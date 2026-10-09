@@ -131,7 +131,8 @@ const NA = '<span class="muted">n/a</span>';
 // /open-problems/table/; site.mjs wraps each in its page(). Its own helpers come in as `site`, so
 // the energies, citations and labels are written as on QMBL's Table.
 export function openProblemsPages(op, instances, site) {
-  const { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, DOI, CITE_YEAR, figureSections = "" } = site;
+  const { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, DOI, CITE_YEAR, figureSections = "",
+    searchIndex, searchWords, searchMatch, SEARCH_STOP, latticeOf, sizeBand, SIZE_BANDS } = site;
   const { targets, entries, systems } = score(op, instances);
   const n = targets.length;
   const aiBadge = a => `<span class="badge">${AI_LABELS[a]}</span>`;
@@ -198,23 +199,32 @@ ${entriesTable}` : "";
 
   // One table per model, with the Table's names and labels. An instance links to its target row
   // in the Table, which opens the instance there; without a variational energy, to its record row
-  // (or its lowest row).
+  // (or its lowest row). Each row carries QMBL's search index and each section its lattice and
+  // size badges, so the search bar on top filters as QMBL's Table does (Tristan, 2026-10-09).
   const sections = groups.map(([model, name, group]) => {
+    const lattices = [...new Set(group.map(x => latticeOf(x.inst)))].sort();
+    const bands = SIZE_BANDS.filter(([key]) => group.some(x => sizeBand(x.inst) === key));
+    const badges = `<div class="quick">
+    <span class="muted">lattice</span>${lattices.map(l => `<button type="button" data-lattice="${esc(l)}">${esc(l)}</button>`).join("")}
+    ${bands.length > 1 ? `<span class="muted">size</span>${bands.map(([key, , label]) => `<button type="button" data-size="${key}">${label}</button>`).join("")}` : ""}
+  </div>`;
     const rows = group.map(x => {
       const { t, inst, row, estimate, first } = x;
       const linked = row ?? recordOf(inst) ?? [...inst.rows].sort((a, b) => a.energy - b.energy)[0];
       const beat = row ? `<td class="record">${energyCell(row, inst)}</td><td>${esc(row.method)}</td><td>${citeHtml(row)}</td>`
         : first ? `<td class="record"><span class="num">${quote(first.energy_per_site, first.sigma_per_site).text}</span></td><td>${esc(first.system)}</td><td><a href="#${entryId(first)}">first verified state</a></td>`
         : '<td colspan="3" class="muted">no variational energy yet; the first verified state sets it</td>';
-      return `<tr id="${targetId(inst)}">
+      const search = searchIndex(inst, name);
+      return `<tr id="${targetId(inst)}" class="op-row" data-search="${esc(search.own)}" data-methods="${esc(search.methods)}" data-lattice="${esc(latticeOf(inst))}" data-size="${sizeBand(inst)}">
         <th scope="row"><a href="/instances/#${rowId(inst, linked)}">${esc(instanceLabel(inst))}</a></th>
         ${beat}<td>${estimate ? `${energyCell(estimate, inst)} <span class="badge">${boundLabel(estimate)}</span>` : ""}</td>
         <td class="num">${inst.rows.length}</td>
         <td>${t.verifier.supported ? '<span class="muted">yes</span>' : `not yet <span class="muted">(${esc(t.verifier.reason)})</span>`}</td></tr>`;
     }).join("");
-    return `<section class="targets">
+    return `<section class="targets" data-model="${model}">
   <h3 id="targets-${model.toLowerCase()}">${esc(name)}<a class="anchor" href="#targets-${model.toLowerCase()}" aria-label="Link to this section">#</a></h3>
-  <p class="muted">${group.length} instance${group.length === 1 ? "" : "s"}, energies as <code>${perSiteLabel(group[0].inst)}</code></p>
+  <p class="muted"><span class="count">${group.length} instance${group.length === 1 ? "" : "s"}</span>, energies as <code>${perSiteLabel(group[0].inst)}</code></p>
+  ${badges}
   <div class="scroll"><table class="leaderboard op-wide">
     <thead><tr><th>instance</th><th>energy to beat</th><th>method</th><th>source</th><th>record (estimate)</th><th>results</th><th>verifier</th></tr></thead>
     <tbody>${rows}</tbody></table></div>
@@ -226,7 +236,7 @@ ${entriesTable}` : "";
   // the header's menu links. A figure carries its own title, so on the Leaderboard nothing but the
   // lead stands above the first. Both end with the citation, as QMBL's home page does.
   const head = url => `
-<div class="op-title"><h1>QMBL: Open Problems</h1>
+<div class="op-title"><h1>The best published ground-state energies of open problems</h1>
 <p class="op-links"><a class="ext" href="${SUBMISSIONS}" aria-label="QMBL: Open Problems on GitHub" title="Targets, entries and verifier on GitHub">${GITHUB_MARK}</a>
 <button class="cite-btn" type="button" data-cite="${esc(citation)}" title="Copy the citation">&#10077;<span>Cite</span></button></p></div>
 <nav class="op-tabs" aria-label="QMBL: Open Problems">${[[OPEN_PROBLEMS_URL, "Leaderboard"], [OPEN_PROBLEMS_TABLE_URL, "Table"]].map(([href, label]) =>
@@ -249,8 +259,62 @@ ${FIG_SCRIPT}
 ${systemsSection}
 ${cite}`;
 
+  // The search bar and the Hamiltonian badges of QMBL's Table, with its matching (searchWords,
+  // searchMatch, SEARCH_STOP from site.mjs); these rows open nothing, so there is no row to expand.
+  const search = `
+<p class="search"><input id="filter" type="search" placeholder="Filter by Hamiltonian, lattice, size, coupling or method…" autocomplete="off" spellcheck="false">
+<span id="filter-count" class="muted"></span></p>
+<div class="quick models"><span class="muted">Hamiltonian</span>${groups.map(([m, name]) => `<button type="button" data-model="${m}">${esc(name)}</button>`).join("")}</div>`;
+  const searchScript = `<script>
+const box = document.getElementById("filter");
+const count = document.getElementById("filter-count");
+const sections = [...document.querySelectorAll("section[data-model]")];
+const total = document.querySelectorAll("tr.op-row").length;
+const searchWords = ${searchWords};
+const searchMatch = ${searchMatch};
+const STOP = new Set(${JSON.stringify(SEARCH_STOP)});
+const index = new Map([...document.querySelectorAll("tr.op-row")].map(row => {
+  const own = row.dataset.search.split(" ");
+  return [row, row.dataset.methods ? row.dataset.methods.split("|").map(m => own.concat(m.split(" "))) : [own]];
+}));
+function apply() {
+  const q = box.value.trim();
+  const words = searchWords(q).filter(([w]) => !STOP.has(w));
+  const model = document.querySelector(".models button.on")?.dataset.model;
+  let shown = 0;
+  for (const section of sections) {
+    const outside = model && section.dataset.model !== model;
+    const lattice = section.querySelector(".quick button[data-lattice].on")?.dataset.lattice;
+    const size = section.querySelector(".quick button[data-size].on")?.dataset.size;
+    const rows = [...section.querySelectorAll("tr.op-row")];
+    let n = 0;
+    for (const row of rows) {
+      const hit = !outside && (!words.length || searchMatch(index.get(row), words))
+        && (!lattice || row.dataset.lattice === lattice)
+        && (!size || row.dataset.size === size);
+      row.hidden = !hit;
+      if (hit) n++;
+    }
+    shown += n;
+    section.hidden = outside || (!n && !lattice && !size);
+    section.querySelector(".count").textContent = (n === rows.length ? "" : n + " of ") + rows.length + (rows.length === 1 ? " instance" : " instances");
+  }
+  count.textContent = q || model ? shown + " of " + total + " instances" : "";
+}
+box.addEventListener("input", apply);
+for (const b of document.querySelectorAll(".quick button")) b.addEventListener("click", () => {
+  const on = b.classList.contains("on");
+  const key = ["model", "lattice", "size"].find(k => k in b.dataset);
+  for (const o of b.parentElement.querySelectorAll("button[data-" + key + "]")) o.classList.remove("on");
+  if (!on) b.classList.add("on");
+  apply();
+});
+</script>`;
+
   const table = `${head(OPEN_PROBLEMS_TABLE_URL)}
+${search}
 ${sections}
+${searchScript}
 ${entriesSection}
 ${cite}`;
 
@@ -291,7 +355,7 @@ header.site nav a.op[aria-current] { color: var(--bg); background: var(--ink); b
 // (site.mjs, open-problems.css), with the rules of its figure switches.
 export const OPEN_PROBLEMS_PAGE_CSS = `/* GitHub and Cite on the title's line, centred on it, as the header's mark and Cite
    pill; on a narrow screen they wrap under it. */
-div.op-title { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.6rem; margin: 0 0 0.6rem; }
+div.op-title { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.6rem; margin: 0 0 1.3rem; }
 div.op-title h1 { margin: 0; }
 p.op-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; margin: 0; }
 p.op-links a.ext { color: var(--muted); display: inline-flex; }
