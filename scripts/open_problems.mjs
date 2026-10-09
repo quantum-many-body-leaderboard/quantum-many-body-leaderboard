@@ -1,8 +1,9 @@
 // QMBL: Open Problems, the page at /open-problems/ (Tristan, 2026-10-06 and 2026-10-08): the
 // instances of a QMBL release with no exact ground-state energy, as open problems for scientists
 // and AI systems, with the energy to beat on each, and the verified entries. Since 2026-10-09 it
-// is laid out as QMBL's Leaderboard and Table are: a figure (open_problems_figure.mjs), then the
-// targets, one table per model, then the entries once there are any, then how scoring works.
+// is laid out as QMBL's Leaderboard and Table are: its own figure (open_problems_figure.mjs) and
+// the home page's figure sections for these instances (site.mjs), then the targets, one table
+// per model, then the entries once there are any, then how scoring works.
 //
 // Two inputs from the Open Problems repository (quantum-many-body-leaderboard/open-problems),
 // checked out beside this one or wherever OPEN_PROBLEMS_DIR points: targets/v1.json, the frozen
@@ -120,7 +121,7 @@ const NA = '<span class="muted">n/a</span>';
 // The body and meta description of /open-problems/; site.mjs wraps them in its page(). Its own
 // helpers come in as `site`, so the energies, citations and labels are written as on the Table.
 export function openProblemsPage(op, instances, site) {
-  const { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD } = site;
+  const { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, figureSections = "" } = site;
   const { targets, entries, systems } = score(op, instances);
   const { version, qmbl_release: release, qmbl_doi: doi, frozen } = op.targets;
   const n = targets.length, solved = instances.filter(i => exactRecordOf(i)).length;
@@ -163,15 +164,16 @@ ${systemsTable}
 <h2 id="entries">Entries</h2>
 ${entriesTable}` : "";
 
-  // The figure, with a hover card for each Table row it links to, as on the home page, and one
-  // for each entry it draws.
+  // The figures: this page's own, then the home page's sections for these instances
+  // (site.mjs, `figureSections`), with a hover card for each Table row they link to, as on the
+  // home page, and one for each entry drawn.
   const fig = openProblemsFigure(targets, entries, e => `#${entryId(e)}`);
-  const figHtml = figure([FIGURE_NAME, fig.title, fig.caption], "", fig.svg);
+  const figHtml = figure([FIGURE_NAME, fig.title, fig.caption], "", fig.svg) + "\n" + figureSections;
   const figRows = new Set([...[...figHtml.matchAll(/href="\/instances\/#(r-[\w-]+)"/g)].map(m => m[1]),
     ...[...figHtml.matchAll(/data-rows="([\w -]+)"/g)].flatMap(m => m[1].split(" "))]);
   const cards = instances.flatMap(inst => inst.rows.filter(r => figRows.has(rowId(inst, r)))
     .map(r => `<div data-row="${rowId(inst, r)}">${rowCard(r, inst)}</div>`));
-  if (cards.length !== figRows.size) throw new Error(`the Open Problems figure links ${figRows.size} rows, ${cards.length} found in data/`);
+  if (cards.length !== figRows.size) throw new Error(`the Open Problems figures link ${figRows.size} rows, ${cards.length} found in data/`);
   const drawn = new Set([...figHtml.matchAll(/href="#(e-[\w-]+)"/g)].map(m => m[1]));
   const entryCards = entries.filter(s => drawn.has(entryId(s.e))).map(s => `<div data-row="${entryId(s.e)}"><b>${esc(modelName(s.x.inst.model))} ${esc(instanceLabel(s.x.inst))}</b>
 <span>${esc(s.e.system)}, ${esc(s.e.team)} &middot; ${AI_LABELS[s.e.ai_involvement]}</span>
@@ -203,13 +205,14 @@ ${entriesTable}` : "";
 </section>`;
   }).join("\n");
 
-  // The page is a figure and the table under it, as QMBL's Leaderboard and Table are
-  // (Tristan, 2026-10-09); the figure carries its own title, so nothing stands above it.
+  // The page is the figures and the table under them, as QMBL's Leaderboard and Table are
+  // (Tristan, 2026-10-09); a figure carries its own title, so nothing stands above the first.
+  // GitHub, Zenodo and Cite stand on the title's line, to its right (Tristan, 2026-10-09).
   const body = `
-<h1>QMBL: Open Problems</h1>
+<div class="op-title"><h1>QMBL: Open Problems</h1>
 <p class="op-links"><a class="ext" href="${SUBMISSIONS}" aria-label="QMBL: Open Problems on GitHub" title="Targets, entries and verifier on GitHub">${GITHUB_MARK}</a>
 <a class="ext" href="https://doi.org/${esc(doi)}" aria-label="QMBL ${esc(release)} on Zenodo" title="QMBL ${esc(release)} on Zenodo, the release the targets are taken from">${ZENODO_MARK}</a>
-<button class="cite-btn" type="button" data-cite="${esc(citation)}" title="Copy the citation">&#10077;<span>Cite</span></button></p>
+<button class="cite-btn" type="button" data-cite="${esc(citation)}" title="Copy the citation">&#10077;<span>Cite</span></button></p></div>
 <p class="lead">QMBL: Open Problems is a record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy.</p>
 
 ${figHtml}
@@ -264,8 +267,11 @@ header.site nav a.op[aria-current] { color: #fff; background: var(--accent); box
   header.site nav { gap: 0.4rem 0.75rem; font-size: 0.9rem; }
   header.site nav a.op, header.site nav button.cite-btn { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
 }
-/* GitHub, Zenodo and Cite under the page's title, as the header's mark and Cite pill. */
-p.op-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; margin: 0.4rem 0 0.6rem; }
+/* GitHub, Zenodo and Cite on the title's line, centred on it, as the header's mark and Cite
+   pill; on a narrow screen they wrap under it. */
+div.op-title { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.6rem; margin: 0 0 0.6rem; }
+div.op-title h1 { margin: 0; }
+p.op-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; margin: 0; }
 p.op-links a.ext { color: var(--muted); display: inline-flex; }
 p.op-links a.ext:hover { color: var(--ink); }
 p.op-links a.ext svg { display: block; }
