@@ -29,7 +29,7 @@ import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
 import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { FRONTIER } from "./views.mjs";
 import { energyFigures } from "./ladders.mjs";
-import { loadOpenProblems, openProblemsPage, openProblemsLlms, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_NAV_CSS, OPEN_PROBLEMS_PAGE_CSS } from "./open_problems.mjs";
+import { loadOpenProblems, openProblemsPages, openProblemsLlms, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL, OPEN_PROBLEMS_NAV_CSS, OPEN_PROBLEMS_PAGE_CSS } from "./open_problems.mjs";
 
 const OUT = "_site";
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
@@ -63,8 +63,9 @@ const esc = s => String(s)
   .replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 // QMBL: Open Problems (open_problems.mjs), built only where its repository is checked out
-// beside this one or at OPEN_PROBLEMS_DIR; without it the site is built as before.
-const OPEN_PROBLEMS = loadOpenProblems();
+// beside this one or at OPEN_PROBLEMS_DIR; without it the site is built as before. Its targets
+// are this build's instances with no exact energy (the checkout's scripts/targets.mjs).
+const OPEN_PROBLEMS = await loadOpenProblems(instances);
 
 // The front page is the leaderboard (the figures), /instances/ the table. The URLs stay -
 // they are what is linked and cited.
@@ -74,7 +75,7 @@ const NAV = [
 ];
 // Open Problems is a button at the very right of the menu, after Cite (Tristan, 2026-10-09).
 const opButton = url => (OPEN_PROBLEMS
-  ? `<a href="${OPEN_PROBLEMS_URL}" class="op"${url === OPEN_PROBLEMS_URL ? ' aria-current="page"' : ""}>Open Problems</a>` : "");
+  ? `<a href="${OPEN_PROBLEMS_URL}" class="op"${url.startsWith(OPEN_PROBLEMS_URL) ? ' aria-current="page"' : ""}>Open Problems</a>` : "");
 
 // GitHub's mark (octicon mark-github, MIT), inline so it takes the nav's colour.
 const GITHUB_MARK = `<svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>`;
@@ -455,7 +456,7 @@ const TAB_CSS = tabCss(COMPUTE_AXES, ENERGY_FIGS, SLIDERS);
 // QMBL page"), for its instances: every energy figure in which one of them is drawn, shown whole
 // as here, solved sizes included, and the cost figures of those instances. Their switches have
 // ids of their own, op-, whose rules go into that page's own stylesheet (open-problems.css).
-const OPEN = new Set(OPEN_PROBLEMS?.targets.instances.map(t => t.instance_id) ?? []);
+const OPEN = new Set(OPEN_PROBLEMS?.targets.map(t => t.instance_id) ?? []);
 const isOpen = inst => OPEN.has(inst.instance_id);
 const figInstances = f => (f.group === "other" ? f.scans.flatMap(s => s.slots.flatMap(x => x.members)) : f.stops.flatMap(s => s.ladder.members));
 const OP_ENERGY_FIGS = ENERGY_FIGS.map(([group, figs]) => [group, figs.filter(f => figInstances(f).some(isOpen))]).filter(([, figs]) => figs.length);
@@ -1205,7 +1206,7 @@ function llmsTxt() {
     "primary paper named on the row, not to this site.",
     "",
     "## Pages",
-    ...(OPEN_PROBLEMS ? [openProblemsLlms(OPEN_PROBLEMS)] : []),
+    ...(OPEN_PROBLEMS ? openProblemsLlms(OPEN_PROBLEMS) : []),
     "- [Leaderboard](https://qmbl.org/): the accuracy and cost figures, and how to cite.",
     `- [Table](https://qmbl.org/instances/): every one of the ${summary.instances} instances, with its record and every energy.`,
     `- [Rules](${RULES}): what counts as a record, ties, provenance, objections.`,
@@ -1523,9 +1524,11 @@ write("rules/index.html", redirectPage("/rules/", RULES, "Rules"));
 write("data/index.html", redirectPage("/data/", DATA, "Data"));
 write("contribute/index.html", contributePage());
 if (OPEN_PROBLEMS) {
-  write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", wide: true, css: `/open-problems.css?v=${OP_CSS_VERSION}`,
-    ...openProblemsPage(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
-      figureSections: opFigureSections() }) }));
+  const op = openProblemsPages(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
+    DOI, CITE_YEAR: RELEASED.slice(0, 4), figureSections: opFigureSections() });
+  const opCss = `/open-problems.css?v=${OP_CSS_VERSION}`;
+  write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", wide: true, css: opCss, ...op.leaderboard }));
+  write("open-problems/table/index.html", page({ url: OPEN_PROBLEMS_TABLE_URL, title: "Open Problems: Table", wide: true, css: opCss, ...op.table }));
   write("open-problems.css", OP_CSS);
 }
 write("404.html", notFoundPage());
@@ -1566,7 +1569,7 @@ write("api/qmbl.json", JSON.stringify({
   summary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 
-const urls = ["/", "/instances/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL] : []), ...instances.map(instUrl)];
+const urls = ["/", "/instances/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL] : []), ...instances.map(instUrl)];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${BUILT}</lastmod></url>`).join("\n")}
