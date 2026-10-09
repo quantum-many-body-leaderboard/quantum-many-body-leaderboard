@@ -32,32 +32,75 @@ export function marks(t, pts, X, Y, colorOf) {
     }
     if (!flagged) soundY.set(N, groups.map(g => g[0].y));
     for (const g of groups) {
-      const rows = g.map(q => q.p);
-      const [head] = rows, y = g[0].y, color = colorOf(head), r = COUNT_R;
+      const rows = g.map(q => q.p), y = g[0].y;
       const x = X(N) + (flagged && (soundY.get(N) ?? []).some(sy => Math.abs(sy - y) < MERGE) ? ASIDE : 0);
-      if (rows.length === 1) { out.push([head, flagged ? mark(t, x, y, color, head) : dot(t, x, y, color, head.eligible, rowHref(head.inst, head.r))]); continue; }
-      const count = ink => `<text x="${n(x)}" y="${n(y + 3)}" font-size="8.5" font-weight="600" fill="${ink}" text-anchor="middle" style="font-variant-numeric:tabular-nums">${rows.length}</text>`;
-      let svg;
-      if (flagged) {
-        // The count is haloed so that it reads over the slash.
-        const d = `M${n(x - 8)} ${n(y + 8)}L${n(x + 8)} ${n(y - 8)}`;
-        svg = `<circle cx="${n(x)}" cy="${n(y)}" r="${r - 1}" fill="none" stroke="${color}" stroke-width="2"/>` +
-          `<path d="${d}" stroke="${t.surface}" stroke-width="3.5" stroke-linecap="round"/><path d="${d}" stroke="${color}" stroke-width="2" stroke-linecap="round"/>` +
-          count(color).replace("<text ", `<text paint-order="stroke" stroke="${t.surface}" stroke-width="2.5" stroke-linejoin="round" `);
-      } else {
-        const filled = rows.some(p => p.eligible);
-        const ink = filled ? (onFill(color) === "#ffffff" ? t.surface : t.ink) : color;
-        svg = `<circle cx="${n(x)}" cy="${n(y)}" r="${r + 1.5}" fill="${t.surface}"/>` + (filled
-          ? `<circle cx="${n(x)}" cy="${n(y)}" r="${r}" fill="${color}"/>`
-          : `<circle cx="${n(x)}" cy="${n(y)}" r="${r - 1}" fill="${t.surface}" stroke="${color}" stroke-width="2"/>`) + count(ink);
-      }
-      const a = linked(rowHref(head.inst, head.r), svg).replace('<a class="pt"', `<a class="pt" data-rows="${rows.map(p => rowId(p.inst, p.r)).join(" ")}"`);
-      out.push([head, a]);
+      out.push([rows[0], groupMark(t, rows, x, y, colorOf(rows[0]), flagged)]);
     }
   }
-  // Hollow first, then filled, so a record-eligible mark is never covered by one that is not;
-  // flagged last, drawn as outlines that hide nothing.
-  return out.sort((a, b) => (a[0].flagged ?? false) - (b[0].flagged ?? false) || a[0].eligible - b[0].eligible).map(([, svg]) => svg);
+  return drawOrder(out);
+}
+
+// Hollow first, then filled, so a record-eligible mark is never covered by one that is not;
+// flagged last, drawn as outlines that hide nothing.
+const drawOrder = out => out.sort((a, b) => (a[0].flagged ?? false) - (b[0].flagged ?? false) || a[0].eligible - b[0].eligible).map(([, svg]) => svg);
+
+// One group's mark at (x, y): a dot for one row, else a count mark linking to the first (best)
+// row, with every row in `data-rows`; a flagged group is a slashed outline.
+function groupMark(t, rows, x, y, color, flagged) {
+  const [head] = rows, r = COUNT_R;
+  if (rows.length === 1) return flagged ? mark(t, x, y, color, head) : dot(t, x, y, color, head.eligible, rowHref(head.inst, head.r));
+  const count = ink => `<text x="${n(x)}" y="${n(y + 3)}" font-size="8.5" font-weight="600" fill="${ink}" text-anchor="middle" style="font-variant-numeric:tabular-nums">${rows.length}</text>`;
+  let svg;
+  if (flagged) {
+    // The count is haloed so that it reads over the slash.
+    const d = `M${n(x - 8)} ${n(y + 8)}L${n(x + 8)} ${n(y - 8)}`;
+    svg = `<circle cx="${n(x)}" cy="${n(y)}" r="${r - 1}" fill="none" stroke="${color}" stroke-width="2"/>` +
+      `<path d="${d}" stroke="${t.surface}" stroke-width="3.5" stroke-linecap="round"/><path d="${d}" stroke="${color}" stroke-width="2" stroke-linecap="round"/>` +
+      count(color).replace("<text ", `<text paint-order="stroke" stroke="${t.surface}" stroke-width="2.5" stroke-linejoin="round" `);
+  } else {
+    const filled = rows.some(p => p.eligible);
+    const ink = filled ? (onFill(color) === "#ffffff" ? t.surface : t.ink) : color;
+    svg = `<circle cx="${n(x)}" cy="${n(y)}" r="${r + 1.5}" fill="${t.surface}"/>` + (filled
+      ? `<circle cx="${n(x)}" cy="${n(y)}" r="${r}" fill="${color}"/>`
+      : `<circle cx="${n(x)}" cy="${n(y)}" r="${r - 1}" fill="${t.surface}" stroke="${color}" stroke-width="2"/>`) + count(ink);
+  }
+  return linked(rowHref(head.inst, head.r), svg).replace('<a class="pt"', `<a class="pt" data-rows="${rows.map(p => rowId(p.inst, p.r)).join(" ")}"`);
+}
+
+// marks() for a figure whose sizes lie close together (open_problems_figure.mjs, where the home
+// figure's per-size merging left marks of neighbouring sizes covering each other): rows merge
+// whatever their size, each group holding the rows within MERGE of its best one in both
+// directions, and is drawn there, so no two marks overlap. A flagged group, which never merges
+// with sound rows, goes to the nearest place clear of the marks already drawn. Returns the marks
+// and where they sit, [x, y, half-size], so the caller can place more marks clear of them.
+const halfSize = (rows, flagged) => (flagged ? (rows > 1 ? 9 : 6.5) : rows > 1 ? COUNT_R : 5);
+export function marksAcross(t, pts, X, Y, colorOf) {
+  const order = (a, b) => (b.exact ?? false) - (a.exact ?? false) || a.shown - b.shown || b.eligible - a.eligible;
+  const groupsOf = ps => {
+    const groups = [];
+    for (const q of [...ps].sort(order).map(p => ({ p, x: X(p.inst.n_sites), y: Y(p.shown) }))) {
+      const g = groups.find(g => Math.max(Math.abs(g[0].x - q.x), Math.abs(g[0].y - q.y)) <= MERGE);
+      if (g) g.push(q); else groups.push([q]);
+    }
+    return groups;
+  };
+  const out = [], placed = [];
+  for (const [flagged, ps] of [[false, pts.filter(p => !p.flagged)], [true, pts.filter(p => p.flagged)]])
+    for (const g of groupsOf(ps)) {
+      const rows = g.map(q => q.p), h = halfSize(rows.length, flagged), y = g[0].y;
+      const x = flagged ? freeX(placed, g[0].x, y, h) : g[0].x;
+      placed.push([x, y, h]);
+      out.push([rows[0], groupMark(t, rows, x, y, colorOf(rows[0]), flagged)]);
+    }
+  return { svgs: drawOrder(out), placed };
+}
+
+// The nearest x to x0 on the line y where a mark of half-size h clears every mark in `placed`
+// by a pixel, looked for a pixel at a time, to the right first.
+export function freeX(placed, x0, y, h) {
+  const clear = x => placed.every(([px, py, ph]) => Math.max(Math.abs(px - x), Math.abs(py - y)) >= ph + h + 1);
+  for (let d = 0; d <= 200; d++) for (const x of d ? [x0 + d, x0 - d] : [x0]) if (clear(x)) return x;
+  return x0;
 }
 
 // A log-log plot area: size along x with the ticks given, distance up y on a decade scale.
