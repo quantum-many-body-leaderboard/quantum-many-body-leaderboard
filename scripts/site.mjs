@@ -29,6 +29,7 @@ import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
 import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { FRONTIER } from "./views.mjs";
 import { energyFigures } from "./ladders.mjs";
+import { loadOpenProblems, openProblemsPage, openProblemsLlms, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_CSS } from "./open_problems.mjs";
 
 const OUT = "_site";
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
@@ -61,9 +62,14 @@ const esc = s => String(s)
   .replace(/&(?![#A-Za-z0-9]+;)/g, "&amp;")
   .replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+// QMBL: Open Problems (open_problems.mjs), built only where its repository is checked out
+// beside this one or at OPEN_PROBLEMS_DIR; without it the site is built as before.
+const OPEN_PROBLEMS = loadOpenProblems();
+
 // The front page is the leaderboard (the figures), /instances/ the table. The URLs stay -
-// they are what is linked and cited.
+// they are what is linked and cited. Open Problems comes first, as a button (Tristan, 2026-10-08).
 const NAV = [
+  ...(OPEN_PROBLEMS ? [[OPEN_PROBLEMS_URL, "Open Problems", "op"]] : []),
   ["/", "Leaderboard"],
   ["/instances/", "Table"],
 ];
@@ -104,8 +110,8 @@ function page({ url, title, description, body, wide = false }) {
 <meta property="og:url" content="https://qmbl.org${url}">
 <header class="site">
   <a class="wordmark" href="/">${logoSvg()}<b>QMBL<span class="tagline">the quantum many-body leaderboard</span></b><span class="badge beta" title="QMBL is in beta: the data and the site are still being checked and re-cut">beta</span></a>
-  <nav>${NAV.map(([href, label]) =>
-    `<a href="${href}"${href === url ? ' aria-current="page"' : ""}>${label}</a>`).join("")}
+  <nav>${NAV.map(([href, label, cls]) =>
+    `<a href="${href}"${cls ? ` class="${cls}"` : ""}${href === url ? ' aria-current="page"' : ""}>${label}</a>`).join("")}
     <a class="ext" href="${REPO}" aria-label="QMBL on GitHub" title="Source and data on GitHub">${GITHUB_MARK}</a>
     <button class="cite-btn" type="button" data-cite="${esc(CITATION)}" title="Copy the citation">&#10077;<span>Cite</span></button></nav>
 </header>
@@ -1178,6 +1184,7 @@ function llmsTxt() {
     "primary paper named on the row, not to this site.",
     "",
     "## Pages",
+    ...(OPEN_PROBLEMS ? [openProblemsLlms(OPEN_PROBLEMS)] : []),
     "- [Leaderboard](https://qmbl.org/): the accuracy and cost figures, and how to cite.",
     `- [Table](https://qmbl.org/instances/): every one of the ${summary.instances} instances, with its record and every energy.`,
     `- [Rules](${RULES}): what counts as a record, ties, provenance, objections.`,
@@ -1469,7 +1476,7 @@ tr.more figure.chart { margin: 0.4rem 0 0.8rem; }
 @media (prefers-color-scheme: dark) {
 ${FIG_DARK}
 }
-` + LOGO_CSS;
+` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_CSS : "");
 
 // The stylesheet's URL carries a hash of its contents. Pages serves both the page and the
 // stylesheet with a ten-minute cache, and they expire separately: a new page on an old
@@ -1490,6 +1497,8 @@ write("instances/index.html", instancesPage());
 write("rules/index.html", redirectPage("/rules/", RULES, "Rules"));
 write("data/index.html", redirectPage("/data/", DATA, "Data"));
 write("contribute/index.html", contributePage());
+if (OPEN_PROBLEMS) write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", wide: true,
+  ...openProblemsPage(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, RULES }) }));
 write("404.html", notFoundPage());
 write("style.css", CSS);
 write("favicon.svg", faviconSvg());
@@ -1528,7 +1537,7 @@ write("api/qmbl.json", JSON.stringify({
   summary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 
-const urls = ["/", "/instances/", "/contribute/", ...instances.map(instUrl)];
+const urls = ["/", "/instances/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL] : []), ...instances.map(instUrl)];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${BUILT}</lastmod></url>`).join("\n")}
