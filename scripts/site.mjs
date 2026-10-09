@@ -94,8 +94,9 @@ for (const b of document.querySelectorAll("button.cite-btn")) b.addEventListener
 });
 </script>`;
 
-// `css` is a page's own stylesheet, after the site's (open-problems.css).
-function page({ url, title, description, body, wide = false, css = null }) {
+// `css` is a page's own stylesheet, after the site's (open-problems.css). `ogTitle` is the
+// link-preview title where the page title alone would hide QMBL on an X card (Tristan, 2026-10-09).
+function page({ url, title, description, body, wide = false, css = null, ogTitle = null }) {
   const head = title === null ? "QMBL" : `${title} &middot; QMBL`;
   return `<!doctype html>
 <html lang="en">
@@ -108,7 +109,7 @@ function page({ url, title, description, body, wide = false, css = null }) {
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="${esc(title ?? "QMBL: the Quantum Many-Body Leaderboard")}">
+<meta property="og:title" content="${esc(ogTitle ?? title ?? "QMBL: the Quantum Many-Body Leaderboard")}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://qmbl.org${url}">
@@ -1527,7 +1528,7 @@ if (OPEN_PROBLEMS) {
   const op = openProblemsPages(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
     DOI, CITE_YEAR: RELEASED.slice(0, 4), figureSections: opFigureSections() });
   const opCss = `/open-problems.css?v=${OP_CSS_VERSION}`;
-  write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", wide: true, css: opCss, ...op.leaderboard }));
+  write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", ogTitle: "QMBL: Open Problems", wide: true, css: opCss, ...op.leaderboard }));
   write("open-problems/table/index.html", page({ url: OPEN_PROBLEMS_TABLE_URL, title: "Open Problems: Table", wide: true, css: opCss, ...op.table }));
   write("open-problems.css", OP_CSS);
 }
