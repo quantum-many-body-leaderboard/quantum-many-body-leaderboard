@@ -255,18 +255,19 @@ export const openProblemsLlms = op =>
   `- [Open Problems](https://qmbl.org${OPEN_PROBLEMS_URL}): the ${op.targets.instances.length} instances with no exact ground-state energy as open problems for scientists and AI systems, with the energy to beat on each, the scoring and the verified entries.`;
 
 // The menu button, last in the menu (site.mjs) on every page, so its rules go into the site's
-// stylesheet: a pill in ink (Tristan, 2026-10-09), outlined, and filled on its own page as a
-// chosen badge is, black on a light page and white on a dark one, so it reads as a button beside
-// the plain links and the grey Cite pill. On a phone the menu tightens to stay on one line under
-// the wordmark; where even that does not fit (below 390 px), the button, being last, wraps to a
-// line of its own.
+// stylesheet: a filled pill in the navy accent that turns ink on hover and on its own page
+// (Tristan, 2026-10-09: ink, with colour, also on hover), so it reads as a button beside the
+// plain links and the grey Cite pill; light text on navy and black, dark text on the light navy
+// and white of dark mode. On a phone the menu tightens to stay on one line under the wordmark;
+// where even that does not fit (below 390 px), the button, being last, wraps to a line of its own.
 export const OPEN_PROBLEMS_NAV_CSS = `
 header.site nav a.op {
   display: inline-flex; align-items: center; padding: 0.4rem 0.75rem; font-size: 0.85rem; line-height: 1;
-  color: var(--ink); background: var(--surface); border: 1px solid var(--ink); border-radius: 999px;
+  color: var(--bg); background: var(--accent); border: 1px solid var(--accent); border-radius: 999px;
+  transition: background-color 0.15s, border-color 0.15s;
 }
-header.site nav a.op:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, var(--surface)); }
-header.site nav a.op[aria-current] { color: var(--bg); background: var(--ink); box-shadow: none; }
+header.site nav a.op:hover { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+header.site nav a.op[aria-current] { color: var(--bg); background: var(--ink); border-color: var(--ink); box-shadow: none; }
 @media (max-width: 480px) {
   header.site nav { gap: 0.4rem 0.75rem; font-size: 0.9rem; }
   header.site nav a.op, header.site nav button.cite-btn { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
