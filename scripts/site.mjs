@@ -374,18 +374,20 @@ function computeInstances(id, group, entry) {
     .filter((p, k) => !shared.includes(ps[k])).join("").replace(/^, /, "");
   return tabs(id, group.map((inst, k) => [esc(label(parts[k])), figure(entry(inst))]), lead);
 }
-const COMPUTE_TABS = COMPUTE_AXES.flatMap(([, figs], a) => [[`cost-${a}`, computeModels(figs).length],
-  ...computeModels(figs).map((g, m) => [`cost-${a}-${m}`, g.length])]);
-function computeSwitcher() {
-  if (!COMPUTE_AXES.length) return "";
+// `axes`, `prefix` and `hours` let /open-problems/ show the same section for its instances.
+const computeTabs = (axes, prefix = "") => axes.flatMap(([, figs], a) => [[`${prefix}cost-${a}`, computeModels(figs).length],
+  ...computeModels(figs).map((g, m) => [`${prefix}cost-${a}-${m}`, g.length])]);
+const COMPUTE_TABS = computeTabs(COMPUTE_AXES);
+function computeSwitcher(axes = COMPUTE_AXES, prefix = "", hours = COST_FIGS.length) {
+  if (!axes.length) return "";
   return `<section class="tabs" id="energy-vs-compute">
   <h2>The best published energies, by cost</h2>
   <p class="muted">Skim through three kinds of cost: compute hours, estimated FLOPs and number of parameters. Papers state compute cost
-  in hours on GPU/CPU on ${COST_FIGS.length} instances. Many more papers state the number of parameters, samples and optimisation steps, and
+  in hours on GPU/CPU on ${hours} instances. Many more papers state the number of parameters, samples and optimisation steps, and
   public DMRG run scripts state their sweeps, which imply a count of floating-point operations that we estimate (<a href="${DATA}#how-a-flop-count-is-estimated">how</a>). On top,
   we plot the parameter count alone.</p>
-  ${tabs("cost-axis", COMPUTE_AXES.map(([label, figs, entry], a) => [label, `<div class="tabs">${tabs(`cost-${a}`, computeModels(figs).map((g, m) =>
-    [esc(modelName(g[0].model)), `<div class="tabs">${computeInstances(`cost-${a}-${m}`, g, entry)}</div>`]))}</div>`]))}
+  ${tabs(`${prefix}cost-axis`, axes.map(([label, figs, entry], a) => [label, `<div class="tabs">${tabs(`${prefix}cost-${a}`, computeModels(figs).map((g, m) =>
+    [esc(modelName(g[0].model)), `<div class="tabs">${computeInstances(`${prefix}cost-${a}-${m}`, g, entry)}</div>`]))}</div>`]))}
 </section>`;
 }
 // The published energies of every Hamiltonian, drawn by size_energy.mjs into figures/energy/
@@ -433,19 +435,34 @@ const sliderRules = ({ id, f }) => (f.strip ? f.stops.map((s, k) =>
 #${id}-${k}:checked ~ .track label[for="${id}-${k}"] { color: #fff; background: var(--accent); border-color: var(--accent); }
 #${id}-${k}:focus-visible ~ .track label[for="${id}-${k}"] { outline: 2px solid var(--accent); outline-offset: 2px; }`).join("\n") : "");
 
-function energySwitcher() {
-  if (!ENERGY_FIGS.length) return "";
+function energySwitcher(groups = ENERGY_FIGS, sliders = SLIDERS, prefix = "") {
+  if (!groups.length) return "";
   return `<section class="tabs" id="energy-by-hamiltonian">
   <h2>The published energies, by Hamiltonian</h2>
-  ${tabs("energy-group", ENERGY_FIGS.map(([group, figs], j) =>
-    [group === "other" ? "Other" : esc(modelName(group)), `<div class="tabs">${tabs(`energy-${j}`, figs.map(f =>
-      [esc(f.label), group === "other" ? figure(otherEntry(f)) : slider(SLIDERS.find(s => s.f === f))]))}</div>`]))}
+  ${tabs(`${prefix}energy-group`, groups.map(([group, figs], j) =>
+    [group === "other" ? "Other" : esc(modelName(group)), `<div class="tabs">${tabs(`${prefix}energy-${j}`, figs.map(f =>
+      [esc(f.label), group === "other" ? figure(otherEntry(f)) : slider(sliders.find(s => s.f === f))]))}</div>`]))}
 </section>`;
 }
 
-const TAB_CSS = [tabRules("cost-axis", COMPUTE_AXES.length), ...COMPUTE_TABS.map(([id, n]) => tabRules(id, n)),
-  tabRules("energy-group", ENERGY_FIGS.length),
-  ...ENERGY_FIGS.map(([, figs], j) => tabRules(`energy-${j}`, figs.length)), ...SLIDERS.map(sliderRules)].join("\n");
+const tabCss = (axes, groups, sliders, prefix = "") => [tabRules(`${prefix}cost-axis`, axes.length), ...computeTabs(axes, prefix).map(([id, n]) => tabRules(id, n)),
+  tabRules(`${prefix}energy-group`, groups.length),
+  ...groups.map(([, figs], j) => tabRules(`${prefix}energy-${j}`, figs.length)), ...sliders.map(sliderRules)].join("\n");
+const TAB_CSS = tabCss(COMPUTE_AXES, ENERGY_FIGS, SLIDERS);
+
+// The same two sections on /open-problems/ (Tristan, 2026-10-09: "all figures just like on main
+// QMBL page"), for its instances: every energy figure in which one of them is drawn, shown whole
+// as here, solved sizes included, and the cost figures of those instances. Their switches have
+// ids of their own, op-, whose rules are appended to the stylesheet after this page's.
+const OPEN = new Set(OPEN_PROBLEMS?.targets.instances.map(t => t.instance_id) ?? []);
+const isOpen = inst => OPEN.has(inst.instance_id);
+const figInstances = f => (f.group === "other" ? f.scans.flatMap(s => s.slots.flatMap(x => x.members)) : f.stops.flatMap(s => s.ladder.members));
+const OP_ENERGY_FIGS = ENERGY_FIGS.map(([group, figs]) => [group, figs.filter(f => figInstances(f).some(isOpen))]).filter(([, figs]) => figs.length);
+const OP_SLIDERS = OP_ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [] : figs.map((f, k) => ({ id: `op-slide-${j}-${k}`, f }))));
+const OP_COMPUTE_AXES = COMPUTE_AXES.map(([label, figs, entry]) => [label, figs.filter(isOpen), entry]).filter(([, figs]) => figs.length);
+const OP_TAB_CSS = OPEN_PROBLEMS ? tabCss(OP_COMPUTE_AXES, OP_ENERGY_FIGS, OP_SLIDERS, "op-") : "";
+const opFigureSections = () => [energySwitcher(OP_ENERGY_FIGS, OP_SLIDERS, "op-"),
+  computeSwitcher(OP_COMPUTE_AXES, "op-", COST_FIGS.filter(isOpen).length)].join("\n");
 
 // Dark mode for an inlined figure: an attribute selector per light colour, which beats the
 // presentation attribute in the cascade. The two themes list their colours in the same
@@ -1479,7 +1496,7 @@ tr.more figure.chart { margin: 0.4rem 0 0.8rem; }
 @media (prefers-color-scheme: dark) {
 ${FIG_DARK}
 }
-` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_CSS : "");
+` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_CSS + OP_TAB_CSS + "\n" : "");
 
 // The stylesheet's URL carries a hash of its contents. Pages serves both the page and the
 // stylesheet with a ten-minute cache, and they expire separately: a new page on an old
@@ -1501,7 +1518,8 @@ write("rules/index.html", redirectPage("/rules/", RULES, "Rules"));
 write("data/index.html", redirectPage("/data/", DATA, "Data"));
 write("contribute/index.html", contributePage());
 if (OPEN_PROBLEMS) write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", wide: true,
-  ...openProblemsPage(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD }) }));
+  ...openProblemsPage(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
+    figureSections: opFigureSections() }) }));
 write("404.html", notFoundPage());
 write("style.css", CSS);
 write("favicon.svg", faviconSvg());
