@@ -13,7 +13,7 @@
 // Drawn with the page from the live data, in the light theme, which the stylesheet recolours in
 // dark mode as it does the home figures; never written to figures/.
 import { W, PAD, text, legend, header, footnote, doc, diamond, THEMES } from "./chart.mjs";
-import { marks, logPlot, FLAGGED, ASIDE } from "./size_marks.mjs";
+import { marksAcross, freeX, logPlot, FLAGGED } from "./size_marks.mjs";
 import { perSiteDivisor, recordEligible } from "./units.mjs";
 
 export const FIGURE_NAME = "open-problems-by-size";
@@ -25,6 +25,7 @@ const CAPTION = "The energies on the open problems, placed by their relative gap
   "and a slashed mark is a flagged row.";
 const BOUNDS = { variational: 0, projected: 1, extrapolated: 2 };
 const Y0 = 1e-8, Y1 = 1;
+const DIAMOND = 5.8; // the half-size of an entry's mark (chart.mjs diamond)
 
 // `targets` and `entries` as open_problems.mjs scores them; `entryHref(e)` is an entry's link.
 // Returns the light SVG, with the title and caption that label it on the page.
@@ -68,19 +69,14 @@ export function openProblemsFigure(targets, entries, entryHref) {
     xTicks: [10, 30, 100, 300, 1000].filter(v => v >= X0 && v <= X1), xLabel: "sites",
     yLabel: "relative gap to the energy to beat (lower is better)", lanes: ["energy to beat", "estimates below it"] });
   const Y = g => (g < 0 ? lane(1) : gapY(g));
-  parts.push(...marks(t, pts, X, Y, p => t.series[BOUNDS[p.r.bound_type]]));
-  // An entry is drawn on top, at its size or, where a mark already sits there, CLEAR to its right
-  // or left (the distance at which a diamond clears a count mark; a flagged mark may itself sit
-  // ASIDE to the right of its size, as marks() draws it). Never further: the lines are crowded,
-  // and a mark set further off would read as another size, so where all three places are taken
-  // the entry goes to the one with most room and covers a little of its neighbour.
-  const CLEAR = 13;
-  const taken = pts.flatMap(p => (p.flagged ? [0, ASIDE] : [0]).map(dx => [X(p.inst.n_sites) + dx, Y(p.shown)]));
+  // Sizes lie closer together here than on the home figure, so marks merge across sizes as well
+  // (Tristan, 2026-10-09: the lines must not overlap, as the home figure's exact line does not).
+  const drawn = marksAcross(t, pts, X, Y, p => t.series[BOUNDS[p.r.bound_type]]);
+  parts.push(...drawn.svgs);
+  // An entry is drawn at the nearest place clear of every other mark, as a flagged group is.
   for (const en of ents) {
-    const y = Y(en.shown), x0 = X(en.N);
-    const room = x => Math.min(Infinity, ...taken.map(([tx, ty]) => Math.hypot(tx - x, ty - y)));
-    const x = [x0, x0 + CLEAR, x0 - CLEAR].find(x => room(x) >= CLEAR) ?? [x0, x0 + CLEAR, x0 - CLEAR].sort((a, b) => room(b) - room(a))[0];
-    taken.push([x, y]);
+    const y = Y(en.shown), x = freeX(drawn.placed, X(en.N), y, DIAMOND);
+    drawn.placed.push([x, y, DIAMOND]);
     parts.push(diamond(t, x, y, t.ink, entryHref(en.s.e)));
   }
 
