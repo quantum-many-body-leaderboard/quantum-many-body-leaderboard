@@ -465,12 +465,13 @@ const FIG_DARK = [...FIG_COLOURS].filter(([l, d]) => l !== d)
 // fight the row cards, and four inlined figures would repeat its id, so it and <desc> are
 // dropped here and the entry's title and caption label the figure instead. Marks are
 // links but not tab stops: four hundred of them per figure would bury the page's keyboard
-// order, and the table they point to is the accessible form of the same rows.
-function figure([name, title, caption], cls = "") {
-  const file = `figures/${name}.svg`;
-  for (const v of [name, `${name}-dark`])
+// order, and the table they point to is the accessible form of the same rows. `source` is a
+// figure drawn with the page rather than read from figures/ (open_problems_figure.mjs).
+function figure([name, title, caption], cls = "", source = null) {
+  const file = source == null ? `figures/${name}.svg` : `${name} (drawn with the page)`;
+  if (source == null) for (const v of [name, `${name}-dark`])
     if (!fs.existsSync(`figures/${v}.svg`)) throw new Error(`figures/${v}.svg is missing; run the build first`);
-  const svg = fs.readFileSync(file, "utf8").trim()
+  const svg = (source ?? fs.readFileSync(file, "utf8")).trim()
     .replace(/<title id="title">[^<]*<\/title>\n<desc id="desc">[^<]*<\/desc>\n/, "")
     .replace(' aria-labelledby="title desc"', () => ` aria-label="${esc(title)}. ${esc(caption)}"`)
     .replaceAll('<a class="pt" href=', () => '<a class="pt" tabindex="-1" href=');
@@ -1498,7 +1499,7 @@ write("rules/index.html", redirectPage("/rules/", RULES, "Rules"));
 write("data/index.html", redirectPage("/data/", DATA, "Data"));
 write("contribute/index.html", contributePage());
 if (OPEN_PROBLEMS) write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", wide: true,
-  ...openProblemsPage(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, RULES }) }));
+  ...openProblemsPage(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD }) }));
 write("404.html", notFoundPage());
 write("style.css", CSS);
 write("favicon.svg", faviconSvg());
