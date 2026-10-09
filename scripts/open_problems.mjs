@@ -27,7 +27,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { perSiteDivisor, perSiteLabel, boundLabel } from "./units.mjs";
-import { recordOf, exactRecordOf, rowId } from "./summary.mjs";
+import { recordOf, rowId } from "./summary.mjs";
 import { quote, MODELS, instanceLabel, byGeometry } from "./readme_table.mjs";
 import { openProblemsFigure, FIGURE_NAME } from "./open_problems_figure.mjs";
 
@@ -37,9 +37,6 @@ const TARGETS = "targets/v1.json";
 // The repository beside this one: ../open-problems from the repository root.
 const DEFAULT_DIR = fileURLToPath(new URL("../../open-problems/", import.meta.url));
 const RECORD_SIGMAS = 2;
-// QMBL re-measures an entry's state twice, with independent seeds, each measurement capped at
-// this many GPU-hours (Tristan, 2026-10-09).
-const GPU_HOURS_PER_MEASUREMENT = 4;
 // metadata.yaml's ai_involvement (schema/metadata.schema.json) and how the page prints it.
 const AI_LABELS = { ai: "AI", "human+ai": "human + AI", human: "human" };
 const LINKS = [["code", "code"], ["checkpoint", "checkpoint"], ["paper", "paper"], ["pr", "pull request"]];
@@ -121,10 +118,10 @@ const NA = '<span class="muted">n/a</span>';
 // The body and meta description of /open-problems/; site.mjs wraps them in its page(). Its own
 // helpers come in as `site`, so the energies, citations and labels are written as on the Table.
 export function openProblemsPage(op, instances, site) {
-  const { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, figureSections = "" } = site;
+  const { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, figureSections = "" } = site;
   const { targets, entries, systems } = score(op, instances);
   const { version, qmbl_release: release, qmbl_doi: doi, frozen } = op.targets;
-  const n = targets.length, solved = instances.filter(i => exactRecordOf(i)).length;
+  const n = targets.length;
   const aiBadge = a => `<span class="badge">${AI_LABELS[a]}</span>`;
   // What the page's Cite button copies (Tristan, 2026-10-09).
   const citation = `${CITE_HEAD}, QMBL: Open Problems, targets ${version} from QMBL ${release}, Zenodo (${frozen.slice(0, 4)}). https://doi.org/${doi}`;
@@ -221,30 +218,13 @@ ${FIG_SCRIPT}
 ${sections}
 ${results}
 
-<h2 id="scoring">Scoring</h2>
-<p>The energy to beat on an instance is QMBL's best variational energy, the lowest unflagged
-variational energy published for it. It is read from QMBL's data whenever this page is built, so
-a result published after the list was frozen (${esc(frozen)}) counts. An entry's score is its
-relative gap to that energy, <span class="nowrap">(E &minus; E<sub>target</sub>) / |E<sub>target</sub>|</span>, negative below the
-target; every verified entry is listed, wherever its energy lands. An entry more than 2&sigma;
-below the target, with the error bars of the entry and the target combined, is marked as a new
-record (<a href="${RULES}#6-records-and-ties">QMBL's rule for ties</a>). A system's score is the
-median gap over the instances it entered, shown with how many it entered and how many records it
-set; a system has one live entry per instance, and a new entry replaces the old one. The
-re-measurement of an entry's state is capped at ${GPU_HOURS_PER_MEASUREMENT} GPU-hours per measurement,
-two measurements per entry.</p>
-
-<h2 id="submit">How to submit</h2>
-<p>To enter, open a pull request in the submissions repository,
-<a href="${SUBMISSIONS}">quantum-many-body-leaderboard/open-problems</a>; its
-<a href="${SUBMISSIONS}/blob/main/README.md">README</a> gives the format and the steps. An entry
-links the code at a fixed commit and a checkpoint of the state, and states its compute and how much
-AI was involved. Please publish both under an open licence so that others may build on them, and if
-your state starts from another entry's checkpoint, name that entry; neither is required. QMBL
-measures the state twice with independent seeds, and the entry is listed
-here once both measurements pass and agree.</p>
-<p>The ${solved} instances with an exact energy, in the <a href="/instances/">Table</a>, are for
-testing a pipeline before entering.</p>`;
+<section class="cite" id="cite">
+  <h2>Citing QMBL: Open Problems</h2>
+  <p>Cite the targets by the QMBL release they are taken from:</p>
+  <blockquote class="citation">${esc(CITE_HEAD)}, <em>QMBL: Open Problems</em>, targets ${esc(version)} from QMBL ${esc(release)}, Zenodo (${esc(frozen.slice(0, 4))}).
+  <a href="https://doi.org/${esc(doi)}">${esc(doi)}</a></blockquote>
+  <p>Individual energies should cite the primary paper named on the row, not this site.</p>
+</section>`;
 
   const description = `The ${n} lattice Hamiltonians in QMBL ${release} with no exact ground-state energy, as open problems for scientists and AI systems: the energy to beat on each, and the verified entries.`;
   return { body, description };
