@@ -1,19 +1,26 @@
-// QMBL: Open Problems, the page at /open-problems/ (Tristan, 2026-10-06 and 2026-10-08): the
-// instances of a QMBL release with no exact ground-state energy, as open problems for scientists
-// and AI systems, with the energy to beat on each, and the verified entries. Since 2026-10-09 it
-// is laid out as QMBL's Leaderboard and Table are: its own figure (open_problems_figure.mjs) and
-// the home page's figure sections for these instances (site.mjs), then the targets, one table
-// per model, then the entries once there are any, then how scoring works.
+// QMBL: Open Problems (Tristan, 2026-10-06 and 2026-10-08): the instances in QMBL with no exact
+// ground-state energy, as open problems for scientists and AI systems, with the energy to beat on
+// each, and the verified entries. Since 2026-10-09 it is two pages, as QMBL is (Tristan: "like
+// QMBL where we have leaderboard (with same figures) and table"), switched by a row of two tabs
+// under the title: the Leaderboard, /open-problems/, with its own figure
+// (open_problems_figure.mjs), the home page's figure sections for these instances (site.mjs) and
+// the systems once there are entries; and the Table, /open-problems/table/, with the targets, one
+// table per model, and the entries. How scoring works and how to enter are in the repository's
+// README (Tristan, 2026-10-09).
 //
 // Two inputs from the Open Problems repository (quantum-many-body-leaderboard/open-problems),
-// checked out beside this one or wherever OPEN_PROBLEMS_DIR points: targets/v1.json, the frozen
-// instance list, and results/<model>/<instance>/<entry>.json, one file per verified entry (written
-// there by maintainer/publish.mjs). Without the checkout loadOpenProblems() returns null and
-// site.mjs builds neither the page nor its menu button, so such a build is the site as before.
+// checked out beside this one or wherever OPEN_PROBLEMS_DIR points: scripts/targets.mjs, which
+// says which of QMBL's instances are targets, and results/<model>/<instance>/<entry>.json, one
+// file per verified entry (written there by maintainer/publish.mjs). Without the checkout
+// loadOpenProblems() returns null and site.mjs builds neither the pages nor their menu button,
+// so such a build is the site as before.
 //
-// The instance list is frozen; the energy to beat is not. It is read from data/ on every build:
-// the lowest unflagged variational energy, never an extrapolation or a projection, even where
-// one holds QMBL's record (that record is shown beside it, as an estimate). The scoring is the
+// The targets follow QMBL (Tristan, 2026-10-09: rolling problems): every instance in data/ with no
+// exact energy, on every build. An instance that gets an exact energy is solved: it leaves the
+// targets, and its entries stay listed, marked solved, outside the systems' scores. The energy to
+// beat is read from data/ too: the lowest unflagged variational energy, never an extrapolation or
+// a projection, even where one holds QMBL's record (that record is shown beside it, as an
+// estimate). The scoring is the
 // repository's (README, verifier/op_verify.py `combine`), recomputed here against the live
 // target: an entry's gap is (E - E_target) / |E_target|, a new record lies more than 2 sigma
 // combined below the target (QMBL's tie rule, RULES.md 6), and a system's score is the median
@@ -25,15 +32,15 @@
 // only by its menu button.
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { perSiteDivisor, perSiteLabel, boundLabel } from "./units.mjs";
-import { recordOf, rowId } from "./summary.mjs";
+import { recordOf, exactRecordOf, rowId } from "./summary.mjs";
 import { quote, MODELS, instanceLabel, byGeometry } from "./readme_table.mjs";
 import { openProblemsFigure, FIGURE_NAME } from "./open_problems_figure.mjs";
 
 export const OPEN_PROBLEMS_URL = "/open-problems/";
+export const OPEN_PROBLEMS_TABLE_URL = "/open-problems/table/";
 const SUBMISSIONS = "https://github.com/quantum-many-body-leaderboard/open-problems";
-const TARGETS = "targets/v1.json";
 // The repository beside this one: ../open-problems from the repository root.
 const DEFAULT_DIR = fileURLToPath(new URL("../../open-problems/", import.meta.url));
 const RECORD_SIGMAS = 2;
@@ -41,21 +48,24 @@ const RECORD_SIGMAS = 2;
 const AI_LABELS = { ai: "AI", "human+ai": "human + AI", human: "human" };
 const LINKS = [["code", "code"], ["checkpoint", "checkpoint"], ["paper", "paper"], ["pr", "pull request"]];
 
-// The target list and the entries, or null where the checkout is missing. A malformed entry
-// stops the build: the page would otherwise score it wrongly or not at all.
-export function loadOpenProblems(dir = process.env.OPEN_PROBLEMS_DIR || DEFAULT_DIR) {
-  const root = path.resolve(dir), file = path.join(root, TARGETS);
-  if (!fs.existsSync(file)) {
-    console.log(`open-problems: ${file} not found, so /open-problems/ and its menu button are not built`);
+// The targets and the entries, or null where the checkout is missing. A malformed entry stops
+// the build: the pages would otherwise score it wrongly or not at all.
+export async function loadOpenProblems(instances, dir = process.env.OPEN_PROBLEMS_DIR || DEFAULT_DIR) {
+  const root = path.resolve(dir);
+  if (!fs.existsSync(root)) {
+    console.log(`open-problems: ${root} not found, so /open-problems/ and its menu button are not built`);
     return null;
   }
-  const targets = JSON.parse(fs.readFileSync(file, "utf8"));
-  const ids = new Set(targets.instances.map(t => t.instance_id));
+  const module = path.join(root, "scripts/targets.mjs");
+  if (!fs.existsSync(module)) throw new Error(`${module} not found: the open-problems checkout is older than its rolling targets (1f516a1)`);
+  const { openTargets } = await import(pathToFileURL(module).href);
+  const targets = openTargets(instances, perSiteDivisor);
+  const known = new Set(instances.map(i => i.instance_id));
   const results = path.join(root, "results");
   const files = fs.existsSync(results) ? fs.readdirSync(results, { recursive: true }).filter(f => f.endsWith(".json")).sort() : [];
   const entries = files.map(f => {
     const e = JSON.parse(fs.readFileSync(path.join(results, f), "utf8"));
-    const wrong = !ids.has(e.instance_id) ? `instance ${e.instance_id} is not in ${TARGETS}`
+    const wrong = !known.has(e.instance_id) ? `instance ${e.instance_id} is not in data/`
       : !Object.hasOwn(AI_LABELS, e.ai_involvement) ? `ai_involvement is ${e.ai_involvement}, not one of ${Object.keys(AI_LABELS).join(", ")}`
       : !Number.isFinite(e.energy_per_site) ? "energy_per_site is not a number"
       : !e.system || !e.team ? "system or team is missing" : null;
@@ -78,9 +88,8 @@ const median = xs => {
 // Every target with its live energy to beat, every entry scored against it, every system scored.
 function score(op, instances) {
   const byId = new Map(instances.map(i => [i.instance_id, i]));
-  const targets = op.targets.instances.map(t => {
+  const targets = op.targets.map(t => {
     const inst = byId.get(t.instance_id);
-    if (!inst) throw new Error(`${TARGETS}: ${t.instance_id} is not in data/`);
     const f = perSiteDivisor(inst) ?? 1, row = bestVariational(inst), rec = recordOf(inst);
     return { t, inst, row, estimate: rec && rec !== row ? rec : null, first: null,
       energy: row ? row.energy / f : null, sigma: row ? (row.sigma ?? 0) / f : null };
@@ -90,15 +99,21 @@ function score(op, instances) {
   // sets its target, and the newest entry of a system on an instance is its live one (a new
   // entry replaces the old; the repository's CI keeps only one, but a stale file must not count twice).
   const sorted = [...op.entries].sort((a, b) => String(a.measured).localeCompare(String(b.measured)) || a.file.localeCompare(b.file));
-  const live = new Map(sorted.map(e => [`${e.system}\n${e.instance_id}`, e]));
+  const latest = new Map(sorted.map(e => [`${e.system}\n${e.instance_id}`, e]));
   const entries = sorted.map(e => {
-    const x = of.get(e.instance_id), s = { e, x, live: live.get(`${e.system}\n${e.instance_id}`) === e };
+    const x = of.get(e.instance_id), live = latest.get(`${e.system}\n${e.instance_id}`) === e;
+    // On an instance solved since the entry: listed and marked, not scored (Tristan, 2026-10-09).
+    if (!x) {
+      const inst = byId.get(e.instance_id);
+      return { e, x: { inst, exact: exactRecordOf(inst) }, live, solved: true, gap: null, record: false };
+    }
+    const s = { e, x, live };
     if (x.energy == null && !x.first) return { ...s, first: (x.first = e), gap: null, record: true };
     const te = x.energy ?? x.first.energy_per_site, ts = x.energy != null ? x.sigma : x.first.sigma_per_site ?? 0;
     return { ...s, gap: (e.energy_per_site - te) / Math.abs(te),
       record: te - e.energy_per_site > RECORD_SIGMAS * Math.hypot(e.sigma_per_site ?? 0, ts) };
   });
-  const systems = [...Map.groupBy(entries.filter(s => s.live), s => s.e.system)].map(([system, list]) => {
+  const systems = [...Map.groupBy(entries.filter(s => s.live && !s.solved), s => s.e.system)].map(([system, list]) => {
     const gaps = list.map(s => s.gap).filter(g => g != null);
     return { system, teams: [...new Set(list.map(s => s.e.team))], ai: [...new Set(list.map(s => s.e.ai_involvement))],
       median: gaps.length ? median(gaps) : null, instances: list.length, records: list.filter(s => s.record).length };
@@ -112,16 +127,17 @@ const entryId = e => `e-${e.file.replace(/\.json$/, "").replace(/[^\w-]/g, "_")}
 const gapText = g => (g == null ? '<span class="muted">n/a</span>' : g === 0 ? "0" : `${g < 0 ? "−" : "+"}${Math.abs(g).toExponential(1)}`);
 const NA = '<span class="muted">n/a</span>';
 
-// The body and meta description of /open-problems/; site.mjs wraps them in its page(). Its own
-// helpers come in as `site`, so the energies, citations and labels are written as on the Table.
-export function openProblemsPage(op, instances, site) {
-  const { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, figureSections = "" } = site;
+// The bodies and meta descriptions of the Leaderboard, /open-problems/, and the Table,
+// /open-problems/table/; site.mjs wraps each in its page(). Its own helpers come in as `site`, so
+// the energies, citations and labels are written as on QMBL's Table.
+export function openProblemsPages(op, instances, site) {
+  const { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, DOI, CITE_YEAR, figureSections = "" } = site;
   const { targets, entries, systems } = score(op, instances);
-  const { version, qmbl_release: release, qmbl_doi: doi, frozen } = op.targets;
   const n = targets.length;
   const aiBadge = a => `<span class="badge">${AI_LABELS[a]}</span>`;
-  // What the page's Cite button copies (Tristan, 2026-10-09).
-  const citation = `${CITE_HEAD}, QMBL: Open Problems, targets ${version} from QMBL ${release}, Zenodo (${frozen.slice(0, 4)}). https://doi.org/${doi}`;
+  // What the Cite button copies and the citation section prints (Tristan, 2026-10-09). The
+  // targets follow QMBL, so it is QMBL's concept DOI, which always resolves to the latest release.
+  const citation = `${CITE_HEAD}, QMBL: Open Problems, Zenodo (${CITE_YEAR}). https://doi.org/${DOI}`;
 
   const compute = c => {
     const h = x => Number(x).toLocaleString("en-US", { maximumFractionDigits: 1 });
@@ -136,39 +152,45 @@ export function openProblemsPage(op, instances, site) {
       <td class="num">${gapText(s.median)}</td><td class="num">${s.instances}</td><td class="num">${s.records}</td></tr>`).join("")}</tbody></table></div>`;
 
   // The targets as the Table orders them: by model (its names), then by geometry. The entries
-  // follow that order, and on one instance their energy, lowest first.
+  // follow that order, and on one instance their energy, lowest first; entries on instances
+  // solved since come last.
   const groups = MODELS.map(([model, name]) => [model, name,
     targets.filter(x => x.inst.model === model).sort((a, b) => byGeometry(a.inst, b.inst))]).filter(([, , g]) => g.length);
   const order = new Map(groups.flatMap(([, , g]) => g).map((x, k) => [x, k]));
+  const rank = s => order.get(s.x) ?? order.size;
+  // A solved instance has no target row here; it links to its exact row in QMBL's Table.
+  const instanceHref = s => (s.solved ? `/instances/${s.x.exact ? `#${rowId(s.x.inst, s.x.exact)}` : ""}` : `#${targetId(s.x.inst)}`);
   const entriesTable = `<div class="scroll"><table class="op-wide">
     <thead><tr><th>instance</th><th>system</th><th>team</th><th>AI</th><th>energy, re-measured</th><th>gap</th><th>compute</th><th>links</th></tr></thead>
-    <tbody>${[...entries].sort((a, b) => order.get(a.x) - order.get(b.x) || a.e.energy_per_site - b.e.energy_per_site).map(s => `<tr id="${entryId(s.e)}">
-      <th scope="row"><a href="#${targetId(s.x.inst)}">${esc(modelName(s.x.inst.model))} ${esc(instanceLabel(s.x.inst))}</a></th>
+    <tbody>${[...entries].sort((a, b) => rank(a) - rank(b) || a.e.energy_per_site - b.e.energy_per_site).map(s => `<tr id="${entryId(s.e)}">
+      <th scope="row"><a href="${instanceHref(s)}">${esc(modelName(s.x.inst.model))} ${esc(instanceLabel(s.x.inst))}</a></th>
       <td>${esc(s.e.system)}${s.live ? "" : ' <span class="badge" title="A newer entry of this system on this instance replaces it">replaced</span>'}</td>
       <td>${esc(s.e.team)}</td><td>${aiBadge(s.e.ai_involvement)}</td>
       <td class="record nowrap"><span class="num">${quote(s.e.energy_per_site, s.e.sigma_per_site).text}</span> <span class="muted">${perSiteLabel(s.x.inst)}</span></td>
-      <td class="num">${s.first ? '<span class="muted">first state</span>' : gapText(s.gap)}${s.record ? '<span class="tag">new record</span>' : ""}</td>
+      <td class="num">${s.solved ? '<span class="badge" title="QMBL has an exact energy for this instance now">solved</span>' : s.first ? '<span class="muted">first state</span>' : gapText(s.gap)}${s.record ? '<span class="tag">new record</span>' : ""}</td>
       <td>${compute(s.e.compute)}</td><td>${links(s.e.links)}</td></tr>`).join("")}</tbody></table></div>`;
 
-  // After the targets, and only once there are entries (Tristan, 2026-10-09).
-  const results = entries.length ? `
+  // Only once there are entries (Tristan, 2026-10-09): the systems on the Leaderboard, the
+  // entries on the Table, after the targets.
+  const systemsSection = systems.length ? `
 <h2 id="systems">Systems</h2>
-<p class="muted">Lowest median gap first; only a system's live entries count.</p>
-${systemsTable}
+<p class="muted">Lowest median gap first; only a system's live entries on open instances count.</p>
+${systemsTable}` : "";
+  const entriesSection = entries.length ? `
 <h2 id="entries">Entries</h2>
 ${entriesTable}` : "";
 
-  // The figures: this page's own, then the home page's sections for these instances
+  // The figures: the Leaderboard's own, then the home page's sections for these instances
   // (site.mjs, `figureSections`), with a hover card for each Table row they link to, as on the
-  // home page, and one for each entry drawn.
-  const fig = openProblemsFigure(targets, entries, e => `#${entryId(e)}`);
+  // home page, and one for each entry drawn; an entry links to its row on the Table.
+  const fig = openProblemsFigure(targets, entries.filter(s => !s.solved), e => `${OPEN_PROBLEMS_TABLE_URL}#${entryId(e)}`);
   const figHtml = figure([FIGURE_NAME, fig.title, fig.caption], "", fig.svg) + "\n" + figureSections;
   const figRows = new Set([...[...figHtml.matchAll(/href="\/instances\/#(r-[\w-]+)"/g)].map(m => m[1]),
     ...[...figHtml.matchAll(/data-rows="([\w -]+)"/g)].flatMap(m => m[1].split(" "))]);
   const cards = instances.flatMap(inst => inst.rows.filter(r => figRows.has(rowId(inst, r)))
     .map(r => `<div data-row="${rowId(inst, r)}">${rowCard(r, inst)}</div>`));
   if (cards.length !== figRows.size) throw new Error(`the Open Problems figures link ${figRows.size} rows, ${cards.length} found in data/`);
-  const drawn = new Set([...figHtml.matchAll(/href="#(e-[\w-]+)"/g)].map(m => m[1]));
+  const drawn = new Set([...figHtml.matchAll(/href="\/open-problems\/table\/#(e-[\w-]+)"/g)].map(m => m[1]));
   const entryCards = entries.filter(s => drawn.has(entryId(s.e))).map(s => `<div data-row="${entryId(s.e)}"><b>${esc(modelName(s.x.inst.model))} ${esc(instanceLabel(s.x.inst))}</b>
 <span>${esc(s.e.system)}, ${esc(s.e.team)} &middot; ${AI_LABELS[s.e.ai_involvement]}</span>
 <span class="e"><span class="num">${quote(s.e.energy_per_site, s.e.sigma_per_site).text}</span> <span class="muted">${perSiteLabel(s.x.inst)} &middot; verified entry</span>${s.record ? '<span class="tag">new record</span>' : ""}</span>
@@ -199,37 +221,51 @@ ${entriesTable}` : "";
 </section>`;
   }).join("\n");
 
-  // The page is the figures and the table under them, as QMBL's Leaderboard and Table are
-  // (Tristan, 2026-10-09); a figure carries its own title, so nothing stands above the first.
-  // GitHub and Cite stand on the title's line, to its right (Tristan, 2026-10-09; the Zenodo
-  // link was removed the same day).
-  const body = `
+  // Both pages open with the title, GitHub and Cite on its line, to its right (Tristan,
+  // 2026-10-09; the Zenodo link was removed the same day), and under it the two tabs, written as
+  // the header's menu links. A figure carries its own title, so on the Leaderboard nothing but the
+  // lead stands above the first. Both end with the citation, as QMBL's home page does.
+  const head = url => `
 <div class="op-title"><h1>QMBL: Open Problems</h1>
 <p class="op-links"><a class="ext" href="${SUBMISSIONS}" aria-label="QMBL: Open Problems on GitHub" title="Targets, entries and verifier on GitHub">${GITHUB_MARK}</a>
 <button class="cite-btn" type="button" data-cite="${esc(citation)}" title="Copy the citation">&#10077;<span>Cite</span></button></p></div>
+<nav class="op-tabs" aria-label="QMBL: Open Problems">${[[OPEN_PROBLEMS_URL, "Leaderboard"], [OPEN_PROBLEMS_TABLE_URL, "Table"]].map(([href, label]) =>
+    `<a href="${href}"${href === url ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>`;
+  const cite = `
+<section class="cite" id="cite">
+  <h2>Citing QMBL: Open Problems</h2>
+  <p>Cite QMBL: Open Problems by QMBL's concept DOI, which always resolves to the latest release:</p>
+  <blockquote class="citation">${esc(CITE_HEAD)}, <em>QMBL: Open Problems</em>, Zenodo (${esc(CITE_YEAR)}).
+  <a href="https://doi.org/${esc(DOI)}">${esc(DOI)}</a></blockquote>
+  <p>Individual energies should cite the primary paper named on the row, not this site.</p>
+</section>`;
+
+  const leaderboard = `${head(OPEN_PROBLEMS_URL)}
 <p class="lead">QMBL: Open Problems is a record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy. Scientists and agents should use the shared results to build on each other's work more efficiently and advance frontier science.</p>
 
 ${figHtml}
 <template id="fig-cards">${[...cards, ...entryCards].join("\n")}</template>
 ${FIG_SCRIPT}
+${systemsSection}
+${cite}`;
+
+  const table = `${head(OPEN_PROBLEMS_TABLE_URL)}
 ${sections}
-${results}
+${entriesSection}
+${cite}`;
 
-<section class="cite" id="cite">
-  <h2>Citing QMBL: Open Problems</h2>
-  <p>Cite the targets by the QMBL release they are taken from:</p>
-  <blockquote class="citation">${esc(CITE_HEAD)}, <em>QMBL: Open Problems</em>, targets ${esc(version)} from QMBL ${esc(release)}, Zenodo (${esc(frozen.slice(0, 4))}).
-  <a href="https://doi.org/${esc(doi)}">${esc(doi)}</a></blockquote>
-  <p>Individual energies should cite the primary paper named on the row, not this site.</p>
-</section>`;
-
-  const description = `The ${n} lattice Hamiltonians in QMBL ${release} with no exact ground-state energy, as open problems for scientists and AI systems: the energy to beat on each, and the verified entries.`;
-  return { body, description };
+  const what = `The ${n} lattice Hamiltonians in QMBL with no exact ground-state energy, as open problems for scientists and AI systems`;
+  return {
+    leaderboard: { body: leaderboard, description: `${what}: the best published energies on them, by system size, Hamiltonian and cost.` },
+    table: { body: table, description: `${what}: the energy to beat on each, and the verified entries.` },
+  };
 }
 
-// One line for llms.txt.
-export const openProblemsLlms = op =>
-  `- [Open Problems](https://qmbl.org${OPEN_PROBLEMS_URL}): the ${op.targets.instances.length} instances with no exact ground-state energy as open problems for scientists and AI systems, with the energy to beat on each, the scoring and the verified entries.`;
+// Two lines for llms.txt.
+export const openProblemsLlms = op => [
+  `- [Open Problems](https://qmbl.org${OPEN_PROBLEMS_URL}): the best published energies on the ${op.targets.length} instances with no exact ground-state energy, open problems for scientists and AI systems, in the home page's figures.`,
+  `- [Open Problems table](https://qmbl.org${OPEN_PROBLEMS_TABLE_URL}): the energy to beat on each of them, and the verified entries.`,
+];
 
 // The menu button, last in the menu (site.mjs) on every page, so its rules go into the site's
 // stylesheet: a filled pill in the navy accent that turns ink on hover and on its own page
@@ -261,6 +297,11 @@ p.op-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; m
 p.op-links a.ext { color: var(--muted); display: inline-flex; }
 p.op-links a.ext:hover { color: var(--ink); }
 p.op-links a.ext svg { display: block; }
+/* The Leaderboard and Table tabs under the title, written as the header's menu links. */
+nav.op-tabs { display: flex; gap: 1.2rem; font-size: 0.95rem; margin: 0 0 1.2rem; }
+nav.op-tabs a { color: var(--ink2); text-decoration: none; }
+nav.op-tabs a:hover { color: var(--accent); }
+nav.op-tabs a[aria-current] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
 section.targets h3 { margin-top: 2.2rem; }
 section.targets h3 + p.muted { margin: 0.2rem 0 0; }
 .nowrap { white-space: nowrap; }
