@@ -252,11 +252,12 @@ testing a pipeline before entering.</p>`;
 export const openProblemsLlms = op =>
   `- [Open Problems](https://qmbl.org${OPEN_PROBLEMS_URL}): the ${op.targets.instances.length} instances with no exact ground-state energy as open problems for scientists and AI systems, with the energy to beat on each, the scoring and the verified entries.`;
 
-// The menu button, last in the menu (site.mjs): an outlined pill in the accent colour, filled on
-// its own page as a chosen badge is, so it reads as a button beside the plain links and the grey
-// Cite pill. On a phone the menu tightens to stay on one line under the wordmark; where even
-// that does not fit (below 390 px), the button, being last, wraps to a line of its own.
-export const OPEN_PROBLEMS_CSS = `
+// The menu button, last in the menu (site.mjs) on every page, so its rules go into the site's
+// stylesheet: an outlined pill in the accent colour, filled on its own page as a chosen badge
+// is, so it reads as a button beside the plain links and the grey Cite pill. On a phone the menu
+// tightens to stay on one line under the wordmark; where even that does not fit (below 390 px),
+// the button, being last, wraps to a line of its own.
+export const OPEN_PROBLEMS_NAV_CSS = `
 header.site nav a.op {
   display: inline-flex; align-items: center; padding: 0.4rem 0.75rem; font-size: 0.85rem; line-height: 1;
   color: var(--accent); background: var(--surface); border: 1px solid var(--accent); border-radius: 999px;
@@ -267,7 +268,11 @@ header.site nav a.op[aria-current] { color: #fff; background: var(--accent); box
   header.site nav { gap: 0.4rem 0.75rem; font-size: 0.9rem; }
   header.site nav a.op, header.site nav button.cite-btn { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
 }
-/* GitHub, Zenodo and Cite on the title's line, centred on it, as the header's mark and Cite
+`;
+
+// The rest of what /open-problems/ needs, in a stylesheet of its own that only that page links
+// (site.mjs, open-problems.css), with the rules of its figure switches.
+export const OPEN_PROBLEMS_PAGE_CSS = `/* GitHub, Zenodo and Cite on the title's line, centred on it, as the header's mark and Cite
    pill; on a narrow screen they wrap under it. */
 div.op-title { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.6rem; margin: 0 0 0.6rem; }
 div.op-title h1 { margin: 0; }
