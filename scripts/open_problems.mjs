@@ -45,8 +45,8 @@ const SUBMISSIONS = "https://github.com/quantum-many-body-leaderboard/open-probl
 const DEFAULT_DIR = fileURLToPath(new URL("../../open-problems/", import.meta.url));
 const RECORD_SIGMAS = 2;
 // metadata.yaml's ai_involvement (schema/metadata.schema.json) and how the page prints it.
-const AI_LABELS = { ai: "AI", "human+ai": "human + AI", human: "human" };
-const LINKS = [["code", "code"], ["checkpoint", "checkpoint"], ["paper", "paper"], ["pr", "pull request"]];
+export const AI_LABELS = { ai: "AI", "human+ai": "human + AI", human: "human" };
+export const LINKS = [["code", "code"], ["checkpoint", "checkpoint"], ["paper", "paper"], ["pr", "pull request"]];
 
 // The targets and the entries, or null where the checkout is missing. A malformed entry stops
 // the build: the pages would otherwise score it wrongly or not at all.
@@ -86,7 +86,9 @@ const median = xs => {
 };
 
 // Every target with its live energy to beat, every entry scored against it, every system scored.
-function score(op, instances) {
+// Exported for the README of the Open Problems repository (its scripts/readme.mjs), so that the
+// README and these pages score alike.
+export function score(op, instances) {
   const byId = new Map(instances.map(i => [i.instance_id, i]));
   const targets = op.targets.map(t => {
     const inst = byId.get(t.instance_id);

@@ -17,6 +17,10 @@
 //
 // Not part of build.sh: needs ImageMagick (convert), ffmpeg and DejaVu Sans Mono, and the GIFs are
 // committed. Regenerate with:  node scripts/ascii.mjs
+//
+// The header with another tagline, and nothing else, goes wherever --out says. The README of
+// QMBL: Open Problems opens with it (Tristan, 2026-10-09: a version of QMBL's GIF):
+//   node scripts/ascii.mjs --tagline "open problems" --out ../open-problems/figures/open-problems-ascii.gif
 import { execFileSync } from "node:child_process";
 import { writeFileSync, rmSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -49,12 +53,11 @@ function banner(fontName, text) {
   return lines;
 }
 
-function encode(dir, frames, name, width = null) {
+function encode(dir, frames, out, width = null) {
   let concat = "";
   frames.forEach((dur, i) => { concat += `file 'f${String(i).padStart(3, "0")}.png'\nduration ${dur}\n`; });
   concat += `file 'f${String(frames.length - 1).padStart(3, "0")}.png'\n`;
   writeFileSync(`${dir}/frames.txt`, concat);
-  const out = path.join(ROOT, "figures", `${name}.gif`);
   execFileSync("ffmpeg", ["-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", `${dir}/frames.txt`, "-vf",
     (width ? `scale=${width}:-1:flags=lanczos,` : "") + "split[a][b];[a]palettegen=max_colors=32:stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle", "-loop", "0", out]);
   rmSync(dir, { recursive: true, force: true });
@@ -62,7 +65,7 @@ function encode(dir, frames, name, width = null) {
 }
 
 // ------------------------------------------------------------------ header: Alpha with a live fill
-function header() {
+function header(tagline = "the quantum many-body leaderboard", out = path.join(ROOT, "figures/qmbl-ascii.gif")) {
   const lines = banner("Alpha", "QMBL"), fill = ":";
   const R = lines.length, K = Math.max(...lines.map(l => l.length));
   // fill sites inside the letters
@@ -74,7 +77,7 @@ function header() {
   const LR = 9, LK = 10, F2 = 2;
   const a = Array.from({ length: LR }, () => Array.from({ length: LK }, () => (rnd() < 0.5 ? 1 : -1)));
   const jit = Array.from({ length: LR * LK }, () => ({ p: rnd() * 6.3, q: rnd() * 6.3, w: 0.35 + rnd() * 0.5, v: 0.3 + rnd() * 0.4 }));
-  const tag = banner("Small Block", "the quantum many-body leaderboard"), TW = Math.max(...tag.map(l => l.length));
+  const tag = banner("Small Block", tagline), TW = Math.max(...tag.map(l => l.length));
   const FO = 1.5, ORDER = 24;                                              // order line: size, characters
   const padC = 1, padR = 1, gap = 16;
   const leftW = Math.max(K, TW), leftH = R + 2 + tag.length;
@@ -121,7 +124,7 @@ function header() {
     args.push(`${dir}/f${String(t).padStart(3, "0")}.png`); execFileSync("convert", args);
     frames.push(0.09);
   }
-  encode(dir, frames, "qmbl-ascii");                                      // native 1840 px: resampling only inflates the GIF
+  encode(dir, frames, out);                                               // native 1840 px: resampling only inflates the GIF
 }
 
 // ------------------------------------------------------------------ footer: optical lattice strip
@@ -150,7 +153,7 @@ function strip() {
     args.push(`${dir}/f${String(t).padStart(3, "0")}.png`); execFileSync("convert", args);
     frames.push(0.08);
   }
-  encode(dir, frames, "lattice-strip");
+  encode(dir, frames, path.join(ROOT, "figures/lattice-strip.gif"));
 }
 
 // ------------------------------------------------------------------ Ticks Slant, plain text
@@ -160,6 +163,12 @@ function ticks() {
   console.log(path.relative(ROOT, out));
 }
 
-header();
-strip();
-ticks();
+const arg = k => { const i = process.argv.indexOf(k); return i > 1 ? process.argv[i + 1] : null; };
+if (arg("--tagline")) {
+  if (!arg("--out")) throw new Error("--tagline needs --out: the header with another tagline must not replace figures/qmbl-ascii.gif");
+  header(arg("--tagline"), path.resolve(arg("--out")));
+} else {
+  header();
+  strip();
+  ticks();
+}
