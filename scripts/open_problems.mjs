@@ -40,9 +40,6 @@ const RECORD_SIGMAS = 2;
 // metadata.yaml's ai_involvement (schema/metadata.schema.json) and how the page prints it.
 const AI_LABELS = { ai: "AI", "human+ai": "human + AI", human: "human" };
 const LINKS = [["code", "code"], ["checkpoint", "checkpoint"], ["paper", "paper"], ["pr", "pull request"]];
-// Zenodo's mark for the link beside GitHub's: a Z cut out of a disc, drawn here so that the page
-// makes no request elsewhere; the same size and colour as the GitHub mark, which it sits beside.
-const ZENODO_MARK = `<svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 0a8 8 0 1 0 0 16A8 8 0 1 0 8 0zM4.75 4.25h6.5v1.6l-4.3 4.3h4.3v1.6h-6.5v-1.6l4.3-4.3h-4.3z"/></svg>`;
 
 // The target list and the entries, or null where the checkout is missing. A malformed entry
 // stops the build: the page would otherwise score it wrongly or not at all.
@@ -204,11 +201,11 @@ ${entriesTable}` : "";
 
   // The page is the figures and the table under them, as QMBL's Leaderboard and Table are
   // (Tristan, 2026-10-09); a figure carries its own title, so nothing stands above the first.
-  // GitHub, Zenodo and Cite stand on the title's line, to its right (Tristan, 2026-10-09).
+  // GitHub and Cite stand on the title's line, to its right (Tristan, 2026-10-09; the Zenodo
+  // link was removed the same day).
   const body = `
 <div class="op-title"><h1>QMBL: Open Problems</h1>
 <p class="op-links"><a class="ext" href="${SUBMISSIONS}" aria-label="QMBL: Open Problems on GitHub" title="Targets, entries and verifier on GitHub">${GITHUB_MARK}</a>
-<a class="ext" href="https://doi.org/${esc(doi)}" aria-label="QMBL ${esc(release)} on Zenodo" title="QMBL ${esc(release)} on Zenodo, the release the targets are taken from">${ZENODO_MARK}</a>
 <button class="cite-btn" type="button" data-cite="${esc(citation)}" title="Copy the citation">&#10077;<span>Cite</span></button></p></div>
 <p class="lead">QMBL: Open Problems is a record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy. Scientists and agents should use the shared results to build on each other's work more efficiently and advance frontier science.</p>
 
@@ -256,7 +253,7 @@ header.site nav a.op[aria-current] { color: var(--bg); background: var(--ink); b
 
 // The rest of what /open-problems/ needs, in a stylesheet of its own that only that page links
 // (site.mjs, open-problems.css), with the rules of its figure switches.
-export const OPEN_PROBLEMS_PAGE_CSS = `/* GitHub, Zenodo and Cite on the title's line, centred on it, as the header's mark and Cite
+export const OPEN_PROBLEMS_PAGE_CSS = `/* GitHub and Cite on the title's line, centred on it, as the header's mark and Cite
    pill; on a narrow screen they wrap under it. */
 div.op-title { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.6rem; margin: 0 0 0.6rem; }
 div.op-title h1 { margin: 0; }
