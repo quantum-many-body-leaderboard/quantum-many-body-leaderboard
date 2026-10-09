@@ -29,7 +29,7 @@ import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
 import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { FRONTIER } from "./views.mjs";
 import { energyFigures } from "./ladders.mjs";
-import { loadOpenProblems, openProblemsPage, openProblemsLlms, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_CSS } from "./open_problems.mjs";
+import { loadOpenProblems, openProblemsPage, openProblemsLlms, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_NAV_CSS, OPEN_PROBLEMS_PAGE_CSS } from "./open_problems.mjs";
 
 const OUT = "_site";
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
@@ -93,7 +93,8 @@ for (const b of document.querySelectorAll("button.cite-btn")) b.addEventListener
 });
 </script>`;
 
-function page({ url, title, description, body, wide = false }) {
+// `css` is a page's own stylesheet, after the site's (open-problems.css).
+function page({ url, title, description, body, wide = false, css = null }) {
   const head = title === null ? "QMBL" : `${title} &middot; QMBL`;
   return `<!doctype html>
 <html lang="en">
@@ -102,7 +103,7 @@ function page({ url, title, description, body, wide = false }) {
 <title>${head}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="https://qmbl.org${url}">
-<link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">
+<link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">${css ? `\n<link rel="stylesheet" href="${css}">` : ""}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -453,7 +454,7 @@ const TAB_CSS = tabCss(COMPUTE_AXES, ENERGY_FIGS, SLIDERS);
 // The same two sections on /open-problems/ (Tristan, 2026-10-09: "all figures just like on main
 // QMBL page"), for its instances: every energy figure in which one of them is drawn, shown whole
 // as here, solved sizes included, and the cost figures of those instances. Their switches have
-// ids of their own, op-, whose rules are appended to the stylesheet after this page's.
+// ids of their own, op-, whose rules go into that page's own stylesheet (open-problems.css).
 const OPEN = new Set(OPEN_PROBLEMS?.targets.instances.map(t => t.instance_id) ?? []);
 const isOpen = inst => OPEN.has(inst.instance_id);
 const figInstances = f => (f.group === "other" ? f.scans.flatMap(s => s.slots.flatMap(x => x.members)) : f.stops.flatMap(s => s.ladder.members));
@@ -1496,12 +1497,16 @@ tr.more figure.chart { margin: 0.4rem 0 0.8rem; }
 @media (prefers-color-scheme: dark) {
 ${FIG_DARK}
 }
-` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_CSS + OP_TAB_CSS + "\n" : "");
+` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS : "");
+// /open-problems/'s own rules and those of its figure switches, in open-problems.css, which only
+// that page links: every page carries the menu button, but not that page's figures.
+const OP_CSS = OPEN_PROBLEMS ? OPEN_PROBLEMS_PAGE_CSS + OP_TAB_CSS + "\n" : "";
 
 // The stylesheet's URL carries a hash of its contents. Pages serves both the page and the
 // stylesheet with a ten-minute cache, and they expire separately: a new page on an old
 // stylesheet had its new switch sections unstyled and hidden (2026-09-17).
 const CSS_VERSION = createHash("sha1").update(CSS).digest("hex").slice(0, 10);
+const OP_CSS_VERSION = createHash("sha1").update(OP_CSS).digest("hex").slice(0, 10);
 
 // ----------------------------------------------------------------------------- output
 function write(rel, content) {
@@ -1517,9 +1522,12 @@ write("instances/index.html", instancesPage());
 write("rules/index.html", redirectPage("/rules/", RULES, "Rules"));
 write("data/index.html", redirectPage("/data/", DATA, "Data"));
 write("contribute/index.html", contributePage());
-if (OPEN_PROBLEMS) write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", wide: true,
-  ...openProblemsPage(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
-    figureSections: opFigureSections() }) }));
+if (OPEN_PROBLEMS) {
+  write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", wide: true, css: `/open-problems.css?v=${OP_CSS_VERSION}`,
+    ...openProblemsPage(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
+      figureSections: opFigureSections() }) }));
+  write("open-problems.css", OP_CSS);
+}
 write("404.html", notFoundPage());
 write("style.css", CSS);
 write("favicon.svg", faviconSvg());
