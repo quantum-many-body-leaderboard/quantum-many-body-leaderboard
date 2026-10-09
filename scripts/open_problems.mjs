@@ -213,7 +213,7 @@ ${entriesTable}` : "";
 <p class="op-links"><a class="ext" href="${SUBMISSIONS}" aria-label="QMBL: Open Problems on GitHub" title="Targets, entries and verifier on GitHub">${GITHUB_MARK}</a>
 <a class="ext" href="https://doi.org/${esc(doi)}" aria-label="QMBL ${esc(release)} on Zenodo" title="QMBL ${esc(release)} on Zenodo, the release the targets are taken from">${ZENODO_MARK}</a>
 <button class="cite-btn" type="button" data-cite="${esc(citation)}" title="Copy the citation">&#10077;<span>Cite</span></button></p></div>
-<p class="lead">QMBL: Open Problems is a record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy.</p>
+<p class="lead">QMBL: Open Problems is a record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy. Each energy to beat names the method and paper that reached it, and each entry comes with its code and checkpoint, so people and AI agents can build on each other's results.</p>
 
 ${figHtml}
 <template id="fig-cards">${[...cards, ...entryCards].join("\n")}</template>
@@ -239,7 +239,9 @@ two measurements per entry.</p>
 <a href="${SUBMISSIONS}">quantum-many-body-leaderboard/open-problems</a>; its
 <a href="${SUBMISSIONS}/blob/main/README.md">README</a> gives the format and the steps. An entry
 links the code at a fixed commit and a checkpoint of the state, and states its compute and how much
-AI was involved. QMBL measures the state twice with independent seeds, and the entry is listed
+AI was involved. Please publish both under an open licence so that others may build on them, and if
+your state starts from another entry's checkpoint, name that entry; neither is required. QMBL
+measures the state twice with independent seeds, and the entry is listed
 here once both measurements pass and agree.</p>
 <p>The ${solved} instances with an exact energy, in the <a href="/instances/">Table</a>, are for
 testing a pipeline before entering.</p>`;
