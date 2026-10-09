@@ -1526,7 +1526,8 @@ write("data/index.html", redirectPage("/data/", DATA, "Data"));
 write("contribute/index.html", contributePage());
 if (OPEN_PROBLEMS) {
   const op = openProblemsPages(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
-    DOI, CITE_YEAR: RELEASED.slice(0, 4), figureSections: opFigureSections() });
+    DOI, CITE_YEAR: RELEASED.slice(0, 4), figureSections: opFigureSections(),
+    searchIndex, searchWords, searchMatch, SEARCH_STOP, latticeOf, sizeBand, SIZE_BANDS });
   const opCss = `/open-problems.css?v=${OP_CSS_VERSION}`;
   write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", ogTitle: "QMBL: Open Problems", wide: true, css: opCss, ...op.leaderboard }));
   write("open-problems/table/index.html", page({ url: OPEN_PROBLEMS_TABLE_URL, title: "Open Problems: Table", wide: true, css: opCss, ...op.table }));
