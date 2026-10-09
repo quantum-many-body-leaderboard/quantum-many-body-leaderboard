@@ -253,7 +253,7 @@ ${entriesTable}` : "";
 </section>`;
 
   const leaderboard = `${head(OPEN_PROBLEMS_URL)}
-<p class="lead">QMBL: Open Problems is a record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy. Scientists and agents should use the shared results to build on each other's work more efficiently and advance frontier science.</p>
+<p class="lead">QMBL: Open Problems is a record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy. Scientists and AI systems should use the shared results to build on each other's work more efficiently and advance frontier science.</p>
 
 ${figHtml}
 <template id="fig-cards">${[...cards, ...entryCards].join("\n")}</template>
