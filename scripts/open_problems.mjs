@@ -249,11 +249,10 @@ testing a pipeline before entering.</p>`;
 export const openProblemsLlms = op =>
   `- [Open Problems](https://qmbl.org${OPEN_PROBLEMS_URL}): the ${op.targets.instances.length} instances with no exact ground-state energy as open problems for scientists and AI systems, with the energy to beat on each, the scoring and the verified entries.`;
 
-// The menu button: an outlined pill in the accent colour, filled on its own page as a chosen
-// badge is, so it reads as a button beside the plain links and the grey Cite pill. On a phone
-// the menu tightens to stay on one line under the wordmark; where even that does not fit
-// (below 390 px), the button takes a line of its own above the links rather than leaving the
-// Cite button alone on a second line.
+// The menu button, last in the menu (site.mjs): an outlined pill in the accent colour, filled on
+// its own page as a chosen badge is, so it reads as a button beside the plain links and the grey
+// Cite pill. On a phone the menu tightens to stay on one line under the wordmark; where even
+// that does not fit (below 390 px), the button, being last, wraps to a line of its own.
 export const OPEN_PROBLEMS_CSS = `
 header.site nav a.op {
   display: inline-flex; align-items: center; padding: 0.4rem 0.75rem; font-size: 0.85rem; line-height: 1;
@@ -264,10 +263,6 @@ header.site nav a.op[aria-current] { color: #fff; background: var(--accent); box
 @media (max-width: 480px) {
   header.site nav { gap: 0.4rem 0.75rem; font-size: 0.9rem; }
   header.site nav a.op, header.site nav button.cite-btn { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
-}
-@media (max-width: 389px) {
-  header.site nav::before { content: ""; flex-basis: 100%; order: 1; }
-  header.site nav > :not(.op) { order: 2; }
 }
 /* GitHub, Zenodo and Cite under the page's title, as the header's mark and Cite pill. */
 p.op-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; margin: 0.4rem 0 0.6rem; }
