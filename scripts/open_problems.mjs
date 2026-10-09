@@ -1,6 +1,8 @@
 // QMBL: Open Problems, the page at /open-problems/ (Tristan, 2026-10-06 and 2026-10-08): the
 // instances of a QMBL release with no exact ground-state energy, as open problems for scientists
-// and AI systems, with the energy to beat on each, and the verified entries.
+// and AI systems, with the energy to beat on each, and the verified entries. Since 2026-10-09 it
+// is laid out as QMBL's Leaderboard and Table are: a figure (open_problems_figure.mjs), then the
+// targets, one table per model, then the entries once there are any, then how scoring works.
 //
 // Two inputs from the Open Problems repository (quantum-many-body-leaderboard/open-problems),
 // checked out beside this one or wherever OPEN_PROBLEMS_DIR points: targets/v1.json, the frozen
@@ -26,6 +28,7 @@ import { fileURLToPath } from "node:url";
 import { perSiteDivisor, perSiteLabel, boundLabel } from "./units.mjs";
 import { recordOf, exactRecordOf, rowId } from "./summary.mjs";
 import { quote, MODELS, instanceLabel, byGeometry } from "./readme_table.mjs";
+import { openProblemsFigure, FIGURE_NAME } from "./open_problems_figure.mjs";
 
 export const OPEN_PROBLEMS_URL = "/open-problems/";
 const SUBMISSIONS = "https://github.com/quantum-many-body-leaderboard/open-problems";
@@ -39,6 +42,9 @@ const GPU_HOURS_PER_MEASUREMENT = 4;
 // metadata.yaml's ai_involvement (schema/metadata.schema.json) and how the page prints it.
 const AI_LABELS = { ai: "AI", "human+ai": "human + AI", human: "human" };
 const LINKS = [["code", "code"], ["checkpoint", "checkpoint"], ["paper", "paper"], ["pr", "pull request"]];
+// Zenodo's mark for the link beside GitHub's: a Z cut out of a disc, drawn here so that the page
+// makes no request elsewhere; the same size and colour as the GitHub mark, which it sits beside.
+const ZENODO_MARK = `<svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 0a8 8 0 1 0 0 16A8 8 0 1 0 8 0zM4.75 4.25h6.5v1.6l-4.3 4.3h4.3v1.6h-6.5v-1.6l4.3-4.3h-4.3z"/></svg>`;
 
 // The target list and the entries, or null where the checkout is missing. A malformed entry
 // stops the build: the page would otherwise score it wrongly or not at all.
@@ -114,13 +120,13 @@ const NA = '<span class="muted">n/a</span>';
 // The body and meta description of /open-problems/; site.mjs wraps them in its page(). Its own
 // helpers come in as `site`, so the energies, citations and labels are written as on the Table.
 export function openProblemsPage(op, instances, site) {
-  const { esc, citeHtml, energyCell, modelName, RULES } = site;
+  const { esc, citeHtml, energyCell, modelName, RULES, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD } = site;
   const { targets, entries, systems } = score(op, instances);
-  const { qmbl_release: release, qmbl_doi: doi, frozen } = op.targets;
-  const n = targets.length, supported = targets.filter(x => x.t.verifier.supported).length;
-  const open = targets.filter(x => x.energy == null && !x.first).length;
-  const solved = instances.filter(i => exactRecordOf(i)).length;
+  const { version, qmbl_release: release, qmbl_doi: doi, frozen } = op.targets;
+  const n = targets.length, solved = instances.filter(i => exactRecordOf(i)).length;
   const aiBadge = a => `<span class="badge">${AI_LABELS[a]}</span>`;
+  // What the page's Cite button copies (Tristan, 2026-10-09).
+  const citation = `${CITE_HEAD}, QMBL: Open Problems, targets ${version} from QMBL ${release}, Zenodo (${frozen.slice(0, 4)}). https://doi.org/${doi}`;
 
   const compute = c => {
     const h = x => Number(x).toLocaleString("en-US", { maximumFractionDigits: 1 });
@@ -149,14 +155,28 @@ export function openProblemsPage(op, instances, site) {
       <td class="num">${s.first ? '<span class="muted">first state</span>' : gapText(s.gap)}${s.record ? '<span class="tag">new record</span>' : ""}</td>
       <td>${compute(s.e.compute)}</td><td>${links(s.e.links)}</td></tr>`).join("")}</tbody></table></div>`;
 
+  // After the targets, and only once there are entries (Tristan, 2026-10-09).
   const results = entries.length ? `
 <h2 id="systems">Systems</h2>
 <p class="muted">Lowest median gap first; only a system's live entries count.</p>
 ${systemsTable}
 <h2 id="entries">Entries</h2>
-${entriesTable}` : `
-<h2 id="entries">Entries</h2>
-<p>No entry has been verified yet; to submit one, see <a href="#submit">How to submit</a>.</p>`;
+${entriesTable}` : "";
+
+  // The figure, with a hover card for each Table row it links to, as on the home page, and one
+  // for each entry it draws.
+  const fig = openProblemsFigure(targets, entries, e => `#${entryId(e)}`);
+  const figHtml = figure([FIGURE_NAME, fig.title, fig.caption], "", fig.svg);
+  const figRows = new Set([...[...figHtml.matchAll(/href="\/instances\/#(r-[\w-]+)"/g)].map(m => m[1]),
+    ...[...figHtml.matchAll(/data-rows="([\w -]+)"/g)].flatMap(m => m[1].split(" "))]);
+  const cards = instances.flatMap(inst => inst.rows.filter(r => figRows.has(rowId(inst, r)))
+    .map(r => `<div data-row="${rowId(inst, r)}">${rowCard(r, inst)}</div>`));
+  if (cards.length !== figRows.size) throw new Error(`the Open Problems figure links ${figRows.size} rows, ${cards.length} found in data/`);
+  const drawn = new Set([...figHtml.matchAll(/href="#(e-[\w-]+)"/g)].map(m => m[1]));
+  const entryCards = entries.filter(s => drawn.has(entryId(s.e))).map(s => `<div data-row="${entryId(s.e)}"><b>${esc(modelName(s.x.inst.model))} ${esc(instanceLabel(s.x.inst))}</b>
+<span>${esc(s.e.system)}, ${esc(s.e.team)} &middot; ${AI_LABELS[s.e.ai_involvement]}</span>
+<span class="e"><span class="num">${quote(s.e.energy_per_site, s.e.sigma_per_site).text}</span> <span class="muted">${perSiteLabel(s.x.inst)} &middot; verified entry</span>${s.record ? '<span class="tag">new record</span>' : ""}</span>
+<span class="muted">${s.first ? "the first verified state on this instance" : `gap ${gapText(s.gap)}`}</span></div>`);
 
   // One table per model, with the Table's names and labels. An instance links to its target row
   // in the Table, which opens the instance there; without a variational energy, to its record row
@@ -183,15 +203,20 @@ ${entriesTable}` : `
 </section>`;
   }).join("\n");
 
+  // The page is a figure and the table under it, as QMBL's Leaderboard and Table are
+  // (Tristan, 2026-10-09); the figure carries its own title, so nothing stands above it.
   const body = `
 <h1>QMBL: Open Problems</h1>
-<p class="lead">QMBL ${esc(release)} (<a href="https://doi.org/${esc(doi)}">${esc(doi)}</a>) has ${n} lattice
-Hamiltonians with no exact ground-state energy. This page lists them as open problems for
-scientists and AI systems.</p>
-<p>The energy of any state is an upper bound on the ground-state energy (the variational
-principle), so on these instances a lower energy of an explicit state is a better result. QMBL
-re-measures the state of every entry with one protocol before it is listed. Scientists and AI
-systems enter the same list, and each entry is labelled by how much AI was involved.</p>
+<p class="op-links"><a class="ext" href="${SUBMISSIONS}" aria-label="QMBL: Open Problems on GitHub" title="Targets, entries and verifier on GitHub">${GITHUB_MARK}</a>
+<a class="ext" href="https://doi.org/${esc(doi)}" aria-label="QMBL ${esc(release)} on Zenodo" title="QMBL ${esc(release)} on Zenodo, the release the targets are taken from">${ZENODO_MARK}</a>
+<button class="cite-btn" type="button" data-cite="${esc(citation)}" title="Copy the citation">&#10077;<span>Cite</span></button></p>
+<p class="lead">QMBL: Open Problems is a record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy.</p>
+
+${figHtml}
+<template id="fig-cards">${[...cards, ...entryCards].join("\n")}</template>
+${FIG_SCRIPT}
+${sections}
+${results}
 
 <h2 id="scoring">Scoring</h2>
 <p>The energy to beat on an instance is QMBL's best variational energy, the lowest unflagged
@@ -205,15 +230,6 @@ median gap over the instances it entered, shown with how many it entered and how
 set; a system has one live entry per instance, and a new entry replaces the old one. The
 re-measurement of an entry's state is capped at ${GPU_HOURS_PER_MEASUREMENT} GPU-hours per measurement,
 two measurements per entry.</p>
-${results}
-
-<h2 id="targets">Targets</h2>
-<p>One row per instance, grouped by Hamiltonian as in the <a href="/instances/">Table</a>, where
-each instance links to its published energies. Where an extrapolation or a projected energy holds
-QMBL's record, it is shown as an estimate: no explicit state reached it, so it is not the energy to
-beat. ${open ? `On the ${open} instance${open === 1 ? "" : "s"} with no variational energy yet, the first verified state sets the target. ` : ""}The
-verifier measures ${supported} of the ${n} instances today; the others take entries once it covers them.</p>
-${sections}
 
 <h2 id="submit">How to submit</h2>
 <p>To enter, open a pull request in the submissions repository,
@@ -253,6 +269,11 @@ header.site nav a.op[aria-current] { color: #fff; background: var(--accent); box
   header.site nav::before { content: ""; flex-basis: 100%; order: 1; }
   header.site nav > :not(.op) { order: 2; }
 }
+/* GitHub, Zenodo and Cite under the page's title, as the header's mark and Cite pill. */
+p.op-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; margin: 0.4rem 0 0.6rem; }
+p.op-links a.ext { color: var(--muted); display: inline-flex; }
+p.op-links a.ext:hover { color: var(--ink); }
+p.op-links a.ext svg { display: block; }
 section.targets h3 { margin-top: 2.2rem; }
 section.targets h3 + p.muted { margin: 0.2rem 0 0; }
 .nowrap { white-space: nowrap; }
