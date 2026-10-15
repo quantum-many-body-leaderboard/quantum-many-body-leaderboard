@@ -23,7 +23,7 @@ for (const it of instances()) {
     // extrapolated in the truncation error, with its error bar. The row's own energy is the
     // one reached at the stated bond dimension, so the row is classified without that clause
     // (the word "extrapolated" in it made Heisenberg/square_100_O an extrapolated row), and
-    // the extrapolated number becomes a row of its own below (2026-09-17, Tristan).
+    // the extrapolated number becomes a row of its own below (2026-09-17).
     const extrap = method.match(EXTRAP_IN_METHOD);
     let { bound_type, reason } = classify(extrap ? method.replace(EXTRAP_IN_METHOD, ")") : method);
     const review = NEEDS_REVIEW.has(method) || bound_type === null;

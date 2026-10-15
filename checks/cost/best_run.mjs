@@ -1,4 +1,4 @@
-// A configuration run more than once is stored as its best run (Tristan, 2026-09-25): the lowest
+// A configuration run more than once is stored as its best run (2026-09-25): the lowest
 // final energy among its protocol-v1.4 runs that stand (finite, not diverged, R-hat < 1.05). Runs
 // of one configuration differ although the seed is the same, because XLA's GPU arithmetic is not
 // deterministic and a hard optimisation (the triangular lattice) amplifies it.

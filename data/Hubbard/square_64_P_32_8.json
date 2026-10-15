@@ -199,7 +199,7 @@
           "reported_as": "-33.68(3) (total ground state energy, units of t; \"Statistical errors are on the last digit\")",
           "conversion": "stored as printed (total): energy -33.68; sigma 3 x 1e-2 = 0.03",
           "note": "Value, sigma, cluster (8 x 8, N = 64), boundary (PBC = periodic both ways), filling (half filling, N_up = N_dn = 32), U = 8, t = 1 and bound_type (sign-free ground-state AFQMC, tau = 0.01, stated numerically exact -> exact (stochastic)) agree with the source; Hamiltonian identical to VarBench's (no constant shift); dof 64 = N_up + N_dn and einf 128 = U N_up N_dn / N; own computation, peer reviewed (PRB 94, 085103). Same cell in v1 PDF, v2 PDF and v2 HTML. Table row check: E - (P + K) = -0.05 (P = 27.67(2), K = -61.30(3), 1.07 sigma). No other row on the instance carries this number (no duplicate). Cross-checks: VarBench/Wu et al. AFQMC -33.642(5) differs by 0.038 = 1.25 sigma (combined); the attractive-repulsive identity applied to the separate AFQMC row on square_64_P_32_-8 (-289.657(6)) gives -33.657, 0.75 sigma. Quoted per site as AFQMC -0.5262(5) by arXiv:2507.02644 Table S1 and as QMC -0.5262(5) by arXiv:2606.00924 Table II (neither carried as a row: no duplicate).",
-          "source_entry": "VP3-arxiv-1605-09421#55 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP3-arxiv-1605-09421#55 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         },
         "journal_read": {
           "checked_on": "2026-10-15",
@@ -279,8 +279,8 @@
           "version_read": "arXiv:2606.00924v1 (only version) PDF, pypdf layout; arXiv HTML v1 tables and TeX source (VP6)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The K = 0 (Hartree-Fock) state is sampled like every other depth. The caption's table-wide 'around 0.0003' is not a per-row sigma (Tristan, 2026-09-17). The method string's fallback read 'Hartree' as deterministic; the string itself is corrected to the paper's label 'HB K = 0 (HF)' in this block too. Ruling 2 (Tristan, 2026-09-30): HB K = 0 rows are marked sampled. Not the best bound on the instance, so no record moves.",
-          "source_entry": "VP6-arxiv-2606-00924#44 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, Tristan 2026-09-30",
+          "reason": "The K = 0 (Hartree-Fock) state is sampled like every other depth. The caption's table-wide 'around 0.0003' is not a per-row sigma (2026-09-17). The method string's fallback read 'Hartree' as deterministic; the string itself is corrected to the paper's label 'HB K = 0 (HF)' in this block too. Ruling 2 (2026-09-30): HB K = 0 rows are marked sampled. Not the best bound on the instance, so no record moves.",
+          "source_entry": "VP6-arxiv-2606-00924#44 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, 2026-09-30",
           "from": false
         },
         {
@@ -291,7 +291,7 @@
           "version_read": "arXiv:2606.00924v1 (only version) PDF, pypdf layout mode (sources/2606.00924v1.layout.txt, identical to qmbl sources/2606.00924.txt); every cell re-read in the arXiv HTML v1 tables (parsed with node) and the TeX source main.tex",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "M8 flag settled from the source: the K = 0 (Hartree-Fock) energy is a VMC estimate like every other depth ('All calculations are performed using variational Monte Carlo ...'; the caption's 'sampling errors are around 0.0003' covers the K = 0 column). The stored published string contains 'Hartree', which units.mjs DETERMINISTIC treats as a deterministic energy (check M8). The paper's own label is 'K = 0 (HF)' (Table II; Table IV prints 'K = 0'). units.mjs already reads that label as sampled (comment at units.mjs lines 14-17), and the paper's other three K = 0 rows (4 × 4, 6 × 6, 10 × 10, all Table II) carry it. The display name is unchanged: method_names.mjs line 274 maps 'HB K = 0 (HF)' to ['Hartree-Fock', ''] as it maps the old string. Value, instance, bound_type and reference are otherwise verified: −0.4743 (energy per site; caption: 'The energy sampling errors are around 0.0003') → -0.4743 × 64 = -30.3552 (Hubbard stored as total = per site × N). M2 flag (far above the reference) is the HF error at U = 8, with no shift. sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The paper's label for the depth-0 state is 'HB K = 0' (main text, e.g. '-0.5889 (HB K = 0)' on 16 x 16; the table columns read 'K = 0' in Table IV and 'K = 0 (HF)' in Table II); that it is the Hartree-Fock state is the row's method name.",
+          "reason": "M8 flag settled from the source: the K = 0 (Hartree-Fock) energy is a VMC estimate like every other depth ('All calculations are performed using variational Monte Carlo ...'; the caption's 'sampling errors are around 0.0003' covers the K = 0 column). The stored published string contains 'Hartree', which units.mjs DETERMINISTIC treats as a deterministic energy (check M8). The paper's own label is 'K = 0 (HF)' (Table II; Table IV prints 'K = 0'). units.mjs already reads that label as sampled (comment at units.mjs lines 14-17), and the paper's other three K = 0 rows (4 × 4, 6 × 6, 10 × 10, all Table II) carry it. The display name is unchanged: method_names.mjs line 274 maps 'HB K = 0 (HF)' to ['Hartree-Fock', ''] as it maps the old string. Value, instance, bound_type and reference are otherwise verified: −0.4743 (energy per site; caption: 'The energy sampling errors are around 0.0003') → -0.4743 × 64 = -30.3552 (Hubbard stored as total = per site × N). M2 flag (far above the reference) is the HF error at U = 8, with no shift. sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Ruling B4 (2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The paper's label for the depth-0 state is 'HB K = 0' (main text, e.g. '-0.5889 (HB K = 0)' on 16 x 16; the table columns read 'K = 0' in Table IV and 'K = 0 (HF)' in Table II); that it is the Hartree-Fock state is the row's method name.",
           "source_entry": "VP6-arxiv-2606-00924#44 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Hartree-Fock (K=0 hierarchical-backflow baseline, single Slater determinant)"
         }
@@ -328,8 +328,8 @@
           "location": "Supplemental Material Table II ('Energies per site for the Hubbard model at half-filling under periodic boundary conditions, for U = 2, 4, 6, and 8'), row '8 × 8', column 'U = 8', sub-column 'K = 1'",
           "reported_as": "−0.5229 (energy per site; caption: 'The energy sampling errors are around 0.0003')",
           "conversion": "-0.5229 × 64 = -33.4656 (Hubbard stored as total = per site × N)",
-          "note": "Half filling, PBC (caption), U = 8, 8 × 8: instance square_64_P_32_8 (N_up = N_dn = 32). The same row's quoted QMC cell −0.5262(5) is Qin et al.'s PBC total -33.68(3) / 64, stored on this instance as the AFQMC row (-33.68); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
-          "source_entry": "VP6-arxiv-2606-00924#45 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "Half filling, PBC (caption), U = 8, 8 × 8: instance square_64_P_32_8 (N_up = N_dn = 32). The same row's quoted QMC cell −0.5262(5) is Qin et al.'s PBC total -33.68(3) / 64, stored on this instance as the AFQMC row (-33.68); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
+          "source_entry": "VP6-arxiv-2606-00924#45 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -379,8 +379,8 @@
           "location": "Supplemental Material Table II ('Energies per site for the Hubbard model at half-filling under periodic boundary conditions, for U = 2, 4, 6, and 8'), row '8 × 8', column 'U = 8', sub-column 'K = 2'",
           "reported_as": "−0.5245 (energy per site; caption: 'The energy sampling errors are around 0.0003')",
           "conversion": "-0.5245 × 64 = -33.568 (Hubbard stored as total = per site × N)",
-          "note": "Half filling, PBC (caption), U = 8, 8 × 8: instance square_64_P_32_8 (N_up = N_dn = 32). The same row's quoted QMC cell −0.5262(5) is Qin et al.'s PBC total -33.68(3) / 64, stored on this instance as the AFQMC row (-33.68); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
-          "source_entry": "VP6-arxiv-2606-00924#46 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "Half filling, PBC (caption), U = 8, 8 × 8: instance square_64_P_32_8 (N_up = N_dn = 32). The same row's quoted QMC cell −0.5262(5) is Qin et al.'s PBC total -33.68(3) / 64, stored on this instance as the AFQMC row (-33.68); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
+          "source_entry": "VP6-arxiv-2606-00924#46 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -431,7 +431,7 @@
           "reported_as": "-0.5188 (energy per site, units of t, p = 1)",
           "conversion": "-0.5188 x 64 = -33.2032 (stored -33.2032)",
           "note": "PBC, U = 8, N_up = N_dn, own computation, one Lanczos step on the VMC state: variational. No error bar or variance printed (sigma null stays). peer_reviewed true correct (Phys. Rev. B 109, 245107 (2024)); the reference string lacks the authors (Zhou, Zhou & Liang). v4 printed -0.5186.",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#37 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#37 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         },
         "journal_read": {
           "checked_on": "2026-10-15",
@@ -492,7 +492,7 @@
           "reported_as": "-0.5241 (energy per site, units of t, p = 1)",
           "conversion": "-0.5241 x 64 = -33.5424 (stored -33.5424)",
           "note": "PBC, U = 8, N_up = N_dn, own computation, one Lanczos step on the VMC state: variational. No error bar or variance printed (sigma null stays). peer_reviewed true correct (Phys. Rev. B 109, 245107 (2024)); the reference string lacks the authors (Zhou, Zhou & Liang). Above both exact rows (-33.642(5), -33.68(3)). v4 printed -0.5239.",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#38 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#38 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         },
         "journal_read": {
           "checked_on": "2026-10-15",

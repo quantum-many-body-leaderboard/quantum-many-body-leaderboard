@@ -179,7 +179,7 @@
         "reported_as": "python3 vmc.py --ham j1j2 --boundary peri --sign mars --ham_dim 2 --L 10 --J2 0.6 --zero_mag --net rbm --seed 123 --show_progress",
         "conversion": "none: NetKet Stats mean is the total energy in Pauli units; sigma = error_of_mean; variance = Stats.variance (total)",
         "note": "Script builds the 10x10 PBC J1-J2 at J2 = 0.6 (NetKet Heisenberg, Pauli, J = [1, 0.6], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.RBM(alpha = 1, log_cosh) with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.01, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. Upstream value changes are listed in the history below; the stored value is the latest. History: entered 6470cd9 (2022-10-18, Dian, 'Add RBM and Jastrow for J1-J2 L=10 scanning J2'); value history: 6470cd9 2022-10-18 'Add RBM and Jastrow for J1-J2 L=10 scanning J2': E=-181.2847 S=0.0042 V=18.62346 -> 14d39eb 2022-10-19 'Update estimation of some VMC results': E=-181.3329 S=0.0074 V=56.47486; code link added 5047bfd (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -234,7 +234,7 @@
         "reported_as": "python3 vmc.py --ham j1j2 --boundary peri --sign mars --ham_dim 2 --L 10 --J2 0.6 --zero_mag --net jas --seed 123 --show_progress",
         "conversion": "none: NetKet Stats mean is the total energy in Pauli units; sigma = error_of_mean; variance = Stats.variance (total)",
         "note": "Script builds the 10x10 PBC J1-J2 at J2 = 0.6 (NetKet Heisenberg, Pauli, J = [1, 0.6], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.Jastrow with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.00, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. History: entered 6470cd9 (2022-10-18, Dian, 'Add RBM and Jastrow for J1-J2 L=10 scanning J2'); unchanged since; code link added fdb4bfb (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#21 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#21 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -436,7 +436,7 @@
           "conversion": "-0.47259 x 400 = -189.036 (agrees with the stored -189.036); sigma 1e-5 x 400 = 0.004 (agrees)",
           "checked_on": "2026-09-29",
           "reason": "M10 settled from the source: the number's only print known to us is Phys. Rev. B 100, 125124 (2019), a refereed physics journal (arXiv abs journal ref). The computation is Ferrari and Becca's, provided privately to Choo et al.; if private-communication numbers should never count as refereed, keep null (the Viteritti/Rende/Becca private-communication row on square_100_P_0.5 is null).",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#11 (qmbl-verify 2026-09-29; skeptic unclear; unclear; true per ruling 4 (Tristan 2026-09-30))",
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#11 (qmbl-verify 2026-09-29; skeptic unclear; unclear; true per ruling 4 (2026-09-30))",
           "from": null
         },
         {
@@ -447,8 +447,8 @@
           "version_read": "arXiv:1903.06713v1 PDF (= Phys. Rev. B 100, 125124 (2019)), pypdf layout and plain (VP15)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "Variational Monte Carlo energies with a statistical bar (1); the method string's fallback reads 'mean field' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (Tristan, 2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored.",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#10 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "Variational Monte Carlo energies with a statistical bar (1); the method string's fallback reads 'mean field' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored.",
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#10 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -485,7 +485,7 @@
           "reported_as": "-0.477623 (energy per site, S.S units, J1 = 1; no error bar printed)",
           "conversion": "-0.477623 x 4 x 100 = -191.0492 (stored -191.0492, exact match)",
           "note": "Independent second read of a QMBL-added row. Hamiltonian H = J1 sum_<i,j> S_i S_j + J2 sum_<<i,j>> S_i S_j with spin-1/2 operators (v1 Eq. 4, v2 Eq. 6), 'square lattice with periodic boundary conditions and N = 36, 64 and 100 spins 1/2'; Table I is per site in S.S units with J1 = 1 (the paper's own 6x6 ED column and its quoted Sandvik QMC cells fix it). Size, boundary and J2 agree with the instance; 'ViT' is a variational NQS, so bound_type variational is right; method_as_published 'ViT' is the column header; peer_reviewed false is right (no journal reference on the abs page, 2026-09-29); primary (column '(this work)'). Kind of number: the authors' extended data (2026-09-28) states that Table I lists the best of ten checkpoints (every 150 of 1500 epochs), each a 4096-sample estimate; no error bar is printed, so sigma stays null (RULES.md 6). energy_variance 6 = sigma^2 x 16 x 100 with sigma^2 = 3.750e-3 = (<H^2>-<H>^2)/N per spin (S.S units), authors' extended data row '0.60 -0.477625 9.5 3.75 -0.477625 9.5 3.75 -0.477438 2.1 4.63', column group 'the best epochs, 4096 samples; Table I'; V-score N Var/E^2 = 1.6438e-2 recomputes. The extended data prints -0.477625 for this state; the row keeps Table I's -0.477623 (0.02 of the 4096-sample error apart). Best checkpoint = final epoch (same 4096-sample energy in both column groups); the same state re-measured with 102,400 samples gives -0.477438 (error 2.10e-5), 1.85e-4 per site above the Table I value.",
-          "source_entry": "VP5-arxiv-2606-04558#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP5-arxiv-2606-04558#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -514,7 +514,7 @@
         "source_file": "sources/2606.04558-authors-extended-data-vit.txt",
         "reported_as": "0.60 -0.477625 9.5 3.75",
         "conversion": "var_over_n_SS",
-        "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 9.5e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; Tristan, 2026-09-28). The source prints this energy as -0.477625; Table I of the paper prints -0.477623, which the row keeps (0.02 epsilon apart)."
+        "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 9.5e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; 2026-09-28). The source prints this energy as -0.477625; Table I of the paper prints -0.477623, which the row keeps (0.02 epsilon apart)."
       }
     },
     {
@@ -612,7 +612,7 @@
           "version_read": "journal version (IOPscience article HTML, open access, fetched 2026-09-29 through the automation browser because IOP answers a plain fetch with a bot captcha; saved as sources/liang2023-mlst-acc56a.html and parsed with node); arXiv:2204.07816v1, the only arXiv version (qmbl/sources/2204.07816.txt, layout text), does not contain the number: it states 'We set J1=1 and J2 = 0.5 throughout the investigations' and its 10 x 10 results are at J2 = 0.5 only (-0.497468; -0.4961 after 350 SR steps)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "'previous work [47] (Liang et al.)' is a citation marker, not a method. The producing table states that its values are CNN1 after one Lanczos step (p = 1); the row's short name 'CNN' with empty method_detail hides the Lanczos step (method_detail: '1 Lanczos step, 106 529 parameters'). bound_type stays variational (RULES.md 4: p-step Lanczos on a variational state). The pending 2026-09-16 proposal 'Deep CNN' (group N2) misses the Lanczos step. Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is the Table 1 caption's ('achieved by CNN1 with 106 529 parameters. The values are obtained by the Lanczos step with p = 1.'); the Lanczos step is the detail, and the parameter count is a compute number, not part of the string.",
+          "reason": "'previous work [47] (Liang et al.)' is a citation marker, not a method. The producing table states that its values are CNN1 after one Lanczos step (p = 1); the row's short name 'CNN' with empty method_detail hides the Lanczos step (method_detail: '1 Lanczos step, 106 529 parameters'). bound_type stays variational (RULES.md 4: p-step Lanczos on a variational state). The pending 2026-09-16 proposal 'Deep CNN' (group N2) misses the Lanczos step. Ruling B4 (2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is the Table 1 caption's ('achieved by CNN1 with 106 529 parameters. The values are obtained by the Lanczos step with p = 1.'); the Lanczos step is the detail, and the parameter count is a compute number, not part of the string.",
           "source_entry": "VP5-arxiv-2606-04558#11 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "previous work [47] (Liang et al.)"
         },
@@ -719,7 +719,7 @@
         "checked_on": "2026-10-07",
         "method": "source text of arXiv:2108.13830 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.47713",
-        "note": "Table 4 ('Energies for varied J2/J1 && system scales'), row 10 x 10, column 0.60; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
+        "note": "Table 4 ('Energies for varied J2/J1 && system scales'), row 10 x 10, column 0.60; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
         "secondary_of": null,
         "journal_read": {
           "checked_on": "2026-10-15",
@@ -741,7 +741,7 @@
           "version_read": "arXiv:2108.13830v1, v2, v3, v4 (PDFs downloaded by this reader, md5 equal to the shared-cache copies; pypdf plain + layout text) and the published IEEE TPDS 33(11), 2846-2859 (2022) PDF (IEEE Xplore copy of 2026-10-03 from qmbl-verify-2026-09-29/sources/journal, re-extracted here with pypdf); all five print the same cell",
           "conversion": "-0.47713 x 4 x 100 = -190.852 (stored -190.852: agrees; energy not changed)",
           "checked_on": "2026-10-07",
-          "reason": "The stored published string is not printed anywhere in the source. Its parenthetical names the source, which RULES 3 keeps out of method_as_published and method_detail. Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, word for word, and what explains it goes to method_detail via scripts/method_names.mjs. The paper calls its method 'CNN'. The bare key 'CNN' already maps to ['CNN', ''] for Choo et al.'s different network, which shares square_100_P_0.55 and _0.6 with these rows. So the proposal quotes the longer printed label, which gives this network its own key and a detail: large model, Marshall sign (Eq. 9), C4 rotation sum (Eq. 10), fine-tuned by transfer learning from the 24 x 24 state (Sec. 4.3.3, Fig. 5). The 106529 parameters go to compute.parameters through the mapping's extra. Minimal alternative: 'CNN' alone, which leaves the detail empty, as it is now. The sibling row J1J2/square_256_P_0.5 (-508.17024, from the 2026-09-15 pass, outside this group) carries the same string and needs the same change. Keep the old method_names key until that row moves too.",
+          "reason": "The stored published string is not printed anywhere in the source. Its parenthetical names the source, which RULES 3 keeps out of method_as_published and method_detail. Ruling B4 (2026-10-02): a corrected published string quotes a label the source prints, word for word, and what explains it goes to method_detail via scripts/method_names.mjs. The paper calls its method 'CNN'. The bare key 'CNN' already maps to ['CNN', ''] for Choo et al.'s different network, which shares square_100_P_0.55 and _0.6 with these rows. So the proposal quotes the longer printed label, which gives this network its own key and a detail: large model, Marshall sign (Eq. 9), C4 rotation sum (Eq. 10), fine-tuned by transfer learning from the 24 x 24 state (Sec. 4.3.3, Fig. 5). The 106529 parameters go to compute.parameters through the mapping's extra. Minimal alternative: 'CNN' alone, which leaves the detail empty, as it is now. The sibling row J1J2/square_256_P_0.5 (-508.17024, from the 2026-09-15 pass, outside this group) carries the same string and needs the same change. Keep the old method_names key until that row moves too.",
           "source_entry": "RP1-arxiv-2108-13830#8",
           "from": "CNN (Li et al. 2022, sunway supercomputer)"
         },
@@ -749,13 +749,13 @@
           "field": "verified.note",
           "edit": [
             "; no error bar printed |",
-            "; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) |"
+            "; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) |"
           ],
           "checked_on": "2026-10-07",
           "reason": "Ruling 4 of qmbl-verify 2026-10-07: the outlier window stated on the row.",
-          "source_entry": "RP1-arxiv-2108-13830 (ambiguous, bound_type); ruling 4, Tristan 2026-10-07",
+          "source_entry": "RP1-arxiv-2108-13830 (ambiguous, bound_type); ruling 4, 2026-10-07",
           "from": "Table 4 ('Energies for varied J2/J1 && system scales'), row 10 x 10, column 0.60; no error bar printed | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
-          "to": "Table 4 ('Energies for varied J2/J1 && system scales'), row 10 x 10, column 0.60; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table."
+          "to": "Table 4 ('Energies for varied J2/J1 && system scales'), row 10 x 10, column 0.60; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table."
         }
       ],
       "compute": {
