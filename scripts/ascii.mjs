@@ -19,7 +19,7 @@
 // committed. Regenerate with:  node scripts/ascii.mjs
 //
 // The header with another tagline, and nothing else, goes wherever --out says. The README of
-// QMBL: Open Problems opens with it (Tristan, 2026-10-09: a version of QMBL's GIF):
+// QMBL: Open Problems opens with it (2026-10-09: a version of QMBL's GIF):
 //   node scripts/ascii.mjs --tagline "open problems" --out ../open-problems/figures/open-problems-ascii.gif
 import { execFileSync } from "node:child_process";
 import { writeFileSync, rmSync, mkdtempSync } from "node:fs";

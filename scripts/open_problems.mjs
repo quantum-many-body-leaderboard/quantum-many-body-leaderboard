@@ -1,12 +1,12 @@
-// QMBL: Open Problems (Tristan, 2026-10-06 and 2026-10-08): the instances in QMBL with no exact
+// QMBL: Open Problems (2026-10-06 and 2026-10-08): the instances in QMBL with no exact
 // ground-state energy, as open problems for scientists and AI systems, with the energy to beat on
-// each, and the verified entries. Since 2026-10-09 it is two pages, as QMBL is (Tristan: "like
+// each, and the verified entries. Since 2026-10-09 it is two pages, as QMBL is ("like
 // QMBL where we have leaderboard (with same figures) and table"), switched by a row of two tabs
 // under the title: the Leaderboard, /open-problems/, with its own figure
 // (open_problems_figure.mjs), the home page's figure sections for these instances (site.mjs) and
 // the systems once there are entries; and the Table, /open-problems/table/, with the targets, one
 // table per model, and the entries. How scoring works and how to enter are in the repository's
-// README (Tristan, 2026-10-09).
+// README (2026-10-09).
 //
 // Two inputs from the Open Problems repository (quantum-many-body-leaderboard/open-problems),
 // checked out beside this one or wherever OPEN_PROBLEMS_DIR points: scripts/targets.mjs, which
@@ -15,7 +15,7 @@
 // loadOpenProblems() returns null and site.mjs builds neither the pages nor their menu button,
 // so such a build is the site as before.
 //
-// The targets follow QMBL (Tristan, 2026-10-09: rolling problems): every instance in data/ with no
+// The targets follow QMBL (2026-10-09: rolling problems): every instance in data/ with no
 // exact energy, on every build. An instance that gets an exact energy is solved: it leaves the
 // targets, and its entries stay listed, marked solved, outside the systems' scores. The energy to
 // beat is read from data/ too: the lowest unflagged variational energy, never an extrapolation or
@@ -104,7 +104,7 @@ export function score(op, instances) {
   const latest = new Map(sorted.map(e => [`${e.system}\n${e.instance_id}`, e]));
   const entries = sorted.map(e => {
     const x = of.get(e.instance_id), live = latest.get(`${e.system}\n${e.instance_id}`) === e;
-    // On an instance solved since the entry: listed and marked, not scored (Tristan, 2026-10-09).
+    // On an instance solved since the entry: listed and marked, not scored (2026-10-09).
     if (!x) {
       const inst = byId.get(e.instance_id);
       return { e, x: { inst, exact: exactRecordOf(inst) }, live, solved: true, gap: null, record: false };
@@ -138,7 +138,7 @@ export function openProblemsPages(op, instances, site) {
   const { targets, entries, systems } = score(op, instances);
   const n = targets.length;
   const aiBadge = a => `<span class="badge">${AI_LABELS[a]}</span>`;
-  // What the Cite button copies and the citation section prints (Tristan, 2026-10-09). The
+  // What the Cite button copies and the citation section prints (2026-10-09). The
   // targets follow QMBL, so it is QMBL's concept DOI, which always resolves to the latest release.
   const citation = `${CITE_HEAD}, QMBL: Open Problems, Zenodo (${CITE_YEAR}). https://doi.org/${DOI}`;
 
@@ -173,7 +173,7 @@ export function openProblemsPages(op, instances, site) {
       <td class="num">${s.solved ? '<span class="badge" title="QMBL has an exact energy for this instance now">solved</span>' : s.first ? '<span class="muted">first state</span>' : gapText(s.gap)}${s.record ? '<span class="tag">new record</span>' : ""}</td>
       <td>${compute(s.e.compute)}</td><td>${links(s.e.links)}</td></tr>`).join("")}</tbody></table></div>`;
 
-  // Only once there are entries (Tristan, 2026-10-09): the systems on the Leaderboard, the
+  // Only once there are entries (2026-10-09): the systems on the Leaderboard, the
   // entries on the Table, after the targets.
   const systemsSection = systems.length ? `
 <h2 id="systems">Systems</h2>
@@ -202,7 +202,7 @@ ${entriesTable}` : "";
   // One table per model, with the Table's names and labels. An instance links to its target row
   // in the Table, which opens the instance there; without a variational energy, to its record row
   // (or its lowest row). Each row carries QMBL's search index and each section its lattice and
-  // size badges, so the search bar on top filters as QMBL's Table does (Tristan, 2026-10-09).
+  // size badges, so the search bar on top filters as QMBL's Table does (2026-10-09).
   const sections = groups.map(([model, name, group]) => {
     const lattices = [...new Set(group.map(x => latticeOf(x.inst)))].sort();
     const bands = SIZE_BANDS.filter(([key]) => group.some(x => sizeBand(x.inst) === key));
@@ -233,7 +233,7 @@ ${entriesTable}` : "";
 </section>`;
   }).join("\n");
 
-  // Both pages open with the title, GitHub and Cite on its line, to its right (Tristan,
+  // Both pages open with the title, GitHub and Cite on its line, to its right (
   // 2026-10-09; the Zenodo link was removed the same day), and under it the two tabs, written as
   // the header's menu links. A figure carries its own title, so on the Leaderboard nothing but the
   // lead stands above the first. Both end with the citation, as QMBL's home page does.
@@ -335,7 +335,7 @@ export const openProblemsLlms = op => [
 
 // The menu button, last in the menu (site.mjs) on every page, so its rules go into the site's
 // stylesheet: a filled pill in the navy accent that turns ink on hover and on its own page
-// (Tristan, 2026-10-09: ink, with colour, also on hover), so it reads as a button beside the
+// (2026-10-09: ink, with colour, also on hover), so it reads as a button beside the
 // plain links and the grey Cite pill; light text on navy and black, dark text on the light navy
 // and white of dark mode. On a phone the menu tightens to stay on one line under the wordmark;
 // where even that does not fit (below 390 px), the button, being last, wraps to a line of its own.
