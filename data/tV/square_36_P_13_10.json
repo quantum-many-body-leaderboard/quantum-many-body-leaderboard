@@ -35,11 +35,23 @@
           "version_read": "arXiv:2210.05871 v1, v3, v4 (pypdf layout, sources in the run); VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute; at V = 10 every sector was computed, the ground state is Gamma B1). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (Tristan, 2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
-          "source_entry": "VB4-tfising-tv#46 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute; at V = 10 every sector was computed, the ground state is Gamma B1). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+          "source_entry": "VB4-tfising-tv#46 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_10/ed_lattice_symmetries.sh)"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "\"Received 13-10-2022 Accepted 18-04-2023 Published 27-06-2023\", \"Published by the SciPost Foundation\", doi:10.21468/SciPostPhys.14.6.171",
+          "location": "journal p. 1 masthead",
+          "version_read": "published PDF SciPost Phys. 14, 171 (2023), doi:10.21468/SciPostPhys.14.6.171, sources/journal/scipost14-171.pdf, sha256 21fc99f7; pypdf layout mode; compared with arXiv:2210.05871v4 (latest; qmbl-runs/qmbl-verify/sources/2210.05871v4.pdf, sha256 18e3ceb6)",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 10: -7.92802624; stored -7.928026240978371 truncates to -7.92802624 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13. Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_10/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 10 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
+          "source_entry": "JB1-j1j2-tv#11"
         }
       ],
+      "peer_reviewed": true,
       "verified": {
         "checked_on": "2026-09-29",
         "scope": "value",
@@ -93,11 +105,22 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -p --follow); arXiv:2406.09077v1/v2, the journal version Commun. Phys. 8, 46 (2025) and its Supplementary Information read by VA4-hubbard-tv-heisenberg",
           "conversion": "none (citation)",
           "checked_on": "2026-09-30",
-          "reason": "Ruling 1 (Tristan, 2026-09-30): the number is cited to where it was published, the VarBench dataset (Wu et al., Science 386, 296 (2024)), with the author's paper kept as the method reference; not a RULES.md 8 removal, because the number is printed, in the dataset. Neither arXiv version nor the journal version of arXiv:2406.09077 or its Supplementary Information prints this value (VA4); it entered VarBench on 2023-01-09 (e85c51e, Dian Wu: \"Update t-V 6x6 VMC without backflow from Imelda\"), 18 months before arXiv v1, and is unchanged since.",
-          "source_entry": "VA4-hubbard-tv-heisenberg#81, VA4-hubbard-tv-heisenberg#82 (qmbl-verify 2026-09-29); ruling 1, Tristan 2026-09-30",
+          "reason": "Ruling 1 (2026-09-30): the number is cited to where it was published, the VarBench dataset (Wu et al., Science 386, 296 (2024)), with the author's paper kept as the method reference; not a RULES.md 8 removal, because the number is printed, in the dataset. Neither arXiv version nor the journal version of arXiv:2406.09077 or its Supplementary Information prints this value (VA4); it entered VarBench on 2023-01-09 (e85c51e, Dian Wu: \"Update t-V 6x6 VMC without backflow from Imelda\"), 18 months before arXiv v1, and is unchanged since.",
+          "source_entry": "VA4-hubbard-tv-heisenberg#81, VA4-hubbard-tv-heisenberg#82 (qmbl-verify 2026-09-29); ruling 1, 2026-09-30",
           "from": "[paper](https://arxiv.org/abs/2406.09077) [code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_10/tV_model_slater.sh)"
         }
-      ]
+      ],
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published PDF Science 386, 296 (2024), sources/journal/science386-296.pdf, sha256 80f8b792, and Supplementary Materials, sources/journal/science386-296-sm.pdf, sha256 4539b5df (node fetch: Cloudflare 403; fetched in the automation browser after the article page loaded); arXiv:2302.04919v2 compared; the number itself from the VarBench dataset v1.1.0 = ref. [63] of the paper (Zenodo 10.5281/zenodo.13377360, the GitHub release of tag v1.1.0, commit 0064b70; the Zenodo API timed out from this host, so the tag in varbench-history was read)",
+        "location": "VarBench v1.1.0, tV/square_36_P_13_10.md, Slater-Jastrow row",
+        "reported_as": "-6.168047091994236730 | 8.708582883788365536e-02 | var 3.426841426704378790e+01",
+        "conversion": "none",
+        "note": "6 x 6, Nf = 13, V = 10. Science SM S1 Eq. (S4) (journal): H = -t sum (c+_i c_j + h.c.) + V sum n_i n_j, t = 1, Nf fixed (total, spinless) — no V(n-1/2)(n-1/2) shift, matching the stored convention. Method paper Romero, Nys & Carleo, Commun. Phys. 8, 46 (2025) read in its journal version (Europe PMC full-text XML PMC11779646, sources/journal/commphys8-46.epmc.xml, sha256 a2e037eb; Supplementary Information sources/journal/commphys8-46-supp.pdf, sha256 0489aee4): it studies closed-shell L = 4, 8, 10 spectra and L = 4..10 structure factors and prints none of the 6 x 6, Nf = 13 energies (searched both for the stored digits and per-site forms), and its data statement reads 'The data underlying this study are accessible upon reasonable request'; the dataset is the printing source, as the row's reference already says. No duplicate.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#41",
+        "secondary_of": null
+      }
     },
     {
       "energy": -7.566606087928786,
@@ -140,8 +163,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -p --follow); arXiv:2406.09077v1/v2, the journal version Commun. Phys. 8, 46 (2025) and its Supplementary Information read by VA4-hubbard-tv-heisenberg",
           "conversion": "none (citation)",
           "checked_on": "2026-09-30",
-          "reason": "Ruling 1 (Tristan, 2026-09-30): the number is cited to where it was published, the VarBench dataset (Wu et al., Science 386, 296 (2024)), with the author's paper kept as the method reference; not a RULES.md 8 removal, because the number is printed, in the dataset. Neither arXiv version nor the journal version of arXiv:2406.09077 or its Supplementary Information prints this value (VA4); it entered VarBench on 2022-12-20 (b96fa83, Imelda Romero: \"add tV benchmark results\"), 18 months before arXiv v1, and is unchanged since.",
-          "source_entry": "VA4-hubbard-tv-heisenberg#83, VA4-hubbard-tv-heisenberg#84 (qmbl-verify 2026-09-29); ruling 1, Tristan 2026-09-30",
+          "reason": "Ruling 1 (2026-09-30): the number is cited to where it was published, the VarBench dataset (Wu et al., Science 386, 296 (2024)), with the author's paper kept as the method reference; not a RULES.md 8 removal, because the number is printed, in the dataset. Neither arXiv version nor the journal version of arXiv:2406.09077 or its Supplementary Information prints this value (VA4); it entered VarBench on 2022-12-20 (b96fa83, Imelda Romero: \"add tV benchmark results\"), 18 months before arXiv v1, and is unchanged since.",
+          "source_entry": "VA4-hubbard-tv-heisenberg#83, VA4-hubbard-tv-heisenberg#84 (qmbl-verify 2026-09-29); ruling 1, 2026-09-30",
           "from": "[paper](https://arxiv.org/abs/2406.09077) [code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_10/tV_model_bf.sh)"
         }
       ]
@@ -294,7 +317,7 @@
           "reported_as": "-6.908615 (total energy, units of t)",
           "conversion": "Hamiltonian Eq. (58) = VarBench tV form (V n_i n_j, bonds once, no shift); tables print totals in units of t; stored = printed total; printed total -6.908615; stored -6.90861492 = eps -0.19190597 (sweep-rows-2026-09-15.json line 6623) x 36; difference 8.0e-8 is below the printed half-unit, a per-site round-trip residue (loader class, not a row correction; see report)",
           "note": "V/t = 10, Np = 13, L = 6, PBC (Sec. 3, Eq. 58, table header) match the instance; own computation ('this work' / the paper's own HF); bound_type variational correct (HF determinant energy, the paper's 'expected upper bound'); peer_reviewed true (SciPost Phys. 14, 171 (2023)). Instance reference: ED -7.928026241. Independent check: an unrestricted Hartree-Fock iteration of Eq. (58) on this cluster by this reader (out/VP9-tv-hubbard-heisenberg/work/hf_tv.py, 64x64 mean field, not an ED) converges to -6.908615059, which the paper prints to six decimals (it truncates rather than rounds: -3.232766891 is printed -3.232766, and Table 1 prints -21.499999 for the closed-shell value -21.5); the printed HF cell is the HF minimum of the VarBench Hamiltonian, so no shift and a genuine upper bound. No duplicate on the instance (no other HF/arSJVMC row, no quote of this number). Metric flag (M2: 12.86% above the instance's exact reference; no known constant shift explains it): settled from the source - the paper prints this HF energy beside its own exact reference in the same table; the gap is the Hartree-Fock error at this V/t (no constant shift: the uniform HF check fixes the convention), not a unit or convention slip.",
-          "source_entry": "VP9-tv-hubbard-heisenberg#12 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP9-tv-hubbard-heisenberg#12 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       }
     },
@@ -329,7 +352,7 @@
           "reported_as": "-7.23(3) (total energy, units of t)",
           "conversion": "Hamiltonian Eq. (58) = VarBench tV form (V n_i n_j, bonds once, no shift); tables print totals in units of t; stored = printed total; printed total -7.23; stored -7.22999988 = eps -0.20083333 (sweep-rows-2026-09-15.json line 6644) x 36; difference 1.2e-7 is below the printed half-unit, a per-site round-trip residue (loader class, not a row correction; see report); sigma printed (3) in the last digit = 0.03 total (stored 0.03)",
           "note": "V/t = 10, Np = 13, L = 6, PBC (Sec. 3, Eq. 58, table header) match the instance; own computation ('this work' / the paper's own HF); bound_type variational correct (directly sampled VMC energy, no Lanczos step or extrapolation); peer_reviewed true (SciPost Phys. 14, 171 (2023)). Instance reference: ED -7.928026241. Error bar: parenthesised last-digit error, definition not stated (C7); samples are uncorrelated (direct sampling). No duplicate on the instance (no other HF/arSJVMC row, no quote of this number). Metric flag (M2: 8.80% above the instance's exact reference; no known constant shift explains it; M6: sigma/|E| = 0.0041): settled from the source - printed as is; the paper's own ED/DMRG sits in the same table and the text states the shortfall ('For V/t = 2 and 4, the VMC energy falls short of even the Hartree-Fock energy', Table 4 caption; training difficulty, p. 33). The large relative bar is the printed one.",
-          "source_entry": "VP9-tv-hubbard-heisenberg#13 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP9-tv-hubbard-heisenberg#13 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {

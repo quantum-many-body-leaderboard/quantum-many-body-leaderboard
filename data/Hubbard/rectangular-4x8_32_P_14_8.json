@@ -34,8 +34,8 @@
           "version_read": "PNAS article PDF and SI Appendix (PMC9371695), pypdf layout; arXiv:2111.10420v2 (VA3)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "A variational Monte Carlo energy whose stored sigma is the uploader's Monte Carlo error; the method string's fallback reads 'mean-field' in the upload's 'Soft mean-field constraint' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (Tristan, 2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored.",
-          "source_entry": "VA3-10-1073-pnas-2122059119#20 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "A variational Monte Carlo energy whose stored sigma is the uploader's Monte Carlo error; the method string's fallback reads 'mean-field' in the upload's 'Soft mean-field constraint' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored.",
+          "source_entry": "VA3-10-1073-pnas-2122059119#20 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -48,8 +48,18 @@
         "reported_as": "-0.7633(7) (energy per site, units of t)",
         "conversion": "-0.7633 x 32 = -24.4256; stored -24.426 / 32 = -0.7633125, which truncates and rounds to -0.7633",
         "note": "Energy verified; sigma differs (ambiguous entry). PBC-PBC = P. 4 x 8, n = 7/8 = 14 up + 14 down at zero magnetization, U = 8, t = 1, Eq. 1 with no shift. N~ = 16 and alpha = 14 for L = 8 ('A good trade-off ... is achieved by the addition of N~ = 16 hidden fermions for all system sizes. We also consider a two-layer fully connected neural network of hidden-unit density α = {60, 14, 6} for the L = {4, 8, 16} sizes', main Sec. 3 B, p. 6), lambda = 8 soft mean-field constraint on phi_v ('To guide the wave-function ansatz toward the λ = 8 stripe order, we add a soft mean-field constraint', p. 6): method string and detail right. Variational VMC bound, own computation. Not the record (MLP-NNBF -24.586784). Upload 93b5ac0 (2022-07-16): -24.426 | 0.002 | 0.021(2); energy_variance upload-only. Duplicate check: arXiv:2308.11823 Table III quotes this value as 'Ref.2 (HFSD)' -0.7633 and prints the same -0.7633 in its own BW2 column (QMBL row 'BW2 (p=1)' -24.4256, sweep-allresults); that BW2 cell is the other paper's own number and moved across its versions (v1 -0.7635, v3/v4 -0.7637, v5/v6 -0.7633), so it is not a duplicate of this row; its coincidence with the adjacent Ref.2 cell is noted in the report for whoever reads arXiv:2308.11823. M6/M8 settled from the source: a sampled VMC energy ('General expectation values and gradients of the objective function are computed using Markov chain Monte Carlo sampling', main text Sec. 2 C, p. 5) whose stored sigma is the uploader's Monte Carlo error; units.mjs counts the row deterministic only because 'Soft mean-field constraint' matches /mean[- ]field/ (units.mjs line 20), which changes nothing while sigma is stored (isSampled is consulted only when sigma is null). Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report).",
-        "source_entry": "VA3-10-1073-pnas-2122059119#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
-        "secondary_of": null
+        "source_entry": "VA3-10-1073-pnas-2122059119#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+          "location": "SI Sec. 8 C, Table 4 (p. 9), row L = 8, column 'Energy per site HFDS (PBC-PBC)'",
+          "reported_as": "-0.7633(7) (energy per site, units of t)",
+          "conversion": "-0.7633 x 32 = -24.4256; stored -24.426 / 32 = -0.763313",
+          "note": "4 x 8 P, 14 + 14, U = 8, N~ = 16, alpha = 14. Journal = arXiv v2. Printed bar 0.0224 total vs stored 0.002: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Not a duplicate: the BW2 (p=1) row -24.4256 on this instance is PRB 109, 245107 Table III's own BW2 column (-0.7633), which coincides with the HFDS value printed in that table's Ref. [2] column; different method, same digits. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#3"
+        }
       }
     },
     {
@@ -74,7 +84,17 @@
         "method": "arXiv PDF text extracted locally with pypdf in layout mode, no LLM transcription",
         "reported_as": "-0.76690(1) per site, sigma^2/N_site = 0.016320",
         "note": "Table IV of arXiv:2507.10705, \"Raw data of Fig. 7 in the L x 4 lattice with 1/8 doping and U = 8\", row 8 x 4; Sec. III states Fig. 7 shows \"L x 4 PBC lattices\". 32 sites, 28 electrons, U = 8, periodic: this instance. The same table's 16 x 4 value -0.76413(3) is the HFPS row on rectangular-4x16_64_P_28_8, and its 4 x 4 value -0.74177(5) sits 3e-5 above the ED energy -0.7418 quoted by arXiv:2606.00924. New record, 0.47% below the VarBench HFDS row -0.7633125 and below the RHB -0.7641(3) of arXiv:2606.00924 on the same lattice. Variance: sigma^2/N_site stored as a total (x 32). Its V-score, 2.7e-3, is ~25x the VarBench HFDS row's 1.1e-4 at a higher energy; the HFDS variance is the likelier outlier, since on 4x16 the same VarBench ansatz has ten times the per-site variance and this paper puts HFDS 3e-4 above exact already at 4x4. Read from the arXiv version; the PNAS version was not compared (pnas.org refuses this sandbox).",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF PNAS 123(35), e2535288123 (2026), sources/journal/pnas123-e2535288123.pdf, sha256 5cb7382c, and SI Appendix sources/journal/pnas123-e2535288123-si.pdf, sha256 9e72e89b (both via in-page fetch in the automation browser after the article page loaded; ETH Bibliothek access stamp), pypdf layout + plain; compared with arXiv:2507.10705v1 (sha256 97b1cddb)",
+          "location": "SI Appendix Table S4, row 8 x 4 (arXiv: Table IV)",
+          "reported_as": "-0.76690(1) per site, σ2/Nsite 0.016320, training time 100 h",
+          "conversion": "-0.7669 x 32 = -24.5408; sigma 1e-5 x 32 = 0.00032; variance 0.016320 x 32 = 0.52224",
+          "note": "Journal value identical to arXiv v1 (only the table numbering changed: arXiv Tables II-IV moved to SI Appendix Tables S1, S3, S4).  Reference (Chen, Wan, Sengupta, Georges & Roth, title as printed, PNAS 123, e2535288123 (2026)) and peer_reviewed true are right; bound_type variational. No field changes.",
+          "source_entry": "R5-browser#12"
+        }
       },
       "compute": {
         "parameters": 600000,
@@ -164,7 +184,7 @@
           "version_read": "arXiv:2606.00924v1 (only version) PDF, pypdf layout mode (sources/2606.00924v1.layout.txt, identical to qmbl sources/2606.00924.txt); every cell re-read in the arXiv HTML v1 tables (parsed with node) and the TeX source main.tex. No journal version (arXiv abs page, Crossref, OpenAlex, 2026-09-29).",
           "conversion": "stored 0.0096 = 0.0003 × 32 (the caption's table-wide error × N); proposed null",
           "checked_on": "2026-09-29",
-          "reason": "Tristan's ruling of 2026-09-17 (Journal 2026-09-17; hub 'Quantum many-body leaderboard'): one approximate error stated for a whole table is not a sigma, and this paper's 31 table rows stay without one. This row came from the worklist batch and still carries the caption's 0.0003 × 32; the 30 sibling table rows from the all-results batch are already null. With sigma null the row is a sampled energy without sigma, like its siblings. It is not the instance's record (HFPS −0.76690(1) is lower). The value, instance (4 × 8 PBC, 28 electrons, U = 8; HFDS cell −0.7633 = VarBench HFDS row), bound_type and reference are otherwise verified. The note should also be fixed: 'sigma is the caption's table-wide ...' is no longer true, and 'the same ansatz gives -0.7410 on 4 x 4' is inexact, since −0.7410 is Table III's N_det = 16, N_neuron = 80 value (N_det = 5, N_neuron = 100 gives −0.7403). The 4 × 8 setting N_det = 5, N_neuron = 100 rests on the paper's general sentence 'we adopt Ndet = 5 and Nneuron = 100 for all subsequent large-scale simulations'.",
+          "reason": "the maintainer's ruling of 2026-09-17 (Journal 2026-09-17; hub 'Quantum many-body leaderboard'): one approximate error stated for a whole table is not a sigma, and this paper's 31 table rows stay without one. This row came from the worklist batch and still carries the caption's 0.0003 × 32; the 30 sibling table rows from the all-results batch are already null. With sigma null the row is a sampled energy without sigma, like its siblings. It is not the instance's record (HFPS −0.76690(1) is lower). The value, instance (4 × 8 PBC, 28 electrons, U = 8; HFDS cell −0.7633 = VarBench HFDS row), bound_type and reference are otherwise verified. The note should also be fixed: 'sigma is the caption's table-wide ...' is no longer true, and 'the same ansatz gives -0.7410 on 4 x 4' is inexact, since −0.7410 is Table III's N_det = 16, N_neuron = 80 value (N_det = 5, N_neuron = 100 gives −0.7403). The 4 × 8 setting N_det = 5, N_neuron = 100 rests on the paper's general sentence 'we adopt Ndet = 5 and Nneuron = 100 for all subsequent large-scale simulations'.",
           "source_entry": "VP6-arxiv-2606-00924#11 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": 0.0096
         }
@@ -219,8 +239,8 @@
           "version_read": "arXiv:2606.00924v1 (only version) PDF, pypdf layout; arXiv HTML v1 tables and TeX source (VP6)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The K = 0 (Hartree-Fock) state is sampled like every other depth. The caption's table-wide 'around 0.0003' is not a per-row sigma (Tristan, 2026-09-17). The method string's fallback read 'Hartree' as deterministic; the string itself is corrected to the paper's label 'HB K = 0 (HF)' in this block too. Ruling 2 (Tristan, 2026-09-30): HB K = 0 rows are marked sampled. Not the best bound on the instance, so no record moves.",
-          "source_entry": "VP6-arxiv-2606-00924#12 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, Tristan 2026-09-30",
+          "reason": "The K = 0 (Hartree-Fock) state is sampled like every other depth. The caption's table-wide 'around 0.0003' is not a per-row sigma (2026-09-17). The method string's fallback read 'Hartree' as deterministic; the string itself is corrected to the paper's label 'HB K = 0 (HF)' in this block too. Ruling 2 (2026-09-30): HB K = 0 rows are marked sampled. Not the best bound on the instance, so no record moves.",
+          "source_entry": "VP6-arxiv-2606-00924#12 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, 2026-09-30",
           "from": false
         },
         {
@@ -231,7 +251,7 @@
           "version_read": "arXiv:2606.00924v1 (only version) PDF, pypdf layout mode (sources/2606.00924v1.layout.txt, identical to qmbl sources/2606.00924.txt); every cell re-read in the arXiv HTML v1 tables (parsed with node) and the TeX source main.tex",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "M8 flag settled from the source: the K = 0 (Hartree-Fock) energy is a VMC estimate like every other depth ('All calculations are performed using variational Monte Carlo ...'; the caption's 'sampling errors are around 0.0003' covers the K = 0 column). The stored published string contains 'Hartree', which units.mjs DETERMINISTIC treats as a deterministic energy (check M8). The paper's own label is 'K = 0 (HF)' (Table II; Table IV prints 'K = 0'). units.mjs already reads that label as sampled (comment at units.mjs lines 14-17), and the paper's other three K = 0 rows (4 × 4, 6 × 6, 10 × 10, all Table II) carry it. The display name is unchanged: method_names.mjs line 274 maps 'HB K = 0 (HF)' to ['Hartree-Fock', ''] as it maps the old string. Value, instance, bound_type and reference are otherwise verified: −0.6146 (energy per site; caption: 'The energy sampling errors are around 0.0003') → -0.6146 × 32 = -19.6672 (Hubbard stored as total = per site × N). M2 flag (far above the reference) is the HF error at U = 8, with no shift. sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The paper's label for the depth-0 state is 'HB K = 0' (main text, e.g. '-0.5889 (HB K = 0)' on 16 x 16; the table columns read 'K = 0' in Table IV and 'K = 0 (HF)' in Table II); that it is the Hartree-Fock state is the row's method name.",
+          "reason": "M8 flag settled from the source: the K = 0 (Hartree-Fock) energy is a VMC estimate like every other depth ('All calculations are performed using variational Monte Carlo ...'; the caption's 'sampling errors are around 0.0003' covers the K = 0 column). The stored published string contains 'Hartree', which units.mjs DETERMINISTIC treats as a deterministic energy (check M8). The paper's own label is 'K = 0 (HF)' (Table II; Table IV prints 'K = 0'). units.mjs already reads that label as sampled (comment at units.mjs lines 14-17), and the paper's other three K = 0 rows (4 × 4, 6 × 6, 10 × 10, all Table II) carry it. The display name is unchanged: method_names.mjs line 274 maps 'HB K = 0 (HF)' to ['Hartree-Fock', ''] as it maps the old string. Value, instance, bound_type and reference are otherwise verified: −0.6146 (energy per site; caption: 'The energy sampling errors are around 0.0003') → -0.6146 × 32 = -19.6672 (Hubbard stored as total = per site × N). M2 flag (far above the reference) is the HF error at U = 8, with no shift. sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Ruling B4 (2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The paper's label for the depth-0 state is 'HB K = 0' (main text, e.g. '-0.5889 (HB K = 0)' on 16 x 16; the table columns read 'K = 0' in Table IV and 'K = 0 (HF)' in Table II); that it is the Hartree-Fock state is the row's method name.",
           "source_entry": "VP6-arxiv-2606-00924#12 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Hierarchical Backflow (HB) VMC, path depth K=0 (Hartree-Fock)"
         }
@@ -268,8 +288,8 @@
           "location": "Supplemental Material Table IV ('Energies persite for the Hubbard model at nh = 0.125, U = 8 for different systems under periodic boundary conditions'), row '4 × 8', column 'K = 1'",
           "reported_as": "−0.7599 (energy per site; caption: 'The energy sampling errors are around 0.0003')",
           "conversion": "-0.7599 × 32 = -24.3168 (Hubbard stored as total = per site × N)",
-          "note": "4 × 8 under PBC, nh = 0.125 (M = 7N/8 = 28 electrons), U = 8: instance rectangular-4x8_32_P_14_8, not the _PO_ (PBC-OBC) instance. The same row's HFDS cell −0.7633 (= VarBench HFDS row −24.426/32 = −0.76331, = HFDS SI Table IV PBC-PBC −0.7633(7)) fixes the cluster and convention. bound_type variational. sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
-          "source_entry": "VP6-arxiv-2606-00924#13 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "4 × 8 under PBC, nh = 0.125 (M = 7N/8 = 28 electrons), U = 8: instance rectangular-4x8_32_P_14_8, not the _PO_ (PBC-OBC) instance. The same row's HFDS cell −0.7633 (= VarBench HFDS row −24.426/32 = −0.76331, = HFDS SI Table IV PBC-PBC −0.7633(7)) fixes the cluster and convention. bound_type variational. sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
+          "source_entry": "VP6-arxiv-2606-00924#13 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -319,8 +339,8 @@
           "location": "Supplemental Material Table IV ('Energies persite for the Hubbard model at nh = 0.125, U = 8 for different systems under periodic boundary conditions'), row '4 × 8', column 'K = 2'",
           "reported_as": "−0.7617 (energy per site; caption: 'The energy sampling errors are around 0.0003')",
           "conversion": "-0.7617 × 32 = -24.3744 (Hubbard stored as total = per site × N)",
-          "note": "4 × 8 under PBC, nh = 0.125 (M = 7N/8 = 28 electrons), U = 8: instance rectangular-4x8_32_P_14_8, not the _PO_ (PBC-OBC) instance. The same row's HFDS cell −0.7633 (= VarBench HFDS row −24.426/32 = −0.76331, = HFDS SI Table IV PBC-PBC −0.7633(7)) fixes the cluster and convention. bound_type variational. sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
-          "source_entry": "VP6-arxiv-2606-00924#14 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "4 × 8 under PBC, nh = 0.125 (M = 7N/8 = 28 electrons), U = 8: instance rectangular-4x8_32_P_14_8, not the _PO_ (PBC-OBC) instance. The same row's HFDS cell −0.7633 (= VarBench HFDS row −24.426/32 = −0.76331, = HFDS SI Table IV PBC-PBC −0.7633(7)) fixes the cluster and convention. bound_type variational. sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
+          "source_entry": "VP6-arxiv-2606-00924#14 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -370,8 +390,8 @@
           "location": "SM Table II, row '8 x 4, U/t=8, n=0.875', column 'NNB'",
           "reported_as": "-0.755 ± 4 × 10^-5 (energy per site)",
           "conversion": "-0.755 x 32 = -24.16; sigma 4e-5 x 32 = 0.00128",
-          "note": "Second reading, from the published paper and its Supplemental Material: value and bar agree. Neither states the boundary conditions of the L x 4 runs; the only boundary words belong to reference values: DMRG '(PBC, open)' for the 4 x infinity system (main text, ref. [65]) and, for 16 x 4, 'the twist-averaged boundary condition AFQMC result of -49.088' (SM Sec. IV; LeBlanc et al., PRX 5, 041041), a periodic reference. Periodic in both directions is inferred: the 8 x 4 energy (-0.755 per site) fits the fully periodic cluster and not the cylinder (HFDS: -0.7633(7) periodic, -0.7309(6) cylinder), and three papers that quote these runs place them on fully periodic lattices (arXiv:2111.10420v2 Fig. 4(b), arXiv:2606.00924v1 Table IV, arXiv:2308.11823v6 Table III). Accepted as periodic (ruling D1, Tristan 2026-10-03).",
-          "source_entry": "VP6-arxiv-2606-00924#20 (qmbl-verify 2026-09-29, ambiguous); triage D1; ruling D1, Tristan 2026-10-03 (accept PBC-PBC as inferred)"
+          "note": "Second reading, from the published paper and its Supplemental Material: value and bar agree. Neither states the boundary conditions of the L x 4 runs; the only boundary words belong to reference values: DMRG '(PBC, open)' for the 4 x infinity system (main text, ref. [65]) and, for 16 x 4, 'the twist-averaged boundary condition AFQMC result of -49.088' (SM Sec. IV; LeBlanc et al., PRX 5, 041041), a periodic reference. Periodic in both directions is inferred: the 8 x 4 energy (-0.755 per site) fits the fully periodic cluster and not the cylinder (HFDS: -0.7633(7) periodic, -0.7309(6) cylinder), and three papers that quote these runs place them on fully periodic lattices (arXiv:2111.10420v2 Fig. 4(b), arXiv:2606.00924v1 Table IV, arXiv:2308.11823v6 Table III). Accepted as periodic (ruling D1, 2026-10-03).",
+          "source_entry": "VP6-arxiv-2606-00924#20 (qmbl-verify 2026-09-29, ambiguous); triage D1; ruling D1, 2026-10-03 (accept PBC-PBC as inferred)"
         }
       },
       "corrections": [
@@ -519,7 +539,7 @@
           "reported_as": "\"compared to the variance extrapolated “ground truth” energy of −0.768416\" (per site, units of t)",
           "conversion": "-0.768416 x 32 = -24.589312; no sigma printed",
           "note": "4 x 8 PBC, U = 8, t = 1, delta = 1/8, own computation, preprint. Extrapolated, not a bound, as stored; no error bar printed. The 4 x 8 fit (Fig. 5a) runs through 'the optimized symmetries at various nh', so the shared method string's 'NNBF + symmetrized variants' is the 4 x 16 recipe; the method field NNBF and the class are right. Not a duplicate.",
-          "source_entry": "VP13-hubbard-j1j2-heisenberg#15 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP13-hubbard-j1j2-heisenberg#15 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -570,7 +590,17 @@
           "reported_as": "-0.7591 (energy per site, units of t, p = 1)",
           "conversion": "-0.7591 x 32 = -24.2912 (stored -24.2912)",
           "note": "PBC, U = 8, N_up = N_dn, own computation, one Lanczos step on the VMC state: variational. No error bar or variance printed (sigma null stays). peer_reviewed true correct (Phys. Rev. B 109, 245107 (2024)); the reference string lacks the authors (Zhou, Zhou & Liang). 28 electrons, Nf = 14 per spin.",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#41 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#41 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 109, 245107 (2024), sources/journal/prb109-245107.pdf, sha256 52a11b5f (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.11823v6 (qmbl/sources/2308.11823.txt): Table III identical (journal caption adds 'and U = 8' and AFQMC error bars on the n = 1 reference column)",
+          "location": "Table III (p. 245107-6), 'energies (per site) of the Fermi-Hubbard model on rectangular lattices with the PBC and U = 8 ... All energy results for BW1 and BW2 are evaluated using p = 1 wave functions', row n = 0.875, 4 x 8, column BW1",
+          "reported_as": "−0.7591 per site",
+          "conversion": "-0.7591 x 32 = -24.2912",
+          "note": "PBC, U = 8, t = 1, H with U n_up n_dn (Eq. 18, no shift); filling n = 0.875 -> Nf per spin as in the instance; one Lanczos step (p = 1) on the tensor-backflow state, variational; evaluated with 48 000 MC samples, no error bar printed. Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#63"
         }
       },
       "compute": {
@@ -621,7 +651,17 @@
           "reported_as": "-0.7633 (energy per site, units of t, p = 1)",
           "conversion": "-0.7633 x 32 = -24.4256 (stored -24.4256)",
           "note": "PBC, U = 8, N_up = N_dn, own computation, one Lanczos step on the VMC state: variational. No error bar or variance printed (sigma null stays). peer_reviewed true correct (Phys. Rev. B 109, 245107 (2024)); the reference string lacks the authors (Zhou, Zhou & Liang). Equal at the printed digits to the Ref.2 (HFSD) cell -0.7633 of the same row (VarBench HFDS row -24.426), but it is the paper's own BW2 column (v4 printed -0.7637 there; v5 re-evaluated every cell by 1-4e-4): not a duplicate.",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#42 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#42 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 109, 245107 (2024), sources/journal/prb109-245107.pdf, sha256 52a11b5f (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.11823v6 (qmbl/sources/2308.11823.txt): Table III identical (journal caption adds 'and U = 8' and AFQMC error bars on the n = 1 reference column)",
+          "location": "Table III (p. 245107-6), 'energies (per site) of the Fermi-Hubbard model on rectangular lattices with the PBC and U = 8 ... All energy results for BW1 and BW2 are evaluated using p = 1 wave functions', row n = 0.875, 4 x 8, column BW2",
+          "reported_as": "−0.7633 per site",
+          "conversion": "-0.7633 x 32 = -24.4256",
+          "note": "PBC, U = 8, t = 1, H with U n_up n_dn (Eq. 18, no shift); filling n = 0.875 -> Nf per spin as in the instance; one Lanczos step (p = 1) on the tensor-backflow state, variational; evaluated with 48 000 MC samples, no error bar printed. Equal at 4 digits to the HFDS row -24.426(2) (PNAS 119, e2122059119), which the same table prints in its 'Ref. [2]' column as -0.7633; BW2 is the paper's own column, so this is a coincidence of two methods, not a duplicate. Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#64"
         }
       },
       "compute": {

@@ -41,6 +41,17 @@
           "conversion": "stored as printed (total): energy -123.99; sigma 3 x 1e-2 = 0.03",
           "note": "Value, sigma, cluster (12 x 12, N = 144), boundary (PBC-APBC = periodic x, antiperiodic y = VarBench PA), filling (half filling, N_up = N_dn = 72), U = 4, t = 1 and bound_type (sign-free ground-state AFQMC, tau = 0.01, stated numerically exact -> exact (stochastic)) agree with the source; Hamiltonian identical to VarBench's (no constant shift); dof 144 = N_up + N_dn and einf 144 = U N_up N_dn / N; own computation, peer reviewed (PRB 94, 085103). Same cell in v1 PDF, v2 PDF and v2 HTML. Table row check: E - (P + K) = 0 (P = 72.96(2), K = -196.95(2), 0 sigma). No other row on the instance carries this number (no duplicate).",
           "source_entry": "VP3-arxiv-1605-09421#9 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "journal PDF (PRB 94, 085103) and arXiv:1605.09421v2 PDF, both pypdf layout mode, Table IV E rows parsed by column position with node; no LLM transcription",
+          "location": "Appendix (Finite-size data at half-filling), Table IV, p. 085103-11, row 12 x 12 E, column U = 4 PBC-APBC",
+          "reported_as": "-123.99(3) (total ground-state energy, units of t; \"Statistical errors are on the last digit and are indicated in parenthesis\")",
+          "conversion": "stored as printed (total): energy -123.99; sigma 0.03",
+          "version_read": "published PDF Phys. Rev. B 94, 085103 (2016) (published 4 Aug 2016), sources/journal/prb94-085103.pdf, sha256 3e2a87a9; no Supplemental Material listed on the APS abstract page; compared with arXiv:1605.09421v2 (sources/arxiv-1605.09421/latest.pdf, sha256 227f31f5)",
+          "note": "Journal and arXiv v2 print the same cell (-123.99(3)); no difference between versions. Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + U sum n_up n_dn, no constant shift (same as VarBench). 12 x 12 square, N = 144, PBC-APBC = periodic along x, antiperiodic along y (Sec. IV A) = QMBL PA, half filling N_up = N_dn = 72 (spin-balanced, n = 1), U = 4. Sign-free ground-state AFQMC, tau = 0.01 with Trotter error below the statistical error (Sec. II B), stated numerically exact at half filling (Sec. IV) -> exact (stochastic) with sigma. Own computation; peer reviewed, reference string correct. dof 144, einf 144 = U N/4 consistent. No duplicate: no other row on the instance carries this number.",
+          "source_entry": "JP3-arxiv-1605-09421#9"
         }
       },
       "compute": {

@@ -7,7 +7,7 @@ Conventions are VarBench's (vendor/varbench/<Model>/README.md), stored energies 
   t-V (spinless)      H = -sum_<ij> (c+_i c_j + h.c.) + V sum_<ij> n_i n_j
   single-band Anderson impurity: e0 n_d + U n_du n_dd + sum_l eps_l n_l + sum_l (V_l d+ c_l + h.c.), per spin,
       bath parameters from VarBench's HamParams/<model>.h5, U from its run scripts.
-Only particle number or total Sz is conserved (Tristan, 2026-09-24): no lattice symmetry, so the
+Only particle number or total Sz is conserved (2026-09-24): no lattice symmetry, so the
 cost is that of plain sparse Lanczos in a standard tool. Every build is checked against the stored
 exact energy by run_ed.py before its cost counts.
 """

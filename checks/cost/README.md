@@ -9,7 +9,7 @@ public code, and attaches each run as **a row of its own** with `computed_by: "q
 a paper's number: it is QMBL's implementation, QMBL's hyperparameters and QMBL's budget,
 and the row says so in its method string. Nothing here is attached to anyone else's row.
 
-## Protocol (Tristan, 2026-09-21)
+## Protocol (2026-09-21)
 
 - **Hardware.** One NVIDIA A100 80 GB PCIe for the neural states (the job asks for the card
   by its 80 GB of memory and checks it; a request by type alone once landed on a 40 GB card);
@@ -108,11 +108,11 @@ and the row says so in its method string. Nothing here is attached to anyone els
     own CPU time and CPU time / (wall-clock × cores); the clock of its cores, sampled every
     30 s; the node's load average against its core count; and for a GPU run, the GPU's SM clock,
     utilisation and power.
-  - **All 14 rows were rerun under v1.4 (Tristan, 2026-09-24)**, so every row carries these
+  - **All 14 rows were rerun under v1.4 (2026-09-24)**, so every row carries these
     numbers. The optimisation, sampling and evaluation are unchanged. The DMRG reruns also
     record TeNPy's Lanczos count, which the FLOP model needs.
 
-- **2026-09-25: a configuration run more than once is stored as its best run** (Tristan). Runs
+- **2026-09-25: a configuration run more than once is stored as its best run**. Runs
   of one configuration with the same seed differ, because XLA's GPU arithmetic is not
   deterministic.
   - **Where it matters:** on triangular 36 the difference decides whether the GCNN blows up
@@ -123,13 +123,13 @@ and the row says so in its method string. Nothing here is attached to anyone els
   - **What the row says:** its note gives the number of runs, not their spread. v1.3 runs are
     not candidates, because they lack the hardware record.
 
-- **2026-09-25 (v1.5), the size ladder (Tristan, 2026-09-24).** To read cost against system
+- **2026-09-25 (v1.5), the size ladder (2026-09-24).** To read cost against system
   size, every ansatz above runs on J1-J2 at J2 = 0.5 on the periodic L x L squares, L = 4, 6,
   8, 10, 12, 14, 16, under the protocol unchanged (the same sampler, samples, 2000 steps,
   optimizer and evaluation at every size), and DMRG on 6 x 6, 8 x 8 and 12 x 12 on 8 CPU
   cores as above.
   - **The neural states run on one NVIDIA H100 NVL 96 GB of a group host**, not on the A100s
-    of the first batch: their queue is the bottleneck. Tristan allowed one such card by day for this
+    of the first batch: their queue is the bottleneck. the maintainer allowed one such card by day for this
     ladder beyond the host's day cap (2026-09-24); since 2026-09-28 the host has no cap for
     our jobs at all (a card only after 20 min idle). One card, one run after another
     (`h100/ladder.sh`, deployed by `h100/deploy.sh` with NetKet 3.22.4, jax 0.8.3 and flax
@@ -149,7 +149,7 @@ and the row says so in its method string. Nothing here is attached to anyone els
     rows made before stand; the two 16 x 16 runs are rerun from the start.
   - **Where it shows.** The runs are rows (`computed_by: qmbl`) in the table and in "The best
     published energies, by cost". The front-page section "What the cost grows to with the lattice"
-    (`scripts/size_cost.mjs`, 2026-09-29) was removed on 2026-10-06 (Tristan).
+    (`scripts/size_cost.mjs`, 2026-09-29) was removed on 2026-10-06.
 
 ## What a run becomes
 
@@ -164,7 +164,7 @@ reading RULES.md 8.2 gives a VarBench baseline.
 ## The forward pass, counted (2026-09-29)
 
 The FLOP estimate (DATA.md, `nqs-v2`) models one forward pass of a network as
-2 × c_x × parameters × reuse. For QMBL's own networks that pass is counted instead (Tristan,
+2 × c_x × parameters × reuse. For QMBL's own networks that pass is counted instead (
 2026-09-29, after arXiv:2606.02794 measured theirs with JAX's FLOP counter).
 
 - **How.** `forward_flops.py` builds each network exactly as `run_nqs.py` does, lets JAX trace
@@ -216,7 +216,7 @@ arithmetic.
 - **The Jacobian** costs 3.5-10 forward passes per sample, which `nqs-v2` does not count.
   Against the 290-900 forward passes per sample that local energies and proposals take on
   these instances, that is 0.4-3 %.
-- **Applied (Tristan, 2026-09-29).** `add_cost_runs.mjs` attaches each run's counted SR step
+- **Applied (2026-09-29).** `add_cost_runs.mjs` attaches each run's counted SR step
   (`evaluation.sr_counted`: the Jacobian, and the dense solve or the set-up of conjugate
   gradients, whose iterations the runs do not log) and `flops.mjs` uses it. Published rows get
   their SR matrix sized by the Jacobian mode read from their code (DATA.md, `evaluation.jacobian`).

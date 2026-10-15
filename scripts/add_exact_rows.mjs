@@ -181,7 +181,7 @@ for (const [L, printed] of SANDVIK_TABLES.cyl) {
     version_read: "arXiv:2601.20189v2, HTML (caption alttext, Sec. IV) and PDF; J. Stat. Mech. (2026) 043101",
     conversion, checked_on: "2026-09-29",
     reason: `Built with the bond count Table 3's caption prints, N_b = 2L^2 - L = ${NbCaption}, which counts only the bonds along the open direction; the ${L} x ${2 * L} cylinder has 4L^2 - L = ${Nb}. The published value was about half the energy (E/N ${(-v * NbCaption / N).toFixed(5)} in S.S units, above the Neel product state); the printed E0/N_b is per true bond, since Fig. 8 fits all three boundary conditions to one infinite-size E0/N_b.`,
-    source_entry: "qmbl-verify 2026-09-16 P4-ours-exact-0915; second reading of the caption, Sec. IV and Fig. 8 on 2026-09-29; fixed on Tristan's go-ahead, 2026-09-29",
+    source_entry: "qmbl-verify 2026-09-16 P4-ours-exact-0915; second reading of the caption, Sec. IV and Fig. 8 on 2026-09-29; fixed on approval, 2026-09-29",
     from,
   });
   put(`Heisenberg/rectangular-${L}x${2 * L}_${N}_PO`,
@@ -224,7 +224,7 @@ put("Heisenberg/pyrochlore-2x2x2_32_P",
 // state. Two codes on an AMD EPYC 9654 server, 2026-09-29 (checks/hubbard-4x4-half-filling-ed/):
 // plain Lanczos over the whole fixed-(8, 8) space (165,636,900 states) and the factorised matvec
 // of checks/hubbard-u-labels/ed_check.py with ARPACK; they agree to 2.5e-12. By Lieb's theorem
-// the ground state is the unique singlet, in the (8, 8) sector. Ruled 2026-09-30 (Tristan). The
+// the ground state is the unique singlet, in the (8, 8) sector. Ruled 2026-09-30. The
 // U = 8 quote is removed in removals.mjs; the U = 4 quote, -0.85137 per site, is this energy
 // rounded to its printed digits, so add_allresults_rows.mjs's duplicate check skips it as the
 // exact row already carried.
@@ -249,7 +249,7 @@ for (const [U, energy, a, b, perSite, quoted, producer, fate] of [
 // 1.25e-3 lower in S.S units, found again in a second basis (the C2 subgroup's even sector, A+ + B+,
 // 861,818,918 states) to 2.2e-15; C4's E pair lies higher, and QMBL reproduces the printed A+ value
 // (checks/j1j2-40-sector-ed/). Momenta q != 0 were not diagonalised; the paper puts the ground state at
-// q = (0, 0). Ruled 2026-10-02 (R3) and 2026-10-03 (Tristan). The A+ row is removed in removals.mjs.
+// q = (0, 0). Ruled 2026-10-02 (R3) and 2026-10-03. The A+ row is removed in removals.mjs.
 put("J1J2/square_40_P_0.6",
   { model: "J1J2", lattice: "square", n_sites: 40, boundary: "P", params: { J2: 0.6 }, dof: 40, einf: 0 },
   { energy: -76.73971980261, sigma: null,
@@ -262,7 +262,7 @@ put("J1J2/square_40_P_0.6",
 console.log("batch B2: 4 exact rows computed by QMBL (pyrochlore-2x2x2_32_P; Hubbard 4x4 at half filling, U = 4 and 8; J1-J2 40-site, J2 = 0.6)");
 
 // Batch B3: exact diagonalizations QMBL ran itself where no published exact energy is carried
-// (Tristan, 2026-10-09: an instance exact diagonalization reaches gets its exact energy, as a row
+// (2026-10-09: an instance exact diagonalization reaches gets its exact energy, as a row
 // QMBL computed). J1J2/square_36_P_0.45, the 6x6 torus: ed_sym.py of checks/exact-recompute-2026-09/
 // over the sectors k = (0,0) and (pi,pi), each C4v irrep, even spin inversion, on an AMD EPYC 9654
 // server, 2026-09-28; the lowest level is k = (0,0) A1, found again in a second basis (the C2v axes
@@ -277,7 +277,7 @@ put("J1J2/square_36_P_0.45",
     method: "Exact diagonalization", why: "Lanczos exact diagonalization in the symmetry sectors of the 6x6 torus, computed by QMBL; deterministic",
     read: "ed_sym.py (numba matrix-free Lanczos in the sectors of the torus translations, a point group and spin inversion; tol 1e-9 with a second pass) at k = (0,0) and (pi,pi), every C4v irrep, even spin inversion, 2026-09-28, and in the C2v axes group's even sector at k = (0,0) (A1 + B1), 2026-10-09, an AMD EPYC 9654 server; results in checks/exact-recompute-2026-09/results/",
     reported: "-74.2546644341862 (C4v, k = (0,0), A1; 15,804,956 states; residual 6.0e-10) | -74.25466443418684 (C2v axes, k = (0,0), A1 + B1; 31,601,346 states; residual 4.0e-10)",
-    note: "Pauli total; E/N = -0.515657392 in S.S units. Lowest of the eight C4v sectors computed; the next is -71.9586017 (k = (0,0), B1). The two bases agree to 6.4e-13. The same code reproduces the exact rows at J2 = 0.5 to 12 digits and the printed 36-site values of Schulz, Ziman & Poilblanc at 0.2, 0.55 and 0.65 (checks/README.md, exact-recompute-2026-09). Chen et al. quote -0.51565739 at this coupling, which matches to 1e-8, citing Schulz et al., who have no J2 = 0.45 row; Golubev et al. (arXiv:2606.04558, Table I) print an ED value 6.1e-7 below it (SWEEP.md). No published exact row is carried, so QMBL's stands (Tristan, 2026-10-09).",
+    note: "Pauli total; E/N = -0.515657392 in S.S units. Lowest of the eight C4v sectors computed; the next is -71.9586017 (k = (0,0), B1). The two bases agree to 6.4e-13. The same code reproduces the exact rows at J2 = 0.5 to 12 digits and the printed 36-site values of Schulz, Ziman & Poilblanc at 0.2, 0.55 and 0.65 (checks/README.md, exact-recompute-2026-09). Chen et al. quote -0.51565739 at this coupling, which matches to 1e-8, citing Schulz et al., who have no J2 = 0.45 row; Golubev et al. (arXiv:2606.04558, Table I) print an ED value 6.1e-7 below it (SWEEP.md). No published exact row is carried, so QMBL's stands (2026-10-09).",
     source: "qmbl-verify-2026-09-28", checked: "2026-09-28" });
 console.log("batch B3: 1 exact row computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45)");
 

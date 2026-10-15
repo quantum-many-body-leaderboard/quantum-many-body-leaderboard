@@ -163,7 +163,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 2e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6735047380 and SE 2.08e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 6.58e-6 per site (33x the bar); propagating each run's Monte-Carlo error through the fit gives 2.97e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6734900500 the row sits below by 1.47e-5 per site: 73 printed sigma, 2.2 bootstrap SD, 0.5 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 8) prints −0.6735047(2), x 4 x 64 = -172.4172032.",
-    "source_entry": "VP7-arxiv-2502-17144#46 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#46 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -173,7 +173,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 5e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6715950003 and SE 4.61e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.46e-5 per site (29x the bar); propagating each run's Monte-Carlo error through the fit gives 3.06e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6715526600 the row sits below by 4.23e-5 per site: 85 printed sigma, 2.9 bootstrap SD, 1.4 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 10) and Table V (periodic 10 x 10) print −0.6715950(5), x 4 x 100 = -268.638.",
-    "source_entry": "VP7-arxiv-2502-17144#7 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#7 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -183,7 +183,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 1e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6707008121 and SE 1.15e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 3.63e-6 per site (36x the bar); propagating each run's Monte-Carlo error through the fit gives 3.23e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6706819200 the row sits below by 1.89e-5 per site: 189 printed sigma, 5.2 bootstrap SD, 0.6 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 12) prints −0.6707008(1), x 4 x 144 = -386.3236608.",
-    "source_entry": "VP7-arxiv-2502-17144#14 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#14 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -193,7 +193,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 5e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6703091913 and SE 4.88e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.54e-5 per site (31x the bar); propagating each run's Monte-Carlo error through the fit gives 2.95e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6702322500 the row sits below by 7.69e-5 per site: 154 printed sigma, 5.0 bootstrap SD, 2.6 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 14) prints −0.6703092(5), x 4 x 196 = -525.5224128.",
-    "source_entry": "VP7-arxiv-2502-17144#17 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#17 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -203,7 +203,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 6e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6697419856 and SE 4.83e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.53e-5 per site (25x the bar); propagating each run's Monte-Carlo error through the fit gives 2.00e-5. The printed bar (6) is one unit above the notebook's own 4.83e-7; the energy digits reproduce. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6697196700 the row sits below by 2.23e-5 per site: 37 printed sigma, 1.5 bootstrap SD, 1.1 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 20) prints −0.6697420(6), x 4 x 400 = -1071.5872.",
-    "source_entry": "VP7-arxiv-2502-17144#40 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#40 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -213,7 +213,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 5e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6696126658 and SE 4.99e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.58e-5 per site (32x the bar); propagating each run's Monte-Carlo error through the fit gives 2.06e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6696043400 the row sits below by 8.36e-6 per site: 17 printed sigma, 0.5 bootstrap SD, 0.4 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 24) prints −0.6696127(5), x 4 x 576 = -1542.7876608.",
-    "source_entry": "VP7-arxiv-2502-17144#43 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#43 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -223,7 +223,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 4e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6695579778 and SE 4.09e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.29e-5 per site (32x the bar); propagating each run's Monte-Carlo error through the fit gives 1.72e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6695449600 the row sits below by 1.30e-5 per site: 33 printed sigma, 1.0 bootstrap SD, 0.8 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 28) prints −0.6695580(4), x 4 x 784 = -2099.733888.",
-    "source_entry": "VP7-arxiv-2502-17144#48 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#48 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -236,7 +236,7 @@ export const DEFECTS = [
   },
   // qmbl-verify 2026-09-29, apply step (commit A, 2026-09-30): flags from proposals a skeptic
   // upheld. The sigma-understated flags on arXiv:2502.17144's zero-variance extrapolations follow ruling 6
-  // (Tristan, 2026-09-30): the printed bar is the standard error of the bootstrap mean, and the
+  // (2026-09-30): the printed bar is the standard error of the bootstrap mean, and the
   // row keeps it. Where the skeptic refuted only the propagated error, that number is left out;
   // the seven rows flagged before carry the second reading's finding above.
   {
@@ -287,7 +287,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 5e-8 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6286411361 and SE 4.84e-8 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.53e-6 per site (31x the bar); propagating each run's Monte-Carlo error through the fit gives 1.30e-5. Against the SSE (Sandvik, via arXiv:2605.13807 Table 2) value -0.6286561000 the row sits above by 1.50e-5 per site: 299 printed sigma, 9.8 bootstrap SD, 1.2 propagated sigma. Value and bound_type (extrapolated) are right: Table V (open 10 x 10, This work (zero-variance)) prints −0.62864114(5), x 4 x 100 = -251.456456. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-    "source_entry": "VP7-arxiv-2502-17144#5 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#5 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -297,7 +297,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 4e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6694876561 and SE 3.63e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.15e-5 per site (29x the bar); propagating each run's Monte-Carlo error through the fit gives 1.74e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6695113300 the row sits above by 2.36e-5 per site: 59 printed sigma, 2.1 bootstrap SD, 1.4 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 32) prints −0.6694877(4), x 4 x 1024 = -2742.2216192. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-    "source_entry": "VP7-arxiv-2502-17144#11 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#11 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -307,7 +307,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 9e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6699686923 and SE 8.11e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 2.57e-5 per site (29x the bar); propagating each run's Monte-Carlo error through the fit gives 2.71e-5. The printed bar (9) is one unit above the notebook's own 8.11e-7; the energy digits reproduce. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6699766000 the row sits above by 7.90e-6 per site: 9 printed sigma, 0.3 bootstrap SD, 0.3 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 16) prints −0.6699687(9), x 4 x 256 = -686.0479488. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-    "source_entry": "VP7-arxiv-2502-17144#23 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#23 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -317,7 +317,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 5e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6697819470 and SE 4.57e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.44e-5 per site (29x the bar); propagating each run's Monte-Carlo error through the fit gives 2.27e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6698204300 the row sits above by 3.85e-5 per site: 77 printed sigma, 2.7 bootstrap SD, 1.7 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 18) prints −0.6697819(5), x 4 x 324 = -868.0373424. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-    "source_entry": "VP7-arxiv-2502-17144#29 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#29 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -327,7 +327,7 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 1e-8 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 2, 4 runs, OLS, np.random.seed(100)): intercept -0.6035149588 equals the authors' zero_var_energies.pkl and the printed value to its digits. The fit has 4 points but 2 distinct runs (at L = L0 = 6 the rate r does not enter Eq. (6), so the r = 0.25 and r = 0.475 runs are one run counted twice), so the line passes through both, the residuals are zero, the wild bootstrap returns the same intercept 1000 times (SD 2.2e-16, SE 7.1e-18, stored in zero_var_energies.pkl as 7.02e-18) and the printed (1) is that zero shown as one unit of the last digit: there is no uncertainty estimate at all. Against the ED (VarBench) value -0.6035218345 the row sits above by 6.87e-6 per site: 687 printed sigma. Value and bound_type (extrapolated) are right: Table V (open 6 x 6, This work (zero-variance)) prints −0.60351496(1), x 4 x 36 = -86.90615424. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-    "source_entry": "VP7-arxiv-2502-17144#33 (qmbl-verify 2026-09-29; skeptic refuted; only the propagated error was refuted and is dropped from the finding; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#33 (qmbl-verify 2026-09-29; skeptic refuted; only the propagated error was refuted and is dropped from the finding; ruling 6, 2026-09-30)"
   },
   {
     "match": {
@@ -337,9 +337,9 @@ export const DEFECTS = [
     },
     "flag": "sigma-understated",
     "finding": "The printed bar 7e-8 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6788717699 and SE 6.80e-8 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 2.15e-6 per site (31x the bar). The fit has 6 points but 4 distinct runs (at L = 6 the s = 1 and s = 2 runs are identical for both rates). Against the ED (VarBench) value -0.6788721500 the row sits above by 3.80e-7 per site: 5 printed sigma, 0.2 bootstrap SD. Value and bound_type (extrapolated) are right: Table III (L = 6) and Table V (periodic 6 x 6) print −0.67887177(7), x 4 x 36 = -97.75753488. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-    "source_entry": "VP7-arxiv-2502-17144#38 (qmbl-verify 2026-09-29; skeptic refuted; only the propagated error was refuted and is dropped from the finding; ruling 6, Tristan 2026-09-30)"
+    "source_entry": "VP7-arxiv-2502-17144#38 (qmbl-verify 2026-09-29; skeptic refuted; only the propagated error was refuted and is dropped from the finding; ruling 6, 2026-09-30)"
   },
-  // qmbl-verify 2026-09-29, handoff (reader, 2026-10-02), ruling R1 (Tristan, 2026-10-02): a quote whose
+  // qmbl-verify 2026-09-29, handoff (reader, 2026-10-02), ruling R1 (2026-10-02): a quote whose
   // number the cited paper does not hold as read, flagged as the Shallow CNN row was (VP13#52).
   {
     "match": {
@@ -349,9 +349,9 @@ export const DEFECTS = [
     },
     "flag": "quote-not-in-primary",
     "finding": "Quote check in the citing paper passed: arXiv:2602.02665v1 Table I, 30 x 30 block, prints 'Jastrow-Gutzwiller -0.545348 [71]' with no error bar (-0.545348 x 4 x 900 = -1963.2528, the stored energy); [71] = E. Ghorbani, L. F. Tocchio and F. Becca, Phys. Rev. B 93, 085111 (2016). In the cited paper as read (arXiv:1512.03356 v1 and v2, VP15; the published PRB 93, 085111 PDF, VJ2), I could not locate -0.545348 or any 30 x 30 cluster: its tables are 18 x 18 ('All data are presented on the 18 x 18 cluster'), its 6 x 6 figures carry the exact Lanczos energies, and no thermodynamic-limit or size-scaling energy of the isotropic Jastrow-Gutzwiller state is printed. Also read without a hit: Iqbal, Hu, Thomale, Poilblanc & Becca, arXiv:1601.06018v4 (VMC 6x6 -0.548025(3), 2D limit -0.545321(7)); Ferrari & Becca, arXiv:1903.05691v3; a web search for '0.545348' (only arXiv:2602.02665). The citing paper's acknowledgements thank F. Becca 'for useful discussions' only. The row carries a number its cited source does not contain, the case of the Shallow CNN row on J1J2/square_100_P_0.5 (VP13#52), which commit A flagged 'quote-not-in-primary' rather than removing it. Not a record holder on the instance. Resolution: the authors of arXiv:2602.02665 or F. Becca to say where -0.545348 is printed, or removal under RULES.md 8 ('A cited number that cannot be found in the cited source is not admissible').",
-    "source_entry": "VJ2-journal-other#54, VP15-hubbard-j1j2-heisenberg#32 (qmbl-verify 2026-09-29, not_found), as RH2#11 (handoff reader, triage of 2026-10-02) by precedent VP13#52; ruling R1, Tristan 2026-10-02"
+    "source_entry": "VJ2-journal-other#54, VP15-hubbard-j1j2-heisenberg#32 (qmbl-verify 2026-09-29, not_found), as RH2#11 (handoff reader, triage of 2026-10-02) by precedent VP13#52; ruling R1, 2026-10-02"
   },
-  // qmbl-verify 2026-09-29, handoff (2026-10-02), ruling E9 (Tristan): a quote derived from a relative error.
+  // qmbl-verify 2026-09-29, handoff (2026-10-02), ruling E9: a quote derived from a relative error.
   {
     "match": {
       "instance": "Heisenberg/triangular_36_P",
@@ -359,8 +359,8 @@ export const DEFECTS = [
       "energy": -79.632
     },
     "flag": "quote-not-in-primary",
-    "finding": "Quote check in the citing paper passed: Roth & MacDonald, arXiv:2104.05085v3 Table I, prints 'NN + Gutzwiller [12] -0.553 N/A' (-0.553 x 144 = -79.632, the stored energy), with [12] = F. Ferrari, F. Becca and J. Carrasquilla, Neural Gutzwiller-projected variational wave functions, Phys. Rev. B 100, 125131 (2019), arXiv:1906.00463. In the cited paper as read (arXiv:1906.00463v2, layout and plain text searched for 0.55 and 0.56) I could not locate an energy per site for the 6 x 6 triangular lattice: Sec. V.C gives only the relative error ('from Delta E ~ 2.2% to Delta E ~ 1.4%') and Fig. 9 plots Delta E against N_alpha. -0.553 is a three-digit conversion of that relative error against the exact -0.5603734: -0.5603734 x (1 - 0.014) = -0.552528, and Delta E in [1.35%, 1.45%] gives -0.552808 to -0.552248. The row carries a precision nobody printed and no error bar: the case of the Shallow CNN row on J1J2/square_100_P_0.5 and of the Jastrow-Gutzwiller row on Heisenberg/triangular_900_P, flagged rather than removed (ruling E9, Tristan 2026-10-02). Resolution: Roth & MacDonald or Ferrari et al. to say where -0.553 is printed, or removal under RULES.md 8. It holds no record.",
-    "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#49 (qmbl-verify 2026-09-29, ambiguous); ruling E9, Tristan 2026-10-02"
+    "finding": "Quote check in the citing paper passed: Roth & MacDonald, arXiv:2104.05085v3 Table I, prints 'NN + Gutzwiller [12] -0.553 N/A' (-0.553 x 144 = -79.632, the stored energy), with [12] = F. Ferrari, F. Becca and J. Carrasquilla, Neural Gutzwiller-projected variational wave functions, Phys. Rev. B 100, 125131 (2019), arXiv:1906.00463. In the cited paper as read (arXiv:1906.00463v2, layout and plain text searched for 0.55 and 0.56) I could not locate an energy per site for the 6 x 6 triangular lattice: Sec. V.C gives only the relative error ('from Delta E ~ 2.2% to Delta E ~ 1.4%') and Fig. 9 plots Delta E against N_alpha. -0.553 is a three-digit conversion of that relative error against the exact -0.5603734: -0.5603734 x (1 - 0.014) = -0.552528, and Delta E in [1.35%, 1.45%] gives -0.552808 to -0.552248. The row carries a precision nobody printed and no error bar: the case of the Shallow CNN row on J1J2/square_100_P_0.5 and of the Jastrow-Gutzwiller row on Heisenberg/triangular_900_P, flagged rather than removed (ruling E9, 2026-10-02). Resolution: Roth & MacDonald or Ferrari et al. to say where -0.553 is printed, or removal under RULES.md 8. It holds no record.",
+    "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#49 (qmbl-verify 2026-09-29, ambiguous); ruling E9, 2026-10-02"
   },
 ];
 

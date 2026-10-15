@@ -1,7 +1,7 @@
 // Generate figures/energy-vs-compute*.svg, figures/energy-vs-parameters*.svg and one
 // figures/cost/<instance>*.svg per instance with enough costed energies: on one
 // instance, what the best published energies are at each cost. The question is not how
-// far a number sits from the exact answer but which results are the best ones (Tristan,
+// far a number sits from the exact answer but which results are the best ones (
 // 2026-09-16), so the axis is the energy itself and the frontier runs through whatever
 // holds it at each cost - an exact diagonalization with its CPU-hours as readily as a
 // variational bound with its GPU-hours. Panels are per instance, as energies of different
@@ -11,10 +11,10 @@
 // Three axes: hours, parameter count, and estimated FLOPs. A GPU-hour and a CPU core-hour
 // share the hours axis with different marks and are never converted into each other - the
 // reader sees the unit, and DATA.md forbids any equivalence. The FLOPs axis is an estimate
-// evaluated by flops.mjs from the stated parameter, sample and iteration counts (Tristan,
+// evaluated by flops.mjs from the stated parameter, sample and iteration counts (
 // 2026-09-21); it is drawn in its own figures and never on the hours axis, since turning
 // one into the other is the conversion DATA.md forbids. The per-instance figures are hours
-// (figures/cost/) and estimated FLOPs (figures/flops/): cost means compute (Tristan,
+// (figures/cost/) and estimated FLOPs (figures/flops/): cost means compute (
 // 2026-09-16), and they are what the site shows, on the front page behind a badge per
 // instance and in the instance's row of the table.
 //
@@ -67,7 +67,7 @@ function frontierOf(pts) {
 }
 
 // Square marks for CPU core-hours, circles for everything else. Every result is a mark and
-// only a mark (Tristan, 2026-09-23): no whisker for a derived cost, which the footnote counts
+// only a mark (2026-09-23): no whisker for a derived cost, which the footnote counts
 // instead. Same surface ring and filled/hollow convention as dot().
 function mark(t, x, y, color, filled, unit, href) {
   const out = [];
@@ -85,14 +85,14 @@ function mark(t, x, y, color, filled, unit, href) {
 // points named. Every result is a dot - an exact diagonalization or a QMC energy as much as
 // a variational one - and only a result with a cost can be placed; a record that states no
 // cost is named in a line of text under the axis, never drawn as a line across it
-// (Tristan, 2026-09-23). QMBL's own runs are all named, so none is read as published.
-// A mark is named by its method alone, its detail in the row's card on hover (Tristan,
+// (2026-09-23). QMBL's own runs are all named, so none is read as published.
+// A mark is named by its method alone, its detail in the row's card on hover (
 // 2026-09-29); QMBL's own runs keep "QMBL" in the name, so none is read as published
 // (2026-09-23). The colour says the kind of number.
 const markName = r => shortLabel({ ...r, method_detail: undefined, compute: undefined, bound_type: "variational", defect: undefined });
 
 // The figures whose energy axis is broken in two, the few high energies above and the crowd
-// below (Tristan, 2026-10-07, after option D of the paper's figure 2): picked by eye from the
+// below (2026-10-07, after option D of the paper's figure 2): picked by eye from the
 // 21 on which breaking it named the marks better or spread a crowd; on the others one scale
 // reads as well. Names as costFigureName, flopsFigureName and paramsFigureName give them.
 const BROKEN = new Set([
@@ -104,7 +104,7 @@ const brokenAxes = new Map();
 
 // An instance's own figure: every mark named in place where it can be. Where two or more
 // marks still find no room, their region is boxed and drawn again, enlarged, in an inset in
-// the plot's top right corner, a second crowd's in the top left (Tristan, 2026-09-29: no
+// the plot's top right corner, a second crowd's in the top left (2026-09-29: no
 // second panel under the plot). A figure in BROKEN takes, instead, the broken axis that names
 // its marks best - fewest numbered, then fewest names on lines, then the shortest lines, then
 // the most spread up the plot - and no inset. Returns the y the footnote starts at.
@@ -151,7 +151,7 @@ const stairs = (front, X, Y) => front.slice(1).flatMap((p, i) => {
 // mark where that covers nothing - no other mark, label or line, not the frontier, nothing in
 // `avoid`. In an instance's own figure (`nameAll`) a name with no such spot, or one that would
 // sit off its mark's row in a crowd, where it reads as a neighbour's, goes in a lane above or
-// below the mark with a vertical line to it (Tristan, 2026-09-29, in place of numbers and an
+// below the mark with a vertical line to it (2026-09-29, in place of numbers and an
 // enlarged panel); what is still left is numbered. Marks drawn as one, within 6 px, are named
 // together, a line per method in the order they lie from top to bottom ("ViT ×2" where two
 // share one). Every name links to its rows, so on the site hovering it shows their cards.
@@ -285,7 +285,7 @@ function layoutLabels({ pts, named, X, Y, front, left, right, top, bottom, nameO
     }
     // Numbered marks, left to right, the number in the first free spot touching the mark. The
     // number links to the mark's row as the mark does, so on the site hovering either shows
-    // the row's card, which names it; no key under the axis (Tristan, 2026-09-29).
+    // the row's card, which names it; no key under the axis (2026-09-29).
     const keyed = order.filter(it => !at.has(it)).flatMap(it => it.ps.map((p, i) => ({ p, mx: it.own[i][0], my: it.own[i][1] })))
       .sort((a, b) => a.mx - b.mx || a.my - b.my);
     keyed.forEach((kd, i) => {
@@ -341,7 +341,7 @@ const toRows = (rows, svg) => (rows.length > 1
 
 // The marks, each linked to its row; marks drawn as one, within 6 px (as layoutLabels groups
 // their names), all carry the whole pile, best first, so hovering whichever lies on top lists
-// every row under it, as its name does (Tristan, 2026-10-06).
+// every row under it, as its name does (2026-10-06).
 function drawMarks(t, parts, pts, X, Y) {
   const piles = [];
   for (const p of pts) {
@@ -572,7 +572,7 @@ function drawPanel(t, parts, inst, pts, { px, left, right, top, bottom, xLabel, 
     if (tag) { parts.push(text(r.x0 + 1, r.y0 - 4, tag, { size: 10, fill: t.muted, weight: 600 })); z.tagRect = { x0: r.x0, x1: r.x0 + 9, y0: r.y0 - 14, y1: r.y0 }; }
     drawInset(t, parts, inst, inBox, front.filter(p => inBox.includes(p)), frame, box, nameOf, tag ? `Box ${tag}, enlarged` : "The boxed region, enlarged");
   });
-  // An instance's own figure names every mark (Tristan, 2026-09-24: a dot without a name
+  // An instance's own figure names every mark (2026-09-24: a dot without a name
   // cannot be read); the small overview panels name the frontier only, where naming them
   // all piles the labels on each other.
   const hide = new Set(zooms.flatMap(z => z.inBox));
@@ -633,7 +633,7 @@ const HOURS_LEGEND = t => [
   { kind: "dot", color: t.series[3], label: "Exact" },
   { kind: "line", color: t.series[0], label: "Frontier" },
 ];
-// The marks, the derived hours and QMBL's own runs (Tristan, 2026-09-18 and 09-23): the
+// The marks, the derived hours and QMBL's own runs (2026-09-18 and 09-23): the
 // no-conversion rule and the bound kinds are said in the page text and the legend.
 function HOURS_FOOTER(all, overview = false) {
   const cpu = all.filter(p => p.cost.unit === "cpu").length, der = all.filter(p => p.cost.derived).length;
@@ -738,7 +738,7 @@ for (const { inst, pts } of flopsPanels) {
 }
 
 // Parameter count: the same construction on the ansatz size the paper prints, for the
-// instances with at least three such rows (Tristan, 2026-09-23), overview and one figure per instance.
+// instances with at least three such rows (2026-09-23), overview and one figure per instance.
 const PARAMS_LEGEND = t => [
   { kind: "dot", color: t.series[0], label: "Variational bound" },
   { kind: "dot", color: t.series[1], label: "Projected" },

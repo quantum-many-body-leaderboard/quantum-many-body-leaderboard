@@ -1,4 +1,4 @@
-// Results name the hardware, never the cluster, the node or the account (Tristan, 2026-09-29).
+// Results name the hardware, never the cluster, the node or the account (2026-09-29).
 // This removes the keys `host` and `slurm_partition` wherever they occur, reduces absolute paths
 // in a recorded command line (`argv`) to file names, and rewrites any other path into a run
 // directory as ~/agent-runs/...; in the committed job logs likewise. It is idempotent, and

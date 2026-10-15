@@ -100,8 +100,8 @@
           "version_read": "varbench/methods@ed31bb0 run script and program read as text; VarBench snapshot 390a21e and history (26f221f, 5285adc)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "Same program as the 4x4 VQE rows (ruling 2, Tristan 2026-09-30): the energy is the exact statevector expectation, and the stored sigma 0 is the uploader's statement that it has no statistical error. The fallback counted the string sampled, which made a sigma of 0 look like a sampled bar of zero (metric flag M6). Separate and still open: the linked script passes --j2=0.0, which builds the square lattice, so the link does not reproduce this triangular value (VB3#67, ambiguous). Not a record (ED and DMRG lie lower).",
-          "source_entry": "VB3-varbench-code-heisenberg#67 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "Same program as the 4x4 VQE rows (ruling 2, 2026-09-30): the energy is the exact statevector expectation, and the stored sigma 0 is the uploader's statement that it has no statistical error. The fallback counted the string sampled, which made a sigma of 0 look like a sampled bar of zero (metric flag M6). Separate and still open: the linked script passes --j2=0.0, which builds the square lattice, so the link does not reproduce this triangular value (VB3#67, ambiguous). Not a record (ED and DMRG lie lower).",
+          "source_entry": "VB3-varbench-code-heisenberg#67 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": true
         },
         {
@@ -112,8 +112,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked vqe.sh passes --j2=0.0, with which HeisenbergTriangle builds the 4x4 square lattice, not the triangular one (the run needs --j2=1.0); everything else checks, and the logged energy is the exact statevector expectation (VB3#67). The number is the uploader's own, printed in no paper the reader found, so it is cited to the dataset with the uploader named. Not a record. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB3-varbench-code-heisenberg#67 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked vqe.sh passes --j2=0.0, with which HeisenbergTriangle builds the 4x4 square lattice, not the triangular one (the run needs --j2=1.0); everything else checks, and the logged energy is the exact statevector expectation (VB3#67). The number is the uploader's own, printed in no paper the reader found, so it is cited to the dataset with the uploader named. Not a record. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB3-varbench-code-heisenberg#67 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_16_P/vqe.sh)"
         }
       ],
@@ -289,7 +289,7 @@
         "reported_as": "| -33.5469 | 0.0034 | 12.0932 | 16 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_16_P/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -33.5469/(4 x 16) = -0.524170313",
         "note": "scripts/Heisenberg/triangular_16_P/vmc_rbm.sh: 'python3 vmc.py --ham heis_tri --boundary peri --sign mars --ham_dim 2 --L 4 --zero_mag --net rbm --seed 123 --show_progress' -> 4x4 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), periodic; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.001: the stored sigma is the error of that final estimate. 0.6752 above the exact -34.22205967006502. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered ad306c2 (2022-10-19, Dian Wu) as -33.5469 | 0.0034 | 12.0932 | RBM (alpha = 1); linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#69 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#69 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -344,7 +344,7 @@
         "reported_as": "| -33.0945 | 0.0027 | 7.37471 | 16 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_16_P/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -33.0945/(4 x 16) = -0.517101562",
         "note": "scripts/Heisenberg/triangular_16_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis_tri --boundary peri --sign mars --ham_dim 2 --L 4 --zero_mag --net jas --seed 123 --show_progress' -> 4x4 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), periodic; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.018: the stored sigma is the error of that final estimate. 1.1276 above the exact -34.22205967006502. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered ad306c2 (2022-10-19, Dian Wu) as -33.0945 | 0.0027 | 7.37471 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#70 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#70 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     }

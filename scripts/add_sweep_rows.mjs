@@ -3,7 +3,7 @@
 import fs from "node:fs";
 const CHECKED = "2026-09-13";
 const CNNMPS = { ref: "arXiv:2603.14425, Disentangling Tensor Network States with Deep Neural Networks", pr: false };
-// A number the CTWF paper quotes, not one it produced (Tristan, 2026-09-17): Sec. III of
+// A number the CTWF paper quotes, not one it produced (2026-09-17): Sec. III of
 // arXiv:2503.10462 gives -0.4976764(7) as the factored attention "with more samples Ns = 2^14
 // and more parameters Np = 434760 ... [48]", ref. [48] being a private communication, and the
 // authors' Zenodo CSV labels it "Improved factored attention (not shown in figure)". Table 1 of
@@ -21,7 +21,7 @@ const ADD = {
       note:TBL+' Claim: "the best energy obtained by CNN-MPS is -0.4976939(2) ... which is lower than the best previously reported result". Supersedes Chen & Heyl -0.4976921(4) as the record for this instance.' },
     { eps:-0.4976923, err:2e-7, m:"T-MPS", src:CNNMPS, note:TBL },
     { eps:-0.4976764, err:7e-7, m:"Factored-attention transformer (improved, Ns = 2^14, Np = 434760)", src:VRB, secondaryOf:"arXiv:2503.10462",
-      note:TBL+" Credited there to CTWF, but arXiv:2503.10462 Sec. III prints it as the factored attention of ref. [48] (private communication): \"With more samples Ns = 2^14 and more parameters Np = 434760, the factored attention is possible to reach variational energy -0.4976764(7) ... while still less accurate than CTWF\"; the authors' Zenodo CSV (10.5281/zenodo.14035975, sources/2503.10462-zenodo-10x10_J1J2.csv) lists it as \"Improved factored attention (not shown in figure), 434760, -0.4976764(7)\". Relabelled 2026-09-17 (Tristan)." },
+      note:TBL+" Credited there to CTWF, but arXiv:2503.10462 Sec. III prints it as the factored attention of ref. [48] (private communication): \"With more samples Ns = 2^14 and more parameters Np = 434760, the factored attention is possible to reach variational energy -0.4976764(7) ... while still less accurate than CTWF\"; the authors' Zenodo CSV (10.5281/zenodo.14035975, sources/2503.10462-zenodo-10x10_J1J2.csv) lists it as \"Improved factored attention (not shown in figure), 434760, -0.4976764(7)\". Relabelled 2026-09-17." },
   ]},
   "J1J2/square_256_P_0.5": { rows: [
     { eps:-0.4969140, err:5e-7, m:"CNN-MPS", src:CNNMPS, note:TBL+' Claim: "For L=16, CNN-MPS yields the lowest variational energy, -0.4969140(5), compared with the previously best reported value -0.4967163(8)".' },
