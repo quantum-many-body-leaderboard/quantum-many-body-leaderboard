@@ -73,7 +73,7 @@ const NAV = [
   ["/", "Leaderboard"],
   ["/instances/", "Table"],
 ];
-// Open Problems is a button at the very right of the menu, after Cite (Tristan, 2026-10-09).
+// Open Problems is a button at the very right of the menu, after Cite (2026-10-09).
 const opButton = url => (OPEN_PROBLEMS
   ? `<a href="${OPEN_PROBLEMS_URL}" class="op"${url.startsWith(OPEN_PROBLEMS_URL) ? ' aria-current="page"' : ""}>Open Problems</a>` : "");
 
@@ -95,7 +95,7 @@ for (const b of document.querySelectorAll("button.cite-btn")) b.addEventListener
 </script>`;
 
 // `css` is a page's own stylesheet, after the site's (open-problems.css). `ogTitle` is the
-// link-preview title where the page title alone would hide QMBL on an X card (Tristan, 2026-10-09).
+// link-preview title where the page title alone would hide QMBL on an X card (2026-10-09).
 function page({ url, title, description, body, wide = false, css = null, ogTitle = null }) {
   const head = title === null ? "QMBL" : `${title} &middot; QMBL`;
   return `<!doctype html>
@@ -453,7 +453,7 @@ const tabCss = (axes, groups, sliders, prefix = "") => [tabRules(`${prefix}cost-
   ...groups.map(([, figs], j) => tabRules(`${prefix}energy-${j}`, figs.length)), ...sliders.map(sliderRules)].join("\n");
 const TAB_CSS = tabCss(COMPUTE_AXES, ENERGY_FIGS, SLIDERS);
 
-// The same two sections on /open-problems/ (Tristan, 2026-10-09: "all figures just like on main
+// The same two sections on /open-problems/ (2026-10-09: "all figures just like on main
 // QMBL page"), for its instances: every energy figure in which one of them is drawn, shown whole
 // as here, solved sizes included, and the cost figures of those instances. Their switches have
 // ids of their own, op-, whose rules go into that page's own stylesheet (open-problems.css).
