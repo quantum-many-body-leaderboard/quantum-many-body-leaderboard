@@ -87,8 +87,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked vmc_gcnn.sh runs a two-layer GCNN over the ring's automorphism group, not the one-layer ReLU network symmetrised over translations that the method names; VarBench's own parameter file of the h = 1 state holds one real Dense layer (32 x 32 kernel and 32 biases) (VB4). The number is the uploader's own, so it is cited to the dataset with the uploader named. Not a record. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB4-tfising-tv#29 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked vmc_gcnn.sh runs a two-layer GCNN over the ring's automorphism group, not the one-layer ReLU network symmetrised over translations that the method names; VarBench's own parameter file of the h = 1 state holds one real Dense layer (32 x 32 kernel and 32 biases) (VB4). The number is the uploader's own, so it is cited to the dataset with the uploader named. Not a record. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB4-tfising-tv#29 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_1/vmc_gcnn.sh)"
         }
       ]
@@ -144,7 +144,7 @@
         "reported_as": "VarBench TFIsing/chain_32_P_1.md: Energy -40.75763 | Sigma 1.4e-4 | Energy Variance 0.01991942 | DOF 32 | Einf 0 | Method \"RBM (alpha = 1)\"",
         "conversion": "none (total energy, J units)",
         "note": "Script builds the instance (periodic chain of 32 sites, h = 1, Pauli TFIM) with nk.models.RBM(alpha = 1, log_cosh, float32; vmc.py lines 125-140); +0.00240 from the exact -40.76003249419223 (above it, as a variational energy must be). sigma check: sqrt(Var/2^20) = sqrt(0.01991942/1048576) = 1.38e-4 vs stored 0.00014 (vmc.py lines 268-270: final estimate with estim_size = 2^20 samples); variance is Var(H) of the total energy. The linked script was attached on 2024-07-30 (fdb4bfb Jastrow / 5047bfd RBM) to a number already in VarBench (10f5c12 (2022-07-11) as -40.7576, digits extended in af1d48f (2022-09-01)); vmc.py uses nk.operator.IsingJax (vmc.py line 78), so it is a later reimplementation of the baseline that documents the ansatz and protocol, not the output of the run that produced this number (no log in the methods repo). Value unchanged since 10f5c12; no value was changed and restored.",
-        "source_entry": "VB4-tfising-tv#18 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#18 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -313,7 +313,7 @@
         "reported_as": "VarBench TFIsing/chain_32_P_1.md: Energy -40.70126 | Sigma 5.3e-4 | Energy Variance 0.2877156 | DOF 32 | Einf 0 | Method \"Jastrow baseline\"",
         "conversion": "none (total energy, J units)",
         "note": "Script builds the instance (periodic chain of 32 sites, h = 1, Pauli TFIM) with nk.models.Jastrow (vmc.py lines 118-124); +0.0588 from the exact -40.76003249419223 (above it, as a variational energy must be). sigma check: sqrt(Var/2^20) = sqrt(0.2877156/1048576) = 5.24e-4 vs stored 0.00053 (vmc.py lines 268-270: final estimate with estim_size = 2^20 samples); variance is Var(H) of the total energy. The linked script was attached on 2024-07-30 (fdb4bfb Jastrow / 5047bfd RBM) to a number already in VarBench (59e621a (2022-09-13; earlier -40.69845(50) af1d48f)); vmc.py uses nk.operator.IsingJax (vmc.py line 78), so it is a later reimplementation of the baseline that documents the ansatz and protocol, not the output of the run that produced this number (no log in the methods repo). Value unchanged since 59e621a; no value was changed and restored.",
-        "source_entry": "VB4-tfising-tv#17 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#17 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     }

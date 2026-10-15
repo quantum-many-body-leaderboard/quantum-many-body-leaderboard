@@ -79,7 +79,7 @@
         "reported_as": "-182.065 | 0.005 |  (VarBench upload by L. F. Tocchio)",
         "conversion": "uploaded directly as totals (ltocchio, 2021-09-24..10-04); per site -0.63217",
         "note": "48 x 6 torus (the compiled nx = 48, nh = 288; ny = nh/nx = 6), periodic in both directions, t = 1, no t', U = 12 with U n_up n_dn (no constant shift: the diagonal energy is U per doubly occupied site, Main_*_wf.f 'diag(k)=diag(k)-U'), N_up = nelup = 126, N_dn = 288 - neldo = 126 (particle-hole transformed down spins, as the code states for iopt >= 0): the instance. Stripe wavelength 6 as printed. Lattice fixed-node GFMC (gamma = 0) on the VMC state: projected is right; its trial energy etry agrees with the result per site. The M3 flag (FN below the best variational bound) is expected: FN improves on its own trial state. No output log in the repository (scope config). FN not printed in the papers.",
-        "source_entry": "VB2-varbench-code-hubbard#60 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB2-varbench-code-hubbard#60 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -125,8 +125,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked script recompiles programs/vmc_hubbard, whose committed uniform program hard-codes its cluster (parameters nx, nh), so as committed it builds a 45 x 6 cluster, not this instance; the inputs otherwise match it (VB2). His published size-averaged 6 x 48 energies agree with this upload to 1e-4 (arXiv:1905.02658v2 Table 1; arXiv:2111.04623v4 Tables 1 and 2), but the reader found the stored digits only in the upload. So the number is cited to the dataset with the uploader named. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB2-varbench-code-hubbard#67 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked script recompiles programs/vmc_hubbard, whose committed uniform program hard-codes its cluster (parameters nx, nh), so as committed it builds a 45 x 6 cluster, not this instance; the inputs otherwise match it (VB2). His published size-averaged 6 x 48 energies agree with this upload to 1e-4 (arXiv:1905.02658v2 Table 1; arXiv:2111.04623v4 Tables 1 and 2), but the reader found the stored digits only in the upload. So the number is cited to the dataset with the uploader named. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB2-varbench-code-hubbard#67 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/rectangular-6x48_288_P_126_12/VMC-uniform/vmc_hubbard.sh)"
         }
       ]
@@ -157,8 +157,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked script recompiles programs/vmc_hubbard, whose committed uniform program hard-codes its cluster (parameters nx, nh), so as committed it builds a 45 x 6 cluster, not this instance; the inputs otherwise match it (VB2). The reader found the fixed-node energies only in the uploads. So the number is cited to the dataset with the uploader named. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB2-varbench-code-hubbard#68 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked script recompiles programs/vmc_hubbard, whose committed uniform program hard-codes its cluster (parameters nx, nh), so as committed it builds a 45 x 6 cluster, not this instance; the inputs otherwise match it (VB2). The reader found the fixed-node energies only in the uploads. So the number is cited to the dataset with the uploader named. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB2-varbench-code-hubbard#68 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/rectangular-6x48_288_P_126_12/FN-uniform/fn_hubbard.sh)"
         }
       ]
@@ -195,6 +195,16 @@
           "conversion": "-0.6255 x 288 = -180.144 (stored -180.144); sigma null (one bound for the whole table, not a per-value sigma)",
           "note": "C1: Eq. (1) t-t'-U Hubbard, no constant shift; t' = 0 here, so VarBench's plain Hubbard. C3: 'ladders with L = Lx × 6 sites and periodic boundary conditions along both the x and the y directions' (Sec. 2) -> rectangular-6x48_288_P; the group's 6 x 48 VarBench decks run ibc=0 ('periodic-periodic'). C4: δ = 1/8, N = 252 = 126 + 126 (N↑ = N↓ not printed; singlet BCS term of Eq. (9) in both states, and the group's deck for 6 x 48 uses nelup=126, neldo=162); stripe wavelength λ = 6 imposed (Lx = 2kλ). C5: U/t = 12, t' = 0. Variational VMC energy (Jastrow + backflow), own number; no per-value sigma, as stored. No duplicate: the instance's other rows are Tocchio's 2021 VarBench uploads of the same group's code (ltocchio, Sept/Oct 2021, before arXiv v1), different numbers: VarBench 'VMC with stripe of wavelength 6 (+Jastrow and backflow)' -180.16(1) = -0.625556 per site (rounds to -0.6256; only a truncation would print -0.6255), against the paper's -0.6255; the VarBench U = 8 uploads would print -0.7483 and -0.7436, so the paper's table is a separate run. SciPost Phys. 12, 180 not read (scipost.org bot check); arXiv v4 is dated after publication (2022-06-01). peer_reviewed true.",
           "source_entry": "RP6-hubbard-j1j2#14"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF SciPost Phys. 12, 180 (2022), sources/journal/scipost12-180.pdf, sha256 820f88a4 (fetched in the logged-in automation browser, in-page fetch of scipost.org/SciPostPhys.12.6.180/pdf), pypdf layout + plain (scipost12-180.R5.*.txt); compared with arXiv:2111.04623v4 (sources/arxiv/2111.04623v4.pdf, sha256 5e123436, layout)",
+          "location": "Table 2 (p. 10, U/t = 12, Lx = 48), row t'/t = 0, column Estripe '-0.6255 (λ = 6)'",
+          "reported_as": "-0.6255 per site, units of t (caption: 'The error bar on the energy is always smaller than 10−4')",
+          "conversion": "-0.6255 x 288 = -180.144",
+          "note": "Journal and arXiv v4 print the same value (arXiv Table 2 same row). Journal Sec. 2 (p. 4): 'ladders with L = Lx × 6 sites and periodic boundary conditions along both the x and the y directions' (the introduction, p. 3, calls it a '6-leg cylinder geometry', in both versions; Sec. 2 is the explicit statement and matches the stored P). Eq. (1) t-t'-U Hubbard, no constant shift; t' = 0, doping 1/8; Jastrow + backflow VMC, variational; sigma null right (one table-wide bound). Received 01-12-2021, published 01-06-2022; reference and peer_reviewed true are right. No field changes.",
+          "source_entry": "R5-browser#4"
         }
       }
     },
@@ -230,6 +240,16 @@
           "conversion": "-0.6227 x 288 = -179.3376 (stored -179.3376); sigma null (one bound for the whole table, not a per-value sigma)",
           "note": "C1: Eq. (1) t-t'-U Hubbard, no constant shift; t' = 0 here, so VarBench's plain Hubbard. C3: 'ladders with L = Lx × 6 sites and periodic boundary conditions along both the x and the y directions' (Sec. 2) -> rectangular-6x48_288_P; the group's 6 x 48 VarBench decks run ibc=0 ('periodic-periodic'). C4: δ = 1/8, N = 252 = 126 + 126 (N↑ = N↓ not printed; singlet BCS term of Eq. (9) in both states, and the group's deck for 6 x 48 uses nelup=126, neldo=162); uniform state (Δc = Δs = 0, Néel ΔAF allowed). C5: U/t = 12, t' = 0. Variational VMC energy (Jastrow + backflow), own number; no per-value sigma, as stored. No duplicate: the instance's other rows are Tocchio's 2021 VarBench uploads of the same group's code (ltocchio, Sept/Oct 2021, before arXiv v1), different numbers: VarBench 'VMC with uniform BCS (+Jastrow and backflow)' -179.212(8) = -0.622264 per site, 4.4e-4 per site above the paper's uniform state, against the paper's -0.6227; the VarBench U = 8 uploads would print -0.7483 and -0.7436, so the paper's table is a separate run. SciPost Phys. 12, 180 not read (scipost.org bot check); arXiv v4 is dated after publication (2022-06-01). peer_reviewed true.",
           "source_entry": "RP6-hubbard-j1j2#15"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF SciPost Phys. 12, 180 (2022), sources/journal/scipost12-180.pdf, sha256 820f88a4 (fetched in the logged-in automation browser, in-page fetch of scipost.org/SciPostPhys.12.6.180/pdf), pypdf layout + plain (scipost12-180.R5.*.txt); compared with arXiv:2111.04623v4 (sources/arxiv/2111.04623v4.pdf, sha256 5e123436, layout)",
+          "location": "Table 2 (p. 10, U/t = 12, Lx = 48), row t'/t = 0, column Euniform",
+          "reported_as": "-0.6227 per site, units of t (caption: 'The error bar on the energy is always smaller than 10−4')",
+          "conversion": "-0.6227 x 288 = -179.3376",
+          "note": "Journal and arXiv v4 print the same value (arXiv Table 2 same row). Journal Sec. 2 (p. 4): 'ladders with L = Lx × 6 sites and periodic boundary conditions along both the x and the y directions' (the introduction, p. 3, calls it a '6-leg cylinder geometry', in both versions; Sec. 2 is the explicit statement and matches the stored P). Eq. (1) t-t'-U Hubbard, no constant shift; t' = 0, doping 1/8; Jastrow + backflow VMC, variational; sigma null right (one table-wide bound). Received 01-12-2021, published 01-06-2022; reference and peer_reviewed true are right. No field changes.",
+          "source_entry": "R5-browser#5"
         }
       }
     }

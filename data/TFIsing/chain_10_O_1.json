@@ -254,7 +254,7 @@
         "reported_as": "VarBench TFIsing/chain_10_O_1.md: Energy -12.37844 | Sigma 1.9e-4 | Energy Variance 0.03606162 | DOF 10 | Einf 0 | Method \"Jastrow baseline\"",
         "conversion": "none (total energy, J units)",
         "note": "Script builds the instance (open chain of 10 sites, h = 1, Pauli TFIM) with nk.models.Jastrow (vmc.py lines 118-124); +0.00305 from the exact -12.381489999654757 (above it, as a variational energy must be). sigma check: sqrt(Var/2^20) = sqrt(0.03606162/1048576) = 1.85e-4 vs stored 0.00019 (vmc.py lines 268-270: final estimate with estim_size = 2^20 samples); variance is Var(H) of the total energy. The linked script was attached on 2024-07-30 (fdb4bfb Jastrow / 5047bfd RBM) to a number already in VarBench (77a95d7 (2022-12-12)); vmc.py uses nk.operator.IsingJax (vmc.py line 78), so it is a later reimplementation of the baseline that documents the ansatz and protocol, not the output of the run that produced this number (no log in the methods repo). Value unchanged since 77a95d7; no value was changed and restored.",
-        "source_entry": "VB4-tfising-tv#14 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#14 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -300,8 +300,8 @@
           "version_read": "varbench/methods ed31bb0 programs/pqc_ising_1d/pqc_HamVar.py (G. Mazzola; qutip 4.7): the hard-coded 48 parameters evaluated here in a 10-qubit statevector with qutip's gate conventions (work/tfising_checks.mjs; no optimisation, no diagonalisation)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The committed program, pqc_HamVar.py (24 blocks, 48 parameters), evaluated in a 10-qubit statevector with its hard-coded parameters, reproduces the stored energy and variance: a deterministic statevector expectation with no statistical error (ruling 2, Tristan 2026-09-30; RULES.md 6). The string names no deterministic marker, so the fallback counted it sampled. The instance is solved and the row is not the best bound, so nothing changes here.",
-          "source_entry": "VB4-tfising-tv#12 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "The committed program, pqc_HamVar.py (24 blocks, 48 parameters), evaluated in a 10-qubit statevector with its hard-coded parameters, reproduces the stored energy and variance: a deterministic statevector expectation with no statistical error (ruling 2, 2026-09-30; RULES.md 6). The string names no deterministic marker, so the fallback counted it sampled. The instance is solved and the row is not the best bound, so nothing changes here.",
+          "source_entry": "VB4-tfising-tv#12 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": true
         }
       ],
@@ -314,7 +314,7 @@
         "reported_as": "VarBench TFIsing/chain_10_O_1.md: Energy -12.38133801299217 | Sigma (empty) | Energy Variance 0.0007985776929899657 | DOF 10 | Einf 0 | Method \"VQE HV (d = 24)\"",
         "conversion": "statevector: <H> = -12.381338013039802, Var = 0.000798577079962115; stored -12.38133801299217, 0.0007985776929899657; differences -4.8e-11 and -6.1e-10 (the file prints the parameters to 8 digits)",
         "note": "The committed program reproduces the stored energy and variance: deterministic statevector expectation, 24 blocks = 48 parameters, open chain h = 1, total energy 1.52e-4 above the exact -12.3814899997. Upload history: until ff71117 (2024-08-05) VarBench listed VQE HV at d = 8, 12, 16, 20, 24, 26, with this exact number and variance under 'd = 26' and -12.381299615657655 (var 0.0009568460000082268) under 'd = 24'; ff71117 kept one row, relabelled 'd = 24', with the former d = 26 value. The program's 24-block circuit gives this value, so the current label matches the linked program and the pre-2024 'd = 26' label was the inconsistent one; the dropped d = 24 number is listed under Unlisted numbers. Note: units.mjs isSampled() counts 'VQE HV (d = 24)' as sampled (no deterministic marker in the string) although the energy is an exact statevector expectation; it has no effect here (the instance is solved and the row is not the best bound).",
-        "source_entry": "VB4-tfising-tv#12 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#12 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -360,8 +360,8 @@
           "version_read": "varbench/methods ed31bb0 programs/pqc_ising_1d/pqc_RYCNOT.py (G. Mazzola; qutip 4.7): the hard-coded 110 parameters evaluated here in a 10-qubit statevector (work/tfising_checks.mjs)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The committed program, pqc_RYCNOT.py (10 blocks, 110 parameters), evaluated in a 10-qubit statevector with its hard-coded parameters, reproduces the stored energy and variance: a deterministic statevector expectation with no statistical error (ruling 2, Tristan 2026-09-30; RULES.md 6). The string names no deterministic marker, so the fallback counted it sampled. The instance is solved and the row is not the best bound, so nothing changes here.",
-          "source_entry": "VB4-tfising-tv#13 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "The committed program, pqc_RYCNOT.py (10 blocks, 110 parameters), evaluated in a 10-qubit statevector with its hard-coded parameters, reproduces the stored energy and variance: a deterministic statevector expectation with no statistical error (ruling 2, 2026-09-30; RULES.md 6). The string names no deterministic marker, so the fallback counted it sampled. The instance is solved and the row is not the best bound, so nothing changes here.",
+          "source_entry": "VB4-tfising-tv#13 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": true
         }
       ],
@@ -374,7 +374,7 @@
         "reported_as": "VarBench TFIsing/chain_10_O_1.md: Energy -12.380038028233812 | Sigma (empty) | Energy Variance 0.007944439359960143 | DOF 10 | Einf 0 | Method \"VQE R-CX (d = 10)\"",
         "conversion": "statevector: <H> = -12.380038028230706, Var = 0.00794443898965369; stored -12.380038028233812, 0.007944439359960143; differences 3.1e-12 and -3.7e-10",
         "note": "The committed program reproduces the stored energy and variance (statevector, deterministic), 1.45e-3 above exact. The row kept its 2022 label and value through ff71117 (2024-08-05), which dropped the d = 4, 6, 8, 12 rows (Unlisted numbers). Same isSampled() remark as the HV row.",
-        "source_entry": "VB4-tfising-tv#13 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#13 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },

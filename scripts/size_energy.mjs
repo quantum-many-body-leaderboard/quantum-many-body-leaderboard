@@ -1,10 +1,10 @@
 // Generate figures/energy/*.svg, the front page's view of every Hamiltonian: the published
-// energies as they are, with no reference to measure them against (Tristan, 2026-09-17: the
+// energies as they are, with no reference to measure them against (2026-09-17: the
 // direct view instead of the relative gap). The shape is ladders.mjs's, which the site reads
 // the same way: per model and lattice, stops along an axis (J2, U, the filling) grouped in
 // facets, each stop a figure of one panel, energy against sites; and per figure with two
 // stops or more one strip, the record at each stop and size, which the site puts above the
-// panel as the slider that picks the stop (Tristan, 2026-09-18: one panel at a time, chosen
+// panel as the slider that picks the stop (2026-09-18: one panel at a time, chosen
 // on the coupling, instead of a stack of panels; 2026-09-21: one strip for the whole figure,
 // the facets as groups along it, instead of a strip per facet). Per model one "other" figure for the Hamiltonians
 // published at a single size that share no strip - every t-V instance is one of them - with
@@ -108,7 +108,7 @@ const LEGEND = t => [
 ];
 
 // A stop: its ladder alone, full width. The title is the model and lattice, the facet and
-// the stop, with no subtitle and no footnote (Tristan, 2026-09-18): the legend says what the
+// the stop, with no subtitle and no footnote (2026-09-18): the legend says what the
 // marks are and the per-site label above the panel says the unit.
 function stopFigure(f, facet, s) {
   write(s.name, t => {
@@ -129,7 +129,7 @@ function stopFigure(f, facet, s) {
 // site's list (largest size first, lowest energy first at a size). The cursor is a group
 // per stop, hidden in the file and shown by the site's stylesheet for the chosen one.
 //
-// Hover states the site's stylesheet drives (Tristan, 2026-09-21). Each facet is a group
+// Hover states the site's stylesheet drives (2026-09-21). Each facet is a group
 // (`grp`) and each stop a column in it (`col`: a hit area over the column, the stop's dots,
 // its count mark), so that the pointer over a column hovers both. Over a group its size
 // lines move apart, up by EX per size rank, so that seven lines coinciding at this scale
@@ -212,7 +212,7 @@ for (const f of figures) {
     continue;
   }
   // The "other" figure: the varying quantity along x, evenly spaced. Title alone, no footnote
-  // (Tristan, 2026-09-18); the per-site label above the panels says the unit.
+  // (2026-09-18); the per-site label above the panels says the unit.
   write(f.name, t => {
     const specs = f.scans.map(s => ({ title: s.label, slots: s.slots, xLabel: s.x }));
     const h = header(t, f.title, "Every Hamiltonian of this model with energies published at only one size and no strip to join, grouped where they " +

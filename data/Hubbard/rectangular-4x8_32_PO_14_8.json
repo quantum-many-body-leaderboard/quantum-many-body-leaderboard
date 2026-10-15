@@ -98,8 +98,8 @@
         "location": "45703f4 (2022-04-01): '-23.5645 | | 0.0155 | DMRG(MaxLinkDim = 12000, MaxTruncErr~6.6E-06, extrap energy -23.5658 +/- 0.0003)'; 645dc9f (2022-03-31): '-94.257 | | 0.24766 | DMRG(MaxLinkDim = 10000, MaxTruncErr~2.62E-05, extrap energy -94.263 +/- 0.001'",
         "reported_as": "-23.5645 (total)",
         "conversion": "none",
-        "note": "The stored number is J. M. Silvester's upload of 2022-04-01, transcribed correctly, and the script's configuration matches the instance (U = 8, 8 x 4, periodic along the 4-site direction, 14 + 14). It may have lost a digit: the uploader's factor-4 entry of the day before was -94.257, and -94.257 / 4 = -23.56425, while the same day's division turned the variance (0.24766 -> 0.0155) and the extrapolated energy (-94.263 +/- 0.001 -> -23.5658 +/- 0.0003) exactly, as did his conversions of the same week on other instances (-192.213 -> -48.0533, -127.599 -> -31.8998). -23.5645 lies 2.5e-4 below -23.56425, outside the +/-1.25e-4 that the three decimals of -94.257 allow. Kept as uploaded (ruling E13, Tristan 2026-10-02); only the uploader can say which is right. The row holds the instance's variational record either way.",
-        "source_entry": "VB2-varbench-code-hubbard#28 (qmbl-verify 2026-09-29, ambiguous; skeptic upheld); ruling E13, Tristan 2026-10-02 (keep, note the discrepancy); the uploader is not asked (Tristan, 2026-10-03)",
+        "note": "The stored number is J. M. Silvester's upload of 2022-04-01, transcribed correctly, and the script's configuration matches the instance (U = 8, 8 x 4, periodic along the 4-site direction, 14 + 14). It may have lost a digit: the uploader's factor-4 entry of the day before was -94.257, and -94.257 / 4 = -23.56425, while the same day's division turned the variance (0.24766 -> 0.0155) and the extrapolated energy (-94.263 +/- 0.001 -> -23.5658 +/- 0.0003) exactly, as did his conversions of the same week on other instances (-192.213 -> -48.0533, -127.599 -> -31.8998). -23.5645 lies 2.5e-4 below -23.56425, outside the +/-1.25e-4 that the three decimals of -94.257 allow. Kept as uploaded (ruling E13, 2026-10-02); only the uploader can say which is right. The row holds the instance's variational record either way.",
+        "source_entry": "VB2-varbench-code-hubbard#28 (qmbl-verify 2026-09-29, ambiguous; skeptic upheld); ruling E13, 2026-10-02 (keep, note the discrepancy); the uploader is not asked (2026-10-03)",
         "secondary_of": null
       }
     },
@@ -222,8 +222,8 @@
           "version_read": "PNAS article PDF and SI Appendix (PMC9371695), pypdf layout; arXiv:2111.10420v2 (VA3)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "A variational Monte Carlo energy whose stored sigma is the uploader's Monte Carlo error; the method string's fallback reads 'mean-field' in the upload's 'Soft mean-field constraint' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (Tristan, 2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored.",
-          "source_entry": "VA3-10-1073-pnas-2122059119#18 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "A variational Monte Carlo energy whose stored sigma is the uploader's Monte Carlo error; the method string's fallback reads 'mean-field' in the upload's 'Soft mean-field constraint' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored.",
+          "source_entry": "VA3-10-1073-pnas-2122059119#18 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -236,8 +236,18 @@
         "reported_as": "-0.7350(6) (energy per site, units of t)",
         "conversion": "-0.7350 x 32 = -23.52 (exact)",
         "note": "Energy verified against the journal; sigma differs (ambiguous entry). Version difference: v2 printed -0.7309(6), the metastable half-filled-stripe state ('S = 0 or small values of S lead to a half-filled stripe configuration of higher energy'), the journal the lower filled-stripe state ('Larger values of S yield a filled-stripe configuration', main Sec. 3 B, p. 6); the stored value follows the journal and the first author's upload (b71872b, 2022-07-16, after v2 of 18 Jun 2022: -23.520 | 0.001 | 0.035(4)). 4 x 8, n = 7/8 = 14 up + 14 down at zero magnetization, U = 8, t = 1, Eq. 1 with no shift. N~ = 16 and alpha = 14 for L = 8 ('A good trade-off ... is achieved by the addition of N~ = 16 hidden fermions for all system sizes. We also consider a two-layer fully connected neural network of hidden-unit density α = {60, 14, 6} for the L = {4, 8, 16} sizes', main Sec. 3 B, p. 6), lambda = 8 soft mean-field constraint on phi_v ('To guide the wave-function ansatz toward the λ = 8 stripe order, we add a soft mean-field constraint', p. 6): method string and detail right. Variational VMC bound, own computation. 0.0445 above the VarBench DMRG row -23.5645; not the record. M6/M8 settled from the source: a sampled VMC energy ('General expectation values and gradients of the objective function are computed using Markov chain Monte Carlo sampling', main text Sec. 2 C, p. 5) whose stored sigma is the uploader's Monte Carlo error; units.mjs counts the row deterministic only because 'Soft mean-field constraint' matches /mean[- ]field/ (units.mjs line 20), which changes nothing while sigma is stored (isSampled is consulted only when sigma is null). Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate (the '8x4 cylinder' HFDS row -23.46944 is PRB 113, 245104's own computation).",
-        "source_entry": "VA3-10-1073-pnas-2122059119#18 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
-        "secondary_of": null
+        "source_entry": "VA3-10-1073-pnas-2122059119#18 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+          "location": "SI Sec. 8 C, Table 4 (p. 9), row L = 8, column 'Energy per site HFDS (PBC-OBC)'",
+          "reported_as": "-0.7350(6) (energy per site, units of t)",
+          "conversion": "-0.7350 x 32 = -23.52",
+          "note": "Journal SI prints -0.7350(6); arXiv v2 Table IV prints -0.7309(6) in this cell (version difference recorded in the 2026-09-29 pass; the stored value already follows the journal). 4 x 8 PO, 14 + 14, U = 8, N~ = 16, alpha = 14. Printed bar 0.0192 total vs stored 0.001: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'). No duplicate.",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#2"
+        }
       }
     },
     {
@@ -262,7 +272,17 @@
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "E_0/M = -0.73342 (+/- 0.00008), sigma^2/M = 0.0225",
         "note": "Read from Table 1 of arXiv:2510.11710 (U/t = 8, n_h = 1/8, energies per site, 131072 samples), parsed from the arXiv HTML. Row \"HFDS (8x4)\".",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'HFDS (8 x 4)', column E0/M and sigma^2/M",
+          "reported_as": "-0.73342(8), sigma^2/M = 0.0225 per site, units of t",
+          "conversion": "-0.73342 x 32 = -23.46944; sigma 0.00008 x 32 = 0.00256; variance 0.0225 x 32 = 0.72 (sigma^2/M read as Var(H)/M)",
+          "note": "8 x 4 cylinder: 'open boundary conditions (OBCs) along the long side and periodic boundary conditions (PBCs) along the short side' (Sec. IV A) = PO; U/t = 8, n_h = 1/8 (Nf = 14 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. Energies 'estimated using 131 072 samples' (caption); variational. Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#30"
+        }
       },
       "compute": {
         "parameters": null,
@@ -303,7 +323,17 @@
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "E_0/M = -0.7332 (+/- 0.0006), sigma^2/M = 0.0235",
         "note": "Read from Table 1 of arXiv:2510.11710 (U/t = 8, n_h = 1/8, energies per site, 131072 samples), parsed from the arXiv HTML. Row \"JBf (8x4)\".",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'JBf (8 x 4)', column E0/M and sigma^2/M",
+          "reported_as": "-0.7332(6), sigma^2/M = 0.0235 per site, units of t",
+          "conversion": "-0.7332 x 32 = -23.4624; sigma 0.0006 x 32 = 0.0192; variance 0.0235 x 32 = 0.752 (sigma^2/M read as Var(H)/M)",
+          "note": "8 x 4 cylinder: 'open boundary conditions (OBCs) along the long side and periodic boundary conditions (PBCs) along the short side' (Sec. IV A) = PO; U/t = 8, n_h = 1/8 (Nf = 14 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. Energies 'estimated using 131 072 samples' (caption); variational. Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#31"
+        }
       },
       "compute": {
         "parameters": null,
@@ -344,7 +374,17 @@
         "method": "source text of arXiv:2510.11710 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.736329(9)",
         "note": "Table I (Appendix E): 'DMRG (8x4) -0.736329(9) NA'; caption: 'results for the 8x4 and 8x8 cylinders and 8x8 torus lattices with U/t=8 and nh=1/8 hole doping' | 8x4 lattice = 'rectangular-4x8', 32 sites; text (Sec. IV.A) states this is an '8x4 lattice with open boundary conditions along the long side and periodic boundary conditions along the short side' i.e. cylinder = catalog boundary PO; nh=1/8 -> Ne=28, Nf=14, matching focus instance directly",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'DMRG (8 x 4)', column E0/M",
+          "reported_as": "-0.736329(9) (sigma^2/M: NA) per site, units of t",
+          "conversion": "-0.736329 x 32 = -23.562528",
+          "note": "8 x 4 cylinder: 'open boundary conditions (OBCs) along the long side and periodic boundary conditions (PBCs) along the short side' (Sec. IV A) = PO; U/t = 8, n_h = 1/8 (Nf = 14 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. DMRG with 'a bond dimension of 8000 with a maximum truncation error of ~1e-5' (Fig. 2 caption): variational at stated bond dimension. The printed (9) is not defined in the paper (deterministic DMRG); sigma left null. Not a duplicate of VarBench's DMRG rows (-23.5645 at MaxLinkDim 12000, -23.5658 extrapolated). Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#32"
+        }
       },
       "compute": {
         "parameters": null,
@@ -372,7 +412,7 @@
           "conversion": "none (the bracket, 9e-6 x 32 = 0.000288, leaves sigma)",
           "checked_on": "2026-09-29",
           "reason": "RULES.md 6: a deterministic energy needs no sigma. The (9) on this DMRG energy at bond dimension 8000 is defined nowhere in the paper (VP13#37); it is kept in method_detail ('printed -0.736329(9) per site'), as the printed bracket of the TFIsing DMRG on TPUs is. No record depends on it: the instance's VarBench DMRG row is lower.",
-          "source_entry": "VP13-hubbard-j1j2-heisenberg#37 (qmbl-verify 2026-09-29, ambiguous; skeptic upheld); ruling E3, Tristan 2026-10-02",
+          "source_entry": "VP13-hubbard-j1j2-heisenberg#37 (qmbl-verify 2026-09-29, ambiguous; skeptic upheld); ruling E3, 2026-10-02",
           "from": 0.000288
         }
       ]

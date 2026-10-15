@@ -40,6 +40,16 @@
           "conversion": "-0.51218 x 4 x 144 = -295.01568; sigma 0.00009 x 576 = 0.05184",
           "note": "Record row, read hardest. One Lanczos step (App. D), variational; J2 = 1/8. The 0.23 % margin over the runner-up (flag M11) is the Lanczos step's gain over the same paper's plain GCNN −0.51101(6); it sits 5.7e-4 per site above the Exact/Interpolated −0.51275 (an extrapolation). Cluster vectors are not printed; 12 × 12 is the only 144-site triangular torus with the full C6v point group the GCNN projects on, and the paper compares it in one row with Iqbal et al.'s 144-site Gutzwiller+LS value. The instance was created from this paper. No duplicate on the instance.",
           "source_entry": "VP10-heisenberg-j1j2#28 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table III (p. 054410-7), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 triangular-lattice', row J2/J1 = 1/8, N = 144, column GCNN+LS",
+          "reported_as": "−0.51218(9) per site (S.S)",
+          "conversion": "-0.51218 x 576 = -295.01568; sigma 0.00009 x 576 = 0.05184",
+          "note": "Record row, read hardest. J2 = 1/8, periodic 144-site cluster, GCNN + one Lanczos step, variational, own computation; the same row's Gutzwiller+LS [10] -0.510558(5) is Iqbal et al.'s value, stored separately (DSL row -294.081408). 'Exact/Interpolated' -0.51275 is an interpolation, not a cluster energy. Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#14"
         }
       },
       "compute": {
@@ -90,7 +100,17 @@
           "reported_as": "−0.51101(6) per site (units of J1/spin, S.S)",
           "conversion": "-0.51101 x 4 x 144 = -294.34176; sigma 0.00006 x 576 = 0.03456",
           "note": "Residual GCNN before the Lanczos step; J2 = 1/8, variational. Cluster vectors are not printed; 12 × 12 is the only 144-site triangular torus with the full C6v point group the GCNN projects on, and the paper compares it in one row with Iqbal et al.'s 144-site Gutzwiller+LS value. The instance was created from this paper. No duplicate on the instance.",
-          "source_entry": "VP10-heisenberg-j1j2#29 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP10-heisenberg-j1j2#29 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table III (p. 054410-7), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 triangular-lattice', row J2/J1 = 1/8, N = 144, column GCNN",
+          "reported_as": "−0.51101(6) per site (S.S)",
+          "conversion": "-0.51101 x 576 = -294.34176; sigma 0.00006 x 576 = 0.03456",
+          "note": "Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#15"
         }
       },
       "compute": {
@@ -132,7 +152,17 @@
         "method": "arXiv PDF extracted locally with pypdf in layout mode, no LLM transcription",
         "reported_as": "-0.510558 (+/- 0.000005) per site in S.S units",
         "note": "Read from Table III of arXiv:2211.07749 (J1-J2 triangular lattice, periodic, energies in units of J1 per spin, i.e. the S.S per-site convention), extracted from the PDF with pypdf in layout mode so the column positions are unambiguous. Column \"Gutzwiller+LS [10]\" = Phys. Rev. B 93, 144411 (2016).",
-        "secondary_of": "Roth, Szabo & MacDonald, High-accuracy variational Monte Carlo for frustrated magnets with deep neural networks, Phys. Rev. B 108, 054410 (2023), arXiv:2211.07749"
+        "secondary_of": "Roth, Szabo & MacDonald, High-accuracy variational Monte Carlo for frustrated magnets with deep neural networks, Phys. Rev. B 108, 054410 (2023), arXiv:2211.07749",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 93, 144411 (2016), sources/journal/prb93-144411.pdf, sha256 3c0f8916, pypdf plain; arXiv:1601.06018v4 compared: identical",
+          "location": "Table III, row Size 12, column 2-LS (DSL, S = 0)",
+          "reported_as": "-0.510558(5)",
+          "conversion": "-0.510558 x 4 x 144 = -294.081408; sigma 5e-6 x 576 = 0.00288",
+          "note": "12 x 12 periodic spin model, J2/J1 = 1/8, S = 0, p = 2 Lanczos steps on the DSL (method_detail says so; method_as_published 'DSL' is the column-group label per ruling B4), variational, primary. Journal = arXiv v4. Duplicate check: no other row on J1J2/triangular_144_P_0.125 carries -294.081408.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#9"
+        }
       },
       "corrections": [
         {
@@ -179,7 +209,7 @@
           "version_read": "arXiv:1601.06018v4 (11 Apr 2016; jref Phys. Rev. B 93, 144411 (2016), doi 10.1103/PhysRevB.93.144411)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The number is the p = 2 value: Table III prints -0.501828(1) (p = 0), -0.508438(3) (p = 1) and -0.510558(5) (p = 2) for L = 12, so 'Lanczos step' / '1 Lanczos step' misstates the method. The quote's column label 'Gutzwiller+LS' does not say how many steps; the primary does. Energy, sigma, 12 x 12 periodic spin Hamiltonian, J2/J1 = 1/8, S.S per site, S = 0, variational all check. The instance's 'GCNN + Lanczos step' rows are Roth et al.'s own and are not affected. Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is the Table III column group's, 'DSL' (the Dirac spin liquid); the 2-LS column (two Lanczos steps) and the Gutzwiller-projected fermionic construction are the detail.",
+          "reason": "The number is the p = 2 value: Table III prints -0.501828(1) (p = 0), -0.508438(3) (p = 1) and -0.510558(5) (p = 2) for L = 12, so 'Lanczos step' / '1 Lanczos step' misstates the method. The quote's column label 'Gutzwiller+LS' does not say how many steps; the primary does. Energy, sigma, 12 x 12 periodic spin Hamiltonian, J2/J1 = 1/8, S.S per site, S = 0, variational all check. The instance's 'GCNN + Lanczos step' rows are Roth et al.'s own and are not affected. Ruling B4 (2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is the Table III column group's, 'DSL' (the Dirac spin liquid); the 2-LS column (two Lanczos steps) and the Gutzwiller-projected fermionic construction are the detail.",
           "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#51 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Gutzwiller-projected fermionic state + Lanczos step"
         }

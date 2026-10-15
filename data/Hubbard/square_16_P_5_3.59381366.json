@@ -35,7 +35,7 @@
           "version_read": "arXiv:2111.10420v2 PDF, pypdf layout mode (Robledo Moreno et al., PNAS 119, e2122059119, 2022)",
           "conversion": "none",
           "checked_on": "2026-09-17",
-          "reason": "The linked lattice-symmetries script passes the U in VarBench's instance name and cannot have produced this energy, which is the ground state at the grid U (checks/hubbard-u-labels/). The number was uploaded by Robledo Moreno on 2022-08-23 as \"Lanczos (Quspin + Scipy)\"; the script link was attached on 2024-07-23 (VarBench 3604bb4). It is printed in the paper that produced it, which the row now cites (ruling 2026-09-17, Tristan).",
+          "reason": "The linked lattice-symmetries script passes the U in VarBench's instance name and cannot have produced this energy, which is the ground state at the grid U (checks/hubbard-u-labels/). The number was uploaded by Robledo Moreno on 2022-08-23 as \"Lanczos (Quspin + Scipy)\"; the script link was attached on 2024-07-23 (VarBench 3604bb4). It is printed in the paper that produced it, which the row now cites (ruling 2026-09-17).",
           "source_entry": "RB1-varbench-code-hubbard#2, ruling 3a (qmbl-verify 2026-09-17)",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_3.5981/ed_lattice_symmetries.sh)"
         },
@@ -61,7 +61,17 @@
         "conversion": "none",
         "note": "Reproduced at the grid U the instance now carries, not at the U of VarBench's name (relabels.mjs).",
         "source_entry": "B2-baseline-hubbard and E1-exact-recompute (qmbl-verify 2026-09-16)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+          "location": "SI Sec. 8 B, Table 3 (p. 9), row 'ED', column U = 3.6",
+          "reported_as": "-19.8916371(9) (total energy, units of t)",
+          "conversion": "none; stored -19.891637199948672 rounds to the printed value",
+          "note": "Exact. Journal = arXiv v2.",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#12"
+        }
       }
     },
     {
@@ -89,7 +99,17 @@
         "conversion": "none (total); sigma = printed (6) = 0.000006",
         "note": "Record row (best variational bound; ED 0.00119 below holds the record). 4 x 4 torus, 5 + 5, grid U = 3.59381366, N~ = 10, alpha = 64. Projection: 'Projections to different symmetry subspaces are applied to the converged trial state: rotation of π/2 (C4), translations of momentum K = 0 and the intersection of both subspaces' (SI Sec. 8 B); the stored row is the intersection, as the method string says. A projected state's energy is at least its sector's minimum and so still an upper bound on the ground state: variational is right. Stored sigma equals the printed bar. Upload 5a046db: -19.890443 | 0.000006 | 0.031(3). Own computation. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
         "source_entry": "VA3-10-1073-pnas-2122059119#10 (qmbl-verify 2026-09-29)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+          "location": "SI Sec. 8 B, Table 3 (p. 9), row 'HFSD (alpha = 64) + (C4 ∩ K = 0)', column U = 3.6",
+          "reported_as": "-19.890443(6) (total energy, units of t)",
+          "conversion": "none",
+          "note": "5 + 5, grid U 3.59381366; variational 0.00119 above ED; sigma = printed. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#13"
+        }
       }
     }
   ],

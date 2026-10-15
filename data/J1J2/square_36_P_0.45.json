@@ -29,7 +29,7 @@
         "checked_on": "2026-09-28",
         "method": "ed_sym.py (numba matrix-free Lanczos in the sectors of the torus translations, a point group and spin inversion; tol 1e-9 with a second pass) at k = (0,0) and (pi,pi), every C4v irrep, even spin inversion, 2026-09-28, and in the C2v axes group's even sector at k = (0,0) (A1 + B1), 2026-10-09, an AMD EPYC 9654 server; results in checks/exact-recompute-2026-09/results/",
         "reported_as": "-74.2546644341862 (C4v, k = (0,0), A1; 15,804,956 states; residual 6.0e-10) | -74.25466443418684 (C2v axes, k = (0,0), A1 + B1; 31,601,346 states; residual 4.0e-10)",
-        "note": "Pauli total; E/N = -0.515657392 in S.S units. Lowest of the eight C4v sectors computed; the next is -71.9586017 (k = (0,0), B1). The two bases agree to 6.4e-13. The same code reproduces the exact rows at J2 = 0.5 to 12 digits and the printed 36-site values of Schulz, Ziman & Poilblanc at 0.2, 0.55 and 0.65 (checks/README.md, exact-recompute-2026-09). Chen et al. quote -0.51565739 at this coupling, which matches to 1e-8, citing Schulz et al., who have no J2 = 0.45 row; Golubev et al. (arXiv:2606.04558, Table I) print an ED value 6.1e-7 below it (SWEEP.md). No published exact row is carried, so QMBL's stands (Tristan, 2026-10-09).",
+        "note": "Pauli total; E/N = -0.515657392 in S.S units. Lowest of the eight C4v sectors computed; the next is -71.9586017 (k = (0,0), B1). The two bases agree to 6.4e-13. The same code reproduces the exact rows at J2 = 0.5 to 12 digits and the printed 36-site values of Schulz, Ziman & Poilblanc at 0.2, 0.55 and 0.65 (checks/README.md, exact-recompute-2026-09). Chen et al. quote -0.51565739 at this coupling, which matches to 1e-8, citing Schulz et al., who have no J2 = 0.45 row; Golubev et al. (arXiv:2606.04558, Table I) print an ED value 6.1e-7 below it (SWEEP.md). No published exact row is carried, so QMBL's stands (2026-10-09).",
         "secondary_of": null
       }
     },
@@ -63,8 +63,19 @@
           "location": "Table I (Supplementary Information, arXiv v3 PDF p. 11; main.tex line 500), block J2 = 0.45, row L = 6, column DMRG (4096); pypdf layout v3 line 648, v1 line 590",
           "reported_as": "-0.515637 (E/N, J1 = 1, S.S; 6 x 6 torus, DMRG (4096))",
           "conversion": "-0.515637 x 4 x 36 = -74.251728",
-          "note": "DMRG with M = 4096 kept SU(2) multiplets (about 16000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 4096 = SU(2) multiplet count. Valid bound: 2.039e-5 per site (2.936e-3 total) above E0/N = -0.515657392 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28 (k = 0 A1, E = -74.254664434186, E/144 = -0.515657392; not yet a row, SWEEP.md 'Open (Tristan)')). Instance: L x L torus = square_36_P, J2 = 0.45 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_36_P_0.45.json; the 48 VMC cells of the same table are the Hu et al. rows).",
-          "source_entry": "VP4-arxiv-1311-5962#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "DMRG with M = 4096 kept SU(2) multiplets (about 16000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 4096 = SU(2) multiplet count. Valid bound: 2.039e-5 per site (2.936e-3 total) above E0/N = -0.515657392 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28 (k = 0 A1, E = -74.254664434186, E/144 = -0.515657392; not yet a row, SWEEP.md 'Open')). Instance: L x L torus = square_36_P, J2 = 0.45 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_36_P_0.45.json; the 48 VMC cells of the same table are the Hu et al. rows).",
+          "source_entry": "VP4-arxiv-1311-5962#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "publisher PDF of the PRL Supplemental Material (J1J2square_suppl.pdf, fetched from journals.aps.org over the ETH network), pypdf layout mode; cross-checked against the publisher's supplement LaTeX (J1J2square_suppl.tex lines 180-224) and arXiv:1311.5962v3 pypdf layout text",
+          "location": "PRL 113, 027201 Supplemental Material, Table I (p. 6), block J2 = 0.45, row L = 6, column DMRG (4096); layout text line 331; arXiv v3 Table I (Fig. 16 there = Fig. 11 in the journal supplement)",
+          "reported_as": "-0.515637 (E/N, J1 = 1, S·S units, 6×6 torus, DMRG (4096))",
+          "conversion": "-0.515637 x 4 x 36 = -74.251728; finite-M DMRG energy, no error bar (deterministic), sigma null agrees",
+          "version_read": "published PDF Phys. Rev. Lett. 113, 027201 (2014) Supplemental Material, sources/journal/prl113-027201-suppl.pdf, sha256 f6f02e53 (also suppl .tex sha256 ec2625c5, main text prl113-027201.pdf sha256 1fcc3383); compared with arXiv:1311.5962v3 (qmbl/sources/1311.5962.pdf/.txt, lines 643-658): all 96 numeric cells of Table I identical",
+          "note": "Journal and arXiv v3 print the same cell. Instance: 6 x 6 torus (Supplement: 'We study L×L torus systems'), J2 = 0.45 printed, J1 = 1, Eq. (1) H = J1 Σ<ij> Si·Sj + J2 Σ<<ij>> Si·Sj each bond once, no constant; QMBL total = 4 N e. bound_type variational agrees: energy at 4096 kept SU(2) states, no extrapolation. Against the stored exact energy -0.5156574 per site this cell is +2.0e-05 per site. Peer_reviewed true and reference PRL 113, 027201 (2014) agree with the arXiv journal-ref and the publisher page. Primary: own SU(2) DMRG. No duplicate on the instance (data/J1J2/square_36_P_0.45.json read).",
+          "source_entry": "JP4-arxiv-1311-5962#20"
         }
       },
       "compute": {
@@ -114,8 +125,19 @@
           "location": "Table I (Supplementary Information, arXiv v3 PDF p. 11; main.tex line 500), block J2 = 0.45, row L = 6, column DMRG (6144); pypdf layout v3 line 648, v1 line 590",
           "reported_as": "-0.515652 (E/N, J1 = 1, S.S; 6 x 6 torus, DMRG (6144))",
           "conversion": "-0.515652 x 4 x 36 = -74.253888",
-          "note": "DMRG with M = 6144 kept SU(2) multiplets (about 24000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 6144 = SU(2) multiplet count. Valid bound: 5.392e-6 per site (7.764e-4 total) above E0/N = -0.515657392 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28 (k = 0 A1, E = -74.254664434186, E/144 = -0.515657392; not yet a row, SWEEP.md 'Open (Tristan)')). Instance: L x L torus = square_36_P, J2 = 0.45 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_36_P_0.45.json; the 48 VMC cells of the same table are the Hu et al. rows).",
-          "source_entry": "VP4-arxiv-1311-5962#21 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "DMRG with M = 6144 kept SU(2) multiplets (about 24000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 6144 = SU(2) multiplet count. Valid bound: 5.392e-6 per site (7.764e-4 total) above E0/N = -0.515657392 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28 (k = 0 A1, E = -74.254664434186, E/144 = -0.515657392; not yet a row, SWEEP.md 'Open')). Instance: L x L torus = square_36_P, J2 = 0.45 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_36_P_0.45.json; the 48 VMC cells of the same table are the Hu et al. rows).",
+          "source_entry": "VP4-arxiv-1311-5962#21 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "publisher PDF of the PRL Supplemental Material (J1J2square_suppl.pdf, fetched from journals.aps.org over the ETH network), pypdf layout mode; cross-checked against the publisher's supplement LaTeX (J1J2square_suppl.tex lines 180-224) and arXiv:1311.5962v3 pypdf layout text",
+          "location": "PRL 113, 027201 Supplemental Material, Table I (p. 6), block J2 = 0.45, row L = 6, column DMRG (6144); layout text line 331; arXiv v3 Table I (Fig. 16 there = Fig. 11 in the journal supplement)",
+          "reported_as": "-0.515652 (E/N, J1 = 1, S·S units, 6×6 torus, DMRG (6144))",
+          "conversion": "-0.515652 x 4 x 36 = -74.253888; finite-M DMRG energy, no error bar (deterministic), sigma null agrees",
+          "version_read": "published PDF Phys. Rev. Lett. 113, 027201 (2014) Supplemental Material, sources/journal/prl113-027201-suppl.pdf, sha256 f6f02e53 (also suppl .tex sha256 ec2625c5, main text prl113-027201.pdf sha256 1fcc3383); compared with arXiv:1311.5962v3 (qmbl/sources/1311.5962.pdf/.txt, lines 643-658): all 96 numeric cells of Table I identical",
+          "note": "Journal and arXiv v3 print the same cell. Instance: 6 x 6 torus (Supplement: 'We study L×L torus systems'), J2 = 0.45 printed, J1 = 1, Eq. (1) H = J1 Σ<ij> Si·Sj + J2 Σ<<ij>> Si·Sj each bond once, no constant; QMBL total = 4 N e. bound_type variational agrees: energy at 6144 kept SU(2) states, no extrapolation. Against the stored exact energy -0.5156574 per site this cell is +5.4e-06 per site. Peer_reviewed true and reference PRL 113, 027201 (2014) agree with the arXiv journal-ref and the publisher page. Primary: own SU(2) DMRG. No duplicate on the instance (data/J1J2/square_36_P_0.45.json read).",
+          "source_entry": "JP4-arxiv-1311-5962#21"
         }
       },
       "compute": {
@@ -165,8 +187,19 @@
           "location": "Table I (Supplementary Information, arXiv v3 PDF p. 11; main.tex line 500), block J2 = 0.45, row L = 6, column DMRG (8192); pypdf layout v3 line 648, v1 line 590",
           "reported_as": "-0.515655 (E/N, J1 = 1, S.S; 6 x 6 torus, DMRG (8192))",
           "conversion": "-0.515655 x 4 x 36 = -74.25432",
-          "note": "DMRG with M = 8192 kept SU(2) multiplets (about 32000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 8192 = SU(2) multiplet count. Valid bound: 2.392e-6 per site (3.444e-4 total) above E0/N = -0.515657392 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28 (k = 0 A1, E = -74.254664434186, E/144 = -0.515657392; not yet a row, SWEEP.md 'Open (Tristan)')). RECORD ROW when read (the best variational bound on the instance then): deterministic, no sigma to give; the cited paper computed it (own DMRG, not a quote). Instance: L x L torus = square_36_P, J2 = 0.45 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_36_P_0.45.json; the 48 VMC cells of the same table are the Hu et al. rows).",
+          "note": "DMRG with M = 8192 kept SU(2) multiplets (about 32000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 8192 = SU(2) multiplet count. Valid bound: 2.392e-6 per site (3.444e-4 total) above E0/N = -0.515657392 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28 (k = 0 A1, E = -74.254664434186, E/144 = -0.515657392; not yet a row, SWEEP.md 'Open')). RECORD ROW when read (the best variational bound on the instance then): deterministic, no sigma to give; the cited paper computed it (own DMRG, not a quote). Instance: L x L torus = square_36_P, J2 = 0.45 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_36_P_0.45.json; the 48 VMC cells of the same table are the Hu et al. rows).",
           "source_entry": "VP4-arxiv-1311-5962#22 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "publisher PDF of the PRL Supplemental Material (J1J2square_suppl.pdf, fetched from journals.aps.org over the ETH network), pypdf layout mode; cross-checked against the publisher's supplement LaTeX (J1J2square_suppl.tex lines 180-224) and arXiv:1311.5962v3 pypdf layout text",
+          "location": "PRL 113, 027201 Supplemental Material, Table I (p. 6), block J2 = 0.45, row L = 6, column DMRG (8192); layout text line 331; arXiv v3 Table I (Fig. 16 there = Fig. 11 in the journal supplement)",
+          "reported_as": "-0.515655 (E/N, J1 = 1, S·S units, 6×6 torus, DMRG (8192))",
+          "conversion": "-0.515655 x 4 x 36 = -74.254320; finite-M DMRG energy, no error bar (deterministic), sigma null agrees",
+          "version_read": "published PDF Phys. Rev. Lett. 113, 027201 (2014) Supplemental Material, sources/journal/prl113-027201-suppl.pdf, sha256 f6f02e53 (also suppl .tex sha256 ec2625c5, main text prl113-027201.pdf sha256 1fcc3383); compared with arXiv:1311.5962v3 (qmbl/sources/1311.5962.pdf/.txt, lines 643-658): all 96 numeric cells of Table I identical",
+          "note": "Journal and arXiv v3 print the same cell. Instance: 6 x 6 torus (Supplement: 'We study L×L torus systems'), J2 = 0.45 printed, J1 = 1, Eq. (1) H = J1 Σ<ij> Si·Sj + J2 Σ<<ij>> Si·Sj each bond once, no constant; QMBL total = 4 N e. bound_type variational agrees: energy at 8192 kept SU(2) states, no extrapolation. Against the stored exact energy -0.5156574 per site this cell is +2.4e-06 per site. Peer_reviewed true and reference PRL 113, 027201 (2014) agree with the arXiv journal-ref and the publisher page. Primary: own SU(2) DMRG. No duplicate on the instance (data/J1J2/square_36_P_0.45.json read).",
+          "source_entry": "JP4-arxiv-1311-5962#22"
         }
       },
       "compute": {
@@ -208,7 +241,18 @@
         "method": "source text of arXiv:1311.5962 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; parsed by column from the primary table",
         "reported_as": "-0.515660(1)",
         "note": "Table I of arXiv:1311.5962 (pypdf layout text, line 648), J2 = 0.45, L = 6, column 4 of 8 | E/J1 per site in S.S units on the L x L periodic torus (caption)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "publisher PDF of the PRL Supplemental Material (J1J2square_suppl.pdf, fetched from journals.aps.org over the ETH network), pypdf layout mode; cross-checked against the publisher's supplement LaTeX (J1J2square_suppl.tex lines 180-224) and arXiv:1311.5962v3 pypdf layout text",
+          "location": "PRL 113, 027201 Supplemental Material, Table I (p. 6), block J2 = 0.45, row L = 6, column DMRG (∞); layout text line 331; arXiv v3 Table I (Fig. 16 there = Fig. 11 in the journal supplement)",
+          "reported_as": "-0.515660(1) (E/N, J1 = 1, S·S units, 6×6 torus, DMRG (∞))",
+          "conversion": "-0.515660 x 4 x 36 = -74.255040; sigma 1 in last digit = 1e-06 x 4 x 36 = 0.000144",
+          "version_read": "published PDF Phys. Rev. Lett. 113, 027201 (2014) Supplemental Material, sources/journal/prl113-027201-suppl.pdf, sha256 f6f02e53 (also suppl .tex sha256 ec2625c5, main text prl113-027201.pdf sha256 1fcc3383); compared with arXiv:1311.5962v3 (qmbl/sources/1311.5962.pdf/.txt, lines 643-658): all 96 numeric cells of Table I identical",
+          "note": "Journal and arXiv v3 print the same cell. Instance: 6 x 6 torus (Supplement: 'We study L×L torus systems'), J2 = 0.45 printed, J1 = 1, Eq. (1) H = J1 Σ<ij> Si·Sj + J2 Σ<<ij>> Si·Sj each bond once, no constant; QMBL total = 4 N e. bound_type extrapolated agrees (caption: 'DMRG (∞) is obtained from the straight line energy extrapolation with DMRG truncation error'). Against the stored exact energy -0.5156574 per site this cell is -2.6e-06 per site (-2.6 printed bars). is_record: lowest non-exact row on the instance (the instance is solved by ED, so this is the closest challenger, not the record shown). Peer_reviewed true and reference PRL 113, 027201 (2014) agree with the arXiv journal-ref and the publisher page. Primary: own SU(2) DMRG. No duplicate on the instance (data/J1J2/square_36_P_0.45.json read). The Hu et al. row 'VMC + Lanczos steps, extrapolated in the variance' carries the same total -74.25504 (-0.51566(1)); a different computation (VMC p=∞ vs DMRG ∞) printed side by side in this table, not a duplicate.",
+          "source_entry": "JP4-arxiv-1311-5962#23"
+        }
       },
       "compute": {
         "parameters": null,
@@ -235,7 +279,7 @@
           "version_read": "arXiv:1311.5962v3 (e-print main.tex of 2014-07-12, PDF identical in text to v2); v1 compared; PRL 113, 027201 (2014) Supplemental Material not accessible (APS 403)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The stored method string and its detail ('SU(2), truncation error → 0 from 4096 to 8192 states', method_names.mjs line 52) and the compute note say this L = 6 extrapolation was fitted to the 4096/6144/8192 runs. The paper states those fit points only for L = 10 (a sentence added in v2 together with the removal of the L = 10 error bars); for L = 6 and 8 it says only 'straight line ... as illustrated in Fig. 16'. At L = 6 there is no figure and no statement of the fit points. 'Up to 8192' states what the source supports. Value, sigma (sigma = the printed extrapolation bar (1 in the last digit, per site), how estimated not stated), instance, J2 and bound_type extrapolated are verified. Against the exact ground state E0/N = -0.515657392 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28 (k = 0 A1, E = -74.254664434186, E/144 = -0.515657392; not yet a row, SWEEP.md 'Open (Tristan)')) the extrapolation sits below by 2.61e-6 per site = -2.61 printed bars. Instance: L x L torus = square_36_P, J2 = 0.45 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). Duplicate check (settles M13): one other row on the instance stores the same total, -74.25504, Hu, Becca, Parola & Sorella 'VMC + Lanczos steps, extrapolated in the variance' (arXiv:1304.2630, primary). That is Hu et al.'s own variance extrapolation, printed -0.51566(1) in their Table IV (L = 6, S = 0) and quoted in Gong et al.'s Table I column VMC (p = ∞); this row is Gong et al.'s own DMRG extrapolation -0.515660(1) in the neighbouring column. Two methods from two papers coincide at the printed digits: not a duplicate, both rows stay. Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is Table I's column, 'DMRG (∞)'; the straight-line extrapolation in the truncation error, SU(2) symmetry and up to 8192 kept SU(2) states are the detail.",
+          "reason": "The stored method string and its detail ('SU(2), truncation error → 0 from 4096 to 8192 states', method_names.mjs line 52) and the compute note say this L = 6 extrapolation was fitted to the 4096/6144/8192 runs. The paper states those fit points only for L = 10 (a sentence added in v2 together with the removal of the L = 10 error bars); for L = 6 and 8 it says only 'straight line ... as illustrated in Fig. 16'. At L = 6 there is no figure and no statement of the fit points. 'Up to 8192' states what the source supports. Value, sigma (sigma = the printed extrapolation bar (1 in the last digit, per site), how estimated not stated), instance, J2 and bound_type extrapolated are verified. Against the exact ground state E0/N = -0.515657392 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28 (k = 0 A1, E = -74.254664434186, E/144 = -0.515657392; not yet a row, SWEEP.md 'Open')) the extrapolation sits below by 2.61e-6 per site = -2.61 printed bars. Instance: L x L torus = square_36_P, J2 = 0.45 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). Duplicate check (settles M13): one other row on the instance stores the same total, -74.25504, Hu, Becca, Parola & Sorella 'VMC + Lanczos steps, extrapolated in the variance' (arXiv:1304.2630, primary). That is Hu et al.'s own variance extrapolation, printed -0.51566(1) in their Table IV (L = 6, S = 0) and quoted in Gong et al.'s Table I column VMC (p = ∞); this row is Gong et al.'s own DMRG extrapolation -0.515660(1) in the neighbouring column. Two methods from two papers coincide at the printed digits: not a duplicate, both rows stay. Ruling B4 (2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is Table I's column, 'DMRG (∞)'; the straight-line extrapolation in the truncation error, SU(2) symmetry and up to 8192 kept SU(2) states are the detail.",
           "source_entry": "VP4-arxiv-1311-5962#23 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "DMRG, extrapolated in the truncation error (4096-8192 SU(2) states)"
         },
@@ -288,7 +332,17 @@
           "reported_as": "-0.51364(1) per site, E/J1, S.S units",
           "conversion": "-0.51364 * 4 * 36 = -73.96416; sigma 1e-5 * 144 = 0.00144",
           "note": "Own computation. L x L periodic cluster (N = 36), J2/J1 = 0.45, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type variational (p = 0 Lanczos steps on the projected Z2Azz13 state; p = 0 is 'the original variational wave function') agrees. The same cell is reprinted in Gong, Zhu, Sheng, Motrunich & Fisher, arXiv:1311.5962v3 Table I (caption: 'The VMC energies are from Ref.~\\cite{PRB_88_060402}'), identical digits; that reprint is a quote, not a second computation, and is not stored as a row.",
-          "source_entry": "VP1-arxiv-1304-2630#45 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#45 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE I (caption 'p=0'), row L = 6, S = 0, column J2/J1 = 0.45",
+          "reported_as": "-0.51364(1) per site, E/J1, S.S units",
+          "conversion": "-0.51364 * 4 * 36 = -73.96416; sigma (cell error) * 144 = 0.00144",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.51364(1), arXiv -0.51364(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type variational agrees (p Lanczos steps on the projected Z2Azz13 state, variational). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#44"
         }
       }
     },
@@ -323,7 +377,17 @@
           "reported_as": "-0.51538(1) per site, E/J1, S.S units",
           "conversion": "-0.51538 * 4 * 36 = -74.21472; sigma 1e-5 * 144 = 0.00144",
           "note": "Own computation. L x L periodic cluster (N = 36), J2/J1 = 0.45, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type variational (p = 1 Lanczos steps on the projected Z2Azz13 state; p = 0 is 'the original variational wave function') agrees. The same cell is reprinted in Gong, Zhu, Sheng, Motrunich & Fisher, arXiv:1311.5962v3 Table I (caption: 'The VMC energies are from Ref.~\\cite{PRB_88_060402}'), identical digits; that reprint is a quote, not a second computation, and is not stored as a row.",
-          "source_entry": "VP1-arxiv-1304-2630#46 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#46 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE II (caption 'p=1'), row L = 6, S = 0, column J2/J1 = 0.45",
+          "reported_as": "-0.51538(1) per site, E/J1, S.S units",
+          "conversion": "-0.51538 * 4 * 36 = -74.21472; sigma (cell error) * 144 = 0.00144",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.51538(1), arXiv -0.51538(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type variational agrees (p Lanczos steps on the projected Z2Azz13 state, variational). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#45"
         }
       }
     },
@@ -358,7 +422,17 @@
           "reported_as": "-0.51558(1) per site, E/J1, S.S units",
           "conversion": "-0.51558 * 4 * 36 = -74.24352; sigma 1e-5 * 144 = 0.00144",
           "note": "Own computation. L x L periodic cluster (N = 36), J2/J1 = 0.45, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type variational (p = 2 Lanczos steps on the projected Z2Azz13 state; p = 0 is 'the original variational wave function') agrees. The same cell is reprinted in Gong, Zhu, Sheng, Motrunich & Fisher, arXiv:1311.5962v3 Table I (caption: 'The VMC energies are from Ref.~\\cite{PRB_88_060402}'), identical digits; that reprint is a quote, not a second computation, and is not stored as a row.",
-          "source_entry": "VP1-arxiv-1304-2630#47 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#47 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE III (caption 'p=2'), row L = 6, S = 0, column J2/J1 = 0.45",
+          "reported_as": "-0.51558(1) per site, E/J1, S.S units",
+          "conversion": "-0.51558 * 4 * 36 = -74.24352; sigma (cell error) * 144 = 0.00144",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.51558(1), arXiv -0.51558(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type variational agrees (p Lanczos steps on the projected Z2Azz13 state, variational). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#46"
         }
       }
     },
@@ -393,7 +467,17 @@
           "reported_as": "-0.51566(1) per site, E/J1, S.S units",
           "conversion": "-0.51566 * 4 * 36 = -74.25504; sigma 1e-5 * 144 = 0.00144",
           "note": "Own computation. L x L periodic cluster (N = 36), J2/J1 = 0.45, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type extrapolated (zero-variance fit through p = 0, 1, 2) agrees. The same cell is reprinted in Gong, Zhu, Sheng, Motrunich & Fisher, arXiv:1311.5962v3 Table I (caption: 'The VMC energies are from Ref.~\\cite{PRB_88_060402}'), identical digits; that reprint is a quote, not a second computation, and is not stored as a row. M13 settled: the equal stored total -74.25504 under Gong et al. is their own DMRG(infinity) truncation-error extrapolation printed as -0.515660(1) (arXiv:1311.5962v3 Table I, TeX line 500), which coincides with this row's -0.51566(1) only at this paper's five printed digits; Gong's VMC(p=infinity) column reprints this row's number and is not stored. Two different computations, not a duplicate.",
-          "source_entry": "VP1-arxiv-1304-2630#48 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#48 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE IV (caption 'extrapolation'), row L = 6, S = 0, column J2/J1 = 0.45",
+          "reported_as": "-0.51566(1) per site, E/J1, S.S units",
+          "conversion": "-0.51566 * 4 * 36 = -74.25504; sigma (cell error) * 144 = 0.00144",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.51566(1), arXiv -0.51566(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type extrapolated agrees (variance extrapolation Ep ~ Eex + const sigma_p^2 fitted over p = 0,1,2 (L <= 10) or p = 0,1 (L = 14, 18)). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#47"
         }
       }
     },
@@ -428,7 +512,7 @@
           "reported_as": "-0.515281 (energy per site, S.S units, J1 = 1; no error bar printed)",
           "conversion": "-0.515281 x 4 x 36 = -74.200464 (stored -74.200464, exact match)",
           "note": "Independent second read of a QMBL-added row. Hamiltonian H = J1 sum_<i,j> S_i S_j + J2 sum_<<i,j>> S_i S_j with spin-1/2 operators (v1 Eq. 4, v2 Eq. 6), 'square lattice with periodic boundary conditions and N = 36, 64 and 100 spins 1/2'; Table I is per site in S.S units with J1 = 1 (the paper's own 6x6 ED column and its quoted Sandvik QMC cells fix it). Size, boundary and J2 agree with the instance; 'ViT' is a variational NQS, so bound_type variational is right; method_as_published 'ViT' is the column header; peer_reviewed false is right (no journal reference on the abs page, 2026-09-29); primary (column '(this work)'). Kind of number: the authors' extended data (2026-09-28) states that Table I lists the best of ten checkpoints (every 150 of 1500 epochs), each a 4096-sample estimate; no error bar is printed, so sigma stays null (RULES.md 6). No exact row on this instance: sits 3.76e-4 per site above the exact -0.51565739 printed by Chen, Hendry, Weinberg & Feiguin (arXiv:2206.14307 Table 5, 'Energy(Exact)') and 3.74e-4 above Gong et al.'s 8192-state DMRG -0.515655 stored here; the paper's own ED prints -0.515658.",
-          "source_entry": "VP5-arxiv-2606-04558#24 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP5-arxiv-2606-04558#24 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -464,7 +548,17 @@
         "method": "source text of arXiv:2206.14307 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.51452(1)",
         "note": "Table 5, row 'Energy(CNN)', 6x6 J2 = 0.45 | Energy per site E/N in S.S units (table captions); the 6x6 exact column equals the exact rows QMBL carries.",
-        "secondary_of": "arXiv:2206.14307"
+        "secondary_of": "arXiv:2206.14307",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 100, 125124 (2019), doi:10.1103/PhysRevB.100.125124, sources/journal/prb100-125124.pdf, sha256 bae6515a (APS, ETH network; no Supplemental Material); arXiv:1903.06713v1 (only version) compared: CNN rows identical; pypdf layout and plain mode",
+          "location": "Table I (Appendix A), 6 x 6 block, row CNN, column J2 = 0.45",
+          "reported_as": "-0.51452(1) (per site, S.S units, J1 = 1)",
+          "conversion": "-0.51452 x 4 x 36 = -74.09088; sigma 1e-5 x 4 x 36 = 0.00144",
+          "note": "Eq. (1) H = J1 sum S_i.S_j + J2 sum S_i.S_j, 'square lattice with periodic boundary conditions', zero-magnetization sector, J1 = 1; Appendix A: 'the exact values (including error bars) for the variational energies obtained in this paper' (own CNN, variational, MCMC with spin-exchange moves, 5000 samples). Units fixed by the table's 6x6 Exact row, which equals QMBL's exact rows. Journal and arXiv v1 CNN cells identical. peer_reviewed true, reference correct (title as published). No duplicate on the instance.",
+          "source_entry": "JP8-j1j2-hubbard-heisenberg#52"
+        }
       },
       "corrections": [
         {
@@ -503,7 +597,17 @@
         "method": "source text of arXiv:2206.14307 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.51552(1)",
         "note": "Table 5, row 'Energy(RBM)', 6x6 J2 = 0.45 | Energy per site E/N in S.S units (table captions); the 6x6 exact column equals the exact rows QMBL carries.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Adv. Neural Inf. Process. Syst. 35, 7490-7503 (NeurIPS 2022, doi:10.52202/068431-0544), sources/journal/neurips35-7490.pdf, sha256 902d3e93; supplement sources/journal/neurips35-7490-supp.pdf, sha256 c1ea9c74; compared with arXiv:2206.14307v1 (the only arXiv version; qmbl/sources/2206.14307.pdf): every RBM cell identical, the journal adds 'Energy(RBM+PP)' rows (quotes of ref. [30]) to Tables 2 and 4; pypdf plain + layout mode (with fonttools), local extraction, no LLM transcription",
+          "location": "journal Table 5, 6x6 block, row 'Energy(RBM)', column J2 = 0.45",
+          "reported_as": "-0.51552(1) (energy per site E/N, J1 = 1, S.S units)",
+          "conversion": "-0.51552 x 4 x 36 = -74.23488; sigma 0.00001 x 144 = 0.00144",
+          "note": "Pauli-stored total = E/N x 4N; H = J1 sum S.S + J2 sum S.S, S spin operators, J1 = 1, no constant (Eq. 1); L x L periodic (Sec. 4.1); S^z = 0 sector, psi_KL projected to momentum K and a C4v irrep (A1 or B1, Sec. 3.4); variational MC energy of the symmetrized RBM, 2e5 evaluation samples; no variance extrapolation reported. bound_type variational, peer_reviewed true and reference (NeurIPS 35, 7490-7503) agree. arXiv v1 and journal cells identical. Not a duplicate: no other row on the instance carries this number from this paper or a quote of it. Sits above the paper's exact value -0.51565739 (same table).",
+          "source_entry": "JP6-heisenberg-j1j2#17"
+        }
       },
       "corrections": [
         {
@@ -580,8 +684,8 @@
       "family": "tensor network",
       "bound_type": "extrapolated",
       "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
-      "reference": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, Phys. Rev. B 94, 075143 (2016), arXiv:1112.3331",
-      "peer_reviewed": true,
+      "reference": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-10-07",
       "provenance": "primary",
       "verified": {
@@ -591,6 +695,28 @@
         "note": "Table I, row J2 = 0.45, column L=6 | Energy per site in S.S units; the table's own L = 4 and L = 6 ED columns equal QMBL's exact rows. The finite-size values are extrapolated linearly in 1/Dc^2 (text), so they are not upper bounds.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+          "location": "Table I",
+          "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+          "checked_on": "2026-10-15",
+          "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+          "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15",
+          "from": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, Phys. Rev. B 94, 075143 (2016), arXiv:1112.3331"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "location": "Table I",
+          "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+          "checked_on": "2026-10-15",
+          "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+          "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15",
+          "from": true
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,

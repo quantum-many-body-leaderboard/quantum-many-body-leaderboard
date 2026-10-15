@@ -65,7 +65,7 @@ const ADD = {
         version_read: "private correspondence, data files as received 2026-09-19 (zip sha256 da066f4b244e886c82bf347a2b5e43cecd0e12369ccfa240b809170c71b79dcc)",
         conversion: "S.S total x 4 = Pauli total; per site -0.48558404568894675 x 1024",
         checked_on: "2026-09-19",
-        reason: "The paper gives the energy as approximate to four decimals; the authors measured the same fixed state with 8,388,608 samples over 256 chains and obtained E/N = -0.4855840(29) J, one unit of the last printed digit below the printed value and 29 sigma of the new error bar, so a sigma cannot sit on the printed number. Corrected to the measured value with the printed one kept here (ruling 2026-09-19, Tristan).",
+        reason: "The paper gives the energy as approximate to four decimals; the authors measured the same fixed state with 8,388,608 samples over 256 chains and obtained E/N = -0.4855840(29) J, one unit of the last printed digit below the printed value and 29 sigma of the new error bar, so a sigma cannot sit on the printed number. Corrected to the measured value with the printed one kept here (ruling 2026-09-19).",
         source_entry: "qmbl-runs/repo-data-census/search/replies/2509.13746-cheng-2026-09-19.txt, ruling 1 (2026-09-19)",
         from: +((-0.4855 * 1024).toPrecision(12)),
       }],

@@ -40,7 +40,18 @@
           "reported_as": "-8.476(9) (total ground state energy, units of t; \"Statistical errors are on the last digit\")",
           "conversion": "stored as printed (total): energy -8.476; sigma 9 x 1e-3 = 0.009",
           "note": "Value, sigma, cluster (4 x 4, N = 16), boundary (PBC = periodic both ways), filling (half filling, N_up = N_dn = 8), U = 8, t = 1 and bound_type (sign-free ground-state AFQMC, tau = 0.01, stated numerically exact -> exact (stochastic)) agree with the source; Hamiltonian identical to VarBench's (no constant shift); dof 16 = N_up + N_dn and einf 32 = U N_up N_dn / N; own computation, peer reviewed (PRB 94, 085103). Same cell in v1 PDF, v2 PDF and v2 HTML. Table row check: E - (P + K) = 0 (P = 6.864(8), K = -15.34(2), 0 sigma). No other row on the instance carries this number (no duplicate). Independent check: QMBL's ED row on this instance, -8.46896 (quoted via arXiv:2602.03031), sits 0.0070 = 0.78 sigma above the AFQMC value; consistent. The ED row holds the record; no duplicate.",
-          "source_entry": "VP3-arxiv-1605-09421#23 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP3-arxiv-1605-09421#23 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "journal PDF (PRB 94, 085103) and arXiv:1605.09421v2 PDF, both pypdf layout mode, Table IV E rows parsed by column position with node; no LLM transcription",
+          "location": "Appendix (Finite-size data at half-filling), Table IV, p. 085103-11, row 4 x 4 E, column U = 8 PBC",
+          "reported_as": "-8.476(9) (total ground-state energy, units of t; \"Statistical errors are on the last digit and are indicated in parenthesis\")",
+          "conversion": "stored as printed (total): energy -8.476; sigma 0.009",
+          "version_read": "published PDF Phys. Rev. B 94, 085103 (2016) (published 4 Aug 2016), sources/journal/prb94-085103.pdf, sha256 3e2a87a9; no Supplemental Material listed on the APS abstract page; compared with arXiv:1605.09421v2 (sources/arxiv-1605.09421/latest.pdf, sha256 227f31f5)",
+          "note": "Journal and arXiv v2 print the same cell (-8.476(9)); no difference between versions. Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + U sum n_up n_dn, no constant shift (same as VarBench). 4 x 4 square, N = 16, PBC, half filling N_up = N_dn = 8 (spin-balanced, n = 1), U = 8. Sign-free ground-state AFQMC, tau = 0.01 with Trotter error below the statistical error (Sec. II B), stated numerically exact at half filling (Sec. IV) -> exact (stochastic) with sigma. Own computation; peer reviewed, reference string correct. dof 16, einf 32 = U N/4 consistent. No duplicate: no other row on the instance carries this number.",
+          "source_entry": "JP3-arxiv-1605-09421#23"
         }
       },
       "compute": {
@@ -115,8 +126,8 @@
           "location": "Supplemental Material Table II ('Energies per site for the Hubbard model at half-filling under periodic boundary conditions, for U = 2, 4, 6, and 8'), row '4 × 4', column 'U = 8', sub-column 'K = 0 (HF)'",
           "reported_as": "−0.4898 (energy per site; caption: 'The energy sampling errors are around 0.0003')",
           "conversion": "-0.4898 × 16 = -7.8368 (Hubbard stored as total = per site × N)",
-          "note": "Half filling, PBC (caption), U = 8, 4 × 4: instance square_16_P_8_8 (N_up = N_dn = 8). The same row's quoted QMC cell −0.5298(1) is Qin et al.'s PBC total -8.476(9) / 16, stored on this instance as the AFQMC row (-8.476); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above. M2 flag settled: K = 0 is the Hartree-Fock state ('K = 0 corresponds to the Hartree-Fock state', Fig. 2 caption), sampled by VMC like the other depths. Its distance from the reference is the HF error at U = 8, not a unit or constant-shift problem: the K = 1 and K = 2 cells of the same row sit 0.1-0.6% above.",
-          "source_entry": "VP6-arxiv-2606-00924#30 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "Half filling, PBC (caption), U = 8, 4 × 4: instance square_16_P_8_8 (N_up = N_dn = 8). The same row's quoted QMC cell −0.5298(1) is Qin et al.'s PBC total -8.476(9) / 16, stored on this instance as the AFQMC row (-8.476); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above. M2 flag settled: K = 0 is the Hartree-Fock state ('K = 0 corresponds to the Hartree-Fock state', Fig. 2 caption), sampled by VMC like the other depths. Its distance from the reference is the HF error at U = 8, not a unit or constant-shift problem: the K = 1 and K = 2 cells of the same row sit 0.1-0.6% above.",
+          "source_entry": "VP6-arxiv-2606-00924#30 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -166,8 +177,8 @@
           "location": "Supplemental Material Table II ('Energies per site for the Hubbard model at half-filling under periodic boundary conditions, for U = 2, 4, 6, and 8'), row '4 × 4', column 'U = 8', sub-column 'K = 1'",
           "reported_as": "−0.5281 (energy per site; caption: 'The energy sampling errors are around 0.0003')",
           "conversion": "-0.5281 × 16 = -8.4496 (Hubbard stored as total = per site × N)",
-          "note": "Half filling, PBC (caption), U = 8, 4 × 4: instance square_16_P_8_8 (N_up = N_dn = 8). The same row's quoted QMC cell −0.5298(1) is Qin et al.'s PBC total -8.476(9) / 16, stored on this instance as the AFQMC row (-8.476); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
-          "source_entry": "VP6-arxiv-2606-00924#31 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "Half filling, PBC (caption), U = 8, 4 × 4: instance square_16_P_8_8 (N_up = N_dn = 8). The same row's quoted QMC cell −0.5298(1) is Qin et al.'s PBC total -8.476(9) / 16, stored on this instance as the AFQMC row (-8.476); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
+          "source_entry": "VP6-arxiv-2606-00924#31 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -217,8 +228,8 @@
           "location": "Supplemental Material Table II ('Energies per site for the Hubbard model at half-filling under periodic boundary conditions, for U = 2, 4, 6, and 8'), row '4 × 4', column 'U = 8', sub-column 'K = 2'",
           "reported_as": "−0.5291 (energy per site; caption: 'The energy sampling errors are around 0.0003')",
           "conversion": "-0.5291 × 16 = -8.4656 (Hubbard stored as total = per site × N)",
-          "note": "Half filling, PBC (caption), U = 8, 4 × 4: instance square_16_P_8_8 (N_up = N_dn = 8). The same row's quoted QMC cell −0.5298(1) is Qin et al.'s PBC total -8.476(9) / 16, stored on this instance as the AFQMC row (-8.476); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (Tristan, 2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
-          "source_entry": "VP6-arxiv-2606-00924#32 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "note": "Half filling, PBC (caption), U = 8, 4 × 4: instance square_16_P_8_8 (N_up = N_dn = 8). The same row's quoted QMC cell −0.5298(1) is Qin et al.'s PBC total -8.476(9) / 16, stored on this instance as the AFQMC row (-8.476); that fixes per-site units, the U n_up n_dn convention and PBC (not PBC-APBC). The own value lies above it. bound_type variational (VMC + SR, no extrapolation). sigma stays null: the caption's table-wide 'The energy sampling errors are around 0.0003' is not a per-row sigma (2026-09-17, Journal 2026-09-17 and hub). Sz is not stated in the paper; at even electron number any-Sz variational energy bounds the N_up = N_dn instance energy from above.",
+          "source_entry": "VP6-arxiv-2606-00924#32 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -251,8 +262,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": "true",
       "source": "sweep-allresults-2026-09-15",
       "provenance": "primary",
       "verified": {
@@ -269,7 +280,7 @@
           "reported_as": "-0.52909(25) (energy per site, units of t)",
           "conversion": "-0.52909 x 16 = -8.46544; sigma 25e-5 x 16 = 0.004",
           "note": "4x4 PBC, half filling (Nf = 8 per spin), U/t as instance, per-site convention (Eq. 40 = VarBench form, no shift) and bound_type variational (VMC of a trained NQS, no extrapolation) agree. Own computation, arXiv preprint (Feb 2026), peer_reviewed false correct. The bracketed error is not defined for Table VII (C7); 'best final energy among five independent runs' is the SM's general reporting rule (C6). No other row on the instance carries this number (no duplicate). N_p = 11,424. 0.00344 above the primary ED -8.46888.",
-          "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#15 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#15 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -297,7 +308,33 @@
         "scope": "row",
         "confidence": "medium",
         "note": "parameters (11,424), iterations (10,000) and samples (4,096 per iteration) are stated for the 4×4 Hubbard benchmark (both U/t values, identical hyperparameters: d=16, n_h=4, depth L=4, ∆τ=0.5; MinSR lr 0.01, diagonal shift 1e-4). device/n_devices are the paper's blanket statement (two A100 40GB for models that fit in memory, two H100 80GB for larger models); which of the two applied to this small Hubbard run is not said, hence medium confidence. No wall-clock or GPU-hours stated. Fig. 3 (Supplement) reports peak GPU memory and seconds per iteration on two H100s for the J1-J2 ViT models only. || pass 2026-09-27: Not autoregressive: the fermionic TQS/PITQS decoder is a multi-Slater backflow (Eqs. 32-35) sampled by Markov chain from |Psi|^2 in NetKet, so proposals_per_sample = 2N = 32, NetKet's default sweep_size = hilbert.size for 16 sites x 2 spin orbitals (the sampler is not otherwise stated; the ARCH entry's 'ar' is wrong for these rows, verify/agent-C.md §6). local_energy all: NetKet's fermion operator pads to all 4 x bonds terms. sr minsr (MinSR). complex false: real embedding/output matrices and a \"real multi-determinant backflow form\" (complex log-amplitude only for the sign). Not expressible: the K = 4 determinants one decoder pass feeds (det term x4, ~3 % of the forward) and the attention scores (+18 %). Net x1.47 on the stored estimate (agent-C.md). || pass 2026-09-29: evaluation.jacobian \"complex\" (medium confidence), the matrix the code's SR builds (DATA.md). || pass 2026-09-29: evaluation.jacobian \"complex\" (medium confidence), the matrix the code's SR builds (DATA.md)."
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026) DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page",
+          "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+          "conversion": "n/a",
+          "checked_on": "2026-10-15",
+          "reason": "Published since the row was read (scope-pub.json lists it); the stored reference also names no authors. Value check: Table VII row TQS, column E (U/t = 8) prints '−0.529 09(25)' in the journal and in arXiv v1; -0.52909 x 16 = -8.46544; sigma 25e-5 x 16 = 0.004. 4x4 PBC half filling, per-site units of t, no constant shift, variational; no duplicate on the instance (TQS and PITQS are different networks).",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#31",
+          "from": "Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": "true",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page",
+          "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+          "conversion": "n/a",
+          "checked_on": "2026-10-15",
+          "reason": "Peer-reviewed journal version exists and prints the same Table VII value.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#32",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -8.46704,
@@ -312,8 +349,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": "true",
       "source": "sweep-allresults-2026-09-15",
       "provenance": "primary",
       "verified": {
@@ -359,7 +396,33 @@
         "scope": "row",
         "confidence": "medium",
         "note": "parameters (4,752), iterations (10,000) and samples (4,096 per iteration) are stated for the 4×4 Hubbard benchmark (both U/t values, identical hyperparameters: d=16, n_h=4, depth L=4, ∆τ=0.5; MinSR lr 0.01, diagonal shift 1e-4). device/n_devices are the paper's blanket statement (two A100 40GB for models that fit in memory, two H100 80GB for larger models); which of the two applied to this small Hubbard run is not said, hence medium confidence. No wall-clock or GPU-hours stated. Fig. 3 (Supplement) reports peak GPU memory and seconds per iteration on two H100s for the J1-J2 ViT models only. || pass 2026-09-27: Not autoregressive: the fermionic TQS/PITQS decoder is a multi-Slater backflow (Eqs. 32-35) sampled by Markov chain from |Psi|^2 in NetKet, so proposals_per_sample = 2N = 32, NetKet's default sweep_size = hilbert.size for 16 sites x 2 spin orbitals (the sampler is not otherwise stated; the ARCH entry's 'ar' is wrong for these rows, verify/agent-C.md §6). local_energy all: NetKet's fermion operator pads to all 4 x bonds terms. sr minsr (MinSR). complex false: real embedding/output matrices and a \"real multi-determinant backflow form\" (complex log-amplitude only for the sign). reuse = N x (embedding 320 + L x layer 2224 + decoder 2208) / P = 16 x 11,424 / 4,752 = 38.4646: PITQS applies its one shared layer L = 4 times, so its forward equals TQS's (the SM: computational times \"comparable\"; agent-C.md), while the family reuse N charges the shared layer once. Not expressible: the K = 4 determinants one decoder pass feeds (det term x4, ~3 % of the forward) and the attention scores (+18 %). Net x3.53 on the stored estimate (agent-C.md). || pass 2026-09-29: evaluation.jacobian \"complex\" (medium confidence), the matrix the code's SR builds (DATA.md). || pass 2026-09-29: evaluation.jacobian \"complex\" (medium confidence), the matrix the code's SR builds (DATA.md)."
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026) DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page",
+          "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+          "conversion": "n/a",
+          "checked_on": "2026-10-15",
+          "reason": "Published since the row was read (scope-pub.json lists it); the stored reference also names no authors. RECORD row. Value check: Table VII row PITQS, column E (U/t = 8) prints '−0.529 19(35)' in the journal and in arXiv v1; -0.52919 x 16 = -8.46704; sigma 35e-5 x 16 = 0.0056. 4x4 PBC half filling, per-site units of t, no constant shift, variational; no duplicate on the instance (TQS and PITQS are different networks).",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#33",
+          "from": "Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": "true",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page",
+          "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+          "conversion": "n/a",
+          "checked_on": "2026-10-15",
+          "reason": "Peer-reviewed journal version exists and prints the same Table VII value.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#34",
+          "from": false
+        }
+      ]
     }
   ]
 }

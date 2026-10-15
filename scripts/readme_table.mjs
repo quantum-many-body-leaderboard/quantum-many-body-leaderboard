@@ -181,7 +181,7 @@ function main() {
     lines.push("", ...HEADER, ...group.map(i => row(i, instanceLabel(i), cache)), "", "</details>", "");
   }
 
-  // The legend (bound_type, bold, circle, dagger) and the table-wide counts are Tristan's
+  // The legend (bound_type, bold, circle, dagger) and the table-wide counts are the maintainer's
   // hand-written "## Details" section below the END marker since 2026-09-16 (2eb98a3), so
   // the generator emits nothing after the last </details>; the counts live in
   // data/_summary.json and on the site's front page.

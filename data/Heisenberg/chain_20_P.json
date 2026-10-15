@@ -85,7 +85,7 @@
         "reported_as": "| -35.6174890 | 0.0000072 | 0.0001278 | 20 | 0 | RNN | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_P/vmc_rnn.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -35.617489/(4 x 20) = -0.445218612",
         "note": "vmc_rnn.sh: periodic 20-site ring, Pauli, J = 1, Marshall sign rule (bipartite ring, N even), full Hilbert space with exact autoregressive sampling, FastLSTMNet 2 x 16, Adam 10^5 steps. The stored (sigma, Var) imply 2.5e6 independent samples (ratio 0.652), not the script's 2^20: numbers from the 2021 run (d9e1806, 2021-10-15), script added 2024-07-30 (d54f7c0). 5.7e-5 above the exact energy: a valid bound.",
-        "source_entry": "VB3-varbench-code-heisenberg#13 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#13 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -115,8 +115,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked vmc_rnn.sh runs a plain FastLSTMNet, and vmc.py has no symmetrisation option, so the link does not implement the method named; VarBench first linked a vmc_rnn_sym.sh that is not in varbench/methods. The number was uploaded years before the script and is printed in no paper the reader found (VB1/VB3), so it is cited to the dataset with the uploader named. No record at stake. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB3-varbench-code-heisenberg#14 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked vmc_rnn.sh runs a plain FastLSTMNet, and vmc.py has no symmetrisation option, so the link does not implement the method named; VarBench first linked a vmc_rnn_sym.sh that is not in varbench/methods. The number was uploaded years before the script and is printed in no paper the reader found (VB1/VB3), so it is cited to the dataset with the uploader named. No record at stake. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB3-varbench-code-heisenberg#14 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_P/vmc_rnn.sh)"
         }
       ]
@@ -162,7 +162,7 @@
         "reported_as": "| -35.61452 | 0.00033 | 0.0488 | 20 | 0 | VMC with projected fermions + Jastrow | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_P/vmc_gutzwiller.sh) |",
         "conversion": "stored = 4N x <H>/N of read_ene.x (S.S per site), sigma x 4N, variance 16 Var_S(H); per site S.S = -35.61452/(4 x 20) = -0.4451815",
         "note": "vmc_gutzwiller.sh + inputs: geometry.d 1-site cell x 20 (ring; the last flag 1 only makes the auxiliary fermions antiperiodic, the spin exchange uses abs(ivicn) and is periodic), nelup = neldo = 10 (Sz = 0), jperp = 1, uvv = 0.25 (H = sum S.S, no constant), BCS-paired projected fermions (iesBCS=3) + spin Jastrow (iesspin=9); read_ene.x binned error. Stored = 4N x <H>/N (Pauli total). sigma/sqrt(Var/2^20) = 1.53 (binned SEM; implied 4.5e5 effective samples). 0.00303 above the exact energy. Entered 37e1c6a (2021-11-25, F. Ferrari), never changed; linked by Ferrari d186176 (2024-07-30).",
-        "source_entry": "VB3-varbench-code-heisenberg#15 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#15 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -307,7 +307,7 @@
         "reported_as": "| -35.60392 | 0.00041 | 0.1757833 | 20 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_P/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -35.60392/(4 x 20) = -0.445049000",
         "note": "scripts/Heisenberg/chain_20_P/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 1 --L 20 --zero_mag --net rbm --seed 123 --show_progress' -> 20-site ring (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.001: the stored sigma is the error of that final estimate. 0.0136 above the exact -35.61754611950579. History: entered 10f5c12 (2022-07-11, Dian Wu) as -35.6039 | 0.00041 | 0.175783 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -35.6039 -> -35.60392; variance 0.175783 -> 0.1757833; linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#17 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#17 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -362,7 +362,7 @@
         "reported_as": "| -35.55179 | 0.00049 | 0.2419342 | 20 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_P/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -35.55179/(4 x 20) = -0.444397375",
         "note": "scripts/Heisenberg/chain_20_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 1 --L 20 --zero_mag --net jas --seed 123 --show_progress' -> 20-site ring (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.020: the stored sigma is the error of that final estimate. 0.0658 above the exact -35.61754611950579. History: entered af1d48f (2022-09-01, Dian Wu) as -35.55179 | 0.00049 | 0.2419342 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#18 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#18 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     }

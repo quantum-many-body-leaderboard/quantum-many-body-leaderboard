@@ -1,7 +1,7 @@
 // A diagonalization resolved by symmetry sector states the lowest energy in each sector, and
 // only the ground state's sector is a ground-state energy. That row stays a row and holds the
 // record; every other sector's minimum leaves the rows for the instance's `spectrum` (DATA.md;
-// Tristan, ruled 2026-09-16 and reconfirmed 2026-09-30 for J1J2/triangular_48_P_0.125). A level
+// ruled 2026-09-16 and reconfirmed 2026-09-30 for J1J2/triangular_48_P_0.125). A level
 // of the spectrum is not a result, and as a row it had to be excluded by every consumer in turn.
 //
 // Runs once the rows are final, after the overlays and the method names (which assign `sector`):

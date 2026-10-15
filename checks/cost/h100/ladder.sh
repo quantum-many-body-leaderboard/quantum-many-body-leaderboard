@@ -10,7 +10,7 @@
 #
 # The card: the one the previous job used if it is still free, else one the host's GPU
 # policy lists as eligible (idle for 20 minutes); if there is none, wait. The host has no card
-# cap for our jobs since 2026-09-28 (Tristan); the ladder still takes one card, never a second.
+# cap for our jobs since 2026-09-28; the ladder still takes one card, never a second.
 set -uo pipefail
 source "$(dirname "$0")/site.env"   # REMOTE_ROOT, GPU_POLICY (copied here with h100/ by deploy.sh)
 ROOT=$REMOTE_ROOT

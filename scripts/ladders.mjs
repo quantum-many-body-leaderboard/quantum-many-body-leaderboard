@@ -39,7 +39,7 @@ const variantsOf = inst => inst.instance_id.split("/")[1].split("_").slice(2)
 const gcd = (a, b) => (b ? gcd(b, a % b) : a);
 
 // The rows a figure draws: a bound, a projection, an extrapolation or a ground-state exact
-// energy. A flagged row is drawn too, with a slashed mark (Tristan, 2026-09-18: the reader
+// energy. A flagged row is drawn too, with a slashed mark (2026-09-18: the reader
 // sees the number and that it is contested; RULES.md 6.1 keeps it off the records and so
 // off the record line), except a row flagged wrong-instance, whose energy belongs on
 // another axis. Rows without a bound type are not, nor the minimum of a sector other than
@@ -150,7 +150,7 @@ function scansOf(instances) {
 // The strip a slider shows above its panel (size_energy.mjs): its plot box is shared with the
 // site, which sets a badge under each stop at the stop's x. Stops sit at even spacing in their
 // own order, as the couplings of an "other" panel do: placed by value, the badges for J2 = 0.4,
-// 0.45, 0.5, 0.55, 0.6 ran into each other (Tristan, 2026-09-18). Above the plot is room for
+// 0.45, 0.5, 0.55, 0.6 ran into each other (2026-09-18). Above the plot is room for
 // the size lines to move apart when the strip is hovered (size_energy.mjs), and above that
 // the facet labels and the legend.
 export const STRIP = { left: PAD + 56, right: W - PAD - 10, top: 92, bottom: 252, labelY: 40 };
@@ -166,15 +166,15 @@ const valueLabel = at => (typeof at === "number" ? String(Number(at.toPrecision(
 // and lattice) is shown as facets, a facet being the ladders that differ only in the
 // figure's axis: the coupling or filling with most distinct values among the ladders drawn
 // at two sizes or more (J2 for J1-J2, U for Hubbard). On the site a figure is one slider
-// (Tristan, 2026-09-21, in place of a slider per facet): one strip of the record at every
+// (2026-09-21, in place of a slider per facet): one strip of the record at every
 // stop and size, the facets as groups along it with an empty slot between them, a badge
 // under each stop, and one panel per stop, the stop with most energies shown first. A
 // ladder published at one size is a stop like any other where its facet has a ladder with
-// sizes (Tristan, 2026-09-18: J2 = 0.35 at 36 sites belongs beside J2 = 0.3 and 0.4, not
+// sizes (2026-09-18: J2 = 0.35 at 36 sites belongs beside J2 = 0.3 and 0.4, not
 // under Other); where nothing in its facet has, it goes to the model's "other" figure, the
 // scan panels of what was published at one size. A figure without an axis is one facet per
 // ladder, each a single stop, and has no strip: its panels are stacked, each under its
-// facet's label (Tristan, 2026-09-21: periodic over open, not a strip of two); nor has a
+// facet's label (2026-09-21: periodic over open, not a strip of two); nor has a
 // figure of one stop, the panel alone.
 export function energyFigures(instances) {
   const figs = [], single = [];

@@ -39,8 +39,8 @@
           "version_read": "PNAS article PDF and SI Appendix (PMC9371695), pypdf layout; arXiv:2111.10420v2 (VA3)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "A variational Monte Carlo energy whose stored sigma is the uploader's Monte Carlo error; the method string's fallback reads 'mean-field' in the upload's 'Soft mean-field constraint' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (Tristan, 2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored. The row stays flagged: its number is the 8 x 8 U = 2 upload copied onto the 6 x 6 file; the statement is about the kind of number, which the copy shares.",
-          "source_entry": "VA3-10-1073-pnas-2122059119#28 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, Tristan 2026-09-30",
+          "reason": "A variational Monte Carlo energy whose stored sigma is the uploader's Monte Carlo error; the method string's fallback reads 'mean-field' in the upload's 'Soft mean-field constraint' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored. The row stays flagged: its number is the 8 x 8 U = 2 upload copied onto the 6 x 6 file; the statement is about the kind of number, which the copy shares.",
+          "source_entry": "VA3-10-1073-pnas-2122059119#28 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -78,6 +78,16 @@
           "conversion": "-1.2079 x 36 = -43.4844; sigma 0.0001 x 36 = 0.0036",
           "note": "Record row (best variational bound; the instance record is the sign-free AFQMC -43.499(2)). Energy, sigma, lattice 6x6, boundary PA, half filling N_up = N_dn = 18 (zero magnetization), U = 2 with plain U n_up n_dn (einf 18 consistent), bound_type variational, own computation, peer reviewed (PNAS) all agree. Sits 0.0146 above AFQMC -43.499(2), as a bound must. Duplicate check: the instance's only other variational row, VarBench -76.162 (flag wrong-instance), is the 8x8 U = 2 upload (-76.162/64 = -1.190031 = Table V L = 8 cell -1.1900(2)), not this number; no duplicate.",
           "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#0 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "PNAS SI (publisher file via PMC9371695), sources/journal/pnas119-e2122059119-supp.pdf, sha256 c6e62d9c, pypdf layout; main text from the PMC full text; pnas.org PDF HTTP 403; arXiv:2111.10420v2 SI Table V compared: identical",
+          "location": "SI Table 5, row L = 6, column U = 2",
+          "reported_as": "-1.2079(1)",
+          "conversion": "-1.2079 x 36 = -43.4844; sigma 1e-4 x 36 = 0.0036",
+          "note": "Record row read hardest: 6 x 6, periodic x antiperiodic (PA), half filling (N_up = N_dn = 18), U = 2 with plain U n_up n_dn (Eq. 1, so no constant shift; einf 18 = U N/4 consistent), N_hidden = 8, alpha = 78, variational, own computation, peer reviewed. Duplicate check: the instance's other HFDS row -76.162 (VarBench, 'N_hidden = 16') is the 8 x 8 U = 2 total (-1.1900 x 64 = -76.16), a known misfiled VarBench row, not a duplicate of this one.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#11"
         }
       }
     },
@@ -113,6 +123,17 @@
           "conversion": "stored as printed (total): energy -43.499; sigma 2 x 1e-3 = 0.002",
           "note": "Value, sigma, cluster (6 x 6, N = 36), boundary (PBC-APBC = periodic x, antiperiodic y = VarBench PA), filling (half filling, N_up = N_dn = 18), U = 2, t = 1 and bound_type (sign-free ground-state AFQMC, tau = 0.01, stated numerically exact -> exact (stochastic)) agree with the source; Hamiltonian identical to VarBench's (no constant shift); dof 36 = N_up + N_dn and einf 18 = U N_up N_dn / N; own computation, peer reviewed (PRB 94, 085103). Same cell in v1 PDF, v2 PDF and v2 HTML. Table row check: E - (P + K) = 0.001 (P = 14.357(1), K = -57.857(4), 0.22 sigma). No other row on the instance carries this number (no duplicate).",
           "source_entry": "VP3-arxiv-1605-09421#40 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "journal PDF (PRB 94, 085103) and arXiv:1605.09421v2 PDF, both pypdf layout mode, Table IV E rows parsed by column position with node; no LLM transcription",
+          "location": "Appendix (Finite-size data at half-filling), Table IV, p. 085103-11, row 6 x 6 E, column U = 2 PBC-APBC",
+          "reported_as": "-43.499(2) (total ground-state energy, units of t; \"Statistical errors are on the last digit and are indicated in parenthesis\")",
+          "conversion": "stored as printed (total): energy -43.499; sigma 0.002",
+          "version_read": "published PDF Phys. Rev. B 94, 085103 (2016) (published 4 Aug 2016), sources/journal/prb94-085103.pdf, sha256 3e2a87a9; no Supplemental Material listed on the APS abstract page; compared with arXiv:1605.09421v2 (sources/arxiv-1605.09421/latest.pdf, sha256 227f31f5)",
+          "note": "Journal and arXiv v2 print the same cell (-43.499(2)); no difference between versions. Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + U sum n_up n_dn, no constant shift (same as VarBench). 6 x 6 square, N = 36, PBC-APBC = periodic along x, antiperiodic along y (Sec. IV A) = QMBL PA, half filling N_up = N_dn = 18 (spin-balanced, n = 1), U = 2. Sign-free ground-state AFQMC, tau = 0.01 with Trotter error below the statistical error (Sec. II B), stated numerically exact at half filling (Sec. IV) -> exact (stochastic) with sigma. Own computation; peer reviewed, reference string correct. dof 36, einf 18 = U N/4 consistent. No duplicate: no other row on the instance carries this number.",
+          "source_entry": "JP3-arxiv-1605-09421#40"
         }
       },
       "compute": {

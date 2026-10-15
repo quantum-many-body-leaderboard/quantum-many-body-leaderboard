@@ -58,12 +58,23 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify/varbench-history)",
           "conversion": "none",
           "checked_on": "2026-10-03",
-          "reason": "RULES.md 6 (rule E3, Tristan 2026-10-02): a deterministic energy needs no sigma. The 4e-10 is VarBench's Sigma column on Wietek & Läuchli, Phys. Rev. E 98, 033309 (2018)'s exact diagonalization, defined nowhere; with it the README printed this exact record with a bracket at twelve decimals, beyond the deposited digits. Exact records are printed to the stored digits. Ruling L1 (Tristan 2026-10-03).",
-          "source_entry": "qmbl-verify 2026-09-29, handoff item 3, L1 (the E3 rule beyond the ruled entries); ruling L1, Tristan 2026-10-03",
+          "reason": "RULES.md 6 (rule E3, 2026-10-02): a deterministic energy needs no sigma. The 4e-10 is VarBench's Sigma column on Wietek & Läuchli, Phys. Rev. E 98, 033309 (2018)'s exact diagonalization, defined nowhere; with it the README printed this exact record with a bracket at twelve decimals, beyond the deposited digits. Exact records are printed to the stored digits. Ruling L1 (2026-10-03).",
+          "source_entry": "qmbl-verify 2026-09-29, handoff item 3, L1 (the E3 rule beyond the ruled entries); ruling L1, 2026-10-03",
           "from": 4e-10
         }
       ],
-      "peer_reviewed": true
+      "peer_reviewed": true,
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published PDF Phys. Rev. E 98, 033309 (2018), sources/journal/pre98-033309.pdf, sha256 e8e3383f, pypdf layout; arXiv:1804.05028v2 compared (sources/arxiv/1804.05028v2.pdf, its Table I 'g.s. energy' row identical)",
+        "location": "Table I, column 'Triangular 48', row 'Ground state energy'",
+        "reported_as": "-26.812 945 271 5 (S.S total, J = 1); sector Gamma.A1.even",
+        "conversion": "-26.8129452715 x 4 = -107.251781086",
+        "note": "H = J sum S_i . S_j, J = 1 (Eq. 44), energies in units of J ('The energy is given in units of the nearest neighbor coupling constant J = 1'), S.S total; stored Pauli total = 4 x printed. Own ED (Lanczos with sublattice coding). Uploaded to VarBench by the first author (1fa8a1c, A. Wietek, 2022-02-11). sigma null for exact (corrected). peer_reviewed true. 48-site triangular cluster with D6 (file triangular_sqrt48_PP_48).",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#51",
+        "secondary_of": null
+      }
     }
   ]
 }

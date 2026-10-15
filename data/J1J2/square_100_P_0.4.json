@@ -124,7 +124,7 @@
         "reported_as": "julia --project heisenberg_2d.jl --peri --L 10 --J2 0.4 --J22 0.4 --zero_mag --max_B 1024 --seed 123",
         "conversion": "none: dmrg() energy is the total in Pauli units (J *= 4 on spin-1/2 operators); variance = <H^2> - E^2 of the whole system",
         "note": "Script builds the 10x10 PBC J1-J2 at J2 = J22 = 0.4 (Pauli, no Marshall rotation, no shift), S^z = 0, max bond dimension 1024 = method string, 50 sweeps, cutoff 1e-12, seed 123; final dmrg() energy: variational at stated bond dimension (no extrapolation), sigma not applicable. D = 1024 on a 10x10 torus is far from converged but is a valid bound at stated bond dimension. History: entered 6e6044e (2022-10-17, Dian, 'Add DMRG for J1-J2 L=10 scanning J2'); unchanged since; code link added f88f9ba (2024-07-19).",
-        "source_entry": "VB1-varbench-code-j1j2#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -179,7 +179,7 @@
         "reported_as": "python3 vmc.py --ham j1j2 --boundary peri --sign mars --ham_dim 2 --L 10 --J2 0.4 --zero_mag --net rbm --seed 123 --show_progress",
         "conversion": "none: NetKet Stats mean is the total energy in Pauli units; sigma = error_of_mean; variance = Stats.variance (total)",
         "note": "Script builds the 10x10 PBC J1-J2 at J2 = 0.4 (NetKet Heisenberg, Pauli, J = [1, 0.4], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.RBM(alpha = 1, log_cosh) with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.02, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. History: entered 6470cd9 (2022-10-18, Dian, 'Add RBM and Jastrow for J1-J2 L=10 scanning J2'); unchanged since; code link added 5047bfd (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#11 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#11 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -234,7 +234,7 @@
         "reported_as": "python3 vmc.py --ham j1j2 --boundary peri --sign mars --ham_dim 2 --L 10 --J2 0.4 --zero_mag --net jas --seed 123 --show_progress",
         "conversion": "none: NetKet Stats mean is the total energy in Pauli units; sigma = error_of_mean; variance = Stats.variance (total)",
         "note": "Script builds the 10x10 PBC J1-J2 at J2 = 0.4 (NetKet Heisenberg, Pauli, J = [1, 0.4], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.Jastrow with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.01, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. History: entered 6470cd9 (2022-10-18, Dian, 'Add RBM and Jastrow for J1-J2 L=10 scanning J2'); unchanged since; code link added fdb4bfb (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#12 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#12 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -260,7 +260,17 @@
         "method": "arXiv PDF text extracted locally with pypdf, no LLM transcription",
         "reported_as": "-0.52388 (+/- 0.00002) per site in S.S units",
         "note": "Read from Table 5 of arXiv:2206.14307 (J1-J2 on 6x6 and 10x10 square lattices, PBC, E/N in S.S units), extracted from the PDF with pypdf.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Adv. Neural Inf. Process. Syst. 35, 7490-7503 (NeurIPS 2022, doi:10.52202/068431-0544), sources/journal/neurips35-7490.pdf, sha256 902d3e93; supplement sources/journal/neurips35-7490-supp.pdf, sha256 c1ea9c74; compared with arXiv:2206.14307v1 (the only arXiv version; qmbl/sources/2206.14307.pdf): every RBM cell identical, the journal adds 'Energy(RBM+PP)' rows (quotes of ref. [30]) to Tables 2 and 4; pypdf plain + layout mode (with fonttools), local extraction, no LLM transcription",
+          "location": "journal Table 5, 10x10 block, row 'Energy(RBM)', column J2 = 0.4",
+          "reported_as": "-0.52388(2) (energy per site E/N, J1 = 1, S.S units)",
+          "conversion": "-0.52388 x 4 x 100 = -209.552; sigma 0.00002 x 400 = 0.008",
+          "note": "Pauli-stored total = E/N x 4N; H = J1 sum S.S + J2 sum S.S, S spin operators, J1 = 1, no constant (Eq. 1); L x L periodic (Sec. 4.1); S^z = 0 sector, psi_KL projected to momentum K and a C4v irrep (A1 or B1, Sec. 3.4); variational MC energy of the symmetrized RBM, 2e5 evaluation samples; no variance extrapolation reported. bound_type variational, peer_reviewed true and reference (NeurIPS 35, 7490-7503) agree. arXiv v1 and journal cells identical. Not a duplicate: no other row on the instance carries this number from this paper or a quote of it.",
+          "source_entry": "JP6-heisenberg-j1j2#4"
+        }
       },
       "compute": {
         "parameters": null,
@@ -327,7 +337,17 @@
         "method": "arXiv PDF text extracted locally with pypdf, no LLM transcription",
         "reported_as": "-0.52371 (+/- 0.00001) per site in S.S units",
         "note": "Read from Table 5 of arXiv:2206.14307 (J1-J2 on 6x6 and 10x10 square lattices, PBC, E/N in S.S units), extracted from the PDF with pypdf.",
-        "secondary_of": "Chen, Hendry, Weinberg & Feiguin, Systematic improvement of neural network quantum states using a Lanczos recursion, arXiv:2206.14307 (2022)"
+        "secondary_of": "Chen, Hendry, Weinberg & Feiguin, Systematic improvement of neural network quantum states using a Lanczos recursion, arXiv:2206.14307 (2022)",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 100, 125124 (2019), doi:10.1103/PhysRevB.100.125124, sources/journal/prb100-125124.pdf, sha256 bae6515a (APS, ETH network; no Supplemental Material); arXiv:1903.06713v1 (only version) compared: CNN rows identical; pypdf layout and plain mode",
+          "location": "Table I (Appendix A), 10 x 10 block, row CNN, column J2 = 0.4",
+          "reported_as": "-0.52371(1) (per site, S.S units, J1 = 1)",
+          "conversion": "-0.52371 x 4 x 100 = -209.484; sigma 1e-5 x 4 x 100 = 0.004",
+          "note": "Eq. (1) H = J1 sum S_i.S_j + J2 sum S_i.S_j, 'square lattice with periodic boundary conditions', zero-magnetization sector, J1 = 1; Appendix A: 'the exact values (including error bars) for the variational energies obtained in this paper' (own CNN, variational, MCMC with spin-exchange moves, 5000 samples). Units fixed by the table's 6x6 Exact row, which equals QMBL's exact rows. Journal and arXiv v1 CNN cells identical. peer_reviewed true, reference correct (title as published). No duplicate on the instance.",
+          "source_entry": "JP8-j1j2-hubbard-heisenberg#44"
+        }
       },
       "compute": {
         "parameters": 3838,
@@ -391,7 +411,17 @@
           "reported_as": "-0.52188(1) per site, E/J1, S.S units",
           "conversion": "-0.52188 * 4 * 100 = -208.752; sigma 1e-5 * 400 = 0.004",
           "note": "Own computation. L x L periodic cluster (N = 100), J2/J1 = 0.4, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type variational (p = 0 Lanczos steps on the projected Z2Azz13 state; p = 0 is 'the original variational wave function') agrees. The same cell is reprinted in Gong, Zhu, Sheng, Motrunich & Fisher, arXiv:1311.5962v3 Table I (caption: 'The VMC energies are from Ref.~\\cite{PRB_88_060402}'), identical digits; that reprint is a quote, not a second computation, and is not stored as a row.",
-          "source_entry": "VP1-arxiv-1304-2630#0 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#0 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE I (caption 'p=0'), row L = 10, S = 0, column J2/J1 = 0.4",
+          "reported_as": "-0.52188(1) per site, E/J1, S.S units",
+          "conversion": "-0.52188 * 4 * 100 = -208.752; sigma (cell error) * 400 = 0.004",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.52188(1), arXiv -0.52188(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type variational agrees (p Lanczos steps on the projected Z2Azz13 state, variational). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#0"
         }
       }
     },
@@ -426,7 +456,17 @@
           "reported_as": "-0.52368(1) per site, E/J1, S.S units",
           "conversion": "-0.52368 * 4 * 100 = -209.472; sigma 1e-5 * 400 = 0.004",
           "note": "Own computation. L x L periodic cluster (N = 100), J2/J1 = 0.4, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type variational (p = 1 Lanczos steps on the projected Z2Azz13 state; p = 0 is 'the original variational wave function') agrees. The same cell is reprinted in Gong, Zhu, Sheng, Motrunich & Fisher, arXiv:1311.5962v3 Table I (caption: 'The VMC energies are from Ref.~\\cite{PRB_88_060402}'), identical digits; that reprint is a quote, not a second computation, and is not stored as a row.",
-          "source_entry": "VP1-arxiv-1304-2630#1 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#1 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE II (caption 'p=1'), row L = 10, S = 0, column J2/J1 = 0.4",
+          "reported_as": "-0.52368(1) per site, E/J1, S.S units",
+          "conversion": "-0.52368 * 4 * 100 = -209.472; sigma (cell error) * 400 = 0.004",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.52368(1), arXiv -0.52368(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type variational agrees (p Lanczos steps on the projected Z2Azz13 state, variational). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#1"
         }
       }
     },
@@ -462,6 +502,16 @@
           "conversion": "-0.5240 * 4 * 100 = -209.6; sigma 1e-4 * 400 = 0.04",
           "note": "Own computation. L x L periodic cluster (N = 100), J2/J1 = 0.4, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type variational (p = 2 Lanczos steps on the projected Z2Azz13 state; p = 0 is 'the original variational wave function') agrees. The same cell is reprinted in Gong, Zhu, Sheng, Motrunich & Fisher, arXiv:1311.5962v3 Table I (caption: 'The VMC energies are from Ref.~\\cite{PRB_88_060402}'), identical digits; that reprint is a quote, not a second computation, and is not stored as a row. RECORD read hardest: printed -0.5240(1) (four decimals, trailing zero significant; same print in Gong et al. Table I). Its margin over aCNN(C4v) -209.5996 (sigma 0.0016, Wang, He & Lu) is 0.0004 total = 1e-6 per site, 0.01 of this row's own sigma 0.04: a statistical tie decided by print rounding. The lower ViT -209.7444 carries no sigma.",
           "source_entry": "VP1-arxiv-1304-2630#2 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE III (caption 'p=2'), row L = 10, S = 0, column J2/J1 = 0.4",
+          "reported_as": "-0.5240(1) per site, E/J1, S.S units",
+          "conversion": "-0.5240 * 4 * 100 = -209.6; sigma (cell error) * 400 = 0.04",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.5240(1), arXiv -0.5240(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type variational agrees (p Lanczos steps on the projected Z2Azz13 state, variational). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#2"
         }
       }
     },
@@ -496,7 +546,17 @@
           "reported_as": "-0.52429(2) per site, E/J1, S.S units",
           "conversion": "-0.52429 * 4 * 100 = -209.716; sigma 2e-5 * 400 = 0.008",
           "note": "Own computation. L x L periodic cluster (N = 100), J2/J1 = 0.4, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type extrapolated (zero-variance fit through p = 0, 1, 2) agrees. The same cell is reprinted in Gong, Zhu, Sheng, Motrunich & Fisher, arXiv:1311.5962v3 Table I (caption: 'The VMC energies are from Ref.~\\cite{PRB_88_060402}'), identical digits; that reprint is a quote, not a second computation, and is not stored as a row.",
-          "source_entry": "VP1-arxiv-1304-2630#3 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#3 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE IV (caption 'extrapolation'), row L = 10, S = 0, column J2/J1 = 0.4",
+          "reported_as": "-0.52429(2) per site, E/J1, S.S units",
+          "conversion": "-0.52429 * 4 * 100 = -209.716; sigma (cell error) * 400 = 0.008",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.52429(2), arXiv -0.52429(2)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type extrapolated agrees (variance extrapolation Ep ~ Eex + const sigma_p^2 fitted over p = 0,1,2 (L <= 10) or p = 0,1 (L = 14, 18)). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#3"
         }
       }
     },
@@ -531,7 +591,18 @@
           "reported_as": "-0.521487 (E/N, J1 = 1, S.S; 10 x 10 torus, DMRG (4096))",
           "conversion": "-0.521487 x 4 x 100 = -208.5948",
           "note": "DMRG with M = 4096 kept SU(2) multiplets (about 16000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 4096 = SU(2) multiplet count. Instance: L x L torus = square_100_P, J2 = 0.40 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_100_P_0.4.json; the 48 VMC cells of the same table are the Hu et al. rows).",
-          "source_entry": "VP4-arxiv-1311-5962#0 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP4-arxiv-1311-5962#0 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "publisher PDF of the PRL Supplemental Material (J1J2square_suppl.pdf, fetched from journals.aps.org over the ETH network), pypdf layout mode; cross-checked against the publisher's supplement LaTeX (J1J2square_suppl.tex lines 180-224) and arXiv:1311.5962v3 pypdf layout text",
+          "location": "PRL 113, 027201 Supplemental Material, Table I (p. 6), block J2 = 0.40, row L = 10, column DMRG (4096); layout text line 329; arXiv v3 Table I (Fig. 16 there = Fig. 11 in the journal supplement)",
+          "reported_as": "-0.521487 (E/N, J1 = 1, S·S units, 10×10 torus, DMRG (4096))",
+          "conversion": "-0.521487 x 4 x 100 = -208.594800; finite-M DMRG energy, no error bar (deterministic), sigma null agrees",
+          "version_read": "published PDF Phys. Rev. Lett. 113, 027201 (2014) Supplemental Material, sources/journal/prl113-027201-suppl.pdf, sha256 f6f02e53 (also suppl .tex sha256 ec2625c5, main text prl113-027201.pdf sha256 1fcc3383); compared with arXiv:1311.5962v3 (qmbl/sources/1311.5962.pdf/.txt, lines 643-658): all 96 numeric cells of Table I identical",
+          "note": "Journal and arXiv v3 print the same cell. Instance: 10 x 10 torus (Supplement: 'We study L×L torus systems'), J2 = 0.40 printed, J1 = 1, Eq. (1) H = J1 Σ<ij> Si·Sj + J2 Σ<<ij>> Si·Sj each bond once, no constant; QMBL total = 4 N e. bound_type variational agrees: energy at 4096 kept SU(2) states, no extrapolation. Peer_reviewed true and reference PRL 113, 027201 (2014) agree with the arXiv journal-ref and the publisher page. Primary: own SU(2) DMRG. No duplicate on the instance (data/J1J2/square_100_P_0.4.json read).",
+          "source_entry": "JP4-arxiv-1311-5962#0"
         }
       },
       "compute": {
@@ -582,7 +653,18 @@
           "reported_as": "-0.522043 (E/N, J1 = 1, S.S; 10 x 10 torus, DMRG (6144))",
           "conversion": "-0.522043 x 4 x 100 = -208.8172",
           "note": "DMRG with M = 6144 kept SU(2) multiplets (about 24000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 6144 = SU(2) multiplet count. Instance: L x L torus = square_100_P, J2 = 0.40 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_100_P_0.4.json; the 48 VMC cells of the same table are the Hu et al. rows).",
-          "source_entry": "VP4-arxiv-1311-5962#1 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP4-arxiv-1311-5962#1 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "publisher PDF of the PRL Supplemental Material (J1J2square_suppl.pdf, fetched from journals.aps.org over the ETH network), pypdf layout mode; cross-checked against the publisher's supplement LaTeX (J1J2square_suppl.tex lines 180-224) and arXiv:1311.5962v3 pypdf layout text",
+          "location": "PRL 113, 027201 Supplemental Material, Table I (p. 6), block J2 = 0.40, row L = 10, column DMRG (6144); layout text line 329; arXiv v3 Table I (Fig. 16 there = Fig. 11 in the journal supplement)",
+          "reported_as": "-0.522043 (E/N, J1 = 1, S·S units, 10×10 torus, DMRG (6144))",
+          "conversion": "-0.522043 x 4 x 100 = -208.817200; finite-M DMRG energy, no error bar (deterministic), sigma null agrees",
+          "version_read": "published PDF Phys. Rev. Lett. 113, 027201 (2014) Supplemental Material, sources/journal/prl113-027201-suppl.pdf, sha256 f6f02e53 (also suppl .tex sha256 ec2625c5, main text prl113-027201.pdf sha256 1fcc3383); compared with arXiv:1311.5962v3 (qmbl/sources/1311.5962.pdf/.txt, lines 643-658): all 96 numeric cells of Table I identical",
+          "note": "Journal and arXiv v3 print the same cell. Instance: 10 x 10 torus (Supplement: 'We study L×L torus systems'), J2 = 0.40 printed, J1 = 1, Eq. (1) H = J1 Σ<ij> Si·Sj + J2 Σ<<ij>> Si·Sj each bond once, no constant; QMBL total = 4 N e. bound_type variational agrees: energy at 6144 kept SU(2) states, no extrapolation. Peer_reviewed true and reference PRL 113, 027201 (2014) agree with the arXiv journal-ref and the publisher page. Primary: own SU(2) DMRG. No duplicate on the instance (data/J1J2/square_100_P_0.4.json read).",
+          "source_entry": "JP4-arxiv-1311-5962#1"
         }
       },
       "compute": {
@@ -633,7 +715,18 @@
           "reported_as": "-0.522391 (E/N, J1 = 1, S.S; 10 x 10 torus, DMRG (8192))",
           "conversion": "-0.522391 x 4 x 100 = -208.9564",
           "note": "DMRG with M = 8192 kept SU(2) multiplets (about 32000 U(1) states): energy reached at finite bond dimension, variational (bound_type agrees); no error bar printed (deterministic), sigma null agrees; compute.bond_dimension 8192 = SU(2) multiplet count. Instance: L x L torus = square_100_P, J2 = 0.40 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell. Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_100_P_0.4.json; the 48 VMC cells of the same table are the Hu et al. rows).",
-          "source_entry": "VP4-arxiv-1311-5962#2 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP4-arxiv-1311-5962#2 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "publisher PDF of the PRL Supplemental Material (J1J2square_suppl.pdf, fetched from journals.aps.org over the ETH network), pypdf layout mode; cross-checked against the publisher's supplement LaTeX (J1J2square_suppl.tex lines 180-224) and arXiv:1311.5962v3 pypdf layout text",
+          "location": "PRL 113, 027201 Supplemental Material, Table I (p. 6), block J2 = 0.40, row L = 10, column DMRG (8192); layout text line 329; arXiv v3 Table I (Fig. 16 there = Fig. 11 in the journal supplement)",
+          "reported_as": "-0.522391 (E/N, J1 = 1, S·S units, 10×10 torus, DMRG (8192))",
+          "conversion": "-0.522391 x 4 x 100 = -208.956400; finite-M DMRG energy, no error bar (deterministic), sigma null agrees",
+          "version_read": "published PDF Phys. Rev. Lett. 113, 027201 (2014) Supplemental Material, sources/journal/prl113-027201-suppl.pdf, sha256 f6f02e53 (also suppl .tex sha256 ec2625c5, main text prl113-027201.pdf sha256 1fcc3383); compared with arXiv:1311.5962v3 (qmbl/sources/1311.5962.pdf/.txt, lines 643-658): all 96 numeric cells of Table I identical",
+          "note": "Journal and arXiv v3 print the same cell. Instance: 10 x 10 torus (Supplement: 'We study L×L torus systems'), J2 = 0.40 printed, J1 = 1, Eq. (1) H = J1 Σ<ij> Si·Sj + J2 Σ<<ij>> Si·Sj each bond once, no constant; QMBL total = 4 N e. bound_type variational agrees: energy at 8192 kept SU(2) states, no extrapolation. Peer_reviewed true and reference PRL 113, 027201 (2014) agree with the arXiv journal-ref and the publisher page. Primary: own SU(2) DMRG. No duplicate on the instance (data/J1J2/square_100_P_0.4.json read).",
+          "source_entry": "JP4-arxiv-1311-5962#2"
         }
       },
       "compute": {
@@ -684,7 +777,18 @@
           "reported_as": "-0.5253 (E/N, J1 = 1, S.S; 10 x 10 torus, DMRG (∞))",
           "conversion": "-0.5253 x 4 x 100 = -210.12",
           "note": "DMRG (inf): straight-line extrapolation in the truncation error through the 4096, 6144 and 8192 SU(2)-state energies (caption: 'The extrapolated results for L = 10 are obtained from the linear fitting of the data by keeping 4096, 6144 and 8192 SU(2) states'), so method string, detail and bound_type extrapolated agree. No error bar in v2/v3, sigma null agrees: the caption says 'For L = 10, we do not show the error bar of extrapolation because the DMRG truncation error is large (eps ~ 8e-5) and thus our estimation of the error bar is not accurate'; v1 printed -0.5253(2), which the authors withdrew, so it must not be stored. Instance: L x L torus = square_100_P, J2 = 0.40 (printed), J1 = 1, spin-1/2 S.S Hamiltonian with every NN and NNN bond once (Eq. 1); stored total = 4 N e. v1 and v3 print the same cell except the error bar (v1: -0.5253(2)). Primary: the authors' own SU(2) DMRG; peer_reviewed true (PRL 113, 027201). No other row on the instance carries this number (checked every row of data/J1J2/square_100_P_0.4.json; the 48 VMC cells of the same table are the Hu et al. rows).",
-          "source_entry": "VP4-arxiv-1311-5962#3 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP4-arxiv-1311-5962#3 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "publisher PDF of the PRL Supplemental Material (J1J2square_suppl.pdf, fetched from journals.aps.org over the ETH network), pypdf layout mode; cross-checked against the publisher's supplement LaTeX (J1J2square_suppl.tex lines 180-224) and arXiv:1311.5962v3 pypdf layout text",
+          "location": "PRL 113, 027201 Supplemental Material, Table I (p. 6), block J2 = 0.40, row L = 10, column DMRG (∞); layout text line 329; arXiv v3 Table I (Fig. 16 there = Fig. 11 in the journal supplement)",
+          "reported_as": "-0.5253 (E/N, J1 = 1, S·S units, 10×10 torus, DMRG (∞))",
+          "conversion": "-0.5253 x 4 x 100 = -210.120000; no error bar printed for L = 10 (caption: 'we do not show the error bar of extrapolation because the DMRG truncation error is large (ϵ≃ 8× 10−5) and thus our estimation of the error bar is not accurate'), sigma null agrees",
+          "version_read": "published PDF Phys. Rev. Lett. 113, 027201 (2014) Supplemental Material, sources/journal/prl113-027201-suppl.pdf, sha256 f6f02e53 (also suppl .tex sha256 ec2625c5, main text prl113-027201.pdf sha256 1fcc3383); compared with arXiv:1311.5962v3 (qmbl/sources/1311.5962.pdf/.txt, lines 643-658): all 96 numeric cells of Table I identical",
+          "note": "Journal and arXiv v3 print the same cell. Instance: 10 x 10 torus (Supplement: 'We study L×L torus systems'), J2 = 0.40 printed, J1 = 1, Eq. (1) H = J1 Σ<ij> Si·Sj + J2 Σ<<ij>> Si·Sj each bond once, no constant; QMBL total = 4 N e. bound_type extrapolated agrees (caption: 'DMRG (∞) is obtained from the straight line energy extrapolation with DMRG truncation error'). is_record: lowest non-exact row on the instance. Authors' own caveat on L = 10 extrapolations (quoted above) applies; value transcribed correctly. Peer_reviewed true and reference PRL 113, 027201 (2014) agree with the arXiv journal-ref and the publisher page. Primary: own SU(2) DMRG. No duplicate on the instance (data/J1J2/square_100_P_0.4.json read).",
+          "source_entry": "JP4-arxiv-1311-5962#3"
         }
       },
       "compute": {
@@ -735,7 +839,7 @@
           "reported_as": "-0.524361 (energy per site, S.S units, J1 = 1; no error bar printed)",
           "conversion": "-0.524361 x 4 x 100 = -209.7444 (stored -209.7444, exact match)",
           "note": "Independent second read of a QMBL-added row. Hamiltonian H = J1 sum_<i,j> S_i S_j + J2 sum_<<i,j>> S_i S_j with spin-1/2 operators (v1 Eq. 4, v2 Eq. 6), 'square lattice with periodic boundary conditions and N = 36, 64 and 100 spins 1/2'; Table I is per site in S.S units with J1 = 1 (the paper's own 6x6 ED column and its quoted Sandvik QMC cells fix it). Size, boundary and J2 agree with the instance; 'ViT' is a variational NQS, so bound_type variational is right; method_as_published 'ViT' is the column header; peer_reviewed false is right (no journal reference on the abs page, 2026-09-29); primary (column '(this work)'). Kind of number: the authors' extended data (2026-09-28) states that Table I lists the best of ten checkpoints (every 150 of 1500 epochs), each a 4096-sample estimate; no error bar is printed, so sigma stays null (RULES.md 6). energy_variance 1.296 = sigma^2 x 16 x 100 with sigma^2 = 8.100e-4 = (<H^2>-<H>^2)/N per spin (S.S units), authors' extended data row '0.40 -0.524361 4.5 0.81 -0.524298 4.75 0.88 -0.524267 1 0.94', column group 'the best epochs, 4096 samples; Table I'; V-score N Var/E^2 = 2.9459e-3 recomputes. Best checkpoint is an earlier epoch; the final (1500th) epoch gives -0.524298 on 4096 samples and -0.524267 (error 1.00e-5) on 102,400 samples, 9.40e-5 per site above the Table I value.",
-          "source_entry": "VP5-arxiv-2606-04558#6 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP5-arxiv-2606-04558#6 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -764,7 +868,7 @@
         "source_file": "sources/2606.04558-authors-extended-data-vit.txt",
         "reported_as": "0.40 -0.524361 4.5 0.81",
         "conversion": "var_over_n_SS",
-        "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 4.5e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; Tristan, 2026-09-28)."
+        "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 4.5e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; 2026-09-28)."
       }
     },
     {
@@ -780,7 +884,7 @@
       "family": "CNN / ResNet",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+      "reference": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-09-17",
       "provenance": "primary",
@@ -798,7 +902,7 @@
           "reported_as": "-0.523999(4) per site",
           "conversion": "-0.523999 x 400 = -209.5996; sigma 0.0016",
           "note": "10x10 torus (C3 via Sec. II.3 and the co-printed PBC VMC/DMRG values), Marshall sign, C4v by data augmentation; variational. Variance is QMBL-measured.",
-          "source_entry": "VP11-heisenberg-hubbard-j1j2#38 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP11-heisenberg-hubbard-j1j2#38 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -828,7 +932,21 @@
         "reported_as": "\"var_eloc_total_SS\": 0.30691413473834084",
         "conversion": "var_total_SS",
         "note": "Measured E/N = -0.52400636 +/- 1.12e-5 (S.S), 0.62 combined sigma from the printed -0.523999(4) of arXiv:2308.09664 Table 3, aCNN(C4v); R_hat 1.0003. Var(E_loc) of the total energy in S.S units, x16 for the stored Pauli convention. The row keeps the printed energy and error bar."
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+          "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+          "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+          "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table III (p. 245120-5), J1-J2 model L = 10 (PBC per Sec. III A/C), row aCNN(C4v), column J2/J1 = 0.4 prints −0.523999(4) per site (S.S); -0.523999 x 400 = -209.5996; sigma 0.000004 x 400 = 0.0016 equals the stored energy and sigma. energy_variance is QMBL-measured (prior ruling A2). The VMC(p = 2) row -0.5240(1) of Hu et al. on the same instance (-209.6) is a different method and paper, a coincidence at 4 digits, not a duplicate.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#32",
+          "from": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664"
+        }
+      ]
     },
     {
       "energy": -209.5488,
@@ -843,7 +961,7 @@
       "family": "CNN / ResNet",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+      "reference": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-09-17",
       "provenance": "primary",
@@ -861,7 +979,7 @@
           "reported_as": "-0.523872(4) per site",
           "conversion": "-0.523872 x 400 = -209.5488; sigma 0.0016",
           "note": "All fields agree (C4 only, run to compare with the complex-valued CNN).",
-          "source_entry": "VP11-heisenberg-hubbard-j1j2#39 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP11-heisenberg-hubbard-j1j2#39 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -879,7 +997,21 @@
         "scope": "paper",
         "confidence": "high",
         "note": "Paper-wide statements: one aCNN architecture (30 layers = 14 residual blocks, 3 channels, 5×5 kernels, 6538 real parameters) for all calculations, all run on a single Nvidia 3090 GPU.495627(6) with a fixed (Marshall-type) sign structure and C4v data augmentation. Number of Adam steps ('optimized until the loss function no longer drops'), batch size per step and wall-clock are not stated."
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+          "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+          "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+          "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table III (p. 245120-5), J1-J2 model L = 10 (PBC per Sec. III A/C), row aCNN(C4), column J2/J1 = 0.4 prints −0.523872(4) per site (S.S); -0.523872 x 400 = -209.5488; sigma 0.000004 x 400 = 0.0016 equals the stored energy and sigma. ",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#33",
+          "from": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664"
+        }
+      ]
     }
   ],
   "coverage": [

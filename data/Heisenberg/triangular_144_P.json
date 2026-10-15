@@ -47,7 +47,7 @@
         "reported_as": "| -314.632 | 0.013 | 43.3 | 144 | 0 | VMC with Dirac+field+Jastrow | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_P/vmc_gutzwiller.sh) |",
         "conversion": "stored = 4N x <H>/N of read_ene.x (S.S per site), sigma x 4N, variance 16 Var_S(H); per site S.S = -314.632/(4 x 144) = -0.5462361",
         "note": "vmc_gutzwiller inputs: 2-site supercell x '12 0 0 6' = 12x12 triangular torus (basis at 120 degrees), nelup = neldo = 72 (Sz = 0), jperp = 1, uvv = 0.25 (H = sum S.S), Dirac spin liquid fluxes + 120-degree field at K (pitch 2/3, 1/sqrt(3) in datprep.in) + spin Jastrow (iesspin=17); binned error (ratio 2.02). Conversion is on record: first upload -2.18494 | 9e-05 | 2e-03 (5276be9, 2021-08-31; per site, already x4) -> -314.632 | 0.013 | 43.3 (5ee34f3, 2021-09-21): -2.18494 x 144 = -314.63136, 9e-05 x 144 = 0.01296, and 43.3/144^2 = 0.00209 (the per-site variance had been printed to one digit). 1.781 above the 2D-RNN record of Moss et al. Linked d186176 (2024-07-30).",
-        "source_entry": "VB3-varbench-code-heisenberg#62 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#62 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -196,7 +196,7 @@
         "reported_as": "| -299.46304457007847 | | 100.89209006595773 | 100 | 0 | DMRG (bond dimension = 512) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_P/dmrg.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -299.46304457007847/(4 x 144) = -0.519901119",
         "note": "dmrg.sh: heisenberg_2d.jl --peri --L 12 --J2 1 --zero_mag --max_B 512: 12x12 triangular torus (432 bonds), Pauli, J = 1, Sz = 0, 50 sweeps at D = 512. M2 (5.4% above the record): a torus of width 12 at D = 512 in a snake MPS; no constant shift. The DOF cell (VarBench 100) is already corrected to 144 on the row (ruling 2026-09-21). Entered c85080f (2022-09-03, Dian Wu), never changed; linked 2024-07-19.",
-        "source_entry": "VB3-varbench-code-heisenberg#63 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#63 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -251,7 +251,7 @@
         "reported_as": "| -282.04227 | 0.013 | 168.431 | 144 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_P/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -282.04227/(4 x 144) = -0.489656719",
         "note": "scripts/Heisenberg/triangular_144_P/vmc_rbm.sh: 'python3 vmc.py --ham heis_tri --boundary peri --sign mars --ham_dim 2 --L 12 --zero_mag --net rbm --seed 123 --show_progress' -> 12x12 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), periodic; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.026: the stored sigma is the error of that final estimate. 34.3711 above the 2D-RNN record -316.41336(5641) (Moss et al.). M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered 10f5c12 (2022-07-11, Dian Wu) as -281.863 | 0.013 | 173.486 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -281.863 -> -282.04227; variance 173.486 -> 168.431; linked 5047bfd (2024-07-30). The value change sits in af1d48f, titled 'Add Jastrow baseline' (a re-run). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#64 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#64 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -306,7 +306,7 @@
         "reported_as": "| -279.66142 | 0.012 | 154.749 | 144 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_P/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -279.66142/(4 x 144) = -0.485523299",
         "note": "scripts/Heisenberg/triangular_144_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis_tri --boundary peri --sign mars --ham_dim 2 --L 12 --zero_mag --net jas --seed 123 --show_progress' -> 12x12 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), periodic; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 0.988: the stored sigma is the error of that final estimate. 36.7519 above the 2D-RNN record -316.41336(5641) (Moss et al.). M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered af1d48f (2022-09-01, Dian Wu) as -277.77834 | 0.011 | 149.787 | Jastrow baseline; 59e621a (2022-09-13, 'Update Jastrow and RBM baselines'): energy -277.77834 -> -279.66142; sigma 0.011 -> 0.012; variance 149.787 -> 154.749; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#65 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#65 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -341,7 +341,17 @@
           "reported_as": "-0.54700(8) (GS energy per site, units of J_xy, S.S)",
           "conversion": "-0.54700 x 4 x 144 = -315.072; sigma 0.00008 x 576 = 0.04608",
           "note": "Hamiltonian S.S with J = 1 (Eq. 3), PBC, S^z_tot = 0, variational (Table 2 'Variational GS energy per site'), 16-site plaquettes, own computation, NJP (peer reviewed) all agree. Cluster: 12 x 12 torus via the paper's same-N comparison with Ref. [31] (L x L clusters). Duplicate check: no other row on triangular_144_P carries this number.",
-          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#5 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#5 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF New J. Phys. 12, 103039 (2010), sources/journal/njp12-103039.pdf, sha256 d222cb34 (in-page fetch of iopscience.iop.org/article/10.1088/1367-2630/12/10/103039/pdf in a browser over the ETH network), pypdf layout + plain (njp12-103039.R5.*.txt); compared with arXiv:1006.4480v3 (sha256 bf4542be, layout)",
+          "location": "Table 2 (journal p. 6), row N = 144",
+          "reported_as": "144 −0.547 00(8) –",
+          "conversion": "-0.547 x 576 = -315.072; sigma 8e-5 x 576 = 0.04608",
+          "note": "Journal Table 2 (p. 6) equals arXiv v3 Table 2 digit for digit. Caption: \"Variational GS energy per site (in units of J xy) computed, by using the entangled-plaquette ansatz, for the spin-1/2 AHM on a triangular lattice of size N with PBC. Error bars are in parenthesis; N plaquettes comprising 16 sites were employed.\" PBC, S·S per site (exact N = 36 value −0.560 373), variational EPS with 16-site plaquettes; the journal abstract prints −0.554 20(4) for N = 36, as arXiv does (table bar (5) is the one stored). Reference and peer_reviewed true right. No field changes.",
+          "source_entry": "R5-browser#19"
         }
       }
     },
@@ -367,7 +377,17 @@
         "method": "authors' data release read locally (pickle via numpy), values copied by key, no transcription; the file is committed as sources/2505.20406-repo-final_energies_data.json and reproduces Table V's L = 6 energy and Table II's V-scores",
         "reported_as": "-0.5493287510342069 +/- 0.00009793047021398267 per site (S.S), Var(E/N) = 0.00009590376996331745, V-score 0.04576500475194352",
         "note": "github.com/mschuylermoss/HeisenbergRNN, commit 5f5cffa5cb (2025-10-28, HEAD; file last changed in d58a945cd4 2025-05-27, 'final plotting data and plotting notebooks'), Triangular/final_plotting/plotting_data/final_energies_data_plotting.pkl, sha256 bdc59e5bc3780fb4ea7444400dc9abd9984a6a259ab03f9299c1f80edb87d276: ['TriangularMS,periodicBC']['scale=4.0,rate=0.158,T=1.00'], L = 12. The paper's most accurate schedule (Table II, whose L = 12 V-score 4.6e-2 is this run's 0.0458); plotted in Fig. 4(a), not printed. TriangularMS is the 120-degree basis rotation U_tri, which changes the representation, not the Hamiltonian. Variance is Var(H)/N^2 in S.S units; total = var x N^2 x 16.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "authors' data release github.com/mschuylermoss/HeisenbergRNN@5f5cffa5cb Triangular/final_plotting/plotting_data/final_energies_data_plotting.pkl (sources/repo-2505.20406/, sha256 bdc59e5b, same file as the committed JSON's source), decoded by walking pickle opcodes without executing them (tools/pkl_arrays.py); cross-checked against the journal PRB 112, 134449 Table II V-scores (sources/journal/prb112-134449.pdf, sha256 ea3dde74); pypdf layout mode unless noted",
+          "location": "pickle key ['TriangularMS,periodicBC']['scale=4.0,rate=0.158,T=1.00'], index L = 12; journal Table II row L = 12",
+          "reported_as": "energies -0.5493287510342069, variances 0.00009590376996331745, std errors 0.00009793047021398267, vscores 0.04576500475194352 (pickle); V-score 4.6 x 10^-2 (journal Table II)",
+          "conversion": "-0.5493287510342069 x 4 x 144 = -316.413361; sigma 0.00009793047021398267 x 576 = 0.056408; variance (per-sample Var(E/N) = Var(H)/N^2, since N v / e^2 reproduces the V-score) 0.00009590376996331745 x 144^2 x 16 = 31.818569",
+          "note": "Triangular L x L torus with periodic boundary conditions, S.S Heisenberg (stored Pauli total = 4 x S.S total); s = 4.0, r = 0.158 is the paper's 'most accurate simulation' (Table II caption); the energy is plotted in Fig. 4(a), not printed; TriangularMS is the 120-degree basis rotation (representation, not Hamiltonian). Final variational estimate from 1e4 samples (std error^2 x 1e4 = variance). All stored values reproduce to the stored digits. Record row: own computation, read hardest; no other row on the instance carries this number.",
+          "source_entry": "JP10-hubbard-heisenberg#45"
+        }
       },
       "compute": {
         "parameters": null,

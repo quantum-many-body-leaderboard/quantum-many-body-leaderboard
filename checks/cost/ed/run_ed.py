@@ -109,7 +109,7 @@ def main():
         schema="qmbl-ed-cost-1", instance_id=args.instance,
         energy=E, stored_exact=ref, relative_difference=rel, reproduces_stored=rel < TOL_REL,
         sector=dict(conserved=sector, dimension=int(A.shape[0]), nonzeros=int(A.nnz), dtype=str(A.dtype),
-                    lattice_symmetries="none (Tristan, 2026-09-24: plain sparse Lanczos in a standard tool)"),
+                    lattice_symmetries="none (2026-09-24: plain sparse Lanczos in a standard tool)"),
         lanczos_steps=count[0],
         timing=dict(wall_seconds=wall, wall_hms=hms(wall), import_seconds=t0 - T_START, build_seconds=t1 - t0,
                     sparse_seconds=t2 - t1, solve_seconds=t3 - t2,

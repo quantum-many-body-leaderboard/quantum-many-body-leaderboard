@@ -47,7 +47,18 @@
           "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#8 (qmbl-verify 2026-09-29; skeptic upheld); same value proposed by VJ2-journal-other#17",
           "from": 0.076
         }
-      ]
+      ],
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published PDF Phys. Rev. X 11, 041021 (2021) (open access), sources/journal/prx11-041021.pdf, sha256 e65c26b3, pypdf layout (ð1Þ = (1) in the font); arXiv:2101.08787v2 compared (qmbl/sources/2101.08787.txt Table II identical)",
+        "location": "Table II, row '4 x 4^3', column mVMC",
+        "reported_as": "-0.4831(1) per site (S.S, J = 1)",
+        "conversion": "-0.4831 x 1024 = -494.6944; sigma 0.1024",
+        "note": "H = j1 sum h_lambda(i,j) + j2 sum ..., h_lambda = lambda/2 (S+S- + S-S+) + SzSz (Eqs. 1-2), Heisenberg point lambda = 1, j2 = 0; Table II: 'The ground-state energy per site is listed in the first line of every cell'; 'We consider pyrochlore clusters with periodic boundary conditions'. Geometry 4 x L^3 = 4L^3 sites. Stored Pauli total = 4 x N x E/N. Own computation (mVMC / NQS CNN columns). The paper prints no energy variance: the stored energy_variance is the VarBench upload's only. Published 29 October 2021, peer reviewed. No duplicate.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#55",
+        "secondary_of": null
+      }
     },
     {
       "energy": -497.238062785,
@@ -71,7 +82,17 @@
         "method": "arXiv PDF text extracted locally with pypdf in layout mode, no LLM transcription",
         "reported_as": "E0 ~ -0.4855 J/site, approximate, no error bar",
         "note": "Sec. A: \"The obtained ground state energy is E0 ~ -0.5118 J/site for the L = 2 cluster and E0 ~ -0.4855 J/site for the L = 4 cluster\", periodic boundary conditions on both; the L = 4 cluster carries Nv = 4N^2 = 262144 parameters, so N = 256. Units: the same passage quotes the mVMC energy -0.5162 J/site for L = 2, which is the pyrochlore-2x2x2_32_P record -0.516266 in the S.S per-site convention. Approximate and without an error bar. It is 0.5% below the VarBench mVMC record -0.4830957, although the ansatz has no symmetry projection and sits above mVMC at L = 2 - which says more about that record than about this row. 2026-09-19: the authors measured the fixed state on request, E/N = -0.4855840(29) J with Var(H) = 4.894(22) J^2 (see corrections and error_metrics on this row).",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 075158 (2026), sources/journal/prb113-075158.pdf, sha256 45e97f46, pypdf plain; arXiv:2509.13746v3 compared; authors' file qmbl/sources/2509.13746-authors-pyro-result.dat (read-only)",
+          "location": "journal Sec. III A ('E0 ~ -0.4855 J/site for the L = 4 cluster'); authors' result file lines energy_per_site_J, energy_sem_chain_per_site_J, variance_total_J2",
+          "reported_as": "journal: E0 ~ -0.4855 J/site; authors: energy_per_site_J = -4.8558404568894675E-001, energy_sem_chain_per_site_J = 2.8891780023232759E-006, variance_total_J2 = 4.8938086505829848E+000",
+          "conversion": "-0.48558404568894675 x 4 x 256 = -497.238062785; sigma 2.889178e-6 x 1024 = 0.00295852; variance 4.8938087 x 16 = 78.300938 (Pauli total)",
+          "note": "Record row read hardest: 256-site pyrochlore (L = 4), periodic, S.S with J = 1, no symmetry projection, variational, own state; all stored numbers agree with the authors' file, and the journal value is the same as arXiv v3 (~ -0.4855). Journal vs arXiv difference: the journal adds a paragraph on stopping the optimisation for the largest sizes ('uncertainty in the variational energy ... smaller than 10^-4 J/site', for e.g. L = 8); it is a convergence statement, not an error bar, and does not change this row. Duplicate check: the only other row is VarBench's mVMC -494.6944.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#17"
+        }
       },
       "corrections": [
         {
@@ -82,7 +103,7 @@
           "version_read": "private correspondence, data files as received 2026-09-19 (zip sha256 da066f4b244e886c82bf347a2b5e43cecd0e12369ccfa240b809170c71b79dcc)",
           "conversion": "S.S total x 4 = Pauli total; per site -0.48558404568894675 x 1024",
           "checked_on": "2026-09-19",
-          "reason": "The paper gives the energy as approximate to four decimals; the authors measured the same fixed state with 8,388,608 samples over 256 chains and obtained E/N = -0.4855840(29) J, one unit of the last printed digit below the printed value and 29 sigma of the new error bar, so a sigma cannot sit on the printed number. Corrected to the measured value with the printed one kept here (ruling 2026-09-19, Tristan).",
+          "reason": "The paper gives the energy as approximate to four decimals; the authors measured the same fixed state with 8,388,608 samples over 256 chains and obtained E/N = -0.4855840(29) J, one unit of the last printed digit below the printed value and 29 sigma of the new error bar, so a sigma cannot sit on the printed number. Corrected to the measured value with the printed one kept here (ruling 2026-09-19).",
           "source_entry": "qmbl-runs/repo-data-census/search/replies/2509.13746-cheng-2026-09-19.txt, ruling 1 (2026-09-19)",
           "from": -497.152
         },
