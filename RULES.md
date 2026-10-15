@@ -31,7 +31,7 @@ different sector, the row moves rather than competes.
 | `bound_type` | yes | one of §4; never guessed |
 | `method` | yes | the method's name alone: `DMRG`, `HFPS`, `AFQMC` |
 | `method_detail` | yes, may be empty | what tells this row apart from other rows of that method: architecture size, projection, Lanczos steps, trial state, what an extrapolation sends to zero. Never the kind, the instance or the source |
-| `method_as_published` | yes | the method string exactly as the source printed it; a corrected one quotes a label the source prints, word for word, and what explains it goes to `method_detail` (Tristan, 2026-10-02) |
+| `method_as_published` | yes | the method string exactly as the source printed it; a corrected one quotes a label the source prints, word for word, and what explains it goes to `method_detail` (2026-10-02) |
 | `reference` | yes | §8 |
 | `dof`, `einf` | yes | checked against the instance (§9) |
 | `energy_variance` | no | renders `n/a`; enables the V-score |
@@ -57,7 +57,7 @@ flagged row (6), the class beside a record is how a reader knows what was claime
 - **`extrapolated`**: the reported number is an extrapolation, not an achieved energy:
   zero-variance or bond-dimension extrapolation. **Not a bound.** No ansatz ever reached it.
   Sign-problem-free QMC taken to its own limits (Δτ → 0, β → ∞) stays `exact`; its detail
-  says so (Tristan, 2026-09-17).
+  says so (2026-09-17).
 - **`exact`**: numerically exact for this instance: exact diagonalization, exact solution,
   sign-problem-free QMC where that is established. QMC is exact only within its statistical
   error bar, not to the printed digits: such a row must state `sigma`, and is shown
@@ -117,8 +117,8 @@ energy any state reached.
 
 Until 2026-10-08 only a `variational` energy could hold the record, and a sampled one only
 with its `sigma`; `projected` and `extrapolated` rows and sampled rows without an error bar
-were listed but held nothing, and 47 instances had no record at all. Tristan dropped both
-conditions on 2026-10-08, so that no published result is listed as unable to hold a record.
+were listed but held nothing, and 47 instances had no record at all. Both
+conditions were dropped on 2026-10-08, so that no published result is listed as unable to hold a record.
 
 - **A solved instance has a record, and exact diagonalization holds it.** The exact energy is
   the answer, so it is the state of the art on that instance by definition; every other row
@@ -144,7 +144,7 @@ conditions on 2026-10-08, so that no published result is listed as unable to hol
 - Rows whose error bars overlap at **2 sigma** share the rank. A row without `sigma` is
   compared by its energy alone.
 - **An error bar is asked for, not required.** A sampled row without `sigma` ranks and can
-  hold the record like any other (Tristan, 2026-10-08). Where `sigma` is given it must state
+  hold the record like any other (2026-10-08). Where `sigma` is given it must state
   how it was estimated: an error bar that ignores autocorrelation understates by around an
   order of magnitude, which is enough to make or break a tie. Report the blocking or binning
   analysis, or the raw chain.
@@ -153,7 +153,7 @@ conditions on 2026-10-08, so that no published result is listed as unable to hol
   error; their convergence control is the bond dimension (`compute.bond_dimension`) or the
   truncation error (`method_detail`). 231 of the 942 variational rows are of this kind
   (2026-10-02).
-- **Sampled or deterministic is read from the source, per row** (Tristan, 2026-09-30). The
+- **Sampled or deterministic is read from the source, per row** (2026-09-30). The
   method's name does not settle it. A finite PEPS whose energy is a Monte Carlo average over
   spin configurations, an MPS-RNN, a PEPS + CNN state or a Gutzwiller-projected mean-field
   state is sampled although its string reads like a tensor network or a mean field; a circuit
@@ -215,6 +215,12 @@ its method like any other (since 2026-10-08).
 ## 8. Provenance
 
 - **arXiv preprint minimum.** Rows flag whether the source is peer reviewed.
+- **The journal version is the source of record (2026-10-15).** Where a paper is published,
+  its row is read from the journal version (main text and supplement) and cites it. The arXiv
+  version is read alongside; where the two differ, the journal value is stored and the
+  difference is noted on the row. A row read from an arXiv version alone says so in its
+  provenance: it is admissible, but it is not fully verified, and it is read again once the
+  journal version appears.
 - Preprint-only sources older than 12 months are flagged `stale-preprint`.
 - A row whose number is quoted from a *different* paper than the one that produced it is
   marked `secondary` and names both.
@@ -224,18 +230,17 @@ its method like any other (since 2026-10-08).
   version of PRB 107, 115133, whose tables print twist averages only; they are printed in the
   VarBench dataset (Wu et al., Science 386, 296 (2024)) and cite it. The same holds for the t-V
   VMC energies the first author of arXiv:2406.09077 uploaded before that paper existed. This is
-  not the inadmissible case below: the number is printed, just not in the paper (Tristan,
-  2026-09-30). It also holds for an author's upload that the paper shows only as a plotted point,
+  not the inadmissible case below: the number is printed, just not in the paper (2026-09-30). It also holds for an author's upload that the paper shows only as a plotted point,
   which is not read (below): the shuriken mVMC energies of PRB 104, L220408 and the open 10x10
-  Tensor-RNN energy of PRR 5, L032001 cite the dataset (Tristan, 2026-10-02).
+  Tensor-RNN energy of PRR 5, L032001 cite the dataset (2026-10-02).
 - **A private communication printed in a paper is admissible, as `secondary`.** Case: Nomura's
   12x12 and 16x16 RBM+PP energies exist only as the "Ref. [7]" cells of Roth, Szabo &
   MacDonald, PRB 108, 054410 (2023), numbers Nomura shared with them; the paper of the method,
   PRX 11, 031034, prints none. The rows cite "Nomura, private communication, in Roth, Szabo &
-  MacDonald, PRB 108, 054410 (2023)" (Tristan, 2026-09-30).
+  MacDonald, PRB 108, 054410 (2023)" (2026-09-30).
 - **A table outranks a figure.** Where the source prints a number in a table, the row carries
   the table's value; a value decoded from a figure's plotted points is not used, even where the
-  table truncates (Tristan, 2026-09-30: PRX 11, 041021, Table II against Fig. 2(a)).
+  table truncates (2026-09-30: PRX 11, 041021, Table II against Fig. 2(a)).
 - **A cited number that cannot be found in the cited source is not admissible.** Case:
   arXiv 2604.25775 reports "the previous best result −0.766073(6) from NNBF [24]", citing
   Loehr & Clark arXiv 2510.26906. That value appears nowhere in the only public version of
@@ -254,7 +259,7 @@ when the two disagree.
 in a refereed paper is peer reviewed (Ferrari & Becca's VMC energies in Choo, Neupert & Carleo,
 PRB 100, 125124; Nomura's numbers in PRB 108, 054410), and so is a number in refereed
 machine-learning proceedings (SIAM SDM); the reference tells the two kinds of venue apart
-(Tristan, 2026-09-30).
+(2026-09-30).
 
 Case: arXiv:2607.00398 (conference proceedings) claims -0.49782(3) on 10x10 J1-J2, described in
 its own abstract as "statistically consistent with the variational state of the art". It is 1.3e-4
@@ -331,7 +336,7 @@ ranks, can hold a record, and is cited to its run script, job and commit.
    3 sigma - the row's own, combined in quadrature with the exact row's where that row is
    stochastic - or past a relative 1e-8 when neither states one. A stochastic exact row
    without `sigma` is itself an issue. A row is flagged below the exact energy only if the
-   whole interval its printed digits allow lies below it (Tristan, 2026-10-02): the HQT
+   whole interval its printed digits allow lies below it (2026-10-02): the HQT
    energy -0.6735 on the 8 x 8 torus, printed to four decimals, stands for anything in
    [-0.67355, -0.67345], which holds the SSE value -0.67349005, so it carries no flag,
    although its stored total sits 0.0025 under the exact row's. The validator sees only the
@@ -411,7 +416,7 @@ Errors found by the maintainers are corrected in public with the reason recorded
 Rows are never silently corrected. A row that duplicates another, or is not an energy of its
 instance, is removed, with the ruling and reason listed in `scripts/removals.mjs`. A row declared
 `exact` that independent recomputation places above the ground-state energy, by more than the
-precision it is printed to, is removed on the same footing (Tristan, 2026-09-18): the table carries
+precision it is printed to, is removed on the same footing (2026-09-18): the table carries
 one exact energy per instance and a number that is not it states nothing an exact row may claim.
 The same holds below the ground state, where a per-site rounding was multiplied back to a total
 (the 4x4 Hubbard rows at half filling, 2026-09-30). The removal names the recomputation and the
@@ -421,7 +426,7 @@ value that stands; where no other exact row carries it, QMBL's recomputed row do
 Where the printed value of an exact row is QMBL's recomputed energy rounded or truncated to the
 printed digits, the row keeps its citation and carries QMBL's digits, with the printed value in
 `corrections` and the recomputation named; where the paper's value is better, the row keeps it
-(Tristan, 2026-09-30). Worked case: Schulz, Ziman & Poilblanc's 6x6 J1-J2 energies print six
+(2026-09-30). Worked case: Schulz, Ziman & Poilblanc's 6x6 J1-J2 energies print six
 decimals per site; at J2 = 0.2, 0.55 and 0.65 they are the recomputed energies rounded, and the
 rows carry the full values (`checks/exact-recompute-2026-09/`). At J2 = 0.1 the printed -0.638096
 is neither (the recomputation gives -0.638095436); the row keeps the paper's value, and the
