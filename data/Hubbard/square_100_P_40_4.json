@@ -50,7 +50,17 @@
         "conversion": "-1.1135 x 100 = -111.35; sigma 0.0002 x 100 = 0.02",
         "note": "Stored energy and sigma equal the printed RC/SYM cell x N exactly. Instance agrees: square 10 x 10, PBC, N_up = N_dn = 40, U = 4, t' = 0, standard Hubbard form (no shift; Einf 64 = U N_up N_dn / N). bound_type projected agrees with RULES 4 (constraint release; the paper's 'essentially exact' is not a bound and not an established exact result, since RC 'can converge from below or above'). Primary source: the paper's own computation; VarBench upload by Yiqi Yang cf6ed25 2022-03-17 with this reference, never changed. Venue PRB (peer reviewed). Other rows: Tensor-Backflow -110.86 and + 1 Lanczos step -111.09 (arXiv:2507.01856), VAFQMC (N_l=4) -111.097(6) (arXiv:2308.08594), all above. No duplicate. Same-source values not in the table: CP/UHF -1.11378(3), CP/SYM -1.11468(2) (Table II).",
         "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#54 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 88, 125132 (2013), sources/journal/prb88-125132.pdf, sha256 2e0b4883, pypdf layout + plain; arXiv:1307.2147v3 compared (Table II identical, qmbl-verify/sources/1307.2147v3.txt)",
+          "location": "Table II (p. 11), row '10 x 10 (40, 40)', column RC/SYM",
+          "reported_as": "-1.1135(2) per site (E/L, units of t)",
+          "conversion": "-1.1135 x 100 = -111.35; sigma 0.0002 x 100 = 0.02",
+          "note": "Table II caption: 'Energy per site in some open-shell Hubbard square lattices at U = 4. The symmetry of the ground state, S^2 = 0, Kx = Ky = 0, is preserved in the trial wave function used in CP/SYM and RC/SYM.' Text: 'The RC results in Table II are essentially exact ground-state energies.' Sec. II C: 'The RC energy will asymptotically converge to the exact ground-state energy. However, it can converge from below or above' — no bound, consistent with 'projected; no strict upper bound property'. Boundary not stated in the table; the paper's clusters are periodic supercells ('the periodic 8 x 8 supercell with N_up = N_dn = 13'), accepted as inferred (2026-10-03 practice). H = -t sum c+c + U sum n_up n_dn, t = 1 (Eq. 1). Own computation; the Science SM cites it as ref. [146] for its constraint-release results. Published 23 September 2013, peer reviewed. No duplicate on the instance.",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#42"
+        }
       }
     },
     {
@@ -66,7 +76,7 @@
       "family": "backflow / Pfaffian",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+      "reference": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-09-15",
       "provenance": "primary",
@@ -117,6 +127,18 @@
           "reason": "Published as Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc: Crossref record (api.crossref.org/works/10.1103/dqc7-zsvc: container 'Physical Review B', volume 113, issue 15, article 155121, received 2025-07-07, published 2026-04-10); the arXiv abs page lists the same DOI. This answers metric flag M10 ('preprint older than 12 months ... published since?'): yes. sources/openalex.json still lists the paper as an arXiv preprint (checked 2026-09-16) and should be refreshed. Phys. Rev. B is a physics-numerics venue (RULES 8.1).",
           "source_entry": "VP9-tv-hubbard-heisenberg#35 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": false
+        },
+        {
+          "field": "reference",
+          "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+          "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+          "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+          "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 80/100, U = 4, 10 x 10, PBC, column Ep=0: -1.1086 (per site) x 100 = -110.86 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+          "source_entry": "JP8-j1j2-hubbard-heisenberg#29",
+          "from": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856"
         }
       ]
     },
@@ -133,7 +155,7 @@
       "family": "backflow / Pfaffian",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+      "reference": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-09-15",
       "provenance": "primary",
@@ -184,6 +206,18 @@
           "reason": "Published as Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc: Crossref record (api.crossref.org/works/10.1103/dqc7-zsvc: container 'Physical Review B', volume 113, issue 15, article 155121, received 2025-07-07, published 2026-04-10); the arXiv abs page lists the same DOI. This answers metric flag M10 ('preprint older than 12 months ... published since?'): yes. sources/openalex.json still lists the paper as an arXiv preprint (checked 2026-09-16) and should be refreshed. Phys. Rev. B is a physics-numerics venue (RULES 8.1).",
           "source_entry": "VP9-tv-hubbard-heisenberg#37 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": false
+        },
+        {
+          "field": "reference",
+          "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+          "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+          "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+          "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 80/100, U = 4, 10 x 10, PBC, column Ep=1: -1.1109 (per site) x 100 = -111.09 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+          "source_entry": "JP8-j1j2-hubbard-heisenberg#30",
+          "from": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856"
         }
       ]
     },
@@ -209,7 +243,17 @@
         "method": "source text of arXiv:2308.08594 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−1.11097(6)",
         "note": "Table I | same instance as above | variance reported as 0.8, not stored: convention not verified",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 6, 013237 (2024), sources/journal/prresearch6-013237.pdf, sha256 6fb243ee; compared arXiv:2308.08594v2 (sources/arxiv/2308.08594v2.pdf, sha256 236ccded): Table I identical cell for cell; pypdf layout mode unless noted",
+          "location": "Table I (p. 013237-4), column 10 x 10, n = 0.8, U = 4, row E_VAFQMC/N and row sigma^2_VAFQMC",
+          "reported_as": "-1.11097(6) (per site, units of t); sigma^2_VAFQMC = 0.8(6)",
+          "conversion": "-1.11097 x 100 = -111.097; sigma 0.00006 x 100 = 0.006; variance stored as printed central value 0.8 (caption: sigma^2 = <H^2> - <H>^2, i.e. total Var(H); the main text's 'energy variance per site (<H^2>-<H>^2)/N of less than 1' disagrees with its own caption, unchanged from arXiv v2)",
+          "note": "VAFQMC N_l = 4 (caption), energy measured on ~1e6 fresh samples after optimisation; variational. Fully periodic square lattice (Table I caption 'on a PBC square Hubbard model'); Nf = 40 per spin gives n = 0.80000; U = 4, t' = 0; H = -t sum c^dag c + h.c. + U sum n_up n_dn (Eq. 2), no constant shift. Journal and arXiv v2 values identical. No duplicate on the instance.",
+          "source_entry": "JP10-hubbard-heisenberg#0"
+        }
       },
       "compute": {
         "parameters": null,

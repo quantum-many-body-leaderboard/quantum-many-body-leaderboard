@@ -342,6 +342,16 @@
           "conversion": "-0.54700 x 4 x 144 = -315.072; sigma 0.00008 x 576 = 0.04608",
           "note": "Hamiltonian S.S with J = 1 (Eq. 3), PBC, S^z_tot = 0, variational (Table 2 'Variational GS energy per site'), 16-site plaquettes, own computation, NJP (peer reviewed) all agree. Cluster: 12 x 12 torus via the paper's same-N comparison with Ref. [31] (L x L clusters). Duplicate check: no other row on triangular_144_P carries this number.",
           "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#5 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "arXiv:1006.4480v3 PDF (qmbl-verify-2026-09-29/sources/1006.4480v3.pdf, sha256 bf4542be, pypdf layout), re-read by R5; journal New J. Phys. 12, 103039 (2010) NOT read (IOP hCaptcha, see tried)",
+          "location": "arXiv v3 Table 2, row N = 144",
+          "reported_as": "144 -0.54700(8)",
+          "conversion": "-0.547 x 576 = -315.072; sigma 8e-5 x 576 = 0.04608",
+          "note": "Journal version not obtained (tried: iopscience.iop.org/article/10.1088/1367-2630/12/10/103039 in the logged-in automation browser (2026-10-15, R5): redirected to validate.perfdrive.com 'Radware Bot Manager Captcha' with an hCaptcha challenge; not solved (brief: no captcha solving); web.archive.org captures of /article/.../pdf: the archived page is the same Radware captcha (2025-11-27 capture); old-style URL /1367-2630/12/10/103039/pdf/1367-2630_12_10_103039.pdf: 404; MPG PuRe item_1492287 (publisher PDF 4043.pdf): visibility AUDIENCE, REST download returns 401 off the MPG network; OpenAlex content PDF W1978246163: needs an API key (401); Unpaywall/Semantic Scholar/OpenAlex list only the IOP PDF and arXiv; scholar.archive.org asks for an ALTCHA check (not done)). Row stays arXiv-read; value, sigma, PBC, S·S per site, variational agree with arXiv v3. Needs Tristan to tick the IOP hCaptcha once in the automation browser if the journal check is wanted.",
+          "source_entry": "R5-browser#19"
         }
       }
     },
@@ -367,7 +377,17 @@
         "method": "authors' data release read locally (pickle via numpy), values copied by key, no transcription; the file is committed as sources/2505.20406-repo-final_energies_data.json and reproduces Table V's L = 6 energy and Table II's V-scores",
         "reported_as": "-0.5493287510342069 +/- 0.00009793047021398267 per site (S.S), Var(E/N) = 0.00009590376996331745, V-score 0.04576500475194352",
         "note": "github.com/mschuylermoss/HeisenbergRNN, commit 5f5cffa5cb (2025-10-28, HEAD; file last changed in d58a945cd4 2025-05-27, 'final plotting data and plotting notebooks'), Triangular/final_plotting/plotting_data/final_energies_data_plotting.pkl, sha256 bdc59e5bc3780fb4ea7444400dc9abd9984a6a259ab03f9299c1f80edb87d276: ['TriangularMS,periodicBC']['scale=4.0,rate=0.158,T=1.00'], L = 12. The paper's most accurate schedule (Table II, whose L = 12 V-score 4.6e-2 is this run's 0.0458); plotted in Fig. 4(a), not printed. TriangularMS is the 120-degree basis rotation U_tri, which changes the representation, not the Hamiltonian. Variance is Var(H)/N^2 in S.S units; total = var x N^2 x 16.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "authors' data release github.com/mschuylermoss/HeisenbergRNN@5f5cffa5cb Triangular/final_plotting/plotting_data/final_energies_data_plotting.pkl (sources/repo-2505.20406/, sha256 bdc59e5b, same file as the committed JSON's source), decoded by walking pickle opcodes without executing them (tools/pkl_arrays.py); cross-checked against the journal PRB 112, 134449 Table II V-scores (sources/journal/prb112-134449.pdf, sha256 ea3dde74); pypdf layout mode unless noted",
+          "location": "pickle key ['TriangularMS,periodicBC']['scale=4.0,rate=0.158,T=1.00'], index L = 12; journal Table II row L = 12",
+          "reported_as": "energies -0.5493287510342069, variances 0.00009590376996331745, std errors 0.00009793047021398267, vscores 0.04576500475194352 (pickle); V-score 4.6 x 10^-2 (journal Table II)",
+          "conversion": "-0.5493287510342069 x 4 x 144 = -316.413361; sigma 0.00009793047021398267 x 576 = 0.056408; variance (per-sample Var(E/N) = Var(H)/N^2, since N v / e^2 reproduces the V-score) 0.00009590376996331745 x 144^2 x 16 = 31.818569",
+          "note": "Triangular L x L torus with periodic boundary conditions, S.S Heisenberg (stored Pauli total = 4 x S.S total); s = 4.0, r = 0.158 is the paper's 'most accurate simulation' (Table II caption); the energy is plotted in Fig. 4(a), not printed; TriangularMS is the 120-degree basis rotation (representation, not Hamiltonian). Final variational estimate from 1e4 samples (std error^2 x 1e4 = variance). All stored values reproduce to the stored digits. Record row: own computation, read hardest; no other row on the instance carries this number.",
+          "source_entry": "JP10-hubbard-heisenberg#45"
+        }
       },
       "compute": {
         "parameters": null,

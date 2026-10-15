@@ -51,7 +51,18 @@
           "from": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 16. Single hidden layer fully connected net with alpha = 1). Soft mean-field constraint for Neel order."
         }
       ],
-      "sampled": true
+      "sampled": true,
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+        "location": "SI Sec. 8 D, Table 5 (p. 9), row L = 6, column U = 8",
+        "reported_as": "-0.5270(3) (energy per site, units of t)",
+        "conversion": "-0.5270 x 36 = -18.972; stored -18.9738 / 36 = -0.527050 truncates to -0.5270 (rounding tie)",
+        "note": "6 x 6 PA, 18 + 18, U = 8. Table 5 caption: 'periodic boundary conditions along one of the sides of the square and anti-periodic boundary conditions along the other side' = PA; half filling; 'The trial state is the hidden fermion determinant state with a fully parametrized hidden sub-matrix'; 'N~ = {8, 8, 16} and alpha = {96, 78, 1} for the 4x4, 6x6 and 8x8 lattices' (SI Sec. 6). Printed bar 0.0108 vs stored 0.001: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#19",
+        "secondary_of": null
+      }
     },
     {
       "energy": -19.01,
@@ -85,6 +96,17 @@
           "conversion": "stored as printed (total): energy -19.01; sigma 1 x 1e-2 = 0.01",
           "note": "Value, sigma, cluster (6 x 6, N = 36), boundary (PBC-APBC = periodic x, antiperiodic y = VarBench PA), filling (half filling, N_up = N_dn = 18), U = 8, t = 1 and bound_type (sign-free ground-state AFQMC, tau = 0.01, stated numerically exact -> exact (stochastic)) agree with the source; Hamiltonian identical to VarBench's (no constant shift); dof 36 = N_up + N_dn and einf 72 = U N_up N_dn / N; own computation, peer reviewed (PRB 94, 085103). Same cell in v1 PDF, v2 PDF and v2 HTML. Table row check: E - (P + K) = 0.01 (P = 15.67(1), K = -34.69(2), 0.41 sigma). No other row on the instance carries this number (no duplicate).",
           "source_entry": "VP3-arxiv-1605-09421#43 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "journal PDF (PRB 94, 085103) and arXiv:1605.09421v2 PDF, both pypdf layout mode, Table IV E rows parsed by column position with node; no LLM transcription",
+          "location": "Appendix (Finite-size data at half-filling), Table IV, p. 085103-11, row 6 x 6 E, column U = 8 PBC-APBC",
+          "reported_as": "-19.01(1) (total ground-state energy, units of t; \"Statistical errors are on the last digit and are indicated in parenthesis\")",
+          "conversion": "stored as printed (total): energy -19.01; sigma 0.01",
+          "version_read": "published PDF Phys. Rev. B 94, 085103 (2016) (published 4 Aug 2016), sources/journal/prb94-085103.pdf, sha256 3e2a87a9; no Supplemental Material listed on the APS abstract page; compared with arXiv:1605.09421v2 (sources/arxiv-1605.09421/latest.pdf, sha256 227f31f5)",
+          "note": "Journal and arXiv v2 print the same cell (-19.01(1)); no difference between versions. Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + U sum n_up n_dn, no constant shift (same as VarBench). 6 x 6 square, N = 36, PBC-APBC = periodic along x, antiperiodic along y (Sec. IV A) = QMBL PA, half filling N_up = N_dn = 18 (spin-balanced, n = 1), U = 8. Sign-free ground-state AFQMC, tau = 0.01 with Trotter error below the statistical error (Sec. II B), stated numerically exact at half filling (Sec. IV) -> exact (stochastic) with sigma. Own computation; peer reviewed, reference string correct. dof 36, einf 72 = U N/4 consistent. No duplicate: no other row on the instance carries this number.",
+          "source_entry": "JP3-arxiv-1605-09421#43"
         }
       },
       "compute": {

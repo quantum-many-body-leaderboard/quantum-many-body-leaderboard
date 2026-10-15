@@ -276,7 +276,17 @@
         "conversion": "-3.18197 x 400 = -1272.788; digitised D = 32768 point -3.1819733 x 400 = -1272.7893 (0.0013 lower, inside the printed rounding and the (2) x 400 = 0.008)",
         "note": "Record row. Number, convention, class and bond dimension agree: the printed value is the energy reached at D = 2^15 (Fig. 3 plots D = 1024-32768, no extrapolation; the D = 2^14 point is -3.1819720), so variational with compute.bond_dimension 32768. Boundary conditions are not stated in the paper; open-open is established indirectly (card C3: the caption's own comparison with open finite-PEPS values at 11 x 11 and 21 x 21 brackets it, and it lies just below VarBench's open-boundary DMRG and MPS-RNN rows on this instance; any periodic direction would lower it by several 1e-3 per site). The sigma question is a separate ambiguous entry. Journal version not read. Not a duplicate: no other row on the instance carries this number.",
         "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#6 (qmbl-verify 2026-09-29)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF PRX Quantum 4, 010317 (2023), sources/journal/prxquantum4-010317.pdf, sha256 f7fd2d08; pypdf plain + layout; Fig. 3 markers located in the page-9 content stream (scripts/paths.mjs). Compared with arXiv:2204.05693v1 (only version; qmbl/sources/2204.05693.txt line 454)",
+          "location": "Fig. 3 caption (p. 9) and Sec. V B (p. 8), Eq. (18)",
+          "reported_as": "\"leading to an energy density of −3.181 97(2)\" (energy per site, Pauli, B = 3.0)",
+          "conversion": "-3.18197 x 400 = -1272.788 (TFIsing Pauli, E/N = energy / N)",
+          "note": "Record row. Journal = arXiv v1: same caption value -3.18197(2), same B = 3.0, same D = 2^15 = 32 768 statement (\"At bond dimension D = 2^15 = 32 768 our simulations already reached the maximum level of achievable accuracy within single-precision arithmetic\"), same Lubasch et al. comparison (-3.172 10(1) at 11 x 11, -3.182 43(1) at 21 x 21, open PEPS: PRB 90, 064425 Table, read in this group). Journal Eq. (18) H = -sum s^z s^z + B sum s^x (arXiv Eq. (20), same sign): the sign of the field term does not change the spectrum (rotation by pi about z), no constant. Journal Fig. 3 main panel has six markers at D = 2^10 ... 2^15 (x ticks 102.56-281.57 pt, 35.8 pt per doubling), so no D = 2^16 point was added in review; variational at D = 2^15. Boundary still not stated in the journal text; open-open stays inferred (prior card C3; the bracketing by the open 11 x 11 and 21 x 21 PEPS values the caption quotes). Sigma: the (2) is a deterministic DMRG uncertainty, kept in method_detail per the settled VA6#7 entry. Own computation (primary). Not a duplicate: no other row on the instance carries -1272.788.",
+          "source_entry": "JA2-j1j2-heisenberg-tfising#0"
+        }
       }
     },
     {

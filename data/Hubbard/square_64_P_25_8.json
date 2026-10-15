@@ -174,7 +174,17 @@
         "method": "source text of arXiv:2308.08594 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.9252(1)",
         "note": "Table I | 8x8=64 sites P; n=0.78125 => Nf=25 per spin; U=8; catalogue best_per_site for this instance is -0.91482812, so this quoted value is notably lower (stronger) than the current catalogue best",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 6, 013237 (2024), sources/journal/prresearch6-013237.pdf, sha256 6fb243ee; compared arXiv:2308.08594v2 (sources/arxiv/2308.08594v2.pdf, sha256 236ccded): Table I identical cell for cell; pypdf layout mode unless noted",
+          "location": "Table I (p. 013237-4), column 8 x 8, n = 0.78125, U = 8, row E_AFQMC/N",
+          "reported_as": "-0.9252(1) (per site, units of t)",
+          "conversion": "-0.9252 x 64 = -59.2128; sigma 0.0001 x 64 = 0.0064",
+          "note": "No release-constraint star on this cell, so constrained-path AFQMC; the methods paragraph says 'Constrained-path AFQMC results are obtained using protocols similar to those in Refs. [28,34-36] including self-consistently optimized constraints [37]' (p. 013237-3), i.e. the authors' own run; the value is absent from Ref. [18] (LeBlanc et al. PRX 5, 041041: main text and Data_supplemental.zip searched, no 8x8 AFQMC file) and the starred cells are Ref. [17]'s. bound_type projected is right (not a bound). Fully periodic square lattice (Table I caption 'on a PBC square Hubbard model'); Nf = 25 per spin gives n = 0.78125; U = 8, t' = 0; H = -t sum c^dag c + h.c. + U sum n_up n_dn (Eq. 2), no constant shift. Journal and arXiv v2 values identical. No duplicate on the instance.",
+          "source_entry": "JP10-hubbard-heisenberg#5"
+        }
       },
       "compute": {
         "parameters": null,
@@ -297,7 +307,17 @@
         "method": "source text of arXiv:2308.08594 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.9148(1)",
         "note": "Table I | same instance as above | variance reported as 2.4, not stored: convention not verified",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 6, 013237 (2024), sources/journal/prresearch6-013237.pdf, sha256 6fb243ee; compared arXiv:2308.08594v2 (sources/arxiv/2308.08594v2.pdf, sha256 236ccded): Table I identical cell for cell; pypdf layout mode unless noted",
+          "location": "Table I (p. 013237-4), column 8 x 8, n = 0.78125, U = 8, row E_VAFQMC/N and row sigma^2_VAFQMC",
+          "reported_as": "-0.9148(1) (per site, units of t); sigma^2_VAFQMC = 2.4(4)",
+          "conversion": "-0.9148 x 64 = -58.5472; sigma 0.0001 x 64 = 0.0064; variance stored as printed central value 2.4 (caption: sigma^2 = <H^2> - <H>^2, i.e. total Var(H); the main text's 'energy variance per site (<H^2>-<H>^2)/N of less than 1' disagrees with its own caption, unchanged from arXiv v2)",
+          "note": "VAFQMC N_l = 4 (caption), energy measured on ~1e6 fresh samples after optimisation; variational. Fully periodic square lattice (Table I caption 'on a PBC square Hubbard model'); Nf = 25 per spin gives n = 0.78125; U = 8, t' = 0; H = -t sum c^dag c + h.c. + U sum n_up n_dn (Eq. 2), no constant shift. Journal and arXiv v2 values identical. No duplicate on the instance.",
+          "source_entry": "JP10-hubbard-heisenberg#6"
+        }
       },
       "compute": {
         "parameters": null,

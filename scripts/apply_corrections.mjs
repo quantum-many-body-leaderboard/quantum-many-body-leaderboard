@@ -86,7 +86,11 @@ for (const [id, list] of byInstance) {
       corrected++;
       if (r === inst) continue;
     } else {
-      if (r.verified && r.provenance !== "imported") r.verified.second_read = rec;
+      // a reading of the published version (RULES.md 8) sits beside the earlier readings, never over them
+      const { journal, ...read } = rec;
+      if (journal && r.verified) r.verified.journal_read = read;
+      else if (journal) r.verified = { ...read, secondary_of: null };
+      else if (r.verified && r.provenance !== "imported") r.verified.second_read = rec;
       else r.verified = { ...rec, secondary_of: null };
       verified++;
     }

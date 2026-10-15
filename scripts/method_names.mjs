@@ -71,6 +71,7 @@ export const NAMES = {
   "QMC": ["QMC", "loop algorithm, ALPS, T = 1e-4, converged in T"],
   "QMC (stochastic series expansion)": ["SSE QMC", ""],
   "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64": ["SSE QMC", ""],
+  "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64": ["SSE QMC", ""], // L > 30 in Sandvik's Table 1 (qmbl-verify 2026-10-15)
   "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32": ["SSE QMC", ""], // arXiv:2601.20189 Sec. IV: the open L x L and L x 2L tables ran at beta/L = 32 only
   "QMC (continuous-time expansion)": ["CT-QMC", "ground-state projector, Θ = 40, free-fermion trial state; LCT-INT of PRB 91, 235151"],
   "AFQMC (Metropolis), numerically exact": ["AFQMC", ""],

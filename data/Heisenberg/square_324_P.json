@@ -38,6 +38,16 @@
           "conversion": "4 x 324 x (-0.66982043) = -868.08727728 (Pauli total); sigma 4 x 324 x 2e-8 = 0.0000259",
           "note": "Periodic 18 x 18 (square_324_P), H = sum_<ij> S_i.S_j with J = 1, each nearest-neighbour bond once; e0 = <H>/N per spin, N = L^2, no constant shift in the reported value (Sec. II A, II C). Tabulated at the average of beta/L = 32 and 64 runs (Table I caption, Sec. II C). Sign-free SSE on the bipartite lattice, T -> 0 converged: exact (stochastic); sigma is 1 s.d. of the mean rounded to one digit (Table I caption). Energy, sigma, lattice, boundary, dof = 324, einf = 0, bound_type, reference (J. Stat. Mech. (2026) 043101) and peer_reviewed agree. No other row on the instance carries this number (duplicate check against data/Heisenberg/square_324_P.json).",
           "source_entry": "VP2-arxiv-2601-20189#66 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf; pypdf layout mode (journal PDF; same row re-read in plain mode), arXiv HTML parsed with node one value per <td>",
+          "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 18",
+          "reported_as": "−0.66982043(2) per spin (e0), S.S units",
+          "conversion": "Pauli total = 4 N e0 = 4 x 324 x (-0.66982043) = -868.08727728; sigma = 4 x 324 x 2e-8 = 0.00002592 (stored to 3 significant digits, loader convention)",
+          "note": "Journal, arXiv v2 and v1 print the same value. BC P, size square N=324, J = 1 with H = sum S_i.S_j (no constant; the SSE constant is subtracted internally only, Sec. 2.1), sign-free SSE QMC so bound_type exact (stochastic) with sigma, peer_reviewed true and reference J. Stat. Mech. (2026) 043101 agree.",
+          "source_entry": "JP2-arxiv-2601-20189#32"
         }
       },
       "compute": {
@@ -79,7 +89,17 @@
         "method": "source text of arXiv:2502.17144 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.6697819(5)",
         "note": "Table III, row L=18, column 'RNN, zero-variance E/N' | Same row's quoted QMC[76] value (-0.66982039(4)) matches instance exact_per_site -0.66982043 to displayed precision.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article); pypdf plain + layout mode (pypdf + fonttools via uv --with, no system install)",
+          "location": "Table III, row L=18, column 'RNN Zero-variance E/N'",
+          "reported_as": "−0.6697819(5) (E/N, S·S units, Eq. (1) H = Σ⟨ij⟩ S_i·S_j, no constant)",
+          "conversion": "-0.6697819 × 4 × 324 = -868.0373424; sigma 5e-7 × 4 × 324 = 0.000648",
+          "note": "Zero-variance extrapolation (linear fit of E vs variance over the s = 1, 2, 4 runs, wild bootstrap 10^3; Table V caption, Sec. III): not a bound, bound_type extrapolated is right. Journal and arXiv v3 print the same digits. Printed bar is the bootstrap SE (Table III caption); prior pass flagged it as understated vs the bootstrap spread for periodic L=12/14 (prior-findings), not re-raised here. L×L periodic, N=324, J=1, no couplings beyond NN; peer_reviewed true is right.",
+          "source_entry": "JP5-arxiv-2502-17144#16"
+        }
       },
       "compute": {
         "parameters": 791554,
@@ -142,7 +162,7 @@
       "family": "RNN",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144",
+      "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
       "peer_reviewed": true,
       "source": "repo-data-2026-09-16",
       "provenance": "primary",
@@ -188,7 +208,21 @@
         "scope": "row",
         "confidence": "medium",
         "note": "Parameter count is for the PBC 2D RNN with d_h = 256, shared across all L (iterative retraining from L = 6), so scope is the ansatz. Four A100s is stated for the PBC timing runs; per-L wall clock is plotted only (Fig. 7, 8). The step count for this row follows from the schedule formula with the (s, r) named in the verification note but is not printed as a number, so iterations stays null. || route2a 2026-09-24: Run: repository run boundary=periodic, scale s = 4, rate r = 0.25, E/N = -0.669681549 +- 1.72e-5 vs row -0.66968155; the match is unique at 1e-7 or better against the other nine runs of that boundary and size. iterations = 27964 = Adam steps at this size only = step_schedule_exp_decay(L = 18, s = 4, r = 0.25) (num_training_steps accumulates over sizes and global_step is restored from the previous size's checkpoint, so the loop at size L runs exactly the increment). Not counted (pre-training on smaller lattices, iterative retraining): cumulative steps from scratch through L = 18 = 1036361 (L = 6 stages 401000 + L=8 251218 + L=10 155519 + L=12 97475 + L=14 62269 + L=16 40916). Paper Eq. (6) as printed, s x [C exp(-r(L - L0)) + F] with C = 101e3, F = 2e3, gives 28114; the code's C-term is (1000 + 100000 s), not 101000 s - they agree only at s = 1; the code is what ran. (The existing block quoted Eq. (6) as 's x C exp(-r(L-L0)) + F', a misplaced bracket: the HTML has s x [C exp(...) + F].) samples = 100 per optimisation step (run script 'num_samples = 100  # Batch size', split over the 4 GPUs as ceil(100/4) = 25 per device). CONTRADICTS the existing samples = 10000: 10000 is the final-energy estimate count (Fig. 3/12 captions; script 'num_samples_final_energy_estimate': 10000), not a per-step count; replaced, old value kept here. parameters 791554 checked: Table I shapes give PBC 2(4d_h+4d_sigma)d_h + 2d_h + 4d_h^2 + d_h d_sigma + d_sigma = 791,554 and OBC 2(2d_h x 2d_sigma x d_h) + 2d_h + 2d_h^2 + d_h d_sigma + d_sigma = 1,180,674 at d_h = 256, d_sigma = 2 (exact match); size-independent (weights shared over sites, same network for all L). Also flagged: the code uses LRSchedule_constant(1e-5) for L > 6 where Appendix C prints gamma = 5e-5 (no effect on cost). Confidence medium: iterations are evaluated from the authors' run script at the (s, r) identified by energy matching, not printed. || pass 2026-09-27: evaluation: every step at L = 18 > 6 is C4v-symmetrised (config_step3 copied for each larger L, l_symmetries from --lsym default \"1\"): each amplitude is the sum over the 8 C4v images (symmetries.py, spin parity off), in the gradient log-amplitudes and in every connected configuration of the local energy; evaluations_per_amplitude 8 (verify/VERIFY.md Part 2 #15 and agent-B.md: with it the repo's per-step timings give 2.8-3.2 TFLOP/s per A100, without it 0.35-0.40). The sampler draws from the unsymmetrised RNN in one autoregressive pass (RNNWF.sample), so proposals_per_sample 1 is not multiplied by the symmetry sum. local_energy all: energy.py tiles every bond and evaluates the network on all flipped configurations, parallel pairs included, then masks them with the sign factor. Adam: sr none. use_complex = 0, float32: complex false. Pre-training on smaller lattices is not in this row's iterations (DATA.md exclusion; agent-B.md gives the cumulative factors)."
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+          "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+          "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+          "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=18; plotted in journal Fig. 3(a), not printed; E/N -0.6696815490722656 ± 0.0000172383403245776 (std error), Var(E_loc/N) 0.000002971603771459582 (S·S units); -0.6696815490722656 × 4 × 324 = -867.907287598; sigma 0.0000172383403245776 × 4 × 324 = 0.0223409; variance 0.000002971603771459582 × 324^2 × 16 = 4.9911532; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+          "source_entry": "JP5-arxiv-2502-17144#17",
+          "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
+        }
+      ]
     }
   ]
 }

@@ -56,7 +56,17 @@
         "reported_as": "-0.628656(2) (per site, S.S units)",
         "conversion": "-0.628656 * 100 * 4 = -251.4624; the stored -251.46248 carries a seventh digit no version of the paper prints (8e-5 = 0.1 sigma), kept under the 2026-09-16 precision ruling (ruling 4a, Tristan 2026-09-19)",
         "note": "open 10x10, S = 1/2 Heisenberg, loop algorithm at T = 1e-4; Liu et al. PRB 95, 195154 and Sharir et al. quote the same -0.628656(2)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 90, 064425 (2014), sources/journal/prb90-064425.pdf, sha256 fe000363; pypdf layout + plain. Compared with arXiv:1405.3259v2 (latest; qmbl-verify-2026-09-29/sources/1405.3259v2.va6.plain.txt line 1497)",
+          "location": "Appendix C, Table III (p. 15), column 10 x 10; text p. 16",
+          "reported_as": "−0.628656(2) (energy per site, S.S units)",
+          "conversion": "-0.628656 x 100 x 4 = -251.4624; sigma 2e-6 x 400 = 0.0008. The stored seventh digit (-251.46248, 8e-5 = 0.1 sigma) is not printed in the journal either; kept under ruling 4a (Tristan 2026-09-19)",
+          "note": "Journal = arXiv v2: same Table III value and the same sentence \"The presented values and errors correspond to temperature T = 10^-4, and they agree with the ones corresponding to T = 10^-3 within the error bars.\" H = sum S_l.S_m (Sec. V B, antiferromagnetic, S units), \"square lattice geometry with open boundary conditions and size N = L x L considered throughout this work\" (p. 2). Own computation with the ALPS loop algorithm (Table III caption \"computed with the ALPS library\"), so primary. Exact (stochastic) with sigma 0.0008 stands. Not a duplicate: Sandvik SSE -251.462448(72) is another computation; Moss et al.'s tensorized-GRU -251.4624(36) is a variational row with its own sigma.",
+          "source_entry": "JA2-j1j2-heisenberg-tfising#2"
+        }
       }
     },
     {
@@ -755,7 +765,17 @@
         "reported_as": "-0.6286561 (+/- 2e-7) per site in S.S units",
         "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"QMC [49]\" = arXiv:2601.20189. The square-lattice Heisenberg AFM is bipartite and sign-problem-free, so SSE QMC is numerically exact here (RULES.md 4).",
         "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
-        "found_via": null
+        "found_via": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf; pypdf layout mode (journal PDF; same row re-read in plain mode), arXiv HTML parsed with node one value per <td>",
+          "location": "Table 2 (open L x L, E0/N_b magnitude, N_b = 2(L^2 - L)), row L = 10",
+          "reported_as": "0.3492534(1) (E0/N_b, magnitude, per bond)",
+          "conversion": "Pauli total = -4 N_b (E0/N_b) = -4 x 180 x 0.3492534 = -251.462448 (E/N = -0.62865612 S.S); sigma = 4 x 180 x 1e-7 = 0.000072 (stored to 3 significant digits)",
+          "note": "Journal, arXiv v2 and v1 print the same value. BC O, size square N=100, J = 1 with H = sum S_i.S_j (no constant; the SSE constant is subtracted internally only, Sec. 2.1), sign-free SSE QMC so bound_type exact (stochastic) with sigma, peer_reviewed true and reference J. Stat. Mech. (2026) 043101 agree. Row from add_sweep2_rows.mjs (quoted via arXiv:2605.13807), already re-based on Table 2 on 2026-09-29; stored value now matches the producing paper's journal print.",
+          "source_entry": "JP2-arxiv-2601-20189#13"
+        }
       },
       "compute": {
         "parameters": null,
@@ -849,7 +869,7 @@
       "family": "RNN",
       "bound_type": "variational",
       "bound_type_reason": "assigned during source verification (RULES.md 4)",
-      "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144",
+      "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
       "peer_reviewed": true,
       "source": "sweep-tables-2026-09-14",
       "provenance": "primary",
@@ -923,6 +943,18 @@
           "reason": "Value verified: Table V prints 'This work (best RNN) -0.628656(9)' (open 10x10), which is this run rounded to its error bar (-0.628656005859375 +/- 8.532e-6); the release carries the variance of the same state, which the paper plots (Fig. 12(b)) but does not print. Attaching it makes the row V-score capable, as add_error_metrics.mjs did for the triangular companion paper's L = 6 row.",
           "source_entry": "VP7-arxiv-2502-17144#2 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": null
+        },
+        {
+          "field": "reference",
+          "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+          "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+          "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+          "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: Table V, 'open 10×10' block, row 'This work (best RNN)'; variance from the data release ['open']['rate=0.475']['scale=2'] L=10; −0.628656(9) (E/N, S·S units); data release run s=2, r=0.475: E/N -0.628656005859375, std error 0.000008532164450863953, Var(E_loc/N) 7.279783021658659e-7; -0.628656 × 4 × 100 = -251.4624; sigma 9e-6 × 4 × 100 = 0.0036; variance 7.279783021658659e-7 × 100^2 × 16 = 0.11647653; the run rounds to the printed value (-0.6286560 ± 8.53e-6); std_error^2 × 10^4 / var = 1.000000 (10^4 samples, Fig. 3/12 captions), so var = Var(H)/N^2. Printed best variational energy of the authors' own run (bold 'This work'); open best = lowest of the s = 2 and 4 schedules (Table V caption, authors' notebook), here s = 2. Variational, own computation, L×L open, U(1) zero-magnetisation sector imposed (Sec. II), singlet GS; peer_reviewed true is right. Journal and arXiv v3 identical.",
+          "source_entry": "JP5-arxiv-2502-17144#0",
+          "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
       ]
     },
@@ -1027,7 +1059,17 @@
         "reported_as": "-0.628627 (+/- 0.000001) per site in S.S units",
         "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"PixelCNN [52]\" = Phys. Rev. Lett. 124, 020503 (2020).",
         "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
-        "found_via": null
+        "found_via": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Lett. 124, 020503 (2020), sources/journal/prl124-020503.pdf, sha256 bb1e1a6d, SM naqs_supp.pdf = prl124-020503-supp.pdf, sha256 52237eb9 (journals.aps.org, node fetch); compared with arXiv:1902.04057v3: Table II identical; pypdf plain",
+          "location": "Table II, row 10 × 10, column NAQS",
+          "reported_as": "10 × 10 −0.628601(2) −0.628627(1) −0.628656(2)",
+          "conversion": "-0.628627 x 400 = -251.4508; sigma 1e-6 x 400 = 4e-4",
+          "note": "Journal = arXiv v3. OBC, variational. The text writes H with Pauli matrices but the table is per-site S.S (it sits next to the S.S QMC value), so the stored x4N conversion is right. Side note: the text's 'relative error 3.5e-5 ± 0.4e-5' does not follow from the table (|(-0.628627+0.628656)/0.628656| = 4.6e-5). No duplicate on square_100_O.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#65"
+        }
       },
       "compute": {
         "parameters": null,
@@ -1129,6 +1171,16 @@
           "conversion": "-0.628601 x 4 x 100 = -251.4404; sigma 0.000002 x 400 = 0.0008",
           "note": "Second reading, from the producing paper: value and bar agree. The same row's L = 6 cell lies 13 printed sigma below the 6 x 6 open-boundary exact energy and is flagged there (Heisenberg/square_36_O, defects.mjs FP2-arxiv-1611-09467#3). This cell sits 5.5e-5 per site above Sandvik's SSE -0.6286561(2) on this instance, within the paper's own accuracy trend (relative error 8.7e-5 at D = 10 on 10 x 10, Sec. IV), and nothing points at it: left unflagged (ruling E11, Tristan 2026-10-03). The paper gives its bars as the Monte Carlo sampling error.",
           "source_entry": "VP15-hubbard-j1j2-heisenberg#57 (qmbl-verify 2026-09-29, ambiguous); ruling E11, Tristan 2026-10-03 (leave unflagged)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 95, 195154 (2017), sources/journal/prb95-195154.pdf, sha256 b442a8cd (APS, shared cache); compared with arXiv:1611.09467v3 (work/arxiv, pypdf): Table I and II cells used here identical; pypdf plain",
+          "location": "Table II, row D = 10, column L = 10 (also Table I, 10 × 10 J2 = 0, GO, D = 10)",
+          "reported_as": "D = 10 ... −0.628601(2)",
+          "conversion": "-0.628601 x 400 = -251.4404; sigma 2e-6 x 400 = 8e-4",
+          "note": "Journal read. OBC, S.S per site, variational. The prior pass's duplicate 'PEPS (bond dimension = 10)' row is no longer on data/Heisenberg/square_100_O.json; the other Liu rows there are D = 8 GO (-0.628507) and SU D = 10 (-0.62611), different numbers. The method string does not name D = 10 (method_detail 'gradient optimization'); the D = 8 row names its D.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#67"
         }
       },
       "compute": {
@@ -1219,6 +1271,16 @@
           "conversion": "Eq. (7) H = J1 sum S_i.S_j, S_i.S_i = 3/4, J1 = 1, per-site S.S energies (the paper's own 'Exact' cells equal QMBL's exact rows /4N on 6x6 and 10x10); stored Pauli total = 4N x E/N, sigma with the same factor; -0.628507 x 4 x 100 = -251.4028; sigma 1e-6 x 400 = 0.0004",
           "note": "10x10 OBC ('except for those on open edges', Sec. II), J2 = 0, D = 8, Dc = 16 (Table II caption), GO after SU; own computation; variational (PEPS, above the instance's QMC exact -0.6286562 by 1.49e-4/site); peer_reviewed true (PRB 95, 195154). v1/v2 printed this cell as -0.6280(2); v3 re-optimised. No duplicate: the other PEPS row on the instance (-251.4404, 'Finite PEPS, gradient optimization') is the D = 10 GO cell. Metric flags M6/M8 answered from the source: this PEPS energy is a Monte Carlo estimate (Eq. 2: 'The energy is evaluated through MC sampling according to the configuration weight W^2(S)'), and the printed bar is the MC sampling error ('The MC sampling error is order of 10^-6', Fig. 5 caption). The row is sampled; units.mjs counts it deterministic through its \\bpeps\\b marker. No eligibility consequence here because sigma is stored, but the classifier line is wrong for MC-evaluated PEPS (see report). The contraction cut-off systematic is not in the bar (App. A: Dc = 16 vs 20 differ by 8e-6 per site on 10x10 D=8).",
           "source_entry": "VP9-tv-hubbard-heisenberg#58 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 95, 195154 (2017), sources/journal/prb95-195154.pdf, sha256 b442a8cd (layout mode for Table II, plain mode for Table I); compared arXiv:1611.09467v3 (sources/arxiv/1611.09467v3.pdf, sha256 659d1461): Tables I and II identical in every PEPS cell; pypdf layout mode unless noted",
+          "location": "Table II, row D = 8, column L = 10 (same cell as Table I, 10 x 10 J2 = 0, GO, D = 8)",
+          "reported_as": "-0.628507(1) per site (S.S)",
+          "conversion": "-0.628507 x 4 x 100 = -251.4028; sigma 0.000001 x 400 = 0.0004",
+          "note": "Open-boundary L x L square (finite PEPS); per-site S.S energies; stored Pauli total = E/N x 4N. Dc = 2D 'adopted throughout' (Sec. IV and Appendix A), so D = 10 runs use Dc = 20. Energy is a Monte Carlo average (bar = MC error), variational. Journal and arXiv v3 identical. Not a duplicate of 'Finite PEPS, gradient optimization' -251.4404 (that is the D = 10 cell -0.628601(2)).",
+          "source_entry": "JP10-hubbard-heisenberg#39"
         }
       },
       "compute": {
@@ -1285,6 +1347,16 @@
           "conversion": "Eq. (7) H = J1 sum S_i.S_j, S_i.S_i = 3/4, J1 = 1, per-site S.S energies (the paper's own 'Exact' cells equal QMBL's exact rows /4N on 6x6 and 10x10); stored Pauli total = 4N x E/N, sigma with the same factor; -0.62611 x 400 = -250.444; sigma 1e-5 x 400 = 0.004",
           "note": "10x10 OBC, J2 = 0, simple-update PEPS at D = 10, energy evaluated with Dc = 2D = 20 ('In all these calculations, we use Dc=2D', p. 5); own computation; variational (4.0e-3 relative above the QMC exact, consistent with the text's 'approximately 10^-2 at D=8, which changes only a little for up to D=10'); peer_reviewed true. v2 printed -0.6261(1). No duplicate on the instance. Metric flags M6/M8 answered from the source: this PEPS energy is a Monte Carlo estimate (Eq. 2: 'The energy is evaluated through MC sampling according to the configuration weight W^2(S)'), and the printed bar is the MC sampling error ('The MC sampling error is order of 10^-6', Fig. 5 caption). The row is sampled; units.mjs counts it deterministic through its \\bpeps\\b marker. No eligibility consequence here because sigma is stored, but the classifier line is wrong for MC-evaluated PEPS (see report). The contraction cut-off systematic is not in the bar (App. A: Dc = 16 vs 20 differ by 8e-6 per site on 10x10 D=8; SU at D=10 not tested).",
           "source_entry": "VP9-tv-hubbard-heisenberg#59 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 95, 195154 (2017), sources/journal/prb95-195154.pdf, sha256 b442a8cd (layout mode for Table II, plain mode for Table I); compared arXiv:1611.09467v3 (sources/arxiv/1611.09467v3.pdf, sha256 659d1461): Tables I and II identical in every PEPS cell; pypdf layout mode unless noted",
+          "location": "Table I, column 10 x 10 J2/J1 = 0.0, SU sub-column, row D = 10",
+          "reported_as": "-0.62611(1) per site (S.S)",
+          "conversion": "-0.62611 x 4 x 100 = -250.444; sigma 0.00001 x 400 = 0.004",
+          "note": "Open-boundary L x L square (finite PEPS); per-site S.S energies; stored Pauli total = E/N x 4N. Dc = 2D 'adopted throughout' (Sec. IV and Appendix A), so D = 10 runs use Dc = 20. Energy is a Monte Carlo average (bar = MC error), variational. Journal and arXiv v3 identical.",
+          "source_entry": "JP10-hubbard-heisenberg#40"
         }
       },
       "compute": {
@@ -1341,7 +1413,17 @@
         "method": "source text of arXiv:2502.17144 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.62864114(5)",
         "note": "Table V, 'open 10x10' block, row 'This work (zero-variance)' | S.S convention, no rescale",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article); pypdf plain + layout mode (pypdf + fonttools via uv --with, no system install)",
+          "location": "Table V, 'open 10×10' block, row 'This work (zero-variance)'",
+          "reported_as": "−0.62864114(5) (E/N, S·S units, Eq. (1) H = Σ⟨ij⟩ S_i·S_j, no constant)",
+          "conversion": "-0.62864114 × 4 × 100 = -251.456456; sigma 5e-8 × 4 × 100 = 0.00002",
+          "note": "Zero-variance extrapolation (linear fit of E vs variance over the s = 2, 4 runs, wild bootstrap 10^3; Table V caption, Sec. III): not a bound, bound_type extrapolated is right. Journal and arXiv v3 print the same digits. Printed bar is the bootstrap SE (Table III caption); prior pass flagged it as understated vs the bootstrap spread for periodic L=12/14 (prior-findings), not re-raised here. L×L open, N=100, J=1, no couplings beyond NN; peer_reviewed true is right.",
+          "source_entry": "JP5-arxiv-2502-17144#1"
+        }
       },
       "compute": {
         "parameters": 1180674,

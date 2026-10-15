@@ -54,7 +54,18 @@
           "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#45 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "[paper](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.92.033603) [code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_25_-8/AFQMC/)"
         }
-      ]
+      ],
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published PDF Science 386, 296 (2024), sources/journal/science386-296.pdf, sha256 80f8b792, and Supplementary Materials, sources/journal/science386-296-sm.pdf, sha256 4539b5df (node fetch: Cloudflare 403; fetched in the automation browser after the article page loaded); arXiv:2302.04919v2 compared; the number itself from the VarBench dataset v1.1.0 = ref. [63] of the paper (Zenodo 10.5281/zenodo.13377360, the GitHub release of tag v1.1.0, commit 0064b70; the Zenodo API timed out from this host, so the tag in varbench-history was read)",
+        "location": "VarBench v1.1.0, Hubbard/square_64_P_25_-8.md, row 'AFQMC (Metropolis, Trotter error extrapolated), numerically exact'",
+        "reported_as": "-232.05 | 0.007 (total energy, units of t)",
+        "conversion": "none (total)",
+        "note": "8 x 8, 25 + 25, U = -8. Science SM S3 E 1-2 (journal version, same text as arXiv v2 Suppl. S3 E): 'For sign-problem-free systems, e.g., the repulsive Hubbard model (U > 0) at half-filling or the spin-balanced attractive Hubbard model (U < 0) [135, 147], numerically exact results are given by AFQMC using a generalized Metropolis algorithm with force bias [30, 148]'; 'For all systems computed in this work, we have either extrapolated Delta tau to zero or set it to a fixed value (typically Delta tau = 0.01) and verified that the Trotter error is well within our statistical error.' Hamiltonian (S5) H = -t sum c+c + U sum n_up n_dn, no shift, t = 1, N_up = N_dn. Neither the Science main text nor the SM prints any of these energies (searched both PDFs for the stored digits); the dataset is the printing source. Exact (stochastic) with sigma = AFQMC error bar; peer-reviewed venue. No duplicate on the instance.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#29",
+        "secondary_of": null
+      }
     }
   ],
   "coverage": [

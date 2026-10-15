@@ -41,6 +41,17 @@
           "conversion": "stored as printed (total): energy -30.865; sigma 9 x 1e-3 = 0.009",
           "note": "Value, sigma, cluster (6 x 6, N = 36), boundary (PBC = periodic both ways), filling (half filling, N_up = N_dn = 18), U = 4, t = 1 and bound_type (sign-free ground-state AFQMC, tau = 0.01, stated numerically exact -> exact (stochastic)) agree with the source; Hamiltonian identical to VarBench's (no constant shift); dof 36 = N_up + N_dn and einf 36 = U N_up N_dn / N; own computation, peer reviewed (PRB 94, 085103). Same cell in v1 PDF, v2 PDF and v2 HTML. Table row check: E - (P + K) = -0.065 (P = 17.43(1), K = -48.230(8), 4.15 sigma). No other row on the instance carries this number (no duplicate). Source-internal inconsistency in this table row (not in the stored field): E = -30.865(9) but P + K = 17.43(1) + (-48.230(8)) = -30.80, a 0.065 = 4.2 sigma gap; every other Table IV cell satisfies E = P + K within 1.2 sigma. Evidence that the printed E is the consistent number: Hellmann-Feynman integration of the printed P/U over U = 2..8 (cubic) gives E(U = 4) = -30.900 from E(U = 2) and -30.897 from E(U = 6), 0.035 from the printed E and 0.10 from P + K (the same check reproduces the 4x4 and 8x8 PBC columns to within 0.07 but some PBC-APBC columns only to 0.1-0.3, so it favours the printed E weakly); the HB K = 1 row -30.7944 on this instance sits 0.23% above the printed E, in line with HB K = 1's 0.24-0.33% gap at U = 4 on 4x4, 8x8 and 10x10, against 0.02% if P + K were right. The per-site size sequence does not discriminate. The P or K cell is the likely misprint (or has an understated bar); neither is stored. The stored E and sigma are the printed ones; an author question, not a row change.",
           "source_entry": "VP3-arxiv-1605-09421#45 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "journal PDF (PRB 94, 085103) and arXiv:1605.09421v2 PDF, both pypdf layout mode, Table IV E rows parsed by column position with node; no LLM transcription",
+          "location": "Appendix (Finite-size data at half-filling), Table IV, p. 085103-11, row 6 x 6 E, column U = 4 PBC",
+          "reported_as": "-30.865(9) (total ground-state energy, units of t; \"Statistical errors are on the last digit and are indicated in parenthesis\")",
+          "conversion": "stored as printed (total): energy -30.865; sigma 0.009",
+          "version_read": "published PDF Phys. Rev. B 94, 085103 (2016) (published 4 Aug 2016), sources/journal/prb94-085103.pdf, sha256 3e2a87a9; no Supplemental Material listed on the APS abstract page; compared with arXiv:1605.09421v2 (sources/arxiv-1605.09421/latest.pdf, sha256 227f31f5)",
+          "note": "Journal and arXiv v2 print the same cell (-30.865(9)); no difference between versions. Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + U sum n_up n_dn, no constant shift (same as VarBench). 6 x 6 square, N = 36, PBC, half filling N_up = N_dn = 18 (spin-balanced, n = 1), U = 4. Sign-free ground-state AFQMC, tau = 0.01 with Trotter error below the statistical error (Sec. II B), stated numerically exact at half filling (Sec. IV) -> exact (stochastic) with sigma. Own computation; peer reviewed, reference string correct. dof 36, einf 36 = U N/4 consistent. No duplicate: no other row on the instance carries this number.",
+          "source_entry": "JP3-arxiv-1605-09421#45"
         }
       },
       "compute": {

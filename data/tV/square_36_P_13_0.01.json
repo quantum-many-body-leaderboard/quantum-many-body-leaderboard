@@ -38,8 +38,20 @@
           "reason": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (Tristan, 2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
           "source_entry": "VB4-tfising-tv#41 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_0.01/ed_lattice_symmetries.sh)"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "\"Received 13-10-2022 Accepted 18-04-2023 Published 27-06-2023\", \"Published by the SciPost Foundation\", doi:10.21468/SciPostPhys.14.6.171",
+          "location": "journal p. 1 masthead",
+          "version_read": "published PDF SciPost Phys. 14, 171 (2023), doi:10.21468/SciPostPhys.14.6.171, sources/journal/scipost14-171.pdf, sha256 21fc99f7; pypdf layout mode; compared with arXiv:2210.05871v4 (latest; qmbl-runs/qmbl-verify/sources/2210.05871v4.pdf, sha256 18e3ceb6)",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 0.01: -27.93340531; stored -27.933405318364226 truncates to -27.93340531 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13. Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_0.01/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 0.01 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
+          "source_entry": "JB1-j1j2-tv#5"
         }
       ],
+      "peer_reviewed": true,
       "verified": {
         "checked_on": "2026-09-29",
         "scope": "value",
@@ -97,7 +109,18 @@
           "source_entry": "VA4-hubbard-tv-heisenberg#68, VA4-hubbard-tv-heisenberg#69 (qmbl-verify 2026-09-29); ruling 1, Tristan 2026-09-30",
           "from": "[paper](https://arxiv.org/abs/2406.09077) [code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_0.01/tV_model_slater.sh)"
         }
-      ]
+      ],
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published PDF Science 386, 296 (2024), sources/journal/science386-296.pdf, sha256 80f8b792, and Supplementary Materials, sources/journal/science386-296-sm.pdf, sha256 4539b5df (node fetch: Cloudflare 403; fetched in the automation browser after the article page loaded); arXiv:2302.04919v2 compared; the number itself from the VarBench dataset v1.1.0 = ref. [63] of the paper (Zenodo 10.5281/zenodo.13377360, the GitHub release of tag v1.1.0, commit 0064b70; the Zenodo API timed out from this host, so the tag in varbench-history was read)",
+        "location": "VarBench v1.1.0, tV/square_36_P_13_0.01.md, row 'VMC Determinant Slater-Jastrow (RBM) Ansatz with K=0 projections'",
+        "reported_as": "-27.93340661781254397 | 4.794376639741113871e-06 | var 8.140955499729786117e-07",
+        "conversion": "none (total)",
+        "note": "6 x 6 torus, 13 spinless fermions, V = 0.01. Science SM S1 Eq. (S4) (journal): H = -t sum (c+_i c_j + h.c.) + V sum n_i n_j, t = 1, Nf fixed (total, spinless) — no V(n-1/2)(n-1/2) shift, matching the stored convention. Method paper Romero, Nys & Carleo, Commun. Phys. 8, 46 (2025) read in its journal version (Europe PMC full-text XML PMC11779646, sources/journal/commphys8-46.epmc.xml, sha256 a2e037eb; Supplementary Information sources/journal/commphys8-46-supp.pdf, sha256 0489aee4): it studies closed-shell L = 4, 8, 10 spectra and L = 4..10 structure factors and prints none of the 6 x 6, Nf = 13 energies (searched both for the stored digits and per-site forms), and its data statement reads 'The data underlying this study are accessible upon reasonable request'; the dataset is the printing source, as the row's reference already says. The value lies 1.30e-6 below the instance's ED -27.933405318364226 (0.27 sigma): consistent within its stochastic error. Under RULES §6 the ED row holds this solved instance's record; the group file's is_record flag on this VMC row looks like a best-non-exact marker. Uploaded by D. Wu for I. Romero (e85c51e, 2023-01-09). No duplicate.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#37",
+        "secondary_of": null
+      }
     },
     {
       "energy": -27.93340599860148,
@@ -168,7 +191,17 @@
         "method": "source text of arXiv:2210.05871 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-27.933333",
         "note": "Table 3: System (L=6, Np=13), V/t=0.01 column, HF row | total/36 = per-site",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF SciPost Phys. 14, 171 (2023), sources/journal/scipost14-171.pdf, sha256 21fc99f7, pypdf plain; arXiv:2210.05871v4 compared: identical",
+          "location": "Table 3 (L = 6, Np = 13), row HF, column V/t = 0.01",
+          "reported_as": "-27.933333",
+          "conversion": "total, no conversion; stored -27.9333330012 is the printed value with per-site round-trip float noise (loader issue, ruling 'fixed once in the script')",
+          "note": "6 x 6 periodic, Np = 13 total, V = 0.01 with V n_i n_j unshifted (paper's ED equals the instance's ED to all printed digits), HF deterministic variational, own result. Duplicate check: no other HF row on tV/square_36_P_13_0.01.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#15"
+        }
       },
       "corrections": [
         {

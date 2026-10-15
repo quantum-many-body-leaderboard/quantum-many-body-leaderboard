@@ -28,7 +28,17 @@
         "method": "arXiv HTML parsed locally, one value per table cell; no LLM transcription",
         "reported_as": "E0/N_b = 0.3373629(2) (magnitude, per bond, N_b = 4512), L = 48, open",
         "note": "Table 2, \"SSE data for L x L systems with open boundary conditions. The ground state energy is normalized by the number of interaction bonds N_b = 2(L^2 - L)\", row L = 48. Printed as a magnitude; E/N = -(E0/N_b) N_b / N = -0.66066901 in S.S units, Pauli total = 4 N E/N. The L = 6 value agrees with the exact-diagonalization row on square_36_O to 3.3e-7 (2 sigma), and L = 10 and 16 reproduce the rows QMBL already quotes from this paper via arXiv:2605.13807.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf; pypdf layout mode (journal PDF; same row re-read in plain mode), arXiv HTML parsed with node one value per <td>",
+          "location": "Table 2 (open L x L, E0/N_b magnitude, N_b = 2(L^2 - L)), row L = 48",
+          "reported_as": "0.3373629(2) (E0/N_b, magnitude, per bond)",
+          "conversion": "Pauli total = -4 N_b (E0/N_b) = -4 x 4512 x 0.3373629 = -6088.7256192 (E/N = -0.66066901 S.S); sigma = 4 x 4512 x 2e-7 = 0.00361 (stored to 3 significant digits)",
+          "note": "Journal, arXiv v2 and v1 print the same value. BC O, size square N=2304, J = 1 with H = sum S_i.S_j (no constant; the SSE constant is subtracted internally only, Sec. 2.1), sign-free SSE QMC so bound_type exact (stochastic) with sigma, peer_reviewed true and reference J. Stat. Mech. (2026) 043101 agree.",
+          "source_entry": "JP2-arxiv-2601-20189#25"
+        }
       },
       "compute": {
         "parameters": null,

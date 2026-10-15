@@ -30,7 +30,17 @@
         "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
         "reported_as": "-0.4967163 (+/- 8e-7) per site in S.S units",
         "note": "PDF text: \"our approach yields the best variational energy E/N = -0.4967163(8) ... on such a large lattice\" (16x16). No VarBench instance existed for this size.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Nat. Phys. 20, 1476 (2024), sources/journal/natphys20-1476.pdf, sha256 097af42c (byte-identical to arXiv:2302.01941v3, same sha256); SI natphys20-1476-supp.pdf sha256 2cba6187; arXiv v3 compared (identical file); pypdf plain",
+          "location": "p. 3, 16x16 paragraph",
+          "reported_as": "our approach yields the best variational energy E/N = −0.4967163(8)",
+          "conversion": "-0.4967163 x 1024 = -508.6374912; sigma 8e-7 x 1024 = 8.192e-4",
+          "note": "16x16 PBC J2 = 0.5. Unlisted: the authors' Fig2c.csv holds lower variational values (ResNet2 139008 -0.4967935; + LS -0.496883) not printed in the text.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#4"
+        }
       },
       "compute": {
         "parameters": 34944,
@@ -270,7 +280,7 @@
       "v_score": null,
       "method": "CNN",
       "method_detail": "",
-      "method_as_published": "CNN (Li et al. 2022, sunway supercomputer)",
+      "method_as_published": "CNN model with 106529 variational parameters",
       "family": "CNN / ResNet",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -349,6 +359,18 @@
           "source_entry": "RP1-arxiv-2108-13830 (ambiguous, bound_type); ruling 4, Tristan 2026-10-07",
           "from": "Table I, L=16 row: '16  -0.49626  CNN  2022  [48]'. Bibliography item [48] of the arXiv:2603.14425 PDF is M. Li et al. 2022 (IEEE TPDS 33, 2846, the Sunway CNN paper; the arXiv HTML numbers the same entry [24]); until 2026-09-16 this row's reference was Qian & Qin 2023, the HTML list element bib48 (printed [36] in the PDF). Re-read from the PDF 2026-09-16. | Same per-site S·S convention as the instance record (Table I header).",
           "to": "Table I, L=16 row: '16  -0.49626  CNN  2022  [48]'. Bibliography item [48] of the arXiv:2603.14425 PDF is M. Li et al. 2022 (IEEE TPDS 33, 2846, the Sunway CNN paper; the arXiv HTML numbers the same entry [24]); until 2026-09-16 this row's reference was Qian & Qin 2023, the HTML list element bib48 (printed [36] in the PDF). Re-read from the PDF 2026-09-16. | Same per-site S·S convention as the instance record (Table I header). | Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan)."
+        },
+        {
+          "field": "method",
+          "to": "CNN model with 106529 variational parameters",
+          "reported_as": "'The CNN model with 106529 variational parameters is well optimized by millions of samples with the SR method and multiple stages of transfer learning' (Sec. 1 contributions list, journal and arXiv v4 p. 2); value '-0.49626'",
+          "location": "journal Sec. 1 contributions list and Table 4 ('Energies for Varied J2/J1 && System Scales'), row '16 × 16', column 0.50 (journal p. 2856; arXiv v4 p. 10)",
+          "version_read": "published PDF IEEE Trans. Parallel Distrib. Syst. 33(11), 2846-2859 (2022), doi:10.1109/TPDS.2022.3145163, sources/journal/tpds33-2846.pdf, sha256 69666954 (IEEE Xplore, ETH licence, downloaded 2026-10-15); compared with arXiv:2108.13830v4 (latest; byte-identical to qmbl/sources/2108.13830.pdf): Table 4 identical cell by cell",
+          "conversion": "-0.49626 x 4 x 256 = -508.17024 (energy unchanged)",
+          "checked_on": "2026-10-15",
+          "reason": "The stored published string is not printed in the source and its parenthetical names the source (RULES 3). Ruling B4 / 2026-10-07 rulings 1 and 3 already renamed the 29 sibling rows of the same Table 4 to this verbatim label; this row (loaded 2026-09-15 from a quote in arXiv:2603.14425) was outside that pass and is the only Table 4 row still carrying the old label.",
+          "source_entry": "JP6-heisenberg-j1j2#50",
+          "from": "CNN (Li et al. 2022, sunway supercomputer)"
         }
       ]
     },
@@ -384,6 +406,16 @@
           "conversion": "-0.496509 x 4 x 256 = -508.425216; sigma 0.000006 x 1024 = 0.006144",
           "note": "16 × 16 torus (not the 8 × 32 cylinder), J2 = 0.5, variational; 'for the 16 × 16 lattice in particular, we require approx. 300 GPU hours'. Cosmetic only: this row's reference string lacks the author names and its method_as_published is 'GCNN' where the sibling rows read 'GCNN (deep group-convolutional network)'; the site resolves the citation from the arXiv id. No duplicate on the instance.",
           "source_entry": "VP10-heisenberg-j1j2#24 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table I (p. 054410-4), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 square-lattice', row J2/J1 = 0.5, 16 x 16, column 'Our work'",
+          "reported_as": "−0.496509(6) per site (S.S)",
+          "conversion": "-0.496509 x 1024 = -508.425216; sigma 0.000006 x 1024 = 0.006144",
+          "note": "Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#8"
         }
       },
       "compute": {
@@ -441,7 +473,17 @@
         "method": "source text of arXiv:2211.07749 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.496213(3)",
         "note": "Table I, J2/J1=0.5 block, row '16×16', 'Ref. [7]' column; text: 'approx. 60000 CPU hours of Ref. [7]' | same instance mapping as above",
-        "secondary_of": "arXiv:2211.07749"
+        "secondary_of": "arXiv:2211.07749",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table I (p. 054410-4), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 square-lattice', row J2/J1 = 0.5, 16 x 16, column 'RBM+PP [7]'",
+          "reported_as": "−0.496213(3) per site (S.S)",
+          "conversion": "-0.496213 x 1024 = -508.122112; sigma 0.000003 x 1024 = 0.003072",
+          "note": "Secondary row (RBM+PP of Ref. [7], shared by Y. Nomura per the journal acknowledgments). Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#9"
+        }
       },
       "compute": {
         "parameters": null,

@@ -40,6 +40,16 @@
           "conversion": "-0.51268 x 4 x 108 = -221.47776; sigma 0.00009 x 432 = 0.03888",
           "note": "Record row, read hardest. J2 = J1/8 = 0.125 (Sec. IV). One Lanczos step on the trained residual GCNN (12 residual blocks of six feature maps, LayerSR; 4096 then 16384 samples): App. D, \"we find the wave function with minimum variational energy in the two-dimensional Krylov space spanned by |ψ0⟩ and the orthogonal component of H|ψ0⟩\", estimated from 2^14 samples; a p-step Lanczos state stays variational (RULES.md 4). method_detail '1 Lanczos step' is right. Sits 2.9e-4 per site above the Exact/Interpolated −0.51297 of the same row (an extrapolation, carried as such). Cluster vectors are not printed; Table IV names the irreps K.A1−, M.A1− and Γ.E2+ on the 108-site cluster, which requires the full C6v space group, and among 108-site triangular tori only the (6,6) cluster (N = 3·6²) has it. The instance was created from this paper and is the only 108-site triangular instance. No duplicate on the instance.",
           "source_entry": "VP10-heisenberg-j1j2#26 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table III (p. 054410-7), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 triangular-lattice', row J2/J1 = 1/8, N = 108, column GCNN+LS",
+          "reported_as": "−0.51268(9) per site (S.S)",
+          "conversion": "-0.51268 x 432 = -221.47776; sigma 0.00009 x 432 = 0.03888",
+          "note": "Record row, read hardest. J2 = 1/8, periodic 108-site cluster, one Lanczos step on the GCNN (Sec. IV, App. D: first-order Lanczos energy from <H>, sigma and mu3 of the GCNN state); a Lanczos step on a variational state is variational (RULES §4). Own computation. The 'Exact/Interpolated' -0.51297 in the same row is a thermodynamic-limit interpolation, not a cluster energy. Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#12"
         }
       },
       "compute": {
@@ -91,6 +101,16 @@
           "conversion": "-0.51175 x 4 x 108 = -221.076; sigma 0.00007 x 432 = 0.03024",
           "note": "Residual GCNN before the Lanczos step; J2 = 1/8, variational. Cluster vectors are not printed; Table IV names the irreps K.A1−, M.A1− and Γ.E2+ on the 108-site cluster, which requires the full C6v space group, and among 108-site triangular tori only the (6,6) cluster (N = 3·6²) has it. The instance was created from this paper and is the only 108-site triangular instance. No duplicate on the instance.",
           "source_entry": "VP10-heisenberg-j1j2#27 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table III (p. 054410-7), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 triangular-lattice', row J2/J1 = 1/8, N = 108, column GCNN",
+          "reported_as": "−0.51175(7) per site (S.S)",
+          "conversion": "-0.51175 x 432 = -221.076; sigma 0.00007 x 432 = 0.03024",
+          "note": "Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#13"
         }
       },
       "compute": {

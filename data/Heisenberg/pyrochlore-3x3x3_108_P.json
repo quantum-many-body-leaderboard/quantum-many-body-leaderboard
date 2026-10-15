@@ -47,7 +47,18 @@
           "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#4 (qmbl-verify 2026-09-29; skeptic upheld); same value proposed by VJ2-journal-other#13",
           "from": 0.04
         }
-      ]
+      ],
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published PDF Phys. Rev. X 11, 041021 (2021) (open access), sources/journal/prx11-041021.pdf, sha256 e65c26b3, pypdf layout (ð1Þ = (1) in the font); arXiv:2101.08787v2 compared (qmbl/sources/2101.08787.txt Table II identical)",
+        "location": "Table II, row '4 x 3^3', column mVMC",
+        "reported_as": "-0.4871(1) per site (S.S, J = 1)",
+        "conversion": "-0.4871 x 432 = -210.4272; sigma 0.0432",
+        "note": "H = j1 sum h_lambda(i,j) + j2 sum ..., h_lambda = lambda/2 (S+S- + S-S+) + SzSz (Eqs. 1-2), Heisenberg point lambda = 1, j2 = 0; Table II: 'The ground-state energy per site is listed in the first line of every cell'; 'We consider pyrochlore clusters with periodic boundary conditions'. Geometry 4 x L^3 = 4L^3 sites. Stored Pauli total = 4 x N x E/N. Own computation (mVMC / NQS CNN columns). The paper prints no energy variance: the stored energy_variance is the VarBench upload's only. Published 29 October 2021, peer reviewed. Lies below the DMRG column -0.4851 [38] of the same row; lowest stored energy on the instance (record). Journal = arXiv v2. No duplicate.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#53",
+        "secondary_of": null
+      }
     },
     {
       "energy": -208.4832,
@@ -90,7 +101,18 @@
           "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#6 (qmbl-verify 2026-09-29; skeptic upheld); same value proposed by VJ2-journal-other#15",
           "from": 0.04
         }
-      ]
+      ],
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published PDF Phys. Rev. X 11, 041021 (2021) (open access), sources/journal/prx11-041021.pdf, sha256 e65c26b3, pypdf layout (ð1Þ = (1) in the font); arXiv:2101.08787v2 compared (qmbl/sources/2101.08787.txt Table II identical)",
+        "location": "Table II, row '4 x 3^3', column NQS CNN",
+        "reported_as": "-0.4826(2) per site (S.S, J = 1)",
+        "conversion": "-0.4826 x 432 = -208.4832; sigma 0.0864",
+        "note": "H = j1 sum h_lambda(i,j) + j2 sum ..., h_lambda = lambda/2 (S+S- + S-S+) + SzSz (Eqs. 1-2), Heisenberg point lambda = 1, j2 = 0; Table II: 'The ground-state energy per site is listed in the first line of every cell'; 'We consider pyrochlore clusters with periodic boundary conditions'. Geometry 4 x L^3 = 4L^3 sites. Stored Pauli total = 4 x N x E/N. Own computation (mVMC / NQS CNN columns). The paper prints no energy variance: the stored energy_variance is the VarBench upload's only. Published 29 October 2021, peer reviewed. No duplicate.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#54",
+        "secondary_of": null
+      }
     },
     {
       "energy": -209.5632,
@@ -160,8 +182,20 @@
           "reason": "A finite-bond-dimension DMRG energy is deterministic and needs no sigma (RULES 6); no source prints a bar for it, and VarBench's '0' is the uploader's placeholder beside '????' for the variance. A stored 0 claims infinite precision for a number printed to 1e-4 per site and suppresses the no-error-metric marker. One of 8 rows in the table with sigma exactly 0 (the others are exact rows).",
           "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#14 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": 0
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "-0.4851 (Table II, column 'DMRG [38]', row 4 x 3^3)",
+          "location": "PRX 11, 041021, Appendix H, Table II; journal ref of arXiv:2010.03563 'Phys. Rev. Lett. 126, 117204 (2021)' (arXiv abs page fetched 2026-10-15) and of arXiv:2101.08787 'Phys. Rev. X 11, 041021 (2021)'",
+          "version_read": "published PDF Phys. Rev. X 11, 041021 (2021), sources/journal/prx11-041021.pdf, sha256 e65c26b3; compared arXiv:2101.08787v2 (sources/arxiv/2101.08787v2.pdf, sha256 6006bdcf): Table II DMRG column identical; primary PRL 126, 117204 (sha256 8bc32853) read too",
+          "conversion": "-0.4851 x 4 x 108 = -209.5632 (equals stored)",
+          "checked_on": "2026-10-15",
+          "reason": "Listed in scope-pub.json: the producing paper (PRL 126, 117204) and the quoting paper (PRX 11, 041021) are both published; peer_reviewed is null. Value, cluster (108-site cubic 3x3x3, periodic) and bound_type variational ('the DMRG result of Ref. [38] without bond-dimension extrapolation', PRX Fig. 1(b) caption) verified; the PRL itself prints only the extrapolated -0.4935(50) for 108 sites, so the row stays secondary as stored.",
+          "source_entry": "JP10-hubbard-heisenberg#59"
         }
-      ]
+      ],
+      "peer_reviewed": true
     }
   ]
 }

@@ -6016,22 +6016,6 @@ export const CORRECTIONS = [
   },
   {
     "match": {
-      "instance": "J1J2/square_36_P_0.5",
-      "method": "CNN1 (VMC, 100 SR steps)",
-      "energy": -72.0288
-    },
-    "field": "reference",
-    "to": "Liang, Li, Xiao, An, He, Zhao, Chen, Yang, Wang, Qian, Shen, Jia, Gu, Liu & Wei, 2^1296 exponentially complex quantum many-body simulation via scalable deep learning method, arXiv:2204.07816v1 (2022), Sec. 7.3.1; later published in revised form as Liang, Li, Xiao, Chen, Yang, An & He, Deep learning representations for quantum many-body systems on heterogeneous hardware, Mach. Learn.: Sci. Technol. 4, 015035 (2023)",
-    "reported_as": "When L=6, the energy is decreased to -0.5002 after 100 SR steps.",
-    "location": "arXiv:2204.07816v1 Sec. 7.3.1 (p. 10)",
-    "version_read": "arXiv:2204.07816v1; Mach. Learn.: Sci. Technol. 4, 015035 (2023), IOPscience full-text HTML (shared cache liang2023-mlst-acc56a.html, parsed locally with node: sources/vp16_mlst_acc56a.fromhtml.txt)",
-    "conversion": "-0.5002 x 4 x 36 = -72.0288 (stored, agrees)",
-    "checked_on": "2026-09-29",
-    "reason": "The reference is a bare arXiv id; give authors, title, the section, and the published version. M10 ('preprint older than 12 months, peer_reviewed false: published since?') is answered: yes, as MLST 4, 015035 (2023), but that version's transfer-learning section (2.2.3) gives no energies and '-0.5002' / '100 SR steps' was not located in its text, so the number is located only in the preprint and the stored peer_reviewed false stands (same reading as row #12). Value, 6 x 6 PBC, J2 = 0.5, S.S per site agree; the number sits 0.0036 per site above the stored ED -0.5038096539, so no variational violation. Kind of number (C6): the energy after 100 SR steps of a transfer-learning start, i.e. a trace value rather than a converged final estimate; no sigma, and the method string already says '100 SR steps'. Duplicate check (live data/J1J2/square_36_P_0.5.json): no other row carries -0.5002.",
-    "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#25 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
       "instance": "J1J2/triangular_144_P_0.125",
       "method": "Gutzwiller-projected fermionic state + Lanczos step",
       "energy": -294.081408
@@ -6303,134 +6287,6 @@ export const CORRECTIONS = [
     "checked_on": "2026-09-29",
     "reason": "Name the table and the version that print the number, add the DOI, and drop '[47] (quoted in arXiv:2606.04558)' with the provenance change; the arXiv id alone (as the pending 2026-09-16 proposal adds) would point readers to a version without the number.",
     "source_entry": "VP5-arxiv-2606-04558#14 (qmbl-verify 2026-09-29; skeptic upheld; identifier punctuation adjusted at apply so the reference resolves to the paper)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.4",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -134.525952
-    },
-    "field": "sigma",
-    "to": 0.001024,
-    "reported_as": "- 0. 525492(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 40; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.525492 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.40 (v4-v6 = PRX Table I prints -0.525653(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "0.000004 per site x 4 x 64 = 0.001024",
-    "checked_on": "2026-09-29",
-    "reason": "The producing paper prints an error bar, (4) in the last digit, which the quoting table dropped. What the bar is (standard error, binning) is not defined in the text read.",
-    "source_entry": "VP5-arxiv-2606-04558#37 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.4",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -134.525952
-    },
-    "field": "provenance",
-    "to": "primary",
-    "reported_as": "- 0. 525492(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 40; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.525492 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.40 (v4-v6 = PRX Table I prints -0.525653(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "The number is now located in the paper that produced it (arXiv v1-v3 Table I), so the row is no longer only a quote. In the input this is origin quoted -> own together with arxiv 2606.04558 -> 2005.14142, so that the loader's verified.method names the source actually read; the entry's evidence and convention_check strings (which describe arXiv:2606.04558 Table I) should then name the primary location instead (arXiv:2005.14142v1 Table I, 8 x 8 row; per site, J1 = 1, Eq. (1), PBC).",
-    "source_entry": "VP5-arxiv-2606-04558#39 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.4",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -134.525952
-    },
-    "field": "peer_reviewed",
-    "to": false,
-    "reported_as": "- 0. 525492(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 40; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.525492 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.40 (v4-v6 = PRX Table I prints -0.525653(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "Printed only in arXiv v1-v3; the refereed version (v4-v6 = PRX 11, 031034) replaced the whole 8 x 8 row by the no-sublattice energies (-0.525653(1) here), so this number was never refereed. Resolves M10 peer-reviewed-missing.",
-    "source_entry": "VP5-arxiv-2606-04558#40 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.4",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -134.525952
-    },
-    "field": "reference",
-    "to": "Nomura & Imada, Dirac-type nodal spin liquid revealed by refined quantum many-body solver using neural-network wave function, correlation ratio, and level spectroscopy, arXiv:2005.14142v1-v3 (2020-2021), Table I, 8 x 8 row (4 x 4 sublattice structure); replaced in v4-v6 = Phys. Rev. X 11, 031034 (2021) by -0.525653(1) without sublattice structure",
-    "reported_as": "- 0. 525492(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 40; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.525492 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.40 (v4-v6 = PRX Table I prints -0.525653(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "The cited journal version does not contain -0.525492(4): its Table I prints -0.525653(1) here (RULES.md 8: a cited number must be findable in the cited source). The number is in arXiv v1-v3, so the reference must name those versions.",
-    "source_entry": "VP5-arxiv-2606-04558#41 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.45",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -130.845952
-    },
-    "field": "sigma",
-    "to": 0.001024,
-    "reported_as": "- 0. 511117(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 45; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.511117 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.45 (v4-v6 = PRX Table I prints -0.511331(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "0.000004 per site x 4 x 64 = 0.001024",
-    "checked_on": "2026-09-29",
-    "reason": "The producing paper prints an error bar, (4) in the last digit, which the quoting table dropped. What the bar is (standard error, binning) is not defined in the text read.",
-    "source_entry": "VP5-arxiv-2606-04558#44 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.45",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -130.845952
-    },
-    "field": "provenance",
-    "to": "primary",
-    "reported_as": "- 0. 511117(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 45; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.511117 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.45 (v4-v6 = PRX Table I prints -0.511331(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "The number is now located in the paper that produced it (arXiv v1-v3 Table I), so the row is no longer only a quote. In the input this is origin quoted -> own together with arxiv 2606.04558 -> 2005.14142, so that the loader's verified.method names the source actually read; the entry's evidence and convention_check strings (which describe arXiv:2606.04558 Table I) should then name the primary location instead (arXiv:2005.14142v1 Table I, 8 x 8 row; per site, J1 = 1, Eq. (1), PBC).",
-    "source_entry": "VP5-arxiv-2606-04558#46 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.45",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -130.845952
-    },
-    "field": "peer_reviewed",
-    "to": false,
-    "reported_as": "- 0. 511117(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 45; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.511117 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.45 (v4-v6 = PRX Table I prints -0.511331(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "Printed only in arXiv v1-v3; the refereed version (v4-v6 = PRX 11, 031034) replaced the whole 8 x 8 row by the no-sublattice energies (-0.511331(1) here), so this number was never refereed. Resolves M10 peer-reviewed-missing.",
-    "source_entry": "VP5-arxiv-2606-04558#47 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.45",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -130.845952
-    },
-    "field": "reference",
-    "to": "Nomura & Imada, Dirac-type nodal spin liquid revealed by refined quantum many-body solver using neural-network wave function, correlation ratio, and level spectroscopy, arXiv:2005.14142v1-v3 (2020-2021), Table I, 8 x 8 row (4 x 4 sublattice structure); replaced in v4-v6 = Phys. Rev. X 11, 031034 (2021) by -0.511331(1) without sublattice structure",
-    "reported_as": "- 0. 511117(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 45; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.511117 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.45 (v4-v6 = PRX Table I prints -0.511331(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "The cited journal version does not contain -0.511117(4): its Table I prints -0.511331(1) here (RULES.md 8: a cited number must be findable in the cited source). The number is in arXiv v1-v3, so the reference must name those versions.",
-    "source_entry": "VP5-arxiv-2606-04558#48 (qmbl-verify 2026-09-29; skeptic upheld)"
   },
   {
     "match": {
@@ -11144,38 +11000,6 @@ export const CORRECTIONS = [
     "checked_on": "2026-09-29",
     "reason": "'previous work [47] (Liang et al.)' is a citation marker, not a method. The producing table states that its values are CNN1 after one Lanczos step (p = 1); the row's short name 'CNN' with empty method_detail hides the Lanczos step (method_detail: '1 Lanczos step, 106 529 parameters'). bound_type stays variational (RULES.md 4: p-step Lanczos on a variational state). The pending 2026-09-16 proposal 'Deep CNN' (group N2) misses the Lanczos step. Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is the Table 1 caption's ('achieved by CNN1 with 106 529 parameters. The values are obtained by the Lanczos step with p = 1.'); the Lanczos step is the detail, and the parameter count is a compute number, not part of the string.",
     "source_entry": "VP5-arxiv-2606-04558#11 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.4",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -134.525952
-    },
-    "field": "method",
-    "to": "RBM+PP",
-    "reported_as": "- 0. 525492(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 40; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.525492 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.40 (v4-v6 = PRX Table I prints -0.525653(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "'previous work [23] (Nomura & Imada neural-network solver)' is the quoting paper's citation marker plus a paraphrase, not a method string any source printed (RULES.md 3). The primary names the state RBM+PP and states the 4 x 4 sublattice structure used for 8 x 8 ('As for the real variational parameters f_ij in the PP part for 8 x 8, 12 x 12, and 16 x 16 lattices, we impose 4 x 4 sublattice structure', v1 App. A) and the projections ('We always apply the spin-parity and momentum projections', 'The ground state energy in Fig. 10 is also produced with the simplified point-group projection'). The sublattice structure is what separates this number from the -0.525653(1) row already on the instance (method_detail: '4 x 4 sublattice structure, K = 0, even spin parity, simplified point-group projection'). Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is Table I's ('Raw data of RBM+PP ground-state energy in Fig. 10'); the 4 x 4 sublattice structure and the projections are the detail.",
-    "source_entry": "VP5-arxiv-2606-04558#38 (qmbl-verify 2026-09-29; skeptic upheld)"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_64_P_0.45",
-      "method": "previous work [23] (Nomura & Imada neural-network solver)",
-      "energy": -130.845952
-    },
-    "field": "method",
-    "to": "RBM+PP",
-    "reported_as": "- 0. 511117(4) (arXiv:2005.14142v1 Table I 'Raw data of RBM+PP ground-state energy in Fig. 10', row 8 x 8, column J2 = 0. 45; per site, S.S units, J1 = 1); quoted by arXiv:2606.04558 Table I as -0.511117 [23] (v1) / [39] (v2)",
-    "location": "Nomura & Imada arXiv:2005.14142v1-v3 Table I, 8 x 8 row, J2 = 0.45 (v4-v6 = PRX Table I prints -0.511331(1) without sublattice structure instead)",
-    "version_read": "arXiv:2005.14142 v1 (28 May 2020), v2 (2 Jun 2020), v3 (29 Jan 2021), v4 (27 Apr 2021), v5 (13 Jun 2021), v6 (12 Jul 2021; = Phys. Rev. X 11, 031034 (2021), journal ref on the abs page): all six PDFs fetched 2026-09-29, pypdf layout and plain mode; the quoting paper arXiv:2606.04558 v1/v2 read as above",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "'previous work [23] (Nomura & Imada neural-network solver)' is the quoting paper's citation marker plus a paraphrase, not a method string any source printed (RULES.md 3). The primary names the state RBM+PP and states the 4 x 4 sublattice structure used for 8 x 8 ('As for the real variational parameters f_ij in the PP part for 8 x 8, 12 x 12, and 16 x 16 lattices, we impose 4 x 4 sublattice structure', v1 App. A) and the projections ('We always apply the spin-parity and momentum projections', 'The ground state energy in Fig. 10 is also produced with the simplified point-group projection'). The sublattice structure is what separates this number from the -0.511331(1) row already on the instance (method_detail: '4 x 4 sublattice structure, K = 0, even spin parity, simplified point-group projection'). Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, verbatim, and what explains it is the row's method_detail (method_names.mjs). The label is Table I's ('Raw data of RBM+PP ground-state energy in Fig. 10'); the 4 x 4 sublattice structure and the projections are the detail.",
-    "source_entry": "VP5-arxiv-2606-04558#45 (qmbl-verify 2026-09-29; skeptic upheld)"
   },
   {
     "match": {
@@ -20099,5 +19923,1751 @@ export const CORRECTIONS = [
     "checked_on": "2026-10-07",
     "reason": "Ruling 4 of qmbl-verify 2026-10-07 covers the two Li et al. rows QMBL carried before the pass.",
     "source_entry": "RP1-arxiv-2108-13830 (ambiguous, bound_type); ruling 4, Tristan 2026-10-07"
+  },
+  // qmbl-verify 2026-10-15, journal-version pass (RULES.md 8): references, peer_reviewed flags
+  // and method strings read in the published versions; rulings 2026-10-15.
+  {
+    "match": {
+      "instance": "J1J2/square_16_P_0.5",
+      "method": "ClebschTree",
+      "energy": -33.831039193
+    },
+    "field": "reference",
+    "to": "[paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by co-author Jannes Nys on 2022-10-24, commit 9e80241 (\"Include ClebschTree results on 4x4 J1-J2 model\"); method: Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), arXiv:2104.14869, which shows the 4 x 4 result only as a plotted relative error (Fig. 2))",
+    "reported_as": "no printed value; Fig. 2 'Relative error on the ground state energy Delta E/E0 = (E0,exact - E)/E0,exact of the J1-J2 model on a 4 x 4 lattice' (plotted point only)",
+    "location": "PRB 104, 045123, Fig. 2 (p. 5); Table I covers 8 x 8 only; VarBench J1J2/square_16_P_0.5.md row 'ClebschTree' (v1.1.0)",
+    "version_read": "published PDF Phys. Rev. B 104, 045123 (2021), sources/journal/prb104-045123.pdf, sha256 725a3579, pypdf layout; arXiv:2104.14869v2 compared (Table I identical, 2026-09-29 extraction)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The journal version prints no 4 x 4 energy (text, Table I and captions searched; the paper has no supplement); the stored -33.831039193 | 0.00031 | 0.01741932679 was uploaded to VarBench 15 months after publication by a co-author. The 2026-09-29 pass located it by decoding Fig. 2's vector marker, which the 2026-09-30 ruling ('a table beats a figure: no values decoded from plotted points') no longer accepts as a printing source. Same treatment as the Sorella, t-V and shuriken author uploads (ruling 1 / R2-E5): cite the VarBench dataset with the uploader named and the paper as method reference. Energy, sigma, variance, instance (4 x 4 PBC, J2 = 0.5) and method unchanged; the earlier figure check (relative error 1.93e-5 = the stored value against ED -33.83169340557936) stays in the note.",
+    "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#56"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "RBM with momentum (K=0), spin-parity (even S), and point-group (A1) projections, 72 hidden units",
+      "energy": -72.5414
+    },
+    "field": "reference",
+    "to": "[paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by Yusuke Nomura on 2021-10-13, commit b8b0d37, hidden-unit label edited by him in f97cf5f the same day; method: Y. Nomura, J. Phys.: Condens. Matter 33, 174003 (2021), arXiv:2009.14777, whose Fig. 3 plots this M = 144 state without printing its digits)",
+    "reported_as": "VarBench b8b0d37 (yusukenomura, 2021-10-13): \"|  -72.54140   |   0.00009     |   0.1905(3)    |  RBM with momentum (K=0), spin-parity (even S), and point-group (A1) projections, 96 hidden units (Method Ref: J. Phys.: Condens. Matter 33, 174003 (2021))  |\"; journal Fig. 3 (decoded) 6 x 6 leftmost red dot E/N = -0.5037572, Delta_var = 3.6068e-5",
+    "location": "Journal Fig. 3 (p. 6) and its caption; Sec. 3.1 text; VarBench history b8b0d37, f97cf5f, 956b014",
+    "version_read": "published PDF J. Phys.: Condens. Matter 33, 174003 (2021) (IOP, fetched 2026-10-15 over the ETH network), sources/journal/jpcm33-174003.pdf, sha256 74b5f2df; pypdf plain + layout; Fig. 3 decoded from the page-6 content stream (scripts/paths.mjs, axis calibrated on the 6 y ticks and 5 x ticks; the red dashed exact line decodes to -0.5038101). Compared with arXiv:2009.14777v3 (latest; qmbl-verify/sources/2009.14777v3.layout.txt and the VA5 decode of its Fig. 3)",
+    "conversion": "Stored E/N = -72.5414 / 144 = -0.50375972 (S.S units), Delta_var = (0.1905/16)/(72.5414/4)^2 = 3.6201e-5; journal Fig. 3 decode -0.5037572 / 3.6068e-5: agreement 2.5e-6 in E/N (marker quantisation 3.1e-6) and 1.3e-7 in Delta_var. Identical to the arXiv v3 decode (-0.5037571, 3.607e-5)",
+    "checked_on": "2026-10-15",
+    "reason": "The journal prints no digits for this state: the only numbers in its text are 3996 (N_var at M = 72), the 8 x 8 zero-variance extrapolation -0.49904(1) and quoted references. The energy, sigma 0.00009 and variance 0.1905(3) first appear in Nomura's own VarBench upload, which labels the paper \"Method Ref\"; Dian Wu turned that into a [paper] link in 956b014 (2024-07-11). RULES.md 8 / DATA.md: \"A number first printed in a dataset cites the dataset, naming the upload (who, when, commit) and keeping the author's paper as the method reference: VarBench uploads that no paper prints cite Wu et al., Science 386, 296 (2024)\", and no values are decoded from plotted points. The same author's RBM+PP row on this instance already uses this form. The number itself is right: the journal figure agrees within the marker quantisation, and the journal and arXiv v3 figures decode to the same points. Not a duplicate of the RBM+PP rows (-72.54722 upload; Nomura & Imada -72.54216), which are different states.",
+    "source_entry": "JA2-j1j2-heisenberg-tfising#3"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "RBM with momentum (K=0), spin-parity (even S), and point-group (A1) projections, 96 hidden units",
+      "energy": -127.65838
+    },
+    "field": "reference",
+    "to": "[paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by Yusuke Nomura on 2021-10-13, commit 89d5460; method: Y. Nomura, J. Phys.: Condens. Matter 33, 174003 (2021), arXiv:2009.14777, whose Fig. 3 plots this M = 192 state without printing its digits)",
+    "reported_as": "VarBench 89d5460 (yusukenomura, 2021-10-13): \"|  -127.65838   |   0.00059     |    1.85(1)     |  RBM with momentum (K=0), spin-parity (even S), and point-group (A1) projections, 96 hidden units (Method Ref: J. Phys.: Condens. Matter 33, 174003 (2021))  |\"; journal Fig. 3 (decoded) 8 x 8 leftmost blue square E/N = -0.4986667, Delta_var = 1.1368e-4",
+    "location": "Journal Fig. 3 (p. 6) and its caption; Sec. 3.1 text; VarBench history 5dec36f, 89d5460, 956b014",
+    "version_read": "published PDF J. Phys.: Condens. Matter 33, 174003 (2021) (IOP, fetched 2026-10-15 over the ETH network), sources/journal/jpcm33-174003.pdf, sha256 74b5f2df; pypdf plain + layout; Fig. 3 decoded from the page-6 content stream (scripts/paths.mjs, axis calibrated on the 6 y ticks and 5 x ticks; the red dashed exact line decodes to -0.5038101). Compared with arXiv:2009.14777v3 (latest; qmbl-verify/sources/2009.14777v3.layout.txt and the VA5 decode of its Fig. 3)",
+    "conversion": "Stored E/N = -127.65838 / 256 = -0.49866555 (S.S units), Delta_var = (1.85/16)/(127.65838/4)^2 = 1.1352e-4; journal Fig. 3 decode -0.4986667 / 1.1368e-4: agreement 1.2e-6 in E/N (quantisation 3.1e-6) and 1.6e-7 in Delta_var. Identical to the arXiv v3 decode (-0.4986667, 1.137e-4)",
+    "checked_on": "2026-10-15",
+    "reason": "As for the 6 x 6 row: the journal prints no digits for the M = 192 state (its only 8 x 8 number is the zero-variance extrapolation E/N = -0.49904(1)); energy, sigma 0.00059 and variance 1.85(1) first appear in Nomura's VarBench upload labelled \"Method Ref\", and Dian Wu made it a [paper] link in 956b014. RULES.md 8 / DATA.md: a number first printed in a dataset cites the dataset with the upload named and the paper as method reference. The number agrees with the journal figure. Not a duplicate of the instance's RBM+PP rows (-127.73465 upload, -127.60576 and -127.714816 Nomura & Imada).",
+    "source_entry": "JA2-j1j2-heisenberg-tfising#4"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.01",
+      "method": "Exact diagonalization",
+      "energy": -27.933405318364226
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "\"Received 13-10-2022 Accepted 18-04-2023 Published 27-06-2023\", \"Published by the SciPost Foundation\", doi:10.21468/SciPostPhys.14.6.171",
+    "location": "journal p. 1 masthead",
+    "version_read": "published PDF SciPost Phys. 14, 171 (2023), doi:10.21468/SciPostPhys.14.6.171, sources/journal/scipost14-171.pdf, sha256 21fc99f7; pypdf layout mode; compared with arXiv:2210.05871v4 (latest; qmbl-runs/qmbl-verify/sources/2210.05871v4.pdf, sha256 18e3ceb6)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 0.01: -27.93340531; stored -27.933405318364226 truncates to -27.93340531 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13. Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_0.01/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 0.01 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
+    "source_entry": "JB1-j1j2-tv#5"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "Exact diagonalization",
+      "energy": -27.340544159534836
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "\"Received 13-10-2022 Accepted 18-04-2023 Published 27-06-2023\", \"Published by the SciPost Foundation\", doi:10.21468/SciPostPhys.14.6.171",
+    "location": "journal p. 1 masthead",
+    "version_read": "published PDF SciPost Phys. 14, 171 (2023), doi:10.21468/SciPostPhys.14.6.171, sources/journal/scipost14-171.pdf, sha256 21fc99f7; pypdf layout mode; compared with arXiv:2210.05871v4 (latest; qmbl-runs/qmbl-verify/sources/2210.05871v4.pdf, sha256 18e3ceb6)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 0.1: -27.34054415; stored -27.340544159534836 truncates to -27.34054415 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13. Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_0.1/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 0.1 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
+    "source_entry": "JB1-j1j2-tv#7"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_1",
+      "method": "Exact diagonalization",
+      "energy": -22.07737235783086
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "\"Received 13-10-2022 Accepted 18-04-2023 Published 27-06-2023\", \"Published by the SciPost Foundation\", doi:10.21468/SciPostPhys.14.6.171",
+    "location": "journal p. 1 masthead",
+    "version_read": "published PDF SciPost Phys. 14, 171 (2023), doi:10.21468/SciPostPhys.14.6.171, sources/journal/scipost14-171.pdf, sha256 21fc99f7; pypdf layout mode; compared with arXiv:2210.05871v4 (latest; qmbl-runs/qmbl-verify/sources/2210.05871v4.pdf, sha256 18e3ceb6)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 1: -22.07737235; stored -22.07737235783086 truncates to -22.07737235 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13. Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_1/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 1 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
+    "source_entry": "JB1-j1j2-tv#9"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_10",
+      "method": "Exact diagonalization",
+      "energy": -7.928026240978371
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "\"Received 13-10-2022 Accepted 18-04-2023 Published 27-06-2023\", \"Published by the SciPost Foundation\", doi:10.21468/SciPostPhys.14.6.171",
+    "location": "journal p. 1 masthead",
+    "version_read": "published PDF SciPost Phys. 14, 171 (2023), doi:10.21468/SciPostPhys.14.6.171, sources/journal/scipost14-171.pdf, sha256 21fc99f7; pypdf layout mode; compared with arXiv:2210.05871v4 (latest; qmbl-runs/qmbl-verify/sources/2210.05871v4.pdf, sha256 18e3ceb6)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 10: -7.92802624; stored -7.928026240978371 truncates to -7.92802624 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13. Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_10/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 10 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
+    "source_entry": "JB1-j1j2-tv#11"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-3x3x3_108_P",
+      "method": "DMRG",
+      "energy": -209.5632
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "-0.4851 (Table II, column 'DMRG [38]', row 4 x 3^3)",
+    "location": "PRX 11, 041021, Appendix H, Table II; journal ref of arXiv:2010.03563 'Phys. Rev. Lett. 126, 117204 (2021)' (arXiv abs page fetched 2026-10-15) and of arXiv:2101.08787 'Phys. Rev. X 11, 041021 (2021)'",
+    "version_read": "published PDF Phys. Rev. X 11, 041021 (2021), sources/journal/prx11-041021.pdf, sha256 e65c26b3; compared arXiv:2101.08787v2 (sources/arxiv/2101.08787v2.pdf, sha256 6006bdcf): Table II DMRG column identical; primary PRL 126, 117204 (sha256 8bc32853) read too",
+    "conversion": "-0.4851 x 4 x 108 = -209.5632 (equals stored)",
+    "checked_on": "2026-10-15",
+    "reason": "Listed in scope-pub.json: the producing paper (PRL 126, 117204) and the quoting paper (PRX 11, 041021) are both published; peer_reviewed is null. Value, cluster (108-site cubic 3x3x3, periodic) and bound_type variational ('the DMRG result of Ref. [38] without bond-dimension extrapolation', PRX Fig. 1(b) caption) verified; the PRL itself prints only the extrapolated -0.4935(50) for 108 sites, so the row stays secondary as stored.",
+    "source_entry": "JP10-hubbard-heisenberg#59"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "HQT (Ours)",
+      "energy": -172.416
+    },
+    "field": "reference",
+    "to": "Guo, Xiao, Liu & Li, Holographic Quantum Transformer: A Generalist Neuro-Symbolic Architecture for Solving Frustrated Systems via Generative Attention, Proc. 32nd ACM SIGKDD Conf. on Knowledge Discovery and Data Mining V.2 (KDD '26), pp. 11028-11037, arXiv:2607.00398, doi:10.1145/3770855.3818932",
+    "reported_as": "Xingran Guo, Tiaojie Xiao, Jie Liu, and Keqin Li (ACM running head 'KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea Xingran Guo, Tiaojie Xiao, Jie Liu, and Keqin Li'); Crossref: pages 11028-11037, DOI 10.1145/3770855.3818932",
+    "location": "ACM PDF running head; Crossref record",
+    "version_read": "published PDF Proc. KDD '26 V.2, pp. 11028-11037, doi:10.1145/3770855.3818932, sources/journal/kdd26-11028.pdf, sha256 4bd25c64 (dl.acm.org via the automation browser; node fetch gets 403); compared with arXiv:2607.00398v1 (only version): every printed energy identical (diff of all signed decimals in both texts is empty), captions identical",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "The stored reference names no authors, pages or DOI; the two other HQT rows on this paper (sweep-2026-09-13) already carry the full form. Same paper, one citation string. Value check (no transcription issue): Table 2 (Summary of Phase Diagram Scan (8× 8)), row J2/J1 0.00 '−0.6735 0.0005 20.05 3.18 Néel', -0.6735 x 256 = -172.416. RECORD-flagged row. ACM identical to arXiv v1. 8x8 PBC J2 = 0, coarse-scan value, no sigma. Existing defect on this row (scripts/defects.mjs, FP1/VP13 passes) stands; the ACM text changes nothing it relies on.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#22"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "HQT (Ours), Cold Start",
+      "energy": -198.96
+    },
+    "field": "reference",
+    "to": "Guo, Xiao, Liu & Li, Holographic Quantum Transformer: A Generalist Neuro-Symbolic Architecture for Solving Frustrated Systems via Generative Attention, Proc. 32nd ACM SIGKDD Conf. on Knowledge Discovery and Data Mining V.2 (KDD '26), pp. 11028-11037, arXiv:2607.00398, doi:10.1145/3770855.3818932",
+    "reported_as": "Xingran Guo, Tiaojie Xiao, Jie Liu, and Keqin Li (ACM running head 'KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea Xingran Guo, Tiaojie Xiao, Jie Liu, and Keqin Li'); Crossref: pages 11028-11037, DOI 10.1145/3770855.3818932",
+    "location": "ACM PDF running head; Crossref record",
+    "version_read": "published PDF Proc. KDD '26 V.2, pp. 11028-11037, doi:10.1145/3770855.3818932, sources/journal/kdd26-11028.pdf, sha256 4bd25c64 (dl.acm.org via the automation browser; node fetch gets 403); compared with arXiv:2607.00398v1 (only version): every printed energy identical (diff of all signed decimals in both texts is empty), captions identical",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "The stored reference names no authors, pages or DOI; the two other HQT rows on this paper (sweep-2026-09-13) already carry the full form. Same paper, one citation string. Value check (no transcription issue): Table 3 row 'HQT (Ours), Cold Start' 'HQT (Ours), Cold Start This work (2026) −0.4974 Random init.', -0.4974 x 400 = -198.96. ACM identical to arXiv v1; no sigma printed; 10x10 PBC J2 = 0.5.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#25"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_8_4",
+      "method": "TQS",
+      "energy": -13.61824
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026) DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page",
+    "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "Published since the row was read (scope-pub.json lists it); the stored reference also names no authors. RECORD row. Value check: Table VII row TQS, column E (U/t = 4) prints '−0.851 14(13)' in the journal and in arXiv v1; -0.85114 x 16 = -13.61824; sigma 13e-5 x 16 = 0.00208. 4x4 PBC half filling, per-site units of t, no constant shift, variational; no duplicate on the instance (TQS and PITQS are different networks).",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#27"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_8_4",
+      "method": "TQS",
+      "energy": -13.61824
+    },
+    "field": "peer_reviewed",
+    "to": "true",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page",
+    "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists and prints the same Table VII value.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#28"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_8_4",
+      "method": "PITQS",
+      "energy": -13.61808
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026) DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page",
+    "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "Published since the row was read (scope-pub.json lists it); the stored reference also names no authors. Value check: Table VII row PITQS, column E (U/t = 4) prints '−0.851 13(22)' in the journal and in arXiv v1; -0.85113 x 16 = -13.61808; sigma 22e-5 x 16 = 0.00352. 4x4 PBC half filling, per-site units of t, no constant shift, variational; no duplicate on the instance (TQS and PITQS are different networks).",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#29"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_8_4",
+      "method": "PITQS",
+      "energy": -13.61808
+    },
+    "field": "peer_reviewed",
+    "to": "true",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page",
+    "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists and prints the same Table VII value.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#30"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_8_8",
+      "method": "TQS",
+      "energy": -8.46544
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026) DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page",
+    "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "Published since the row was read (scope-pub.json lists it); the stored reference also names no authors. Value check: Table VII row TQS, column E (U/t = 8) prints '−0.529 09(25)' in the journal and in arXiv v1; -0.52909 x 16 = -8.46544; sigma 25e-5 x 16 = 0.004. 4x4 PBC half filling, per-site units of t, no constant shift, variational; no duplicate on the instance (TQS and PITQS are different networks).",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#31"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_8_8",
+      "method": "TQS",
+      "energy": -8.46544
+    },
+    "field": "peer_reviewed",
+    "to": "true",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page",
+    "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists and prints the same Table VII value.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#32"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_8_8",
+      "method": "PITQS",
+      "energy": -8.46704
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026) DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page",
+    "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "Published since the row was read (scope-pub.json lists it); the stored reference also names no authors. RECORD row. Value check: Table VII row PITQS, column E (U/t = 8) prints '−0.529 19(35)' in the journal and in arXiv v1; -0.52919 x 16 = -8.46704; sigma 35e-5 x 16 = 0.0056. 4x4 PBC half filling, per-site units of t, no constant shift, variational; no duplicate on the instance (TQS and PITQS are different networks).",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#33"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_8_8",
+      "method": "PITQS",
+      "energy": -8.46704
+    },
+    "field": "peer_reviewed",
+    "to": "true",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page",
+    "version_read": "published PDF Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, sources/journal/prresearch8-033032.pdf, sha256 7c05ab41 (journals.aps.org, node fetch); compared with arXiv:2602.03031v1 (only version; HTML qmbl/sources/2602.03031.html, PDF sha256 e29c6b55): Table VII identical in every cell (ED reference renumbered [1] -> [37])",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists and prints the same Table VII value.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#34"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "CNN",
+      "energy": -198.064
+    },
+    "field": "reference",
+    "to": "Choo, Neupert & Carleo, Two-dimensional frustrated J1-J2 model studied with neural network quantum states, Phys. Rev. B 100, 125124 (2019), arXiv:1903.06713",
+    "reported_as": "PHYSICAL REVIEW B 100, 125124 (2019) 'Two-dimensional frustrated J1-J2 model studied with neural network quantum states', Kenny Choo, Titus Neupert, Giuseppe Carleo (Crossref title identical)",
+    "location": "journal title page; Crossref 10.1103/PhysRevB.100.125124",
+    "version_read": "published PDF Phys. Rev. B 100, 125124 (2019), sources/journal/prb100-125124.pdf, sha256 bae6515a (APS, shared cache); compared with arXiv:1903.06713v1 (only version)",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "The stored reference carries the arXiv title (changed in review) and no authors; the other Choo rows on J2 = 0.2-1.0 already use the journal form. Value check: Table I, 10×10, row CNN, J2 = 0.5 prints −0.49516(1) in the journal and arXiv v1; -0.49516 x 400 = -198.064, sigma 1e-5 x 400 = 0.004; PBC, S.S per site, variational. Not a duplicate of VarBench's 'VMC with projected BCS' -198.06(9) (a different method and number).",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#35"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_36_P",
+      "method": "VMC",
+      "energy": -79.8048
+    },
+    "field": "method",
+    "to": "Entangled-plaquette state (EPS), 16-site plaquettes",
+    "reported_as": "Table 2. Variational GS energy per site ... computed, by using the entangled-plaquette ansatz ... N plaquettes comprising 16 sites have been employed. 36 -0.55420(5) -0.560373",
+    "location": "Table 2 caption and row N = 36",
+    "version_read": "arXiv:1006.4480v3 PDF, pypdf layout (journal blocked, see note). Journal version New J. Phys. 12, 103039 (2010) NOT read: iopscience.iop.org returns a Radware 'Bot Manager Captcha' to node fetch and to the automation browser (2026-10-15); the only other copy OpenAlex/Unpaywall list (edoc.mpg.de/522465) redirects to the MPG.PuRe home page (403 to node). Fell back to arXiv:1006.4480v3 (latest; arXiv journal-ref 'New J. Phys. 12 103039 (2010)'), work/arxiv/1006.4480v3.pdf, pypdf layout. The rows stay arXiv-read.",
+    "conversion": "-0.5542 x 144 = -79.8048; sigma 5e-5 x 144 = 0.0072 (Table 2's bar; the abstract prints (4), which would give 0.00576)",
+    "checked_on": "2026-10-15",
+    "reason": "The row now cites Mezzacapo & Cirac as primary, but keeps the label 'VMC' that the quoting paper (arXiv:2104.05085 Table I 'VMC [31]') gave it; the source names the method EPS with 16-site plaquettes, as the N = 144 and 324 rows already say. Value, sigma, PBC, S.S per site, variational verified. No duplicate on the instance.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#50"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "S. CNN",
+      "energy": -193.1944
+    },
+    "field": "reference",
+    "to": "Liang, Dong & He, Hybrid convolutional neural network and projected entangled pair states wave functions for quantum many-particle states, Phys. Rev. B 103, 035138 (2021), arXiv:2009.14370",
+    "reported_as": "PHYSICAL REVIEW B 103, 035138 (2021) 'Hybrid convolutional neural network and projected entangled pair states wave functions for quantum many-particle states', Xiao Liang, Shao-Jun Dong, and Lixin He (Crossref identical)",
+    "location": "journal title page; Crossref 10.1103/PhysRevB.103.035138",
+    "version_read": "published PDF Phys. Rev. B 103, 035138 (2021), sources/journal/prb103-035138.pdf, sha256 959310c6 (journals.aps.org, node fetch); compared with arXiv:2009.14370v2: Table I identical",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "The stored reference carries the arXiv title ('... and PEPS wave functions ...'), changed in the journal, and names no authors. Value check: Table I, row J2 = 0.5, column S. CNN: '−0.482986' in journal and arXiv v2; -0.482986 x 400 = -193.1944; no sigma printed; 10x10 PBC, S.S per site, variational (sampled: true already set). No duplicate on the instance.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#55"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PEPS+S. CNN",
+      "energy": -196.934
+    },
+    "field": "reference",
+    "to": "Liang, Dong & He, Hybrid convolutional neural network and projected entangled pair states wave functions for quantum many-particle states, Phys. Rev. B 103, 035138 (2021), arXiv:2009.14370",
+    "reported_as": "PHYSICAL REVIEW B 103, 035138 (2021) 'Hybrid convolutional neural network and projected entangled pair states wave functions for quantum many-particle states', Xiao Liang, Shao-Jun Dong, and Lixin He (Crossref identical)",
+    "location": "journal title page; Crossref 10.1103/PhysRevB.103.035138",
+    "version_read": "published PDF Phys. Rev. B 103, 035138 (2021), sources/journal/prb103-035138.pdf, sha256 959310c6 (journals.aps.org, node fetch); compared with arXiv:2009.14370v2: Table I identical",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "The stored reference carries the arXiv title ('... and PEPS wave functions ...'), changed in the journal, and names no authors. Value check: Table I, row J2 = 0.5, column PEPS+S. CNN: '−0.492335' in journal and arXiv v2; -0.492335 x 400 = -196.934; no sigma printed; 10x10 PBC, S.S per site, variational (sampled: true already set). No duplicate on the instance.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#56"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PEPS+D. CNN",
+      "energy": -198.2008
+    },
+    "field": "reference",
+    "to": "Liang, Dong & He, Hybrid convolutional neural network and projected entangled pair states wave functions for quantum many-particle states, Phys. Rev. B 103, 035138 (2021), arXiv:2009.14370",
+    "reported_as": "PHYSICAL REVIEW B 103, 035138 (2021) 'Hybrid convolutional neural network and projected entangled pair states wave functions for quantum many-particle states', Xiao Liang, Shao-Jun Dong, and Lixin He (Crossref identical)",
+    "location": "journal title page; Crossref 10.1103/PhysRevB.103.035138",
+    "version_read": "published PDF Phys. Rev. B 103, 035138 (2021), sources/journal/prb103-035138.pdf, sha256 959310c6 (journals.aps.org, node fetch); compared with arXiv:2009.14370v2: Table I identical",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "The stored reference carries the arXiv title ('... and PEPS wave functions ...'), changed in the journal, and names no authors. Value check: Table I, row J2 = 0.5, column PEPS+D. CNN: '−0.495502' in journal and arXiv v2; -0.495502 x 400 = -198.2008; no sigma printed; 10x10 PBC, S.S per site, variational (sampled: true already set). No duplicate on the instance.",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#57"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "VMC, Gutzwiller-projected U(1) Dirac spin liquid (NN hopping, [0,pi] flux, no Jastrow), periodic-periodic spinon boundary conditions",
+      "energy": -328.12032
+    },
+    "field": "reference",
+    "to": "He, Yu & Li, Variational Monte Carlo study of the 1/9-magnetization plateau in kagome antiferromagnets, Phys. Rev. Lett. 133, 096501 (2024), arXiv:2407.20629, Supplemental Material S4",
+    "reported_as": "PHYSICAL REVIEW LETTERS 133, 096501 (2024) 'Variational Monte Carlo Study of the 1/9-Magnetization Plateau in Kagome Antiferromagnets' (Crossref title)",
+    "location": "journal title page; Crossref 10.1103/PhysRevLett.133.096501",
+    "version_read": "published PDF Phys. Rev. Lett. 133, 096501 (2024), sources/journal/prl133-096501.pdf, sha256 bf0cd9d7, and Supplemental Material sm_kagome_field.pdf = sources/journal/prl133-096501-supp.pdf, sha256 bf9444af (journals.aps.org, node fetch); compared with arXiv:2407.20629v1 (SM appended): Sec. S4 sentence identical",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "The stored reference names no title (every other row cites author, title and venue). Value check: SM Sec. S4 '(E = 0.42724 ± 0.00003) for ... (periodic-periodic (P-P)) BC', printed without a sign; -0.42724 x 768 = -328.12032; sigma 3e-5 x 768 = 0.02304; 8 × 8 × 3 torus, P-P spinon BC, variational. Journal SM = arXiv v1. Not a duplicate of Ran et al.'s -0.42866(2) row (different number, quoted by this SM).",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#63"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "VMC, Gutzwiller-projected U(1) Dirac spin liquid (NN hopping, [0,pi] flux, no Jastrow), periodic-antiperiodic spinon boundary conditions",
+      "energy": -329.22624
+    },
+    "field": "reference",
+    "to": "He, Yu & Li, Variational Monte Carlo study of the 1/9-magnetization plateau in kagome antiferromagnets, Phys. Rev. Lett. 133, 096501 (2024), arXiv:2407.20629, Supplemental Material S4",
+    "reported_as": "PHYSICAL REVIEW LETTERS 133, 096501 (2024) 'Variational Monte Carlo Study of the 1/9-Magnetization Plateau in Kagome Antiferromagnets' (Crossref title)",
+    "location": "journal title page; Crossref 10.1103/PhysRevLett.133.096501",
+    "version_read": "published PDF Phys. Rev. Lett. 133, 096501 (2024), sources/journal/prl133-096501.pdf, sha256 bf0cd9d7, and Supplemental Material sm_kagome_field.pdf = sources/journal/prl133-096501-supp.pdf, sha256 bf9444af (journals.aps.org, node fetch); compared with arXiv:2407.20629v1 (SM appended): Sec. S4 sentence identical",
+    "conversion": "n/a",
+    "checked_on": "2026-10-15",
+    "reason": "The stored reference names no title (every other row cites author, title and venue). Value check: SM Sec. S4 'E = 0.42868 ± 0.00003 ... for P-A', printed without a sign; -0.42868 x 768 = -329.22624; sigma 3e-5 x 768 = 0.02304; 8 × 8 × 3 torus, P-A spinon BC, variational. Journal SM = arXiv v1. Not a duplicate of Ran et al.'s -0.42866(2) row (different number, quoted by this SM).",
+    "source_entry": "JP11-j1j2-heisenberg-hubbard#64"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_36_P",
+      "method": "VMC",
+      "energy": -79.94736
+    },
+    "field": "reference",
+    "to": "Kaneko, Morita & Imada, Gapless spin-liquid phase in an extended spin 1/2 triangular Heisenberg model, J. Phys. Soc. Jpn. 83, 093707 (2014), arXiv:1407.0318 (6 x 6 value quoted as -0.55519(4) in Table I of Iqbal, Hu, Thomale, Poilblanc & Becca, Phys. Rev. B 93, 144411 (2016), and as -0.55519 in Table I of Roth & MacDonald, arXiv:2104.05085)",
+    "reported_as": "VMC (Kaneko et al.) (Ref. [48]) -0.55519(4) -0.5449(2)",
+    "location": "Iqbal et al., Phys. Rev. B 93, 144411 (2016), Table I, column '6 x 6 torus'",
+    "version_read": "published PDF Phys. Rev. B 93, 144411 (2016), sources/journal/prb93-144411.pdf, sha256 3c0f8916 (quote); primary J. Phys. Soc. Jpn. 83, 093707 not reachable (journals.jps.jp HTTP 403), arXiv:1407.0318v2 as cached in qmbl/sources",
+    "conversion": "energy and sigma unchanged: -0.55519 x 144 = -79.94736; 4e-5 x 144 = 0.00576",
+    "checked_on": "2026-10-15",
+    "reason": "The stored sigma (0.00576) comes from Iqbal et al.'s refereed quote, which the reference does not name; it names only the unrefereed quote arXiv:2104.05085 that prints no bar. Energy, 6 x 6 torus, J2 = 0, S.S per site and variational all agree with the journal quote. The primary's journal text could not be fetched; the row stays secondary.",
+    "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#10"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_O",
+      "method": "RNN",
+      "energy": -86.906304
+    },
+    "field": "reference",
+    "to": "Hibat-Allah, Melko & Carrasquilla, Supplementing Recurrent Neural Network Wave Functions with Symmetry and Annealing to Improve Accuracy, Machine Learning and the Physical Sciences workshop, NeurIPS 2021, arXiv:2207.14314 (the 6 x 6 open value is printed only in the quote: Table V, ref. [38], of Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144)",
+    "reported_as": "RNN [38] -0.603516(1)",
+    "location": "Moss et al., Phys. Rev. B 112, 134450 (2025), Table V, block 'open 6 x 6'",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; arXiv:2207.14314v2 (journal_ref 'Machine Learning and the Physical Sciences, NeurIPS 2021')",
+    "conversion": "energy and sigma unchanged: -0.603516 x 144 = -86.906304; 1e-6 x 144 = 0.000144",
+    "checked_on": "2026-10-15",
+    "reason": "The quoting paper the row rests on is now published (PRB 112, 134450; its Table V prints the same -0.603516(1)) and the primary's venue is the NeurIPS 2021 ML4PS workshop (arXiv journal_ref); the stored reference names neither and dates the primary '2024a'. Value, 6 x 6 open, S.S, variational unchanged; provenance stays secondary.",
+    "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#20"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1024_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -2742.31840768
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 32: \"−0.66951133(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 32",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 1024 x (-0.66951133) = -2742.31840768; sigma = 4 x 1024 x 3e-8 = 0.0001229 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 32 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#16"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1296_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -3470.64087744
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 36: \"−0.66949091(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 36",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 1296 x (-0.66949091) = -3470.64087744; sigma = 4 x 1296 x 3e-8 = 0.0001555 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 36 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#17"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1600_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -4284.657664
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 40: \"−0.66947776(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 40",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 1600 x (-0.66947776) = -4284.657664; sigma = 4 x 1600 x 3e-8 = 0.000192 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 40 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Versions differ: journal \"−0.66947776(3)\", arXiv v2 \"-0.66947776(3)\", v1 \"-0.66947775(3)\".",
+    "source_entry": "JP2-arxiv-2601-20189#20"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1936_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -5184.36708416
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 44: \"−0.66946889(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 44",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 1936 x (-0.66946889) = -5184.36708416; sigma = 4 x 1936 x 3e-8 = 0.0002323 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 44 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Versions differ: journal \"−0.66946889(3)\", arXiv v2 \"-0.66946889(3)\", v1 \"-0.66946890(3)\".",
+    "source_entry": "JP2-arxiv-2601-20189#22"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_2304_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -6169.76861184
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 48: \"−0.66946274(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 48",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 2304 x (-0.66946274) = -6169.76861184; sigma = 4 x 2304 x 3e-8 = 0.0002765 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 48 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Versions differ: journal \"−0.66946274(3)\", arXiv v2 \"-0.66946274(3)\", v1 \"-0.66946275(3)\".",
+    "source_entry": "JP2-arxiv-2601-20189#26"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_2704_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -7240.86129728
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 52: \"−0.66945833(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 52",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 2704 x (-0.66945833) = -7240.86129728; sigma = 4 x 2704 x 3e-8 = 0.0003245 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 52 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#29"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_3136_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -8397.64377088
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 56: \"−0.66945502(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 56",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 3136 x (-0.66945502) = -8397.64377088; sigma = 4 x 3136 x 3e-8 = 0.0003763 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 56 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#30"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_3600_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -9640.11744
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 60: \"−0.66945260(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 60",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 3600 x (-0.66945260) = -9640.11744; sigma = 4 x 3600 x 3e-8 = 0.000432 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 60 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#33"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_4096_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -10968.2805965
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 64: \"−0.66945072(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 64",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 4096 x (-0.66945072) = -10968.2805965; sigma = 4 x 4096 x 3e-8 = 0.0004915 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 64 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#39"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_5184_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -13881.6768384
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 72: \"−0.66944815(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 72",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 5184 x (-0.66944815) = -13881.6768384; sigma = 4 x 5184 x 3e-8 = 0.0006221 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 72 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#42"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_6400_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -17137.82912
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 80: \"−0.66944645(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 80",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 6400 x (-0.66944645) = -17137.82912; sigma = 4 x 6400 x 3e-8 = 0.000768 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 80 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#45"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_7744_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -20736.7376128
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 88: \"−0.66944530(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 88",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 7744 x (-0.66944530) = -20736.7376128; sigma = 4 x 7744 x 3e-8 = 0.0009293 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 88 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#50"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_9216_P",
+      "method": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "energy": -24678.4035226
+    },
+    "field": "method",
+    "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+    "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 96: \"−0.66944454(3)\"",
+    "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 96",
+    "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+    "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 9216 x (-0.66944454) = -24678.4035226; sigma = 4 x 9216 x 3e-8 = 0.001106 (stored to 3 significant digits, loader convention))",
+    "checked_on": "2026-10-15",
+    "reason": "L = 96 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Journal, arXiv v2 and v1 print the same value.",
+    "source_entry": "JP2-arxiv-2601-20189#55"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_O",
+      "method": "2D tensorized-GRU RNN wavefunction, best variational",
+      "energy": -251.4624
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: Table V, 'open 10×10' block, row 'This work (best RNN)'; variance from the data release ['open']['rate=0.475']['scale=2'] L=10; −0.628656(9) (E/N, S·S units); data release run s=2, r=0.475: E/N -0.628656005859375, std error 0.000008532164450863953, Var(E_loc/N) 7.279783021658659e-7; -0.628656 × 4 × 100 = -251.4624; sigma 9e-6 × 4 × 100 = 0.0036; variance 7.279783021658659e-7 × 100^2 × 16 = 0.11647653; the run rounds to the printed value (-0.6286560 ± 8.53e-6); std_error^2 × 10^4 / var = 1.000000 (10^4 samples, Fig. 3/12 captions), so var = Var(H)/N^2. Printed best variational energy of the authors' own run (bold 'This work'); open best = lowest of the s = 2 and 4 schedules (Table V caption, authors' notebook), here s = 2. Variational, own computation, L×L open, U(1) zero-magnetisation sector imposed (Sec. II), singlet GS; peer_reviewed true is right. Journal and arXiv v3 identical.",
+    "source_entry": "JP5-arxiv-2502-17144#0"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -268.604
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: Table V, 'periodic 10×10' block, row 'This work (best RNN)'; variance from the data release ['periodic']['rate=0.25']['scale=4'] L=10; −0.67151(2) (E/N, S·S units); data release run s=4, r=0.25: E/N -0.6715101623535157, std error 0.000021966849513485598, Var(E_loc/N) 0.000004825424775481224; -0.67151 × 4 × 100 = -268.604; sigma 2e-5 × 4 × 100 = 0.008; variance 0.000004825424775481224 × 100^2 × 16 = 0.77206796; the run rounds to the printed value (-0.6715102 ± 2.20e-5); std_error^2 × 10^4 / var = 1.000000 (10^4 samples, Fig. 3/12 captions), so var = Var(H)/N^2. Printed best variational energy of the authors' own run (bold 'This work'); periodic best = lowest of all ten schedules, here s = 4. Variational, own computation, L×L periodic, U(1) zero-magnetisation sector imposed (Sec. II), singlet GS; peer_reviewed true is right. Journal and arXiv v3 identical.",
+    "source_entry": "JP5-arxiv-2502-17144#2"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -268.638
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: Table III row L=10 ('RNN Zero-variance E/N') and Table V 'periodic 10×10' row 'This work (zero-variance)'; −0.6715950(5) (E/N, S·S units, Eq. (1) H = Σ⟨ij⟩ S_i·S_j, no constant); -0.671595 × 4 × 100 = -268.638; sigma 5e-7 × 4 × 100 = 0.0002. Zero-variance extrapolation (linear fit of E vs variance over the s = 1, 2, 4 runs, wild bootstrap 10^3; Table V caption, Sec. III): not a bound, bound_type extrapolated is right. Journal and arXiv v3 print the same digits. Printed bar is the bootstrap SE (Table III caption); prior pass flagged it as understated vs the bootstrap spread for periodic L=12/14 (prior-findings), not re-raised here. L×L periodic, N=100, J=1, no couplings beyond NN; peer_reviewed true is right.",
+    "source_entry": "JP5-arxiv-2502-17144#3"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1024_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -2741.43505859
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=32; plotted in journal Fig. 3(a), not printed; E/N -0.6692956686019897 ± 0.00001276756579333374 (std error), Var(E_loc/N) 0.0000016301073628710583 (S·S units); -0.6692956686019897 × 4 × 1024 = -2741.43505859; sigma 0.00001276756579333374 × 4 × 1024 = 0.0522959; variance 0.0000016301073628710583 × 1024^2 × 16 = 27.348663; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#5"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_144_O",
+      "method": "2D tensorized-GRU RNN wavefunction, best variational",
+      "energy": -365.875518799
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['open']['rate=0.475']['scale=4'], L=12; plotted in journal Fig. 12(a), not printed; E/N -0.6352005534701877 ± 0.0000068553791405784055 (std error), Var(E_loc/N) 4.699622316107752e-7 (S·S units); -0.6352005534701877 × 4 × 144 = -365.875518799; sigma 0.0000068553791405784055 × 4 × 144 = 0.0039487; variance 4.699622316107752e-7 × 144^2 × 16 = 0.15592219; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of the s = 2 and 4 schedules (authors' rule, ruling E8). Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L open; open-boundary runs agree with PEPS references (App. G); sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#6"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_144_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -386.27633667
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=12; plotted in journal Fig. 3(a), not printed; E/N -0.6706186400519477 ± 0.00002268290278703412 (std error), Var(E_loc/N) 0.000005145140788460403 (S·S units); -0.6706186400519477 × 4 × 144 = -386.27633667; sigma 0.00002268290278703412 × 4 × 144 = 0.0130654; variance 0.000005145140788460403 × 144^2 × 16 = 1.7070342; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#8"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_196_O",
+      "method": "2D tensorized-GRU RNN wavefunction, best variational",
+      "energy": -501.70401001
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['open']['rate=0.25']['scale=4'], L=14; plotted in journal Fig. 12(a), not printed; E/N -0.6399285841961295 ± 0.0000056564089371291915 (std error), Var(E_loc/N) 3.1994962064034987e-7 (S·S units); -0.6399285841961295 × 4 × 196 = -501.70401001; sigma 0.0000056564089371291915 × 4 × 196 = 0.00443462; variance 3.1994962064034987e-7 × 196^2 × 16 = 0.19665895; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of the s = 2 and 4 schedules (authors' rule, ruling E8). Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L open; open-boundary runs agree with PEPS references (App. G); sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#9"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_196_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -525.388427734
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=14; plotted in journal Fig. 3(a), not printed; E/N -0.6701383006816007 ± 0.00002145833623584729 (std error), Var(E_loc/N) 0.00000460460194010677 (S·S units); -0.6701383006816007 × 4 × 196 = -525.388427734; sigma 0.00002145833623584729 × 4 × 196 = 0.0168233; variance 0.00000460460194010677 × 196^2 × 16 = 2.8302462; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#11"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_256_O",
+      "method": "2D tensorized-GRU RNN wavefunction, best variational",
+      "energy": -658.966369629
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['open']['rate=0.25']['scale=2'], L=16; plotted in journal Fig. 12(a), not printed; E/N -0.6435218453407288 ± 0.0000071965624241340895 (std error), Var(E_loc/N) 5.179051072445873e-7 (S·S units); -0.6435218453407288 × 4 × 256 = -658.966369629; sigma 0.0000071965624241340895 × 4 × 256 = 0.00736928; variance 5.179051072445873e-7 × 256^2 × 16 = 0.54306287; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of the s = 2 and 4 schedules (authors' rule, ruling E8). Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L open; open-boundary runs agree with PEPS references (App. G); sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#12"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_256_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -685.94317627
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=16; plotted in journal Fig. 3(a), not printed; E/N -0.6698663830757141 ± 0.000020826963238396445 (std error), Var(E_loc/N) 0.00000433762397733517 (S·S units); -0.6698663830757141 × 4 × 256 = -685.94317627; sigma 0.000020826963238396445 × 4 × 256 = 0.0213268; variance 0.00000433762397733517 × 256^2 × 16 = 4.5483284; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#14"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_324_O",
+      "method": "2D tensorized-GRU RNN wavefunction, best variational",
+      "energy": -837.652160645
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['open']['rate=0.25']['scale=4'], L=18; plotted in journal Fig. 12(a), not printed; E/N -0.6463365437072 ± 0.0000050911801557546155 (std error), Var(E_loc/N) 2.592011537834959e-7 (S·S units); -0.6463365437072 × 4 × 324 = -837.652160645; sigma 0.0000050911801557546155 × 4 × 324 = 0.00659817; variance 2.592011537834959e-7 × 324^2 × 16 = 0.43535841; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of the s = 2 and 4 schedules (authors' rule, ruling E8). Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L open; open-boundary runs agree with PEPS references (App. G); sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#15"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_324_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -867.907287598
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=18; plotted in journal Fig. 3(a), not printed; E/N -0.6696815490722656 ± 0.0000172383403245776 (std error), Var(E_loc/N) 0.000002971603771459582 (S·S units); -0.6696815490722656 × 4 × 324 = -867.907287598; sigma 0.0000172383403245776 × 4 × 324 = 0.0223409; variance 0.000002971603771459582 × 324^2 × 16 = 4.9911532; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#17"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -97.75728
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: Table V, 'periodic 6×6' block, row 'This work (best RNN)'; variance from the data release ['periodic']['rate=0.25']['scale=2'] L=6; −0.67887(2) (E/N, S·S units); data release run s=2, r=0.25: E/N -0.6788689295450846, std error 0.000017165085874130356, Var(E_loc/N) 0.000002946401730662695; -0.67887 × 4 × 36 = -97.75728; sigma 2e-5 × 4 × 36 = 0.00288; variance 0.000002946401730662695 × 36^2 × 16 = 0.061096586; the run rounds to the printed value (-0.6788689 ± 1.72e-5); std_error^2 × 10^4 / var = 1.000000 (10^4 samples, Fig. 3/12 captions), so var = Var(H)/N^2. Printed best variational energy of the authors' own run (bold 'This work'); periodic best = lowest of all ten schedules, here s = 2. Variational, own computation, L×L periodic, U(1) zero-magnetisation sector imposed (Sec. II), singlet GS; peer_reviewed true is right. Journal and arXiv v3 identical.",
+    "source_entry": "JP5-arxiv-2502-17144#20"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -97.75753488
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: Table III row L=6 ('RNN Zero-variance E/N') and Table V 'periodic 6×6' row 'This work (zero-variance)'; −0.67887177(7) (E/N, S·S units, Eq. (1) H = Σ⟨ij⟩ S_i·S_j, no constant); -0.67887177 × 4 × 36 = -97.75753488; sigma 7e-8 × 4 × 36 = 0.00001008. Zero-variance extrapolation (linear fit of E vs variance over the s = 1, 2, 4 runs, wild bootstrap 10^3; Table V caption, Sec. III): not a bound, bound_type extrapolated is right. Journal and arXiv v3 print the same digits. Printed bar is the bootstrap SE (Table III caption); prior pass flagged it as understated vs the bootstrap spread for periodic L=12/14 (prior-findings), not re-raised here. L×L periodic, N=36, J=1, no couplings beyond NN; peer_reviewed true is right.",
+    "source_entry": "JP5-arxiv-2502-17144#21"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_400_O",
+      "method": "2D tensorized-GRU RNN wavefunction, best variational",
+      "energy": -1037.74389648
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['open']['rate=0.25']['scale=4'], L=20; plotted in journal Fig. 12(a), not printed; E/N -0.6485899353027343 ± 0.0000049977675311788755 (std error), Var(E_loc/N) 2.4977680295705797e-7 (S·S units); -0.6485899353027343 × 4 × 400 = -1037.74389648; sigma 0.0000049977675311788755 × 4 × 400 = 0.00799643; variance 2.4977680295705797e-7 × 400^2 × 16 = 0.63942862; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of the s = 2 and 4 schedules (authors' rule, ruling E8). Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L open; open-boundary runs agree with PEPS references (App. G); sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#22"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_400_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -1071.34484863
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=20; plotted in journal Fig. 3(a), not printed; E/N -0.6695905303955079 ± 0.000014522895718750352 (std error), Var(E_loc/N) 0.000002109145000576973 (S·S units); -0.6695905303955079 × 4 × 400 = -1071.34484863; sigma 0.000014522895718750352 × 4 × 400 = 0.0232366; variance 0.000002109145000576973 × 400^2 × 16 = 5.3994112; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#24"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_576_O",
+      "method": "2D tensorized-GRU RNN wavefunction, best variational",
+      "energy": -1502.1673584
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['open']['rate=0.25']['scale=4'], L=24; plotted in journal Fig. 12(a), not printed; E/N -0.6519823604159884 ± 0.000006755591237420077 (std error), Var(E_loc/N) 4.563801296710692e-7 (S·S units); -0.6519823604159884 × 4 × 576 = -1502.1673584; sigma 0.000006755591237420077 × 4 × 576 = 0.0155649; variance 4.563801296710692e-7 × 576^2 × 16 = 2.4226556; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of the s = 2 and 4 schedules (authors' rule, ruling E8). Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L open; open-boundary runs agree with PEPS references (App. G); sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#25"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_576_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -1542.38525391
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=24; plotted in journal Fig. 3(a), not printed; E/N -0.6694380442301432 ± 0.000015315237536517475 (std error), Var(E_loc/N) 0.0000023455650079995394 (S·S units); -0.6694380442301432 × 4 × 576 = -1542.38525391; sigma 0.000015315237536517475 × 4 × 576 = 0.0352863; variance 0.0000023455650079995394 × 576^2 × 16 = 12.451235; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#27"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_O",
+      "method": "2D tensorized-GRU RNN wavefunction, best variational",
+      "energy": -158.472824097
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['open']['rate=0.475']['scale=4'], L=8; plotted in journal Fig. 12(a), not printed; E/N -0.619034469127655 ± 0.0000057981170573067555 (std error), Var(E_loc/N) 3.361816141023155e-7 (S·S units); -0.619034469127655 × 4 × 64 = -158.472824097; sigma 0.0000057981170573067555 × 4 × 64 = 0.00148432; variance 3.361816141023155e-7 × 64^2 × 16 = 0.022031998; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of the s = 2 and 4 schedules (authors' rule, ruling E8); lowest of all ten here is s=0.5, r=0.475 (E/N -0.6190494894981384), excluded by the authors' rule. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L open; open-boundary runs agree with PEPS references (App. G); sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#28"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -172.406982422
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.475']['scale=4'], L=8; plotted in journal Fig. 3(a), not printed; E/N -0.6734647750854492 ± 0.000023129494476360125 (std error), Var(E_loc/N) 0.000005349735147319734 (S·S units); -0.6734647750854492 × 4 × 64 = -172.406982422; sigma 0.000023129494476360125 × 4 × 64 = 0.00592115; variance 0.000005349735147319734 × 64^2 × 16 = 0.35060024; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#30"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_784_P",
+      "method": "2D RNN wavefunction (best variational)",
+      "energy": -2099.1550293
+    },
+    "field": "reference",
+    "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+    "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+    "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+    "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['periodic']['rate=0.25']['scale=4'], L=28; plotted in journal Fig. 3(a), not printed; E/N -0.6693734149543606 ± 0.000012777601955951893 (std error), Var(E_loc/N) 0.0000016326711174474564 (S·S units); -0.6693734149543606 × 4 × 784 = -2099.1550293; sigma 0.000012777601955951893 × 4 × 784 = 0.0400706; variance 0.0000016326711174474564 × 784^2 × 16 = 16.056498; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of all ten schedules. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L periodic; Table III caption: 'None of the variational energies obtained from our simulations were less than the reference values'; sits above the instance's SSE row.",
+    "source_entry": "JP5-arxiv-2502-17144#32"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.5",
+      "method": "CNN (Li et al. 2022, sunway supercomputer)",
+      "energy": -508.17024
+    },
+    "field": "method",
+    "to": "CNN model with 106529 variational parameters",
+    "reported_as": "'The CNN model with 106529 variational parameters is well optimized by millions of samples with the SR method and multiple stages of transfer learning' (Sec. 1 contributions list, journal and arXiv v4 p. 2); value '-0.49626'",
+    "location": "journal Sec. 1 contributions list and Table 4 ('Energies for Varied J2/J1 && System Scales'), row '16 × 16', column 0.50 (journal p. 2856; arXiv v4 p. 10)",
+    "version_read": "published PDF IEEE Trans. Parallel Distrib. Syst. 33(11), 2846-2859 (2022), doi:10.1109/TPDS.2022.3145163, sources/journal/tpds33-2846.pdf, sha256 69666954 (IEEE Xplore, ETH licence, downloaded 2026-10-15); compared with arXiv:2108.13830v4 (latest; byte-identical to qmbl/sources/2108.13830.pdf): Table 4 identical cell by cell",
+    "conversion": "-0.49626 x 4 x 256 = -508.17024 (energy unchanged)",
+    "checked_on": "2026-10-15",
+    "reason": "The stored published string is not printed in the source and its parenthetical names the source (RULES 3). Ruling B4 / 2026-10-07 rulings 1 and 3 already renamed the 29 sibling rows of the same Table 4 to this verbatim label; this row (loaded 2026-09-15 from a quote in arXiv:2603.14425) was outside that pass and is the only Table 4 row still carrying the old label.",
+    "source_entry": "JP6-heisenberg-j1j2#50"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "Tensor-Backflow family, zero-variance extrapolation, PBC",
+      "energy": -48.9088
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Sec. III B text and Fig. 2(c) caption: \"The extrapolated energy for PBC shown in Fig. 2(c) is -0.7642\" (n = 0.875, U = 8, t' = 0, 4 x 16, PBC; per site) x 64 = -48.9088 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#22"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x16_128_P_56_8",
+      "method": "Tensor-Backflow (NN backflow, direct optimization, Ep = 0)",
+      "energy": -96.3712
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table V, row 8 x 16, t' = 0, NN, column Ep=0: -0.7529 (per site) x 128 = -96.3712 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#23"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x16_128_P_56_8",
+      "method": "Tensor-Backflow + 1 Lanczos step (NN backflow, direct optimization, Ep = 1)",
+      "energy": -96.8704
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table V, row 8 x 16, t' = 0, NN, column Ep=1 (also Table II row PBC 0 8 x 16: Ep=1 -0.7568, Ref. [10] -0.7568): -0.7568 (per site) x 128 = -96.8704 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#24"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x24_192_P_84_8",
+      "method": "Tensor-Backflow (NN backflow, direct optimization, Ep = 0)",
+      "energy": -144
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table V, row 8 x 24, t' = 0, NN, column Ep=0: -0.7500 (per site) x 192 = -144 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#25"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x24_192_P_84_8",
+      "method": "Tensor-Backflow + 1 Lanczos step (NN backflow, direct optimization, Ep = 1)",
+      "energy": -144.8832
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table V, row 8 x 24, t' = 0, NN, column Ep=1: -0.7546 (per site) x 192 = -144.8832 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#26"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x32_256_P_112_8",
+      "method": "Tensor-Backflow (NN backflow, direct optimization, Ep = 0)",
+      "energy": -192.128
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table V, row 8 x 32, t' = 0, NN, column Ep=0: -0.7505 (per site) x 256 = -192.128 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#27"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x32_256_P_112_8",
+      "method": "Tensor-Backflow + 1 Lanczos step (NN backflow, direct optimization, Ep = 1)",
+      "energy": -193.2032
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table V, row 8 x 32, t' = 0, NN, column Ep=1: -0.7547 (per site) x 256 = -193.2032 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#28"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_100_P_40_4",
+      "method": "Tensor-Backflow (no Lanczos step, Ep=0), direct optimization, 10x10 lattice, PBC",
+      "energy": -110.86
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 80/100, U = 4, 10 x 10, PBC, column Ep=0: -1.1086 (per site) x 100 = -110.86 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#29"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_100_P_40_4",
+      "method": "Tensor-Backflow + 1 Lanczos step (Ep=1), direct optimization, 10x10 lattice, PBC",
+      "energy": -111.09
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 80/100, U = 4, 10 x 10, PBC, column Ep=1: -1.1109 (per site) x 100 = -111.09 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#30"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_144_PA_72_8",
+      "method": "Tensor-Backflow (E_p=0, no Lanczos step)",
+      "energy": -74.952
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 1, U = 8, 12 x 12, A-PBC, column Ep=0: -0.5205 (per site) x 144 = -74.952 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#31"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_144_PA_72_8",
+      "method": "Tensor-Backflow (E_p=1, one Lanczos step)",
+      "energy": -75.2256
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 1, U = 8, 12 x 12, A-PBC, column Ep=1: -0.5224 (per site) x 144 = -75.2256 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#32"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_144_P_58_4",
+      "method": "Tensor-Backflow (no Lanczos step, Ep=0), direct optimization, 12x12 lattice, PBC",
+      "energy": -158.9472
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 116/144, U = 4, 12 x 12, PBC, column Ep=0: -1.1038 (per site) x 144 = -158.9472 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#33"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_144_P_58_4",
+      "method": "Tensor-Backflow + 1 Lanczos step (Ep=1), direct optimization, 12x12 lattice, PBC",
+      "energy": -159.2784
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 116/144, U = 4, 12 x 12, PBC, column Ep=1: -1.1061 (per site) x 144 = -159.2784 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#34"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_144_P_72_8",
+      "method": "Tensor-Backflow (E_p=0, no Lanczos step)",
+      "energy": -75.0096
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 1, U = 8, 12 x 12, PBC, column Ep=0: -0.5209 (per site) x 144 = -75.0096 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#35"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_144_P_72_8",
+      "method": "Tensor-Backflow (E_p=1, one Lanczos step)",
+      "energy": -75.2256
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 1, U = 8, 12 x 12, PBC, column Ep=1: -0.5224 (per site) x 144 = -75.2256 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#36"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "Tensor-Backflow + Lanczos",
+      "energy": -193.3312
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 0.875, U = 8, 16 x 16, PBC, column Ep=1 (also Table II and Table IV, PBC U = 8 direct optimization): -0.7552 (per site) x 256 = -193.3312 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#37"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "Tensor-Backflow",
+      "energy": -192.2304
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 0.875, U = 8, 16 x 16, PBC, column Ep=0: -0.7509 (per site) x 256 = -192.2304 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#38"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_22_4",
+      "method": "Tensor-Backflow (no Lanczos step, Ep=0), direct optimization, 8x8 lattice, PBC",
+      "energy": -75.7312
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 44/64, U = 4, 8 x 8, PBC, column Ep=0: -1.1833 (per site) x 64 = -75.7312 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#39"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_22_4",
+      "method": "Tensor-Backflow + 1 Lanczos step (Ep=1), direct optimization, 8x8 lattice, PBC",
+      "energy": -75.8144
+    },
+    "field": "reference",
+    "to": "Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "Author line of the published article: 'Xiao Liang' (sole author; APS citation_author meta tag 'Xiao Liang'; Crossref author 'Liang')",
+    "location": "Title page of Phys. Rev. B 113, 155121 (2026)",
+    "version_read": "published PDF Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, sources/journal/prb113-155121.pdf, sha256 310788ff (APS, ETH network; no Supplemental Material linked on the abstract page); arXiv:2507.01856v4 compared (sources/2507.01856v4.pdf): every table cell identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Every other QMBL reference string starts with the author list; this one has none. The value itself is verified against the journal: Table I, row n = 44/64, U = 4, 8 x 8, PBC, column Ep=1: -1.1846 (per site) x 64 = -75.8144 equals the stored energy; sigma null (no error bar printed; energies 'evaluated with the MC sample number in the magnitude of O(4.5 x 10^4)', Sec. III). Boundary, filling and U agree (N_up = N_dn not stated; the energy is an upper bound on the instance ground state in any S^z sector).",
+    "source_entry": "JP8-j1j2-hubbard-heisenberg#40"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_36_P",
+      "method": "aCNN, sign structure fixed to the exact (ED) one",
+      "energy": -80.526816
+    },
+    "field": "reference",
+    "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+    "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+    "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+    "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table IV (p. 245120-6), 'optimized with the exact sign structure from ED', row aCNN, column HMTL prints −0.559214(6) per site (S.S); -0.559214 x 144 = -80.526816; sigma 0.000006 x 144 = 0.000864 equals the stored energy and sigma. 100-layer aCNN with C6v and the exact ED sign structure (caption and Sec. III D); variational.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#31"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.4",
+      "method": "aCNN(C4v)",
+      "energy": -209.5996
+    },
+    "field": "reference",
+    "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+    "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+    "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+    "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table III (p. 245120-5), J1-J2 model L = 10 (PBC per Sec. III A/C), row aCNN(C4v), column J2/J1 = 0.4 prints −0.523999(4) per site (S.S); -0.523999 x 400 = -209.5996; sigma 0.000004 x 400 = 0.0016 equals the stored energy and sigma. energy_variance is QMBL-measured (prior ruling A2). The VMC(p = 2) row -0.5240(1) of Hu et al. on the same instance (-209.6) is a different method and paper, a coincidence at 4 digits, not a duplicate.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#32"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.4",
+      "method": "aCNN(C4)",
+      "energy": -209.5488
+    },
+    "field": "reference",
+    "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+    "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+    "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+    "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table III (p. 245120-5), J1-J2 model L = 10 (PBC per Sec. III A/C), row aCNN(C4), column J2/J1 = 0.4 prints −0.523872(4) per site (S.S); -0.523872 x 400 = -209.5488; sigma 0.000004 x 400 = 0.0016 equals the stored energy and sigma. ",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#33"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.45",
+      "method": "aCNN(C4v)",
+      "energy": -203.6828
+    },
+    "field": "reference",
+    "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+    "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+    "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+    "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table III (p. 245120-5), J1-J2 model L = 10 (PBC per Sec. III A/C), row aCNN(C4v), column J2/J1 = 0.45 prints −0.509207(5) per site (S.S); -0.509207 x 400 = -203.6828; sigma 0.000005 x 400 = 0.002 equals the stored energy and sigma. ",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#34"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.55",
+      "method": "aCNN(C4v)",
+      "energy": -193.396
+    },
+    "field": "reference",
+    "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+    "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+    "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+    "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table III (p. 245120-5), J1-J2 model L = 10 (PBC per Sec. III A/C), row aCNN(C4v), column J2/J1 = 0.55 prints −0.483490(5) per site (S.S); -0.48349 x 400 = -193.396; sigma 0.000005 x 400 = 0.002 equals the stored energy and sigma. energy_variance is QMBL-measured (prior ruling A2).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#36"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.55",
+      "method": "aCNN(C4)",
+      "energy": -193.2692
+    },
+    "field": "reference",
+    "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+    "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+    "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+    "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table III (p. 245120-5), J1-J2 model L = 10 (PBC per Sec. III A/C), row aCNN(C4), column J2/J1 = 0.55 prints −0.483173(5) per site (S.S); -0.483173 x 400 = -193.2692; sigma 0.000005 x 400 = 0.002 equals the stored energy and sigma. ",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#37"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "ACE (16 conv layers) trial state + fixed-node GFMC",
+      "energy": -49.05408
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Sec. III C 1 (p. 023001-6), 16 x 4 PBC, U = 8, delta = 1/8, t' = 0: 'a GFMC calculation with the ACE trial wavefunction gives an even lower energy of −0.766 47(2)' prints −0.766 47(2) per site; -0.76647 x 64 = -49.05408; sigma 0.00002 x 64 = 0.00128 equals the stored energy and sigma. Fixed-node GFMC on the ACE trial state, projected (Sec. II: 'under the fixed-node approximation').",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#39"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "ACE (16 conv layers) trial state + fixed-node GFMC",
+      "energy": -49.05408
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Sec. III C 1 (p. 023001-6), 16 x 4 PBC, U = 8, delta = 1/8, t' = 0: 'a GFMC calculation with the ACE trial wavefunction gives an even lower energy of −0.766 47(2)' prints −0.766 47(2) per site; -0.76647 x 64 = -49.05408; sigma 0.00002 x 64 = 0.00128 equals the stored energy and sigma. Fixed-node GFMC on the ACE trial state, projected (Sec. II: 'under the fixed-node approximation').",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#40"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "ACE (16 conv layers) + full symmetry projection",
+      "energy": -49.03872
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Sec. III C 1 (p. 023001-6), 16 x 4 PBC, U = 8, delta = 1/8, t' = 0: 'By directly optimizing the projected, symmetrized state, we obtain a variational energy of −0.766 23(1)' prints −0.766 23(1) per site; -0.76623 x 64 = -49.03872; sigma 0.00001 x 64 = 0.00064 equals the stored energy and sigma. Variational, full symmetry projection (App. B). energy_variance 0.45273382 is from the authors' open_data result.txt (2026-09-29 reading), not printed in the paper.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#41"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "ACE (16 conv layers) + full symmetry projection",
+      "energy": -49.03872
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Sec. III C 1 (p. 023001-6), 16 x 4 PBC, U = 8, delta = 1/8, t' = 0: 'By directly optimizing the projected, symmetrized state, we obtain a variational energy of −0.766 23(1)' prints −0.766 23(1) per site; -0.76623 x 64 = -49.03872; sigma 0.00001 x 64 = 0.00064 equals the stored energy and sigma. Variational, full symmetry projection (App. B). energy_variance 0.45273382 is from the authors' open_data result.txt (2026-09-29 reading), not printed in the paper.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#42"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "ACE (16 conv layers), no explicit symmetry",
+      "energy": -48.93696
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Sec. III C 1 (p. 023001-6), 16 x 4 PBC, U = 8, delta = 1/8, t' = 0: 'Our standard ACE architecture, trained without explicit symmetries, achieves a ground-state energy of −0.764 64(1)' prints −0.764 64(1) per site; -0.76464 x 64 = -48.93696; sigma 0.00001 x 64 = 0.00064 equals the stored energy and sigma. Variational, no symmetry.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#43"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "ACE (16 conv layers), no explicit symmetry",
+      "energy": -48.93696
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Sec. III C 1 (p. 023001-6), 16 x 4 PBC, U = 8, delta = 1/8, t' = 0: 'Our standard ACE architecture, trained without explicit symmetries, achieves a ground-state energy of −0.764 64(1)' prints −0.764 64(1) per site; -0.76464 x 64 = -48.93696; sigma 0.00001 x 64 = 0.00064 equals the stored energy and sigma. Variational, no symmetry.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#44"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "ACE (16 conv layers) trial state + fixed-node GFMC",
+      "energy": -194.1248
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Table I (p. 023001-4), 16 x 16 Hubbard, column t' = 0, PBC, row ACE + GFMC prints −0.7583 per site; -0.7583 x 256 = -194.1248 equals the stored energy. Fixed-node GFMC, projected. Caption: errors not shown are 'one or several orders of magnitude smaller than the last displayed significant digit' (a table-wide bound, not a per-row sigma; sigma stays null).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#45"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "ACE (16 conv layers) trial state + fixed-node GFMC",
+      "energy": -194.1248
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table I (p. 023001-4), 16 x 16 Hubbard, column t' = 0, PBC, row ACE + GFMC prints −0.7583 per site; -0.7583 x 256 = -194.1248 equals the stored energy. Fixed-node GFMC, projected. Caption: errors not shown are 'one or several orders of magnitude smaller than the last displayed significant digit' (a table-wide bound, not a per-row sigma; sigma stays null).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#46"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "ACE (16 conv layers), no symmetry projection",
+      "energy": -193.8688
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Table I (p. 023001-4), 16 x 16 Hubbard, column t' = 0, PBC, row ACE prints −0.7573 per site; -0.7573 x 256 = -193.8688 equals the stored energy. Variational; Sec. III C 2: 'from here we report energies without symmetry projection'. Table-wide error statement only; sigma stays null.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#47"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "ACE (16 conv layers), no symmetry projection",
+      "energy": -193.8688
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table I (p. 023001-4), 16 x 16 Hubbard, column t' = 0, PBC, row ACE prints −0.7573 per site; -0.7573 x 256 = -193.8688 equals the stored energy. Variational; Sec. III C 2: 'from here we report energies without symmetry projection'. Table-wide error statement only; sigma stays null.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#48"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "SCALE (1 conv layer) trial state + fixed-node GFMC",
+      "energy": -193.536
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Table I (p. 023001-4), 16 x 16 Hubbard, column t' = 0, PBC, row SCALE + GFMC prints −0.7560 per site; -0.756 x 256 = -193.536 equals the stored energy. Fixed-node GFMC on the SCALE trial state, projected; SCALE L_conv = 1 (Table VI).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#49"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "SCALE (1 conv layer) trial state + fixed-node GFMC",
+      "energy": -193.536
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table I (p. 023001-4), 16 x 16 Hubbard, column t' = 0, PBC, row SCALE + GFMC prints −0.7560 per site; -0.756 x 256 = -193.536 equals the stored energy. Fixed-node GFMC on the SCALE trial state, projected; SCALE L_conv = 1 (Table VI).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#50"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "SCALE (1 conv layer), no symmetry projection",
+      "energy": -192.7424
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Table I (p. 023001-4), 16 x 16 Hubbard, column t' = 0, PBC, row SCALE prints −0.7529 per site; -0.7529 x 256 = -192.7424 equals the stored energy. Variational, no symmetry projection; SCALE L_conv = 1 (Table VI).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#51"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "SCALE (1 conv layer), no symmetry projection",
+      "energy": -192.7424
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table I (p. 023001-4), 16 x 16 Hubbard, column t' = 0, PBC, row SCALE prints −0.7529 per site; -0.7529 x 256 = -192.7424 equals the stored energy. Variational, no symmetry projection; SCALE L_conv = 1 (Table VI).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#52"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_-8",
+      "method": "ACE (Accurate Convolutional ansatz for lattice Electrons; deep convolutional backflow NQS)",
+      "energy": -257.056
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row ACE prints −4.0165 per site; -4.0165 x 64 = -257.056 equals the stored energy. U = -8, t' = 0, 1/8 hole doping (Sec. III B) -> 56 electrons, Nf = 28. Boundary not printed (journal as arXiv); periodic accepted as inferred per the 2026-10-03 ruling.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#53"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_-8",
+      "method": "ACE (Accurate Convolutional ansatz for lattice Electrons; deep convolutional backflow NQS)",
+      "energy": -257.056
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row ACE prints −4.0165 per site; -4.0165 x 64 = -257.056 equals the stored energy. U = -8, t' = 0, 1/8 hole doping (Sec. III B) -> 56 electrons, Nf = 28. Boundary not printed (journal as arXiv); periodic accepted as inferred per the 2026-10-03 ruling.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#54"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_-8",
+      "method": "SCALE (Sparse Convolutional Ansatz for Lattice Electrons; efficient backflow NQS)",
+      "energy": -257.0304
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row SCALE prints −4.0161 per site; -4.0161 x 64 = -257.0304 equals the stored energy. Boundary not printed; periodic inferred (2026-10-03 ruling).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#55"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_-8",
+      "method": "SCALE (Sparse Convolutional Ansatz for Lattice Electrons; efficient backflow NQS)",
+      "energy": -257.0304
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row SCALE prints −4.0161 per site; -4.0161 x 64 = -257.0304 equals the stored energy. Boundary not printed; periodic inferred (2026-10-03 ruling).",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#56"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_-8",
+      "method": "SCALE+GFMC (GFMC projection on the SCALE trial state)",
+      "energy": -257.0688
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row SCALE + GFMC prints −4.0167 per site; -4.0167 x 64 = -257.0688 equals the stored energy. Projected. Equal at 4 digits to the Det-PH row -257.0688 (arXiv:2604.21978, its own -4.0167(1) with an error bar): different paper and method, a coincidence, not a duplicate. Boundary not printed; periodic inferred.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#57"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_-8",
+      "method": "SCALE+GFMC (GFMC projection on the SCALE trial state)",
+      "energy": -257.0688
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row SCALE + GFMC prints −4.0167 per site; -4.0167 x 64 = -257.0688 equals the stored energy. Projected. Equal at 4 digits to the Det-PH row -257.0688 (arXiv:2604.21978, its own -4.0167(1) with an error bar): different paper and method, a coincidence, not a duplicate. Boundary not printed; periodic inferred.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#58"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_-8",
+      "method": "ACE+GFMC (GFMC projection on the ACE trial state)",
+      "energy": -257.0752
+    },
+    "field": "reference",
+    "to": "Gu, Han, Li, Xiao, Xiang, Qin, Wang & Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+    "reported_as": "PRX INTELLIGENCE 1, 023001 (2026); DOI: 10.1103/2kq2-5g5q; (Received 10 February 2026; accepted 11 August 2026; published 6 October 2026)",
+    "location": "journal PDF p. 023001-1 header and footer",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "The paper is published (listed in scope-pub.json). Journal version located by Crossref title search (DOI 10.1103/2kq2-5g5q, PRX Intelligence 1, 023001, published 2026-10-06) and OpenAlex (same DOI, lists arXiv:2604.25775 as a location); the arXiv API still shows no journal_ref and no DOI for 2604.25775v1 on 2026-10-15. Journal values for this row equal the arXiv v1 values. Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row ACE + GFMC prints −4.0168 per site; -4.0168 x 64 = -257.0752 equals the stored energy. Projected. Boundary not printed; periodic inferred.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#59"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_-8",
+      "method": "ACE+GFMC (GFMC projection on the ACE trial state)",
+      "energy": -257.0752
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "published 6 October 2026 in PRX Intelligence after review (received 10 February 2026, accepted 11 August 2026)",
+    "location": "journal PDF p. 023001-1",
+    "version_read": "published PDF PRX Intelligence 1, 023001 (2026), published 6 October 2026, doi:10.1103/2kq2-5g5q, sources/journal/prxintelligence1-023001.pdf, sha256 b3d8ee6b (pypdf layout + plain; Table VI body is not in the text layer and was read from the rendered page 9); compared with arXiv:2604.25775v1 (only version; qmbl/sources/2604.25775.txt): Tables I, IV, VI and Sec. III.C.1 identical for these rows",
+    "conversion": "none",
+    "checked_on": "2026-10-15",
+    "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row ACE + GFMC prints −4.0168 per site; -4.0168 x 64 = -257.0752 equals the stored energy. Projected. Boundary not printed; periodic inferred.",
+    "source_entry": "JP9-heisenberg-j1j2-hubbard#60"
   },
 ];

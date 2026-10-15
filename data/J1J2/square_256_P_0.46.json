@@ -30,7 +30,17 @@
         "method": "source text of arXiv:2108.13830 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.50642",
         "note": "Table 4 ('Energies for varied J2/J1 && system scales'), row 16 x 16, column 0.46; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF IEEE Trans. Parallel Distrib. Syst. 33(11), 2846-2859 (2022), doi:10.1109/TPDS.2022.3145163, sources/journal/tpds33-2846.pdf, sha256 69666954 (IEEE Xplore, ETH licence, downloaded 2026-10-15); compared with arXiv:2108.13830v4 (latest; byte-identical to qmbl/sources/2108.13830.pdf): Table 4 identical cell by cell; pypdf plain + layout mode (with fonttools), local extraction, no LLM transcription",
+          "location": "journal Table 4 ('Energies for Varied J2/J1 && System Scales'), row '16 × 16', column 0.46 (journal p. 2856; arXiv v4 p. 10)",
+          "reported_as": "-0.50642 (energy per site, S.S units, no error bar printed)",
+          "conversion": "-0.50642 x 4 x 256 = -518.57408",
+          "note": "H = J1/4 sum sigma.sigma + J2/4 sum sigma.sigma with Pauli sigma (Eq. 3), i.e. S.S with J1 = 1, no constant; L x L square lattice, periodic boundary conditions (Sec. 4: 'for the periodic boundary conditions'); final energy of the 106529-parameter CNN after transfer learning from 24 x 24 (Sec. 4.3.3, Stage 2/3; Fig. 11 caption names the 106529-parameter model); no error bar printed anywhere for Table 4 (sigma stays null). Sector S^z = 0 (Neel start, pair-exchange proposals, Sec. 3.1); sign fixed to the Marshall-Peierls rule (Eq. 9), which restricts the ansatz but keeps the energy a variational bound. The chain-restart window (Sec. 3.2.1, 'we terminate the problematic Markov chain and start a new one') is stated identically in the journal; ruling 4 (2026-10-07, variational) stands. peer_reviewed true, reference agrees. Not a duplicate.",
+          "source_entry": "JP6-heisenberg-j1j2#48"
+        }
       },
       "corrections": [
         {

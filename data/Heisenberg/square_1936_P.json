@@ -15,7 +15,7 @@
       "v_score": null,
       "method": "SSE QMC",
       "method_detail": "",
-      "method_as_published": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64",
+      "method_as_published": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
       "family": "other",
       "bound_type": "exact",
       "bound_type_reason": "sign-problem-free SSE QMC on a bipartite lattice, T -> 0 converged; numerically exact (RULES.md 4)",
@@ -55,7 +55,21 @@
         "scope": "paper",
         "confidence": "medium",
         "note": "No per-size cost is stated for this row; the paper gives worked examples only for L = 96 (periodic, beta = 64L: ~4e5 CPU core hours, ~1.5e8 sweeps of ~10 s each on Intel Xeon Gold 6000-series CPUs) and L = 8 (periodic, beta = 32L: ~5e4 core hours for about half the statistics), and states that run lengths were adapted to reach an energy error below 3e-8 (periodic Table 1). All calculations ran on Boston University's Shared Computing Cluster (CPU); core counts and wall-clock are not stated ('distributed over a large number of CPU cores')."
-      }
+      },
+      "corrections": [
+        {
+          "field": "method",
+          "to": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64",
+          "reported_as": "Table 1 caption: \"Results for different system sizes computed at inverse temperature β/L = 64 for L > 30 and averaged over β/L = 32 and β/L = 64 simulations for L ⩽ 30.\"; row L = 44: \"−0.66946889(3)\"",
+          "location": "Table 1 (periodic L x L, e0 = E/N per spin, S.S units; beta/L = 64 for L > 30, average of beta/L = 32 and 64 for L <= 30), row L = 44",
+          "version_read": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf",
+          "conversion": "n/a (energy and sigma verified: Pauli total = 4 N e0 = 4 x 1936 x (-0.66946889) = -5184.36708416; sigma = 4 x 1936 x 3e-8 = 0.0002323 (stored to 3 significant digits, loader convention))",
+          "checked_on": "2026-10-15",
+          "reason": "L = 44 > 30, so this Table 1 entry is the beta/L = 64 run alone, not an average over beta/L = 32 and 64 as the stored method string says. Energy, sigma, BC and size verified against the journal PDF. Versions differ: journal \"−0.66946889(3)\", arXiv v2 \"-0.66946889(3)\", v1 \"-0.66946890(3)\".",
+          "source_entry": "JP2-arxiv-2601-20189#22",
+          "from": "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64"
+        }
+      ]
     }
   ]
 }
