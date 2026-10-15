@@ -260,6 +260,16 @@
           "conversion": "-0.5459 x 4 x 324 = -707.4864; sigma 0.0001 x 1296 = 0.1296",
           "note": "Hamiltonian S.S with J = 1 (Eq. 3), PBC, S^z_tot = 0, variational (Table 2 'Variational GS energy per site'), 16-site plaquettes, own computation, NJP (peer reviewed) all agree. Cluster: 18 x 18 torus (same-N comparison with Ref. [31]; arXiv:2602.02665 Table 1 lists it under 18 x 18). Duplicate check: no other row on triangular_324_P carries this number (the RVB -0.54716(3) and the ViT rows are different numbers).",
           "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#6 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "arXiv:1006.4480v3 PDF (qmbl-verify-2026-09-29/sources/1006.4480v3.pdf, sha256 bf4542be, pypdf layout), re-read by R5; journal New J. Phys. 12, 103039 (2010) NOT read (IOP hCaptcha, see tried)",
+          "location": "arXiv v3 Table 2, row N = 324",
+          "reported_as": "324 -0.5459(1)",
+          "conversion": "-0.5459 x 1296 = -707.4864; sigma 1e-4 x 1296 = 0.1296",
+          "note": "Journal version not obtained (tried: iopscience.iop.org/article/10.1088/1367-2630/12/10/103039 in the logged-in automation browser (2026-10-15, R5): redirected to validate.perfdrive.com 'Radware Bot Manager Captcha' with an hCaptcha challenge; not solved (brief: no captcha solving); web.archive.org captures of /article/.../pdf: the archived page is the same Radware captcha (2025-11-27 capture); old-style URL /1367-2630/12/10/103039/pdf/1367-2630_12_10_103039.pdf: 404; MPG PuRe item_1492287 (publisher PDF 4043.pdf): visibility AUDIENCE, REST download returns 401 off the MPG network; OpenAlex content PDF W1978246163: needs an API key (401); Unpaywall/Semantic Scholar/OpenAlex list only the IOP PDF and arXiv; scholar.archive.org asks for an ALTCHA check (not done)). Row stays arXiv-read; value, sigma, PBC, S·S per site, variational agree with arXiv v3. Needs Tristan to tick the IOP hCaptcha once in the automation browser if the journal check is wanted.",
+          "source_entry": "R5-browser#20"
         }
       }
     },
@@ -285,7 +295,17 @@
         "method": "source text of arXiv:2602.02665 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading of the quotes; primary not read",
         "reported_as": "−0.53570(1)",
         "note": "Table 1 of arXiv:2602.02665, 18 × 18 block, row 'p-BCS', printed '−0.53570(1)' [70]; the same string is Table II of arXiv:1512.03356 (L569), column 'E/J' (Ref. 33)', J/J' = 1.0, 'on the 18 × 18 cluster'. Primary not read: arxiv.org/pdf/cond-mat/0602180 returned HTTP 500 on 2026-09-28, so no committed text; a reader saw '-0.5357 ± 0.0001' in the primary's Table 2 on the arXiv HTML render, not committed and not used here. | Table 1 of arXiv:2602.02665 prints energies per site of the triangular Heisenberg model on periodic L x L clusters, S.S units.",
-        "secondary_of": "arXiv:2602.02665"
+        "secondary_of": "arXiv:2602.02665",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 93, 085111 (2016), sources/journal/prb93-085111.pdf, sha256 87f9e2d1, pypdf plain + layout; primary Phys. Rev. B 74, 014408 (2006), sources/journal/prb74-014408.pdf, sha256 2306a676, pypdf plain; arXiv:1512.03356v2 (VP12 reading) compared: identical",
+          "location": "Ghorbani et al. Table II, row J/J' = 1.0, column 'E/J' (Ref. [33])'",
+          "reported_as": "-0.53570(1)",
+          "conversion": "-0.53570 x 4 x 324 = -694.2672; sigma 1e-5 x 1296 = 0.01296",
+          "note": "18 x 18 periodic, isotropic point, S.S per site, variational. The journal version of the primary (PRB 74, 014408) now read: its isotropic value is only the thermodynamic-limit estimate -0.5357 +- 0.0001 (Table II), its 18 x 18 tables (I, III) stop at 0.8 (e.g. -0.44687(1), -0.46514(2), -0.47840(3) at 0.2, 0.7, 0.8 match Ghorbani's Ref. [33] column cell for cell; 0.9 and 1.0 are absent), so the stored reference ('provided to and printed in Ghorbani') is right; Ghorbani's acknowledgment confirms 'S. Yunoki for providing some data'. Journal = arXiv. Duplicate check: no other row on triangular_324_P carries -694.2672 (Ghorbani's own DSL -694.2024 is -0.53565(2), a different state).",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#6"
+        }
       },
       "corrections": [
         {
@@ -359,7 +379,17 @@
         "method": "authors' data release read locally (pickle via numpy), values copied by key, no transcription; the file is committed as sources/2505.20406-repo-final_energies_data.json and reproduces Table V's L = 6 energy and Table II's V-scores",
         "reported_as": "-0.5486121942967545 +/- 0.0000683154952622206 per site (S.S), Var(E/N) = 0.00004667006892922484, V-score 0.05024033645606475",
         "note": "github.com/mschuylermoss/HeisenbergRNN, commit 5f5cffa5cb (2025-10-28, HEAD; file last changed in d58a945cd4 2025-05-27, 'final plotting data and plotting notebooks'), Triangular/final_plotting/plotting_data/final_energies_data_plotting.pkl, sha256 bdc59e5bc3780fb4ea7444400dc9abd9984a6a259ab03f9299c1f80edb87d276: ['TriangularMS,periodicBC']['scale=4.0,rate=0.158,T=1.00'], L = 18. The paper's most accurate schedule (Table II, whose L = 18 V-score 5.0e-2 is this run's 0.0502); plotted in Fig. 4(a), not printed; quoted as -0.54861(1) in Table 1 of arXiv:2602.02665, whose error bar is not the primary's. TriangularMS is the 120-degree basis rotation U_tri, which changes the representation, not the Hamiltonian. Variance is Var(H)/N^2 in S.S units; total = var x N^2 x 16.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "authors' data release github.com/mschuylermoss/HeisenbergRNN@5f5cffa5cb Triangular/final_plotting/plotting_data/final_energies_data_plotting.pkl (sources/repo-2505.20406/, sha256 bdc59e5b, same file as the committed JSON's source), decoded by walking pickle opcodes without executing them (tools/pkl_arrays.py); cross-checked against the journal PRB 112, 134449 Table II V-scores (sources/journal/prb112-134449.pdf, sha256 ea3dde74); pypdf layout mode unless noted",
+          "location": "pickle key ['TriangularMS,periodicBC']['scale=4.0,rate=0.158,T=1.00'], index L = 18; journal Table II row L = 18",
+          "reported_as": "energies -0.5486121942967545, variances 0.00004667006892922484, std errors 0.0000683154952622206, vscores 0.05024033645606475 (pickle); V-score 5.0 x 10^-2 (journal Table II)",
+          "conversion": "-0.5486121942967545 x 4 x 324 = -711.001404; sigma 0.0000683154952622206 x 1296 = 0.088537; variance (per-sample Var(E/N) = Var(H)/N^2, since N v / e^2 reproduces the V-score) 0.00004667006892922484 x 324^2 x 16 = 78.387794",
+          "note": "Triangular L x L torus with periodic boundary conditions, S.S Heisenberg (stored Pauli total = 4 x S.S total); s = 4.0, r = 0.158 is the paper's 'most accurate simulation' (Table II caption); the energy is plotted in Fig. 4(a), not printed; TriangularMS is the 120-degree basis rotation (representation, not Hamiltonian). Final variational estimate from 1e4 samples (std error^2 x 1e4 = variance). All stored values reproduce to the stored digits.",
+          "source_entry": "JP10-hubbard-heisenberg#46"
+        }
       },
       "compute": {
         "parameters": null,

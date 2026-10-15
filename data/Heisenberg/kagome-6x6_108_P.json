@@ -28,7 +28,17 @@
         "method": "arXiv PDF text extracted locally with pypdf, no LLM transcription",
         "reported_as": "-0.4461111111111111 per site in S.S units",
         "note": "Sec. III (end of the 108-site paragraph) and Fig. 5 caption: \"The obtained ground state energy E0 = -48.18(0) is ~1.78% lower than the ground state energy obtained with DMRG calculations (E_DMRG = -47.33964)\"; same value in arXiv v1 (Fig. 12 caption, \"E_chi0 = -48.18(0)\"). Total in S.S units; E/N = -0.4461111. The only error statement is the parenthesised (0): a statistical error that rounds to zero at the 0.01 level, while the other five 108-site states in the same figure carry (3)-(8). No variance, acceptance rate or autocorrelation time is printed in either version. A near-zero error bar from 2^13 samples of a non-eigenstate is itself a symptom of frozen Markov chains, so no sigma is recorded. Sampler stated by the paper: single spin flips over the whole Hilbert space, no S^z_tot = 0 sector (Sec. III end). DISPUTED - see the defect flag.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. X 15, 011047 (2025), doi:10.1103/PhysRevX.15.011047, sources/journal/prx15-011047.pdf, sha256 66682815 (APS, ETH network; no Supplemental Material linked); arXiv:2401.02866v2 compared: no number differs; pypdf layout and plain mode",
+          "location": "Sec. III, 108-site paragraph, and Fig. 5 caption",
+          "reported_as": "E0 = -48.18(0) (total, S.S units); Fig. 5 caption: 'EGCNN = -48.18(0)'",
+          "conversion": "-48.18 x 4 = -192.72; '(0)' is not a usable sigma, stays null",
+          "note": "6 x 6 x 3 cluster, periodic boundary conditions; GCNN four layers, four features; lowest state chi0, P_Z2 = -1, q = (pi, pi/sqrt3), sampled with single spin flips over the whole Hilbert space. Journal identical to arXiv v2. Transcription is correct; the existing non-ergodic-sampler flag (1.78% below the DMRG -47.33964, Comment arXiv:2605.28861) is unaffected by the journal reading and stands. No duplicate.",
+          "source_entry": "JP8-j1j2-hubbard-heisenberg#59"
+        }
       },
       "compute": {
         "parameters": null,
@@ -87,6 +97,16 @@
           "conversion": "-0.4383 x 4 x 108 = -189.3456; sigma 3e-4 x 432 = 0.1296 (both agree)",
           "note": "6 x 6 x 3 = 108-site torus = kagome-6x6_108_P; extrapolated (C6); M6 settled as for Torus 4. Ðurić et al.'s DMRG benchmark -47.33964 (= -0.4383300 per site) agrees with this cell to its printed digits but has one more digit than Depenbrock print; the 'E earlier' -0.43111 in the same row is Jiang, Weng & Sheng's (quoted, not in QMBL). No duplicate on the instance (rows: Ðurić GCNN (flagged), this).",
           "source_entry": "VP15-hubbard-j1j2-heisenberg#48 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Lett. 109, 067201 (2012), sources/journal/prl109-067201.pdf, sha256 80049032, and EPAPS supplement prl109-067201-supp.pdf (KagomePaper_EPAPS.pdf), sha256 83020790 (journals.aps.org, node fetch); compared with arXiv:1205.4858v2: Table I torus rows identical; pypdf plain",
+          "location": "Table I, row Torus 6",
+          "reported_as": "Torus 6 −0.4383(3) 0.1148(1)",
+          "conversion": "-0.4383 x 432 = -189.3456; sigma 3e-4 x 432 = 0.1296",
+          "note": "RECORD row. 108-site torus = 'tori of up to 108 sites'. Journal = arXiv v2. bound_type extrapolated correct; S.S per-site convention (Torus 3 row equals the 27-site exact -0.436 278 of ref. [47]). Reference title differs from the journal only by the hyphen in 'Spin-Liquid' (Crossref: 'Nature of the Spin-Liquid Ground State of the S=1/2 Heisenberg Model on the Kagome Lattice'); not worth a correction unless titles are normalised. No duplicate on the instance.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#62"
         }
       },
       "compute": {

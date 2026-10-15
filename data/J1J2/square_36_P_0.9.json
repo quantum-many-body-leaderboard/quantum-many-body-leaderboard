@@ -48,7 +48,17 @@
         "conversion": "none (recomputed directly as the stored Pauli / fermion total)",
         "note": "Real recomputation (code and output file). |E - stored| = 2.84e-13 (relative 3.04e-15). Second determination: the stored value is the source's own ED (VarBench), a different code. Coverage: k = (0,0) and (3,3), the four C4v 1D irreps, z=+1. Also read by VJ2-journal-other#36 (scope value: Table II (journal p. 681 = PDF p. 7), \"The ground state energy per site for different clusters and different values of J2 (J1 is normalized to unity)\", row 0.90, column 36(B1)).",
         "source_entry": "VE-exact-recompute#73, VJ2-journal-other#36 (qmbl-verify 2026-09-29)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF J. Phys. I France 6, 675 (1996), sources/journal/jp1-6-675.pdf (HAL jpa-00247209, digitised Journal de Physique archive; EDP landing page 403 DataDome captcha, hal.science/jpa-00247209/document Anubis challenge on 2026-10-15, so the 2026-09-30 HAL download was copied into the shared cache), sha256 f6f0adbf; pypdf layout text + pdftoppm 200 dpi render of PDF p. 7 (journal p. 681); compared with arXiv:cond-mat/9402061v2 (latest; qmbl-verify-2026-09-29/sources/cond-mat-9402061v2.vb1.layout.txt)",
+          "location": "Table II (journal p. 681), \"The ground state energy per site for different clusters and different values of J2 (J1 is normalized to unity)\", row 0.90, column 36(B1)",
+          "reported_as": "-0.649052 (energy per site, J1 = 1, S.S units; 36(A1) cell in the same row -0.645445)",
+          "conversion": "-93.463489624054 / (4 x 36) = -0.649052011, rounds to -0.649052",
+          "note": "Journal and arXiv v2 print the same digits in this row (36(A1) -0.645445, 36(B1) -0.649052); no difference between versions. C1-C4 from the journal: Eq. (1) H = J1 sum Si.Sj + J2 sum Si.Sj', Si.Si = 3/4, each bond counted once, no constant: stored Pauli total = 4 N E/N; N = 36 is the 6 x 6 cluster of Fig. 1 \"with periodic boundary conditions\"; Q = 0, Sz = 0, B1 is the ground-state irrep from J2 = 0.70 on (bold 0.530001 marks the change). bound_type exact right (Lanczos ED, Harwell EA15AD). Baseline code (varbench/methods ed31bb0, scripts/J1J2/square_36_P_0.9/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham j1j2 --boundary peri --ham_dim 2 --L 6 --J2 0.9 --zero_mag\"; vmc.py builds ColoredJ1J2((6,6), pbc=True) (36 + 36 NN, 72 NNN bonds, each once) with nk.operator.Heisenberg(J=[1, J2]) (Pauli, no shift) at total_sz = 0: lattice, size, boundary, couplings, operators match the instance. The script fixes every lattice-symmetries sector to 0 (k = 0, A1), so it does not produce this B1 number; this is the known VB1 point settled by ruling E5 (2026-10-02, the row cites the printing paper beside the link), not re-flagged. No output log in varbench/methods. Upload history (varbench-history, git log -S): the stored digits enter once, in 1c99d74 (2022-10-18, Dian Wu, \"Add J1-J2 L=6 J2=0.8,0.9\"), and are never changed or restored afterwards. No duplicate: the instance has one exact row; no other row carries this number. peer_reviewed is absent on this imported row (loader-level, as on every imported row); the printing venue J. Phys. I is refereed.",
+          "source_entry": "JB1-j1j2-tv#2"
+        }
       }
     },
     {

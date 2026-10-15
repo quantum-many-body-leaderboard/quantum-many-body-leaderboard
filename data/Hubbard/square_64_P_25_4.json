@@ -174,7 +174,17 @@
         "method": "source text of arXiv:2308.08594 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−1.13253(3)",
         "note": "Table I | 8x8=64 sites P; n=0.78125 filling => Nf=25 per spin; U=4; not starred (not deemed effectively exact); catalogue best_per_site for this instance is -1.130375, so this quoted value is lower (a stronger record) than the current catalogue best",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 6, 013237 (2024), sources/journal/prresearch6-013237.pdf, sha256 6fb243ee; compared arXiv:2308.08594v2 (sources/arxiv/2308.08594v2.pdf, sha256 236ccded): Table I identical cell for cell; pypdf layout mode unless noted",
+          "location": "Table I (p. 013237-4), column 8 x 8, n = 0.78125, U = 4, row E_AFQMC/N",
+          "reported_as": "-1.13253(3) (per site, units of t)",
+          "conversion": "-1.13253 x 64 = -72.48192; sigma 0.00003 x 64 = 0.00192",
+          "note": "No release-constraint star on this cell, so constrained-path AFQMC; the methods paragraph says 'Constrained-path AFQMC results are obtained using protocols similar to those in Refs. [28,34-36] including self-consistently optimized constraints [37]' (p. 013237-3), i.e. the authors' own run; the value is absent from Ref. [18] (LeBlanc et al. PRX 5, 041041: main text and Data_supplemental.zip searched, no 8x8 AFQMC file) and the starred cells are Ref. [17]'s. bound_type projected is right (not a bound). Fully periodic square lattice (Table I caption 'on a PBC square Hubbard model'); Nf = 25 per spin gives n = 0.78125; U = 4, t' = 0; H = -t sum c^dag c + h.c. + U sum n_up n_dn (Eq. 2), no constant shift. Journal and arXiv v2 values identical. No duplicate on the instance.",
+          "source_entry": "JP10-hubbard-heisenberg#3"
+        }
       },
       "compute": {
         "parameters": null,
@@ -297,7 +307,17 @@
         "method": "source text of arXiv:2308.08594 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−1.13048(8)",
         "note": "Table I | same instance as above; text: 'at n=0.78125 we obtain nearly the same energies for U=4 and U=8...to a very sophisticated VMC wave function', i.e. the SU(2)+Lanczos VMC† row | variance reported as 0.5, not stored: convention not verified",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 6, 013237 (2024), sources/journal/prresearch6-013237.pdf, sha256 6fb243ee; compared arXiv:2308.08594v2 (sources/arxiv/2308.08594v2.pdf, sha256 236ccded): Table I identical cell for cell; pypdf layout mode unless noted",
+          "location": "Table I (p. 013237-4), column 8 x 8, n = 0.78125, U = 4, row E_VAFQMC/N and row sigma^2_VAFQMC",
+          "reported_as": "-1.13048(8) (per site, units of t); sigma^2_VAFQMC = 0.5(3)",
+          "conversion": "-1.13048 x 64 = -72.35072; sigma 0.00008 x 64 = 0.00512; variance stored as printed central value 0.5 (caption: sigma^2 = <H^2> - <H>^2, i.e. total Var(H); the main text's 'energy variance per site (<H^2>-<H>^2)/N of less than 1' disagrees with its own caption, unchanged from arXiv v2)",
+          "note": "VAFQMC N_l = 4 (caption), energy measured on ~1e6 fresh samples after optimisation; variational. Fully periodic square lattice (Table I caption 'on a PBC square Hubbard model'); Nf = 25 per spin gives n = 0.78125; U = 4, t' = 0; H = -t sum c^dag c + h.c. + U sum n_up n_dn (Eq. 2), no constant shift. Journal and arXiv v2 values identical. No duplicate on the instance.",
+          "source_entry": "JP10-hubbard-heisenberg#4"
+        }
       },
       "compute": {
         "parameters": null,

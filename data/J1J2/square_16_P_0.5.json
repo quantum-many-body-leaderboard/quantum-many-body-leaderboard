@@ -348,7 +348,7 @@
       "family": "other NQS",
       "bound_type": "variational",
       "bound_type_reason": "vmc|\\brbm\\b|\\brnn\\b|jast",
-      "reference": "[paper](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.104.045123)",
+      "reference": "[paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by co-author Jannes Nys on 2022-10-24, commit 9e80241 (\"Include ClebschTree results on 4x4 J1-J2 model\"); method: Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), arXiv:2104.14869, which shows the 4 x 4 result only as a plotted relative error (Fig. 2))",
       "source": "varbench@2024-10-22",
       "provenance": "imported",
       "compute": {
@@ -367,6 +367,20 @@
         "confidence": "medium",
         "note": "The 4x4 energy is from the Fig. 2 scan (tau = 8, eta = 0.001, N_samples = 4096); the paper does not print the 4x4 numbers, VarBench holds them (row reference PRB 104, 045123). Parameter count not given as a number (determined by tau and jmax; no count printed), so parameters left null. No GPU/CPU-hours or wall-clock stated; iterations left null."
       },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "[paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by co-author Jannes Nys on 2022-10-24, commit 9e80241 (\"Include ClebschTree results on 4x4 J1-J2 model\"); method: Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), arXiv:2104.14869, which shows the 4 x 4 result only as a plotted relative error (Fig. 2))",
+          "reported_as": "no printed value; Fig. 2 'Relative error on the ground state energy Delta E/E0 = (E0,exact - E)/E0,exact of the J1-J2 model on a 4 x 4 lattice' (plotted point only)",
+          "location": "PRB 104, 045123, Fig. 2 (p. 5); Table I covers 8 x 8 only; VarBench J1J2/square_16_P_0.5.md row 'ClebschTree' (v1.1.0)",
+          "version_read": "published PDF Phys. Rev. B 104, 045123 (2021), sources/journal/prb104-045123.pdf, sha256 725a3579, pypdf layout; arXiv:2104.14869v2 compared (Table I identical, 2026-09-29 extraction)",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "The journal version prints no 4 x 4 energy (text, Table I and captions searched; the paper has no supplement); the stored -33.831039193 | 0.00031 | 0.01741932679 was uploaded to VarBench 15 months after publication by a co-author. The 2026-09-29 pass located it by decoding Fig. 2's vector marker, which the 2026-09-30 ruling ('a table beats a figure: no values decoded from plotted points') no longer accepts as a printing source. Same treatment as the Sorella, t-V and shuriken author uploads (ruling 1 / R2-E5): cite the VarBench dataset with the uploader named and the paper as method reference. Energy, sigma, variance, instance (4 x 4 PBC, J2 = 0.5) and method unchanged; the earlier figure check (relative error 1.93e-5 = the stored value against ED -33.83169340557936) stays in the note.",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#56",
+          "from": "[paper](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.104.045123)"
+        }
+      ],
       "verified": {
         "checked_on": "2026-09-29",
         "scope": "value",

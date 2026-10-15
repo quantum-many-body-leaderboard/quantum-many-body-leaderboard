@@ -40,6 +40,16 @@
           "conversion": "-0.485583 x 4 x 256 = -497.236992; sigma 0.000008 x 1024 = 0.008192",
           "note": "Record row, read hardest. Energy, sigma (8e-6 per site), 16 × 16 torus, J2 = 0.55, variational all agree; 3.75e-4 per site below the Ref. [7] value −0.485208(4) of the same row. v1 printed −0.48483(1) (then above Ref. [7]); the stored value is v2's. No duplicate on the instance.",
           "source_entry": "VP10-heisenberg-j1j2#25 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table I (p. 054410-4), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 square-lattice', row J2/J1 = 0.55, 16 x 16, column 'Our work'",
+          "reported_as": "−0.485583(8) per site (S.S)",
+          "conversion": "-0.485583 x 1024 = -497.236992; sigma 0.000008 x 1024 = 0.008192",
+          "note": "Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#10"
         }
       },
       "compute": {
@@ -81,7 +91,17 @@
         "method": "source text of arXiv:2211.07749 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; parsed by column from the primary table",
         "reported_as": "-0.485208(4)",
         "note": "Table I of arXiv:2211.07749 (line 190), J2/J1 = 0.55, 16x16, Ref. [7] column | E/J1 per site in S.S units on the L x L periodic torus",
-        "secondary_of": "arXiv:2211.07749"
+        "secondary_of": "arXiv:2211.07749",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table I (p. 054410-4), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 square-lattice', row J2/J1 = 0.55, 16 x 16, column 'RBM+PP [7]'",
+          "reported_as": "−0.485208(4) per site (S.S)",
+          "conversion": "-0.485208 x 1024 = -496.852992; sigma 0.000004 x 1024 = 0.004096",
+          "note": "Secondary row (RBM+PP of Ref. [7], shared by Y. Nomura per the journal acknowledgments). Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#11"
+        }
       },
       "compute": {
         "parameters": null,
@@ -148,7 +168,17 @@
         "method": "source text of arXiv:2108.13830 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.48499",
         "note": "Table 4 ('Energies for varied J2/J1 && system scales'), row 16 x 16, column 0.55; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF IEEE Trans. Parallel Distrib. Syst. 33(11), 2846-2859 (2022), doi:10.1109/TPDS.2022.3145163, sources/journal/tpds33-2846.pdf, sha256 69666954 (IEEE Xplore, ETH licence, downloaded 2026-10-15); compared with arXiv:2108.13830v4 (latest; byte-identical to qmbl/sources/2108.13830.pdf): Table 4 identical cell by cell; pypdf plain + layout mode (with fonttools), local extraction, no LLM transcription",
+          "location": "journal Table 4 ('Energies for Varied J2/J1 && System Scales'), row '16 × 16', column 0.55 (journal p. 2856; arXiv v4 p. 10)",
+          "reported_as": "-0.48499 (energy per site, S.S units, no error bar printed)",
+          "conversion": "-0.48499 x 4 x 256 = -496.62976",
+          "note": "H = J1/4 sum sigma.sigma + J2/4 sum sigma.sigma with Pauli sigma (Eq. 3), i.e. S.S with J1 = 1, no constant; L x L square lattice, periodic boundary conditions (Sec. 4: 'for the periodic boundary conditions'); final energy of the 106529-parameter CNN after transfer learning from 24 x 24 (Sec. 4.3.3, Stage 2/3; Fig. 11 caption names the 106529-parameter model); no error bar printed anywhere for Table 4 (sigma stays null). Sector S^z = 0 (Neel start, pair-exchange proposals, Sec. 3.1); sign fixed to the Marshall-Peierls rule (Eq. 9), which restricts the ansatz but keeps the energy a variational bound. The chain-restart window (Sec. 3.2.1, 'we terminate the problematic Markov chain and start a new one') is stated identically in the journal; ruling 4 (2026-10-07, variational) stands. peer_reviewed true, reference agrees. Not a duplicate.",
+          "source_entry": "JP6-heisenberg-j1j2#51"
+        }
       },
       "corrections": [
         {

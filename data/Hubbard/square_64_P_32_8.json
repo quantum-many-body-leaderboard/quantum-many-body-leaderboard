@@ -99,7 +99,17 @@
         "conversion": "none (dataset total = stored total); -33.642 / 64 = -0.52565625(78) per site",
         "note": "Record row (exact (stochastic), smallest sigma on the instance; metrics.json records[236]; is_record false in the group file). Instance, convention and class agree with the card: 8 x 8 PP, N_up = N_dn = 32, U = 8, Eq. S5 without shift (einf 128), sign-problem-free ground-state AFQMC with the Trotter error extrapolated, exact (stochastic) under RULES 4, which settles the M8 flag (bound_type_reason 'exact diagonalization|ex' is a classifier trace; the Qin row's wording would fit). The reference set by ruling 5 (2026-09-21) names the producer correctly; no article prints -33.642, and the dataset the paper cites as [63] holds it (still linked to PRB 94, 085103), so the reference could add 'VarBench dataset v1.1.0, doi:10.5281/zenodo.13377360'. Independent checks: Qin et al. Table IV -33.68(3) (1.25 sigma) and VarBench's own attractive-U run on the same lattice, -289.657(6) (Hubbard/square_64_P_32_-8, uploaded by the same author 253efd3, 2022-04-21, with AFQMCLAB inputs extrapolated to dt = 0 in the methods archive), which the half-filling identity E(U) = E(-U) + U N/2 maps to -33.657(6), 1.9 sigma from this row. The three exact estimates agree within 2 sigma. Against the -U estimate, Gu et al.'s sigma-less -33.65248 (flagged below-exact-suspected, 2.1 sigma below this row) sits 0.75 sigma above, and 0.9 sigma above Qin et al.: the flag rests on this one run. Not a duplicate: Qin et al.'s -33.68(3) on the instance is a separate computation.",
         "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#19 (qmbl-verify 2026-09-29)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Science 386, 296 (2024), sources/journal/science386-296.pdf, sha256 80f8b792, and Supplementary Materials, sources/journal/science386-296-sm.pdf, sha256 4539b5df (node fetch: Cloudflare 403; fetched in the automation browser after the article page loaded); arXiv:2302.04919v2 compared; the number itself from the VarBench dataset v1.1.0 = ref. [63] of the paper (Zenodo 10.5281/zenodo.13377360, the GitHub release of tag v1.1.0, commit 0064b70; the Zenodo API timed out from this host, so the tag in varbench-history was read)",
+          "location": "VarBench v1.1.0, Hubbard/square_64_P_32_8.md, AFQMC row",
+          "reported_as": "-33.642 | 0.005 (total energy, units of t)",
+          "conversion": "none",
+          "note": "8 x 8 PBC, half filling, U = 8; VarBench's own AFQMC (Yiqi Yang, b1b88c1, 2022-03-16), not Qin et al. 2016 (Table IV: -33.68(3)). Science SM S3 E 1-2 (journal version, same text as arXiv v2 Suppl. S3 E): 'For sign-problem-free systems, e.g., the repulsive Hubbard model (U > 0) at half-filling or the spin-balanced attractive Hubbard model (U < 0) [135, 147], numerically exact results are given by AFQMC using a generalized Metropolis algorithm with force bias [30, 148]'; 'For all systems computed in this work, we have either extrapolated Delta tau to zero or set it to a fixed value (typically Delta tau = 0.01) and verified that the Trotter error is well within our statistical error.' Hamiltonian (S5) H = -t sum c+c + U sum n_up n_dn, no shift, t = 1, N_up = N_dn. Neither the Science main text nor the SM prints any of these energies (searched both PDFs for the stored digits); the dataset is the printing source. Exact (stochastic) with sigma = AFQMC error bar; peer-reviewed venue.",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#35"
+        }
       }
     },
     {
@@ -124,7 +134,17 @@
         "method": "arXiv PDF text extracted locally with pypdf in layout mode, no LLM transcription",
         "reported_as": "-0.52582 per site, no error bar",
         "note": "Supplementary Table S1 of arXiv:2507.02644, \"Benchmark energy in pure Hubbard model at half-filling with PBC\", column 8 x 8, row \"NQS\"; the AFQMC reference in the same table is -0.5262(5). Same method string as this paper's 16 x 4 row. No error bar. It sits 1.6e-4 per site below the stored AFQMC exact row -0.5256563(78) - see the defect flag. Read from the arXiv supplement; the Nat. Commun. version was not compared.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Nat. Commun. 17, 7838 (2026), sources/journal/natcommun17-7838.pdf, sha256 4398bf71 (downloaded from nature.com in the automation browser; node fetch gets a JS challenge), Supplementary Information natcommun17-7838-supp.pdf sha256 210722bd; compared with arXiv:2507.02644v2 (work/arxiv, same numbers in Table S1 and Note 3.1); pypdf layout",
+          "location": "SI Table 1, column 8×8, row NQS",
+          "reported_as": "-0.52582",
+          "conversion": "-0.52582 x 64 = -33.65248",
+          "note": "Journal and arXiv:2507.02644v2 print the same value. Instance, PBC, U = 8, t' = 0, filling and bound_type variational agree; no sigma printed anywhere in journal main text or SI (prior pass: also not in Code Ocean capsule). No duplicate on the instance. Half filling PBC U = 8.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#9"
+        }
       },
       "compute": {
         "parameters": null,
@@ -180,6 +200,17 @@
           "conversion": "stored as printed (total): energy -33.68; sigma 3 x 1e-2 = 0.03",
           "note": "Value, sigma, cluster (8 x 8, N = 64), boundary (PBC = periodic both ways), filling (half filling, N_up = N_dn = 32), U = 8, t = 1 and bound_type (sign-free ground-state AFQMC, tau = 0.01, stated numerically exact -> exact (stochastic)) agree with the source; Hamiltonian identical to VarBench's (no constant shift); dof 64 = N_up + N_dn and einf 128 = U N_up N_dn / N; own computation, peer reviewed (PRB 94, 085103). Same cell in v1 PDF, v2 PDF and v2 HTML. Table row check: E - (P + K) = -0.05 (P = 27.67(2), K = -61.30(3), 1.07 sigma). No other row on the instance carries this number (no duplicate). Cross-checks: VarBench/Wu et al. AFQMC -33.642(5) differs by 0.038 = 1.25 sigma (combined); the attractive-repulsive identity applied to the separate AFQMC row on square_64_P_32_-8 (-289.657(6)) gives -33.657, 0.75 sigma. Quoted per site as AFQMC -0.5262(5) by arXiv:2507.02644 Table S1 and as QMC -0.5262(5) by arXiv:2606.00924 Table II (neither carried as a row: no duplicate).",
           "source_entry": "VP3-arxiv-1605-09421#55 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "journal PDF (PRB 94, 085103) and arXiv:1605.09421v2 PDF, both pypdf layout mode, Table IV E rows parsed by column position with node; no LLM transcription",
+          "location": "Appendix (Finite-size data at half-filling), Table IV, p. 085103-11, row 8 x 8 E, column U = 8 PBC",
+          "reported_as": "-33.68(3) (total ground-state energy, units of t; \"Statistical errors are on the last digit and are indicated in parenthesis\")",
+          "conversion": "stored as printed (total): energy -33.68; sigma 0.03",
+          "version_read": "published PDF Phys. Rev. B 94, 085103 (2016) (published 4 Aug 2016), sources/journal/prb94-085103.pdf, sha256 3e2a87a9; no Supplemental Material listed on the APS abstract page; compared with arXiv:1605.09421v2 (sources/arxiv-1605.09421/latest.pdf, sha256 227f31f5)",
+          "note": "Journal and arXiv v2 print the same cell (-33.68(3)); no difference between versions. Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + U sum n_up n_dn, no constant shift (same as VarBench). 8 x 8 square, N = 64, PBC, half filling N_up = N_dn = 32 (spin-balanced, n = 1), U = 8. Sign-free ground-state AFQMC, tau = 0.01 with Trotter error below the statistical error (Sec. II B), stated numerically exact at half filling (Sec. IV) -> exact (stochastic) with sigma. Own computation; peer reviewed, reference string correct. dof 64, einf 128 = U N/4 consistent. No duplicate: no other row on the instance carries this number.",
+          "source_entry": "JP3-arxiv-1605-09421#55"
         }
       },
       "compute": {
@@ -401,6 +432,16 @@
           "conversion": "-0.5188 x 64 = -33.2032 (stored -33.2032)",
           "note": "PBC, U = 8, N_up = N_dn, own computation, one Lanczos step on the VMC state: variational. No error bar or variance printed (sigma null stays). peer_reviewed true correct (Phys. Rev. B 109, 245107 (2024)); the reference string lacks the authors (Zhou, Zhou & Liang). v4 printed -0.5186.",
           "source_entry": "VP12-heisenberg-j1j2-hubbard#37 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 109, 245107 (2024), sources/journal/prb109-245107.pdf, sha256 52a11b5f (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.11823v6 (qmbl/sources/2308.11823.txt): Table III identical (journal caption adds 'and U = 8' and AFQMC error bars on the n = 1 reference column)",
+          "location": "Table III (p. 245107-6), 'energies (per site) of the Fermi-Hubbard model on rectangular lattices with the PBC and U = 8 ... All energy results for BW1 and BW2 are evaluated using p = 1 wave functions', row n = 1, 8 x 8, column BW1",
+          "reported_as": "−0.5188 per site",
+          "conversion": "-0.5188 x 64 = -33.2032",
+          "note": "PBC, U = 8, t = 1, H with U n_up n_dn (Eq. 18, no shift); filling n = 1 -> Nf per spin as in the instance; one Lanczos step (p = 1) on the tensor-backflow state, variational; evaluated with 48 000 MC samples, no error bar printed. Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#69"
         }
       },
       "compute": {
@@ -452,6 +493,16 @@
           "conversion": "-0.5241 x 64 = -33.5424 (stored -33.5424)",
           "note": "PBC, U = 8, N_up = N_dn, own computation, one Lanczos step on the VMC state: variational. No error bar or variance printed (sigma null stays). peer_reviewed true correct (Phys. Rev. B 109, 245107 (2024)); the reference string lacks the authors (Zhou, Zhou & Liang). Above both exact rows (-33.642(5), -33.68(3)). v4 printed -0.5239.",
           "source_entry": "VP12-heisenberg-j1j2-hubbard#38 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 109, 245107 (2024), sources/journal/prb109-245107.pdf, sha256 52a11b5f (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.11823v6 (qmbl/sources/2308.11823.txt): Table III identical (journal caption adds 'and U = 8' and AFQMC error bars on the n = 1 reference column)",
+          "location": "Table III (p. 245107-6), 'energies (per site) of the Fermi-Hubbard model on rectangular lattices with the PBC and U = 8 ... All energy results for BW1 and BW2 are evaluated using p = 1 wave functions', row n = 1, 8 x 8, column BW2",
+          "reported_as": "−0.5241 per site",
+          "conversion": "-0.5241 x 64 = -33.5424",
+          "note": "PBC, U = 8, t = 1, H with U n_up n_dn (Eq. 18, no shift); filling n = 1 -> Nf per spin as in the instance; one Lanczos step (p = 1) on the tensor-backflow state, variational; evaluated with 48 000 MC samples, no error bar printed. Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#70"
         }
       },
       "compute": {

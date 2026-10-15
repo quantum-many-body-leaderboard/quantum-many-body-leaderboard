@@ -260,7 +260,17 @@
         "method": "arXiv PDF text extracted locally with pypdf, no LLM transcription",
         "reported_as": "-0.51889 (+/- 0.00002) per site in S.S units",
         "note": "Read from Table 5 of arXiv:2206.14307 (J1-J2 on 6x6 and 10x10 square lattices, PBC, E/N in S.S units), extracted from the PDF with pypdf.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Adv. Neural Inf. Process. Syst. 35, 7490-7503 (NeurIPS 2022, doi:10.52202/068431-0544), sources/journal/neurips35-7490.pdf, sha256 902d3e93; supplement sources/journal/neurips35-7490-supp.pdf, sha256 c1ea9c74; compared with arXiv:2206.14307v1 (the only arXiv version; qmbl/sources/2206.14307.pdf): every RBM cell identical, the journal adds 'Energy(RBM+PP)' rows (quotes of ref. [30]) to Tables 2 and 4; pypdf plain + layout mode (with fonttools), local extraction, no LLM transcription",
+          "location": "journal Table 5, 10x10 block, row 'Energy(RBM)', column J2 = 0.7",
+          "reported_as": "-0.51889(2) (energy per site E/N, J1 = 1, S.S units)",
+          "conversion": "-0.51889 x 4 x 100 = -207.556; sigma 0.00002 x 400 = 0.008",
+          "note": "Pauli-stored total = E/N x 4N; H = J1 sum S.S + J2 sum S.S, S spin operators, J1 = 1, no constant (Eq. 1); L x L periodic (Sec. 4.1); S^z = 0 sector, psi_KL projected to momentum K and a C4v irrep (A1 or B1, Sec. 3.4); variational MC energy of the symmetrized RBM, 2e5 evaluation samples; no variance extrapolation reported. bound_type variational, peer_reviewed true and reference (NeurIPS 35, 7490-7503) agree. arXiv v1 and journal cells identical. Not a duplicate: no other row on the instance carries this number from this paper or a quote of it.",
+          "source_entry": "JP6-heisenberg-j1j2#12"
+        }
       },
       "compute": {
         "parameters": null,
