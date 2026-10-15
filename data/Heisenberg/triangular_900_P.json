@@ -171,7 +171,7 @@
       "family": "classic VMC",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Ghorbani, Tocchio & Becca, Variational wave functions for the S = 1/2 Heisenberg model on the anisotropic triangular lattice: Spin liquids and spiral orders, Phys. Rev. B 93, 085111 (2016), arXiv:1512.03356 (quoted in arXiv:2602.02665)",
+      "reference": "Iqbal, Hu, Thomale, Poilblanc & Becca, Spin liquid nature in the Heisenberg J1-J2 triangular antiferromagnet, Phys. Rev. B 93, 144411 (2016), arXiv:1601.06018, Fig. 5(a), L = 30 point (plotted only; the digits are printed in arXiv:2602.02665, Table I, which cites Ghorbani, Tocchio & Becca, PRB 93, 085111)",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-09-28",
       "provenance": "secondary",
@@ -182,11 +182,35 @@
         "note": "Table 1 of arXiv:2602.02665, 30 × 30 block, row 'Jastrow-Gutzwiller', printed '−0.545348' with no error bar, attributed to [71] = Ghorbani, Tocchio & Becca 2016. Not located in the committed text of arXiv:1512.03356 (searched '0.5453', '30×30', '900', 'extrapolat'; its Tables I-II are 18 × 18 only): may come from a later version, a figure, or the authors directly. No sigma stored, none printed. | Table 1 of arXiv:2602.02665 prints energies per site of the triangular Heisenberg model on periodic L x L clusters, S.S units.",
         "secondary_of": "arXiv:2602.02665"
       },
-      "defect": {
-        "flag": "quote-not-in-primary",
-        "finding": "Quote check in the citing paper passed: arXiv:2602.02665v1 Table I, 30 x 30 block, prints 'Jastrow-Gutzwiller -0.545348 [71]' with no error bar (-0.545348 x 4 x 900 = -1963.2528, the stored energy); [71] = E. Ghorbani, L. F. Tocchio and F. Becca, Phys. Rev. B 93, 085111 (2016). In the cited paper as read (arXiv:1512.03356 v1 and v2, VP15; the published PRB 93, 085111 PDF, VJ2), I could not locate -0.545348 or any 30 x 30 cluster: its tables are 18 x 18 ('All data are presented on the 18 x 18 cluster'), its 6 x 6 figures carry the exact Lanczos energies, and no thermodynamic-limit or size-scaling energy of the isotropic Jastrow-Gutzwiller state is printed. Also read without a hit: Iqbal, Hu, Thomale, Poilblanc & Becca, arXiv:1601.06018v4 (VMC 6x6 -0.548025(3), 2D limit -0.545321(7)); Ferrari & Becca, arXiv:1903.05691v3; a web search for '0.545348' (only arXiv:2602.02665). The citing paper's acknowledgements thank F. Becca 'for useful discussions' only. The row carries a number its cited source does not contain, the case of the Shallow CNN row on J1J2/square_100_P_0.5 (VP13#52), which commit A flagged 'quote-not-in-primary' rather than removing it. Not a record holder on the instance. Resolution: the authors of arXiv:2602.02665 or F. Becca to say where -0.545348 is printed, or removal under RULES.md 8 ('A cited number that cannot be found in the cited source is not admissible').",
-        "source_entry": "VJ2-journal-other#54, VP15-hubbard-j1j2-heisenberg#32 (qmbl-verify 2026-09-29, not_found), as RH2#11 (handoff reader, triage of 2026-10-02) by precedent VP13#52; ruling R1, Tristan 2026-10-02"
-      }
+      "defect": null,
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Iqbal, Hu, Thomale, Poilblanc & Becca, Spin liquid nature in the Heisenberg J1-J2 triangular antiferromagnet, Phys. Rev. B 93, 144411 (2016), arXiv:1601.06018, Fig. 5(a), L = 30 point (plotted only; the digits are printed in arXiv:2602.02665, Table I, which cites Ghorbani, Tocchio & Becca, PRB 93, 085111)",
+          "location": "Fig. 5(a), L = 30 point",
+          "version_read": "arXiv:1601.06018v4 source (fig5.pdf vector stream, calibrated on the axis ticks) and the published Phys. Rev. B 93, 144411 (2016) PDF (sources/journal/prb93-144411.pdf)",
+          "reported_as": "L = 30 marker -0.5453489 +- 3.9e-6 per site (decoded); arXiv:2602.02665 Table I prints -0.545348",
+          "checked_on": "2026-10-15",
+          "source_entry": "R4-locate (correction, origin of the quoted number); ruling 2026-10-15",
+          "reason": "The quoted -0.545348 is the L = 30 Jastrow-Gutzwiller point of Fig. 5(a) of Iqbal et al. (decoded -0.5453489, 9e-7 away); Ghorbani, Tocchio & Becca have no 30 x 30 cluster. Kept as a secondary quote of the printed digits, its origin named (ruling 2026-10-15).",
+          "from": "Ghorbani, Tocchio & Becca, Variational wave functions for the S = 1/2 Heisenberg model on the anisotropic triangular lattice: Spin liquids and spiral orders, Phys. Rev. B 93, 085111 (2016), arXiv:1512.03356 (quoted in arXiv:2602.02665)"
+        },
+        {
+          "field": "defect",
+          "to": null,
+          "location": "Fig. 5(a), L = 30 point",
+          "version_read": "arXiv:1601.06018v4 source (fig5.pdf vector stream, calibrated on the axis ticks) and the published Phys. Rev. B 93, 144411 (2016) PDF (sources/journal/prb93-144411.pdf)",
+          "reported_as": "L = 30 marker -0.5453489 +- 3.9e-6 per site (decoded); arXiv:2602.02665 Table I prints -0.545348",
+          "checked_on": "2026-10-15",
+          "source_entry": "R4-locate (correction, origin of the quoted number); ruling 2026-10-15",
+          "reason": "The quoted number's origin is located: Iqbal et al., PRB 93, 144411, Fig. 5(a). The row stays secondary, citing where its digits are printed and where they come from (ruling 2026-10-15).",
+          "from": {
+            "flag": "quote-not-in-primary",
+            "finding": "Quote check in the citing paper passed: arXiv:2602.02665v1 Table I, 30 x 30 block, prints 'Jastrow-Gutzwiller -0.545348 [71]' with no error bar (-0.545348 x 4 x 900 = -1963.2528, the stored energy); [71] = E. Ghorbani, L. F. Tocchio and F. Becca, Phys. Rev. B 93, 085111 (2016). In the cited paper as read (arXiv:1512.03356 v1 and v2, VP15; the published PRB 93, 085111 PDF, VJ2), I could not locate -0.545348 or any 30 x 30 cluster: its tables are 18 x 18 ('All data are presented on the 18 x 18 cluster'), its 6 x 6 figures carry the exact Lanczos energies, and no thermodynamic-limit or size-scaling energy of the isotropic Jastrow-Gutzwiller state is printed. Also read without a hit: Iqbal, Hu, Thomale, Poilblanc & Becca, arXiv:1601.06018v4 (VMC 6x6 -0.548025(3), 2D limit -0.545321(7)); Ferrari & Becca, arXiv:1903.05691v3; a web search for '0.545348' (only arXiv:2602.02665). The citing paper's acknowledgements thank F. Becca 'for useful discussions' only. The row carries a number its cited source does not contain, the case of the Shallow CNN row on J1J2/square_100_P_0.5 (VP13#52), which commit A flagged 'quote-not-in-primary' rather than removing it. Not a record holder on the instance. Resolution: the authors of arXiv:2602.02665 or F. Becca to say where -0.545348 is printed, or removal under RULES.md 8 ('A cited number that cannot be found in the cited source is not admissible').",
+            "source_entry": "VJ2-journal-other#54, VP15-hubbard-j1j2-heisenberg#32 (qmbl-verify 2026-09-29, not_found), as RH2#11 (handoff reader, triage of 2026-10-02) by precedent VP13#52; ruling R1, Tristan 2026-10-02"
+          }
+        }
+      ]
     },
     {
       "energy": -1972.56176758,
