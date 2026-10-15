@@ -1,4 +1,4 @@
-// The figure at the top of /open-problems/ (Tristan, 2026-10-09: "can we have figure
+// The figure at the top of /open-problems/ (2026-10-09: "can we have figure
 // 'Leaderboard' and table?"): the home page's "The best published energies, by system size"
 // (size_accuracy.mjs) for the open problems, with its frame, marks, merged marks, colours and
 // legend (size_marks.mjs, chart.mjs) and its hover cards (site.mjs), every mark linking to its
@@ -70,7 +70,7 @@ export function openProblemsFigure(targets, entries, entryHref) {
     yLabel: "relative gap to the energy to beat (lower is better)", lanes: ["energy to beat", "estimates below it"] });
   const Y = g => (g < 0 ? lane(1) : gapY(g));
   // Sizes lie closer together here than on the home figure, so marks merge across sizes as well
-  // (Tristan, 2026-10-09: the lines must not overlap, as the home figure's exact line does not).
+  // (2026-10-09: the lines must not overlap, as the home figure's exact line does not).
   const drawn = marksAcross(t, pts, X, Y, p => t.series[BOUNDS[p.r.bound_type]]);
   parts.push(...drawn.svgs);
   // An entry is drawn at the nearest place clear of every other mark, as a flagged group is.
