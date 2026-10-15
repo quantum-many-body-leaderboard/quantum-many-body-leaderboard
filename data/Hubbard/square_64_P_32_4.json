@@ -181,7 +181,18 @@
           "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#18 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "[paper](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.94.085103)"
         }
-      ]
+      ],
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published PDF Science 386, 296 (2024), sources/journal/science386-296.pdf, sha256 80f8b792, and Supplementary Materials, sources/journal/science386-296-sm.pdf, sha256 4539b5df (node fetch: Cloudflare 403; fetched in the automation browser after the article page loaded); arXiv:2302.04919v2 compared; the number itself from the VarBench dataset v1.1.0 = ref. [63] of the paper (Zenodo 10.5281/zenodo.13377360, the GitHub release of tag v1.1.0, commit 0064b70; the Zenodo API timed out from this host, so the tag in varbench-history was read)",
+        "location": "VarBench v1.1.0, Hubbard/square_64_P_32_4.md, row 'AFQMC (Metropolis, Trotter error extrapolated), numerically exact' (its reference column still cites PRB 94, 085103)",
+        "reported_as": "-55.063 | 0.004 (total energy, units of t)",
+        "conversion": "none",
+        "note": "8 x 8 PBC, half filling, U = 4. Prior finding stands: Qin et al. PRB 94, 085103 Table IV prints -55.05(1), so the row is VarBench's own AFQMC (uploaded 2022-03-16), cited to the Science paper. Science SM S3 E 1-2 (journal version, same text as arXiv v2 Suppl. S3 E): 'For sign-problem-free systems, e.g., the repulsive Hubbard model (U > 0) at half-filling or the spin-balanced attractive Hubbard model (U < 0) [135, 147], numerically exact results are given by AFQMC using a generalized Metropolis algorithm with force bias [30, 148]'; 'For all systems computed in this work, we have either extrapolated Delta tau to zero or set it to a fixed value (typically Delta tau = 0.01) and verified that the Trotter error is well within our statistical error.' Hamiltonian (S5) H = -t sum c+c + U sum n_up n_dn, no shift, t = 1, N_up = N_dn. Neither the Science main text nor the SM prints any of these energies (searched both PDFs for the stored digits); the dataset is the printing source. Exact (stochastic) with sigma = AFQMC error bar; peer-reviewed venue.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#34",
+        "secondary_of": null
+      }
     },
     {
       "energy": -55.05,
@@ -215,6 +226,17 @@
           "conversion": "stored as printed (total): energy -55.05; sigma 1 x 1e-2 = 0.01",
           "note": "Value, sigma, cluster (8 x 8, N = 64), boundary (PBC = periodic both ways), filling (half filling, N_up = N_dn = 32), U = 4, t = 1 and bound_type (sign-free ground-state AFQMC, tau = 0.01, stated numerically exact -> exact (stochastic)) agree with the source; Hamiltonian identical to VarBench's (no constant shift); dof 64 = N_up + N_dn and einf 64 = U N_up N_dn / N; own computation, peer reviewed (PRB 94, 085103). Same cell in v1 PDF, v2 PDF and v2 HTML. Table row check: E - (P + K) = -0.004 (P = 31.747(8), K = -86.793(8), 0.26 sigma). No other row on the instance carries this number (no duplicate). Cross-checks: VarBench's AFQMC row -55.063(4) on this instance differs by 0.013 = 1.2 sigma (combined); the attractive-repulsive identity E(-U) = E(U) - U N/2 applied to the separate AFQMC row VarBench carries on square_64_P_32_-4 (-183.064(4), cites PRA 92, 033603) gives -55.064, 1.3 sigma. Not a duplicate (different number): the VarBench row also cites PRB 94, 085103, but my reading of this source did not locate -55.063 or -0.8604 (Table IV prints -55.05(1); every negative decimal of the v2 layout and plain text was listed; the 2026-09-15/16 pass read the same). That row's attribution is for its own group to settle; -55.063 matches -183.064 + 128 = -55.064, i.e. it looks like the attractive-U run mapped back.",
           "source_entry": "VP3-arxiv-1605-09421#53 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "journal PDF (PRB 94, 085103) and arXiv:1605.09421v2 PDF, both pypdf layout mode, Table IV E rows parsed by column position with node; no LLM transcription",
+          "location": "Appendix (Finite-size data at half-filling), Table IV, p. 085103-11, row 8 x 8 E, column U = 4 PBC",
+          "reported_as": "-55.05(1) (total ground-state energy, units of t; \"Statistical errors are on the last digit and are indicated in parenthesis\")",
+          "conversion": "stored as printed (total): energy -55.05; sigma 0.01",
+          "version_read": "published PDF Phys. Rev. B 94, 085103 (2016) (published 4 Aug 2016), sources/journal/prb94-085103.pdf, sha256 3e2a87a9; no Supplemental Material listed on the APS abstract page; compared with arXiv:1605.09421v2 (sources/arxiv-1605.09421/latest.pdf, sha256 227f31f5)",
+          "note": "Journal and arXiv v2 print the same cell (-55.05(1)); no difference between versions. Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + U sum n_up n_dn, no constant shift (same as VarBench). 8 x 8 square, N = 64, PBC, half filling N_up = N_dn = 32 (spin-balanced, n = 1), U = 4. Sign-free ground-state AFQMC, tau = 0.01 with Trotter error below the statistical error (Sec. II B), stated numerically exact at half filling (Sec. IV) -> exact (stochastic) with sigma. Own computation; peer reviewed, reference string correct. dof 64, einf 64 = U N/4 consistent. No duplicate: no other row on the instance carries this number.",
+          "source_entry": "JP3-arxiv-1605-09421#53"
         }
       },
       "compute": {

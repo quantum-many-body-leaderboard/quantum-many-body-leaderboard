@@ -287,7 +287,17 @@
         "reported_as": "-0.560313 (+/- 0.000003) per site in S.S units",
         "note": "Read from Table 5 of arXiv:2505.20406 (TLAHM, L=6 triangular lattice, PBC, E/N in S.S units), parsed from the arXiv HTML. Row \"Group Convolutional Neural Network [32]\" = arXiv:2211.07749. Sits 6.0e-5 ABOVE the exact -0.5603734 already on this instance, as a variational bound must. CONFIRMED IN PRIMARY SOURCE - arXiv:2211.07749, results table: \"J2/J1 N GCNN ... Exact/Interpolated ... 0 36 -0.560313(3) - -0.5603734\" - the GCNN energy at J2/J1 = 0, N = 36, printed beside the exact value.",
         "secondary_of": null,
-        "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, arXiv:2505.20406v3 (2025-10-13)"
+        "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, arXiv:2505.20406v3 (2025-10-13)",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table III (p. 054410-7), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 triangular-lattice', row J2/J1 = 0, N = 36, column GCNN",
+          "reported_as": "−0.560313(3) per site, units of J1/spin (S.S)",
+          "conversion": "-0.560313 x 144 = -80.685072; sigma 0.000003 x 144 = 0.000432",
+          "note": "Record-flagged row, read hardest. 36-site torus, J2 = 0, variational GCNN. The same row prints Exact -0.5603734 (= the instance's exact row -80.6937689612426/144); this GCNN row is therefore the best non-exact row, not the RULES §6 record (the exact row holds that). Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#1"
+        }
       },
       "compute": {
         "parameters": 49386,
@@ -355,7 +365,17 @@
         "reported_as": "-0.5601 (+/- 0.0004) per site in S.S units",
         "note": "Read from Table 5 of arXiv:2505.20406 (TLAHM, L=6 triangular lattice, PBC, E/N in S.S units), parsed from the arXiv HTML. Row \"Lattice Convolutional Network [49]\" = arXiv:2206.07370. CONFIRMED IN PRIMARY SOURCE - arXiv:2206.07370v1, Table 1: \"Triangular 36 0 - -0.55889 -0.5601(4) -0.5603734\" - the LCN energy at J2 = 0 on the 36-site triangular lattice, with the regular kernel (Table 3 prints -0.5601(4) for the regular and -0.5501(6) for the special kernel).",
         "secondary_of": null,
-        "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, arXiv:2505.20406v3 (2025-10-13)"
+        "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, arXiv:2505.20406v3 (2025-10-13)",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Proc. 2024 SIAM SDM pp. 490-498, doi:10.1137/1.9781611978032.57, sources/journal/sdm2024-490.pdf, sha256 654de76e (the /doi/pdf link gave a Cloudflare 403 even in-page; the PDF came from the ePDF reader's signed /doi/pdfdirect URL in the automation browser), pypdf plain + layout (layout text has binary glyphs, plain used for the tables); compared with arXiv:2206.07370v1 (qmbl/sources/2206.07370.txt)",
+          "location": "Table 1 (p. 495-496 of the proceedings, PDF p. 7), Triangular, size 36, J2 = 0, column 'LCN (ours)'; same value in Table 2 (Regular Kernel) and Table 3 (Periodic padding)",
+          "reported_as": "-0.5601(4) per site (reference column -0.5603734, ED)",
+          "conversion": "-0.5601 x 144 = -80.6544; sigma 4e-4 x 144 = 0.0576",
+          "note": "Journal value identical to arXiv v1. Hamiltonian Eq. (5.7) H = Σ S_i·S_j + J2 Σ S_i·S_j with 'spin-1/2 operators' (the text then defines S^α_i via the Pauli matrix; the table's ED reference -0.5603734 is the S·S per-site value, so the energies are S·S per site); periodic padding = periodic boundary conditions (Sec. 5.5). Journal/arXiv difference outside this row: arXiv Table 1 has an extra comparison column (e.g. '-0.55889' for triangular 36, J2 = 0), the journal Table 1 has GNN, LCN and reference only. Reference (Fu, Zhang, Zhang, Ling, Xu & Ji, SDM 2024 pp. 490-498) and peer_reviewed true right. No field changes.",
+          "source_entry": "R5-browser#22"
+        }
       },
       "compute": {
         "parameters": 290000,
@@ -504,7 +524,17 @@
         "reported_as": "-0.5562 (+/- 0.0002) per site in S.S units",
         "note": "Read from Table 5 of arXiv:2505.20406 (TLAHM, L=6 triangular lattice, PBC, E/N in S.S units), parsed from the arXiv HTML. The citing paper's own result.",
         "secondary_of": null,
-        "found_via": null
+        "found_via": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 112, 134449 (2025), doi:10.1103/nh89-6jmf, sources/journal/prb112-134449.pdf, sha256 ea3dde74; compared arXiv:2505.20406v3 HTML (sources/arxiv/2505.20406v3.html): Table V cells identical; pypdf layout mode unless noted",
+          "location": "Appendix, Table V (L = 6 PBC), row 'RNN wavefunction'",
+          "reported_as": "-0.5562(2) per site (S.S)",
+          "conversion": "-0.5562 x 4 x 36 = -80.0928; sigma 0.0002 x 144 = 0.0288; variance 0.0003726674864689509 x 36^2 x 16 = 7.727633 from the data release (L = 6 entry, energy -0.5562074449327257, V-score 0.0434 = journal Table II '4.3 x 10^-2')",
+          "note": "Exact ED in the same table -0.5603734 matches the instance's ED row / 144 (-80.6937689612426 / 144 = -0.56037340), fixing the S.S convention. The release's unrounded -0.55620744(19305) would give -80.093872, sigma 0.027799; the stored row follows the printed rounding, which is within the printed bar (ruling: keep printed digits unless a finer value is from the same source; optional refinement, not proposed).",
+          "source_entry": "JP10-hubbard-heisenberg#47"
+        }
       },
       "error_metrics": {
         "fields": [
@@ -634,7 +664,7 @@
       "family": "classic VMC",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Ryui Kaneko, Satoshi Morita, and Masatoshi Imada. Gapless spin-liquid phase in an extended spin 1/2 triangular heisenberg model. Journal of the Physical Society of Japan, 83(9):093707, 2014. (cited as ref [30] in arXiv:2104.05085)",
+      "reference": "Kaneko, Morita & Imada, Gapless spin-liquid phase in an extended spin 1/2 triangular Heisenberg model, J. Phys. Soc. Jpn. 83, 093707 (2014), arXiv:1407.0318 (6 x 6 value quoted as -0.55519(4) in Table I of Iqbal, Hu, Thomale, Poilblanc & Becca, Phys. Rev. B 93, 144411 (2016), and as -0.55519 in Table I of Roth & MacDonald, arXiv:2104.05085)",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-09-15",
       "provenance": "secondary",
@@ -685,6 +715,18 @@
           "reason": "M10 'peer_reviewed missing': the cited primary is a refereed journal article.",
           "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#51 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": null
+        },
+        {
+          "field": "reference",
+          "to": "Kaneko, Morita & Imada, Gapless spin-liquid phase in an extended spin 1/2 triangular Heisenberg model, J. Phys. Soc. Jpn. 83, 093707 (2014), arXiv:1407.0318 (6 x 6 value quoted as -0.55519(4) in Table I of Iqbal, Hu, Thomale, Poilblanc & Becca, Phys. Rev. B 93, 144411 (2016), and as -0.55519 in Table I of Roth & MacDonald, arXiv:2104.05085)",
+          "reported_as": "VMC (Kaneko et al.) (Ref. [48]) -0.55519(4) -0.5449(2)",
+          "location": "Iqbal et al., Phys. Rev. B 93, 144411 (2016), Table I, column '6 x 6 torus'",
+          "version_read": "published PDF Phys. Rev. B 93, 144411 (2016), sources/journal/prb93-144411.pdf, sha256 3c0f8916 (quote); primary J. Phys. Soc. Jpn. 83, 093707 not reachable (journals.jps.jp HTTP 403), arXiv:1407.0318v2 as cached in qmbl/sources",
+          "conversion": "energy and sigma unchanged: -0.55519 x 144 = -79.94736; 4e-5 x 144 = 0.00576",
+          "checked_on": "2026-10-15",
+          "reason": "The stored sigma (0.00576) comes from Iqbal et al.'s refereed quote, which the reference does not name; it names only the unrefereed quote arXiv:2104.05085 that prints no bar. Energy, 6 x 6 torus, J2 = 0, S.S per site and variational all agree with the journal quote. The primary's journal text could not be fetched; the row stays secondary.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#10",
+          "from": "Ryui Kaneko, Satoshi Morita, and Masatoshi Imada. Gapless spin-liquid phase in an extended spin 1/2 triangular heisenberg model. Journal of the Physical Society of Japan, 83(9):093707, 2014. (cited as ref [30] in arXiv:2104.05085)"
         }
       ]
     },
@@ -695,9 +737,9 @@
       "dof": 36,
       "einf": 0,
       "v_score": null,
-      "method": "VMC",
-      "method_detail": "",
-      "method_as_published": "VMC",
+      "method": "EPS",
+      "method_detail": "16-site plaquettes",
+      "method_as_published": "Entangled-plaquette state (EPS), 16-site plaquettes",
       "family": "classic VMC",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -760,6 +802,18 @@
           "reason": "M10 'peer_reviewed missing': the cited primary is a refereed journal article.",
           "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#55 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": null
+        },
+        {
+          "field": "method",
+          "to": "Entangled-plaquette state (EPS), 16-site plaquettes",
+          "reported_as": "Table 2. Variational GS energy per site ... computed, by using the entangled-plaquette ansatz ... N plaquettes comprising 16 sites have been employed. 36 -0.55420(5) -0.560373",
+          "location": "Table 2 caption and row N = 36",
+          "version_read": "arXiv:1006.4480v3 PDF, pypdf layout (journal blocked, see note). Journal version New J. Phys. 12, 103039 (2010) NOT read: iopscience.iop.org returns a Radware 'Bot Manager Captcha' to node fetch and to the automation browser (2026-10-15); the only other copy OpenAlex/Unpaywall list (edoc.mpg.de/522465) redirects to the MPG.PuRe home page (403 to node). Fell back to arXiv:1006.4480v3 (latest; arXiv journal-ref 'New J. Phys. 12 103039 (2010)'), work/arxiv/1006.4480v3.pdf, pypdf layout. The rows stay arXiv-read.",
+          "conversion": "-0.5542 x 144 = -79.8048; sigma 5e-5 x 144 = 0.0072 (Table 2's bar; the abstract prints (4), which would give 0.00576)",
+          "checked_on": "2026-10-15",
+          "reason": "The row now cites Mezzacapo & Cirac as primary, but keeps the label 'VMC' that the quoting paper (arXiv:2104.05085 Table I 'VMC [31]') gave it; the source names the method EPS with 16-site plaquettes, as the N = 144 and 324 rows already say. Value, sigma, PBC, S.S per site, variational verified. No duplicate on the instance.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#50",
+          "from": "VMC"
         }
       ]
     },
@@ -785,7 +839,17 @@
         "method": "source text of arXiv:2104.05085 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.548025",
         "note": "Table I, J2=0 column, row 'VMC [27]': -0.548025. | Same table as ED row.",
-        "secondary_of": "arXiv:2104.05085"
+        "secondary_of": "arXiv:2104.05085",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 93, 144411 (2016), sources/journal/prb93-144411.pdf, sha256 3c0f8916, pypdf plain + layout; arXiv:1601.06018v4 compared: identical",
+          "location": "Table I, row 'VMC [see Eqs. (7) and (9)]*', column '6 x 6 torus'",
+          "reported_as": "-0.548025(3)",
+          "conversion": "-0.548025 x 4 x 36 = -78.9156; sigma 3e-6 x 144 = 0.000432",
+          "note": "6 x 6 torus, J2 = 0, S.S per site (the same table's ED -0.5603734 is the instance's exact energy), own variational result (asterisk), primary. The [A,P] label in Fig. 4 is the boundary of the auxiliary fermionic Hamiltonian, not of the spin model. Journal = arXiv v4. Duplicate check: no other row on triangular_36_P carries -78.9156.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#8"
+        }
       },
       "corrections": [
         {
@@ -860,7 +924,17 @@
         "method": "source text of arXiv:2505.20406 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.543(1)",
         "note": "TABLE V. Estimates of the ground-state energy per spin for the TLAHM on an L=6 lattice with PBC. | per-site convention fixed by exact-diagonalization and record rows in the same table",
-        "secondary_of": "arXiv:2505.20406"
+        "secondary_of": "arXiv:2505.20406",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 73, 014519 (2006), sources/journal/prb73-014519.pdf, sha256 26b5a2a2, pypdf plain; arXiv:cond-mat/0509520v2 compared: identical",
+          "location": "Table I, block '36 sites lattice', row 'our best WF'",
+          "reported_as": "-0.543 (1)",
+          "conversion": "-0.543 x 4 x 36 = -78.192; sigma 0.001 x 144 = 0.144",
+          "note": "36-site triangular (periodic inferred from the table's ED -0.5604 = the 6 x 6 PBC ED), half filling, energy 3<S.S> per site so the t-J -n n/4 term does not enter, variational with one Lanczos step, own result. Duplicate check: no other row on triangular_36_P carries -78.192.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#22"
+        }
       },
       "corrections": [
         {
@@ -948,7 +1022,17 @@
         "method": "source text of arXiv:2505.20406 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.55148(5)",
         "note": "TABLE V | same as above",
-        "secondary_of": "arXiv:2505.20406"
+        "secondary_of": "arXiv:2505.20406",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 112, 134449 (2025), doi:10.1103/nh89-6jmf, sources/journal/prb112-134449.pdf, sha256 ea3dde74; compared arXiv:2505.20406v3 HTML (sources/arxiv/2505.20406v3.html): Table V cells identical; pypdf layout mode unless noted",
+          "location": "Appendix, Table V, row 'Projected mean field ansatz [26]'",
+          "reported_as": "-0.55148(5) per site (S.S)",
+          "conversion": "-0.55148 x 4 x 36 = -79.41312; sigma 0.00005 x 144 = 0.0072",
+          "note": "Secondary quote: Ref. [26] is Heidarian, Sorella & Becca, PRB 80, 012404 (2009). Primary read too (published PDF sources/journal/prb80-012404.pdf, sha256 c0b88975, layout and plain mode): its 6 x 6 accuracy is shown only as relative errors in Fig. 2, and the text prints E/J = -0.5470(1) (TL) and -0.551(1) (extrapolated); I did not locate -0.55148(5) in the primary's text (an earlier pass traced it to Iqbal et al., PRB 93, 144411, Table I, not re-read here). Row stays secondary; transcription from the Moss quote is right.",
+          "source_entry": "JP10-hubbard-heisenberg#48"
+        }
       },
       "corrections": [
         {
@@ -991,7 +1075,7 @@
       "family": "CNN / ResNet",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+      "reference": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-09-17",
       "provenance": "primary",
@@ -1027,7 +1111,21 @@
         "scope": "paper",
         "confidence": "high",
         "note": "Paper-wide statements: one aCNN architecture (30 layers = 14 residual blocks, 3 channels, 5×5 kernels, 6538 real parameters) for all calculations, all run on a single Nvidia 3090 GPU.495627(6) with a fixed (Marshall-type) sign structure and C4v data augmentation. Number of Adam steps ('optimized until the loss function no longer drops'), batch size per step and wall-clock are not stated."
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+          "reported_as": "Jia-Qi Wang, Han-Qing Wu, Rong-Qiang He, and Zhong-Yi Lu",
+          "location": "journal PDF p. 245120-1 author line (arXiv:2308.09664v2 p. 1 lists the same four authors)",
+          "version_read": "published PDF Phys. Rev. B 109, 245120 (2024), sources/journal/prb109-245120.pdf, sha256 5c3a3f11 (pypdf layout + plain); no Supplemental Material on the APS abstract page; compared with arXiv:2308.09664v2 (qmbl/sources/2308.09664.txt): Tables I, III, IV identical",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Author list omits Han-Qing Wu; the J2 = 0.5 row of the same paper already carries the four-author form. Value check: Table IV (p. 245120-6), 'optimized with the exact sign structure from ED', row aCNN, column HMTL prints −0.559214(6) per site (S.S); -0.559214 x 144 = -80.526816; sigma 0.000006 x 144 = 0.000864 equals the stored energy and sigma. 100-layer aCNN with C6v and the exact ED sign structure (caption and Sec. III D); variational.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#31",
+          "from": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664"
+        }
+      ]
     },
     {
       "energy": -79.2126086267484,

@@ -104,4 +104,33 @@ export const REMOVALS = [
     ruled: "2026-10-07 (Tristan): duplicate, the original paper's row stays (qmbl-verify 2026-10-07 (record-attempts pass), ruling 2)",
     reason: "arXiv:2502.01264 Table IV 'SLL (p=0)' at L = 10 is the energy of its initial state, Ref. [35]'s aCNN(C4v) (-0.483490(5), arXiv:2308.09664 Table III row aCNN(C4v), column J2/J1 = 0.55), which QMBL carries from arXiv:2308.09664 itself.",
   },
+  // Withdrawn in review: printed in the arXiv version only; the published version dropped or
+  // replaced the number (qmbl-verify 2026-10-15, journal-version pass).
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "CNN1 (VMC, 100 SR steps)",
+      "energy": -72.0288
+    },
+    "ruled": "2026-10-15: withdrawn by the authors in review (Mach. Learn.: Sci. Technol. 4, 015035 (2023), arXiv:2204.07816)",
+    "reason": "arXiv:2204.07816v1 Sec. 7.3.1 prints -0.5002 per site for CNN1 at L = 6 after 100 SR steps, an intermediate stage of a transfer-learning run. The published version describes the 6x6 -> 10x10 -> 36x36 transfer without this energy."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.4",
+      "method": "previous work [23] (Nomura & Imada neural-network solver)",
+      "energy": -134.525952
+    },
+    "ruled": "2026-10-15: withdrawn by the authors in review (Phys. Rev. X 11, 031034 (2021), arXiv:2005.14142)",
+    "reason": "arXiv:2005.14142v1-v3 Table I prints -0.525492(4) per site for 8x8 at J2 = 0.4 (4x4 sublattice structure). The published Table I replaces it with -0.525653(1) (no sublattice structure), which QMBL carries as its own row; the arXiv value is printed nowhere in the journal version."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.45",
+      "method": "previous work [23] (Nomura & Imada neural-network solver)",
+      "energy": -130.845952
+    },
+    "ruled": "2026-10-15: withdrawn by the authors in review (Phys. Rev. X 11, 031034 (2021), arXiv:2005.14142)",
+    "reason": "arXiv:2005.14142v1-v3 Table I prints -0.511117(4) per site for 8x8 at J2 = 0.45 (4x4 sublattice structure). The published Table I replaces it with -0.511331(1) (no sublattice structure), which QMBL carries as its own row; the arXiv value is printed nowhere in the journal version."
+  },
 ];

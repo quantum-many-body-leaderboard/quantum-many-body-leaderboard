@@ -50,7 +50,17 @@
         "conversion": "0.14809 x 36 = 5.33124; sigma 0.00004 x 36 = 0.00144",
         "note": "Stored energy and sigma equal the printed RC/SYM cell x N exactly. Instance agrees: square 6 x 6, PBC, N_up = N_dn = 24, U = 4, t' = 0, standard Hubbard form (no shift; Einf 64 = U N_up N_dn / N). bound_type projected agrees with RULES 4 (constraint release; the paper's 'essentially exact' is not a bound and not an established exact result, since RC 'can converge from below or above'). Primary source: the paper's own computation; VarBench upload by Yiqi Yang 542a7ef 2022-03-17 with this reference, never changed. Venue PRB (peer reviewed). Only row on the instance. Particle-hole mirror of (12,12) printed as its own Table II line: -42.669 + U (N - N_e) = -42.669 + 4 x (36 - 24) = 5.331, 0.00024 (0.12 combined sigma) from 5.33124 (M5b 'identity holds'); a distinct instance, so not a duplicate. The (24,24) line is presumably a separate run rather than a mirrored copy: its CP/UHF bar differs from the (12,12) one ((2) vs (3)) and its CP/SYM cell differs from the exact mirror in the last digit (0.14709 vs -1.18625 + 4/3 = 0.147083), both within error. Same-source values not in the table: CP/UHF 0.14889(2), CP/SYM 0.14709(3) (Table II).",
         "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#57 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 88, 125132 (2013), sources/journal/prb88-125132.pdf, sha256 2e0b4883, pypdf layout + plain; arXiv:1307.2147v3 compared (Table II identical, qmbl-verify/sources/1307.2147v3.txt)",
+          "location": "Table II (p. 11), row '6 x 6 (24, 24)', column RC/SYM",
+          "reported_as": "0.14809(4) per site (E/L, units of t)",
+          "conversion": "0.14809 x 36 = 5.33124; sigma 0.00144",
+          "note": "Table II caption: 'Energy per site in some open-shell Hubbard square lattices at U = 4. The symmetry of the ground state, S^2 = 0, Kx = Ky = 0, is preserved in the trial wave function used in CP/SYM and RC/SYM.' Text: 'The RC results in Table II are essentially exact ground-state energies.' Sec. II C: 'The RC energy will asymptotically converge to the exact ground-state energy. However, it can converge from below or above' — no bound, consistent with 'projected; no strict upper bound property'. Boundary not stated in the table; the paper's clusters are periodic supercells ('the periodic 8 x 8 supercell with N_up = N_dn = 13'), accepted as inferred (2026-10-03 practice). H = -t sum c+c + U sum n_up n_dn, t = 1 (Eq. 1). Own computation; the Science SM cites it as ref. [146] for its constraint-release results. Published 23 September 2013, peer reviewed. Positive per-site energy at n = 4/3 (above half filling) is as printed. No duplicate on the instance.",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#45"
+        }
       }
     }
   ],

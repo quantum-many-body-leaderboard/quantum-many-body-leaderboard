@@ -676,7 +676,9 @@ so are an instance's `params`, whose old value stays in the instance's own `corr
 QMBL's recomputed energy rounded or truncated carries QMBL's digits, the printed value in
 `corrections` ([RULES.md §11](RULES.md#11-corrections)). `verified` records a check that
 found nothing wrong, and an independent re-read of a row QMBL added itself is
-`verified.second_read`. An instance renamed because its upstream name
+`verified.second_read`. A reading of the published version of a paper (RULES.md §8) is
+`verified.journal_read` where the row already carries a reading, and the row's `verified`
+where it carries none; it names the journal file read and the arXiv version compared. An instance renamed because its upstream name
 carries the wrong coupling or size has `relabelled` (the old id, the reason and the evidence);
 the old id, where rows were computed at that coupling, stays with `split` and an exact row QMBL
 computed ([`checks/hubbard-u-labels/`](checks/hubbard-u-labels/)). The size case is an impurity

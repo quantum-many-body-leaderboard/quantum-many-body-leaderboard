@@ -63,7 +63,17 @@
         "conversion": "-3.1739018 x 144 = -457.0418592, sigma 2e-7 x 144 = 0.0000288; stored -457.041866(27) = -3.17390185(19) per site, 0.25 sigma from the printed cell and inside its rounding",
         "note": "Record row. Instance, convention and class agree: 12 x 12 open, h = 3, Pauli TFIM (Eq. 14), single-layer 2D vanilla pRNN with 100 memory units, final estimate from 2e6 exact autoregressive samples, variational, produced by this paper (PixelCNN -3.1739005(5) is the only quoted column). Finer digits, sigma and variance 0.001429 are first author M. Hibat-Allah's upload (75dddcc, 2021-12-13), which replaced his own mislabelled first upload of the 1DRNN cell (5ec0c50, 2021-11-16: -3.1738969 as '2DRNN'). sqrt(0.001429 / 2e6) = 2.67e-5 = stored sigma, so sigma is the SEM of the final 2e6-sample estimate. Variance not printed in the paper (C7). Not a duplicate: the other row of this paper on the instance is the 1DRNN cell -457.0411536 (-3.1738969(5)). No exact reference exists at 144 sites; the lowest variational row stands.",
         "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#4 (qmbl-verify 2026-09-29)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 2, 023358 (2020), sources/journal/prresearch2-023358.pdf, sha256 af5fbd71; pypdf layout + plain. Compared with arXiv:2002.02973v4 (latest; qmbl-verify/sources/2002.02973v4.plain.txt line 1736)",
+          "location": "Appendix F, Table II (p. 13), row h = 3, column 2DRNN; Eq. (14) and Sec. III (p. 4)",
+          "reported_as": "−3.1 739 018(2) (E/N, Pauli, J = 1; thin spaces as printed)",
+          "conversion": "-3.1739018 x 144 = -457.0418592; sigma 2e-7 x 144 = 2.88e-5. Stored -457.041866(27) = -3.17390185(19) per site: the authors' VarBench upload digits (75dddcc, M. Hibat-Allah, 2021-12-13), 0.25 sigma from and inside the rounding of the printed cell",
+          "note": "Record row. Journal = arXiv v4 in every cell of Table II and in the caption (\"2D pRNN wave function (a single layer of 2D vanilla RNN with 100 memory units)\", \"For the estimation of the variational energy ... we use 2 x 10^6 samples\"). Hamiltonian Eq. (14) H = -sum s^z s^z - h sum s^x, Pauli, \"both with open boundary conditions\" (Sec. III), 12 x 12, h = 3: matches the instance, no constant. Variational, produced by this paper (PixelCNN column quoted from Ref. [56]). Reference already names the upload (ruling E5). Not a duplicate: the other row of this paper on the instance is the 1DRNN cell -3.1738969(5) = -457.0411536.",
+          "source_entry": "JA2-j1j2-heisenberg-tfising#1"
+        }
       }
     },
     {
@@ -315,7 +325,17 @@
         "method": "source text of arXiv:2002.02973 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-3.1738969(5)",
         "note": "Table II, row h=3, column 1DRNN: -3.1738969(5) | Same table's DMRG column at h=3 (-3.17389966) and 2DRNN column (-3.1739018(2), which exactly equals the instance's recorded best_per_site/exact_per_site) confirm the printed E/N values are already in the instance's per-site Pauli convention; no rescale needed.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 2, 023358 (2020), sources/journal/prresearch2-023358.pdf, sha256 af5fbd71, pypdf plain; arXiv:2002.02973v4 compared: identical",
+          "location": "Table II (Appendix F), row h = 3, column 1DRNN",
+          "reported_as": "-3.1 738 969(5)",
+          "conversion": "-3.1738969 x 144 = -457.0411536; sigma 5e-7 x 144 = 7.2e-5",
+          "note": "12 x 12 open, Pauli TFIM at h = 3, variational (2e6 samples), own. Duplicate check: the instance's 2DRNN row (VarBench, -457.041866) is the other column; no other row carries -457.0411536.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#28"
+        }
       },
       "compute": {
         "parameters": 152000,
