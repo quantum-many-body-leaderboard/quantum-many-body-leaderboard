@@ -40,6 +40,16 @@
           "conversion": "-0.485583 x 4 x 256 = -497.236992; sigma 0.000008 x 1024 = 0.008192",
           "note": "Record row, read hardest. Energy, sigma (8e-6 per site), 16 × 16 torus, J2 = 0.55, variational all agree; 3.75e-4 per site below the Ref. [7] value −0.485208(4) of the same row. v1 printed −0.48483(1) (then above Ref. [7]); the stored value is v2's. No duplicate on the instance.",
           "source_entry": "VP10-heisenberg-j1j2#25 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table I (p. 054410-4), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 square-lattice', row J2/J1 = 0.55, 16 x 16, column 'Our work'",
+          "reported_as": "−0.485583(8) per site (S.S)",
+          "conversion": "-0.485583 x 1024 = -497.236992; sigma 0.000008 x 1024 = 0.008192",
+          "note": "Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#10"
         }
       },
       "compute": {
@@ -81,7 +91,17 @@
         "method": "source text of arXiv:2211.07749 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; parsed by column from the primary table",
         "reported_as": "-0.485208(4)",
         "note": "Table I of arXiv:2211.07749 (line 190), J2/J1 = 0.55, 16x16, Ref. [7] column | E/J1 per site in S.S units on the L x L periodic torus",
-        "secondary_of": "arXiv:2211.07749"
+        "secondary_of": "arXiv:2211.07749",
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 108, 054410 (2023), sources/journal/prb108-054410.pdf, sha256 62c13865 (pypdf layout + plain); APS abstract page lists no Supplemental Material; compared with arXiv:2211.07749v2 (qmbl/sources/2211.07749.txt/.pdf): every cell of Tables I and III identical",
+          "location": "Table I (p. 054410-4), 'Optimized ground-state energies (in units of J1/spin) ... J1-J2 square-lattice', row J2/J1 = 0.55, 16 x 16, column 'RBM+PP [7]'",
+          "reported_as": "−0.485208(4) per site (S.S)",
+          "conversion": "-0.485208 x 1024 = -496.852992; sigma 0.000004 x 1024 = 0.004096",
+          "note": "Secondary row (RBM+PP of Ref. [7], shared by Y. Nomura per the journal acknowledgments). Energy, sigma, size, boundary, couplings and bound_type agree with the source; no other row on the instance carries the same number from this or a quoted paper.",
+          "source_entry": "JP9-heisenberg-j1j2-hubbard#11"
+        }
       },
       "compute": {
         "parameters": null,
@@ -109,7 +129,7 @@
           "conversion": "quoted -0.485208(4) vs published figure -0.484934: the quoted value lies 2.74e-4 per site lower, 15-30 times the figure decode precision (~1e-5 per site at this scale; circles/triangles checked against the polyline vertices)",
           "checked_on": "2026-09-30",
           "reason": "Settles VP10's question (quote of the published paper, or numbers Nomura shared?): the published PRX prints no 12 x 12 or 16 x 16 energy (only the 6 x 6 / 8 x 8 Table I, the 10 x 10 Table II and the 18 x 18 footnote [73]), and the only place it shows these sizes, Fig. 13, plots energies 1.7-3.2e-4 per site above Roth et al.'s \"Ref. [7]\" cells. Fig. 13 is, by the text's own list, produced without the point-group projection (only the momentum and spin-parity projections are \"always\" applied; the figures produced with the simplified point-group projection are named as Figs. 2, 6-10, 14-16, and Fig. 13 is not among them); its 6 x 6 and 8 x 8 points sit the same way above Table I (e.g. 8 x 8, J2 = 0.5: -0.4982865 vs -0.498886(1)). The Roth cells are therefore not a quote of the published paper but the \"detailed numerical results from Ref. [7]\" Nomura shared (Roth et al. acknowledgment), most likely point-group-projected states of the same method. Options for the ruling: this reference change (secondary, private communication printed in a peer-reviewed paper; peer_reviewed would follow the printing venue, PRB), or RULES.md 8 (\"a cited number that cannot be found in the cited source is not admissible\") if private communications are not admitted. Value and sigma are transcribed correctly from Roth et al. (VP10). ",
-          "source_entry": "VJ2-journal-other#25 (qmbl-verify 2026-09-29; group without a skeptic); ruling 3, Tristan 2026-09-30, whose citation form leads the string",
+          "source_entry": "VJ2-journal-other#25 (qmbl-verify 2026-09-29; group without a skeptic); ruling 3, 2026-09-30, whose citation form leads the string",
           "from": "Y. Nomura and M. Imada, Phys. Rev. X 11, 031034 (2021) (cited as ref [7] in Table I of arXiv:2211.07749)"
         },
         {
@@ -120,8 +140,8 @@
           "version_read": "Phys. Rev. X 11, 031034 (2021), published PDF (sources/journal/prx11-031034.pdf, 19 pp., sha256 32051252..., Distiller 2021-08-12; received 24 Jan 2020, revised 27 Apr 2021, published 12 Aug 2021); text by pypdf plain + layout (work/vj2_prx11-031034.*), digit strings also searched with all spaces removed; Figs. 10 and 13 (vector, inline in pp. 13 and 15) parsed with work/vecparse3.py and decoded by work/decode_prx031_figs.mjs on the journal's own ticks; the method is validated on Fig. 10(b), whose RBM+PP markers reproduce Table I 8 x 8 to <= 2e-6 per site",
           "conversion": "none",
           "checked_on": "2026-09-30",
-          "reason": "Ruling 4 (Tristan, 2026-09-30): a privately provided number printed in a refereed paper is peer-reviewed; this one is printed in Phys. Rev. B 108, 054410 (ruling 3: cited as Nomura, private communication, in that paper; secondary). The VJ2 reading notes that peer_reviewed would follow the printing venue.",
-          "source_entry": "VJ2-journal-other#25 (qmbl-verify 2026-09-29; group without a skeptic); rulings 3 and 4, Tristan 2026-09-30",
+          "reason": "Ruling 4 (2026-09-30): a privately provided number printed in a refereed paper is peer-reviewed; this one is printed in Phys. Rev. B 108, 054410 (ruling 3: cited as Nomura, private communication, in that paper; secondary). The VJ2 reading notes that peer_reviewed would follow the printing venue.",
+          "source_entry": "VJ2-journal-other#25 (qmbl-verify 2026-09-29; group without a skeptic); rulings 3 and 4, 2026-09-30",
           "from": null
         }
       ]
@@ -147,8 +167,18 @@
         "checked_on": "2026-10-07",
         "method": "source text of arXiv:2108.13830 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.48499",
-        "note": "Table 4 ('Energies for varied J2/J1 && system scales'), row 16 x 16, column 0.55; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
-        "secondary_of": null
+        "note": "Table 4 ('Energies for varied J2/J1 && system scales'), row 16 x 16, column 0.55; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF IEEE Trans. Parallel Distrib. Syst. 33(11), 2846-2859 (2022), doi:10.1109/TPDS.2022.3145163, sources/journal/tpds33-2846.pdf, sha256 69666954 (IEEE Xplore, ETH licence, downloaded 2026-10-15); compared with arXiv:2108.13830v4 (latest; byte-identical to qmbl/sources/2108.13830.pdf): Table 4 identical cell by cell; pypdf plain + layout mode (with fonttools), local extraction, no LLM transcription",
+          "location": "journal Table 4 ('Energies for Varied J2/J1 && System Scales'), row '16 × 16', column 0.55 (journal p. 2856; arXiv v4 p. 10)",
+          "reported_as": "-0.48499 (energy per site, S.S units, no error bar printed)",
+          "conversion": "-0.48499 x 4 x 256 = -496.62976",
+          "note": "H = J1/4 sum sigma.sigma + J2/4 sum sigma.sigma with Pauli sigma (Eq. 3), i.e. S.S with J1 = 1, no constant; L x L square lattice, periodic boundary conditions (Sec. 4: 'for the periodic boundary conditions'); final energy of the 106529-parameter CNN after transfer learning from 24 x 24 (Sec. 4.3.3, Stage 2/3; Fig. 11 caption names the 106529-parameter model); no error bar printed anywhere for Table 4 (sigma stays null). Sector S^z = 0 (Neel start, pair-exchange proposals, Sec. 3.1); sign fixed to the Marshall-Peierls rule (Eq. 9), which restricts the ansatz but keeps the energy a variational bound. The chain-restart window (Sec. 3.2.1, 'we terminate the problematic Markov chain and start a new one') is stated identically in the journal; ruling 4 (2026-10-07, variational) stands. peer_reviewed true, reference agrees. Not a duplicate.",
+          "source_entry": "JP6-heisenberg-j1j2#51"
+        }
       },
       "corrections": [
         {
@@ -159,7 +189,7 @@
           "version_read": "arXiv:2108.13830v1, v2, v3, v4 (PDFs downloaded by this reader, md5 equal to the shared-cache copies; pypdf plain + layout text) and the published IEEE TPDS 33(11), 2846-2859 (2022) PDF (IEEE Xplore copy of 2026-10-03 from qmbl-verify-2026-09-29/sources/journal, re-extracted here with pypdf); all five print the same cell",
           "conversion": "-0.48499 x 4 x 256 = -496.62976 (stored -496.62976: agrees; energy not changed)",
           "checked_on": "2026-10-07",
-          "reason": "The stored published string is not printed anywhere in the source. Its parenthetical names the source, which RULES 3 keeps out of method_as_published and method_detail. Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, word for word, and what explains it goes to method_detail via scripts/method_names.mjs. The paper calls its method 'CNN'. The bare key 'CNN' already maps to ['CNN', ''] for Choo et al.'s different network, which shares square_100_P_0.55 and _0.6 with these rows. So the proposal quotes the longer printed label, which gives this network its own key and a detail: large model, Marshall sign (Eq. 9), C4 rotation sum (Eq. 10), fine-tuned by transfer learning from the 24 x 24 state (Sec. 4.3.3, Fig. 5). The 106529 parameters go to compute.parameters through the mapping's extra. Minimal alternative: 'CNN' alone, which leaves the detail empty, as it is now. The sibling row J1J2/square_256_P_0.5 (-508.17024, from the 2026-09-15 pass, outside this group) carries the same string and needs the same change. Keep the old method_names key until that row moves too.",
+          "reason": "The stored published string is not printed anywhere in the source. Its parenthetical names the source, which RULES 3 keeps out of method_as_published and method_detail. Ruling B4 (2026-10-02): a corrected published string quotes a label the source prints, word for word, and what explains it goes to method_detail via scripts/method_names.mjs. The paper calls its method 'CNN'. The bare key 'CNN' already maps to ['CNN', ''] for Choo et al.'s different network, which shares square_100_P_0.55 and _0.6 with these rows. So the proposal quotes the longer printed label, which gives this network its own key and a detail: large model, Marshall sign (Eq. 9), C4 rotation sum (Eq. 10), fine-tuned by transfer learning from the 24 x 24 state (Sec. 4.3.3, Fig. 5). The 106529 parameters go to compute.parameters through the mapping's extra. Minimal alternative: 'CNN' alone, which leaves the detail empty, as it is now. The sibling row J1J2/square_256_P_0.5 (-508.17024, from the 2026-09-15 pass, outside this group) carries the same string and needs the same change. Keep the old method_names key until that row moves too.",
           "source_entry": "RP1-arxiv-2108-13830#40",
           "from": "CNN (Li et al. 2022, sunway supercomputer)"
         },
@@ -167,13 +197,13 @@
           "field": "verified.note",
           "edit": [
             "; no error bar printed |",
-            "; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) |"
+            "; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) |"
           ],
           "checked_on": "2026-10-07",
           "reason": "Ruling 4 of qmbl-verify 2026-10-07: the outlier window stated on the row.",
-          "source_entry": "RP1-arxiv-2108-13830 (ambiguous, bound_type); ruling 4, Tristan 2026-10-07",
+          "source_entry": "RP1-arxiv-2108-13830 (ambiguous, bound_type); ruling 4, 2026-10-07",
           "from": "Table 4 ('Energies for varied J2/J1 && system scales'), row 16 x 16, column 0.55; no error bar printed | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
-          "to": "Table 4 ('Energies for varied J2/J1 && system scales'), row 16 x 16, column 0.55; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table."
+          "to": "Table 4 ('Energies for varied J2/J1 && system scales'), row 16 x 16, column 0.55; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table."
         }
       ],
       "compute": {
@@ -241,8 +271,8 @@
       "family": "tensor network",
       "bound_type": "extrapolated",
       "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
-      "reference": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, Phys. Rev. B 94, 075143 (2016), arXiv:1112.3331",
-      "peer_reviewed": true,
+      "reference": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-10-07",
       "provenance": "primary",
       "verified": {
@@ -252,6 +282,28 @@
         "note": "Table I, row J2 = 0.55, column L=16 | Energy per site in S.S units; the table's own L = 4 and L = 6 ED columns equal QMBL's exact rows. The finite-size values are extrapolated linearly in 1/Dc^2 (text), so they are not upper bounds.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+          "location": "Table I",
+          "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+          "checked_on": "2026-10-15",
+          "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+          "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15",
+          "from": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, Phys. Rev. B 94, 075143 (2016), arXiv:1112.3331"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "location": "Table I",
+          "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+          "checked_on": "2026-10-15",
+          "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+          "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15",
+          "from": true
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,

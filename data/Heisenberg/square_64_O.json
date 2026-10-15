@@ -28,7 +28,17 @@
         "method": "arXiv HTML parsed locally, one value per table cell; no LLM transcription",
         "reported_as": "E0/N_b = 0.3537355(1) (magnitude, per bond, N_b = 112), L = 8, open",
         "note": "Table 2, \"SSE data for L x L systems with open boundary conditions. The ground state energy is normalized by the number of interaction bonds N_b = 2(L^2 - L)\", row L = 8. Printed as a magnitude; E/N = -(E0/N_b) N_b / N = -0.61903712 in S.S units, Pauli total = 4 N E/N. The L = 6 value agrees with the exact-diagonalization row on square_36_O to 3.3e-7 (2 sigma), and L = 10 and 16 reproduce the rows QMBL already quotes from this paper via arXiv:2605.13807.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf; pypdf layout mode (journal PDF; same row re-read in plain mode), arXiv HTML parsed with node one value per <td>",
+          "location": "Table 2 (open L x L, E0/N_b magnitude, N_b = 2(L^2 - L)), row L = 8",
+          "reported_as": "0.3537355(1) (E0/N_b, magnitude, per bond)",
+          "conversion": "Pauli total = -4 N_b (E0/N_b) = -4 x 112 x 0.3537355 = -158.473504 (E/N = -0.61903712 S.S); sigma = 4 x 112 x 1e-7 = 0.0000448 (stored to 3 significant digits)",
+          "note": "Journal, arXiv v2 and v1 print the same value. BC O, size square N=64, J = 1 with H = sum S_i.S_j (no constant; the SSE constant is subtracted internally only, Sec. 2.1), sign-free SSE QMC so bound_type exact (stochastic) with sigma, peer_reviewed true and reference J. Stat. Mech. (2026) 043101 agree.",
+          "source_entry": "JP2-arxiv-2601-20189#46"
+        }
       },
       "compute": {
         "parameters": null,
@@ -78,7 +88,17 @@
           "reported_as": "-0.619013(2) (per site, S.S units, J1 = 1)",
           "conversion": "Eq. (7) H = J1 sum S_i.S_j, S_i.S_i = 3/4, J1 = 1, per-site S.S energies (the paper's own 'Exact' cells equal QMBL's exact rows /4N on 6x6 and 10x10); stored Pauli total = 4N x E/N, sigma with the same factor; -0.619013 x 4 x 64 = -158.467328; sigma 2e-6 x 256 = 0.000512",
           "note": "8x8 OBC, J2 = 0, D = 8, Dc = 16; own; variational, 2.4e-5/site above Sandvik's SSE exact (stochastic) -0.61903712 (stored -158.473504(45)); the paper prints no exact value for L = 8 ('-'); peer_reviewed true. v1/v2 printed -0.6187(6). No duplicate on the instance. Metric flags M6/M8 answered from the source: this PEPS energy is a Monte Carlo estimate (Eq. 2: 'The energy is evaluated through MC sampling according to the configuration weight W^2(S)'), and the printed bar is the MC sampling error ('The MC sampling error is order of 10^-6', Fig. 5 caption). The row is sampled; units.mjs counts it deterministic through its \\bpeps\\b marker. No eligibility consequence here because sigma is stored, but the classifier line is wrong for MC-evaluated PEPS (see report). The contraction cut-off systematic is not in the bar (App. A: Dc = 16 vs 20 differ by 8e-6 per site on 10x10 D=8).",
-          "source_entry": "VP9-tv-hubbard-heisenberg#62 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP9-tv-hubbard-heisenberg#62 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 95, 195154 (2017), sources/journal/prb95-195154.pdf, sha256 b442a8cd (layout mode for Table II, plain mode for Table I); compared arXiv:1611.09467v3 (sources/arxiv/1611.09467v3.pdf, sha256 659d1461): Tables I and II identical in every PEPS cell; pypdf layout mode unless noted",
+          "location": "Table II, row D = 8, column L = 8",
+          "reported_as": "-0.619013(2) per site (S.S)",
+          "conversion": "-0.619013 x 4 x 64 = -158.467328; sigma 0.000002 x 256 = 0.000512",
+          "note": "Open-boundary L x L square (finite PEPS); per-site S.S energies; stored Pauli total = E/N x 4N. Dc = 2D 'adopted throughout' (Sec. IV and Appendix A), so D = 10 runs use Dc = 20. Energy is a Monte Carlo average (bar = MC error), variational. Journal and arXiv v3 identical.",
+          "source_entry": "JP10-hubbard-heisenberg#43"
         }
       },
       "compute": {
@@ -106,8 +126,8 @@
           "version_read": "arXiv:1611.09467v3 PDF (= Phys. Rev. B 95, 195154 (2017)), pypdf layout + plain and pdftotext (VP9, VP15)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (Tristan, 2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored.",
-          "source_entry": "VP9-tv-hubbard-heisenberg#62 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored.",
+          "source_entry": "VP9-tv-hubbard-heisenberg#62 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -144,7 +164,17 @@
           "reported_as": "-0.619033(3) (per site, S.S units, J1 = 1)",
           "conversion": "Eq. (7) H = J1 sum S_i.S_j, S_i.S_i = 3/4, J1 = 1, per-site S.S energies (the paper's own 'Exact' cells equal QMBL's exact rows /4N on 6x6 and 10x10); stored Pauli total = 4N x E/N, sigma with the same factor; -0.619033 x 4 x 64 = -158.472448; sigma 3e-6 x 256 = 0.000768",
           "note": "8x8 OBC, J2 = 0, D = 10, Dc = 20; own; variational, 4.1e-6/site (1.4 printed sigma) above Sandvik's SSE -0.61903712(18); first printed in v3; peer_reviewed true. Context: the same D=10 column is 13 sigma below exact at L = 6 (row defect on square_36_O), so a size-dependent downward bias of this column cannot be excluded, but this cell is above exact and carries no defect. No duplicate on the instance. Metric flags M6/M8 answered from the source: this PEPS energy is a Monte Carlo estimate (Eq. 2: 'The energy is evaluated through MC sampling according to the configuration weight W^2(S)'), and the printed bar is the MC sampling error ('The MC sampling error is order of 10^-6', Fig. 5 caption). The row is sampled; units.mjs counts it deterministic through its \\bpeps\\b marker. No eligibility consequence here because sigma is stored, but the classifier line is wrong for MC-evaluated PEPS (see report). The contraction cut-off systematic is not in the bar (App. A: Dc = 16 vs 20 differ by 8e-6 per site on 10x10 D=8).",
-          "source_entry": "VP9-tv-hubbard-heisenberg#63 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP9-tv-hubbard-heisenberg#63 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 95, 195154 (2017), sources/journal/prb95-195154.pdf, sha256 b442a8cd (layout mode for Table II, plain mode for Table I); compared arXiv:1611.09467v3 (sources/arxiv/1611.09467v3.pdf, sha256 659d1461): Tables I and II identical in every PEPS cell; pypdf layout mode unless noted",
+          "location": "Table II, row D = 10, column L = 8",
+          "reported_as": "-0.619033(3) per site (S.S)",
+          "conversion": "-0.619033 x 4 x 64 = -158.472448; sigma 0.000003 x 256 = 0.000768",
+          "note": "Open-boundary L x L square (finite PEPS); per-site S.S energies; stored Pauli total = E/N x 4N. Dc = 2D 'adopted throughout' (Sec. IV and Appendix A), so D = 10 runs use Dc = 20. Energy is a Monte Carlo average (bar = MC error), variational. Journal and arXiv v3 identical.",
+          "source_entry": "JP10-hubbard-heisenberg#44"
         }
       },
       "compute": {
@@ -172,8 +202,8 @@
           "version_read": "arXiv:1611.09467v3 PDF (= Phys. Rev. B 95, 195154 (2017)), pypdf layout + plain and pdftotext (VP9, VP15)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (Tristan, 2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored.",
-          "source_entry": "VP9-tv-hubbard-heisenberg#63 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored.",
+          "source_entry": "VP9-tv-hubbard-heisenberg#63 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -192,7 +222,7 @@
       "family": "RNN",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144",
+      "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
       "peer_reviewed": true,
       "source": "repo-data-2026-09-16",
       "provenance": "primary",
@@ -212,8 +242,8 @@
           "version_read": "sources/2502.17144-repo-final_energy_data.json (the authors' pickle, read 2026-09-16); the notebook read by VP7 and its skeptic on 2026-09-29",
           "conversion": "-0.619034469127655 x 4 x 64 = -158.472824097",
           "checked_on": "2026-10-02",
-          "reason": "The authors' best RNN at open boundaries is the lowest of the s = 2 and 4 schedules, here s = 4, r = 0.475; this row was built from the lowest of all ten, s = 0.5, r = 0.475 (-0.6190494894981384 +/- 0.00001254102938802611 per site), a run the authors exclude and one of the two s = 0.5 runs that sit below the SSE energy (0.99 and 0.85 combined sigma). Table V's open 6 x 6 entry is the s = 2 run by the same rule. Ruling E8, Tristan 2026-10-02: follow the authors' selection.",
-          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous; the skeptic refuted only its count of runs below SSE); ruling E8, Tristan 2026-10-02",
+          "reason": "The authors' best RNN at open boundaries is the lowest of the s = 2 and 4 schedules, here s = 4, r = 0.475; this row was built from the lowest of all ten, s = 0.5, r = 0.475 (-0.6190494894981384 +/- 0.00001254102938802611 per site), a run the authors exclude and one of the two s = 0.5 runs that sit below the SSE energy (0.99 and 0.85 combined sigma). Table V's open 6 x 6 entry is the s = 2 run by the same rule. Ruling E8, 2026-10-02: follow the authors' selection.",
+          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous; the skeptic refuted only its count of runs below SSE); ruling E8, 2026-10-02",
           "from": -158.476669312
         },
         {
@@ -224,8 +254,8 @@
           "version_read": "sources/2502.17144-repo-final_energy_data.json (the authors' pickle, read 2026-09-16); the notebook read by VP7 and its skeptic on 2026-09-29",
           "conversion": "0.0000057981170573067555 x 4 x 64 = 0.00148432",
           "checked_on": "2026-10-02",
-          "reason": "The authors' best RNN at open boundaries is the lowest of the s = 2 and 4 schedules, here s = 4, r = 0.475; this row was built from the lowest of all ten, s = 0.5, r = 0.475 (-0.6190494894981384 +/- 0.00001254102938802611 per site), a run the authors exclude and one of the two s = 0.5 runs that sit below the SSE energy (0.99 and 0.85 combined sigma). Table V's open 6 x 6 entry is the s = 2 run by the same rule. Ruling E8, Tristan 2026-10-02: follow the authors' selection.",
-          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous; the skeptic refuted only its count of runs below SSE); ruling E8, Tristan 2026-10-02",
+          "reason": "The authors' best RNN at open boundaries is the lowest of the s = 2 and 4 schedules, here s = 4, r = 0.475; this row was built from the lowest of all ten, s = 0.5, r = 0.475 (-0.6190494894981384 +/- 0.00001254102938802611 per site), a run the authors exclude and one of the two s = 0.5 runs that sit below the SSE energy (0.99 and 0.85 combined sigma). Table V's open 6 x 6 entry is the s = 2 run by the same rule. Ruling E8, 2026-10-02: follow the authors' selection.",
+          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous; the skeptic refuted only its count of runs below SSE); ruling E8, 2026-10-02",
           "from": 0.0032105
         },
         {
@@ -236,8 +266,8 @@
           "version_read": "sources/2502.17144-repo-final_energy_data.json (the authors' pickle, read 2026-09-16); the notebook read by VP7 and its skeptic on 2026-09-29",
           "conversion": "3.361816141023155e-7 x 64^2 x 16 = 0.022031998",
           "checked_on": "2026-10-02",
-          "reason": "The authors' best RNN at open boundaries is the lowest of the s = 2 and 4 schedules, here s = 4, r = 0.475; this row was built from the lowest of all ten, s = 0.5, r = 0.475 (-0.6190494894981384 +/- 0.00001254102938802611 per site), a run the authors exclude and one of the two s = 0.5 runs that sit below the SSE energy (0.99 and 0.85 combined sigma). Table V's open 6 x 6 entry is the s = 2 run by the same rule. Ruling E8, Tristan 2026-10-02: follow the authors' selection.",
-          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous; the skeptic refuted only its count of runs below SSE); ruling E8, Tristan 2026-10-02",
+          "reason": "The authors' best RNN at open boundaries is the lowest of the s = 2 and 4 schedules, here s = 4, r = 0.475; this row was built from the lowest of all ten, s = 0.5, r = 0.475 (-0.6190494894981384 +/- 0.00001254102938802611 per site), a run the authors exclude and one of the two s = 0.5 runs that sit below the SSE energy (0.99 and 0.85 combined sigma). Table V's open 6 x 6 entry is the s = 2 run by the same rule. Ruling E8, 2026-10-02: follow the authors' selection.",
+          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous; the skeptic refuted only its count of runs below SSE); ruling E8, 2026-10-02",
           "from": 0.10307333
         },
         {
@@ -248,7 +278,7 @@
           "location": "HeisenbergRNN@29bf62a Square/utils.py, Square/scripts/enlargeSquare_scaling.py; sources/2502.17144-repo-final_energy_data.json",
           "version_read": "the compute pass of 2026-09-24 (route2a) as recorded in this block; the authors' pickle as committed in qmbl sources/",
           "checked_on": "2026-10-02",
-          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous); ruling E8, Tristan 2026-10-02",
+          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous); ruling E8, 2026-10-02",
           "conversion": "step_schedule_exp_decay(L = 8, s = 4, r = 0.475) = int(401000 x exp(-0.95) + 8000) = 163083",
           "reason": "Ruling E8: the row is the authors' best run at open boundaries, s = 4, r = 0.475, in place of the lowest of all ten, s = 0.5 (add_repo_data_rows.mjs). The block was written for the s = 0.5 run (20723 steps at this size); the code's schedule at s = 4 gives 163083."
         },
@@ -262,7 +292,7 @@
           "location": "HeisenbergRNN@29bf62a Square/utils.py, Square/scripts/enlargeSquare_scaling.py; sources/2502.17144-repo-final_energy_data.json",
           "version_read": "the compute pass of 2026-09-24 (route2a) as recorded in this block; the authors' pickle as committed in qmbl sources/",
           "checked_on": "2026-10-02",
-          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous); ruling E8, Tristan 2026-10-02",
+          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous); ruling E8, 2026-10-02",
           "conversion": "none (text field)",
           "reason": "The run the block describes follows the row (ruling E8).",
           "from": "Parameter count is for the OBC (tensorized-GRU) 2D RNN with d_h = 256, shared across all L, so scope is the ansatz. No hardware or run time is stated for the OBC runs. The step count for this row follows from the schedule formula with the (s, r) named in the verification note but is not printed as a number, so iterations stays null. || route2a 2026-09-24: Run: repository run boundary=open, scale s = 0.5, rate r = 0.475, E/N = -0.619049489 +- 1.25e-5 vs row -0.61904949; the match is unique at 1e-7 or better against the other nine runs of that boundary and size. iterations = 20723 = Adam steps at this size only = step_schedule_exp_decay(L = 8, s = 0.5, r = 0.475) (num_training_steps accumulates over sizes and global_step is restored from the previous size's checkpoint, so the loop at size L runs exactly the increment). Not counted (pre-training on smaller lattices, iterative retraining): cumulative steps from scratch through L = 8 = 71723 (L = 6 stages 51000). Paper Eq. (6) as printed, s x [C exp(-r(L - L0)) + F] with C = 101e3, F = 2e3, gives 20530; the code's C-term is (1000 + 100000 s), not 101000 s - they agree only at s = 1; the code is what ran. (The existing block quoted Eq. (6) as 's x C exp(-r(L-L0)) + F', a misplaced bracket: the HTML has s x [C exp(...) + F].) samples = 100 per optimisation step (run script 'num_samples = 100  # Batch size', split over the 4 GPUs as ceil(100/4) = 25 per device). CONTRADICTS the existing samples = 10000: 10000 is the final-energy estimate count (Fig. 3/12 captions; script 'num_samples_final_energy_estimate': 10000), not a per-step count; replaced, old value kept here. device/n_devices: the OBC runs were submitted by the same many_runs.sh through run_oneNode_fourGPU.sh (4 GPUs, constraint a100-80gb) as the PBC runs; the paper states four A100s only for the PBC timing figures (Figs. 7, 8). Existing device/n_devices were null/null. parameters 1180674 checked: Table I shapes give PBC 2(4d_h+4d_sigma)d_h + 2d_h + 4d_h^2 + d_h d_sigma + d_sigma = 791,554 and OBC 2(2d_h x 2d_sigma x d_h) + 2d_h + 2d_h^2 + d_h d_sigma + d_sigma = 1,180,674 at d_h = 256, d_sigma = 2 (exact match); size-independent (weights shared over sites, same network for all L). Also flagged: the code uses LRSchedule_constant(1e-5) for L > 6 where Appendix C prints gamma = 5e-5 (no effect on cost). Confidence medium: iterations are evaluated from the authors' run script at the (s, r) identified by energy matching, not printed. || pass 2026-09-27: evaluation: every step at L = 8 > 6 is C4v-symmetrised (config_step3 copied for each larger L, l_symmetries from --lsym default \"1\"): each amplitude is the sum over the 8 C4v images (symmetries.py, spin parity off), in the gradient log-amplitudes and in every connected configuration of the local energy; evaluations_per_amplitude 8 (verify/VERIFY.md Part 2 #15 and agent-B.md: with it the repo's per-step timings give 2.8-3.2 TFLOP/s per A100, without it 0.35-0.40). The sampler draws from the unsymmetrised RNN in one autoregressive pass (RNNWF.sample), so proposals_per_sample 1 is not multiplied by the symmetry sum. local_energy all: energy.py tiles every bond and evaluates the network on all flipped configurations, parallel pairs included, then masks them with the sign factor. Adam: sr none. use_complex = 0, float32: complex false. Pre-training on smaller lattices is not in this row's iterations (DATA.md exclusion; agent-B.md gives the cumulative factors).",
@@ -278,11 +308,23 @@
           "location": "HeisenbergRNN@29bf62a Square/utils.py, Square/scripts/enlargeSquare_scaling.py; sources/2502.17144-repo-final_energy_data.json",
           "version_read": "the compute pass of 2026-09-24 (route2a) as recorded in this block; the authors' pickle as committed in qmbl sources/",
           "checked_on": "2026-10-02",
-          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous); ruling E8, Tristan 2026-10-02",
+          "source_entry": "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous); ruling E8, 2026-10-02",
           "conversion": "L = 6 stages 1000 + 100000 s = 401000; Eq. (6) at s = 4: 4 x (101000 exp(-0.95) + 2000) = 164243",
           "reason": "The same numbers for the s = 4 run, by the formulas the block states for s = 0.5 (which they reproduce: 51000, 71723, 20530).",
           "from": "Parameter count is for the OBC (tensorized-GRU) 2D RNN with d_h = 256, shared across all L, so scope is the ansatz. No hardware or run time is stated for the OBC runs. The step count for this row follows from the schedule formula with the (s, r) named in the verification note but is not printed as a number, so iterations stays null. || route2a 2026-09-24: Run: repository run boundary=open, scale s = 4, rate r = 0.475, E/N = -0.619034469 +- 5.80e-6, the authors' best run at open boundaries (they choose among s = 2 and 4; this block was written on 2026-09-24 for the lowest of all ten runs, s = 0.5, which the row carried until 2026-10-02, ruling E8). iterations = 163083 = Adam steps at this size only = step_schedule_exp_decay(L = 8, s = 4, r = 0.475) (num_training_steps accumulates over sizes and global_step is restored from the previous size's checkpoint, so the loop at size L runs exactly the increment). Not counted (pre-training on smaller lattices, iterative retraining): cumulative steps from scratch through L = 8 = 71723 (L = 6 stages 51000). Paper Eq. (6) as printed, s x [C exp(-r(L - L0)) + F] with C = 101e3, F = 2e3, gives 20530; the code's C-term is (1000 + 100000 s), not 101000 s - they agree only at s = 1; the code is what ran. (The existing block quoted Eq. (6) as 's x C exp(-r(L-L0)) + F', a misplaced bracket: the HTML has s x [C exp(...) + F].) samples = 100 per optimisation step (run script 'num_samples = 100  # Batch size', split over the 4 GPUs as ceil(100/4) = 25 per device). CONTRADICTS the existing samples = 10000: 10000 is the final-energy estimate count (Fig. 3/12 captions; script 'num_samples_final_energy_estimate': 10000), not a per-step count; replaced, old value kept here. device/n_devices: the OBC runs were submitted by the same many_runs.sh through run_oneNode_fourGPU.sh (4 GPUs, constraint a100-80gb) as the PBC runs; the paper states four A100s only for the PBC timing figures (Figs. 7, 8). Existing device/n_devices were null/null. parameters 1180674 checked: Table I shapes give PBC 2(4d_h+4d_sigma)d_h + 2d_h + 4d_h^2 + d_h d_sigma + d_sigma = 791,554 and OBC 2(2d_h x 2d_sigma x d_h) + 2d_h + 2d_h^2 + d_h d_sigma + d_sigma = 1,180,674 at d_h = 256, d_sigma = 2 (exact match); size-independent (weights shared over sites, same network for all L). Also flagged: the code uses LRSchedule_constant(1e-5) for L > 6 where Appendix C prints gamma = 5e-5 (no effect on cost). Confidence medium: iterations are evaluated from the authors' run script at the (s, r) identified by energy matching, not printed. || pass 2026-09-27: evaluation: every step at L = 8 > 6 is C4v-symmetrised (config_step3 copied for each larger L, l_symmetries from --lsym default \"1\"): each amplitude is the sum over the 8 C4v images (symmetries.py, spin parity off), in the gradient log-amplitudes and in every connected configuration of the local energy; evaluations_per_amplitude 8 (verify/VERIFY.md Part 2 #15 and agent-B.md: with it the repo's per-step timings give 2.8-3.2 TFLOP/s per A100, without it 0.35-0.40). The sampler draws from the unsymmetrised RNN in one autoregressive pass (RNNWF.sample), so proposals_per_sample 1 is not multiplied by the symmetry sum. local_energy all: energy.py tiles every bond and evaluates the network on all flipped configurations, parallel pairs included, then masks them with the sign factor. Adam: sr none. use_complex = 0, float32: complex false. Pre-training on smaller lattices is not in this row's iterations (DATA.md exclusion; agent-B.md gives the cumulative factors).",
           "to": "Parameter count is for the OBC (tensorized-GRU) 2D RNN with d_h = 256, shared across all L, so scope is the ansatz. No hardware or run time is stated for the OBC runs. The step count for this row follows from the schedule formula with the (s, r) named in the verification note but is not printed as a number, so iterations stays null. || route2a 2026-09-24: Run: repository run boundary=open, scale s = 4, rate r = 0.475, E/N = -0.619034469 +- 5.80e-6, the authors' best run at open boundaries (they choose among s = 2 and 4; this block was written on 2026-09-24 for the lowest of all ten runs, s = 0.5, which the row carried until 2026-10-02, ruling E8). iterations = 163083 = Adam steps at this size only = step_schedule_exp_decay(L = 8, s = 4, r = 0.475) (num_training_steps accumulates over sizes and global_step is restored from the previous size's checkpoint, so the loop at size L runs exactly the increment). Not counted (pre-training on smaller lattices, iterative retraining): cumulative steps from scratch through L = 8 = 564083 (L = 6 stages 401000). Paper Eq. (6) as printed, s x [C exp(-r(L - L0)) + F] with C = 101e3, F = 2e3, gives 164243; the code's C-term is (1000 + 100000 s), not 101000 s - they agree only at s = 1; the code is what ran. (The existing block quoted Eq. (6) as 's x C exp(-r(L-L0)) + F', a misplaced bracket: the HTML has s x [C exp(...) + F].) samples = 100 per optimisation step (run script 'num_samples = 100  # Batch size', split over the 4 GPUs as ceil(100/4) = 25 per device). CONTRADICTS the existing samples = 10000: 10000 is the final-energy estimate count (Fig. 3/12 captions; script 'num_samples_final_energy_estimate': 10000), not a per-step count; replaced, old value kept here. device/n_devices: the OBC runs were submitted by the same many_runs.sh through run_oneNode_fourGPU.sh (4 GPUs, constraint a100-80gb) as the PBC runs; the paper states four A100s only for the PBC timing figures (Figs. 7, 8). Existing device/n_devices were null/null. parameters 1180674 checked: Table I shapes give PBC 2(4d_h+4d_sigma)d_h + 2d_h + 4d_h^2 + d_h d_sigma + d_sigma = 791,554 and OBC 2(2d_h x 2d_sigma x d_h) + 2d_h + 2d_h^2 + d_h d_sigma + d_sigma = 1,180,674 at d_h = 256, d_sigma = 2 (exact match); size-independent (weights shared over sites, same network for all L). Also flagged: the code uses LRSchedule_constant(1e-5) for L > 6 where Appendix C prints gamma = 5e-5 (no effect on cost). Confidence medium: iterations are evaluated from the authors' run script at the (s, r) identified by energy matching, not printed. || pass 2026-09-27: evaluation: every step at L = 8 > 6 is C4v-symmetrised (config_step3 copied for each larger L, l_symmetries from --lsym default \"1\"): each amplitude is the sum over the 8 C4v images (symmetries.py, spin parity off), in the gradient log-amplitudes and in every connected configuration of the local energy; evaluations_per_amplitude 8 (verify/VERIFY.md Part 2 #15 and agent-B.md: with it the repo's per-step timings give 2.8-3.2 TFLOP/s per A100, without it 0.35-0.40). The sampler draws from the unsymmetrised RNN in one autoregressive pass (RNNWF.sample), so proposals_per_sample 1 is not multiplied by the symmetry sum. local_energy all: energy.py tiles every bond and evaluates the network on all flipped configurations, parallel pairs included, then masks them with the sign factor. Adam: sr none. use_complex = 0, float32: complex false. Pre-training on smaller lattices is not in this row's iterations (DATA.md exclusion; agent-B.md gives the cumulative factors)."
+        },
+        {
+          "field": "reference",
+          "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+          "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+          "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+          "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: authors' data release github.com/mschuylermoss/HeisenbergRNN@29bf62ac28 (cited in the journal as Ref. [101], Data Availability), Square/final_plotting/final_data/final_energy_data_plotting.pkl fetched 2026-10-15 to sources/repo-HeisenbergRNN/ (sha256 565359ec, identical at main), read with a restricted unpickler + numpy: ['open']['rate=0.475']['scale=4'], L=8; plotted in journal Fig. 12(a), not printed; E/N -0.619034469127655 ± 0.0000057981170573067555 (std error), Var(E_loc/N) 3.361816141023155e-7 (S·S units); -0.619034469127655 × 4 × 64 = -158.472824097; sigma 0.0000057981170573067555 × 4 × 64 = 0.00148432; variance 3.361816141023155e-7 × 64^2 × 16 = 0.022031998; std_error^2 × 10^4 / var = 1.000000. Authors' own run, the lowest of the s = 2 and 4 schedules (authors' rule, ruling E8); lowest of all ten here is s=0.5, r=0.475 (E/N -0.6190494894981384), excluded by the authors' rule. Journal: Eq. (1) H = Σ⟨ij⟩ S_i·S_j (no constant), N = L², U(1) zero-magnetisation sector (Sec. II.C), 10×10^3 samples per final energy (Fig. 3 / Fig. 12 captions), data openly available at Ref. [101] (Data Availability). The value is plotted, not printed, in both journal and arXiv v3; journal text and figure captions match v3. Variational, L×L open; open-boundary runs agree with PEPS references (App. G); sits above the instance's SSE row.",
+          "source_entry": "JP5-arxiv-2502-17144#28",
+          "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
       ],
       "compute": {

@@ -1,5 +1,5 @@
 // Instances whose name carries a different coupling or size from the one their rows were computed
-// at (RULES.md 11; ruling 2026-09-16, extended 2026-09-17, Tristan; the impurity bath size below,
+// at (RULES.md 11; ruling 2026-09-16, extended 2026-09-17; the impurity bath size below,
 // qmbl-verify 2026-09-29).
 //
 // VarBench's Hubbard couplings between 1 and 10 are the grid 10^(k/9). The 14-site chain
@@ -67,7 +67,7 @@ export const RELABELS = [
     // row ran; its energy is a valid bound at 7.74264 and at 7.74263683. Until 2026-10-02 it moved with
     // the instance. The sibling 5 + 5 script and the variance pattern of the 4 + 4 DMRG series place it
     // at 7.74264, so it stays there with the ground state at that U (qmbl-verify 2026-09-29, VB2#46;
-    // ruling E6, Tristan 2026-10-02).
+    // ruling E6, 2026-10-02).
     from: "Hubbard/square_16_P_4_7.74264", to: "Hubbard/square_16_P_4_7.74263683", params: { U: 7.74263683 },
     reason: "The name's 7.74264 rounds the coupling of this Hamiltonian, 7.74263683 (10^(8/9)). The exact diagonalization, -16.509154825265142, is the ground state there; at U = 7.74264 the ground state is 6.1e-7 higher, so the stored exact energy sat below the ground state of the instance as named.",
     keep: [{ method: "DMRG (MaxBondDim ~3200)", energy: -16.5091541,
@@ -78,7 +78,7 @@ export const RELABELS = [
     // Ground states at the two couplings differ by 3.0e-9. The DMRG row, run at 4.64158882, resolves
     // them: its variance puts it within 7e-11 of the ground state there, and it sits 2.2e-9 below the
     // one at 4.64158883. Until 2026-10-02 it moved with the instance, inside the validator's 1e-8 band;
-    // now it stays at its own U (qmbl-verify 2026-09-29, VB2#15; ruling E6, Tristan 2026-10-02).
+    // now it stays at its own U (qmbl-verify 2026-09-29, VB2#15; ruling E6, 2026-10-02).
     from: "Hubbard/chain_14_P_4_4.64158882", to: "Hubbard/chain_14_P_4_4.64158883", params: { U: 4.64158883 },
     reason: "The name's 4.64158882 misrounds the coupling of this Hamiltonian, 4.6415888336 (10^(6/9)). The exact diagonalization, -10.896957984833337, is the ground state at U = 4.64158883 and 3.03e-9 above the ground state at 4.64158882.",
     keep: [{ method: "DMRG (MaxBondDim ~1500)", energy: -10.896957987,

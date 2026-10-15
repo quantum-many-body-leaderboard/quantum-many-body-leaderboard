@@ -18,7 +18,7 @@
       "method_as_published": "QMC",
       "family": "other",
       "bound_type": "exact",
-      "bound_type_reason": "corrected: Sign-problem-free loop QMC on the bipartite square lattice, taken to its own limit: T = 1e-4 on 100 spins, and the authors state agreement with T = 1e-3 within the error bars. Exact (stochastic) with the printed sigma (RULES.md 4; ruling 5, Tristan 2026-09-19). Sandvik's SSE row on this instance, -251.46244(8), is 0.05 sigma away and keeps the exact reference.",
+      "bound_type_reason": "corrected: Sign-problem-free loop QMC on the bipartite square lattice, taken to its own limit: T = 1e-4 on 100 spins, and the authors state agreement with T = 1e-3 within the error bars. Exact (stochastic) with the printed sigma (RULES.md 4; ruling 5, 2026-09-19). Sandvik's SSE row on this instance, -251.46244(8), is 0.05 sigma away and keeps the exact reference.",
       "reference": "[paper](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.90.064425)",
       "source": "varbench@2024-10-22",
       "provenance": "imported",
@@ -31,8 +31,8 @@
           "version_read": "arXiv:1405.3259v2 PDF, pypdf layout mode (Lubasch, Cirac & Banuls, PRB 90, 064425, 2014); v1 checked for the digit",
           "conversion": "none (classification)",
           "checked_on": "2026-09-18",
-          "reason": "Sign-problem-free loop QMC on the bipartite square lattice, taken to its own limit: T = 1e-4 on 100 spins, and the authors state agreement with T = 1e-3 within the error bars. Exact (stochastic) with the printed sigma (RULES.md 4; ruling 5, Tristan 2026-09-19). Sandvik's SSE row on this instance, -251.46244(8), is 0.05 sigma away and keeps the exact reference.",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A6 (2026-09-16); ruling 5, Tristan 2026-09-19",
+          "reason": "Sign-problem-free loop QMC on the bipartite square lattice, taken to its own limit: T = 1e-4 on 100 spins, and the authors state agreement with T = 1e-3 within the error bars. Exact (stochastic) with the printed sigma (RULES.md 4; ruling 5, 2026-09-19). Sandvik's SSE row on this instance, -251.46244(8), is 0.05 sigma away and keeps the exact reference.",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A6 (2026-09-16); ruling 5, 2026-09-19",
           "from": null
         },
         {
@@ -54,9 +54,19 @@
         "method": "arXiv:1405.3259v2 PDF, pypdf layout mode (Lubasch, Cirac & Banuls, PRB 90, 064425); v1 checked for the digit",
         "location": "Appendix C, Table III, column 10 x 10",
         "reported_as": "-0.628656(2) (per site, S.S units)",
-        "conversion": "-0.628656 * 100 * 4 = -251.4624; the stored -251.46248 carries a seventh digit no version of the paper prints (8e-5 = 0.1 sigma), kept under the 2026-09-16 precision ruling (ruling 4a, Tristan 2026-09-19)",
+        "conversion": "-0.628656 * 100 * 4 = -251.4624; the stored -251.46248 carries a seventh digit no version of the paper prints (8e-5 = 0.1 sigma), kept under the 2026-09-16 precision ruling (ruling 4a, 2026-09-19)",
         "note": "open 10x10, S = 1/2 Heisenberg, loop algorithm at T = 1e-4; Liu et al. PRB 95, 195154 and Sharir et al. quote the same -0.628656(2)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 90, 064425 (2014), sources/journal/prb90-064425.pdf, sha256 fe000363; pypdf layout + plain. Compared with arXiv:1405.3259v2 (latest; qmbl-verify-2026-09-29/sources/1405.3259v2.va6.plain.txt line 1497)",
+          "location": "Appendix C, Table III (p. 15), column 10 x 10; text p. 16",
+          "reported_as": "−0.628656(2) (energy per site, S.S units)",
+          "conversion": "-0.628656 x 100 x 4 = -251.4624; sigma 2e-6 x 400 = 0.0008. The stored seventh digit (-251.46248, 8e-5 = 0.1 sigma) is not printed in the journal either; kept under ruling 4a (2026-09-19)",
+          "note": "Journal = arXiv v2: same Table III value and the same sentence \"The presented values and errors correspond to temperature T = 10^-4, and they agree with the ones corresponding to T = 10^-3 within the error bars.\" H = sum S_l.S_m (Sec. V B, antiferromagnetic, S units), \"square lattice geometry with open boundary conditions and size N = L x L considered throughout this work\" (p. 2). Own computation with the ALPS loop algorithm (Table III caption \"computed with the ALPS library\"), so primary. Exact (stochastic) with sigma 0.0008 stands. Not a duplicate: Sandvik SSE -251.462448(72) is another computation; Moss et al.'s tensorized-GRU -251.4624(36) is a variational row with its own sigma.",
+          "source_entry": "JA2-j1j2-heisenberg-tfising#2"
+        }
       }
     },
     {
@@ -109,7 +119,7 @@
         "reported_as": "| -251.4430 | 0.0010 | 0.1102 | 100 | 0 | RNN | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rnn.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -251.443/(4 x 100) = -0.628607500",
         "note": "vmc_rnn.sh: open 10x10 square lattice, Pauli, J = 1, Marshall sign rule (bipartite), full Hilbert space, exact autoregressive sampling, FastLSTMNet 2 x 16, Adam 10^5 steps. The stored (sigma, Var) imply 1.1e5 independent samples (sigma/sqrt(Var/2^20) = 3.09): from the 2021 run (c12e2c8, 2021-10-14, Dian Wu, data-repository cell 'To be published'), not the linked 2024 script (d54f7c0). 0.0195 above the QMC reference: a valid bound.",
-        "source_entry": "VB3-varbench-code-heisenberg#26 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#26 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -139,8 +149,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked vmc_rnn.sh runs a plain FastLSTMNet, and vmc.py has no symmetrisation option, so the link does not implement the method named; VarBench first linked a vmc_rnn_sym.sh that is not in varbench/methods. The number was uploaded years before the script and is printed in no paper the reader found (VB1/VB3), so it is cited to the dataset with the uploader named. No record at stake. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB3-varbench-code-heisenberg#27 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked vmc_rnn.sh runs a plain FastLSTMNet, and vmc.py has no symmetrisation option, so the link does not implement the method named; VarBench first linked a vmc_rnn_sym.sh that is not in varbench/methods. The number was uploaded years before the script and is printed in no paper the reader found (VB1/VB3), so it is cited to the dataset with the uploader named. No record at stake. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB3-varbench-code-heisenberg#27 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rnn.sh)"
         }
       ]
@@ -264,7 +274,7 @@
         "reported_as": "| -251.4534 | | 0.3203 | 100 | 0 | DMRG (MaxTruncError ~1.87E-6, MaxBondDim=10000, Extrapolated Energy = - 251.4628 +/- 0.0019) | [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/square_100_O.jl) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -251.4534/(4 x 100) = -0.628633500",
         "note": "Program square_100_O.jl: 10x10, xperiodic = yperiodic = false (lines 99-103), nearest-neighbour edges once, lattice_heisenberg_MPO in Pauli form (lines 80-82), Neel start with conserve_qns (Sz = 0), maxdim 4 ... 10000, two sweeps each (line 113). M8 (method text reads extrapolated): answered, -251.4534 is the energy the MPS reached at MaxBondDim = 10000 (the program has no extrapolation); variational is right, and the extrapolated number is carried on its own row. VarBench SM: 'we only report full-variance calculations and forgo extrapolations to allow comparisons with other methods' (arXiv:2302.04919 SM S3, sources/2302.04919.txt lines 765-767). 0.0091 above the exact (stochastic) QMC -251.46248(80). Variance: entered 0.02002 (21a4642, 2022-03-26) and multiplied by 16 the next day (0.32032, 626f8ca; 0.3203 in d871a56): the run printed S.S units (the file's unused chain MPO is S.S). 0.3203 (Pauli) gives var/(E - E0) = 35, in line with VarBench's 6x6 square DMRG rows (38-40); 0.02002 would give 2.2. History of the energy: -251.4437712 (a0766e7, 2021-12-05, 'max trunc error ~4E-6', MaxBondDim 9442) replaced by -251.4534 (dd105fb, 2022-02-22); nothing restored. Program linked 2024-08-08 (d944d80).",
-        "source_entry": "VB3-varbench-code-heisenberg#28 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#28 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -387,7 +397,7 @@
         "reported_as": "'Extrapolated Energy = - 251.4628 +/- 0.0019' inside the method cell of null",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -251.4628/(4 x 100) = -0.628657000",
         "note": "QMBL split row: the number is printed inside VarBench's method string, 'Extrapolated Energy = - 251.4628 +/- 0.0019' (c342a72, 2022-03-27, J. M. Silvester; earlier '- 251.46(3) +/- 0.002' (dd105fb) and '- 251.463 +/- 0.002' (2892ab4); a first 'extrapolated energy: -251.32413735' of 2021-12-05 was removed the same day, 7567499). M6 (deterministic but sigma 0.0019): the +/- is the uploader's uncertainty of a truncation-error extrapolation, not a statistical error; square_100_O.jl contains no extrapolation and the fit is not documented. bound_type extrapolated is right. Agrees with the exact (stochastic) QMC -251.46248(80) (0.2 combined sigma).",
-        "source_entry": "VB3-varbench-code-heisenberg#29 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#29 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -440,7 +450,7 @@
         "reported_as": "band centre -0.628638445 per site (E/N, S.S units), band half-height 1.099e-6 (decoded from the vector data; no printed digits in the paper)",
         "conversion": "-0.628638445 x 4 x 100 = -251.455378 (stored -251.45538); 1.099e-6 x 400 = 0.00044 (stored sigma 0.00044). Calibration: y ticks -0.62858..-0.62868 fit to 2e-9; the PEPS, PixelCNN and QMC bands on the same axes decode to -0.628601(2), -0.628627(1), -0.628656(2), the published values and bars of Liu et al. and Sharir et al.",
         "note": "Instance, convention (H = 1/4 sum sigma.sigma = S.S), OBC, U(1) + C4v sector and variational class agree; the number is the paper's own (first-author VarBench upload 1ab3fe8, 2021-12-13, identical to the plotted band). Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko (arXiv:2502.17144v3 = PRB 112, 134450, Table V, 'open 10 x 10') quote it as 'RNN [38] -0.628638(4)': same digits, a bar 3.6x the plotted 1.1e-6; the stored bar follows the primary figure and the upload (sqrt(Var/N_s) with Var = 0.19397/16 in S.S units implies N_s = 1.0e6). energy_variance 0.19397 is printed in no version (upload only). Venue: NeurIPS 2021 ML4PS workshop, non-archival (peer_reviewed question already raised by VP16 on square_36_O). Not a duplicate: no other row on square_100_O carries -0.62863845 (Moss's own best RNN is -251.4624, the minGRU -251.4548).",
-        "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#16 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#16 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -485,8 +495,8 @@
           "version_read": "arXiv:2206.12363v2 (8 Mar 2023) and v1 PDFs, pypdf plain + layout (VA5); Phys. Rev. Research 5, L032001 (2023) published PDF (VJ2)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "MPS-RNN and tensor-RNN are autoregressive networks: the energy is a Monte Carlo estimate over 10^6 exact samples, and the stored sigma is that estimate's error (the upload's Var/sigma^2 = 10^6). The method string's fallback reads 'MPS' and 'bond dimension' as deterministic markers. Ruling 2 (Tristan, 2026-09-30): MPS-RNN and tensor-RNN rows are marked sampled. No eligibility change: sigma is stored.",
-          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#23, VJ2-journal-other#0 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "MPS-RNN and tensor-RNN are autoregressive networks: the energy is a Monte Carlo estimate over 10^6 exact samples, and the stored sigma is that estimate's error (the upload's Var/sigma^2 = 10^6). The method string's fallback reads 'MPS' and 'bond dimension' as deterministic markers. Ruling 2 (2026-09-30): MPS-RNN and tensor-RNN rows are marked sampled. No eligibility change: sigma is stored.",
+          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#23, VJ2-journal-other#0 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -544,8 +554,8 @@
           "version_read": "arXiv:2206.12363v2 (8 Mar 2023) and v1 PDFs, pypdf plain + layout (VA5); Phys. Rev. Research 5, L032001 (2023) published PDF (VJ2)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "MPS-RNN and tensor-RNN are autoregressive networks: the energy is a Monte Carlo estimate over 10^6 exact samples, and the stored sigma is that estimate's error (the upload's Var/sigma^2 = 10^6). The method string's fallback reads 'MPS' and 'bond dimension' as deterministic markers. Ruling 2 (Tristan, 2026-09-30): MPS-RNN and tensor-RNN rows are marked sampled. No eligibility change: sigma is stored.",
-          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#24, VJ2-journal-other#1 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "MPS-RNN and tensor-RNN are autoregressive networks: the energy is a Monte Carlo estimate over 10^6 exact samples, and the stored sigma is that estimate's error (the upload's Var/sigma^2 = 10^6). The method string's fallback reads 'MPS' and 'bond dimension' as deterministic markers. Ruling 2 (2026-09-30): MPS-RNN and tensor-RNN rows are marked sampled. No eligibility change: sigma is stored.",
+          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#24, VJ2-journal-other#1 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -603,8 +613,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -p --follow); arXiv:2206.12363v1 and v2 and the HAL deposit of the published paper read by VA5-hubbard-heisenberg-tfising-j1j2, the journal version Phys. Rev. Research 5, L032001 (2023) by VJ2-journal-other",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "Ruling 1 (Tristan, 2026-09-30), applied to this row by ruling A5 (2026-10-02): the number is cited to where it was published, the VarBench dataset (Wu et al., Science 386, 296 (2024)), with the author's paper kept as the method reference; not a RULES.md 8 removal, because the number is printed, in the dataset. The paper prints no digits for this energy; it shows it only as a plotted point in Fig. 4(a), which is not read (table over figure, 2026-09-30; the decoded -251.4192 of VA5 and VJ2 is not used). The stored value is the first author's upload of 2022-07-11 (VarBench 0524667), between arXiv v1 (2022-06-24) and v2 (2023-03-08), unchanged since.",
-          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#28 (qmbl-verify 2026-09-29; skeptic upheld; figure-decoded, not applied), VJ2-journal-other#2 (figure-decoded, not applied); ruling 1, Tristan 2026-09-30; ruling A5, Tristan 2026-10-02",
+          "reason": "Ruling 1 (2026-09-30), applied to this row by ruling A5 (2026-10-02): the number is cited to where it was published, the VarBench dataset (Wu et al., Science 386, 296 (2024)), with the author's paper kept as the method reference; not a RULES.md 8 removal, because the number is printed, in the dataset. The paper prints no digits for this energy; it shows it only as a plotted point in Fig. 4(a), which is not read (table over figure, 2026-09-30; the decoded -251.4192 of VA5 and VJ2 is not used). The stored value is the first author's upload of 2022-07-11 (VarBench 0524667), between arXiv v1 (2022-06-24) and v2 (2023-03-08), unchanged since.",
+          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#28 (qmbl-verify 2026-09-29; skeptic upheld; figure-decoded, not applied), VJ2-journal-other#2 (figure-decoded, not applied); ruling 1, 2026-09-30; ruling A5, 2026-10-02",
           "from": "[paper](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.5.L032001) [code](https://github.com/cqsl/mps-rnn)"
         },
         {
@@ -615,8 +625,8 @@
           "version_read": "arXiv:2206.12363v2 (8 Mar 2023) and v1 PDFs, pypdf plain + layout (VA5); Phys. Rev. Research 5, L032001 (2023) published PDF (VJ2)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "MPS-RNN and tensor-RNN are autoregressive networks: the energy is a Monte Carlo estimate over 10^6 exact samples, and the stored sigma is that estimate's error (the upload's Var/sigma^2 = 10^6). The method string's fallback reads 'MPS' and 'bond dimension' as deterministic markers. Ruling 2 (Tristan, 2026-09-30): MPS-RNN and tensor-RNN rows are marked sampled. No eligibility change: sigma is stored.",
-          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#28, VJ2-journal-other#2 (qmbl-verify 2026-09-29; skeptic upheld; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "MPS-RNN and tensor-RNN are autoregressive networks: the energy is a Monte Carlo estimate over 10^6 exact samples, and the stored sigma is that estimate's error (the upload's Var/sigma^2 = 10^6). The method string's fallback reads 'MPS' and 'bond dimension' as deterministic markers. Ruling 2 (2026-09-30): MPS-RNN and tensor-RNN rows are marked sampled. No eligibility change: sigma is stored.",
+          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#28, VJ2-journal-other#2 (qmbl-verify 2026-09-29; skeptic upheld; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -673,7 +683,7 @@
         "reported_as": "| -249.1033 | 0.0051 | 26.13060 | 100 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -249.1033/(4 x 100) = -0.622758250",
         "note": "scripts/Heisenberg/square_100_O/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 2 --L 10 --zero_mag --net rbm --seed 123 --show_progress' -> 10x10 square lattice, open (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.022: the stored sigma is the error of that final estimate. 2.3592 above the exact (stochastic) QMC -251.46248(80). History: entered 10f5c12 (2022-07-11, Dian Wu) as -248.367 | 0.0059 | 35.6700 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -248.367 -> -249.1033; sigma 0.0059 -> 0.0051; variance 35.6700 -> 26.13060; linked 5047bfd (2024-07-30). The value change sits in af1d48f, titled 'Add Jastrow baseline' (a re-run: lower energy and variance). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#30 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#30 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -728,7 +738,7 @@
         "reported_as": "| -248.1073 | 0.0056 | 31.73600 | 100 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -248.1073/(4 x 100) = -0.620268250",
         "note": "scripts/Heisenberg/square_100_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 2 --L 10 --zero_mag --net jas --seed 123 --show_progress' -> 10x10 square lattice, open (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.018: the stored sigma is the error of that final estimate. 3.3552 above the exact (stochastic) QMC -251.46248(80). History: entered af1d48f (2022-09-01, Dian Wu) as -247.9477 | 0.0057 | 31.69845 | Jastrow baseline; 59e621a (2022-09-13, 'Update Jastrow and RBM baselines'): energy -247.9477 -> -248.1073; sigma 0.0057 -> 0.0056; variance 31.69845 -> 31.73600; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#31 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#31 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -755,7 +765,17 @@
         "reported_as": "-0.6286561 (+/- 2e-7) per site in S.S units",
         "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"QMC [49]\" = arXiv:2601.20189. The square-lattice Heisenberg AFM is bipartite and sign-problem-free, so SSE QMC is numerically exact here (RULES.md 4).",
         "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
-        "found_via": null
+        "found_via": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF J. Stat. Mech. (2026) 043101 (DOI 10.1088/1742-5468/ae4f80), sources/journal/jstat2026-043101.pdf, sha256 7d00e92b; compared with arXiv:2601.20189v2 HTML (sources/arxiv-2601.20189v2.html) and v1 HTML; PDFs sources/arxiv-2601.20189v2.pdf sha256 6e393c87, v1 03c01bdf; pypdf layout mode (journal PDF; same row re-read in plain mode), arXiv HTML parsed with node one value per <td>",
+          "location": "Table 2 (open L x L, E0/N_b magnitude, N_b = 2(L^2 - L)), row L = 10",
+          "reported_as": "0.3492534(1) (E0/N_b, magnitude, per bond)",
+          "conversion": "Pauli total = -4 N_b (E0/N_b) = -4 x 180 x 0.3492534 = -251.462448 (E/N = -0.62865612 S.S); sigma = 4 x 180 x 1e-7 = 0.000072 (stored to 3 significant digits)",
+          "note": "Journal, arXiv v2 and v1 print the same value. BC O, size square N=100, J = 1 with H = sum S_i.S_j (no constant; the SSE constant is subtracted internally only, Sec. 2.1), sign-free SSE QMC so bound_type exact (stochastic) with sigma, peer_reviewed true and reference J. Stat. Mech. (2026) 043101 agree. Row from add_sweep2_rows.mjs (quoted via arXiv:2605.13807), already re-based on Table 2 on 2026-09-29; stored value now matches the producing paper's journal print.",
+          "source_entry": "JP2-arxiv-2601-20189#13"
+        }
       },
       "compute": {
         "parameters": null,
@@ -849,7 +869,7 @@
       "family": "RNN",
       "bound_type": "variational",
       "bound_type_reason": "assigned during source verification (RULES.md 4)",
-      "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144",
+      "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
       "peer_reviewed": true,
       "source": "sweep-tables-2026-09-14",
       "provenance": "primary",
@@ -923,6 +943,18 @@
           "reason": "Value verified: Table V prints 'This work (best RNN) -0.628656(9)' (open 10x10), which is this run rounded to its error bar (-0.628656005859375 +/- 8.532e-6); the release carries the variance of the same state, which the paper plots (Fig. 12(b)) but does not print. Attaching it makes the row V-score capable, as add_error_metrics.mjs did for the triangular companion paper's L = 6 row.",
           "source_entry": "VP7-arxiv-2502-17144#2 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": null
+        },
+        {
+          "field": "reference",
+          "to": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+          "reported_as": "PHYSICAL REVIEW B 112, 134450 (2025) (running head of every page); Crossref DOI 10.1103/6ccd-wzhz, article number 134450, published 2025-10-28",
+          "location": "journal PDF page headers; Crossref works/10.1103/6ccd-wzhz",
+          "version_read": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article)",
+          "conversion": "none",
+          "checked_on": "2026-10-15",
+          "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: Table V, 'open 10×10' block, row 'This work (best RNN)'; variance from the data release ['open']['rate=0.475']['scale=2'] L=10; −0.628656(9) (E/N, S·S units); data release run s=2, r=0.475: E/N -0.628656005859375, std error 0.000008532164450863953, Var(E_loc/N) 7.279783021658659e-7; -0.628656 × 4 × 100 = -251.4624; sigma 9e-6 × 4 × 100 = 0.0036; variance 7.279783021658659e-7 × 100^2 × 16 = 0.11647653; the run rounds to the printed value (-0.6286560 ± 8.53e-6); std_error^2 × 10^4 / var = 1.000000 (10^4 samples, Fig. 3/12 captions), so var = Var(H)/N^2. Printed best variational energy of the authors' own run (bold 'This work'); open best = lowest of the s = 2 and 4 schedules (Table V caption, authors' notebook), here s = 2. Variational, own computation, L×L open, U(1) zero-magnetisation sector imposed (Sec. II), singlet GS; peer_reviewed true is right. Journal and arXiv v3 identical.",
+          "source_entry": "JP5-arxiv-2502-17144#0",
+          "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
       ]
     },
@@ -1027,7 +1059,17 @@
         "reported_as": "-0.628627 (+/- 0.000001) per site in S.S units",
         "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"PixelCNN [52]\" = Phys. Rev. Lett. 124, 020503 (2020).",
         "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
-        "found_via": null
+        "found_via": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Lett. 124, 020503 (2020), sources/journal/prl124-020503.pdf, sha256 bb1e1a6d, SM naqs_supp.pdf = prl124-020503-supp.pdf, sha256 52237eb9 (journals.aps.org, node fetch); compared with arXiv:1902.04057v3: Table II identical; pypdf plain",
+          "location": "Table II, row 10 × 10, column NAQS",
+          "reported_as": "10 × 10 −0.628601(2) −0.628627(1) −0.628656(2)",
+          "conversion": "-0.628627 x 400 = -251.4508; sigma 1e-6 x 400 = 4e-4",
+          "note": "Journal = arXiv v3. OBC, variational. The text writes H with Pauli matrices but the table is per-site S.S (it sits next to the S.S QMC value), so the stored x4N conversion is right. Side note: the text's 'relative error 3.5e-5 ± 0.4e-5' does not follow from the table (|(-0.628627+0.628656)/0.628656| = 4.6e-5). No duplicate on square_100_O.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#65"
+        }
       },
       "compute": {
         "parameters": null,
@@ -1127,8 +1169,18 @@
           "location": "Table II, row 'D=10': '-0.603535(1) -0.619033(3) -0.628601(2) -0.635025(3) -0.639764(3) -0.643391(3) -0.66948(42)', column L = 10",
           "reported_as": "-0.628601(2) per site, S.S units",
           "conversion": "-0.628601 x 4 x 100 = -251.4404; sigma 0.000002 x 400 = 0.0008",
-          "note": "Second reading, from the producing paper: value and bar agree. The same row's L = 6 cell lies 13 printed sigma below the 6 x 6 open-boundary exact energy and is flagged there (Heisenberg/square_36_O, defects.mjs FP2-arxiv-1611-09467#3). This cell sits 5.5e-5 per site above Sandvik's SSE -0.6286561(2) on this instance, within the paper's own accuracy trend (relative error 8.7e-5 at D = 10 on 10 x 10, Sec. IV), and nothing points at it: left unflagged (ruling E11, Tristan 2026-10-03). The paper gives its bars as the Monte Carlo sampling error.",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#57 (qmbl-verify 2026-09-29, ambiguous); ruling E11, Tristan 2026-10-03 (leave unflagged)"
+          "note": "Second reading, from the producing paper: value and bar agree. The same row's L = 6 cell lies 13 printed sigma below the 6 x 6 open-boundary exact energy and is flagged there (Heisenberg/square_36_O, defects.mjs FP2-arxiv-1611-09467#3). This cell sits 5.5e-5 per site above Sandvik's SSE -0.6286561(2) on this instance, within the paper's own accuracy trend (relative error 8.7e-5 at D = 10 on 10 x 10, Sec. IV), and nothing points at it: left unflagged (ruling E11, 2026-10-03). The paper gives its bars as the Monte Carlo sampling error.",
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#57 (qmbl-verify 2026-09-29, ambiguous); ruling E11, 2026-10-03 (leave unflagged)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 95, 195154 (2017), sources/journal/prb95-195154.pdf, sha256 b442a8cd (APS, shared cache); compared with arXiv:1611.09467v3 (work/arxiv, pypdf): Table I and II cells used here identical; pypdf plain",
+          "location": "Table II, row D = 10, column L = 10 (also Table I, 10 × 10 J2 = 0, GO, D = 10)",
+          "reported_as": "D = 10 ... −0.628601(2)",
+          "conversion": "-0.628601 x 400 = -251.4404; sigma 2e-6 x 400 = 8e-4",
+          "note": "Journal read. OBC, S.S per site, variational. The prior pass's duplicate 'PEPS (bond dimension = 10)' row is no longer on data/Heisenberg/square_100_O.json; the other Liu rows there are D = 8 GO (-0.628507) and SU D = 10 (-0.62611), different numbers. The method string does not name D = 10 (method_detail 'gradient optimization'); the D = 8 row names its D.",
+          "source_entry": "JP11-j1j2-heisenberg-hubbard#67"
         }
       },
       "compute": {
@@ -1180,8 +1232,8 @@
           "version_read": "arXiv:1611.09467v3 PDF (= Phys. Rev. B 95, 195154 (2017)), pypdf layout + plain and pdftotext (VP9, VP15)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (Tristan, 2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored.",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#55, VP15-hubbard-j1j2-heisenberg#57 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored.",
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#55, VP15-hubbard-j1j2-heisenberg#57 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -1218,7 +1270,17 @@
           "reported_as": "-0.628507(1) (per site, S.S units, J1 = 1)",
           "conversion": "Eq. (7) H = J1 sum S_i.S_j, S_i.S_i = 3/4, J1 = 1, per-site S.S energies (the paper's own 'Exact' cells equal QMBL's exact rows /4N on 6x6 and 10x10); stored Pauli total = 4N x E/N, sigma with the same factor; -0.628507 x 4 x 100 = -251.4028; sigma 1e-6 x 400 = 0.0004",
           "note": "10x10 OBC ('except for those on open edges', Sec. II), J2 = 0, D = 8, Dc = 16 (Table II caption), GO after SU; own computation; variational (PEPS, above the instance's QMC exact -0.6286562 by 1.49e-4/site); peer_reviewed true (PRB 95, 195154). v1/v2 printed this cell as -0.6280(2); v3 re-optimised. No duplicate: the other PEPS row on the instance (-251.4404, 'Finite PEPS, gradient optimization') is the D = 10 GO cell. Metric flags M6/M8 answered from the source: this PEPS energy is a Monte Carlo estimate (Eq. 2: 'The energy is evaluated through MC sampling according to the configuration weight W^2(S)'), and the printed bar is the MC sampling error ('The MC sampling error is order of 10^-6', Fig. 5 caption). The row is sampled; units.mjs counts it deterministic through its \\bpeps\\b marker. No eligibility consequence here because sigma is stored, but the classifier line is wrong for MC-evaluated PEPS (see report). The contraction cut-off systematic is not in the bar (App. A: Dc = 16 vs 20 differ by 8e-6 per site on 10x10 D=8).",
-          "source_entry": "VP9-tv-hubbard-heisenberg#58 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP9-tv-hubbard-heisenberg#58 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 95, 195154 (2017), sources/journal/prb95-195154.pdf, sha256 b442a8cd (layout mode for Table II, plain mode for Table I); compared arXiv:1611.09467v3 (sources/arxiv/1611.09467v3.pdf, sha256 659d1461): Tables I and II identical in every PEPS cell; pypdf layout mode unless noted",
+          "location": "Table II, row D = 8, column L = 10 (same cell as Table I, 10 x 10 J2 = 0, GO, D = 8)",
+          "reported_as": "-0.628507(1) per site (S.S)",
+          "conversion": "-0.628507 x 4 x 100 = -251.4028; sigma 0.000001 x 400 = 0.0004",
+          "note": "Open-boundary L x L square (finite PEPS); per-site S.S energies; stored Pauli total = E/N x 4N. Dc = 2D 'adopted throughout' (Sec. IV and Appendix A), so D = 10 runs use Dc = 20. Energy is a Monte Carlo average (bar = MC error), variational. Journal and arXiv v3 identical. Not a duplicate of 'Finite PEPS, gradient optimization' -251.4404 (that is the D = 10 cell -0.628601(2)).",
+          "source_entry": "JP10-hubbard-heisenberg#39"
         }
       },
       "compute": {
@@ -1246,8 +1308,8 @@
           "version_read": "arXiv:1611.09467v3 PDF (= Phys. Rev. B 95, 195154 (2017)), pypdf layout + plain and pdftotext (VP9, VP15)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (Tristan, 2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored.",
-          "source_entry": "VP9-tv-hubbard-heisenberg#58 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored.",
+          "source_entry": "VP9-tv-hubbard-heisenberg#58 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -1284,7 +1346,17 @@
           "reported_as": "-0.62611(1) (per site, S.S units, J1 = 1)",
           "conversion": "Eq. (7) H = J1 sum S_i.S_j, S_i.S_i = 3/4, J1 = 1, per-site S.S energies (the paper's own 'Exact' cells equal QMBL's exact rows /4N on 6x6 and 10x10); stored Pauli total = 4N x E/N, sigma with the same factor; -0.62611 x 400 = -250.444; sigma 1e-5 x 400 = 0.004",
           "note": "10x10 OBC, J2 = 0, simple-update PEPS at D = 10, energy evaluated with Dc = 2D = 20 ('In all these calculations, we use Dc=2D', p. 5); own computation; variational (4.0e-3 relative above the QMC exact, consistent with the text's 'approximately 10^-2 at D=8, which changes only a little for up to D=10'); peer_reviewed true. v2 printed -0.6261(1). No duplicate on the instance. Metric flags M6/M8 answered from the source: this PEPS energy is a Monte Carlo estimate (Eq. 2: 'The energy is evaluated through MC sampling according to the configuration weight W^2(S)'), and the printed bar is the MC sampling error ('The MC sampling error is order of 10^-6', Fig. 5 caption). The row is sampled; units.mjs counts it deterministic through its \\bpeps\\b marker. No eligibility consequence here because sigma is stored, but the classifier line is wrong for MC-evaluated PEPS (see report). The contraction cut-off systematic is not in the bar (App. A: Dc = 16 vs 20 differ by 8e-6 per site on 10x10 D=8; SU at D=10 not tested).",
-          "source_entry": "VP9-tv-hubbard-heisenberg#59 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP9-tv-hubbard-heisenberg#59 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 95, 195154 (2017), sources/journal/prb95-195154.pdf, sha256 b442a8cd (layout mode for Table II, plain mode for Table I); compared arXiv:1611.09467v3 (sources/arxiv/1611.09467v3.pdf, sha256 659d1461): Tables I and II identical in every PEPS cell; pypdf layout mode unless noted",
+          "location": "Table I, column 10 x 10 J2/J1 = 0.0, SU sub-column, row D = 10",
+          "reported_as": "-0.62611(1) per site (S.S)",
+          "conversion": "-0.62611 x 4 x 100 = -250.444; sigma 0.00001 x 400 = 0.004",
+          "note": "Open-boundary L x L square (finite PEPS); per-site S.S energies; stored Pauli total = E/N x 4N. Dc = 2D 'adopted throughout' (Sec. IV and Appendix A), so D = 10 runs use Dc = 20. Energy is a Monte Carlo average (bar = MC error), variational. Journal and arXiv v3 identical.",
+          "source_entry": "JP10-hubbard-heisenberg#40"
         }
       },
       "compute": {
@@ -1312,8 +1384,8 @@
           "version_read": "arXiv:1611.09467v3 PDF (= Phys. Rev. B 95, 195154 (2017)), pypdf layout + plain and pdftotext (VP9, VP15)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (Tristan, 2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored. The simple-update state of the same table is evaluated the same way and printed with the same kind of bar.",
-          "source_entry": "VP9-tv-hubbard-heisenberg#59 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, Tristan 2026-09-30",
+          "reason": "The energy of these finite PEPS is not a tensor contraction but a Monte Carlo average over spin configurations weighted by W^2(S), each W(S) contracted approximately by boundary MPS; the printed bar is the MC sampling error. The method string's fallback reads 'PEPS' as a deterministic marker. Ruling 2 (2026-09-30): finite PEPS with Monte Carlo gradients are marked sampled. No eligibility change: sigma is stored. The simple-update state of the same table is evaluated the same way and printed with the same kind of bar.",
+          "source_entry": "VP9-tv-hubbard-heisenberg#59 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -1341,7 +1413,17 @@
         "method": "source text of arXiv:2502.17144 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.62864114(5)",
         "note": "Table V, 'open 10x10' block, row 'This work (zero-variance)' | S.S convention, no rescale",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 112, 134450 (2025) (DOI 10.1103/6ccd-wzhz, published 28 Oct 2025), sources/journal/prb112-134450.pdf, sha256 ba3722e0; compared with arXiv:2502.17144v3 (13 Oct 2025), qmbl/sources/2502.17144.pdf, sha256 e3e68ab0: every number with 4+ decimals is identical in both (token diff; only DOIs/arXiv ids differ); no separate supplement (appendices A-G in the article); pypdf plain + layout mode (pypdf + fonttools via uv --with, no system install)",
+          "location": "Table V, 'open 10×10' block, row 'This work (zero-variance)'",
+          "reported_as": "−0.62864114(5) (E/N, S·S units, Eq. (1) H = Σ⟨ij⟩ S_i·S_j, no constant)",
+          "conversion": "-0.62864114 × 4 × 100 = -251.456456; sigma 5e-8 × 4 × 100 = 0.00002",
+          "note": "Zero-variance extrapolation (linear fit of E vs variance over the s = 2, 4 runs, wild bootstrap 10^3; Table V caption, Sec. III): not a bound, bound_type extrapolated is right. Journal and arXiv v3 print the same digits. Printed bar is the bootstrap SE (Table III caption); prior pass flagged it as understated vs the bootstrap spread for periodic L=12/14 (prior-findings), not re-raised here. L×L open, N=100, J=1, no couplings beyond NN; peer_reviewed true is right.",
+          "source_entry": "JP5-arxiv-2502-17144#1"
+        }
       },
       "compute": {
         "parameters": 1180674,
@@ -1362,7 +1444,7 @@
       "defect": {
         "flag": "sigma-understated",
         "finding": "The printed bar 5e-8 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6286411361 and SE 4.84e-8 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.53e-6 per site (31x the bar); propagating each run's Monte-Carlo error through the fit gives 1.30e-5. Against the SSE (Sandvik, via arXiv:2605.13807 Table 2) value -0.6286561000 the row sits above by 1.50e-5 per site: 299 printed sigma, 9.8 bootstrap SD, 1.2 propagated sigma. Value and bound_type (extrapolated) are right: Table V (open 10 x 10, This work (zero-variance)) prints −0.62864114(5), x 4 x 100 = -251.456456. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-        "source_entry": "VP7-arxiv-2502-17144#5 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+        "source_entry": "VP7-arxiv-2502-17144#5 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
       },
       "corrections": [
         {
@@ -1422,7 +1504,7 @@
           "reported_as": "-0.628605(6) (per site, S.S)",
           "conversion": "-0.628605 x 400 = -251.442; sigma 6e-6 x 400 = 0.0024",
           "note": "Open 10x10 / 16x16 square, J = 1, S.S per-site convention (the table's own QMC column equals Sandvik's stored exact rows), bound_type variational (final VMC energy, no extrapolation), one-standard-error bar. Own computation, arXiv preprint (May 2026), peer_reviewed false correct. No other row on the instance carries this number (no duplicate). Method string matches Table VI caption and Table V (3 layers, d_h = 256, c4v, iterative retraining from 6x6; final evaluation c4v on 100,000 samples); a different network from the Table II cold-start row -0.628637(4), so not a duplicate.",
-          "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#43 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#43 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1483,7 +1565,7 @@
           "reported_as": "-0.62840(2) per site, S.S units (Eq. 39 block: Pauli products with J1/4)",
           "conversion": "-0.6284 x 4 x 100 = -251.36 (agrees with the stored -251.36); sigma 0.00002 x 400 = 0.008 (agrees)",
           "note": "Second reading from the source. 10 x 10 open boundaries = square_100_O, fixed by the paper's own reference energy -0.628656 [80] (Liu et al.'s L = 10 OBC value) and its 10 x 10 OBC scaling study (C3); J2 = 0, H in S.S units, variational (end-of-training energy of a 2D pRNN, d_h = 200, Marshall sign, Adam (lr 5e-4, 2e5 iterations)), own number, no symmetry projection. Method string checked against Sec. III C and Table I. peer_reviewed false is right (v1 only; no journal version on 2026-09-29). C6/C7 caveat: '(n)' is undefined and the sample count of the end-of-training estimate is not stated (training used N_s = 200 per step); not a record row, so this does not matter here. No duplicate on the instance (no other row carries this number; this paper's other row is the minSR result).",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#61 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#61 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1540,7 +1622,7 @@
           "reported_as": "-0.628486(6) per site, S.S units (Eq. 39 block: Pauli products with J1/4)",
           "conversion": "-0.628486 x 4 x 100 = -251.3944 (agrees with the stored -251.3944); sigma 0.000006 x 400 = 0.0024 (agrees)",
           "note": "Second reading from the source. 10 x 10 open boundaries = square_100_O, fixed by the paper's own reference energy -0.628656 [80] (Liu et al.'s L = 10 OBC value) and its 10 x 10 OBC scaling study (C3); J2 = 0, H in S.S units, variational (end-of-training energy of a 2D pRNN, d_h = 200, Marshall sign, minSR with lambda = 3e-4 ||T||^(2/3) (1e5 iterations)), own number, no symmetry projection. Method string checked against Sec. III C and Table I. peer_reviewed false is right (v1 only; no journal version on 2026-09-29). C6/C7 caveat: '(n)' is undefined and the sample count of the end-of-training estimate is not stated (training used N_s = 200 per step); not a record row, so this does not matter here. No duplicate on the instance (no other row carries this number; this paper's other row is the Adam result).",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#62 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#62 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {

@@ -51,8 +51,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked script recompiles programs/vmc_hubbard, whose committed uniform program hard-codes its cluster (parameters nx, nh), so as committed it builds no valid cluster, not this instance; the inputs otherwise match it (VB2). Levy et al. quote the 8 x 8 VMC energies as 'VMC [14]' (arXiv:2308.08594 Table I), but the reader found the stored digits only in the upload. So the number is cited to the dataset with the uploader named. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB2-varbench-code-hubbard#90 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked script recompiles programs/vmc_hubbard, whose committed uniform program hard-codes its cluster (parameters nx, nh), so as committed it builds no valid cluster, not this instance; the inputs otherwise match it (VB2). Levy et al. quote the 8 x 8 VMC energies as 'VMC [14]' (arXiv:2308.08594 Table I), but the reader found the stored digits only in the upload. So the number is cited to the dataset with the uploader named. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB2-varbench-code-hubbard#90 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_28_8/VMC-uniform/vmc_hubbard.sh)"
         }
       ]
@@ -83,8 +83,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked script recompiles programs/vmc_hubbard, whose committed uniform program hard-codes its cluster (parameters nx, nh), so as committed it builds no valid cluster, not this instance; the inputs otherwise match it (VB2). The reader found the stored digits only in the upload. So the number is cited to the dataset with the uploader named. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB2-varbench-code-hubbard#91 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked script recompiles programs/vmc_hubbard, whose committed uniform program hard-codes its cluster (parameters nx, nh), so as committed it builds no valid cluster, not this instance; the inputs otherwise match it (VB2). The reader found the stored digits only in the upload. So the number is cited to the dataset with the uploader named. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB2-varbench-code-hubbard#91 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_28_8/FN-uniform/fn_hubbard.sh)"
         }
       ]
@@ -111,7 +111,17 @@
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "E_0/M = -0.7458 (+/- 0.0006), sigma^2/M = 0.0525",
         "note": "Read from Table 1 of arXiv:2510.11710 (U/t = 8, n_h = 1/8, energies per site, 131072 samples), parsed from the arXiv HTML. Row \"JBf (8x8 Torus)\".",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'JBf (8 x 8 torus)', column E0/M and sigma^2/M",
+          "reported_as": "-0.7458(6), sigma^2/M = 0.0525 per site, units of t",
+          "conversion": "-0.7458 x 64 = -47.7312; sigma 0.0006 x 64 = 0.0384; variance 0.0525 x 64 = 3.36 (sigma^2/M read as Var(H)/M)",
+          "note": "8 x 8 torus 'PBCs-PBCs' (Sec. IV B heading); U/t = 8, n_h = 1/8 (Nf = 28 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. Energies 'estimated using 131 072 samples' (caption); variational. Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#33"
+        }
       },
       "compute": {
         "parameters": null,
@@ -152,7 +162,17 @@
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "E_0/M = -0.7454 (+/- 0.0009), sigma^2/M = 0.0563",
         "note": "Read from Table 1 of arXiv:2510.11710 (U/t = 8, n_h = 1/8, energies per site, 131072 samples), parsed from the arXiv HTML. Row \"HFDS (8x8 Torus)\".",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'HFDS (8 x 8 torus)', column E0/M and sigma^2/M",
+          "reported_as": "-0.7454(9), sigma^2/M = 0.0563 per site, units of t",
+          "conversion": "-0.7454 x 64 = -47.7056; sigma 0.0009 x 64 = 0.0576; variance 0.0563 x 64 = 3.6032 (sigma^2/M read as Var(H)/M)",
+          "note": "8 x 8 torus 'PBCs-PBCs' (Sec. IV B heading); U/t = 8, n_h = 1/8 (Nf = 28 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. Energies 'estimated using 131 072 samples' (caption); variational. Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#34"
+        }
       },
       "compute": {
         "parameters": null,
@@ -193,7 +213,17 @@
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "E_0/M = -0.7422 (+/- 0.0003), sigma^2/M = 0.0698",
         "note": "Read from Table 1 of arXiv:2510.11710 (U/t = 8, n_h = 1/8, energies per site, 131072 samples), parsed from the arXiv HTML. Right-hand table, row \"JBf-ViT\"; same lattice and parameters per the caption.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'JBf-ViT', column E0/M and sigma^2/M",
+          "reported_as": "-0.7422(3), sigma^2/M = 0.0698 per site, units of t",
+          "conversion": "-0.7422 x 64 = -47.5008; sigma 0.0003 x 64 = 0.0192; variance 0.0698 x 64 = 4.4672 (sigma^2/M read as Var(H)/M)",
+          "note": "8 x 8 torus 'PBCs-PBCs' (Sec. IV B heading); U/t = 8, n_h = 1/8 (Nf = 28 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. Energies 'estimated using 131 072 samples' (caption); variational. Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#35"
+        }
       },
       "compute": {
         "parameters": null,
@@ -234,7 +264,17 @@
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "E_0/M = -0.736 (+/- 0.001), sigma^2/M = 0.105",
         "note": "Read from Table 1 of arXiv:2510.11710 (U/t = 8, n_h = 1/8, energies per site, 131072 samples), parsed from the arXiv HTML. Right-hand table, row \"HFDS-ViT\".",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'HFDS-ViT', column E0/M and sigma^2/M",
+          "reported_as": "-0.736(1), sigma^2/M = 0.105 per site, units of t",
+          "conversion": "-0.736 x 64 = -47.104; sigma 0.001 x 64 = 0.064; variance 0.105 x 64 = 6.72 (sigma^2/M read as Var(H)/M)",
+          "note": "8 x 8 torus 'PBCs-PBCs' (Sec. IV B heading); U/t = 8, n_h = 1/8 (Nf = 28 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. Energies 'estimated using 131 072 samples' (caption); variational. Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#36"
+        }
       },
       "compute": {
         "parameters": null,
@@ -275,7 +315,17 @@
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "E_0/M = -0.729 (+/- 0.004), sigma^2/M = 0.139",
         "note": "Read from Table 1 of arXiv:2510.11710 (U/t = 8, n_h = 1/8, energies per site, 131072 samples), parsed from the arXiv HTML. Right-hand table, row \"HFDS Symm-ViT-Ti\".",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'HFDS Symm-ViT-Ti', column E0/M and sigma^2/M",
+          "reported_as": "-0.729(4), sigma^2/M = 0.139 per site, units of t",
+          "conversion": "-0.729 x 64 = -46.656; sigma 0.004 x 64 = 0.256; variance 0.139 x 64 = 8.896 (sigma^2/M read as Var(H)/M)",
+          "note": "8 x 8 torus 'PBCs-PBCs' (Sec. IV B heading); U/t = 8, n_h = 1/8 (Nf = 28 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. Energies 'estimated using 131 072 samples' (caption); variational. Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#37"
+        }
       },
       "compute": {
         "parameters": null,
@@ -316,7 +366,17 @@
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "E_0/M = -0.726 (+/- 0.009), sigma^2/M = 0.168",
         "note": "Read from Table 1 of arXiv:2510.11710 (U/t = 8, n_h = 1/8, energies per site, 131072 samples), parsed from the arXiv HTML. Right-hand table, row \"JBf Symm-ViT-Ti\".",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. B 113, 245104 (2026), doi:10.1103/s3kd-bc4q, sources/journal/prb113-245104.pdf, sha256 9da94fdb; compared arXiv:2510.11710v2 HTML (sources/arxiv/2510.11710v2.html, parsed with node; the v2 PDF text layer lost the table): Table I identical; pypdf layout mode unless noted",
+          "location": "Appendix E, Table I, row 'JBf Symm-ViT-Ti', column E0/M and sigma^2/M",
+          "reported_as": "-0.726(9), sigma^2/M = 0.168 per site, units of t",
+          "conversion": "-0.726 x 64 = -46.464; sigma 0.009 x 64 = 0.576; variance 0.168 x 64 = 10.752 (sigma^2/M read as Var(H)/M)",
+          "note": "8 x 8 torus 'PBCs-PBCs' (Sec. IV B heading); U/t = 8, n_h = 1/8 (Nf = 28 per spin); H = -t sum (c^dag c + h.c.) + U sum n_up n_dn, no shift. Energies 'estimated using 131 072 samples' (caption); variational. Reference string lacks authors (Sharma, Shokry, Nutakki, Simard, Ferrero & Vicentini, doi:10.1103/s3kd-bc4q): cosmetic, not proposed as a correction.",
+          "source_entry": "JP10-hubbard-heisenberg#38"
+        }
       },
       "compute": {
         "parameters": null,
@@ -357,7 +417,17 @@
         "method": "source text of arXiv:2308.08594 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.7616(1)",
         "note": "Table I | 8x8=64 sites P; n=0.875 => Nf=28 per spin; U=8; catalogue best_per_site for this instance is -0.74928125, so this quoted value is notably lower (stronger) than the current catalogue best",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 6, 013237 (2024), sources/journal/prresearch6-013237.pdf, sha256 6fb243ee; compared arXiv:2308.08594v2 (sources/arxiv/2308.08594v2.pdf, sha256 236ccded): Table I identical cell for cell; pypdf layout mode unless noted",
+          "location": "Table I (p. 013237-4), column 8 x 8, n = 0.875, U = 8, row E_AFQMC/N",
+          "reported_as": "-0.7616(1) (per site, units of t)",
+          "conversion": "-0.7616 x 64 = -48.7424; sigma 0.0001 x 64 = 0.0064",
+          "note": "No release-constraint star on this cell, so constrained-path AFQMC; the methods paragraph says 'Constrained-path AFQMC results are obtained using protocols similar to those in Refs. [28,34-36] including self-consistently optimized constraints [37]' (p. 013237-3), i.e. the authors' own run; the value is absent from Ref. [18] (LeBlanc et al. PRX 5, 041041: main text and Data_supplemental.zip searched, no 8x8 AFQMC file) and the starred cells are Ref. [17]'s. bound_type projected is right (not a bound). Fully periodic square lattice (Table I caption 'on a PBC square Hubbard model'); Nf = 28 per spin gives n = 0.87500; U = 8, t' = 0; H = -t sum c^dag c + h.c. + U sum n_up n_dn (Eq. 2), no constant shift. Journal and arXiv v2 values identical. No duplicate on the instance.",
+          "source_entry": "JP10-hubbard-heisenberg#9"
+        }
       },
       "compute": {
         "parameters": null,
@@ -395,7 +465,7 @@
           "location": "arXiv:2308.08594v2 Table I, column 8 x 8, n = 0.875, U = 8, row E_AFQMC/N; methods paragraph (pypdf layout l. 250-254)",
           "version_read": "arXiv:2308.08594v2 (= Phys. Rev. Research 6, 013237); LeBlanc et al. supplemental data zip (Caltech record k3sdg-d1267, fetched 2026-10-02); arXiv:1505.02290v2; arXiv:1307.2147v3",
           "checked_on": "2026-10-02",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, Tristan 2026-10-02",
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, 2026-10-02",
           "conversion": "-0.7616 x 64 = -48.7424; sigma 1e-4 x 64 = 0.0064 (both as stored, unchanged)",
           "reason": "VP12 asked which calculation produced this cell and at which boundary. Table I of arXiv:2308.08594v2 credits its AFQMC column to [17, 18] and stars the cells that are exact from release-constraint AFQMC [17]; this cell has no star. The reader read neither cited paper's text nor data to contain it: Shi & Zhang (arXiv:1307.2147v3) print 8 x 8 entries at (14,14) and (22,22) only, and LeBlanc et al.'s supplemental data (Caltech authors record k3sdg-d1267) hold densities 0.3, 0.6, 0.8, 0.875 and 1 with no 8 x 8 AFQMC file (their 8 x 8 files are the fixed-node DMC that Table I credits to [18]; their finite-size AFQMC is twist-averaged, arXiv:1505.02290v2 Sec. II). The paper says it obtained constrained-path results itself ('Constrained-path AFQMC results are obtained using protocols similar to those in Refs. [28, 34-36] including self-consistently optimized constraints [37]'), on the PBC square cluster its caption names, which is this instance. So the number is cited to arXiv:2308.08594 as its own, with [17, 18] named as the method references; a confirmation from S. Zhang would close it. Projected, not a variational bound: no record either way.",
           "from": "H. Shi and S. Zhang, Phys. Rev. B 88, 125132 (2013) and J. P. F. LeBlanc et al., Phys. Rev. X 5, 041041 (2015) (AFQMC, cited jointly as refs [17,18] in arXiv:2308.08594)"
@@ -407,7 +477,7 @@
           "location": "arXiv:2308.08594v2 Table I, column 8 x 8, n = 0.875, U = 8, row E_AFQMC/N; methods paragraph (pypdf layout l. 250-254)",
           "version_read": "arXiv:2308.08594v2 (= Phys. Rev. Research 6, 013237); LeBlanc et al. supplemental data zip (Caltech record k3sdg-d1267, fetched 2026-10-02); arXiv:1505.02290v2; arXiv:1307.2147v3",
           "checked_on": "2026-10-02",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, Tristan 2026-10-02",
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, 2026-10-02",
           "conversion": "none",
           "reason": "Follows the reference entry: the cell is arXiv:2308.08594's own constrained-path run, not a quote of [17, 18], so the row is primary.",
           "from": "secondary"
@@ -420,7 +490,7 @@
           "location": "arXiv:2308.08594v2 Table I, column 8 x 8, n = 0.875, U = 8, row E_AFQMC/N; methods paragraph (pypdf layout l. 250-254)",
           "version_read": "arXiv:2308.08594v2 (= Phys. Rev. Research 6, 013237); LeBlanc et al. supplemental data zip (Caltech record k3sdg-d1267, fetched 2026-10-02); arXiv:1505.02290v2; arXiv:1307.2147v3",
           "checked_on": "2026-10-02",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, Tristan 2026-10-02",
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, 2026-10-02",
           "conversion": "none",
           "reason": "The 2026-09-15 reading named arXiv:2308.08594 as the paper quoting the number; it is the paper that produced it (reference entry), so that reading was of the primary source. Left standing, it would also make the row's own identifier read as a quoting source (paperOf, enrich_sources.mjs)."
         },
@@ -434,7 +504,7 @@
           "location": "arXiv:2308.08594v2 Table I, column 8 x 8, n = 0.875, U = 8, row E_AFQMC/N; methods paragraph (pypdf layout l. 250-254)",
           "version_read": "arXiv:2308.08594v2 (= Phys. Rev. Research 6, 013237); LeBlanc et al. supplemental data zip (Caltech record k3sdg-d1267, fetched 2026-10-02); arXiv:1505.02290v2; arXiv:1307.2147v3",
           "checked_on": "2026-10-02",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, Tristan 2026-10-02",
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, 2026-10-02",
           "conversion": "none (text field)",
           "reason": "The 2026-09-16 compute pass placed this cell in LeBlanc et al.'s supplemental data; the reader of 2026-10-02 found no 8 x 8 AFQMC file there (see the reference entry). Wording only.",
           "from": "Neither original paper states a cost for this 8 x 8 constrained-path AFQMC energy: the finite-size 8 x 8 doped entries (N = 50 and 56 electrons) are in the supplemental data sets of LeBlanc et al., whose main text gives only the generic AFQMC settings (projection length typically beta = 64 for the ground-state projection method, open-ended for constrained path; Delta tau = 0.01; twist averaging), and Shi & Zhang's tables (their Tables I-II) do not contain these fillings at all. The only concrete run-time statement in either paper (~17 hours on 100 AMD Opteron 2.4 GHz cores, 5 x 10^5 walkers x 100 runs) is for a different 8 x 8 free-projection benchmark (N_up = N_dn = 13, U = 4) in Shi & Zhang and is not attributed to this row. The citing paper arXiv:2308.08594 quotes the numbers without cost information. Both originals fetched: fetched/1307.2147.pdf/.txt (pdftotext reported a repairable xref error; text extracted), fetched/1505.02290.pdf/.txt.",
@@ -450,7 +520,7 @@
           "location": "arXiv:2308.08594v2 Table I, column 8 x 8, n = 0.875, U = 8, row E_AFQMC/N; methods paragraph (pypdf layout l. 250-254)",
           "version_read": "arXiv:2308.08594v2 (= Phys. Rev. Research 6, 013237); LeBlanc et al. supplemental data zip (Caltech record k3sdg-d1267, fetched 2026-10-02); arXiv:1505.02290v2; arXiv:1307.2147v3",
           "checked_on": "2026-10-02",
-          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, Tristan 2026-10-02",
+          "source_entry": "VP12-heisenberg-j1j2-hubbard#34 (qmbl-verify 2026-09-29, ambiguous), retried as RH2#15 (handoff reader, 2026-10-02) with the recommendation R1 accepts; ruling R1, 2026-10-02",
           "conversion": "none (text field)",
           "reason": "The note called arXiv:2308.08594 the citing paper; it produced the number (reference entry). Wording only; no cost statement is added.",
           "from": "Neither paper the table credits for its AFQMC column states a cost for this 8 x 8 constrained-path AFQMC energy, and neither holds it (the 2026-10-02 reading of LeBlanc et al.'s supplemental data found no 8 x 8 AFQMC file at this filling): LeBlanc et al.'s main text gives only the generic AFQMC settings (projection length typically beta = 64 for the ground-state projection method, open-ended for constrained path; Delta tau = 0.01; twist averaging), and Shi & Zhang's tables (their Tables I-II) do not contain these fillings at all. The only concrete run-time statement in either paper (~17 hours on 100 AMD Opteron 2.4 GHz cores, 5 x 10^5 walkers x 100 runs) is for a different 8 x 8 free-projection benchmark (N_up = N_dn = 13, U = 4) in Shi & Zhang and is not attributed to this row. The citing paper arXiv:2308.08594 quotes the numbers without cost information. Both originals fetched: fetched/1307.2147.pdf/.txt (pdftotext reported a repairable xref error; text extracted), fetched/1505.02290.pdf/.txt.",
@@ -480,7 +550,17 @@
         "method": "source text of arXiv:2308.08594 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.7469(2)",
         "note": "Table I | same instance as above | variance reported as 3.5, not stored: convention not verified",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 6, 013237 (2024), sources/journal/prresearch6-013237.pdf, sha256 6fb243ee; compared arXiv:2308.08594v2 (sources/arxiv/2308.08594v2.pdf, sha256 236ccded): Table I identical cell for cell; pypdf layout mode unless noted",
+          "location": "Table I (p. 013237-4), column 8 x 8, n = 0.875, U = 8, row E_VAFQMC/N and row sigma^2_VAFQMC",
+          "reported_as": "-0.7469(2) (per site, units of t); sigma^2_VAFQMC = 3.5(5)",
+          "conversion": "-0.7469 x 64 = -47.8016; sigma 0.0002 x 64 = 0.0128; variance stored as printed central value 3.5 (caption: sigma^2 = <H^2> - <H>^2, i.e. total Var(H); the main text's 'energy variance per site (<H^2>-<H>^2)/N of less than 1' disagrees with its own caption, unchanged from arXiv v2)",
+          "note": "VAFQMC N_l = 4 (caption), energy measured on ~1e6 fresh samples after optimisation; variational. Fully periodic square lattice (Table I caption 'on a PBC square Hubbard model'); Nf = 28 per spin gives n = 0.87500; U = 8, t' = 0; H = -t sum c^dag c + h.c. + U sum n_up n_dn (Eq. 2), no constant shift. Journal and arXiv v2 values identical. No duplicate on the instance.",
+          "source_entry": "JP10-hubbard-heisenberg#10"
+        }
       },
       "compute": {
         "parameters": null,
@@ -496,7 +576,7 @@
         "source": "Sec. II A Implementation Details; Sec. II (parameter scaling); Appendix A Further Computational Details, arXiv:2308.08594 (compute pass 2026-09-16) (compute pass 2026-09-24)",
         "scope": "paper",
         "confidence": "medium",
-        "note": "Blanket statements for all VAFQMC (N_l = 4) results; nothing is given per system size. samples = the \"approximately 10^6 samples\" used for the final energy measurement; gradients during optimization used 189,000 samples per step; 126 walkers (optimization) / 120 walkers (measurement); 1000-sweep thermalization; variance measured with 10x more samples. iterations = \"around 180 optimization steps\" (79 at step size 0.01 + 100 at 0.001 per Appendix A). Parameter count not stated, only the scaling O(N_l * N^2), dominated by the T_l^sigma hopping matrices. No hardware, GPU/CPU-hours or wall-clock stated anywhere (JAX + Optax implementation; affiliation Flatiron Institute, no machine named). || route2b-pass 2026-09-24: Parameters: only the scaling is stated (\"Most of these parameters are in T_l^sigma, with O(N_l * N^2) parameters\"; alpha = {lambda_i, tau_l^sigma, t_l^sigma_ij}, T_l not Hermitian). Not countable: whether T_l^sigma is a dense N x N matrix, whether lambda_i is per slice, and whether |phi_0> is optimised are not stated. Searched: arXiv v2 (= PRR 6, 013237 text, Sections II-III, Appendices A-B), GitHub (no code by the authors; icf/vafqmc_afqmc is unrelated). DISAGREEMENT with the stored samples: the paper states \"gradients are accumulated with 189,000 samples\" per optimisation step; the stored samples = 1e6 is the post-optimisation measurement (\"measured with approximately 10^6 samples\"). Kept as stored; per DATA.md (samples per optimisation step) the value should be 189,000. VAFQMC is not a network: a cost model needs N_l = 4 slices, the k = 3 product formula for exp(T), the O(N_l N^3) per-sample cost, 126 walkers x N N_l Metropolis updates per measurement, 189,000 samples x 180 steps. || Ruling 2026-09-24 (Tristan): samples = 189000 per optimisation step as the quoted sentence states; the stored 1e6 was the measurement count."
+        "note": "Blanket statements for all VAFQMC (N_l = 4) results; nothing is given per system size. samples = the \"approximately 10^6 samples\" used for the final energy measurement; gradients during optimization used 189,000 samples per step; 126 walkers (optimization) / 120 walkers (measurement); 1000-sweep thermalization; variance measured with 10x more samples. iterations = \"around 180 optimization steps\" (79 at step size 0.01 + 100 at 0.001 per Appendix A). Parameter count not stated, only the scaling O(N_l * N^2), dominated by the T_l^sigma hopping matrices. No hardware, GPU/CPU-hours or wall-clock stated anywhere (JAX + Optax implementation; affiliation Flatiron Institute, no machine named). || route2b-pass 2026-09-24: Parameters: only the scaling is stated (\"Most of these parameters are in T_l^sigma, with O(N_l * N^2) parameters\"; alpha = {lambda_i, tau_l^sigma, t_l^sigma_ij}, T_l not Hermitian). Not countable: whether T_l^sigma is a dense N x N matrix, whether lambda_i is per slice, and whether |phi_0> is optimised are not stated. Searched: arXiv v2 (= PRR 6, 013237 text, Sections II-III, Appendices A-B), GitHub (no code by the authors; icf/vafqmc_afqmc is unrelated). DISAGREEMENT with the stored samples: the paper states \"gradients are accumulated with 189,000 samples\" per optimisation step; the stored samples = 1e6 is the post-optimisation measurement (\"measured with approximately 10^6 samples\"). Kept as stored; per DATA.md (samples per optimisation step) the value should be 189,000. VAFQMC is not a network: a cost model needs N_l = 4 slices, the k = 3 product formula for exp(T), the O(N_l N^3) per-sample cost, 126 walkers x N N_l Metropolis updates per measurement, 189,000 samples x 180 steps. || Ruling 2026-09-24: samples = 189000 per optimisation step as the quoted sentence states; the stored 1e6 was the measurement count."
       },
       "error_metrics": {
         "fields": [

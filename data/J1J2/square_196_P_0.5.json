@@ -49,7 +49,7 @@
         "reported_as": "datprep.in: 'ioptPH=1 jperp=1.d0 uvv=0.25d0 nelup=98 neldo=98 ieskin=1 iesBCS=6 iesaf=0 iesspin=0' last lines '0.d0 0.d0' / '4.d0 2.d0'; geometry.d: ''' 1.d0 '' 1.d0 90.d0 / 1 / 14 0 0 14 / 0 0'; VMC.in ngen=200000; script prints '<H>/N' and '<H**2>/N**2' from read_ene '0 10000 5 0'",
         "conversion": "total = 196 x printed <H>/N (Pauli units: jham = 4 J in S units); sigma = 196 x error; variance = 196^2 x (<H^2>/N^2 - (<H>/N)^2); stored -387.63 = -1.97770 per site (Pauli) = -0.494426 per site in S.S units",
         "note": "Hamiltonian: t = 0, exchange jham = (4, 2) on shells d = 1, sqrt 2 with uvv = 0.25 cancelling the t-J -n n/4 term: Pauli J1-J2 with J2 = 0.5, no shift. 14x14 torus; the geometry flags '0 0' affect only the auxiliary fermion boundary (jhop carries no boundary sign), so the spin model is periodic. S^z = 0 at half filling (nelup = neldo = 98). Projected BCS (iesBCS = 6, ieskin = 1, no Jastrow) = 'projected BCS (Z2 spin liquid)'. VMC measurement of stored optimised parameters (itestr = 2, 200000 generations), sigma = binned SE (10^4-generation bins, first 4 dropped). Variational bound; M2/M11 flags: none raised. Early per-site uploads: 28fba79 -1.97751(7e-5); 4569aa1 -1.97772(6e-5), var 6e-4; total -387.63(1), var 22.1 entered eb457b1 (-1.97772 x 196 = -387.633; 6e-5 x 196 = 0.0118, stored 0.01 at one significant digit). History: entered eb457b1 (2021-09-17, Francesco, 'Create square_14_PP_196_0.5.md'); unchanged since; code link added d186176 (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#93 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#93 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -169,7 +169,7 @@
         "reported_as": "julia --project heisenberg_2d.jl --peri --L 14 --J2 0.5 --J22 0.5 --zero_mag --max_B 512 --seed 123",
         "conversion": "none: dmrg() energy is the total in Pauli units (J *= 4 on spin-1/2 operators); variance = <H^2> - E^2 of the whole system",
         "note": "Script builds the 14x14 PBC J1-J2 at J2 = J22 = 0.5 (Pauli, no Marshall rotation, no shift), S^z = 0, max bond dimension 512 = method string, 50 sweeps, cutoff 1e-12, seed 123; final dmrg() energy: variational at stated bond dimension (no extrapolation), sigma not applicable. D = 512 on a 14x14 torus is far from converged but is a valid bound at stated bond dimension. History: entered af1d48f (2022-09-01, Dian, 'Add Jastrow baseline'); unchanged since; code link added f88f9ba (2024-07-19).",
-        "source_entry": "VB1-varbench-code-j1j2#94 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#94 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -224,7 +224,7 @@
         "reported_as": "python3 vmc.py --ham j1j2 --boundary peri --sign mars --ham_dim 2 --L 14 --J2 0.5 --zero_mag --net rbm --seed 123 --show_progress",
         "conversion": "none: NetKet Stats mean is the total energy in Pauli units; sigma = error_of_mean; variance = Stats.variance (total)",
         "note": "Script builds the 14x14 PBC J1-J2 at J2 = 0.5 (NetKet Heisenberg, Pauli, J = [1, 0.5], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.RBM(alpha = 1, log_cosh) with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.01, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. Upstream value changes are listed in the history below; the stored value is the latest. History: entered 10f5c12 (2022-07-11, Dian, 'Add RBM baseline'); value history: 10f5c12 2022-07-11 'Add RBM baseline': E=-367.875 S=0.014 V=211.383 -> 8fb6da0 2022-09-17 'Update RBM baselines for J1-J2': E=-369.024 S=0.014 V=200.584; code link added 5047bfd (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#95 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#95 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -279,7 +279,7 @@
         "reported_as": "python3 vmc.py --ham j1j2 --boundary peri --sign mars --ham_dim 2 --L 14 --J2 0.5 --zero_mag --net jas --seed 123 --show_progress",
         "conversion": "none: NetKet Stats mean is the total energy in Pauli units; sigma = error_of_mean; variance = Stats.variance (total)",
         "note": "Script builds the 14x14 PBC J1-J2 at J2 = 0.5 (NetKet Heisenberg, Pauli, J = [1, 0.5], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.Jastrow with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 0.96, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. Upstream value changes are listed in the history below; the stored value is the latest. History: entered af1d48f (2022-09-01, Dian, 'Add Jastrow baseline'); value history: af1d48f 2022-09-01 'Add Jastrow baseline': E=-367.434 S=0.012 V=149.872 -> 59e621a 2022-09-13 'Update Jastrow and RBM baselines': E=-370.282 S=0.011 V=136.877; code link added fdb4bfb (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#96 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#96 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -314,7 +314,17 @@
           "reported_as": "-0.49447(1) per site, E/J1, S.S units",
           "conversion": "-0.49447 * 4 * 196 = -387.66448; sigma 1e-5 * 784 = 0.00784",
           "note": "Own computation. L x L periodic cluster (N = 196), J2/J1 = 0.5, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type variational (p = 0 Lanczos steps on the projected Z2Azz13 state; p = 0 is 'the original variational wave function') agrees. L = 14 and 18 are printed only in this paper's own tables (Gong et al.'s reprint stops at L = 10).",
-          "source_entry": "VP1-arxiv-1304-2630#23 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#23 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE I (caption 'p=0'), row L = 14, S = 0, column J2/J1 = 0.5",
+          "reported_as": "-0.49447(1) per site, E/J1, S.S units",
+          "conversion": "-0.49447 * 4 * 196 = -387.66448; sigma (cell error) * 784 = 0.00784",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.49447(1), arXiv -0.49447(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type variational agrees (p Lanczos steps on the projected Z2Azz13 state, variational). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#22"
         }
       }
     },
@@ -350,6 +360,16 @@
           "conversion": "-0.49638 * 4 * 196 = -389.16192; sigma 1e-5 * 784 = 0.00784",
           "note": "Own computation. L x L periodic cluster (N = 196), J2/J1 = 0.5, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type variational (p = 1 Lanczos steps on the projected Z2Azz13 state; p = 0 is 'the original variational wave function') agrees. L = 14 and 18 are printed only in this paper's own tables (Gong et al.'s reprint stops at L = 10). RECORD read hardest: other rows on this instance besides this paper's: VarBench's own rows (projected-BCS VMC -387.63(1) from its run script vmc_gutzwiller.sh, a separate computation 0.034 above this paper's p = 0; DMRG at bond dimension 512; RBM and Jastrow baselines); the runner-up is this paper's p = 0 row (-0.49447 per site), so the M11 margin is one Lanczos step. The p = 1 energy is a VMC estimate of |Psi_1> = (1 + alpha_1 H)|Psi_v> with alpha_1 variational ('alpha_m are p additional variational parameters'), an upper bound; the sampling regularisation of footnote 30 ('no appreciable change is found with epsilon ranging from 10^-8 to 10^-4') does not change that. M12 (per-site record above the larger cluster's square_256_P_0.5 record -0.496914) is this row's variational error, not a transcription slip: the same paper's variance-extrapolated value here is -0.49722(2), 8.40e-4 per site lower, and all S = 0 cells are monotone p0 > p1 > extrapolated and smooth in L.",
           "source_entry": "VP1-arxiv-1304-2630#24 (qmbl-verify 2026-09-29)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE II (caption 'p=1'), row L = 14, S = 0, column J2/J1 = 0.5",
+          "reported_as": "-0.49638(1) per site, E/J1, S.S units",
+          "conversion": "-0.49638 * 4 * 196 = -389.16192; sigma (cell error) * 784 = 0.00784",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.49638(1), arXiv -0.49638(1)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type variational agrees (p Lanczos steps on the projected Z2Azz13 state, variational). peer_reviewed true and reference PRB 88, 060402 correct.",
+          "source_entry": "JP1-arxiv-1304-2630#23"
         }
       }
     },
@@ -384,7 +404,17 @@
           "reported_as": "-0.49722(2) per site, E/J1, S.S units",
           "conversion": "-0.49722 * 4 * 196 = -389.82048; sigma 2e-5 * 784 = 0.01568",
           "note": "Own computation. L x L periodic cluster (N = 196), J2/J1 = 0.5, S = 0 ground-state row, E/J1 per site in S.S units; stored total = 4N x cell, sigma likewise. bound_type extrapolated (zero-variance fit through p = 0 and p = 1 only: 'we limit to the first Lanczos step for large clusters (up to the L = 18)') agrees. L = 14 and 18 are printed only in this paper's own tables (Gong et al.'s reprint stops at L = 10).",
-          "source_entry": "VP1-arxiv-1304-2630#25 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP1-arxiv-1304-2630#25 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
+        },
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "Journal version: APS publisher PDF + Supplemental Material, fetched over ETH network, pypdf layout mode; published PDF Phys. Rev. B 88, 060402(R) (2013) (published 8 Aug 2013), sources/journal/prb88-060402.pdf, sha256 a4fdce15; Supplemental Material sources/journal/prb88-060402-supp.pdf, sha256 62378132 (tables I-IV); compared with arXiv:1304.2630v1 (only version), qmbl/sources/1304.2630.txt",
+          "location": "Supplemental Material TABLE IV (caption 'extrapolation'), row L = 14, S = 0, column J2/J1 = 0.5",
+          "reported_as": "-0.49722(2) per site, E/J1, S.S units",
+          "conversion": "-0.49722 * 4 * 196 = -389.82048; sigma (cell error) * 784 = 0.01568",
+          "note": "Journal and arXiv v1 agree on this cell (journal -0.49722(2), arXiv -0.49722(2)). Own computation. L x L square cluster, PBC ('clusters with N = L x L sites and periodic boundary conditions'), H = J1 sum S.S + J2 sum S.S, no constant; S = 0 ground-state row. bound_type extrapolated agrees (variance extrapolation Ep ~ Eex + const sigma_p^2 fitted over p = 0,1,2 (L <= 10) or p = 0,1 (L = 14, 18)). peer_reviewed true and reference PRB 88, 060402 correct. Record row.",
+          "source_entry": "JP1-arxiv-1304-2630#24"
         }
       }
     },
@@ -409,8 +439,18 @@
         "checked_on": "2026-10-07",
         "method": "source text of arXiv:2108.13830 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.4964",
-        "note": "Table 4 ('Energies for varied J2/J1 && system scales'), row 14 x 14, column 0.50; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
-        "secondary_of": null
+        "note": "Table 4 ('Energies for varied J2/J1 && system scales'), row 14 x 14, column 0.50; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF IEEE Trans. Parallel Distrib. Syst. 33(11), 2846-2859 (2022), doi:10.1109/TPDS.2022.3145163, sources/journal/tpds33-2846.pdf, sha256 69666954 (IEEE Xplore, ETH licence, downloaded 2026-10-15); compared with arXiv:2108.13830v4 (latest; byte-identical to qmbl/sources/2108.13830.pdf): Table 4 identical cell by cell; pypdf plain + layout mode (with fonttools), local extraction, no LLM transcription",
+          "location": "journal Table 4 ('Energies for Varied J2/J1 && System Scales'), row '14 × 14', column 0.50 (journal p. 2856; arXiv v4 p. 10)",
+          "reported_as": "-0.4964 (energy per site, S.S units, no error bar printed)",
+          "conversion": "-0.4964 x 4 x 196 = -389.1776",
+          "note": "H = J1/4 sum sigma.sigma + J2/4 sum sigma.sigma with Pauli sigma (Eq. 3), i.e. S.S with J1 = 1, no constant; L x L square lattice, periodic boundary conditions (Sec. 4: 'for the periodic boundary conditions'); final energy of the 106529-parameter CNN after transfer learning from 24 x 24 (Sec. 4.3.3, Stage 2/3; Fig. 11 caption names the 106529-parameter model); no error bar printed anywhere for Table 4 (sigma stays null). Sector S^z = 0 (Neel start, pair-exchange proposals, Sec. 3.1); sign fixed to the Marshall-Peierls rule (Eq. 9), which restricts the ansatz but keeps the energy a variational bound. The chain-restart window (Sec. 3.2.1, 'we terminate the problematic Markov chain and start a new one') is stated identically in the journal; ruling 4 (2026-10-07, variational) stands. peer_reviewed true, reference agrees. Not a duplicate.",
+          "source_entry": "JP6-heisenberg-j1j2#44"
+        }
       },
       "corrections": [
         {
@@ -421,7 +461,7 @@
           "version_read": "arXiv:2108.13830v1, v2, v3, v4 (PDFs downloaded by this reader, md5 equal to the shared-cache copies; pypdf plain + layout text) and the published IEEE TPDS 33(11), 2846-2859 (2022) PDF (IEEE Xplore copy of 2026-10-03 from qmbl-verify-2026-09-29/sources/journal, re-extracted here with pypdf); all five print the same cell",
           "conversion": "-0.4964 x 4 x 196 = -389.1776 (stored -389.1776: agrees; energy not changed)",
           "checked_on": "2026-10-07",
-          "reason": "The stored published string is not printed anywhere in the source. Its parenthetical names the source, which RULES 3 keeps out of method_as_published and method_detail. Ruling B4 (Tristan, 2026-10-02): a corrected published string quotes a label the source prints, word for word, and what explains it goes to method_detail via scripts/method_names.mjs. The paper calls its method 'CNN'. The bare key 'CNN' already maps to ['CNN', ''] for Choo et al.'s different network, which shares square_100_P_0.55 and _0.6 with these rows. So the proposal quotes the longer printed label, which gives this network its own key and a detail: large model, Marshall sign (Eq. 9), C4 rotation sum (Eq. 10), fine-tuned by transfer learning from the 24 x 24 state (Sec. 4.3.3, Fig. 5). The 106529 parameters go to compute.parameters through the mapping's extra. Minimal alternative: 'CNN' alone, which leaves the detail empty, as it is now. The sibling row J1J2/square_256_P_0.5 (-508.17024, from the 2026-09-15 pass, outside this group) carries the same string and needs the same change. Keep the old method_names key until that row moves too.",
+          "reason": "The stored published string is not printed anywhere in the source. Its parenthetical names the source, which RULES 3 keeps out of method_as_published and method_detail. Ruling B4 (2026-10-02): a corrected published string quotes a label the source prints, word for word, and what explains it goes to method_detail via scripts/method_names.mjs. The paper calls its method 'CNN'. The bare key 'CNN' already maps to ['CNN', ''] for Choo et al.'s different network, which shares square_100_P_0.55 and _0.6 with these rows. So the proposal quotes the longer printed label, which gives this network its own key and a detail: large model, Marshall sign (Eq. 9), C4 rotation sum (Eq. 10), fine-tuned by transfer learning from the 24 x 24 state (Sec. 4.3.3, Fig. 5). The 106529 parameters go to compute.parameters through the mapping's extra. Minimal alternative: 'CNN' alone, which leaves the detail empty, as it is now. The sibling row J1J2/square_256_P_0.5 (-508.17024, from the 2026-09-15 pass, outside this group) carries the same string and needs the same change. Keep the old method_names key until that row moves too.",
           "source_entry": "RP1-arxiv-2108-13830#28",
           "from": "CNN (Li et al. 2022, sunway supercomputer)"
         },
@@ -429,13 +469,13 @@
           "field": "verified.note",
           "edit": [
             "; no error bar printed |",
-            "; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) |"
+            "; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) |"
           ],
           "checked_on": "2026-10-07",
           "reason": "Ruling 4 of qmbl-verify 2026-10-07: the outlier window stated on the row.",
-          "source_entry": "RP1-arxiv-2108-13830 (ambiguous, bound_type); ruling 4, Tristan 2026-10-07",
+          "source_entry": "RP1-arxiv-2108-13830 (ambiguous, bound_type); ruling 4, 2026-10-07",
           "from": "Table 4 ('Energies for varied J2/J1 && system scales'), row 14 x 14, column 0.50; no error bar printed | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table.",
-          "to": "Table 4 ('Energies for varied J2/J1 && system scales'), row 14 x 14, column 0.50; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4, Tristan) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table."
+          "to": "Table 4 ('Energies for varied J2/J1 && system scales'), row 14 x 14, column 0.50; no error bar printed. Li et al. (IEEE TPDS 33, 2846, Sec. 3.2.1) discard samples whose local energy is far from the standard result and restart those chains, so the energy is a mean over a window, not a plain average; kept variational (qmbl-verify 2026-10-07, ruling 4 ) | Energy per site in S.S units, periodic boundary conditions (text: 'periodic boundary condition'); the 10x10 and 16x16 cells at J2 = 0.50 equal the rows QMBL already carries from this table."
         }
       ],
       "compute": {
@@ -522,7 +562,7 @@
           "reported_as": "energy -382.89471027500554 sigma 0.02641613296048191 energy_variance 88.89066116724415 tau_corr 0.014472633151330738 r_hat 1.004286771594917 energy_per_site_SS -0.48838611004464993 (Pauli total; eval 131072 samples, 1024 chains, 64 discarded per chain, chains from training)",
           "conversion": "energy stored as is (Pauli total, no conversion); sigma 0.02641613296048191 -> 0.026 (two significant figures); v_score = 196 x 88.89066116724415 / (-382.89471027500554)^2 = 0.11883749118406153; gpu_hours = 22139.372579089366 / 3600 x 1 = 6.150",
           "note": "Energy, sigma, variance, V-score, dof 196, einf 0, label, method string, reference (run, no scheduler, commit), source day 2026-09-26 and the compute block (parameters, gpu_hours, wall_clock 06:08:59, device, samples 4096, iterations 2000, proposals_per_sample 980, complex false, sr cg, forward_flops) all match the results file and the loader. Parameters 39232 = 200N + 32 complex at N = 196; forward-flops.json, which builds the network separately, counts the same. Gates: R-hat 1.0043 < 1.05 on the first evaluation attempt (64 discards), finite, not diverged, 3 recoveries under the divergence rule (step 166, energy 2.10e+3, restored from step 150 (E = -89.37), lr 0.005; step 743, energy 4.70e+5, restored from step 700 (E = -384.60), lr 0.0025; step 793, energy -1.64e+9, restored from step 750 (E = -385.13), lr 0.00125), within the protocol's five and stated in the row's verified note. Protocol fields as README v1.5 states them (2000 steps x 4096 samples, 1024 chains, 16 discarded, SR lr 0.01 after a 200-step linear warmup, diag_shift 1e-6 with relative 0.01, MetropolisExchange d_max 2 in S_z = 0, seed 20260921, chunk 1024); solver conjugate gradients as run_nqs.py's rule gives for 78464 real parameters (Cholesky where <= 4096). Commit 55af6b8 (2026-09-25T09:06:02+02:00) exists and precedes the run; run_nqs.py at 55af6b8 has no batched evaluation and the attempts carry no 'batches' field, as expected for a run before the 2026-09-29 amendment. The scripts changed after it only in the host-name scrub (dc612f3), no numerics. Trace: steps 0-1999 complete (2105 lines, the extra ones steps redone after restores and 3 diverged line(s)); the final evaluation sits -3.2456 from the mean of steps 1900-1999 (-379.6491, sd 2.6611; -1.22 sd); evaluation variance 88.891 against the same steps' mean variance 117.089. Training transient inside the Hamiltonian's bound (|E| <= 2 n_conn = 1568, so the divergence rule did not fire): the largest upward step in the trace is +181.77 at step 1501 (-386.478 -> -204.709); the lowest step energy is -386.614 at step 1458, and the trace ends at -382.815 (step 1999). The row is the final state's evaluation, as the protocol prescribes; it lies 3.720 above the lowest step energy of the run. Single run of this configuration (best_of 1; runs/ holds exactly this run). No exact row on the instance; not the record (a lower variational row: -389.16192, VMC + 1 Lanczos step). Duplicate check: no other row on the instance carries this number.",
-          "source_entry": "RH1#15 (qmbl-verify 2026-09-29, handoff reader 2026-10-02: a cost-run row the pass never read); ruling R1, Tristan 2026-10-02"
+          "source_entry": "RH1#15 (qmbl-verify 2026-09-29, handoff reader 2026-10-02: a cost-run row the pass never read); ruling R1, 2026-10-02"
         }
       },
       "compute": {
@@ -589,7 +629,7 @@
           "reported_as": "energy -365.46037615560635 sigma 0.044321495749914064 energy_variance 237.9369923607801 tau_corr 0.04106168399050858 r_hat 1.0043856787200263 energy_per_site_SS -0.4661484389739877 (Pauli total; eval 131072 samples, 1024 chains, 64 discarded per chain, chains from training)",
           "conversion": "energy stored as is (Pauli total, no conversion); sigma 0.044321495749914064 -> 0.044 (two significant figures); v_score = 196 x 237.9369923607801 / (-365.46037615560635)^2 = 0.3491704198942174; gpu_hours = 2446.8058408275247 / 3600 x 1 = 0.680",
           "note": "Energy, sigma, variance, V-score, dof 196, einf 0, label, method string, reference (run, no scheduler, commit), source day 2026-09-26 and the compute block (parameters, gpu_hours, wall_clock 00:40:47, device, samples 4096, iterations 2000, proposals_per_sample 980, complex true, sr cg, forward_flops) all match the results file and the loader. Parameters 38808 = N^2 + 2N complex at N = 196; forward-flops.json, which builds the network separately, counts the same. Gates: R-hat 1.0044 < 1.05 on the first evaluation attempt (64 discards), finite, not diverged, no recovery. Protocol fields as README v1.5 states them (2000 steps x 4096 samples, 1024 chains, 16 discarded, SR lr 0.01 after a 200-step linear warmup, diag_shift 1e-6 with relative 0.01, MetropolisExchange d_max 2 in S_z = 0, seed 20260921, chunk 16384); solver conjugate gradients as run_nqs.py's rule gives for 77616 real parameters (Cholesky where <= 4096). Commit 55af6b8 (2026-09-25T09:06:02+02:00) exists and precedes the run; run_nqs.py at 55af6b8 has no batched evaluation and the attempts carry no 'batches' field, as expected for a run before the 2026-09-29 amendment. The scripts changed after it only in the host-name scrub (dc612f3), no numerics. Trace: steps 0-1999 complete (2000 lines); the final evaluation sits -0.0715 from the mean of steps 1900-1999 (-365.3889, sd 0.2441; -0.29 sd); evaluation variance 237.937 against the same steps' mean variance 237.410. Single run of this configuration (best_of 1; runs/ holds exactly this run). No exact row on the instance; not the record (a lower variational row: -389.16192, VMC + 1 Lanczos step). Duplicate check: no other row on the instance carries this number.",
-          "source_entry": "RH1#16 (qmbl-verify 2026-09-29, handoff reader 2026-10-02: a cost-run row the pass never read); ruling R1, Tristan 2026-10-02"
+          "source_entry": "RH1#16 (qmbl-verify 2026-09-29, handoff reader 2026-10-02: a cost-run row the pass never read); ruling R1, 2026-10-02"
         }
       },
       "compute": {
@@ -656,7 +696,7 @@
           "reported_as": "energy -383.8992107630571 sigma 0.022084836004344986 energy_variance 57.05011488574486 tau_corr 0.06028857226731754 r_hat 1.004514094229236 energy_per_site_SS -0.4896673606671647 (Pauli total; eval 131072 samples, 1024 chains, 64 discarded per chain, chains from training)",
           "conversion": "energy stored as is (Pauli total, no conversion); sigma 0.022084836004344986 -> 0.022 (two significant figures); v_score = 196 x 57.05011488574486 / (-383.8992107630571)^2 = 0.07587141017937234; gpu_hours = 3598.6469874167815 / 3600 x 1 = 1.000",
           "note": "Energy, sigma, variance, V-score, dof 196, einf 0, label, method string, reference (run, no scheduler, commit), source day 2026-09-26 and the compute block (parameters, gpu_hours, wall_clock 00:59:59, device, samples 4096, iterations 2000, proposals_per_sample 980, complex true, sr dense, forward_flops) all match the results file and the loader. Parameters 789 = 4N + 5 complex (alpha = 4 kernels of N, 4 hidden biases, 1 visible bias) at N = 196; forward-flops.json, which builds the network separately, counts the same. Gates: R-hat 1.0045 < 1.05 on the first evaluation attempt (64 discards), finite, not diverged, no recovery. Protocol fields as README v1.5 states them (2000 steps x 4096 samples, 1024 chains, 16 discarded, SR lr 0.01 after a 200-step linear warmup, diag_shift 1e-6 with relative 0.01, MetropolisExchange d_max 2 in S_z = 0, seed 20260921, chunk 4096); solver Cholesky as run_nqs.py's rule gives for 1578 real parameters (Cholesky where <= 4096). Commit 55af6b8 (2026-09-25T09:06:02+02:00) exists and precedes the run; run_nqs.py at 55af6b8 has no batched evaluation and the attempts carry no 'batches' field, as expected for a run before the 2026-09-29 amendment. The scripts changed after it only in the host-name scrub (dc612f3), no numerics. Trace: steps 0-1999 complete (2000 lines); the final evaluation sits -0.0085 from the mean of steps 1900-1999 (-383.8908, sd 0.0974; -0.09 sd); evaluation variance 57.050 against the same steps' mean variance 56.553. Single run of this configuration (best_of 1; runs/ holds exactly this run). No exact row on the instance; not the record (a lower variational row: -389.16192, VMC + 1 Lanczos step). Duplicate check: no other row on the instance carries this number.",
-          "source_entry": "RH1#17 (qmbl-verify 2026-09-29, handoff reader 2026-10-02: a cost-run row the pass never read); ruling R1, Tristan 2026-10-02"
+          "source_entry": "RH1#17 (qmbl-verify 2026-09-29, handoff reader 2026-10-02: a cost-run row the pass never read); ruling R1, 2026-10-02"
         }
       },
       "compute": {
@@ -722,7 +762,7 @@
           "reported_as": "energy -388.40457455789715 sigma 0.010057690182617785 energy_variance 13.615032679257068 tau_corr 0 r_hat 1.0036662436056965 energy_per_site_SS -0.4954139981605831 (Pauli total; eval 131072 samples, 1024 chains, 64 discarded per chain, chains from training)",
           "conversion": "energy stored as is (Pauli total, no conversion); sigma 0.010057690182617785 -> 0.01 (two significant figures); v_score = 196 x 13.615032679257068 / (-388.40457455789715)^2 = 0.017689114244896244; gpu_hours = 33697.1011401359 / 3600 x 1 = 9.360",
           "note": "Energy, sigma, variance, V-score, dof 196, einf 0, label, method string, reference (run, no scheduler, commit), source day 2026-09-27 and the compute block (parameters, gpu_hours, wall_clock 09:21:37, device, samples 4096, iterations 2000, proposals_per_sample 980, complex false, sr cg, forward_flops) all match the results file and the loader. Parameters 158800 = 153900 + 25N real (vit.py: embedding, positions, 4 layers with N/4-entry attention tables per head, two log-cosh heads) at N = 196; forward-flops.json, which builds the network separately, counts the same. Gates: R-hat 1.0037 < 1.05 on the first evaluation attempt (64 discards), finite, not diverged, no recovery. Protocol fields as README v1.5 states them (2000 steps x 4096 samples, 1024 chains, 16 discarded, SR lr 0.01 after a 200-step linear warmup, diag_shift 1e-6 with relative 0.01, MetropolisExchange d_max 2 in S_z = 0, seed 20260921, chunk 1024); solver conjugate gradients as run_nqs.py's rule gives for 158800 real parameters (Cholesky where <= 4096). Commit 55af6b8 (2026-09-25T09:06:02+02:00) exists and precedes the run; run_nqs.py at 55af6b8 has no batched evaluation and the attempts carry no 'batches' field, as expected for a run before the 2026-09-29 amendment. The scripts changed after it only in the host-name scrub (dc612f3), no numerics. Trace: steps 0-1999 complete (2000 lines); the final evaluation sits 0.0092 from the mean of steps 1900-1999 (-388.4138, sd 0.0540; 0.17 sd); evaluation variance 13.615 against the same steps' mean variance 9.223. Training transient inside the Hamiltonian's bound (|E| <= 2 n_conn = 1568, so the divergence rule did not fire): the largest upward step in the trace is +1.54 at step 1 (-200.098 -> -198.561); the lowest step energy is -388.570 at step 1981, and the trace ends at -388.479 (step 1999). The row is the final state's evaluation, as the protocol prescribes; it lies 0.165 above the lowest step energy of the run. Single run of this configuration (best_of 1; runs/ holds exactly this run). No exact row on the instance; not the record (a lower variational row: -389.16192, VMC + 1 Lanczos step). Duplicate check: no other row on the instance carries this number.",
-          "source_entry": "RH1#18 (qmbl-verify 2026-09-29, handoff reader 2026-10-02: a cost-run row the pass never read); ruling R1, Tristan 2026-10-02"
+          "source_entry": "RH1#18 (qmbl-verify 2026-09-29, handoff reader 2026-10-02: a cost-run row the pass never read); ruling R1, 2026-10-02"
         }
       },
       "compute": {

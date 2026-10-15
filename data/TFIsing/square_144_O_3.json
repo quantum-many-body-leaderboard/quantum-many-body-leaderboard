@@ -49,8 +49,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The number is printed in the paper (Table II, verified by VA6#4), so ruling 1 keeps the paper as its citation and the dataset upload is named beside it. The run script VarBench linked in 2024 sets num_units = 500 where the paper states 100 memory units (Sec. III C, Tables II and III); compute.parameters already follows the paper (VA6#5). The row holds the instance's variational record; only the citation text changes. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#5 (qmbl-verify 2026-09-29, ambiguous; skeptic upheld); ruling E5, Tristan 2026-10-02",
+          "reason": "The number is printed in the paper (Table II, verified by VA6#4), so ruling 1 keeps the paper as its citation and the dataset upload is named beside it. The run script VarBench linked in 2024 sets num_units = 500 where the paper states 100 memory units (Sec. III C, Tables II and III); compute.parameters already follows the paper (VA6#5). The row holds the instance's variational record; only the citation text changes. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#5 (qmbl-verify 2026-09-29, ambiguous; skeptic upheld); ruling E5, 2026-10-02",
           "from": "[paper](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.2.023358) [code](https://github.com/varbench/methods/blob/main/scripts/TFIsing/square_144_O_3/vmc_2DRNN.sh)"
         }
       ],
@@ -63,7 +63,17 @@
         "conversion": "-3.1739018 x 144 = -457.0418592, sigma 2e-7 x 144 = 0.0000288; stored -457.041866(27) = -3.17390185(19) per site, 0.25 sigma from the printed cell and inside its rounding",
         "note": "Record row. Instance, convention and class agree: 12 x 12 open, h = 3, Pauli TFIM (Eq. 14), single-layer 2D vanilla pRNN with 100 memory units, final estimate from 2e6 exact autoregressive samples, variational, produced by this paper (PixelCNN -3.1739005(5) is the only quoted column). Finer digits, sigma and variance 0.001429 are first author M. Hibat-Allah's upload (75dddcc, 2021-12-13), which replaced his own mislabelled first upload of the 1DRNN cell (5ec0c50, 2021-11-16: -3.1738969 as '2DRNN'). sqrt(0.001429 / 2e6) = 2.67e-5 = stored sigma, so sigma is the SEM of the final 2e6-sample estimate. Variance not printed in the paper (C7). Not a duplicate: the other row of this paper on the instance is the 1DRNN cell -457.0411536 (-3.1738969(5)). No exact reference exists at 144 sites; the lowest variational row stands.",
         "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#4 (qmbl-verify 2026-09-29)",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 2, 023358 (2020), sources/journal/prresearch2-023358.pdf, sha256 af5fbd71; pypdf layout + plain. Compared with arXiv:2002.02973v4 (latest; qmbl-verify/sources/2002.02973v4.plain.txt line 1736)",
+          "location": "Appendix F, Table II (p. 13), row h = 3, column 2DRNN; Eq. (14) and Sec. III (p. 4)",
+          "reported_as": "−3.1 739 018(2) (E/N, Pauli, J = 1; thin spaces as printed)",
+          "conversion": "-3.1739018 x 144 = -457.0418592; sigma 2e-7 x 144 = 2.88e-5. Stored -457.041866(27) = -3.17390185(19) per site: the authors' VarBench upload digits (75dddcc, M. Hibat-Allah, 2021-12-13), 0.25 sigma from and inside the rounding of the printed cell",
+          "note": "Record row. Journal = arXiv v4 in every cell of Table II and in the caption (\"2D pRNN wave function (a single layer of 2D vanilla RNN with 100 memory units)\", \"For the estimation of the variational energy ... we use 2 x 10^6 samples\"). Hamiltonian Eq. (14) H = -sum s^z s^z - h sum s^x, Pauli, \"both with open boundary conditions\" (Sec. III), 12 x 12, h = 3: matches the instance, no constant. Variational, produced by this paper (PixelCNN column quoted from Ref. [56]). Reference already names the upload (ruling E5). Not a duplicate: the other row of this paper on the instance is the 1DRNN cell -3.1738969(5) = -457.0411536.",
+          "source_entry": "JA2-j1j2-heisenberg-tfising#1"
+        }
       }
     },
     {
@@ -179,7 +189,7 @@
         "reported_as": "VarBench TFIsing/square_144_O_3.md: Energy -457.0417309784141 | Sigma (empty) | Energy Variance 0.009210997202899307 | DOF 144 | Einf 0 | Method \"DMRG (bond dimension = 1024)\"",
         "conversion": "none (total energy, J units; per site -3.173900910)",
         "note": "Script builds the instance (Pauli TFIM +sum ZZ + h sum X on the open 12x12 square, h = 3, equivalent to -sum ZZ - h sum X on this bipartite cluster; no symmetry or magnetisation constraint). Bond dimension = max_B = 1024. Energy is the last sweep's, variational, no extrapolation; variance <H^2> - E^2 of the final MPS (ising_*.jl lines 63-65). No output log (config scope). Value since af1d48f (2022-09-01); script link attached 2024-07-19 (f88f9ba, cd362c4). Not the record: the 2DRNN row -457.041866(27) (other group) is 1.35e-4 lower. Snake-ordered open 12x12, 264 bonds.",
-        "source_entry": "VB4-tfising-tv#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -234,7 +244,7 @@
         "reported_as": "VarBench TFIsing/square_144_O_3.md: Energy -457.02705 | Sigma 0.00060 | Energy Variance 0.36743321 | DOF 144 | Einf 0 | Method \"RBM (alpha = 1)\"",
         "conversion": "none (total energy, J units)",
         "note": "Script builds the instance (open square of 144 sites, h = 3, Pauli TFIM) with nk.models.RBM(alpha = 1, log_cosh, float32; vmc.py lines 125-140); above the best bound -457.041866(27). sigma check: sqrt(Var/2^20) = sqrt(0.36743321/1048576) = 5.92e-4 vs stored 0.0006 (vmc.py lines 268-270: final estimate with estim_size = 2^20 samples); variance is Var(H) of the total energy. The linked script was attached on 2024-07-30 (fdb4bfb Jastrow / 5047bfd RBM) to a number already in VarBench (10f5c12 (2022-07-11) as -457.027, digits extended in af1d48f); vmc.py uses nk.operator.IsingJax (vmc.py line 78), so it is a later reimplementation of the baseline that documents the ansatz and protocol, not the output of the run that produced this number (no log in the methods repo). Value unchanged since 10f5c12; no value was changed and restored.",
-        "source_entry": "VB4-tfising-tv#21 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#21 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -289,7 +299,7 @@
         "reported_as": "VarBench TFIsing/square_144_O_3.md: Energy -457.01444 | Sigma 0.00073 | Energy Variance 0.54852065 | DOF 144 | Einf 0 | Method \"Jastrow baseline\"",
         "conversion": "none (total energy, J units)",
         "note": "Script builds the instance (open square of 144 sites, h = 3, Pauli TFIM) with nk.models.Jastrow (vmc.py lines 118-124); above the best bound -457.041866(27). sigma check: sqrt(Var/2^20) = sqrt(0.54852065/1048576) = 7.23e-4 vs stored 0.00073 (vmc.py lines 268-270: final estimate with estim_size = 2^20 samples); variance is Var(H) of the total energy. The linked script was attached on 2024-07-30 (fdb4bfb Jastrow / 5047bfd RBM) to a number already in VarBench (af1d48f (2022-09-01)); vmc.py uses nk.operator.IsingJax (vmc.py line 78), so it is a later reimplementation of the baseline that documents the ansatz and protocol, not the output of the run that produced this number (no log in the methods repo). Value unchanged since af1d48f; no value was changed and restored.",
-        "source_entry": "VB4-tfising-tv#22 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#22 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -315,7 +325,17 @@
         "method": "source text of arXiv:2002.02973 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-3.1738969(5)",
         "note": "Table II, row h=3, column 1DRNN: -3.1738969(5) | Same table's DMRG column at h=3 (-3.17389966) and 2DRNN column (-3.1739018(2), which exactly equals the instance's recorded best_per_site/exact_per_site) confirm the printed E/N values are already in the instance's per-site Pauli convention; no rescale needed.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published PDF Phys. Rev. Research 2, 023358 (2020), sources/journal/prresearch2-023358.pdf, sha256 af5fbd71, pypdf plain; arXiv:2002.02973v4 compared: identical",
+          "location": "Table II (Appendix F), row h = 3, column 1DRNN",
+          "reported_as": "-3.1 738 969(5)",
+          "conversion": "-3.1738969 x 144 = -457.0411536; sigma 5e-7 x 144 = 7.2e-5",
+          "note": "12 x 12 open, Pauli TFIM at h = 3, variational (2e6 samples), own. Duplicate check: the instance's 2DRNN row (VarBench, -457.041866) is the other column; no other row carries -457.0411536.",
+          "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#28"
+        }
       },
       "compute": {
         "parameters": 152000,

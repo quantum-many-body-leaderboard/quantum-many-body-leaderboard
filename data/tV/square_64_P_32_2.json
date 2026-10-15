@@ -35,7 +35,7 @@
           "conversion": "the committed h5 is a sibling run, 64 * (-1.2910776412131288) + 64 = -18.6290 +- 0.0634, 0.75 combined sigma from the stored total; DMRG -18.6338 is 0.85 sigma above",
           "checked_on": "2026-09-18",
           "reason": "Sign-problem-free ground-state projector QMC (RULES.md 4): the average sign is exactly 1, the projection time 40 leaves 18 on each side of every measurement, and the energy is unbiased within its error bar, so exact (stochastic) with the sigma below. The 2026-09-16 objection that the rows sit above ED and DMRG is their statistical scatter: every chain row is within 0.75 sigma of ED.",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19",
           "from": null
         },
         {
@@ -47,7 +47,7 @@
           "conversion": "the table's cell as stored, no finer source: the committed h5 is a sibling run, 64 * (-1.2910776412131288) + 64 = -18.6290 +- 0.0634, 0.75 combined sigma from the stored total; DMRG -18.6338 is 0.85 sigma above",
           "checked_on": "2026-09-18",
           "reason": "The value VarBench filed under Energy Variance is N times the per-site error of the mean of the Energy estimator, i.e. the standard error of the total energy, not Var(H); the code has no <H^2> estimator. An exact (stochastic) row must state its sigma (RULES.md 4, 9.4).",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19",
           "from": null
         },
         {
@@ -59,7 +59,7 @@
           "conversion": "the cell is the sigma, see the sigma correction; v_score is recomputed and becomes null",
           "checked_on": "2026-09-18",
           "reason": "The cell is the error bar filed in the wrong column; LCT-INT measures no <H^2>, so there is no energy variance to store.",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19",
           "from": 0.0932
         },
         {
@@ -71,7 +71,7 @@
           "conversion": "none",
           "checked_on": "2026-09-18",
           "reason": "The cited paper did not produce the number and its algorithm was not run; the number is VarBench's own run of the ground-state LCT-INT code, so the row cites the run script like every VarBench-computed row (RULES.md 8.2). The method paper is named in the method detail. Dian Wu attached the PRB 93 string 46 minutes after the upload (7fe0a8a) and made it the paper link in 2620f45.",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19",
           "from": "[paper](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.93.155117) [code](https://github.com/wangleiphy/SpinlesstV-LCT-INT)"
         },
         {
@@ -82,8 +82,8 @@
           "version_read": "varbench/methods 3edb6a9: scripts/tV/square_64_P_32_2/lct_int.sh, lct_int_inputs/params.in, test.out.h5 (h5py); programs/SpinlesstV-LCT-INT src; arXiv:1501.00986v1 (PRB 91, 235151) and arXiv:1602.02095v2 (PRB 93, 155117) PDFs, pypdf layout mode; VarBench history 75839cf, 7fe0a8a, 2620f45",
           "conversion": "none",
           "checked_on": "2026-09-18",
-          "reason": "Computed by VarBench, not collected (RULES.md 8.2): the uploader converted the code's shifted output to V n_i n_j herself, the inputs and outputs are in the methods repo, and four of the six reproduce the stored totals to 1e-15. The 2026-09-16 hold on baseline changes was about rows whose number could not be located; here the cited paper's content is known and the artefact exists (ruling 1a, Tristan 2026-09-19).",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19"
+          "reason": "Computed by VarBench, not collected (RULES.md 8.2): the uploader converted the code's shifted output to V n_i n_j herself, the inputs and outputs are in the methods repo, and four of the six reproduce the stored totals to 1e-15. The 2026-09-16 hold on baseline changes was about rows whose number could not be located; here the cited paper's content is known and the artefact exists (ruling 1a, 2026-09-19).",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19"
         }
       ],
       "baseline": true,
@@ -246,7 +246,7 @@
           "reported_as": "-18.506328 (total energy, units of t)",
           "conversion": "Hamiltonian Eq. (58) = VarBench tV form (V n_i n_j, bonds once, no shift); tables print totals in units of t; stored = printed total; printed total -18.506328; stored -18.50632768 = eps -0.28916137 (sweep-rows-2026-09-15.json line 6707) x 64; difference 3.2e-7 is below the printed half-unit, a per-site round-trip residue (loader class, not a row correction; see report)",
           "note": "V/t = 2, Np = 32, L = 8, PBC (Sec. 3, Eq. 58, table header) match the instance; own computation ('this work' / the paper's own HF); bound_type variational correct (HF determinant energy, the paper's 'expected upper bound'); peer_reviewed true (SciPost Phys. 14, 171 (2023)). Instance reference: DMRG -18.633949713, exact (stochastic) CTQMC -18.7136(932). Independent check: an unrestricted Hartree-Fock iteration of Eq. (58) on this cluster by this reader (out/VP9-tv-hubbard-heisenberg/work/hf_tv.py, 64x64 mean field, not an ED) converges to -18.506328380, which the paper prints to six decimals (it truncates rather than rounds: -3.232766891 is printed -3.232766, and Table 1 prints -21.499999 for the closed-shell value -21.5); the printed HF cell is the HF minimum of the VarBench Hamiltonian, so no shift and a genuine upper bound. No duplicate on the instance (no other HF/arSJVMC row, no quote of this number).",
-          "source_entry": "VP9-tv-hubbard-heisenberg#16 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP9-tv-hubbard-heisenberg#16 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       }
     },
@@ -281,7 +281,7 @@
           "reported_as": "-17.56(4) (total energy, units of t)",
           "conversion": "Hamiltonian Eq. (58) = VarBench tV form (V n_i n_j, bonds once, no shift); tables print totals in units of t; stored = printed total; printed total -17.56 = stored -17.56; sigma printed (4) in the last digit = 0.04 total (stored 0.04)",
           "note": "V/t = 2, Np = 32, L = 8, PBC (Sec. 3, Eq. 58, table header) match the instance; own computation ('this work' / the paper's own HF); bound_type variational correct (directly sampled VMC energy, no Lanczos step or extrapolation); peer_reviewed true (SciPost Phys. 14, 171 (2023)). Instance reference: DMRG -18.633949713, exact (stochastic) CTQMC -18.7136(932). Error bar: parenthesised last-digit error, definition not stated (C7); samples are uncorrelated (direct sampling). No duplicate on the instance (no other HF/arSJVMC row, no quote of this number). Metric flag (M2: 6.16% above the instance's exact (stochastic) reference; no known constant shift explains it): settled from the source - printed as is; the paper's own ED/DMRG sits in the same table and the text states the shortfall ('For V/t = 2 and 4, the VMC energy falls short of even the Hartree-Fock energy', Table 4 caption; training difficulty, p. 33). The large relative bar is the printed one.",
-          "source_entry": "VP9-tv-hubbard-heisenberg#17 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP9-tv-hubbard-heisenberg#17 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {

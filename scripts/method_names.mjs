@@ -1,5 +1,5 @@
 // Every published method string, mapped to a short name, the detail that tells rows of the
-// same method apart, and the method family (Tristan, 2026-09-17). The published string stays
+// same method apart, and the method family (2026-09-17). The published string stays
 // on the row as `method_as_published`; nothing here changes an energy or a bound_type.
 //
 // `method` is the name alone. `detail` carries what distinguishes a row: architecture size,
@@ -15,10 +15,10 @@
 // printed as an extrapolation inside a DMRG string (emit.mjs), which shares the string with its
 // finite-bond-dimension row. `instance_detail` ({ instance: detail }) replaces it on the instances
 // named, where one printed label names different networks: a corrected published string quotes
-// the source's label, and what tells the rows apart is the detail (Tristan, 2026-10-02).
+// the source's label, and what tells the rows apart is the detail (2026-10-02).
 //
 // Symmetry and extrapolation are written in slots, after the free text and separated from it
-// and from each other by "; ", in this order (Tristan, 2026-09-29):
+// and from each other by "; ", in this order (2026-09-29):
 //   symmetric: <groups>     built into the ansatz or the tensors, or named without saying how
 //   projected: <groups>     projected onto, as the source says
 //   extrapolated: <X → 0 or χ → ∞> (<how>)
@@ -71,6 +71,7 @@ export const NAMES = {
   "QMC": ["QMC", "loop algorithm, ALPS, T = 1e-4, converged in T"],
   "QMC (stochastic series expansion)": ["SSE QMC", ""],
   "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64": ["SSE QMC", ""],
+  "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64": ["SSE QMC", ""], // L > 30 in Sandvik's Table 1 (qmbl-verify 2026-10-15)
   "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32": ["SSE QMC", ""], // arXiv:2601.20189 Sec. IV: the open L x L and L x 2L tables ran at beta/L = 32 only
   "QMC (continuous-time expansion)": ["CT-QMC", "ground-state projector, Θ = 40, free-fermion trial state; LCT-INT of PRB 91, 235151"],
   "AFQMC (Metropolis), numerically exact": ["AFQMC", ""],
