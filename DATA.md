@@ -80,7 +80,7 @@ those instances*
 
 `computed_by: "qmbl"` marks a row QMBL ran itself, under the protocol in
 [`checks/cost/README.md`](checks/cost/README.md): the common ansätze on one machine, so
-that the table has cost figures that are comparable across methods (Tristan, 2026-09-21).
+that the table has cost figures that are comparable across methods (2026-09-21).
 It is the QMBL analogue of VarBench's `baseline`, and the same reading applies: a QMBL run
 holding a record means nobody has published a better number, not that QMBL claims one. A
 run is QMBL's implementation, hyperparameters and budget, never the authors', and its
@@ -164,13 +164,13 @@ per reading pass, applied in date order; the first (2026-09-16) read all 130 pap
 the non-baseline rows in full, appendices and supplements included, and found a statement
 in 81 of them. The second (2026-09-23) read the run script behind each of the 99 VarBench
 DMRG rows in [github.com/varbench/methods](https://github.com/varbench/methods) at
-`ed31bb0` for its sweep schedule; no script records a time. The third (2026-09-24, Tristan)
+`ed31bb0` for its sweep schedule; no script records a time. The third (2026-09-24)
 read the run scripts of the 187 other VarBench variational rows at the same commit and reread
 the sources of the 95 published rows that stated two of parameters, samples and iterations for
 the third, including the authors' code and run data; 153 of its 278 blocks carry all three.
 Where it found a stored number to be a different quantity (a final evaluation's sample count
 stored as the per-step count), the later block holds the per-step number and its note the old
-one. A VQE shot count per estimated quantity is not a per-step sample count and stays in the note. The fourth (2026-09-27, Tristan) followed a verification of every family against its papers and code (`qmbl-runs/cost-routes-2026-09-24/verify/`): 235 blocks gained what the run states about how it evaluated its state, in three objects that, like `sweep_schedule`, are statements and never costs. `evaluation` holds the training stages, the network evaluations per amplitude (a symmetry sum, several determinants), the sampler proposals per kept sample, whether the local energy skips vanishing terms, complex parameters, a dense read-out head and the optimiser's solve; `vmc_schedule` (kind `mvmc`) the def-file settings of an mVMC run; `circuit_schedule` a VQE script's gates and runs. The next section says how each enters the estimate.
+one. A VQE shot count per estimated quantity is not a per-step sample count and stays in the note. The fourth (2026-09-27) followed a verification of every family against its papers and code (`qmbl-runs/cost-routes-2026-09-24/verify/`): 235 blocks gained what the run states about how it evaluated its state, in three objects that, like `sweep_schedule`, are statements and never costs. `evaluation` holds the training stages, the network evaluations per amplitude (a symmetry sum, several determinants), the sampler proposals per kept sample, whether the local energy skips vanishing terms, complex parameters, a dense read-out head and the optimiser's solve; `vmc_schedule` (kind `mvmc`) the def-file settings of an mVMC run; `circuit_schedule` a VQE script's gates and runs. The next section says how each enters the estimate.
 
 A statement a later reading finds wrong is corrected like any stored value, in
 [`scripts/corrections.mjs`](scripts/corrections.mjs) (`compute.parameters`, `compute.note`,
@@ -204,7 +204,7 @@ A missing `compute` block excludes nothing, exactly like a missing variance.
 
 An exact energy is the same whoever computes it, so what it costs belongs to the instance, not
 to a row. QMBL diagonalizes the instance itself and stores the cost **once per instance**, as the
-field `qmbl_ed_cost` (Tristan, 2026-09-23/24). Duplicate rows would make one Hamiltonian look
+field `qmbl_ed_cost` (2026-09-23/24). Duplicate rows would make one Hamiltonian look
 like several results.
 - **What is run:** [`checks/cost/ed/run_ed.py`](checks/cost/ed/run_ed.py) builds the
   Hamiltonian in NetKet in VarBench's conventions. It conserves only particle number or total
@@ -254,8 +254,8 @@ each optimisation step drew and how many steps were taken (the VarBench rows in 
 scripts). Those three numbers, with the instance and what the paper or code says about how
 the network was evaluated, fix the arithmetic an optimisation took, and
 [`scripts/flops.mjs`](scripts/flops.mjs) turns them into floating-point operations at build
-time (Tristan, 2026-09-21). The model for neural and other variational Monte Carlo states is
-`nqs-v2` (Tristan, 2026-09-27, after a verification of every family against its papers and
+time (2026-09-21). The model for neural and other variational Monte Carlo states is
+`nqs-v2` (2026-09-27, after a verification of every family against its papers and
 code on 2026-09-25 found `nqs-v1` off by 3-40x wherever a run symmetrised, trained in stages
 or skipped vanishing terms). DMRG, mVMC and the VarBench VQE have their own models at the end
 of this section.
@@ -289,13 +289,13 @@ Per training stage:
 - `c_x` = 2 for complex parameters on real inputs (4 real FLOPs per multiply-add, not 2), and
   4 where the code is JAX (NetKet, jVMC and the like): JAX promotes the real input to complex, so
   every multiply-add is complex by complex, 8 FLOPs, as counted on QMBL's own networks (below;
-  Tristan, 2026-09-29). No published row states complex parameters yet. The SR term is sized
+  2026-09-29). No published row states complex parameters yet. The SR term is sized
   on its own (next bullet).
 - `SR`: the optimiser's linear solve where the code is known: the dense S (2 × samples ×
   P² + P³/3), NetKet's on-the-fly S made dense (P matrix-vector products), conjugate gradients
   at their stated iteration count, or MinSR (2 × samples² × P + samples³/3). Not counted where
   the code is unknown. The matrix is the one the code builds (`evaluation.jacobian`, read from
-  the code; Tristan, 2026-09-29):
+  the code; 2026-09-29):
   - `real`: real parameters and a real output, samples × P.
   - `complex`: NetKet's complex mode, which every network with a complex output gets unless it
     is declared holomorphic. The real and imaginary parts of the output are stacked into
@@ -319,7 +319,7 @@ Per training stage:
 - **A counted forward pass replaces the modelled one** where the row carries
   `evaluation.forward_flops`: QMBL's own runs, whose networks are counted from the program JAX
   traces for them ([checks/cost/README.md](checks/cost/README.md#the-forward-pass-counted-2026-09-29),
-  Tristan 2026-09-29). On the eight runs the count is 0.99-1.01 times the model for QMBL's ViT,
+  2026-09-29). On the eight runs the count is 0.99-1.01 times the model for QMBL's ViT,
   1.2-1.3 times for its GCNN and 2.0-2.1 times for its complex RBMs. JAX promotes the real spin
   configuration to complex, so a complex network multiplies complex by complex: 8 FLOPs per
   multiply-add, not the 4 `c_x` = 2 assumed; `c_x` is now 4 for such networks in JAX codes
@@ -400,7 +400,7 @@ Three rules, the same shape as the block's own:
 
 #### DMRG: `dmrg-v1`
 
-For a row with a `sweep_schedule` (Tristan, 2026-09-23), `flops.mjs` counts the dense tensor
+For a row with a `sweep_schedule` (2026-09-23), `flops.mjs` counts the dense tensor
 contractions of two-site DMRG:
 
     FLOPs = Σ over sweeps  2 × Σ over the N − 1 two-site updates
@@ -467,7 +467,7 @@ axis with the network estimates and, like them, never the hours axis.
 #### mVMC: `mvmc-v2`
 
 For a row whose compute block carries its mVMC def-file settings (`vmc_schedule`, kind
-`mvmc`: the VarBench mVMC + RBM rows, read from their inputs and `mVMC.sh`; Tristan, 2026-09-27),
+`mvmc`: the VarBench mVMC + RBM rows, read from their inputs and `mVMC.sh`; 2026-09-27),
 `flops.mjs` counts the Pfaffian arithmetic over every projection term:
 
     FLOPs = c_x [ P_tot N_QP (r + a u) + N_it S N_QP (n_conn r + n²) + (a P_tot / N + N_it S) N_QP (7/3) n³ ] + SR
@@ -523,7 +523,7 @@ off its rows at build time, so it cannot disagree with the page.
 Per instance, not per row. A diagonalization resolved by symmetry sector states the lowest
 energy in each sector, and only the ground state's sector is a ground-state energy: that row
 stays a row and holds the record, and the minima of the other sectors are the instance's
-`spectrum` (Tristan, 2026-09-16 and 2026-09-30). One instance has one:
+`spectrum` (2026-09-16 and 2026-09-30). One instance has one:
 `J1J2/triangular_48_P_0.125`, whose 48 sectors of the S<sup>z</sup> = 0 space come from
 Wietek et al. (PRX 14, 021010), App. B naming Γ.A1 (spin flip +1) the ground state. One of
 its 47 entries, the compute block cut:
@@ -604,7 +604,7 @@ source, the row says so: `sampled: true` or `false`, set in
 method string gave stays in `corrections[].from`. Where the field is absent, the method string
 decides: explicit deterministic markers (DMRG, PEPS, MPS, statevector, exact diagonalization,
 mean field, ...) in [`scripts/units.mjs`](scripts/units.mjs), everything else sampled. The field
-exists because the string misleads both ways (Tristan, 2026-09-30): VarBench's
+exists because the string misleads both ways (2026-09-30): VarBench's
 "2^14 samples/grad" VQE rows print the exact statevector energy, and a finite PEPS evaluated by
 Monte Carlo, an MPS-RNN or a projected mean-field state is sampled.
 
