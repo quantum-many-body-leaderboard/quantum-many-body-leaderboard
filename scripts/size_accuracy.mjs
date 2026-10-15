@@ -4,12 +4,12 @@
 // on every instance, so this view needs nothing the rows do not already carry.
 //
 // Size runs along x and the distance up y. The two exact-referenced figures draw it as a
-// plain log scale (Tristan, 2026-09-17), 10^-8 at the bottom and 10^0 at the top, so a
+// plain log scale (2026-09-17), 10^-8 at the bottom and 10^0 at the top, so a
 // better energy is lower and the exact energy - distance zero, off any log scale - is the
 // line below the plot. The per-Hamiltonian figures keep the scale turned upside down
-// (Tristan, 2026-09-16), a better energy higher and the record holders in a band above.
+// (2026-09-16), a better energy higher and the record holders in a band above.
 //
-// The question every figure here asks is which published results are the best (Tristan,
+// The question every figure here asks is which published results are the best (
 // 2026-09-16); the relative gap is only the mechanic that lets Hamiltonians of different
 // energy scales share one axis. It is taken against the exact energy wherever an instance
 // has one. The two exact-referenced figures use
@@ -20,7 +20,7 @@
 // scale shows only the size of the distance.
 //
 // The two exact-referenced figures draw an "exact" line below the 10^-8 gridline instead
-// (Tristan, 2026-09-17), with sign-problem-free QMC counted as exact. A row closer than
+// (2026-09-17), with sign-problem-free QMC counted as exact. A row closer than
 // 10^-8 sits on that line, above or below. A row below the exact energy within twice the
 // joint error bar is placed by the size of its gap, since inside the error bar the sign
 // says nothing. A row further below than that has no place on either axis, so it is not
@@ -55,7 +55,7 @@ function referenceOf(inst) {
 }
 
 // Every row that is a result rather than the answer: a bound or an extrapolation with a
-// stated bound type, flagged rows included and marked as such (Tristan, 2026-09-18), except
+// stated bound type, flagged rows included and marked as such (2026-09-18), except
 // a row flagged wrong-instance, whose energy belongs on another axis. `gap` is relative to the reference energy;
 // extrapolations and projections may land below an exact reference, and so may a sampled
 // bound without an error bar below a record. The axis shows the absolute value, so such a
@@ -187,7 +187,7 @@ const lifted = all.filter(p => p.shown > p.gap).length;
 const UNDER = `${under} ${under === 1 ? "row lies" : "rows lie"} below the exact energy by more than twice the error bar and ${under === 1 ? "is" : "are"} not drawn.`;
 const Y_LABEL = "relative gap to the instance's exact energy (lower is better)";
 // The largest size at which the overview draws a model other than Heisenberg or Hubbard
-// (Tristan, 2026-09-18: the subtitle says so, and points to the per-Hamiltonian figures).
+// (2026-09-18: the subtitle says so, and points to the per-Hamiltonian figures).
 const LAST_OTHER = Math.max(...all.filter(p => !["Heisenberg", "Hubbard"].includes(p.inst.model)).map(p => p.inst.n_sites));
 
 // ------------------------------------------------------ 1. every row against an exact energy

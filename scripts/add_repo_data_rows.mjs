@@ -29,7 +29,7 @@
 // s = 2 run; the s = 0.5 run is lower). The two rules differ at open L = 8 alone, where the
 // lowest of all ten is the s = 0.5 run, 0.99 sigma below the SSE energy. Until 2026-10-02 the
 // open rows took the lowest of all ten; where that gave another run, its values stay on the
-// row in `corrections` (qmbl-verify 2026-09-29, VP7#45; ruling E8, Tristan 2026-10-02). The
+// row in `corrections` (qmbl-verify 2026-09-29, VP7#45; ruling E8, 2026-10-02). The
 // run that produced each row is named in the note. Sizes Table V already covers are skipped
 // by the duplicate check against the tree as built.
 import fs from "node:fs";
@@ -95,8 +95,8 @@ for (const r of [...best.values()].sort((a, b) => a.boundary.localeCompare(b.bou
     location: `${SRC.source}: ['${r.boundary}']['rate=${r.rate}']['scale=${r.scale}'], L = ${r.L}; the authors' selection in HeisenbergRNN@29bf62a get_zer_var_energies.ipynb, cell 8 ('Min energy L=${r.L}: ${r.energy_per_site}')`,
     version_read: "sources/2502.17144-repo-final_energy_data.json (the authors' pickle, read 2026-09-16); the notebook read by VP7 and its skeptic on 2026-09-29",
     conversion, checked_on: "2026-10-02",
-    reason: `The authors' best RNN at open boundaries is the lowest of the s = 2 and 4 schedules, here s = ${r.scale}, r = ${r.rate}; this row was built from the lowest of all ten, s = ${old.scale}, r = ${old.rate} (${old.energy_per_site} +/- ${old.std_error} per site), a run the authors exclude and one of the two s = 0.5 runs that sit below the SSE energy (0.99 and 0.85 combined sigma). Table V's open 6 x 6 entry is the s = 2 run by the same rule. Ruling E8, Tristan 2026-10-02: follow the authors' selection.`,
-    source_entry: "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous; the skeptic refuted only its count of runs below SSE); ruling E8, Tristan 2026-10-02",
+    reason: `The authors' best RNN at open boundaries is the lowest of the s = 2 and 4 schedules, here s = ${r.scale}, r = ${r.rate}; this row was built from the lowest of all ten, s = ${old.scale}, r = ${old.rate} (${old.energy_per_site} +/- ${old.std_error} per site), a run the authors exclude and one of the two s = 0.5 runs that sit below the SSE energy (0.99 and 0.85 combined sigma). Table V's open 6 x 6 entry is the s = 2 run by the same rule. Ruling E8, 2026-10-02: follow the authors' selection.`,
+    source_entry: "VP7-arxiv-2502-17144#45 (qmbl-verify 2026-09-29, ambiguous; the skeptic refuted only its count of runs below SSE); ruling E8, 2026-10-02",
     from: was[field],
   });
   inst.rows.push({

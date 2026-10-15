@@ -1,4 +1,4 @@
-// The instances QMBL measures an ED cost on (Tristan, 2026-09-23/24; checks/cost/README.md,
+// The instances QMBL measures an ED cost on (2026-09-23/24; checks/cost/README.md,
 // "QMBL-measured ED cost"): every instance with an exact-diagonalization row and at most 30
 // sites. For each, what run_ed.py needs (model, lattice, parameters, the stored exact energy
 // it must reproduce) and what the dry pass decides with: the conserved sector's dimension and

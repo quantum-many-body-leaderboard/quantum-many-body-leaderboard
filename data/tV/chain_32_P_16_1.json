@@ -35,8 +35,8 @@
           "version_read": "checks/exact-recompute-2026-09/results/tV__chain_32_P_16_1.json; VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked ed_lattice_symmetries.sh fixes every lattice-symmetries sector to 0 (nk2ls.py line 214, translation and reflection in 1D), and the stored number predates the link (a QuSpin Lanczos run whose script is not in varbench/methods; VB4). No paper the reader found prints it. QMBL's exact diagonalization of the full space, no spatial symmetry, reproduces it (translation expectation ~0, the K = +-pi/2 doublet the reader expected); the files are copied into checks/exact-recompute-2026-09/ with this commit. The row cites that reproduction beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (Tristan, 2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
-          "source_entry": "VB4-tfising-tv#31 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked ed_lattice_symmetries.sh fixes every lattice-symmetries sector to 0 (nk2ls.py line 214, translation and reflection in 1D), and the stored number predates the link (a QuSpin Lanczos run whose script is not in varbench/methods; VB4). No paper the reader found prints it. QMBL's exact diagonalization of the full space, no spatial symmetry, reproduces it (translation expectation ~0, the K = +-pi/2 doublet the reader expected); the files are copied into checks/exact-recompute-2026-09/ with this commit. The row cites that reproduction beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+          "source_entry": "VB4-tfising-tv#31 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/chain_32_P_16_1/ed_lattice_symmetries.sh)"
         }
       ],
@@ -162,7 +162,7 @@
         "reported_as": "VarBench tV/chain_32_P_16_1.md: Energy -15.94684764968563 | Sigma (empty) | Energy Variance (empty) | DOF 16 | Einf 7.741935483870968 | Method \"DMRG (maxbonddim = 200)\"",
         "conversion": "none (total energy, t = 1)",
         "note": "Script builds the instance (32-site ring, fermionic PBC through ITensors' Jordan-Wigner handling of 'Fermion' OpSums, Nf = 16 fixed by the QN-conserving MPS, V = 1, V n_i n_j without shift; einf and dof correct). Variational energy of the last sweep at the stated bond dimension, no extrapolation; no output log (config). Provenance: Qi Yang's upload 75839cf (2022-12-01, 'update spinless tV model benchmark', converted 'V(n-1/2)(n-1/2) to Vnn data'), before the ITensors t-V script was linked (2024-07-19): the script documents the method, the run is Qi Yang's. 2.95e-7 above the ED -15.946847944277561.",
-        "source_entry": "VB4-tfising-tv#47 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#47 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -306,7 +306,7 @@
           "conversion": "32 * (-0.7483189639888563) + 8 = -15.946206847643403, the stored total; ED -15.946847944277561 is 0.63 sigma below",
           "checked_on": "2026-09-18",
           "reason": "Sign-problem-free ground-state projector QMC (RULES.md 4): the average sign is exactly 1, the projection time 40 leaves 18 on each side of every measurement, and the energy is unbiased within its error bar, so exact (stochastic) with the sigma below. The 2026-09-16 objection that the rows sit above ED and DMRG is their statistical scatter: every chain row is within 0.75 sigma of ED.",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19",
           "from": null
         },
         {
@@ -318,7 +318,7 @@
           "conversion": "32 * 0.0000316265616252196 = 0.00101205, which rounds to the table's cell",
           "checked_on": "2026-09-18",
           "reason": "The value VarBench filed under Energy Variance is N times the per-site error of the mean of the Energy estimator, i.e. the standard error of the total energy, not Var(H); the code has no <H^2> estimator. An exact (stochastic) row must state its sigma (RULES.md 4, 9.4).",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19",
           "from": null
         },
         {
@@ -330,7 +330,7 @@
           "conversion": "the cell is the sigma, see the sigma correction; v_score is recomputed and becomes null",
           "checked_on": "2026-09-18",
           "reason": "The cell is the error bar filed in the wrong column; LCT-INT measures no <H^2>, so there is no energy variance to store.",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19",
           "from": 0.00101
         },
         {
@@ -342,7 +342,7 @@
           "conversion": "none",
           "checked_on": "2026-09-18",
           "reason": "The cited paper did not produce the number and its algorithm was not run; the number is VarBench's own run of the ground-state LCT-INT code, so the row cites the run script like every VarBench-computed row (RULES.md 8.2). The method paper is named in the method detail. Dian Wu attached the PRB 93 string 46 minutes after the upload (7fe0a8a) and made it the paper link in 2620f45.",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19",
           "from": "[paper](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.93.155117) [code](https://github.com/wangleiphy/SpinlesstV-LCT-INT)"
         },
         {
@@ -353,8 +353,8 @@
           "version_read": "varbench/methods 3edb6a9: scripts/tV/chain_32_P_16_1/lct_int.sh, lct_int_inputs/params.in, test.out.h5 (h5py); programs/SpinlesstV-LCT-INT src; arXiv:1501.00986v1 (PRB 91, 235151) and arXiv:1602.02095v2 (PRB 93, 155117) PDFs, pypdf layout mode; VarBench history 75839cf, 7fe0a8a, 2620f45",
           "conversion": "none",
           "checked_on": "2026-09-18",
-          "reason": "Computed by VarBench, not collected (RULES.md 8.2): the uploader converted the code's shifted output to V n_i n_j herself, the inputs and outputs are in the methods repo, and four of the six reproduce the stored totals to 1e-15. The 2026-09-16 hold on baseline changes was about rows whose number could not be located; here the cited paper's content is known and the artefact exists (ruling 1a, Tristan 2026-09-19).",
-          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, Tristan 2026-09-19"
+          "reason": "Computed by VarBench, not collected (RULES.md 8.2): the uploader converted the code's shifted output to V n_i n_j herself, the inputs and outputs are in the methods repo, and four of the six reproduce the stored totals to 1e-15. The 2026-09-16 hold on baseline changes was about rows whose number could not be located; here the cited paper's content is known and the artefact exists (ruling 1a, 2026-09-19).",
+          "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19"
         }
       ],
       "baseline": true,

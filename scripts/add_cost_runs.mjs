@@ -30,12 +30,12 @@ const label = (r, f) => `${r.label}, QMBL cost-to-reproduce run${/^h100-/.test(f
 const jobOf = h => (h.slurm_job_id ? `Slurm job ${h.slurm_job_id}` : "no scheduler");
 
 // The forward pass of the network, counted from the program JAX traces for it
-// (checks/cost/forward_flops.py, forward-flops.json; Tristan, 2026-09-29): nqs-v2 in flops.mjs
+// (checks/cost/forward_flops.py, forward-flops.json; 2026-09-29): nqs-v2 in flops.mjs
 // uses it instead of its modelled 2 x parameters x reuse. Attached only where the counted
 // network has the run's parameter count.
 const FWD_FILE = "checks/cost/forward-flops.json";
 const FWD = fs.existsSync(FWD_FILE) ? JSON.parse(fs.readFileSync(FWD_FILE, "utf8")) : null;
-// The SR step, counted the same way (checks/cost/sr_flops.py, sr-flops.json; Tristan, 2026-09-29):
+// The SR step, counted the same way (checks/cost/sr_flops.py, sr-flops.json; 2026-09-29):
 // the Jacobian NetKet builds (its "complex" mode for these networks), and the solve of a dense S or
 // the set-up of conjugate gradients, whose iterations the runs do not log.
 const SR_FILE = "checks/cost/sr-flops.json";

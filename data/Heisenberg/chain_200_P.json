@@ -137,7 +137,7 @@
         "reported_as": "| -354.4774 | 0.0013 | 0.595 | 200 | 0 | VMC with projected fermions + Jastrow | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_200_P/vmc_gutzwiller.sh) |",
         "conversion": "stored = 4N x <H>/N of read_ene.x (S.S per site), sigma x 4N, variance 16 Var_S(H); per site S.S = -354.4774/(4 x 200) = -0.4430967",
         "note": "vmc_gutzwiller.sh + inputs: geometry.d 1-site cell x 200 (ring; the last flag 1 only makes the auxiliary fermions antiperiodic, the spin exchange uses abs(ivicn) and is periodic), nelup = neldo = 100 (Sz = 0), jperp = 1, uvv = 0.25 (H = sum S.S, no constant), BCS-paired projected fermions (iesBCS=3) + long-range spin Jastrow (iesspin=99), ngen = 5e5; read_ene.x binned error (bins of 10^4, first 4 dropped). Stored = 4N x <H>/N (Pauli total). sigma/sqrt(Var/2^20) = 1.73 (binned SEM; implied 3.5e5 effective samples). 0.0568 above the Bethe-ansatz ground state -354.53421300896656: a valid bound. Entered 61acf55 (2022-02-15, F. Ferrari), never changed; linked by Ferrari d186176 (2024-07-30).",
-        "source_entry": "VB3-varbench-code-heisenberg#4 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#4 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -192,7 +192,7 @@
         "reported_as": "| -351.3410 | 0.0037 | 14.31015 | 200 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_200_P/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -351.341/(4 x 200) = -0.439176250",
         "note": "scripts/Heisenberg/chain_200_P/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 1 --L 200 --zero_mag --net rbm --seed 123 --show_progress' -> 200-site ring (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.002: the stored sigma is the error of that final estimate. 3.1932 above the Bethe-ansatz ground state -354.53421300896656 (work/bethe.mjs). History: entered 10f5c12 (2022-07-11, Dian Wu) as -351.341 | 0.0037 | 14.3102 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -351.341 -> -351.3410; variance 14.3102 -> 14.31015; linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#5 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#5 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -247,7 +247,7 @@
         "reported_as": "| -346.7672 | 0.0045 | 20.28494 | 200 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_200_P/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -346.7672/(4 x 200) = -0.433459000",
         "note": "scripts/Heisenberg/chain_200_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 1 --L 200 --zero_mag --net jas --seed 123 --show_progress' -> 200-site ring (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.023: the stored sigma is the error of that final estimate. 7.7670 above the Bethe-ansatz ground state -354.53421300896656 (work/bethe.mjs). History: entered af1d48f (2022-09-01, Dian Wu) as -346.7672 | 0.0045 | 20.28494 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#6 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#6 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     }

@@ -48,7 +48,7 @@ import fs from "node:fs";
 // kernel applied at every element of the space group; sites alone where the method detail
 // says translations), or a number; `sampling` is "mcmc" or "ar" (autoregressive); `det` adds
 // the determinant or Pfaffian of a fermionic state. Entries after Tensor backflow: compute
-// pass 2026-09-24 (Tristan).
+// pass 2026-09-24.
 export const ARCH = {
   "RBM": { reuse: "sites", sampling: "mcmc", note: "translation-symmetric RBM: each hidden unit is evaluated at every translation" },
   "RBM (dense)": { reuse: 1, sampling: "mcmc", note: "dense RBM (NetKet's nk.models.RBM): every weight is applied once" },
@@ -85,7 +85,7 @@ export const ARCH = {
 // A row renamed after it was estimated keeps the architecture it was estimated as, by its published
 // string: the ResNet1 of Heisenberg/square_100_P was the short name CNN until the verification pass
 // of 2026-09-29 named it ResNet, and stays costed as a CNN. No ResNet entry, which would give the
-// other ResNet rows estimates nobody has checked (Tristan, 2026-10-02). The same holds for the 10x10
+// other ResNet rows estimates nobody has checked (2026-10-02). The same holds for the 10x10
 // ResNet2 of 34,944 parameters, a "Deep CNN" until its re-identification (ruling E4, 2026-10-02).
 const ESTIMATED_AS = { "ResNet1 (MinSR)": "CNN", "ResNet2": "CNN" };
 export const archOf = r => ARCH[ESTIMATED_AS[r.method_as_published ?? r.method] ?? (r.method === "RBM" && (/^α = \d+(, QMBL run(, H100 size ladder)?)?$/.test(r.method_detail || "") || /\bprojected: (?!unspecified)/.test(r.method_detail || "")) ? "RBM (dense)" : r.method)];
@@ -168,7 +168,7 @@ export function flopsOf(r, inst) {
   return nqsFlopsOf(r, inst);
 }
 
-// `nqs-v2` (Tristan, 2026-09-27, after the verification of 2026-09-25): nqs-v1 plus what the run
+// `nqs-v2` (2026-09-27, after the verification of 2026-09-25): nqs-v1 plus what the run
 // states about how it evaluated the network (the block's `evaluation`, DATA.md). Per stage
 //   FLOPs = iterations x samples x [(n_conn + 3) x m + proposals x (m, or 1 for an autoregressive draw)] x forward
 //         + iterations x SR
@@ -177,10 +177,10 @@ export function flopsOf(r, inst) {
 // sized by the Jacobian the code builds (below). Without an `evaluation` block every factor takes its
 // nqs-v1 value.
 // Where the forward pass was counted from the program JAX traces for the network
-// (`evaluation.forward_flops`, QMBL's own runs: checks/cost/forward_flops.py, Tristan 2026-09-29),
+// (`evaluation.forward_flops`, QMBL's own runs: checks/cost/forward_flops.py, 2026-09-29),
 // that count replaces the modelled forward; everything else in the formula stays.
 // The SR term is sized by the matrix the code solves (`evaluation.jacobian`, read from the code;
-// Tristan 2026-09-29, after the counted SR steps of checks/cost/sr_flops.py matched NetKet's modes
+// 2026-09-29, after the counted SR steps of checks/cost/sr_flops.py matched NetKet's modes
 // exactly): "real", a real S x P Jacobian; "complex", NetKet's complex mode, which stacks the real
 // and imaginary parts of a complex output (2S rows) and splits complex parameters into real pairs
 // (P_r columns), all in real arithmetic; "holomorphic", a complex S x P Jacobian (4 real FLOPs per
@@ -222,7 +222,7 @@ function nqsFlopsOf(r, inst) {
   } else reuse = arch.reuse;
   // Complex weights on real inputs: 4 real FLOPs per multiply-add, not 2. A JAX code (NetKet, jVMC, ...)
   // promotes the real input to complex, so every multiply-add is complex by complex, 8 FLOPs: counted
-  // on QMBL's own networks (checks/cost/forward_flops.py), c_x = 4 there (Tristan, 2026-09-29). The SR
+  // on QMBL's own networks (checks/cost/forward_flops.py), c_x = 4 there (2026-09-29). The SR
   // term has its own factor: c_x = 2 unless `evaluation.jacobian` says how the code builds its matrix.
   const jaxCode = /netket|\bjax\b|jvmc|flax|quantax/i.test(ev.code || "");
   const cx = ev.complex ? (jaxCode ? 4 : 2) : 1, cxSR = ev.complex ? 2 : 1;

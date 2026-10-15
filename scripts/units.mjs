@@ -10,7 +10,7 @@ export const SPIN_MODELS = new Set(["Heisenberg", "J1J2", "TFIsing"]);
 // 2026-10-08 no row needs a sigma to hold a record (RULES.md 6); the distinction still
 // decides the README's dagger marker and which rows the error-bar counts ask about.
 //
-// Which kind a row is, is a statement read from its source, per row (Tristan, 2026-09-30,
+// Which kind a row is, is a statement read from its source, per row (2026-09-30,
 // qmbl-verify 2026-09-29 ruling 2). A row whose reader established it carries `sampled`,
 // true or false, set in corrections.mjs with the evidence, and that decides. The method
 // string is only the fallback where the field is absent, because a name is not the answer:
@@ -50,7 +50,7 @@ export const noErrorMetrics = r =>
 
 // Sign-problem-free QMC is `exact` within its statistical error bar, not to the printed
 // digits (RULES.md 4): such a row must state sigma, and every surface prints its class as
-// "exact (stochastic)" (Tristan, 2026-09-16). The method name (AFQMC, SSE QMC, QMC) tells it
+// "exact (stochastic)" (2026-09-16). The method name (AFQMC, SSE QMC, QMC) tells it
 // apart from exact diagonalization and exact solutions.
 const STOCHASTIC = /\bqmc\b|\bafqmc\b|monte carlo|stochastic series/i;
 export const stochasticExact = r => r.bound_type === "exact" && STOCHASTIC.test(r.method || "");
@@ -84,7 +84,7 @@ export function methodLabel(r) {
 // The one sector row that IS the ground state. J1J2/triangular_48_P_0.125 carries all 48
 // (k.irrep, spin-flip) sectors of the Sz = 0 space from Wietek et al., PRX 14, 021010, whose
 // App. B names Gamma.A1 (spin-flip +1) as the ground state; the qmbl-verify pass of
-// 2026-09-15 confirmed the number against the paper's own upload, and Tristan ruled on
+// 2026-09-15 confirmed the number against the paper's own upload, and ruled on
 // 2026-09-16 (qmbl-verify DECISIONS.md, 3c; reconfirmed 2026-09-30) that this row stays and
 // the other 47 move to a per-instance spectrum record, which the build does since 2026-09-30.
 // The sector named here is the row that stays.
@@ -104,7 +104,7 @@ export const exactEligible = r => groundStateExact(r) && !r.defect;
 // variational, projected or extrapolated, with or without an error bar - that carries no
 // unresolved defect (RULES.md 6, 6.1). On an instance with an eligible exact row this
 // decides the closest challenger, not the record. Until 2026-10-08 only a variational bound
-// could hold a record, and a sampled one only with its sigma; Tristan dropped both, so
+// could hold a record, and a sampled one only with its sigma; both were dropped, so
 // that every published result counts and nothing is listed as unable to hold a record.
 const RECORD_KINDS = new Set(["variational", "projected", "extrapolated"]);
 export const recordEligible = r => RECORD_KINDS.has(r.bound_type) && !r.defect;

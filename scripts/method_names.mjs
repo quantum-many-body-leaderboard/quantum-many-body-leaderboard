@@ -1,5 +1,5 @@
 // Every published method string, mapped to a short name, the detail that tells rows of the
-// same method apart, and the method family (Tristan, 2026-09-17). The published string stays
+// same method apart, and the method family (2026-09-17). The published string stays
 // on the row as `method_as_published`; nothing here changes an energy or a bound_type.
 //
 // `method` is the name alone. `detail` carries what distinguishes a row: architecture size,
@@ -15,10 +15,10 @@
 // printed as an extrapolation inside a DMRG string (emit.mjs), which shares the string with its
 // finite-bond-dimension row. `instance_detail` ({ instance: detail }) replaces it on the instances
 // named, where one printed label names different networks: a corrected published string quotes
-// the source's label, and what tells the rows apart is the detail (Tristan, 2026-10-02).
+// the source's label, and what tells the rows apart is the detail (2026-10-02).
 //
 // Symmetry and extrapolation are written in slots, after the free text and separated from it
-// and from each other by "; ", in this order (Tristan, 2026-09-29):
+// and from each other by "; ", in this order (2026-09-29):
 //   symmetric: <groups>     built into the ansatz or the tensors, or named without saying how
 //   projected: <groups>     projected onto, as the source says
 //   extrapolated: <X → 0 or χ → ∞> (<how>)

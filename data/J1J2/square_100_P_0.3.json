@@ -169,7 +169,7 @@
         "reported_as": "julia --project heisenberg_2d.jl --peri --L 10 --J2 0.3 --J22 0.3 --zero_mag --max_B 1024 --seed 123",
         "conversion": "none: dmrg() energy is the total in Pauli units (J *= 4 on spin-1/2 operators); variance = <H^2> - E^2 of the whole system",
         "note": "Script builds the 10x10 PBC J1-J2 at J2 = J22 = 0.3 (Pauli, no Marshall rotation, no shift), S^z = 0, max bond dimension 1024 = method string, 50 sweeps, cutoff 1e-12, seed 123; final dmrg() energy: variational at stated bond dimension (no extrapolation), sigma not applicable. D = 1024 on a 10x10 torus is far from converged but is a valid bound at stated bond dimension. History: entered 6e6044e (2022-10-17, Dian, 'Add DMRG for J1-J2 L=10 scanning J2'); unchanged since; code link added f88f9ba (2024-07-19).",
-        "source_entry": "VB1-varbench-code-j1j2#7 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#7 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -224,7 +224,7 @@
         "reported_as": "python3 vmc.py --ham j1j2 --boundary peri --sign mars --ham_dim 2 --L 10 --J2 0.3 --zero_mag --net rbm --seed 123 --show_progress",
         "conversion": "none: NetKet Stats mean is the total energy in Pauli units; sigma = error_of_mean; variance = Stats.variance (total)",
         "note": "Script builds the 10x10 PBC J1-J2 at J2 = 0.3 (NetKet Heisenberg, Pauli, J = [1, 0.3], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.RBM(alpha = 1, log_cosh) with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.01, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. History: entered 6470cd9 (2022-10-18, Dian, 'Add RBM and Jastrow for J1-J2 L=10 scanning J2'); unchanged since; code link added 5047bfd (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#8 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#8 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -279,7 +279,7 @@
         "reported_as": "python3 vmc.py --ham j1j2 --boundary peri --sign mars --ham_dim 2 --L 10 --J2 0.3 --zero_mag --net jas --seed 123 --show_progress",
         "conversion": "none: NetKet Stats mean is the total energy in Pauli units; sigma = error_of_mean; variance = Stats.variance (total)",
         "note": "Script builds the 10x10 PBC J1-J2 at J2 = 0.3 (NetKet Heisenberg, Pauli, J = [1, 0.3], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.Jastrow with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.01, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. History: entered 6470cd9 (2022-10-18, Dian, 'Add RBM and Jastrow for J1-J2 L=10 scanning J2'); unchanged since; code link added fdb4bfb (2024-07-30).",
-        "source_entry": "VB1-varbench-code-j1j2#9 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB1-varbench-code-j1j2#9 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -314,7 +314,7 @@
           "reported_as": "-0.556912 (energy per site, S.S units, J1 = 1; no error bar printed)",
           "conversion": "-0.556912 x 4 x 100 = -222.7648 (stored -222.7648, exact match)",
           "note": "Independent second read of a QMBL-added row. Hamiltonian H = J1 sum_<i,j> S_i S_j + J2 sum_<<i,j>> S_i S_j with spin-1/2 operators (v1 Eq. 4, v2 Eq. 6), 'square lattice with periodic boundary conditions and N = 36, 64 and 100 spins 1/2'; Table I is per site in S.S units with J1 = 1 (the paper's own 6x6 ED column and its quoted Sandvik QMC cells fix it). Size, boundary and J2 agree with the instance; 'ViT' is a variational NQS, so bound_type variational is right; method_as_published 'ViT' is the column header; peer_reviewed false is right (no journal reference on the abs page, 2026-09-29); primary (column '(this work)'). Kind of number: the authors' extended data (2026-09-28) states that Table I lists the best of ten checkpoints (every 150 of 1500 epochs), each a 4096-sample estimate; no error bar is printed, so sigma stays null (RULES.md 6). energy_variance 0.8 = sigma^2 x 16 x 100 with sigma^2 = 5.000e-4 = (<H^2>-<H>^2)/N per spin (S.S units), authors' extended data row '0.30 -0.556912 3.5 0.5 -0.556800 3.5 0.48 -0.556856 0.75 0.49', column group 'the best epochs, 4096 samples; Table I'; V-score N Var/E^2 = 1.6121e-3 recomputes. Best checkpoint is an earlier epoch; the final (1500th) epoch gives -0.556800 on 4096 samples and -0.556856 (error 7.50e-6) on 102,400 samples, 5.60e-5 per site above the Table I value.",
-          "source_entry": "VP5-arxiv-2606-04558#5 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP5-arxiv-2606-04558#5 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -343,7 +343,7 @@
         "source_file": "sources/2606.04558-authors-extended-data-vit.txt",
         "reported_as": "0.30 -0.556912 3.5 0.5",
         "conversion": "var_over_n_SS",
-        "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 3.5e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; Tristan, 2026-09-28)."
+        "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 3.5e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; 2026-09-28)."
       }
     }
   ],

@@ -150,7 +150,7 @@
         "reported_as": "| -80.36672248793934 | | 7.068731007373572 | 36 | 0 | DMRG (bond dimension = 2048) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/dmrg.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -80.36672248793934/(4 x 36) = -0.558102239",
         "note": "dmrg.sh: heisenberg_2d.jl --peri --L 6 --J2 1 --zero_mag --max_B 2048: 6x6 triangular torus, Pauli, J = 1, Sz = 0, 50 sweeps at D = 2048. 0.327 above the exact energy (0.4%): a torus in a snake MPS; QMBL's own chi = 2000 DMRG cost run on this instance gives -80.35309, consistent. Entered 721e09e (2022-08-22), never changed; linked 2024-07-19.",
-        "source_entry": "VB3-varbench-code-heisenberg#79 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#79 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -205,7 +205,7 @@
         "reported_as": "| -70.7915 | 0.0065 | 43.4753 | 36 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -70.7915/(4 x 36) = -0.491607639",
         "note": "scripts/Heisenberg/triangular_36_P/vmc_rbm.sh: 'python3 vmc.py --ham heis_tri --boundary peri --sign mars --ham_dim 2 --L 6 --zero_mag --net rbm --seed 123 --show_progress' -> 6x6 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), periodic; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.009: the stored sigma is the error of that final estimate. 9.9023 above the exact -80.6937689612426. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered 721e09e (2022-08-22, Dian Wu) as -70.7915 | 0.0065 | 43.4753 | RBM (alpha = 1); linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#80 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#80 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -260,7 +260,7 @@
         "reported_as": "| -70.0967 | 0.0060 | 37.0349 | 36 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -70.0967/(4 x 36) = -0.486782639",
         "note": "scripts/Heisenberg/triangular_36_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis_tri --boundary peri --sign mars --ham_dim 2 --L 6 --zero_mag --net jas --seed 123 --show_progress' -> 6x6 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), periodic; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.010: the stored sigma is the error of that final estimate. 10.5971 above the exact -80.6937689612426. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered af1d48f (2022-09-01, Dian Wu) as -70.0967 | 0.0060 | 37.0349 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#81 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#81 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -412,7 +412,7 @@
           "conversion": "-0.5601 x 4 x 36 = -80.6544 (stored, agrees); sigma 0.0004 x 144 = 0.0576 (stored, agrees)",
           "checked_on": "2026-09-29",
           "reason": "Resolves metric flag M10 'peer_reviewed missing': the paper appeared in refereed conference proceedings (an ML/data-mining venue in the sense of RULES 8.1; precedent: NeurIPS 2022 counted as peer_reviewed true for arXiv:2206.14307). Same title and author list as arXiv v1; the published tables were not compared. Everything else on the row checks: -0.5601(4) per site, S.S units (reference column), 6x6 periodic triangular (reference ED -0.5603734 = the instance's ED), J2 = 0, own computation, variational, no duplicate on the instance. The loader writes null for every row with a primary (line 154), so it needs a per-row value.",
-          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#36 (qmbl-verify 2026-09-29; skeptic unclear; unclear; true per ruling 4 (Tristan 2026-09-30))",
+          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#36 (qmbl-verify 2026-09-29; skeptic unclear; unclear; true per ruling 4 (2026-09-30))",
           "from": null
         },
         {
@@ -484,7 +484,7 @@
         "source": "Appendix VIII E Optimization Details; Table III (triangular-lattice p6m G-CNN parameter counts); Table II (square-lattice counts, for contrast), arXiv:2104.05085 (compute pass 2026-09-16) || arXiv:2104.05085 v1/v2/v3 Appendix VIII E, Sec. IV A, Fig. 2, Tables I-III, Sec. VI (https://arxiv.org/pdf/2104.05085v1, v2 in route2a-fetched/, v3 = qmbl/sources/2104.05085.pdf); github.com/chrisrothUT repositories listed 2026-09-24 (no GCNN code repository; netket fork branches hold no experiment scripts) (compute pass 2026-09-24)",
         "scope": "ansatz",
         "confidence": "low",
-        "note": "parameters = 449856 is the \"Full\" connectivity p6m G-CNN of Table III, stated in the J2 = J1/8 filter-ablation section; the paper says the same architecture/hyperparameters (4 layers, 16 hidden nodes) were used for the other systems, including this J2 = 0 triangular 6x6 run, so the count is attributed at ansatz scope. iterations = 500 phase pre-optimization + 10^4 steps at batch size 100 + 2 x 10^3 steps at batch size 1000 (sum of stated stages); samples left null because batch sizes change (100 then 1000). No hardware, GPU-hours or wall-clock stated (Fig. 3 plots energy against \"training time\" without units in the text; PyTorch implementation). || samples = 100 is the batch size (configurations per Adam step) of the main stage, 10^4 of the 12500 steps; the last 2 x 10^3 steps used 1000 and the 500 phase pre-optimisation steps have no stated batch size; same first-stage convention as the 2211.07749 square rows (1024 then 4096). Stage-weighted total: 10^4 x 100 + 2 x 10^3 x 1000 = 3.0e6 samples over the 12000 stated-batch steps, so iterations x samples = 1.25e6 understates the sampling by ~2.4x. Sampling scheme (Markov chain or not) is not stated. CONTRADICTION on parameters: 449856 is the 'Full' connectivity model of Table III (J2 = J1/8 filter ablation, Fig. 3), and the four Table III counts are reproduced exactly by N = 16 x 36 + (4 x 16^2 + 16) x k with k = 432 / 36 / 12 / 1 group elements per filter (embedding over all 36 sites, 4 hidden 16->16 group convolutions and a 16->1 output convolution, no biases, complex weights counted once): the 'Full' filters span all 432 = 36 x 12 elements of p6m, i.e. they are full-range, not the third-nearest-neighbour local filters (Fig. 2, 19 sites) of the 'best performing model' that produced Table I's -0.55922 = this row's energy. The local model's count cannot be evaluated reliably: the same structure with local filters does not reproduce the square-lattice Table II count 113360 (full-range gives 300096, 13-site local 108368-108736). Value kept (no replacement stated), confidence lowered to low; recommend treating 449856 as an upper bound or nulling it. || Ruling 2026-09-24 (Tristan): parameters null: 449856 is the full-range G-CNN's count, this energy is the local-filter model's, whose count is not stated."
+        "note": "parameters = 449856 is the \"Full\" connectivity p6m G-CNN of Table III, stated in the J2 = J1/8 filter-ablation section; the paper says the same architecture/hyperparameters (4 layers, 16 hidden nodes) were used for the other systems, including this J2 = 0 triangular 6x6 run, so the count is attributed at ansatz scope. iterations = 500 phase pre-optimization + 10^4 steps at batch size 100 + 2 x 10^3 steps at batch size 1000 (sum of stated stages); samples left null because batch sizes change (100 then 1000). No hardware, GPU-hours or wall-clock stated (Fig. 3 plots energy against \"training time\" without units in the text; PyTorch implementation). || samples = 100 is the batch size (configurations per Adam step) of the main stage, 10^4 of the 12500 steps; the last 2 x 10^3 steps used 1000 and the 500 phase pre-optimisation steps have no stated batch size; same first-stage convention as the 2211.07749 square rows (1024 then 4096). Stage-weighted total: 10^4 x 100 + 2 x 10^3 x 1000 = 3.0e6 samples over the 12000 stated-batch steps, so iterations x samples = 1.25e6 understates the sampling by ~2.4x. Sampling scheme (Markov chain or not) is not stated. CONTRADICTION on parameters: 449856 is the 'Full' connectivity model of Table III (J2 = J1/8 filter ablation, Fig. 3), and the four Table III counts are reproduced exactly by N = 16 x 36 + (4 x 16^2 + 16) x k with k = 432 / 36 / 12 / 1 group elements per filter (embedding over all 36 sites, 4 hidden 16->16 group convolutions and a 16->1 output convolution, no biases, complex weights counted once): the 'Full' filters span all 432 = 36 x 12 elements of p6m, i.e. they are full-range, not the third-nearest-neighbour local filters (Fig. 2, 19 sites) of the 'best performing model' that produced Table I's -0.55922 = this row's energy. The local model's count cannot be evaluated reliably: the same structure with local filters does not reproduce the square-lattice Table II count 113360 (full-range gives 300096, 13-site local 108368-108736). Value kept (no replacement stated), confidence lowered to low; recommend treating 449856 as an upper bound or nulling it. || Ruling 2026-09-24: parameters null: 449856 is the full-range G-CNN's count, this energy is the local-filter model's, whose count is not stated."
       },
       "corrections": [
         {
@@ -633,8 +633,8 @@
       },
       "defect": {
         "flag": "quote-not-in-primary",
-        "finding": "Quote check in the citing paper passed: Roth & MacDonald, arXiv:2104.05085v3 Table I, prints 'NN + Gutzwiller [12] -0.553 N/A' (-0.553 x 144 = -79.632, the stored energy), with [12] = F. Ferrari, F. Becca and J. Carrasquilla, Neural Gutzwiller-projected variational wave functions, Phys. Rev. B 100, 125131 (2019), arXiv:1906.00463. In the cited paper as read (arXiv:1906.00463v2, layout and plain text searched for 0.55 and 0.56) I could not locate an energy per site for the 6 x 6 triangular lattice: Sec. V.C gives only the relative error ('from Delta E ~ 2.2% to Delta E ~ 1.4%') and Fig. 9 plots Delta E against N_alpha. -0.553 is a three-digit conversion of that relative error against the exact -0.5603734: -0.5603734 x (1 - 0.014) = -0.552528, and Delta E in [1.35%, 1.45%] gives -0.552808 to -0.552248. The row carries a precision nobody printed and no error bar: the case of the Shallow CNN row on J1J2/square_100_P_0.5 and of the Jastrow-Gutzwiller row on Heisenberg/triangular_900_P, flagged rather than removed (ruling E9, Tristan 2026-10-02). Resolution: Roth & MacDonald or Ferrari et al. to say where -0.553 is printed, or removal under RULES.md 8. It holds no record.",
-        "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#49 (qmbl-verify 2026-09-29, ambiguous); ruling E9, Tristan 2026-10-02"
+        "finding": "Quote check in the citing paper passed: Roth & MacDonald, arXiv:2104.05085v3 Table I, prints 'NN + Gutzwiller [12] -0.553 N/A' (-0.553 x 144 = -79.632, the stored energy), with [12] = F. Ferrari, F. Becca and J. Carrasquilla, Neural Gutzwiller-projected variational wave functions, Phys. Rev. B 100, 125131 (2019), arXiv:1906.00463. In the cited paper as read (arXiv:1906.00463v2, layout and plain text searched for 0.55 and 0.56) I could not locate an energy per site for the 6 x 6 triangular lattice: Sec. V.C gives only the relative error ('from Delta E ~ 2.2% to Delta E ~ 1.4%') and Fig. 9 plots Delta E against N_alpha. -0.553 is a three-digit conversion of that relative error against the exact -0.5603734: -0.5603734 x (1 - 0.014) = -0.552528, and Delta E in [1.35%, 1.45%] gives -0.552808 to -0.552248. The row carries a precision nobody printed and no error bar: the case of the Shallow CNN row on J1J2/square_100_P_0.5 and of the Jastrow-Gutzwiller row on Heisenberg/triangular_900_P, flagged rather than removed (ruling E9, 2026-10-02). Resolution: Roth & MacDonald or Ferrari et al. to say where -0.553 is printed, or removal under RULES.md 8. It holds no record.",
+        "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#49 (qmbl-verify 2026-09-29, ambiguous); ruling E9, 2026-10-02"
       },
       "corrections": [
         {
@@ -646,7 +646,7 @@
           "conversion": "none",
           "checked_on": "2026-09-29",
           "reason": "RULES.md 8.1 (ruling 4, 2026-09-30): peer_reviewed follows the venue that printed the number. The reader found -0.553 printed only in Roth & MacDonald's arXiv paper, which has no journal version; the refereed Ferrari et al. print only Delta E ~ 1.4% (VP14#49). Answers the M10 'peer_reviewed missing' flag of the row, which ruling E9 keeps, flagged.",
-          "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#49 (qmbl-verify 2026-09-29, ambiguous); ruling E9, Tristan 2026-10-02, with ruling 4",
+          "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#49 (qmbl-verify 2026-09-29, ambiguous); ruling E9, 2026-10-02, with ruling 4",
           "from": null
         }
       ]
@@ -981,8 +981,8 @@
           "version_read": "arXiv:cond-mat/0509520v2 PDF (= Phys. Rev. B 73, 014519 (2006)), pypdf plain (VP11)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "A Gutzwiller-projected (Pfaffian) wave function evaluated by Monte Carlo and printed with its statistical bar; the method string's fallback reads 'mean field' as a deterministic marker. The string is corrected to the paper's label in this block too. Not named in the ruling's list, but the same case (ruling 2, Tristan 2026-09-30). No eligibility change: sigma is stored.",
-          "source_entry": "VP11-heisenberg-hubbard-j1j2#58 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, Tristan 2026-09-30",
+          "reason": "A Gutzwiller-projected (Pfaffian) wave function evaluated by Monte Carlo and printed with its statistical bar; the method string's fallback reads 'mean field' as a deterministic marker. The string is corrected to the paper's label in this block too. Not named in the ruling's list, but the same case (ruling 2, 2026-09-30). No eligibility change: sigma is stored.",
+          "source_entry": "VP11-heisenberg-hubbard-j1j2#58 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, 2026-09-30",
           "from": false
         },
         {
@@ -1055,8 +1055,8 @@
           "version_read": "Phys. Rev. B 80, 012404 (2009) published PDF, pypdf plain + layout (VJ2)",
           "conversion": "none",
           "checked_on": "2026-09-29",
-          "reason": "A variational Monte Carlo energy (the bar (5) is its statistical error); the method string's fallback reads 'mean field' as a deterministic marker. Not named in the ruling's list, but the same case (ruling 2, Tristan 2026-09-30). No eligibility change: sigma is stored.",
-          "source_entry": "VJ2-journal-other#49, VP11-heisenberg-hubbard-j1j2#62 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it; skeptic upheld); ruling 2, Tristan 2026-09-30",
+          "reason": "A variational Monte Carlo energy (the bar (5) is its statistical error); the method string's fallback reads 'mean field' as a deterministic marker. Not named in the ruling's list, but the same case (ruling 2, 2026-09-30). No eligibility change: sigma is stored.",
+          "source_entry": "VJ2-journal-other#49, VP11-heisenberg-hubbard-j1j2#62 (qmbl-verify 2026-09-29; reader's reading; no skeptic checked it; skeptic upheld); ruling 2, 2026-09-30",
           "from": false
         }
       ],
@@ -1093,7 +1093,7 @@
           "reported_as": "-0.559214(6) per site",
           "conversion": "-0.559214 x 144 = -80.526816; sigma 0.000864",
           "note": "36-site triangular torus (the same table's ED -0.560374 equals the instance's exact -0.5603734); 100-layer aCNN with C6v and the exact ED sign structure (caption), which the method string states; variational. Table 4 is absent from v1.",
-          "source_entry": "VP11-heisenberg-hubbard-j1j2#37 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP11-heisenberg-hubbard-j1j2#37 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1159,7 +1159,7 @@
           "reported_as": "\"energy_SS\": -19.8031521566871, \"energy\": -79.2126086267484, chi_reached 500; log: 'RUNG chi=500: E = -79.212609 (Pauli, total), E/N = -0.5500876 S.S, sweeps 16, max trunc err 0.0006064990325569687, wall 00:27:35 = 3.68 core-h'",
           "conversion": "4 x -19.8031521566871 = -79.2126086267484 (the stored energy)",
           "note": "Script Hamiltonian, torus and S^z = 0 start match the instance; chi reached = chi_max; bound_type variational (finite-chi DMRG). Sits above the instance's ED -80.6937689612426 as it must. Commit and job in the json match the row's reference. No duplicate on the instance.",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#33 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#33 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1244,7 +1244,7 @@
           "reported_as": "\"energy_SS\": -19.98163054416064, \"energy\": -79.92652217664256, chi_reached 1000; log: 'RUNG chi=1000: E = -79.926522 (Pauli, total), E/N = -0.5550453 S.S, sweeps 16, max trunc err 0.00037311592377740595, wall 01:10:45 = 9.43 core-h'",
           "conversion": "4 x -19.98163054416064 = -79.92652217664256 (the stored energy)",
           "note": "Script Hamiltonian, torus and S^z = 0 start match the instance; chi reached = chi_max; bound_type variational (finite-chi DMRG). Sits above the instance's ED -80.6937689612426 as it must. Commit and job in the json match the row's reference. No duplicate on the instance.",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#34 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#34 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1345,7 +1345,7 @@
           "reported_as": "\"energy_SS\": -20.088272906069633, \"energy\": -80.35309162427853, chi_reached 2000; log: 'RUNG chi=2000: E = -80.353092 (Pauli, total), E/N = -0.5580076 S.S, sweeps 16, max trunc err 0.00023684509156278683, wall 03:03:20 = 24.44 core-h'",
           "conversion": "4 x -20.088272906069633 = -80.35309162427853 (the stored energy)",
           "note": "Script Hamiltonian, torus and S^z = 0 start match the instance; chi reached = chi_max; bound_type variational (finite-chi DMRG). Sits above the instance's ED -80.6937689612426 as it must. Commit and job in the json match the row's reference. No duplicate on the instance.",
-          "source_entry": "VP15-hubbard-j1j2-heisenberg#35 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP15-hubbard-j1j2-heisenberg#35 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1462,7 +1462,7 @@
           "reported_as": "energy -80.45855704311515 sigma 0.006354516711348047 energy_variance 5.45144124948146 tau_corr 0 r_hat 1.0037788694987775 energy_per_site_SS -0.5587399794660775 (Pauli total; eval 131072 samples, chains from training)",
           "conversion": "energy stored as is (Pauli total, no conversion); sigma 0.006354516711348047 -> 0.0064 (two significant figures); v_score = 36 x 5.45144124948146 / -80.45855704311515^2 = 0.03031582264010927",
           "note": "Energy, sigma, variance, V-score, dof 36, einf 0, parameters 7232, job, commit and label all match the results file and the loader. Instance built as stored (C1-C5), Pauli units, S_z = 0, variational, peer_reviewed false correct. Final evaluation sits beside the training trace tail; energy above the instance's ED -80.6937689612426. Best of 2 runs (15097829 chosen; 15056274 ended at -79.8273 after 3 recoveries). The chosen run went through one divergence recovery (energy -1.04e8 at step 153, restored from step 150, lr 0.005 from there), within the protocol's rule (at most 5); the row's verified note says so. Duplicate check: no other row on Heisenberg/triangular_36_P carries this number.",
-          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#39 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#39 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1537,7 +1537,7 @@
           "reported_as": "energy -76.60531652120582 sigma 0.016821273919707346 energy_variance 35.74488444047138 tau_corr 0.018780686130572932 r_hat 1.0040647022141393 energy_per_site_SS -0.531981364730596 (Pauli total; eval 131072 samples, chains from training)",
           "conversion": "energy stored as is (Pauli total, no conversion); sigma 0.016821273919707346 -> 0.017 (two significant figures); v_score = 36 x 35.74488444047138 / -76.60531652120582^2 = 0.21927977425806272",
           "note": "Energy, sigma, variance, V-score, dof 36, einf 0, parameters 1368, job, commit and label all match the results file and the loader. Instance built as stored (C1-C5), Pauli units, S_z = 0, variational, peer_reviewed false correct. Final evaluation sits beside the training trace tail; energy above the instance's ED -80.6937689612426. Single run of this configuration. M2 (5.07% above exact) settled: a 1368-parameter RBM without sign structure on the frustrated triangular lattice; still 5.8 lower than VarBench's own RBM (alpha = 1) row -70.7915; evaluation variance 35.745 vs trace tail 35.94. Duplicate check: no other row on Heisenberg/triangular_36_P carries this number.",
-          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#40 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#40 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1609,7 +1609,7 @@
           "reported_as": "energy -73.44638853443263 sigma 0.02482466794726441 energy_variance 80.29017754419445 tau_corr 0.0030190221099478665 r_hat 1.0041322644078527 energy_per_site_SS -0.5100443648224489 (Pauli total; eval 131072 samples, chains from training)",
           "conversion": "energy stored as is (Pauli total, no conversion); sigma 0.02482466794726441 -> 0.025 (two significant figures); v_score = 36 x 80.29017754419445 / -73.44638853443263^2 = 0.5358263014895149",
           "note": "Energy, sigma, variance, V-score, dof 36, einf 0, parameters 149, job, commit and label all match the results file and the loader. Instance built as stored (C1-C5), Pauli units, S_z = 0, variational, peer_reviewed false correct. Final evaluation sits beside the training trace tail; energy above the instance's ED -80.6937689612426. Single run of this configuration. M2 (8.98% above exact) and M6 (V-score 0.536 outlier) settled: a 149-parameter translation-symmetric RBM; the evaluation variance 80.29 matches the training trace's last-100-step mean 78.03, so the V-score is the state's, not an evaluation artefact; energy between VarBench's Jastrow (-70.0967) and the plain RBM run (-76.605). Duplicate check: no other row on Heisenberg/triangular_36_P carries this number.",
-          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#41 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#41 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1681,7 +1681,7 @@
           "reported_as": "energy -79.9911596136248 sigma 0.006754502141950846 energy_variance 5.852950728342892 tau_corr 0.010848061807489207 r_hat 1.0042366987297604 energy_per_site_SS -0.5554941639835056 (Pauli total; eval 131072 samples, chains from training)",
           "conversion": "energy stored as is (Pauli total, no conversion); sigma 0.006754502141950846 -> 0.0068 (two significant figures); v_score = 36 x 5.852950728342892 / -79.9911596136248^2 = 0.032930125320589",
           "note": "Energy, sigma, variance, V-score, dof 36, einf 0, parameters 154800, job, commit and label all match the results file and the loader. Instance built as stored (C1-C5), Pauli units, S_z = 0, variational, peer_reviewed false correct. Final evaluation sits beside the training trace tail; energy above the instance's ED -80.6937689612426. Best of 2 runs (15056279 chosen; 15097831 ended at -74.1036). Duplicate check: no other row on Heisenberg/triangular_36_P carries this number.",
-          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#42 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#42 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {

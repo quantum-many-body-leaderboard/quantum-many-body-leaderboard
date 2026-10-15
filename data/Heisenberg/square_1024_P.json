@@ -37,7 +37,7 @@
           "reported_as": "-0.66951133(3) (e0, energy per spin, S.S units)",
           "conversion": "4 x 1024 x (-0.66951133) = -2742.31840768 (Pauli total); sigma 4 x 1024 x 3e-8 = 0.000123",
           "note": "Periodic 32 x 32 (square_1024_P), H = sum_<ij> S_i.S_j with J = 1, each nearest-neighbour bond once; e0 = <H>/N per spin, N = L^2, no constant shift in the reported value (Sec. II A, II C). Tabulated at beta/L = 64 only (Table I caption: 'beta/L = 64 for L > 30'); the beta/L = 32 runs agree within error bars and serve as the convergence check (Sec. II C, p. 6), so the method string's 'T -> 0 converged at beta/L = 32 and 64' reads correctly as a convergence statement. Sign-free SSE on the bipartite lattice, T -> 0 converged: exact (stochastic); sigma is 1 s.d. of the mean rounded to one digit (Table I caption). Energy, sigma, lattice, boundary, dof = 1024, einf = 0, bound_type, reference (J. Stat. Mech. (2026) 043101) and peer_reviewed agree. No other row on the instance carries this number (duplicate check against data/Heisenberg/square_1024_P.json).",
-          "source_entry": "VP2-arxiv-2601-20189#46 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP2-arxiv-2601-20189#46 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -124,7 +124,7 @@
       "defect": {
         "flag": "sigma-understated",
         "finding": "The printed bar 4e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6694876561 and SE 3.63e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.15e-5 per site (29x the bar); propagating each run's Monte-Carlo error through the fit gives 1.74e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6695113300 the row sits above by 2.36e-5 per site: 59 printed sigma, 2.1 bootstrap SD, 1.4 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 32) prints −0.6694877(4), x 4 x 1024 = -2742.2216192. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-        "source_entry": "VP7-arxiv-2502-17144#11 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+        "source_entry": "VP7-arxiv-2502-17144#11 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
       },
       "corrections": [
         {
