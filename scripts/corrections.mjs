@@ -21670,4 +21670,736 @@ export const CORRECTIONS = [
     "reason": "Peer-reviewed journal version exists (PRX Intelligence 1, 023001). Value check: Table IV (App. D, p. 023001-6), attractive Hubbard, column 8 x 8, U = -8, row ACE + GFMC prints −4.0168 per site; -4.0168 x 64 = -257.0752 equals the stored energy. Projected. Boundary not printed; periodic inferred.",
     "source_entry": "JP9-heisenberg-j1j2-hubbard#60"
   },
+  // qmbl-verify 2026-10-15, rulings on the journal-version pass: Wang et al.'s Table I is cited to
+  // the arXiv version that prints it; the triangular 30 x 30 quote names the figure it comes from.
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_900_P",
+      "method": "Jastrow-Gutzwiller",
+      "energy": -1963.2528
+    },
+    "field": "reference",
+    "to": "Iqbal, Hu, Thomale, Poilblanc & Becca, Spin liquid nature in the Heisenberg J1-J2 triangular antiferromagnet, Phys. Rev. B 93, 144411 (2016), arXiv:1601.06018, Fig. 5(a), L = 30 point (plotted only; the digits are printed in arXiv:2602.02665, Table I, which cites Ghorbani, Tocchio & Becca, PRB 93, 085111)",
+    "location": "Fig. 5(a), L = 30 point",
+    "version_read": "arXiv:1601.06018v4 source (fig5.pdf vector stream, calibrated on the axis ticks) and the published Phys. Rev. B 93, 144411 (2016) PDF (sources/journal/prb93-144411.pdf)",
+    "reported_as": "L = 30 marker -0.5453489 +- 3.9e-6 per site (decoded); arXiv:2602.02665 Table I prints -0.545348",
+    "checked_on": "2026-10-15",
+    "source_entry": "R4-locate (correction, origin of the quoted number); ruling 2026-10-15",
+    "reason": "The quoted -0.545348 is the L = 30 Jastrow-Gutzwiller point of Fig. 5(a) of Iqbal et al. (decoded -0.5453489, 9e-7 away); Ghorbani, Tocchio & Becca have no 30 x 30 cluster. Kept as a secondary quote of the printed digits, its origin named (ruling 2026-10-15)."
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_900_P",
+      "method": "Jastrow-Gutzwiller",
+      "energy": -1963.2528
+    },
+    "field": "defect",
+    "to": null,
+    "location": "Fig. 5(a), L = 30 point",
+    "version_read": "arXiv:1601.06018v4 source (fig5.pdf vector stream, calibrated on the axis ticks) and the published Phys. Rev. B 93, 144411 (2016) PDF (sources/journal/prb93-144411.pdf)",
+    "reported_as": "L = 30 marker -0.5453489 +- 3.9e-6 per site (decoded); arXiv:2602.02665 Table I prints -0.545348",
+    "checked_on": "2026-10-15",
+    "source_entry": "R4-locate (correction, origin of the quoted number); ruling 2026-10-15",
+    "reason": "The quoted number's origin is located: Iqbal et al., PRB 93, 144411, Fig. 5(a). The row stays secondary, citing where its digits are printed and where they come from (ruling 2026-10-15)."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -293.0688
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -293.0688
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.48",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -288.4608
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.48",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -288.4608
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -285.8688
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -285.8688
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.52",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -283.392
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.52",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -283.392
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.55",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -280.0512
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.55",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -280.0512
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -275.5584
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -275.5584
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_16_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -34.368
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_16_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -34.368
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_16_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -33.7152
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_16_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -33.7152
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_16_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -33.1328
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_16_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -33.1328
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -520.9088
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -520.9088
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.48",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -512.8192
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.48",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -512.8192
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -508.5184
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -508.5184
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.52",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -503.808
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.52",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -503.808
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.55",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -497.5616
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.55",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -497.5616
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -489.1648
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_256_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -489.1648
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -74.1744
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -74.1744
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -72.4896
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -72.4896
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.55",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -71.0352
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.55",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -71.0352
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -70.2576
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -70.2576
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -130.7648
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.45",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -130.7648
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.48",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -128.8704
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.48",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -128.8704
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -127.5904
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -127.5904
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.52",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -126.4896
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.52",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -126.4896
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.55",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -124.928
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.55",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -124.928
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -123.0848
+    },
+    "field": "reference",
+    "to": "Wang, Gu, Verstraete & Wen, Tensor-product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality, arXiv:1112.3331v4 (2016), Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table and shows L = 8 and 16 only as plotted points)",
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "Table I, the source of this number, is printed in arXiv:1112.3331v3 and v4 only; the published version has no table (ruling 2026-10-15, RULES.md 8: the journal version is the source of record, so the number is cited to the arXiv version that prints it).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.6",
+      "method": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "energy": -123.0848
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "location": "Table I",
+    "version_read": "arXiv:1112.3331v4 PDF and the published Phys. Rev. B 94, 075143 (2016) PDF (sources/journal/prb94-075143.pdf, sha256 97a2d901), every page extracted and rendered",
+    "checked_on": "2026-10-15",
+    "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
+    "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
+  },
 ];
