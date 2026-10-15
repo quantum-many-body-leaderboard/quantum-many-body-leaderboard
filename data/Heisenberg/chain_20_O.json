@@ -85,7 +85,7 @@
         "reported_as": "| -34.729829 | 0.000014 | 0.000506 | 20 | 0 | RNN | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_rnn.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -34.729829/(4 x 20) = -0.434122863",
         "note": "vmc_rnn.sh: open 20-site chain, NetKet Heisenberg J = 1 Pauli with Marshall sign rule (a sublattice rotation on the bipartite chain), full Hilbert space (no --zero_mag; exact autoregressive sampling, ARDirectSampler), FastLSTMNet 2 layers x 16 features, Adam, 10^5 steps. RNN is the method named. The stored (sigma, Var) imply 2.6e6 independent samples (sigma/sqrt(Var/2^20) = 0.637), not the script's 2^20: the numbers come from the 2021 run (c12e2c8, 2021-10-14, Dian Wu), the script (d54f7c0, 2024-07-30) documents the settings afterwards. 6.4e-5 above the exact energy (4.6 sigma): a valid bound.",
-        "source_entry": "VB3-varbench-code-heisenberg#8 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#8 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -230,7 +230,7 @@
         "reported_as": "| -34.72711 | 0.00021 | 0.04559541 | 20 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -34.72711/(4 x 20) = -0.434088875",
         "note": "scripts/Heisenberg/chain_20_O/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 1 --L 20 --zero_mag --net rbm --seed 123 --show_progress' -> 20-site open chain (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.007: the stored sigma is the error of that final estimate. 0.0028 above the exact -34.72989333759587. History: entered 10f5c12 (2022-07-11, Dian Wu) as -34.7271 | 0.00021 | 0.0455955 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -34.7271 -> -34.72711; variance 0.0455955 -> 0.04559541; linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -285,7 +285,7 @@
         "reported_as": "| -34.69100 | 0.00031 | 0.1008130 | 20 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -34.691/(4 x 20) = -0.433637500",
         "note": "scripts/Heisenberg/chain_20_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 1 --L 20 --zero_mag --net jas --seed 123 --show_progress' -> 20-site open chain (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.000: the stored sigma is the error of that final estimate. 0.0389 above the exact -34.72989333759587. History: entered af1d48f (2022-09-01, Dian Wu) as -34.69100 | 0.00031 | 0.1008130 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#11 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#11 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     }

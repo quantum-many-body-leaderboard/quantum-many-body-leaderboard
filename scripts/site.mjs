@@ -181,13 +181,13 @@ function energyCell(row, inst, decimals) {
 }
 
 // A table with a sigma column prints the energy without the bracketed digit, at the
-// precision its own sigma sets, so the error bar is written once (Tristan, 2026-09-28).
+// precision its own sigma sets, so the error bar is written once (2026-09-28).
 const bareEnergyCell = (row, inst) => energyCell(row, inst, quoteRow(row, inst).decimals);
 
 // The site prints none of the README's markers for a missing error bar (the circle, the
 // dagger): the sigma column says n/a. Methods print as methodLabel (units.mjs); the published
 // string, searched but not shown, loses the source's own "(this work)" or "(Ours)", since the
-// source column names the paper (Tristan, 2026-09-17).
+// source column names the paper (2026-09-17).
 const methodText = method => method.replace(/\s*\((?:this work|ours)\)/gi, "");
 
 // A flagged row's badge names its flag, and hovering it says what that kind of flag means in
@@ -345,8 +345,8 @@ const paramsEntry = inst => [paramsFigureName(inst), `${modelName(inst.model)} $
 const flopsEntry = inst => [flopsFigureName(inst), `${modelName(inst.model)} ${instanceLabel(inst)}: the best energies at each estimated cost in FLOPs`,
   "Every energy on this instance whose paper states its parameter, sample and iteration counts, against the floating-point operations those imply."];
 
-// Front page: one section for both axes (Tristan, 2026-09-21, in place of a section per
-// axis), in three rows of badges (Tristan, 2026-09-23, in place of one badge per instance):
+// Front page: one section for both axes (2026-09-21, in place of a section per
+// axis), in three rows of badges (2026-09-23, in place of one badge per instance):
 // the axis, "stated hours", "estimated FLOPs" or "parameters", then the model, then the instance, each
 // row holding only what has a figure on the axis above it. The axes stay separate figures:
 // the merge is of the sections, never of the axes. An instance badge says only what tells
@@ -385,7 +385,7 @@ function computeSwitcher() {
 // stops; per model an "other" figure for what was published at one size and shares no
 // strip. Which exist is read off the directory, as for the cost figures. Two rows of
 // badges, the model (and Other) and then the lattice; under them the figure as a slider
-// (Tristan, 2026-09-18, in place of a stack of panels; 2026-09-21, one slider per figure
+// (2026-09-18, in place of a stack of panels; 2026-09-21, one slider per figure
 // with the facets as groups along its strip, in place of a slider per facet): the strip is
 // the record at each stop and size, a badge under each stop picks its panel, and the stop
 // with most energies is the one shown first. Radio inputs, as the badges are, so the arrow
@@ -395,7 +395,7 @@ function computeSwitcher() {
 // column has, and the axis's name stands before each group's badges. With the script, the
 // column of a stop in the strip selects it too, and the count mark over a stop lists its
 // energies as the overview figure's count marks do. A figure without an axis has no strip:
-// its panels are stacked, each under its facet's label (Tristan, 2026-09-21).
+// its panels are stacked, each under its facet's label (2026-09-21).
 const ENERGY_FIGS = [...Map.groupBy(energyFigures(instances)
   .filter(f => fs.existsSync(`figures/${f.group === "other" ? f.name : f.stops[0].name}.svg`)), f => f.group)];
 const otherEntry = f => [f.name, f.title, "Energies on Hamiltonians published at one size, with the coupling or filling that differs between them along x."];
@@ -503,7 +503,7 @@ const cardSource = r => { const c = citeRef(r, cache); return esc([c.text, c.als
 // `data-head` replaces the list's heading (the strips' count marks, whose rows span sizes).
 // Clicking a stop's column in a strip, its count mark included (size_energy.mjs, `col`),
 // checks its radio, as its badge does; a strip's mark does not pin its list, which shows
-// while the pointer is on the mark (Tristan, 2026-09-21).
+// while the pointer is on the mark (2026-09-21).
 const FIG_SCRIPT = `<script>
 (() => {
   document.addEventListener("click", e => {
@@ -779,12 +779,12 @@ function searchIndex(inst, name) {
 
 
 // Every row of the instance, the record marked, challengers with their gap above it in a
-// column of its own, per site (Tristan, 2026-09-28). sigma
+// column of its own, per site (2026-09-28). sigma
 // is shown because 62% of rows carry one (2026-09-16); Var(E) and the V-score, on 36%, stay
 // on the instance page. The Table names a method alone; its detail, bond dimension and
-// sector are on the instance page (Tristan, 2026-09-29).
+// sector are on the instance page (2026-09-29).
 // Distance to the record, per site: 0 on the record, the gap to it for an unflagged row of
-// any kind but exact, n/a elsewhere (Tristan, 2026-09-28; every such kind since 2026-10-08).
+// any kind but exact, n/a elsewhere (2026-09-28; every such kind since 2026-10-08).
 // The Table's opened row and the instance page both show it. Only a solved instance can
 // have such a row below its record - an extrapolation can overshoot the exact energy - and
 // that distance is shown negative.
@@ -822,7 +822,7 @@ function allRows(inst) {
 
 // The Table's energy column: the record, or on an instance without one the lowest unflagged
 // row, else the lowest row. Whether it is a record, and why not, shows when the row opens
-// (Tristan, 2026-09-29).
+// (2026-09-29).
 function bestRow(inst) {
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
   return sorted.find(r => !r.defect) ?? sorted[0];

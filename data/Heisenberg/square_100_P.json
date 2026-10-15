@@ -47,7 +47,7 @@
         "reported_as": "| -267.741 | 0.004 | 12.2 | 100 | 0 | VMC with fermions (flux+neel+Jastrow) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_P/vmc_gutzwiller.sh) |",
         "conversion": "stored = 4N x <H>/N of read_ene.x (S.S per site), sigma x 4N, variance 16 Var_S(H); per site S.S = -267.741/(4 x 100) = -0.6693525",
         "note": "vmc_gutzwiller inputs: 4-site 2x2 supercell x '5 0 0 5' = 10x10 periodic spin torus, nelup = neldo = 50 (Sz = 0), jperp = 1, uvv = 0.25 (H = sum S.S), pi-flux hopping (wf.in) + Neel field (iesaf=1) + spin Jastrow (iesspin=18); binned error (sigma/sqrt(Var/2^20) = 1.17). Stored = 4N x <H>/N. 0.880 above Sandvik's SSE. Entered 21ff9bc (2022-02-15, F. Ferrari), never changed; linked d186176 (2024-07-30).",
-        "source_entry": "VB3-varbench-code-heisenberg#32 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#32 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -101,7 +101,7 @@
         "reported_as": "| -268.4538 | 0.0005 | 0.5409 | 100 | 0 | RNN | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_P/vmc_rnn.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -268.4538/(4 x 100) = -0.671134500",
         "note": "vmc_rnn.sh: periodic 10x10 square lattice, Pauli, J = 1, Marshall sign rule (bipartite, L even), full Hilbert space, FastLSTMNet 2 x 16, Adam 10^5 steps. The stored (sigma, Var) imply 2.2e6 independent samples (ratio 0.696): from the 2022 run (5af37ba, 2022-03-04, Dian Wu), not the linked 2024 script. 0.1673 above Sandvik's SSE: a valid bound.",
-        "source_entry": "VB3-varbench-code-heisenberg#33 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#33 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -131,8 +131,8 @@
           "version_read": "VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked vmc_rnn.sh runs a plain FastLSTMNet, and vmc.py has no symmetrisation option, so the link does not implement the method named; VarBench first linked a vmc_rnn_sym.sh that is not in varbench/methods. The number was uploaded years before the script and is printed in no paper the reader found (VB1/VB3), so it is cited to the dataset with the uploader named. No record at stake. Ruling E5 (Tristan, 2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
-          "source_entry": "VB3-varbench-code-heisenberg#34 (qmbl-verify 2026-09-29, ambiguous); ruling E5, Tristan 2026-10-02",
+          "reason": "The linked vmc_rnn.sh runs a plain FastLSTMNet, and vmc.py has no symmetrisation option, so the link does not implement the method named; VarBench first linked a vmc_rnn_sym.sh that is not in varbench/methods. The number was uploaded years before the script and is printed in no paper the reader found (VB1/VB3), so it is cited to the dataset with the uploader named. No record at stake. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
+          "source_entry": "VB3-varbench-code-heisenberg#34 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_P/vmc_rnn.sh)"
         }
       ]
@@ -250,7 +250,7 @@
         "reported_as": "| -265.9424657801722 | | 42.496814964441 | 100 | 0 | DMRG (bond dimension = 1024) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_P/dmrg.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -265.9424657801722/(4 x 100) = -0.664856164",
         "note": "dmrg.sh: heisenberg_2d.jl --peri --L 10 --zero_mag --max_B 1024: 10x10 torus, Pauli, J = 1, no diagonal, Sz = 0, 50 sweeps at D = 1024, cutoff 1e-12. 2.679 above Sandvik's SSE (1%): a torus in a snake MPS at D = 1024. History: replaced the D = 80 value -261.3172227195609 (var 94.47555607618415; 3c108e3, 2022-07-11) in c85080f (2022-09-03, Dian Wu), the commit that also typed the square_196_P/triangular_144_P DOF = 100 (already corrected); nothing restored. Linked f88f9ba/cd362c4 (2024-07-19).",
-        "source_entry": "VB3-varbench-code-heisenberg#35 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#35 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -305,7 +305,7 @@
         "reported_as": "| -265.7726 | 0.0060 | 37.11238 | 100 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_P/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -265.7726/(4 x 100) = -0.664431500",
         "note": "scripts/Heisenberg/square_100_P/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 2 --L 10 --zero_mag --net rbm --seed 123 --show_progress' -> 10x10 square lattice, periodic (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.009: the stored sigma is the error of that final estimate. 2.8485 above Sandvik's SSE -268.621064(8). History: entered 10f5c12 (2022-07-11, Dian Wu) as -265.773 | 0.0060 | 37.1123 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -265.773 -> -265.7726; variance 37.1123 -> 37.11238; linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#36 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#36 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -360,7 +360,7 @@
         "reported_as": "| -265.6846 | 0.0056 | 31.98062 | 100 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_P/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -265.6846/(4 x 100) = -0.664211500",
         "note": "scripts/Heisenberg/square_100_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 2 --L 10 --zero_mag --net jas --seed 123 --show_progress' -> 10x10 square lattice, periodic (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.014: the stored sigma is the error of that final estimate. 2.9365 above Sandvik's SSE -268.621064(8). History: entered af1d48f (2022-09-01, Dian Wu) as -265.6846 | 0.0056 | 31.98062 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#37 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#37 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -790,7 +790,7 @@
       "defect": {
         "flag": "sigma-understated",
         "finding": "The printed bar 5e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6715950003 and SE 4.61e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.46e-5 per site (29x the bar); propagating each run's Monte-Carlo error through the fit gives 3.06e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6715526600 the row sits below by 4.23e-5 per site: 85 printed sigma, 2.9 bootstrap SD, 1.4 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 10) and Table V (periodic 10 x 10) print −0.6715950(5), x 4 x 100 = -268.638.",
-        "source_entry": "VP7-arxiv-2502-17144#7 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, Tristan 2026-09-30)"
+        "source_entry": "VP7-arxiv-2502-17144#7 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
       },
       "corrections": [
         {
@@ -960,7 +960,7 @@
           "version_read": "arXiv:2507.10287v1 (only arXiv version, 14 Jul 2025), PDF text extracted locally with pypdf layout mode (sources/vp15_2507.10287.layout.txt); journal version Phys. Rev. B 114, 134404 (2026) not read (APS returns 403)",
           "conversion": "V-score as defined in ref. [42] (Wu et al., Science 386, 296 (2024)): V = N Var(H)/(E - E_inf)^2 with E_inf = 0 for the Heisenberg model, so Var(H)/E^2 = V/N = 1e-4/100 = 1e-6 in any unit; Var(H) (Pauli total) = 1e-6 x (-268.6176)^2 = 0.072155415. Printed to one significant figure, so the variance is known only to within a factor 1.5 either way (V in [0.5e-4, 1.5e-4)).",
           "checked_on": "2026-09-29",
-          "reason": "The paper prints a V-score for the row's state and no variance; the V-score fixes the relative variance, which add_allresults_rows.mjs stores as energy_variance = var_rel x E^2. The row would then show the paper's own V-score (1e-4). Low precision is stated; Tristan may prefer to leave the field empty.",
+          "reason": "The paper prints a V-score for the row's state and no variance; the V-score fixes the relative variance, which add_allresults_rows.mjs stores as energy_variance = var_rel x E^2. The row would then show the paper's own V-score (1e-4). Low precision is stated; the maintainer may prefer to leave the field empty.",
           "source_entry": "VP15-hubbard-j1j2-heisenberg#8 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": null
         }
@@ -997,7 +997,7 @@
           "reported_as": "-0.671431(2) per site",
           "conversion": "-0.671431 x 400 = -268.5724; sigma 0.000002 x 400 = 0.0008",
           "note": "PBC 10x10, Marshall sign, C4v, variational; sits 1.2e-4 per site above the stored SSE exact -0.6715527. energy_variance is QMBL's own checkpoint measurement (not in the paper), not re-derived here.",
-          "source_entry": "VP11-heisenberg-hubbard-j1j2#34 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP11-heisenberg-hubbard-j1j2#34 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         },
         "journal_read": {
           "checked_on": "2026-10-15",
@@ -1070,7 +1070,7 @@
           "reported_as": "-0.671476 (energy per site, S.S units, J1 = 1; no error bar printed)",
           "conversion": "-0.671476 x 4 x 100 = -268.5904 (stored -268.5904, exact match)",
           "note": "Independent second read of a QMBL-added row. Hamiltonian H = J1 sum_<i,j> S_i S_j + J2 sum_<<i,j>> S_i S_j with spin-1/2 operators (v1 Eq. 4, v2 Eq. 6), 'square lattice with periodic boundary conditions and N = 36, 64 and 100 spins 1/2'; Table I is per site in S.S units with J1 = 1 (the paper's own 6x6 ED column and its quoted Sandvik QMC cells fix it). Size, boundary and J2 agree with the instance; 'ViT' is a variational NQS, so bound_type variational is right; method_as_published 'ViT' is the column header; peer_reviewed false is right (no journal reference on the abs page, 2026-09-29); primary (column '(this work)'). Kind of number: the authors' extended data (2026-09-28) states that Table I lists the best of ten checkpoints (every 150 of 1500 epochs), each a 4096-sample estimate; no error bar is printed, so sigma stays null (RULES.md 6). Sits 7.67e-5 per site above the instance's exact row 'SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32' (-0.67155266 per site). The paper's relative error against this QMC value (1x10^-2 %) reproduces: 1.1e-2 %. energy_variance 0.24 = sigma^2 x 16 x 100 with sigma^2 = 1.500e-4 = (<H^2>-<H>^2)/N per spin (S.S units), authors' extended data row '0.00 -0.671476 1.9 0.15 -0.671476 1.9 0.15 -0.671466 0.65 0.16', column group 'the best epochs, 4096 samples; Table I'; V-score N Var/E^2 = 3.3268e-4 recomputes. Best checkpoint = final epoch (same 4096-sample energy in both column groups); the same state re-measured with 102,400 samples gives -0.671466 (error 6.50e-6), 1.00e-5 per site above the Table I value.",
-          "source_entry": "VP5-arxiv-2606-04558#0 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)"
+          "source_entry": "VP5-arxiv-2606-04558#0 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         }
       },
       "compute": {
@@ -1099,7 +1099,7 @@
         "source_file": "sources/2606.04558-authors-extended-data-vit.txt",
         "reported_as": "0.00 -0.671476 1.9 0.15",
         "conversion": "var_over_n_SS",
-        "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 1.9e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; Tristan, 2026-09-28)."
+        "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 1.9e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; 2026-09-28)."
       }
     }
   ],

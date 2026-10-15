@@ -57,7 +57,7 @@
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
           "reason": "VA5#17-#19 read arXiv:2207.14314 v1, v2 and the NeurIPS ML4PS workshop PDF: no energy of these states is printed; Fig. 3(b) plots the difference to the authors' DMRG, which is not printed either, and the upload is consistent with the plotted difference (VA5). A figure-only state as in ruling A5. The [code] link is kept, as for the Tensor-RNN case. This row holds the instance's variational record; the record stays, only the citation changes. Settled by RULES.md 8 ('A number first printed in a dataset is cited to the dataset, with the author's paper kept as the method reference and the upload named'; ruling 1 of 2026-09-30, extended by A5 of 2026-10-02 to author uploads a paper shows only as a plotted point); not applied by the 2026-09-29 pass because the readers left it ambiguous or not_found. Format and wording follow the corrections.mjs block 'Numbers first printed in the VarBench dataset'.",
-          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#19 (qmbl-verify 2026-09-29, open entry), as RH2#6 (handoff reader, triage of 2026-10-02); ruling R1, Tristan 2026-10-02",
+          "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#19 (qmbl-verify 2026-09-29, open entry), as RH2#6 (handoff reader, triage of 2026-10-02); ruling R1, 2026-10-02",
           "from": "[paper](https://arxiv.org/abs/2207.14314) [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_256_O/vmc_2DgatedtensorizedRNN.sh)"
         }
       ]
@@ -131,7 +131,7 @@
         "reported_as": "| -520.160985 | | 159.85312 | 256 | 0 | DMRG (Bond dimension = 2000) | [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensor_cpp/dmrg_triangular_heisenberg_16x16.cc) |",
         "conversion": "stored = 4 x printed S.S total: -520.160985/4 = -130.040246250; per site S.S = -0.5079697",
         "note": "Program dmrg_triangular_heisenberg_16x16.cc (M. Hibat-Allah, ITensor C++): 16x16 triangularLattice, open, H = sum S.S, Sz = 0, schedule ending at 2000, cutoff 1e-10: final energy, variational. Stored = 4 x -130.04024625. arXiv:2207.14314 used D = 2000 at 16x16. Variance 159.85312 has no runnable source (non-compiling lines 82-83, and dmrg.sh cd's into the non-existent programs/dmrg_itensors_c++). History: -129.31321 (S.S, 36d51f4, 2022-02-15) -> x4 -517.25284 (878bf7a) -> -520.160985 with variance (3c96eaa, 2023-02-01, Hibat-Allah). 8.919 above the gated-RNN record. Linked 9369b7d (2024-08-13).",
-        "source_entry": "VB3-varbench-code-heisenberg#75 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#75 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -186,7 +186,7 @@
         "reported_as": "| -488.934 | 0.018 | 340.191 | 256 | 0 | RBM (alpha = 1) | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_256_O/vmc_rbm.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -488.934/(4 x 256) = -0.477474609",
         "note": "scripts/Heisenberg/triangular_256_O/vmc_rbm.sh: 'python3 vmc.py --ham heis_tri --boundary open --sign mars --ham_dim 2 --L 16 --zero_mag --net rbm --seed 123 --show_progress' -> 16x16 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), open; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 0.999: the stored sigma is the error of that final estimate. 40.1460 above the 2D gated RNN record -529.080(88). M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered 10f5c12 (2022-07-11, Dian Wu) as -488.258 | 0.018 | 344.140 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -488.258 -> -488.840; variance 344.140 -> 340.525; 59e621a (2022-09-13, 'Update Jastrow and RBM baselines'): energy -488.840 -> -488.934; variance 340.525 -> 340.191; linked 5047bfd (2024-07-30). The first value change sits in af1d48f, titled 'Add Jastrow baseline'. Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#76 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#76 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -241,7 +241,7 @@
         "reported_as": "| -487.225 | 0.015 | 237.059 | 256 | 0 | Jastrow baseline | [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_256_O/vmc_jastrow.sh) |",
         "conversion": "none: VarBench stores the total in Pauli form (SM Eq. S2, J = 1); per site S.S = -487.225/(4 x 256) = -0.475805664",
         "note": "scripts/Heisenberg/triangular_256_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis_tri --boundary open --sign mars --ham_dim 2 --L 16 --zero_mag --net jas --seed 123 --show_progress' -> 16x16 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), open; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 0.998: the stored sigma is the error of that final estimate. 41.8550 above the 2D gated RNN record -529.080(88). M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered 59e621a (2022-09-13, Dian Wu) as -487.225 | 0.015 | 237.059 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
-        "source_entry": "VB3-varbench-code-heisenberg#77 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB3-varbench-code-heisenberg#77 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     }

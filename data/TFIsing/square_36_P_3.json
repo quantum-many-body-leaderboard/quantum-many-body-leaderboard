@@ -33,7 +33,7 @@
         "reported_as": "VarBench TFIsing/square_36_P_3.md: Energy -115.232707303718485 | Sigma (empty) | Energy Variance (empty) | DOF 36 | Einf 0 | Method \"Exact diagonalization\" (VarBench prints -115.232707303718485)",
         "conversion": "none (total energy in J units; per site -3.20090854)",
         "note": "Script builds the instance: 6x6 torus (Grid pbc=True), h = 3, Pauli IsingJax(J=-1). Sector: every lattice symmetry fixed to sector 0; this is the ground-state sector here because -h sum X has non-positive off-diagonal elements in the Z basis, so the ground state is nodeless (Perron-Frobenius) and invariant under all site permutations of the lattice; no magnetisation restriction. No output log; the DMRG (chi = 1024) row sits 5.8e-6 above and the RBM 1.06e-3 above, consistent. Value in VarBench since 721e09e (2022-08-22, 'Add exact diagonalization for 6x6 TFIsing, Heisenberg, and Heisenberg triangular'); script link 2024-07-23 (3604bb4). Value-level recompute (2^36 / 288 ~ 2.4e8 symmetric states) belongs to the VE group.",
-        "source_entry": "VB4-tfising-tv#4 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#4 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -205,7 +205,7 @@
         "reported_as": "VarBench TFIsing/square_36_P_3.md: Energy -115.23165 | Sigma 0.00028 | Energy Variance 0.082848699 | DOF 36 | Einf 0 | Method \"RBM (alpha = 1)\"",
         "conversion": "none (total energy, J units)",
         "note": "Script builds the instance (periodic square of 36 sites, h = 3, Pauli TFIM) with nk.models.RBM(alpha = 1, log_cosh, float32; vmc.py lines 125-140); +0.00106 from the exact -115.23270730371848 (above it, as a variational energy must be). sigma check: sqrt(Var/2^20) = sqrt(0.082848699/1048576) = 2.81e-4 vs stored 0.00028 (vmc.py lines 268-270: final estimate with estim_size = 2^20 samples); variance is Var(H) of the total energy. The linked script was attached on 2024-07-30 (fdb4bfb Jastrow / 5047bfd RBM) to a number already in VarBench (6e7a021 (2023-01-09; earlier -115.2259(17) 721e09e / -115.22592(53) af1d48f)); vmc.py uses nk.operator.IsingJax (vmc.py line 78), so it is a later reimplementation of the baseline that documents the ansatz and protocol, not the output of the run that produced this number (no log in the methods repo). Value unchanged since 6e7a021; no value was changed and restored.",
-        "source_entry": "VB4-tfising-tv#19 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#19 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     },
@@ -260,7 +260,7 @@
         "reported_as": "VarBench TFIsing/square_36_P_3.md: Energy -115.19484 | Sigma 0.00062 | Energy Variance 0.39779351 | DOF 36 | Einf 0 | Method \"Jastrow baseline\"",
         "conversion": "none (total energy, J units)",
         "note": "Script builds the instance (periodic square of 36 sites, h = 3, Pauli TFIM) with nk.models.Jastrow (vmc.py lines 118-124); +0.0379 from the exact -115.23270730371848 (above it, as a variational energy must be). sigma check: sqrt(Var/2^20) = sqrt(0.39779351/1048576) = 6.16e-4 vs stored 0.00062 (vmc.py lines 268-270: final estimate with estim_size = 2^20 samples); variance is Var(H) of the total energy. The linked script was attached on 2024-07-30 (fdb4bfb Jastrow / 5047bfd RBM) to a number already in VarBench (af1d48f (2022-09-01)); vmc.py uses nk.operator.IsingJax (vmc.py line 78), so it is a later reimplementation of the baseline that documents the ansatz and protocol, not the output of the run that produced this number (no log in the methods repo). Value unchanged since af1d48f; no value was changed and restored.",
-        "source_entry": "VB4-tfising-tv#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, Tristan 2026-10-02)",
+        "source_entry": "VB4-tfising-tv#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
       }
     }

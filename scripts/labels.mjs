@@ -3,7 +3,7 @@
 // inset goes.
 //
 // A verbatim copy of stairs(), layoutLabels(), meets() and insetFrame() in pareto.mjs at
-// 77d3c2e (Tristan, 2026-09-29), for the record-over-time figure; pareto.mjs, which another
+// 77d3c2e (2026-09-29), for the record-over-time figure; pareto.mjs, which another
 // session is still changing, is to import them from here once that settles. Points are placed
 // at X(p.cost.value), Y(p.e). One addition: `lines`, boxes a name keeps clear of but a lane's
 // line may cross (the record-over-time figure's full-width record line, which would otherwise
@@ -20,7 +20,7 @@ export const stairs = (front, X, Y) => front.slice(1).flatMap((p, i) => {
 // mark where that covers nothing - no other mark, label or line, not the frontier, nothing in
 // `avoid`. In an instance's own figure (`nameAll`) a name with no such spot, or one that would
 // sit off its mark's row in a crowd, where it reads as a neighbour's, goes in a lane above or
-// below the mark with a vertical line to it (Tristan, 2026-09-29, in place of numbers and an
+// below the mark with a vertical line to it (2026-09-29, in place of numbers and an
 // enlarged panel); what is still left is numbered. Marks drawn as one, within 6 px, are named
 // together, a line per method in the order they lie from top to bottom ("ViT ×2" where two
 // share one). Every name links to its rows, so on the site hovering it shows their cards.
@@ -155,7 +155,7 @@ export function layoutLabels({ pts, named, X, Y, front, left, right, top, bottom
     }
     // Numbered marks, left to right, the number in the first free spot touching the mark. The
     // number links to the mark's row as the mark does, so on the site hovering either shows
-    // the row's card, which names it; no key under the axis (Tristan, 2026-09-29).
+    // the row's card, which names it; no key under the axis (2026-09-29).
     const keyed = order.filter(it => !at.has(it)).flatMap(it => it.ps.map((p, i) => ({ p, mx: it.own[i][0], my: it.own[i][1] })))
       .sort((a, b) => a.mx - b.mx || a.my - b.my);
     keyed.forEach((kd, i) => {

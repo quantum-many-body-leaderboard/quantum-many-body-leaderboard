@@ -192,7 +192,7 @@ const ABBREVIATED = { "Hierarchical backflow": "HB", "Residual hierarchical back
   "Transformer backflow": "Transformer BF", "Tensor backflow": "Tensor BF", "Slater-backflow-Jastrow": "SBJ" };
 const LABEL_MAX = 26;
 // A row QMBL computed itself (DATA.md, computed_by) is marked "QMBL" in its label, in every
-// figure, so it is never read as a published result (Tristan, 2026-09-23).
+// figure, so it is never read as a published result (2026-09-23).
 // A label names a slot's groups or limit without the slot's key ("aCNN (C4v)", "RNN (variance
 // → 0)"), and a slot that names no group by its key alone ("GCNN (deep, projected)");
 // method_names.mjs describes the slots.

@@ -75,7 +75,7 @@ function authorYear(ref) {
 }
 
 // A VarBench run script is cited with the paper VarBench was published with, and dated by it
-// (Tristan, 2026-09-28): the paper behind a row whose reference is a script in github.com/varbench.
+// (2026-09-28): the paper behind a row whose reference is a script in github.com/varbench.
 const VARBENCH_PAPER = "doi:10.1126/science.adg9774";
 const varbenchPaper = (row, cache) =>
   /\[code\]\(https:\/\/github\.com\/varbench\//.test(row.reference || "") ? cache[VARBENCH_PAPER] ?? null : null;
