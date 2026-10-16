@@ -548,6 +548,51 @@ Object.assign(NAMES, {
   "HFPS (filled stripe, Table V)": ["HFPS", "filled stripe"],
 });
 
+// Pass 2026-10-16-heg (SWEEP.md), track 2: the labels its generator writes for arXiv:2202.04622 (WAP-net), 2305.07240
+// (MP-NQS), 2604.15888, 2607.08616, 2607.25872 (Fermi Sets), 2201.03156, 2202.05183 and 2203.15472 (DeepSolid).
+Object.assign(NAMES, {
+  "WAP-net (n_d = 1)": ["WAP-net", "n_d = 1", { family: "other NQS" }],
+  "WAP-net (n_d = 8)": ["WAP-net", "n_d = 8", { family: "other NQS" }],
+  "IB-VMC (iterative backflow, single determinant)": ["Iterative backflow", "single determinant"],
+  "IB-DMC (fixed-node DMC on the iterative-backflow state)": ["Fixed-node DMC", "trial state: iterative backflow", { family: "DMC" }],
+  "MP-NQS (plane-wave orbitals)": ["MP-NQS", "plane-wave orbitals", { family: "other NQS" }],
+  "FN-DMC (Slater-Jastrow trial state)": ["Fixed-node DMC", "trial state: Slater-Jastrow", { family: "DMC" }],
+  "MP-NQS (Gaussian orbitals on bcc sites)": ["MP-NQS", "Gaussian orbitals on bcc sites", { family: "other NQS" }],
+  "FermiNet (n_det = 1), before basis transformation": ["FermiNet", "1 determinant", { family: "other NQS" }],
+  "FermiNet (n_det = 1), after basis transformation": ["FermiNet", "1 determinant, Gaussian basis transformation", { family: "other NQS" }],
+  "FermiNet (n_det = 4), before basis transformation": ["FermiNet", "4 determinants", { family: "other NQS" }],
+  "FermiNet (n_det = 4), after basis transformation": ["FermiNet", "4 determinants, Gaussian basis transformation", { family: "other NQS" }],
+  "FermiNet (n_det = 16), before basis transformation": ["FermiNet", "16 determinants", { family: "other NQS" }],
+  "FermiNet (n_det = 16), after basis transformation": ["FermiNet", "16 determinants, Gaussian basis transformation", { family: "other NQS" }],
+  "FermiNet (n_det = 1), basis transformation + step III": ["FermiNet", "1 determinant, Gaussian basis transformation, step III re-optimisation", { family: "other NQS" }],
+  "FermiNet (n_det = 4), basis transformation + step III": ["FermiNet", "4 determinants, Gaussian basis transformation, step III re-optimisation", { family: "other NQS" }],
+  "FermiNet (n_det = 16), basis transformation + step III": ["FermiNet", "16 determinants, Gaussian basis transformation, step III re-optimisation", { family: "other NQS" }],
+  "MPNN (1 message-passing iterations, plane-wave reference), before basis transformation": ["MP-NQS", "1 message-passing iterations, plane-wave reference", { family: "other NQS" }],
+  "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation": ["MP-NQS", "1 message-passing iterations, plane-wave reference, Gaussian basis transformation", { family: "other NQS" }],
+  "MPNN (2 message-passing iterations, plane-wave reference), before basis transformation": ["MP-NQS", "2 message-passing iterations, plane-wave reference", { family: "other NQS" }],
+  "MPNN (2 message-passing iterations, plane-wave reference), after basis transformation": ["MP-NQS", "2 message-passing iterations, plane-wave reference, Gaussian basis transformation", { family: "other NQS" }],
+  "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), before basis transformation": ["MP-NQS", "2 message-passing iterations, plane-wave reference, α fixed across the scan", { family: "other NQS" }],
+  "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), after basis transformation": ["MP-NQS", "2 message-passing iterations, plane-wave reference, α fixed across the scan, Gaussian basis transformation", { family: "other NQS" }],
+  "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), before basis transformation": ["MP-NQS", "2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan", { family: "other NQS" }],
+  "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), after basis transformation": ["MP-NQS", "2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan, Gaussian basis transformation", { family: "other NQS" }],
+  "SJB-VMC (Slater-Jastrow-backflow)": ["Slater-Jastrow-backflow", ""],
+  "SJB-DMC (fixed-node DMC on the SJB nodes)": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow; extrapolated: Δτ → 0", { family: "DMC" }],
+  "NN-VMC (self-attention wave function)": ["Self-attention NQS", "spatially weighted particle attention", { family: "transformer / ViT" }],
+  "Fermi Sets VMC (2.5e4 parameters)": ["Fermi Sets", "4 determinants, 2.5e4 parameters", { family: "other NQS" }],
+  "Fermi Sets fixed-phase DMC (2.5e4 parameters)": ["Fixed-phase DMC", "trial state: Fermi Sets, 2.5e4 parameters", { family: "DMC" }],
+  "Fermi Sets VMC (3.7e4 parameters)": ["Fermi Sets", "4 determinants, 3.7e4 parameters", { family: "other NQS" }],
+  "Fermi Sets fixed-phase DMC (3.7e4 parameters)": ["Fixed-phase DMC", "trial state: Fermi Sets, 3.7e4 parameters", { family: "DMC" }],
+  "Fermi Sets VMC (5.0e4 parameters)": ["Fermi Sets", "4 determinants, 5.0e4 parameters", { family: "other NQS" }],
+  "Fermi Sets fixed-phase DMC (5.0e4 parameters)": ["Fixed-phase DMC", "trial state: Fermi Sets, 5.0e4 parameters", { family: "DMC" }],
+  "Neural canonical transformation (ground state)": ["Neural canonical transformation", "normalizing-flow backflow on a plane-wave determinant", { family: "other NQS" }],
+  "FermiNet (16 dense determinants)": ["FermiNet", "16 dense determinants, 4 layers 512/64", { family: "other NQS" }],
+  "SJB-VMC (gas)": ["Slater-Jastrow-backflow", "plane-wave determinant"],
+  "SJB-DMC (gas trial state)": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow, plane-wave determinant", { family: "DMC" }],
+  "SJB-VMC (crystal)": ["Slater-Jastrow-backflow", "Gaussian-orbital (crystal) determinant"],
+  "SJB-DMC (crystal trial state)": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow, Gaussian-orbital (crystal) determinant", { family: "DMC" }],
+  "DeepSolid (1 determinant)": ["DeepSolid", "1 determinant, 3 layers 256/32", { family: "other NQS" }],
+});
+
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],
