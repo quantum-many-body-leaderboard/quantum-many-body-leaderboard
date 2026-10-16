@@ -641,7 +641,7 @@ ${FIG_SCRIPT}
 </section>`;
   return page({
     url: "/", title: null, body, wide: true, jsonld: datasetLd(),
-    description: `The best published variational ground-state energies for ${summary.instances} lattice Hamiltonian instances, ranked by energy, every row citing its primary paper.`,
+    description: `Published ground-state energies for ${summary.instances} lattice Hamiltonian instances, with the record on each, every row citing its primary paper.`,
   });
 }
 
