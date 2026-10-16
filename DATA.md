@@ -573,6 +573,11 @@ between total densities ni = ni↑ + ni↓, as mVMC, the program behind its row,
 (Eq. (S6) prints these terms between equal spins). The density terms are not traceless, so
 that instance's `einf` is not checked.
 
+Since 2026-10-16 a t12 instance from a paper carries its t2 in the name, `_t12_<t2>` (for example
+`Hubbard/square_64_P_28_8_t12_-0.2`), because several t2 values share a size; `params` holds
+t1 = 1 and t2. The papers write `-t Σ⟨ij⟩ - t' Σ⟨⟨ij⟩⟩ + U Σ ni↑ni↓`, the form of Eq. (S6), so t2 is
+their t'. The README label states t2, and t2 is a coupling of the size ladders (`ladders.mjs`).
+
 Getting these wrong is the single most likely source of a false record, which is why
 they are stated once and reused rather than inlined per script.
 
