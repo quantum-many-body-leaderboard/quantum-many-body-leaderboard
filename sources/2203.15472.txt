@@ -1,0 +1,1061 @@
+Ab initio calculation of real solids via neural network ansatz
+Xiang Li1*, Zhe Li1, and Ji Chen2
+1ByteDance Inc, Zhonghang Plaza, No. 43, North 3rd Ring West Road, Haidian District, Beijing.
+2School of Physics, Interdisciplinary Institute of Light-Element Quantum Materials, Frontiers Science Center for Nano-Optoelectronics, Peking
+University, Beijing 100871, People’s Republic of China
+Abstract Neural networks have been applied to tackle many-body electron correlations for small molecules and physical
+models in recent years. Here we propose a new architecture that extends molecular neural networks with the inclusion of
+periodic boundary conditions to enableab initio calculation of real solids. The accuracy of our approach is demonstrated
+in four diﬀerent types of systems, namely the one-dimensional periodic hydrogen chain, the two-dimensional graphene, the
+three-dimensional lithium hydride crystal, and the homogeneous electron gas, where the obtained results, e.g. total energies,
+dissociation curves, and cohesive energies, outperform many traditionalab initio methods and reach the level of the most ac-
+curate approaches. Moreover, electron densities of typical systems are also calculated to provide physical intuition of various
+solids. Our method of extending a molecular neural network to periodic systems can be easily integrated into other neural
+network structures, highlighting a promising future ofab initio solution of more complex solid systems using neural net-
+work ansatz, and more generally endorsing the application of machine learning in materials simulation and condensed matter
+physics.
+1 Introduction
+Solving the many-body electronic structure of real solids from
+ab initio is one of the grand challenges in condensed matter
+physics and materials science [1]. More accurateab initio solu-
+tionscanpushthelimitofourunderstandinginmanyfundamen-
+talandmysteriousemergentphenomena,suchassuperconductiv-
+ity,light-matterinteraction,heterogeneouscatalysis,tonamejust
+a few [2]. The current workhorse method is density functional
+theory (DFT), whose accuracy depends quite sensitively on the
+choiceoftheso-calledexchange-correlationfunctionalandunfor-
+tunately there lacks a systematic routine towards the exact [3, 4].
+Othercommonlyused ab initioquantumchemistrymethods,such
+as the coupled-cluster and conﬁguration interaction theories [5],
+can provide more accurate solutions for molecules but face se-
+vere diﬃculty when applied to solid systems. Recently, several
+breakthroughs have been made in applying these quantum chem-
+istry methods on solids [6, 7], driving the study of solid systems
+towards a new frontier.
+Meanwhile, in the last few years, new attempts to tackle the
+correlatedwavefunctionprobleminmoleculesormodelHamilto-
+nians using neural network based approaches have been reported
+by diﬀerent groups [8–14]. The key idea is to use the neural net-
+workasthewavefunctionansatzinquantumMonteCarlo(QMC)
+simulations. The stochastic nature of QMC enables a consider-
+ablyeconomical[6,15–17]timescalingandeﬃcientparalleliza-
+tion. The universal approximation theorem behind neural net-
+work based ansatz signiﬁcantly improves the accuracy of the tra-
+ditionalQMCmethodandthestrategyhasbeenprovedsuccessful
+instudyingsmallmolecules[10–12]. However,howtoapplysuch
+neural network ansatz for real solids, i.e. how to apply periodic
+boundary conditions (PBC) in the neural network, and whether
+it can describe the long-range electron correlations in extended
+systems remain as open questions.
+Here we propose a powerful periodic neural network ansatz,
+∗Email: lixiang.62770689@bytedance.com
+basedonwhichwedevelopahighlyeﬃcientQMCmethodfor ab
+initio calculation of real solid and general periodic systems with
+unprecedentedaccuracy. Weapplyourmethodtoperiodichydro-
+genchains,graphene,lithiumhydride(LiH)crystal,andhomoge-
+neouselectrongas. Thesesystemscoverawiderangeofinterests,
+includingmaterialsdimensionfromonetothree,electronicstruc-
+ture from metallic to insulating, and bonding type from covalent
+to ionic. The calculated dissociation curve, cohesive energy and
+correlation energy, can be compared satisfactorily with available
+experimental values and other state-of-the-art computational ap-
+proaches. Electron densities of typical systems are further cal-
+culated to test our neural network and explore the underlying
+physics. Alltheresultsdemonstratesthatourmethodcanachieve
+accurate electronic structure calculations of real solid/periodic
+systems.
+2 Results
+2.1 Neural network for solid system
+Periodicityandanti-symmetryaretwofundamentalpropertiesof
+thewavefunctionofasolidsystem. Theanti-symmetrycanbeen-
+sured by the Slater determinant, which has been commonly used
+asthebasicblockinmolecularneuralnetworks. Wealsoexpress
+thewavefunctionbytwoSlaterdeterminantsofonespin-upchan-
+nel and one spin-down channel,
+Ψ(/u1D42B)=Det ↑[/u1D452/u1D456/u1D424⋅/u1D42B↑/u1D462↑mol(/u1D451)]Det↓[/u1D452/u1D456/u1D424⋅/u1D42B↓/u1D462↓mol(/u1D451)]. (1)
+In this regard, our ansatz resembles the structure of FermiNet
+[10, 11], whereas other neural network wavefunction ansatz may
+include extra terms in addition to the Slater determinants [12].
+Each determinant is then constructed from a set of periodic or-
+bitals, which inherits the physics captured by the Bloch function
+form by a product of phase factor/u1D452/u1D456/u1D424⋅/u1D42B and collective molecular
+orbital/u1D462mol.
+Fig. 1 displays more details on the structure of our neural net-
+work. Buildinganeﬃcientandaccurateperiodicansatzisthekey
+1
+arXiv:2203.15472v2  [physics.chem-ph]  24 May 2022
+𝐫𝟏 𝐫𝟐 …
+𝐚𝟏 𝐚𝟐 𝐚𝟑
+𝐚𝟏
+𝐚𝟐
+𝐚𝟑
+𝐤𝟏 𝐤𝟐 …
+𝐫𝟏
+𝐫𝟐
+…
+⨂
+𝐮𝟏𝟏𝐑𝐞…𝐮𝟏𝐍𝐑𝐞
+………
+𝐮𝐍𝟏𝐑𝐞…𝐮𝐍𝐍𝐑𝐞
++i
+exp(i )
+𝐮𝟏𝟏𝐈𝐦…𝐮𝟏𝐍𝐈𝐦
+………
+𝐮𝐍𝟏𝐈𝐦…𝐮𝐍𝐍𝐈𝐦
+𝐤𝟏 𝐤𝟐 …
+𝐫𝟏
+𝐫𝟐
+…
+⨂
+⨀ 𝚿
+electron coordinate 𝐚𝟏 𝐚𝟐 𝐚𝟑 lattice vectors 𝐤𝟏 𝐤𝟐 … crystal momentum vectors
+molecular 
+neural networks
+periodic metric 
+matrix
+𝐫𝟏 𝐫𝟐 …
+𝐮𝟏𝟏…𝐮𝟏𝐍
+………
+𝐮𝐍𝟏…𝐮𝐍𝐍
+Fig. 1/uni007C.var Sketch of neural network architecture.The electron coordinates/u1D42B/u1D456 are passed to two channels. In the ﬁrst one, they build the periodic
+distancefeatures /u1D451(/u1D42B)usingtheperiodicmetricmatrix /u1D40Candthelatticevectors /u1D41A,andthen /u1D451(/u1D42B)featuresarefedintotwomolecularneuralnetworks,
+that represent separately the real and the imaginary part of wavefunction. In the second channel,/u1D42B/u1D456 constructs the plane-wave phase factors on a
+selectedsetofcrystalmomentumvectors. ThetotalwavefunctionsofsolidsareconstructedbythetwochannelsfollowingtheexpressionofEq.(1).
+step in developingab initio methods for solid. Here we have fol-
+lowed the recently proposed scheme of Whitehead et al. to con-
+struct a set of periodic distance features/u1D451(/u1D42B) [18] using lattice
+vectors in real and reciprocal space(/u1D41A/u1D456, /u1D41B/u1D456),
+/u1D451(/u1D42B)=
+√
+/u1D400/u1D40C/u1D400/u1D447
+2/u1D70B , /u1D400=( /u1D41A1, /u1D41A2, /u1D41A3),
+/u1D40C/u1D456/u1D457 =/u1D4532(/u1D714/u1D456)/u1D6FF/u1D456/u1D457+/u1D454(/u1D714/u1D456)/u1D454(/u1D714/u1D457)(1− /u1D6FF/u1D456/u1D457), /u1D714/u1D456= /u1D42B⋅ /u1D41B/u1D456.
+(2)
+Theperiodicmetricmatrix /u1D40Cisconstructedbyperiodicfunctions
+/u1D453,/u1D454 , which retains ordinary distances at the origin and regulates
+them to periodic ones at far distances, ensuring asymptotic cusp
+form, continuity, and periodicity requirement at the same time.
+Theconstructedperiodicdistancefeatures /u1D451(/u1D42B)canthenbefed
+into molecular neural networks to form collective orbitals/u1D462mol.
+Speciﬁcally, in this work we represent the molecular networks
+with FermiNet [10], which incorporates the electron-electron in-
+teractions. Theinclusionofall-electronfeaturespromotesthetra-
+ditional single-particle orbitals to the collective ones, and hence
+thedescriptionofwavefunctionandcorrelationeﬀectscanbeim-
+proved while fewer Slater determinants are required. In addition,
+thewavefunctionofsolidsystemsisnecessarilycomplex-valued,
+and we introduce two sets of molecular orbitals to represent the
+real and imaginary parts of the solid wavefunction, respectively.
+The plane-wave phase factors/u1D452i/u1D424⋅/u1D42B in Fig. 1 are used to construct
+the Bloch function like orbitals, and the corresponding/u1D424 points
+are selected to minimize the Hartree-Fock (HF) energy.
+Basedonthevariationalprinciple,ourneuralnetworkistrained
+using the variational Monte Carlo (VMC) approach. To eﬃ-
+ciently optimize the network, a modiﬁed Kronecker factored cur-
+vatureestimator(KFAC)optimizer[19]isadopted,whichsignif-
+icantly outperforms traditional energy minimization algorithms.
+Calculationsarealsoensuredbyeﬃcientandmassiveparalleliza-
+tion on multiple nodes of high-performance GPUs. More details
+on the theories, methods, and computations are included in the
+Methods section and the supplementary information.
+2.2 Ground-state energy
+2.2.1 Hydrogen chain
+Hydrogenchainisoneofthesimplestmodelsincondensedmatter
+research. Despite its simplicity, hydrogen chain is a challenging
+and interesting system, serving as a benchmark system for elec-
+tronic structure methods and featuring intriguing correlated phe-
+nomena[20]. ThecalculatedenergyoftheperiodicH 10chainasa
+function of the bond length is shown in Fig. 2a. The results from
+lattice-regularized diﬀusion Monte Carlo (LR-DMC) and tradi-
+tionalVMCarealsoplottedforcomparison[20]. Wecanseethat
+our results nearly coincide with the LR-DMC results and signiﬁ-
+cantlyoutperformtraditionalVMC(seeSupplementaryTable3).
+In Fig. 2b, the energy of hydrogen chains of diﬀerent atom num-
+bers are calculated for extrapolation to the thermodynamic limit
+(TDL). The shaded bar in Fig. 2b illustrates the extrapolated en-
+ergy of the periodic hydrogen chain at TDL from auxiliary ﬁeld
+quantumMonteCarlo(AFQMC),whichisconsideredasthecur-
+rentstate-of-the-artalongwithLR-DMC.OurTDLresultiscom-
+parablewithbothAFQMCandLR-DMC(seeSupplementaryTa-
+ble 4).
+2
+a
+b
+c
+d
+e
+f
+g
+h
+Fig. 2/uni007C.var Calculated results of neural network. Our results are all labeled as Net./u1D41A, H10 dissociation curve is plotted. /u1D41B, energy of diﬀerent
+hydrogenchainsizesN,thebondlengthofhydrogenchainisﬁxedat1.8Bohr. LR-DMCandVMCbothuseTZ-LDAbasisandAFQMCispushed
+to complete basis limit [20]./u1D41C, structure of graphene./u1D41D, the cohesive energy per atom ofΓ point and ﬁnite-size error corrected result is plotted.
+Experiment cohesive energy is from Ref. [21]. Graphene is calculated at its equilibrium length 1.421 Å./u1D41E, structure of rock-salt lithium hydride
+crystal. /u1D41F, equation of state of LiH crystal is plotted, ﬁtted Birch-Murnaghan parameters and experimental data are also given. HF corrections are
+calculated using ccpvdz basis, and/u1D438HF∞ is approximated by/u1D438HFN=8. The arrows denote the corresponding HF corrections./u1D420, plot of homogeneous
+electron gas system./u1D421, correlation error of 54 electrons HEG systems at diﬀerent/u1D45F/u1D460. DCD and BF-VMC results are displayed for comparison, and
+BF-DMC data is used as reference [22, 23].
+2.2.2 Graphene
+Graphene is arguably the most famous two-dimensional system
+(Fig. 2c) receiving broad attention in the past two decades for its
+mechanical, electronic, and chemical applications [24]. Here we
+carryoutsimulationstoestimateitscohesiveenergy,whichmea-
+sures the strength of C-C chemical bonding and long-range dis-
+persion interactions. The calculations are performed on a2×2
+supercell of graphene using twist average boundary condition
+(TABC)[25]inconjunctionwithstructurefactor /u1D446(/u1D424)correction
+[26] (see Supplementary Fig. 3) to reduce the ﬁnite-size error.
+The calculated results are plotted in Fig. 2d along with the ex-
+perimental value [21], and it shows that our neural network can
+deal with graphene very well, producing a cohesive energy of
+graphene within 0.1 eV/atom to the experimental reference (see
+Supplementary Table 6). We also plotted the results with PBC,
+namely theΓ point only result, which deviates from the experi-
+ment data by 1.25 eV/atom.
+2.2.3 Lithium hydride crystal
+For three-dimensional system, we consider the LiH crystal with
+a rock-salt structure (Fig. 2e), another benchmark system for ac-
+curate ab initio methods [6, 27, 28]. Despite consisting of only
+simpleelements,LiHrepresentstypicalionicandcovalentbond-
+ings upon changing the lattice constants. Using our neural net-
+work,weﬁrstsimulatetheequationofstateofLiHona 2×2×2
+supercell, as shown in Fig. 2f. In addition, we employ a stan-
+dard ﬁnite-size correction based on Hartree-Fock calculations of
+a large supercell (see Supplementary Fig. 5). In Fig. 2f we also
+show the Birch-Murnaghan ﬁtting to the equation of state, based
+on which we can obtain thermodynamic quantities such as the
+cohesive energy, the bulk modulus, and the equilibrium lattice
+constantofLiH.Asshownintheinset,ourresultsonthethermo-
+dynamic quantities agree very well with experimental data [27]
+(see Supplementary Table 8, 9). For further validation, we have
+also computed directly the3×3×3 supercell of LiH at its equi-
+libriumlength 4.061Å,whichcontains108electrons. Tothebest
+of our knowledge, this is the largest electronic system computed
+usingahigh-qualityneuralnetworkansatz. The 3×3×3 supercell
+calculationpredictsthetotalenergyperunitcellofLiHis −8.160
+Hartree and the cohesive energy per unit cell is−4.770eV after
+the ﬁnite-size correction (see Supplementary Table 10), which is
+also very close to the experimental value−4.759eV [27].
+2.2.4 Homogeneous electron gas
+In addition to the real solids, our computational framework can
+also apply straightforwardly to model systems such as homoge-
+neous electron gas (HEG). HEG has been studied for a long time
+to understand the fundamental behavior of metals and electronic
+phase transitions [29]. Several seminalab initio works have re-
+ported the energy of HEG at diﬀerent densities [22, 23, 29–31],
+andrecentlymoreinvestigationshavebeenconductedusingneu-
+ralnetworkansatz[30,31]. Herewebroadenourteststosimulate
+a simple cubic cell containing 54 electrons in closed-shell con-
+ﬁguration (Fig. 2g). Fig. 2h shows the correlation energy error
+from our neural network calculations on HEG at 6 diﬀerent den-
+sities from/u1D45F/u1D460 = 0.5 Bohr to 20.0 Bohr. The state-of-the-art re-
+sults, namely VMC with backﬂow correlation (BF) [22] and dis-
+3
+0 2 4 6 8 10
+x / L
+0.0
+0.2
+0.4Electron density / L 1
+L = 2 Bohr
+L = 4 Bohr
+H atom
+0 3 6
+L / Bohr
+0.0
+0.5|Z|
+Fig. 3/uni007C.var Electron density ofH/u1D7CF/u1D7CE chains. Horizontal axis is scaled by
+the corresponding bond length. Complex polarization modulus/uni007C.var/u1D44D/uni007C.varas a
+function of bond length is plotted in the inset.
+tinguishable cluster with double excitations (DCD) [23] are also
+plotted for comparison, and the most accurate BF-DMC result is
+usedasthereferenceenergyofcorrelationerror. Overall,ourneu-
+ralnetworkperformsverywell,withanerroroflessthan1%ina
+wide range of density (see Supplementary Table 11). Generally,
+the correlation error increases as the density of HEG decreases
+whenthecorrelationeﬀectsbecomelarger,whichalsoappearsin
+DCD calculations.
+2.3 Electron density
+Besides the total energy of solid systems, the electron density is
+alsoakeyquantitytobecalculated. Forexample,electrondensity
+iscrucialforcharacterizingdiﬀerentsolids,suchasthediﬀerence
+betweeninsulatorsandconductors,andthedistinctnatureofionic
+andcovalentcrystals. InDFTtheone-to-onecorrespondencebe-
+tween many-body wavefunction and electron density proved by
+Hohenberg and Kohn in 1964 suggests that electron density is a
+fundamental quantity of materials. However, an interesting sur-
+vey found that while new functionals in DFT improve the energy
+calculation the obtained density somehow can deviate from the
+exact[32]. Here,withouraccurateneuralnetworkwavefunction,
+wecanalsoobtainaccurateelectrondensityofsolidsandprovide
+a valuable benchmark and guidance for method development.
+Aconductorfeaturesfree-movingelectrons,whichwouldhave
+macroscopic movements under external electric ﬁelds. In con-
+trast, electrons are localized and constrained in insulators and
+cause considerable electron resistance. In Fig. 3, as an example,
+we show the calculated electron density of the hydrogen chain at
+two diﬀerent bond lengths. As we can see, for the compressed
+hydrogen chain (L = 2Bohr), the electron density is rather uni-
+form and has small ﬂuctuations. As the chain is stretched, the
+electrons are more localized and the density proﬁle has larger
+variations. The observation is consistent with the well-known
+insulator-conductor transition on the hydrogen chain by varying
+the bond length. To measure the transition more quantitatively,
+we further calculate the complex polarization/u1D44D as the order pa-
+rameter for insulator-conductor transition [33]. A conducting
+state is characterized by a vanishing complex polarization mod-
+ulus /uni007C.var/u1D44D/uni007C.var ∼ 0, while an insulating state has ﬁnite/uni007C.var/u1D44D/uni007C.var ∼ 1. We
+can see that the conductor-insulator transition bond length of hy-
+drogenchainisaround3Bohraccordingtothecalculatedresults,
+which is also consistent with previous studies [33].
+Ionic and covalent bonds are the most fundamental chemical
+Si
+NaCl
+LiH
+a b
+c d
+Fig.4 /uni007C.varElectrondensityofsolids. a ,structuresofsolids,wherethelat-
+tice planes for plotting electron densities are indicated.b, electron den-
+sityofdiamond-structuredSiinits( 01̄1)plane,ccECP[Ne]isemployed,
+andthebondlengthofSiequals 5.42Å. c,electrondensityofNaClcrys-
+talinits /u1D465/u1D466-plane,ccECP[Ne]isemployed,andthebondlengthofNaCl
+equals5.7Å. d, electron density of LiH crystal in its/u1D465/u1D466-plane, and the
+bond length of LiH equals4.0Å.
+bonds in solids. While the physical pictures of these two types
+of bonding are very diﬀerent, they both lie in the behavior of
+electrons as the "quantum glue" and electron density distribution
+is a simple way to visualize diﬀerent bonding types. Here we
+choosetocalculatetheelectrondensityofthediamond-structured
+Si, rock-salt NaCl and LiH crystals at their equilibrium position.
+They are representative of covalent and ionic crystals and have
+alsobeeninvestigatedbyotherhigh-levelwavefunctionmethods,
+e.g. AFQMC [34]. Note that in the calculations of NaCl and
+Si, correlation-consistent eﬀective core potential (ccECP) is em-
+ployedtoreducethecost,whichremovestheinertiacoreelectrons
+and keeps the behavior of active valence electrons [13, 35].
+Theelectrondensityofdiamond-structuredSiinits (01̄1)plane
+isplottedinFig.4b. Wecanseethatvalenceelectronsareshared
+by nearest Si atoms, forming apparent Si-Si covalent bonds. In
+contrast,valenceelectronsarelocatedaroundatomsinNaClcrys-
+talasFig.4cshows. Allthevalenceelectronsareattractedaround
+Cl atoms, forming eﬀectiveNa+ and Cl− ions in the crystal.
+Moreover, the electron density of LiH crystal is also calculated
+and plotted in Fig. 4d. LiH crystal is a moderate system between
+a typical ionic and covalent crystal. According to the result, the
+electrons are nearly equally distributed near Li and H atoms for
+our network. Detailed Bader charge analysis [36] manifests the
+atoms in the crystal becomeLi0.67+ andH0.67− ions respectively
+(resolution ∼ 0.015Å), which slightly deviates from the stable
+closed-shell conﬁguration (see Supplementary Note 6 for more
+details).
+4
+3 Conclusion
+The construction of a wave function for solid systems is a cru-
+cialbutunsolvedproblemintheneuralnetworkcommunity. The
+core mechanism of our neural network is the use of the peri-
+odic distance feature, which promotes molecule neural networks
+elegantly to the corresponding periodic ones and avoids time-
+consuminglatticesummation. Consideringthehigh-accuracyre-
+sultsobtainedinthis work, ourneural networkcan befurther ap-
+pliedtostudymoredelicatephysicsandmaterialsproblems,such
+as the phase transitions of solids, surfaces, interfaces, and disor-
+dered systems, to name just a few. Our ansatz also oﬀers a ﬂex-
+ible extension to other neural networks and an easy integration
+into traditional computational techniques. The naturally evolved
+many-body wavefunction from the neural network may provide
+more physical and chemical insights to emergent phenomena of
+complex materials.
+4 Methods
+Supercell approximation. Simulating a solid system requires
+solvingtheSchrödingerequationofmanyelectronswithinalarge
+bulk. Supercell approximation is usually adopted to simplify the
+problem,consideringaﬁnitenumberofelectronsandnucleiwith
+periodic boundary conditions, whose Hamiltonian reads
+̂/u1D43B/u1D446 = /uni2211.s1
+/u1D456
+−12Δ/u1D456+12
+)uni2032(var/uni2211.s1
+/u1D40B/u1D446,/u1D456,/u1D457
+1
+/uni007C.var/u1D42B/u1D456− /u1D42B/u1D457+ /u1D40B/u1D446/uni007C.var
+−
+/uni2211.s1
+/u1D40B/u1D446,/u1D456,/u1D43C
+/u1D44D/u1D43C
+/uni007C.var/u1D42B/u1D456− /u1D411/u1D43C+ /u1D40B/u1D446/uni007C.var+12
+)uni2032(var/uni2211.s1
+/u1D40B/u1D446,/u1D43C,/u1D43D
+/u1D44D/u1D43C/u1D44D/u1D43D
+/uni007C.var/u1D411/u1D43C− /u1D411/u1D43D + /u1D40B/u1D446/uni007C.var ,
+(3)
+where /u1D42B/u1D456 denotes the spatial position of i-th electron in the super-
+cell. /u1D411/u1D43C,/u1D44D/u1D43C are the spatial position and charge of I-th nucleus
+and{/u1D40B/u1D446}isthesetofsupercelllatticevectors,whichisusuallya
+subset of primitive cell lattice vectors{/u1D40B/u1D45D}. In order to simulate
+the real environments of electrons in solids, the interactions be-
+tweentheparticlesandtheirimagesarealsoincludedin ̂/u1D43B/u1D446,and
+the prime symbol in summation means/u1D456 = /u1D457 terms are omitted
+for /u1D40B/u1D446 =0 .
+SupercellHamiltonian ̂/u1D43B/u1D446 isinvariantundertranslationofany
+electronbyavectorin {/u1D40B/u1D446}aswellasasimultaneoustranslation
+of all electrons by a vector in{/u1D40B/u1D45D}. As a consequence, two pe-
+riodic conditions are required for the ground-state wavefunction
+Ψ,
+Ψ(/u1D42B1+ /u1D40B/u1D45D,..., /u1D42B/u1D441+ /u1D40B/u1D45D)=exp( /u1D456/u1D424/u1D45D⋅ /u1D40B/u1D45D)Ψ(/u1D42B1,..., /u1D42B/u1D441),
+Ψ(/u1D42B1+ /u1D40B/u1D446,..., /u1D42B/u1D441)=exp( /u1D456/u1D424/u1D446⋅ /u1D40B/u1D446)Ψ(/u1D42B1,..., /u1D42B/u1D441),
+(4)
+where /u1D424/u1D446, /u1D424/u1D45D denote the momentum vectors reduced in the ﬁrst
+Brillouinzoneofthesupercellandtheprimitivecell,respectively.
+Eq.(4)andtheanti-symmetryconditiontogetherformthefunda-
+mental requirements forΨ. As the size of supercell increases,
+simulationresultsgraduallyconvergetothethermodynamiclimit
+of real solid system.
+Wavefunction ansatz. In conventional QMC simulation of
+solids, Hartree-Fock type wavefunction anzatz composed of
+Bloch functions is often used, which reads
+ΨHF/u1D424/u1D446,/u1D424/u1D45D(/u1D42B)=Det
+/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/u1D452/u1D456/u1D4241⋅/u1D42B1/u1D462/u1D4241(/u1D42B1) ⋯ /u1D452/u1D456/u1D424/u1D441⋅/u1D42B1/u1D462/u1D424/u1D441(/u1D42B1)⋅ ⋅⋅ ⋅⋅ ⋅/u1D452/u1D456/u1D4241⋅/u1D42B/u1D441/u1D462/u1D4241(/u1D42B/u1D441) ⋯ /u1D452/u1D456/u1D424/u1D441⋅/u1D42B/u1D441/u1D462/u1D424/u1D441(/u1D42B/u1D441)/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x/uni007C.x . (5)
+In order to satisfy Eq. (4),/u1D424/u1D456 in the determinant should lie on
+the grid of supercell reciprocal lattice vectors{/u1D406/u1D446} oﬀset by/u1D424/u1D446
+within the ﬁrst Brillouin zone of primitive cell. Moreover,/u1D462/u1D424
+functionsinEq.(5)shouldsatisfythetranslationinvariantcondi-
+tion by the primitive cell lattice vectors,
+/u1D462/u1D424(/u1D42B+ /u1D40B/u1D45D)= /u1D462/u1D424(/u1D42B). (6)
+Following the strategy of FermiNet [10], Bloch functions in
+Eq. (5) can be promoted with collective distances,
+/u1D452/u1D456/u1D424⋅/u1D42B/u1D456/u1D462/u1D424(/u1D42B/u1D456) →/u1D452/u1D456/u1D424⋅/u1D42B/u1D456/u1D462/u1D424(/u1D42B/u1D456; /u1D42B≠/u1D456), (7)
+where /u1D42B≠/u1D456 denotes all the electron coordinates except/u1D42B/u1D456. These
+collective orbitals are constructed to achieve the equivalence of
+electron permutations/u1D443,
+/u1D443/u1D456,/u1D457/u1D462/u1D424/u1D456(/u1D42B/u1D457; /u1D42B≠/u1D457)= /u1D462/u1D424/u1D457(/u1D42B/u1D456; /u1D42B≠/u1D456), (8)
+which combined with the Slater determinant ensure the anti-
+symmetry nature of electron. Moreover, we use the periodic dis-
+tance features/u1D451(/u1D42B) in Eq. (2) to substitute ordinary/uni007C.var/u1D42B/uni007C.var in the
+molecular neural network. The periodic functions/u1D453,/u1D454 used in
+Eq. (2) read
+/u1D453(/u1D714)= /uni007C.var/u1D714/uni007C.var(1− /uni007C.var/u1D714∕/u1D70B/uni007C.var3
+4 ),
+/u1D454(/u1D714)= /u1D714(1− 32/uni007C.var/u1D714∕/u1D70B/uni007C.var+12/uni007C.var/u1D714∕/u1D70B/uni007C.var2), (9)
+and their arguments/u1D714 are reduced into[−/u1D70B,/u1D70B]. Eq. (6) can then
+be satisﬁed without causing discontinuity [18]. For an overall
+sketch of the neural network, see Algorithm 1. Note that the dis-
+tance between electrons and nuclei is omitted for HEG system
+since it does not contain any nucleus. Speciﬁc hyperparameters
+of each system are listed in Supplementary Note 1.
+Neural network optimization. Parameters /u1D703 within the neu-
+ralnetworkcanbeoptimizedtominimizetheenergyexpectation
+value⟨/u1D438/u1D459⟩, and the gradient∇/u1D703⟨/u1D438/u1D459⟩ reads
+∇/u1D703⟨/u1D438/u1D459⟩=Re[ ⟨/u1D438/u1D459∇/u1D703lnΨ∗⟩−⟨/u1D438/u1D459⟩⟨∇/u1D703lnΨ∗⟩],
+/u1D438/u1D459=Ψ −1 ̂/u1D43B/u1D446Ψ, (10)
+where /u1D438/u1D459 denotes the local energy of neural network ansatz
+Ψ. Besides energy minimization, stochastic reconﬁguration op-
+timization [37] has also been widely adopted and proved to be
+much more eﬃcient, whose gradient reads
+Grad= /u1D439−1∇/u1D703⟨/u1D438/u1D459⟩,
+/u1D439/u1D456/u1D457 =Re
+/bracketleft.s2
+⟨/u1D715lnΨ∗
+/u1D715/u1D703/u1D456
+/u1D715lnΨ
+/u1D715/u1D703/u1D457
+⟩−⟨/u1D715lnΨ∗
+/u1D715/u1D703/u1D456
+⟩⟨/u1D715lnΨ/u1D715/u1D703/u1D457 ⟩/bracketright.s2. (11)
+5
+Algorithm 1 Pseudocode of network
+Require: electron positions{/u1D42B↑1,⋯, /u1D42B↑/u1D45B↑, /u1D42B↓1,⋯, /u1D42B↓/u1D45B↓}
+Require: nuclear positions{/u1D411/u1D43C}in the primitive cell
+Require: latticevector {/u1D41A/u1D45D,/u1D4461 , /u1D41A/u1D45D,/u1D4462 , /u1D41A/u1D45D,/u1D4463 }ofprimitivecellandsu-percell
+Require: reciprocal lattice vector{/u1D41B/u1D45D,/u1D4461 , /u1D41B/u1D45D,/u1D4462 , /u1D41B/u1D45D,/u1D4463 } of primitivecell and supercell
+Require: occupied{/u1D424/u1D422} points oﬀered by Hartree-Fock method
+1: foreach electron e, atom Ido
+2: /u1D714/u1D452,/u1D43C =( /u1D42B/u1D452− /u1D411/u1D43C)⋅{/u1D41B/u1D45D1, /u1D41B/u1D45D2, /u1D41B/u1D45D3}
+3: /u1D714/u1D452,/u1D452)uni2032(var =( /u1D42B/u1D452− /u1D42B/u1D452)uni2032(var)⋅{/u1D41B/u1D4461, /u1D41B/u1D4462, /u1D41B/u1D4463}
+4: end for
+5: foreach electron edo
+6: /u1D421/u1D452={Σ 3/u1D456=1/u1D454(/u1D714/u1D456/u1D452,/u1D43C) /u1D41A/u1D45D/u1D456,/u1D451(/u1D714/u1D452,/u1D43C)}
+7: /u1D421/u1D452,/u1D452)uni2032(var ={Σ 3/u1D456=1/u1D454(/u1D714/u1D456/u1D452,/u1D452)uni2032(var) /u1D41A/u1D446/u1D456 ,/u1D451(/u1D714/u1D452,/u1D452)uni2032(var)}
+8: end for
+9: foreach layer ldo
+10: /u1D420/u1D459,↑= 1/u1D45B↑ ∑/u1D452 /u1D421/u1D459,↑/u1D452
+11: /u1D420/u1D459,↓= 1/u1D45B↓ ∑/u1D452 /u1D421/u1D459,↓/u1D452
+12: foreach electron e, spin/u1D6FC do
+13: /u1D420/u1D459,/u1D6FC,↑/u1D452 = 1/u1D45B↑ ∑/u1D452)uni2032(var /u1D421/u1D459,/u1D6FC,↑/u1D452,/u1D452)uni2032(var
+14: /u1D420/u1D459,/u1D6FC,↓/u1D452 = 1/u1D45B↓ ∑/u1D452)uni2032(var /u1D421/u1D459,/u1D6FC,↓/u1D452,/u1D452)uni2032(var
+15: /u1D41F/u1D459,/u1D6FC/u1D452 =cat( /u1D421/u1D459,/u1D6FC/u1D452 , /u1D420/u1D459,↑, /u1D420/u1D459,↓, /u1D420/u1D459,/u1D6FC,↑/u1D452 , /u1D420/u1D459,/u1D6FC,↓/u1D452 )
+16: /u1D421/u1D459+1,/u1D6FC/u1D452 =tanh( /u1D415/u1D459⋅ /u1D41F/u1D459,/u1D6FC/u1D452 + /u1D41B/u1D459)+ /u1D421/u1D459,/u1D6FC/u1D452
+17: /u1D421/u1D459+1,/u1D6FC,/u1D6FD/u1D452,/u1D452)uni2032(var =tanh( /u1D416/u1D459⋅ /u1D421/u1D459,/u1D6FC,/u1D6FD/u1D452,/u1D452)uni2032(var + /u1D41C/u1D459)+ /u1D421/u1D459,/u1D6FC,/u1D6FD/u1D452,/u1D452)uni2032(var
+18: end for
+19: end for
+20: foreach orbital ido
+21: foreach electron e, spin/u1D6FC do
+22: /u1D462/u1D6FC/u1D456,/u1D452=Orb Re/u1D456,/u1D6FC⋅ /u1D421/u1D43F/u1D452 + /u1D422×Orb Im/u1D456,/u1D6FC⋅ /u1D421/u1D43F/u1D452
+23: /u1D45D/u1D6FC/u1D456,/u1D452=exp( /u1D422/u1D424/u1D456⋅ /u1D42B/u1D6FC/u1D452)
+24: enve/u1D6FC/u1D456,/u1D452= ∑/u1D43C/u1D70B/u1D43C,/u1D6FC/u1D456 exp(−/u1D70E/u1D43C,/u1D6FC/u1D456 /u1D451(/u1D714/u1D452,/u1D43C))
+25: /u1D719/u1D6FC/u1D456,/u1D452=/u1D45D/u1D6FC/u1D456,/u1D452/u1D462/u1D6FC/u1D456,/u1D452enve/u1D6FC/u1D456,/u1D452
+26: end for
+27: end for
+28: Ψ=Det[ /u1D719↑]Det[/u1D719↓]
+In this work, we adopt a modiﬁed KFAC optimizer, which ap-
+proximates/u1D439 as
+/u1D439 =Re
+/bracketleft.s2
+⟨ /u1D715lnΨ∗
+/u1D715vec(/u1D44A/u1D459)
+/u1D715lnΨ/u1D447
+/u1D715vec(/u1D44A/u1D459)⟩−⟨ /u1D715lnΨ∗/u1D715vec(/u1D44A/u1D459)⟩⟨ /u1D715lnΨ/u1D447/u1D715vec(/u1D44A/u1D459)⟩/bracketright.s2
+=Re
+/bracketleft.s2
+⟨(/u1D44E/u1D459⊗/u1D452∗/u1D459)(/u1D44E/u1D459⊗/u1D452/u1D459)/u1D447⟩−⟨(/u1D44E/u1D459⊗/u1D452∗/u1D459)⟩⟨(/u1D44E/u1D459⊗/u1D452/u1D459)⟩/u1D447
+/bracketright.s2
+≈Re
+/bracketleft.s2
+⟨/u1D44E/u1D459/u1D44E/u1D447/u1D459 ⟩⊗⟨/u1D452∗/u1D459/u1D452/u1D447/u1D459 ⟩/bracketright.s2,
+(12)
+where/u1D44A/u1D459 denotestheweightparametersoflayer /u1D459,andvecmeans
+vectorized form. /u1D44E/u1D459,/u1D452/u1D459 denote the activation and sensitivity of
+layer/u1D459 respectively. Note that activation/u1D44E/u1D459 is always real-valued,
+which explains the absence of conjugation of/u1D44E/u1D459 in the second
+line. The ﬁrst term in the bracket of Eq. (12) is approximated as
+the Kronecker product of the expectation values, and the second
+term is omitted for simpliﬁcation.
+Twist average boundary condition. TABC is a conventional
+technique to reduce the ﬁnite-size error due to the constrained
+sizeofsupercell[25]. Itaveragesthecontributionsfromdiﬀerent
+periodicimagesofthesupercellandimprovetheconvergenceon
+the total energy. The formula reads
+/u1D438TABC= Ω/u1D446(2/u1D70B)3 /uni222B.updsp1.B.Z./u1D4513/u1D424/u1D446 Ψ∗/u1D424/u1D446 ̂/u1D43B/u1D446Ψ/u1D424/u1D446Ψ∗/u1D424/u1D446Ψ/u1D424/u1D446 , (13)
+where 1.B.Z. denotes the ﬁrst Brillouin zone of supercell and
+the integral is practically approximated by a discrete sum of a
+Monkhorst-Packmesh(seeSupplementaryNote3.3formorede-
+tails).
+Structurefactorcorrection Finite-sizeerrorcanbefurtherre-
+duced via the structure factor/u1D446(/u1D424)correction [26], which is usu-
+ally calculated to correct the exchange-correlation potential/u1D449xc
+and the formula reads
+Δ/u1D449xc
+/u1D441e
+= 2/u1D70BΩ/u1D446 lim/u1D424→0/u1D446(/u1D424)/u1D4242 ,
+/u1D446(/u1D424)= 1/u1D441e[⟨/u1D70C(/u1D424)/u1D70C∗(/u1D424)⟩−⟨/u1D70C(/u1D424)⟩⟨/u1D70C∗(/u1D424)⟩], (14)
+wherelim/u1D424→0 is practically estimated via interpolation (see Sup-
+plementary Note 3.4 for more details).
+Empirical correction formula. Empirical formulas are also
+commonly employed to reduce the ﬁnite-size error [16], one of
+which reads
+/u1D438∞=/u1D438NetN +(/u1D438HF∞ −/u1D438HFN ). (15)
+The simulation size of high-accuracy methods is usually limited
+duetohighcomputationalcosts. Hencemethodswithmuchmore
+practicaltimescaling,suchasHF,isusuallyusedtogiveaposte-
+rior estimation of the ﬁnite-size error. All the results of LiH are
+corrected using this empirical formula with HF results in ccpvdz
+basis (see Supplementary Note 4.3 for more details).
+Electron density analysis Electron density/u1D70C(/u1D42B)is deﬁned as
+/u1D70C(/u1D42B)= /u1D441 /uni222B.updsp/u1D4513/u1D42B2⋯/u1D4513/u1D42B/u1D441 /uni007C.varΨ(/u1D42B, /u1D42B2,⋯, /u1D42B/u1D441)/uni007C.var2, (16)
+and it’s practically evaluated by accumulating Monte Carlo sam-
+ples of electrons on a uniform grid over the simulation cell. As
+for the complex polarization/u1D44D, it is deﬁned as [33]
+/u1D44D = ⟨exp(/u1D456
+/uni2211.s1
+/u1D456
+2/u1D70B
+/u1D43F /u1D42B∥/u1D456)⟩, (17)
+where /u1D42B∥ denotes the projection of electron coordinate along the
+chain direction. Moreover, Bader charge is employed to estimate
+the charge partition on each atom [36]. The convergence test of
+Bader charge is shown in the Supplementary Fig.8.
+Workﬂowandcomputationaldetails. Thisworkisdeveloped
+upon open-source FermiNet and PyQMC on Github, deep learn-
+ingframeworkJAX[38]isusedwhichsupportsﬂexibleandpow-
+erful complex number calculation. Ground-state energy calcu-
+lations are performed with all-electrons. Diamond-structured Si
+6
+and NaCl crystal are simulated with ccECP[Ne] [35]. The neu-
+ral network is pretrained by Hartree-Fock ansatz, obtained with
+PySCF software [39]. All the expectation values for distribution
+/uni007C.varΨ/uni007C.var2areevaluatedviatheMonteCarloapproach,andthentheen-
+ergyandwavefunctionisoptimizedusingthemodiﬁedKFACop-
+timizer(seeSupplementaryFig.1,2,4,6,7). TheEwaldsumma-
+tiontechniqueisimplementedforthelatticesummationinenergy
+calculation. After training is converged, energy is calculated in a
+separateinferencephase. Concretecodeofthisworkisdeveloped
+on Github athttps://github.com/bytedance/DeepSolid.
+References
+[1] W. Kohn. Nobel lecture: Electronic structure of matter—wave functions
+and density functionals.Rev. Mod. Phys., 71:1253–1266, Oct 1999.
+[2] RichardM.Martin. Electronic Structure: Basic Theory and Practical Meth-
+ods. Cambridge University Press, 2004.
+[3] R. O. Jones. Density functional theory: Its origins, rise to prominence, and
+future. Rev. Mod. Phys., 87:897–923, Aug 2015.
+[4] James Kirkpatrick, Brendan McMorrow, David H. P. Turban, Alexan-
+der L. Gaunt, James S. Spencer, Alexander G. D. G. Matthews, Annette
+Obika, Louis Thiry, Meire Fortunato, David Pfau, Lara Román Castel-
+lanos,StigPetersen,AlexanderW.R.Nelson,PushmeetKohli,PaulaMori-
+Sánchez, Demis Hassabis, and Aron J. Cohen. Pushing the frontiers of
+density functionals by solving the fractional electron problem.Science,
+374(6573):1385–1389, December 2021. Publisher: American Association
+for the Advancement of Science.
+[5] Kiel T. Williams, Yuan Yao, Jia Li, Li Chen, Hao Shi, Mario Motta,
+Chunyao Niu, Ushnish Ray, Sheng Guo, Robert J. Anderson, Junhao Li,
+Lan Nguyen Tran, Chia-Nan Yeh, Bastien Mussard, Sandeep Sharma, Fa-
+bien Bruneval, Mark van Schilfgaarde, George H. Booth, Garnet Kin-
+Lic Chan, Shiwei Zhang, Emanuel Gull, Dominika Zgid, Andrew Millis,
+Cyrus J. Umrigar, and Lucas K. Wagner. Direct Comparison of Many-
+Body Methods for Realistic Electronic Hamiltonians.Physical Review X,
+10(1):011041, February 2020. Publisher: American Physical Society.
+[6] George H. Booth, Andreas Grüneis, Georg Kresse, and Ali Alavi. Towards
+an exact description of electronic wavefunctions in real solids.Nature,
+493:365–370, 2013.
+[7] Tina N. Mihm, Tobias Schäfer, Sai Kumar Ramadugu, Laura Weiler, An-
+dreas Grüneis, and James J. Shepherd. A shortcut to the thermodynamic
+limitforquantummany-bodycalculationsofmetals. Nature Computational
+Science, 1(12), December 2021.
+[8] Jiequn Han, Linfeng Zhang, and Weinan E. Solving Many-Electron Schrö-
+dinger Equation Using Deep Neural Networks.Journal of Computational
+Physics, 399:108929, December 2019. arXiv: 1807.07014.
+[9] Giuseppe Carleo and Matthias Troyer. Solving the quantum many-body
+problemwithartiﬁcialneuralnetworks. Science,355(6325):602–606,2017.
+[10] DavidPfau,JamesS.Spencer,AlexanderG.D.G.Matthews,andW.M.C.
+Foulkes. Ab initio solution of the many-electron schrödinger equation with
+deep neural networks.Phys. Rev. Research, 2:033429, Sep 2020.
+[11] JamesSSpencer,DavidPfau,AleksandarBotev,andWMatthewCFoulkes.
+Better, faster fermionic neural networks.arXiv:2011.07125, 2020.
+[12] JanHermann,ZenoSchätzle,andFrankNoé. Deep-neural-networksolution
+of the electronic Schrödinger equation.Nat. Chem., 12(10):891–897, Oct
+2020.
+[13] XiangLi,CunweiFan,WeiluoRen,andJiChen. Fermionicneuralnetwork
+witheﬀectivecorepotential. Physical Review Research,4(1):013021,2022.
+[14] Weiluo Ren, Weizhong Fu, and Ji Chen. Towards the ground state of
+molecules via diﬀusion monte carlo on neural networks.arXiv preprint
+arXiv:2204.13903, 2022.
+[15] Kai Guther, Robert J. Anderson, Nick S. Blunt, Nikolay A. Bogdanov,
+Deidre Cleland, Nike Dattani, Werner Dobrautz, Khaldoon Ghanem, Pe-
+ter Jeszenszki, Niklas Liebermann, Giovanni Li Manni, Alexander Y. Lo-
+zovoi, Hongjun Luo, Dongxia Ma, Florian Merz, Catherine Overy, Markus
+Rampp, Pradipta Kumar Samanta, Lauretta R. Schwarz, James J. Shep-
+herd, SimonD.Smart, EugenioVitale, OskarWeser, GeorgeH.Booth, and
+Ali Alavi. NECI: N-Electron Conﬁguration Interaction with an emphasis
+on state-of-the-art stochastic methods. The Journal of Chemical Physics ,
+153(3):034107, July 2020. Publisher: American Institute of Physics.
+[16] W.M.C.Foulkes,L.Mitas,R.J.Needs,andG.Rajagopal. Quantummonte
+carlo simulations of solids.Rev. Mod. Phys., 73:33, Jan 2001.
+[17] Hao Shi and Shiwei Zhang. Some recent developments in auxiliary-ﬁeld
+quantum monte carlo for real materials.The Journal of Chemical Physics ,
+154(2):024107, 2021.
+[18] TM Whitehead, MH Michael, and GJ Conduit. Jastrow correlation factor
+for periodic systems.Physical Review B, 94(3):035157, 2016.
+[19] James Martens and Roger Grosse. Optimizing neural networks with
+kronecker-factored approximate curvature. InProceedings of the 32nd In-
+ternational Conference on International Conference on Machine Learning
+- Volume 37, ICML’15, page 2408–2417. JMLR.org, 2015.
+[20] Mario Motta, David M. Ceperley, Garnet Kin-Lic Chan, John A. Gomez,
+Emanuel Gull, Sheng Guo, Carlos A. Jiménez-Hoyos, Tran Nguyen Lan,
+Jia Li, Fengjie Ma, Andrew J. Millis, Nikolay V. Prokof’ev, Ushnish Ray,
+Gustavo E. Scuseria, Sandro Sorella, Edwin M. Stoudenmire, Qiming Sun,
+Igor S. Tupitsyn, Steven R. White, Dominika Zgid, and Shiwei Zhang. To-
+wards the solution of the many-electron problem in real materials: Equa-
+tionofstateofthehydrogenchainwithstate-of-the-artmany-bodymethods.
+Phys. Rev. X, 7:031059, Sep 2017.
+[21] Yannick Dappe, Rafal Oszwaldowski, P. Pou, José Ortega, R. Pérez, and
+FernandoFlores. Local-orbitaloccupancyformulationofdensityfunctional
+theory: Application to si, c, and graphene.Phys. Rev. B, 73, 06 2006.
+[22] P. López Ríos, A. Ma, N. D. Drummond, M. D. Towler, and R. J. Needs.
+Inhomogeneous backﬂow transformations in quantum monte carlo calcula-
+tions. Phys. Rev. E, 74:066701, Dec 2006.
+[23] Ke Liao, Thomas Schraivogel, Hongjun Luo, Daniel Kats, and Ali Alavi.
+Towards eﬃcient and accurate ab initio solutions to periodic systems via
+transcorrelationandcoupledclustertheory. Phys. Rev. Research,3:033072,
+Jul 2021.
+[24] AndreK.Geim. Nobellecture: Randomwalktographene. Rev. Mod. Phys.,
+83:851–862, Aug 2011.
+[25] C.Lin,F.H.Zong,andD.M.Ceperley.Twist-averagedboundaryconditions
+incontinuumquantummontecarloalgorithms. Phys. Rev. E,64:016702,Jun
+2001.
+[26] Simone Chiesa, David M. Ceperley, Richard M. Martin, and Markus Holz-
+mann. Finite-size error in many-body simulations with long-range interac-
+tions. Phys. Rev. Lett., 97:076404, Aug 2006.
+[27] S.J.Nolan,M.J.Gillan,D.Alfè,N.L.Allan,andF.R.Manby. Calculation
+of properties of crystalline lithium hydride using correlated wave function
+theory. Phys. Rev. B, 80:165109, Oct 2009.
+[28] S. J. Binnie, S. J. Nolan, N. D. Drummond, D. Alfè, N. L. Allan, F. R.
+Manby, and M. J. Gillan. Bulk and surface energetics of crystalline lithium
+hydride: Benchmarks from quantum monte carlo and quantum chemistry.
+Phys. Rev. B, 82:165431, Oct 2010.
+[29] D.M.CeperleyandB.J.Alder.Groundstateoftheelectrongasbyastochas-
+tic method. Phys. Rev. Lett., 45:566–569, Aug 1980.
+[30] Max Wilson, Saverio Moroni, Markus Holzmann, Nicholas Gao, Filip Wu-
+darski, Tejs Vegge, and Arghya Bhowmik. Wave function ansatz (but peri-
+odic) networks and the homogeneous electron gas, 2022.
+[31] G. Cassella, H. Sutterud, S. Azadi, N. D. Drummond, D. Pfau, J. S.
+Spencer, and W. M. C. Foulkes. Discovering quantum phase transitions
+with fermionic neural networks, 2022.
+[32] Michael G. Medvedev, Ivan S. Bushmarinov, Jianwei Sun, John P. Perdew,
+andKonstantinA.Lyssenko. Densityfunctionaltheoryisstrayingfromthe
+path toward the exact functional.Science, 355(6320):49–52, 2017.
+[33] Lorenzo Stella, Claudio Attaccalite, Sandro Sorella, and Angel Rubio.
+Strong electronic correlation in the hydrogen chain: A variational monte
+carlo study.Phys. Rev. B, 84:245117, Dec 2011.
+[34] Siyuan Chen, Mario Motta, Fengjie Ma, and Shiwei Zhang. Ab initio elec-
+tronic density in solids by many-body plane-wave auxiliary-ﬁeld quantum
+monte carlo calculations.Phys. Rev. B, 103:075138, Feb 2021.
+[35] Abdulgani Annaberdiyev, Cody A. Melton, M. Chandler Bennett, Guang-
+ming Wang, and Lubos Mitas. Accurate atomic correlation and total ener-
+giesforcorrelationconsistenteﬀectivecorepotentials. Journal of Chemical
+Theory and Computation, 16(3):1482–1502, 2020. PMID: 32027496.
+[36] W Tang, E Sanville, and G Henkelman. A grid-based bader analysis
+algorithm without lattice bias. Journal of Physics: Condensed Matter ,
+21(8):084204, jan 2009.
+[37] SandroSorella. Greenfunctionmontecarlowithstochasticreconﬁguration.
+Phys. Rev. Lett., 80:4558–4561, May 1998.
+[38] James Bradbury, Roy Frostig, Peter Hawkins, Matthew James Johnson,
+Chris Leary, Dougal Maclaurin, George Necula, Adam Paszke, Jake Van-
+derPlas,SkyeWanderman-Milne,andQiaoZhang. JAX:composabletrans-
+formations of Python+NumPy programs, 2018.
+[39] Qiming Sun, Timothy C. Berkelbach, Nick S. Blunt, George H. Booth,
+Sheng Guo, Zhendong Li, Junzi Liu, James D. McClain, Elvira R. Say-
+7
+futyarova, Sandeep Sharma, Sebastian Wouters, and Garnet Kin-Lic Chan.
+Pyscf: thepython-basedsimulationsofchemistryframework. WIREs Com-
+put. Mol. Sci., 8(1):e1340, 2018.
+Acknowledgments
+TheauthorsthankMatthewFoulkes,DavidCeperley,LucasWagner,GarethCon-
+duit, and Ke Liao for helpful discussions. We thank ByteDance AML team spe-
+ciallyfortheirtechnicalandcomputingsupport. WealsothankByteDanceAI-Lab
+LIT Group and the rest of ByteDance AI-Lab research team for inspiration and
+encouragement. This work is directed and supported by Hang Li and ByteDance
+AI-Lab. J.C. is supported by the National Natural Science Foundation of China
+under Grant No. 92165101.
+Author contributions
+X.L. and J.C. conceived the study; X.L. developed the method, performed imple-
+mentations, simulations, and data analyses; Z.L. contributed to the code devel-
+opment and simulation of HEG; J.C. supervised the project. X.L., Z.L., and J.C.
+wrote the paper.
+8
+Supplementary information: Ab initio calculation of real solids via neural
+network ansatz
+Xiang Li1, Zhe Li1, and Ji Chen2
+1ByteDance Inc, Zhonghang Plaza, No. 43, North 3rd Ring West Road, Haidian District, Beijing.
+2School of Physics, Interdisciplinary Institute of Light-Element Quantum Materials, Frontiers Science Center for Nano-Optoelectronics, Peking
+University, Beijing 100871, People’s Republic of China
+May 25, 2022
+Supplementary Note 1. Hyperparameters for simulations
+The recommended hyperparameters are listed in Supplementary Table 1. Some employed hyperparameters of the presented results
+diﬀer from the recommended ones, which are specially given in Supplementary Table 2.
+Hyperparameter Value Hyperparameter Value
+Pretrain basis ccpvdz Pretrain iterations 1e3
+Dimension of one electron layer/u1D415 256 Dimension of two electron layer /u1D416 32
+Number of layers 4 Number of determinants 8
+Optimizer KFAC Learning rate 3e-2
+Damping 1e-3 Constrained norm of gradient 1e-3
+Momentum of optimizer 0.0 Batch size 4096
+Number of training steps 2e5 Clipping window of gradient 5
+MCMC burn in 1e3 MCMC steps between each iterations 20
+MCMC move width 2e-2 Target MCMC acceptance 55%
+Precision Float64 Number of inference steps 5e4
+Supplementary Table 1/uni007C.var Recommended hyperparameters
+System Layer dimension Layer Determinants Batch size Training steps
+Hydrogen chain (256, 32) 3 8 4096 1e5
+Graphene (256, 32) 4 8 4096 3e5
+2×2×2 Lithium hydride (256, 32) 4 8 4096 3e5
+3×3×3 Lithium hydride (256, 32) 4 1 8192 4e5
+Homogeneous electron gas (256, 32) 3 1 4096 3e5
+Supplementary Table 2/uni007C.var Some system dependent hyperparameters
+Supplementary Note 2. Hydrogen chain
+Supplementary Note 2.1 Training curve
+The training curve ofH10 in PBC is plotted in Supplementary Fig. 1. The correlation error is deﬁned as
+Correlationerror =
+/parenleft.s2
+1− /u1D438Net−/u1D438HF
+/u1D438DMC−/u1D438HF
+/parenright.s2
+×100% , (1)
+where/u1D438HF is calculated using the ccpvdz basis set and/u1D438DMC is taken from Ref. [1].
+1
+arXiv:2203.15472v2  [physics.chem-ph]  24 May 2022
+0.1%
+1%
+10%
+100%
+H10, R=1.4 Bohr H10, R=1.6 Bohr H10, R=1.8 Bohr
+0.1%
+1%
+10%
+100%
+H10, R=2.0 Bohr H10, R=2.4 Bohr H10, R=2.8 Bohr
+101 102 103 104 1050.1%
+1%
+10%
+100%
+H18, R=1.8 Bohr
+101 102 103 104 105
+H30, R=1.8 Bohr
+101 102 103 104 105
+H50, R=1.8 Bohr
+Iteration
+Correlation error
+Supplementary Figure 1/uni007C.var Hydrogen chain training curve.For clarity, at each iteration number, we plot the median correlation error of the last
+10%of the corresponding iteration.
+Bond length (Å) Net LR-DMC(LDA) VMC(LDA)
+1.4 -0.551677(1) -0.55178(1) -0.55049(1)
+1.6 -0.568740(1) -0.56881(1) -0.56752(1)
+1.8 -0.572922(1) -0.57304(1) -0.57172(1)
+2.0 -0.570401(1) -0.57055(1) -0.56911(1)
+2.4 -0.556861(1) -0.55703(1) -0.55522(1)
+2.8 -0.540783(1) -0.54102(1) -0.53831(1)
+Supplementary Table 3/uni007C.var Energy ofH10 chain.
+Supplementary Note 2.2 H10 dissociation curve
+Energy ofH10 chain per atom is given in Supplementary Table 3, LR-DMC and VMC results from Ref. [1] are also listed for com-
+parison.
+Supplementary Note 2.3 Finite-size error extrapolation
+Energies of diﬀerent hydrogen chains are given in Supplementary Table 4.
+2
+Size Net LR-DMC(LDA) VMC(LDA)
+10 -0.572922(1) -0.57304(1) -0.57172(1)
+18 -0.567776(1) -0.56796(1) -0.56644(1)
+30 -0.566114(1) -0.56627(1) -0.56478(1)
+50 -0.565419(1) -0.56560(1) -0.56409(1)
+SupplementaryTable4 /uni007C.varEnergiesofdiﬀerenthydrogenchains,energiesaregiveninHartreeandthebondlengthofhydrogenchainisﬁxedat1.8
+Bohr.
+Supplementary Note 3. Graphene
+Atom Position (Å) Lattice vector Position (Å)
+C1 (1.421, 0.0, 0.0) /u1D41A1 (2.1315, -1.2306, 0.0)
+C2 (2.842, 0.0, 0.0) /u1D41A2 (2.1315, 1.2306, 0.0)
+/u1D41A3 (0, 0, 52.9177)
+Supplementary Table 5/uni007C.varGeometry of Graphene
+Supplementary Note 3.1 Geometry
+The primitive cell lattice vectors as well as carbon atom coordinates are given in Supplementary Table 5. The size of supercell is
+2×2 .
+Supplementary Note 3.2 Twist average boundary condition (TABC)
+A3×3 Monkhorst-PackmeshintheﬁrstBrillouinzoneofthesupercellreciprocalspacewith Γpointcenteredisusedtoapproximate
+the twist average integral, which reads
+/u1D438TABC= Ω/u1D446(2/u1D70B)3 /uni222B.updsp1.B.Z./u1D4513/u1D424/u1D446 Ψ∗/u1D424/u1D446 ̂/u1D43B/u1D446Ψ/u1D424/u1D446Ψ∗/u1D424/u1D446Ψ/u1D424/u1D446 ≈ 19/u1D438/u1D4241+23/u1D438/u1D4242+29/u1D438/u1D4243,
+/u1D4241=0, /u1D4242= 13 /u1D41B/u1D4461 +13 /u1D41B/u1D4462, /u1D4243= 23 /u1D41B/u1D4461 +13 /u1D41B/u1D4462,
+(2)
+and the weight factors origin from the diﬀerent number of symmetry equivalent/u1D424 points.
+Supplementary Note 3.3 Training curves
+Training curves at diﬀerent/u1D424/u1D446 are plotted in Supplementary Fig. 2.
+105 2 × 105-76.3
+-76.2
+-76.1
+-76.0
+k1
+105 2 × 105
+k2
+105 2 × 105
+k3
+Iteration
+Energy per cell / Hartree
+Supplementary Figure 2/uni007C.var2×2 Graphene training curve.For clarity, at each iteration number, we show the median energy per primitive cell
+over the last 10%of iteration.
+TheﬁnalresultsarelistedinSupplementaryTable6. TheenergyofanisolatedcarbonatomistakenfromRef.[2], /u1D438=−37.84471
+Hartree.
+3
+/u1D4241 /u1D4242 /u1D4243
+Energy (Hartree) -76.15588(6) -76.24949(5) -76.26314(5)
+Supplementary Table 6/uni007C.var Energy of graphene at diﬀerent twists
+Supplementary Note 3.4 Structure factor correction
+TABCtechniqueisusuallycombinedwithstructurefactorcorrections[3],andthecombinationisnowseenasthestandardschemeof
+applyingQMCtosolids. Structurefactor /u1D446(/u1D424)iscalculatedtocorrecttheexchange-correlationpart,namely /u1D449xc,ofthetotalpotential
+energy, which reads
+Δ/u1D449xc
+/u1D441e
+= 2/u1D70BΩ/u1D446 lim/u1D424→0/u1D446(/u1D424)/u1D4242 ,
+/u1D446(/u1D424)= 1/u1D441e[⟨/u1D70C(/u1D424)/u1D70C∗(/u1D424)⟩−⟨/u1D70C(/u1D424)⟩⟨/u1D70C∗(/u1D424)⟩], /u1D70C(/u1D424)= /uni2211.s1/u1D456 exp(/u1D456/u1D424 ⋅ /u1D42B/u1D456), (3)
+where /u1D42B/u1D456 referstothecoordinateofeachelectron,and /u1D441e denotesthenumberofelectronsinthesimulationcell. Thecalculated /u1D446(/u1D424)
+and correspondingΔ/u1D449xc ofΓ point is plotted in Supplementary Fig. 3, and corrections of all twists are quite close to each other.
+0.00 0.25 0.50 0.75
+0.00
+0.05
+0.10S(k)
+0.00 0.25 0.50 0.75
+1.9
+2.0Vxc N 1e  / Hartree
+1e-4
+|k|
+Supplementary Figure 3/uni007C.var Structure factor correction of Graphene.The lines are ﬁtted with the formula:/u1D446(/u1D424)=1−exp(− /u1D44E ⋅ /u1D4242).
+The ﬁnal correction from structure factor is 0.00122 Hartree / atom.
+Supplementary Note 4. Lithium hydride
+Supplementary Note 4.1 Geometry
+Lithium hydride crystal has a rock-salt structure, whose lattice vectors and atom positions are given in Supplementary Table 7.
+Atom Position lattice vector Position
+Li (0.0, 0.0, 0.0) /u1D41A1 (0.0, L/2, L/2)
+H (L/2, L/2, L/2) /u1D41A2 (L/2, 0.0, L/2)
+/u1D41A3 (L/2, L/2, 0.0)
+Supplementary Table 7/uni007C.var Geometry of LiH crystal
+Supplementary Note 4.2 Training curves
+Training curves of the2×2×2 LiH crystal is plotted in Supplementary Fig. 4.
+4
+-8.123
+-8.117
+LiH, L=3.4 Å
+-8.138
+-8.132
+LiH, L=3.6 Å
+-8.147
+-8.141
+LiH, L=3.8 Å
+-8.152
+-8.146
+LiH, L=4.0 Å
+105 2 × 105-8.152
+-8.146
+LiH, L=4.2 Å
+105 2 × 105-8.151
+-8.145
+LiH, L=4.4 Å
+105 2 × 105-8.146
+-8.140
+LiH, L=4.6 Å
+105 2 × 105-8.142
+-8.136
+LiH, L=4.8 Å
+Iteration
+Energy per cell / Hartree
+Supplementary Figure 4/uni007C.var2×2×2 LiH training curve.For clarity, at each iteration number, we show the median energy of primitive cell over
+the last 10% of iteration.
+Supplementary Note 4.3 Dissociation curve
+The energy of2×2×2 LiH is listed in Supplementary Table 8. The energy of an isolated lithium atom is taken from Ref. [2],
+/u1D438 = −7.47798 Hartree. Corresponding Hatree-Fock corrections are calculated with the ccpvdz basis set and the convergence
+behavior of HF calculation is plotted in Supplementary Fig. 5.
+L (Å) Net HF correction L (Å) Net HF correction
+3.4 -8.12185(1) -0.0099 4.2 -8.15112(1) -0.0004
+3.6 -8.13738(1) -0.0067 4.4 -8.14967(1) 0.0009
+3.8 -8.146147(1) -0.0042 4.6 -8.14502(1) 0.0020
+4.0 -8.15096(1) -0.0021 4.8 -8.14094(1) 0.0030
+Supplementary Table 8/uni007C.var Energy of2×2×2 LiH crystal.Energies are all given in Hartree.
+-8.048
+-8.036
+-8.024
+LiH, L=3.4 Å
+-8.063
+-8.051
+-8.039
+LiH, L=3.6 Å
+-8.071
+-8.059
+-8.047
+LiH, L=3.8 Å
+-8.074
+-8.062
+-8.050
+LiH, L=4.0 Å
+2 4 6 8-8.074
+-8.062
+-8.050
+LiH, L=4.2 Å
+2 4 6 8-8.072
+-8.060
+-8.048
+LiH, L=4.4 Å
+2 4 6 8-8.067
+-8.055
+-8.043
+LiH, L=4.6 Å
+2 4 6 8-8.061
+-8.049
+-8.037
+LiH, L=4.8 Å
+k point mesh
+Energy per cell / Hartree
+Supplementary Figure 5/uni007C.varHartree-Fock corrections.The convergence behavior of HF calculations with respect to the number of/u1D424 points.
+5
+Supplementary Note 4.4 Birch-Murnaghan ﬁt
+The third order Birch-Murnaghan equation of state is employed to ﬁt the dissociation curve, which reads
+/u1D438(/u1D449)= /u1D4380+9/u1D4490/u1D435016 /braceleft.s2/bracketleft.s2/parenleft.s2/u1D4490/u1D449 /parenright.s22∕3−1/bracketright.s23/u1D435)uni2032(var0+/bracketleft.s2/parenleft.s2/u1D4490/u1D449 /parenright.s22∕3−1/bracketright.s22/bracketleft.s26−4 /parenleft.s2/u1D4490/u1D449 /parenright.s22∕3/bracketright.s2/braceright.s2, (4)
+where/u1D4380,/u1D4490,/u1D4350,/u1D435)uni2032(var0 are ﬁtted quantities, their results and corresponding experiment data [4] are listed in Supplementary Table 9.
+/u1D44E0 (Å) /u1D4350 (GPa) /u1D438coh (eV)
+Net 4.022 36.89 -4.757
+Exp 4.061(1) 33-38 -4.778,-4.759
+Supplementary Table 9/uni007C.var Parameters of Birch-Murnaghan equation of state
+Supplementary Note 4.5 3×3×3 LiH
+The training curve of the3×3×3 LiH crystal at its equilibrium lattice constantL = 4.061Å is plotted in Supplementary Fig. 6,
+corresponding Hartree-Fock corrections are also given. The ﬁnal inference results from neural network are listed in Supplementary
+Table 10.
+105 2 × 105 3 × 105 4 × 105
+Iteration
+-8.150
+-8.154
+-8.158
+-8.162Energy per cell / Hartree
+2 4 6 8
+k point mesh
+-8.068
+-8.066
+-8.064
+-8.062Energy per cell / Hartree
+SupplementaryFigure6 /uni007C.var3×3×3 LiH.Leftpanelplotsthetrainingcurveofthe 3×3×3 LiH.Forclarity,ateachiterationnumber,weshowthe
+median energy per unit cell over the last 10%of iteration. Right panel plots the corresponding Hartree-Fock corrections with the ccpvdz basis set.
+L (Å) Net HF correction
+4.061 -8.16020(2) 0.0069
+Supplementary Table 10/uni007C.var Energy of the3×3×3 LiH crystal.Energies are all given in Hartree.
+Supplementary Note 5. Homogeneous electron gas
+Supplementary Note 5.1 Training curve
+The training curve of HEG system containing 54 electrons is plotted in Supplementary Fig. 7./u1D438HF and/u1D438DMC are taken from Ref.
+[5]. Final results of neural network, BF-DMC, BF-VMC and DCD [5, 6] are listed in Supplementary Table 11.
+6
+0.1%
+1%
+10%
+100%
+rs=0.5 Bohr rs=1 Bohr rs=2 Bohr
+101 102 103 104 1050.1%
+1%
+10%
+100%
+rs=5 Bohr
+101 102 103 104 105
+rs=10 Bohr
+101 102 103 104 105
+rs=20 Bohr
+Iteration
+Correlation error
+Supplementary Figure 7/uni007C.var Homogeneous electron gas.For clarity, at each iteration number, we show the median correlation error over the last
+10%of iteration.
+/u1D45F/u1D460 Net BF-DMC BF-VMC DCD
+0.5 3.221226(2) 3.22112(4) 3.22132(7) 3.22052
+1 0.530019(1) 0.52989(4) 0.53009(3) 0.53001
+2 -0.013840(1) -0.013966(9) -0.01382(2) -0.01286
+5 -0.0788354(2) -0.079036(3) -0.078961(5) -0.07655
+10 -0.0542785(1) -0.054443(2) -0.054389(2) -0.05157
+20 -0.0316886(1) -0.032047(2) -0.0319984(8) -0.02925
+SupplementaryTable11 /uni007C.varEnergyperelectronofHEGatdiﬀerentmeanradiusofelectrons /u1D45F/u1D460. HEGsystemcontains54electronsandenergies
+are all given in Hartree,/u1D45F/u1D460 is given in Bohr.
+Supplementary Note 6. Bader charge analysis
+Detailed Bader charge analysis [7] is applied to conventional LiH crystal, and the result is plotted in Fig. 8.
+03 753 1503 2253 3003
+Point
+1.70
+1.75
+1.80
+1.85
+1.90Charge
+Bader charge of H atom
+03 753 1503 2253 3003
+Point
+2.10
+2.15
+2.20
+2.25
+2.30Charge
+Bader charge of Li atom
+Supplementary Figure 8/uni007C.var Bader charge of LiH crystal.Calculated Bader charge of atoms in LiH crystal, point denotes the number uniformly
+dividing the crystal.
+7
+According to the result, Li and H atoms in LiH becomeLi0.67+ andH0.67− ions respectively.
+References
+[1] Mario Motta, David M. Ceperley, Garnet Kin-Lic Chan, John A. Gomez, Emanuel Gull, Sheng Guo, Carlos A. Jiménez-Hoyos,
+TranNguyenLan,JiaLi,FengjieMa,AndrewJ.Millis,NikolayV.Prokof’ev,UshnishRay,GustavoE.Scuseria,SandroSorella,
+EdwinM.Stoudenmire,QimingSun,IgorS.Tupitsyn,StevenR.White,DominikaZgid,andShiweiZhang. Towardsthesolution
+ofthemany-electronprobleminrealmaterials: Equationofstateofthehydrogenchainwithstate-of-the-artmany-bodymethods.
+Phys. Rev. X, 7:031059, Sep 2017.
+[2] David Pfau, James S. Spencer, Alexander G. D. G. Matthews, and W. M. C. Foulkes. Ab initio solution of the many-electron
+schrödinger equation with deep neural networks.Phys. Rev. Research, 2:033429, Sep 2020.
+[3] SimoneChiesa,DavidM.Ceperley,RichardM.Martin,andMarkusHolzmann. Finite-sizeerrorinmany-bodysimulationswith
+long-range interactions.Phys. Rev. Lett., 97:076404, Aug 2006.
+[4] S. J. Binnie, S. J. Nolan, N. D. Drummond, D. Alfè, N. L. Allan, F. R. Manby, and M. J. Gillan. Bulk and surface energetics of
+crystallinelithiumhydride: Benchmarksfromquantummontecarloandquantumchemistry. Phys. Rev. B,82:165431,Oct2010.
+[5] P. López Ríos, A. Ma, N. D. Drummond, M. D. Towler, and R. J. Needs. Inhomogeneous backﬂow transformations in quantum
+monte carlo calculations.Phys. Rev. E, 74:066701, Dec 2006.
+[6] Ke Liao, Thomas Schraivogel, Hongjun Luo, Daniel Kats, and Ali Alavi. Towards eﬃcient and accurate ab initio solutions to
+periodic systems via transcorrelation and coupled cluster theory.Phys. Rev. Research, 3:033072, Jul 2021.
+[7] WTang,ESanville,andGHenkelman.Agrid-basedbaderanalysisalgorithmwithoutlatticebias. Journal of Physics: Condensed
+Matter, 21(8):084204, jan 2009.
+8

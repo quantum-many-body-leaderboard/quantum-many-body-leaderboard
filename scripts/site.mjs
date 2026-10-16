@@ -283,6 +283,12 @@ function hamiltonian(inst) {
       return { formula: `H = ${p.t2 == null ? hop("t", nn) : `${hop("t<sub>1</sub>", nn)} ${hop("t<sub>2</sub>", nnn)}`} + U ${sum("i")} n<sub>i&uarr;</sub>n<sub>i&darr;</sub>${p.V1 == null ? "" : dd("V<sub>1</sub>", nn) + dd("V<sub>2</sub>", nnn)}`,
         note: `${p.t2 == null ? "t = 1" : `t<sub>1</sub> = ${p.t1}, t<sub>2</sub> = ${p.t2}`}, U = ${p.U}${p.V1 == null ? "" : `, V<sub>1</sub> = ${p.V1}, V<sub>2</sub> = ${p.V2}`}, N<sub>&uarr;</sub> = N<sub>&darr;</sub> = ${p.Nf} on ${inst.n_sites} sites.` };
     }
+    case "HEG2D": case "HEG3D": {
+      // Track 2 (RULES.md 12.2): Ewald-summed Coulomb interaction with a uniform background and the Madelung term.
+      const d = inst.model === "HEG3D" ? 3 : 2;
+      return { formula: `H = &minus;&frac12; ${sum("i")} &nabla;<sub>i</sub><sup>2</sup> + ${sum("i&lt;j")} v<sub>E</sub>(r<sub>i</sub> &minus; r<sub>j</sub>) + N&xi;/2`,
+        note: `Homogeneous electron gas in ${d}D: N<sub>&uarr;</sub> = ${p.N_up}, N<sub>&darr;</sub> = ${p.N_dn} in a periodic ${esc(inst.lattice)} cell at r<sub>s</sub> = ${p.rs} bohr, ${p.twist && p.twist !== "Gamma" ? `twist ${esc(String(p.twist))}` : "&Gamma; point"}. v<sub>E</sub> is the Ewald-summed Coulomb interaction with a uniform neutralizing background, &xi; the Madelung term. Hartree atomic units; the energy per electron is E/N.` };
+    }
     case "tV":
       return { formula: `H = &minus;t ${sum(nn)} (c<sup>&dagger;</sup><sub>i</sub>c<sub>j</sub> + h.c.) + V ${sum(nn)} n<sub>i</sub>n<sub>j</sub>`,
         note: `Spinless fermions, t = 1, V = ${p.V}, ${p.Nf} particles on ${inst.n_sites} sites.` };
@@ -720,6 +726,8 @@ const MODEL_WORDS = {
   tV: "spinless-fermions tv",
   TFIsing: "tfim tfi",
   Impurity: "anderson dmft bath",
+  HEG3D: "jellium electron-gas heg continuum 3d",
+  HEG2D: "jellium electron-gas heg continuum 2d",
 };
 const SHAPE_WORDS = { chain: "1d one-dimensional", square: "2d", rectangular: "2d rectangle", triangular: "2d triangle",
   kagome: "2d", shuriken: "2d", pyrochlore: "3d" };
@@ -1081,15 +1089,18 @@ ${recordBox}
   ${variant ? `<p>${variant}</p>` : ""}
   ${relabel ? `<p>${relabel}</p>` : ""}
   <dl class="facts">
-    <div><dt>lattice</dt><dd>${esc(inst.lattice)}</dd></div>
-    <div><dt>sites</dt><dd class="num">${inst.n_sites}</dd></div>
+    <div><dt>${/^HEG/.test(inst.model) ? "cell" : "lattice"}</dt><dd>${esc(inst.lattice)}</dd></div>
+    <div><dt>${/^HEG/.test(inst.model) ? "electrons" : "sites"}</dt><dd class="num">${inst.n_sites}</dd></div>
     <div><dt>boundary</dt><dd>${inst.boundary ? esc(BOUNDARY[inst.boundary] ?? "periodic") : "&mdash;"}</dd></div>
     ${params}
     <div><dt>energies</dt><dd class="num">${inst.rows.length}</dd></div>
   </dl>
-  <p class="muted">Stored as a total energy in the convention of
+  <p class="muted">${/^HEG/.test(inst.model)
+    ? `Stored as a total energy in Hartree (<a href="${RULES}#12-track-2-the-homogeneous-electron-gas">rules &sect;12</a>); quoted here as
+    <code>${perSiteLabel(inst)}</code>, the energy per electron`
+    : `Stored as a total energy in the convention of
     <a href="https://doi.org/10.1126/science.adg9774">VarBench</a>; quoted here as
-    <code>${perSiteLabel(inst)}</code>, which is what the papers report
+    <code>${perSiteLabel(inst)}</code>, which is what the papers report`}
     (<a href="${DATA}#units-and-conventions">how the conversion works</a>).</p>
 </section>
 
