@@ -622,10 +622,11 @@ ${figure(byFamily)}
     .map(r => `<div data-row="${rowId(inst, r)}">${rowCard(r, inst)}</div>`));
   if (cards.length !== linked.size) throw new Error(`figures link ${linked.size} rows, ${cards.length} found in data/: a figure is older than the data`);
   const body = `
-<h1>The best published ground-state energies</h1>
-<p class="lead">QMBL is a record book of the state of the art in quantum many-body simulation. Browse
+<h1>State-of-the-art ground-state energies</h1>
+<p class="lead">QMBL is a live record book of the state of the art in quantum many-body simulation. Browse
 through the leaderboard figures below interactively or look at the pure data in the
-<a href="/instances/">table</a>.</p>
+<a href="/instances/">table</a>. Scientists and AI systems should use the shared results to build on
+each other's work more efficiently and advance frontier science.</p>
 
 ${figures}
 <template id="fig-cards">${cards.join("\n")}</template>
