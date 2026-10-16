@@ -11,7 +11,7 @@
 
 **A live record of SOTA published ground-state energies for lattice Hamiltonians.**
 
-Organised literature for fellow researchers and AI, so that we can see the works of the wider research community at one glance.
+Organised literature for fellow researchers and AI systems. So that we can see the works of the wider research community at one glance, build on each other's work more efficiently and advance frontier science together.
 
 ## Leaderboard
 
@@ -496,8 +496,10 @@ Check [DATA.md](DATA.md) for stored units, conventions, error-metrics, and prove
 
 ## Contributing
 
-**New entries**: open an issue or a PR with: instance, number, error bar and how it
-was estimated, the `bound_type`, and the primary reference. A row is `pending` for 30
+**New entries**: use the [new result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-result.yml)
+(instance, number, error bar and how it was estimated, the `bound_type`, and the primary
+reference), or open a PR with the same. A lattice problem QMBL does not have yet goes
+through the [new instance form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-instance.yml). A row is `pending` for 30
 days and `confirmed` if no objection is unresolved.
 
 **Corrections welcome**: Open an issue against it. Be specific and technical; 
