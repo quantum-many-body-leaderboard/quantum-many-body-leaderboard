@@ -1,0 +1,84 @@
+name: New instance
+description: Propose a lattice problem QMBL does not have yet.
+title: "[new instance] "
+labels: ["new instance"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        An instance is one exact problem: Hamiltonian, cluster, boundaries, couplings and
+        sector. Energies are compared only within one instance, so each of these has to be
+        unambiguous. Add the energies themselves with the **New result** form once the
+        instance exists, or list them under Notes here.
+
+  - type: dropdown
+    id: model
+    attributes:
+      label: Model
+      options:
+        - Heisenberg
+        - J1-J2
+        - transverse-field Ising
+        - Hubbard
+        - t-V
+        - impurity
+        - other (define under Hamiltonian)
+    validations:
+      required: true
+
+  - type: textarea
+    id: hamiltonian
+    attributes:
+      label: Hamiltonian
+      description: As the source writes it, with its operator convention (S·S or σ·σ) and sign conventions.
+      placeholder: "H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj"
+    validations:
+      required: true
+
+  - type: input
+    id: cluster
+    attributes:
+      label: Lattice and cluster
+      description: Lattice, cluster shape and number of sites.
+      placeholder: "square, 10×10, 100 sites"
+    validations:
+      required: true
+
+  - type: input
+    id: boundary
+    attributes:
+      label: Boundary conditions
+      description: Per direction, and any twist or antiperiodic sign.
+      placeholder: "periodic × periodic"
+    validations:
+      required: true
+
+  - type: input
+    id: couplings
+    attributes:
+      label: Couplings
+      placeholder: "J1 = 1, J2 = 0.5"
+    validations:
+      required: true
+
+  - type: input
+    id: sector
+    attributes:
+      label: Filling and symmetry sector
+      description: Particle numbers or magnetisation, and any momentum or point-group sector the energies are in.
+      placeholder: "N_up = N_dn = 44 (n = 0.875), Sz = 0"
+
+  - type: input
+    id: reference
+    attributes:
+      label: Paper that defines it
+      description: arXiv id with version, or DOI, and where the definition is.
+      placeholder: "arXiv:2507.01856v1, Sec. II and Table I caption"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Known energies on it, an exact reference if one exists, or anything that tells it apart from an instance QMBL already has.

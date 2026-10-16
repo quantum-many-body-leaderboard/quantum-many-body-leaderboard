@@ -1,0 +1,131 @@
+name: New result
+description: Add a published ground-state energy to an existing instance.
+title: "[new result] "
+labels: ["new result"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One energy per issue. Fields marked required are what a row needs; anything else
+        you leave empty renders as `n/a` and does not block the row ([rules §3](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#3-required-fields)).
+        The instance must already exist; for a new one, use the **New instance** form first.
+
+  - type: input
+    id: instance
+    attributes:
+      label: Instance
+      description: The instance id as shown on qmbl.org or in `data/`.
+      placeholder: J1J2/square_100_P_0.5
+    validations:
+      required: true
+
+  - type: input
+    id: energy
+    attributes:
+      label: Energy as printed
+      description: Copy the number exactly as the paper prints it, with its error bar if it has one.
+      placeholder: "-0.4976939(2)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: energy_unit
+    attributes:
+      label: What the printed energy is
+      description: QMBL converts to its stored convention ([units](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/DATA.md#units-and-conventions)); this tells us from which.
+      options:
+        - per site, spin S·S convention
+        - per site, Pauli σ·σ convention
+        - total, spin S·S convention
+        - total, Pauli σ·σ convention
+        - per site (fermion model)
+        - total (fermion model)
+        - other (explain under Notes)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sigma_meaning
+    attributes:
+      label: What the error bar means
+      options:
+        - standard error of the mean
+        - standard deviation
+        - confidence-interval half-width
+        - upper bound on the error
+        - no error bar printed
+        - not stated in the paper
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sampled
+    attributes:
+      label: Is the energy a Monte Carlo estimate?
+      options:
+        - "yes"
+        - "no"
+        - not stated
+    validations:
+      required: true
+
+  - type: dropdown
+    id: bound_type
+    attributes:
+      label: bound_type
+      description: "What kind of number it is ([rules §4](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#4-bound_type)). variational: an achieved energy of a variational state (VMC, NQS, DMRG at a stated bond dimension, PEPS). projected: fixed-node, constrained-path or GFMC on a trial state. extrapolated: zero-variance or bond-dimension extrapolation. exact: exact diagonalization or sign-problem-free QMC."
+      options:
+        - variational
+        - projected
+        - extrapolated
+        - exact
+        - not sure
+    validations:
+      required: true
+
+  - type: input
+    id: method
+    attributes:
+      label: Method as published
+      description: The method string exactly as the paper prints it.
+      placeholder: "CNN-MPS (h,D,l)=(32,20,20), Marshall sign transformation"
+    validations:
+      required: true
+
+  - type: input
+    id: reference
+    attributes:
+      label: Paper
+      description: arXiv id with version, or DOI. If the paper is published, give the journal reference too; QMBL reads the journal version where one exists.
+      placeholder: "arXiv:2603.14425v1; journal, volume, page (year) if published"
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Where in the paper
+      description: Table, figure or equation, and the row.
+      placeholder: "Table 1, row 3"
+    validations:
+      required: true
+
+  - type: textarea
+    id: compute
+    attributes:
+      label: What it cost (optional)
+      description: Any of GPU-hours × device, parameter count, samples, iterations, bond dimension, wall-clock, and the energy variance if printed. Say where each number is stated.
+      placeholder: "200k parameters, 4096 samples, 15000 iterations (Supplement Table S1)"
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Symmetry sector, projections, anything that makes this number differ from others on the instance.
+
+  - type: checkboxes
+    id: own_work
+    attributes:
+      label: Authorship
+      options:
+        - label: I am an author of this paper.
