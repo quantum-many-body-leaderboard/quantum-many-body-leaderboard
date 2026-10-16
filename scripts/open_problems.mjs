@@ -133,14 +133,14 @@ const NA = '<span class="muted">n/a</span>';
 // /open-problems/table/; site.mjs wraps each in its page(). Its own helpers come in as `site`, so
 // the energies, citations and labels are written as on QMBL's Table.
 export function openProblemsPages(op, instances, site) {
-  const { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, DOI, CITE_YEAR, figureSections = "",
+  const { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, CITE_TITLE, DOI, CITE_YEAR, figureSections = "",
     searchIndex, searchWords, searchMatch, SEARCH_STOP, latticeOf, sizeBand, SIZE_BANDS } = site;
   const { targets, entries, systems } = score(op, instances);
   const n = targets.length;
   const aiBadge = a => `<span class="badge">${AI_LABELS[a]}</span>`;
-  // What the Cite button copies and the citation section prints (2026-10-09). The
-  // targets follow QMBL, so it is QMBL's concept DOI, which always resolves to the latest release.
-  const citation = `${CITE_HEAD}, QMBL: Open Problems, Zenodo (${CITE_YEAR}). https://doi.org/${DOI}`;
+  // What the Cite button copies and the citation section prints (2026-10-09). QMBL: Open Problems
+  // has no DOI of its own yet, so it cites QMBL under QMBL's own title and concept DOI (2026-10-16).
+  const citation = `${CITE_HEAD}, ${CITE_TITLE}, Zenodo (${CITE_YEAR}). https://doi.org/${DOI}`;
 
   const compute = c => {
     const h = x => Number(x).toLocaleString("en-US", { maximumFractionDigits: 1 });
@@ -246,8 +246,8 @@ ${entriesTable}` : "";
   const cite = `
 <section class="cite" id="cite">
   <h2>Citing QMBL: Open Problems</h2>
-  <p>Cite QMBL: Open Problems by QMBL's concept DOI, which always resolves to the latest release:</p>
-  <blockquote class="citation">${esc(CITE_HEAD)}, <em>QMBL: Open Problems</em>, Zenodo (${esc(CITE_YEAR)}).
+  <p>QMBL: Open Problems has no DOI of its own yet. Its targets are QMBL's open instances, so cite QMBL by its concept DOI, which always resolves to the latest release:</p>
+  <blockquote class="citation">${esc(CITE_HEAD)}, <em>${esc(CITE_TITLE)}</em>, Zenodo (${esc(CITE_YEAR)}).
   <a href="https://doi.org/${esc(DOI)}">${esc(DOI)}</a></blockquote>
   <p>Individual energies should cite the primary paper named on the row, not this site.</p>
 </section>`;
