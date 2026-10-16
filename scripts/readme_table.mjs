@@ -97,8 +97,9 @@ export function instanceLabel(inst) {
     parts.push(`n ${shown === fill ? "=" : "&asymp;"} ${shown}`);
   }
   // The Hubbard variants VarBench names by suffix keep that name in the label; their couplings
-  // (t2, V1, V2) are in params and written out on the instance page.
-  for (const v of inst.instance_id.matchAll(/_(t12|UV1V2)(?=_|$)/g)) parts.push(v[1]);
+  // (t2, V1, V2) are in params and written out on the instance page. Since 2026-10-16 several t2
+  // values share a size, so a t12 label also states t2.
+  for (const v of inst.instance_id.matchAll(/_(t12|UV1V2)(?=_|$)/g)) parts.push(v[1] === "t12" && p.t2 != null ? `t12 (t2 = ${p.t2})` : v[1]);
   return parts.join(", ");
 }
 
