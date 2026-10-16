@@ -1,0 +1,804 @@
+      Probingd-wave pairing in thet-t                                                                      ′-UHubbard model with tensor-backflow wave
+                                                                    functions
+
+                                                                  Xiao  Liang1, 2,∗
+             1Research Computing(Information Technology),  William & Mary,  Williamsburg,  Virginia 23185,  USA
+                           2Department  of  Physics,  William  &  Mary,  Williamsburg,  Virginia  23185,  USA
+
+                   Building on the recently developed tensor-backflow method, which accurately describes energies
+                and stripe states in the Fermi-Hubbard model, we investigated-wave pairing in the two-dimensional
+                t-t  ′-UHubbard model.  For the 8×8 lattice, we improve the wave function using symmetry pro-
+                jections followed by one Lanczos step, whereas for the 12×12 and 16×16 lattices, we apply one
+                Lanczos step without symmetry projection.  We focus primarily on the parameter regime with filling
+                n= 0.875, on-site repulsionU= 8 and next-nearest-neighbor hoppingt                         ′ =−0.2t, a regime in which
+                enhancedd-wave pairing has been reported.  The resulting energies are competitive with those ob-
+                tained using state-of-the-art neural quantum states.  For example, on a 16×16 lattice with periodic
+                boundary conditions, the tensor-backflow wave function after one Lanczos step without explicit sym-
+                metry enforcement achieves a relative energy difference of 4.4×10       −3    from the symmetry-preserving
+                neural  quantum  state  result.   From  the  real  space  pair  correlations,  fort    ′  =−0.2t,  we  observe
+                strongerd-wave pair correlations together with the characteristic relative sign between horizontal
+                and vertical bond-pair components.  Compared witht      ′ = 0, finite negativet ′ increases the spectral
+                weight of the corresponding pair-density matrix, which indicates the enhanced overalld-wave pair
+                fluctuations.  The leading eigenvalue is enhanced on the 8×8 lattice for both with and without sym-
+                metry projections.  For larger lattices such as 12×12 and 16×16, the leading pair-density matrix
+                spectral weight is distributed among several nearly degenerate eigenmodes rather than being con-
+                centrated in a single dominant mode.  This indicates enhanced and more broadly distributedd-wave
+                pair fluctuations, but no single eigenvalue exhibits the extensive scaling required for ODLRO.
+
+
+                     I.    INTRODUCTION                                        the effectiveness of VMC depends crucially on the qual-
+                                                                               ity of the variational wave function.  Incorporating prior
+   The Fermi-Hubbard model is a paradigmatic model for                         physical  information,  such  as  known  sign  structures  or
+studying the microscopic origin of unconventional super-                       Hamiltonian symmetries, can substantially improve opti-
+conductivity1,2. Determining its ground state is challeng-                     mization and variational accuracy.  The frustratedJ1-J2
+ing because several competing phases can be extremely                          model provides one example.  Near the maximal frustra-
+close in energy3–10.  On finite lattices, the ground state                     tionJ2 = 0.5J1, employing a prior Marshall sign rule                  17
+can also depend sensitively on system size and boundary                        significantly reduces the optimization difficulty18–20.  In
+conditions.  Therefore, to reduce the finite-size effect, the                  addition  to  incorporating  prior  sign  structure,  enforc-
+lattice size should be sufficiently large.  Thet-t    ′-UHub-                  ing  Hamiltonian  symmetries  can  reduce  the  optimiza-
+bard model is more challenging than the pure Hubbard                           tion difficulty and improve variational accuracy21.  This
+model. The next-nearest-neighbor hoppingt            ′ changes the             strategy has also proved effective for the Fermi-Hubbard
+Fermi surface and makes the ground state more sensitive                        model22–24.
+to finite-size effects.  Meanwhile, several nearly degener-                       Recently, the tensor-backflow wave function has shown
+ate phases compete near the ground state.                                      high  efficiency  and  accuracy  in  solving  the  Hubbard
+   Variational  Monte  Carlo  (VMC)  provides  a  flexible                     model25.     For  example,  combined  with  one  Lanczos
+framework for approximating many-body ground states                            step, the tensor-backflow wave function achieves energies
+and  their  energies.    Unlike  many  projector  quantum                      competitive with Transformer-based NQS calculations26,
+Monte  Carlo  approaches,  VMC  does  not  suffer  from  a                     meanwhile the method has obtained charge-density-wave
+fermionic sign problem in sampling the probability distri-                     (CDW)  and  spin-density-wave  (SDW)  with  periods  of
+bution of a prescribed variational wave function11,12; its                     1/nand 2/n, on the 16×16 lattice with periodic bound-
+accuracy instead depends on the expressiveness and op-                         ary conditions (PBC), wherenis the electron filling.  As
+timization of the ansatz.  Neural quantum states (NQSs)                        a variational wave function, the tensor-backflow is opti-
+provide  a  powerful  class  of  variational  wave  functions.                 mized by first-order-gradient method with sufficient MC
+Neural-network wave functions have achieved high accu-                         sample  number,  and  it  has  sufficient  expressive  power
+racy for a variety of strongly correlated systems, includ-                     for  a  wide  range  of  parameters  in  the  Fermi-Hubbard
+ing many-electron problems in continuous space13–16.                           model.  For example, for the case ofn= 0.875,U= 8,
+   For lattice models, an effective variational wave func-                     t′ =−0.2ton the 12×12 under PBC, the tensor-backflow
+tion   must   combine   sufficient   expressive   power   with                 has successfully obtained the width-4 stripe with the en-
+tractable optimization.  In VMC, the variational param-                        ergy lower than the Transformer NQS.
+eters are typically optimized using gradient-based meth-                          In this work, we apply the tensor-backflow method on
+ods to minimize the energy expectation value.  However,                        cases ofn= 0.875,U= 8,t                   ′ =−0.2ton square lattices
+                                                                                                                                                              2
+
+up to the size 16×16 under PBC and open boundary                                  variables has the representation ability beyond the prod-
+conditions (OBC). For the 8×8 case, we perform sym-                               uct ofη   αδ andϕ       k.  To further improve the representation
+metry projections on the tensor-backflow wave function,                           ability on backflow corrections, we consider the summa-
+followed by a Lanczos step.  The best energy achieved in                          tion index  of backflow  terms as  an additional  indepen-
+this work is -0.7441, which is 8.1×10       −4    and 8.7×10       −3             dent degree of freedom.  Thus, the single tensor is built
+higher than those achieved by the Transformer NQS: -                              as:g     rα,k,δ,s(r    α),s(r      δ)25.   The  resulting  wave  function  is
+0.744726, and the fully symmetrized Pfaffian:  -0.750623,                         represented by the Slater determinant:
+respectively.  For cases of 12×12 and 16×16, a Lanc-
+zos  step  is  applied  on  the  wave  function.   For  the  case                                             w(S) = detM              B,                          (3)
+of 16×16 under PBC, we compare energies from differ-
+ent setups of pinning fields, and we find that the width-4                        where the matrix element is built according to the back-
+stripe gives the lowest energy.  The best energy achieved                         flow summation:M                      Bi,k = Pj gri,k,j,s(r    i),s(r      j), whereiand
+in  this  work  for  the  16×16  lattice  is  -0.7408,  this  is                  jare used for labeling particles and backflow terms, re-
+6.5×10       −3    lower than the Neural Pfaffian22 and the rel-                  spectively.
+ative  energy  differences  with  respect  to  state-of-the-art                      A single full-rank tensor contains a number of varia-
+NQS results24,27 are below 4.5×10       −3  .  Furthermore, we                    tional parameters equal to the product of its dimensions.
+calculate pair correlations and investigate components of                         For a particular particle fillingn, the parameter number
+the pair correlation, for botht     ′ =−0.2tandt             ′ = 0 on all         ofgscales quadratically and cubically with lattice size for
+lattice sizes.  Fort   ′ =−0.2t, we find strongerd-wave pair                      a finite range backflow and all-site backflow, respectively.
+correlations than fort    ′ = 0, together with the character-                     However, only a subset of these parameters contributes
+istic relative sign between horizontal and vertical bond-                         to a given amplitudew(S).  The computational complex-
+pair components, such benefit oft   ′ is also demonstrated                        ity for generating onew(S) isO(QN                       3), whereQis the
+by comparing eigenvalues of pair-density matrices.  For                           number of backflow terms considered andNis the parti-
+the same lattice size, eigenvalues oft   ′ =−0.2tis gener-                        cle number.  For a lattice withMsites, there areQ=5, 9
+ally higher than the counterparts oft   ′ = 0.  However, the                      andMfor NN, next-nearest-neighbor (NNN) and all-site
+largest eigenvalue oft   ′  =−0.2tis not higher than that                         backflow, respectively.
+oft   ′ = 0 for lattices of 12×12 and 16×16.                                         In   the   conventional   Hartree-Fock   construction   in
+                                                                                  Eq.(2), the particle and orbital spin labels must match,
+         II.    TENSOR-BACKFLOW METHOD                                            resulting  in  a  block-diagonal  structure  ofM    B  in  spin
+                                                                                  space.  This restriction can limit the expressive power for
+                                                                                  systems with nontrivial spin correlations.  As the tensor
+   We  briefly  review  the  tensor-backflow  method  intro-                      representation is beyond the original backflow correction
+duced  previously25,28.   The  tensor-backflow  wave  func-                       built from Hartree-Fock orbitals, all matrix elements in
+tion  is  constructed  based  on  backflow  corrections.   In                     MBi,k  are considered regardless of spins of orbitalkand
+backflow corrections, the particle position is transformed                        particlei.
+as29:                                                                                A Hartree-Fock orbital without spin can be represented
+                 rBα  =r   α +Xηαβ[S](r       β −r   α),              (1)         by a tensor containing dimensions ofr   i andk.  Without
+                                 β                                                restricting the spin identity between the orbital and the
+                                                                                  particle,  the  unrestricted-Hartree-Fock  (UHF)  is  repre-
+wherer           α are actual particle positions andη       αβ[S] are vari-       sented by a tensor with the dimension ofg    UHFri,k,σi, where
+ational  parameters  depending  on  the  many-body  state                         σi  denotes  the  particle  spin.   By  expanding  the  UHF’s
+|S⟩.   Consequently,  the  backflow-corrected  orbital  of  a                     tensor, the remaining dimensions in the tensor-backflow
+particle onr     α: ϕ Bk (r  α) is a linear combination of orbitals               are added as:g     ri,k,σi,2,j,s(r       j), where the dimension of 2 is
+from backflow sitesr        δ29,30:                                               for distinguishing double occupation onr     i.  Because the
+                    ϕBk (r  α) = X     ηαδ[S]ϕ     k(r  δ),                 (2)   optimization cost of a UHF is low,  the tensor-backflow
+                                                                                  wave function is initialized by a UHF to reduce the opti-
+                                   rδ                                             mization cost.
+wherer           δ  denote the sites considered in backflow correc-                  The  tensor  representation  is  optimized  by  first-order
+tions.  For example, for nearest-neighbor (NN) backflow,                          gradient  descent  method,  a  parameter  in  the  tensor  is
+rδ containsr         α and the NN sites.  For all-site backflow,r    δ            updated as25,31,32:
+covers all lattice sites.  In original backflow corrections,
+for  simplicity, ηdepends  ons(r           α)  ands(r          δ)  instead  of                          xt+∆t       =x   t −sgn(G           x)d  x,                   (4)
+the full many-body state|S⟩             29,30.
+   A full-rank tensor can represent an arbitrary function                         whereG           x is the gradient of parameterx,d                       x is the step
+of  several  independent  variables.    For  the  function  of                    size. The energy and gradients are estimated by Markov-
+ηαδϕk  in the backflow correction, the independent vari-                          Chain-Monte-Carlo process:
+ables are the particle positionr            α, orbital indexk, con-
+figurations ofs(r       α) ands(r          δ).   A tensor built on these                      Gx = 2⟨E(S)O             x(S)⟩ −2⟨E(S)⟩⟨O                          x(S)⟩,       (5)
+                                                                                                                                                                  3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  Demonstration on the convergence of the pair cor-                           FIG. 2.  Energy extrapolation on the 8×8 lattice.  Red and
+relation with respect to MC sample number, for the case of                           blue  dots  denote  results  obtained  from  tensor-backflow  and
+N↑  =N   ↓  =  5  andU=  4  on  the  4×4  lattice  with  PBC,                        tensor-backflow along withTprojection,  respectively.  High
+achieved by thep= 1 wave function.  The pair correlation is                          and low energies depict results with and without one Lanczos
+defined in Eq.(9).                                                                   step.TandRdenote symmetry projections of the half-size
+                                                                                     translational invariance and the C4 rotational invariance, re-
+                                                                                     spectively.  Linear fitting is achieved with four solid dots, and
+                                                                                     the best energy obtained fromTandRprojection along with
+where   local   estimators   under   a   configuration|S⟩                            a  Lanczos  step  is  denoted  by  the  blue  star.   Although  the
+                                                                                     energy extrapolation is a demonstration of the lowest energy
+are:E(S)   =         PS′ w(S    ′)/w(S)⟨S            ′ ˆHS⟩ andO               x(S)   =achievable by the method, it shows the precision achieved by
+∂ln|w(S)|/∂x.                                                                        Transformer NQS is improvable23,26.
+   To  improve  the  energy  accuracy  of  tensor-backflow,
+subsequent methods such as symmetry projections and                                                  III.    NUMERICAL RESULTS
+a  Lanczos  step  are  applied  on  the  wave  function.   The
+wave  function  for  symmetry  projections  is  constructed                             The Hamiltonian of thet-t       ′-UHubbard model is:
+as22,23:
+                                                                                        ˆH=−t      X     (ˆc  †iσˆc  jσ + H.c.)−t          ′  X(ˆc  †iσˆc  jσ + H.c.)
+
+                                                                                                   ⟨ij⟩,σ                           ⟨⟨ij⟩⟩,σ
+                wsym(S) =   X         λGξ(  ˆT,S)w(        ˆTS),             (6)              +U  X       ˆn  i↑ ˆn  i↓ ,
+                                ˆT∈G
+                                                                                                      i
+                                                                                                                                                                (8)
+where  ˆTapplies a symmetry operation on|S⟩,ξ(              ˆT,S) is                 wheretandt                ′ are strengths for NN and NNN hoppings,
+the permutation sign from the symmetry operation and                                 respectively.  Uis  the  strength  of  on-site  interactions,
+λG is the character of the symmetry representation.  An-                             ˆc  †iσ(ˆc  iσ) creates (destroys) a particle of spinσon thei-th
+other method to improve the wave function is a Lanczos                               site, and the particle number operator ˆn  iσ = ˆc  †
+step.   It  improves  the  wave  function  by  constructing  a                       sett= 1 through our investigations.                              iσˆc  iσ.  We
+state in Krylov subspace33:                                                             To benchmark the tensor-backflow wave function, we
+                                                                                     first compare its pair correlations with exact results for
+                     |Ψ p+1 ⟩=A|Ψ         p⟩+B|Ψ        ⊥p ⟩,                  (7)   the case ofN   ↑ =N   ↓ = 5 on the 4×4 lattice with PBC      34.
+                                                                                     The pair correlation is:
+
+                                                                                                                  ⟨∆  d(d)∆   †d(0)⟩,                           (9)
+where|Ψ          ⊥p ⟩= (  ˆH−E)/σ|Ψ                 p⟩, withσ          2 the energy vari-with ∆d(d) =c       d,↑  P
+ance of|Ψ     p⟩.                                                                    sign  structuref(±e                        x)  =−f(±e              y)  =  1.   Pair  correla-δ f(δ)c       d+δ,↓     , where thed-wave bond-
+
+   Both  symmetry  projections  and  a  Lanczos  step  lead                          tion  comparisons  are  depicted  in  Tab.(I).  In  the  table,
+to  multiple  Slater  determinants  in  the  final  wave  func-                      each result of tensor-backflow is obtained by thep= 1
+tion.   However,  even  with  the  correct  kinds  of  symme-                        wave function with 1×10      7 MC sample number. For each
+tries, symmetry projection can improve energy accuracy                               pair separationd= (dx,dy), the tensor-backflow result
+when  the  wave  function  isn’t  trapped  at  local  minima.                        agrees with the exact value.  Based on Eq.(7), the num-
+Meanwhile, a Lanczos step preserves the wave function’s                              ber of determinants scales asO(N) in a wave function
+symmetry and it can improve the energy accuracy sys-                                 coefficientw  p=1  (S).   Because  the  configuration  in  each
+tematically19,25.                                                                    determinant  is  locally  changed  relative  to  the  original
+                                                                                                                                                                    4
+
+       U          Ep=1                                 (0, 0)               (1, 0)               (2, 0)               (1, 1)               (2, 1)               (2, 2)
+       2       -1.3360(2)    this work      2.068(6)           0.092(3)          -0.112(4)          0.114(4)           0.027(2)           0.178(3)
+                                 exact          2.06693            0.09223           -0.11187           0.11381            0.02840            0.17793
+       4       -1.2236(3)    this work      2.065(6)           0.086(3)          -0.093(4)          0.100(4)           0.024(3)           0.153(3)
+                                 exact          2.06345            0.08714           -0.09422           0.10013            0.02453            0.15302
+
+TABLE I. Comparisons on pair correlations obtained from this work and exact results34, on the 4×4 lattice withN          ↑ =N   ↓ = 5.
+The  pair  separation  isd=  (dx,dy).   Each  estimation  is  obtained  with  thep=1  wave  function  and  1×10                              7  MC  samples.
+Estimation errors are indicated by the last digit in the parentheses.
+
+
+                No Sym         T              R           T+R
+    Ep=0      -0.7374(4)    -0.7384(4)  -0.7383(4)  -0.7395(4)
+    Ep=1      -0.7424(3)    -0.7432(8)  -0.7431(8)  -0.7441(8)
+
+TABLE II. Energy comparisons under different kinds of sym-
+metry  projections  on  the  wave  function,  for  the  case  of
+t′  =−0.2t,U= 8 andn= 0.875 on the 8×8 lattice with
+PBC.TandRdenote symmetry projections of the half-size
+translational invariance and the C4 rotational invariance, re-
+spectively.  Estimation errors are indicated by the last digit
+in the parentheses.
+
+
+one,  only  a  few  matrix  elements  are  changed,  thus  the
+efficiency for generating onew      p=1  (S) is significantly im-
+proved by reusing matrix elements.  Because of the high
+efficiency,  the  MC  sample  number  for  each  estimation
+is  as  large  as  1×10      7,  meanwhile  the  estimation  error
+of  Eq.(9)  is  below  1×10     −3  .   Fig.(1)  demonstrates  the
+estimation  convergence  for  the  separation  of  (2,1)  and
+U= 4.
+
+
+
+                             A.8×8case
+
+   We first present results ford-wave pair correlations at
+n=  0.875,U=  8  andt                   ′  =−0.2ton  the  8×8  lat-
+tice  with  PBC.  The  tensor-backflow  wave  function  in-
+cludes NNN  backflow  corrections.   The  tensor-backflow
+wave  function  contains  516096  variational  parameters,                           FIG. 3.  Ground state patterns obtained from tensor-backflow
+based on the product of tensor dimensions.  The tensor-                              without  any  symmetry  projection  and  with  symmetry  pro-
+backflow wave function is initialized from the noninter-                             jections ofTandT+R, on the 8×8 lattice.  Left and right
+acting (U  UHF  = 0) UHF state.                                                      sided figures depict spin density:s   zi  = (n ↑i −n   ↓i )/2 and charge
+   In  this  work,  we  apply  several  post-optimization  im-                       density:n   i  =n   ↑i  +n   ↓i .   All  results  are  obtained  byp=  1
+provements  to  achieve  high  energy  accuracy,  we  apply                          wave functions.  The tensor-backflow without any symmetry
+projections  of  half-sized  translational  symmetryTand                             projection(a)(b) withTprojection(c)(d) and withT+Rpro-
+C4 rotational symmetryRon the wave function, along                                   jection(e)(f).
+with a Lanczos step. Tab.(II) depicts energy comparisons
+of various posterior optimizations.  From the table, the
+original tensor-backflow achieves energies of -0.7374 and                            Compared with the Transformer NQS energy of -0.744726
+-0.7424,  without and with a Lanczos step,  respectively.                            and the fully symmetrized Pfaffian energy of -0.750623,
+The symmetry projection of eitherTorRimproves the                                    our  best  energy:  -0.7441,  is  higher  by  8.1×10       −4    and
+energy accuracy, and the energy after a Lanczos step is                              8.7×10       −3  , respectively.
+near -0.743.  Energies are similar forRprojections with                                  Fig.(2) demonstrates the energy extrapolation for the
+λG  =±1,  here  we  use  theRprojection  withλ                        G  =  1.       8×8 case.  In the figure,TandRdenote symmetry pro-
+The best energy -0.7441 is achieved with symmetry pro-                               jections of the half-size translational invariance and the
+jections  of  bothTandRalong  with  a  Lanczos  step.                                C4 rotational invariance, respectively. For both with and
+                                                                                                                                                            5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.d-wave pair correlations achieved by different kinds of wave functions on the 8×8 lattice.  Definitions ofTandRare
+the same as Fig.(2).  dy and dx depict pair separations along directions perpendicular to and parallel to the stripe in Fig.(3),
+respectively.  (a,b)Thep=0 andp=1 tensor-backflow states yield similar pair correlations.  TheTprojection produces negligible
+change relative to the unprojectedp=0 state.  Pair separations nearL/2 are detailed in insets.  The pair correlation is nonzero
+under the separation dy =L/2, but it decreases to zero under dx =L/2.  After theRprojection, the pair correlation restores
+rotational symmetry along both dx and dy.  (c-f)The eight components defined in Eq.(14) under pair separations ofL/2 and
+L/2−1 along x and y axes.
+
+
+without a Lanczos step, energies achieved with symme-                            peaks  atk    y  =  3π/4,  indicating  the  width-4  stripe  or-
+try projections are lower than those without symmetry                            der.  Meanwhile,  symmetry projections redistribute the
+projections.  The energy extrapolation is just a demon-                          spectral weights thus moderately reduce the peaks.
+stration of the method, and the extrapolated energy at                               Based on ground state results,  we investigated-wave
+zero variance is estimated as:  -0.7455.                                         pair correlations of wave functions with different poste-
+   Fig.(3)  depicts  ground  state  patterns  of  wave  func-                    rior optimizations on the 8×8 lattice with PBC. As de-
+tions with different posterior optimizations.  All results                       picted in Fig.(3)(a)(b), the tensor-backflow wave function
+in the figure are obtained byp= 1 wave functions.  The                           produces the width-4 stripes in the ground state pattern,
+ground state pattern of the tensor-backflow without any                          thus it lacks translational and rotational invariances. We
+symmetry  projection  is  depicted  in  Fig.(3)(a)(b),  with                     compare how projections of half-size translational invari-
+width-4 stripes obtained successfully.  A half-size trans-                       ance and C4 rotational invariance can affect thed-wave
+lational  symmetry  projectionTreduces  the  spin  den-                          pair  correlations.   Thes/d-wave  pair-field  operator  on
+sity meanwhile preserves the charge density, depicted in                         siter      i is22,32:
+Fig.(3)(c)(d).   The  symmetry  projection  of  both  half-
+size translational invarianceTand C4 rotational invari-                                           ∆s,d(r  i) = 1
+anceRreduces the spin density to nearly uniform mean-                                                            2[A ex(r  i)±A     ey(r  i)],           (10)
+while  significantly  reduces  the  charge  density,  depicted                   wheree           x,y is the unit vector along x/y-axis andA       δ(r  i) =
+in Fig.(3)(e)(f).  The results of both energy accuracy and                       P                                         -wave pair correla-
+ground state patterns demonstrate that symmetry pro-                                 ± cri,↑ cri±δ,↓   −c   ri,↓ cri±δ,↑   .  Thes/d
+jections can improve the tensor-backflow wave function                           tion is defined as22,32:
+on the 8×8 lattice, meanwhile a Lanczos step can sig-                                Ps,d(r  i,r j) =⟨∆    †
+nificantly improve the energy accuracy.                                                                    s,d(r  i)∆s,d(r  j) + ∆s,d(r  i)∆†s,d(r  j)⟩.
+   Spin structure factorsS(k                 x =π, k   y) for various kinds                                                                             (11)
+of  wave  functions  are  depicted  in  Fig.(11)(a),  with  the                  By definition, Eq.(11) can be expanded to eight terms in
+definition:S(k) =                              1M2 Pij eik·(r      i−r   j)szi szj, wheres           zi  is de-total, with four terms in the format ofA   †δ1Aδ2  and four
+fined in Fig.(3).  From the figure, spin structure factors                       terms in the format ofA   δ1A†δ2, whereδ           1 =e   x, ey andδ       2 =
+                                                                                                                                                               6
+
+ex, ey.   Pair  correlations  for  parallel  and  perpendicular                    projection ofT+Rhas similar results to the projection
+pairs are withδ         1 =δ   2 andδ       1 ̸=δ   2, respectively.               ofR.
+   In  this  work,  we  consider  the  translational  invariant                       Fig.(4)(c)(d)(e)(f) depict the eight components defined
+definition of thed-wave pair correlation, where the cor-                           in Eq.(14), for various kinds of wave functions and pair
+relation  under  a  pair  separationdis  averaged  on  the                         separations on the 8×8 lattice.  For the pair separation
+whole lattice:                                                                     of dy  =L/2,  whereLis the lattice side length,  thed-
+                                   X                                               wave bond-sign structure is clearly shown in Fig.(4)(c).
+                 Pd(d) =      1M        Pd(r  i,r i +d),             (12)          From the tensor-backflow wave function for bothp= 0
+                                  i∈M                                              andp=  1,  because  of  the  separation  ofL/2  on  PBC,
+wheredis  the  pair  separation  andMis  the  total  site                          the  pair  components  satisfy  the  half-lattice  translation
+number. To reveal the bond-sign structure ofd-wave pair                            relations:K1 =K2,K3 =K4,K5 =K8 andK6 =K7.
+correlation, we consider parallel and perpendicular pairs                          Meanwhile, thed-wave bond-sign structure is shown by
+in thed-wave pair correlation defined in Eq.(12):                                  K1≈ −K5,K2≈ −K6,  etc.   That is,  horizontal and
+                                  X                                                vertical bond components have opposite signs.  For the
+      C1(δ       1, δ2,d) =       1    A†                                          pair separation of dy =L/2−1 depicted in Fig.(4)(d),
+                           4M            δ1(r  i)A  δ2(r  i +d),                   despite the  lack of  half-size translational invariance for
+                                 i∈M                                    (13)       pair components, nonzerod-wave pair correlation is also
+                                  X                                                obvious.  Fig.(4)(e) depicts the pair separation of dx =
+      C2(δ       1, δ2,d) =       14M  Aδ1(r  i)A †δ2(r  i +d),                    L/2.  From bothp= 0 andp= 1 tensor-backflow wave
+                                 i∈M
+and the eight components fromK1 toK8 are defined:                                  functions,  all  eight  components  are  close  to  zero  when
+                                                                                   dx =L/2.  Fig.(4)(f) depicts the pair separation of dx =
+     K1/2 =C1/2(e                      x, ex),  K3/4 =C1/2(e                        y, ey),L/2−1.   Local  nonzerod-wave  pair  correlation  exists
+     K5/6 =C1/2(e                      x, ey),  K7/8 =C1/2(e                        y, ex),       (14)based  on  bothp=  0  andp=  1  tensor-backflow  wave
+                                                                                   function.   Meanwhile  the  projection  ofRsymmetrizes
+where components of 1, 3, 5, 7 have the form ofA   †Aand                           the pair correlation along dx and dy.  Note that within
+components of 2, 4, 6, 8 have the form ofAA   †.  Bonds                            theRprojection, a component under the same separation
+in  components  of  1,  2,  3,  4  are  parallel  to  each  other                  length are different along dx and dy.  For example,K1
+and  those  in  components  of  5,  6,  7,  8  are  perpendicu-                    for dx = 3 corresponds toK3 for dy = 3 after the C4
+lar  to  each  other.   Thed-wave  pair  correlation  defined                      rotational symmetry.
+in Eq.(12) is obtainable through the eight components:
+P          f(i)  =±1  for  the  first  four  and  the
+   i f(i)Ki,  where                                                                                      B.12×12,16×16case
+last four components, respectively.
+   On the 8×8 lattice, we compare components in thed-                                 For  the  case  ofn=  0.875,U=  8,t                   ′  =−0.2t on
+wave pair correlation for various kinds of wave functions                          the 12×12 lattice with PBC. The tensor-backflow wave
+in Fig.(4).  Each estimation in the figure is achieved with                        function  used  in  this  work  was  optimized  in  the  previ-
+the MC sample number in the magnitude of 4.6×10         5.                         ous literature25.  The wave function was initialized with
+In the figure, we consider tensor-backflow wave functions
+without and with a Lanczos step, half-size translational                           UUHF  = 4, and the converged energies were -0.7370(3)
+symmetry projectionT, C4 rotational symmetry projec-                               forp=  0  and  -0.7419(2)  forp=  1.    In  contrast  to
+tionRand symmetry projections of bothTandR.  In                                    the symmetry-preserving NQS result -0.744327, the rel-
+the  figure,  all  wave  functions  within  symmetry  projec-                      ative energy difference ofp=  1 is 3.2×10            −3  .   On the
+tions are without a Lanczos step.  dx and dy depict the                            12×12 lattice, energies oft         ′ =−0.2tare -0.7369(5) and
+pair separation in Eq.(12) and Eq.(13) are along the x-                            -0.7370(5) after theRprojection withλ                  G =±1, respec-
+axis and y-axis, respectively.                                                     tively.  Furthermore, for the 12×12 lattice, the weight
+   d-wave pair correlations for pair separations along dy                          of a 90-degree rotated configuration|w                          p=1  ( ˆTS)|is much
+and  dx  are  depicted  in  Fig.(4)(a)(b).   From  the  insets,                    smaller than the original one|w        p=1  (S)|, thus configura-
+based  on  bothp=  0  andp=  1  wave  functions,  the                              tions around|        ˆTS⟩are neglected when the MC sampling
+tensor-backflow  state  exhibits  a  nonzero  long-distance                        starts from configurations near|S⟩.  Spin structure fac-
+pair  correlation  along  dy,  whereas  the  correlation  de-                      torsS(k           x =π, k   y) for the 12×12 lattice are depicted in
+creases  toward  zero  along  dx,  reflecting  the  broken  ro-                    Fig.(11)(b).  Because of the side length 12,S(k) doesn’t
+tational  symmetry  of  the  stripe  state  in  Fig.(3)(a)(b).                     exactly peak atk    y  = 3π/4, however it peaks at nearest
+dy and dx depict pair separations along directions per-                            allowed momentumsk         y = 2π/3,5π/6.
+pendicular to and parallel to the stripe in Fig.(3), respec-                          We investigate thed-wave pair correlations for cases of
+tively.  From the insets, the projection of half-size trans-                       t′ =−0.2tandt             ′ = 0 on the 12×12 lattice under PBC
+lational  invariance  doesn’t  change  thed-wave  pair  cor-                       within the symmetry broken butp= 1 wave functions.
+relations.  Meanwhile,  the C4 projection approximately                            Fig.(5) depicts the pair correlations and components un-
+halves the correlation along dy and generates an equiv-                            der various pair separations fort    ′  =−0.2tandt                 ′  = 0.
+alent correlation along dx.  Along both dy  and dx,  the                           Each estimation in the figure is obtained by thep= 1
+                                                                                                                                                                          7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.  For cases ofn= 0.875,U= 8,t                 ′ =−0.2tandt               ′ = 0 on the 12×12 lattice with PBC. dx and dy depict pair separations
+along directions parallel and perpendicular to the stripe, respectively.  Under various pair separations,d-wave pair correlations
+(a) and eight components of thed-wave pair correlation (b).  All results are obtained withinp= 1 wave functions, and the MC
+sample number for each estimation is 4.6×10            5.
+
+                                                PF1                    PF2                    PF2                    PF3                    PF3
+                         UUHF                   4                        4                        0                        4                        4
+                    Step Number          2484                   2152                   2020                   1925                   9013
+                         Ep=0              -0.7342(2)          -0.7351(2)          -0.7349(7)          -0.7351(7)          -0.7360(7)
+                         Ep=1              -0.7396(1)          -0.7400(1)          -0.7400(1)          -0.7401(2)          -0.7408(1)
+
+TABLE III. Energy results for the case ofn= 0.875,U= 8,t                ′ =−0.2ton the 16×16 lattice with PBC, under various pinning
+fields (PF) and initialU           UHF .U UHF  is the interaction strength in the initial UHF. Step number depicts the energy optimization
+step number after the pinning field is removed.  Estimation errors are indicated by the last digit in the parentheses.
+
+
+                                                                                         lations.  Fig.(5)(b) depicts the eight components defined
+                                                                                         in Eq.(14), fort    ′ =−0.2t.  From the figure, the nonzero
+                                                                                         pair correlation is accompanied by the expectedd-wave
+                                                                                         bond-sign structure at the largest pair separation along
+                                                                                         dx.  Meanwhile, the bond sign structrue varies at other
+                                                                                         pair separations.  Along dy, where zero pair correlation
+                                                                                         is expected from Fig.(5)(a), all components are close to
+                                                                                         zero.
+                                                                                            We  continue  investigating  cases  ofn=  0.875,U=
+                                                                                         8,t   ′  =−0.2ton  the  16×16  lattice  with  PBC.  Unlike
+                                                                                         the 8×8 and 12×12 lattices, the tensor-backflow wave
+                                                                                         function  requires  additional  pinning  fields  to  guide  the
+                                                                                         optimization.   We  find  that  the  optimization  is  prone
+FIG. 6.  Energy convergences for cases ofn= 0.875,U= 8,                                  to becoming trapped in local minima even with various
+t′  =−0.2ton  the  16×16  lattice  with  PBC,  under  various                            UUHF .  To achieve the best energy, we compare energies
+pinning  fields  (PF)  and  initialU           UHF .   Step  number  in  the             under various setups of pinning fields.  The pinning fields
+horizontal axis depicts the energy optimization step number                              are applied by:
+after the pinning field is removed.
+                                                                                                             ˆHPF  =  ˆH+   X         hi(n ↑i −n   ↓i ),             (15)
+
+                                                                                                                               i∈PF
+wave function within 4.6×10         5 MC samples. Here dx and
+dy denote pair separations along the x and y directions,                                 where   ˆHis  the  original  Hamiltonian  defined  in  Eq.(8)
+respectively. In Fig.(5)(a),d-wave pair correlations along                               andh       i  defines the pinning fields.  In this work we con-
+dx and dy are different because of the symmetry broken                                   sider three kinds of pinning fields, denoted as PF1, PF2
+state.  Fort   ′ =−0.2t, nonzerod-wave pair correlation is                               and  PF3.    For  PF1,h         i  =  0.25×(−1)                ix  fori     y  =  2
+generated along dx.  However, pair correlations fort    ′ = 0                            andh       i   =   0.25×(−1)                ix+1  fori     y   =   14.    For  PF2,
+are close to zero along both dx and dy.   This provides                                  hi = 0.25×(−1)                ix fori     y = 2,10 andh          i = 0.25×(−1)                ix+1
+evidence that negativet  ′ enhances thed-wave pair corre-                                fori     y = 6,14.  For PF3,h            i = 0.25×(−1)                ix  fori     y = 1,9
+                                                                                                                                                          8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.  Ground state patterns for cases ofn= 0.875,U= 8,t              ′ =−0.2ton the 16×16 lattice, under various pinning fields
+(PF) and boundary conditions.  Each result is obtained by thep= 1 wave function with the MC sample number of 10           5.  Under
+PBC, results from PF1, PF2 and PF3 are depicted by (a)(b), (c)(d) and (e)(f), respectively.  Results of PF3 are obtained from
+the energy ofE   p=1   =−0.7408.  For results of OBC, the optimization starts from the wave function converged for PF3 under
+PBC, and the converged energy isE   p=1   =−0.7097(1).
+
+
+andh       i = 0.25×(−1)                ix+1  fori     y  = 5,13.  PF2 and PF3  are obtained by the wave function within the step num-
+differ  only  by  a  translation  along  dy.   After  the  UHF                  ber  about  2000.   Meanwhile,  the  result  of  PF3(e)(f)  is
+is  optimized,  the  pinning  fields  are  applied  during  the                 obtained  by  the  wave  function  within  the  step  number
+optimization  steps,  where  the  MC  sample  each  step  is                    9013.  However, ground state patterns of the step num-
+O(4.5×10              4).   After  several  thousands  of  optimization         ber of 1925 and 9013 are similar for PF3. From the figure,
+steps,  the  ground  state  pattern  according  to  the  pin-                   even with the PF1, a width-4 stripe order is in the devel-
+ning  fields  is  established.   Then,  the  pinning  fields  are               opment.  For PF2 and PF3, width-4 stripe order is suc-
+removed and optimizations are continued with approxi-                           cessfully established.  We also transfer the wave function
+mately 4.5×10         5 MC samples used at each optimization                    converged under PF3 to OBC(g)(h), and the converged
+step.                                                                           energy  isE   p=1    =−0.7097.   From  the  figure,  width-4
+   Tab.(III) denotes how converged energies are sensitive                       stripe order is preserved in OBC, and the ground state
+to pinning fields,U           UHF  and optimization step number.                is  adjusted  according  to  the  boundary  condition.   Spin
+In the table, step number denotes optimization steps used                       structure  factorsS(k                 x  =π, k   y)  for  the  16×16  lattice
+for converging the energy after the pinning fields are re-                      are depicted in Fig.(11)(c).  From the figure, all cases of
+moved.  Energy convergences after removing the pinning                          PF1, PF2, PF3 and OBC have the peak atk    y  = 3π/4,
+fields  are  depicted  in  Fig.(6).   From  the  Tab.(III)  and                 indicating the width-4 stripe order.
+Fig.(6), PF1 leads to the highest energy.  Both PF2 and                            Fig.(8) depicts thed-wave pair correlations and com-
+PF3  give  similar  energies  after  a  similar  step  number,                  ponents for the 16×16 lattice.  In the figure, all results
+regardless  of  theU      UHF .   Furthermore,  the  energy  ac-                are obtained byp= 1 wave functions except the case of
+curacy  can  be  further  improved  by  increasing  the  step                   PF3 withTprojection.  Comparisons betweent              ′ =−0.2t
+number.  As depicted in the figure, for the case of PF3                         andt      ′  = 0 are depicted in Fig.(8)(a).  From the figure,
+andU       UHF  =  4,  increasing  the  step  number  from  1925                for the case oft   ′ = 0, pair correlations decrease to zero
+to 9013 further decreases theE      p=1   from -0.7401(2) to -                  in both dx and dy, thus we find no evidence for robust
+0.7408(1), meanwhile, the energy ofE   p=0   =−0.7360(7)                        long-distanced-wave pairing correlations at this lattice
+corresponds  to  the  Neural  Pfaffians22.   Therefore,  the                    size.  For the case oft   ′ =−0.2t, nonzero pair correlations
+energy  can  be  further  lowered  by  continuing  the  opti-                   exist under the largest pair separation along dx.  Com-
+mization.  This observation is consistent with the large                        ponents defined in Eq.(14) for dx =L/2 are depicted in
+numbers of optimization steps employed in recent NQS                            Fig.(8)(c)(d).  From Fig.(8)(c),d-wave bond-sign struc-
+calculations26,27.                                                              ture  are  generated  for  both  PF1  and  PF2.   Although
+   Fig.(7) depicts ground state patterns achieved under                         components  of  PF1  and  PF2  have  the  opposite  global
+various  kinds  of  pinning  fields.   Each  spin  density  and                 sign.   Fig.(8)(d)  depicts  results  of  PF3  and  compares
+charge density in the figure is obtained byp= 1 wave                            the components to the case oft   ′  = 0.  Because pinning
+functions. In the figure, results PF1(a)(b) and PF2(c)(d)                       fields of PF2 and PF3 differs only by a translation along
+                                                                                                                                                              9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.d-wave pair correlations achieved by different kinds of wave functions on the 16×16 lattice.  dy and dx depict pair
+separations along directions perpendicular to and parallel to the stripe in Fig.(7), respectively.  All results are obtained using
+p= 1 wave functions, except for the PF3 state withTprojection.  (a)d-wave pair correlations under various pair separations,
+fort    ′ =−0.2 andt             ′ = 0.  (b)d-wave pair correlations along dx and dy for OBC. (c)(d)Components of pair correlations under
+the largest pair separation along dx.  Results oft   ′ = 0 are denoted by green dots without errorbars for visibility.
+
+
+dy,d-wave components from PF2 and PF3 are similar.                                From  Fig.(7)(g)(h)  and  Fig.(11)(c),  the  width-4  stripe
+For comparisons, components fort    ′  = 0 are denoted in                         order is preserved under OBC. Fig.(8)(b) depictsd-wave
+Fig.(8)(d) without errorbars for visibility.  From the fig-                       pair correlations for OBC. Different from PBC, pair cor-
+ure, all components oft   ′ = 0 are close to zero, matching                       relations are close to zero under largest pair separations
+the zerod-wave pair correlations in Fig.(8)(a).                                   along both dx and dy for OBC.
+   The  pair  components  in  Eq.(14)  are  difficult  to  con-
+verge for the 16×16 lattice, as they require a large MC                              C.    Pair structure factor and pair-density matrix
+number.   Convergence of pair components are depicted                                                            eigenvalues
+in  Fig.(12).    In  the  figure,  under  the  pair  separation
+dx  =L/2,  each  estimation  is  obtained  by  thep=  1
+wave-function, 829440 and 645120 MC samples are used                                 Beyond  the  real-space  bond-sign  analysis,  we  inves-
+fort    ′ =−0.2tandt             ′ = 0, respectively.  From the figure,           tigate  whether  the  tensor-backflow  states  exhibit  off-
+d-wave bond-sign structure is revealed for thet       ′ =−0.2t                    diagonal long-range order (ODLRO)35 by examining the
+case.   However,  fort    ′  =  0,  all  components  are  close  to               pair structure factor and the eigenvalue spectrum of the
+zero.                                                                             pair-density matrix on 8×8, 12×12 and 16×16 lattices.
+   We study the case of OBC to investigated-wave pair                                To determine the type of the ground state, we calculate
+correlations  under  larger  pair  separations.   To  preserve                    the pair structure factor36:
+the width-4 stripe order, the wave function is transferred                                                 X
+from the case of PF3 under PBC, and it has been opti-                                    Sd(k) =       1M2      eik·(r      i−r   j)⟨∆ †d(r  i)∆d(r  j)⟩,       (16)
+mized for 1324 steps.   The final converged energies are                                                    ij
+Ep=0   =−0.7048(7) andE                 p=1   =−0.7097(1).  For OBC,
+instead of averagingd-wave pair correlations on the whole                         and eigenvalues of the pair-density matrix37:
+lattice denoted in Eq.(12), there arei      x ∈[3,14], i             y  = 3
+for dy∈[3,11] andi                   x  = 3, i  y ∈[3,14] for dx∈[3,11].                                  Pij =⟨∆    †d(r  i)∆d(r  j)⟩,                   (17)
+                                                                                                                                                         10
+
+                                                                                tions  improve  the  variational  energy  effectively,  largest
+                                                                                eigenvalues with and without symmetry projections are
+                                                                                similar.  For the 8×8 lattice, we evaluate thet          ′ = 0 state
+                                                                                using NN backflow (Q=5) and NNN backflow (Q=9) and
+                                                                                the resulting spectra are similar, indicating that the en-
+                                                                                hanced  pairing  spectrum  att   ′  =−0.2t is  not  simply
+                                                                                caused by the larger backflow range.
+                                                                                   On larger lattices such as 12×12 and 16×16, the largest
+                                                                                eigenvalue oft   ′ =−0.2tis not higher than that oft              ′ = 0.
+                                                                                However, near the largest eigenvalue oft   ′  =−0.2t, the
+FIG. 9.  Pair structure factors fork     y = 0(a) andk       x = 0(b) on        d-wave pair spectral weight is distributed among several
+8×8, 12×12 and 16×16 lattices, each result is obtained by                       nearly degenerate leading eigenmodes rather than being
+thep= 0 wave function.                                                          concentrated as strongly in a single dominant eigenmode,
+                                                                                suggesting a larger number of nearly degenerate leading
+                                                                                d-wave pair modes fort      ′  =−0.2t.  Similar to the 8×8
+                                                                                case,  the  leading  part  of  the  pair-density  matrix  spec-
+                                                                                trum  is  generally  shifted  toward  larger  eigenvalues  for
+                                                                                t′  =−0.2t, indicating strongerd-wave pair correlations
+                                                                                distributed among several modes.
+                                                                                   In  Fig.(10),  each  matrix  element  is  estimated  using
+                                                                                115200 MC samples.  The resulting spectra show consis-
+                                                                                tent  qualitative  trends  among  independently  optimized
+                                                                                wave  functions.   However,  we  do  not  use  small  differ-
+                                                                                ences  between  individual  nearly  degenerate  eigenvalues
+                                                                                as  quantitative  evidence.   ODLRO  requires  the  largest
+                                                                                eigenvalue of the pair-density matrix to scale extensively,
+                                                                                λmax ∝Min the thermodynamic limit        35,37.  Based on
+                                                                                Fig.(10),  the  leading  eigenvalue  does  not  show  growth
+                                                                                proportional to the system size over the lattice sizes stud-
+                                                                                ied.   Based  on  Fig.(8)(b),  thed-wave  pair  correlation
+FIG. 10.  Eigenvalue spectra of thed-wave pair-density ma-                      decreases to zero at large pair separations under OBC,
+trices for the 8×8, 12×12 and 16×16 lattices.  Each result                      thus the nonzero pair correlation under PBC should not
+is obtained by thep= 0 wave function.                                           be  interpreted  as  robust  ODLRO.  Both  Fig.(10)  and
+                                                                                Fig.(8)(b) suggest enhancedd-wave pairing fluctuations
+                                                                                rather than established superconducting ODLRO.
+where ∆d is defined in Eq.(10).  We verify on 8×8 that
+the Lanczos step substantially improves the energy while
+leaving the pair correlations nearly unchanged.  This mo-                             IV.    DISCUSSIONS AND CONCLUSIONS
+tivates evaluating the computationally more demanding
+pair-density  matrix  usingp=  0  wave  functions  on  the                         In this work, we apply the tensor-backflow wave func-
+larger lattices. To reduce the computational cost, we cal-                      tion combined with various posterior optimization meth-
+culate the pair structure factor byp= 0 wave functions,                         ods  to  investigate  thed-wave  superconductivity  in  the
+each matrix element⟨∆   †d∆d⟩is estimated using 115200                          t-t  ′-UHubbard  model  on  square  lattices.   We  compare
+MC samples.                                                                     cases of botht     ′ =−0.2tandt                 ′ = 0 on the same square
+   Fig.(9)(a)(b) depict pair structure factors fork     y  = 0                  lattice to investigate the effects oft   ′ =−0.2t.
+andk       x = 0, respectively.  From the figure, pair structure                   We obtain energies competitive with current state-of-
+factors are centered atk=  0 for all lattice sizes,  indi-                      the-art NQS results.  On the 8×8 lattice, we use sym-
+cating  that  the  dominant  pairing  correlations  occur  at                   metry projections along with a Lanczos step to improve
+zero center-of-mass momentum.  However, the peak does                           the  energy  accuracy.   The  best  energy  achieved  in  this
+not visibly sharpen with increasing lattice size over the                       work fort    ′ =−0.2tis -0.7441.  The relative energy dif-
+sizes studied, consistent with predominantly short-range                        ferences  are  8.1×10       −4    and  8.7×10       −3    compared  with
+pairing correlations.                                                           Transformer NQS26 and fully symmetrized Pfaffian23, re-
+   Besides  the  pair  structure  factor,   Fig.(10)  depicts                   spectively.   On  the  12×12  lattice,  we  use  the  tensor-
+eigenvalues  of  pair-density  matrices  fort    ′  =−0.2tand                   backflow  wave  function  optimized  in  the  previous  lit-
+t′ = 0 on 8×8, 12×12 and 16×16 lattices. From the fig-                          erature25,  within  the  energyE            p=1    =−0.7419(2),  and
+ure, on the 8×8 lattice, the leadingd-wave pair-density                         the relative energy difference to the symmetry-preserving
+matrix eigenvalue is enhanced fort    ′ =−0.2trelative to                       NQS result is 3.2×10       −3  .  On the 16×16 lattice, we opti-
+t′ = 0.  For the 8×8 lattice, although symmetry projec-                         mize the wave function using pinning fields. We compare
+                                                                                                                                                          11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 11.  Spin structure factors for cases ofn= 0.875,U= 8,t                  ′ =−0.2ton lattices of 8×8(a), 12×12(b) and 16×16(c).
+Unless otherwise specified, all results are obtained under PBC.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 12.  Convergence of pair correlation components defined in Eq.(14) under dx =L/2 fort          ′  =−0.2tandt               ′  = 0 on the
+16×16 lattice.  All results are obtained byp= 1 wave-functions.  PF2 is employed for initializing thet              ′ =−0.2tcase.
+
+
+states obtained with different pinning field protocols at                        pair structure factors, and pair-density matrix spectra for
+comparable optimization stages. and find that the width-                         t′ =−0.2tandt                 ′ = 0.  On the 8×8 lattice, the leading
+4  stripe  order gives  the  lowest  energy,  and  the  relative                 pair-density matrix eigenvalue is enhanced fort    ′ =−0.2t.
+energy difference is 4.4×10       −3   relative to the symmetry-                 On the 12×12 and 16×16 lattices, negativet              ′ enhances
+preserving NQS. Furthermore, we show that the energy                             the leading portion of the pair-density matrix spectrum,
+accuracy can be improved by simply increasing optimiza-                          with the spectral weight distributed among several nearly
+tion steps, however the qualitative stripe pattern remains                       degenerate  modes.   Because  thep=  0  wave  function
+unchanged.                                                                       contains no explicit pairing determinant or pairing func-
+   In  this  work,  although  a  Lanczos  step  substantially                    tion, these enhancedd-wave correlations arise from the
+lowers the energy,  comparison of thep=  0 andp=  1                              configuration-dependent backflow structure of the varia-
+states shows that the qualitatived-wave pairing behav-                           tional state.  Overall, negativet  ′  enhancesd-wave pair-
+ior  is  already  captured  by  the  original  tensor-backflow                   ing fluctuations in the width-4 striped state, but neither
+state.  This illustrates that, in a regime containing sev-                       the pair structure factor nor the finite-size scaling of the
+eral nearly degenerate competing states, improvements in                         pair-density matrix spectrum establishes superconduct-
+variational energy do not necessarily lead to equally large                      ing ODLRO up to 16×16.
+changes in order-sensitive observables.  It is therefore im-
+portant to compare both energies and order-sensitive ob-
+servables across competing variational states.
+   We have compared real-spaced-wave pair correlations,
+                                                                                                                                                        12
+
+               V.    ACKNOWLEDGEMENT                                                 Appendix A    SPIN STRUCTURE FACTORS
+
+                                                                                   Fig.(11)  depicts  spin  structure  factorsS(k                 x  =π, k   y)
+                                                                                for cases ofn= 0.875,U= 8,t                   ′ =−0.2ton lattices of
+                                                                                8×8(a), 12×12(b) and 16×16(c).p= 0 andp= 1 wave
+                                                                                function are used for cases with and without symmetry
+                                                                                projections, respectively.
+
+
+                                                                                           Appendix B    PAIR CORRELATION
+                                                                                         CONVERGENCE ON16×16LATTICE
+
+   X.  Liang  thanks  the  inspirational  discussion  with                         Fig.(12)  depicts  the  convergence  of  pair  correlation
+Daniele  Guerci  and  Shiwei  Zhang.   X.  Liang  discussed                     components defined in Eq.(14) fort    ′ =−0.2tandt                 ′ = 0
+with GPT-5.6 Sol and Gemma4 on concepts and defini-                             on  the  16×16  lattice.    All  results  are  obtained  by
+tions in the manuscript preparation.  All equations were                        p=  1 wave-functions.   PF2 is employed for initializing
+derived by hand but verified by GPT-5.6 Sol.  The au-                           thet     ′ =−0.2tcase.  Because of PBC, four components
+thor acknowledges William & Mary Research Computing                             are  shown  for  eacht  ′  case.   From  the  figure,  we  use  a
+and the Texas Advanced Computing Center (TACC) at                               large MC sample number to reveal bond-sign structures
+The University of Texas at Austin for providing compu-                          fort    ′ =−0.2tandt                 ′ = 0.  Fort   ′ =−0.2t,d-wave pairing
+tational  resources  that  have  contributed  to  the  results                  bond-sign structure is revealed.  However fort    ′ = 0, all
+reported within this paper.                                                     components are close to zero.
+
+
+
+
+
+
+
+ ∗  xliang06@wm.edu                                                              9  S.  Sorella,  Systematically  improvable  mean-field  varia-
+ 1  H. Xu, C.-M. Chung, M. Qin, U. Schollw¨ock, S. R. White                         tional ansatz for strongly correlated systems:  Application
+   and S. Zhang, Coexistence of superconductivity with par-                         to the Hubbard model, Phys. Rev. B107, 115133 (2023)
+   tially  filled  stripes  in  the  Hubbard  model,  Science384,               10  C.  N.  Varney,  C.-R.  Lee,  Z.  J.  Bai,  S.  Chiesa,  M.  Jarrel
+   eadh7691 (2024)                                                                  and R. T. Scalettar, Quantum Monte Carlo study of the
+ 2  F. ˇSimkovic IV, R. Rossi, A. Georges and M. Ferrero, Ori-                      two-dimensional fermion Hubbard model, Phys. Rev. B80,
+   gin and fate of the pseudogap in the doped Hubbard model,                        075116 (2009)
+   Science385, ade9194 (2024)                                                   11  E.  Y.  Loh  Jr.,  J.  E.  Gubernatis,  R.  T.  Scalettar,  S.  R.
+ 3  J.  P.  F.  LeBlanc,  A.  E.  Antipov,  F.  Becca,  I.  W.  Bulik,              White, D. J. Scalapino and R. L. Sugar, Sign problem in
+   G. K.-L. Chan, C.-M. Chung, Y. Deng, M. Ferrero, T. M.                           the numerical simulation of many-electron systems, Phys.
+   Henderson,  C. A. Jimenez-Hoyos, et. al. (Simons Collab-                         Rev. B41, 13 (1990)
+   oration on the Many-Electron Problem), Solutions of the                      12  M.  Troyer  and  U.-J.  Wiese,   Computational  Complex-
+   Two-Dimensional  Hubbard  Model:  Benchmarks  and  Re-                           ity and Fundamental Limitations to Fermionic Quantum
+   sults from a Wide Range of Numerical Algorithms, Phys.                           Monte  Carlo  Simulations,  Phys.  Rev.  Lett.94,  170201
+   Rev. X5, 041041 (2015)                                                           (2005)
+ 4  B.-X.  Zheng,  C.-M.  Chung,  P.  Corboz,  G.  Ehlers,  M.-P.               13  D. Pfau, J. S. Spencer and Alexander G. D. G. Matthews,
+   Qin, R. M. Noack, H. Shi, S. R. White, S. Zhang and G.                           Ab initiosolution of the many-electron Schr¨odinger equa-
+   K.-L. Chan, Stripe order in the underdoped region of the                         tion  with  deep  neural  networks,  Phys.  Rev.  Research2,
+   two-dimensional Hubbard model, Science358, 1155-1160                             033429 (2020)
+   (2017)                                                                       14  A. Avdoshkin, M. Geier and L. Fu, Integrated neural wave
+ 5  B.-X.  Zheng  and  G.  K.-L.  Chan,Ground-state  phase  di-                     function  solver  for  spinful  Fermi  systems,  Phys.  Rev.  B
+   agram  of  the  square  lattice  Hubbard  model  from  density                   113, 195108 (2026)
+   matrix embedding theory, Phys. Rev. B93, 035126 (2016)                       15  A. Abouelkomsan, M. Geier and L. Fu, Topological order
+ 6  P.   Corboz,   Improved   energy   extrapolation   with   infi-                 in neural wavefunction, Phys. Rev. B113, 205119 (2026)
+   nite  projects  entangled-pair  states  applied  to  the  two-               16  D. Luo, David D. Dai and L. Fu, Pairing-based graph neu-
+   dimensional  Hubbard  model,  Phys.  Rev.  B93,  045116                          ral network for simulating quantum materials, Phys. Rev.
+   (2016)                                                                           B113, 165107 (2026)
+ 7  M. Scheb and R. M. Noack, Finite projected entangled pair                   17  U.  Schollw ock,  Marshall’s  sign  rule  and  density-matrix
+   states for the Hubbard model, Phys. Rev. B107, 165112                            renormalization-group  acceleration,  Phys.  Rev.  B58,  13
+   (2023)                                                                           (1998)
+ 8  H.-H. Zhao, K. Ido, S. Morita and M. Imada, Variational                     18  K. Choo, T. Neupert and G. Carleo, Two-dimensional frus-
+   Monte Carlo method for fermionic models combined with                            tratedJ1-J2 model studied with neural network quantum
+   tensor  networks  and  applications  to  the  hole-doped  two-                   states, Phys. Rev. B100, 125124 (2019)
+   dimensional  Hubbard  model,  Phys.  Rev.  B96,  085103                      19  X. Liang,  M. Li,  Q. Xiao,  J. Chen,  C. Yang,  H. An and
+   (2017)                                                                           L. He,  Deep learning representations for quantum many-
+                                                                                                                                                          13
+
+   body systems on heterogeneous hardware,  Mach. Learn.:                        28  Y.-T.  Zhou,  Z.-W.  Zhou  and  X.  Liang,  Solving  Fermi-
+   Sci. Technol.4, 015035 (2023)                                                     Hubbard-type  models  by  tensor  representations  of  back-
+20  A. Chen and M. Heyl, Empowering deep neural quantum                              flow corrections, Phys. Rev. B109, 245107 (2024)
+   states through efficient optimization, Nat. Phys.20, 1476-                    29  L. F. Tocchio, F. Becca, A. Parola and S. Sorella, Role of
+   1481 (2024)                                                                       backflow corrections for the nonmagnetic phase of thet-t       ′
+21  L. L. Viteritti, R. Rende, S. Sachdev and G. Carleo, Ap-                         Hubbard model, Phys. Rev. B78, 041101(R) (2008)
+   proaching the Thermodynamic Limit with Neural-Network                         30  L. F. Tocchio, F. Becca and C. Gros, Backflow correlations
+   Quantum States, arXiv:  2602.02665 (2026)                                         in the Hubbard model:  An efficient tool for the study of
+22  C. Roth, A. Chen, A. Sengupta and A. Georges, Supercon-                          the metal-insulator transition and the large-Ulimit, Phys.
+   ductivity in the two-dimensional Hubbard model revealed                           Rev. B83, 195138 (2011)
+   by neural quantum states, arXiv:  2511.07566 (2025)                           31  W.-Y. Liu, S.-J. Dong, Y.-J. Han, G.-C. Guo, and L. He,
+23  L.-L. Viteritti, R. Rende, C. Roth, A. Sengupta, G. Carleo                       Gradient  optimization  of  finite  projected  entangled  pair
+   and A. Georges, Beyond Variational Bias: Resolving Inter-                         states, Phys. Rev. B95, 195154 (2017)
+   twined Orders in the Hubbard Model, arXiv:  2604.21978                        32  S.-J. Dong, C. Wang, Y.-J. Han, C. Yang, and L. He, Sta-
+   (2026)                                                                            ble diagonal stripes in thet-Jmodel at  ¯n             h= 1/8 doping
+24  R. Rende, L. L. Viteritti and A. Georges, Superconductiv-                        from fPEPS calculations, npj Quantum Mater.5, 28 (2020)
+   ity in thet-t       ′ Hubbard Model from Symmetry-Preserving                  33  S.  Sorella,  Generalized  Lanczos  algorithm  for  variational
+   Neural-Network   Quantum   States,   arXiv:     2608.12465                        quantum Monte Carlo, Phys. Rev. B64, 024512 (2001)
+   (2026)                                                                        34  S. Zhang,  J. Carlson and J. E. Gubernatis,  Pairing Cor-
+25  X. Liang, Investigating the Fermi-Hubbard model by the                           relations in the Two-Dimensional Hubbard Model,  Phys.
+   tensor-backflow method, Phys. Rev. B113, 155121 (2026)                            Rev. Lett.78, 23 (1997)
+26  Y. Gu, W. Li, H. Lin, B. Zhan, R. Li, Y. Huang, D. He, Y.                    35  C.  N.  Yang,  Concept  of  Off-Diagonal  Long-Range  Order
+   Wu, T. Xiang M. Qin, et. al. Solving the Hubbard model                            and the Quantum Phases of Liquid He and of Supercon-
+   with neural quantum states, Nat. Comm.17, 7838(2026)                              ductors, Rev. Mod. Phys.34, 694 (1962)
+27  Y.  Gu,  Z.  Han,  W.  Li,  Z.  Xiao,  T.  Xiang,  M.  Qin,  L.              36  K.  S.  Huang,  Z.  Han,  S.  A.  Kivelson  and  H.  Yao,  Pair-
+   Wang  and  D.  Lv,  Pareto  Frontier  of  Neural  Quantum                         density-wave in the strong coupling limit of the Holstein-
+   States:  Scalable, Affordable, and Accurate Convolutional                         Hubbard model, npj Quantum Mater.7, 17 (2022)
+   Backflow for Strongly Correlated Lattice Fermions, arXiv:                     37  H. Karlsson, J. S. Hofmann and A. Wietek, Cooper con-
+   2604.25775 (2026)                                                                 densation and pair wave functions in systems of strongly
+                                                                                     correlated electrons, Phys. Rev. B114, 055133 (2026)

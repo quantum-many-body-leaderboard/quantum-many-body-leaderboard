@@ -1,0 +1,1282 @@
+                 Fermionic Wave Functions from Neural-Network Constrained Hidden States
+
+                Javier Robledo Moreno,1, 2,∗ Giuseppe Carleo,3,† Antoine Georges,4, 5, 6, 7,‡ and James Stokes1, 8,§
+                          1Center for Computational Quantum Physics, Flatiron Institute, New York, NY 10010 USA
+                                             2Center  for  Quantum  Phenomena,  Department  of  Physics,
+                                     New York University,  726 Broadway,  New York,  New York 10003,  USA
+                 3Institute of Physics,  ´Ecole Polytechnique F´ed´erale de Lausanne (EPFL), CH-1015 Lausanne, Switzerland
+                                     4Coll`ege de France,  11 place Marcelin Berthelot,  75005 Paris,  France
+                          5Center for Computational Quantum Physics, Flatiron Institute, New York, NY 10010 USA
+                         6Centre de Physique Th´eorique, Ecole Polytechnique, CNRS, 91128 Palaiseau Cedex, France
+                                         7Department  of  Quantum  Matter  Physics,  University  of  Geneva,
+                                              24  Quai  Ernest-Ansermet,  1211  Geneva  4,  Switzerland
+                             8Center for Computational Mathematics, Flatiron Institute, New York, NY 10010 USA
+                                                                  (Dated: June 22, 2022)
+                  We introduce a systematically improvable family of variational wave functions for the simulation of strongly
+                correlated fermionic systems.  This family consists of Slater determinants in an augmented Hilbert space in-
+                volving ‘hidden’ additional fermionic degrees of freedom.  These determinants are projected onto the physical
+                Hilbert space through a constraint which is optimized, together with the single-particle orbitals, using a neural
+                network parametrization.  This construction draws inspiration from the success of hidden particle representa-
+                tions1 but overcomes the limitations associated with the mean-ﬁeld treatment of the constraint often used in this
+                context.  Our construction provides an extremely expressive family of wave functions, which is proven to be
+                universal. We apply this construction to the ground state properties of the Hubbard model on the square lattice,
+                achieving levels of accuracy which are competitive with state-of-the-art variational methods.
+
+
+   Many-body  quantum  systems  are  computationally  chal-                       opment of systematically improvable neural-network-based
+lenging because of the exponential dependence of the size                         trial wave functions is currently an active ﬁeld of research
+of the Hilbert space on the number of particles.  Variational                     both  in  second  quantization6–8,  and  ﬁrst  quantization9–15.
+approaches address this problem by considering a class of                         In  the  latter  approach,  the  wave  function  amplitudes  must
+wave functions depending on a set of parameters over which                        be  anti-symmetric  functions  of  the  particle  conﬁgurations,
+an optimization is performed.  In this way, the computation-                      while being able to capture correlations beyond the single-
+ally intractable search over the full Hilbert space is reduced                    particle Slater determinants. This is typically achieved either
+to a search over a submanifold of dimension merely poly-                          by considering determinants of multi-particle orbitals10,12,14
+nomial in the number of particles.   Variational approaches                       (backﬂow  transformations),  or  by  Slater  determinants  of
+have  proven  successful  in  providing  qualitative  and  quan-                  single-particle orbitals multiplied by a neural-network Jas-
+titative insights into the nature of the ground state and the                     trow factor that depends on the lattice occupations9,11.  De-
+low-energy excited states of a number of interacting quan-                        spite being universal in the lattice, the Slater neural-network
+tum systems.  For example, in the case of spin systems with                       Jastrow wave functions seem to struggle to get competitive
+arbitrary pairwise interactions, it has been proven2,3 that the                   energies in the strong coupling regime.
+ratio between the energy of optimized mean-ﬁeld states and                            The Hubbard model on the square lattice has been the sub-
+the  true  ground  state  energy  approaches  a  ﬁnite  constant                  ject of intense theoretical scrutiny, and constitutes the most
+in the limit of large system size.  The subsequent develop-                       iconic ‘simple’ model of an interacting quantum system. De-
+ment  of  systematically  improvable  variational  wave  func-                    spite this simplicity, a full computational solution is still to
+tions has led to quantitative agreement with exact energies                       be achieved.  For this model, as well as related lattice mod-
+of one-dimensional systems using matrix product states, and                       els of interacting fermions such as thet-J and Kondo lattice
+recently  also  in  two  dimensions  using  neural-network  and                   models,  signiﬁcant insight has been obtained using hidden
+tensor-network states4,5.                                                         particle approaches1. Although a number of different formu-
+   The remarkable success of variational states in the descrip-                   lations are available  16–34  all such approaches share a basic
+tion  of  quantum  spin  systems  unfortunately  does  not  have                  concept which consists in augmenting the physical Hilbert
+a parallel in correlated systems of fermions, however.  It is                     space by auxiliary degrees of freedom and subsequently per-
+known, for example, that the natural mean-ﬁeld analogue of                        forming a projection back to the subspace of physical states.
+direct-product states, the so-called Slater determinant (SD)                      This projection can be regarded as a constraint that selects
+states, fail to even qualitatively describe the thermodynamic                     the representative states in the augmented space that are iden-
+limit of Fermi-Hubbard type Hamiltonians3  and the devel-                         tiﬁed with the basis of the physical Hilbert space.  In many
+                                                                                  cases,  a  mean-ﬁeld  saddle  point  approximation  is  applied
+                                                                                  both to the auxiliary particle hamiltonian and to the treatment
+∗ jrm874@nyu.edu                                                                  of the constraint, which is implemented with static and uni-
+† giuseppe.carleo@epﬂ.ch                                                          form Lagrange multipliers. This mean-ﬁeld approximation is
+‡ ageorges@ﬂatironinstitute.org                                                   uncontrolled in general, except when the saddle-point is as-
+§ jstokes@ﬂatironinstitute.org                                                    sociated with the limit of large number of ﬂavors18,20.  Even
+                                                                                                                                                             2
+
+in those cases, going beyond the saddle point level is chal-
+lenging and no systematic improvements beyond the mean-
+ﬁeld variational wave functions are available,  especially in
+view of the approximate treatment of the constraint.
+   In this article,  we draw inspiration from hidden particle
+approaches to construct a systematically improvable family
+of variational fermionic wave functions. These states are ob-
+tained as the exact projection of Slater determinant states in
+a Hilbert space augmented by hidden fermionic degrees of
+freedom. One of the major novelties of the proposed method
+is that the constraint is parametrized by neural networks, giv-
+ing  rise  to  an  extremely  ﬂexible  family  of  wave  function
+ans¨atze.   The constraint is optimized together with the or-
+bitals in the enlarged Hilbert space with the goal of minimiz-
+ing the energy.   The expressive power of this new class of
+wave functions is demonstrated in a variational Monte Carlo
+(VMC) setting, obtaining an accuracy which is competitive
+with the state-of-the-art for the ground-state properties of the
+Hubbard model in the square and rectangular lattices.
+   The paper is structured as follows: we begin (Sec. I) by in-
+troducing the Hamiltonian and the physical degrees of free-
+dom of the problem. In Sec. II, we introduce the fundamen-
+tals of the hidden fermion representation, describe the Slater
+determinant in the augmented space together with the fully
+parametrized constraint function and prove the universality
+of this representation.  This section also contains details on
+the VMC implementation.  In Sec. III, we present ground-
+state  energy  benchmarks  for  the  Hubbard  model  with  in-
+creasingly large system sizes, and demonstrate that we can                        FIG.  1.      Depiction  of  the  geometrical  interpretation  of  the  hid-
+stabilize competing orders of charge and spin stripes for the                     den  fermion  formalism.   The  Fock  space  spanned  by  the  visible
+Hubbard model on rectangular lattice geometries.                                  fermionic  modes ˆa†iσ  is  represented  by  the  green horizontal  line.
+                                                                                  The augmented Fock space is represented by the light orange plane
+                                                                                  (plane of the paper).  The orange diagonal line represents the sub-
+     I.    BACKGROUND: STATES AND HAMILTONIAN                                     space in the augmented Fock space that is isomorphic to the physi-
+                                                                                  cal Hilbert space after applying the constraint function (black ar-
+                                                                                  rows).   The  collection  of  Slater  determinants  (SDs)  in  the  aug-
+   In this paper we develop a general technique for approx-                       mented space is represented by the blue shape, and the intersection
+imating the ground state of interacting fermionic hamiltoni-                      with the subspace of just visible DOFs is marked in yellow.  This
+ans with discrete degrees of freedom–as deﬁned for example                        intersection corresponds to the physical Hartree-Fock states.  The
+by discrete orbitals or spatial coordinates.  As a speciﬁc ap-                    constraint function changes the collection of states that represent
+plication, we focus here on the Fermi-Hubbard model, whose                        the physical Hilbert space bringing the target correlated state close
+Hamiltonian reads                                                                 to a Slater determinant in the enlarged space.
+
+ˆH =− ∑              ∑       tij(ˆc†                          Uiˆni↑ˆni↓ ,
+                                   iσˆcjσ+ˆc†jσˆciσ)+∑
+          σ∈{↑,↓}  {i,j}∈E                               i∈V
+                                                                         (1)
+where  the  binary  index σ ∈ {↑,↓}  labels  two  species  of
+fermionic modes satisfying the canonical anti-commutation
+relations,
+
+         {ˆc†iσ, ˆcjσ′} =δijδσσ′ ,  {ˆciσ, ˆcjσ′} = 0 .       (2)
+                                                                                     In this work we are concerned with the subspace of def-
+The  fermionic  modes  ˆciσ  are  the  physical  (electronic)  de-                inite  particle  numbers N↑  and N↓  of  the  individual  spin
+grees of freedom (DOF). The fermion dynamics is described                         species,  in  which  case  the  two  species  are  distinguishable
+by  the  lattice  withV  sites  deﬁned  by  the  non-zero  entries                from each other.   However,  it is convenient to impose full
+of thetij  hopping matrix, as well as by the onsite coulomb                       anti-symmetry between the spin species to enhance the ex-
+repulsion Ui.    In  the  following,  we  exclusively  focus  on                  pressivity of the family of trial wave functions,  like in the
+the  square  and  rectangular  lattices  with  uniform  hopping                   so called unrestricted Hartree-Fock (HF). The projection to
+(tij = 1) and onsite repulsion, leaving more general geome-                       deﬁniteN↑ andN↓ subspace is imposed in the sampling of
+tries to future studies.                                                          the wave function amplitudes.
+                                                                                                                                                          3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.    Hidden-fermion determinant state amplitudes with a neural-network parametrized constraint function.  The top part of the deter-
+minant is constructed by slicingN  rows from the topM  rows of the Φ matrix, according to visible particle conﬁgurationx.  Each row of
+the bottom sub-matrix [φh(f(x)),χh(f(x))] (hidden sub-matrix) is parametrized by the outputs of a separate neural network (indicated by
+different colors), whose input is the ﬂattened visible-lattice occupancyn.
+
+
+     II.    HIDDEN FERMION FORMALISM AND WAVE                                   sentative” states is chosen to span the basis of the physical
+                        FUNCTION ANSATZ                                         Hilbert space within the augmented space;  similarly to the
+                                                                                constraint applied in the hidden rotor, spin or boson formal-
+A.    States in the augmented Hilbert space: constraint function                ism19,25–27.  This choice produces a basis of the correct di-
+                                                                                mension, eliminating so called unphysical states.  This con-
+   Recall that the multi-particle physical Hilbert (Fock) space                 straint is applied by the following procedure: for each visible
+is spanned byM := 2V creation operators ˆc†                                     fermion occupancyn a particular hidden fermion occupancy
+                                                       iσ applied in all         ˜n is chosen.   The arbitrary choice of the population of the
+possible ways to the Fock vacuum|0⟩.  The strategy of this                      hidden modes can be summarized by a constraint function
+paper is to deﬁne an augmented Fock space, constructed by                       F (n) = ˜n.
+Mtot >M fermionic modes.                                                            In the physical subspace the probability amplitude of the
+   We partition the mode operators of the augmented Fock                        spinful fermion occupancyn is given by the overlap between
+space into two species of auxiliary fermionic degrees of free-                  the augmented basis states (Eq. 3) and a given trial state vec-
+dom ˆa†µ and  ˆd†ν, referred to as visible and hidden modes re-                 tor|Ψ⟩ of the augmented Fock space, where the hidden oc-
+spectively.  We note that, although most hidden particle ap-                    cupancy ˜n is controlled by the visible occupancy n via the
+proaches enlarge the Hilbert space with bosonic degrees of                      constraint:
+freedom, fermionic hidden sectors have been considered in
+recent works29–34 (see also23,24,35).  We require 1≤µ≤M,                                                ψ(n) =⟨n,F (n)|Ψ⟩.                          (4)
+and 1≤ ν≤   ˜M  with  ˜M  a free hyper-parameter.  Of course
+Mtot  = M +  ˜M.  The occupancy of the visible modes ˆa†µ                       In this work we consider the search of the optimal constraint
+is identiﬁed one-to-one with the occupancy of the physical
+modes ˆc†iσ, establishing a direct correspondence between the                   function,  contrary to previous hidden-particle formulations
+index µ  of  the  visible  modes  and  the  position-spin  multi-               where the constraint is a ﬁxed physically-motivated rule. The
+index of the physical modes (i,σ).                                              resulting wave function ansatz is thus parametrized by both
+   Thus, the basis for the augmented Fock space is spanned                      the choice of the state in the augmented space|Ψ⟩ and the
+by the set of states                                                            constraint functionF (n). Since there exist doubly exponen-
+                                           ˜M∏                              tially many constraint functions, an extremely ﬂexible family
+         |n, ˜n⟩ =   ∏(ˆa†                    ( ˆd†µ)˜nµ|0⟩,       (3)      of correlated trial wave functions is obtained.
+                              iσ)niσ                                                It should be noted that the hidden single-particle orbitals
+                        i,σ                 µ=1                                  ˆd†µ deﬁne an abstract space of hidden particle conﬁgurations.
+where n and ˜n label the occupancy of the visible and hid-                      While one may be concerned by the nature of this abstract
+den modes respectively. Note that this basis does not have a                    space and the form of the orthogonal set of single particle
+deﬁnite number of hidden fermions, even if the visible occu-                    orbitals that deﬁne its basis, in practice, we work in the basis
+pations are constrained to have deﬁnite particle number.                        of particle conﬁgurations in the orbitals  ˆd†µ.  Consequently,
+   Since the augmented Fock space deﬁnes a superset of the                      the relevant quantity is the combination of single-particle or-
+physical many-body fermionic states, a collection of ”repre-                    bitals in the abstract space.
+                                                                                                                                                            4
+
+   Fig. 1 illustrates geometrically the general concept of the                   In  order  to  respect  the  Fermi  statistics,  it  is  sufﬁcient  to
+hidden fermion formalism.  The constraint function can be                        choose the  function f  to be  of bosonic  nature;  that is,  in-
+interpreted as a non-trivial rotation of the collection of states                variant under permutations of the visible conﬁguration.  The
+that constitute the basis of the physical Fock space embed-                      amplitudes of the wave function ansatz in the conﬁguration
+ded  in  the  augmented  space  (light  green  horizontal  line  is              basis are thus given by
+rotated to the orange segment in Fig. 1).   The goal of this                                                             [ φv(x)   χv(x)             ]
+transformation is to bring the target correlated state close to                    ψ(x) =⟨x,f(x)|ΨSD⟩ = det                φh(f(x)) χh(f(x))             (9)
+the parametrized family of states in the enlarged space.  In
+Fig. 1 the chosen family of parametrized states is the family                    where[φv(x),χv(x)] and[φh(f(x)),χh(f(x))] denote the
+of SDs.  We also show that in the particular case of  ˜M  = 0                    N×(N + ˜N) and  ˜N×(N + ˜N) sub-matrices obtained from
+(light  green  subspace)  the  physical  Fock  space  is  directly               [φv,χv] and[φh,χh] respectively by slicing the row entries
+spanned by the visible modes,  and that standard SD states                       corresponding tox andf(x). For convenience we denote the
+can be recovered in that limit.                                                  [φh(f(x)),χh(f(x))] matrix as the hidden sub-matrix.
+
+
+
+              B.    Hidden fermion determinant states                              2.    Universality and connection to other wave function ans¨atze
+
+                            1.    Generalities                                      This  ansatz  is  universal  in  the  lattice.   The  proof  relies
+   In  order  to  demonstrate  the  versatility  of  the  hidden                 on the ability of the determinant in Eq. 9 to represent a uni-
+fermion approach, we consider in this work the special case                      versal lookup table of amplitudes that are matched with the
+                                                                                 amplitudes of an arbitrary target state.  In the particular case
+where|Ψ⟩ is the uncorrelated Slater determinant state|ΨSD⟩,                      of φh  =  0 and χv  =  0 the ﬂexibility of the ansatz is re-
+which is characterized by a total numberNtot≥N of orbital                        lied upon χh, as φv  leads to amplitudes that correspond to
+functionsφn :{1,...Mtot}→ C where 1≤n≤Ntot and˜N  =Ntot−N  is the number of added hidden fermions. Inan uncorrelated state in the physical space.  It is possible to
+                                                                                 construct the lookup table for  ˜N≥ 1, requiring  ˜M  to grow
+particular,|ΨSD⟩ is obtained from the Fock vacuum as fol-                        combinatorially fast with the number of physical fermionic
+lows,                                                                            modes.  See the Supplementary Information (SI)36 for a de-
+                     |ΨSD⟩ =  ˆϕ†                                                tailed discussion.  It follows that in the general case where
+                                   1··· ˆϕ†Ntot|0⟩ ,                      (5)    φh⁄= 0 andχv⁄= 0, the determinant in the enlarged Fock
+where each  ˆϕ†α  is a linear combination of the original cre-                   space does not inherit the nodes of theφv orbitals.
+ation  operators,  whose  coefﬁcients  are  determined  by  the                     Our   construction   bears   some   similarities   with   back-
+                                                                                 ﬂow37–40, in which orbitals are taken to be functions of the
+corresponding orbital. In terms of the row-vectors                               coordinates of all particles.  In contrast to regular backﬂow,
+                                                                                 only the restriction of orbitals to hidden states have multi-
+       ( ˆϕ†1,..., ˆϕ†Ntot) = (ˆa†1,..., ˆa†M, ˆd†1,..., ˆd†˜M) Φ     (6)        particle position dependence (see (9)).
+where Φ is the Mtot×Ntot  matrix whose columns corre-                               Jastrow-like wave function ans¨atze of the form
+
+spond to the orbital functions.  It will be convenient to write                                       ψJ(x) =J(n) det[φv(x)],                    (10)
+the matrix of orbitals in the following block form,                              where J(n)  is  an  arbitrary  function  of  the  visible  lattice
+                                 [φv χv]                                         occupations,  also appear naturally in this formalism.   This
+                           Φ =     φh χh       .                              (7)connection clearly materializes by considering  ˜N  =  1 and
+                                                                                 χv =φh = 0. In this case the amplitudes of the wave func-
+Whereφv is theM×N matrix representing the amplitudes of                          tion ansatz are the product of det[φv(x)] and a symmetric
+the visible orbitals evaluated in the visible modes,χv is the                    function of the visible particle conﬁgurationχh(f(x)). Note
+M×  ˜N  matrix representing the amplitude of the hidden or-                      that this class of wave functions includes the physically mo-
+bitals evaluated in the visible modes,φh is the  ˜M×N matrix                     tivated Gutzwiller and Jastrow factors, as well as generalized
+representing the amplitude of the visible orbitals evaluated in                  neural-network Jastrow factors9,11 applied to Slater determi-
+the hidden modes andχh is the  ˜M×  ˜N matrix representing                       nants.   The  constraint  function  reproducing  the  Gutzwiller
+the amplitude of the hidden orbitals evaluated in the hidden                     state can be found in the SI36.
+modes.                                                                              Conﬁguration-interaction (CI) wave functions are also ex-
+   Since the SD state is an eigenstate of the total number op-                   plicitly connected to the hidden fermion determinant state.
+erator, as are both the visible and hidden sectors, and antic-                   Using  the  Laplace  expansion  of  the  determinant  in  Eq.  9
+ipating that particle conﬁgurations are sampled in the VMC                       along  its  last   ˜N  rows  yields  a  linear  combination  of N-
+framework, we can represent the constraint as a mapping be-                      particle Slater determinants.  IfφV andχV are chosen to be
+tween the visible-particle conﬁgurationx = (x1,...,xN) and                       theN  lowest HF orbitals and the ﬁrst  ˜N  virtual orbitals re-
+the hidden-particle conﬁguration ˜x = (˜x1,..., ˜xN)                             spectively, then a CI wave function is obtained, containing all
+                                                                                 possible (single to  ˜N-tuple) excitations to the ﬁrst  ˜N virtual
+                               f :x↦→ ˜x.                                   (8)  orbitals. See SI36 for the detailed derivation.
+                                                                                                                                                          5
+
+ 3.    Parametrized constraint function, practical implementation               parametrizing the rows of the hidden sub-matrix, are jointly
+                                                                                optimized  using  the  stochastic  reconﬁguration  method43,
+   In  contrast  to  physically  motivated  constraint  functions,              an  extension  of  the  classical  natural  gradient  optimization
+a  more  general  approach  involves  considering f(x)  to  be-                 method44 to variational quantum states. Given that we are in-
+long  to  a  parametrized  family,  whose  parameters  are  opti-               terested in the approximation of the ground-state wave func-
+mized,  together  with  the  orbitals,  in  the  energy  minimiza-              tion, we rely on the variational principle and use the expecta-
+tion.  The variational Monte Carlo seeks optimal parameters                     tion value of the Hamiltonian with respect to the variational
+θ  for a variational family of wave functions ψθ(x),  which                     state  as  the  objective  function  to  be  optimized.   For  every
+are assumed to be differentiable with respect toθ. Although                     Hamiltonian parameter choice a new trial state is optimized
+the requirement of differentiability appears to be in tension                   from scratch.
+with the combinatorial nature of f(x), this obstacle is eas-                       General expectation values and gradients of the objective
+ily  overcome  by  parametrizing  instead  the  composition  of                 function  are  computed  using  Markov  Chain  Monte  Carlo
+functions φ(f(x)) and χ(f(x)),  which appears in the hid-                       sampling according to the probability distribution deﬁned by
+den sub-matrix of the enlarged determinant (see (9)).  This                     the square of the wave function amplitudes|ψθ(x)|2, work-
+parametrization is connected to the notion of a continuous set                  ing in the basis of particle conﬁgurations. We use the Python
+of orthogonal hidden modes ˆd†µ, which accounts to  ˜M→∞.                       library NetKet45 for the implementation (see the SI36 for de-
+Remarkably,  this  automatically  satisﬁes  the  condition  that                tails), where gradients of the wave function amplitudes with
+ ˜M  must grow combinatorially with M  for the determinant                      respect to the variational parameters are computed by the so
+in Eq. 9 to be a universal lookup table of amplitudes.  The                     called automatic differentiation implemented in the Python
+hidden fermion conﬁgurationsf(x) are thus represented by                        library Jax46.
+some internal state of the parametric function.  However, in
+practice we are never interested in such internal state.                                       III.    NUMERICAL EXPERIMENTS
+   Since the hidden sub-matrix is a matrix-valued function
+which  by  construction  is  a  permutation-invariant  function                    In this section we benchmark the hidden fermion deter-
+of the visible conﬁguration x, we choose to represent it by                     minant wave function ansatz with a fully parametrized con-
+neural  networks,  taking  as  an  input  the  visible  occupation              straint  function.   We  ﬁrst  study  the  square  lattice  at  aver-
+numbersn, without loss of generality.  Neural networks are                      age  site  occupation n  =  1/2  and n  =  5/8.   We  use  the
+the perfect candidate to reduce the intractable complexity of                   4× 4 square lattice as a test-bed to study the accuracy (com-
+choosing the optimal constraint, as they deﬁne an extremely                     pared to exact diagonalization (ED)) of the proposed ansatz.
+ﬂexible family of functions.  Furthermore, sufﬁciently large                    The accuracy is quantiﬁed by the difference between the ED
+neural networks can represent arbitrary contrainst functions,                   ground-state energy and the variational energy, relative to the
+since they satisfy a universal approximation theorem41.  The                    ED ground-state energy. We analyze the effect of the neural
+set of variational parametersθ of our ansatz consists on the                    network complexity and compare against relevant results in
+the matricesφv andχv together with the weights and biases                       the literature.  Lastly we focus on rectangular geometries of
+parametrizing the corresponding neural network.  Fig. 2 de-                     size 4×L, where we consider 1/8 hole-doping (n = 7/8).
+tails the precise parametrization used in this work.  In prac-                  Periodic boundary conditions are set in the short side of the
+tice, each row of the hidden sub-matrix is parametrized by its                  rectangle in all cases. We study the case of both open and pe-
+own neural network, as shown in Fig. 2 by different colored                     riodic boundary conditions on the long side.  In the former,
+neural-network blocks.  We consider multilayer perceptrons                      we compare our energies with Density Matrix Renormaliza-
+with hyperbolic-tangent activations. The hyperparameters of                     tion Group (DMRG) results and study the competing stripe
+the ansatz include the neural network architecture as well as                   orders of the system. In the latter and in the smallest system
+the number of added hidden fermions  ˜N.                                        size (4× 4) we analyse the relative error in the ground-state
+   The  cost  of  evaluating  the  enlarged  determinant  and  its              energy,  obtained from ED. In the larger sizes (L  =  8 and
+derivatives with respect to the variational parameters scales                   L  =  16) we compare the ground state energy with the re-
+with the number of visible and hidden fermions asO((N +                         sults obtained using a Slater-Jastrow ansatz and the neural
+˜N)3),  coming  from  the  used  LU  factorization.   Typically                 network backﬂow wave function from Ref.10. In all cases we
+we choose  ˜N ∼O(N), and therefore the asymptotic cost                          focus on the zero magnetization and ﬁxed visible and hidden
+of the evaluation of the hidden fermion determinant state is                    particle subspaces.
+O(N 3).  The computation of the wave function amplitudes
+and gradients is the only step in the VMC algorithm where
+the required resources are larger, by a constant factor, than                                  A.    Benchmarks in the square lattice
+the computation of aN-fermion determinant.
+                                                                                   We  begin  by  considering  the  particular  case  of   ˜N   =
+                             C.    Methods                                      N, which provides a good trade-off between computational
+                                                                                complexity and accuracy;  and a single-hidden-layer neural
+                                                                                network parametrizing each row of the hidden sub-matrix.
+   Both  the  amplitudes  of  the  matrices φv  and χv,   to-                   This architecture is a good starting point to study the effect
+gether  with  the  weights  and  biases  of  the  neural  networks              of the neural network expressive power in the accuracy of the
+                                                                                                                                                               6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.   Exact diagonalization benchmarks of the ground-state energy in the 4× 4 lattice with periodic boundary conditions.  (a) Relative
+error in the ground-state energy as a function of the inverse of the width densityα of the single-hidden-layer neural networks parametrizing
+the rows of the hidden sub-matrix.  Average physical site occupation isn  =  1/2 and  ˜N  =  8.  Different values ofU  are considered, as
+indicated by each color.  The error for a Slater-RBM ansatz (see main text) with hidden neuron density α  =  32, at the same values of
+U  is included for comparison.  Indicated is also the relative error from the variance-extrapolated energy for each value ofU  (see SI36 for
+details).  (b) Relative error in the ground-state energy as a function of the coupling constantU, atn = 5/8 average site occupancy (ﬁrst
+closed shell) and  ˜N  = 10.  The rows of the hidden sub-matrix are given by single-hidden-layer neural networks withα = 64.  The error
+from Slater-Jastrow and Slater-RBM ans¨atze are included for comparison.  The green diamond is the relative error found with the state-
+of-the-art, tensor-network-based ansatz from Ref.42.  Shown is also the relative error according to the projection of the converged hidden
+fermion determinant state to the subspace of invariant wave functions under the action ofπ/2 rotations (C4) and the group of all possible
+translationsT  withK = 0 momentum, separately and together.
+
+
+ansatz. In this case, the expressive power is only determined                      better estimates to the ground-state energy.  See SI36 for de-
+by the number of hidden units.  More hidden units improve                          tails.   The  relative  error  corresponding  to  the  variance  ex-
+the ﬂexibility of the neural network.  Furthermore, this sin-                      trapolated energies is shown in Fig. 3 (a), where the relative
+gle hidden layer architecture is the minimal architecture that                     error  is  in  this  case  deﬁned  as  the  difference  between  the
+satisﬁes the universal approximation theorem41.                                    variance extrapolated and the ground-state energies, relative
+   Panel (a) of Fig. 3 shows the relative error in the ground                      to the ground-state energy.
+state energy as a function of the ratio between the number                            The improvement of the accuracy with the increase ofα
+of hidden units and input features (α), atn = 1/2 average                          is  accompanied  by  a  gentle  increase  in  the  computational
+site occupation.  Different values ofU  are shown, including                       complexity of the determinant amplitudes. The scaling with
+challenging cases (U = 7.75 andU = 10) where the ground                            α  is  linear,  as  the  evaluation  of  the  elements  hidden  sub-
+state is strongly correlated. There is a systematic trend to de-                   matrix requiresO( ˜N(M·αM +αM· (N +  ˜N))) oper-
+crease the error in the energy asα is increased, providing a                       ations,  coming  from  the  two  aﬁne  transformations  of  the
+clear and controllable pathway to obtaining more expressive                        fully connected neural networks with a single hidden layer.
+wave function ans¨atze.  Moreover, for the largest values of                       For  reference,  the  scaling  of  the  evaluation  of  the  neural-
+α,  and contrary to what is observed on typical wave func-                         network backﬂow from10 isO(N 3), from the evaluation of
+tion ans¨atze, the error does not signiﬁcantly increase withU                      the  determinant  of  multi-particle  orbitals,  while  the  evalu-
+as the correlations in the ground state increase. Remarkably,                      ation of the matrix elements that enter the determinant re-
+the  relative  error  at U  =  10,  typically  the  most  challeng-                quires to store M  distinct fully connected neural networks
+ing case, is orders of magnitude lower than the error of the                       andO(N(M·αM +αM· (N)) operations.  This makes
+Slater-RBM wave function ansatz.  The Slater-RBM ansatz                            the  asymptotic  scaling  of  the  hidden  fermion  determinant
+is  a  particular  case  of  the  wave  function  in  Eq.  10,  where              state withN,M andα identical to the scaling of the neural-
+J(n) is a restricted Boltzmann Machine of complex weights.                         network backﬂow
+   The direct extrapolation of the relative error to theα→∞                           In  principle,  deeper  architectures  provide  a  greater  ex-
+limit  is  challenging  as  the  asymptotic  scaling  of  the  accu-               pressive  power  than  their  shallower  counterparts48,  at  the
+racy with the neural network complexity is not a well un-                          expense  of  a  higher  computational  cost.   We  observe  that,
+derstood  matter  in  the  ﬁeld.   However,  from  the  different                  while deeper architectures provide marginal gains in the en-
+energy and variance estimates obtained for each α we per-                          ergy error, increasing the number of hidden fermions yields a
+form an energy-variance extrapolation procedure47 to obtain                        greater impact on the accuracy of the ansatz (see the SI36 for
+                                                                                                                                                         7
+
+a detailed study of the effect of increasing  ˜N  and the depth                 To guide the wave function ansatz towards theλ = 8 stripe
+of the neural networks in the accuracy of the ansatz).                          order, we add a soft mean-ﬁeld constraint to the φv  matrix
+   Benchmarks on physically motivated constraint functions                      of orbitals.  AM×N  matrix is added to the variationalφv.
+were also performed (see the SI36  for details).  Our experi-                   This matrix has zeros everywhere except for a single entry
+ments reveal that parametrizingf is advantageous compared                       in every column.  These entries are ﬁlled up with a constant
+to the physically inspired rigid rules, which show a marginal                   factorS that multiplies max(|φv|), following the charge and
+improvement in accuracy as compared to the Slater-Jastrow                       spin order described above. This forces each of theN visible
+state.                                                                          orbitals to peak in a certain position of the physical lattice.
+   Atn = 5/8 average site occupation we can compare the                         The value ofS  is a hyper-parameter.  The wave function is
+relative error in the energy against the state-of-the-art ansatz                optimized with this constraint until its convergence, then the
+from Ref.42. n  =  5/8,  which corresponds to N  =  10,  is                     guiding matrix is merged into φv  as part of the variational
+the  ﬁrst  closed  shell  for  the  model  under  consideration  in             parameters and the energy optimization is continued.
+the non-interacting limit.   Fig. 3 (b) shows the relative er-                     A good trade-off between accuracy and computational re-
+ror in the ground-state energy as a function ofU.  The error                    source  use  is  achieved  by  the  addition  of   ˜N   =  16  hid-
+does not increase monotonically with the value ofU, as stan-                    den fermions for all system sizes.  We also consider a two
+dard wave function ans¨atze do.  This is shown by the refer-                    layer fully connected neural network of hidden-unit density
+ence errors displayed by the Slater-Jastrow and Slater-RBM                      α ={60, 14, 6} for theL ={4, 8, 16} sizes respectively, to
+ans¨atze.   Remarkably,  the single Slater determinant ansatz                   parametrize the rows of the hidden sub-matrix.
+with the parametrized constraint function outperforms (by a                        We investigate the case with periodic boundary conditions
+factor of two in the relative error) the relative error reported                on the short side of the rectangle and open boundary condi-
+in Ref.42 that uses the state-of-the-art ansatz consisting on a                 tions on the long side (PBC-OBC). The left panel of Fig. 4
+pairing reference state multiplied by Jastrow, Gutzwiller and                   (a) shows the energy per site as a function ofL and the com-
+doublon-holon correlation factors as well as fat tree tensor                    parison with DMRG variational energies used in Ref.49. The
+network of bond dimension 16,  all projected into the zero                      DMRG algorithm ﬁnds two meta-stable solutions, one with
+momentum  singlet  subspace,  with  enforced C4  rotational                     half-ﬁlled stripes and one with ﬁlled stripes.  In theL  =  8
+symmetry.  Remarkably, while the result from Ref.42  relies                     case, we can stabilize both meta-stable arrangements by tun-
+on the projection of the trial state onto given symmetry sec-                   ing the value ofS.S = 0 or small values ofS lead to a half-
+tors, our ansatz achieves better accuracy with no symmetry                      ﬁlled stripe conﬁguration of higher energy.   In this system
+projections.   Symmetry projections are an independent av-                      size  the  charge  distribution  shows  high  hole  density  every
+enue to improve the accuracy.  So far, we have only consid-                     four sites, coinciding with domain walls in the antiferromag-
+ered the increase of the neural-network complexity to obtain                    netic order.  Larger values ofS  yield a ﬁlled stripe conﬁg-
+better trial states.  Not surprisingly, our ansatz is further im-               uration, showing only one stripe of high hole density in the
+proved when projected to relevant symmetry subspaces after                      system, that coincides with a domain wall in the antiferro-
+its convergence, as shown in panel (b) of Fig. 3.                               magnetic order.  The charge and spin conﬁgurations for the
+   See the SI36  for more benchmarks in square geometries                       two competing orders are shown on the right panel of Fig. 4
+at  half  ﬁlling,  where  we  compare  the  variational  energies               (a).  They are in good agreement with the DMRG hole dis-
+from  the  hidden  fermion  determinant  state  at  increasingly                tributions.  The variational energy from the hidden fermion
+larger  system  sizes  with  Auxiliary  Field  Quantum  Monte                   determinant state is in good agreement with the DMRG en-
+Carlo (AFQMC) calculations51.   Our energies are in better                      ergies.   At L  =  16,  the  best  variational  energy  found  by
+agreement to AFQMC than those obtained with the neural-                         tuningS  lies between the DMRG energies that correspond
+network Jastrow wave function from Ref.9.                                       to the half and ﬁlled stripes.  Our method, not being specif-
+                                                                                ically tailored to quasi one-dimensional problems, does not
+                                                                                outperform DMRG in this particular lattice geometry.
+B.    Increasing system size and stripe order at 1/8 hole-doped                    A more interesting case is the addition of periodic bound-
+                       rectangular geometries                                   ary conditions along the long side of the rectangle, a situa-
+                                                                                tion that is not amenable to DMRG calculations due to its
+   To conclude this work, we investigate the validity of the                    computational cost.  The left panel of Fig. 4 (b) shows the
+proposed  wave  function  ansatz  on  increasingly  larger  sys-                energy per site as a function ofL and the comparison with
+tem sizes in rectangular geometries. In particular, we choose                   the ED energy in the 4× 4 system.  The hidden fermion de-
+rectangular lattices of dimensionsL×4, withL ={4, 8, 16}.                       terminant with a parametrized constraint function achieves
+We focus on the 1/8 hole doped and zero total magnetization                     a  signiﬁcantly  lower  energy  than  both  the  standard  Slater-
+subspace, where, in the strong coupling regime, the ground                      Jastrow ansatz and the state-of-the-art neural network back-
+state is expected to show hole stripes every eight lattice sites                ﬂow ansatz from Ref.10. In the 4×4 lattice, the relative error
+across the long side of the rectangle (λ = 8).  The high hole                   in the energy is reduced by over one order of magnitude com-
+density regions coincide with domain walls in the antiferro-                    pared to the neural network backﬂow wave function.  In the
+magnetic order49,52.  In this section we study the particular                   4× 8 and 4× 16 lattices the energy per site is noticeably
+case ofU  = 8.  For this particular choice of coupling con-                     lower than it from the neural network backﬂow and Slater-
+stant and ﬁlling, previous works have found different com-                      Jastrow ans¨atze.  These results demonstrate the escalability
+peting orders close  in energy to the λ  =  8  stripe order49.                  of the proposed formalism, which outperforms existing state-
+                                                                                                                                                             8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.     Energy per site and competing charge and spin orders in the 4×L rectangular lattice at 1/8 hole doping (n  =  0.875) and
+U = 8. (a) Periodic boundary conditions on the short side of the cylinder and open on the long side (PBC-OBC). The left panel compares
+the hidden fermion determinant state energies with DMRG energies.   The width of the DMRG symbols shows the range of converged
+variational energies for different bond dimensions used in Ref.49. ForL = 8, blue points labelled as [1] and [2] correspond to ﬁlled and half
+ﬁlled stripes.  The right panel shows the hole and staggered spin distribution for both meta-stable conﬁgurations.  The diameter of the grey
+circles is proportional to the hole density.  (b) Periodic boundary conditions along both sides of the rectangles (PBC-PBC). The left panel
+compares the hidden fermion determinant state energies with the Slater-Jastrow and neural network backﬂow ans¨atze (from Ref.10).  The
+dashed horizontal line marks the ED (4× 4 with PBCs from Ref.50) energy. In the 4× 4 lattice the relative error in the ground state energy
+is displayed for each ansatz. The right panel shows the hole and staggered spin distributions in the 4× 16 lattice.
+
+
+of-the-art wave function ans¨atze used in the ﬁeld.  For these                    representation.  We presented numerical experiments which
+cases we setS = 3.                                                                show  that  the  proposed  wave  function  is  competitive  with
+   In addition, we analyze the hole density and staggered spin                    the state-of-the-art variational accuracy in the ground state
+density distributions in the largest system size (4× 16) in the                   of the Hubbard model in the square lattice.  Furthermore, in
+right panel of Fig. 4 (b). The hole density distribution shows                    contrast to standard variational approaches9,42, the accuracy
+repeating  maxima  separated  by 8  lattice  sites.   Coinciding                  of this ansatz does not rely on imposing symmetries, poten-
+with the maxima in the hole density, the antiferromagnetic                        tially allowing for a great level of accuracy on systems with a
+order displays a domain wall. The amplitude of the staggered                      small number of symmetries. This also opens the possibility
+magnetization is modulated along the long side of the rect-                       of applying our approach to systems without an underlying
+angles. These features are consistent with observations from                      lattice, with potential applications to quantum chemistry, nu-
+previous studies49,52  coming from different many-body nu-                        clear physics and materials science.
+merical methods, further validating the accuracy of the hid-
+den fermion determinant state to ﬁnd good approximations
+to the highly correlated ground states of complex Hamiltoni-
+ans.                                                                                 In particular, we envision the accurate calculation of the
+                                                                                  ground-state properties of molecular Hamiltonians, which in
+                                                                                  the Molecular Orbital basis lacks both an underlying lattice
+                        IV.    CONCLUSIONS                                        and exploitable symmetries. The connection between a com-
+                                                                                  pact representation of a CI wave function with all possible
+   In this paper we have shown that the variational treatment                     single-, double-, up to  ˜N-tuple excitations provides an accu-
+of interacting electrons in an augmented Fock space can be                        rate post Hatree-Fock starting point for the trial state.  The
+highly beneﬁcial to improve the generality of the wave func-                      formalism introduced in this manuscript is also well-suited
+tion  ansatz,  especially  in  the  strong  correlation  limit.   We              for  models  with  quenched  disorder,  such  as  models  of  in-
+found that key elements for the success of this approach are                      teracting fermions on fully connected lattices with random
+to optimize the constraint function relating the enlarged and                     exchange interactions53. While exact solutions of such mod-
+physical Hilbert spaces, as well as treating this constraint ex-                  els are available in the large-M  limit when the spin symme-
+actly.   A simple Slater determinant state in the augmented                       try is extended toSU(M), the physicalSU(2) case requires
+Fock space is found to provide an extremely expressive wave                       computational approaches. Similarly to Molecular Hamilto-
+function ansatz, which we proved to be universal.  The op-                        nians, this class of Hamiltonians also lacks any translational
+timization of the constraint function and of the hidden sec-                      symmetries that can be exploited to improve the accuracy of
+tor orbital amplitudes was performed using a neural network                       traditional wave-function ans¨atze.
+                                                                                                                                                                        9
+
+                                                                                                                ACKNOWLEDGMENTS
+
+                                                                                           The Flatiron Institute is a division of the Simons Founda-
+                                                                                        tion.  GC is supported by the Swiss National Science Foun-
+                                                                                        dation  under  Grant  No.   200021            200336.   The  authors  ac-
+                                                                                        knowledge Steven White for providing DMRG raw data of
+                                                                                        the energies of Ref.49 of cylindrical geometries.
+
+
+
+
+
+
+
+ 1  In  the  condensed  matter  physics  literature,  the  term  ‘slave-                   neural networks,”  (2021), arXiv:2108.08631 [cond-mat.str-el].
+   particle’ representations has been used historically to denote ap-                   16  S E Barnes, “New method for the anderson model,”   6, 1375–
+   proaches in which the physical Hilbert space is viewed as the                           1383 (1976).
+   projection of an enlarged Hilbert space, often in conjunction with                   17  S E Barnes, “New method for the anderson model. II. the u=0
+   a subsequent mean-ﬁeld treatment. In this work, we deem appro-                          limit,”  7, 2637–2647 (1977).
+   priate to use a different terminology and denote by ‘visible’ and                    18  Piers Coleman, “New approach to the mixed-valence problem,”
+   ‘hidden’ the previously called ‘auxiliary’ and ‘slave’ degrees of                       Phys. Rev. B 29, 3035–3044 (1984).
+   freedom, respectively.                                                               19  Gabriel  Kotliar  and  Andrei  E.  Ruckenstein,  “New  functional
+ 2  Elliott H Lieb, “The classical limit of quantum spin systems,”                         integral  approach  to  strongly  correlated  fermi  systems:   The
+   Communications in Mathematical Physics 31, 327–340 (1973).                              gutzwiller approximation as a saddle point,” Phys. Rev. Lett. 57,
+ 3  Sergey  Bravyi,   David  Gosset,   Robert  K¨onig,     and  Kristan                    1362–1365 (1986).
+   Temme,  “Approximation  algorithms  for  quantum  many-body                          20  G.  Kotliar,  “The  large  n  expansion  and  the  strong  correlation
+   problems,” Journal of Mathematical Physics 60, 032203 (2019).                           problem,” in Strongly Interacting Fermions and High-Tc super-
+ 4  Katharine  Hyatt  and  E.  M.  Stoudenmire,  “Dmrg  approach                           conductivity,  Les  Houches,  Session  LVI,  edited  by  B.  Doucot
+   to   optimizing   two-dimensional   tensor   networks,”      (2020),                    and J. Zinn-Justin (Elsevier, 1995) p. 197.
+   arXiv:1908.08833 [cond-mat.str-el].                                                  21  T. Li,  P. W¨olﬂe,   and P. J. Hirschfeld, “Spin-rotation-invariant
+ 5  Kenny  Choo,  Titus  Neupert,     and  Giuseppe  Carleo,  “Two-                        slave-boson approach to the hubbard model,” Phys. Rev. B 40,
+   dimensional  frustrated J1−J2  model  studied  with  neural  net-                       6817–6821 (1989).
+   work quantum states,” Phys. Rev. B 100, 125124 (2019).                               22  R. Fr´esard and P. W¨olﬂe, “Uniﬁed slave boson representation of
+ 6  Kenny  Choo,   Antonio  Mezzacapo,     and  Giuseppe  Carleo,                          spin and charge degrees of freedom for strongly correlated fermi
+   “Fermionic neural-network states for ab-initio electronic struc-                        systems,” International Journal of Modern Physics B 06, 685–
+   ture,” Nature Communications 11, 2368 (2020).                                           704 (1992).
+ 7  Nobuyuki Yoshioka, Wataru Mizukami,  and Franco Nori, “Solv-                        23  C.  Jayaprakash,  H.  R.  Krishnamurthy,     and  Sanjoy  Sarker,
+   ing quasiparticle band spectra of real solids using neural-network                      “Mean-ﬁeld theory for the t-j model,” Phys. Rev. B 40, 2610–
+   quantum states,” Communications Physics 4, 106 (2021).                                  2613 (1989).
+ 8  Elizabeth R. Bennewitz, Florian Hopfmueller, Bohdan Kulchyt-                        24  C. L. Kane, P. A. Lee, T. K. Ng, B. Chakraborty,  and N. Read,
+   skyy,   Juan  Carrasquilla,     and  Pooya  Ronagh,  “Neural  er-                       “Mean-ﬁeld theory of the spiral phases of a doped antiferromag-
+   ror  mitigation  of  near-term  quantum  simulations,”     (2021),                      net,” Phys. Rev. B 41, 2653–2656 (1990).
+   arXiv:2105.08086 [quant-ph].                                                         25  Serge Florens and Antoine Georges, “Quantum impurity solvers
+ 9  Yusuke  Nomura,  Andrew  S.  Darmawan,  Youhei  Yamaji,   and                          using  a  slave  rotor  representation,”  Phys.  Rev.  B  66,  165111
+   Masatoshi Imada, “Restricted boltzmann machine learning for                             (2002).
+   solving strongly correlated quantum systems,” Phys. Rev. B 96,                       26  Serge Florens and Antoine Georges, “Slave-rotor mean-ﬁeld the-
+   205152 (2017).                                                                          ories of strongly correlated systems and the mott transition in
+10  Di Luo and Bryan K. Clark, “Backﬂow transformations via neu-                           ﬁnite dimensions,” Phys. Rev. B 70, 035114 (2004).
+   ral  networks  for  quantum  many-body  wave  functions,”  Phys.                     27  L. de’Medici, A. Georges,  and S. Biermann, “Orbital-selective
+   Rev. Lett. 122, 226401 (2019).                                                          mott transition in multiband systems:  Slave-spin representation
+11  James  Stokes,  Javier  Robledo  Moreno,  Eftychios  A.  Pnev-                         and  dynamical  mean-ﬁeld  theory,”  Phys.  Rev.  B  72,  205124
+   matikakis,   and Giuseppe Carleo, “Phases of two-dimensional                            (2005).
+   spinless   lattice   fermions   with   ﬁrst-quantized   deep   neural-               28  Frank  Lechermann,  Antoine  Georges,  Gabriel  Kotliar,    and
+   network quantum states,” Phys. Rev. B 102, 205122 (2020).                               Olivier Parcollet, “Rotationally invariant slave-boson formalism
+12  David Pfau,  James S. Spencer,  Alexander G. D. G. Matthews,                           and momentum dependence of the quasiparticle weight,” Phys.
+   and W. M. C. Foulkes, “Ab initio solution of the many-electron                          Rev. B 76, 155102 (2007).
+   schr¨odinger equation with deep neural networks,” Phys. Rev. Re-                     29  Nicola Lanat`a,  Tsung-Han Lee,  Yong-Xin Yao,   and Vladimir
+   search 2, 033429 (2020).                                                                Dobrosavljevi´c,  “Emergent  bloch  excitations  in  mott  matter,”
+13  James S. Spencer, David Pfau, Aleksandar Botev,  and W. M. C.                          Phys. Rev. B 96, 195126 (2017).
+   Foulkes,  “Better,  faster  fermionic  neural  networks,”    (2020),                 30  Marius  S.  Frank,  Tsung-Han  Lee,  Gargee  Bhattacharyya,  Pak
+   arXiv:2011.07125 [physics.comp-ph].                                                     Ki Henry Tsang, Victor L. Quito, Vladimir Dobrosavljevi´c, Ove
+14  Jan  Hermann,  Zeno  Sch¨atzle,   and  Frank  No´e,  “Deep-neural-                     Christiansen,  and Nicola Lanat`a, “Quantum embedding descrip-
+   network solution of the electronic schr¨odinger equation,” Nature                       tion of the anderson lattice model with the ghost gutzwiller ap-
+   Chemistry 12, 891–897 (2020).                                                           proximation,” Phys. Rev. B 104, L081103 (2021).
+15  Koji    Inui,     Yasuyuki    Kato,         and    Yukitoshi    Motome,             31  Daniele Guerci, Massimo Capone,  and Michele Fabrizio, “Ex-
+   “Determinant-free fermionic wave function using feed-forward                            citon mott transition revisited,” Phys. Rev. Materials 3, 054605
+                                                                                                                                                                   10
+
+   (2019).                                                                            44  Shun-Ichi Amari, “Natural gradient works efﬁciently in learn-
+32  Daniele   Guerci,   Beyond   simple   variational   approaches   to                   ing,” Neural computation 10, 251–276 (1998).
+   strongly correlated electron systems, Ph.D. thesis, International                  45  Giuseppe Carleo, Kenny Choo, Damian Hofmann, James E. T.
+   School for Advanced Studies (SISSA) (2019).                                            Smith,  Tom Westerhout,  Fabien Alet,  Emily J. Davis,  Stavros
+33  Ya-Hui Zhang and Subir Sachdev, “From the pseudogap metal                             Efthymiou,   Ivan   Glasser,   Sheng-Hsuan   Lin,   Marta   Mauri,
+   to the fermi liquid using ancilla qubits,” Phys. Rev. Research 2,                      Guglielmo  Mazzola,  Christian  B.  Mendl,  Evert  van  Nieuwen-
+   023172 (2020).                                                                         burg, Ossian O’Reilly, Hugo Th´eveniaut, Giacomo Torlai, Fil-
+34  Alexander  Nikolaenko,  Maria  Tikhanovskaya,  Subir  Sachdev,                        ippo  Vicentini,    and  Alexander  Wietek,  “Netket:   A  machine
+   and Ya-Hui Zhang, “Small to large fermi surface transition in a                        learning toolkit for many-body quantum systems,” SoftwareX ,
+   single-band model using randomly coupled ancillas,” Phys. Rev.                         100311 (2019).
+   B 103, 235138 (2021).                                                              46  James Bradbury,  Roy Frostig,  Peter Hawkins,  Matthew James
+35  T.  K.  Ng  and  C.  H.  Cheng,  “Supersymmetry  in  models  with                     Johnson, Chris Leary, Dougal Maclaurin, George Necula, Adam
+   strong on-site coulomb repulsion: Application to the heisenberg                        Paszke,  Jake  VanderPlas,  Skye  Wanderman-Milne,   and  Qiao
+   model,” Phys. Rev. B 59, R6616–R6619 (1999).                                           Zhang,  “JAX:  composable  transformations  of  Python+NumPy
+36  See supplementary information below for further details.                              programs,”  (2018).
+37  Yongkyung  Kwon,  D.  M.  Ceperley,    and  Richard  M.  Mar-                     47  Tsuyoshi Kashima and Masatoshi Imada, “Path-integral renor-
+   tin,  “Effects  of  three-body  and  backﬂow  correlations  in  the                    malization   group   method   for   numerical   study   on   ground
+   two-dimensional electron gas,” Phys. Rev. B 48, 12037–12046                            states   of   strongly   correlated   electronic   systems,”   Journal
+   (1993).                                                                                of   the   Physical   Society   of   Japan   70,   2287–2299   (2001),
+38  Yongkyung Kwon, D. M. Ceperley,  and Richard M. Martin, “Ef-                          https://doi.org/10.1143/JPSJ.70.2287.
+   fects of backﬂow correlation in the three-dimensional electron                     48  Guido Mont´ufar, Razvan Pascanu, Kyunghyun Cho,  and Yoshua
+   gas:  Quantum monte carlo study,” Phys. Rev. B 58, 6800–6806                           Bengio, “On the number of linear regions of deep neural net-
+   (1998).                                                                                works,”  (2014), arXiv:1402.1869 [stat.ML].
+39  Luca  F.  Tocchio,  Federico  Becca,  Alberto  Parola,    and  San-               49  Bo-Xiao  Zheng,   Chia-Min  Chung,   Philippe  Corboz,   Georg
+   dro Sorella, “Role of backﬂow correlations for the nonmagnetic                         Ehlers,    Ming-Pu    Qin,    Reinhard    M.    Noack,    Hao    Shi,
+                        ′  hubbard  model,”  Phys.  Rev.  B  78,  041101
+   phase  of  the t–t                                                                     Steven   R.   White,    Shiwei   Zhang,       and   Garnet   Kin-Lic
+   (2008).                                                                                Chan,  “Stripe  order  in  the  underdoped  region  of  the  two-
+40  Luca F. Tocchio,  Federico Becca,   and Claudius Gros, “Back-                         dimensional hubbard model,” Science 358, 1155–1160 (2017),
+   ﬂow  correlations  in  the  hubbard  model:   An  efﬁcient  tool  for                  https://science.sciencemag.org/content/358/6367/1155.full.pdf.
+   the study of the metal-insulator transition and the large-u limit,”                50  E.  Dagotto,  A.  Moreo,  F.  Ortolani,  D.  Poilblanc,   and  J.  Ri-
+   Phys. Rev. B 83, 195138 (2011).                                                        era, “Static and dynamical properties of doped hubbard clusters,”
+41  G. Cybenko, “Approximation by superpositions of a sigmoidal                           Phys. Rev. B 45, 10741–10760 (1992).
+   function,” Mathematics of Control, Signals and Systems 2, 303–                     51  Mingpu Qin, Hao Shi,  and Shiwei Zhang, “Benchmark study of
+   314 (1989).                                                                            the two-dimensional hubbard model with auxiliary-ﬁeld quan-
+42  Hui-Hai Zhao, Kota Ido, Satoshi Morita,  and Masatoshi Imada,                         tum monte carlo method,” Phys. Rev. B 94, 085103 (2016).
+   “Variational monte carlo method for fermionic models combined                      52  Alexander  Wietek,  Yuan-Yao  He,  Steven  R.  White,  Antoine
+   with  tensor  networks  and  applications  to  the  hole-doped  two-                   Georges,    and  E.  Miles  Stoudenmire,  “Stripes,  antiferromag-
+   dimensional hubbard model,” Phys. Rev. B 96, 085103 (2017).                            netism, and the pseudogap in the doped hubbard model at ﬁnite
+43  Sandro Sorella, Michele Casula,  and Dario Rocca, “Weak bind-                         temperature,” Phys. Rev. X 11, 031007 (2021).
+   ing between two aromatic rings: Feeling the van der waals attrac-                  53  Debanjan Chowdhury, Antoine Georges, Olivier Parcollet,  and
+   tion by quantum monte carlo methods,” The Journal of Chemical                          Subir Sachdev, “Sachdev-ye-kitaev models and beyond: A win-
+   Physics 127, 014105 (2007), https://doi.org/10.1063/1.2746035.                         dow into non-fermi liquids,”  (2021).
+
+
+
+                                Appendix A: Universality of the hidden fermion determinant state in the lattice
+
+   The aim of this appendix is to prove that the hidden fermion determinant state of amplitudesψ(x), can exactly match the
+combinatorially-many amplitudes of an arbitrary target stateψtar(x), thus provingψ(x) to be a universal wave function ansatz
+in the ﬁxed particle subspace of Fock space.
+   TakeN  and  ˜N  visible and hidden fermions occupyingM  and  ˜M  visible and hidden modes respectively.  For simplicity,
+and without loss of generality, we consider the particular case where the hidden orbitals have zero amplitude in the visible
+lattice and the visible orbitals have zero amplitude in the positions of the hidden modes, i.e. χv = φh = 0, thus simplifying
+the evaluation of the amplitudes of the hidden fermion determinant state to:
+                                                       [φv(x)        0          ]
+                                       ψ(x) = det           0  χh(f(x))            = det[φv(x)]· det[χh(f(x))].                                        (A1)
+
+With this particular wave function structure, we already know that det[φv(x)] is not capable of matching the amplitudes
+of an arbitrary state in Fock space.   This is because it is a N×N  determinant of single-particle orbitals,  thus incapable
+of  capturing  correlated  states.   This  implies  that  the  majority  of  the  expressive  power  of  the  ansatz  must  come  from  the˜N×  ˜N  determinant det[χh(f(x))].  Note that, while theχh are single particle orbitals of the hidden particle positions, the
+
+hidden particle conﬁguration depends on the conﬁguration of all of the visible particles through the constraint function, and
+                                                                                                                                                         11
+
+consequently, det[χh(f(x))] can be interpreted as the determinant of multiple-visible-particle orbitals.  Therefore, in order
+to haveψ(x) =ψtar(x), the determinant det[χh(f(x))] must satisfy:
+
+                                                          det[χh(f(x))] =  ψtar(x)det[φv(x)],                                                                  (A2)
+
+which can only be accomplished iff det[φv(x)]⁄=  0 for all x.   This requirement is satisﬁed by choosing the rows of the
+(M×N)φv matrix to be non-colinearN-dimenstional vectors.  Note that bothψtar(x) and det[φv(x)] are anti-symmetric
+functions, and in consequence, det[χh(f(x))] must be a symmetric function ofx, which is achieved by takingf(x) to be
+symmetric.
+   Now we provide an explicit construction off(x) andχh such that requirement A2 is satisﬁed for an arbitrary stateψtar(x).) entries, that provides the
+This construction is based on identifying det[χh(f(x))] with a lookup table with αmax  = (MN
+corresponding amplitudes for the different αmax  occupation conﬁgurations n of the visible particles on the visible modes.( ˜M×  ˜N)
+Therefore, in the worst case scenario we require  ˜M =αmax + ( ˜N− 1) hidden modes. A possible choice for the
+matrix of amplitudesχh that achieves the desired lookup table is given by
+                                                                      χ1     0  ...     0
+                                                                   ...       ...                 ...
+
+                                                           χh =      χαmax   0  ...     0                                                              (A3)
+                                                                        0
+                                                                         ...        I( ˜N−1)
+
+                                                                        0
+
+with I( ˜N−1) the ( ˜N− 1)× ( ˜N− 1) identity matrix. We identifyχ1,...,χαmax with theαmax different amplitudes of the ratio
+ψtar(x)/ det[φv(x)]. The position of hidden fermioni is determined byith component of the constraint function, i.e.fi(x),
+which must satisfy 0<fi(x)≤  ˜M andfi(x)∈ Z. We choose
+                                                              {
+                                                   fi(x) =      α(x)                     if i = 1
+                                                                αmax + (i− 1)    if  2≤i≤  ˜N                                                           (A4)
+where 0 < α(x)≤ αmax andα∈ Z provides a distinct label to each of the(M) different occupation conﬁgurations of the
+                                                                                                   N
+visible particles on the visible modes.
+   With the construction we obtain det[χh(f(x))] =χm =ψtar(x)/ det[φv(x)] with 1≤m≤αmax, thus concluding the
+proof that the hidden fermion determinant state can match the amplitudes of an arbitrary state in the ﬁxed particle subspace of
+Fock space.
+   It is noteworthy that the explicit construction of a combinatorially-large number of hidden modes can be circumvented by
+directly parametrizing the function composition[χh(f(x))] by a universal function approximator.
+
+
+                    Appendix B: Conﬁguration interaction wavefunctions from the hidden fermion determinant state
+
+   The  aim  of  this  appendix  is  to  provide  an  explicit  construction  of  a  multi-determinant  wave  function  ansatz  from  the
+hidden fermion determinant state. In particular, we show that linear combinations of the Hartree-Fock (HF) ground state with
+all possible single, double, triple,..,  ˜N-tuple excitations to the  ˜N  lower virtual orbitals can be constructed from the hidden
+fermion determinant state with  ˜N  hidden fermions.  First we introduce the notation that will be used in the remaining of the
+section.  Then we show the  ˜N  =  1 and  ˜N  =  2 cases to demonstrate that they lead to a linear combination of N-particle
+determinants containing single and double excitations to the ﬁrst and second virtual orbitals respectively.  We conclude by
+generalizing the result to an arbitrary number of hidden fermions.
+   {φHFα } is the set of single-particle the HF orbitals. The subscriptα = 1, 2,...,Ntot labels the orbitals in ascending order in
+energy.  We refer to theN  lowest energy orbitals as the occupied orbitals.  The remaining orbitals are called virtual orbitals,
+following the quantum chemistry nomenclature.  The Slater determinant constructed with φHF1 ,...,φHFN   corresponds to the
+usual HF ground state|Φ⟩ =  ˆϕ†1... ˆϕ†N|0⟩, whose amplitudes are given by the determinant:
+                                                                    φHF                               
+                                                                         1   (x1) ··· φHFN  (x1)
+                                                 ψHF(x) = det             ...                         ....                                                        (B1)
+
+                                                                      φHF1   (xN) ··· φHFN  (xN))
+                                                                                                                                                                12
+
+Following the Quantum Chemistry notation|Φµα⟩ withα≤N andµ>N, is the excitation of the fermion in occupied orbital
+α to the virtual orbitalµ:
+
+                                                      |Φµα⟩ =  ˆϕ†1... ˆϕ†α−1 ˆϕ†α+1... ˆϕ†N· ˆϕ†µ|0⟩.                                                           (B2)
+
+Analogously|Φµ1...µnα1...αn⟩ labels the promotion of the n electrons in occupied orbitals α1  through αn  to virtual orbitals µ1
+throughµn.
+   We choose to identify the visible orbitalsφv with theN occupied HF orbitalsφHFα    (1≤α≤N) and the  ˜N hidden orbitals
+χh with the  ˜N ﬁrst virtual orbitalsφHFµ    (N <µ≤N +  ˜N).
+
+
+                                                             1.     ˜N = 1 and single excitations
+
+
+   According to the above identiﬁcation of orbitals, the wave function amplitudes become:
+                                                            φHF                                                      
+                                                               1   (x1) ···  φHFN  (x1)   φHFN+1(x1)
+                                                           ...                            ...                      ...
+
+                                         ψ(x) = det          φHF1   (xN) ···  φHFN  (xN)  φHFN+1(xN))                    .                                           (B3)
+
+
+                                                           φHF1   (f1(x)) ··· φHFN  (f1(x)) φHFN+1(f1(x))
+
+The cofactor of the above determinantCij(x) is deﬁned asCij(x) = det[Aij(x)], whereAij(x) is the minor of the matrix of
+orbitals, obtained by eliminating rowi and columnj from the matrix that enters the original determinant. Using the Laplace
+expansion of the determinant along its last row:
+
+                                                ψ(x) =  ∑              (−1)α·φHFα  (f1(x))·CNtot,α(x).                                                   (B4)
+                                                           1≤α≤Ntot
+
+We realize thatCNtot,α(x) can be identiﬁed with the amplitudes of theN-particle Slater determinant obtained from promoting
+particle in occupied orbitalα to the ﬁrst virtual orbital. In the particular case whereα =Ntot,CNtot,Ntot(x) are the amplitudes
+of the HF ground state. The prefactors to the cofactors can be set to constants (−1)α·φHFα  (f1(x)) =cN+1α     . For this choice of
+constraint function and orbital amplitudes, the projected augmented determinant to the physical space corresponds to the CI
+wavefunction with single-particle excitations:
+
+                                                       |ψproj⟩ =c0|Φ⟩ + ∑                 cN+1α |ΦN+1α ⟩.                                                            (B5)
+                                                                                1≤α≤N
+
+
+                                                            2.     ˜N = 2 and double excitations
+
+
+   In this case, the amplitudes of the hidden fermion determinant state are given by the determinant:
+                                                  φHF                                                                          
+                                                     1   (x1) ···  φHFN  (x1)   φHFN+1(x1)   φHFN+2(x1)
+                                               ...                            ...                      ...                       ...
+
+                                                   φHF1   (xN) ···  φHFN  (xN)  φHFN+1(xN))  φHFN+2(xN))
+                               ψ(x) = det                                                                                          .                               (B6)
+
+                                                 φHF1   (f1(x)) ··· φHFN  (f1(x)) φHFN+1(f1(x)) φHFN+2(f1(x))
+
+                                                 φHF1   (f2(x)) ··· φHFN  (f2(x)) φHFN+1(f2(x)) φHFN+2(f2(x))
+
+We now proceed to expand the above determinant on its cofactors by its last row, obtaining the linear combinations of (N +1)-
+particle determinants:
+
+                                                  ψ(x) =  ∑              (−1)α·φHFα  (f2(x))·CNtot,α.                                                      (B7)
+                                                             1≤α≤Ntot
+                                                                                                                                                        13
+
+Ci,j  is the cofactor of the (N + 2)-particle determinantCij  = det[Aij] whereAij  is the minor obtained by removing row
+i and columnj  from the matrix entering the determinant in Eq. B6.  NowCNtot,α are (N + 1)-particle determinants.  The
+cofactorsCNtot,α can also be expanded on their cofactors by their last row, obtaining:
+
+                           ψ(x) =  ∑                (−1)α+β+1·φHFα  (f2(x))·φHFβ   (f1(x))·C(Ntot−1,β)(Ntot,α).                            (B8)
+                                       1≤α≤Ntot
+                                     1≤β≤Ntot−1
+HereC(kl)(ij) is the cofactorC(kl)(ij) = det[A(kl)(ij)] whereA(kl)(ij) is the minor obtained by removing rowk and columnl
+from the previously deﬁned minorAij. NowC(Ntot−1,β)(Ntot,α) areN-particle Slater determinants obtained by promoting the
+particles in the occupied orbitalsα andβ to the two lowest virtual orbitalsφHFN+1 andφHFN+2. It must be noted that the limiting
+cases C(Ntot−1,Ntot−1)(Ntot,Ntot), C(Ntot−1,Ntot−1)(Ntot,α)  and C(Ntot−1,β)(Ntot,Ntot)  are the HF ground-state determinant,
+the excitation of the particle in occupied orbitalα to the second virtual orbital and the excitation of the particle in occupied
+orbitalβ to the ﬁrst virtual orbital receptively. As before, setting the prefactors to the cofactors to be the constants:
+                                                                              c0                 ifα =Ntot; β =Ntot− 1
+
+                        (−1)α+β+1·φHFα  (f2(x))·φHFα  (f2(x)) :=                 cN+1β                 ifα =Ntot; β≤N                                 (B9)
+                                                                              cN+2α                 ifα≤N; β =Ntot− 1
+                                                                                 cN+2,N+1α,β              ifα≤N; β =≤N
+the augmented determinant, projected to the physical space corresponds to the the CI wavefunction with single and double-
+particle excitations:
+
+                               |ψproj⟩ =c0|Ψ⟩ +  ∑                  cµα·|Φµα⟩+   ∑                    cµ1,µ2α1,α2·|Φµ1,µ2α1,α2⟩.                               (B10)
+                                                         1≤α≤N                       1≤α1<α2≤N
+                                                       N<µ≤Ntot                    N<µ1<µ2≤Ntot
+                                                       |          {z          }    |                 {z                  }
+                                                                singles                            doubles
+
+
+                                                      3.    General  ˜N and  ˜N-tuple excitations
+
+
+   The generalization of the two cases above to arbitrary  ˜N  implies that the hidden fermion determinant state of  ˜N  hidden
+fermions can be chosen to be a compact representation of a CI wavefunction with all possible single through  ˜N-tuple particle
+excitations to the  ˜N lowest virtual orbitals:
+
+  |ψproj⟩ =c0·|Φ⟩ +  ∑                   cµα|Φµα⟩  +   ∑                 cµ1,µ2α1,α2·|Φµ1,µ2α1,α2⟩+... +    ∑                    cµ1...µ ˜Nα1...α ˜N|Φµ1...µ ˜Nα1...α ˜N⟩.
+                              1≤α≤N                     1≤α1<α2≤N                                         1≤α1<...<α ˜N≤N
+                            N<µ≤Ntot                  N<µ1<µ2≤Ntot                                       N<µ1<...<µ ˜N≤Ntot
+                            |         {z         }    |                 {z                  }            |         {z          }
+                                    singles                           doubles                                   ˜N−tuples
+                                                                                                                                                    (B11)
+Note that in the above expression the coefﬁcientscµ1...µnα1...αn are given, up to a sign, by the product
+                                                                    ∏
+                                                                           φαi(fj(x)).
+                                                                 1≤i,j≤n
+
+
+                                                               4.    Concluding remarks
+
+
+   It must be noted that for arbitrary  ˜N not all of the coefﬁcients of the above expansion can be independent from each other.
+This claim is supported by a simple counting argument. There are  ˜N·( ˜N +N) of theφHFα  (f(x)) coefﬁcients from the bottom
+hidden sub-matrix. However, in general , the number of free parameters in the above CI expansion is:
+                                                                   ∑      (N)( ˜N)
+                                                                             i       i   ,
+
+                                                                 1≤i≤ ˜N
+
+which except for  ˜N = 1 is larger than  ˜N· ( ˜N +N). While this imposes a constraint on the type of CI wavefunctions that can
+be obtained with this construction, it must be noted that other successful trial states like unitary coupled clusters also suffer
+from similar constraints.
+                                                                                                                                                             14
+
+   While the above construction assumed the staring orbitals to be the occupied and virtual orbitals from the HF solution of
+the given Hamiltonian, a more general case concerns the choice of arbitrary linear combinations of those orbitals. In practice
+we allow such arbitrary linear combinations, and therefore, the trial state we use in this work contains, as a particular case, the
+CI wavefunction.
+   Finally it is important to remark that in this derivation we have setφHFα  (f(x)) to be constants. However, in the general case
+they will be bosonic functions of the visible particle positions, which leads to Jastrow-like factors in the CI expansion, thus
+leading to a more general wave function.
+
+
+                                              Appendix C: Physically motivated constraint functions
+
+   In this appendix we ﬁrst show an explicit construction of the Gutzwiller wave function ansatz from the hidden fermion
+determinant state.  This construction serves as a motivation to showcase the fact that a simple constraint function leads to a
+correlated wave function. Inspired by this, we present other physically motivated (non-optimizable) constraint functions, and
+benchmark them in the 4× 4 Hubbard model at quarter occupation. We also study the possibility of adding neural-network-
+based correlation factors to the hidden fermion Slater determinant state.
+
+
+                1.    Explicit construction of the Gutzwiller wave function in the Slater determinant hidden fermion state
+
+   In order to gain intuition about the nature of the hidden fermion determinant state, consider as a trivial warmup, the molec-
+ular orbital wave function, which has the following Fock-space representation corresponding toN  = 2 fermions inM  = 4
+modes,
+                                                 [                                                     ]
+                                                  c†1↑c†2↓ +c†2↑c†1↓ +e−g(c†1↑c†1↓ +c†2↑c†2↓)            |0⟩ .                                                      (C1)
+
+by introducing one hidden fermion ( ˜N  = 1) with two hidden states ( ˜M  = 2) and using the following disjointly supported
+orbitals,
+                                           φ1(1↑)      0                                                          0
+                                   φv =    φ1(2↑)      0        ,                  χv =                         0 ,                                     (C2)
+                                                 0   φ2(1↓)                                                           0
+                                           [0  00   φ2(2↓)]                                                      [  10  ]
+
+                                   φh =     0  0     ,                         χh =                                e−g      .                                     (C3)
+
+In particular, with the following choice of constraint function
+
+                                                              f(x) =n1↑n1↓ +n2↑n2↓ ,                                                                       (C4)
+
+we ﬁnd the probability amplitudes
+                                                            φ1(i1) φ2(i1)                  0                    
+                                            ψ(x) = det      φ1(i2) φ2(i2)                  0[                ]                                                 (C5)
+                                                                  0          0      exp   −g∑2i=1ni↑ni↓
+                                                             [       2∑          ]      [φ1(i1) φ2(i1)]
+                                                    = exp      −g       ni↑ni↓     det    φ1(i2) φ2(i2)          ,                                                   (C6)
+                                                                   i=1
+which is of the required form.  By similar reasoning, one can construct the Gutzwiller projection of an arbitrary Slater deter-
+minant state with 2M modes described by orbitalsφv,
+                                                                    [      M∑           ]
+                                                   ψ(x) = exp        −g        ni↑ni↓     det[φv(x)] ,                                                         (C7)
+                                                                          i=1
+
+simply by choosing disjointly supported hidden and visible orbitalsφh  = 0, χv  = 0, χh  = [1,e−g,...,e−Mg]T together
+with the constraint function
+
+                                                                              M∑
+                                                                  f(x) =          ni↑ni↓ .                                                                            (C8)
+                                                                             i=1
+                                                                                                                                                            15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.  Benchmarks of physically motivated constraint functions with ED energies in the 4×4 Hubbard model atn = 1/2 average physical
+site occupation. Results from standard wave function ans¨atze are shown as dashed lines for comparison purposes. (a) Relative error in the
+ground-state energy as a function of the coupling constantU. The different constraint function ans¨atze are a single Slater determinant in the
+augmented Fock space with no projections. (b) Same as panel (a) including a complex RBM projection factor both in the control unrestricted
+HF ansatz and a E-RBM factor in the the hidden fermion ans¨atze.
+
+
+
+                                        2.    Benchmarks with physically motivated constraint functions
+
+   Motivated by the ability to reproduce correlated wave function ans¨atze as described above, we propose and test a collection
+of constraint functions built from the physical intuition about the ground state physics of the Hamiltonian in Eq. (1) in the
+main text.
+
+
+
+
+                                                      a.    Gutzwiller-inspired constraint function
+
+   Take  ˜N  = 1 and  ˜M  =N/2, with the constraint functionf(x) =∑Mi=1ni↑ni↓. The position of the hidden fermion in the
+hidden modes is determined by the number of doubly occupied sites in thex conﬁguration.  The wave function ansatz is the
+Slater determinant in the enlarged Hilbert space of Eq. (5) in the main text.  The variational parameters are the coefﬁcients
+(orbitals) of the non-orthogonal change of single-particle basis in Eq. (6) in the main text.  For a particular choice of orbitals
+this ansatz can reproduce the Gutzwiller wave function as described above.
+
+
+
+
+                                                          b.    Unrestricted hidden spin ansatz
+
+   Consider a pair of hidden fermionic modes  ˆd†iβ withβ = 0, 1, associated to each site of the visible Hubbard latticei, and
+a single hidden fermion populating each pair of hidden modes.  Thus  ˜N  = M/2 and  ˜M  = M.  The position of the hidden
+fermion depends on the visible site occupancy via the local constraint function fi(x)  = ni↑ni↓  = β.  The wave function
+ansatz is the Slater determinant in the enlarged Hilbert space of Eq. (5) in the main text.  The variational parameters are the
+coefﬁcients (orbitals) of the non-orthogonal change of single-particle basis in Eq. (6) in the main text.  This ansatz is closely
+related to the hidden spin formalism27.  The difference is to consider the hidden fermions to be indistinguishable particles
+amongst each other and the visible ones, as opposed to the hidden spin formalism where the added spins are distinguishable
+particles.  This unrestricted hidden spin ansatz provides more ﬂexibility, the same way the unrestricted Hartree-Fock does
+compared to factorised HF. It is easy to see that the unrestricted hidden spin ansatz can reproduce the Gutzwiller ansatz for a
+particular choice of orbitals. Furthermore, it was proven that the hidden spin formalism can capture the Mott transition at the
+mean ﬁeld level. Therefore, this ansatz can capture correlations beyond the Gutzwiller single-site correlations.
+                                                                                                                                                           16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6.   Effect of the number of hidden fermions and depth of the fully connected neural network that parametrizes the hidden sub-matrix
+in the expressive power of the hidden fermion determinant ansatz.  The color scale shows the relative error in the ground-state energy for
+different values ofU givenNh and the neural network depth. The results correspond to the 4× 4 Hubbard model atn = 1/2 ﬁlling.
+
+
+
+                                                        c.    Jastrow-inspired constraint function
+
+
+   Consider a disjointed collection of hidden modes  ˆd†l,β with 1≤l≤Dmax and 0≤β≤N, whereDmax is the maximum
+graph distance (Manhattan distance) in the physical lattice.  There is one hidden fermion for each of thel groups of hidden
+modes,  ˜N  = Dmax.  The position of the hidden particle at thelth group of hidden modes depends on the number of visible
+fermions at distancel in thex conﬁguration:
+
+                                                                      1                                                                                         (C9)
+                                                                            ∑      ∑
+                                                          fl(x) =        ˜N               ninj.
+                                                                            i∈V  j∈(i+l)
+
+
+
+
+
+                                                                     d.    Benchmarks
+
+
+   Panel (a) on Fig. 5 shows the relative error in the ground state energy as a function ofU for the Gutzwiller-inspired constraint
+function, unrestricted hidden spin and Jastrow-inspired constraint function ans¨atze. It also shows the relative error for standard
+wave function ans¨atze like the unrestricted SD and the unrestricted SD with Gutzwiller and Jastrow factors for comparison.
+The Gutzwiller-inspired constraint function, and unrestricted hidden spin ans¨atze have a relative error comparable to it of
+the standard unrestricted SD with Gutzwiller and Jastrow factors, providing for some values ofU  a marginal improvement
+in the ground-state energy.  On the other hand, the Jastrow-inspired constraint function ansatz achieves relative error values
+comparable to a single unrestricted SD. These results show that the choice of constraint function is of great relevance to ﬁnd
+and ansatz that can capture correlated phenomena.
+   In  addition  to  considering  mean-ﬁeld  states  in  the  enlarged  Hilbert  space,  correlated  states  can  also  be  constructed  by
+multiplying the Slater determinant by a parametrized factor that depends on both the occupation of the visible and hidden
+degrees of freedom.  In particular we take that factor to be a complex Restricted Boltzmann Machine in the enlarged space
+of occupationsn⊕ ˜n (E-RBM). Panel (b) of Fig. 5 shows the relative error in the ground-state energy as a function of the
+coupling constant for the The Gutzwiller-inspired constraint function, and unrestricted hidden spin ans¨atze with an additional
+E-RBM factor where the hidden layer has twice as many units as input features (α = 2).  For comparison purposes, we also
+show the relative error of an unrestricted SD ansatz (visible space) with an additional complex RBM factor with twice as many
+units as input features (α = 2), proposed proposed for the ﬁrst time in Ref.9. At smaller values ofU the correlated ans¨atze in
+the enlarged space have a lower relative error in the energy than the equivalent correlated ansatz in the original Hilbert space.
+At larger values ofU, the correlated unrestricted hidden spin ansatz notably outperforms the correlated ansatz in the original
+Hilbert space.
+   While the results presented above show that the hidden fermion formalism outperforms well established wave functions
+ans¨atze for carefully chosen constraint functions, it is still unclear how to choose the optimal constraint function. In fact, there
+exists a doubly exponential number of constraint functions, making the brute-force search of constraint function an intractable
+problem.
+                                                                                                                                                          17
+
+   Appendix D: Effect of the number of hidden fermions and neural network architecture in the expressive power of the hidden
+                                                               fermion determinant state
+
+   We study the effect of the depth of the neural networks, leaving the width of the hidden layers ﬁxed.  The width of the
+ﬁrst half of hidden layers matches the number of input features and the second half matches the number of output features.
+Fig. 6 shows the relative error in the ground-state energy for different values ofU  and  ˜N  and the neural network depth.  For
+every number of hidden fermions, the accuracy improves as the depth of the neural network increases until a critical value is
+reached, in this case six hidden layers. Beyond six hidden layers the optimization becomes challenging . Even though deeper
+architectures are known to be more expressive48, the optimization of the energy becomes increasingly challenging, making
+the ansatz to get stuck in a local minimum that can be identiﬁed with the mean-ﬁeld solution. It is also noteworthy that for a
+ﬁxed depth, the error decreases as the number of hidden fermions is increased, to the point that shallow architectures lead to
+low errors.
+   In particular, note that a neural network with a single hidden layer (depth 2) and with eight hidden fermions provides the
+lowest error for the whole range of coupling strengths.  We choose this conﬁguration of eight hidden fermions and a single
+hidden layer architecture as a starting point to study the effect of the width of the network in the ansatz expressive power in
+the main text. The key advantage is that in this network architecture, the number of hidden units is the only control parameter
+to increase its expressivity.  Furthermore, this single hidden layer architecture is the minimal architecture that satisﬁes the
+universal approximation theorem41.
+
+
+                                             Appendix E: Energy-variance extrapolation in Fig. 3 (a)
+
+   The convergence of the resulting ground-state energy with the complexity of the neural-networks in the variational states is
+not a well understood matter, thus, the direct extrapolation of the energy from the parameter controlling the NN complexity
+is not a well motivated technique.  However, it is clear that in general more expressive architectures yield lower energies and
+variances. This collection of converged energies and variances can be used to extrapolate a better estimate to the ground-state
+energy.
+   The energy-variance extrapolation is motivated by the fact that the difference between the true ground-state energy⟨ ˆH⟩gs
+and the variational expectation value⟨ ˆH⟩:
+
+                                                                  δE =⟨ ˆH⟩−⟨ ˆH⟩gs                                                                             (E1)
+
+vanishes linearly with the energy variance
+
+                                                                 ∆E =⟨ ˆH2⟩−⟨ ˆH⟩2⟨ ˆH⟩2                                                                                   (E2)
+
+
+for sufﬁciently smallδE (see Eqs.  2.17-2.23.  in Ref47).  Therefore, a better estimate to⟨ ˆH⟩gs can be extracted by perform-
+ing linear regression on the variational energies and variances coming from different trial wave function with different NN
+complexities. In our case for different values of the ratio between hidden and input unitsα.
+   The variational energies from Fig. 3 (a) in the main text for different values ofα are shown as a function of their variance in
+Fig. 7, at different values of the coupling constantU. The relation between the variational energy and the variance is in good
+agreement with a linear trend.  From the intercept of the linear extrapolation with the zero variance axis we extract estimates
+of⟨ ˆH⟩gs. The relative errors of the extrapolated energies are shown in Fig. 3 (a) in the main text.
+
+
+                                Appendix F: Energy benchmarks in theL×L Hubbard model at half ﬁlling.
+
+   We  study  the  accuracy,  of  the  hidden  fermion  determinant  state,  relative  to  Auxiliary  Field  Quantum  Monte  Carlo
+(AFQMC), on increasingly larger systems.   At half ﬁlling AFQMC does not have a sign problem.   Therefore it provides
+very accurate estimates of the energy values.
+   We focus on the 4× 4, 6× 6 and 8× 8 system sizes, imposing periodic boundary conditions along one of the sides of the
+square and anti-periodic along the other side.  In this case the energy per site increases monotonically with the side length51.
+We use the hidden fermion determinant state with a fully parametrized hidden sub-matrix.  The number of hidden fermions
+and hidden unit densities are  ˜N ={8, 8, 16} andα ={96, 78, 1} for the 4× 4, 6× 6 and 8× 8 lattices respectively. Figure 8
+shows the relative error in the ground-state energy as a function of the inverse of the number of sites in the lattice for different
+values ofU. While the error increases with the system size, it always stays in the orderO(10−3) or lower. Remarkably, the
+achieved accuracy is better, by at least a factor of two, than the reported accuracy for the neural-network based wave function
+ansatz in Ref.9.
+                                                                                                                                                               18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.   Energy-variance extrapolation of the ground-state energy for the 4× 4 square Hubbard lattice with periodic boundary conditions
+and average site occupationn = 1/2.  The variational energy for different values of the ratio between hidden and input unitsα is shown
+as a function of its variance. The data is the same as in Fig. 3 (a) in the main text. Different panels show the the extrapolation for different
+values of the coupling constantU. The solid lines are the lines of best ﬁt to the variational data.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.    Relative (to AFQMC energies from Ref.51) error in the ground-state energy in the square lattice Hubbard model at half ﬁlling
+for increasing side lengthL. Periodic boundary conditions are imposed along one of the sides while anti-periodic boundary conditions are
+imposed along the other side. Different values ofU are shown in different colors as indicated. The green and brown diamonds correspond
+to the accuracy reported in Ref.9 using a neural-network based Jastrow wave function ansatz forU = 4 andU = 8 respectively.
+
+
+      Appendix G: First quantized fermions on the open-sourced library NetKet: a VMC library for distinguishable particles
+
+   Recall that in the canonical quantization ofN  spinless fermions hopping on an undirected graphG = (V,E), the conﬁg-
+uration space is described by arrays of the formx = (x1,...,xN)∈VN , where we assume some ordering on the vertices,
+which identiﬁes them with the integers from 1 to|V|. In this section we describe how to reformulate the problem in terms of
+a local spin model necessary for implementation in the NetKet framekwork. The Hilbert space of the spin model consists of a
+tensor product of local Hilbert spaces CN+1
+                                                                    Hspin =⨂         CN+1                                                                             (G1)
+                                                                                i∈V
+which is spanned by orthonormal basis vectors of the form|κ⟩ where κ  :V →{0,...,N}.  Recall that each function κ
+provides lookup table describing the location of a vertex within the conﬁguration x  =  (x1,...,xN) (or zero if the vertex
+is absent).  It is clear thatHspin contains many unphysical states.  These unphysical states are avoided in the Markov chain
+by ensuring a valid initialization and using a transition rule that exchanges the state of two vertices.  Now we discuss the
+implementation of the following operators as local operators onHspin,
+                                                                ni ,   ninj ,   c†icj                                                                        (G2)
+The ﬁrst is represented by a single-site operatorn : CN+1→ CN+1 given byn :=             1 −|0⟩⟨0| where           1   denotes the identity
+operator on CN+1. The second is given by the tensor product operatorn⊗n, where the left and right tensor factors represent
+                                                                                                                                                              19
+
+sitesi andj, respectively. Finally,c†icj is represented by(|0⟩⟨0|⊗n)SWAP.
+
+
+
+                          Appendix H: Converged values of variational energies for different trial wave functions
+
+   This  section  contains  the  numerical  values  of  the  converged  ground  state  energies  obtained  in  this  work,  with  special
+emphasis on the hidden fermion determinant state (HFDS). We also include energies from other trial states for reference.
+Exact diagonalization energies used in the benchmarks are also provided for the smaller system sizes.
+
+
+
+                                                       1.    4× 4 Hubbard model withn = 1/2
+
+
+
+
+   Here we provide the variational and exact diagonalization (ED) energies for different trial states in the square lattice Hubbard
+model of size 4× 4 and average site occupationn = 1/2 and periodic boundary conditions, for various values ofU.
+   Table I contains the ground-state variational energies for different values ofU obtained with the HFDS wave function with
+a parametrized constraint function.  The hidden sub-matrix is parametrized by single-hidden-layer neural networks of width
+densityα. It also contains the ED energies for reference. The data corresponds to the relative errors shown in Fig. 3 (a) in the
+main text.
+
+   U       ED energy        HFDS (α = 0.5)       HFDS (α = 1)       HFDS (α = 2)       HFDS (α = 4)       HFDS (α = 8)      HFDS (α = 16)        HFDS (α = 32)
+  3.6   -17.6980300(1)        -17.65651(7)        -17.68383(9)        -17.6893(1)        -17.6897(4)       -17.6925(6)         -17.6929(8)         -17.69357(4)
+ 7.75   -16.5091548(2)         -16.4196(4)         -16.4823(6)        -16.4893(3)        -16.4959(4)       -16.4960(3)          -16.502(3)          -16.505(1)
+  10    -16.1432081(7)         -16.0457(1)         -16.0995(5)        -16.1103(8)        -16.1204(5)       -16.1329(4)         -16.1348(5)         -16.1383(9)
+
+TABLE I. Ground-state energy for different values ofU in the 4× 4 Hubbard model withn = 1/2 and periodic boundary conditions. Table
+contains ED energies for reference. Table also contains variational energies from the hidden fermion determinant state with a parametrized
+constraint function. The data corresponds to the relative errors shown in Fig. 3 (a) in the main text. The hidden sub-matrix is parametrized
+by single-hidden-layer neural networks of width densityα. See the main text for more details.
+
+   Table II contains ground-state energies for different variational states, with an emphasis on variational energies from hidden
+fermion determinant states and hidden fermion determinant states with an added RBM factor in the augmented space with
+physically motivated constraint functions, as described in Section 3 in the Supplementary information.  Other trial states are
+included for reference. It also contains the exact diagonalization (ED) energies used for benchmarking. The data corresponds
+to the relative errors shown in Fig. 1 in the Supplementary Information.
+
+               Ansatz                      U = 0.1             U = 0.6            U = 1             U =2.15            U = 3.6          U = 7.75            U =10
+                 ED                   -19.9073095(9)      -19.4747633(2)     -19.161986(3)      -18.4053208(8)     -17.698030(1)     -16.509154(8)     -16.509154(8)
+                USD                      -19.906(7)           -19.43(3)         -19.07(4)          -18.06(6)          -16.85(8)         -14.36(8)         -13.74(7)
+        USD (Gutzwiller)                 -19.9044(7)         -19.468(1)         -19.147(2)        -18.306(3)         -17.552(1)        -16.219(1)        -15.685(2)
+          USD (Jastrow)                 -19.90449(1)       -19.46832(6)        -19.1432(1)        -18.3173(2)       -17.5487(3)        -16.2932(5)       -15.7443(6)
+           USD (RBM)                   -19.904895(4)       -19.47284(1)       -19.14965(3)       -18.37420(7)       -17.6184(1)        -16.3607(2)       -15.9339(2)
+     Gutzwiller inspired CF             -19.90535(1)       -19.46667(2)       -19.14257(3)       -18.32346(8)       -17.58269(9)       -16.2395(1)       -15.7953(2)
+    Unrestricted hidden spin           -19.906781(3)       -19.46918(1)       -19.14371(2)       -18.33683(7)       -17.58288(8)       -15.8113(1)       -16.1697(2)
+       Jastrow inspired CF             -19.906567(7)       -19.44978(4)       -19.09486(7)        -17.8293(2)       -16.8694(2)        -14.1253(4)       -13.2197(5)
+ Gutzwiller inspired CF(RBM)           -19.904895(4)       -19.47284(1)       -19.14965(3)       -18.37420(6)       -17.6184(2)        -16.3607(2)       -15.9416(2)
+  Unrestricted hid. spin(RBM)          -19.904427(5)       -19.47455(1)       -19.16018(3)       -18.37803(5)       -17.64362(9)       -16.3997(2)       -15.9788(2)
+
+TABLE II. Ground-state energy for different values ofU  in the 4× 4 Hubbard model withn = 1/2 and periodic boundary conditions.
+Table  contains  ED  energies  for  reference.   The  table  contains  variational  energies  for  various  trial  states,  including  unrestricted  Slater
+determinants (USD), unrestricted Slater determinants with applied Gutzwiller factor (USD Gutzwiller), unrestricted Slater determinants
+with applied Jastrow factor (USD Jastrow), unrestricted Slater determinants with applied RBM factor (USD RBM), as well as HFSD with
+physically motivated constraint functions: Gutzwiller inspired CF, unrestricted hidden spin and Jastrow inspired CF (see Section 3. B in the
+Supplementary Information for details).  The table also contains results for the HFSD state with an added RBM factor in the augmented
+space, using the Gutzwiller inspired and unrestricted hidden spin constraint functions (see Section 3. B in the Supplementary Information
+for details). The data corresponds to the relative errors shown in Fig. 1 in the Supplementary Information.
+                                                                                                                                                         20
+
+                                                      2.    4× 4 Hubbard model withn = 5/8
+
+
+
+   Table III provides the variational (for the hidden fermion determinant state with a fully parametrized hidden sub-matrix) and
+exact diagonalization (ED) energies in the square lattice Hubbard model of size 4×4 and average site occupationn = 5/8 (ﬁrst
+closed shell of the model) and periodic boundary conditions, for various values ofU. The hidden sub-matrix is parametrized
+by single-hidden-layer neural networks of width densityα.  Projections to different symmetry subspaces are applied to the
+converged trial state: rotation ofπ/2 (C4), translations of momentumK = 0 and the intersection of both subspaces. See the
+main text for more details. The data corresponds to the relative errors displayed in Fig. 3 (b) in the main text.
+
+                                    Ansatz                       U =2.15            U = 3.6           U = 7.75             U =10
+                                      ED                    -21.2122357(7)     -19.8916371(9)     -17.6037315(5)     -16.9035599(8)
+                              HFSD (α = 64)                  -21.211411(4)      -19.888814(8)       -17.60017(2)       -16.90020(3)
+                            HFSD (α = 64)+C4                 -21.211811(4)      -19.889250(7)       -17.60100(2)       -16.90119(2)
+                         HFSD (α = 64) +K = 0                -21.211853(3)      -19.890244(6)       -17.60140(2)       -16.90147(2)
+                     HFSD (α = 64) + (C4∩K = 0)              -21.211896(2)      -19.890443(6)       -17.60200(1)       -16.90183(2)
+
+TABLE III. Ground state energy for different values ofU  in the 4× 4 Hubbard model withn = 5/8 and periodic boundary conditions.
+Table contains ED energies for reference.  The table shows the converged energies for the hidden fermion determinant state with a fully
+parametrized hidden sub-matrix. Energies of the projection of the converged trial state to different symmetry subspaces are also shown. The
+data corresponds to the relative errors displayed in Fig. 3 (b) in the main text.
+
+
+
+
+                                               3.    4×L Hubbard model withn = 7/8 and U = 8
+
+
+
+   Here we present the converged ground-state energies of the hidden fermion determinant state with a fully parametrized
+hidden sub-matrix in the Hubbard model in rectangular geometries of dimension 4×L at 1/8 hole doping (n = 7/8) and
+U  =  8.  Periodic boundary conditions are considered along the short side of the rectangle,  while both open and periodic
+boundary conditions are taken along the long side of the rectangle. In Table IV both conﬁgurations are labelled as PBC-PBC
+and PBC-OBC respectively. Table IV shows the variational energy per site obtained with the hidden fermion determinant state
+with a fully parametrized hidden sub-matrix. The value ofα depends on the system size (see Section 3. B in the main text for
+details). The energies are those displayed in Fig. 4 in the main text.
+
+                                    L   Energy per site HFDS (PBC-PBC)           Energy per site HFDS (PBC-OBC)
+                                    4                 -0.7409(1)                                  NA
+                                    8                 -0.7633(7)                              -0.7309(6)
+                                   16                 -0.753(2)                               -0.7466(8)
+
+TABLE IV.  Variational energy per site in the Hubbard model in rectangular geometries of dimensions 4×L at 1/8 hole doping (n = 7/8)
+andU = 8, obtained with the hidden fermion determinant state with a fully parametrized hidden sub-matrix. The value ofα depends on the
+system size (see Section 3. B in the main text for details). The energies are those displayed in Fig. 4 in the main text.
+
+
+
+
+                                                       4. L×L Hubbard model withn = 1
+
+
+
+   Table V shows the energy per site on the square lattice Hubbard model of sizeL×L with periodic boundary conditions
+along one of the sides of the square and anti-periodic boundary conditions along the other side.  The trial state is the hidden
+fermion determinant state with a fully parametrized hidden sub-matrix. Details on the number of hidden fermions and hidden
+unit densities can be found on Section 6 of the Supplementary Information.
+                                                                                                                                                                     21
+
+                                                    L       U = 2          U = 4          U = 6          U = 8
+                                                    4   -1.25693(1)     -0.9120(1)     -0.68135(1)    -0.5401(1)
+                                                    6    -1.2079(1)     -0.8717(2)     -0.6609(4)     -0.5289(3)
+                                                    8    -1.1900(2)     -0.8621(4)     -0.6574(2)     -0.5244(6)
+
+TABLE V.  Variational energy per site in theL×L Hubbard model at half ﬁlling with periodic boundary conditions along one of the sides
+of the square and anti-periodic boundary conditions along the other side. The trial state is the hidden fermion determinant state with a fully
+parametrized hidden sub-matrix (see Section 6 in the Supplementary Information for more details). The energies correspond to the relative
+errors shown in Fig 4 in the Supplementary Information.
