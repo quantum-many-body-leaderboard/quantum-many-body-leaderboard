@@ -33,7 +33,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { perSiteDivisor, perSiteLabel, boundLabel } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, boundLabel, HEG_MODELS } from "./units.mjs";
 import { recordOf, exactRecordOf, rowId } from "./summary.mjs";
 import { quote, MODELS, instanceLabel, byGeometry } from "./readme_table.mjs";
 import { openProblemsFigure, FIGURE_NAME } from "./open_problems_figure.mjs";
@@ -59,7 +59,8 @@ export async function loadOpenProblems(instances, dir = process.env.OPEN_PROBLEM
   const module = path.join(root, "scripts/targets.mjs");
   if (!fs.existsSync(module)) throw new Error(`${module} not found: the open-problems checkout is older than its rolling targets (1f516a1)`);
   const { openTargets } = await import(pathToFileURL(module).href);
-  const targets = openTargets(instances, perSiteDivisor);
+  // Track 1 only: track 2's electron gas (RULES.md 12, 2026-10-16) is not part of Open Problems unless that is decided.
+  const targets = openTargets(instances.filter(i => !HEG_MODELS.has(i.model)), perSiteDivisor);
   const known = new Set(instances.map(i => i.instance_id));
   const results = path.join(root, "results");
   const files = fs.existsSync(results) ? fs.readdirSync(results, { recursive: true }).filter(f => f.endsWith(".json")).sort() : [];
