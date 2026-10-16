@@ -87,8 +87,28 @@ for (const b of document.querySelectorAll("button.cite-btn")) b.addEventListener
 });
 </script>`;
 
-function page({ url, title, description, body, wide = false }) {
-  const head = title === null ? "QMBL" : `${title} &middot; QMBL`;
+// schema.org Dataset for Google Dataset Search, on the front page only (one dataset, not one per instance).
+function datasetLd() {
+  return {
+    "@context": "https://schema.org", "@type": "Dataset",
+    name: "QMBL: the Quantum Many-Body Leaderboard",
+    description: `Published ground-state energies for ${summary.instances} lattice Hamiltonian instances (Heisenberg, J1-J2, Hubbard, t-V, transverse-field Ising, impurity models), ${summary.rows} energies with method, error bar where published and bound type, every row citing its primary paper.`,
+    url: "https://qmbl.org/", sameAs: [`https://doi.org/${DOI}`, REPO], identifier: `https://doi.org/${DOI}`,
+    license: "https://www.apache.org/licenses/LICENSE-2.0",
+    isAccessibleForFree: true, dateModified: BUILT,
+    keywords: ["ground-state energy", "quantum many-body", "variational Monte Carlo", "neural quantum states", "DMRG", "quantum Monte Carlo", "Hubbard model", "J1-J2 model", "Heisenberg model", "benchmark"],
+    creator: [
+      { "@type": "Person", givenName: "Tristan", familyName: "Zerweck", name: "Tristan Zerweck" },
+      { "@type": "Person", givenName: "Juan", familyName: "Carrasquilla", name: "Juan Carrasquilla" },
+    ],
+    distribution: [
+      { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: "https://qmbl.org/api/qmbl.json" },
+    ],
+  };
+}
+
+function page({ url, title, description, body, wide = false, jsonld = null }) {
+  const head = title === null ? "QMBL: the Quantum Many-Body Leaderboard" : `${title} &middot; QMBL`;
   return `<!doctype html>
 <html lang="en">
 <meta charset="utf-8">
@@ -104,7 +124,7 @@ function page({ url, title, description, body, wide = false }) {
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://qmbl.org${url}">
-<header class="site">
+${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>\n` : ""}<header class="site">
   <a class="wordmark" href="/">${logoSvg()}<b>QMBL<span class="tagline">the quantum many-body leaderboard</span></b><span class="badge beta" title="QMBL is in beta: the data and the site are still being checked and re-cut">beta</span></a>
   <nav>${NAV.map(([href, label]) =>
     `<a href="${href}"${href === url ? ' aria-current="page"' : ""}>${label}</a>`).join("")}
@@ -619,7 +639,7 @@ ${FIG_SCRIPT}
   <p>Individual energies should cite the primary paper named on the row, not this site.</p>
 </section>`;
   return page({
-    url: "/", title: null, body, wide: true,
+    url: "/", title: null, body, wide: true, jsonld: datasetLd(),
     description: `The best published variational ground-state energies for ${summary.instances} lattice Hamiltonian instances, ranked by energy, every row citing its primary paper.`,
   });
 }
@@ -1098,7 +1118,7 @@ ${verified ? `<section><h2>How these numbers were read</h2>
 </section>`;
 
   const recText = rec ? `Record ${quoteRow(rec, inst).text} ${perSiteLabel(inst)} by ${shorten(methodLabel(rec), 40)}.` : "No row currently holds the record.";
-  return page({ url: instUrl(inst), title: label, body, wide: true,
+  return page({ url: instUrl(inst), title: `Ground-state energy, ${label}`, body, wide: true,
     description: `${label}: ${inst.rows.length} published ground-state energies. ${recText}` });
 }
 
