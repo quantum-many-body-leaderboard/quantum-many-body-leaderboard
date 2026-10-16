@@ -560,6 +560,7 @@ loader, never by hand.
 | TFIsing | total energy, **Pauli** | `E/N`: divide by `n_sites`; no `S·S` term to rescale |
 | Hubbard, t-V | total energy | per site: divide by `n_sites` |
 | Impurity | total energy | no meaningful per-site energy |
+| HEG2D, HEG3D (track 2) | total energy, Hartree, Ewald sum with the Madelung term (RULES.md 12.2) | per electron: divide by N (`n_sites` holds N) |
 
 `dof` is the spin count for spin models, `N_up + N_dn` for Hubbard, and the particle
 count for **spinless** t-V. `einf` is `0` for traceless spin Hamiltonians and
@@ -572,6 +573,11 @@ states in the form of VarBench's Eq. (S6). `_t12` adds a next-nearest-neighbour 
 between total densities ni = ni↑ + ni↓, as mVMC, the program behind its row, defines them
 (Eq. (S6) prints these terms between equal spins). The density terms are not traceless, so
 that instance's `einf` is not checked.
+
+Since 2026-10-16 a t12 instance from a paper carries its t2 in the name, `_t12_<t2>` (for example
+`Hubbard/square_64_P_28_8_t12_-0.2`), because several t2 values share a size; `params` holds
+t1 = 1 and t2. The papers write `-t Σ⟨ij⟩ - t' Σ⟨⟨ij⟩⟩ + U Σ ni↑ni↓`, the form of Eq. (S6), so t2 is
+their t'. The README label states t2, and t2 is a coupling of the size ladders (`ladders.mjs`).
 
 Getting these wrong is the single most likely source of a false record, which is why
 they are stated once and reused rather than inlined per script.
