@@ -560,6 +560,7 @@ loader, never by hand.
 | TFIsing | total energy, **Pauli** | `E/N`: divide by `n_sites`; no `S·S` term to rescale |
 | Hubbard, t-V | total energy | per site: divide by `n_sites` |
 | Impurity | total energy | no meaningful per-site energy |
+| HEG2D, HEG3D (track 2) | total energy, Hartree, Ewald sum with the Madelung term (RULES.md 12.2) | per electron: divide by N (`n_sites` holds N) |
 
 `dof` is the spin count for spin models, `N_up + N_dn` for Hubbard, and the particle
 count for **spinless** t-V. `einf` is `0` for traceless spin Hamiltonians and
