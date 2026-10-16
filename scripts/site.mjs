@@ -79,6 +79,8 @@ const opButton = url => (OPEN_PROBLEMS
 
 // GitHub's mark (octicon mark-github, MIT), inline so it takes the nav's colour.
 const GITHUB_MARK = `<svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>`;
+// ETH Zurich logo (short form, black/white per the colour scheme), from ETH's eth_logo_kurz_pos.svg, cropped to the glyphs; the clear zone is the CSS margin.
+const ETH_LOGO = `<svg class="eth-logo" viewBox="22.68 22.67 140.71 22.69" role="img" aria-label="ETH Zurich"><g fill="currentColor"><path d="M109.18,39.305c-0.81,4.017-3.913,4.221-4.528,4.221c-1.752,0-2.797-1.012-2.797-2.705c0-0.386,0.057-0.912,0.155-1.439 l1.919-9.562l0.008-0.037h-2.267l-1.956,9.805l-0.026,0.14c-0.084,0.443-0.163,0.863-0.163,1.408c0,2.634,1.73,4.402,4.309,4.402 c1.886,0,3.401-0.619,4.507-1.841l-0.294,1.615l-0.007,0.038h2.235l3.088-15.53l0.006-0.037h-2.299L109.18,39.305z"/><path d="M124.635,29.595c-1.752,0-3.304,0.716-4.281,1.974l0.351-1.748l0.007-0.037h-2.235l-3.089,15.529l-0.007,0.038h2.269 l1.891-9.524c0.483-2.445,2.36-4.218,4.465-4.218c0.904,0,1.616,0.356,2.176,1.087l0.021,0.028l1.841-1.649l-0.019-0.023 C127.174,30.07,126.064,29.595,124.635,29.595z"/><polygon points="87.149,31.759 87.143,31.797 94.878,31.797 84.579,43.442 84.574,43.448 84.186,45.351 95.164,45.351 95.554,43.337 87.348,43.337 97.679,31.692 97.684,31.685 98.071,29.784 87.534,29.784"/><polygon points="128.332,45.313 128.324,45.351 130.591,45.351 133.684,29.784 131.455,29.784"/><path d="M159.072,29.596c-1.865,0-3.321,0.571-4.44,1.75l1.759-8.668h-2.268l-4.555,22.676h2.268l1.891-9.525 c0.811-4.015,3.941-4.218,4.56-4.218c1.733,0,2.769,1.011,2.769,2.704c0,0.384-0.059,0.908-0.158,1.44l-1.924,9.6h2.266 l1.988-9.809c0.096-0.521,0.159-0.962,0.159-1.547C163.385,31.365,161.649,29.596,159.072,29.596z"/><path d="M144.041,29.595c-4.113,0-7,2.897-7.923,7.949c-0.166,0.846-0.224,1.792-0.224,2.397c0,3.452,2.096,5.597,5.472,5.597 c1.963,0,3.755-0.752,5.181-2.177l0.021-0.021l-1.308-1.595l-0.023-0.028l-0.024,0.027c-1.203,1.266-2.281,1.783-3.721,1.783 c-1.609,0-3.33-0.958-3.33-3.648c0-0.842,0.1-1.538,0.249-2.322c0.243-1.32,0.79-3.164,2.005-4.447 c0.966-0.996,2.111-1.5,3.406-1.5c1.352,0,2.197,0.481,3.021,1.715l0.02,0.031l1.664-1.406l0.023-0.02l-0.018-0.025 C147.396,30.306,146.01,29.595,144.041,29.595z"/><polygon points="132.296,25.512 134.568,25.512 135.133,22.677 132.869,22.677"/><polygon points="110.249,25.512 112.522,25.512 113.084,22.677 110.823,22.677"/><polygon points="104.203,25.512 106.475,25.512 107.039,22.677 104.777,22.677"/><polygon points="73.91,31.464 68.809,31.464 70.6,22.677 27.235,22.677 22.681,45.353 39.971,45.353 41.104,39.685 30.895,39.685 31.514,36.567 41.719,36.567 42.747,31.464 32.539,31.464 33.157,28.345 49.337,28.345 45.921,45.353 53.008,45.353 56.424,28.345 62.374,28.345 58.958,45.353 66.046,45.353 67.795,36.567 72.896,36.567 71.146,45.353 78.233,45.353 82.789,22.677 75.702,22.677"/></g></svg>`;
 
 // The Cite button copies CITATION; where the clipboard is unavailable (no HTTPS, an old
 // browser, a denied permission) it goes to the citing section on the front page instead,
@@ -124,8 +126,9 @@ function page({ url, title, description, body, wide = false, css = null, ogTitle
 ${body}
 </main>
 <footer class="site">
-  <p><a href="/contribute/">Contribute</a> &middot; <a href="${REPO}">Source and data on GitHub</a> &middot;
-     Apache-2.0 &middot; <a href="/llms.txt">llms.txt</a></p>
+  <p><a href="/contribute/">Contribute</a> &middot; <a href="${REPO}">Source and data</a> &middot;
+     Apache-2.0</p>
+  <p class="developed-at">Developed at <a href="https://ethz.ch" title="ETH Zurich">${ETH_LOGO}</a></p>
 </footer>
 ${CITE_SCRIPT}
 </html>
@@ -1119,6 +1122,7 @@ ${verified ? `<section><h2>How these numbers were read</h2>
   <h2>This instance as data</h2>
   <p><a href="${jsonUrl(inst)}">JSON</a> &middot;
      <a href="${REPO}/blob/main/data/${inst.instance_id}.json">source file on GitHub</a> &middot;
+     <a href="${REPO}/issues/new?template=new-result.yml&amp;instance=${encodeURIComponent(inst.instance_id)}">add a result</a> &middot;
      <a href="${REPO}/issues/new?title=${encodeURIComponent(`[${inst.instance_id}] `)}">open an issue about this instance</a></p>
 </section>`;
 
@@ -1135,9 +1139,12 @@ function contributePage() {
 <h2>Open an issue</h2>
 <p>All of it goes through <a href="${REPO}/issues">GitHub issues</a>.</p>
 <ul>
-  <li><b>A missing result.</b> The instance, the energy, its error bar, the method, and the paper
-  it was published in. Anything missing renders as <code>n/a</code> rather than blocking the row
+  <li><b>A missing result.</b> Use the <a href="${REPO}/issues/new?template=new-result.yml">new result form</a>:
+  the instance, the energy as printed, its error bar, the method, and where in the paper it is.
+  Anything missing renders as <code>n/a</code> rather than blocking the row
   (<a href="${RULES}#3-required-fields">rules &sect;3</a>).</li>
+  <li><b>A missing instance.</b> Use the <a href="${REPO}/issues/new?template=new-instance.yml">new instance form</a>:
+  the Hamiltonian, cluster, boundaries, couplings and sector, and the paper that defines it.</li>
   <li><b>A number is wrong, or attributed to the wrong paper.</b> Name the instance and what it
   should be. Rows are corrected in place and the history stays in git.</li>
   <li><b>An error bar we could not find.</b> ${b.rows} sampled energies across ${b.instances}
@@ -1300,6 +1307,9 @@ footer.site {
   font-size: 0.9rem; color: var(--ink2); text-align: center;
 }
 footer.site p { margin: 0.3rem auto; }
+footer.site p.developed-at { margin-top: 1.2rem; display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
+footer.site p.developed-at a { color: var(--ink); line-height: 0; padding: 0.5rem; }
+footer.site svg.eth-logo { height: 1.1rem; width: auto; display: block; }
 
 figure { margin: 2.2rem 0 0; }
 figure picture, figure img, figure.chart svg { display: block; width: 100%; max-width: 920px; height: auto; }
