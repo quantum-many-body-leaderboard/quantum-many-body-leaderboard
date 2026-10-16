@@ -1053,6 +1053,81 @@
         "confidence": "medium",
         "note": "RHB architecture stated but no parameter count: 'we adopt a three-layer fully connected feed-forward neural network (FNN)' with 2N input neurons, N_neuron hidden SiLU neurons, N_det x M linear outputs; 'The neural network introduces variational parameters from the two fully connected layers, totaling approximately 4 N_neuron N + 2 N_det N_neuron M (including both weights and biases). The HB part contributes z d^2 K M N parameters.' 'In this work, we typically set N_neuron = 100 and N_det = 5'; Table III: 'Increasing N_det to 16 (with N_neuron = 80) further reduces the error to 1.1e-3, but at a higher computational cost.' Two-stage optimization (HB K=2 backbone first, then joint). Sample count 'about 16000' is the paper-wide statement. No device, wall-clock, GPU-hours or iteration count anywhere."
       }
+    },
+    {
+      "energy": -192.384,
+      "sigma": 0.0256,
+      "energy_variance": null,
+      "dof": 224,
+      "einf": 392,
+      "v_score": null,
+      "method": "HFPS",
+      "method_detail": "filled stripe",
+      "method_as_published": "HFPS (filled stripe, Table V)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "C. Roth, A. Chen, A. Sengupta & A. Georges, Superconductivity in the two-dimensional Hubbard model revealed by neural quantum states, arXiv:2511.07566",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2511.07566 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.7515(1)",
+        "note": "Table V (App. D 'Supplementary data': 256-site 16x16 cluster, U=8, delta=1/8; columns Filled Stripe | Half-filled stripe + No SC | Half-filled stripe + SC); row t'=0.0, column Filled Stripe; sources/2511.07566.txt line 1198; version read: arXiv v1 (sources/2511.07566.txt); no journal version (Crossref, arXiv abs page) | Eq. (1): H = U sum n_up n_dn - sum t_xx' c+c, t_xx' = t' on next-nearest bonds, periodic; Table V: 16x16, U = 8, doping 1/8, energy per site. The d-wave field Delta_0 enters only the mean-field Hamiltonian of the initial orbitals (Eq. 5, App. D).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -186.1376,
+      "sigma": 0.0768,
+      "energy_variance": null,
+      "dof": 224,
+      "einf": 392,
+      "v_score": null,
+      "method": "HFPS",
+      "method_detail": "half-filled stripe, no d-wave superconductivity",
+      "method_as_published": "HFPS (half-filled stripe, no SC, Table V)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "C. Roth, A. Chen, A. Sengupta & A. Georges, Superconductivity in the two-dimensional Hubbard model revealed by neural quantum states, arXiv:2511.07566",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2511.07566 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.7271(3)",
+        "note": "Table V (App. D 'Supplementary data': 256-site 16x16 cluster, U=8, delta=1/8; columns Filled Stripe | Half-filled stripe + No SC | Half-filled stripe + SC); row t'=0.0, column Half-filled stripe + No SC; sources/2511.07566.txt line 1198; version read: arXiv v1 (sources/2511.07566.txt); no journal version (Crossref, arXiv abs page) | Eq. (1): H = U sum n_up n_dn - sum t_xx' c+c, t_xx' = t' on next-nearest bonds, periodic; Table V: 16x16, U = 8, doping 1/8, energy per site. The d-wave field Delta_0 enters only the mean-field Hamiltonian of the initial orbitals (Eq. 5, App. D).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -189.4656,
+      "sigma": 0.0256,
+      "energy_variance": null,
+      "dof": 224,
+      "einf": 392,
+      "v_score": null,
+      "method": "HFPS",
+      "method_detail": "half-filled stripe + d-wave superconductivity",
+      "method_as_published": "HFPS (half-filled stripe + SC, Table V)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "C. Roth, A. Chen, A. Sengupta & A. Georges, Superconductivity in the two-dimensional Hubbard model revealed by neural quantum states, arXiv:2511.07566",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2511.07566 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.7401(1)",
+        "note": "Table V (App. D 'Supplementary data': 256-site 16x16 cluster, U=8, delta=1/8; columns Filled Stripe | Half-filled stripe + No SC | Half-filled stripe + SC); row t'=0.0, column Half-filled stripe + SC; sources/2511.07566.txt line 1198; version read: arXiv v1 (sources/2511.07566.txt); no journal version (Crossref, arXiv abs page) | Eq. (1): H = U sum n_up n_dn - sum t_xx' c+c, t_xx' = t' on next-nearest bonds, periodic; Table V: 16x16, U = 8, doping 1/8, energy per site. The d-wave field Delta_0 enters only the mean-field Hamiltonian of the initial orbitals (Eq. 5, App. D).",
+        "secondary_of": null
+      }
     }
   ],
   "coverage": [
