@@ -21,7 +21,7 @@
 // beat is read from data/ too: the lowest unflagged variational energy, never an extrapolation or
 // a projection, even where one holds QMBL's record (that record is shown beside it, as an
 // estimate). The scoring is the
-// repository's (README, verifier/op_verify.py `combine`), recomputed here against the live
+// repository's (README; op_verify.py `combine` in quantum-many-body-leaderboard/verifier), recomputed here against the live
 // target: an entry's gap is (E - E_target) / |E_target|, a new record lies more than 2 sigma
 // combined below the target (QMBL's tie rule, RULES.md 6), and a system's score is the median
 // gap over the instances it entered. Where an instance has no variational energy, the first
@@ -75,7 +75,7 @@ export async function loadOpenProblems(instances, dir = process.env.OPEN_PROBLEM
   return { targets, entries };
 }
 
-// verifier/qrec_verify/instance.py best_variational: the lowest unflagged variational row, with
+// qrec_verify/instance.py best_variational (quantum-many-body-leaderboard/verifier): the lowest unflagged variational row, with
 // or without sigma.
 const bestVariational = inst => [...inst.rows].sort((a, b) => a.energy - b.energy)
   .find(r => r.bound_type === "variational" && !r.defect) ?? null;
@@ -109,13 +109,17 @@ export function score(op, instances) {
       const inst = byId.get(e.instance_id);
       return { e, x: { inst, exact: exactRecordOf(inst) }, live, solved: true, gap: null, record: false };
     }
-    const s = { e, x, live };
-    if (x.energy == null && !x.first) return { ...s, first: (x.first = e), gap: null, record: true };
+    // An entry whose re-measurement failed a check is listed with its flags; it sets no target,
+    // takes no record mark and does not count in its system's score (2026-10-12).
+    const flagged = (e.flags ?? []).length > 0;
+    const s = { e, x, live, flagged };
+    if (x.energy == null && !x.first && !flagged) return { ...s, first: (x.first = e), gap: null, record: true };
+    if (x.energy == null && !x.first) return { ...s, gap: null, record: false };
     const te = x.energy ?? x.first.energy_per_site, ts = x.energy != null ? x.sigma : x.first.sigma_per_site ?? 0;
     return { ...s, gap: (e.energy_per_site - te) / Math.abs(te),
-      record: te - e.energy_per_site > RECORD_SIGMAS * Math.hypot(e.sigma_per_site ?? 0, ts) };
+      record: !flagged && te - e.energy_per_site > RECORD_SIGMAS * Math.hypot(e.sigma_per_site ?? 0, ts) };
   });
-  const systems = [...Map.groupBy(entries.filter(s => s.live && !s.solved), s => s.e.system)].map(([system, list]) => {
+  const systems = [...Map.groupBy(entries.filter(s => s.live && !s.solved && !s.flagged), s => s.e.system)].map(([system, list]) => {
     const gaps = list.map(s => s.gap).filter(g => g != null);
     return { system, teams: [...new Set(list.map(s => s.e.team))], ai: [...new Set(list.map(s => s.e.ai_involvement))],
       median: gaps.length ? median(gaps) : null, instances: list.length, records: list.filter(s => s.record).length };
@@ -167,7 +171,7 @@ export function openProblemsPages(op, instances, site) {
     <thead><tr><th>instance</th><th>system</th><th>team</th><th>AI</th><th>energy, re-measured</th><th>gap</th><th>compute</th><th>links</th></tr></thead>
     <tbody>${[...entries].sort((a, b) => rank(a) - rank(b) || a.e.energy_per_site - b.e.energy_per_site).map(s => `<tr id="${entryId(s.e)}">
       <th scope="row"><a href="${instanceHref(s)}">${esc(modelName(s.x.inst.model))} ${esc(instanceLabel(s.x.inst))}</a></th>
-      <td>${esc(s.e.system)}${s.live ? "" : ' <span class="badge" title="A newer entry of this system on this instance replaces it">replaced</span>'}</td>
+      <td>${esc(s.e.system)}${s.live ? "" : ' <span class="badge" title="A newer entry of this system on this instance replaces it">replaced</span>'}${s.flagged ? ` <span class="badge flag" title="${esc(s.e.flags.join("; "))}">did not verify</span>` : ""}</td>
       <td>${esc(s.e.team)}</td><td>${aiBadge(s.e.ai_involvement)}</td>
       <td class="record nowrap"><span class="num">${quote(s.e.energy_per_site, s.e.sigma_per_site).text}</span> <span class="muted">${perSiteLabel(s.x.inst)}</span></td>
       <td class="num">${s.solved ? '<span class="badge" title="QMBL has an exact energy for this instance now">solved</span>' : s.first ? '<span class="muted">first state</span>' : gapText(s.gap)}${s.record ? '<span class="tag">new record</span>' : ""}</td>
@@ -177,7 +181,7 @@ export function openProblemsPages(op, instances, site) {
   // entries on the Table, after the targets.
   const systemsSection = systems.length ? `
 <h2 id="systems">Systems</h2>
-<p class="muted">Lowest median gap first; only a system's live entries on open instances count.</p>
+<p class="muted">Lowest median gap first; only a system's live, verified entries on open instances count.</p>
 ${systemsTable}` : "";
   const entriesSection = entries.length ? `
 <h2 id="entries">Entries</h2>
@@ -186,7 +190,7 @@ ${entriesTable}` : "";
   // The figures: the Leaderboard's own, then the home page's sections for these instances
   // (site.mjs, `figureSections`), with a hover card for each Table row they link to, as on the
   // home page, and one for each entry drawn; an entry links to its row on the Table.
-  const fig = openProblemsFigure(targets, entries.filter(s => !s.solved), e => `${OPEN_PROBLEMS_TABLE_URL}#${entryId(e)}`);
+  const fig = openProblemsFigure(targets, entries.filter(s => !s.solved && !s.flagged), e => `${OPEN_PROBLEMS_TABLE_URL}#${entryId(e)}`);
   const figHtml = figure([FIGURE_NAME, fig.title, fig.caption], "", fig.svg) + "\n" + figureSections;
   const figRows = new Set([...[...figHtml.matchAll(/href="\/instances\/#(r-[\w-]+)"/g)].map(m => m[1]),
     ...[...figHtml.matchAll(/data-rows="([\w -]+)"/g)].flatMap(m => m[1].split(" "))]);
@@ -239,7 +243,7 @@ ${entriesTable}` : "";
   // lead stands above the first. Both end with the citation, as QMBL's home page does.
   const head = url => `
 <div class="op-title"><h1>The best published ground-state energies of open problems</h1>
-<p class="op-links"><a class="ext" href="${SUBMISSIONS}" aria-label="QMBL: Open Problems on GitHub" title="Targets, entries and verifier on GitHub">${GITHUB_MARK}</a>
+<p class="op-links"><a class="ext" href="${SUBMISSIONS}" aria-label="QMBL: Open Problems on GitHub" title="Targets and entries on GitHub">${GITHUB_MARK}</a>
 <button class="cite-btn" type="button" data-cite="${esc(citation)}" title="Copy the citation">&#10077;<span>Cite</span></button></p></div>
 <nav class="op-tabs" aria-label="QMBL: Open Problems">${[[OPEN_PROBLEMS_URL, "Leaderboard"], [OPEN_PROBLEMS_TABLE_URL, "Table"]].map(([href, label]) =>
     `<a href="${href}"${href === url ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>`;
