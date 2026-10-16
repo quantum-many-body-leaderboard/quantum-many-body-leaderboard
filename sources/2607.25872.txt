@@ -1,0 +1,632 @@
+                           Scaling universal Fermi network toward ground states:
+                                           A diffusion-Monte-Carlo assessment
+
+                                     Yu-Sheng  Li,1,∗   Saskia  Poldmaa,2,∗   Tzen  Ong,1  Ahmed
+                                Abouelkomsan,2  Tay-Rong  Chang,3  Hsin  Lin,1  and  Liang  Fu2,†
+                                    1Institute  of  Physics,  Academia  Sinica,  Taipei  11529,  Taiwan
+            2Department of Physics,  Massachusetts Institute of Technology,  Cambridge,  Massachusetts 02139,  USA
+                        3Department  of  Physics,  National  Cheng  Kung  University,  Tainan  70101,  Taiwan
+
+                  In  this  work,  we  show  that  Fermi  Sets—a  provably  universal  neural  network  architecture  for
+                fermionic wavefunctions—can be systematically scaled up to find interacting ground states through
+                energy minimization in a variational Monte Carlo framework.  By further performing fixed-phase
+                diffusion Monte Carlo (DMC) on the optimized neural network wavefunction, we demonstrate that
+                as the network size increases, the variational energy systematically decreases while the energy im-
+                provement from DMC collapses monotonically to zero, indicating convergence to the ground state.
+                We illustrate the scaling of Fermi Sets accompanied by the DMC assessment for interacting electrons
+                in jellium and in a quantum dot under high magnetic fields.
+
+
+                    I.     INTRODUCTION                                     in  continuous  space  [7–10],  without  using  basis  sets  or
+                                                                            discretization.  Instead, a neural network directly gener-
+  Solving  the  electronic  Schr¨odinger  equation—which                    ates antisymmetric many-body wavefunctions, which are
+governs the behavior of atoms, molecules and materials—                     then optimized to minimize the variational energy with
+is  a  central  goal  and  challenge  in  quantum  condensed                respect to the network parameters.
+matter  physics,  quantum  chemistry  and  materials  sci-                     Compared  to  handcrafted  trial  wavefunctions,  neu-
+ence.    The  fundamental  difficulty  of  this  problem  is                ral wavefunctions have the potential advantage of being
+twofold.  First, the Hilbert space of continuum systems is                  more expressive—and more importantly—systematically
+infinite-dimensional even for a finite number of electrons,                 improvable  upon  increasing  the  size  of  the  neural  net-
+N, i.e., the functional space of all possible wavefunctions                 work.  Indeed,  the universal approximation theorem—a
+ψ(r     1, ...,r     N) is unbounded.  Second, Fermi statistics re-         key foundation of machine learning—states that a feed-
+quires that the electron wavefunction must be antisym-                      forward neural network at sufficient size can approximate
+metric under particle exchange.  The functional space of                    any continuous function to arbitrary accuracy.  For the
+antisymmetric  functions  ofNparticle  coordinates  is  a                   purpose of solving many-electron ground states, it is im-
+highly complex manifold.                                                    portant to develop Fermi networks that exactly enforce
+  Traditional  methods  begin  with  a  finite  set  of  one-               the  antisymmetry  by  design  and  can  approximate  any
+electron basis functions, on which a many-body expan-                       continuous antisymmetric function [11, 12].
+sion is built.  Full configuration interaction (FCI) solves                    Very  recently,   Ref.  [12]  has  demonstrated  that  a
+the electronic Schr¨odinger equation exactly within a cho-                  complex-valuedneural network architecture built from a
+sen  basis.   However,  the  number  of  many-body  config-                 small number of Slater determinants weighted by expres-
+urations grows factorially with the number of electrons                     sive symmetric functions—“Fermi Sets”—is auniversal
+and orbitals.  Even for modest molecules in a standard                      approximator of continuous antisymmetric functions. By
+basis set, the dimension of the Hamiltonian matrix can                      design, Fermi Sets can capture arbitrary nodal structure,
+quickly scale to billions or even trillions of configurations,              which is crucial for achieving universal representational
+and the accuracy of FCI results remains limited by the                      power.  Therefore, Fermi Sets wavefunctions can in prin-
+finite size of the one-electron basis set.  Configuration in-               ciple  achieve  arbitrary  accuracy  as  the  network  capac-
+teraction and coupled cluster truncate the expansion at                     ity increases,  pushing the variational energy to the ex-
+fixed excitation level;  their accuracy is limited by both                  act limit.  In this sense, Fermi Sets architecture provides
+the incomplete single-particle basis and the many-body                      a universal and asymptotically-exact solver of the elec-
+truncation.   Diffusion  Monte  Carlo  operates  directly  in               tronic Schr¨odinger equation.
+continuous  real  space  [1,  2],  but  requires  a  trial  wave-              While Fermi Sets has achieved accurate results on sev-
+function  whose  nodes  are  fixed  by  design,  yielding  an               eral  many-electron  problems  [12,  13],  the  feasibility  of
+uncontrolled fixed-node error [3, 4].                                       scaling  Fermi  Sets  systematically  toward  exact  ground
+  Recently,  neural  networks,  especially  those  with  self               states has not been explored.  An immediate challenge is
+attention [5, 6], have emerged as a powerful variational                    how to assess the deviation of an optimized neural wave-
+method for solving many-electron Schr¨odinger equation                      function from the exact ground state, which is in general
+                                                                            unknown. This issue becomes particularly pressing when
+                                                                            the variational energy of the neural wavefunction beats
+∗ These authors contributed equally to this work.                           all existing benchmarks, such as full configuration inter-
+† liangfu@mit.edu
+                                                                            action within a finite basis set and traditional quantum
+                                                                                                                                                      2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  Two-stage framework for optimizing and assessing Fermi Sets wavefunctions.  (a) Variational optimization of the Fermi
+Sets ansatz [Eq. (1)] by energy minimization (Sec. II A).  (b) Fixed-phase diffusion Monte Carlo (Sec. II B):  walkers drift and
+diffuse through configuration space (axesR         1,R 2) at the learned phase Φθ(R), depleting in high-energy regions (orange) and
+proliferating in low-energy ones (green).  The resulting gap ∆E=E          V MC −E   DMC ≥0 measures the residual amplitude error.
+
+
+Monte Carlo [7, 9, 12].  As the community increasingly                        two-dimensional uniform electron gas (N= 16 electrons
+deploys neural networks to solve ground state of many-                        atr    s = 30), and find that the residual gap ∆Ecollapses
+electron systems, there is an urgent and critical need for                    to∼2×10          −4    of the ground state energy.  In both cases,
+rigorous assessments of the accuracy of neural wavefunc-                      the collapse of ∆Eindicates convergence of the optimized
+tions.                                                                        Fermi Sets wavefunction to the true ground state.
+  In  this  work,  we  introduce  a  general  computational                      Remarkably, using the same determinant-based Fermi
+framework that combines complex-valued neural-network                         Sets architecture, we obtain nearly exact ground states
+wavefunctions  with  fixed-phase  diffusion  Monte  Carlo                     in diverse settings.  These include integer quantum Hall
+(FPDMC)   [14]   to   both   improve   and   assess   them.                   and  composite  fermion  states  in  a  quantum  dot  under
+Whereas previous combinations of neural wavefunctions                         magnetic  fields,  as  well  as  a  strongly  correlated  Fermi
+with projector Monte Carlo have relied on the real-valued                     liquid at zero magnetic field.  Our findings support the
+fixed-node approximation [15, 16],  the fixed-phase con-                      notion that Fermi Sets is a universal and asymptotically
+straint  applies  to  arbitrary  complex-valued  trial  wave-                 exact ground state solver for many-electron systems.
+functions, reduces to the fixed-node constraint in the real
+limit, and remains valid when time-reversal symmetry is
+broken  [14,  17].   By  using  the  optimized  neural  wave-                                          II.    METHODS
+function as the trial state of an imaginary-time FPDMC
+projection (Figure 1), we eliminate residual amplitude er-                       Our  computational  framework  consists  of  two  dis-
+rors while holding the learned phase structure fixed. The                     tinct stages:  the variational optimization of a complex-
+resulting reduction of the energy, ∆E=E          VMC−E   DMC ≥                valued  neural  wavefunction,  followed  by  an  imaginary-
+0, provides a rigorous, quantitative metric for the neural                    time  projection  subject  to  the  fixed-phase  approxima-
+wavefunction’s quality.                                                       tion.   For  variational  optimization,  both  problems  em-
+  We  first  apply  the  framework  to  a  parabolic  quan-                   ploy  the  Fermi  Sets  wavefunction  (Sec.  II A).   This  is
+tum  dot  in  a  perpendicular  magnetic  field,  where  the                  followed  by  a  DMC  projection  (Sec.  II B).   Wavefunc-
+exact  ground  state  is  intrinsically  complex-valued,  lies                tions are evaluated in the log domain for numerical stabil-
+beyond the reach of fixed-node projection, and for a few                      ity, from which the amplitude|Ψ                    θ|, the continuous phase
+electrons, can be checked against multi-Landau-level ex-                      Φθ(R) = arg Ψ     θ(R), and their gradients follow analyti-
+act diagonalization.  Using Fermi Sets variational Monte                      cally by automatic differentiation.
+Carlo,  we  find  that  for  the  quantum  dot  problem,  the
+residual gap ∆Edecreases monotonically to as small as                           A.    Fermi Sets wavefunction for the quantum dot
+∼10   −6    of  the  ground  state  energy  as  the  network  ca-
+pacity  grows,  while  the  variational  energy  agrees  with
+the  exact-diagonalization  benchmark.   As  a  second  ex-                      Fermi  Sets  [12]  is  a  complex-valued  neural-network
+ample,  we  apply  Fermi  Sets  to  the  strongly  correlated                 wavefunction that represents the many-electron state as a
+                                                                                                                                                           3
+
+                                                                                 wherer           ij is the absolute distance between electrons i and
+                                                                                 j.   The  cusp  coefficientαis  fixed  atα=              13  for  spin-
+                                                                                 polarized  electrons  in  two  dimensions,  while  the  range
+                                                                                 parameterβ >0 is learnable.  This form of the Jastrow
+                                                                                 captures the correct behavior in both limits: asr    ij →0 it
+                                                                                 reduces toJ    θ →  13rij, reproducing the exact linear cusp
+                                                                                 of a Coulomb problem [20], and asr    ij → ∞, it stabilizes
+                                                                                 to a constant  αβ .
+                                                                                    Lastly,  for  the  quantum  dot  we  include  an  envelope
+                                                                                 in the ansatz, which biases the wavefunction to decay to
+                                                                                 zero at large radius.  The envelope guarantees normaliz-
+                                                                                 ability, and spares the network from having to learn the
+                                                                                 asymptotic tail.  We use the Gaussian envelopee  E,
+
+                                                                                                             NX
+                                                                                            E(R) =−σ             |z j|2,       zj =x   j +iy   j,        (3)
+                                                                                                            j=1
+
+                                                                                 whereσis a learnable parameter.
+                                                                                    Because both the orbitals and the symmetric factors
+                                                                                 are  natively  complex-valued,  the  Fermi  Sets  wavefunc-
+                                                                                 tion  allows  for  intrinsically  complex-valued  wavefunc-
+FIG. 2.  Architecture of the Fermi Sets wavefunction Ψθ(R)                       tions that describe electrons in a magnetic field.
+(Sec. II A). The wavefunction is a sum overN    d products of de-                   For  the  electron  gas,  coordinates  enter  the  network
+terminants supplying fermionic antisymmetry, and symmetric                       only through periodic features:  positions and electron–
+factors carrying the electron-electron correlations.                             electron  differences  are  mapped  to  fractional  coordi-
+                                                                                 natess=  Λ          −1  r,  with  Λ  =  (L    1,L 2)  the  lattice  matrix
+                                                                                 of  the  simulation  cell  (Appendix  E),  and  embedded  as
+linear combination of a small numberN    d of Slater deter-                       sin 2πs,cos 2πs       , while scalar distances are replaced by
+minants with learnable orbitals, weighted by symmetric                           the periodic norm of Ref. [8], which reduces to the Eu-
+functions.  Concretely, the Fermi Sets wavefunction, aug-                        clidean distance at short range.  The ansatz is thus ex-
+mented  with  an  optional  envelope  and  Jastrow  factor,                      actly periodic under translation of any electron by a lat-
+reads as follows,                                                                tice  vector.   The  envelope  and  Jastrow  factor  are  not
+                                NdX                                              used.
+ Ψθ(R)  =e         Jθ(R)    eE(R)    Ωk(R) det   ϕ ki (r  j)Ni,j=1   , (1)
+                                k=1                                                       B.    Fixed-Phase Diffusion Monte Carlo
+whereR= (r                 1, ...r    N).
+   When the orbitalsϕ               ki (r) and the weights Ω    k(R) are al-        Diffusion  Monte  Carlo  isolates  the  ground  state  by
+lowed to be fully general complex-valued functions, Fermi                        evolving  the  imaginary-time  Schr¨odinger  equation:  the
+Sets can provably approximate any continuous antisym-                            propagatore                 −τ(     ˆH−E        0)  filters  out  all  excited-state  com-
+metric  function  in  two  dimensions  using  onlyN        d  =  2               ponents of the trial state asτ→ ∞[2].  For fermions,
+determinants [12].  In practice, the single-particle orbital                     an  unconstrained  projection  suffers  from  the  exponen-
+ϕ ki  is implemented with a multilayer perceptron (MLP),                         tial signal-to-noise decay of the sign problem; the stan-
+while the many-body symmetric function Ωk(R) is im-                              dard remedy for real-valued trial states is the fixed-node
+plemented with a permutation invariant neural network,                           approximation  [3,  4],  which  requires  a  real  trial  state.
+such  as  Deep  Sets  [18]  or  Transformer  [19]  with  sum                     However, for complex wavefunctions we employ the fixed-
+pooling, which are universal approximators of symmetric                          phase method of Ortiz, Ceperley, and Martin [14], which
+functions.  Figure 2 illustratses the Fermi Sets construc-                       applies  to  the  arbitrary  complex-valued  ansatzes  used
+tion.  Details about our implementation can be found in                          here and contains the fixed-node constraint as the spe-
+Appendix B.                                                                      cial case of a real trial state.  The trial wavefunction is
+   Here, we also include an optional Jastrow factore           Jθ(R)             separated into its amplitude and phase,
+— while it can in principle be absorbed into the symmet-
+ric weights Ωk(R), we keep a Jastrow factor for the quan-                                            Ψθ(R) =|Ψ          θ(R)|e        iΦ θ(R)    ,                  (4)
+tum dot,  as it aids with convergence.  As is customary
+for Coulomb problems, we use the Pad´e Jastrow [20]                              and  the  phase  of  the  projected  state  is  constrained  to
+                                          α rij                                  that of the trial state for all imaginary time,
+                      Jθ(R) =    X      1 +β r   ij ,                    (2)
+                                   i<j                                                                    Φ(R, τ) = Φ          θ(R).                        (5)
+                                                                                                                                                        4
+
+Under  this  constraint  the  real,  nonnegative  amplitude                    imaginary-time step ∆τ= 0.001 and a target population
+evolves  in  imaginary  time  under  the  effective  Hamilto-                  of   4092   walkers   with   standard   population   control;
+nian [14] in Hartree atomic units reads                                        residual  time-step  and  population-control  biases  are
+                                                                               quantified in Appendix H and verified to lie below our
+                NX                        NX  ∇iΦθ(R)−A(r                i)2,statistical resolution [21, 22].
+ ˆHeff =−   1      ∇2i +V(R) +          1
+            2  i=1                    2  i=1
+                                                                      (6)                                III.     RESULTS
+whereAis the vector potential of the applied magnetic
+field.   The phase gradient plays the role of an effective                        The assessment framework of Sec. II B makes no ref-
+vector potential and, combined withA, acts as a repul-                         erence to the internal structure of the trial state:  it re-
+sive potential that expels walkers from regions of rapidly                     quires  only  a  complex-valued  trial  wavefunction  whose
+winding phase.  The random walk is therefore free of the                       log-amplitude and phase gradients are available, and the
+sign problem, while the exact antisymmetry of the state                        Fermi Sets wavefunction supplies both by automatic dif-
+is  preserved:  it  is  carried  by  the  fixed  complex  phase,               ferentiation.    We  apply  the  framework  to  two  physi-
+which  shifts  byπunder  any  transposition  of  two  elec-                    cally distinct systems:  a finite quantum dot with explic-
+trons while|Ψ           θ|is exchange symmetric.                               itly  broken  time-reversal  symmetry  (Sec.  III A),  where
+   The  critical  advantage  of  FPDMC  in  this  context  is                  multi-Landau-level exact diagonalization provides an in-
+its strict variational structure.  The asymptotic energy of                    dependent  reference,  and  the  strongly  correlated  uni-
+the projection, the fixed-phase energyE             FP, is by defini-          form electron gas (Sec. III B).  The framework operates
+tion  the  minimum  of  the  Rayleigh  quotient  of   ˆHover                   without modification in either case,  and the diagnostic
+all  states  of  the  formρ(R)e                  iΦ θ(R)      with  nonnegative,exhibits  the  same  qualitative  behavior  across  these  de-
+exchange-symmetric amplitudeρ, i.e., it is the lowest en-                      liberately contrasting problems—spatially confined ver-
+ergy physically permissible for the specific phase mani-                       sus extended, time-reversal-broken versus time-reversal-
+fold Φθ  learned by the network.  Two inequalities follow                      symmetric systems—showing that the observed behavior
+immediately:                                                                   is not tied to a particular physical setting.
+
+                      E0  ≤E   FP  ≤E   VMC.                     (7)
+The right inequality holds becauseρ=|Ψ                   θ|is itself an                   A.    Quantum dot in a magnetic field
+admissible  amplitude;  the  left  inequality  holds  because
+every stateρ e         iΦ θ  is a valid antisymmetric wavefunction,               We  first  validate  our  diagnostic  on  a  setup  with  an
+so  the  Rayleigh–Ritz  principle  applies,  with  equality  if                available reference:N= 4 electrons in a two-dimensional
+and only if Φθ coincides with the phase of an exact ground                     harmonic trap with GaAs parameters (m ∗  = 0.067m          e,
+state [14].  Consequently, the total variational error de-                     ℏω  0 = 3.32 meV,g           ∗ =−0.44). The system is rotationally
+composes exactly into two nonnegative parts,                                   invariant, leading to a good quantum numberL. Despite
+                                                                               having no symmetry enforcement or built-in bias towards
+     EVMC −E   0 =  EVMC −E   FP|{z       } + EFP −E   0|{z }.     (8)       it, the network learns the rotational invariance by itself
+                              ∆E≥0              phase err.≥0                   —  Table  IV  illustrates  how  the  converged  states  after
+                                                                               energy minimization are almost exactL-eigenstates. Ap-
+The measured gap ∆E=E          VMC −E   DMC is thus a rigor-                   pendix G details the angular momentum decomposition
+ous, quantitative measure of the residualamplitudeerror                        of the neural network wavefunction.
+of  the  VMC  state.   A  vanishing  gap  (∆E→0  within                           AtB= 8 T, the ground state is found to haveL= 14.
+statistical  resolution)  demonstrates  that  the  optimiza-                   For quantum dots, the filling factor is calculated as [23]
+tion has saturated the variational freedom permitted by
+its learned phase.  The phase error,  by contrast,  is not                                                ν=   N(N−1)2L        .                          (9)
+probed by ∆E:  since the learned phase may itself be in
+error, a vanishing gap is necessary for the exact ground                       Thus, theL= 14 ground state atB= 8 T corresponds
+state but not sufficient.                                                      to a Jain-sequence composite fermion state atν= 3/7.
+   In     practice     we     perform     importance-sampled                   Additionally,  we study this system atB= 4 T, where
+FPDMC  [2,  4]:   walkers  undergo  drift-diffusion  moves                     the ground state is found to haveL= 6, corresponding
+guided   by ∇ln|Ψ           θ|,   with   branching   weights   deter-          to theν= 1 maximum density droplet (MDD). For both
+mined  by  the  local  energy  of   ˆHeff   in  the  standard                  B= 8 T and 4 T, we benchmark against multi-Landau-
+short-time   algorithm   [21].      Because   the   projected                  level exact diagonalization, with the calculation detailed
+state  is  the  ground  state  of   ˆHeff,  the  mixed  estimator              in Appendix D.
+⟨Ψ  θ| ˆHeff|Φ(τ)⟩/⟨Ψ               θ|Φ(τ)⟩ converges   toE               FP   withoutThe significance of the quantum dot setup lies in the
+mixed-estimator  bias  [2].   Both  the  drift∇ln|Ψ                 θ| and     complicated phase structure:  because the ground state
+the phase gradient∇Φ     θ  are obtained analytically from                     is complex, the network has to learn a non-trivial wind-
+the  network  by  automatic  differentiation.   We  use  an                    ing phase.  Table I collects the VMC and DMC energies
+                                                                                                                                                             5
+
+and residue gaps at both magnetic fields,  and Table II
+gathers the reference energies from exact diagonalization
+and DMC performed on a handcrafted composite-fermion
+ansatz [24].
+
+
+   Figure 3 shows that, as the network grows, the varia-
+tional energy decreases monotonically toward the exact
+ground state value.  ForB= 4 T, NN-VMC outperforms
+8-LL ED, while forB= 8 T, it reaches 7-LL ED, with
+DMC projection refining it to below the 7-LL benchmark.
+That NN-VMC outperforms ED to extraordinary accu-
+racy is verifiable evidence that the network is asymptoti-
+cally approaching the exact ground state as the network
+size is increased.
+
+
+   The projected DMC energy agrees with the variational
+VMC energy to within 0.02% for all network sizes. While
+DMC consistently improves VMC energy further, the ad-                             FIG.  3.   Left:  convergence  of  the  VMC  and  DMC  energies
+ditional gain from DMC or the residue gap shrinks from                            with the number of parameters for a)B= 8 T and c)B= 4 T.
+561µH       ∗  to 25µH      ∗  forB= 8 T, and from 405µH              ∗  to       Right:  Residue gap ∆E=E          VMC −E   DMC.  Error bars denote
+24µH      ∗ forB= 4 T. At 84k parameters, we see that the                         reblocked statistical uncertainties (Appendix F)
+residue gap has shrunk to the order of statistical uncer-
+tainty.  That ∆Ebecomes statistically indistinguishable
+from  zero  at  an  increasing  number  of  parameters  is  a                     TABLE   II.   Exact-diagonalization   and   composite-fermion
+clear  indicator  that  the  network  finds  the  true  ground                    DMC (CF+DMC) [24] energies of the quantum dot ground
+state with increasing precision.  Thus, the exactness of a                        states as a function of the number of Landau levels retained.
+Fermi Sets state is only limited by the network size.                             The bold row is our best Fermi Sets result (largest network,
+                                                                                  Np = 8.4×10         4).
+   It is particularly noteworthy that Fermi Sets success-                          B= 8 T                          Method                         E(H       ∗)
+fully finds the composite fermion state atB= 8T, which                                                            1-LL ED                          5.186000
+cannot be described—even at a qualitative level—by any                                                            3-LL ED                          5.139260
+traditional Slater-Jastrow ansatz. Unlike Jastrow factors                                                         5-LL ED                          5.138819
+that only modify the amplitude, the Fermi Sets wavefunc-                                                          7-LL ED                          5.138745
+tion uses fully general symmetric functions Ωk(r) that are                                                   CF + DMC [24]                      5.1394
+complex-valued,  which  fundamentally  alters  the  phase                                                       Fermi Sets                    5.138760
+structure.   This  is  crucial  for  its  success  in  finding  the                B= 4 T                          Method                         E(H       ∗)
+composite fermion ground state.                                                                                   1-LL ED                          4.295304
+                                                                                                                  3-LL ED                          4.143131
+                                                                                                                  5-LL ED                          4.140971
+                                                                                                                  7-LL ED                          4.140573
+                                                                                                                  8-LL ED                          4.140494
+                                                                                                                Fermi Sets                    4.140447
+
+
+TABLE I. Fixed-phase DMC assessment of Fermi Sets states
+for a quantum dot, in effective Hartrees (H∗), as a function
+of network parameter countN  p.                                                          B.    Two-dimensional uniform electron gas
+
+B= 8 TN      p (104)   E  VMC          EDMC        ∆E(10      −4   H∗)
+                 1.2       5.139966   5.139405(45)          5.61                     We next study the ground state of the two-dimensional
+                 4.8       5.138962   5.138827(17)          1.35                  uniform  electron  gas  (2D  UEG)  [25]:   interacting  elec-
+                 6.4       5.138895   5.138793(17)          1.01                  trons  embedded  in  a  uniform,  rigid,  neutralizing  posi-
+                 8.4       5.138760   5.138734(17)          0.25                  tive  background,  characterized  at  zero  temperature  by
+B= 4 TN      p (104)   E  VMC          EDMC        ∆E(10      −4   H∗)            the  dimensionless  density  parameterr                   s  =a/a   0,  where
+                 1.2       4.141202   4.140797(92)          4.05                  a0  =ℏ   2/me2  is the Bohr radius anda= 1/        √πρis the
+                 2.7       4.140938   4.140632(45)          3.06                  radius of the circle containing one electron on average at
+                 4.8       4.140628   4.140473(30)          1.55                  number densityρ.  We simulate finite systems ofNelec-
+                 8.4       4.140447   4.140423(23)          0.24
+                                                                                  trons under periodic boundary conditions in a hexagonal
+                                                                                                                                                    6
+
+                                                                                The  residue  gap  decreases  monotonically  in  parallel,
+                                                                             from ∆E= 1.630(12)×10                       −5    to 0.567(7)×10               −5    Ha per
+                                                                             electron,  though it remains statistically resolved at the
+                                                                             largest  network.   The  residual  amplitude  error  is  thus
+                                                                             systematically suppressed as capacity grows,  consistent
+                                                                             with the proven improvability of the ansatz [12], and our
+                                                                             lowest energy,E DMC =−0.03199636(7) Ha per electron,
+                                                                             is a variational upper bound on the ground-state energy
+                                                                             at this system size.
+
+
+FIG.  4.   Convergence  of  the  Fermi  Sets  states  for  the  fully
+spin-polarized  2D  UEG  (N=  16,r          s  =  30)  with  network               IV.     DISCUSSION AND CONCLUSIONS
+parameter countN  p. (a) VMC and fixed-phase DMC energies
+per electron.  (b) Residual gap ∆E=E          VMC −E   DMC.  Error              We  have  introduced  a  general  framework  that  in-
+bars denote reblocked statistical uncertainties (Appendix  F)                tegrates  complex-valued  neural-network  wavefunctions
+and are smaller than the symbols where not visible.                          with fixed-phase diffusion Monte Carlo, using the projec-
+                                                                             tion both to improve optimized variational energy and to
+simulation cell, with the long-range Coulomb interaction                     certify their accuracy: in both systems studied, the resid-
+resummed by two-dimensional Ewald summation [26–28];                         ual gap ∆E=E          VMC −E   DMC ≥0 shrinks systematically
+the cell geometry and further background on the model                        with network capacity.
+are collected in Appendix E.  All electron-gas trial states                     Two extensions follow naturally.  Combined with twist
+are Fermi Sets wavefunctions with periodic input features                    averaging and finite-size extrapolation, the ∆Ediagnos-
+(Sec. II A), optimized as described in Appendix A.                           tic would carry certified accuracy to the thermodynamic
+  We  study  the  fully  spin-polarized  gas  withN=  16                     limit; for the 2D UEG, this would allow us to locate the
+electrons atr    s  = 30, which places the benchmark deep                    Wigner-crystallization  boundary  more  accurately.   Be-
+in the strongly correlated regime, immediately adjacent                      cause the fixed-phase constraint accommodates arbitrary
+to the Wigner-crystallization densityr  s ≃31 of the 2D                      complex  trial  states  [14,  17],  the  framework  also  ap-
+UEG [29].                                                                    plies without modification to fractional quantum Hall liq-
+  We fix the number of determinants atN    d = 4 and scale                   uids [9, 30–32] and fractional Chern insulators in moir´e
+the hidden width of the network over three sizes, span-                      materials [33, 34].
+ning roughlyN              p = 25 414 to 50 339 trainable parameters.
+  Table  III  and  Fig.  4  collect  the  results  of  the  size
+scan.   Both  the  variational  and  projected  energies  de-                                   ACKNOWLEDGMENTS
+scend  monotonically  as  the  network  is  scaled  from  25k
+to 37k, and then to 50k parameters, with the DMC en-                            This work was supported by Air Force Office of Sci-
+ergy tracking the VMC energy closely at each step.  For                      entific Research under award number FA2386-24-1-4043.
+reference, we also list the energy of Tanatar and Ceper-                     SP acknowledges support from the MIT Undergraduate
+ley (Ref. 27), obtained with a Slater–Jastrow trial wave                     Research Opportunities Program (UROP). YL, HL and
+function.  Even our smallest network yields a variational                    LF are grateful for the support from MISTI Global Seed
+energy below this benchmark, and the DMC energies im-                        Funds.  T.-R.C. was supported by National Science and
+prove upon it by up to∼1.2×10             −4    Ha per electron at           Technology  Council  (NSTC)  in  Taiwan  (Program  No.
+the largest network size.  Because the fixed-phase energy                    NSTC  113-2124-M  006-009-MY3).   H.L.  acknowledges
+depends on the phase of the trial state alone (Sec. II B),                   the  support  by  the  National  Science  and  Technology
+the steady descent ofE    DMC  is direct evidence that the                   Council (NSTC) in Taiwan under grant number NSTC
+learned phase improves systematically with capacity.                         114-2112-M-001-055-MY3.  LF was supported in part by
+                                                                             a Simons Investigator Award from the Simons Founda-
+TABLE III. Fixed-phase DMC assessment of Fermi Sets states                   tion. We thank the MIT Engaging and the NCHC Nano4
+for the fully spin-polarized 2D UEG (N= 16,r          s  = 30), as           cluster for providing the computational resources for the
+a function of network parameter countN  p.  Energies are per                 NN-VMC and DMC simulations.
+electron, in Hartree; statistical uncertainties in the last digits
+are given in parentheses (Appendix F).
+
+Np (104)   E  VMC (Ha/N)    E              DMC (Ha/N)   ∆E(10                −5   Ha/N)Appendix A: Variational Monte Carlo details
+    2.5   −0.031895091(12)−0.03191139(12)        1.630(12)
+    3.7    −0.031965678(6)−0.03197786(8)          1.218(8)                      According to the Rayleigh–Ritz variational principle,
+    5.0    −0.031990687(3)−0.03199636(7)          0.567(7)
+Ref. [27]  −0.031880(15)               —                        —            the  expectation  value  of  the  Hamiltonian   ˆHevaluated
+                                                                             with  the  trial  wavefunction  Ψθ  provides  a  strict  upper
+                                                                                                                                                              7
+
+bound to the exact ground-state energy,E 0:                                       from  the  Cartesian  inputs.   Each  blockb=  1, ..., L      b  =
+                                                                                  3  applies  multi-head  self-attention  followed  by  a  per-
+                  EVMC(θ) =    ⟨Ψ  θ| ˆH|Ψ     θ⟩                                 electron MLP,
+                                    ⟨Ψ  θ|Ψ θ⟩   ≥E   0.            (A1)
+In  the  VMC  framework,  this  multidimensional  integral                           ˜h(b)i    =h   (b−1)i       + MHA  tanhh         (b−1)   i,                    (B2)
+is recast as a statistical expectation value over the prob-                          h(b)                                     ,       W1, W2 ∈R   d×d    ,
+ability  distributionp(R)∝ |Ψ                              θ(R)|       2.   The  energy  cani    = ˜h(b)i   +W   2 tanh W1˜h(b)i
+thus be evaluated as a Monte Carlo average of the local                                                                                                  (B3)
+energy,                                                                           where the multi-head attention withn        h heads reads
+
+                                                                                                               nhM  X
+    EVMC(θ) =E     R∼p(R)          [E L(R;θ)],       E           L =  ˆHΨ    θΨθ  .     MHA(x)              i =W   O     Aaij W aV xj,
+                                                                      (A2)                                    a=1    j (W  aQxi)·(W     aKxj)!           (B4)
+For  a  complex  trial  state  the  local  energy  is  itself
+complex-valued;  because  ˆHis Hermitian,  its imaginary                                        Aaij = softmaxj                pd/nh               .
+part averages to zero and only the real part contributes
+toE    VMC.                                                                       with⊕denoting concatenation. We usen                  h = 8 attention
+   The  electron  configurationsRare  sampled  with  the                          heads, except ford= 36, wheren                  h = 6 is used instead.
+Metropolis–Hastings  algorithm  [35,  36]:   at  each  opti-                      The  self-attention  couples  every  electron  to  all  others,
+mization step, an ensemble of walkers explores configu-                           and is the origin of the backflow correlations,  which in
+ration space guided by the probability density|Ψ    θ(R)|       2.                our  construction  are  carried  entirely  by  the  symmetric
+   To  drive  the  trial  wavefunction  toward  the  ground                       factors.
+state, the parameters are updated along the energy gra-                               To construct the symmetric factor, the pooled collec-
+dient,  which  for  a  complex  wavefunction  with  real  pa-                     tive coordinate
+rameters takes the standard covariance form [7, 37]
+ ∇θEVMC = 2 ReE    R∼p    EL −E   VMC∇θ log Ψ∗θ , (A3)                                                          NX
+                                                                                                            ξ=         h(L b)i    ∈R   d                      (B5)
+evaluated over the same Monte Carlo samples.                                                                      i=1
+   For  neural-network  ansatzes,  plain  gradient  descent                       is passed to a complex MLP Ωk :R d →C,
+is  inefficient  owing  to  the  ill-conditioned  geometry  of                                                                   tanh(
+the parameter space; the gradient is therefore precondi-                                         Ωk(ξ) =    W re2  +iW    im2     W          1ξ)          (B6)
+tioned with the quantum geometric (Fisher) metric, as in
+stochastic reconfiguration [38] and its scalable Kronecker-                       withW         1 ∈R   d×d     andW       2 = (W  re2  , W im2  )T ∈R   2×d    .
+factored approximation K-FAC [39],  the latter adapted                                The  orbitals  are  constructed  fromg         i  using  a  single-
+to neural wavefunctions in Ref. [7].  In this work we op-                         layer MLPη         i = tanh(W          ϕgi) of widthm= 8.  Theη                      i are
+timize with K-FAC for 500k iterations using a batch of                            turned into complex orbitals using a learned projection
+4,096 walkers and initial learning rate start from 10−3  .
+                                                                                  ϕki (x  j) =w   k,rei    ·η j +iw     k,imi    ·η j,      w k,rei    ,w k,imi     ∈R   m.
+Appendix B: Network architecture for the quantum                                                                                                         (B7)
+                             dot problem                                          With a single layer of widthm= 8, the orbitals provide
+                                                                                  a simple node structure, and the entire burden of repre-
+   The single-particle orbitalsϕ              ki  and the symmetric fac-          senting the many-body correlation falls on the symmetric
+tors  Ωk  of  the  Fermi  Sets  wavefunction,  Eq.  (1),  are                     factors Ωk.
+implemented  for  the  quantum  dot  problem  as  follows.
+Throughout  we  useN      d  =  2  determinants  and  a  tanh                      Appendix C: Parameter count for the quantum dot
+nonlinearity.   The backbone widthdis the single knob                                                              problem
+we sweep, fromd= 24 tod= 64, to vary the network
+size.                                                                                 Almost all parameters live in the attention backbone.
+   The  symmetric  factors  are  built  from  features  pro-                      Collecting  every  weight  and  bias  by  its  scaling  in  the
+duced  by  a  backboneh: R          3N   →R    N×d     .   Each  elec-            widthd, the total parameter count is exactly
+tron  is  first  embedded  from  its  single-particle  inputs
+gi = (x  i, yi, r2i ),                                                                Np = (c  bLb +N   d)d  2 + (c  bLb + 3N  d + 4)d+C
+                 h(0)i    =W   ingi,       Win ∈R   d×3    .            (B1)                   = 20d    2 + 28d+ 166,                                            (C1)
+
+The radial coordinater                2i  is supplied alongside (x  i, yi) be-    withc        b = 6,L   b = 3,N   d = 2.
+cause it is the term that enters the confinement, so pro-                             Thed        2 term counts the weight matrices that scale with
+viding it directly spares the network from synthesizing it                        width: thec      b = 6 matrices of each of theL      b = 3 backbone
+                                                                                                                                                        8
+
+blocks (the four attention projectionsW              Q, WK, WV , WO            area,A= (        √3/2)L        2, to the total area occupied by the
+and the two MLP layersW  1, W2), plus thed×dhidden                             Nelectrons,A=Nπ(r                                sa0)2, fixes the box size:
+layer of each of theN      d symmetric-factor MLPs Ωk.  The                                                          s
+linear  term  collects  the  input  embeddingW             in ∈R   d×3    ,                              L=r      sa0   2πN√
+the 2×doutput projections of the Ω        k, and all per-layer                                                              3  .                      (E1)
+biases.  The constantC= 166 gathers everything inde-
+pendent ofd:  the single-body orbital branch (read-outs                        Interparticle  distances  are  evaluated  in  the  minimum-
+2N  dNm= 128 and embedding 4m= 32), the symmetric-                             image convention [44].
+factor output biases (2N    d = 4), and the two envelope and                      The Hamiltonian of the interactingN-electron system
+Jastrow scalars.                                                               reads
+   To  leading  orderN          p  ∼(c     bLb  +N   d)d  2   =   20d    2,                      NX                X
+quadratic  in  the  widthdand  linear  in  the  depthL                        b,  ˆH=−        1     ∇2i +  1                    1         , (E2)
+with the backbone and symmetric factors together hold-                                    2r  2s            rs              |r i −r   j| + const
+ing about 90% of the total.  We vary the network size by                                        i=1             1≤i<j≤N
+sweepingdover five values [24;  36;  48;  56;  64], spanning                   wherer           s enters in the prefactor as detailed by Ref. [14,
+Np ∈[12,358;  27,094;  47,590;  64,454;  83,878].                              17].  The first term in Eq. E2 is the kinetic energy, the
+                                                                               second the Ewald-resummed electron-electron repulsion,
+            Appendix D: Exact diagonalization                                  and the constant is the Madelung energy of the periodic
+                                                                               cell:  the uniform background cancels the divergent zero-
+                                                                               momentum (G= 0) contribution exactly [28].
+   To provide an independent benchmark we perform our
+own exact diagonalization in a truncated single-particle
+basis.  The natural basis is the set of Fock–Darwin states                      Appendix F: Energy evaluation and standard error
+|n, m⟩of  the  two-dimensional  harmonic  oscillator  in  a                                                 of the mean
+magnetic field, labelled by the Landau-level indexnand
+angular momentumℓ=m−n, with single-particle en-                                   For both the VMC and FPDMC estimates we perform
+ergiesε(n, m)  =  (n+                        12)ω  + + (m+       12)ω −  whereω         ±  =inference runs of 500,000 Monte Carlo steps with an en-
+ω±ω      c/2  andω=        pω20 +ω    2c/4.   We  build  the  many-            semble of 4,096 parallel walkers.  Statistics are accumu-
+body  basis  from  all  Slater  determinants  ofNsuch  or-                     lated  over  the  finalM=  2             18  steps  of  each  trajectory,
+bitals within a fixed total angular-momentum sector, and                       with  the  preceding  segment  discarded  as  equilibration;
+diagonalize the full Hamiltonian in that sector. The two-                      for  FPDMC  this  burn-in  removes  any  systematic  bias
+body Coulomb matrix elements are evaluated in momen-                           from the initial imaginary-time transient. One ensemble-
+tum space using the closed-form expressions for the Fock–                      averaged local-energy measurement is recorded per step,
+Darwin form factors⟨a|e                  iq·r   |c⟩, and the lowest eigenvalue yieldingM= 2                   18 measurements per run.
+is obtained by sparse (Lanczos) diagonalization.                                  All statistical uncertainties are quoted as the standard
+                                                                               error of the mean (SEM). For statistically independent
+                                                                               samples the SEM would beσ(E      L)/ √M, withσ(E                 L) the
+      Appendix E: The 2D uniform electron gas:                                 standard deviation of the recorded measurements;  con-
+               background and simulation cell                                  secutive Monte Carlo configurations are, however, auto-
+                                                                               correlated, so this naive estimate underestimates the true
+   The  2D  UEG  is  a  paradigmatic  many-body  model                         uncertainty.  We therefore obtain the SEM by reblocking
+whose accurate characterization underpins the construc-                        analysis  [45]:   the  local-energy  measurements  are  aver-
+tion of exchange-correlation functionals in density func-                      aged over blocks,  and the SEM is then calculated over
+tional  theory  [27,  40].   Quantum  Monte  Carlo  studies                    the block-averaged energy values.  The block size is sys-
+place the transition from the paramagnetic fluid to a tri-                     tematically increased until the estimated SEM converges
+angular  Wigner  crystal  atr    s  =  31(1)  [27,  29,  40,  41].             to a plateau, and the plateau SEM is quoted as the un-
+Neural-network wavefunctions have been applied to the                          certainty on bothE      VMC andE       DMC.  Since the VMC and
+electron gas in both three and two dimensions [8, 42, 43],                     FPDMC  production  runs  are  statistically  independent,
+making  it  a  natural  and  demanding  testbed  for  the                      the  SEM  of  the  residue  gap  ∆E=E          VMC −E   DMC  is
+present framework.                                                             obtained by combining the two SEMs in quadrature.
+   The  hexagonal  simulation  cell—the  primitive  cell  of
+a  triangular  lattice,  whose  Wigner–Seitz  cell  is  a  reg-
+ular  hexagon—is  defined  by  the  primitive  lattice  vec-                      Appendix G: Angular-momentum decomposition
+torsL       1  =L(1,0)  andL                   2  =L(−1/2,            √3/2).   For  the
+isotropic  UEG  this  geometry  is  preferable  to  a  square                     The   quantum   dot   setup   is   rotationally   invariant,
+cell: its higher rotational symmetry mitigates anisotropic                     [ ˆH, ˆLz] = 0, so the angular momentumL        z is a good quan-
+finite-size  effects,  and  it  accommodates  the  triangular                  tum number. We extract each state’s angular momentum
+Wigner  crystal  without  distortion.    Equating  the  cell                   content by rotation projection.  Under a rotationR               ϕ by
+                                                                                                                                                                      9
+
+angleϕ, anL                 z-eigenstate obeysψ(R          ϕR) =e       iLϕψ(R), so
+the overlap⟨Ψ           θ|Rϕ|Ψ θ⟩=  PL |c L|2eiLϕ is a Fourier se-
+ries inϕwhose coefficients are precisely the sector weights
+|c L|2.    We  decompose  the  state  by  a  discrete  Fourier
+transform overN    ϕ rotation angles.
+   AtB= 8 T the ground state lies in theL           z = 14 sec-
+tor, while theB= 4 T ground state lies in theL               z  = 6
+sector, as determined by ED, and confirmed by VMC in
+TableIV.  We note that NN-VMC independently learns
+the rotational invariance, with all network sizes converg-
+ing to less than 0.1% weight outside their expectedL             z-
+sector.
+
+
+Appendix H: Time-step and population-control bias
+
+   The short-time factorization of the FPDMC propaga-                                 FIG. 5.  Time-step dependence of the FPDMC energy for the
+tor introduces a systematic bias that vanishes as ∆τ→                                 fully spin-polarized 2D UEG (N= 16,r          s  = 30;  production
+0 [21].  To keep this bias small at practical time steps we                           network). The line is a fit used to extrapolate to ∆τ→0; the
+employ  the  size-consistent  drift-limiting  and  branching                          production time step is ∆τ    0 = 0.001.  Error bars denote the
+modifications of Zenet al.[22], including the associated                              reblocked standard error of the mean (Appendix F).
+local-energy cutoff (parameterα).
+   To  verify  that  the  production  time  step  is  small
+enough,  we  repeat  the  FPDMC  projection  for  the  2D
+UEG (N= 16,r           s  = 30;N     d  = 4,  production network)
+at a series of time steps bracketing the production value
+∆τ    0 = 0.001.  The total projected imaginary time is held
+fixed by scaling the number of steps inversely with ∆τ, so
+that the statistical uncertainties (Appendix F) are com-
+parable across the scan.  Figure 5 showsE     DMC(∆τ) to-
+gether  with  a  fit  used  to  extrapolate  to  ∆τ→0;  the
+extrapolated energy differs from the production result at
+∆τ    0  by less than the statistical uncertainty,  confirming
+that the time-step bias at ∆τ    0  = 0.001 is negligible on
+the scale of our error bars.
+
+
+
+TABLE  IV.  Angular-momentum  purity  of  the  Fermi  Sets
+states as a function of network parameter countN  p.
+
+B= 8 T                        N      p                      |c L=14  |2 (%)
+                               1.2×10         4                           99.9160
+                               4.8×10         4                           99.9944
+                               6.4×10         4                           99.9955
+                               8.4×10         4                           99.9990
+B= 4 T                        N      p                       |c L=6  |2 (%)
+                               1.2×10         4                           99.9631
+                               2.7×10         4                           99.9776
+                               4.8×10         4                           99.9903
+                               8.4×10         4                           99.9956
+
+
+
+
+
+
+ [1]  D.  M.  Ceperley  and  B.  J.  Alder,  Ground  state  of  the                         jagopal, Quantum monte carlo simulations of solids, Rev.
+      electron  gas  by  a  stochastic  method,  Phys.  Rev.  Lett.                         Mod. Phys.73, 33 (2001).
+      45, 566 (1980).                                                                   [3]  J.      B.      Anderson,      A      random-walk      simula-
+ [2]  W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Ra-                        tion      of      the      schr¨odinger      equation:          H+3,
+                                                                                                                                                               10
+
+     The     Journal     of     Chemical     Physics63,     1499                    [20]  D. Ceperley, Ground state of the fermion one-component
+     (1975),                   https://pubs.aip.org/aip/jcp/article-                      plasma:  A monte carlo study  in two and three  dimen-
+     pdf/63/4/1499/18897623/1499              1  online.pdf.                              sions, Phys. Rev. B18, 3126 (1978).
+ [4]  P.  J.  Reynolds,   D.  M.  Ceperley,   B.  J.  Alder,  and                   [21]  C.  J.  Umrigar,  M.  P.  Nightingale,  and  K.  J.  Runge,
+     J. Lester, William A., Fixed-node quantum monte carlo                                A   diffusion   monte   carlo   algorithm   with   very   small
+     for  moleculesa)  b),  The  Journal  of  Chemical  Physics                           time-step   errors,   The   Journal   of   Chemical   Physics
+     77,  5593  (1982),  https://pubs.aip.org/aip/jcp/article-                            99,  2865  (1993),  https://pubs.aip.org/aip/jcp/article-
+     pdf/77/11/5593/18939983/5593               1 online.pdf.                             pdf/99/4/2865/19121424/2865              1 online.pdf.
+ [5]  I.  von  Glehn,   J.  S.  Spencer,  and  D.  Pfau,  A  self-                  [22]  A.  Zen,  S.  Sorella,  M.  J.  Gillan,  A.  Michaelides,  and
+     attention ansatz for ab-initio quantum chemistry (2023),                             D.  Alf`e,  Boosting  the  accuracy  and  speed  of  quantum
+     arXiv:2211.13672 [physics.chem-ph].                                                  monte  carlo:   Size  consistency  and  time  step,  Physical
+ [6]  M.  Geier,  K.  Nazaryan,  T.  Zaklama,  and  L.  Fu,  Self-                        Review B93, 10.1103/physrevb.93.241118 (2016).
+     attention neural network for solving correlated electron                       [23]  S. M. Reimann and M. Manninen, Electronic structure
+     problems in solids, Phys. Rev. B112, 045119 (2025).                                  of quantum dots, Rev. Mod. Phys.74, 1283 (2002).
+ [7]  D.  Pfau,  J.  S.  Spencer,  A.  G.  D.  G.  Matthews,  and                   [24]  A.  D.  G¨u¸cl¨u  and  C.  J.  Umrigar,  Maximum-density
+     W. M. C. Foulkes, Ab initio solution of the many-electron                            droplet  to  lower-density  droplet  transition  in  quantum
+     schr¨odinger  equation  with  deep  neural  networks,  Phys.                         dots, Phys. Rev. B72, 045309 (2005).
+     Rev. Res.2, 033429 (2020).                                                     [25]  G. Giuliani and G. Vignale,Quantum Theory of the Elec-
+ [8]  G.  Cassella,  H.  Sutterud,  S.  Azadi,  N.  D.  Drummond,                         tron Liquid(Cambridge University Press, 2005).
+     D. Pfau, J. S. Spencer, and W. M. C. Foulkes, Discov-                          [26]  P.        P.        Ewald,        Die        berechnung        optis-
+     ering  quantum  phase  transitions  with  fermionic  neural                          cher          und          elektrostatischer          gitterpoten-
+     networks, Phys. Rev. Lett.130, 036401 (2023).                                        tiale,     Annalen     der     Physik369,     253     (1921),
+ [9]  Y.  Teng,  D.  D.  Dai,  and  L.  Fu,  Solving  the  fractional                     https://onlinelibrary.wiley.com/doi/pdf/10.1002/andp.19213690304.
+     quantum hall problem with self-attention neural network,                       [27]  B. Tanatar and D. M. Ceperley, Ground state of the two-
+     Phys. Rev. B111, 205117 (2025).                                                      dimensional electron gas, Phys. Rev. B39, 5005 (1989).
+[10]  K. Nazaryan, F. Gaggioli, Y. Teng, and L. Fu, Artificial                      [28]  L.  M.  Fraser,  W.  M.  C.  Foulkes,  G.  Rajagopal,  R.  J.
+     intelligence for quantum matter:  Finding a needle in a                              Needs,   S.  D.  Kenny,  and  A.  J.  Williamson,  Finite-
+     haystack (2026), arXiv:2507.13322 [cond-mat.str-el].                                 size effects and coulomb interactions in quantum monte
+[11]  Z.   Chen   and   J.   Lu,   Exact   and   efficient   repre-                       carlo calculations for homogeneous systems with periodic
+     sentation  of  totally  anti-symmetric  functions  (2025),                           boundary conditions, Phys. Rev. B53, 1814 (1996).
+     arXiv:2311.05064 [math.CA].                                                    [29]  N. D. Drummond and R. J. Needs, Phase diagram of the
+[12]  L. Fu, Fermi sets:  Universal and interpretable neural ar-                          low-density  two-dimensional  homogeneous  electron  gas,
+     chitectures for fermions (2026), arXiv:2601.02508 [cond-                             Phys. Rev. Lett.102, 126402 (2009).
+     mat.str-el].                                                                   [30]  A.  Abouelkomsan  and  L.  Fu,  First-principles  ai  finds
+[13]  T.   Zaklama,   M.   Geier,   and   L.   Fu,   Large   electron                     crystallization of fractional quantum hall liquids (2026),
+     model:    A   universal   ground   state   predictor   (2026),                       arXiv:2602.03927 [cond-mat.mes-hall].
+     arXiv:2603.02346 [cond-mat.str-el].                                            [31]  M. Gattu, Dressing composite fermions with artificial in-
+[14]  G.  Ortiz,  D.  M.  Ceperley,  and  R.  M.  Martin,  New                            telligence (2025), arXiv:2512.00527 [cond-mat.str-el].
+     stochastic method for systems with broken time-reversal                        [32]  A. P. Fadon, D. Pfau, J. S. Spencer, W. T. Lou, T. Ne-
+     symmetry:  2d fermions in a magnetic field, Phys. Rev.                               upert, and W. M. C. Foulkes, Extracting anyon statis-
+     Lett.71, 2777 (1993).                                                                tics from neural network fractional quantum hall states
+[15]  M. Wilson, N. Gao, F. Wudarski, E. Rieffel, and N. M.                               (2025), arXiv:2512.15872 [cond-mat.str-el].
+     Tubman,  Simulations  of  state-of-the-art  fermionic  neu-                    [33]  X.  Li,  Y.  Chen,  B.  Li,  H.  Chen,  F.  Wu,  J.  Chen,
+     ral  network  wave  functions  with  diffusion  monte  carlo                         and  W.  Ren,  Deep  learning  sheds  light  on  integer  and
+     (2021), arXiv:2103.12570 [physics.chem-ph].                                          fractional topological insulators (2025), arXiv:2503.11756
+[16]  W. Ren, W. Fu, X. Wu, and J. Chen, Towards the ground                               [cond-mat.str-el].
+     state  of  molecules  via  diffusion  monte  carlo  on  neural                 [34]  D. Luo, T. Zaklama, and L. Fu, Solving fractional elec-
+     networks, Nature Communications14, 1860 (2023).                                      tron  states  in  twisted  mote2  with  deep  neural  network
+[17]  F. Bolton, Fixed-phase quantum monte carlo method ap-                               (2025), arXiv:2503.13585 [cond-mat.str-el].
+     plied  to  interacting  electrons  in  a  quantum  dot,  Phys.                 [35]  N.   Metropolis,   A.   W.   Rosenbluth,   M.   N.   Rosen-
+     Rev. B54, 4780 (1996).                                                               bluth,     A.    H.    Teller,    and    E.    Teller,    Equation
+[18]  M. Zaheer, S. Kottur, S. Ravanbakhsh, B. Poczos, R. R.                              of    state    calculations    by    fast    computing    ma-
+     Salakhutdinov, and A. Smola, Deep sets, inAdvances in                                chines,    The    Journal    of    Chemical    Physics21,
+     Neural  Information  Processing  Systems, Vol. 30, edited                            1087      (1953),      https://pubs.aip.org/aip/jcp/article-
+     by  I.  Guyon,  U.  V.  Luxburg,  S.  Bengio,  H.  Wallach,                          pdf/21/6/1087/18802390/1087              1 online.pdf.
+     R. Fergus, S. Vishwanathan, and R. Garnett (Curran As-                         [36]  W.  K.  Hastings,  Monte  carlo  sampling  methods  using
+     sociates, Inc., 2017).                                                               markov  chains  and  their  applications,  Biometrika57,
+[19]  A.   Vaswani,   N.   Shazeer,   N.   Parmar,   J.   Uszkoreit,                      97    (1970),    https://academic.oup.com/biomet/article-
+     L. Jones, A. N. Gomez, L. u. Kaiser, and I. Polosukhin,                              pdf/57/1/97/23940249/57-1-97.pdf.
+     Attention is all you need, inAdvances  in  Neural  Infor-                      [37]  F.  Becca  and  S.  Sorella,Quantum  Monte  Carlo  Ap-
+     mation Processing Systems, Vol. 30, edited by I. Guyon,                              proaches  for  Correlated  Systems(Cambridge University
+     U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vish-                            Press, 2017).
+     wanathan,  and  R.  Garnett  (Curran  Associates,  Inc.,                       [38]  S.  Sorella,  Green  function  monte  carlo  with  stochastic
+     2017).                                                                               reconfiguration, Phys. Rev. Lett.80, 4558 (1998).
+                                                                                                                                                             11
+
+[39]  J. Martens and R. Grosse, Optimizing neural networks                              darski,  T.  Vegge,  and  A.  Bhowmik,  Neural  network
+     with kronecker-factored approximate curvature, inPro-                              ansatz for periodic wave functions and the homogeneous
+     ceedings  of  the  32nd  International  Conference  on  Ma-                        electron gas, Phys. Rev. B107, 235139 (2023).
+     chine  Learning,  Proceedings  of  Machine  Learning  Re-                    [43]  C. Smith,  Y. Chen,  R. Levy,  Y. Yang,  M. A. Morales,
+     search, Vol. 37, edited by F. Bach and D. Blei (PMLR,                              and  S.  Zhang,  Unified  variational  approach  description
+     Lille, France, 2015) pp. 2408–2417.                                                of  ground-state  phases  of  the  two-dimensional  electron
+[40]  C.  Attaccalite,  S.  Moroni,  P.  Gori-Giorgi,  and  G.  B.                      gas, Phys. Rev. Lett.133, 266504 (2024).
+     Bachelet, Correlation energy and spin polarization in the                    [44]  M. P. Allen and D. J. Tildesley,Computer Simulation of
+     2d electron gas, Phys. Rev. Lett.88, 256601 (2002).                                Liquids(Oxford University Press, 2017).
+[41]  Y.  Kwon,  D.  M.  Ceperley,  and  R.  M.  Martin,  Effects                 [45]  H. Flyvbjerg and H. G. Petersen, Error estimates on aver-
+     of  three-body  and  backflow  correlations  in  the  two-                         ages of correlated data, The Journal of Chemical Physics
+     dimensional electron gas, Phys. Rev. B48, 12037 (1993).                            91,   461   (1989),   https://pubs.aip.org/aip/jcp/article-
+[42]  M.  Wilson,  S.  Moroni,  M.  Holzmann,  N.  Gao,  F.  Wu-                        pdf/91/1/461/18981401/461            1  online.pdf.

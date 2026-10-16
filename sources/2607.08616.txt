@@ -1,0 +1,432 @@
+                            Accurate Self-Attention Wavefunctions at Large Scale
+
+                                           Filippo  Gaggioli,1  Sam  Azadi,2, 3  and  Liang  Fu1
+                  1Department  of  Physics,  Massachusetts  Institute  of  Technology,  Cambridge,  MA-02139,  USA
+         2Department of Physics and Astronomy, University of Manchester, Oxford Road, Manchester M13 9PL, UK
+           3Department of Physics, Clarendon Laboratory, University of Oxford, Parks Road, Oxford OX1 3PU, UK
+                                                              (Dated:  July 15, 2026)
+
+                   Self-attention  neural  networks  provide  powerful  variational  wavefunctions  that  surpass  the  ex-
+                pressivity of traditional variational ans¨atze.  This expressivity, however, comes with increased com-
+                putational complexity, raising a pressing question about scalability—can such wavefunctions retain
+                their accuracy at large system sizes?  We apply self-attention wavefunctions to the two-dimensional
+                homogeneous electron gas for up toN    e = 169 particles, obtaining energies systematically lower than
+                state-of-the-art  DMC.  Direct  access  to  the  ground  state  wavefunction  further  lets  us  recover  the
+                full collective-mode dispersion of the liquid phase, from the small-qplasmon branch to a roton-like
+                minimum  nearq≈2k               F .   Observables  atN    e  =  91  andN       e  =  169  are  in  near-perfect  agreement,
+                indicating convergence to the thermodynamic limit.
+
+
+  Quantum mechanics provides the microscopic founda-                          cially appealing because they can represent highly nonlo-
+tion  of  natural  sciences.   In  condensed  matter  physics,                cal and particle-dependent correlations without imposing
+it  governs  phenomena  ranging  from  electronic  band                       a hand-crafted orbital ansatz.  Rather than starting from
+structure  and  magnetism  to  superconductivity,   frac-                     a  prescribed  set  of  single-particle  orbitals  and  modify-
+tional  quantum  Hall  states,  and  other  strongly  corre-                  ing them through physically motivated transformations,
+lated phases.  Quantum mechanics is also a quantitative                       self-attention wavefunctions can learn many-body corre-
+predictive theory:  in principle, the properties of atoms,                    lation patterns purely from energy minimization.  As a
+molecules, and materials are entirely determined by the                       result, self-attention wavefunctions have proven capable
+many-body  Schr¨odinger  equation  for  interacting  nuclei                   of capturing different phases of matter within a unified
+and electrons.                                                                ansatz [15–24], and even predicting new physics from first
+  In  practice,  however,  computational  access  to  this                    principles [25].
+predictive  power  is  severely  limited  by  the  exponential                   The  all-to-all  character  of  the  attention  mechanism,
+growth  of  the  many-body  Hilbert  space,  which  repre-                    which is central to its expressive power, comes, however,
+sents  the  central  obstacle  faced  by  classical  numerical                at the expense of a larger number of variational param-
+methods  for  solving  the  ground  state  wavefunction  in                   eters  and  higher  computational  cost.   This  fundamen-
+quantum many-body systems.  In the study of correlated                        tal tension between expressivity and scalability raises a
+lattice systems,  wavefunction-based approaches such as                       central question:can self-attention wavefunctions reach
+tensor-network methods [1] have enabled major progress                        state-of-the-art accuracy at large system sizes,  while re-
+on gapped groundstates, but struggle on gapless systems                       taining their greater expressivity?
+such as metals.                                                                  In  this  work,  we  address  the  question  by  applying
+  Traditional   variational   Monte   Carlo   (VMC)   tech-                   self-attention wavefunctions to the two-dimensional ho-
+niques  [2,  3]  represent  a  useful  alternative  for  contin-              mogeneous  electron  gas,  for  system  sizes  as  large  as
+uum  fermionic  systems  [4,  5].   In  this  approach,  phys-                Ne = 169 particles.  To demonstrate the accuracy of our
+ically motivated trial states,  typically built from Slater                   self-attention wavefunctions, we compare variational en-
+determinants augmented by Jastrow and backflow corre-                         ergies with state-of-the-art DMC results and demonstrate
+lations [6, 7], can deliver accurate variational wavefunc-                    systematically lower energies over a range of system sizes
+tions with a relatively compact set of parameters.  These                     and interaction strengths.
+optimized trial states also play a central role as inputs to                     Our neural wavefunction approach gives full access to
+fixed-node diffusion Monte Carlo (DMC) [8], where their                       the ground-state, enabling the direct evaluation of many-
+nodal  structure  controls  the  remaining  approximation.                    body observables beyond the energy.  We illustrate this
+However, the accuracy of traditional VMC and DMC is                           by computing the momentum occupation and the static
+limited  by  the  quality  of  judiciously  chosen  trial  wave-              structure factorS(q).  From the structure factor,  using
+functions.                                                                    the  Feynman  relationε(q)∼q                           2/S(q),  we  extract  the
+  Machine-learning-based  methods  have  opened  a  new                       collective  mode  dispersion  of  the  HEG,  recovering  the
+route to more powerful many-body solvers [9–12]. Neural                       full excitation branch of the liquid phase:  the plasmon
+quantum states replace fixed analytic forms with train-                       dispersion  at  small  momentaq≪k         F  and  a  roton-like
+able  wavefunctions,  allowing  correlations  to  be  learned                 minimum atq≈2k           F .  Comparing results forN     e  = 91
+directly through variational optimization.  Among these                       andN      e = 169 particles, we find that the extracted dis-
+approaches, self-attention architectures [13, 14] are espe-                   persions agree almost perfectly, indicating that our vari-
+                                                                                                                                                           2
+
+
+                                                                                             TABLE I. Energy comparison (inference).
+                                                                                      System      Method        E[Ha/el]E                    corr [Ha/el]
+                                                                                      Ne = 91   SJB-VMC−0.0318792(2)−0.00456940
+                                                                                      rs = 30    SJB-DMC−0.0319370(1)−0.00462720
+                                                                                                  NN-VMC−0.03193763(3)−0.0046278
+                                                                                      Ne = 91   SJB-VMC−0.0243832(1)−0.00369277
+                                                                                      rs = 40    SJB-DMC−0.0244377(2)−0.00374727
+                                                                                                  NN-VMC−0.02443814(2)−0.0037477
+                                                                                     Ne = 169  SJB-VMC−0.0318548(2)−0.00464301
+                                                                                      rs = 30    SJB-DMC−0.0319197(1)−0.00470791
+                                                                                                  NN-VMC−0.03192077(3)−0.0047090
+
+
+                                                                                 of a density excitation with wavevectorqis given by
+
+FIG. 1.Self-attention neural network and VMC:Illus-                                                         ε(q)≲           ℏ2q2
+tration  of  our  self-attention  architecture  (left),  and  its  role                                               2mS(q)           .                         (2)
+inside the VMC algorithm (right).
+                                                                                 Large values ofS(q) therefore signal soft density modes.
+                                                                                 This  relation  is  especially  useful  at  small  wavevectors
+ational wavefunction remains accurate close to the ther-                         q≪k      F , where the collective-mode dispersion reflects the
+modynamic limit.                                                                 nature of the ground state.  For the Coulomb-interacting
+   Homogeneous electron gas —We consider a system of                             electron  gas,  the  long-wavelength  density  mode  is  the
+spin-polarized  electrons  in  two  spatial  dimensions,  de-                    plasmon,  whose  dispersion  scales  asε(q)∝         √qin  two
+scribed in standard units by the Hamiltonian                                     dimensions.
+                           X                 X         1                            A systematic analysis of these observables across dif-
+            H=−       ℏ2        ∇2i +  e2                                        ferent values ofr   s  is presented below, after introducing
+                      2m     i          4πϵ   j<i  |r i −r   j|.         (1)     the  self-attention  neural-network  wavefunction  used  in
+                                                                                 our variational Monte Carlo calculations.
+The  interaction  strength  defines  the  effective  Bohr  ra-                      Self-attention   wavefunction   —Our  neural-network
+diusa        B  =  4πϵℏ    2/me2,  which  sets  the  natural  length             ansatz  [13,  14]  is  illustrated  in  Fig.  1.   It  consists  of  a
+scale of the problem.  The dimensionless density param-                          stack of self-attention and perceptron layers, repeatedL
+eterr       s =d/a    B, withd=       p1/πnthe average interparti-               times, which takes the electron positionsr             j as input and
+cle distance andnthe two-dimensional electron density,                           outputs a set of vectors that, after a simple projection,
+controls the ratio between interaction and kinetic energy.                       define generalized single-particle orbitalsϕ       (k)i    (r  j,{r   ̸=j  }).
+Smallr          s corresponds to the high-density metallic regime,               Here, the notation emphasizes that the orbital associated
+while larger        s  favors crystallization.  The best available               with particlejdepends not only on its own positionr                          j,
+estimates place the transition between the Fermi-liquid                          but also on the full many-body configuration of the re-
+and Wigner-crystal phases nearr        s ≈35 [26, 27].                           maining electrons{r               ̸=j  }.  These generalized orbitals are
+   The competing liquid and crystalline ground states can                        then combined intoN    det Slater determinants, whose sum
+be characterized through complementary many-body ob-                             defines the antisymmetric fermionic neural wavefunction
+servables.   The  momentum  distributionn(k)  measures
+the occupation of plane-wave orbitalse             ik·r     [28] – in the                                        NdetX      h                     i
+metallic  phase,  it  exhibits  a  sharp  drop  at  the  Fermi                           ψθ(r  1,···,r   N) =          det   ϕ(k)i    (r  j,{r   ̸=j  }),    (3)
+wavevectork         F  = √4πn.  Spatial order is instead probed                                                   k=1
+by the static structure factorS(q) =⟨ρ                     qρ−q  ⟩/N  e, with    parametrized by the network weightsθ.
+ρq = Pi eiq·r     i  the density operator at momentumq.  In                         Notably, the self-attention ansatz (3) does not rely on a
+the crystalline phase,S(q) develops sharp Bragg peaks                            prescribed set of orbitals, as opposed to message-passing
+at the reciprocal-lattice vectors of the triangular Wignerq                      neural network architectures that implements the back-
+crystal, located at momenta|q|=                  8πn/ √3.                        flow  transformation  on  plane-wave  orbitals  [26,  30–32].
+   In addition, the structure factor encodes information                         Instead,  it  generates  generalized  orbitals  directly  from
+about  collective  density  fluctuations  above  the  ground                     the  many-body  electron  configuration.   Moreover,  the
+state.  As first pointed out by Feynman in the context of                        way  in  which  each  particle  is  effectively  “dressed”  by
+superfluid 4He [29], a variational estimate for the energy                       the  surrounding  electrons  is  not  constrained  to  be  the
+                                                                                                                                                      3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  2.Momentum  space  occupation  and  structure  factor.Left  panels:  forr                     s  =  30,  the  system  displays  metallic
+behavior, as signaled by the sharp Fermi surface discontinuity in the momentum space occupationsn(k).  Right panels:  for
+rs = 40, the electrons form a crystalline state (see the density snapshot in the inset).  Correspondingly, prominent Bragg peaks
+appear in the structure factorS(q).
+
+
+same for all orbitals, as in standard backflow coordinate-                    the damping lengthλ. In this way, correlations can build
+transformations.  In this sense,  the self-attention archi-                   up over increasingly large distances through the depth of
+tecture both avoids the bias associated with a prescribed                     the network.  The locality bias in Eq. (4) therefore does
+choice of single-particle orbitals and provides a more flex-                  not  prevent  the  ansatz  (3)  from  capturing  correlations
+ible representation of many-body correlations.                                arising from long-range interactions, as demonstrated by
+  The all-to-all character of the attention mechanism [33]                    the results in the next section.
+presents a challenge for scaling the self-attention ansatz                       Results —We now solve the Hamiltonian (1) in a tri-
+to large system sizes.  On physical grounds, correlations                     angular simulation cell, using periodic boundary condi-
+decay with spatial separation, implying that, in its vanilla                  tions at the Γ-point.  The long-range Coulomb interac-
+implementation, the transformer architecture must invest                      tion is treated through Ewald summation [36].  We focus
+a large amount of “attention” to learn how distant par-                       on spin-polarized systems withN        e  = 91 andN      e  = 169
+ticles arenotstrongly influencing each other.                                 electrons,  and  consider  values  ofr   s  =  30,40  close  to
+  To overcome this limitation, we introduce an exponen-                       the liquid–crystal transition, where correlation effects are
+tial damping factor that biases the attention mechanism                       strongest and obtaining accurate wavefunctions is most
+according to the interparticle distancer              ij. In terms of the     challenging.
+usual “key” and “query” matricesK, Q, the pre-softmax                            To benchmark the accuracy of our self-attention wave-
+attention logit of each particle pair is then defined as                      function,  we  compare  the  variational  energies  against
+                                                                              state-of-the-art  diffusion  Monte  Carlo  results.     The
+                       ℓij = Qi ·K j√dK   − rijλ ,                      (4)   NN-VMC  calculations  were  performed  using  the  self-
+                                                                              attention architecture in Fig. 1,  with≈800 K parame-
+wherei, j=  1,···, N                e  are  the  particle  indices  andd        Kters.  The training lasted about 100 K steps, and ran on
+is  the  dimension  of  the  key  and  query.   The  trainable                two or four H200 GPUs.  The DMC benchmarks (SJB-
+lengthscaleλis initialized from the average interparticle                     DMC) were obtained within the fixed-node approxima-
+distance p1/πn,  without  further  problem-specific  tun-                     tion, using optimized Slater-Jastrow-backflow wavefunc-
+ing.   Our  approach  is  inspired  by  Refs.  [34,  35],  which              tions  (SJB-VMC)  to  impose  the  nodal  constraint,  and
+introduced  “spatial  attention”  based  on  the  fixed  dis-                 were extrapolated to the zero-time-step limit to remove
+tances  between  lattice  sites  for  studying  spin  systems.                the leading time-step bias.  We refer to the SM [28] and
+In contrast, our attention bias is associated with pairs of                   Ref. [27] for further details on the DMC methodology.
+particle positions that constitute the input to our first-                       The  results  are  summarized  in  Tab.  I.  For  interac-
+quantized wavefunction, which is applicable to both con-                      tion strengths considered, our NN-VMC energies aresys-
+tinuum and lattice systems [22]. For this reason, we refer                    tematically lower and more precisethan the correspond-
+to Eq. (4) as“spatially weighted particle attention”.                         ing fixed-node DMC estimates, even for the largest sys-
+  We finally remark that, since the attention operation is                    tem  size  ofN   e  =  169.   Expressing  energies  in  units  of
+applied repeatedly across several layers, particle informa-                   the correlation energyE             corr (defined with respect to the
+tion can progressively propagate beyond the scale set by                      Hartree-Fock energies at the same system size), we quan-
+                                                                                                                                                      4
+
+tify the NN-VMC margin over the traditional SJB-VMC
+benchmark  as  1.263%  and  1.466%  forN           e  =  91  with
+rs = 30,40, and 1.401% for the largest system size with
+Ne  =  169  electrons.   Remarkably,  the  accuracy  of  the
+self-attention wavefunction does not deteriorate upon in-
+creasing the system size.
+  On top of its accuracy, the explicit nature of the NN-
+VMC  wavefunction  allows  us  to  compute  ground-state
+observables beyond the energy.  Fig. 2 shows the momen-
+tum occupationn(k) and the static structure factorS(q)
+forN     e  = 91 electrons atr    s  = 30 (liquid) andr      s  = 40
+(crystal) – the corresponding densities are shown in the
+smaller  insets.   The  momentum  distribution  displays  a
+sharp Fermi surface in the liquid phase as evidenced by
+the discontinuous jump inn(k) acrossk                    F , accompanied
+by a finite interaction-induced tail beyondk       F .  The crys-             FIG. 3.Collective modes (r     s  = 30):the energyq                     2/S(q)
+talline phase, on the other hand, displays a smooth and                       provides a variational upper bound on the dispersion of the
+wider occupation curve, without visible Fermi surface dis-                    collective  modes  for  the  HEG  ground  state.   The  plasmon
+continuity aroundk            F .                                             branch∝   √qat  smallqevolves  into  a  roton-like  minimum
+                                                                              around 2k  F  associated to the incipient crystalline order.  The
+  The structure factor provides complementary informa-                        quantitative agreement across system sizes certifies accuracy
+tion  about  spatial  density  correlations.    Atr  s  =  30,                in approaching the thermodynamic limit.
+S(q)  shows  enhanced  weight  on  an  approximately  cir-
+cular shell around 2k  F ,  but no sharp crystalline peaks.
+This is consistent with a strongly correlated liquid close
+to crystallization.  Atr  s = 40, instead, the structure fac-
+tor develops pronounced peaks at six symmetry-related                         very large system sizes.
+momenta, signaling the emergence of triangular Wigner-
+crystal order.  This is also visible directly from the real-                     Discussion —The availability of expressive variational
+space  density  snapshots  shown  in  the  insets  of  Fig.  2:               wavefunctions  is  an  essential  ingredient  for  discovering
+while ther      s = 30 state remains essentially homogeneous,                 new physics with computational tools. At the same time,
+ther      s = 40 state displays a clear triangular modulation.                resolving the delicate interplay of energy scales in many-
+  Finally, we use the structure factor to extract informa-                    body systems requires quantitative control at the highest
+tion about collective density modes of the liquid phase us-                   level of numerical accuracy.  Our results show that self-
+ing equation (2).  The resulting variational upper bound                      attention architectures can simultaneously meet both re-
+on  the  excitation  dispersionq            2/S(q),  obtained  by  tak-       quirements up to large system sizes.
+ing  the  angular  average  ofS(q)  atr             s  =  30,  is  shown
+in Fig. 3 forN     e = 91 andN      e = 169.  At small wavevec-                  Success  on  the  homogeneous  electron  gas  problem  –
+tors, the dispersion follows the expected two-dimensional                     a cornerstone of many-body condensed matter physics –
+plasmon scalingε(q)∝              √q,  confirming that the neural             opens the door to using self-attention architectures to ex-
+wavefunction  (3)  correctly  capture  the  long-wavelength                   plore new physics in semiconductor systems and beyond.
+Coulomb  correlations  of  the  HEG.  At  larger  momenta,                    More  broadly,  access  to  large  system  sizes  enables  the
+the dispersion develops a clear roton-like minimum close                      study  of  increasingly  realistic  electronic  systems,  with
+to 2k  F , reflecting the softening of density fluctuations at                potential  applications  ranging  from  materials  discovery
+the wavevector associated with the incipient crystalline                      to quantum technologies.
+order.
+  Remarkably,  the  curves  obtained  forN     e  =  91  and                     Acknowledgments  –We thank Ahmed Abouelkomsan
+Ne = 169 are almost indistinguishable over the full range                     for  insightful  comments.   This  work  was  supported  by
+of momenta.  This agreement shows that the collective-                        the National Science Foundation (NSF) Convergence Ac-
+mode dispersion extracted from the self-attention wave-                       celerator  Award  No.   2235945.   We  acknowledge  IAIFI
+function  already  converges  to  its  thermodynamic-limit                    (the NSF Cooperative Agreement PHY-2019786) and the
+behavior at the system sizes considered here.  Together                       MIT  Engaging  cluster  for  providing  the  computational
+with  the  variational  energies  below  fixed-node  DMC,                     resources that have contributed to the NN-VMC results
+these  results  demonstrate  that  self-attention  NN-VMC                     reported in this paper.  L.F. was supported by a Simons
+provides not only accurate ground-state energies, but also                    Investigator  Award  from  the  Simons  Foundation.   S.A.
+reliable access to correlated observables and collective ex-                  acknowledges the support of the Leverhulme Trust un-
+citations in the continuum homogeneous electron gas at                        der the grant agreement RPG-2023-253.
+                                                                                                                                                                  5
+
+                                                                                          intelligence for quantum matter:  Finding a needle in a
+                                                                                          haystack (2025), arXiv:2507.13322 [cond-mat.str-el].
+                                                                                    [19]C.-T. Li, T. Ong, M. Geier, H. Lin, and L. Fu, Attention
+ [1]S.  R.  White,  Density  matrix  formulation  for  quantum                            is all you need to solve chiral superconductivity (2025),
+     renormalization groups, Phys. Rev. Lett.69, 2863 (1992).                             arXiv:2509.03683 [cond-mat.supr-con].
+ [2]W. L. McMillan, Ground state of liquid he     4, Phys. Rev.                     [20]A. P. Fadon, D. Pfau, J. S. Spencer, W. T. Lou, T. Ne-
+     138, A442 (1965).                                                                    upert,  and  W.  M.  C.  Foulkes,  Extracting  anyon  statis-
+ [3]D.  Ceperley,  G.  V.  Chester,  and  M.  H.  Kalos,  Monte                           tics from neural network fractional quantum hall states
+     carlo simulation of a many-fermion study, Phys. Rev. B                               (2025), arXiv:2512.15872 [cond-mat.str-el].
+     16, 3081 (1977).                                                               [21]A.  Abouelkomsan  and  L.  Fu,  First-principles  ai  finds
+ [4]D.  M.  Ceperley  and  B.  J.  Alder,  Ground  state  of  the                         crystallization of fractional quantum hall liquids (2026),
+     electron  gas  by  a  stochastic  method,  Phys.  Rev.  Lett.                        arXiv:2602.03927 [cond-mat.mes-hall].
+     45, 566 (1980).                                                                [22]L. Fu, Fermi sets:  Universal and interpretable neural ar-
+ [5]W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Ra-                        chitectures for fermions (2026), arXiv:2601.02508 [cond-
+     jagopal, Quantum monte carlo simulations of solids, Rev.                             mat.str-el].
+     Mod. Phys.73, 33 (2001).                                                       [23]J.  Zhu,   Y.  Huang,   X.  Hu,   D.  Xiao,  and  T.  Cao,
+ [6]N. D. Drummond, M. D. Towler, and R. J. Needs, Jas-                                   Crystallization  in  the  fractional  quantum  hall  regime
+     trow correlation factor for atoms, molecules, and solids,                            with   disorder-aware   neural   quantum   states   (2026),
+     Phys. Rev. B70, 235119 (2004).                                                       arXiv:2604.06316 [cond-mat.str-el].
+ [7]P. L´opez R´ıos, A. Ma, N. D. Drummond, M. D. Towler,                           [24]K. Nazaryan and L. Fu, Qernel:  a scalable large electron
+     and  R.  J.  Needs,  Inhomogeneous  backflow  transforma-                            model (2026), arXiv:2604.26018 [cond-mat.str-el].
+     tions in quantum monte carlo calculations, Phys. Rev. E                        [25]F. Gaggioli, P.-A. Graham, and L. Fu, Electronic crystals
+     74, 066701 (2006).                                                                   and  quasicrystals  in  semiconductor  quantum  wells:  An
+ [8]D.       Ceperley       and       B.       Alder,       Quantum                       AI-powered discovery (2025), 2512.10909 [cond-mat].
+     monte       carlo,       Science231,       555       (1986),                   [26]C.  Smith,  Y.  Chen,  R.  Levy,  Y.  Yang,  M.  A.  Morales,
+     https://www.science.org/doi/pdf/10.1126/science.231.4738.555.                        and  S.  Zhang,  Unified  variational  approach  description
+ [9]G.    Carleo    and    M.    Troyer,    Solving    the    quan-                       of  ground-state  phases  of  the  two-dimensional  electron
+     tum     many-body     problem     with     artificial     neu-                       gas, Phys. Rev. Lett.133, 266504 (2024).
+     ral       networks,       Science355,       602       (2017),                  [27]S.  Azadi,  N.  D.  Drummond,  and  S.  M.  Vinko,  Quan-
+     https://www.science.org/doi/pdf/10.1126/science.aag2302.                             tum monte carlo study of the phase diagram of the two-
+[10]J. Carrasquilla and R. G. Melko, Machine learning phases                              dimensional uniform electron liquid, Phys. Rev. B110,
+     of matter, Nature Physics13, 431 (2017).                                             245145 (2024).
+[11]D.  Luo  and  B.  K.  Clark,  Backflow  transformations  via                    [28]See Supplementary Material at url ... .
+     neural networks for quantum many-body wave functions,                          [29]R. P. Feynman, Atomic theory of the two-fluid model of
+     Phys. Rev. Lett.122, 226401 (2019).                                                  liquid helium, Phys. Rev.94, 262 (1954).
+[12]D.  Pfau,  J.  S.  Spencer,  A.  G.  D.  G.  Matthews,  and                     [30]G.  Pescia,  J.  Nys,  J.  Kim,  A.  Lovato,  and  G.  Carleo,
+     W. M. C. Foulkes, Ab initio solution of the many-electron                            Message-passing neural quantum states for the homoge-
+     schr¨odinger  equation  with  deep  neural  networks,  Phys.                         neous electron gas, Phys. Rev. B110, 035108 (2024).
+     Rev. Res.2, 033429 (2020).                                                     [31]A.  Valenti,  Y.  Vituri,  Y.  Yang,  D.  E.  Parker,  T.  Soe-
+[13]I.  von  Glehn,   J.  S.  Spencer,  and  D.  Pfau,  A  self-                          jima, J. Dong, M. A. Morales, A. Vishwanath, E. Berg,
+     attention ansatz for ab-initio quantum chemistry (2023),                             and S. Zhang, Quantum geometry driven crystallization:
+     arXiv:2211.13672 [physics.chem-ph].                                                  A neural-network variational monte carlo study (2025),
+[14]M. Geier, K. Nazaryan, T. Zaklama, and L. Fu, Is atten-                               arXiv:2512.07947 [cond-mat.str-el].
+     tion all you need to solve the correlated electron problem?                    [32]D.  Linteau,  S.  Moroni,  G.  Carleo,  and  M.  Holzmann,
+     (2025), arXiv:2502.05383 [cond-mat.str-el].                                          Neural wave functions for high-pressure atomic hydrogen,
+[15]G.  Cassella,  H.  Sutterud,  S.  Azadi,  N.  D.  Drummond,                           Physical Review Research8, 10.1103/t72h-tkcx (2026).
+     D. Pfau,  J. S. Spencer, and W. M. C. Foulkes, Discov-                         [33]A.   Vaswani,   N.   Shazeer,   N.   Parmar,   J.   Uszkoreit,
+     ering  quantum  phase  transitions  with  fermionic  neural                          L. Jones, A. N. Gomez, L. Kaiser, and I. Polosukhin, At-
+     networks, Phys. Rev. Lett.130, 036401 (2023).                                        tention is all you need (2023), arXiv:1706.03762 [cs.CL].
+[16]Y.  Teng,  D.  D.  Dai,  and  L.  Fu,  Solving  the  fractional                 [34]C. Zhang and J. von Delft, Interpretable artificial intelli-
+     quantum hall problem with self-attention neural network,                             gence (ai) analysis of strongly correlated electrons (2025),
+     Phys. Rev. B111, 205117 (2025).                                                      arXiv:2510.26864 [cond-mat.str-el].
+[17]Y. Qian, T. Zhao, J. Zhang, T. Xiang, X. Li, and J. Chen,                       [35]L. L. Viteritti, R. Rende, S. Sachdev, and G. Carleo, Ap-
+     Describing landau level mixing in fractional quantum hall                            proaching the thermodynamic limit with neural-network
+     states with deep learning, Phys. Rev. Lett.134, 176503                               quantum states (2026), arXiv:2602.02665 [cond-mat.str-
+     (2025).                                                                              el].
+[18]K. Nazaryan, F. Gaggioli, Y. Teng, and L. Fu, Artificial                        [36]R.  J.  Needs,  M.  D.  Towler,  N.  D.  Drummond,  and
+                                                                                          P. L´opez R´ıos,    CASINO User Manual (2019).
+                                                                                                                                                         6
+
+                          “Accurate Self-Attention Wavefunctions at Large Scale ”Supplementary materials for:
+
+
+                                                 Filippo Gaggioli1, Sam Azadi2, Liang Fu1
+               1Department of Physics, Massachusetts Institute of Technology, Cambridge, MA-02139, USA
+     2Department of Physics and Astronomy, University of Manchester, Oxford Road, Manchester M13 9PL, UK
+       2Department of Physics, Clarendon Laboratory, University of Oxford, Parks Road, Oxford OX1 3PU, UK
+
+
+
+
+
+
+                                                 MOMENTUM-SPACE OCCUPATION
+
+   In  this  section,  we  give  the  recipe  used  to  evaluate  the  momentum-space  occupationsn(k)  displayed  in  Fig.  2.
+These are read off from the diagonal of the one-body reduced density matrix (1RDM).
+   We work in a single particle basis of plane-waves,
+
+                                                                 Φk(r) =      1√Aeik·r    ,                                                                      (1)
+
+whereA=|L                    1 ×L    2|is the area of the supercell with armsL           1  andL       2.  Periodic boundary conditions restrict the
+momenta to the supercell reciprocal grid
+
+                            kmn  =mb        1 +nb      2,       B= (b     1,b 2) = 2π   L−1  T ,      b i ·L j = 2π δ  ij,                            (2)
+
+withm, n∈ZandL= (L                              1,L 2) the supercell lattice matrix.
+   In this basis, the 1RDM has elements
+                                    ˆ                           
+                                NX
+                ρ1(k;k    ′) =          d2ri d2r′i  Y     d2rj  Ψ(···, r       i, ···)Ψ  ∗(···, r   ′i, ···)Φ  ∗k(r  i)Φk′(r ′i)
+
+                               i=1                     j̸=i
+                                    ˆ                     
+                                NX
+                            =           d2ri  Y     d2rj  |Ψ(···, r        i, ···)|    2 ˆd′ri Ψ∗(···, r   ′i, ···)Ψ∗(···, r    i, ···)  Φ∗k(r  i)Φk′(r ′i).             (3)
+
+                               i=1              j̸=i
+
+On the second line, the elements are expressed in a form that can be evaluated by Monte Carlo sampling a batch of
+configurationsBfrom the probability distribution|Ψ|                                                            2, yielding
+
+                                                     NeX   X      ˆ
+                                     ρ1(k;k    ′)≈                   d′ri Ψ∗(···, r   ′i, ···)Ψ∗(···, r    i, ···)   Φ∗k(r  i)Φk′(r ′i).                                     (4)
+                                                    i=1  {r  i}∈B
+
+The two-dimensional momentum-space occupation is then the corresponding diagonal element, obtained by setting
+k′ =k,
+
+                                                          NeX   X      ˆ
+                                 n(k)≡ρ             1(k;k)≈                d′ri Ψ∗(···, r   ′i, ···)Ψ∗(···, r    i, ···)  Φ∗k(r  i)Φk(r ′i),                                 (5)
+                                                          i=1 {r  i}∈B
+
+and is normalized such that Pk n(k) =N          e.
+
+
+                                                       DIFFUSION MONTE CARLO
+
+   Details of our variational and diffusion Monte Carlo simulations are provided in Ref. [27].  We employed the same
+Slater–Jastrow–backflow (SJB) trial wave function and the same simulation-cell symmetry as used previously for the
+liquid phase.  The only difference is that the VMC and DMC energies reported here were obtained at the Γ-point.  To
+remain consistent with the neural-network setup, we did not apply twist-averaged boundary conditions.  The DMC
+energies were extrapolated to the zero-time-step limit (Fig. S1).
+                                                                                                                                                   7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S1.  Linear extrapolation of the DMC energies as a function of time step to obtain the zero-time-step limit.

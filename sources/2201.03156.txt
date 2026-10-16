@@ -1,0 +1,1265 @@
+  SciPost Physics                                                                                 Submission
+
+
+           m∗ of two-dimensional electron gas: a neural canonical
+                                          transformation study
+
+                             Hao Xie1, 2, Linfeng Zhang3, 4⋆ and Lei Wang1, 5†
+
+            1 Institute of Physics, Chinese Academy of Sciences, Beijing 100190, China
+                2 University of Chinese Academy of Sciences, Beijing 100049, China
+                                  3 DP Technology, Beijing, 100080, China
+                             4 AI for Science Institute, Beijing, 100080, China
+          5 Songshan Lake Materials Laboratory, Dongguan, Guangdong 523808, China
+                                           ⋆ linfeng.zhang.zlf@gmail.com
+                                                † wanglei@iphy.ac.cn
+
+                                                    June 16, 2023
+
+
+Abstract
+
+The quasiparticle effective mass m∗ of interacting electrons is a fundamental quantity
+in the Fermi liquid theory.  However, the precise value of the effective mass of uniform
+electron gas is still elusive after decades of research. The newly developed neural canon-
+ical transformation approach [Xie et al., J. Mach.  Learn.  1, (2022)] offers a principled
+way to extract the effective mass of electron gas by directly calculating the thermal en-
+tropy at low temperature.   The approach models a variational many-electron density
+matrix using two generative neural networks:  an autoregressive model for momentum
+occupation and a normalizing flow for electron coordinates.  Our calculation reveals a
+suppression of effective mass in the two-dimensional spin-polarized electron gas, which
+is more pronounced than previous reports in the low-density strong-coupling region.
+This prediction calls for verification in two-dimensional electron gas experiments.
+
+
+Contents
+
+1   Introduction                                                                                            2
+
+2   Method                                                                                                                        3
+
+3   Results                                                                                                                         6
+
+4   Discussions                                                                                                                  9
+
+A   Benchmark for three-dimensional spin-polarized uniform electron gas               9
+
+B   Entropy of non-interacting fermions in the canonical ensemble               10
+
+C   Twist-averaged boundary conditions                                                        11
+
+D   Model architectures                                                                              11
+    D.1   Autoregressive model for p(K)                                                                               11
+    D.2   Normalizing flow for ΨK (R)                                                                                    13
+
+E   Details of the training procedure                                                              14
+
+                                                            1
+  SciPost Physics                                                                                 Submission
+
+
+
+    E.1    The Hutchinson’s trick                                                                                      14
+    E.2    Stochastic reconfiguration for density matrices                                          15
+
+References                                                                                                                      16
+
+
+
+
+1 Introduction
+
+Landau’s Fermi liquid theory [1] is one of the cornerstones of condensed matter physics [2]. It
+explains the mystery why the non-interacting picture can largely apply to real metals despite
+the strong Coulomb repulsion between electrons.  The essence is that a Fermi liquid consists
+of quasiparticles that are adiabatically connected to bare electrons.  Such a renormalization
+procedure can be encapsulated in only a handful of parameters, from which one can predict
+a broad range of physical properties of the system.  One such parameter is the quasiparticle
+effective mass m∗, which is the central focus of this work.
+    Surprisingly, the precise value of the quasiparticle effective mass of uniform electron gas
+is still controversial after more than fifty years of research [3–17    ].  The uniform electron gas
+consists of electrons distributed homogeneously in a background of positive charges. Despite
+of being simple, the model captures the essence of electron correlation effects and serves as a
+foundational model of interacting electrons [18,19     ].
+    Depending on the spatial dimension and spin polarization of the uniform electron gas,
+previous results may differ quantitatively or even qualitatively on whether the quasiparticle
+effective mass is enhanced (m∗/m> 1) or suppressed (m∗/m< 1) compared to the bare elec-
+tron mass m. Resolving these discrepancies within the same approach can be challenging. For
+example, there lacks a systematic way of improving various approximate analytic calculations
+to reach a consensus [3–9    ]. It is hoped that numerical calculations offer more reliable predic-
+tions to the effective mass. However, two recent quantum Monte Carlo (QMC) studies [16,17     ]
+report drastically different effective masses for the three-dimensional electron gas.  The rea-
+son for such discrepancy is unclear and may be related to different (but equivalent) ways of
+defining the effective mass as well as different approximations employed in the methods. The
+situation is also not clear in the two-dimensional case, even if one employs the same kind of
+QMC method [12–15     ].  There, the predicted effective mass differ qualitatively depending on
+how to process the QMC data  1.  These discrepancies are related to ambiguities in relating
+excited state energies to the effective mass [19], which again entangle with approximations
+and finite size errors in the calculations.
+    Resolving the discrepancy on the effective mass of uniform electron gas is not only a theo-
+retical question with pure academic interests, but also of direct experimental relevance.  One
+can measure the effective mass in a semiconductor quantum well via quantum oscillations [20–
+24] or thermodynamics [25], which is a high-quality realization of the two-dimensional elec-
+tron gas (2DEG) with tunable densities. Unless otherwise specified, we will focus on the spin-
+polarized case in this paper, which can be conveniently realized in experiments by applying an
+in-plane magnetic field.
+    At sufficiently low temperature, the entropy per particle of 2DEG s/kB = π2                        m∗  T
+                                                                                                    3   m  TF  exhibits
+linear dependence on the temperature T, where kB is the Boltzmann constant and TF  is the
+Fermi temperature.  Therefore, one can directly estimate the effective mass from the entropy
+
+   1In fact, the predictions from each group also evolve over years; see Refs. [10–12     ] and [13–15     ] respectively.
+
+
+
+
+                                                           2
+  SciPost Physics                                                                                 Submission
+
+
+
+ratio of interacting (s) and non-interacting (s0) electron gases  [26]:
+                                                      m∗
+                                                       m  =  ss0 .                                                             (1)
+By direct access of the thermodynamic observables, one can avoid subtleties in relating excita-
+tion energies of finite size system to the quasiparticle effective mass [19]. However, previous
+finite-temperature calculations of the uniform electron gas do not resolve the issue related to
+the effective mass [26] because they focus on melting of the Wigner crystal [27] or the equation
+of state in the warm dense matter region [28–30     ], both are outside the scope of Fermi-liquid-
+like behavior.  This is partially due to the fact that the adopted QMC methods typically suffer
+less from the sign problem at low density and high temperature, where the fermionic nature
+of the system is less pronounced.
+    In this paper, we employ the recently developed neural canonical transformation approach [31]
+to study 2DEG at low temperature and estimate the effective mass via the entropy ratio Eq. (1).
+Neural canonical transformation leverages recent advances in deep generative models [32] for
+variational free energy calculation of interacting fermions at finite temperature. This approach
+is particularly suitable for the present task for two reasons:  firstly, the employed variational
+density matrix ansatz fits nicely to the philosophy of Fermi liquid theory; secondly, the thermal
+entropy can be directly accessed unlike other conventional QMC methods.
+    Consider N electrons in a two-dimensional periodic box of length L. We set the energy unit
+to be Rydberg ħh2/2ma20, where a0 = ħh2/me2 is the Bohr radius.  The dimensionless Wigner-
+Seitz parameter rs = L/(pπNa0) measures the average distance between electrons in the unit
+of Bohr radius. The Hamiltonian reads [33]
+
+                                              NX             NX      1
+                                H =− 1r2s        ∇2i  + 2rs     |r i− r j| + const.,                                   (2)
+                                             i=1            i<j
+
+where r i = (xi, yi) is the coordinate of the i-th electron.  The constant term in Eq. (2) refers
+to the energy due to the neutralizing background.
+
+
+2 Method
+
+To investigate the finite-temperature properties of Eq. (2), we minimize the variational free
+energy
+                                           F =  1β Tr(ρ lnρ) + Tr(ρH)                                               (3)
+
+with respect to a many-electron density matrixρ, whereβ = 1/kBT is the inverse temperature.
+In practice, T  is measured relative to the Fermi temperature kBTF  = 4Ry/r2s .  The variational
+free energy Eq. (3) is lower bounded by the true free energy of the system, i.e.,     F≥− 1β ln Z,
+where  Z  = Tre−βH  is the partition function.  The equality holds only when the variational
+density matrix coincides with the exact one, i.e.,ρ = e−βH/Z.
+    The variational density matrix is expressed as a weighted sum over a family of many-body
+orthonormal basis states                          X
+                                            ρ =        p(K)|ΨK〉〈ΨK| .                                                 (4)
+                                                   K
+Here  K≡{k1, k2, . . . , kN} represents a set of occupied momenta, each (under the periodic
+boundary conditions) taking one of the discrete values k =  2πnL   (n∈ Z2) without duplication
+as required by the Pauli exclusion principle.  Such setting is closely in line with an essential
+point of Fermi liquid theory [1]:  one can label the low-energy excited states using the same
+
+                                                           3
+  SciPost Physics                                                                                 Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Figure 1:  (a) A set of occupied momenta  K  residing on the reciprocal space grid
+      within  an  energy  cutoff  indicated  by  the  circle.   In  the  figure  there  are  N  =  13
+      electrons distributed in M  = 49 allowed momenta.  We use the autoregressive net-
+      work Eq. (6) to model the Boltzmann distribution of such configurations. (b) A set of
+      electron coordinates R residing in a periodic box. A normalizing flow network trans-
+      forms R to a new set of quasiparticle coordinates ζ in the same box.  This induces
+      a unitary transformation which, when acting upon the plane-wave Slater determi-
+      nants, produces a set of many-body basis states Eq. (8).
+
+
+quantum number as the ideal Fermi gas. In practice, one has to truncate the momenta within
+an energy cutoff, which is set to be sufficiently large to avoid bias in the considered temperature
+range.  Therefore, for M  possible momenta within the energy cutoff, the summation Eq. (4) terms. See Fig.1(a) for a schematic illustration.
+involves MN
+    Substituting the density matrix ansatz Eq. (4) into Eq. (3), one finds an unbiased estimator
+for the variational free energy:
+                                               1                            Eloc
+                               F =    E        β ln p(K)  +     E              K  (R) .                                (5)
+                                    K∼p(K)                      R∼|ΨK (R)|2
+
+Here R≡{r 1, r 2, . . . , r N} is the set of electron coordinates and ΨK (R) =〈R|ΨK〉 the corre-P    ∇2
+sponding basis wavefunction. The local energy is defined as ElocP              K  (R) =− 1r2s     i     i lnΨK (R) + (∇i lnΨK (R))2+
+2            1
+rs   i<j  |r i−r j| + const.  We use Ewald summation to evaluate the Coulomb interaction term,
+while the gradient and Laplacian operator appearing in the kinetic term can be computed us-
+ing automatic differentiation.  We model the Boltzmann distribution p(K) and wavefunction
+ΨK (R) using two generative networks.
+    We use a variational autoregressive network [34,35     ] to model the normalized Boltzmann
+distribution p(K) over a set of discrete momenta:
+
+                                                          NY
+                                              p(K) =         p (ki|k<i) ,                                                  (6)
+                                                         i=1
+where each factor in the product is a parametrized conditional probability.  To facilitate the
+sampling of these conditional probabilities, we assign a unique index idx(k)∈{1, 2, . . . , M}
+to each of the M  available momenta, e.g., according to their single-particle energies  2.  We
+then model p(K) using a neural network that maps the set K ={k1, k2, . . . , kN} to N vectors
+
+   2In practice, we choose to arrange the momenta in the order of decreasing energy. This stems from the observa-
+tion that a random parameter initialization of the present autoregressive network tends to assign higher probability
+to configurations with large indices, which then have large overlap with the target Boltzmann distribution.
+
+                                                            4
+  SciPost Physics                                                                                 Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure 2: Two limiting cases of the present approach. The red horizontal lines indi-
+     cate benchmark values. (a) Non-interacting limit. The entropy per particle of N = 37
+     free electrons at T/TF = 0.15. The converged result 0.4227(4) agrees well with the
+     exact value 0.4232 calculated by recursion in the canonical ensemble [37,40     ].  (b)
+     Zero-temperature limit. The ground-state energy per particle of N = 37 electrons at
+      rs = 5. The converged result−0.28746(8) is lower than the variational Monte Carlo
+     result−0.2863(1) of Ref. [41].
+
+ˆk1, ˆk2, . . . , ˆkN, where ˆki∈ RM  denotes the conditional log-probability of idx(ki) given k<i.
+To ensure the autoregressive property, i.e., ˆki depends only on k j with  j< i, we implement
+the network as a transformer with causal self-attention layers [36].  In addition, to accom-
+modate the Pauli principle, we require Eq. (6) assign nonzero probabilities only to those mo-
+mentum configurations satisfying idx(k1)< idx(k2)< . . .< idx(kN ). This can be achieved
+by carefully masking out disallowed configurations in the output logits ˆki [37]. We note that
+Refs. [38,39     ] devised an alternative autoregressive model in the bit string representation with
+fixed number of nonzero elements.
+    Using the autoregressive model Eq. (6) rather than enumerating all possible excitations    [31]
+in the summation Eq. (4) allows us to incorporate a combinatorially large number of many-
+body states and access broader temperature range.   One can estimate the thermal entropy
+unbiasedly via the estimator
+                                           s =− 1N    EK∼p(K)[ln p(K)].                                                 (7)
+
+Note such a simple and tractable expression for the entropy is a direct consequence of or-
+thonormality of the many-body basis|ΨK〉.
+    Next, to parametrize a family of orthonormal many-body states|ΨK〉, we perform a unitary
+transformation on the basis of plane-wave Slater determinants.  In practice, we construct the
+unitary transformation as a learnable bijection from the electron coordinates R to a new set of
+quasiparticle coordinates ζ, as illustrated in Fig.1(b). The wavefunction reads        [31]
+                                                                  det∂ ζ 1
+                                                                                  2
+                                  ΨK (R) = det eiki·ζj/LpN!  ·           ∂ R      .                                      (8)
+
+The originally non-interacting plane waves possessed by individual electrons would interfere
+with each other due to correlation effects introduced by the coordinate transformation. Such
+
+                                                          5
+  SciPost Physics                                                                                 Submission
+
+
+
+a picture closely mimics the renormalization process as depicted in Fermi liquid theory. Tech-
+nically, Eq. (8) differs from the standard Slater-Backflow trial wavefunction by the presence of
+an additional Jacobian determinant.  This factor turns out to play a crucial role of preserving
+orthonormality of the basisR dRΨ∗K (R)ΨK′(R) =δK K′.  Note also that the state Eq. (8) in-
+volves coordinate transformation in a many-body context [42], where one needs to deal with
+the extra issue of permutation equivariance compared to the single-particle setting [43–45     ].
+    We use a normalizing flow [46] to implement the bijective map between the electron and
+quasiparticle coordinates.  This can be regarded as a generalization of the backflow transfor-
+mation with invertible neural networks [47].  We compose the FermiNet [48] blocks into a
+residual network to carry out permutation and translation equivariant transformation of elec-
+tron coordinates.  We also modify the electron distance features to comply with the periodic
+nature of the simulation box [37].
+    It is instructive to examine the present approach in two limiting cases. Firstly, in the non-
+interacting limit the problem reduces to a classical statistical mechanics problem: one needs to
+distribute N particles in M possible momenta according to the probability distribution p(K) tohi
+minimize the free energy F = EK∼p(K)               1                     ħh2k2i, where the second term is the
+                                                   β ln p(K) +PNi=1       2m
+non-interacting energy.  In this case, one can trivially set the normalizing flow to an identity
+map and optimize only the autoregressive network. Figure2(a) shows a typical training pro-
+cess, where the entropy Eq. (7) steadily approaches the exact value    [40]. Note the calculation
+of exact non-interacting entropy in the canonical ensemble is not a completely trivial task [37].
+Secondly, in the zero-temperature limit, p(K) is nonzero only for one particular momentum
+configuration K 0 corresponding to the closed-shell non-interacting ground state. The present
+approach then reduces to the usual ground-state variational Monte Carlo method.  As an ex-                          
+ample, Fig.2(b) shows the optimized ground-state energy density         e =  1N ER∼ΨK0 (R)            2  ElocK 0(R)
+
+for a particular set of system parameters, which is lower than previous report using the Slater-
+Jastrow ansatz [41]. In general cases, one has to jointly optimize the autoregressive model and
+the normalizing flow.  We show some additional benchmark results for the three-dimensional
+spin-polarized electron gas in the Appendix [37].
+    To understand how variational free energy calculation reveals the quasiparticle effective
+mass, note the effective mass affects low-temperature thermodynamics of the system via the
+density of states of low-lying excitations.  In practice, we pretrain the state occupation p(K)
+using non-interacting energies as in Fig.2(a). Thus,         p(K) will initially give the same entropy of
+the ideal Fermi gas. We initialize the normalizing flow network to be close to an identity map.
+Training of the normalizing flow will modify the many-body basis Eq. (8) and thus change
+the quasiparticle energy spacing and density of states. On the other hand, the autoregressive
+model will also adjust the Boltzmann distribution accordingly, causing the entropy to depart
+from the initial non-interacting value.  Putting it all together, the entropy ratio Eq. (1) thus
+provides a principled way to extract the effective mass from the quasiparticle energy spectrum.
+
+
+3 Results
+
+To access the quasiparticle effective mass of electron gas via the entropy ratio Eq. (1), one
+should consider temperatures T well below the Fermi temperature TF. Figure3(a) shows the
+entropy per particle of ideal Fermi gas in the thermodynamic limit N  =∞  3, which exhibits
+linear behavior s0/kB = π2        T
+                               3 TF  in the low-temperature limit and crosses over to s0/kB = 2+ln  TTF
+in the high-temperature limit. On the other hand, the temperature should also not be too low in
+
+   3For two-dimensional ideal Fermi gas in the thermodynamic limit,  one has s/kB  =  2f2(z)/f1(z)− ln z  and
+T/TF = 1/f1(z). Here 0≤ z<∞ is the fugacity and fν(z) = z− z2/2ν + z3/3ν−···  is the Fermi-Dirac function.
+
+                                                          6
+  SciPost Physics                                                                                 Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Figure 3:  (a) Entropy per particle of two-dimensional ideal Fermi gas for several
+      electron numbers  N,  including the thermodynamic limit.   The dashed line shows
+      the linear behavior in the low-temperature limit.   For finite  N,  we have used the
+      twist-averaged boundary conditions to reduce the finite size effect.  (b) Entropy per
+      particle as a function of training epochs for N  = 29 electrons at T/TF  = 0.15 for
+      various densities rs.  The reduction of entropy from the initial non-interacting value
+      indicates suppression of the quasiparticle effective mass.
+
+
+practical calculations, otherwise the finite size effect would cause the entropy to deviate from
+the ideal linear behavior due to a small energy scale ħh2/mL2∼ N−1, as shown in Fig.3(a) for
+N = 29 and 57 non-interacting electrons. We choose to set T/TF = 0.15 to balance these two
+considerations.
+    To obtain conclusive predictions of the effective mass, we adopt the twist-averaged bound-
+ary conditions [49] to alleviate the finite size effect [37]. Moreover, one can reasonably expect
+that by taking the entropy ratio Eq. (1), the remaining finite size errors involved in the inter-
+acting and non-interacting systems would further cancel out.  Fig.3(b) shows the interacting
+entropy as a function of training epochs for N  = 29 and various densities  rs.   One clearly
+sees the entropies are reduced from the initial non-interacting values, indicating a suppres-
+sion of the effective mass upon increasing rs.  The entropy fluctuates more strongly than the
+free energy since it is more sensitive to the variation of model parameters in the training.
+    Early analytical calculations [7,50   ] find enhanced or non-monotonic rs-dependence of the
+effective mass in spin-polarized 2DEG. On the other hand, several QMC calculations [13–15     ]
+consistently find monotonically suppressed effective mass as rs increases, but the quantitative
+predictions still differ, especially for large rs as shown in Figure4               4. The discrepancy is due to
+different ways of extracting effective mass from the excitation energies. Refs. [13,14     ] obtain
+the effective mass by differentiating the fitted energy band, while Ref. [15] is based on its
+relation to other Landau Fermi liquid parameters by Galilean invariance.  Both approaches
+possess a number of uncertainties, such as the fitting range of momentum space and integration
+error in estimating the Fermi liquid parameters. Though, the authors of Ref. [15] appeared to
+be more confident with the larger effective mass values reported in Refs. [13,14     ].
+
+   4Data taken from table IV of Ref. [15]. These results are extrapolated to the thermodynamic limit based on the
+data of N = 29,57 and 101 electrons with a presumed N-scaling dependence. The data of Ref. [14] are improved
+upon that of Ref. [13] so we only plot the former.
+
+
+                                                           7
+  SciPost Physics                                                                                 Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Figure 4:  Quasiparticle effective mass computed using the entropy ratio Eq. (1) for
+      N  = 29, 49 and 57 electrons at T/TF  = 0.15.  Also shown for comparison are the
+      QMC data [14,15     ] extrapolated to the thermodynamic limit, as well as the analytic
+      result [50] which is valid in the weak-coupling limit rs→ 0.
+
+
+    Figure4also shows our estimates of the effective mass for             N  = 29, 49 and 57 electrons
+based  on  the  entropy  ratio  Eq.  (1).   We  extract  the  interacting  entropy  by  performing  an
+exponentially-weighted moving average over the training epochs.  The error bars take into
+account both the statistical uncertainties due to Monte Carlo sampling and the fluctuation of
+variational parameters due to noisy gradients [51].  The computed effective mass decreases
+monotonically with increasing interaction strength.  In the small rs region, the predicted ef-
+fective mass appears to converge well to the analytical result reported in Ref. [50], shown as
+the green dashed line in Fig.4, which is reliable in the weak-coupling limit         rs→ 0. However,
+our predictions are lower than previous QMC results [14,15     ] when rs is large.  Such differ-
+ences cannot be attributed to the remaining finite size errors [37]. Since the present approach
+based on the entropy ratio Eq. (1) is less subject to     ad hoc assumptions and data processing
+schemes, we believe it offers a cleaner and more reliable prediction on the effective mass of
+spin-polarized 2DEG.
+    On the experimental side, both enhanced [52] and later then suppressed [53,54     ] effec-
+tive mass of the spin-polarized 2DEG are reported in different systems.  The discrepancy was
+attributed to the valley degeneracy [55,56     ] involved in the sample used in Ref. [52]. The ex-
+perimental data [53,54     ] spread widely between our predictions and those of Refs. [13–15     ] 5.
+Confirmation of the present results calls for a new generation of experimental efforts, where
+besides data uncertainty issue one also has to account for various complications in reality
+for a fair comparison, such as thickness of the electron layer, disorder and temperature ef-
+fects [7,57–59        ].
+
+   5We note that the indicated rs values of the same data plotted in Fig. 2 of Ref. [50] and Fig. 9 of Ref. [14] differ
+by a factor of two.
+
+
+
+
+                                                           8
+  SciPost Physics                                                                                 Submission
+
+
+4 Discussions
+
+The variational approximation of the present approach may be improved by adopting alter-
+native network ansatz [60–62     ] and optimization schemes [63,64     ]. We have documented the
+original data and trained models in the code repository [51] to facilitate further developments.
+In the present implementation, the finite size errors have been largely reduced by adopting
+the twist-averaged boundary conditions.   To scale up the calculation to larger systems one
+can employ machine learning techniques such as gradient checkpointing [65] and distributed
+training [66]. Specifically, techniques for efficiently training flow models and invertible neural
+networks [67–72     ] can be useful. It is also profitable to integrate the present standalone imple-
+mentation into an existing software framework [73]. On the other hand, a rigorous finite-size
+scaling theory for the entropy of uniform electron gas is also valuable for a direct extrapolation
+to the thermodynamic limit.
+    With suitable extensions of the model architecture, the technique developed in this paper
+can apply equally well to the spin-unpolarized case. This may shed new light on the conflicting
+results reported in the literature on the three-dimensional [16,17     ] and two-dimensional [10–
+15]  electron gases.   While we have been focusing  on the quasiparticle effective mass,  the
+outcomes of the present approach are also directly relevant to the exchange-correlation free
+energy, which are useful for the thermal density functional theory [26,30     ] and thermodynamic
+measurements in the 2DEG [25]. Along this line, it is also possible to extend the present study
+to the grand canonical ensemble and compute the compressibility and susceptibility of electron
+gas measurable in experiments [22,23,74,75              ]. Finally, having direct access to the energy and
+wavefunction of low-lying excitations may also allow for calculation of spectral functions at
+real frequencies.
+    Neural canonical transformation [31] not only serves as a variational free energy approach
+powered by deep learning techniques, but also nicely incorporates basic notions of Fermi liquid
+theory. For example, the probabilistic model p(K) in Eq. (4) actually encapsulates the Landau’s
+energy functional for quasiparticles.  Moreover, the unitary transformation implemented as a
+normalizing flow between the electron and quasiparticle coordinates vividly illustrates the
+notion of adiabatic continuity when switching on interactions [2]. Because of these technical
+and physical considerations, we are optimistic with the outcome of applying neural canonical
+transformation to a broader class of interacting fermion problems.
+
+
+Acknowledgements
+
+We thank Yuan Wan, Pan Zhang, Kun Chen, Xinguo Ren, and Giuseppe Carleo for useful dis-
+cussions.  This project is supported by the Strategic Priority Research Program of the Chinese
+Academy of Sciences under Grant No.  XDB30000000 and National Natural Science Founda-
+tion of China under Grant Nos. 92270107, 12188101, T2225018, and T2121001.
+
+
+A Benchmark for three-dimensional spin-polarized uniform elec-
+      tron gas
+
+We carry out additional benchmark calculation for three-dimensional spin-polarized uniform
+electron gas in a periodic cubic box of length L.  We use the same network architectures and 1
+training procedure as described in the main text,  except that  rs  =     3                    3   L
+                                                                                        4πN      a0  and  kBTF  =
+  9π 23 Ry/r2
+  2          s  in the three-dimensional case. The two panels of Fig.S1display a typical training
+
+                                                         9
+  SciPost Physics                                                                                 Submission
+
+
+
+process of the kinetic energy k and potential energy  v  per particle, respectively.  Note that
+rs  = 10 is within the low-density parameter range where the restricted path integral Monte
+Carlo method [28] can favorably produce accurate results.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure S1:  (a) Kinetic energy and (b) potential energy per particle of N  = 33 spin-
+     polarized electrons in 3D with rs = 10 and T/TF = 0.0625. The converged values are
+     k = 0.04250(7) and v =−0.14360(7), while the red horizontal lines k = 0.0426(1)
+     and  v  =−0.14358(1) are  from  the  restricted  path integral  Monte  Carlo  calcula-
+     tion [28].
+
+
+B Entropy of non-interacting fermions in the canonical ensemble
+
+To compute the entropy of N  non-interacting fermions at (inverse) temperatureβ, we first
+compute the partition function ZN  of the system in the canonical ensemble via the recursion
+formula [40]
+                                                     NX
+                                          ZN =  1N      (−1)ℓ−1zℓZN−ℓ,                                             (S1)
+                                                   ℓ=1
+where Z0 = 1 and zℓ =Pk exp              −ℓβ ħh2k22m  is the single-particle partition function at temper-
+atureℓβ.  Note that Eq. (S1) involves adding exponentially small numbers with alternating
+signs, thus one needs to use high-precision arithmetics to obtain reliable results for large par-
+ticle number N.
+    After obtaining ZN, we evaluate the entropy per particle of ideal Fermi gas using the stan-
+dard formula                                                             
+                                        s0 =  1N   ln ZN−β ∂∂β ln ZN         .                                           (S2)
+
+The derivative in Eq. (S2) can be conveniently computed by automatic differentiation through
+high-precision arithmetics, which is natively supported in, e.g., Julia [76]. Alternatively, one
+can manually differentiate both sides of Eq. (S1) with respect to  β to derive a similar recursion
+relation for the energy EN =− ∂∂β ln ZN:
+                                            1   NX
+                                EN =   1ZN  N      (−1)ℓ−1zℓZN−ℓ(ℓeℓ + EN−ℓ),                                 (S3)
+                                               ℓ=1
+
+                                                         10
+  SciPost Physics                                                                                 Submission
+
+
+
+where eℓ =− ∂∂ (ℓβ) ln zℓ is the expected single-particle energy at temperatureℓβ. The starting
+point of this recursion is, unsurprisingly, E0 = 0.
+
+
+C Twist-averaged boundary conditions
+
+In this work, we aim to simulate an interacting Fermi liquid consisting of finite number of
+electrons in a finite box.   Under the conventional periodic boundary conditions (PBC), the
+single-particle momenta reside on a discrete lattice k =  2πnL   (n∈ Z2), as illustrated in Fig.1(a)
+of the main text, and the identification of a sharp spherical Fermi surface characteristic of the
+system is ambiguous.  This is a major contribution to the finite size errors of various physical
+quantities.
+    A useful technique to alleviate the finite size effect is to use the twist-averaged boundary
+conditions (TABC) [49].  This amounts to averaging physical observables over a twist vector
+θ t ∈  [−π,π]2,  which corresponds to the extra phase picked up when the electrons wrap
+around the periodic boundaries of simulation box. Consequently, the single-particle momenta
+k =  1L (2πn+θ t) would be shifted away from the integer lattice points. When the twist average
+is performed, the effective state occupation “smears out" continuously as in the thermodynamic
+limit, thus yields better scaling behavior for various physical quantities.
+    To illustrate the impact of TABC on the simulation, we compute the entropies per particle
+s0  of two-dimensional ideal Fermi gas at the temperature  T/TF  = 0.15 for various particle
+numbers N, as shown in Fig.S2. The results labeled as “PBC" are computed at the         Γ point θ t =
+0, whereas the “TABC" results are obtained by averaging the entropy over 10000 uniformly
+sampled twists. It is clear that TABC results in more regular scaling behavior for small N and
+converges more smoothly to the thermodynamic limit N  =∞.  We also plot the same data
+versus inverse particle number N−1 in the inset to better visualize how they extrapolate to the
+thermodynamic limit.
+    In practice, we choose to implement the twist average over a 2×2 Monkhorst-Pack grid [77],
+which corresponds to a single twist vector θ t  = (π2 ,π2 ) [78,79     ] after taking into account the
+point group symmetry of the simulation box.  Such a scheme is more convenient than ran-
+domly sampling the twist vectors, and introduces essentially no extra computational cost and
+code development efforts.  We also plot the non-interacting entropies per particle under this
+scheme in Fig.S2labeled as “2   × 2", which are in excellent agreement with the results ob-
+tained by random sampling.  For the largest system size (N  = 57 electrons) employed in our
+calculation of the quasiparticle effective mass, the non-interacting entropy deviates from the
+thermodynamic limit value by about 8%. One would then reasonably expect the uncertainties
+in the final estimate of effective mass to be within the same level, assuming a similar N-scaling
+behavior of the interacting entropy.
+
+
+D Model architectures
+
+This  section  summarizes  the  network  architectures  used  for  the  autoregressive  model  and
+normalizing flow. They are adapted from the transformer [36] and FermiNet [48], respectively.
+Please refer to the original publications for more background on these models.
+
+D.1Autoregressive model for       p(K)
+
+In Algorithm1, given the momenta                  k1, k2, . . . , kN occupied by the N electrons, CausalTransformer [36]
+outputs N  M-dimensional arrays ˆk1, ˆk2, . . . , ˆkN, where ˆki denotes the logits of the index of ki
+
+
+                                                        11
+  SciPost Physics                                                                                 Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure S2: Scaling behavior of the entropy per particle of two-dimensional free Fermi
+     gas at T/TF  = 0.15 for various closed-shell particle numbers N  from 13 up to 121,
+     as well as the value in the thermodynamic limit N =∞. The points N = 29, 49 and
+     57 used for the calculation of quasiparticle effective mass in this work are specifically
+     annotated. See text for detailed explanations of the legend.
+
+
+corresponding to the conditional probability p(ki|k<i). The number M of available momenta
+k =  1L (2πn +θ t) is determined by a single-particle energy cutoff|n|2≤ Emax. For N = 29, 49
+and 57 in our calculations, Emax is chosen to be 25, 36 and 49, respectively, corresponding to
+the number of available momenta M = 81, 113 and 149.
+
+Algorithm 1 Autoregressive probabilistic model for a set of momenta.
+Input:  A set of momenta K ={k1, k2, . . . , kN}. An index function that identifies each available
+    momentum k to an integer idx(k)∈{1, . . . , M}.
+Output:  Log-likelihood ln p(K).
+ 1:  ˆk1, ˆk2, . . . , ˆkN = CausalTransformer(k1, k2, . . . , kN )
+ 2:  for each i do                      ▷ ensure Pauli exclusion principle
+ 3:       ˆki,≥M−N+i+1 =−∞
+ 4:       ˆki,≤idx(ki−1) =−∞
+ 5:       ˆki = ˆki− logsumexp(ˆki)                       ▷ normalization
+ 6:  end for
+ 7:  returnPi ˆki,idx(ki)
+
+
+    TableS1summarizes the adopted value of hyperparameters of the network           CausalTransformer
+throughout  our  calculations.   For  more  implementation  details,  please  refer  to  our  source
+code [51].   Other  architectures  of  the  autoregressive  model  are  also  possible,  such  as  the
+masked autoencoder [80], but our choice here based on the transformer turns out to scale
+more favorably to large systems regarding the number of trainable parameters involved.
+
+
+
+
+                                                        12
+  SciPost Physics                                                                                 Submission
+
+
+      Table S1: The hyperparameters of the causal transformer adopted in this work. Note
+      that we choose the non-linear activation of the fully connected neural network in-
+      volved in the architecture to be tanh, which is smooth enough to avoid potential
+      issues upon automatic differentiation.
+
+                Hyperparameter                           Description                           Value
+
+                nlayers                                 Number of layers                          2
+                modelsize                          The size of input and output, alsoknown as the “embedding dimension"              16
+
+                nheads                                         Number of heads of theself-attention part within each layer                4
+
+                nhidden                                 Number of hidden units of thefully connected neural network within each layer      32
+
+
+D.2Normalizing flow for     ΨK(R)
+
+Recall that our goal is not to model a single wavefunction as done in ground-state calculations,
+but an exponentially large family of orthonormal many-electron basis states ΨK (R). As shown
+in Eq. (8) of the main text, we achieve this goal by bijectively mapping the original electron
+coordinates R to the quasiparticle coordinates ζ.
+
+Algorithm 2 Translation and permutation equivariant coordinate transformation.
+Input:  Electron coordinates R ={r 1, r 2, . . . , r N} and box length L.
+Output:  Transformed quasiparticle coordinates ζ.
+ 1:  f1 = zeros_like(R)                        ▷ array shape: (N, 2)
+ 2:  r i j = r i− r j                            ▷ array shape: (N, N, 2)h˙ 2πr i j 2πr i ji
+                            + sin2 πyi j   , cos
+ 3:  f2 =       sin2 πxi jL              L             L    , sin     L
+ 4:  forℓ = 1,··· , d do
+ 5:       g = [ f1, mean( f 1,axis = 0), mean( f 2,axis = 1)]
+ 6:       ifℓ = 1 then
+ 7:             f1 = softplus(FCℓh1(g ))                  ▷ array shape: (N, h1)
+ 8:             f2 = softplus(FCℓh2( f2))                 ▷ array shape: (N, N, h2)
+ 9:       else
+10:             f1 = softplus(FCℓh1(g )) + f1
+11:             f2 = softplus(FCℓh2( f2)) + f2
+12:       end if
+13:  end for
+14:  g = [ f1, mean( f 1,axis = 0), mean( f 2,axis = 1)]
+15:  f1 = softplus(FCh1(g )) + f1
+16:  return R + FC2( f1)
+
+
+    Algorithm2implements this transformation using blocks from the FermiNet                  [48].  The
+one- and two-electron features f 1 and f 2 are fed into a sequence of fully connected layers FCℓh1
+and FCℓh2, where h1, h2 are the one- and two-particle feature size, respectively, andℓ ranges
+from 1 to d.  Initially,  f 2  contains pairwise distance features of the electrons in a periodic
+box [81,82     ], while  f 1  is set to be zero to guarantee the translation equivariance property.
+Each fully connected layer involved in the algorithm has its own independent parameters,
+
+
+                                                          13
+  SciPost Physics                                                                                 Submission
+
+
+
+including those at the final stage.  Throughout our calculations, the network depth is set to
+be d = 2 and h1 = h2 = 16.  We note that one can repeat Alg.2several times to compose an
+iterative-backflow-like transformation [31,83     ] in terms of neural networks.
+    In principle, one may want to ensure invertibility of the coordinate transformation [68]
+to make for a genuine normalizing flow model.  To our best knowledge, there lacks such a
+rigorous guarantee for Alg.2described above.  Nevertheless, the practical training process
+still appears stable. This is probably because the network we adopt is not very deep.
+
+
+E Details of the training procedure
+
+We sample electron momenta K directly from the autoregressive model in an ancestral man-
+ner; see Eq. (6) in the main text. Given the momenta, we then sample the electron coordinates
+R using the Metropolis algorithm according to Born probability of the wavefunction Eq. (8).
+The batch size is set to be 8192.  We compute the Jacobian ∂ ζ∂ R  of the coordinate transfor-
+mation involved in the wavefunction ansatz using forward-mode automatic differentiation in
+Jax [84].
+    Building on these self-generated samples, we train the autoregressive model Eq. (6) and
+the  normalizing  flow  Eq.  (8)  jointly  to  minimize  the  variational  free  energy  Eq.  (5).   The
+gradient estimators with respect to the parameters φ and θ  in the autoregressive model and
+normalizing flow, respectively, can be easily derived as follows:
+                                                       1                          Eloc
+                  ∇φF =    E          ∇φ ln p(K)                                     K  (R)     ,               (S4a)
+                            K∼p(K)                     β ln p(K) +     ER∼|ΨK (R)|2
+                  ∇θ F = 2ℜ   E                      ∇θ lnΨ∗
+                                 K∼p(K)     ER∼|ΨK (R)|2       K (R)· ElocK  (R) ,                                 (S4b)
+
+ where the wavefunction ΨK (R) has been assumed to be complex-valued,  as suggested by
+Eq. (8). One can employ the control variate method    [31,34,85         ] to further reduce the variance
+of these estimators.
+    Below we present some more techniques employed to make the training as efficient as
+possible.
+
+E.1The Hutchinson’s trick
+
+The computational bottleneck of the variational free energy Eq. (5) and gradient estimators
+Eq. (S4) lies in the Laplacian  ∇2 lnΨK (R) involved in the local energy,  which amounts to
+computing the trace of the 2N× 2N Hessian matrix H (lnΨK (R)).  In the standard automatic
+differentiation approach, one needs to iterate over the rows or columns of the Hessian, which
+can be inefficient for large systems.
+    To reduce the computational complexity, we employ the Hutchinson’s stochastic trace es-
+timator [86]                                              εT·H (lnΨK (R))· ε                                 (S5)
+                               ∇2 lnΨK (R) =   E
+                                                  ε∼f (ε)
+over a 2N-dimensional random vector ε with zero mean and identity covariance matrix. The
+probability density  f (ε) can, for example, be chosen as a standard Gaussian.  The Hessian-
+vector product involved in Eq. (S5) can be efficiently computed by combining forward- and
+reverse-mode automatic differentiation in Jax [84].  The price we pay, however, is an addi-
+tional source of randomness on top of the original estimators Eqs.  (5) and (S4), which may
+potentially require more samples to achieve a given statistical accuracy.
+    In practice,  we choose to apply the Hutchinson’s trick only to Hessian of the Jacobian
+determinant term in lnΨK (R); see Eq. (8).  In this way, one can enjoy an overall speedup of
+
+                                                        14
+  SciPost Physics                                                                                 Submission
+
+
+
+roughly one order of magnitude without sacrificing accuracy due to enlarged variance of the
+estimators.
+
+E.2Stochastic reconfiguration for density matrices
+
+The quantity of central interest for the purpose of this work is the thermal entropy, which turns
+out to be fairly sensitive to the training process. We thus employ the stochastic reconfiguration
+method [81], which is much more efficient than conventional first-order optimizers like Adam.
+    In the context of machine learning a classical generative model or the ground-state varia-
+tional Monte Carlo of quantum systems, the conventional metric for the parameter space in-
+volved is well known as the Fisher information. To find an appropriate metric for the present
+quantum statistical mechanics setting, the arguably most natural candidate is the Bures dis-
+tance, defined for two density matricesρ andσ as [87]
+                                                             ˘p            
+                                     d2B(ρ,σ) = 2     1− Tr        ρσpρ       .                                        (S6)
+
+The second term on the right-hand side is well known as the quantum fidelity [88].
+    Recall from Eq. (4) in the main text that  ρ(φ,θ ) =PK p(K;φ)|ΨK (θ )〉〈ΨK (θ )|, where
+φ and θ  are the variational parameters in the classical Boltzmann distribution and quantum
+many-body basis,  respectively.   By expanding the Bures distance in the neighborhood of a
+certain point (φ,θ ), one can obtain [87]
+                                                             X                     X
+             d2B(ρ(φ,θ ),ρ(φ + ∆φ,θ + ∆θ ))≈ 14                  Ii j∆φi∆φj +          Ji j∆θi∆θj,          (S7)
+                                                              i j                   i j
+
+for some positive-definite matrices I and J . The most important observation is that the desired
+metric is block-diagonal with respect to the two generative models in this work.  This fact is
+favorable in practice, since the metric needs to be inverted to determine the parameter update
+direction in each training step.  Note the size of I,J  are equal to the number of parameters
+in the autoregressive model and normalizing flow, respectively, both in the order of several
+thousand throughout our calculations.
+    I coincides exactly with the classical Fisher information matrix
+                          X      1    ∂ p(K)   ∂ p(K)               ∂ ln p(K)     ∂ ln p(K)
+                   Ii j =      p(K)    ∂φi      ∂φj    =    E            ∂φi         ∂φj       ,                 (S8)
+                           K                               K∼p(K)
+
+whereas the quantum component J  reads
+             X            ∂ ΨK      ∂ ΨK        X     2p(K)p(K′)      ›∂ ΨK    ΨK′•         ∂ ΨK
+  Ji j =ℜ          p(K)     ∂θi      ∂θj     −       p(K) + p(K′)        ∂θi             ΨK′     ∂θj       .   (S9)
+                K                               K,K′
+
+The double summation over momenta in the second term of Eq. (S9) is inconvenient to esti-
+mate. In practice, we choose to approximate Ji j as the following covariance matrix
+                                           ∂ lnΨ∗         ∂ lnΨK (R)
+          Ji j =ℜ        E                          K (R)
+                      K∼p(K)     ER∼|ΨK (R)|2    ∂θi          ∂θj
+                                         ∂ lnΨ∗                                ∂ lnΨK (R)
+                 −    E                           K (R)      E                                   .             (S10)
+                    K∼p(K)     ER∼|ΨK (R)|2    ∂θi        K∼p(K)     ER∼|ΨK (R)|2   ∂θj
+
+Notice the first term is the same as that of Eq. (S9), which is clearly a natural generalization
+of the usual quantum Fisher information matrix for pure states. The trainings turn out to still
+behave quite well.
+
+                                                        15
+  SciPost Physics                                                                                 Submission
+
+
+
+    The update rules for the parameters φ,θ  read as follows:
+
+                                           ∆φ =−(I +η1)−1∇φF,                                           (S11a)
+                                           ∆θ =−(J +η1)−1∇θ F,                                           (S11b)
+
+where we have added a small shiftη = 10−3 to the diagonal of (modified) Fisher information
+matrices for numerical stability.  The norms of updates are constrained within a threshold of
+10−3 [48], which plays a similar role as the learning rate in other conventional optimizers.
+See the source code [51] for more details.
+
+
+References
+
+ [1]  G. Baym and C. Pethick,   Landau Fermi-liquid theory:  concepts and applications,   John
+       Wiley & Sons (2008).
+
+ [2]  P. W. Anderson, Basic notions of condensed matter physics, CRC Press (2018).
+
+ [3]  T. Rice,  The effects of electron-electron interaction on the properties of metals,  Annals of
+       Physics 31(1), 100 (1965), doi:https:      //doi.org/10.1016/0003-4916(65)90234-4.
+
+ [4]  L. Hedin,  New method for calculating the one-particle green’s function with application to
+       the electron-gas problem, Phys. Rev. 139, A796 (1965), doi:10.1103      /PhysRev.139.A796.
+
+ [5]  J. Lam, Thermodynamic properties of the electron gas at metallic densities, Phys. Rev. B 5,
+       1254 (1972), doi:10.1103      /PhysRevB.5.1254.
+
+ [6]  A.  Krakovsky  and  J.  K.  Percus,    Quasiparticle  effective  mass  for  the  two-  and  three-
+       dimensional electron gas, Phys. Rev. B 53, 7352 (1996), doi:10.1103      /PhysRevB.53.7352.
+
+ [7]  Y. Zhang and S. Das Sarma,   Spin polarization dependence of carrier effective mass in
+       semiconductor structures:  Spintronic effective mass,  Phys. Rev. Lett. 95, 256603 (2005),
+       doi:10.1103      /PhysRevLett.95.256603.
+
+ [8]  R. Asgari, B. Davoudi, M. Polini, G. F. Giuliani, M. P. Tosi and G. Vignale,  Quasiparticle
+       self-energy and many-body effective mass enhancement in a two-dimensional electron liquid,
+       Phys. Rev. B 71, 045323 (2005), doi:10.1103      /PhysRevB.71.045323.
+
+ [9]  G.  E.  Simion  and  G.  F.  Giuliani,      Many-body  local  fields  theory  of  quasiparticle
+       properties  in  a  three-dimensional  electron  liquid,    Phys.  Rev.  B  77,  035131  (2008),
+       doi:10.1103      /PhysRevB.77.035131.
+
+[10]  Y. Kwon, D. M. Ceperley and R. M. Martin, Quantum monte carlo calculation of the fermi-
+       liquid parameters in the two-dimensional electron gas,   Phys. Rev. B 50,  1684 (1994),
+       doi:10.1103      /PhysRevB.50.1684.
+
+[11]  Y. Kwon, D. M. Ceperley and R. M. Martin,  Transient-estimate monte carlo in the two-
+       dimensional electron gas, Phys. Rev. B 53, 7376 (1996), doi:10.1103      /PhysRevB.53.7376.
+
+[12]  M. Holzmann, B. Bernu, V. Olevano, R. M. Martin and D. M. Ceperley,  Renormalization
+       factor and effective mass of the two-dimensional electron gas,   Phys. Rev. B 79, 041308
+       (2009), doi:10.1103      /PhysRevB.79.041308.
+
+[13]  N. D. Drummond and R. J. Needs,  Quantum monte carlo calculation of the energy band
+       and quasiparticle effective mass of the two-dimensional fermi fluid, Phys. Rev. B 80, 245104
+       (2009), doi:10.1103      /PhysRevB.80.245104.
+
+                                                         16
+  SciPost Physics                                                                                 Submission
+
+
+
+[14]  N. D. Drummond and R. J. Needs,   Diffusion quantum monte carlo calculation of the
+       quasiparticle effective mass of the two-dimensional homogeneous electron gas, Phys. Rev. B
+       87, 045131 (2013), doi:10.1103      /PhysRevB.87.045131.
+
+[15]  N. D. Drummond and R. J. Needs,  Quantum monte carlo calculation of the fermi liquid
+       parameters of the two-dimensional homogeneous electron gas,  Phys. Rev. B 88, 035133
+       (2013), doi:10.1103      /PhysRevB.88.035133.
+
+[16]  K. Haule and K. Chen,  Single-particle excitations in the uniform electron gas by diagram-
+       matic monte carlo,   Scientific Reports 12(1), 2294 (2022),   doi:10.1038      /s41598-022-
+       06188-6.
+
+[17]  S. Azadi, N. D. Drummond and W. M. C. Foulkes, Quasiparticle effective mass of the three-
+       dimensional fermi liquid by quantum monte carlo,  Phys. Rev. Lett. 127, 086401 (2021),
+       doi:10.1103      /PhysRevLett.127.086401.
+
+[18]  G. Giuliani and G. Vignale, Quantum theory of the electron liquid, Cambridge university
+       press (2005).
+
+[19]  R. M. Martin, L. Reining and D. M. Ceperley,   Interacting Electrons:  Theory and Com-
+       putational Approaches,  Cambridge University Press,  doi:10.1017      /CBO9781139050807
+       (2016).
+
+[20]  F. F. Fang and P. J. Stiles,  Effects of a tilted magnetic field on a two-dimensional electron
+       gas, Phys. Rev. 174, 823 (1968), doi:10.1103      /PhysRev.174.823.
+
+[21]  W. Pan, D. C. Tsui and B. L. Draper,  Mass enhancement of two-dimensional electrons in
+       thin-oxide si-mosfet’s, Phys. Rev. B 59, 10208 (1999), doi:10.1103      /PhysRevB.59.10208.
+
+[22]  V.  M.  Pudalov,  M.  E.  Gershenson,  H.  Kojima,  N.  Butch,  E.  M.  Dizhur,  G.  Brun-
+       thaler,  A.  Prinz  and  G.  Bauer,      Low-density  spin  susceptibility  and  effective  mass
+       of  mobile  electrons  in  si  inversion  layers,      Phys.  Rev.  Lett.  88,   196404  (2002),
+       doi:10.1103      /PhysRevLett.88.196404.
+
+[23]  K. Vakili, Y. P. Shkolnikov, E. Tutuc, E. P. De Poortere and M. Shayegan, Spin susceptibility
+       of two-dimensional electrons in narrow alas quantum wells,  Phys. Rev. Lett. 92, 226401
+       (2004), doi:10.1103      /PhysRevLett.92.226401.
+
+[24]  Y.-W. Tan, J. Zhu, H. L. Stormer, L. N. Pfeiffer, K. W. Baldwin and K. W. West, Measurements
+       of the density-dependent many-body electron mass in two dimensional GaAs/AlGaAs het-
+       erostructures, Phys. Rev. Lett. 94, 016405 (2005), doi:10.1103      /PhysRevLett.94.016405.
+
+[25]  A. Y. Kuntsevich, Y. V. Tupikov, V. M. Pudalov and I. S. Burmistrov,  Strongly correlated
+       two-dimensional plasma explored from entropy measurements,  Nature Communications
+       6(1), 7298 (2015), doi:10.1038      /ncomms8298.
+
+[26]  F. G. Eich, M. Holzmann and G. Vignale,  Effective mass of quasiparticles from thermody-
+       namics, Phys. Rev. B 96, 035132 (2017), doi:10.1103      /PhysRevB.96.035132.
+
+[27]  M. Imada and M. Takahashi, Quantum monte carlo simulation of a two-dimensional elec-
+       tron system –melting of wigner crystal–, Journal of the Physical Society of Japan 53(11),
+       3770 (1984), doi:10.1143      /JPSJ.53.3770.
+
+[28]  E. W. Brown, B. K. Clark, J. L. DuBois and D. M. Ceperley,   Path-integral monte carlo
+       simulation of the warm dense homogeneous electron gas,   Phys. Rev. Lett. 110, 146405
+       (2013), doi:10.1103      /PhysRevLett.110.146405.
+
+                                                        17
+  SciPost Physics                                                                                 Submission
+
+
+
+[29]  T. Schoof,  S. Groth,  J. Vorberger and M. Bonitz,   Ab initio thermodynamic results for
+       the degenerate electron gas at finite temperature,  Phys. Rev. Lett. 115, 130402 (2015),
+       doi:10.1103      /PhysRevLett.115.130402.
+
+[30]  F. D. Malone, N. S. Blunt, E. W. Brown, D. K. K. Lee, J. S. Spencer, W. M. C. Foulkes and
+       J. J. Shepherd,  Accurate exchange-correlation energies for the warm dense electron gas,
+       Phys. Rev. Lett. 117, 115701 (2016), doi:10.1103      /PhysRevLett.117.115701.
+
+[31]  H. Xie, L. Zhang and L. Wang, Ab-initio study of interacting fermions at finite temperature
+       with neural canonical transformation,   Journal of Machine Learning 1(1),  38 (2022),
+       doi:https:      //doi.org/10.4208/jml.220113.
+
+[32]  L. Wang, Generative models for physicists (2018).
+
+[33]  D. Ceperley, Ground state of the fermion one-component plasma: A monte carlo study in two
+       and three dimensions, Phys. Rev. B 18, 3126 (1978), doi:10.1103      /PhysRevB.18.3126.
+
+[34]  D. Wu, L. Wang and P. Zhang, Solving statistical mechanics using variational autoregressive
+       networks, Phys. Rev. Lett. 122, 080602 (2019), doi:10.1103      /PhysRevLett.122.080602.
+
+[35]  J.-G. Liu,  L. Mao,  P. Zhang and L. Wang,   Solving quantum statistical mechanics with
+       variational autoregressive networks and quantum circuits,   Machine Learning:  Science
+       and Technology 2(2), 025011 (2021), doi:10.1088      /2632-2153/aba19d.
+
+[36]  A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, L. u. Kaiser and
+       I. Polosukhin,  Attention is all you need,  In I. Guyon, U. V. Luxburg, S. Bengio, H. Wal-
+       lach, R. Fergus, S. Vishwanathan and R. Garnett, eds., Advances in Neural Information
+       Processing Systems, vol. 30. Curran Associates, Inc. (2017).
+
+[37]  See  the  Appendix  for  (a)  additional  benchmark  for  three-dimensional  spin-polarized
+       uniform electron gas; (b) the analytic method to compute the thermal entropy of non-
+       interacting Fermi gas in the canonical ensemble; (c) discussion and implementation de-
+       tails about the use of twist-averaged boundary conditions; details on (d) model architec-
+       tures and (e) the training procedure.
+
+[38]  M.   Hibat-Allah,   M.   Ganahl,   L.   E.   Hayward,   R.   G.   Melko   and   J.   Carrasquilla,
+       Recurrent   neural   network   wave   functions,       Phys.   Rev.   Res.  2,   023358   (2020),
+       doi:10.1103      /PhysRevResearch.2.023358.
+
+[39]  T. D. Barrett, A. Malyshev and A. I. Lvovsky, Autoregressive neural-network wavefunctions
+       for ab initio quantum chemistry (2021), 2109.12606.
+
+[40]  P. Borrmann and G. Franke, Recursion formulas for quantum statistical partition functions,
+       The Journal of Chemical Physics 98(3), 2484 (1993), doi:10.1063      /1.464180.
+
+[41]  B. Tanatar and D. M. Ceperley,  Ground state of the two-dimensional electron gas,  Phys.
+       Rev. B 39, 5005 (1989), doi:10.1103      /PhysRevB.39.5005.
+
+[42]  M. Eger and E. Gross, Point transformations and the many body problem, Annals of Physics
+       24, 63 (1963), doi:https:      //doi.org/10.1016/0003-4916(63)90065-4.
+
+[43]  F. Gygi,  Adaptive riemannian metric for plane-wave electronic-structure calculations,  Eu-
+       rophysics Letters 19(7), 617 (1992), doi:10.1209      /0295-5075/19/7/009.
+
+[44]  F. Gygi,  Electronic-structure calculations in adaptive coordinates,  Phys. Rev. B 48, 11692
+       (1993), doi:10.1103      /PhysRevB.48.11692.
+
+                                                         18
+  SciPost Physics                                                                                 Submission
+
+
+
+[45]  K. Cranmer, S. Golkar and D. Pappadopulo,  Inferring the quantum density matrix with
+       machine learning (2019), 1904.05903.
+
+[46]  G. Papamakarios,  Neural Density Estimation and Likelihood-free Inference (2019), 1910.
+       13233.
+
+[47]  R. P. Feynman and M. Cohen,  Energy spectrum of the excitations in liquid helium,  Phys.
+       Rev. 102, 1189 (1956), doi:10.1103      /PhysRev.102.1189.
+
+[48]  D. Pfau, J. S. Spencer, A. G. D. G. Matthews and W. M. C. Foulkes, Ab initio solution of the
+       many-electron schrödinger equation with deep neural networks, Phys. Rev. Res. 2, 033429
+       (2020), doi:10.1103      /PhysRevResearch.2.033429.
+
+[49]  C.  Lin,   F.  H.  Zong  and  D.  M.  Ceperley,      Twist-averaged  boundary  conditions  in
+       continuum  quantum  monte  carlo  algorithms,      Phys.  Rev.  E  64,   016702  (2001),
+       doi:10.1103      /PhysRevE.64.016702.
+
+[50]  R. Asgari, T. Gokmen, B. Tanatar, M. Padmanabhan and M. Shayegan,   Effective mass
+       suppression in a ferromagnetic two-dimensional electron liquid,  Phys. Rev. B 79, 235324
+       (2009), doi:10.1103      /PhysRevB.79.235324.
+
+[51]  See https://github.com/fermiflow/CoulombGas  for  code  written  in  Jax  [84].  The
+       repository also contains the original data, trained models and data processing scripts
+       that can be used to reproduce the main results in Fig.4.
+
+[52]  A. A. Shashkin, M. Rahimi, S. Anissimova, S. V. Kravchenko, V. T. Dolgopolov and T. M.
+       Klapwijk, Spin-independent origin of the strongly enhanced effective mass in a dilute 2D elec-
+       tron system, Phys. Rev. Lett. 91, 046403 (2003), doi:10.1103      /PhysRevLett.91.046403.
+
+[53]  M. Padmanabhan, T. Gokmen, N. C. Bishop and M. Shayegan, Effective mass suppression
+       in dilute, spin-polarized two-dimensional electron systems,  Phys. Rev. Lett. 101, 026402
+       (2008), doi:10.1103      /PhysRevLett.101.026402.
+
+[54]  T. Gokmen, M. Padmanabhan, K. Vakili, E. Tutuc and M. Shayegan,  Effective mass sup-
+       pression upon complete spin-polarization in an isotropic two-dimensional electron system,
+       Phys. Rev. B 79, 195311 (2009), doi:10.1103      /PhysRevB.79.195311.
+
+[55]  S.   Gangadharaiah   and   D.   L.   Maslov,          Spin-independent   effective   mass   in
+       a   valley-degenerate   electron   system,         Phys.   Rev.   Lett.   95,    186801   (2005),
+       doi:10.1103      /PhysRevLett.95.186801.
+
+[56]  T. Gokmen, M. Padmanabhan and M. Shayegan, Contrast between spin and valley degrees
+       of freedom, Phys. Rev. B 81, 235305 (2010), doi:10.1103      /PhysRevB.81.235305.
+
+[57]  S. Das Sarma, V. M. Galitski and Y. Zhang,  Temperature-dependent effective-mass renor-
+       malization  in  two-dimensional  electron  systems,     Phys.  Rev.  B  69,  125334  (2004),
+       doi:10.1103      /PhysRevB.69.125334.
+
+[58]  R.   Asgari   and   B.   Tanatar,        Many-body   effective   mass   and   spin   susceptibility
+       in   a   quasi-two-dimensional   electron   liquid,       Phys.   Rev.   B  74,   075301   (2006),
+       doi:10.1103      /PhysRevB.74.075301.
+
+[59]  T.  Gokmen,   M.  Padmanabhan  and  M.  Shayegan,      Dependence  of  effective  mass
+       on  spin  and  valley  degrees  of  freedom,      Phys.  Rev.  Lett.  101,   146405  (2008),
+       doi:10.1103      /PhysRevLett.101.146405.
+
+
+                                                         19
+  SciPost Physics                                                                                 Submission
+
+
+
+[60]  T. Salimans, A. Karpathy, X. Chen and D. P. Kingma, PixelCNN++: Improving the PixelCNN
+       with Discretized Logistic Mixture Likelihood and Other Modifications (2017), 1701.05517.
+
+[61]  L. Zhang, J. Han, H. Wang, W. Saidi, R. Car and W. E,  End-to-end symmetry preserving
+       inter-atomic potential energy model for finite and extended systems,  In S. Bengio, H. Wal-
+       lach, H. Larochelle, K. Grauman, N. Cesa-Bianchi and R. Garnett, eds., Advances in Neural
+       Information Processing Systems, vol. 31. Curran Associates, Inc. (2018).
+
+[62]  P. Wirnsberger, A. J. Ballard, G. Papamakarios, S. Abercrombie, S. Racanière, A. Pritzel,
+       D. Jimenez Rezende and C. Blundell, Targeted free energy estimation via learned mappings,
+       The Journal of Chemical Physics 153(14), 144112 (2020), doi:10.1063      /5.0018903.
+
+[63]  J. Martens and R. Grosse,  Optimizing Neural Networks with Kronecker-factored Approxi-
+       mate Curvature (2015), 1503.05671.
+
+[64]  R. Anil, V. Gupta, T. Koren, K. Regan and Y. Singer,  Scalable Second Order Optimization
+       for Deep Learning (2020), 2002.09018.
+
+[65]  A. Griewank and A. Walther, Algorithm 799: Revolve: An implementation of checkpointing
+       for the reverse or adjoint mode of computational differentiation, ACM Trans. Math. Softw.
+       26(1), 19–45 (2000), doi:10.1145      /347837.347846.
+
+[66]  P. Goyal, P. Dollár, R. Girshick, P. Noordhuis, L. Wesolowski, A. Kyrola, A. Tulloch, Y. Jia
+       and K. He,  Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour (2017), 1706.
+       02677.
+
+[67]  W. Grathwohl, R. T. Chen, J. Bettencourt, I. Sutskever and D. Duvenaud,  Ffjord:  Free-
+       form continuous dynamics for scalable reversible generative models,  In 7th International
+       Conference on Learning Representations, ICLR 2019 (2019), 1810.01367.
+
+[68]  J. Behrmann, W. Grathwohl, R. T. Q. Chen, D. Duvenaud and J.-H. Jacobsen,  Invertible
+       residual networks,  In K. Chaudhuri and R. Salakhutdinov, eds., Proceedings of the 36th
+       International Conference on Machine Learning, vol. 97 of Proceedings of Machine Learning
+       Research, pp. 573–582. PMLR (2019).
+
+[69]  R. T. Chen, J. Behrmann, D. Duvenaud and J. H. Jacobsen,  Residual flows for invertible
+       generative modeling, In Advances in Neural Information Processing Systems, vol. 32 (2019),
+       1906.02735.
+
+[70]  R. T. Q. Chen and D. K. Duvenaud,  Neural networks with cheap differential operators,  In
+       H. Wallach, H. Larochelle, A. Beygelzimer, F. d'Alché-Buc, E. Fox and R. Garnett, eds., Ad-
+       vances in Neural Information Processing Systems, vol. 32. Curran Associates, Inc. (2019),
+       1912.03579.
+
+[71]  J. Kelly, J. Bettencourt, M. J. Johnson and D. Duvenaud,  Learning differential equations
+       that are easy to solve (2020), 2007.04504.
+
+[72]  C.-W. Huang, R. T. Q. Chen, C. Tsirigotis and A. Courville,  Convex Potential Flows:  Uni-
+       versal Probability Distributions with Optimal Transport and Convex Optimization (2020),
+       2012.05942.
+
+[73]  F.  Vicentini,  D.  Hofmann,  A.  Szabó,  D.  Wu,  C.  Roth,  C.  Giuliani,  G.  Pescia,  J.  Nys,
+       V.  Vargas-Calderón,  N.  Astrakhantsev  and  G.  Carleo,    NetKet  3:   Machine  Learning
+       Toolbox  for  Many-Body  Quantum  Systems,     SciPost  Phys.  Codebases  p.  7  (2022),
+       doi:10.21468      /SciPostPhysCodeb.7.
+
+                                                         20
+  SciPost Physics                                                                                 Submission
+
+
+
+[74]  S. Shapira, U. Sivan, P. M. Solomon, E. Buchstab, M. Tischler and G. Ben Yoseph,  Ther-
+       modynamics of a charged fermion layer at high rs values, Phys. Rev. Lett. 77, 3181 (1996),
+       doi:10.1103      /PhysRevLett.77.3181.
+
+[75]  S.  C.  Dultz  and  H.  W.  Jiang,    Thermodynamic  signature  of  a  two-dimensional  metal-
+       insulator transition, Phys. Rev. Lett. 84, 4689 (2000), doi:10.1103      /PhysRevLett.84.4689.
+
+[76]  J. Bezanson, A. Edelman, S. Karpinski and V. B. Shah, Julia: A fresh approach to numerical
+       computing, SIAM Review 59(1), 65 (2017), doi:10.1137      /141000671.
+
+[77]  H. J. Monkhorst and J. D. Pack,  Special points for brillouin-zone integrations,  Phys. Rev.
+       B 13, 5188 (1976), doi:10.1103      /PhysRevB.13.5188.
+
+[78]  A. Baldereschi,   Mean-value point in the brillouin zone,   Phys. Rev. B 7, 5212 (1973),
+       doi:10.1103      /PhysRevB.7.5212.
+
+[79]  G. Rajagopal, R. J. Needs, S. Kenny, W. M. C. Foulkes and A. James, Quantum monte carlo
+       calculations for solids using special k points methods,  Phys. Rev. Lett. 73, 1959 (1994),
+       doi:10.1103      /PhysRevLett.73.1959.
+
+[80]  M. Germain, K. Gregor, I. Murray and H. Larochelle,   MADE: Masked Autoencoder for
+       Distribution Estimation (2015), 1502.03509.
+
+[81]  F. Becca and S. Sorella,  Quantum Monte Carlo approaches for correlated systems,  Cam-
+       bridge University Press, ISBN 9781316417041, doi:10.1017      /9781316417041(2017).
+
+[82]  G.  Pescia,   J.  Han,   A.  Lovato,   J.  Lu  and  G.  Carleo,      Neural-network  quantum
+       states  for  periodic  systems  in  continuous  space,    Phys.  Rev.  Res.  4,  023138  (2022),
+       doi:10.1103      /PhysRevResearch.4.023138.
+
+[83]  M. Taddei, M. Ruggeri, S. Moroni and M. Holzmann,  Iterative backflow renormalization
+       procedure for many-body ground-state wave functions of strongly interacting normal fermi
+       liquids, Phys. Rev. B 91, 115106 (2015), doi:10.1103      /PhysRevB.91.115106.
+
+[84]  J. Bradbury, R. Frostig, P. Hawkins, M. J. Johnson, C. Leary, D. Maclaurin, G. Necula,
+       A. Paszke, J. VanderPlas, S. Wanderman-Milne and Q. Zhang, JAX: composable transfor-
+       mations of Python+NumPy programs (2018).
+
+[85]  S. Mohamed, M. Rosca, M. Figurnov and A. Mnih,  Monte carlo gradient estimation in
+       machine learning, Journal of Machine Learning Research 21(132), 1 (2020).
+
+[86]  M. F. Hutchinson,  A stochastic estimator of the trace of the influence matrix for laplacian
+       smoothing splines,  Communications in Statistics - Simulation and Computation 19(2),
+       433 (1990), doi:10.1080      /03610919008812866.
+
+[87]  P. Zanardi, L. Campos Venuti and P. Giorda, Bures metric over thermal state manifolds and
+       quantum criticality, Phys. Rev. A 76, 062318 (2007), doi:10.1103      /PhysRevA.76.062318.
+
+[88]  M. A. Nielsen and I. L. Chuang, Quantum Computation and Quantum Information: 10th
+       Anniversary  Edition,   Cambridge  University  Press,   doi:10.1017      /CBO9780511976667
+       (2010).
+
+
+
+
+
+
+
+                                                        21

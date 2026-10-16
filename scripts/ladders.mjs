@@ -23,12 +23,16 @@ import { MODELS, BOUNDARY, geometry } from "./readme_table.mjs";
 import { groundStateExact } from "./units.mjs";
 import { W, PAD } from "./chart.mjs";
 
-const COUPLINGS = ["J2", "h", "U", "V", "t2"]; // t2: the t12 variants at more than one t2 (2026-10-16)
+const COUPLINGS = ["J2", "h", "U", "V", "t2", "rs"]; // t2: the t12 variants at more than one t2 (2026-10-16)
 
 // Particles per site: Hubbard files carry Nf = N_up = N_dn, t-V is spinless.
-const fillingOf = inst => inst.params?.Nf == null ? null
+// The electron gas (track 2) has no filling; its spin polarization zeta = (N_up - N_dn) / N plays
+// that part in a ladder, since N_up and N_dn grow with N.
+const zetaOf = inst => /^HEG/.test(inst.model) ? Number(((inst.params.N_up - inst.params.N_dn) / inst.n_sites).toFixed(4)) : null;
+const fillingOf = inst => zetaOf(inst) != null ? zetaOf(inst) : inst.params?.Nf == null ? null
   : Number(((inst.model === "Hubbard" ? 2 : 1) * inst.params.Nf / inst.n_sites).toFixed(4));
 const fillingLabel = inst => {
+  if (zetaOf(inst) != null) return `ζ = ${zetaOf(inst)}`;
   const f = fillingOf(inst), exact = (inst.model === "Hubbard" ? 2 : 1) * inst.params.Nf / inst.n_sites;
   return `n ${f === exact ? "=" : "≈"} ${f}`;
 };
@@ -118,6 +122,7 @@ const SCAN = {
   J2: { of: i => i.params?.J2, label: "J2" }, h: { of: i => i.params?.h, label: "h" },
   U: { of: i => i.params?.U, label: "U" }, V: { of: i => i.params?.V, label: "V" },
   t2: { of: i => i.params?.t2, label: "t2" },
+  rs: { of: i => i.params?.rs, label: "rs" },
   n: { of: fillingOf, label: "filling n" }, variant: { of: i => variantsOf(i).join(", "), label: "variant" },
 };
 
@@ -157,7 +162,7 @@ function scansOf(instances) {
 export const STRIP = { left: PAD + 56, right: W - PAD - 10, top: 92, bottom: 252, labelY: 40 };
 export const stripX = (k, count) => STRIP.left + ((k + 0.5) / count) * (STRIP.right - STRIP.left);
 
-const AXES = ["J2", "h", "U", "V", "n", "t2"];
+const AXES = ["J2", "h", "U", "V", "n", "t2", "rs"];
 const slug = s => s.replace(/[^\w.]+/g, "_").replace(/^_+|_+$/g, "");
 const multiSize = L => new Set(L.members.map(i => i.n_sites)).size >= 2;
 const drawnCount = L => L.members.reduce((a, i) => a + drawnRows(i).length, 0);

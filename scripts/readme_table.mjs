@@ -65,6 +65,8 @@ export const MODELS = [
   ["tV", "Spinless t-V"],
   ["TFIsing", "Transverse-field Ising"],
   ["Impurity", "Impurity"],
+  ["HEG3D", "Electron gas, 3D"],
+  ["HEG2D", "Electron gas, 2D"],
 ];
 
 // Boundary codes as defined in vendor/varbench/lattice.md. Periodic is the default and
@@ -73,6 +75,7 @@ export const BOUNDARY = { O: "open", PO: "periodic/open", PA: "periodic/antiperi
 
 export function geometry(inst) {
   const n = inst.n_sites;
+  if (/^HEG/.test(inst.model)) return `${inst.lattice} cell, N = ${n}`;
   const cells = inst.lattice.match(/^([a-z]+)-(\d+(?:x\d+)+)$/);
   if (cells) {
     const product = cells[2].split("x").reduce((a, b) => a * Number(b), 1);
@@ -87,6 +90,9 @@ export function geometry(inst) {
 export function instanceLabel(inst) {
   if (inst.model === "Impurity") return `${inst.lattice}, size ${inst.n_sites}`;
   const p = inst.params ?? {};
+  if (/^HEG/.test(inst.model))
+    return [geometry(inst), `rs = ${p.rs}`, p.N_dn === 0 || p.N_up === 0 ? "polarized" : p.N_up === p.N_dn ? "unpolarized" : `N↑ = ${p.N_up}, N↓ = ${p.N_dn}`,
+      ...(p.twist && p.twist !== "Gamma" ? [`twist ${p.twist}`] : [])].join(", ");
   const parts = [geometry(inst)];
   if (BOUNDARY[inst.boundary]) parts.push(BOUNDARY[inst.boundary]);
   for (const k of ["J2", "h", "U", "V"]) if (p[k] != null) parts.push(`${k} = ${p[k]}`);

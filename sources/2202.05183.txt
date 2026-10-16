@@ -1,0 +1,714 @@
+          Discovering Quantum Phase Transitions with Fermionic Neural Networks
+
+                             Gino  Cassella1,∗  Halvard  Sutterud1,  Sam  Azadi4,  N.D.  Drummond3,
+                                    David  Pfau2,1,  James  S.  Spencer2,  and  W.M.C.  Foulkes1
+                         1Dept.  of  Physics,  Imperial  College  London,  London  SW7  2AZ,  United  Kingdom
+                                            2DeepMind,  London  N1C  4DJ,  United  Kingdom
+                        3Dept.  of  Physics,  Lancaster  University,  Lancaster  LA1  4YB,  United  Kingdom  and
+                            4Dept.  of  Physics,  University  of  Oxford,  Oxford  OX1  3PU,  United  Kingdom
+                                                             (Dated:  July 6, 2022)
+
+                  Deep  neural  networks  have  been  very  successful  as  highly  accurate  wave  function  ans¨atze  for
+                variational Monte Carlo calculations of molecular ground states.  We present an extension of one
+                such ansatz, FermiNet, to calculations of the ground states of periodic Hamiltonians, and study the
+                homogeneous electron gas.  FermiNet calculations of the ground-state energies of small electron gas
+                systems are in excellent agreement with previous initiator full conﬁguration interaction quantum
+                Monte Carlo and diﬀusion Monte Carlo calculations.  We investigate the spin-polarized homogeneous
+                electron gas and demonstrate that the same neural network architecture is capable of accurately
+                representing both the delocalized Fermi liquid state and the localized Wigner crystal state.  The
+                network converges on the translationally invariant ground state at high density and spontaneously
+                breaks the symmetry to produce the crystalline ground state at low density, despite being given no
+                a priori  knowledge that a phase transition exists.
+
+
+  The correlated motion of electrons in condensed matter                     transitions  are  seen  by  studying  changes  in  the  ground
+gives rise to rich emergent phenomena.  Although these                       state as the parameters of the system are varied.
+are governed by fundamental quantum mechanical prin-                            A  signiﬁcant  body  of  recent  work  has  used  machine
+ciples known for almost a century, they remain diﬃcult                       learning to detect phase transitions in simulated classi-
+to  understand  and  even  harder  to  predict  theoretically                cal  [3–5]  and  quantum  [6–8]  systems,  but  these  studies
+or computationally.  One of the major themes of modern                       required a source of external data,  looking for patterns
+condensed  matter  physics  is  the  study  of  phase  transi-               characteristic of diﬀerent phases.  Our approach requires
+tions caused by electron correlation.                                        only the Hamiltonian.  There has also been work using
+  The  diﬃculty  of  solving  the  Schr¨odinger  equation                    neural network ans¨atze to study lattice models and spin
+scales exponentially with particle number in general, so                     systems, including their phase transitions [9–13], but for
+exact solutions for interacting many-electron systems are                    applications  to  many  real  systems,  the  wave  function
+rarely accessible. This explains why approximate numeri-                     must  be  treated,  as  in  the  present  work,  in  continuous
+cal techniques have become such vital tools in the search                    space.
+for  exotic  zero-temperature  phases,  providing  accurate
+predictions  of  experimentally  observable  quantities  in                     The ﬂexibility of the FermiNet hinges on the univer-
+phases  already  understood  qualitatively.   Most  compu-                   sal approximation property of neural networks [14, 15],
+tational approaches, however, encode prior assumptions                       which  makes  them  a  versatile  tool  for  approximating
+about  the  appropriate  phase,  which  poses  a  substan-                   high-dimensional  functions  and  has  led  to  radical  ad-
+tial diﬃculty in predicting previously unknown electronic                    vances in many computational ﬁelds [16–19].  This suc-
+states.  Changes in symmetry or topology are rarely dis-                     cess has motivated the application of neural networks to
+covered computationally before they have been seen ex-                       solving problems across the physical sciences,  including
+perimentally or proposed on theoretical grounds.                             quantum mechanics [9, 20–22].  Several neural-network-
+  In this Letter, we introduce a neural-network-based ap-                    based  wave  functions  in  both  ﬁrst-quantized  [1,  23–
+proach to predicting the qualitative nature of electronic                    26]  and  second-quantized  [27]  representations  have  re-
+ground states in condensed matter. We utilize a represen-                    cently  been  used  to  compute  the  ground-state  energies
+tation of the wave function, the fermionic neural network                    of  molecules  to  a  level  of  accuracy  rivaling,  or  in  some
+(FermiNet) [1], which is capable of representing any  an-                    cases exceeding, sophisticated quantum chemistry meth-
+tisymmetric state [2], and requires no a priori knowledge                    ods  such  as  coupled  cluster  with  singles,  doubles,  and
+of  the  system  being  studied.   Guided  by  the  quantum                  perturbative triples [28].  The FermiNet and ans¨atze de-
+mechanical variational principle alone, without reference                    rived from it are the most accurate of these so far, gain-
+to experimental data, the FermiNet can learn the ground                      ing an advantage over second-quantized neural and most
+state  of  a  many-body  interacting  Hamiltonian.   Phase                   quantum chemical approaches because they are basis-set
+                                                                             free. Choosing an appropriate basis set for a given system
+                                                                             requires some understanding of the qualitative nature of
+                                                                             the ground-state wave function.  Freedom from this re-
+∗ g.cassella20@imperial.ac.uk
+                                                                             quirement, coupled with the ﬂexibility of the neural rep-
+                                                                                                                                                   2
+
+resentation,  enables  the  application  of the  FermiNet to                 a permutation-invariant fashion,  on the set of all other
+generic phases of matter.                                                    electron coordinates.  The use of many-electron orbitals
+  We  extend  the  FermiNet,  which  has  previously  only                   makes a FermiNet determinant much more ﬂexible than
+been applied to atoms and molecules [1, 23, 29, 30] [31], to                 a Slater determinant of one-electron orbitals, and it has
+periodic systems.  Recent work has used neural network                       been  shown  [2]  that  a  single  determinant  of  this  form
+ans¨atze  to  study  periodic  systems  in  continuous  space,               can represent any antisymmetric function.  The proof of
+but  has  either  focused  on  bosonic  systems  [32]  or  used              this  theorem  depends  upon  the  construction  of  discon-
+small basis sets [33], restricting their accuracy.                           tinuous functions that cannot be represented in practice
+  We  demonstrate  the  ﬂexibility  of  the  periodic  Fer-                  by  a  ﬁnite  network  of  a  reasonable  size.   Nevertheless,
+miNet by studying the quantum phase transition between                       a linear combination of a small number of FermiNet de-
+the  Fermi  liquid  and  Wigner  crystal  [34]  in  the  three-              terminants has a much greater representational capacity
+dimensional interacting homogeneous electron gas (HEG)                       than a linear combination of an equal number of Slater
+[35]. Two-dimensional Wigner crystals were very recently                     determinants [1].
+imaged for the ﬁrst time [36–38], but three-dimensional                         It is convenient to work with spin-assigned wave func-
+Wigner crystals have not yet been observed in electronic                     tions  [45],  replacing  Ψ(r1,α1;..., rN,αN)  with  a  func-
+systems  and  are  thus  less  well  understood.   The  zero-                tion of position alone:  Ψ(r1,..., rN) ≜ Ψ(r1,↑;... rN↑,↑
+temperature properties of the three-dimensional HEG de-                      ; rN↑+1,↓;..., rN↓,↓), whereN =N↑ +N↓ is the number
+pend  on  a  single  dimensionless  parameter, rs,  deﬁned                   of electrons and N↑−N↓ = 2Sz is the spin polarization.
+as the ratio of the radius of a sphere that contains one                     The  spin-assigned  wave  function  is  only  antisymmetric
+electron on average to the Bohr radius.  At high density                     on interchange of the position coordinates of electrons of
+(smallrs), the ground state is a weakly interacting Fermi                    the same spin,  but assigning the spins has no eﬀect on
+liquid.   At  low  density  (large rs),  the  correlations  are              expectation values of spin-independent operators.  Rela-
+stronger and the translational symmetry breaks sponta-                       beling  the  electron  positions  according  to  the  assigned
+neously, giving rise to a spatially ordered Wigner crystal                   spins, a FermiNet determinant becomes (in block-matrix
+[34].  We ﬁnd that the same neural network architecture                      form, determinant label k dropped for clarity),
+learns the appropriate ground-state wave function either                                   ⏐⏐⏐⏐⏐⏐                                               ⏐⏐⏐⏐⏐⏐.
+side of the Wigner phase transition, spontaneously break-                                   ψ↑i (r↑j;{r↑/j},{r↓/j}) ψ↑i (r↓j;{r↑/j},{r↓/j})
+ing continuous translational symmetry when the crystal                         det[ψ] =
+phase is stable.  As we give the network no information                                     ψ↓i (r↑j;{r↑/j},{r↓/j}) ψ↓i (r↓j;{r↑/j},{r↓/j})
+about the nature of the ground state,  the degree of in-                                                                                         (3)
+ductive bias in the determination is very low.                               The original FermiNet architecture assumed that the de-
+  The Hamiltonian for a ﬁnite HEG of N  electrons sub-                       terminant above was block diagonal.  We have found that
+ject to periodic boundary conditions is                                      removing this constraint provides a small but noticeable
+                              N∑                                             variational improvement.  Dense determinants are hence
+                  H =−1           ∇2i +UCoulomb,                  (1)        used unless otherwise stated.  A comparison between re-
+                           2 i=1                                             sults  obtained  using  dense  and  block-diagonal  determi-
+where the indicesi label theN electrons in the simulation                    nants can be found in the Supplementary Material.
+cell and UCoulomb is the Coulomb energy per simulation                          The  FermiNet  uses  a  neural  network  to  approximate
+cell  of  an  inﬁnite  periodic  lattice  of  identical  copies  of          the  many-electron  orbitals  appearing  in  the  determi-
+that cell   In practice,  the Coulomb energy is evaluated                    nants [1].  The network consists of two parallel streams,
+using  the  Ewald  method  [39,  40].   We  work  in  Hartree                for  processing  one-electron  and  two-electron  informa-
+atomic units, where energies are measured in Hartrees (1                     tion.     The  one-electron  stream  is  constructed  of  re-
+Ha≈ 27.211 eV) and distances in Bohr radii.                                  peating  blocks,  where  each  block  contains  a  nonlinear
+  The wave function represented by a FermiNet is a sum                       layer and a permutation-equivariant function.  The two-
+of determinants of many-electron (not one-electron) func-                    electron stream is a comparatively small fully-connected
+tions [1, 23]:                                                               feed-forward  network.    The  outputs  of  the  one-  and
+                                                                             two-electron  streams  at  each  layer  are  fed  into  the
+                           ndet∑                                             permutation-equivariant  functions.    The  multiple  out-
+             Ψ({xj}) =          det[ψki (xj;{x/j})],            (2)          puts  of  the  one-electron  stream  are  fed  through  a  ﬁnal
+                             k                                               linear  layer  to  produce  the  required  number  of  many-
+where x = (r,α) labels the spatial and spin coordinates                      electron  functions,{φkαi }.   This  may  be  generalized  to
+of  an  electron,  and  the  set {x/j}  includes  all-electron               complex-valued functions by doubling the output dimen-
+coordinates  except  xj.    Multiplicative  coeﬃcients  are                  sion of the ﬁnal linear layer and taking pairs of the re-
+not  required  as  they  can  be  absorbed  into  the  deter-                sulting outputs to represent the real and imaginary com-
+minants.   The  many-electron  orbital ψki (xj;{x/j})  de-                   ponents ofφkαi   .  All results were obtained with real wave
+pends on the coordinates xj of thej-th electron, and, in                     functions  unless  otherwise  noted.   Finally,  the  network
+                                                                                                                                                     3
+
+  TABLE I: Correlation energy of the spin unpolarized N = 14 HEG with simple cubic boundary conditions.  The
+  i-FCIQMC energies [41] were calculated using a basis of 778 plane-wave orbitals for rs = 5.0 or 2378 plane waves
+otherwise, corresponding to Hilbert spaces of 1024 and 1031 Slater determinants, respectively.  The extrapolation of
+the i-FCIQMC results to the complete basis set limit may yield correlation energies that are 1–2 mHa too negative
+[42].  The Slater-Jastrow-backﬂow (SJB) VMC and DMC results were calculated using the casino program [43, 44]
+      with a single-determinant SJB trial wave function optimized using variance minimization and then energy
+    minimization.  The DMC results were extrapolated to zero time step.  The FermiNet results were obtained as
+                                                             explained in the text.
+                                                                     Correlation energy [Hartree]
+                  Method                        rs = 0.5                rs = 1.0                rs = 2.0                rs = 5.0
+                  SJB
+                     VMC                  −0.58624(1)         −0.5254(1)           −0.437(3)          −0.30339(2)
+                     DMC                  −0.58778(1)         −0.5254(1)          −0.4385(3)         −0.30474(8)
+                  FermiNet
+                     ndet = 1              −0.58895(6)         −0.52568(3)         −0.43881(1)         −0.30468(1)
+                     ndet = 16             −0.59094(6)         −0.52682(3)         −0.44053(1)         −0.30495(1)
+                  i-FCIQMC[41]
+                     ﬁnite basis           −0.5939(4)          −0.5305(5)          −0.4430(7)           −0.304(1)
+                     basis set limit       −0.5969(3)         −0.5325(4)         −0.4447(4)          −0.306(1)
+
+
+
+outputs  are  multiplied  by  a  parameterized  multiplica-                  of the form
+tive  envelope, f,  to  produce  the  many-electron  orbitals                    fkαi   (r) =∑[νkαim cos(km· r) +µkαim sin(km· r)],    (5)
+ψkαi   (r)  = fkαi   (r)φkαi   (r).   The  electron  position  vectors
+ri  and norms‖ri‖, and the electron-electron separation                                       m
+vectors (ri− rj) and norms‖ri− rj‖, are supplied as in-                      for real wave functions, or
+puts to the network, the output of which is the value of
+the many-electron wave function corresponding to those                                         fkαi   (r) =∑νkαim exp(ikm· r),                (6)
+inputs.  Full details of the network architecture are given                                                 m
+in Ref. [1] and the Supplementary Material.                                  for complex wave functions.  The km are simulation-cell
+  To  adapt  the  FermiNet  architecture  to  periodic  sys-                 reciprocal lattice vectors up to the Fermi wavevector of
+tems, it is suﬃcient to modify the input features to en-                     the noninteracting electron gas, and νkαim,µkαim  are learn-
+sure that periodic boundary conditions are satisﬁed.  Pe-                    able parameters.  Finally,  when simulating the  electron
+riodic  input  features  are  most  easily  expressed  in  the               gas,  the  absence  of  nuclei  (and  hence  electron-nuclear
+basis{a1, a2, a3}  of  primitive  Bravais  lattice  vectors  of              cusps) removes the need to include the norms of the elec-
+the simulation cell.  An arbitrary vector r is written as                    tron positions as inputs.
+s1a1 +s2a2 +s3a3  and the periodic input features cor-                          The  FermiNet  wave  function  is  optimized  using  the
+responding  to r  are  obtained  from  the  fractional  coor-                variational  Monte  Carlo  (VMC)  method  [45]:   the  pa-
+dinates si  via the component-wise transformation si→                        rameters  of  the  network  are  adjusted  to  lower  the  ex-
+(sin(2πsi), cos(2πsi)).   A  periodic  analogue  of  the  Eu-                pectation  value  of  the  energy,  which  is  calculated  us-
+clidean norm may be deﬁned in terms of fractional coor-                      ing Metropolis-Hastings Monte Carlo integration over the
+dinates as                                                                   3N-dimensional space of electron positions.  Gradients of
+        ‖s‖2p =∑[1− cos(2πsi)]Sij[1− cos(2πsj)]                              the energy are obtained using standard back-propagation
+                                                                             techniques, and the network parameters are updated us-
+                   ij                                               (4)      ing the Kronecker-factored approximate curvature algo-
+                       + sin(2πsi)Sij sin(2πsj),                             rithm [46], which approximates natural gradient descent
+                                                                             [47] in a way that scales to large neural networks.  Natu-
+where Sij  = ai· aj  acts as a metric tensor in the frac-                    ral gradient descent is equivalent, up to a normalization
+tional  coordinate  system.   This  deﬁnition  of  the  norm                 constant,  to  the  stochastic  reconﬁguration  method  [48]
+is  smooth,  periodic  with  respect  to  the  simulation  cell,             frequently used in VMC [1, 49].  Unless speciﬁed, all cal-
+and proportional to the Euclidean norm as s→ 0.  Un-                         culations  used  the  same  hyperparameters  as  in  Ref.  [1]
+like the simpler norm introduced in [32], it retains these                   which are given in the Supplementary Material.
+properties for non-cubic simulation cells.  These changes                       Table I shows the results of FermiNet calculations of
+are suﬃcient to satisfy the periodic boundary conditions,                    the  total  energy  of  a  14-electron  simple  cubic  simula-
+but we have found that convergence speed and asymp-                          tion  cell  of  unpolarized  HEG  at  four  diﬀerent  densi-
+totic convergence are improved by including an envelope                      ties.   This  system  is  suﬃciently  small  that  near-exact
+                                                                                                                                                    4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  1.   (a)  Single-determinant  Slater-Jastrow-backﬂow  (SJB)  ground-state  total  energies  per  electron,  measured  relative
+to  the  FermiNet  ground-state  total  energy  per  electron,  of  a  spin-polarized  27-electron  gas  in  a  body-centered  cubic  (bcc)
+simulation cell.  The “gas” and “crystal” results were obtained using SJB wave functions built using determinants of plane
+waves and Gaussian orbitals, respectively.  Error bars are smaller than the markers.  FermiNet results for rs ≤ 1 used complex
+wave functions.  FermiNet-VMC yields a variational improvement over SJB-VMC and SJB-DMC in the gas phase and over
+SJB-VMC in the crystal phase.  The values used to construct this ﬁgure may be found in the Supplementary Material.  (b)
+One-electron density of the N = 27 spin-polarized HEG at rs = 10 (left) and 70 (right), projected into the (011) plane of the
+conventional bcc structure, calculated via FermiNet-VMC.  Four simulation cells are shown.  Length scales are normalized by
+rs  for comparison,  such that the apparent length scales are equivalent and the crystal sites are superimposable.  (c) Order
+parameter averaged over crystal axes for the bcc Wigner crystal state of the spin-polarized N = 27 HEG.  Error bars are smaller
+than the markers.  At small values of rs, the order parameter is ∼0, corresponding to a uniform one-electron density (gas-like);
+the order parameter rises sharply to a ﬁnite value at rs = 2, corresponding to the emergence of a crystalline state.
+
+
+initiator  full  conﬁguration  interaction  quantum  Monte                   of the correlation increases, we study the N=27 electron
+Carlo  (i-FCIQMC)  benchmarks  are  available  [41].   The                   spin-polarized HEG in the density range from rs = 1 to
+i-FCIQMC method [50] performs a stochastic diagonal-                         90.  Prior work [52, 53] had found Wigner crystallization
+ization in a ﬁnite basis set, enabling the study of Hilbert                  to  occur  in  the  interval rs  =  [100, 110],  although  a  re-
+spaces far larger than with exact diagonalization [50, 51].                  cent  study  [54]  lowers  this  estimate  substantially.   The
+However, the fermion sign problem in FCIQMC increases                        27-electron system studied here is very small and there
+rapidly withrs, rendering i-FCIQMC calculations at low                       are substantial ﬁnite-system-size eﬀects that broaden the
+densities  with  large  basis  sets  impractical;  the  calcula-             phase transition and move it to a much higher density.
+tions  at rs  =  5  were∼104  times  more  expensive  than                      Ground-state energies obtained using VMC with a Fer-
+those at rs = 1 [41].  Table I also includes VMC results                     miNet wave function and using VMC and DMC with SJB
+calculated using a conventional Slater-Jastrow-backﬂow                       wave functions targeted at gas and crystal states are com-
+(SJB)  wave  function,  and  ﬁxed-node  diﬀusion  Monte                      pared in Fig. 1(a) for the 27-electron system.  FermiNet
+Carlo (DMC) results based on the VMC-optimized SJB                           energies  for rs ≤  1  were  obtained  using  complex  wave
+wave function.  The parameters of the VMC SJB wave                           functions,  as  discussed  below.   The  precise  form  of  the
+function were optimized using variance minimization and                      SJB ans¨atze used to describe gases and crystals are de-
+then energy minimization, as implemented in the casino                       tailed in the Supplementary Material and Ref. [53].  Fer-
+code [43, 44].  The DMC results were extrapolated to zero                    miNet  VMC  calculations  produce  a  tighter  variational
+time step.                                                                   lower  bound  than  both  the  SJB  gas  and  crystal  wave
+  Although FermiNet is a VMC method, it achieves an                          functions  at  all  densities.   Furthermore,  FermiNet  out-
+accuracy  similar  to  that  of  SJB-DMC,  with  both  ap-                   performs  ﬁxed-node  DMC  calculations  based  on  a  SJB
+proaches obtaining 99% of the i-FCIQMC correlation en-                       gas wave function across the entire density range,  even
+ergy extrapolated to the complete basis set limit (which                     at rs≤ 1.  In the low-density regime,  ﬁxed-node DMC
+may be 1–2 mHa too large [42]).  FermiNet obtains a sim-                     calculations  using  the  SJB  crystal  wave  function  give
+ilar fraction of the correlation energy for molecular sys-                   slightly better results than our FermiNet VMC calcula-
+tems with a comparable number of electrons [1].  Again                       tions.  These results suggest that the nodal surface of the
+as in molecular systems,  calculations using sixteen Fer-                    SJB crystal wave function is highly accurate but that the
+miNet determinants are noticeably better than calcula-                       shape of the wave function away from the nodal surface
+tions using one FermiNet determinant.                                        is captured better by the FermiNet.
+  To assess the performance of FermiNet as the strength                         The  Wigner  crystal  ground  state  of  the  HEG  in  the
+                                                                                                                                                   5
+
+low-density limit is expected to be body-centered cubic                     is reliably avoided by utilizing a higher learning rate, de-
+(bcc) as this structure minimizes the packing density and                   tailed in the Supplementary Material.
+has the lowest Madelung energy [34]. The emergent local-                       The center-of-mass coordinate of the electrons in the
+ization of the wave function due to Wigner crystallization                  HEG  separates  and  the  wave  function  can  be  factored
+can be seen by accumulating the expectation value of the                    into  a  center-of-mass  term,  which  is  constant  in  the
+one-electron density operator,                                              ground state, and a term that depends only on the vec-
+                           ⟨     ∑               ⟩                          tor  separations  of  electrons.   The  one-electron  density
+                  ρ(r) =      1       δ(ri− r)      ,                  (7)  of the true ground state is thus uniform, not crystalline
+                              N    i                                        as we have found, and the crystalline order at low den-
+                                                                            sity appears in the pair-correlation function, not the one-
+where the expectation value is taken over samples of one-                   electron  density.   This  is  known  as  a  “ﬂoating  crystal”
+electron coordinates.  An order parameter for the broken-                   state [55, 56].  As the size of the simulation cell tends to
+symmetry state is the Fourier component of ρ(r) corre-                      inﬁnity, the cost of localizing the center of mass reduces
+sponding to any primitive reciprocal lattice vector, bWi  ,                 to zero, the ﬂoating crystal becomes degenerate with the
+of the emergent crystal:                                                    corresponding state of broken translation symmetry, and
+                         ⟨      ∑                                           the phase transition is believed to become ﬁrst order [54],
+             ˜ρ(bWi ) =      1      exp(ibWi · rj)⟩      .            (8)   with the order parameter jumping from zero to a ﬁnite
+                            N    j                                          value at the critical density.
+                                                                               In Refs. [53, 54], it is shown (by considering a Slater
+A  state  with  ˜ρ  =  0  is  gas-like,  and  a  state  with  ˜ρ ⁄=         determinant of Gaussian orbitals, with widths given by
+0  is  crystalline.   If  the  simulation  cell  is  bcc  in  shape         an empirical formula) that the energy diﬀerence between
+and contains N  = M 3  (spin-polarized) electrons at low                    the ﬁxed and ﬂoating crystal is approximately
+enough density, it contains anM×M×M Wigner lattice                                                   ∆E = 0.055r−3/2s  .                          (9)
+and bWi   =Mbi, where the bi are the primitive reciprocal
+lattice vectors corresponding to the simulation cell.                       While  the  FermiNet  diﬀers  from  the  Slater-type  wave
+  Scans of the one-electron density corresponding to the                    functions used to derive ∆E, we expect a similar reduc-
+optimized  FermiNet  wave  functions  at rs  =  10  and  70                 tion in kinetic energy.  At low rs,  ∆E  is large (20mHa
+are shown in Fig. 1(b).  The ﬁgure shows the density in                     at rs  =  2),  so  we  would  expect  FermiNet  to  learn  the
+the (a2, a3) plane, which is normal to the (011) direction                  ﬂoating crystal state.  Fig. 1 (b, c) show that FermiNet
+of  the  conventional  bcc  cell.   Fig.  1(c)  shows  the  order           instead  learns  the  ﬁxed  crystal.   The  notion  of  a  ﬁxed
+parameter  ˜ρ as calculated from VMC simulations using                      origin can be removed by removing the one-electron fea-
+the  FermiNet  and  SJB  gas  and  crystal  wave  functions.                tures, however we ﬁnd this increases the energy obtained.
+These results show that FermiNet is capable of learning                     This  suggests  that  the  two-electron  stream  is  insuﬃ-
+wave functions in both the gas and Wigner crystal states                    ciently  ﬂexible  to  fully  describe  the  two-electron  corre-
+to very high accuracy without any hand-crafted features                     lations in the Wigner crystal without help from the one-
+indicating whether the wave function should be localized                    electron  stream.   Improving  the  ﬂexibility  of  the  two-
+or diﬀuse, any speciﬁc designation of crystal sites, or any                 electron stream will be the focus of future work.  We do
+other  information  that  a  transition  should  occur.   We                not believe that these issues impact the central conclu-
+emphasize  again  that,  unlike  the  gas  and  crystal  SJB                sion of the present work, and stress that in real condensed
+trial wave functions required to describe the gaseous and                   matter systems the Hamiltonian does not possess contin-
+crystalline  states  accurately,  the  form  of  the  FermiNet              uous translational symmetry.
+ansatz is identical across the entire density range.                           To  summarize,  we  have  extended  the  FermiNet  neu-
+  For rs ≤   1,   real-valued  FermiNets  often  become                     ral wave function to calculations with periodic boundary
+trapped  in  local  minima  during  optimization,  with  en-                conditions.   This  we  accomplished  by  making  minimal,
+ergies typically∼0.1% higher than the SJB-DMC bench-                        physically-motivated,  modiﬁcations  to  render  the  input
+marks.  However, complex-valued FermiNets do not be-                        features periodic, and by adding a periodic envelope func-
+come trapped in local minima at the same densities.  The                    tion.  As proof of concept, we have demonstrated the ac-
+Hamiltonian here is real-valued, so the ground state can                    curacy of the modiﬁed architecture on the N=14 HEG,
+be taken to be a real function, and the converged complex                   where we obtained∼99% of the correlation energy and
+FermiNets yield real-valued wave functions multiplied by                    slightly outperformed VMC and DMC calculations using
+a  trivial  (uniform  in  space)  complex  phase.   This  indi-             conventional one-determinant SJB trial wave functions.
+cates that using a complex wave function improves opti-                     For theN=27 HEG, we see that the FermiNet is capable
+mization, rather than simply increasing representational                    of learning the localized Wigner crystal phase  a  priori,
+capacity.  Optimization also frequently becomes stranded                    producing energies in excellent agreement with SJB trial
+in local minima for densities close to the phase transition                 wave functions which encode the qualitative nature of the
+in the crystalline regime (rs = 2, 3, and 5); however, this                 ground state in their construction. This suggests that the
+                                                                                                                                                          6
+
+FermiNet may be capable of determining novel quantum                            [13]N. Astrakhantsev,  T. Westerhout,  A. Tiwari,  K. Choo,
+phases in condensed matter given only the Hamiltonian.                                A. Chen, M. H. Fischer, G. Carleo, and T. Neupert, Phys.
+   To   study   quantum   phase   transitions   in   realistic                        Rev. X 11, 041021 (2021).
+strongly-correlated  electronic  systems,  it  will  be  neces-                 [14]G. Cybenko, Math. Control Signal Systems      2, 303 (1989).
+sary to scale to larger numbers of electrons to overcome                        [15]K. Hornik, Neural Networks      4, 251 (1991).
+ﬁnite-size  eﬀects.   This  may  require  additional  innova-                   [16]A. Krizhevsky, I. Sutskever, and G. E. Hinton, NeurIPS
+                                                                                      25 (2012).
+tions in the neural network architecture employed.  The                         [17]A.   Vaswani,   N.   Shazeer,   N.   Parmar,   J.   Uszkoreit,
+FermiNet  could  also  be  used  as  a  trial  wave  function                         L. Jones, A. N. Gomez, L. u. Kaiser, and I. Polosukhin,
+for  DMC  calculations  in  periodic  boundary  conditions,                           in Advances  in  Neural  Information  Processing  Systems,
+an  approach  that  yields  small  improvements  in  molec-                           Vol. 30, edited by I. Guyon, U. V. Luxburg, S. Bengio,
+ular  systems  [29].   More  generally,  we  believe  that  the                       H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett
+ﬂexibility and accuracy oﬀered by neural networks make                                (Curran Associates, Inc., 2017).
+them promising tools for studying complex correlation ef-                       [18]D. Silver, A. Huang, C. J. Maddison, A. Guez, L. Sifre,
+                                                                                      G.  Van  Den  Driessche,  J.  Schrittwieser,  I.  Antonoglou,
+fects and other emergent phenomena.  The advantages of                                V. Panneershelvam, M. Lanctot, et al., Nature 529, 484
+neural-network-based methods are most compelling when                                 (2016).
+the phenomena in question are unexpected or not yet un-                         [19]J.  Jumper,  R.  Evans,  A.  Pritzel,  T.  Green,  M.  Fig-
+derstood.                                                                             urnov, O. Ronneberger, K. Tunyasuvunakool, R. Bates,
+   This  work  was  undertaken  with  funding  from  the                              A. ˇZ´ıdek, A. Potapenko, et al., Nature 596, 583 (2021).
+UK Engineering and Physical Sciences Research Council                           [20]G.  Torlai,   G.  Mazzola,   J.  Carrasquilla,   M.  Troyer,
+(EP/T51780X/1) (GC) and the Aker scholarship (HS).                                    R. Melko, and G. Carleo, Nat. Phys. 14, 447 (2018).
+                                                                                [21]R. G. Melko, G. Carleo, J. Carrasquilla, and J. I. Cirac,
+Calculations were carried out with resources provided by                              Nat. Phys. 15, 887 (2019).
+the Baskerville Accelerated Compute Facility through a                          [22]K.   T.   Sch¨utt,   S.   Chmiela,   O.   A.   von   Lilienfeld,
+UK Research and Innovation Access to HPC grant.  Via                                  A.  Tkatchenko,  K.  Tsuda,  and  K.-R.  M¨uller,  Lecture
+his  membership  of  the  UK’s  HEC  Materials  Chemistry                             Notes in Phys.  (2020).
+Consortium, which is funded by EPSRC (EP/R029431),                              [23]J. S. Spencer, D. Pfau, A. Botev, and W. M. C. Foulkes,
+Foulkes used the UK Materials and Molecular Modelling                                 arXiv:2011.07125  (2020).
+Hub for computational resources,  MMM Hub,  which is                            [24]J.  Hermann,  Z.  Sch¨atzle,  and  F.  No´e,  Nat.  Chem.      12,
+                                                                                      891 (2020).
+partially  funded  by  EPSRC  (EP/T022213).   Our  SJB-                         [25]M. Scherbela, R. Reisenhofer, L. Gerard, P. Marquetand,
+DMC Wigner crystal calculations were performed using                                  and P. Grohs, arXiv:2105.08351  (2021).
+the Lancaster University’s High-End Computing cluster,                          [26]N. Gao and S. G¨unnemann, arXiv:2110.05064  (2021).
+and  the  ARCHER2  UK  National  Supercomputing  Ser-                           [27]K. Choo, A. Mezzacapo, and G. Carleo, Nat. Comm.      11,
+vice (http://www.archer2.ac.uk) via our membership of                                 1 (2020).
+the UK’s HEC Materials Chemistry Consortium, which                              [28]I.  Shavitt  and  R.  J.  Bartlett,        Many-Body  Methods  in
+is funded by EPSRC (EP/R029431).                                                      Chemistry  and  Physics:    MBPT  and  Coupled-Cluster
+                                                                                      Theory, Cambridge Molecular Science (Cambridge Uni-
+                                                                                      versity Press, 2009).
+                                                                                [29]M. Wilson, N. Gao, F. Wudarski, E. Rieﬀel, and N. M.
+                                                                                      Tubman, arXiv:2103.12570  (2021).
+                                                                                [30]X. Li, C. Fan, W. Ren, and J. Chen, Phys. Rev. Research
+ [1]D.  Pfau,  J.  S.  Spencer,  A.  G.  D.  G.  Matthews,  and                       4, 013021 (2022).
+     W. M. C. Foulkes, Phys. Rev. Research 2, 033429 (2020).                    [31]While  we  were  preparing  this  manuscript,  Wilson        et
+ [2]M. Hutter, arXiv:2007.15298  (2020).                                              al.  [57] reported neural-network-based continuous-space
+ [3]L. Wang, Phys. Rev. B    94, 195105 (2016).                                       VMC  results  for  the  same  14-electron  system  studied
+ [4]J.  Carrasquilla  and  R.  G.  Melko,  Nat.  Phys.     13,  431                   here, plus 7- and 19-electron gases. Although they used
+     (2017).                                                                          a more heavily modiﬁed version of the FermiNet ansatz,
+ [5]E. P. Van Nieuwenburg, Y.-H. Liu, and S. D. Huber, Nat.                           their  results  are  similar  to  ours.  They  restrict  their  at-
+     Phys. 13, 435 (2017).                                                            tention to the Fermi liquid phase and do not study the
+ [6]S. Arai,  M. Ohzeki, and K. Tanaka, J. Phys. Soc. Jpn.                            Wigner transition.
+     87, 033001 (2018).                                                         [32]G.  Pescia,  J.  Han,  A.  Lovato,  J.  Lu,  and  G.  Carleo,
+ [7]J.  Venderley,  V.  Khemani,  and  E.-A.  Kim,  Phys.  Rev.                       arXiv:2112.11957  (2021).
+     Lett. 120, 257204 (2018).                                                  [33]N. Yoshioka,  W. Mizukami, and F. Nori, Comm. Phys.
+ [8]Y.  Zhang,  A.  Mesaros,  K.  Fujita,  S.  D.  Edkins,  M.  H.                    4, 1 (2021).
+     Hamidian, K. Ch’ng, H. Eisaki, S. Uchida, J. C. S. Davis,                  [34]E. Wigner, Phys. Rev.      46, 1002 (1934).
+     E. Khatami, and E.-A. Kim, Nature 570, 484 (2019).                         [35]G. Giuliani and G. Vignale,       Quantum Theory of the Elec-
+ [9]G. Carleo and M. Troyer, Science    355, 602 (2017).                              tron Liquid  (Cambridge University Press, 2005).
+[10]H. Saito, J. Phys. Soc. Jpn.      86, 093001 (2017).                        [36]Y.  Zhou,  J.  Sung,  E.  Brutschea,  I.  Esterlis,  Y.  Wang,
+[11]D. Luo and B. K. Clark, Phys. Rev. Lett.      122, 226401                         G. Scuri, R. J. Gelly, H. Heo, T. Taniguchi, K. Watanabe,
+     (2019).                                                                          et al., Nature 595, 48 (2021).
+[12]J.  Stokes,  J.  R.  Moreno,  E.  A.  Pnevmatikakis,  and                   [37]T. Smole´nski, P. E. Dolgirev, C. Kuhlenkamp, A. Popert,
+     G. Carleo, Phys. Rev. B 102, 205122 (2020).                                      Y. Shimazaki, P. Back, X. Lu, M. Kroner, K. Watanabe,
+                                                                                                                                                               7
+
+     T. Taniguchi, et al., Nature 595, 53 (2021).
+[38]H. Li, S. Li, E. C. Regan, D. Wang, W. Zhao, S. Kahn,
+     K. Yumigeta, M. Blei, T. Taniguchi, K. Watanabe, et al.,
+     Nature 597, 650 (2021).
+[39]P. Ewald, Ann. Phys.      369, 253 (1921).
+[40]L.  M.  Fraser,  W.  M.  C.  Foulkes,  G.  Rajagopal,  R.  J.
+     Needs, S. D. Kenny, and A. J. Williamson, Phys. Rev. B
+     53, 1814 (1996).
+[41]J.  J.  Shepherd,  G.  H.  Booth,  and  A.  Alavi,  J.  Chem.
+     Phys. 136, 244101 (2012).
+[42]V. A. Neufeld and A. J. W. Thom, J. Chem. Phys.      147,
+     194105 (2017).
+[43]R. J. Needs, M. D. Towler, N. D. Drummond, and P. L.
+     R´ıos, Journal of Physics:  Condensed Matter 22, 023201
+     (2010).
+[44]R.   J.   Needs,    M.   D.   Towler,    N.   D.   Drummond,
+     P.  L´opez  R´ıos,  and  J.  R.  Trail,  J.  Chem.  Phys.  152,
+     154106 (2020).
+[45]W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Ra-
+     jagopal, Rev. Modern Phys. 73, 33 (2001).
+[46]J.  Martens  and  R.  Grosse,       Proceedings  of  the  32nd  In-
+     ternational Conference on Machine Learning, PMLR 37,
+     2408 (2015).
+[47]S.-I. Amari, Neural Comp.      10, 251 (1998).
+[48]S. Sorella, Phys. Rev. B      71, 241103 (2005).
+[49]Y. Nomura, A. S. Darmawan, Y. Yamaji, and M. Imada,
+     Phys. Rev. B 96, 205152 (2017).
+[50]D. Cleland, G. H. Booth, and A. Alavi, J. Chem. Phys.
+     134, 024112 (2011).
+[51]G.  H.  Booth,  A.  J.  W.  Thom,  and  A.  Alavi,  J.  Chem.
+     Phys. 131, 054106 (2009).
+[52]D. M. Ceperley and B. J. Alder, Phys. Rev. Lett.      45, 566
+     (1980).
+[53]N. D. Drummond, Z. Radnai, J. R. Trail, M. D. Towler,
+     and R. J. Needs, Phys. Rev. B 69, 085116 (2004).
+[54]S.   Azadi   and   N.   D.   Drummond,   arXiv:2201.08743
+     (2022).
+[55]R.  F.  Bishop  and  K.  H.  L¨uhrmann,  Phys.  Rev.  B      26,
+     5523 (1982).
+[56]M.  Lewin,  E.  H.  Lieb,  and  R.  Seiringer,  Phys.  Rev.  B
+     100, 035127 (2019).
+[57]M.  Wilson,  S.  Moroni,  M.  Holzmann,  N.  Gao,  F.  Wu-
+     darski,  T.  Vegge,  and  A.  Bhowmik,  arXiv:2202.04622
+     (2022).
+[58]J. Stokes, J. Izaac, N. Killoran, and G. Carleo, Quantum
+     4, 269 (2020).
+[59]G. Rajagopal, R. J. Needs, A. James, S. D. Kenny, and
+     W. M. C. Foulkes, Phys. Rev. B 51, 10591 (1995).
+[60]T. Kato, Communications on Pure and Applied Mathe-
+     matics 10, 151 (1957).
+[61]J.  Bradbury,  R.  Frostig,  P.  Hawkins,  M.  J.  Johnson,
+     C. Leary,  D. Maclaurin,  G. Necula,  A. Paszke,  J. Van-
+     derPlas, S. Wanderman-Milne, and Q. Zhang, JAX: com-
+     posable  transformations  of  Python+NumPy  programs,
+     http://github.com/google/jax (2018).
+[62]D. Pfau and J. Spencer, Ferminet JAX implementation,
+     http://github.com/deepmind/ferminet (2020).
+[63]A.    Botev,    KFAC    JAX    implementation,           https:
+     //github.com/deepmind/deepmind-research/tree/
+     master/kfac_ferminet_alpha (2020).
+[64]H. Flyvbjerg and H. G. Petersen, J. Chem. Phys.      91, 461
+     (1989).
+                                                                                                                                                     8
+
+                      SUPPLEMENTARY                                           network  is  doubled,  and  the  inputs  to  the  determinant
+                                                                              become
+         FERMIONIC NEURAL NETWORKS                                                                ψkαi    = (φkα2i  + iφkα2i+1)fkαi                     (18)
+
+  The  FermiNet  architecture  maps  a  set  of  input  fea-                     The set of parameters,
+tures derived from the electron coordinates,{rαj}, where
+α labels the spin of the electron, to the set of functions                              θ ={Vl, Wl, wkαi , bl, cl,gkαi ,πkαim,σkαim},       (19)
+ψkαi   (rj;{r/j}).  In the original FermiNet, this set of in-
+puts to each layer of the network is                                          are   all   learnable.      Pretraining   these   parameters   to
+                                                                            minimize  the  deviation  between  FermiNet  orbitals  and
+                    n↑∑           n↓∑          n↑∑             n↓∑            Hartree-Fock  orbitals  is  possible,  but  we  ﬁnd  that  it  is
+jlαi   =hαi,  1n↑      hl↑j ,  1n↓   hl↓j   1n↑   hlα↑ij ,  1n↓   hlα↑ij    often unnecessary to achieve a well converged result and
+
+                   j=1           j=1          j=1             j=1             it  is  not  performed  in  any  calculations  in  the  current
+                                                                   (10)       study.   The  linear  transformations  speciﬁed  by Vl  and
+where                                                                         Wl  are  known  as  hidden  layers.   For  a  more  extensive
+              h1αi   = (rαi − rI,‖rαi − rI‖ ∀  I)          (11)               description of the FermiNet architecture, see Pfau et al.
+                             (            ‖‖‖rαi − rβ‖‖‖)                     [1].
+                   h1αβij    = rαi − rβj,           j    ,           (12)        FermiNets are trained via the variational Monte Carlo
+                                                                              (VMC) method,  a detailed description of which is pro-
+with   capitalized   subscripts   referring   to   atomic   co-               vided by Foulkes et al. [45].  The parameters θ are opti-
+ordinates, and‖.‖ the Euclidean norm.  These input fea-                       mized via gradient descent to minimize⟨H⟩.  This guides
+tures are updated by consecutive transformations,                             the wave function Ψθ toward the ground state as a result
+                                    (                                         of  the  variational  principle.   Working  in  log-space,  the
+                  hl+1α              Vljlαi   + bl)  + hlαi          (13)     gradient of⟨H⟩ with respect to the parameters θ is
+                    i       = tanh
+                              (     lhlαβ
+           hl+1αβij       = tanhW      ij   + cl)  + hlαβij .        (14)     ∇θ⟨H⟩ =⟨EL∇θlogΨ∗ +E∗L∇θlogΨ− 2⟨EL⟩∇θlog|Ψ|⟩,
+                                                                                                                                                 (20)
+The  ﬁrst  transformation  (one  subscripted  index)  is  re-                 where EL(r) = Ψ−1(r)HΨ(r) and the expectation value
+ferred to as the one-electron stream, and the second (two                     is evaluated for samples of r taken from the probability
+subscripted  indices)  the  two-electron  stream.   The  out-                 amplitude|Ψ(r)|2.   The  kinetic  component  of  the  local
+puts from the Lth transformation are subject to a ﬁnal,                       energy is calculated in log-space via,
+spin-dependent, linear transformation and multiplied by                                           ∑   [            ⏐⏐⏐r +(∂ log Ψ⏐⏐⏐r)2]
+(in  open  boundary  conditions)  an  exponentially  decay-                      TL(r) =−1              ∂2 log Ψ                             .     (21)
+ing  envelope  [23]  which  enforces  the  decay  of  the  wave                                2   i       ∂r2i               ∂ri
+function as ri→∞,
+                                                                                 We employ the Kronecker-factored approximate curva-
+           ψkαi   (rj,{r/j}) =φkαi   (rj,{r/j})fkαi   (rj)        (15)        ture algorithm [46] which uses an approximation to the
+                                                                              Fisher information matrix to carry out natural gradient
+where                                                                         descent  [47].   For  complex  wave  functions,  the  inverse
+                                                                              Fisher  matrix  is  not  strictly  the  appropriate  choice  of
+             φkαi   (rj,{r/j}) = (wkαi · hLαj    +gkαi   )           (16)     metric for natural gradient descent,  and one should in-
+                                                                              stead  use  the  Fubini-Study  metric  [58].   In  the  present
+and                                                                           work,  we  found  that  natural  gradient  using  the  usual
+                                                                              inverse  Fisher  was  capable  of  ﬁnding  the  ground  state,
+                  [∑                                                          possibly because the Hamiltonian is real-valued.  A full
+    fkαi   (rj) =       πkαimexp(−σkαim|(rαj− Rm)|)].      (17)               treatment of the optimization of complex wave functions
+                     m                                                        is beyond the scope of the present work.
+
+The functionsψkαi    are used as the inputs to the determi-
+nants, (Eq. (2)), in the main text.  Note that the pooling                           PERIODIC BOUNDARY CONDITIONS
+operations  in  (Eq.  (10))  are  chosen  such  that  this  fea-
+ture vector is only permutation-invariant with respect to                        The ground state wave function of an interacting sys-
+the  exchange  of  electrons  of  the  same  spin.   Thus,  the               tem possesses a macroscopically large number of degrees
+desired  fermionic  exchange  statistics  are  enforced  even                 of freedomn, due to the many-body interactions between
+with  a  dense  determinant.   To  construct  complex  wave                   all of the charges in the system.  Solving for the many-
+functions, the number of functions φkαi    output from the                    body  wave  function  Ψ(r1,..., rn)  in R3n  is  intractable
+                                                                                                                                                   9
+
+forn approaching the—eﬀectively inﬁnite on a computa-                        is a matrix whose columns consist of the primitive sim-
+tional scale—number of electrons found in a real solid.                      ulation cell lattice vectors.  The simulation cell is a par-
+  To approximate real solids by simulating a small num-                      allelepiped  in  real  space  but  a  unit  cube  in  fractional
+ber of electrons we employ periodic boundary conditions:                     coordinates.  As a result, it is simple to construct maps
+a ﬁnite-sized simulation cell is embedded in a periodic ar-                  that  are  periodic  under  translations  by  simulation  cell
+ray of images of all charges in the simulation cell.  The re-                lattice vectors using trigonometric functions.
+sulting Hamiltonian possesses discrete translational sym-                       All vectors v in the original set of input features [Eqs.
+metry:   displacing  any  charge  by  a  simulation  cell  lat-              (11) and (12)] are replaced via the component-wise map-
+tice vector leaves the system invariant.  The many-body                      ping
+eigenfunctions then have the property [59]                                                    vn→ (sin(2πsn), cos(2πsn)).               (26)
+
+ Ψ(r1,..., ri,..., rn) = Ψ(r1,..., ri + RS,..., rn),  (22)                   An additional subtlety is introduced by the fact that any
+where RS  is  a  simulation  cell  lattice  vector.   As  a  re-             continuous, unique labeling of points on a unit circle re-
+sult,  the  problem  of  ﬁnding  eigenfunctions  on  R3n  for                quires  two  numbers.   This  necessitates  the  use  of  both
+extremely largen has been reduced to a problem of ﬁnd-                       sine  and  cosine  input  features  for  each  spatial  dimen-
+ing  eigenfunctions  on  the  torus T3n  where n  is  a  small               sion by recognizing that the torus T3n  decomposes into
+number.  The errors arising due to this approximation are                    a  product  of  unit  circles,  Sn× Sn× Sn.   Displacing v
+known as ﬁnite-size eﬀects.  A full treatment of ﬁnite-size                  by a simulation cell lattice vector leaves the value of the
+eﬀects are beyond the scope of the present work, and do                      right-hand side of (Eq. (26)) invariant as desired.
+not alter the conclusions of the comparisons presented as
+all systems being compared are utilizing the same ﬁnite-                                               Periodic norm
+size Hamiltonian.
+
+                                                                                The  periodic  analogue  of||v||  must  retain  a  cusp  as
+    FERMINET WITH PERIODIC BOUNDARY                                          v→ 0,  resembling  the  Euclidean  norm.   The  inclusion
+                         CONDITIONS                                          of the Euclidean norm features is known to have a sub-
+                                                                             stantial impact on the accuracy of the FermiNet [1]:  the
+  To impose the constraint (Eq. (22)) on the FermiNet                        network  is  incapable  of  introducing  discontinuities  into
+with  it  is  suﬃcient  to  choose  an  alternative  set  of  in-            the wave function, and thus cannot satisfy the Kato cusp
+put features to the ﬁrst layer of the FermiNet which are                     conditions [60] on the derivatives of the wave function as
+invariant under the translation of any one electron coor-                    electrons approach nuclei and each other without cusps
+dinate by a simulation cell lattice vector.  In the following                being included explicitly in the input features.  Similarly,
+sections we describe modiﬁcations to the coordinate and                      the periodic norm must be continuous everywhere except
+distance features which fulﬁll this requirement.                             at  the  cusps,  as  the  network  will  be  unable  to  remove
+                                                                             these  discontinuities  from  the  wave  function,  resulting
+                                                                             in an unphysical contribution to the kinetic energy.  In
+                    Fractional coordinates                                   summary, we require a function of s which behaves like√
+                                                                             |v| =     v2x +v2y +v2z as v→ R, is periodic on the domain
+  Any vector in real space can be expressed as a linear                      [0, 1]3,  and  whose  derivative  vanishes  at  the  simulation
+combination  of  primitive  simulation  cell  lattice  vectors               cell boundaries to ensure continuity.
+(a1, a2, a3),                                                                   We  proceed  by  considering  the  deﬁnition  of  the  Eu-
+          v =s1a1 +s2a2 +s3a3,  s1,s2,s3∈ R,      (23)                       clidean norm as the Euclidean inner product of a vector
+                                                                             with itself,
+deﬁning s = (s1,s2,s3)∈ R3, which is an equally valid                               ‖v‖2 = v· v = (As)T (As) =∑                siSijsj,         (27)
+representation  of  a  position  on  the  lattice  that  we  will
+refer to as fractional coordinates.  There is a one-to-one                                                                 ij
+mapping between positions in real space and positions in                     where
+fractional coordinates,                                                                                  Sij = ai· aj.                            (28)
+                             s = A−1v                              (24)
+                                                                             We conjecture by analogy that the norm in terms of the
+where,                                                                       periodic co-ordinates (Eq. (26)) should be
+                                | | |                                            ‖s‖2p =∑[1− cos(2πsi)]Sij[1− cos(2πsj)]
+                       A  =  a1  a2  a3,                      (25)                         ij                                                 (29)
+                                 | | |                                                           + sin(2πsi)Sij sin(2πsj),
+                                                                                                                                                 10
+
+                                                                                   TABLE II: FermiNet hyperparameters for all
+                                                                              experiments in the paper.  These are mostly the same
+                                                                                parameters as used in the original FermiNet paper,
+                                                                               except we omit pretraining and slightly increase the
+                                                                                             number of training iterations.
+                                                                                 Kind                   Parameter                      Value
+                                                                                Optim                   Batch size                      4096
+                                                                                Optim              Training iterations                  3e5
+                                                                                Optim            Pretraining iterations                   0
+                                                                                Optim                 Learning rate                 (1e4 + t)−1
+                                                                                Optim            Local energy clipping                   5.0
+                                                                                KFAC                   Momentum                           0
+                                                                                KFAC      Covariance moving average decay               0.95
+                                                                                KFAC                Norm constraint                     1e-3
+                                                                                KFAC                     Damping                        1e-3
+                                                                               MCMC       Proposal std. dev. (per dimension)            0.02
+                                                                               MCMC       Steps between parameter updates                10
+
+
+
+
+                                                                                              EXPERIMENTAL SETUP
+
+
+                                                                                                 FermiNet calculations
+FIG.  2.   Learning  curves,  given  in  terms  of  the  correlation
+energy, for the N = 14 spin unpolarized HEG at rs = 1.0 uti-                   Four  A100  GPUs  were  used  for  all  calculations  pre-
+lizing 16 dense determinants, with and without a sinusoidal
+envelope,  using identical training parameters.  An N  = 500                sented.   Calculations  were  carried  out  using  single  pre-
+moving average ﬁlter has been applied to both curves to im-                 cision  ﬂoating  point  numbers,  as  we  found  statistically
+prove visual clarity.                                                       identical results were achieved using double precision at
+                                                                            the cost of approximately doubling runtime.  The mod-
+                                                                            iﬁcations to FermiNet were implemented using the JAX
+This deﬁnition of the norm possesses all of the proper-                     Python library [61], extending a development version of
+ties that we desired:  as si→ 0 this expression reduces                     the  FermiNet  [62].    Optimization  used  a  JAX  imple-
+to the Euclidean norm [Eq. (27)] by considering the ﬁrst-                   mentation  of  the  Kronecker-factored  approximate  cur-
+order Taylor expansions of sine and cosine;  the period-                    vature (KFAC) gradient descent algorithm [23, 46, 63].
+icity  is  obvious  as  the  expression  is  invariant  to  trans-          In the N=14 electron gas,  a FermiNet with 4 layers of
+lations si→ si± 1;  and,  as a result of reducing to the                    256 units in the one-electron stream and 32 units in the
+Euclidean  norm  at  the  origin,  this  function  retains  the             two-electron stream was used for the 1 and 16 determi-
+desired cusps, while also being diﬀerentiable in the rest                   nant calculations.  In all calculations for theN=27 HEG,
+of the unit cell.  All distances,||.||, in the original set of              we used a FermiNet of four layers with 512/64 units in
+input  features  [Eqs.  (11)  and  (12)]  are  replaced  by  the            the one/two-electron streams respectively with 16 deter-
+periodic norm.                                                              minants.   For  both  systems,  the  wave  function  was  op-
+                                                                            timized  over  3e5  training  iterations  and  5e4  additional
+                                                                            samples of⟨H⟩ with the wave function parameters frozen
+              Periodic multiplicative envelope                              were taken to obtain the ﬁnal energies.  The standard er-
+                                                                            ror associated with these energies was evaluated using a
+  For   the   periodic   envelope   function   introduced   in              reblocking method [64] to account for sequential correla-
+Eqs. (5) and (6), νkim andµkim are strictly positive learn-                 tions introduced by the Monte Carlo sampling strategy.
+able  parameters,  optimized  during  training.   The  enve-                   For  the  majority  of  calculations,  we  employ  a  set  of
+lope eases the representation of highly oscillatory func-                   network and training hyperparameters identical to those
+tions,  while  still  being  trivially  capable  of  representing           previously  used  to  obtain  results  on  molecular  systems
+any function representable by the network with no enve-                     [1].  For the N=27 HEG atrs = 2, 3, and 5, we ﬁnd that
+lope because k0 = 0.  All νkim  and µkim  are initialized to                an initially more aggressive learning rate (base value 1e-2
+small random values except νki0 = 1.  Other initialization                  versus the default 1e-4) is required to reliably avoid lo-
+schemes  may  be  more  appropriate,  but  have  not  been                  cal minima.  This is accompanied by an increased KFAC
+studied here.  Fig. 2 demonstrates the improved training                    norm  constraint  and  damping  of  1.0  and  1e-1,  respec-
+performance due to the envelope.                                            tively.
+                                                                                                                                                 11
+
+           Slater-Jastrow-backﬂow calculations                              where u  is  a  power  series  in  the  electronic  separations
+                                                                            which includes ﬁxed terms to impose the Kato cusp con-
+  The   Slater-Jastrow-backﬂow   (SJB)   wave   function                    ditions [60].  This term is smoothly cut oﬀ at a radius less
+ansatz used to produce the benchmark VMC and DMC                            than or equal to the radius of the largest sphere that can
+calculations in the main text takes the form                                be  inscribed  in  the  Wigner-Seitz  cell  of  the  simulation
+                                                                            cell.  The p term is
+                   Ψ(r) = exp(J(r))S(x(r)).                  (30)                                               ∑
+                                                                                           p(rij) =∑      aA          cos(G· rij),            (35)
+The  Slater  determinant S  is  composed  of  one-electron                                             A      G∈A+
+functions and enforces the fermionic antisymmetry of the                    where A  consists  of  shells  of  simulation  cell  reciprocal
+wave function, just as in the FermiNet.  This determinant                   lattice  vectors,  and A+  excludes  one  from  each  pair  of
+is evaluated at coordinates which are modiﬁed by a back-                    vectors which are related by inversion symmetry.  Simi-
+ﬂow transformation,                                                         larly,
+                                                                                                                ∑
+                         x(r) = r +ξ(r),                         (31)                       q(ri) =∑      bB          cos(G· ri),             (36)
+                                                                                                       B      G∈B+
+and  multiplied  by  a  Jastrow  factor  exp(J)  which  is  a               whereB consists of shells of Wigner crystal primitive cell
+permutation-invariant function of the electronic coordi-                    reciprocal lattice vectors.  Theq term is omitted from the
+nates.  Here we will only provide a brief overview of the                   Fermi ﬂuid wave function, as it does not retain continu-
+terms incorporated into these factors.  A much more de-                     ous translational invariance with respect to the electronic
+tailed  account  is  provided  in  Ref.  [54].   All  SJB  VMC              center of mass.
+and DMC calculations were performed using the casino                           The backﬂow transformation consists of two terms,
+program [43, 44]
+  For  the  Fermi  ﬂuid,  the  one-electron  orbitals  in  the                                        N∑                 N∑
+Slater determinant are the Hartree-Fock orbitals for the                                   ξi(r) =       η(rij)rij +        π(rij),            (37)
+homogeneous electron gas,                                                                            j⁄=i               j⁄=i
+
+                      φk(rj) = exp(ik· rj),                     (32)        where η  is  mathematically  identical  to  the  Jastrow u
+                                                                            term, andπ has the form of the gradient of the Jastrow
+where the{k} are theN/2 (spin unpolarized) orN (spin                        p term:
+polarized) smallest simulation cell reciprocal lattice vec-                             π(rij) =−∑         cA   ∑     sin(G· rij) G.        (38)
+tors.   In  the  crystal,  periodic  one-electron  orbitals  are                                       A      G∈A+
+evaluated as sums over periodic images of site-centered
+Gaussian functions,                                                         The coeﬃcients aA, bB,  and cA  are all optimizable pa-
+                             (                                              rameters.
+      φRP(rj) =∑exp            −C|rj− RP− RS|2),        (33)                   All of these terms are evaluated using a minimum im-
+                    RS                                                      age convention.
+
+where RP is a primitive-cell lattice point within the sim-                                   BLOCK DETERMINANTS
+ulation  cell,  RS  is  a  simulation  cell  lattice  point,  and
+C  is an optimizable parameter controlling the width of
+the  Gaussian.   This  sum  is  truncated  when  the  contri-                  In  the  main  text  we  introduce  the  concept  of  dense
+butions  of  the  images  of  the  Gaussian  basis  functions               determinants  in  the  FermiNet  architecture.    Here  we
+become smaller than 10−7 at the edge of the simulation                      provide a comparison with energies for the unpolarized
+cell in which the orbital is being evaluated.  There are N                  N=14 HEG, obtained using block diagonal determinants.
+primitive-cell lattice points within the simulation cell.                   These values are presented in Table III, alongside the re-
+  The Jastrow exponent consists of a sum of three terms,                    sults obtained using dense determinants, copied from the
+                                                                            main text for comparison. In all cases dense determinants
+                     N∑                          N∑                         oﬀer a small variational improvement in the correlation
+           J(r) =        [u(rij) +p(rij)] +          q(ri),        (34)     energy obtained.
+                    i<j                           i
+                                                                                                                                                              12
+
+TABLE III: Correlation energy of the spin unpolarized
+ N = 14 HEG with simple cubic boundary conditions,
+       compared between a FermiNet wave function
+        constructed from block diagonal and dense
+                            determinants.
+                           Correlation energy [Ha]
+ndet       rs = 0.5        rs = 1.0        rs = 2.0        rs = 5.0
+
+                              Block determinants
+1       −0.58831(7)  −0.52510(3)  −0.43842(1)  −0.30433(1)
+16      −0.58962(6)  −0.52558(3)  −0.43876(1)  −0.30466(1)
+                              Dense determinants
+1       −0.58895(6)  −0.52568(3)  −0.43881(1)  −0.30468(1)
+16     −0.59094(6)−0.52682(3)−0.44053(1)−0.30495(1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   TABLE IV: Total energy per electron of the N=27 HEG in a body-centered cubic simulation cell at a range of
+ densities, obtained via variational Monte Carlo.  SJB values were obtained from our calculations using the casino
+      package.  Here, “gas” refers to a Slater determinant of plane-wave orbitals, and “crystal” refers to a Slater
+                determinant of Gaussian orbitals.  FermiNet results for rs≤ 1 used complex wave functions.
+                                                                   Total energy [Hartree per electron]
+  rs                             FermiNet               SJB-VMC Gas           SJB-DMC Gas        SJB-VMC Crystal     SJB-DMC Crystal
+  0.2                          44.18067(2)                44.18235(4)                44.18224(1)               44.184815(4)               44.18468(3)
+  0.5                          6.318704(2)                 6.31983(2)                 6.319754(7)                6.322090(8)                 6.32130(6)
+  1.0                          1.261547(1)                1.262022(8)                1.261975(2)                 1.26286(1)                  1.26254(2)
+  2.0                          0.152086(1)                0.152393(3)                0.152344(3)               0.1521205(4)               0.152077(4)
+  3.0                   −0.006961(2)          −0.006693(2)         −0.0067419(7)         −0.006915(2)          −0.006966(2)
+  5.0                   −0.057691(4)          −0.057453(1)         −0.0575023(4)         −0.0576496(9)         −0.057702(1)
+  10.0                 −0.050320(5)         −0.0501501(6)         −0.0502038(1)         −0.0502782(7)         −0.0503349(8)
+  30.0                 −0.022541(5)         −0.0224510(2)        −0.02249870(5)        −0.0225119(3)         −0.0225620(2)
+  50.0                 −0.014478(4)         −0.0144033(1)        −0.01444409(5)        −0.0144528(1)         −0.0144918(1)
+  70.0                 −0.010693(3)         −0.0106355(1)         −0.0106735(1)         −0.0106824(1)         −0.0107118(1)
+  90.0                 −0.008496(1)         −0.0084277(1)         −0.0084862(1)        −0.00849274(7)        −0.0085137(2)

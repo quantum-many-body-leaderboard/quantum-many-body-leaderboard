@@ -3,6 +3,8 @@
 // so every rule here is stated once and reused rather than inlined per script.
 
 export const SPIN_MODELS = new Set(["Heisenberg", "J1J2", "TFIsing"]);
+// Track 2 (RULES.md 12): the homogeneous electron gas, stored as totals in Hartree; n_sites holds N.
+export const HEG_MODELS = new Set(["HEG2D", "HEG3D"]);
 
 // Is the reported energy a Monte-Carlo estimate, or a deterministic contraction?
 // Only a sampled energy has an error bar to report: DMRG at a stated bond dimension, exact
@@ -126,7 +128,7 @@ export const recordEligible = r => RECORD_KINDS.has(r.bound_type) && !r.defect;
 // and the family could never produce a single match - which is most of why it shows
 // 0 of 7 instances covered. scripts/validate.mjs asserts the identity on every run.
 export function perSiteDivisor(inst) {
-  if (inst.model === "TFIsing") return inst.n_sites;
+  if (inst.model === "TFIsing" || HEG_MODELS.has(inst.model)) return inst.n_sites;
   if (SPIN_MODELS.has(inst.model)) return 4 * inst.n_sites;
   if (inst.model === "Hubbard" || inst.model === "tV") return inst.n_sites;
   return null; // Impurity: no meaningful per-site energy
@@ -139,6 +141,7 @@ export function toPerSite(energy, inst) {
 
 export function perSiteLabel(inst) {
   if (inst.model === "TFIsing") return "E/N (Pauli)";
+  if (HEG_MODELS.has(inst.model)) return "E/N (Ha)";
   if (SPIN_MODELS.has(inst.model)) return "E/N (S.S)";
   return perSiteDivisor(inst) == null ? "E (total)" : "E/site";
 }
@@ -146,7 +149,7 @@ export function perSiteLabel(inst) {
 // Degrees of freedom: spins for spin models, N_up + N_dn for fermions.
 // VarBench filenames carry Nf = N_up = N_dn.
 export function expectedDof(inst) {
-  if (SPIN_MODELS.has(inst.model)) return inst.n_sites;
+  if (SPIN_MODELS.has(inst.model) || HEG_MODELS.has(inst.model)) return inst.n_sites;
   // t-V is SPINLESS, so Nf is already the total particle number.
   if (inst.model === "tV") return inst.params?.Nf ?? null;
   if (inst.params?.Nf != null) return 2 * inst.params.Nf;
