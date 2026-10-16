@@ -308,6 +308,9 @@ function hamiltonian(inst) {
 // writes them out; this says where they come from and what the density terms couple.
 function variantNote(inst) {
   const notes = `<a href="https://github.com/varbench/varbench/blob/main/Hubbard/supplements/Imada_group_overview.md">VarBench's notes on these runs</a> and Eq. (S6) of its supplement`;
+  // t12 instances named with their t2 (2026-10-16) come from papers, not VarBench: H = -t sum - t' sum<<ij>> + U sum, t2 = t'.
+  if (/_t12_-?[\d.]+$/.test(inst.instance_id))
+    return `This instance is a <code>t12</code> variant: a next-nearest-neighbour hopping t<sub>2</sub>, written as in VarBench's Eq. (S6), so t<sub>2</sub> is the t&prime; of the sources' H = &minus;t &sum;&#10216;ij&#10217; &minus; t&prime; &sum;&#10216;&#10216;ij&#10217;&#10217; + U &sum; n<sub>i&uarr;</sub>n<sub>i&darr;</sub>. Couplings from the Hamiltonian each source prints (see the rows).`;
   if (/_UV1V2(?=_|$)/.test(inst.instance_id))
     return `This instance is the <code>t12</code> variant with the <code>UV1V2</code> interactions: a next-nearest-neighbour hopping t<sub>2</sub>, and density-density terms on nearest (V<sub>1</sub>) and next-nearest neighbours (V<sub>2</sub>), each bond once, between the total densities n<sub>i</sub> = n<sub>i&uarr;</sub> + n<sub>i&darr;</sub> as mVMC, the program behind its row, defines them (Eq. (S6) prints them between equal spins). Couplings from ${notes}.`;
   if (/_t12(?=_|$)/.test(inst.instance_id))
@@ -670,7 +673,7 @@ ${FIG_SCRIPT}
 </section>`;
   return page({
     url: "/", title: null, body, wide: true, jsonld: datasetLd(),
-    description: `The best published variational ground-state energies for ${summary.instances} lattice Hamiltonian instances, ranked by energy, every row citing its primary paper.`,
+    description: `Published ground-state energies for ${summary.instances} lattice Hamiltonian instances, with the record on each, every row citing its primary paper.`,
   });
 }
 
