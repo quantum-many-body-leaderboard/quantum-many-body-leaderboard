@@ -6,12 +6,17 @@ Where a rule was written in response to a concrete case, the case is named.
 
 ## 1. Scope
 
-Track 1, the only track open, covers **ground-state energies of lattice Hamiltonians**
-computed by any method. A row is a claim about one (Hamiltonian instance, method) pair.
+Track 1 covers **ground-state energies of lattice Hamiltonians** computed by any method.
+Track 2, open since 2026-10-16, covers **ground-state energies of the homogeneous electron
+gas** in a periodic cell, in two and three dimensions (12). A row is a claim about one
+(Hamiltonian instance, method) pair.
 
-Out of scope for now: real-time dynamics, finite temperature, continuum and molecular
-systems. Each needs an accuracy metric that track 1's does not provide, and no track
-opens until track 1 is maintained.
+Out of scope for now: real-time dynamics, finite temperature, molecules, atoms, quantum dots
+and other continuum systems with an external potential. Each needs its own instance
+definition (12 is the pattern), and none opens before track 2 has had its first
+verification pass. Until 2026-10-16 this section closed every continuum system, on the
+ground that it needs an accuracy metric track 1 does not provide; track 2 ranks by energy
+like track 1 and computes no V-score (12.2).
 
 ## 2. Instances
 
@@ -442,3 +447,65 @@ published before stay on its rows. An instance whose name carries a different pa
 one its rows were computed at, a coupling or an impurity's bath size, is renamed, with the old
 name and the reason recorded on it (`scripts/relabels.mjs`); rows computed at the named
 parameter keep the old name.
+
+## 12. Track 2: the homogeneous electron gas
+
+Adopted 2026-10-16. Sections 2 to 11 apply to track 2 as to track 1; this section states
+what differs.
+
+### 12.1 Instance
+
+An instance is fixed by its dimension (2 or 3), the electron numbers `N_up` and `N_dn`, the
+density parameter `rs` (bohr), the simulation cell and the twist.
+
+- **Cell:** `sc`, `bcc`, `fcc` (3D), `square`, `triangular` (2D), or a rectangular or rhombic
+  cell with its side ratios stated. Its volume is `N (4π/3) rs³` in 3D and `N π rs²` in 2D.
+  The cell shape changes the energy at fixed N and rs, so two shapes are two instances.
+- **Twist:** the boundary condition ψ(r + L) = e^{iθ} ψ(r). `Gamma` (θ = 0) unless stated.
+  A fixed twist other than Gamma is an instance of its own when the source gives its vector:
+  its energy is the ground-state energy of the Hamiltonian with that boundary condition.
+  A **twist-averaged energy is not a row**: it averages the ground-state energies of many
+  Hamiltonians and is the ground-state energy of none.
+- **Id:** `HEG3D/<cell>_<N>_P_<N_up>_<N_dn>_<rs>` (model `HEG2D` or `HEG3D`), for example
+  `HEG3D/sc_54_P_27_27_1`; a twist other than Gamma adds `_tw<label>`.
+
+### 12.2 Hamiltonian, units and storage
+
+`H = -1/2 Σ_i ∇_i² + Σ_{i<j} v_E(r_i - r_j) + N ξ / 2`, in Hartree atomic units. `v_E` is the
+Ewald-summed Coulomb interaction with all periodic images and a uniform neutralizing
+background, and `ξ`, the Madelung term (each electron's interaction with its own images and
+their background), **is included**.
+
+- Stored as the **total energy in Hartree**; tables and the site show Hartree per electron.
+- Rydberg sources are converted by the loader (× 1/2), never by hand. A source that leaves the
+  Madelung term out, or writes the Ewald sum another way, is converted by the loader from the
+  convention it states, and the row says which. A source that states no convention is
+  `needs_review` until it is found (10). The check that fixes a convention is a Hartree-Fock
+  energy the source prints, compared with QMBL's own for the instance.
+- `dof` is N. No `einf` is defined, so no V-score is computed; `Var(E)/N` is stored where
+  printed (9).
+
+### 12.3 What is a row
+
+A finite-N energy at the instance's density, cell and twist. Not rows: energies with an
+analytic finite-size correction added, extrapolations to N → ∞, twist averages, correlation
+energies quoted against a Hartree-Fock energy the source does not print, and energies in a
+finite one-particle basis not taken to its limit (they belong to another Hamiltonian).
+
+### 12.4 `bound_type`
+
+Section 4 applies unchanged. The recurring cases:
+
+- VMC with any trial state (Slater-Jastrow, backflow, neural networks): `variational`.
+- Fixed-node and fixed-phase DMC: `projected`. Release-node DMC is `projected` unless the
+  source shows the release converged; a claim of exactness is read, not assumed.
+- FCIQMC, coupled cluster and other basis-set methods: a row only when extrapolated to the
+  complete-basis limit, and then `extrapolated`, as is an initiator-FCIQMC energy
+  extrapolated in the initiator threshold.
+- No method is `exact` in track 2 for now. Records follow 6: the lowest unflagged energy of
+  any kind holds the record, and its `bound_type` says what kind of number it is.
+
+### 12.5 Site
+
+Track 2 has its own section and tables. Its figures plot energy per electron against `rs` at
+fixed N and cell, and against N at fixed `rs`, each result a dot.
