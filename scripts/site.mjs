@@ -29,6 +29,7 @@ import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
 import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { FRONTIER } from "./views.mjs";
 import { energyFigures } from "./ladders.mjs";
+import { loadOpenProblems, openProblemsPages, openProblemsLlms, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL, OPEN_PROBLEMS_NAV_CSS, OPEN_PROBLEMS_PAGE_CSS } from "./open_problems.mjs";
 
 const OUT = "_site";
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
@@ -61,12 +62,20 @@ const esc = s => String(s)
   .replace(/&(?![#A-Za-z0-9]+;)/g, "&amp;")
   .replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+// QMBL: Open Problems (open_problems.mjs), built only where its repository is checked out
+// beside this one or at OPEN_PROBLEMS_DIR; without it the site is built as before. Its targets
+// are this build's instances with no exact energy (the checkout's scripts/targets.mjs).
+const OPEN_PROBLEMS = await loadOpenProblems(instances);
+
 // The front page is the leaderboard (the figures), /instances/ the table. The URLs stay -
 // they are what is linked and cited.
 const NAV = [
   ["/", "Leaderboard"],
   ["/instances/", "Table"],
 ];
+// Open Problems is a button at the very right of the menu, after Cite (2026-10-09).
+const opButton = url => (OPEN_PROBLEMS
+  ? `<a href="${OPEN_PROBLEMS_URL}" class="op"${url.startsWith(OPEN_PROBLEMS_URL) ? ' aria-current="page"' : ""}>Open Problems</a>` : "");
 
 // GitHub's mark (octicon mark-github, MIT), inline so it takes the nav's colour.
 const GITHUB_MARK = `<svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>`;
@@ -107,7 +116,9 @@ function datasetLd() {
   };
 }
 
-function page({ url, title, description, body, wide = false, jsonld = null }) {
+// `css` is a page's own stylesheet, after the site's (open-problems.css). `ogTitle` is the
+// link-preview title where the page title alone would hide QMBL on an X card (2026-10-09).
+function page({ url, title, description, body, wide = false, jsonld = null, css = null, ogTitle = null }) {
   const head = title === null ? "QMBL: the Quantum Many-Body Leaderboard" : `${title} &middot; QMBL`;
   return `<!doctype html>
 <html lang="en">
@@ -116,11 +127,11 @@ function page({ url, title, description, body, wide = false, jsonld = null }) {
 <title>${head}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="https://qmbl.org${url}">
-<link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">
+<link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">${css ? `\n<link rel="stylesheet" href="${css}">` : ""}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="${esc(title ?? "QMBL: the Quantum Many-Body Leaderboard")}">
+<meta property="og:title" content="${esc(ogTitle ?? title ?? "QMBL: the Quantum Many-Body Leaderboard")}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://qmbl.org${url}">
@@ -129,7 +140,7 @@ ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(
   <nav>${NAV.map(([href, label]) =>
     `<a href="${href}"${href === url ? ' aria-current="page"' : ""}>${label}</a>`).join("")}
     <a class="ext" href="${REPO}" aria-label="QMBL on GitHub" title="Source and data on GitHub">${GITHUB_MARK}</a>
-    <button class="cite-btn" type="button" data-cite="${esc(CITATION)}" title="Copy the citation">&#10077;<span>Cite</span></button></nav>
+    <button class="cite-btn" type="button" data-cite="${esc(CITATION)}" title="Copy the citation">&#10077;<span>Cite</span></button>${opButton(url)}</nav>
 </header>
 <main class="${wide ? "wide" : ""}">
 ${body}
@@ -398,18 +409,20 @@ function computeInstances(id, group, entry) {
     .filter((p, k) => !shared.includes(ps[k])).join("").replace(/^, /, "");
   return tabs(id, group.map((inst, k) => [esc(label(parts[k])), figure(entry(inst))]), lead);
 }
-const COMPUTE_TABS = COMPUTE_AXES.flatMap(([, figs], a) => [[`cost-${a}`, computeModels(figs).length],
-  ...computeModels(figs).map((g, m) => [`cost-${a}-${m}`, g.length])]);
-function computeSwitcher() {
-  if (!COMPUTE_AXES.length) return "";
+// `axes`, `prefix` and `hours` let /open-problems/ show the same section for its instances.
+const computeTabs = (axes, prefix = "") => axes.flatMap(([, figs], a) => [[`${prefix}cost-${a}`, computeModels(figs).length],
+  ...computeModels(figs).map((g, m) => [`${prefix}cost-${a}-${m}`, g.length])]);
+const COMPUTE_TABS = computeTabs(COMPUTE_AXES);
+function computeSwitcher(axes = COMPUTE_AXES, prefix = "", hours = COST_FIGS.length) {
+  if (!axes.length) return "";
   return `<section class="tabs" id="energy-vs-compute">
   <h2>The best published energies, by cost</h2>
   <p class="muted">Skim through three kinds of cost: compute hours, estimated FLOPs and number of parameters. Papers state compute cost
-  in hours on GPU/CPU on ${COST_FIGS.length} instances. Many more papers state the number of parameters, samples and optimisation steps, and
+  in hours on GPU/CPU on ${hours} instances. Many more papers state the number of parameters, samples and optimisation steps, and
   public DMRG run scripts state their sweeps, which imply a count of floating-point operations that we estimate (<a href="${DATA}#how-a-flop-count-is-estimated">how</a>). On top,
   we plot the parameter count alone.</p>
-  ${tabs("cost-axis", COMPUTE_AXES.map(([label, figs, entry], a) => [label, `<div class="tabs">${tabs(`cost-${a}`, computeModels(figs).map((g, m) =>
-    [esc(modelName(g[0].model)), `<div class="tabs">${computeInstances(`cost-${a}-${m}`, g, entry)}</div>`]))}</div>`]))}
+  ${tabs(`${prefix}cost-axis`, axes.map(([label, figs, entry], a) => [label, `<div class="tabs">${tabs(`${prefix}cost-${a}`, computeModels(figs).map((g, m) =>
+    [esc(modelName(g[0].model)), `<div class="tabs">${computeInstances(`${prefix}cost-${a}-${m}`, g, entry)}</div>`]))}</div>`]))}
 </section>`;
 }
 // The published energies of every Hamiltonian, drawn by size_energy.mjs into figures/energy/
@@ -457,19 +470,34 @@ const sliderRules = ({ id, f }) => (f.strip ? f.stops.map((s, k) =>
 #${id}-${k}:checked ~ .track label[for="${id}-${k}"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 #${id}-${k}:focus-visible ~ .track label[for="${id}-${k}"] { outline: 2px solid var(--accent); outline-offset: 2px; }`).join("\n") : "");
 
-function energySwitcher() {
-  if (!ENERGY_FIGS.length) return "";
+function energySwitcher(groups = ENERGY_FIGS, sliders = SLIDERS, prefix = "") {
+  if (!groups.length) return "";
   return `<section class="tabs" id="energy-by-hamiltonian">
   <h2>The published energies, by Hamiltonian</h2>
-  ${tabs("energy-group", ENERGY_FIGS.map(([group, figs], j) =>
-    [group === "other" ? "Other" : esc(modelName(group)), `<div class="tabs">${tabs(`energy-${j}`, figs.map(f =>
-      [esc(f.label), group === "other" ? figure(otherEntry(f)) : slider(SLIDERS.find(s => s.f === f))]))}</div>`]))}
+  ${tabs(`${prefix}energy-group`, groups.map(([group, figs], j) =>
+    [group === "other" ? "Other" : esc(modelName(group)), `<div class="tabs">${tabs(`${prefix}energy-${j}`, figs.map(f =>
+      [esc(f.label), group === "other" ? figure(otherEntry(f)) : slider(sliders.find(s => s.f === f))]))}</div>`]))}
 </section>`;
 }
 
-const TAB_CSS = [tabRules("cost-axis", COMPUTE_AXES.length), ...COMPUTE_TABS.map(([id, n]) => tabRules(id, n)),
-  tabRules("energy-group", ENERGY_FIGS.length),
-  ...ENERGY_FIGS.map(([, figs], j) => tabRules(`energy-${j}`, figs.length)), ...SLIDERS.map(sliderRules)].join("\n");
+const tabCss = (axes, groups, sliders, prefix = "") => [tabRules(`${prefix}cost-axis`, axes.length), ...computeTabs(axes, prefix).map(([id, n]) => tabRules(id, n)),
+  tabRules(`${prefix}energy-group`, groups.length),
+  ...groups.map(([, figs], j) => tabRules(`${prefix}energy-${j}`, figs.length)), ...sliders.map(sliderRules)].join("\n");
+const TAB_CSS = tabCss(COMPUTE_AXES, ENERGY_FIGS, SLIDERS);
+
+// The same two sections on /open-problems/ (2026-10-09: "all figures just like on main
+// QMBL page"), for its instances: every energy figure in which one of them is drawn, shown whole
+// as here, solved sizes included, and the cost figures of those instances. Their switches have
+// ids of their own, op-, whose rules go into that page's own stylesheet (open-problems.css).
+const OPEN = new Set(OPEN_PROBLEMS?.targets.map(t => t.instance_id) ?? []);
+const isOpen = inst => OPEN.has(inst.instance_id);
+const figInstances = f => (f.group === "other" ? f.scans.flatMap(s => s.slots.flatMap(x => x.members)) : f.stops.flatMap(s => s.ladder.members));
+const OP_ENERGY_FIGS = ENERGY_FIGS.map(([group, figs]) => [group, figs.filter(f => figInstances(f).some(isOpen))]).filter(([, figs]) => figs.length);
+const OP_SLIDERS = OP_ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [] : figs.map((f, k) => ({ id: `op-slide-${j}-${k}`, f }))));
+const OP_COMPUTE_AXES = COMPUTE_AXES.map(([label, figs, entry]) => [label, figs.filter(isOpen), entry]).filter(([, figs]) => figs.length);
+const OP_TAB_CSS = OPEN_PROBLEMS ? tabCss(OP_COMPUTE_AXES, OP_ENERGY_FIGS, OP_SLIDERS, "op-") : "";
+const opFigureSections = () => [energySwitcher(OP_ENERGY_FIGS, OP_SLIDERS, "op-"),
+  computeSwitcher(OP_COMPUTE_AXES, "op-", COST_FIGS.filter(isOpen).length)].join("\n");
 
 // Dark mode for an inlined figure: an attribute selector per light colour, which beats the
 // presentation attribute in the cascade. The two themes list their colours in the same
@@ -491,12 +519,13 @@ const FIG_DARK = [...FIG_COLOURS].filter(([l, d]) => l !== d)
 // fight the row cards, and four inlined figures would repeat its id, so it and <desc> are
 // dropped here and the entry's title and caption label the figure instead. Marks are
 // links but not tab stops: four hundred of them per figure would bury the page's keyboard
-// order, and the table they point to is the accessible form of the same rows.
-function figure([name, title, caption], cls = "") {
-  const file = `figures/${name}.svg`;
-  for (const v of [name, `${name}-dark`])
+// order, and the table they point to is the accessible form of the same rows. `source` is a
+// figure drawn with the page rather than read from figures/ (open_problems_figure.mjs).
+function figure([name, title, caption], cls = "", source = null) {
+  const file = source == null ? `figures/${name}.svg` : `${name} (drawn with the page)`;
+  if (source == null) for (const v of [name, `${name}-dark`])
     if (!fs.existsSync(`figures/${v}.svg`)) throw new Error(`figures/${v}.svg is missing; run the build first`);
-  const svg = fs.readFileSync(file, "utf8").trim()
+  const svg = (source ?? fs.readFileSync(file, "utf8")).trim()
     .replace(/<title id="title">[^<]*<\/title>\n<desc id="desc">[^<]*<\/desc>\n/, "")
     .replace(' aria-labelledby="title desc"', () => ` aria-label="${esc(title)}. ${esc(caption)}"`)
     .replaceAll('<a class="pt" href=', () => '<a class="pt" tabindex="-1" href=');
@@ -1220,6 +1249,7 @@ function llmsTxt() {
     "primary paper named on the row, not to this site.",
     "",
     "## Pages",
+    ...(OPEN_PROBLEMS ? openProblemsLlms(OPEN_PROBLEMS) : []),
     "- [Leaderboard](https://qmbl.org/): the accuracy and cost figures, and how to cite.",
     `- [Table](https://qmbl.org/instances/): every one of the ${summary.instances} instances, with its record and every energy.`,
     `- [Rules](${RULES}): what counts as a record, ties, provenance, objections.`,
@@ -1514,12 +1544,16 @@ tr.more figure.chart { margin: 0.4rem 0 0.8rem; }
 @media (prefers-color-scheme: dark) {
 ${FIG_DARK}
 }
-` + LOGO_CSS;
+` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS : "");
+// /open-problems/'s own rules and those of its figure switches, in open-problems.css, which only
+// that page links: every page carries the menu button, but not that page's figures.
+const OP_CSS = OPEN_PROBLEMS ? OPEN_PROBLEMS_PAGE_CSS + OP_TAB_CSS + "\n" : "";
 
 // The stylesheet's URL carries a hash of its contents. Pages serves both the page and the
 // stylesheet with a ten-minute cache, and they expire separately: a new page on an old
 // stylesheet had its new switch sections unstyled and hidden (2026-09-17).
 const CSS_VERSION = createHash("sha1").update(CSS).digest("hex").slice(0, 10);
+const OP_CSS_VERSION = createHash("sha1").update(OP_CSS).digest("hex").slice(0, 10);
 
 // ----------------------------------------------------------------------------- output
 function write(rel, content) {
@@ -1535,6 +1569,15 @@ write("instances/index.html", instancesPage());
 write("rules/index.html", redirectPage("/rules/", RULES, "Rules"));
 write("data/index.html", redirectPage("/data/", DATA, "Data"));
 write("contribute/index.html", contributePage());
+if (OPEN_PROBLEMS) {
+  const op = openProblemsPages(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
+    CITE_TITLE, DOI, CITE_YEAR: RELEASED.slice(0, 4), figureSections: opFigureSections(),
+    searchIndex, searchWords, searchMatch, SEARCH_STOP, latticeOf, sizeBand, SIZE_BANDS });
+  const opCss = `/open-problems.css?v=${OP_CSS_VERSION}`;
+  write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", ogTitle: "QMBL: Open Problems", wide: true, css: opCss, ...op.leaderboard }));
+  write("open-problems/table/index.html", page({ url: OPEN_PROBLEMS_TABLE_URL, title: "Open Problems: Table", wide: true, css: opCss, ...op.table }));
+  write("open-problems.css", OP_CSS);
+}
 write("404.html", notFoundPage());
 write("style.css", CSS);
 write("favicon.svg", faviconSvg());
@@ -1573,7 +1616,7 @@ write("api/qmbl.json", JSON.stringify({
   summary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 
-const urls = ["/", "/instances/", "/contribute/", ...instances.map(instUrl)];
+const urls = ["/", "/instances/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL] : []), ...instances.map(instUrl)];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${BUILT}</lastmod></url>`).join("\n")}
