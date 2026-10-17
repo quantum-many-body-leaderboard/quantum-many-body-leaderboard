@@ -1,0 +1,1275 @@
+                Inhomogeneous backﬂow transformations in quantum Monte Carlo
+
+                         P.  L´opez  R´ıos,  A.  Ma,  N.  D.  Drummond,  M.  D.  Towler,  and  R.  J.  Needs
+                      Theory  of  Condensed  Matter  Group,  Cavendish  Laboratory,  University  of  Cambridge,
+                                  J.  J.  Thomson  Avenue,  Cambridge  CB3  0HE,  United  Kingdom
+                                                         (Dated:  October 26, 2018)
+                  An  inhomogeneous  backﬂow  transformation  for  many-particle  wave  functions  is  presented  and
+               applied to electrons in atoms, molecules, and solids.  We report variational and diﬀusion quantum
+               Monte Carlo (VMC and DMC) energies for various systems and study the computational cost of
+               using backﬂow wave functions.  We ﬁnd that inhomogeneous backﬂow transformations can provide
+               a  substantial  increase  in  the  amount  of  correlation  energy  retrieved  within  VMC  and  DMC  cal-
+               culations.  The backﬂow transformations signiﬁcantly improve the wave functions and their nodal
+               surfaces.
+
+               PACS numbers:  02.70.Ss, 31.25.-v, 71.10.-w, 71.15.-m
+
+
+                                                         I.    INTRODUCTION
+
+  The fermion sign problem continues to preclude the application of in principle exact quantum Monte Carlo (QMC)
+methods to large systems, and so approximate QMC methods must be used instead.  Probably the most widely-used
+of  these  is  the  stable  and  eﬃcient  diﬀusion  quantum  Monte  Carlo  (DMC)  algorithm,1,2  in  which  the  fermion  sign
+problem is sidestepped through the introduction of the ﬁxed-node approximation.3 DMC can provide highly accurate
+energies for assemblies of quantum particles,  but the ﬁxed-node approximation is uncontrolled and its accuracy is
+often diﬃcult to assess.
+  The ﬁxed-node approximation3  involves constraining the nodal surface of the wave function to equal that of an
+approximate “trial” or “guiding” wave function.  The ﬁxed-node DMC energy is higher than the ground-state energy,
+becoming equal in the limit that the ﬁxed nodal surface is exact.  The dependence of the DMC energy on the quality
+of the trial wave function is often signiﬁcant in practice.  It would therefore be very useful to be able to construct trial
+wave functions with better nodal surfaces to reduce the eﬀect of the ﬁxed-node approximation.
+  Eﬀorts to construct wave functions with accurate nodal surfaces have continued since the introduction of the ﬁxed-
+node approximation. Single-determinant wave functions often provide good nodal surfaces for closed-shell systems, and
+multideterminant wave functions can do so for small open-shell systems, although the required number of determinants
+becomes excessive for large systems.  Compact pairing wave functions consisting of an antisymmetrized product of
+two-electron “geminals”4 were introduced long ago5,6 and have recently been used in QMC calculations for atoms and
+molecules.7,8 Triplet-pairing Pfaﬃan wave functions were ﬁrst used in QMC calculations for liquid  3He by Bouchaud
+and Lhuillier,9 and recently this approach has been extended by Bajdich et al.,10 who considered atomic and molecular
+systems in which both parallel- and antiparallel-spin electrons are paired.
+  Another  approach  for  improving  upon  a  single  determinant  of  one-electron  orbitals  is  to  introduce  parameters
+which allow the orbitals to depend on the positions of the other electrons.  Such a route was followed by Wigner and
+Seitz,11 who considered wave functions in which the orbitals of the up-spin electrons depend on the positions of the
+down-spin electrons, and vice versa.  This idea surfaced again much later in connection with the quantum-mechanical
+description of “backﬂow.”  Classical backﬂow is related to the ﬂow of a ﬂuid around a large impurity.  Its quantum
+analog was discussed by Feynman12 and Feynman and Cohen13 in the contexts of excitations in 4He and the eﬀective
+mass  of  a  3He  impurity  in  liquid  4He.   They  argued  that  the  energy  would  be  lowered  if  the  4He  atoms  executed
+a  ﬂow  pattern  around  the  moving  3He  impurity  which  prevented  the  atoms  overlapping  signiﬁcantly.   This  eﬀect
+was shown to correspond to the requirement that the local current of particles is conserved.  They recognized that,
+without backﬂow, the eﬀective mass of the  3He impurity would equal the bare mass, and incorporating backﬂow led
+to a substantial increase in the eﬀective mass.  It turns out that the mathematical form obtained by incorporating
+backﬂow into a single-determinant wave function is related to the wave functions considered by Wigner and Seitz.11
+  In later studies, wave functions including Jastrow factors and backﬂow-like correlations were used to study a  3He
+impurity in liquid 4He and liquid 3He within a Fermi-hypernetted chain approximation.14,15,16 Backﬂow was ﬁrst used
+in QMC calculations by Lee et  al.,17  who calculated the total energy of liquid  3He.  QMC calculations for electrons
+using Slater-Jastrow wave functions  with backﬂow  correlations were ﬁrst performed  by Kwon  et  al.18  for the  two-
+dimensional homogeneous electron gas (HEG), and later19 for the three-dimensional HEG (see also the paper by Zong
+et  al.20).  QMC calculations using Slater-Jastrow wave functions with backﬂow correlations have also been reported
+for solid and liquid hydrogen,21,22 which were the ﬁrst such applications to inhomogeneous electron systems.
+  While Jastrow factors keep electrons away from one another and greatly improve wave functions in general, they
+do not alter nodal surfaces.  Holzmann et al.21 have argued that backﬂow and three-body Jastrow correlations arise
+                                                                                                                                                     2
+
+as the next-order improvements to the standard Slater-Jastrow wave function, which consists of a Slater determinant
+multiplied by a two-body Jastrow factor.  The importance of backﬂow correlations within DMC calculations is that
+they alter the nodal surface and can therefore be used to reduce the ﬁxed-node error.
+  In  this  paper  we  introduce  parameterized  inhomogeneous  backﬂow  transformations,  and  apply  them  to  atoms,
+molecules, and extended systems.  The rest of this paper is structured as follows:  a general description of the Slater-
+Jastrow and backﬂow wave functions is given in Sec. II, an explicit form for the backﬂow displacement ﬁeld is developed
+in Sec. III, an extensive set of results is given in Sec. IV and discussed in Sec. V, and our conclusions are summarized in
+Sec. VI. Important technical information about the calculations, including the constraints on the backﬂow parameters,
+has been gathered in the appendices.  Hartree atomic units (ℏ =|e| =me = 4πϵ0 = 1) are used throughout.
+
+
+             II.    SLATER-JASTROW AND SLATER-JASTROW-BACKFLOW WAVE FUNCTIONS
+
+  The Slater-Jastrow (SJ) wave function can be written as
+
+                                                            ΨSJT (R) =eJ(R)ΨS(R),                                                                     (1)
+where R  denotes  the  set  of  electron  coordinates{ri}, eJ(R)  is  the  Jastrow  correlation  factor,  and  the  Slater  part
+ΨS(R) consists of a determinant or sum of determinants, deﬁning the nodes of ΨSJT (R).
+  Backﬂow (BF) correlations are introduced by substituting a set of  collective  coordinates X for the coordinates R
+in the Slater determinants, so that
+                                                           ΨBFT  (R) =eJ(R)ΨS(X),                                                                    (2)
+
+where each of the new coordinates is given by17,23
+
+                                                                xi = ri + ξi(R),                                                                          (3)
+where ξi is the backﬂow displacement of particle i, which depends on the conﬁguration of the whole system.
+
+
+                              III.    INHOMOGENEOUS BACKFLOW TRANSFORMATIONS
+
+  The form of the backﬂow displacement ξi in homogeneous  systems has been taken as17,18,23
+
+                                                                         Ne∑
+                                                                ξeei   =     ηijrij ,                                                                          (4)
+                                                                         j⁄=i
+where Ne  is the number of electrons and ηij  = η(rij) is a function of the interparticle distance rij.  Eq. (4) is the
+most general isotropic two-electron coordinate transformation for a homogeneous system.  A single electroni perceives
+space to be isotropic,  but when another electron j  is introduced,  the electron-electron (e-e) vector rij  becomes an
+inequivalent direction.  The e-e backﬂow displacement is taken to be along this direction, as there is no reason why a
+displacement in a speciﬁc perpendicular direction should occur.
+  In a system with nuclei a new set of directions is introduced, the electron-nucleus (e-n) vectors{riI}, and one is
+led to introduce an e-n contribution to ξi, of the form
+
+                                                                         Nn∑
+                                                                ξeni   =     µiIriI ,                                                                          (5)
+                                                                          I
+where µiI =µ(riI) and Nn is the number of nuclei.
+  We also introduce an electron-electron-nucleus (e-e-n) term to describe two-electron backﬂow displacements in the
+presence of a nearby nucleus,
+
+                                                               Ne∑  Nn∑ (ΦjI
+                                                      ξeeni    =            i  rij + ΘjIi  riI),                                                             (6)
+                                                               j⁄=i  I
+
+where ΦjIi   = ΦI(riI,rjI,rij) and ΘjIi   = ΘI(riI,rjI,rij).  Note that the vector ΦjIi  rij + ΘjIi  riI  is capable of spanning
+the plane deﬁned by ri, rj, and rI, without the need to introduce a component along the direction of rjI.  The total
+backﬂow displacement is the sum of these three components, ξi = ξeei   + ξeni   + ξeeni   .
+                                                                                                                                                    3
+
+  At large distancesη(rij) is expected to decay asr−3ij   in three dimensions19 andr−5/2ij      in two dimensions.18 However,
+for  computational  eﬃciency  and  for  compatibility  with  periodic  boundary  conditions  it  is  better  to  cut  oﬀ  the η
+function and the other backﬂow functions smoothly at some radius.  We use a simple cutoﬀ function,
+                                                                   (L−r      )C
+                                                      f(r;L) =          L        H(L−r),                                                               (7)
+
+where r  is  to  be  substituted  by  an  e-e  or  e-n  distance  as  appropriate, L  is  the  cutoﬀ  length, C  is  the  truncation
+order,57 and H  denotes the Heaviside function.  The advantages of this cutoﬀ function are, ﬁrstly, that its value can
+be computed rapidly and, secondly, that it has considerable ﬂexibility because one can choose the value of C and use
+L as an optimizable parameter.
+  Rational18 and Gaussian21 forms for homogeneous backﬂow functions have been used in previous work.  However,
+we have chosen to use natural power expansions because of the excellent results we have obtained with such expansions
+for our Jastrow factor,24 and the lack of a priori knowledge of more speciﬁc parameterizations for the inhomogeneous
+functions.  It is estimated that numerical errors in the evaluation of natural polynomials become signiﬁcant beyond
+order about 20 when using double-precision arithmetic and, although one can go to substantially larger orders using
+Chebyshev polynomials, we have not found this to be an issue in our work.
+  We have used the following polynomial expansions for ηij, µiI, ΦjIi  , and ΘjIi  ,
+
+                                                           Nη∑
+                                    ηij  = f(rij;Lη)           ckrkij,                                                                                             (8)
+                                                          k=0
+                                                            Nµ,I∑
+                                    µiI   = f(riI;Lµ,I)           dk,IrkiI,                                                                                       (9)
+                                                             k=0
+                                                                            Nen,I∑Nen,I∑Nee,I∑
+                                   ΦjIi    = f(riI;LΦ,I)f(rjI;LΦ,I)                           ϕklm,IrkiIrljIrmij,                                      (10)
+                                                                            k=0    l=0  m=0
+                                                                            Nen,I∑Nen,I∑Nee,I∑
+                                   ΘjIi    = f(riI;LΦ,I)f(rjI;LΦ,I)                           θklm,IrkiIrljIrmij,                                      (11)
+                                                                            k=0    l=0  m=0
+
+where Nη, Nµ,I, Nen,I, and Nee,I  are the expansion orders, Lη, Lµ,I, and LΦ,I, are cutoﬀ lengths, and{ck},{dk,I},
+{ϕklm,I}, and{θklm,I} are the optimizable parameters.  We allow the parameters in η, ΦI, and ΘI  to depend on the
+spins of the electron pairs, and those in µ to be spin dependent; for simplicity we have omitted such dependencies in
+the description of the functional forms above.  In periodic systems, we constrain Lη  and Lµ  to be smaller than the
+Wigner-Seitz radius LWS of the simulation cell and LΦ to be smaller than LWS/2, for computational eﬃciency.
+
+
+                                                                IV.    RESULTS
+
+  In this section we present variational quantum Monte Carlo (VMC) and DMC results obtained with our imple-
+mentation  of  backﬂow  transformations.   The casino  code25  has  been  used  for  all  of  our  QMC  calculations.   Our
+DMC algorithm is essentially as described in Ref. 26.  All DMC energies reported here have been extrapolated to zero
+time step.  We have optimized the parameters in our wave functions by minimizing the unreweighted variance of the
+energy,27 using a scheme which facilitates the optimization of parameters that modify the nodal surface.28,29
+  We have used the Jastrow correlation factor of Drummond et al.24 In our all-electron (AE) calculations, with the
+exception of those for the HEG, the orbitals were obtained from Hartree-Fock (HF) calculations using large Gaussian
+basis  sets  and  the  crystal98  code,30  and  the  cusp-correction  algorithm  of  Ref.  31  was  applied  to  each  orbital
+at  each  nucleus.   In  our  pseudopotential  (PP)  calculations  we  used  the  Dirac-Fock  Average  Relativistic  Eﬀective
+pseudopotentials of Refs. 32 and 33, the nonlocal energies being calculated within the locality approximation.34 The
+one-electron orbitals were obtained from the plane-wave PP castep code35 using the Perdew-Burke-Ernzerhof (PBE)
+generalized-gradient-approximation36  exchange-correlation  functional.   The  orbitals  were  re-expanded  in  terms  of
+“blip” functions,37 making the QMC calculations much more eﬃcient.
+  We have reported the variance of the total  local energy for our VMC calculations, σ2 =⟨ ˆH2⟩−⟨ ˆH⟩2,58 while the
+reported mean energies are either total, per electron, or per primitive cell, as we have found appropriate in each case.
+We  have  estimated  the  amount  of  correlation  energy  retrieved  in  our  calculations  by  comparing  our  energies  with
+“exact” reference data, where available.  In the case of the PP carbon atom and PP carbon dimer we have used the
+                                                                                                                                                   4
+
+estimates of the PP valence correlation energy of Ref. 38 assuming an error bar of 0.004 a.u.  as suggested by the
+author.  In the HEG we have used our BF-DMC energies as if they were “exact”, and in PP carbon diamond we have
+not estimated the amount of correlation energy retrieved.
+
+
+                                                     A.    Homogeneous electron gas
+
+  We studied three-dimensional, unpolarized HEGs consisting of 54 electrons in a simple cubic simulation cell subject
+to  periodic  boundary  conditions.   As  well  as  the  densities  of rs  =  1,  5,  10,  and  20  studied  by  Kwon  et  al.19  and
+Holzmann et al.21 using backﬂow wave functions, for completeness we studied two additional densities, rs = 0.5 and
+2.  Holzmann et al. used an analytical backﬂow form containing no variable parameters in addition to a Gaussian form
+with variable parameters.  In each case we compare our result with the corresponding lowest-energy backﬂow result
+from table II of Ref. 21.
+  We included a plane-wave term in our Jastrow factor [Eq. (28) of Ref. 24], which we found to improve the variational
+energies at all densities.  We also studied the eﬀect of including a symmetric three-electron Jastrow term, W , of the
+type used in Ref. 18, with
+
+                                                        Ne∑   Ne∑    Ne∑
+                                                 W  =                     (wijrij)· (wikrik) ,                                                       (12)
+                                                          i  j(⁄=i)k(⁄=i,j)
+
+where wij  is a function of the distance between electrons i and j, which we parameterized as
+
+                                                                               Nw∑
+                                                         wij =f(rij;Lw)            elrlij ,                                                                 (13)
+                                                                               l=0
+
+whereNw is the order of the expansion, the{el} are expansion parameters, andf is the cutoﬀ function of Eq. (7).  We
+decided to include aW  term for all densities at the Slater-Jastrow level, while we used it in conjuction with backﬂow
+only for the three lowest densities, where its eﬀect on the SJ energy was found to be statistically signiﬁcant.  We refer
+to the SJ and BF wave functions with a three-electron Jastrow term as SJ3 and BF3,  respectively.  The backﬂow
+parameters  were  allowed  to  depend  on  the  spins  of  the  electron  pairs,  while  the  parameters  in  the  three-electron
+Jastrow factors were constrained to be independent of spin, as this gave slightly better results.  The expansion orders
+Nη  and Nw  were set to 8 for all densities.  The cutoﬀ lengths Lη  and Lw  were optimized, but at all densities they
+adjusted themselves to the maximum allowed value (the Wigner-Seitz radius).  The energies and variances obtained
+are given in Table I, and the energies are illustrated in Fig. 1, which gives the percentage of the correlation energy
+retrieved at diﬀerent levels as well as the SJ and BF energies of Ref. 21.  The introduction of backﬂow increases the
+kinetic energy, but decreases the potential energy by a larger amount.  Our SJ-DMC energies are in good agreement
+with those of Holzmann et al., which of course they should be, because the SJ trial wave functions have identical nodal
+surfaces.  Our SJ-VMC calculations retrieve a higher percentage of the correlation energy than those of Holzmann
+et  al., and we believe this is mainly due to the plane-wave term in our Jastrow factor.  Our BF-VMC calculations
+consistently retrieve 99.5% of the correlation energy throughout the density range considered, while those of Holzmann
+et al. drop below 99% forrs > 5.  Our BF-DMC energies are within error bars of those of Holzmann et al.  In agreement
+with the work of Refs. 21 and 19, we found that backﬂow gives a larger energy reduction at the VMC level than the
+three-body Jastrow term W  at all densities, although W  becomes more important at large rs.
+  The  variances  of  the  VMC  energies  reported  in  Table  I  are  illustrated  in  Fig.  2.   The  lines  on  the  log-log  plot
+corresponding to our SJ and BF variances are almost parallel, indicating an almost constant ratio of the SJ to BF
+variances of about 4.  The variances of Holzmann et al. are systematically higher than ours for comparable calculations,
+and at rs = 20 our SJ variance is lower than their BF variance.59
+  The optimized homogeneous backﬂow displacement η(rij)rij  is plotted in Figs. 3 and 4, and the optimized three-
+body function wij  is shown in Fig. 5.  Holzmann  et  al.21  and Kwon  et  al.19  used identical η  functions for parallel
+and antiparallel spin pairs, whereas we have allowed them to diﬀer.  At each density, the maximum value of η(rij)rij
+for antiparallel spins is over twice as large as that for parallel spins, and occurs at smaller electron separations.  The
+backﬂow displacements for antiparallel spins are generally larger than for parallel spins, and hence antiparallel-spin
+backﬂow is much more important than parallel-spin backﬂow.  Our antiparallel-spin η function is similar to the spin-
+independent η  function  of  Kwon  et  al.,19  except  that  we  do  not  ﬁnd  an  attractive  tail  at rs  =  20.   Note  that,  to
+obey the cusp conditions, we constrain the parallel-spin η(rij) function to have zero derivative at rij = 0, while the
+antiparallel-spinη function may have a nonzero derivative:  see Appendix A 1.  This accounts for the diﬀerences in the
+behavior of the parallel- and antiparallel-spin η functions at small rij  which are visible in Figs. 3 and 4.
+                                                                                                                                                                 5
+
+
+                                 rs   Wfn. EV (a.u./elec)  σ2V (a.u.)    CEV (%) ED (a.u./elec)  CED (%)
+                                  0.5  HF       3.2659(7)       76(1)               0(3)                  -                   -
+                                       SJ        3.2236(2)         3.34(3)         94.5(5)        3.22245(9)       97.0(3)
+                                       SJ3       3.2233(2)         3.4(2)           95.1(5)                -                   -
+                                       BF       3.22132(7)       0.76(1)         99.5(2)        3.22112(4)     100.0(2)
+
+                                  1.0  HF       0.5689(4)       19.1(4)            0(2)                  -                   -
+                                       SJ        0.53211(7)       0.719(7)       94.3(3)        0.53089(9)       97.5(4)
+                                       SJ3       0.53175(7)       0.80(6)         95.3(3)                -                   -
+                                       BF       0.53009(3)       0.163(2)       99.5(2)        0.52989(4)     100.0(2)
+
+                                  2.0  HF       0.0186(2)         4.9(1)            0(1)                  -                   -
+                                       SJ  −0.01246(3)       0.147(2)       95.4(1) −0.01311(2)       97.4(1)
+                                       SJ3 −0.01252(3)       0.138(2)       95.6(1)                -                   -
+                                       BF −0.01382(2)       0.0342(6)     99.56(7) −0.013966(9)   100.00(6)
+
+                                  5.0  HF −0.05625(7)       0.76(1)           0.0(6)                -                   -
+                                       SJ  −0.07815(1)       0.0149(2)     96.09(7)              -                   -
+                                       SJ3 −0.078284(9)     0.0129(3)     96.70(6) −0.078649(7)     98.30(5)
+                                       BF3 −0.078961(5)     0.00317(6)   99.67(3) −0.079036(3)   100.00(3)
+
+                                10.0  HF −0.03884(4)       0.194(4)         0.0(5)                -                   -
+                                       SJ  −0.053927(4)     0.00236(2)   96.69(4)              -                   -
+                                       SJ3 −0.054042(4)     0.00179(3)   97.43(4) −0.054255(3)     98.80(4)
+                                       BF3 −0.054389(2)     0.00055(1)   99.65(2) −0.054443(2)   100.00(2)
+
+                                20.0  HF −0.02205(2)       0.0477(9)       0.0(4)                -                   -
+                                       SJ  −0.031767(2)     0.000377(4)  97.20(4)              -                   -
+                                       SJ3 −0.031858(1)     0.000237(2)  98.11(3) −0.031973(3)     99.26(5)
+                                       BF3 −0.0319984(8)   0.000091(1)  99.51(3) −0.032047(2)   100.00(3)
+
+TABLE I: Energies and variances for three-dimensional, unpolarized HEGs consisting of 54 electrons in a simple cubic simulation
+cell. EV and ED refer to VMC and DMC energies, respectively; CEV and CED are the percentages of the correlation energies
+retrieved at the VMC and DMC levels, respectively, and σ2V is the VMC variance.
+
+
+
+   The magnitude of our optimized three-electron Jastrow factor, represented in Fig. 5, increases monotonically with
+rs, and the maximum of 6(rijwij)2 is at aboutrij/rs = 0.4 for all densities.  This is in contrast with the behavior of the
+three-electron Jastrow factor of Kwon et al. (see Fig. 1 of Ref. 19), which changes sign atrs = 1 (our parametrization
+is not allowed to do so) and breaks its monotonicity with rs at rs = 20.  Kwon et  al. ﬁnd that the maximum of the
+plotted function is located at about rij/rs = 1.
+
+
+                                                           B.    Lithium atom and dimer
+
+                                                                   1.    AE lithium atom
+
+   Our results for the  1S ground state of the AE lithium atom are given in Table II. The SJ wave function gives a
+reasonably good VMC energy. Our backﬂow function consists of a spin-pair-dependent e-e-n term withNen =Nee = 3;
+this produces a BF-VMC energy that is within statistical error bars of the exact value.  Note that the BF-VMC, SJ-
+DMC, and BF-DMC energies are within statistical error bars of each other and are very close to the exact value.  The
+excellent performance of the BF-VMC calculation is particularly noteworthy.  The single-determinant nodal surface
+of  the  1S  ground  state  of  lithium  is  certainly  extremely  accurate  and  may  even  be  exact,  although  some  contrary
+evidence has been cited.39 It is therefore unlikely that backﬂow could improve upon the SJ-DMC energy, and indeed
+it leaves it essentially unchanged.
+                                                                                                                                                       6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1:  (Color online) Percentages of the correlation energy recovered at the (solid circles from top to bottom) BF-DMC, BF-
+VMC, SJ-DMC, and SJ-VMC levels as a function of the density parameterrs (see Table I). Zero correlation energy corresponds
+to HF-VMC and 100% to BF-DMC.  The hollow circles are the best BF-DMC, BF-VMC, SJ-DMC, and SJ-VMC energies of
+Holzmann et al.,21 in the same order.  The statistical error bars on the QMC data are smaller than the symbols except where
+error bars are shown.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2:  (Color online) VMC variances achieved at the SJ level (top solid line) and BF level (bottom solid line) as a function of
+the density parameter rs (see Table I). The hollow circles are the best SJ-VMC and BF-VMC variances of Holzmann et al.,21
+in the same order.  The statistical error bars on the QMC data are smaller than the symbols except where error bars are shown.
+                                                                                                                                                         7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3:  (Color online) Antiparallel-spin homogeneous backﬂow displacement η(rij)rij  for the HEG at the diﬀerent densities
+studied.   For  the  three  highest  densities,  the  curves  correspond  to  BF  wave  functions,  while  the  others  are  for  BF3  wave
+functions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4: (Color online) Parallel-spin homogeneous backﬂow displacementη(rij)rij for the HEG at the diﬀerent densities studied.
+For the three highest densities, the curves correspond to BF wave functions, while the others are for the BF3 wave function.
+
+
+                                                                2.    AE lithium dimer
+
+   We studied the ground state of the AE Li2 dimer at the experimental bond length of 5.051 a.u.42 We tested several
+diﬀerent backﬂow functions, obtaining the results given in Table III. The use of homogeneous backﬂow retrieves only
+                                                                                                                                                    8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5:  (Color online) Three-body contribution to the Jastrow function for the HEG due to three electrons at the vertices of
+an equilateral triangle of side rij, at the diﬀerent densities studied.  For the three highest densities, the curves correspond to
+SJ3 wave functions, while the other three are for BF3 wave functions.
+
+
+                                          Method  Wfn. Np  E (a.u.)   σ2 (a.u.)   % corr. en.
+                                          HF         -            -−7.43273              -             0.0
+
+                                          Exact     -            -−7.47806              -         100.0
+
+                                          VMC     SJ         0−7.47648(3)  0.00385(2)   96.52(8)
+                                                    BF    114−7.47801(3)  0.00241(1)   99.89(6)
+
+                                          DMC     SJ         0−7.47803(8)         -           99.9(2)
+                                                    BF    114−7.47802(6)         -           99.9(1)
+
+TABLE II: Slater-Jastrow and backﬂow results for the AE lithium atom.  The number of free backﬂow parameters, excluding
+cutoﬀ lengths, is Np.  The Hartree-Fock (HF) and exact energies were taken from Refs. 40 and 41.
+
+
+
+an additional 0.7% of the correlation energy.  A plot of the VMC energy as a function of the number of parameters
+is displayed in Fig. 6, which shows that the reduction in VMC energy is very small beyond about 150 parameters.
+Whereas backﬂow gave 99.89(6)% of the correlation energy at the VMC level for the lithium atom, for the dimer our
+best backﬂow transformation retrieves only 87.79(8)%.  At the DMC level the improvement is small:  using a SJ wave
+function we obtain 96.2(3)% of the correlation energy while with the backﬂow wave function this improves slightly [to
+97.1(3)%].  Considerably better DMC results for Li2 have been obtained using multideterminant (MD) wave functions.
+Bressanini et  al.43  obtained a DMC energy of−14.9923(2) with one conﬁguration state function (CSF), while their
+best result was−14.9952(1) with 4 CSFs.
+  The computed binding energies of Li2 are presented in Table IV. The BF-VMC, SJ-DMC, and BF-DMC energies
+of the AE lithium atom are within error bars of the exact energy, and therefore the error in the binding energy arises
+solely  from  the  Li2  energy.   Backﬂow  improves  the  VMC  and  DMC  binding  energies  of  Li2  a  little,  but  it  is  still
+somewhat short of the exact value.  The single-determinant nodal surface of Li2  is quite poor, and backﬂow is not
+very eﬀective at improving it.  Combining MD wave functions with backﬂow might yield signiﬁcant improvements in
+this case.
+                                                                                                                                                                 9
+
+
+                                   Method  Wfn. Nη Nµ Nen Nee Np  E (a.u.)   σ2 (a.u.)   % corr. en.
+                                   HF         -          -     -      -      -        -−14.871545          -             0.0
+
+                                   Exact     -          -     -      -      -        -−14.9954              -         100.0
+
+                                   VMC     SJ       -     -      -      -       0−14.9751(1)  0.0165(1)     83.6(1)
+                                              BF      0     6     0      0     14−14.9755(1)  0.01607(9)   83.9(1)
+                                              BF      8     0     0      0     17−14.9760(1)  0.01590(7)   84.3(1)
+                                              BF      0     0     2      2     16−14.9768(1)  0.01424(7)   84.9(1)
+                                              BF      0     0     2      4     44−14.9782(1)  0.01273(7)   86.15(9)
+                                              BF      0     0     2      6     72−14.9789(1)  0.0125(1)     86.65(9)
+                                              BF      0     0     3      4   156−14.9797(1)  0.01102(5)   87.33(8)
+                                              BF      0     0     4      4   308−14.9802(1)  0.01030(6)   87.71(8)
+                                              BF      0     0     4      3   230−14.9803(1)  0.01038(4)   87.79(8)
+
+                                   DMC     SJ       -     -      -      -       0−14.9907(4)         -           96.2(3)
+                                              BF      0     0     4      3   230−14.9918(4)         -           97.1(3)
+
+TABLE III: Slater-Jastrow and backﬂow results for the AE Li2 molecule.  The diﬀerent backﬂow forms have been put in order
+of decreasing energy.  The number of free backﬂow parameters, excluding cutoﬀ lengths, is Np.  The Hartree-Fock (HF) and
+exact energies were taken from Ref. 44.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               FIG. 6:  The VMC energy of AE Li2 versus the total number of parameters in the backﬂow functions.
+
+
+                                              C.    Carbon atom, carbon dimer, and diamond
+
+                                                                    1.    AE carbon atom
+
+   The 3P ground state of the AE carbon atom is a good example of a system where single-determinant wave functions
+result in large ﬁxed-node errors:  see Table V. In this case, we have tested several combinations of terms, expansion
+orders,  and  constraints  to  explore  the  possibilities  of  backﬂow  transformations.   The  VMC  data  in  Table  V,  and
+additional data, are plotted in Fig. 7, where the performance of the diﬀerent backﬂow functions used can be compared
+conveniently.   Using  only  homogeneous  backﬂow  (ﬁrst  BF-VMC  results  in  Table  V)  gives  a  very  small  reduction
+                                                                                                                                                           10
+
+
+                                                               Method  Wfn. Eb (a.u.)
+                                                               HF         -        0.0061
+
+                                                               Exact     -        0.0393
+
+                                                               VMC     SJ      0.0221(1)
+                                                                          BF    0.0243(1)
+
+                                                               DMC     SJ      0.0346(4)
+                                                                          BF    0.0358(4)
+
+TABLE  IV:  Slater-Jastrow  and  backﬂow  binding  energies  for  the  AE  Li2  molecule,  computed  using  the  best  results  from
+Tables II and III. The Hartree-Fock (HF) and exact energies were taken from Refs. 40, 41, and 44, and references therein.
+
+
+
+in energy.  It seems that inhomogeneous systems require inhomogeneous backﬂow to produce good wave functions,
+and the e-e-n term is particularly successful in providing this.  To evaluate the relative importance of the two e-e-n
+functions ΦjIi   and ΘjIi  , we performed calculations constraining the parameters in one of them to be zero.  The results
+are also given in Table V. In this case ΘjIi  , which contributes to the backﬂow displacement in the direction of riI,
+is slightly more important than ΦjIi  .  Applying both terms gives better results than using only one of them, as we
+expected.  We also tested the eﬀect of constraining the backﬂow displacement to be irrotational, which was suggested
+in Ref. 21.  The application of this constraint, which is explained in Appendix A 2, approximately halves the number
+of parameters in the backﬂow functions, but it gives very poor results for the carbon atom.
+
+                                  Method  Wfn. Nη Nµ NΦ  S   I Np  E (a.u.)  σ2 (a.u.)  % corr. en.
+                                  HF         -          -     -     -    -   -      -−37.688619         -            0.0
+
+                                  Exact     -          -     -     -    -   -      -−37.8450             -        100.0
+
+                                  VMC     SJ       -     -     -    -   -      0−37.8064(3)  0.193(2)     75.3(2)
+                                             BF      8     0     0   T  -    17−37.8089(3)  0.194(2)     76.9(2)
+                                             BF      0     6     0   T  -    10−37.8089(3)  0.184(1)     76.9(2)
+                                             BF      0     0     2   F  F   10−37.8119(3)  0.1685(8)   78.8(2)
+                                             BF      8     6     0   T  -    27−37.8126(3)  0.178(2)     79.3(2)
+                                             BF      0     0     4   T  T   35−37.8140(3)  0.171(2)     80.2(2)
+                                             BF†     0     0     3   T  F   56−37.8155(3)  0.1578(9)   81.1(2)
+                                             BF      0     0     5   T  T  121−37.8177(3)  0.153(2)     82.5(2)
+                                             BF      0     0     2   T  F   16−37.8180(3)  0.159(4)     82.7(2)
+                                             BF‡     0     0     3   T  F   58−37.8198(3)  0.144(2)     83.7(2)
+                                             BF      0     0     3   F  F   60−37.8225(3)  0.135(2)     85.5(2)
+                                             BF      0     0     4   F  F  158−37.8239(3)  0.119(6)     86.5(2)
+                                             BF      0     0     3   T  F  114−37.8246(3)  0.127(2)     87.0(2)
+                                             BF      0     6     3   T  F  124−37.8252(3)  0.122(1)     87.3(2)
+                                             BF      0     0     4   T  F  308−37.8259(3)  0.109(1)     87.8(2)
+
+                                  DMC     SJ       -     -     -    -   -      0−37.8297(2)        -          90.2(1)
+                                             BF      0     6     3   T  F  124−37.8324(1)        -          92.0(1)
+
+TABLE V: Slater-Jastrow and backﬂow results for the AE carbon atom.  The diﬀerent backﬂow forms have been put in order
+of decreasing energy.  Key: NΦ≡Nen =Nee; S indicates whether the parameters are spin and spin-pair dependent (T) or not
+(F); I indicates whether the constraints for irrotational backﬂow have been applied (T) or not (F); Np  is the number of free
+backﬂow parameters, excluding cutoﬀ lengths.  Where the† symbol is used, we constrained θklm,I  = 0;  where the‡ symbol
+appears, we constrained ϕklm,I = 0.  The Hartree-Fock (HF) and exact energies were taken from Refs. 40 and 41.
+
+
+   The most satisfactory backﬂow forms reduce the diﬀerence between the VMC and exact energies by a factor of
+about 2.  The further energy reduction from using DMC is quite small, and our BF-DMC calculation gave an energy of
+−37.8324(1) a.u., which corresponds to 92.0(1)% of the total correlation energy.  This suggests that, although backﬂow
+                                                                                                                                                  11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  7:  (Color  online)  The  VMC  energy  versus  its  variance  for  AE  carbon  (see  Table  V).  The  open  symbols  denote  that
+the  backﬂow  parameters  are  independent  of  spin,  while  the  ﬁlled  symbols  denoted  spin-dependent  parameters.   The  exact
+nonrelativistic energy is−37.8450 a.u.40,41
+
+
+improves signiﬁcantly upon the single-determinant nodal surface of the carbon atom, it misses some important features
+of  the  exact  nodal  surface.   It  is  well-known  that  the  single-determinant  nodal  surface  of  the  carbon  atom  can  be
+substantially improved by using MD trial wave functions.  Barnett et al.45 used an MD trial wave function consisting
+of 14 CSFs, and obtained a DMC energy of−37.8420(3) a.u., which corresponds to 98.1(2)% of the correlation energy.
+Glauser et  al.46  showed that the conﬁguration space of a single-determinant of HF orbitals for the  3P ground state
+carbon  atom  is  divided  into  four  nodal  pockets,60  but  more  accurate  wave  functions  indicate  that  the  exact  wave
+function has  two  nodal pockets.  It appears  that backﬂow transformations are  unable to  correct this  defect in  the
+single-determinant nodal surface.
+
+
+                                                              2.    PP carbon atom
+
+  We have also studied how backﬂow performs in systems where PPs are used.  Our results for a PP carbon atom are
+given in Table VI. The reduction in the VMC energy obtained with backﬂow is much smaller than for the AE carbon
+atom, but the corresponding energy reduction within DMC of 0.0039(1) a.u. is somewhat larger than the AE one of
+0.0027(2) a.u.  A peculiarity of this case is that the reduction in the DMC energy resulting from the use of backﬂow
+is 71% of the reduction in the VMC energy, which is the largest such percentage amongst the calculations described
+here.
+
+
+                                                              3.    PP carbon dimer
+
+  For  the  PP  carbon  dimer  we  used  the  experimental  bond  length  of  2.3622  a.u.,42  obtaining  the  results  given  in
+Table  VII.  The  carbon  dimer  is  another  example  of  a  system  in  which  MD  eﬀects  are  known  to  be  substantial.
+Backﬂow results in larger energy reductions per atom than for the isolated atom at both the VMC and DMC levels.
+The computed binding energies of C2 are presented in Table VIII. The use of backﬂow slightly improves the binding
+energy of the dimer.
+                                                                                                                                                      12
+
+
+                                            Method  Wfn. Np  E (a.u.)  σ2 (a.u.)  % corr. en.
+                                            HF         -            -−5.31663             -            0.0
+
+                                            Exact     -            -−5.420(4)            -        100(8)
+
+                                            VMC     SJ         0−5.4007(1)   0.0582(4)   81(3)
+                                                      BF    218−5.4061(1)   0.0502(6)   87(3)
+
+                                            DMC     SJ         0−5.40886(7)        -          89(4)
+                                                      BF    218−5.41273(9)        -          93(4)
+
+TABLE VI: Slater-Jastrow and backﬂow results for the PP carbon atom.  The number of free backﬂow parameters, excluding
+cutoﬀ lengths, is Np.  The exact energy was taken from Ref. 38.
+
+
+
+                                            Method  Wfn. Np  E (a.u.)  σ2 (a.u.)  % corr. en.
+                                            HF         -            -−10.652399         -           0.0
+
+                                            Exact     -            -−11.055(4)          -        100(2)
+
+                                            VMC     SJ         0−10.9870(3)  0.168(1)    83.1(9)
+                                                       BF    214−11.0173(2)  0.156(2)    91(1)
+
+                                            DMC     SJ         0−11.0237(4)        -          92(1)
+                                                       BF    214−11.0348(6)        -          95(1)
+
+TABLE VII: Slater-Jastrow and backﬂow results for the PP C2 molecule.  The number of free backﬂow parameters, excluding
+cutoﬀ lengths, is Np.  The exact energy was taken from Ref. 38.
+
+
+
+                                                             Method  Wfn. Eb (a.u.)
+                                                             HF         -        0.02896
+
+                                                             Exact     -        0.233(5)
+
+                                                             VMC     SJ      0.1856(3)
+                                                                        BF    0.2051(2)
+
+                                                             DMC     SJ      0.2060(4)
+                                                                        BF    0.2093(6)
+
+TABLE VIII: Slater-Jastrow and backﬂow binding energies for the PP C2 molecule, computed using the results from Tables VI
+and VII. The Hartree-Fock (HF) and exact energies were taken from Refs. 40, 41, and 44, and the references therein.  The data
+in Ref. 38 can be used to estimate an approximate binding energy of 0.215(6) a.u..
+
+
+
+                                                                  4.    PP diamond
+
+   We have also studied PP carbon diamond with the experimental cubic lattice constant of 6.741 a.u.,47 representing
+the  solid  by  a  2× 2× 2  supercell  containing  16  atoms  subject  to  periodic  boundary  conditions.   Diamond  is  an
+insulator with a large band gap, and therefore we expect the single-determinant nodal surface to be quite accurate.
+We parametrized our backﬂow function usingNη = 8,Nµ = 8, andNee =Nen = 2, allowing all parameters to be spin
+and spin-pair dependent.  The cutoﬀ lengths were optimized, and they went to the maximum allowed values.  The
+results in Table IX show that backﬂow gives a substantial reduction in the VMC energy of 0.0131(2) a.u. per atom
+[0.356(5) eV per atom], which is accompanied by a reduction in the variance by a factor of nearly two.  The reduction
+in the VMC energy of diamond from using backﬂow is somewhat smaller than that obtained in the dimer [0.411(5) eV
+per atom], and substantially larger than that in the atom [0.147(3) eV per atom].  This may arise from the fact that
+the backﬂow functions in diamond are quite long ranged and cover several atoms.  Backﬂow reduces the DMC energy
+of diamond by 0.0035(2) a.u. [0.095(5) eV per atom] per atom, which is a little less than in the dimer [0.15(1) eV per
+                                                                                                                                                13
+
+atom] and atom [0.106(3) eV per atom].
+
+                                            Method      Wfn. Np E (a.u./prim. cell) σ2 (a.u.)
+                                            DFT-PBE  -            -−11.368208                   -
+
+                                            VMC         SJ        0−11.3708(2)            1.51(8)
+                                                         BF     96−11.3970(3)            0.897(8)
+
+                                            DMC         SJ        0−11.40717(8)                -
+                                                         BF     96−11.4141(3)                  -
+
+TABLE IX: Slater-Jastrow and backﬂow energies per primitive cell for PP carbon diamond using a face-centered cubic cell
+containing 16 atoms.  The number of free backﬂow parameters, excluding cutoﬀ lengths, is Np.
+
+
+  We do not discuss the cohesive energy of the diamond crystal, as we would need to account for ﬁnite-size eﬀects to
+be able to compare with experimental data.  Within VMC, the energy gain per atom from using backﬂow is larger in
+the solid than in the atom, and hence the cohesive energy is substantially reduced.  Within DMC, both the solid and
+the atom present a similar energy gain per atom, and the cohesive energy is not changed signiﬁcantly.
+
+
+                                                            V.    DISCUSSION
+
+                         A.    Electron-by-electron and conﬁguration-by-conﬁguration algorithms
+
+  The additional complexity of BF wave functions compared with SJ ones leads to greater computational expense
+in QMC calculations.  One of the most costly operations in QMC calculations is the evaluation of the orbitals and
+their ﬁrst two derivatives at points in the conﬁguration space.  The evaluation of the collective coordinates involves
+some extra cost.  Furthermore, while QMC calculations with SJ wave functions require only the value, gradient, and
+Laplacian  of  each  orbital φ,  calculations  with  BF  wave  functions  also  require  cross  derivatives  such  as ∂2φ/∂x∂y,
+as explained in Ref. 18.  However, the most important complicating factor arising from backﬂow transformations is
+that  they  make  each  orbital  in  the  Slater  determinants  depend  on  the  coordinates  of  every  particle.   In  standard
+QMC algorithms with SJ wave functions one moves the electrons sequentially in what we call the electron-by-electron
+algorithm (EBEA).  Fast update algorithms are used in the EBEA to replace altered rows in the Slater determinants
+eﬃciently  and  the  accept/reject  step  is  performed  on  each  particle  separately.   However,  in  BF  calculations  each
+collective coordinate depends on every electron position and therefore the fast update algorithms used in the EBEA
+are  no  longer  appropriate,  so  that  one  must  recalculate  the  determinants  at  each  step  using  LU  decomposition.
+Nevertheless, the implementation of the EBEA for backﬂow wave functions can take advantage of other optimizations
+to make the algorithm more eﬃcient, such as buﬀering the separate contributions to the collective coordinates, which
+we have exploited as far as possible.
+  In previous fermion backﬂow calculations18,19,21 the electrons have all been moved together and a single accept/reject
+step has been performed, in what we call the conﬁguration-by-conﬁguration algorithm (CBCA).  We have compared
+the eﬃciency of the EBEA and CBCA.  The relative eﬃciency of the EBEA and CBCA depends on the computational
+costs of moving the electrons and the correlation time of the local energies, which is proportional to the number of
+moves of all the electrons required before the local energies are uncorrelated.  Let A and B be two calculations for the
+same system, identical except for the use of diﬀerent sampling algorithms.  We deﬁne the  relative  eﬃciency γ  of A
+and B as
+
+                                                              γ(A, B) = tAσ2AtBσ2B ,                                                                        (14)
+
+wheret is the CPU time andσ is the standard error in the mean energy.48 γ represents the ratio of the time required
+to achieve a ﬁxed error in the mean energy in calculation A to that required in calculation B, and is hence appropriate
+for comparing the eﬃciency of the two algorithms.
+  In Table X we report results for the systems studied in this paper.  For each system, the EBEA and CBCA time
+steps were chosen so that the same proportion of proposed moves were accepted:  in VMC the target acceptance ratio
+was 50%,  which corresponds to fairly eﬃcient sampling,  and in DMC it was around 99.5%.  The correlation times
+for the CBCA are considerably longer than for the EBEA.  The ratio of the correlation time of the CBCA to that
+of the EBEA (the “correlation time ratio” or CTR) appears to increase roughly linearly with the number of atoms
+                                                                                                                                                 14
+
+(for example, compare the AE Li atom and Li2 molecule, and the PP C atom, C2 molecule, and diamond), or with
+the number of electrons. γ(CBCA, EBEA) is larger than unity in all cases except the BF-VMC calculation of lithium
+atom, so the EBEA is generally found to be more eﬃcient than the CBCA. γ(CBCA, EBEA) is larger for SJ wave
+functions than for BF ones because for SJ wave functions and the EBEA one uses fast update algorithms.
+
+                                               System       Ne  Wfn  CTR. γVMC γDMC
+                                               HEG (rs = 1.0)    54     SJ    70    44.0    7.5
+                                                                          BF            34.0    1.2
+
+                                               AE Li atom           3     SJ     9       4.6    1.8
+                                                                          BF     1       0.43  1.9
+                                               AE Li2 molecule    6     SJ    15    15.4    5.0
+                                                                          BF              9.9    3.8
+
+                                               AE C atom            6     SJ     9       5.1    7.9
+                                                                          BF     3       2.4    3.7
+                                               PP C atom            4     SJ     3       3.3    3.7
+                                                                          BF     2       2.3    1.3
+                                               PP C2 molecule     8     SJ    10      6.9    3.5
+                                                                          BF              6.9    1.5
+                                               PP C diamond     64     SJ    80    99.0        -
+                                               (2× 2× 2)                   BF            39.0        -
+
+TABLE X: Comparison of the EBEA and CBCA for SJ and BF wave functions.  Key: Ne is the number of electrons; “CTR”
+is the ratio of the correlation time in the CBCA to that in the EBEA; γ  is γ(CBCA,EBEA), as deﬁned in Eq. (14).  Where
+a separate “CTR” for the BF wave function has not been reported, it is because it was found to equal that of the SJ wave
+function.
+
+
+  Apart  from  the  tests  reported  in  this  section,  all  the  VMC  and  DMC  results  reported  in  this  paper  have  been
+obtained using the EBEA.
+
+
+                                      B.    Computational expense of backﬂow calculations
+
+  We now investigate the relative cost of BF and SJ calculations.  The additional computational expense of each step
+in a BF calculation is oﬀset by the fact that BF wave functions are generally more accurate than SJ ones, so that the
+variance of the energy is smaller, and consequently the number of statistically independent local energies required to
+achieve a given error bar in the mean energy is also smaller.
+  Let A and B be two calculations for the same system, identical except for the use of diﬀerent wave functions.  We
+deﬁne the time  ratio  as τ(A, B) = tA/tB, the squared-error  ratio  as ϵ(A, B) = σ2A/σ2B, and the relative  eﬃciency  as
+γ(A, B) =τ(A, B)ϵ(A, B), wheret is the CPU time andσ is the standard error in the mean energy. τ(A, B) represents
+the relative expense per move of calculation A with respect to calculation B or, equivalently, the relative expense of
+generating a ﬁxed number of conﬁgurations.  The latter is relevant to the wave-function optimization procedure, as
+the number of conﬁgurations used should, if anything, increase with the number of parameters in the wave function.
+γ(A, B) measures the relative ability of calculation A to produce a total energy to a desired degree of certainty with
+respect to B.
+  In Table XI we compile the BF-to-SJ ratios τ, ϵ, and γ  for each calculation.  For the HEG at rs = 20 we report
+BF3-to-SJ3 ratios instead.  The performance of backﬂow in the HEG is impressive:  backﬂow not only improves the
+energies but also makes the calculations less costly!
+  The lithium atom is another example of improved eﬃciency.  According to Table II, the SJ-DMC and BF-DMC
+energies  are  equal,  so  it  does  not  seem  advantageous  to  use  backﬂow  at  all  in  this  system.   However,  due  to  the
+BF-VMC energy being so close to the BF-DMC value, the variance of the BF-DMC run is enormously lowered and
+the CPU time is reduced to 25% of the time taken by the SJ-DMC run.61
+  In all cases except PP diamond, γ is less than 3 in VMC, and 6 in DMC.  However, the crystalline PP calculations
+become signiﬁcantly more expensive when backﬂow is used.  A great part of this increase is due to the computation
+of the nonlocal PP energy, which involves several evaluations of the wave function (12, in this case) for each electron
+and each ion, every time the local energy is computed.
+                                                                                                                                                 15
+
+
+                                               System       Ne  Method  τ   ϵ   γ
+                                               HEG (rs = 1.0)    54   VMC     2.9  0.18  0.52
+                                                                          DMC     4.9  0.15  0.75
+                                               HEG (rs = 20.0)  54   VMC     1.4  0.48  0.67
+                                                                          DMC     2.0  0.15  0.28
+
+                                               AE Li atom            3   VMC     2.3  0.52  1.2
+                                                                          DMC     4.3  0.06  0.25
+                                               AE Li2 molecule     6   VMC     3.9  0.71  2.8
+                                                                          DMC     8.3  0.71  5.9
+
+                                               AE C atom            6   VMC     3.5  0.69  2.4
+                                                                          DMC     5.9  0.41  2.4
+                                               PP C atom             4   VMC     3.1  0.79  2.4
+                                                                          DMC     2.8  0.73  2.1
+                                               PP C2 molecule     8   VMC     3.9  0.65  2.5
+                                                                          DMC     3.3  0.47  1.6
+                                               PP C diamond     64   VMC   27.0  0.31  8.3
+                                               (2× 2× 2)                   DMC      -       -       -
+
+TABLE XI: Data from the timing tests performed on diﬀerent systems.  Key: Ne  is the number of electrons; τ, ϵ, and γ  are
+τ(BF,SJ), ϵ(BF,SJ), and γ(BF,SJ), as deﬁned in the text.
+
+
+
+                                                         C.    Backﬂow and nodes
+
+  HF nodes have been compared with either exact or very accurate nodes in a number of studies.39,43,46,51,52 It has
+been found that the HF wave function often has too many nodal pockets for the ground states of atoms with four or
+more electrons.  It is conceivable that coordinate transformations could modify the number of nodal pockets of a wave
+function.  However, we believe this to be unlikely for the backﬂow transformation presented in this paper, because
+this would require the backﬂow displacement ﬁeld to be discontinuous at very speciﬁc conﬁgurations, or exhibit other
+unusual features. The development of a general backﬂow transformation with the appropriate discontinuities to correct
+HF nodes, which we have not attempted, seems likely to be a tremendously diﬃcult task.
+  We  now  illustrate  graphically  how  our  backﬂow  transformations  changes  nodal  surfaces.   Note  that  the  ﬁgures
+described below are single projections of high-dimensional nodal surfaces, from which almost no useful conclusions
+regarding the full topology of the nodes can be extracted.  Two-dimensional projections of the HF and BF nodes for
+a two-dimensional HEG are depicted in Fig. 8 at two diﬀerent densities.  The eﬀect of backﬂow on the nodes is much
+more pronounced for the low-density HEG.  For an unpolarized system, the nodal changes should be larger than those
+seen in Fig. 8 at all densities.  Some regions of these plots suggest that the displacement of the nodes due to backﬂow
+is largest at points where the curvature of the nodal surface is large, away from electron-electron coalescences.  There
+are a number of avoided crossings in Fig. 8 (3 at rs = 0.5, and 6 atrs = 10) whose connectivity (in the projection) is
+modiﬁed by backﬂow.
+  Three-dimensional projections of the HF and BF nodes of the AE carbon atom are compared in Fig. 9.  The nodes
+are substantially modiﬁed by the introduction of backﬂow.  New nodal regions appear in this projection because the
+electron being moved “pushes” the other electrons (via the backﬂow transformation) through the nodal surface of the
+HF wave function.
+
+
+                                                          VI.    CONCLUSIONS
+
+  We have devised an inhomogeneous backﬂow transformation for systems consisting of electrons and either nuclei
+or ions represented by pseudopotentials.  We have applied our backﬂow transformation to single-determinant Slater-
+Jastrow  wave  functions  for  the  HEG  and  for  atomic,  molecular,  and  solid  systems.   In  each  case  backﬂow  gives  a
+substantial reduction in the VMC energy, and a smaller reduction in the DMC energy.
+  The  homogeneous  backﬂow  transformation  reduces  the  variance  of  the  VMC  energy  of  the  HEG  by  a  factor  of
+about 4, which is the largest such factor we have encountered, and we believe that our backﬂow wave functions for the
+                                                                                                                                                16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  (a) Nodes in a 2D HEG at rs = 0.5.                                      (b) Nodes in a 2D HEG at rs = 10.
+
+
+
+FIG. 8: (Color online) Nodes encountered when moving one of the electrons of a two-dimensional HEG of 101 like-spin electrons
+at two diﬀerent densities.  The HF and BF nodes are in black and orange, respectively.  The green circles indicate the positions
+of the remaining 100 electrons, at which the nodes are required to remain ﬁxed.  The backﬂow wave functions were obtained by
+variance minimization; the energy reductions from SJ-VMC to BF-VMC at rs = 0.5 and 10 were 0.0007(1) a.u./electron and
+0.00005(1) a.u./electron, respectively.
+
+
+HEG are very accurate.  VMC retrieves more than 99.5% of the DMC correlation energy in the density range studied
+(rs = 0.5–20).  The eﬀects of backﬂow on the nodes increase with rs, even though the additional percentage of the
+correlation energy retrieved in VMC decreases with rs, implying that the energies of dilute HEGs are less sensitive
+to the nodal structure of the trial wave function than those of denser systems.
+  Although backﬂow works very well in the HEG, as previous studies have already concluded, we ﬁnd that purely
+homogeneous  backﬂow  transformations  give  poor  results  when  atoms  are  present,  as  we  demonstrated  for  the  AE
+lithium  dimer  and  the  AE  carbon  atom.   However,  in  these  cases  inhomogeneous  backﬂow  transformations  can
+improve the wave functions substantially.
+  For  the  AE  lithium  atom  the  HF  nodal  surface  of  the  SJ  wave  function  is  essentially  exact.   Although  in  this
+case  backﬂow  cannot  improve  the  DMC  energy,  it  gives  a  very  accurate  VMC  energy.   This  shows  that  backﬂow
+transformations can improve the wave function away from the nodes as well as improving the nodal surface itself.  The
+quality of the SJ and BF wave functions for the AE lithium dimer are much lower than for the atom, and consequently
+the binding energy of the dimer is underestimated.  The wave function and nodal surface of the AE lithium dimer
+can be substantially improved by using several determinants,43 but it appears that only modest improvements can be
+obtained using backﬂow.
+  Backﬂow reduces the VMC energy of the AE carbon atom by about 49% of the correlation energy missing at the
+SJ-VMC  level,  but  at  the  DMC  level  the  improvement  is  smaller;  the  BF-DMC  energy  is  only  18%  closer  to  the
+exact value than SJ-DMC.  Backﬂow makes a more signiﬁcant improvement to the DMC energy of a PP carbon atom
+than  the  AE  carbon  atom.   The  PP  and  AE  carbon  atoms  are  also  cases  where  substantial  improvements  to  the
+wave functions can be obtained by using several determinants.  This indicates that the SJ nodal surfaces of these two
+systems need a more drastic correction than backﬂow transformations can provide.
+  When the initial nodal surface is reasonably accurate, backﬂow does an excellent job in improving the VMC energy
+and  correcting  the  remaining  errors  in  the  nodal  surface,  as  was  seen  in  our  study  of  the  HEG  and  AE  lithium.
+However, when the initial nodal surface is intrinsically poor, as is the case, for example, with the HF nodal surfaces
+of the carbon atom and dimer,  backﬂow is apparently incapable of making the gross changes to the nodal surface
+required to correct the ﬂaws, although it normally lowers the VMC and DMC energies somewhat.  We do not believe
+that our backﬂow transformation is capable of changing the number of nodal pockets of the starting wave function.
+  The cost of using BF wave functions can be substantial, but we have given evidence that the expense relative to that
+of using SJ wave functions increases smoothly with the number of atoms in the system.  Backﬂow transformations, like
+                                                                                                                                               17
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      (a) HF nodes of a carbon atom.                             (b) BF nodes of a carbon atom.
+
+
+FIG. 9: (Color online) HF and BF nodes encountered when moving one of the (majority spin) up-spin electrons of an AE carbon
+atom.  The blue circle corresponds to the position of the nucleus, the red upward-pointing triangles indicate the positions of
+the remaining up-spin electrons and the green downward-pointing triangles indicate the positions of the down-spin ones.  The
+HF node consists of a (seemingly) inﬁnite sheet with a bubble attached to it, which contains the nucleus.  Backﬂow slightly
+modiﬁes this node, and adds three large lobes (detached from one another; all intersect the HF node) and a small bubble next
+to a down-spin electron.
+
+
+Jastrow factors and unlike multideterminant expansions, are compact parametrizations, meaning that the number of
+parameters required to retrieve a given fraction of the correlation energy increases only slowly with system size.  This
+can be seen by comparing the number of backﬂow parameters that we have used and the energies we have obtained for
+PP carbon atom, dimer, and diamond.  We have found that it is much more eﬃcient to move electrons one at a time
+(the EBEA) than to move all the electrons at once (the CBCA), as has been done in previous backﬂow calculations.
+The reason for this is that the correlation time of the energy is considerably shorter with the EBEA.  It is important
+to use the EBEA for large systems, as the CBCA-to-EBEA ratio of correlation times seems to increase linearly with
+the number of electrons.
+  BF-VMC energies are normally signiﬁcantly lower than SJ-VMC ones, and therefore BF-VMC might be a useful
+alternative  to  a  (normally  more  expensive)  SJ-DMC  calculation.   The  use  of  more  accurate  trial  wave  functions
+improves  the  statistical  eﬃciency  of  VMC  and  DMC  calculations.   The  variance  of  the  local  energies  encountered
+in a DMC calculation is approximately proportional to the error in the VMC energy, and when backﬂow leads to a
+signiﬁcant reduction in the VMC energy it also improves the statistical eﬃciency of DMC calculations, even when
+backﬂow improves the DMC energy only slightly.  The improved trial wave functions could also be useful in DMC
+calculations  of  quantities  other  than  the  energy,  which  are  normally  more  diﬃcult  to  obtain  accurately  than  the
+energy.
+  Backﬂow would appear to give signiﬁcant improvements in trial wave functions for a wide variety of systems, in-
+cluding various diﬀerent atoms, and small and large systems.  In the present work, we have applied the inhomogeneous
+backﬂow transformation to single-determinant Slater-Jastrow wave functions only, but it can be combined with multi-
+determinant wave functions, and we will report on such calculations elsewhere.53 It can also be combined with pairing
+wave functions.54 We believe that inhomogeneous backﬂow transformations will play an important role in improving
+trial wave functions for use in VMC and DMC calculations.
+                                                                                                                                              18
+
+                                                   VII.    ACKNOWLEDGMENTS
+
+  Financial  support  has  been  provided  by  the  Engineering  and  Physical  Sciences  Research  Council  of  the  United
+Kingdom.  P.L.R. acknowledges the ﬁnancial support provided through the European Community’s Human Potential
+Programme  under  contract  HPRN-CT-2002-00298,  RTN  “Photon-Mediated  Phenomena  in  Semiconductor  Nanos-
+tructures.”  N.D.D. acknowledges ﬁnancial support from Jesus College, Cambridge.  M.D.T. acknowledges ﬁnancial
+support from the Royal Society.  Computer resources have been provided by the Cambridge-Cranﬁeld High Perfor-
+mance Computing Facility.
+
+
+                       APPENDIX A: CONSTRAINTS ON THE BACKFLOW PARAMETERS
+
+                                                           1.    Cusp conditions
+
+  The  Kato  cusp  conditions55,56  (KCC)  are  enforced  so  that  the  local  energy  is  ﬁnite  when  two  electrons  or  an
+electron and a nucleus are coincident.  For SJ wave functions it is common practice to impose the electron-electron
+KCC (EKCC) by constraining the parameters in the Jastrow function,  and the electron-nucleus KCC (NKCC) by
+constraining the orbitals in the Slater determinant.  The backﬂow transformation can alter the nature of the cusps,
+but  we  have  chosen  to  constrain  the  backﬂow  parameters  so  that  they  do  not  modify  the  KCC  as  applied  to  the
+Slater-Jastrow wave function.62
+  Let i  and j  be  two  diﬀerent  electrons  in  the  system.   To  satisfy  the  EKCC,  we  require  that  the  total  backﬂow
+displacement  ξi, has a well-deﬁned gradient (i.e. it should be cuspless) when rij→ 0 if i and j  are distinguishable
+particles, and have zero gradient whenrij→ 0 ifi andj are indistinguishable.  Thus, the e-e term is aﬀected by these
+constraints only if i and j are like-spin electrons, in which case the EKCC are satisﬁed if Lηc1 =Cc0.
+  Let I be a nucleus in the system.  To satisfy the NKCC, we require that the total backﬂow displacement, ξi, has a
+well-deﬁned gradient when riI→ 0, and that it is zero when riI→ 0 if I  is an AE atom.  The NKCC are satisﬁed if
+Lµ,Id1,I =Cd0,I  for all I, and in addition, d0,I = 0, if I is an AE atom.
+  The constraints on the e-e-n functions, some of which only apply to those functions centered on AE atoms, are as
+follows.  (We omit the I index in the parameters for clarity.)
+    • There are 3 (Nee +Nen + 1) constraints from the NKCC,
+
+           (l+m=α)∑                             (k+m=α)∑                               (k+m=α)∑
+                     (Cϕ0lm−LΦϕ1lm) =                      (Cϕk0m−LΦϕk1m) =                       (Cθk0m−LΦθk1m) = 0 ∀ α.     (A1)
+              l,m                                  k,m                                    k,m
+
+    • There are 2Nen + 1 constraints from the EKCC,
+
+                                                              (k+l=α)∑
+                                                                       θkl1 = 0 ∀ α,                                                              (A2)
+                                                                 k,l
+       and 2Nen + 1 extra constraints for like-spin electron pairs,
+
+                                                              (k+l=α)∑
+                                                                       ϕkl1 = 0 ∀ α.                                                              (A3)
+                                                                 k,l
+
+    • [AE only] There are 4 (Nee +Nen) + 2 constraints on ϕklm,
+
+                            (l+m=α)∑            (l+m=α)∑              (k+m=α)∑             (k+m=α)∑
+                                      ϕ0lm =              mϕ0lm =               ϕk0m =               mϕk0m = 0 ∀ α.                   (A4)
+                               l,m                 l,m                   k,m                  k,m
+
+    • [AE only] There are 3 (Nee +Nen) + 2 constraints on θklm,
+
+                                       (l+m=α)∑           (l+m=α)∑              (k+m=α)∑
+                                                 θ0lm =             mθ0lm =               mθk0m = 0 ∀ α.                                 (A5)
+                                          l,m                l,m                   k,m
+                                                                                                                                               19
+
+  These constraints form an indeterminate system of homogeneous algebraic linear equations for the e-e-n parameters.
+Hence, a subset of the parameters can be put in terms of the rest.  This subset can be determined from the “free”
+parameters  by  putting  the  constraints  in  matrix  form  and  using  Gaussian  elimination.   This  procedure  is  the  one
+described in Ref. 24, where it is applied to the parameters in the e-e-n term of the Jastrow factor.
+
+
+                                              2.    Constraints for irrotational backﬂow
+
+  In the derivation of homogeneous backﬂow in Ref. 21 it was suggested that the backﬂow displacement should satisfy
+ξi  =∇iY ,  where Y  = Y (R) is an object called the  backﬂow  potential.  This equation is already satisﬁed by both
+the  e-e  and  e-n  terms,  by  deﬁnition,  and  it  can  be  imposed  on  the  e-e-n  functions  by  using  an  appropriate  set  of
+constraints.  From∇i× ξi = 0, it follows that
+                                                [                   ]              [                   ]
+                                       rij ∂∂riI  ΦjIi f(riI;LΦ,I)     =riI ∂∂rij    ΘjIi f(riI;LΦ,I)     ,                                          (A6)
+
+for all i, j, and I, and all rij, riI, and rjI.  For C > 0, this results in the equation
+
+                (C +k)ϕk,l,m−1−LΦ (k + 1)ϕk+1,l,m−1− (m + 1)θk−2,l,m+1 +LΦ (m + 1)θk−1,l,m+1 = 0,            (A7)
+
+while for C = 0,
+
+                                             (k + 1)ϕk+1,l,m−1− (m + 1)θk−1,l,m+1 = 0.                                                 (A8)
+
+In both cases, 0≤k≤Nen + 2, 0≤l≤Nen, and 0≤m≤Nee + 1, and parameters with indices out of the allowed
+range are to be taken as equal to zero.  The I index has been omitted for clarity.
+  The application of these constraints results in a reduction in the number of free parameters by more than one half,
+as one would expect, because an equivalent backﬂow displacement would be obtained by parameterizing the scalar
+ﬁeld Y  and computing its gradient, whereas we use two scalar ﬁelds in the full e-e-n term.
+
+
+                 APPENDIX B: ZEROING THE BACKFLOW DISPLACEMENT AT AE ATOMS
+
+  When AE atoms are present, the NKCC cannot be fulﬁlled unless the backﬂow displacement at the nuclear position
+is zero. This can be obtained by applying smooth cutoﬀs around such atoms. In this scheme, an artiﬁcial multiplicative
+cutoﬀ function g(riI) is applied to all contributions to the backﬂow displacement of particle i that do not depend on
+the distance riI  to the AE atom I.  This includes the homogeneous backﬂow displacement and the inhomogeneous
+contributions centered on each atom J⁄=I.
+  The g(riI) function must go to zero at riI→ 0 and become unity when riI  is equal to or greater than a threshold
+Lg,I.  For the local energy to be well-deﬁned,  we require that g(riI) and its ﬁrst two derivatives be continuous at
+riI =Lg,I, and to fulﬁll the NKCC correctly, g(riI) and its ﬁrst derivative must go to zero at riI = 0.  The simplest
+g(riI) obeying these conditions is the fourth-order polynomial,
+                                                     ( riI   )2[         ( riI   )       ( riI   )2]
+                                          g(riI) =     Lg,I       6− 8      Lg,I    + 3    Lg,I        ,                                              (B1)
+
+
+which we have used in our calculations.  Although it is perfectly possible to optimize the Lg,I,  we have used ﬁxed
+values for simplicity:  1 a.u. in the AE atoms and about half the interatomic distance in the AE Li2 molecule.
+
+
+
+
+
+
+
+ 1  D. M. Ceperley and B. J. Alder, Phys. Rev. Lett. 45, 566 (1980).
+ 2  W. M. C. Foulkes, L. Mit´as, R. J. Needs, and G. Rajagopal, Rev. Mod. Phys. 73, 33 (2001).
+ 3  J. B. Anderson, J. Chem. Phys. 63, 1499 (1975).
+ 4  Two-electron pairing functions were named “geminals” by H. Shull, J. Chem. Phys. 30, 1405 (1959), to distinguish them
+   from one-electron orbitals.
+ 5  V. A. Fock, Dokl. Akad. Nauk. SSSR 73, 735 (1950).
+ 6  A. C. Hurley, J. Lennard-Jones, and J. A. Pople, Proc. Roy. Soc. (London) A220, 446 (1953).
+ 7  M. Casula and S. Sorella, J. Chem. Phys. 119, 6500 (2003).
+                                                                                                                                                       20
+
+
+ 8  M. Casula, C. Attaccalite, and S. Sorella, J. Chem. Phys. 121, 7110 (2004).
+ 9  J. P. Bouchaud and C. Lhuillier, Europhys. Lett. 3, 1273 (1987).
+10  M. Bajdich, L. Mitas, G. Drobny, L. K. Wagner, and K. E. Schmidt, Phys. Rev. Lett. 96, 130201 (2006).
+11  E. Wigner and F. Seitz, Phys. Rev. 46, 509 (1934).
+12  R. P. Feynman, Phys. Rev. 94, 262 (1954).
+13  R. P. Feynman and M. Cohen, Phys. Rev. 102, 1189 (1956).
+14  V. R. Pandharipande and N. Itoh, Phys. Rev. A 8, 2564 (1973).
+15  K. E. Schmidt and V. R. Pandharipande, Phys. Rev. B 19, 2504 (1979).
+16  E. Manousakis, S. Fantoni, V. R. Pandharipande, and Q. N. Usmani, Phys. Rev. B 28, 3770 (1983).
+17  M. A. Lee, K. E. Schmidt, M. H. Kalos, and G. V. Chester, Phys. Rev. Lett. 46, 728 (1981).
+18  Y. Kwon, D. M. Ceperley, and R. M. Martin, Phys. Rev. B 48, 12037 (1993).
+19  Y. Kwon, D. M. Ceperley, and R. M. Martin, Phys. Rev. B 58, 6800 (1998).
+20  F. H. Zong, C. Lin, and D. M. Ceperley, Phys. Rev. E 66, 036703 (2002).
+21  M. Holzmann, D. M. Ceperley, C. Pierleoni, and K. Esler, Phys. Rev. E 68, 046707 (2003).
+22  C. Pierleoni, D. M. Ceperley, and M. Holzmann, Phys. Rev. Lett. 93, 146402 (2004).
+23  K. E. Schmidt, M. A. Lee, M. H. Kalos, and G. V. Chester, Phys. Rev. Lett. 47, 807 (1981).
+24  N. D. Drummond, M. D. Towler, and R. J. Needs, Phys. Rev. B 70, 235119 (2004).
+25  R. J. Needs, M. D. Towler, N. D. Drummond, and P. L´opez R´ıos, casino User’s guide Version 2.0.0 (2006).
+26  C. J. Umrigar, M. P. Nightingale, and K. J. Runge, J. Chem. Phys. 99, 2865 (1993).
+27  C. J. Umrigar, K. G. Wilson, and J. W. Wilkins, Phys. Rev. Lett. 60, 1719 (1988).
+28  P. R. C. Kent, R. J. Needs, and G. Rajagopal, Phys. Rev. B 59, 12344 (1999).
+29  N. D. Drummond and R. J. Needs, Phys. Rev. B 72, 085124 (2005).
+30  V. R. Saunders, R. Dovesi, C. Roetti, M. Caus`a, N. M. Harrison, R. Orlando, and C. M. Zicovich-Wilson, crystal98 User’s
+   Manual, Universit`a di Torino, Torino (1998).
+31  A. Ma, N. D. Drummond, M. D. Towler, and R. J. Needs, J. Chem. Phys. 122, 224322 (2005).
+32  J. R. Trail and R. J. Needs, J. Chem. Phys. 122, 014112 (2005).
+33  J. R. Trail and R. J. Needs, J. Chem. Phys. 122, 174109 (2005).
+34  L. Mitas, E. L. Shirley, and D. M. Ceperley, J. Chem. Phys. 95, 3467 (1991).
+35  M. D. Segall, P. J. D. Lindan, M. I. J. Probert, C. J. Pickard, P. J. Hasnip, S. J. Clark, and M. C. Payne, J. Phys. Condens.
+   Matt. 14, 2717 (2002).
+36  J. P. Perdew, K. Burke, and M. Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996).
+37  D. Alf`e and M. J. Gillan, Phys. Rev. B 70, 161101(R) (2004).
+38  M. Dolg, Chem. Phys. Lett. 250, 75 (1996).
+39  D. Bressanini, D. M. Ceperley, and P. J. Reynolds, in Recent Advances in Quantum Monte Carlo Methods, edited by W. A.
+   Lester, Jr., S. M. Rothstein, and S. Tanaka (World Scientiﬁc, Singapore, 2002), 2nd ed.
+40  E. R. Davidson, S. A. Hagstrom, S. J. Chakravorty, V. M. Umar, and C. F. Fischer, Phys. Rev. A 44, 7071 (1991).
+41  S. J. Chakravorty, S. R. Gwaltney, E. R. Davidson, F. A. Parpia, and C. F. Fischer, Phys. Rev. A 47, 3649 (1993).
+42  P. E. Cade and A. C. Wahl, At. Data Nucl. Data Tables 13, 340 (1974).
+43  D. Bressanini, G. Morosi, and S. Tarasco, J. Chem. Phys. 123, 204109 (2005).
+44  C. Filippi and C. J. Umrigar, J. Chem. Phys. 105, 213 (1996).
+45  R. N. Barnett, Z. Sun, and W. A. Lester, Jr., J. Chem. Phys. 114, 2013 (2000).
+46  W. A. Glauser, W. R. Brown, W. A. Lester, Jr., D. Bressanini, B. L. Hammond, and M. L. Koszykowski, J. Chem. Phys.
+   97, 9200 (1992).
+47  T. Sato, K. Ohashi, T. Sudoh, K. Haruna, and H. Maeta, Phys. Rev. B 65, 092102 (2002).
+48  H. Flyvbjerg and H. G. Petersen, J. Chem. Phys. 91, 461 (1989).
+49  D. M. Ceperley, J. Stat. Phys. 43, 815 (1986).
+50  A. Ma, N. D. Drummond, M. D. Towler, and R. J. Needs, Phys. Rev. E 71, 066704 (2005).
+51  D. Bressanini and P. J. Reynolds, Phys. Rev. Lett. 95, 110201 (2005).
+52  M. Bajdich, L. Mitas, G. Drobny, and L. K. Wagner, Phys. Rev. B 72, 075131 (2005).
+53  J. R. Trail et al., unpublished.
+54  P. L´opez R´ıos et al., unpublished.
+55  T. Kato, Commun. Pure Appl. Math. 10, 151 (1957).
+56  R. T. Pack and W. B. Brown, J. Chem. Phys. 45, 556 (1966).
+57  TheC-th derivative of the wave function will be discontinuous atr =L. In particular, its Laplacian, used in the computation
+   of the kinetic energy, is discontinuous at r =L if C < 3. In this work we have only considered C = 2 and C = 3.
+58   ˆH is the Hamiltonian operator of the system, and the total local energy is deﬁned as EL = Ψ−1
+59  The VMC variances for the HEG atrs = 1 reported in Table II of Kwon et al.19 have been conﬁrmed by the authors to be inT   ˆHΨT .
+
+   error; the true values are a factor of 10 smaller. These data were later used in Table II of Holzmann et al.,21 who corrected
+   the mistakes, except for the variance of the SJ calculation. We have compared our data with the corrected values.
+60  Two conﬁgurations are in the same nodal pocket if there exists a continuous path between the two along which the wave
+   function does not change sign and is not equal to zero. Nodal pockets are bounded by nodal surfaces, which determine the
+   shape and number of the former.
+61  The variance of the local energies encountered during a DMC calculation is approximately proportional toEVMC−EDMC.49,50
+62  In principle, it would be possible to apply the KCC to the Jastrow and backﬂow parameters together. However, the resulting
+                                                                                                                                                    21
+
+constraints are conﬁguration-dependent and involve orbital derivatives, making this approach diﬃcult.

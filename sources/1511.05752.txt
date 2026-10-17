@@ -1,0 +1,872 @@
+Developments in Stochastic Coupled Cluster Theory:  The initiator approximation and
+                                       application to the Uniform Electron Gas
+
+                                                              James  S.  Spencer
+                                            Department  of  Physics,  Imperial  College  London,
+                                      Exhibition  Road,  London,  SW7  2AZ,  United  Kingdom  and
+                                           Department  of  Materials,  Imperial  College  London,
+                                         Exhibition  Road,  London,  SW7  2AZ,  United  Kingdom
+
+                                                             Alex  J.  W.  Thom∗
+                  University  Chemical  Laboratory,  Lensﬁeld  Road,  Cambridge  CB2  1EW,  United  Kingdom  and
+                                          Department  of  Chemistry,  Imperial  College  London,
+                                         Exhibition  Road,  London,  SW7  2AZ,  United  Kingdom
+                                                             (Dated:  May 7, 2018)
+                  We describe further details of the Stochastic Coupled Cluster method and a diagnostic of such
+                calculations, the shoulder height, akin to the plateau found in Full Conﬁguration Interaction Quan-
+                tum Monte Carlo.  We describe an initiator modiﬁcation to Stochastic Coupled Cluster Theory and
+                show that initiator calculations can be extrapolated to the unbiased limit.  We apply this method
+                to the 3D 14-electron uniform electron gas and present complete basis set limit values of the CCSD
+                and previously unattainable CCSDT correlation energies for up to rs = 2, showing a requirement
+                to include triple excitations to accurately calculate energies at high densities.
+
+
+                    I.    INTRODUCTION                                      tively.  This higher accuracy is at the cost of their being
+                                                                            vastly more complicated to implement, and their scaling
+  In a recent letter[1], we described a novel way of formu-                 makes  them  of  little  current  use  beyond  benchmarking
+lating Coupled Cluster theory stochastically.  The previ-                   the  energetics  of  very  small  molecules.   It  is  in  going
+ous exposition was limited to calculations on a single pro-                 beyond this regime that we believe the novel stochastic
+cessor,  but was shown capable,  within arbitrarily small                   Coupled Cluster theory to be of great use owing to both
+error bars, of reproducing exact Coupled Cluster results                    its simplicity of implementation and parallelizability.
+for  a  range  of  molecular  systems  while  requiring  lesser                Within the paradigm provided by stochastic methods,
+computational resources than the full exact calculations.                   there  has  been  a  great  resurgence  in  their  applications
+  Coupled Cluster theory, though born in the ﬁeld of nu-                    to  quantum  chemical  methods.   The  highly  acclaimed
+clear quantum mechanics, has become astoundingly suc-                       work  of  Booth,  Alavi  and  co-workers[9,  10]  in  formu-
+cessful in the ﬁeld of quantum chemistry.  After the pio-                   lating  Full  Conﬁguration  Interaction  Quantum  Monte
+neering work of  ˇC´ıˇzek and Paldus [2, 3] brought it to the               Carlo (FCIQMC) as a stochastic implementation of FCI
+quantum chemists’ attention, and its use has grown such                     was  the  impetus  for  genesis  of  the  stochastic  formula-
+as to be the ‘gold-standard’ of quantum chemistry[4].  Its                  tion  of  Coupled  Cluster  theory,  and  the  common  ele-
+success stems,  in essence,  from the ability of CCSD(T)                    ments of the methods allow algorithmic developments to
+(Coupled  Cluster  Singles  and  Doubles  with  perturba-                   be  easily  transferred  between  them.   In  particular,  we
+tive  Triples)[5]  to  reproduce  energetics  and  properties               shall focus on the ‘initiator approximation’ of Cleland et
+of a wide range of molecules to ‘chemical accuracy’, i.e.                   al.[11–13] has allowed vastly larger systems to be studied
+within 1 kJ mol−1, and relative ease of formulation, al-                    than conventional diagonalization and both work on new
+lowing  it  to  be  implemented  in  a  range  of  widely  used             properties (explicit correlation[14], density matrices[15],
+computational chemistry software.  It has not, however,                     forces[16],  and  excited  states[17,  18])  and  new  systems
+become ubiquitous within electronic structure theory ow-                    (from the Uniform Electron Gas[19, 20] and the Hubbard
+ing to a high scaling (O(N 7) for CCSD(T)[53]) with num-                    model[21], to real crystalline solids[22, 23]).
+ber of electronsN.  Numerous local approximations[6, 7]                        In  this  paper,  we  elucidate  more  algorithmic  details
+have  reduced  this  scaling,  even  to  the  level  of  linear             of the CCMC method,  as well the inclusion of the ‘ini-
+with  system  size[8],  though  these  have  yet  to  become                tiator approximation’ based upon an analogous develop-
+widespread, and often the onset of the reduced scaling is                   ment  within  FCIQMC[11].   These  advances  allows  the
+only in the regime of large systems.  For greater accuracy                  application  of  high  levels  of  Coupled  Cluster  theory  to
+one can turn to higher levels of truncation of the theory,                  problems much larger than previously possible with full
+with full triples, CCSDT, or full triples and quadruples,                   Coupled Cluster theory.  In Section II we describe the ba-
+CCSDTQ,  having  scalingsO(N 8)  andO(N 10)  respec-                        sic algorithm in detail and provide examples of the Monte
+                                                                            Carlo steps involved and denote this algorithm Coupled
+                                                                            Cluster Monte Carlo (CCMC). The population dynamics
+                                                                            of CCMC are explored in Section III, followed by more
+∗Electronic address:  ajwt3@cam.ac.uk                                       details about the critical plateau height in Section IV in
+                                                                                                                                                   2
+
+which we propose “shoulder plots” as a measure of the                        nant.  Given the occupied/virtual partitioning,  we may
+critical diﬃculty of a system, and show how this varies in                   also represent all possible determinants with respect the
+some molecular systems.  Section V introduces the initia-                    the  reference  (which  we  will  denote D0)  by  listing  the
+tor approximation for CCMC and Section VI details how                        occupied orbitals removed and virtual orbitals added to
+the systematic error inherent to the initiator approxima-                    the determinant, such that Dabij  represents the determi-
+tion can be extrapolated to zero.  The behaviour of the                      nant where i and j  in the reference have been replaced
+CCMC  method  is  explored  in  these  sections  using  the                  by a  and b.   Further  we  shall  denote  by  ˆaabij  the  exci-
+neon atom and nitrogen molecule, going to six-fold exci-                     tation  operator  or  excitor  which  performs  this  process,
+tations (i.e. CCSDTQ56). The use of quantum chemistry                        Dabij  =  ˆaabijD0.   The  excitors  behave  such  that  it  is  not
+methods  in  extended  systems  has  been  the  subject  of                  possible  to  excite  from  or  to  an  orbital  multiple  times,
+much recent interest[24–28] and as a further demonstra-                      e.g.   ˆaai ˆabi  =  0  and  ˆaai ˆaaj  =  0.   By  applying  each  of  the
+tion of the method, we calculate the CCSD and CCSDT                          (2M) possible excitors to the reference determinant, the
+energies of the uniform electron gas in Section VII. We                      whole of determinant space may be generated, and thereN
+ﬁnd a substantial impact from triple excitations at real-                    is a one-to-one correspondence between excitors and de-
+istic densities.  Finally we oﬀer some concluding remarks                    terminants; we may therefore denote the excitors by the
+and future perspective in Section VIII.                                      determinant they would create, Di = ˆaiD0.
+                                                                               These excitors can be used to parameterize all possi-
+    II.    COUPLED CLUSTER MONTE CARLO                                       bleN-particle wavefunctions in this basis in a number of
+                                                                             ways.   A  simple  example  would  be  ΨFCI  = ∑iciˆaiD0,
+                                                                             which  would  correspond  a  Full  Conﬁguration  interac-
+  Key  to  the  success  of  Monte  Carlo  techniques  is  the               tion  type  wavefunction  where  each  determinant  has  its
+ability to reduce computational eﬀort by converting sums                     own coeﬃcient in the expansion.  Coupled Cluster theory
+and  integrals  over  extremely  large  spaces  into  a  series              uses instead an exponential Ansatz for the wavefunction,
+of  discrete  samples  which  approximate  the  full  calcula-               ΨCC = e ˆTD0, where we deﬁne  ˆT  =∑itiˆai.  This seem-
+tion  to  arbitrary  accuracy  with  increasing  numbers  of                 ingly complicated parameterization is used owing to its
+samples.   In  this  section  we  cast  the  Coupled  Cluster                desirable property of remaining size-consistent even if the
+equations in such a form as can be sampled with Monte                        sum of excitors is restricted to a limited level of excita-
+Carlo techniques, and show how by parameterization as                        tion.   In  essence  this  is  due  to  the  fact  that  despite  a
+discrete objects in excitation space the Coupled Cluster                     truncation,  the  exponential  ensures  that  the  wavefunc-
+equations may be easily approximated and solved.                             tion can contain contributions from determinants at all
+  The space in which we shall represent single reference                     excitation levels.
+Coupled Cluster theory is that of excitors which act with                      To   determine   the   parameters {ti},   the   projected
+respect to a reference Slater determinant.  Given an or-                     Schr¨odinger equation is solved; i.e.  for all m, we solve
+thonormal set of 2M spin-orbitals, we partition them into
+a set of N  which are occupied in the reference determi-                                          ⟨Dm| ˆH−E|ΨCC⟩ = 0.                      (1)
+nant,  denoted φi,φj,...φn,  and  2M− N  unoccupied,
+or virtual orbitals, denoted φa,φb,...φf.  The complete                      In  general  this  may  be  expressed  in  an  iterative  form,
+space ofN-electron Slater determinants in this basis has)  and  will  be  denoted  by Dm  where  m  is  anbeginning with a guess for all{ti} and E, and iterating
+size (2MN                                                                    until convergence.  The complexity in this arises from the
+N-vector listing the orbitals occupied in a given determi-                   expansion of the exponential
+
+
+
+                                                                                                              
+                                         1 +∑                 ∑                    ∑                          D0.                                 (2)
+                              e ˆTD0 =               tiˆai + 12     titjˆaiˆaj +  13!    titjtkˆaiˆajˆak +...
+                                                  i              ij                  ijk
+
+
+
+  Instead    of    explicitly    rearranging    the    equations               where δτ  is some small positive number[54],  giving a
+(1)   (or   the   equivalent   more   convenient   equations,                form reminiscent of projector methods.  This is now al-
+⟨Dm|e− ˆT ( ˆH−E)|ΨCC⟩ = 0) in an iterative form, which                      most in the form of an iterative method:
+is  the  means  by  which  many  conventional  implementa-                      ⟨Dm|ΨCC⟩−δτ⟨Dm| ˆH−E|ΨCC⟩ =⟨Dm|ΨCC⟩,    (4)
+tions work), we note that solutions to the Coupled Clus-
+ter equations must also satisfy                                              except  that  the  right  hand  side  has  components  from
+                                                                             many  diﬀerent ti  amplitudes,  so  it  is  not  clear  how  to
+          ⟨Dm|1−δτ( ˆH−E)|ΨCC⟩ =⟨Dm|ΨCC⟩,        (3)                         perform the iteration.  Noting that the projection of ΨCC
+                                                                                                                                                   3
+
+on to a single determinant always contains the amplitude                     so  may  be  safely  ignored.   The  cluster  is  collapsed  by
+of the excitor for that determinant plus terms involving                     taking the product of the excitors at which each of the
+multiple amplitudes,                                                         chosen  excips  is  located  to  give  determinant Dn.   The
+                                                                             amplitude of the cluster is given by the products of pop-
+                  ⟨Dm|e ˆTD0⟩ =tm +O( ˆT 2),                  (5)            ulations of excips at each of the excitors in the cluster.
+                                                                             As the spawning probability must be proportional to this,
+we may cancel out the higher order terms identically on                      we have chosen to select each cluster with a probability
+the left and right hand sides of (4), leaving                                proportional to its amplitude, and make one spawning at-
+                                                                             tempt per cluster.  Then, much as in FCIQMC, we follow
+               tm−δτ⟨Dm| ˆH−E|ΨCC⟩ =tm.              (6)                     the following steps:
+We may write this as an iteration from time τ  toτ +δτ,                         1. Spawning.  From each Dn generated we pick a ran-
+                                                                                    dom  connected  single  or  double  excitation, Dm,
+    tm(τ)−δτ⟨Dm| ˆH−E|ΨCC(τ)⟩ =tm(τ +δτ).     (7)                                   and create a new excip there with probability pro-
+                                                                                    portional to|δτHmn| and appropriate sign.
+The solutions to the Coupled Cluster equations will also                        2. Birth/Death.  From each Dn generated, with prob-
+be  solutions  of  this  iteration  procedure[55],  though  the                     ability proportional to|δτ(Hnn−E)| we create an
+evaluation of the second term in (7) is not trivial.  Indeed,                       opposite signed excip at ˆan.  Here E has yet to be
+it turns out to be easier to sample this term.  The most                            deﬁned, but may be taken as an arbitrary constant.
+straightforward way of sampling these equations involves                            Its later role will be to control population growth.
+storing allti amplitudes as real numbers, and performing                            BecauseDn may have been formed from a product
+two stochastic processes.                                                           of excitors, it is probable that there are no excips at
+  The ﬁrst is sampling ΨCC, by selecting randomly from                              the excitor ˆan, and so, in contrast to FCIQMC, we
+all possible clusters in (2), e.g. titjˆaiˆajD0.  Once selected                     must create an oppositely signed excip, rather than
+the cluster is collapsed to form determinant,titjˆaiˆajD0 =                         simply killing an existing one.  If the cluster con-
+titjˆanD0 = titjDn.  This process may involve some sign                             sisted  of  a  single  excip,  the  opposite  signed  excip
+changes or even result in zero (if i and j excite from the                          will cancel this out.
+same occupied or to the same virtual orbitals).
+  The second stochastic process is the sampling the ac-                         3. Annihilation.    Finally,  after  these  two  processes
+tion  of  the  Hamiltonian.   For  each Dn  generated  from                         have been done for as many clusters as required to
+sampling ΨCC, we could enumerate all possibleDm, eval-                              be sampled, the new list of excips is sorted and any
+uating⟨Dm| ˆH−E|Dn⟩ and updatingtm accordingly. As                                  opposite signed pairs of excips on the same excitor
+the Hamiltonian only connects up to single and double                               removed.
+excitations from a determinant, we may instead sample                        In deterministic Coupled Cluster theory, E is a parame-
+this process by randomly pickingDm as a single or double                     ter  which  iteratively  converges  to  the  Coupled  Cluster
+excitation of Dn, and updating tm appropriately.  While                      energy.    Here  we  shall  replace  it  with  a  parameter S
+we have found such an algorithm which stores all tn  to                      which  will  shift  the  diagonal  elements  of  the  Hamilto-
+well reproduce small Coupled Cluster calculations, it is                     nian  and  may  be  updated  periodically  after  a  number
+not  eﬃcient,  as  many  clusters  selected  have  extremely                 of  cycles  to  allow  the  total  population  of  excips  to  be
+small amplitudes, requiring large numbers of samples.                        controlled[9, 30].
+  A more eﬃcient route is to discretize the amplitudes as
+has been done in the FCIQMC method[9].  In analogy to
+Anderson[29],  we  shall  represent  amplitudes  of  excitors                                       A.    Normalization
+by sets of excitor particles or excips[56].  Each excip rep-
+resents a unit weight and is given a positive or negative                      The  careful  reader  may  have  noticed  that  above  for-
+sign,  and  located  at  an  excitor,  ˆan.   As  the  simulation            malism introduces an imbalance in the description of the
+proceeds, excips are created or destroyed at excitors ac-                    reference  and  the  excitor  space.   Indeed,  the  prescrip-
+cording  to  some  simple  rules,  and  the  mean  (averaged                 tion of intermediate normalization, where the overlap of
+over a number of iterations) signed number of excips at                      the reference with the Coupled Cluster wavefunction is
+a given excitor will be taken to represent its (unnormal-                    ﬁxed at unity, makes it rather diﬃcult to satisfy (4) for
+ized) amplitude.                                                             Dm = D0  in terms of an iteration.  Instead, it is conve-
+  To  sample  the  action  of  (7),  we  make  very  similar                 nient to introduce a further variable, N0,  to act as the
+steps to the algorithm using real numbers just described.                    normalization constant,
+Firstly  a  cluster  out  of  ΨCC  is  selected  randomly,  and
+collapsed into a determinant Dn:  since  ˆT  is represented                                                          ˆT
+by populations of excips at diﬀerent excitors, a cluster is                                        |ΨCC⟩ =N0eN0|D0⟩.                       (8)
+
+formed by randomly selecting a number of excips (which                       The  inclusion  of N0  within  the  exponential  allows  the
+could  be  zero).   Clusters  in  ΨCC  formed  from  excitors                discretization of  ˆT  to produce eﬀectively fractional pop-
+with  no  excips  at  them  would  have  no  amplitude,  and                 ulations on excitors which is essential for the exponential
+                                                                                                                                                      4
+
+to converge.  With this normalization, the number of ex-                             excip is proportional to the total number of excips
+cips  at  the  reference  is  given  by N0,  and  can  thus  be                      at that excitor.
+varied in the iteration satisfying (4).  In this manuscript                       2. Sampling the spawning.  In principle the spawning
+we will refer to these particles on the reference as excips,                         step  samples  the  action  of  the  Hamiltonian  upon
+though they are not strictly the same, and cannot be used                            the collapsed cluster.  A full sampling would enu-
+as a constituent excip of a cluster; as such they are (all)                          merate all connected determinants and attempt to
+always in a cluster as they normalize it multiplicatively.                           spawn on each one-by-one.  We have followed the
+
+                                                                                     route  of  Booth  et  al.[9]  in  choosing  a  minimalist
+                    B.    Energy estimators                                          sampling  of  a  single  attempted  spawn  from  each
+                                                                                     cluster.  This comes with the drawback that as the
+  There are two independent estimators of the Coupled                                number  of  connected  determinants  increases  (say
+Cluster  energy  available  in  this  formalism.   Firstly,  the                     with  system  size  or  basis),  the  timestep  must  be
+time-averaged  value  of  the  shift  is,  at  convergence,  an                      correspondingly  reduced  to  keep  this  step  stable.
+estimator  for  the  energy.   Secondly  the  energy  may  be                        Some brief tests of increasing the number of spawn-
+estimated by projection as                                                           ings  from  each  cluster  indicate  this  has  the  same
+                                                                                     eﬀect as dividing the timestep by this number (re-
+                                                                                     ducing the eﬀective timestep).
+                      Eproj =⟨D0| ˆH|ΨCC⟩⟨D0|ΨCC⟩                          (9)    3. Sampling the projected energy.  The explicit evalua-
+
+This expression could be computed exactly, as the contri-                            tion of the numerator of (9) is complicated by pairs
+butions from only singly and doubly excited determinants                             of  single-excitations.   Instead,  each  time  a  cluster
+are relevant, but would require an iteration through all                             is  generated,  its  contribution  to  the  numerator  is
+possible pairs of single excitors to evaluate their contri-                          accumulated (appropriately unbiased by its gener-
+bution to the doubly excited determinants.  Instead, we                              ation probability).
+sample  both  of  these  contributions  while  sampling  the
+cluster wavefunction.                                                                        D.    A Representative Example
+
+
+                           C.    Sampling                                        Let  us  consider  a  spin-free  system  with  occupied  or-
+                                                                              bitalsi,j,k and virtual orbitalsa,b,c.  In addition to the
+  Sampling forms the core of this method, and the imple-                      reference  there  are  19  possible  excitors,  which  we  shall
+mentational details of this are crucial to an eﬃcient calcu-                  denote  with  subscripts  and  superscripts.   For  example,
+                                                                              abik, denotes the excitor which excites electrons fromi and
+lation.  Here we describe the diﬀerent sampling schemes                       k to orbitals a and b.
+used in our implementation.  Though we have not per-                             Let  us  suppose  we  are  performing  Coupled  Cluster
+formed exhaustive tests on diﬀerent sampling methods,                         theory truncated at singles and doubles (a rather futile
+these  have  appeared  the  most  eﬀective  in  our  calcula-                 truncation since there is only one triple excitation), i.e.
+tions.                                                                        CCSD. At timeτ  in the simulation, we have reached the
+   1. Sampling  the  wavefunction.   At  each  timestep  we                   situation at the top of Fig.  1(a), with 20 excips, 10 being
+       must sample the exponential expansion of the wave-                     at  the  reference.   We  shall  accumulate  various  genera-
+       function,  and  we  do  this  by  randomly  selecting  a               tion  probabilities, pX,  through  this  example  which  will
+       cluster — a single term consisting of a product of                     be  used  to  unbias  our  sampling.   We  sample  with  the
+       speciﬁc amplitudes and excitors — from the expan-                      same number of samples as excips (hence psel  = 20 for
+       sion of the exponential.  We have found that setting                   this timestep).  We shall also adopt a scheme where the
+       the number of samples taken to be the same as the                      likelihood of forming a cluster is exponentially decaying
+       number  of  excips  leads  to  stable  simulations.   If               with  probability   12.   Since  the  largest  cluster  with  any
+       the number of samples does not scale at least lin-                     eﬀect is of size three, we stop at that point and add in
+       early with the number of excips, the selection prob-                   the remaining probabilities of selection for larger clusters
+       abilities  of  the  clusters  become  increasingly  small              to that level.  Let us also suppose that we have not yet
+       and  lead  to  population  blooms  which  destabilize                  modiﬁed  the  shift  from  its  default S  = EHF.   The  fol-
+       the simulation.                                                        lowing four examples of samples and their evolution are
+       We select the size of cluster, s, to be generated so                   illustrated in Fig.  1(a)–1(d).
+
+       that  the  probability  of  selecting  a  cluster  with s                (a)We  decide  with  probability   psize  =   12  to  select  a
+       excitors decays exponentially with s.  Each cluster                           cluster with zero excips.  There is only one choice
+       is  generated  by  selecting s  excips  randomly  from                        of  zero-cluster,  so  we  set pclust   =  1.    The  ac-
+       the list of excips, and we have found it best to bias                         tion  of  this  on  the  reference  is  merely  ˆ1|D0⟩  =
+       the selection so that the probability of selecting an                         |D0⟩,  and  it  has  total  amplitude A  = N0.   There
+                                                                                                                                                                 5
+
+
+
+
+
+
+
+
+
+
+                                               (a)                    A size-0 cluster spawns.
+
+
+
+
+
+
+
+
+
+
+                                            (b)                       A size-2 cluster spawns.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            (c)                 A size-2 cluster spawns and dies.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                               (d)A size-1 cluster aborts a spawn outside the truncation
+                                                                           level and dies.
+
+
+
+
+                                           (e)                 The post-annihilation populations.
+
+FIG. 1:  A representative example of the cluster selection, spawning and death steps of the CCMC algorithm as explained in
+the main text.  Rounded blue boxes represent excitors, and rectangular blue boxes represent determinants.
+
+
+        are  eighteen  possible  single  and  double  excita-                         (b)We  decide  with  probability   psize  =   18  to  pick  a
+        tions  available,  and  we  pick Dabik   with pexcit   =                            cluster  of  size  2. −cj  is  selected  with  probabil-
+         1                                                                                  ity p1  =    3
+        18.   ˆaabik|D0⟩  = |Dabik⟩,  so  no  sign  change  will  be                                      10  and  +abik  is  selected  with  probability
+        needed.   We  create  a  new  excip  at abik  with  prob-                           p2 =   110, so pclust = (2!)p1p2, the 2! accounting for
+        ability δτ|⟨Dabik| ˆH|D0⟩A|/(pselpsizepclustpexcit),  and                           the number of ways in which the cluster could have
+        sign−sgn(⟨Dbi| ˆH|D0⟩).  Let’s say we create a neg-                                 been chosen.  The amplitude of the cluster is given
+        ative  excip  at abik.    Death  occurs  with  probabil-                            by A  = N0−3          1
+                                                                                                             N0  N0 .   The  cluster  ˆacjˆaabik  collapses  to
+        ity|(⟨D0| ˆH|D0⟩−S)δτA|/(pselpsizepclust).  Here as                                 −|Dabcijk⟩  when  applied  to  the  reference.   We  ﬁrst
+        EHF =S, there is no death.                                                          spawn,  picking|Dcj⟩  with  probability pexcit  =   118.
+                                                                                                                                                       6
+
+       ˆacj|D0⟩ =−|Dcj⟩ so we will pick up an extra neg-                           2. Annihilation Plateau.  At a system-dependent num-
+       ative  if  we  spawn  there,  which  we  do  with  prob-                       ber  of  excips,  annihilation  events  become  equal
+       ability δτ|⟨Dcj| ˆH|Dabcijk⟩A|/(psizepclustpexcit).     The                    to  spawning  events,  and  the  population  ceases  to
+       signs  take  a  little  more  care.     Let’s  say  that                       grow,  but  remains  approximately  constant.   The
+       ⟨Dbj| ˆH|Dabcijk⟩  is  negative,  giving  a  collective  ﬁve                   relative signs of the populations at excitors where
+       negatives, resulting at a negative excip at cj.  Death                         there  are many excips  changes  over  this time  un-
+       would  occur  with  probability |(⟨Dabcijk| ˆH|Dabcijk⟩−                       til  it  resembles  the  sign  structure  appropriate  to
+       S)δτA|/(pselpsizepclust),  except  that  in  CCSD,  we                         the  ground  state  wavefunction  (as  parameterized
+       do not store excips for triples, so it is ignored.                             by excitation amplitudes).
+
+  (c)We decide with probability  psize =  1                                        3. Exponential Growth.  The sign structure of the ex-
+                                                     8 to pick a clus-                cips  is  such  that  spawning  once  again  dominates
+       ter of size 2.−cj is selected with probabilityp1 =   310                       over  annihilation,  and  the  total  number  of  excips
+       and +bi  is selected with probability p2 =   210, giving                       grows exponentially with growth rate proportional
+       pclust = (2!)p1p2.  The amplitude is A = N0−3                  2
+                                                                 N0  N0 .             toE−ECC, whereECC is the Coupled Cluster en-
+       The  cluster  ˆacjˆabi  collapses  to|Dbcij⟩  when  applied                    ergy.
+       to  the  reference.   We  pick |Dbj⟩  with  probability                     4. Population  Control. S  is  now  dynamically  mod-
+       pexcit =   118.  ˆabj|D0⟩ =−|Dbj⟩ so we will pick up an                        iﬁed  to  control  the  population  and  limit  growth,
+       extra  negative  for  spawning,  which  has  probabil-                         with  more  negative  values  of S  reducing  popula-
+       ity δτ|⟨Dbj| ˆH|Dbcij⟩A|/(psizepclustpexcit).   A  positive                    tion growth.
+       value of⟨Dbj| ˆH|Dbcij⟩ results in a negative excip be-
+       ing  spawned  at bj.   Death  occurs  with  probability                    Before  the  Annihilation  Plateau,  the  total  rate  of
+       |(⟨Dbcij| ˆH|Dbcij⟩−S)δτA|/(pselpsizepclust), creating a                growth  is  faster  than  that  at  the  reference,  and  if  one
+       positive excip at bcij  because A is negative.                          attempts to control the population growth with the shift,
+                                                                               the population at the reference decreases to zero, caus-
+  (d)We  decide  with  probability   psize  =   1                              ing  the  simulation  to  fail.   Below  the  plateau,  in  com-
+                                                          4  to  pick  a       mon with FCIQMC, we also expect the sign structure of
+       cluster  of  size  1.   +bi  is  selected  with  probability            the solution to be wrong[31], and so the plateau height
+       p1  =   210,  giving pclust  = (1!)p1.  The amplitude is                becomes  a  crucial  feature  in  the  usability  of  Stochastic
+       A = N0  2N0 .  The cluster ˆabi  collapses to|Dbi⟩ when                 Coupled Cluster.
+       applied  to  the  reference.   We  pick  spawning  exci-                   We note that, as we begin simulations with a relatively
+       tation|Dabcijk⟩  with  probability pexcit  =    118.   This             large population of excips at the reference, often the rate
+       is  a  triple  excitation  and  outside  our  truncation                of annihilation does not exactly match that of growth and
+       so  it  is  discarded.   Death  occurs  with  probability               the population growth moves through a shoulder rather
+       |(⟨Dbi| ˆH|Dbi⟩− S)δτA|/(pselpsizepclust),  creating  a                 than a plateau (see ﬁgure 2).  This is caused by eﬀective
+       negative excip at bi.                                                   overshooting  the  plateau  phase  by  starting  with  more
+Let us assume that all the other samplings result in no                        excips.   To  determine  whether  the  system  has  reached
+death  or  spawning.   The  resultant  list  of  new  excips  is               the  region  of  exponential  growth,  we  note  that  in  this
+merged  with  the  main  list,  annihilation  occurs,  and  a                  region, the population of at all excitors should grow ex-
+new  step  begins  (Fig.   1(e)).   We  note  that  in  this  im-              ponentially.  A suitable alternative is therefore to check
+plementation much of the amplitude information cancels                         whether the population at the reference is growing at the
+between A  and pclust,  resulting  an  a  relatively  eﬃcient                  same rate as that of the total population.  One this has
+sampling.                                                                      been  satisﬁed,  the  shift, S,  may  be  allowed  to  vary  to
+                                                                               control the population.
+
+            III.    POPULATION DYNAMICS                                                             IV.    THE PLATEAU
+
+   The behaviour of the such algorithms has been previ-                           The stability of a CCMC calculation requires reaching
+ously explored in the context of FCIQMC[31], and follows                       a plateau or shoulder in the particle growth.  Discerning
+the following phases as shown in Fig 2:                                        such a feature by eye is not an easy task, so we sought
+   1. Initial  Growth.   We  beginning  with  a  population                    a  more  rigorous  deﬁnition.   Before  the  plateau,  a  shift
+       of  excips  at  the  reference.    By  initially  setting               based  on  the  (faster)  total  particle  growth  rate  would
+       S  = EHF  we  ensure  that  the  excips  at  the  refer-                cause a decrease in the population at the reference, and
+       ence  do  not  die.   Gradually,  the  excitor  space  is               likely lead the calculation to fail as this population tends
+       populated with excips spreading outwards from the                       to zero.  The post-plateau stability arises from the fact
+       reference.  As time progresses and the populations                      that the growth rate of reference particles is at least as
+       grow, annihilation events become more common.                           fast as those of the total particles in the system, and so
+                                                                                                                                                      7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    (a)
+
+
+
+                                                                              FIG.  3:   Shoulder  heights  for  the  N2  molecule  at  diﬀerent
+                                                                              bond lengths, basis sets and truncations.  All electrons were
+                                                                              correlated, andLz symmetry enforced.  Hilbert space sizes are
+                                                                              shown by the horizontal lines.
+
+
+                                                                              proves  convenient  to  plot  the  particle  ratio  not  against
+                                                                              the  progress  in  imaginary  time,  but  against  the  total
+                                                                              number of particles, both axes being logarithmic.  In such
+                                                                              a plot the plateau appears as a sharp downward kink in
+                                                                              an otherwise apparently linear progress.  The usefulness
+                                                                              of  such  ‘shoulder’  plots  in  comparing  diﬀerent  calcula-
+                                  (b)                                         tions is explained in ﬁgure 2(b).  There is still some po-
+                                                                              tential  uncertainty  as  to  the  deﬁnition  of  the  shoulder
+FIG. 2:  Ne cc-pVQZ CCSDTQ calculations starting with dif-                    height, but from experience it has proven to be useful to
+ferent initial particle numbers at the reference and diﬀerent                 deﬁne this to be at the maximum of the shoulder plot,
+timesteps.   (a):   With  a  carefully  chosen  low  timestep  and            and this should be taken as an upper limit of the plateau
+initial population, a plateau is visible.  An increased timestep              height  of  the  system.   Such  a  deﬁnition  is  still  subject
+and initial population overshoots the plateau but has a shoul-                to stochastic noise, and so in this paper we have quoted
+der.  The lower panel shows a maximum of the particle ratio                   values which are the mean of the total excip populations
+at the position of the shoulder and plateau.  (b):  ‘Shoulder                 with the ten largest particle ratios, and used the standard
+plots’ allow shoulder height to be read oﬀ easily and calcula-                deviation of these as a measure of uncertainty.  Calcula-
+tions compared.                                                               tions with total particle numbers before the shoulder are
+                                                                              often  unstable,  and  calculations  after  the  shoulder  are
+                                                                              usually stable, though the stochastic nature of such cal-
+turning on a shift will slow these rates equally and the                      culations  removes  total  certainty  about  this.   A  stable
+populations will stabilize.  On this basis, we suggest that                   population (due to the control from the variable energy
+the ratio of total particles to reference particles should be                 shift) appears in the shoulder plot as a tight blob at the
+a useful measure of these rates of growth, and we shall                       end  of  the  line  due  to  (comparatively)  small  stochastic
+call this the particle ratio.  In ﬁgure 2 we plot a typical                   ﬂuctuations in both the population on the reference and
+CCMC calculation showing a plateau and a second cal-                          the total population.
+culation on the same system with diﬀerent timestep and                           A histogram approach has been previously used to au-
+larger initial population.  The calculation with larger ini-                  tomate  detection  of  the  plateau  in  FCIQMC[21];  the
+tial population overshoots the plateau, but still reaches                     shoulder  plot  is  equally  amenable  to  automation  and
+a stable growth phase.  The particle ratio shows clearly                      both approaches give similar values for simulations with
+the location of the plateau by moving from increasing to                      clear plateaus.  Shoulder plots are more reliable when the
+downward; the overshooting calculation shows the same                         plateau is shorter in duration or tends towards a shoulder
+behaviour corresponding the shoulder in its growth.                           in the population growth.
+  From  some  experience  with  comparing  such  plots,  it                      As shown in the original CCMC paper[1], the heights
+                                                                                                                                                      8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              FIG. 5: Ne cc-pVQZ CCSDTQ calculations without initiator,
+                                                                              and with partial and full initiator methods.  The full initiator
+FIG. 4:  All-electron CCSDTQ calculations on the neon atom                    (yellow) method has a signiﬁcantly lower shoulder height and
+                                                                              is stable at even 100,000 excips whereas the partial (red) is
+using Dunning’s cc-pVXZ basis sets[32, 33].  The shoulder is                  unstable when the shift is engaged at 240,000 excips (before
+clearly discernible in each line, and its height increases with               the  plateau),  and  has  a  similar  proﬁle  (green)  to  the  non-
+basis set cardinality.  A vertical descent from the maximum is                initiator (blue) method.
+given by a clearly deﬁned plateau, and a chevron-like peak is
+characteristic of a shoulder. As seen for cc-pVTZ, calculations
+started with more excips lead to a shoulder which can over-                   present,  then  the  algorithm  only  allows  a  walker  to  be
+estimate the position of a plateau.  Calculations were started                spawned there if there are more than a critical number,
+with 102 or 103 excips at the reference (where each line would                nadd, of walkers present at the determinant from which it
+cross Nex/N0 = 100).
+                                                                              was spawned. This modiﬁcation of the algorithm dramat-
+                                                                              ically  alters  the  dynamics,  removing  the  plateau  phase
+of  plateaux  vary  with  both  the  size  of  Hilbert  space                 and greatly stabilizing the calculations.  This is, however,
+and  diﬀering  levels  of  correlation  within  a  molecule;                  at the price of introducing a bias into the algorithm, de-
+system-speciﬁc   behaviour   is   also   seen   for   FCIQMC                  pendent  on  the  number  of  walkers.   This  is  manifested
+calculations[9,  21].     Figure  3  shows  the  variation  of                as an error in the energy which systematically decreases
+plateau  height  with  basis,  excitation  and  bond  length                  with the number of walkers (becoming zero in the large
+for the N2 molecule, showing broadly that the fraction of                     walker limit).
+the Hilbert space required is of a similar magnitude for                         Owing to the great similarity between Stochastic Cou-
+diﬀerent excitation levels and basis sets, and increases as                   pled Cluster theory and FCIQMC, it is expected that the
+the N−N bond is broken, though staying below 27%.                             initiator method will confer similar beneﬁts in Stochas-
+  To see the eﬀects of diﬀerent basis sets, the neon atom,                    tic  Coupled  Cluster  theory.   As  spawning  occurs  from
+with only 10 electrons, is more amenable to study, and                        clusters of excips rather than single walkers, the initiator
+Figure 4 shows examples of shoulder plots for increasingly                    method requires some modiﬁcation.  The obvious choices
+large bases.  Plateau heights and correlation energies are                    are  for  a  cluster  to  be  allowed  to  initiate  (i.e.   spawn
+given in Table I and decrease with truncation level, head-                    onto  an  unoccupied  excitor)  if  either  one  or  all  of  its
+ing  to  less  than  1%  of  the  complete  Hilbert  space  size              component  excips  come  from  an  excitor  whose  popula-
+for larger bases with quadruples truncation.  Whilst for                      tion  is > nadd.   We  denote  these  the  partial  and  full
+CCSD, therefore, the saving is relatively small, it is for                    initiator methods respectively.  A representative sample
+higher  excitation  levels  that  the  Monte  Carlo  sampling                 of  the  behaviour  of  each  of  these  schemes  is  shown  in
+considerably reduces the storage required.                                    Figure 5.  From this, and with the ideas of maintaining
+                                                                              sign-coherence, we have settled upon requiring all excips
+                                                                              within a cluster to come from excitors with populations
+                                                                              > nadd  before  allowing  it  to  initiate  (the  full  initiator
+            V.    THE INITIATOR METHOD                                        method).
+                                                                                 As  the  initiator  calculation  reduces  the  amount  of
+  With the insight that the plateau is exited only when                       spawning, it can be thought of as generally reducing the
+the particles achieve a sign-coherent structure, Cleland et                   particle noise within a calculation.  To investigate the ef-
+al.  introduced what they call the ‘initiator method’[11]                     fect of this, we note that in the regime of large numbers
+to the FCIQMC algorithm (denoted i-FCIQMC). In its                            of particles, the variance of the numerator and denomina-
+mature  version  it  avoids  the  eﬀects  of  sign-incoherence                tor of the projected energy should decrease with 1/Nex.
+by restricting spawning.  If a determinant has no walkers                     More formally, denoting the numerator of the projected
+                                                                                                                                                       9
+
+ truncation            SD                           SDT                             SDTQ                           SDTQ5                         SDTQ56
+    basis      H.S.    Shoulder          H.S.        Shoulder        H.S.         Shoulder        H.S.         Shoulder         H.S.        Shoulder
+  cc-pVDZ       400        33(1)        4680          194(2)        30654          594(4)        113550       1610(20)        259460      2660(10)
+  cc-pVTZ      1940     160(30)         60710      2900(300)     1.032×106  2.27(1)×104        1.021×107  1.90(5)×104       6.143×107  9.6(2)×105
+  cc-pVQZ      6710     290(10)      4.128×105   7100(200)       1.412×107  2.39(6)×105        2.81×108    3.7(1)×106
+  cc-pV5Z     17100  2500(400)       1.815×106  7.9(2)×104       1.068×108  1.57(6)×106        3.66×109
+  cc-pV6Z     82400  2.2(3)×104      1.636×107  2.3(3)×105       1.731×109  1.45(3)×107
+
+TABLE I: All-electron Ne Hilbert space (H.S.) sizes and shoulder heights.  Hilbert space sizes were determined by Monte Carlo
+and only signiﬁcant ﬁgures are shown. Lz  symmetry was enforced except in the case of cc-pV6Z. Shoulder error estimates in
+the last signiﬁcant digit are shown in parentheses.
+
+
+energy at a given timestep to beEproj,numer(τ), to enable
+comparison of diﬀerent calculations, we may calculate
+
+             s2 = Var[Eproj,numer(τ)]τ⟨Nex(τ)⟩τ⟨Eproj,numer(τ)⟩2τ     ,          (10)
+
+which  we  shall  call  the  normalized  relative  variance  of
+the  projected  energy.   This  is  a  substantial  component
+of  the  eventual  error  estimate  for  a  given  calculation
+(though the actual errors are calculated through a block-
+ing analysis[34]).  A calculation with double the value of
+s2 will have to be run for approximately twice as long to
+achieve the same estimate of error, and so it should be
+as low as possible to reduce the computational resources
+required in a calculation.  For N2  in a cc-pCVDZ basis,
+we show s2  for both standard and initiator calculations
+in Figure 6.  Around equilibrium, it can be seen that the
+variance  is  signiﬁcantly  lower  for  initiator  calculations,              FIG.  6:   The  normalized  relative  variance  of  the  projected
+and  so  using  the  initiator  method  should  dramatically                  energy, s2,  (see  text  for  deﬁnition)  for  the  N2  molecule
+reduce the number of steps required to achieve a given                        in  a  cc-pCVDZ  basis.    Calculations  were  performed  with
+error bar.                                                                    about 70,000 excips (forrNN≤ 2.4 ˚A) and 200,000 otherwise.
+  In Figure 7, we show data from a typical set of initia-                     The initiator calculations show a generally reduced variance
+tor calculations using CCSDT on the neon atom in a cc-                        around equilibrium, leading to fewer steps being required to
+pV6Z basis.  As the population increases, the correlation                     converge to a given error estimate.
+energy found gradually converges to the true correlation
+energy.   In  this  case  the  population  required  to  for  the             known about the form of this decay.  In appendix A, we
+initiator approximation’s bias to have decayed is of the                      show that the initiator error is expected to fall oﬀ as the
+order of 5× 105 psips, compared to a shoulder height of                       inverse of the number of particles in iFCIQMC, and we
+2.3(3)×105 psips, so providing no beneﬁt in reducing the                      shall use a similar form to extrapolate results for iCCMC,
+number of psips needed.  In all initiator CCMC calcula-                       writing the energy as a function of number of excips,Nex:
+tions we have tried on systems in this paper (on the neon
+atom, N2 molecule, and UEG), this pattern is repeated,                                            Ei(Nex) =pNqex +Ei(∞),
+and we see that a population of the order of the shoulder
+height  is  required  to  converge  the  initiator  error.   This             where  we  will  allow p,q,  and Ei(∞)  to  be  variable  pa-
+is  in  contrast  to  in  FCIQMC  where  the  initiator  adap-                rameters.  To test the form, we have performed CCSDT
+tation  substantially  helps  the  sign  problem  allow  much                 calculations  on  neon  in  a  cc-pV6Z  basis  set,  where  the
+smaller populations to be used, and unfortunately we do                       shoulder  lies  at  2.3(3)×105  excips  out  of  a  total  space
+not see any similar reductions in CCMC. The reduction                         of 1.64×107 excitors, and we have been able to perform
+in variance is, however, still beneﬁcial.                                     the exact CCSDT calculation with MOLPRO[35, 36] and
+                                                                              MRCC[37].   For  this  system,  iCCMC  calculations  were
+                                                                              performed  for  increasing  total  excip  populations,  and
+                  VI.    EXTRAPOLATION                                        projected  energy  estimators  and  errors  determined  us-
+                                                                              ing  an  automated  blocking  script[57].   As  noted  in  ap-
+  In previous studies of the initiator approximation for                      pendix B, biases are introduced in calculations in which
+FCIQMC, the initiator error has been seen to decay as                         the  shift  varies  greatly,  and  we  have  kept  only  calcula-
+total particle number increases, but there has been little                    tions in which the standard deviation of the shift is lower
+                                                                                                                                                   10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  7:   CCSDT  initiator  energies  and  extrapolations  for              FIG. 8:  The shoulder height for CCSDT on the 3D UEG for
+Ne  cc-pV6Z.  Plotted  are  the  raw  iCCMC  energies  (blue),               systems with M  plane waves.
+Ei(Nex), and various ﬁts.  The curve (green) was ﬁt using all
+data to the formEi(Nex) =p(Nex)q+Ei(∞), varyingp,q, and
+Ei(∞), resulting in an estimate ofEi(∞) = 0.36313(7) which                                 rs     ECCSD   ECCSDT  EFCIQMC
+closely  matches  the  exact Ecorr  =  0.36320646  from  MOL-                              0.1  -0.6639(1)   -0.6659(2)
+PRO/MRCC. Fits for fewer data points are denoted Ei(∞)                                     0.5  -0.5897(1)   -0.5965(2)  -0.5969(3)
+in the legend, and included data points up to the value ofNex
+plotted, for varying p,q, andEi(∞), as well as varying p and                               1.0 -0.5155(3)†   -0.5317(3)  -0.5325(4)
+Ei(∞) and ﬁxing q =−1, giving Ei(∞) = 0.36317(4).  The                                     2.0  -0.4094(1)  -0.4354(4)‡  -0.4447(4)
+shoulder for this system is at 2.3(3)×105 excips.
+                                                                             TABLE II: Correlation energies for the 14-electron Uniform
+                                                                             Electron  Gas.   Extrapolated  initiator  stochastic  CC  results
+than 0.05Eh.  For each population, projected energy es-                      were obtained by basis-set extrapolation from stochastic cou-
+timators for that and lower populations were used in a                       pled cluster calculations.  FCIQMC results are from Ref 39. †
+non-linear  least  squares  ﬁt  performed  with  gnuplot[38].                For rs = 1, Shepherd et al.  have found ECCSD =−0.5152(5)
+In Figure 7, we show ﬁts withp andq allowed to vary, as                      (Fig 7 of Ref.  41). ‡  Owing to non-converging initiator en-
+well as ﬁxing q  =−1.  The latter leads to considerably                      ergies, non-initiator stochastic CC energies were used in the
+                                                                             basis set extrapolation.
+more stable ﬁtting, with data from Nex < 25000 provid-
+ing estimates ofEi(∞) matchingEcorr within error bars
+(albeit large ones),  and we have used it as the basis of
+our later extrapolations.  The least squares ﬁts produce                     FCIQMC, CCSD and CCSD(T) results are available in
+error estimates on the values of the ﬁtted variables and                     such systems,[39, 40] along with a well-tested methodol-
+we  have  used  these  as  is  as  error  estimates  for  the  ex-           ogy to extrapolate to the complete basis set limit[41].
+trapolated values, but caution that they are likely to be                       We begin by studying the CCSDT shoulder heights for
+under-estimates of the errors.                                               the UEG as a function of rs.  Figure 8 shows that these
+                                                                             rise  signiﬁcantly  with rs,  of  the  order  of r3s,  as  well  as
+                                                                             increasing with the plane wave cutoﬀ energy.
+       VII.    THE UNIFORM ELECTRON GAS                                         For values of rs≤ 2 initiator CCSD and CCSDT cal-
+                                                                             culations were performed followed by linear ﬁts against
+  Whilst  the  neon  atom  provides  a  convenient  single-                  1/M  for M ≥  179,  and  the M  = ∞  limit  extracted.
+reference system to test the scaling of shoulders with ba-                   Results  are  in  Table  II.  We  have  also  investigated  the
+sis, there should be little surprise that the CCSDTQ cor-                    convergence of the initiator method for these systems, as
+relation  energy  is  within  a  milliHartree  of  the  CCSDT                shown  in  Figures  9  and  10.   Whilst  the  convergence  of
+even at the cc-pV6Z basis.  In this section,  we turn at-                    the extrapolation for rs = 1 in Figure 9 appears to well-
+tention  to  the  three  dimensional  uniform  electron  gas                 match  the  exact  result,  we  ﬁnd  the  same  methodology
+whose Wigner–Seitz radius,rs provides a convenient tun-                      predicts  a  result  many  standard  deviations  away  from
+able  parameter  to  diﬀerent  regimes  of  correlation,  and                the true correlation energy for rs = 2 (Figure 10).  This
+which  has  been  little  studied  with  coupled  cluster  the-              non-convergent behaviour of the initiator approximation
+ory.   Without  extensive  parallelism  (which  is  to  be  the              may be owing to changes in the nature of the correlation
+subject  of  a  future  paper),  we  have  kept  the  system                 with increasingrs, as the UEG is known to become more
+sizes small, concentrating on the closed-shell 14-electron                   multireference  with  increasing rs.   We  therefore  would
+gas in plane wave bases.  We have used a spherical en-                       caution against the use of initiator extrapolation in such
+ergy  cutoﬀ  and  denote  the  number  of  plane  waves M.                   cases where there is not a clear sign of convergence.
+                                                                                                                                                 11
+
+                                                                               We have investigated two possible implementations of
+                                                                            the initiator approximation in CCMC, and of the most
+                                                                            stable, we conclude that the initiator approximation per-
+                                                                            forms  a  similar  function  to  that  in  FCIQMC,  and  sta-
+                                                                            bilizes  calculations  with  low  numbers  of  excips  at  the
+                                                                            expense of introducing a systematic initiator error.  We
+                                                                            have demonstrated that this error, which in all cases we
+                                                                            have investigated causes a systematic lowering of the en-
+                                                                            ergy,  decays  as N−1excip  and  this  can  be  used  as  a  basis
+                                                                            for extrapolation of the true correlation energy.  Unlike
+                                                                            FCIQMC, we have found that the initiator error does not
+                                                                            decay away quickly in comparison to the critical stable
+                                                                            population indicated by ‘shoulder plots’.  In both the 3D
+                                                                            Uniform Electron Gas and Ne atoms in large bases, we
+FIG. 9: CCSDT initiator extrapolation for the 14-electron 3D                show that the particle population require to reduce the
+uniform electron gas with M = 925 and rs = 1.                               initiator error suﬃciently is of the order of the shoulder
+                                                                            height.  Therefore the reductions in particle population,
+                                                                            which in FCIQMC can amount to many orders of magni-
+                                                                            tude, do not appear to be present in Stochastic Coupled
+                                                                            Cluster Theory.
+                                                                               However,  the  beneﬁts  of  the  initiator  approximation
+                                                                            are still manifold.  With careful extrapolation, it is possi-
+                                                                            ble to perform calculations which are not possible with-
+                                                                            out use of the initiator approximation.  Additionally, the
+                                                                            initiator  approximation  dramatically  reduces  the  vari-
+                                                                            ance  of  the  projected  energy  within  a  calculation,  and
+                                                                            thus by its use the required calculation times are greatly
+                                                                            reduced. There is reason to be optimistic as there is much
+                                                                            which  can  be  tuned  in  the  Stochastic  Coupled  Cluster
+                                                                            algorithm.   In  particular,  the  role  of  the  population  of
+                                                                            particles on the reference, which acts as a normalization,
+                                                                            is critical in the stability of calculations, and in the pro-
+FIG. 10:  CCSDT initiator extrapolation for the 14-electron                 jected  energy.   With  further  algorithmic  modiﬁcations
+3D uniform electron gas with M  = 925 and rs = 2.  Though                   and optimization of parameters, the convergence of the
+the raw initiator energies do not appear to be converging, the              initiator energy with particle number will likely become
+extrapolation does appear to converge to a lower energy than                faster allowing yet larger calculations to be performed.
+the true correlation energy, Ecorr, which was calculated with                  Finally we demonstrate that this method is capable of
+non-initiator CCSDTMC.                                                      calculating coupled cluster energies of the Uniform Elec-
+                                                                            tron Gas up to rs = 2.  Studies beyond this will require
+                                                                            signiﬁcantly more computational resources, but are still
+                    VIII.    CONCLUSION                                     possible.  Of particular note is the vital contribution of
+                                                                            triple excitations even at these modest values of rs, and
+  We have investigated the stability of Stochastic Cou-                     we  hope  to  make  a  more  detailed  study  of  this  in  the
+pled  Cluster  calculations  and  suggest  that  the  particle              future.
+ratio (between the total excip population and the pop-
+ulation on the reference) is a convenient measure of the                                            Acknowledgments
+progress of a Stochastic Coupled Cluster calculation. The
+particle ratio exhibits a maximum as a calculation pro-
+gresses  through  the  growth  phase,  and  this  maximum                      We are grateful to Miss Ruth Franklin and Mr William
+signals the critical number of particles required for a sta-                Vigor for discussions on the algorithms.  AJWT thanks
+ble calculation, and indicates a ‘shoulder height’ equiva-                  the  Royal  Society  for  a  University  Research  Fellowship
+lent to the plateau height in FCIQMC. As a fraction of                      and Imperial College London for a Junior Research Fel-
+the truncated Hilbert space of a coupled cluster calcula-                   lowship,  where  this  work  was  started.    JSS  acknowl-
+tion, this eﬀective plateau height remains a similar order                  edges the research environment provided by the Thomas
+of magnitude (1–10%) as basis set is increased, and de-                     Young Centre under Grant No. TYC-101.  Calculations
+creases as the truncation level increases, so allowing an                   were  performed  on  the  Imperial  College  High  Perfor-
+estimate of the upper bound storage required of a CCMC                      mance  Computing  facilities[42]  and  the  University  of
+calculation.                                                                Cambridge High Performance Computing facilities using
+                                                                                                                                                12
+
+the NECI[43] and the HANDE[44, 45] codes.  Molecular                        Since Ndoub  is  constant,  and C(τ)  scales  linearly  with
+Orbital integrals were generated with a modiﬁed version                     Npsip,  we  may  attempt  to  ﬁt  to  (Npsip)−1  as  an  upper
+of Q-Chem[46], and for Ne cc-pV6Z, MOLPRO[35].  Raw                         bound.
+and  analysed  data  is  available  in  Ref.  47.   We  use  an
+automated iterative blocking algorithm[34, 48–50] to ac-
+curately estimate the stochastic error in all CCMC cal-
+culations presented in this paper.  Figures were plotted
+using matplotlib[51].
+
+
+          Appendix A: Initiator Extrapolation
+
+  We  derive  a  form  for  the  convergence  of  the  initia-
+tor approximation with psip population in Full Conﬁg-
+uration  Interaction  Quantum  Monte  Carlo.   We  expect
+that, while CCMC behaviour will be more complicated,
+it should follow the same general form.
+  Let us denote the true ground state wavefunction ψ0
+with energy E0  and impose intermediate normalization
+on it such that⟨D0|ψ0⟩ = 1.  Consider the instantaneous
+wavefunction at a given timestep, ψ(τ).  We can expect                      FIG. 11:  iCCMC convergence studies of CCSDT for the 14-
+it to consist of a some amount of the ground state, and                     electron 3D uniform electron gas at rs  = 1 using M  = 925
+a diﬀerence term, ψ(τ) =C(τ)ψ0 + ∆(τ), where we can                         plane waves for diﬀerent population control parameters (top)
+specify  that⟨D0|∆(τ)⟩  =  0.  In  a  converged  simulation                 and the corresponding variance in the shift observed during
+C  is  the  population  of  the  reference  determinant,  and               each calculation (bottom). δτ = 10−4 in all calculations.
+is  proportional  to  the  total  number  of  particles.   The
+projected energy is given by
+                                                                                    Appendix B: Population Control Eﬀects
+        E(τ) =⟨D0| ˆH|ψ(τ)⟩⟨D0|ψ(τ)⟩    =⟨D0| ˆH|ψ(τ)⟩C(τ)   .           (A1)  Appendix A contains the assumption that the initia-
+
+  In  an  unbiased  FCIQMC  calculation ⟨∆(τ)⟩τ   =  0                      tor  approximation  is  the  cause  of  all  systematic  errors
+(where⟨⟩τ  indicates  the  long  time  average  over τ).   In               in the simulation.  This is not strictly true; the eﬀect of
+moving to the initiator modiﬁcation, we introduce a sys-                    population control is well understood to introduce a small
+tematic  bias  in  the  dynamics,  resulting  in  a ⟨∆(τ)⟩τ                 bias which decays with increasing population[30, 52].  We
+which no longer vanishes.  For a given value of the initia-                 brieﬂy investigate here the eﬀect of population control on
+tor threshold and value of C, there will be a maximum                       the convergence of the initiator error.
+component of ∆(τ), i.e.  some δ, such that for all deter-                      The shift is updated everyA timesteps during the pop-
+minants i,⟨Di|∆(τ)⟩<δ.  Let us assume that any depen-                       ulation control phase according to[9, 30]
+denceδ has onC is at most of orderC0 (i.e.  constant), as                                                          (  Nex(τ)           )
+a higher power would lead to the initiator approximation                      S(τ) =S(τ−Aδτ)− γ                                           ,   (B1)
+not converging with increasing psip population.                                                           Aδτ ln     Nex(τ−Aδτ)
+  Explicitly evaluating the projected energy,
+                                                                            where γ  is a (typically small) damping parameter.  The
+E(τ)  = ⟨D0| ˆH|C(τ)ψ0 + ∆(τ)⟩C(τ)                                           (A2)variance in the shift (which is independent of the length of
+                                    ∑                                       a simulation) is a measure of the population ﬂuctuations
+                                       i⁄=0⟨D0| ˆH|Di⟩⟨Di|∆(τ)⟩             caused by requiring the population to be approximately
+        = C(τ)⟨D0| ˆH|ψ0⟩C(τ)      +              C(τ)           (A3)       constant.  Figs. 11 and 12 show the eﬀect of population
+                   ∑                                                        control on the 14-electron UEG at rs  = 1.  All simula-
+        ≤ E0 +        iH0iδ                                                 tions  converge  to  within  stochastic  error  at  suﬃciently
+                     C(τ) .                                           (A4)  large  populations  (Fig.  11);  however  extrapolation  also
+Denoting  the  maximal  value  of H0i  as η,  if  there  are                depends upon data from simulations using smaller popu-
+Ndoub double excitations of the reference, we ﬁnd                           lations of excips.  Whilst this is far from a comprehensive
+                                                                            study, we observe a relatively smooth convergence in all
+                                                                            cases once σ2Shift < 0.002 (Fig. 12).  Therefore extrapola-
+                   |E(τ)−E0| ≤ NdoubηδC(τ) .                 (A5)           tion requires careful choices of these parameters.
+                                                                                                                                                              13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 12:  iCCMC convergence studies of CCSDT for the 14-
+electron 3D uniform electron gas at rs  = 1 using M  = 925
+plane waves for diﬀerent population control parameters. δτ =
+10−4  in all calculations.  Dashed lines represent calculations
+for which the shift variance is greater than 0.002.  This is a
+more detailed view of the top panel in Fig. 11.
+
+
+
+
+
+
+ [1]A. J. W. Thom, Phys. Rev. Lett.    105, 263004 (2010).                         [13]D.  Cleland,  G.  H.  Booth,  C.  Overy,  and  A.  Alavi,  J.
+ [2]J.     ˇC´ıˇzek, J. Chem. Phys. 45, 4265 (1966).                                     Chem. Theor. Comput. 8, 4138 (2012).
+ [3]J.      ˇC´ıˇzek and J. Paldus,  Int. J. Quantum Chem. 5,  359                 [14]G.  H.  Booth,  D.  Cleland,  A.  Alavi,  and  D.  P.  Tew,  J.
+     (1971).                                                                             Chem. Phys. 137, 1 (2012).
+ [4]R. J. Bartlett and M. Musia l, Rev. Mod. Phys.     79, 291                     [15]C.  Overy,  G.  H.  Booth,  N.  S.  Blunt,  J.  J.  Shepherd,
+     (2007).                                                                             D. Cleland, and A. Alavi, J. Chem. Phys. 141, 1 (2014).
+ [5]K.  Raghavachari,   G.  W.  Trucks,   J.  A.  Pople,   and                     [16]R.  E.  Thomas,  D.  Opalka,  C.  Overy,  P.  J.  Knowles,
+     M. Head-Gordon, Chem. Phys. Lett. 157, 479 (1989).                                  A. Alavi, and G. H. Booth, J. Chem. Phys. 143, 1 (2015).
+ [6]D.  G.  Liakos,  M.  Sparta,  M.  K.  Kesharwani,  J.  M.  L.                  [17]N. S. Blunt, A. Alavi, and G. H. Booth, Phys. Rev. Lett.
+     Martin,  and  F.  Neese,  J.  Chem.  Theory  Comput.  11,                           115, 050603 (2015).
+     1525 (2015).                                                                  [18]N. S. Blunt, S. D. Smart, G. H. Booth, and A. Alavi, J.
+ [7]J. E. Subotnik, A. Sodt, and M. Head-Gordon, J. Chem.                                Chem. Phys. 143, 134117 (2015).
+     Phys. 125, 074116 (2006).                                                     [19]J. J. Shepherd, A. Gr¨uneis, G. H. Booth, G. Kresse, and
+ [8]M. Sch¨utz, Phys. Chem. Chem. Phys.    4, 3941 (2002).                               A. Alavi, Phys. Rev. B 86, 035111 (2012).
+ [9]G.  H.  Booth,  A.  J.  W.  Thom,  and  A.  Alavi,  J.  Chem.                  [20]J. J. Shepherd, G. Booth, A. Gr¨uneis, and A. Alavi, Phys.
+     Phys. 131, 054106 (2009).                                                           Rev. B 85, 081103 (2012).
+[10]G. H. Booth and A. Alavi, J. Chem. Phys.      132, 174104                      [21]J. J. Shepherd, G. E. Scuseria, and J. S. Spencer, Phys.
+     (2010).                                                                             Rev. B 90, 155130 (2014).
+[11]D. Cleland, G. H. Booth, and A. Alavi, J. Chem. Phys.                          [22]A.  Gr¨uneis,  G.  H.  Booth,  M.  Marsman,  J.  Spencer,
+     132, 41103 (2010).                                                                  A.  Alavi,  and  G.  Kresse,  J.  Chem.  Theor.  Comput. 7,
+[12]G. H. Booth, D. Cleland, A. J. W. Thom, and A. Alavi,                                2780 (2011).
+     J. Chem. Phys. 135, 084104 (2011).                                            [23]G. H. Booth, A. Gr¨uneis, G. Kresse, and A. Alavi, Nature
+                                                                                                                                                             14
+
+     493, 365 (2013).                                                              [43]G. H. Booth, S. D. Smart, and A. Alavi, Mol. Phys.      112,
+[24]F.  R.  Manby,  D.  Alf`e,  and  M.  J.  Gillan,  Phys.  Chem.                       1855 (2014).
+     Chem. Phys. 8, 5178 (2006).                                                   [44]  http://www.hande.org.uk.
+[25]M.  Marsman,  A.  Gr¨uneis,  J.  Paier,  and  G.  Kresse,  J.                  [45]J. S. Spencer, N. S. Blunt, W. A. Vigor, F. D. Malone,
+     Chem. Phys. 130, 184103 (2009).                                                     W. M. C. Foulkes, J. J. Shepherd, and A. J. W. Thom,
+[26]A. Gr¨uneis, J. Chem. Phys.      143, 102817 (2015).                                 J.  Open  Research  Software 3  (2015),  http://doi.org/
+[27]M. Del Ben, J. Hutter, and J. VandeVondele, J. Chem.                                 10.5334/jors.bw.
+     Phys. 143, 102803 (2015).                                                     [46]Y. Shao, Z. Gan, E. Epifanovsky, A. T. Gilbert, M. Wor-
+[28]A. Gr¨uneis, Phys. Rev. Lett.      115, 066402 (2015).                               mit,  J.  Kussmann,  A.  W.  Lange,  A.  Behn,  J.  Deng,
+[29]J. B. Anderson, J. Chem. Phys.      63, 1499 (1975).                                 X. Feng, et al., Mol. Phys. 113, 184 (2015).
+[30]C.  J.  Umrigar,  M.  P.  Nightingale,  and  K.  J.  Runge,  J.                [47]J.  Spencer  and  A.  J.  W.  Thom,        Data  from  “develop-
+     Chem. Phys. 99, 2865 (1993).                                                        ments  in  stochastic  coupled  cluster  theory:   The  initia-
+[31]J. S. Spencer, N. S. Blunt, and W. M. Foulkes, J. Chem.                              tor  approximation  and  application  to  the  uniform  elec-
+     Phys. 136, 054110 (2012).                                                           tron  gas”  (2015),  URL  http://dx.doi.org/10.5281/
+[32]T. H. Dunning, Jr., J. Chem. Phys.      90, 1007 (1989).                             zenodo.33883.
+[33]A. K. Wilson, T. van Mourik, and T. H. Dunning, Jr., J.                        [48]U. Wolﬀ, Comput. Phys. Commun.      156, 143 (2004).
+     Mol. Struct. (THEOCHEM) 388, 339 (1997).                                      [49]R. M. Lee, G. J. Conduit, N. Nemec, P. L´opez Rios, and
+[34]H. Flyvbjerg and H. G. Petersen, J. Chem. Phys.      91, 461                         N. D. Drummond, Phys. Rev. E 83, 066706 (2011).
+     (1989).                                                                       [50]See       https://github.com/jsspencer/pyblock for code.
+[35]H.-J.  Werner,  P.  J.  Knowles,  G.  Knizia,  F.  R.  Manby,                  [51]J. D. Hunter, Computing In Science & Engineering      9, 90
+     M. Sch¨utz, P. Celani, W. Gy¨orﬀy, D. Kats, T. Korona,                              (2007).
+     R. Lindh, et al., Molpro, version 2010.2, a package of ab                     [52]W. A. Vigor, J. S. Spencer, M. J. Bearpark, and A. J. W.
+     initio programs  (2010), see http://www.molpro.net.                                 Thom, J. Chem. Phys. 142, 104101 (2015).
+[36]H.-J.  Werner,  P.  J.  Knowles,  G.  Knizia,  F.  R.  Manby,                  [53]More formally  O(N3M4) whereM is the number of basis
+     and M. Sch¨utz, WIREs Comput Mol Sci 2, 242 (2012).                                 functions in the system
+[37]M. K´allay,  Z. Roli,  J. Csonto,  I. Ladj´anszk,  L. Szeged,                  [54]We have adopted   δτ  rather than τ  as in [1] so as to be
+     B. Lad´oczk, and G. Samu,  MRCC,  a  quantum  chemical                              more consistent with the notation of Alavi et al.
+     program suite, http://www.mrcc.hu.                                            [55]The converse, that solutions to the iteration will also be
+[38]T. Williams, C. Kelley, and many others,       Gnuplot 4.6:  an                      Coupled Cluster solutions, is not necessarily true, though
+     interactive  plotting  program,  http://www.gnuplot.info                            we have not found any situations where this is the case.
+     (2013).                                                                             Indeed  there  is  no  guarantee  that  this  iteration  proce-
+[39]J.  J.  Shepherd,  G.  H.  Booth,  and  A.  Alavi,  J.  Chem.                        dure will converge,  though with a sensible choice of δτ
+     Phys. 136, 244101 (2012).                                                           it appears to be convergent for primarily single-reference
+[40]J.  J.  Shepherd,  T.  M.  Henderson,  and  G.  E.  Scuseria,                        systems
+     Phys. Rev. Lett. 112, 133002 (2014).                                          [56]Note that our previous publication used the word excitor
+[41]J.  J.  Shepherd,  A.  Gr¨uneis,  G.  Booth,  G.  Kresse,  and                       for both the operator and the particle.
+     A. Alavi, Phys. Rev. B 86, 035111 (2012).                                     [57]This makes use of the PELE suite (see       https://github.
+[42]  http://www.imperial.ac.uk/ict/                                                     com/pele-python/pele), and we will describe details of
+     services/teachingandresearchservices/                                               this elsewhere
+     highperformancecomputing.
