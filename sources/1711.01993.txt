@@ -1,0 +1,349 @@
+ Nonlinear Network description for many-body quantum systems in continuous space
+
+                                 Michele  Ruggeri,1  Saverio  Moroni,2  and  Markus  Holzmann3, 4
+                  1Max  Planck  Institute  for  Solid  State  Research,  Heisenbergstr.   1,  70569  Stuttgart,  Germany
+                                  2DEMOCRITOS  National  Simulation  Center,  Istituto  Oﬃcina  dei
+                              Materiali  del  CNR  and  SISSA,  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                      3LPMMC,  UMR  5493  of  CNRS,  Universit´e  Grenoble  Alpes,  F-38100  Grenoble  France
+                                4Institut  Laue  Langevin,  BP  156,  F-38042  Grenoble  Cedex  9,  France
+                                                          (Dated:  November 7, 2017)
+
+                  We show that the recently introduced iterative backﬂow renormalization can be interpreted as a
+                general neural network in continuum space with non-linear functions in the hidden units.  We use
+                this wave function within Variational Monte Carlo for liquid  4He in two and three dimensions, where
+                we typically ﬁnd a tenfold increase in accuracy over currently used wave functions.  Furthermore,
+                subsequent stages of the iteration procedure deﬁne a set of increasingly good wave functions, each
+                with its own variational energy and variance of the local energy:  extrapolation of these energies to
+                zero variance gives values in close agreement with the exact values.  For two dimensional  4He, we
+                also show that the iterative backﬂow wave function can describe both the liquid and the solid phase
+                with the same functional form –a feature shared with the Shadow Wave Function, but now joined
+                by much higher accuracy.  We also achieve signiﬁcant progress for liquid  3He in three dimensions,
+                improving previous variational and ﬁxed-node energies for this very challenging fermionic system.
+
+                PACS numbers:  PACS:
+
+
+  Explicit forms of many-body ground state wave func-                       involved here are in general non-linear.  The network pa-
+tions have played an important role in the qualitative and                  rameters describing the various functions are optimized
+quantitative understanding of many-body quantum sys-                        within VMC simulations.
+tems.  Whereas pairing functions based on Bogoliubov’s                         We apply our description to liquid/solid  4He and liq-
+theory [1] have provided a good description of superﬂu-                     uid  3He,  where  we  obtain  a  systematic  lowering  of  the
+idity  and  superconductivity  of  dilute  gases,  a  full  pair-           energy as we increase the number of layers in the wave
+product (Jastrow) wave function is usually the starting                     functions.   For  the  bosonic  systems  we  benchmark  the
+point for a microscopic description of liquid helium, the                   quality of this explicit wave function with exact results
+prototype of a strongly interacting, correlated quantum                     obtained by stochastic projection Monte Carlo methods.
+system.  Starting from the ﬁrst variational Monte Carlo                     We  further  show  that  our  wave  function  is  able  to  de-
+(VMC) calculations of McMillan [2], liquid and solid he-                    scribe equally well the ﬂuid and the solid phase with the
+lium – bosonic  4He as well as fermionic  3He – have trig-                  same functional form, symmetric and translationally in-
+gered and challenged microscopic simulations to describe                    variant, qualitatively similar to the so-called shadow wave
+many-body quantum systems in two or three dimensional
+continuous space.                                                           function (SWF) approach[14] but with over one order of
+  For systems described on a lattice,  approaches based                     magnitude gain in accuracy.
+on matrix product and tensor network states [3–7] have                         Since  the  eﬀective  interaction  between  two  helium
+provided  essentially  exact  description  of  many  generic                atoms, v(r), is quantitatively well known, a large quan-
+low dimensional systems.  Very recently, neural network                     tity of computations exists which can be rather directly
+states  have  been  shown  to  lead  to  excellent  results  in             compared to experiments.  During the years several types
+one  and  two  dimensional  lattice  models  [8–11],  a  very               of wave functions have been used to simulate  4He.  In the
+promising approach for lattice systems in two and three                     ﬁrst VMC simulations [2], the wave function took into ac-
+dimensions.   However,  generalization  of  these  states  to               count just two-body interparticle correlations; these wave
+continuous systems [12] in two and three dimensions is                      functions  were  then  generalized  to  include  three-body
+diﬃcult or still lacking.                                                   and  higher  correlations,  ΨT (R) ∝  exp[−U(R)],  where
+  In this work we elaborate on a recently introduced [13]                   U(R) denotes a general, symmetric correlation function,
+class of wave functions for quantum many-body systems                       and R≡ (r1, r2,... rN) denotes the coordinate vector of
+in  continuous  space  that  include  sets  of  auxiliary  coor-            the particles [15, 16].
+dinates obtained with iterated backﬂow transformations.
+The wave function is viewed as a neural network where                          Exact results for bosonic  4He can be obtained improv-
+the hidden units of layer M  are obtained iteratively as                    ing stochatically the wave function with Projector Monte
+a function of the coordinates in layer M− 1, with layer                     Carlo techniques such as Diﬀusion Monte Carlo (DMC)
+M  = 0 corresponding to the physical particles.  In con-                    [17] or Variational Path Integral methods[18–20].  Start-
+trast  to  neural  networks  on  a  lattice,  all  the  functions           ing from any trial wave function, ΨT (R), its propagation
+                                                                                                                                                 2
+
+                                                                           fermionic or time-dependent problems [21–23].  Analyt-
+                                                                           ical integration over the hidden layer then becomes ex-
+                                                                           tremely important, since the evaluation of the resulting
+                                                                           explicit  form  may  be  possible  within  a  standard  VMC
+                                                                           approach without facing a sign problem.
+                                                                              In our case, the integration over the hidden variables
+                                                                           cannot  be  done  analytically.   However,  we  can  approx-
+                                                                           imately  perform  the  integrations  in  Eq.  (1)  expanding
+                                                                           U(R′) around some positions Q, which will be ﬁxed later.
+                                                                           For large λ, we can truncate the expansion after the lin-
+                                                                           ear term     ∫
+                                                                                                      [                                        ]
+                                                                            Ψτ(R)≈          dR′ exp    −λ (R′− R +∇U/2λ)2−V (R)
+
+FIG. 1.  Schematic representation of a SWF as a non-linear                           × exp[−U− (R− Q)·∇U + (∇U)2/4λ]      (3)
+network.  The input layer is formed by the coordinates of the              where U  and∇U  are evaluated at Q.  The gaussian in-
+wave function, R, and we have to integrate over the coordi-                tegrals are centered around
+nates in the hidden layer, R′.  Input and hidden layer coordi-
+nates are connected via a gaussian, whereas the coordinates                                       Q = R−∇U(Q)/2λ                       (4)
+inside each layer are connected by the many-body correlation
+potentials, V (R) and U(R′).  Including several hidden layers              which gives an implicit equation to determine Q.
+correspond to the application over several projection steps.                  Performing the gaussian integration, we get
+
+                                                                               Ψτ(R)∼ exp[−V (R)−U(Q)− [∇U(Q)]2/4λ]     (5)
+in imaginary time, τ, can be written as                                    The  resulting  wave  function  can  then  be  put  into  the
+                         ∫                                                 form
+             Ψτ(R)∝         dR′G(R, R′;τ)ΨT (R′)            (1)
+                                                                                             Ψτ(R) = Φ(0)(R)· Φ(1) (Q)                  (6)
+For small τ, the functional form of G is given by                          where Φ(n)(·) = exp[−U (n)(·)] is a correlated wave func-
+        G(R, R′;τ)∝ exp[−λ(R− R′)2−V (R)]       (2)                        tion  containing  generalized  many-body  Jastrow  poten-
+                                                                           tials, U (n)(·).  Although our derivation suggests explicit
+withλ =m/2¯h2τ  andV (R) is given by the interparticle                     expressions for U (n) and Q in terms of V , U, and λ, we
+potential, V (R) =τ∑i<jv(rij).  Large projection times                     rather retain only the functional form,  and we simplify
+can be reached by iterative application of the short time                  Eq. (4) by replacing Q with R in the r.h.s.  The corre-
+propagator;  the  integrals  can  then  be  sampled  numeri-               sponding parameters are then optimized,  such that the
+cally via projection Monte Carlo methods.                                  wave function, Eq. (6), minimizes some target function,
+  Alternatively, we can consider Eqs (1) and (2) as an im-                 usually taken as the energy or the variance of the local
+proved variational ansatz for our ground state, the SWF                    energy.
+[14], and minimize the energy with respect to variations                      In   projection   Monte   Carlo   algorithms,   the   exact
+in λ, V ,  and U.   In  contrast  to  the  explicit  trial  wave           ground state is obtained by iterative applications of the
+functions,  ΨT ,  used  in  previous  VMC  calculations,  the              propagator, G.  Similarly, we want to improve our wave
+SWF is able to describe the melting from solid to liquid                   function  by  approximately  applying  the  propagator  to
+4He without modiﬁcation of the structure.                                  Ψτ. If we again identify R with Q in Eq. (6), Ψτ is of sim-
+  Both shadow and projector Monte Carlo methods ex-                        ilar form as the original trial wave function, ΨT , namely
+plicitly  depend  on  auxiliary  (or  hidden)  variables,  R′.             the exponential of generalized Jastrow potentials, and we
+The resulting wave function thus forms a network where                     can apply the derivation outlined above,  Eqs. (3–5),  to
+the hidden variables are connected to the input layer, R.                  obtain Ψ2τ.  We end up with a rather simple,  iterative
+However, in contrast to many neural network systems on                     structure
+a lattice, the variables inside of each layer are connected                                                  M∏
+to  each  other  via  the  many-body  potentials, V (·)  and                                 Ψ(M)(R) =           Φ(n)(Q(n))                   (7)
+U(·).  Figure 1 shows a schematic representation of the                                                     n=0
+SWF network.                                                               where M  is  the  number  of  iterative  backﬂow  transfor-
+  Within SWF and projection Monte Carlo methods, the                       mation.  At each level, n, new backﬂow coordinates are
+integration over the variables in the hidden layers is done                introduced
+stochastically.  This will in general lead to a sign (phase)
+problem whenever G or ψT  carries a sign (phase) as for                                  Q(n) = Q(n−1) +∇~U (n−1)(Q(n−1))            (8)
+                                                                                                                                                     3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Structure of the iterated backﬂow wave function ob-                  FIG.  3.   Diﬀerence  between  the  variational  energy  and  the
+tained after approximated integration over the hidden layers                  exact  value  in  units  of  the  kinetic  energy T  for  increasing
+of SWF and projector Monte Carlo wave functions (see Fig.1).                  number of hidden layersM of our non-linear network function
+Each layer introduces a new set of non-linear functions U (n)                 for liquid  4He in three dimensions.  Simulations are perfomed
+(here,  two  and  three-body  Jastrow  forms, U (n)2   , U (n)3   )  and      for N  = 64 atoms at equilibrium density (ρ = 0.0218 ˚A−3),
+backﬂow coordinates Q(n) which depend only on the coordi-                     close to freezing (ρ = 0.0262 ˚A−3), and for negative pressure
+nates of the previous layers Q(m<n).                                          (ρ = 0.0196 ˚A−3).  Starting from a Jastrow wave function (J)
+                                                                              with two- and three-particle correlations,M = 0, the error in
+                                                                              the energy is systematically reduced increasing the number of
+                                                                              layers via iterative backﬂow procedure.
+
+These  generalized  backﬂow  coordinates  are  iteratively
+built  from  the  backﬂow  and  Jastrow  potentials  of  the                  tonian for this system is given by
+previous level, Q(n−1) and ~U (n−1), respectively, starting                                                   p2i
+from Q(0) ≡  R.   The  notation ~U (n)  indicates  that  we                                       H =∑                    v(rij).                    (9)
+may use the same functional form in all the generalized                                                   i  2m +∑i<j
+Jastrow factors U (n)≡− log Φ(n).  In practice, we have
+used the simplest possible two- and three-body forms for                      and we have use the HFDHE2 eﬀective potential [27] for
+our explicit calculations below.                                              the interatomic interaction, v(r).
+  The approximate integration of the hidden layer struc-                         In  the  network  used  to  describe  the  ground  state  of
+ture  of SWF  and projector Monte Carlo  wave  function                       bosonic  4He, each layer n contains two- and three-body
+can  again  be  considered  as  a  non-linear  network,  rep-                 correlations in the generalized Jastrow form
+                                                                                                                (                   )
+resented  in  Fig.  2.    It  generalizes  the  iterative  back-                              Φ(n)(X) =e−        U(n)2    (X)+U(n)3    (X)       (10)
+ﬂow  wavefunction  employed  previously  for  the  descrip-
+tion of two-dimensional fermionic  3He [13] to include also                   with
+bosonic systems.
+  Based on hydrodynamic considerations,  backﬂow has                                        U (n)2   (X) =∑     u(n)2   (xij)
+                                                                                                           i<j
+been introduced originally into wave functions to improve                                   U (n)               G(n)
+the  excitation  spectrum  of  superﬂuid  4He  [24,  25],  but                                3   (X) =∑          i   (X)· G(n)i   (X)           (11)
+its  importance  has  soon  been  recognized  for  fermionic                                                 i
+systems  [26]  where  backﬂow  wave  functions  reduce  the                                 G(n)i   (X) =∑      (xi− xj)ζ(n)(xij)
+ﬁxed-node error in a broad class of systems. Our heuristic                                                   j
+derivation above suggests that the network based on iter-
+ative backﬂow transformations should rather be consid-                        characterized by one-dimensional functions, u(n)2   (x) and
+ered as a generic description for quantum systems in con-                     ζ(n)(x).  Here, the coordinates X can refer to either the
+tinuous space. In the following, we explicitly demonstrate                    bare atomic coordinates (R≡ Q(0)) or the transformed
+that this approach produces high-quality wave functions.                      ones (Q(n), n≥ 1) which are obtained via
+                                                                                                          (                     )                 )
+  In order to benchmark the performance of the network,                         q(n)i    = q(n−1)i        +∑q(n−1)i  − q(n−1)j    η(n)(q(n−1)ij
+we focus on a system of N  4He atoms in a cubic simula-                                                j
+tion box with periodic boundary conditions.  The Hamil-                                                                                          (12)
+                                                                                                                                                       4
+
+                                ρ = 0.0196 ˚A−3
+                  EV MC/N       σ2/N    ESWF/N       EDMC/N
+          J      -6.8593(10)    14.80
+         BF1     -6.9936(14)     3.03   -6.765(8)    -7.0243(6)
+         BF2     -7.0076(15)     2.14
+       Extrap.    -7.033(2)
+                                ρ = 0.0218 ˚A−3
+                  EV MC/N       σ2/N    ESWF/N       EDMC/N
+          J      -6.9137(10)    21.40
+         BF1     -7.1204(12)     5.22
+         BF2     -7.1367(10)     3.30   -6.937(6)    -7.1691(12)
+         BF3     -7.1458(14)     2.36
+       Extrap.    -7.169(3)
+                                ρ = 0.0262 ˚A−3
+                  EV MC/N       σ2/N    ESWF/N       EDMC/N
+          J      -6.0220(20)    49.99
+         BF1     -6.4656(25)    11.20                                          FIG.  4.      Pair  correlation  functions g(r)  for  liquid   4He  in
+         BF2     -6.5230(17)     9.34   -6.350(6)    -6.5921(20)               three  dimensions  at  equilibrium  density.   Dashed  lines  (left
+         BF3     -6.5402(13)     5.84                                          scale) show variational results without backﬂow terms (blue)
+         BF4     -6.5502(14)     6.87                                          and with three backﬂow iterations (red), as well as DMC re-
+       Extrap.    -6.615(2)                                                    sults  (black,  barely  visible  behind  the  red  dashes;  extrapo-
+
+TABLE  I.   Ground-state  energy  per  particle,  in  K,  of  liq-             lated estimate[17] using the BF3 trial wave function).  Solid
+uid  4He  in  three  dimensions  at  diﬀerent  densities,  obtained            lines (right scale) show a tenfold magniﬁcation ot the devia-
+with  VMC  (EV MC/N,ESWF/N)  and  DMC  (EDMC/N)  us-                           tion between the VMC and DMC results.
+ing diﬀerent types of trial wave functions:  Jastrow wave func-
+tion  without  backﬂow  (J),  with n  iterated  backﬂow  trans-
+formations (BFn) and Shadow Wave Function[29].  We also
+report  the  variance σ2  of EV MC  and  the  extrapolation  of
+EV MC/N  to  zero  variance[13].   Statistical  uncertainties  on
+the last digit(s) are given in parentheses.  Tail corrections are
+calculated  assuming g(r)  =  1  for  distances  larger  than  half
+the side of the simulation cell.
+
+
+The  representations  of  the  one-dimensional  functions,
+u(n)2   , ζ(n),  and η(n),  establish  the  network  parameters
+which are determined by energy minimization using the
+stochastic reconﬁguration method [28].
+  Although  each  hidden  layer  increases  the  number  of
+variational parameters, the scaling of the computational
+eﬀort for evaluation of the wave function with respect to
+the number of atoms, N, does not increase [13].                                FIG. 5.  Error of the ground state energy of liquid and solid
+                                                                               4He in two dimension in units of the kinetic energy T  across
+  In Fig. 3 and table I, we show the error in the ground                       the the liquid-solid coexistence region (shaded)[32], using var-
+state  energy  obtained  for N  =  64   4He  atoms  in  three                  ious wave functions:  Shadow[30],  Jastrow,  Nosanow and it-
+dimensions.  We have considered the liquid at three dif-                       erative backﬂow network (5 iteration layers at coexistence, 4
+ferent  densities, ρ  =  0.0196  ˚A−3  (negative  pressure),                   layers otherwise).
+ρ = 0.0218 ˚A−3 (equilibrium) andρ = 0.0262 ˚A−3 (freez-
+ing).  The error of the Jastrow or Shadow wave functions
+ranges  in  the  tenths  of  K.  The  ﬁrst  backﬂow  layer  al-                -0.02K at the highest density.
+ready results in signiﬁcantly better variational energies,                        A roughly tenfold increase in accuracy is also obtained
+and additional layers of backﬂow transformations bring                         in the pair correlation function g(r), as shown in Fig. 4
+the error down to a few hundredth K.                                           for the equilibrium density.
+  Apart from the energy,  also the variance of the local                          In order to describe freezing, the liquid and the solid
+energy, σ2, can be computed at each iteration level, M,                        phase must usually be described by diﬀerent functional
+without additional computational costs.  Under suitable                        forms within VMC, as the usual Jastrow wave function
+conditions [13] the extrapolation of the energy to σ2 = 0                      is  in  general  unable  to  localize  the  atoms  in  a  crystal
+with a leading linear term gives the exact ground state                        (unless  the  pair  pseudopotential  is  made  unreasonably
+energy.   The  largest  error  in  the  extrapolated  values  is               hard).   This  bias  propagates  even  to  projector  Monte
+                                                                                                                                                    5
+
+Carlo methods (DMC) based on importance sampling us-                                                         ρ = 0.01635 ˚A−3
+ing the Jastrow function.  In order to correctly describe                                     EV MC/N        σ2/N    EFNDMC/N        EEXP/N
+the solid phase, usually one uses in VMC and DMC an                                   J      -1.6812(17)     38.23    -2.0925(16)
+unsymmetrized  Nosanow  wave  function  [31]  where  the                             BF1     -2.0844(13)     16.70    -2.2760(10)
+atoms are individually tied to predetermined lattice sites                           BF2     -2.2278(23)     8.10     -2.3190(14)      -2.481
+by a one-body term. In this setup, the Jastrow(Nosanow)                              BF3     -2.2576(15)     5.60     -2.3288(14)
+                                                                                   Extrap.     -2.34(1)
+phase describes a metastable liquid(solid) phase at den-                          Ref. [16]    -2.168(3)      14       -2.306(4)
+sities higher(lower) than the coexistence region.                                                            ρ = 0.02380 ˚A−3
+  One  important  conceptual  progress  of  SWF  was  the                                     EV MC/N        σ2/N    EFNDMC/N        EEXP/N
+possibility to describe both liquid and solid  4He within                             J       0.7582(32)    111.06    -0.2890(43)
+the  same  wave  function  [14],  without  breaking  transla-                        BF1      0.0952(17)     65.03    -0.5572(41)
+tional  invariance  or  Bose  symmetry.   Remarkably,  this                          BF2     -0.3661(42)     29.43    -0.6545(15)      -0.918
+feature  is  shared  by  our  network  wave  function.    In                         BF3     -0.5177(32)     17.47    -0.6911(16)
+Fig. 5, we compare the performance of network, Jastrow-                              BF4     -0.5531(27)     14.41    -0.7013(42)
+Nosanow,   and  Shadow  wave  functions  for N   =   16                            Extrap.     -0.723(3)
+4He  atoms  in  two  dimensions  around  the  liquid-solid                        Ref. [16]    -0.127(5)      49      -0.6485(4)
+transition[32].    Again,  our  backﬂow  network  function                   TABLE II.  Ground-state energy per particle, in K, of liquid
+achieves  a  roughly  tenfold  reduction  of  the  variational               3He  in  three  dimensions  at  equilibrium  and  freezing  densi-
+error with respect to Shadow[30], Jastrow, and Nosanow                       ties,  obtained  with  VMC  (EV MC/N)  and  ﬁxed-node  DMC
+wave  functions  –over  a  large  density  range  and  across                (EFNDMC/N)  using  diﬀerent  types  of  trial  wave  functions:
+a  phase  transition.   For  the  higher  density, ρ  =  0.09,               Jastrow wave function without backﬂow (J), and with n it-
+we make sure that the backﬂow wave function describes                        erated backﬂow transformations (BFn).  We also report the
+a  solid  by  inspection  of  the  pair  distribution  function              variance σ2 of EV MC, the extrapolation of EV MC/N  to zero
+                                                                             variance[13], and the experimental value EEXP/N  [33].  Sta-
+g(x,y) calculated with VMC, which is hardly distinguish-                     tistical uncertainties on the last digit(s) are given in paren-
+able from the Nosanow (bona ﬁde solid) result.  For the                      theses.  Tail corrections are calculated assuming g(r) = 1 for
+lowest density g(x,y) turns into a radial, liquid-like pair                  distances larger than half the side of the simulation cell.  The
+distribution function, while at coexistence it is interme-                   results from entry S3BF4 of table I of Ref. [16] are corrected
+diate  between  the  Nosanow  and  Jastrow  results,  much                   by a perturbative estimate of the diﬀerence due to their use
+closer to the former.                                                        of a diﬀerent [34] pair potential v(r).
+
+  Up to now,  we have demonstrated the quality of our
+backﬂow network to describe bosonic quantum systems,                         adopted  here  is  accurate  within  a  few  hundredth  of  a
+where  stochastic  projection  Monte  Carlo  methods  pro-                   K from equilibrium to freezing density for  4He [35], and
+vide  exact  results  for  benchmarking.    Now,  we  show                   presumably equally reliable also for  3He at slightly lower
+that  our  approach  signiﬁcantly  improves  the  descrip-                   densities; furthermore the number of particles,N = 66, is
+tion of strongly correlated fermions in three dimensions,                    chosen to give a small ﬁnite-size shell eﬀect on the kinetic
+similar to previous results [13] obtained for two dimen-                     energy, so that the energies in the table are reasonably
+sional  liquid   3He.   In  table  II  we  list  estimates  of  the          close  to  the  thermodynamic  limit.   Our  best  estimate,
+ground  state  energy  obtained  with  diﬀerent  wave  func-                 the extrapolation to zero variance, is higher than the ex-
+tions  for N  =  66   3He  atoms  in  three  dimensions,  at                 perimental energy by 0.14 K at equilibrium density, and
+equilibrium and freezing density.  The previous best es-                     by 0.19 K at freezing.  This comes to a surprise,  as for
+timates  [16]  were  obtained  introducing  explicit  correla-               4He in two and three dimension and small systems of  3He
+tions up to four-particle in the Jastrow factor and three-                   in two dimensions –very similar cases where exact results
+particle  in  the  backﬂow  coordinates.   The  results  from                are available– the error in the zero-variance extrapolation
+Ref.  [16] included in table II refer to a spin-singlet pair-                is of order of 0.01 K. Nevertheless the improvement over
+ing wave function, which performs marginally better than                     the previous variational and ﬁxed-node energies remains
+a Slater determinant of plane waves.  They lie between                       signiﬁcant.
+BF1 and BF2, showing that the implicit inclusion of cor-
+relations at all orders through backﬂow iteration is more                       In  summary,  in  this  paper,  we  have  put  the  iterated
+eﬀective than explicit construction of successive n-order                    backﬂow  description  [13]  in  a  more  general  frame.   We
+terms (although nothing prevents the two approaches to                       have demonstrated the quality of our backﬂow network
+be combined).  Furthermore, systematic improvement is                        for quantitative description of bosonic and fermionic he-
+more easily obtained by adding further layers of backﬂow                     lium  systems  in  two  and  three  dimensional  continuous
+transformations than further explicit correlations.                          space.
+  In   the   lack   of   exact   benchmark   results   for   this               In our description, each backﬂow transformation cor-
+fermionic case, we compare our results to the experimen-                     responds to a hidden layer, and each new layer depends
+tal equation of state [33].  The HFDHE2 pair potential                       on the coordinates in the previous one.  This structure is
+                                                                                                                                                             6
+
+motivated heuristically from a Path-Integral projection.                          [16]M. Holzmann, B. Bernu, and D.M. Ceperley, Phys. Rev.
+However, from the interpretation as neural network, one                                B 74, 104510 (2006).
+may ask if our description of several fully connected layers                      [17]M. Foulkes, L. Mitas, R. Needs and G. Rajagopal, Rev.
+can be simpliﬁed or made more eﬃcient, e.g.  replace the                               Mod. Phys. 73, 33-83 (2001).
+multiple layer structure by a single layer with M  times                          [18]D. M. Ceperley, Rev. Mod. Phys.     67, 1601 (1995).
+more  backﬂow  coordinates  or  ﬁnd  a  formulation  closer                       [19]S. Baroni and S. Moroni, Phys. Rev. Lett.     82 4745 (1999).
+                                                                                  [20]A.  Sarsa,  K.  E.  Schmidt  and  W.  R.  Magro,  J.  Chem.
+to a restricted Boltzmann machine as recently applied to                               Phys. 113, 1366 (2000).
+discrete lattice systems [8, 11].                                                 [21]F. Pederiva, S. A. Vitiello, K. Gernoth, S. Fantoni, and
+   Although properties of the ground state or systems in                               L. Reatto, Phys. Rev. B 53, 15129 (1996).
+thermal equilibrium can be exactly computed by stochas-                           [22]F.  Calcavecchia,  F.  Pederiva,  M.  H.  Kalos,  and  T.  D.
+tic algorithms for bosonic systems [18], accurate explicit                             K¨uhne, Phys. Rev. E 90, 053304 (2014).
+expressions for correlated quantum states open the pos-                           [23]F.  Calcavecchia  and  M.  Holzmann,  Phys.  Rev.  E      93,
+sibility to study also out-of-equilibrium time evolution of                            043321 (2016).
+                                                                                  [24]R.  P.  Feynman  and  M.  Cohen,  Phys.  Rev.      102,  1189
+a many-body system [36, 37] in two or three dimensional,                               (1956).
+continuous space.                                                                 [25]V. R. Pandharipande and N. Itoh, Phys. Rev. A     8, 2564
+                                                                                       (1973).
+                                                                                  [26]K. E. Schmidt and V. R. Pandharipande, Phys. Rev. B
+                                                                                       19, 2504 (1979).
+                                                                                  [27]R. A. Aziz, V. P. S. Nain, J. S. Carley, W. L. Taylor and
+ [1]N.N. Bogoliubov, J. Phys. Moscow    11, 23 (1947).                                 G. T. McConville, J. Chem. Phys 70, 4330 (1979).
+ [2]W.L. McMillan, Phys. Rev.    138, A442 (1965).                                [28]S. Sorella, M. Casula, and D. Rocca, J. Chem. Phys.     127,
+ [3]M. Fannes, B. Nachtergaele, and R. F. Werner, Commu-                               014105 (2007).
+     nications in Mathematical Physics 144, 443 (1992).                           [29]S. Moroni,  D.E. Galli,  S. Fantoni and L. Reatto,  Phys.
+ [4]S. R. White, Phys. Rev. Lett.    69, 2863 (1992).                                  Rev. B 58, 909 (1998).
+ [5]U. Schollw¨ock, Rev. Mod. Phys.    77, 259 (2005).                            [30]B. Krishnamachari B and G. V. Chester, Phys. Rev. B
+ [6]U. Schollw¨ock, Annals of Physics    326, 96 (2011).                               61, 9677.
+ [7]R. Or´us, Ann. Phys.    349, 117 (2014).                                      [31]L. H. Nosanow, Phys. Rev. Lett.     13, 270 (1964).
+ [8]G. Carleo and M. Troyer, Science    355, 602 (2017).                          [32]M.  C.  Gordillo  and  D.  M.  Ceperley,  Phys.  Rev.  B      58,
+ [9]H. Saito, J. Phys. Soc. Jpn.    86, 093001 (2017).                                 6447 (1998).
+[10]H. Saito and M. Kato, arXiv:1709.05468 (2017).                                [33]R. A. Aziz and R. K. Pathria, Phys. Rev. A     7, 809 (1973);
+[11]Y.  Nomura,  A.  Darmawan,  Y.  Yamaji,  and  M.  Imada,                           the  energy  at  equilibrium  density  is  from  L-  Reesink,
+     arXiv:1709.06475 (2017).                                                          Ph.D. thesis, University of Leiden, 2001.
+[12]M.  Ganahl,  J  Rinc´on,  and  G.  Vidal,  Phys.  Rev.  Lett.                 [34]T.  Korona,  H.  L.  Williams,  R.  Bukowski,  B.  Jeziorski,
+     118, 220402 (2017).                                                               and K. Szalewicz, J. Chem. Phys. 106, 5109 (1997).
+[13]M.  Taddei,  M.  Ruggeri,  S.  Moroni  and  M.  Holzmann,                     [35]M. H. Kalos, M. A. Lee, and G. V. Chester, Phys. Rev.
+     Phys. Rev. B 91, 115106 (2015).                                                   B 24, 115 (1981).
+[14]S. Vitiello, K. Runge, and M. H. Kalos, Phys. Rev. Lett.                      [36]G.  Carleo,  F.  Becca,  M.  Schir`o,  and  M.  Fabrizio,  Sci.
+     60, 1970 (1988).                                                                  Rep. 2, 243 (2012).
+[15]K. Schmidt, M. H. Kalos, M. A. Lee, and G. V. Chester,                        [37]G.  Carleo,  L.  Cevolani,  L.  Sanchez-Palencia,  and  M.
+     Phys. Rev. Lett. 45, 573 (1980).                                                  Holzmann, Phys. Rev. X 7, 031026 (2017).

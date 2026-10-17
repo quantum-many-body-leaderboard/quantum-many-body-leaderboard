@@ -11,6 +11,27 @@ Second pass on every paper: **harvest its bibliography**. Comparison tables cite
 they are beating, and reviews aggregate SOTA across models we have not touched. That is how the
 triangular/kagome/pyrochlore instances get found: nobody wrote a SOTA note for them.
 
+## Track 2, beyond neural networks (2026-10-17): DMC, FCIQMC and coupled cluster
+
+RULES.md 12.3 and 12.4 were amended the same day: finite-basis energies are rows (full CI in a basis is
+`variational`; initiator FCIQMC, coupled cluster and transcorrelated methods `projected`; basis-limit extrapolations
+`extrapolated`). Seeds: the eleven primaries behind the 2026-10-16 papers' comparisons, resolved on Crossref and
+Semantic Scholar; texts fetched for ten (Tanatar & Ceperley 1989 has no arXiv version). Three reader agents.
+Pass `sweep-rows-2026-10-17-heglit.json` (`qmbl-runs/qmbl-worklist/2026-10-17-heg-lit/make_rows.mjs`):
+**136 rows, 17 new instances.**
+
+- arXiv:0801.0518 (López Ríos et al. 2006): N = 54 at rs = 0.5-20, Hartree-Fock, Slater-Jastrow and backflow VMC and
+  fixed-node DMC. Its Hartree-Fock energies match QMBL's to their error bars at all six densities
+  (`checks/heg-hf/convention-check-2026-10-17.json`).
+- cond-mat/9803092 (Kwon, Ceperley & Martin 1998): N = 54-246, VMC and DMC with backflow and three-body terms (Ry).
+- arXiv:1109.2635 (Shepherd et al. 2012): N = 54 initiator FCIQMC at 2838 spin orbitals (`projected`) and its 1/M
+  extrapolation (`extrapolated`).
+- arXiv:2103.03176 (Liao et al. 2021): CCD, DCD and their transcorrelated forms at the complete-basis limit, N = 14 and 54.
+- `cited_by.mjs` pages OpenAlex by page number: cursor paging now returns HTTP 401 from the second page.
+- **Held:** correlation energies whose reference energy is not printed (arXiv:1201.4691, 1202.4990, 1511.05752; 63
+  values), quoted numbers (32), arXiv:1002.2101 (cell shape not stated), and non-energies.
+  arXiv:1711.01993 and 1501.02199 are about helium, not the electron gas.
+
 ## The first track-2 pass (2026-10-16): the electron gas
 
 The papers behind ketworks.org's 199 electron-gas results, read under RULES.md 12 (adopted the same day). Three reader

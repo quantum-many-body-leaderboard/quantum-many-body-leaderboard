@@ -59,10 +59,11 @@ async function openalexCiting(seed) {
   const work = await get(`https://api.openalex.org/works/${key}?mailto=${MAILTO}`);
   if (!work) return { work: null, citing: [] };
   const citing = [];
-  let cursor = "*";
-  while (cursor) {
+  // Page numbers, not cursors: since 2026-10 OpenAlex answers a cursor's second page with HTTP 401
+  // without an API key, while page=2.. still works (up to 10,000 results).
+  for (let n = 1; ; n++) {
     const page = await get(`https://api.openalex.org/works?filter=cites:${work.id.split("/").pop()}` +
-      `&per-page=200&cursor=${encodeURIComponent(cursor)}&mailto=${MAILTO}`);
+      `&per-page=200&page=${n}&mailto=${MAILTO}`);
     for (const w of page.results) citing.push({
       arxiv: arxivOf(w.ids) || (w.locations || []).map(l => (l.landing_page_url || "").match(/arxiv\.org\/abs\/(.+)$/)?.[1]).find(Boolean) || "",
       doi: (w.doi || "").replace("https://doi.org/", ""),
@@ -71,8 +72,8 @@ async function openalexCiting(seed) {
       title: (w.title || "").replace(/\s+/g, " "),
       via: "openalex",
     });
-    cursor = page.meta?.next_cursor || null;
-    if (cursor) await sleep(400);
+    if (page.results.length < 200 || n * 200 >= (page.meta?.count ?? 0)) break;
+    await sleep(400);
   }
   return { work, citing };
 }

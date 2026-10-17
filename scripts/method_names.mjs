@@ -33,7 +33,7 @@ export const SYMMETRY_TERMS = new Set(["SU(2)", "U(1) charge", "U(1) spin", "tra
   "C4", "C4v", "C6v", "sublattice", "full symmetry group", "unspecified",
   "unspecified (symmetry optimization)", "unspecified (symmetrized variants)"]);
 const SLOTS = ["symmetric", "projected", "extrapolated"];
-const EXTRAPOLATION = /^(?:(?:variance|truncation error|Δτ) → 0|χ → ∞)(?: \([^()]+\))?$/;
+const EXTRAPOLATION = /^(?:(?:variance|truncation error|Δτ|1\/M) → 0|χ → ∞)(?: \([^()]+\))?$/; // 1/M: the one-particle basis size (track 2, 2026-10-17)
 // Symmetry or extrapolation wording outside a slot. A Gutzwiller projection removes double
 // occupancy; it is part of the state, not a symmetry.
 const LOOSE = /symmetr|projection|(?<!Gutzwiller)-projected|→ [0∞]|extrapolat/i;
@@ -591,6 +591,46 @@ Object.assign(NAMES, {
   "SJB-VMC (crystal)": ["Slater-Jastrow-backflow", "Gaussian-orbital (crystal) determinant"],
   "SJB-DMC (crystal trial state)": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow, Gaussian-orbital (crystal) determinant", { family: "DMC" }],
   "DeepSolid (1 determinant)": ["DeepSolid", "1 determinant, 3 layers 256/32", { family: "other NQS" }],
+});
+
+// Pass 2026-10-17-heg-lit (SWEEP.md), track 2: arXiv:0801.0518 (López Ríos et al.), cond-mat/9803092 (Kwon, Ceperley
+// & Martin), 1109.2635 (Shepherd et al., FCIQMC), 2103.03176 (Liao et al., CC and transcorrelated CC).
+Object.assign(NAMES, {
+  "i-FCIQMC (2M = 2838 spin orbitals)": ["FCIQMC", "initiator (n_add = 3), 2838 spin orbitals", { family: "FCIQMC / CC" }],
+  "i-FCIQMC, 1/M extrapolation": ["FCIQMC", "initiator (n_add = 3); extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "VMC of the Hartree-Fock determinant": ["Hartree-Fock", "plane-wave determinant, VMC estimate"],
+  "VMC, SJ": ["Slater-Jastrow", ""],
+  "DMC, SJ nodes": ["Fixed-node DMC", "trial state: Slater-Jastrow; extrapolated: Δτ → 0", { family: "DMC" }],
+  "VMC, SJ3": ["Slater-Jastrow", "three-electron Jastrow"],
+  "VMC, BF": ["Slater-Jastrow-backflow", "homogeneous backflow"],
+  "DMC, BF nodes": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow; extrapolated: Δτ → 0", { family: "DMC" }],
+  "DMC, SJ3 nodes": ["Fixed-node DMC", "trial state: Slater-Jastrow + three-electron Jastrow; extrapolated: Δτ → 0", { family: "DMC" }],
+  "VMC, BF3": ["Slater-Jastrow-backflow", "homogeneous backflow + three-electron Jastrow"],
+  "DMC, BF3 nodes": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow + three-electron Jastrow; extrapolated: Δτ → 0", { family: "DMC" }],
+  "VMC SJ": ["Slater-Jastrow", ""],
+  "VMC SJ+3BD": ["Slater-Jastrow", "three-body correlation"],
+  "VMC SJ+BF": ["Slater-Jastrow-backflow", ""],
+  "VMC SJ+3BD+BF": ["Slater-Jastrow-backflow", "three-body correlation"],
+  "DMC SJ": ["Fixed-node DMC", "trial state: Slater-Jastrow", { family: "DMC" }],
+  "DMC SJ+3BD+BF": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow + three-body", { family: "DMC" }],
+  "CCD, complete-basis limit": ["CCD", "extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "DCD, complete-basis limit": ["DCD", "extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-CCD (k_c = 1), complete-basis limit": ["TC-CCD", "correlator cutoff k_c = 1 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-DCD (k_c = 1), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = 1 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-CCD (k_c = √2), complete-basis limit": ["TC-CCD", "correlator cutoff k_c = √2 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-DCD (k_c = √2), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = √2 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-CCD (k_c = 2), complete-basis limit": ["TC-CCD", "correlator cutoff k_c = 2 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-DCD (k_c = 2), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = 2 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-CCD (k_c = √6), complete-basis limit": ["TC-CCD", "correlator cutoff k_c = √6 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-DCD (k_c = √6), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = √6 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-CCD (k_c = √5), complete-basis limit": ["TC-CCD", "correlator cutoff k_c = √5 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-DCD (k_c = √5), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = √5 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-CCD (k_c = 2√2), complete-basis limit": ["TC-CCD", "correlator cutoff k_c = 2√2 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-DCD (k_c = 2√2), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = 2√2 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-CCD (k_c = 3), complete-basis limit": ["TC-CCD", "correlator cutoff k_c = 3 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-DCD (k_c = 3), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = 3 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-CCD (k_c = 4), complete-basis limit": ["TC-CCD", "correlator cutoff k_c = 4 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "TC-DCD (k_c = 4), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = 4 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
 });
 
 // Systematic families of strings, matched when no exact entry exists.
