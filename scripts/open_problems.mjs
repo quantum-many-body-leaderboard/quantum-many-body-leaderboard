@@ -73,7 +73,13 @@ export async function loadOpenProblems(instances, dir = process.env.OPEN_PROBLEM
     if (wrong) throw new Error(`${path.join(results, f)}: ${wrong}`);
     return { ...e, file: f };
   });
-  return { targets, entries };
+  // Its own citation since its first Zenodo release (v0.1.0, 2026-10-17), read with the README's
+  // parser; a checkout without CITATION.cff cites QMBL.
+  const cff = path.join(root, "CITATION.cff");
+  const citation = fs.existsSync(cff)
+    ? (await import(pathToFileURL(path.join(root, "scripts/citation.mjs")).href)).citationOf(fs.readFileSync(cff, "utf8"))
+    : null;
+  return { targets, entries, citation };
 }
 
 // qrec_verify/instance.py best_variational (quantum-many-body-leaderboard/verifier): the lowest unflagged variational row, with
@@ -143,9 +149,11 @@ export function openProblemsPages(op, instances, site) {
   const { targets, entries, systems } = score(op, instances);
   const n = targets.length;
   const aiBadge = a => `<span class="badge">${AI_LABELS[a]}</span>`;
-  // What the Cite button copies and the citation section prints (2026-10-09). QMBL: Open Problems
-  // has no DOI of its own yet, so it cites QMBL under QMBL's own title and concept DOI (2026-10-16).
-  const citation = `${CITE_HEAD}, ${CITE_TITLE}, Zenodo (${CITE_YEAR}). https://doi.org/${DOI}`;
+  // What the Cite button copies and the citation section prints (2026-10-09): QMBL: Open Problems
+  // by its own concept DOI (2026-10-17), else QMBL's.
+  const own = op.citation;
+  const c = own ? { head: own.head, title: own.title, year: own.year, doi: own.doi } : { head: CITE_HEAD, title: CITE_TITLE, year: CITE_YEAR, doi: DOI };
+  const citation = `${c.head}, ${c.title}, Zenodo (${c.year}). https://doi.org/${c.doi}`;
 
   const compute = c => {
     const h = x => Number(x).toLocaleString("en-US", { maximumFractionDigits: 1 });
@@ -251,9 +259,10 @@ ${entriesTable}` : "";
   const cite = `
 <section class="cite" id="cite">
   <h2>Citing QMBL: Open Problems</h2>
-  <p>QMBL: Open Problems has no DOI of its own yet. Its targets are QMBL's open instances, so cite QMBL by its concept DOI, which always resolves to the latest release:</p>
-  <blockquote class="citation">${esc(CITE_HEAD)}, <em>${esc(CITE_TITLE)}</em>, Zenodo (${esc(CITE_YEAR)}).
-  <a href="https://doi.org/${esc(DOI)}">${esc(DOI)}</a></blockquote>
+  <p>${own ? "Cite QMBL: Open Problems by its concept DOI, which always resolves to the latest release:"
+    : "QMBL: Open Problems has no DOI of its own yet. Its targets are QMBL's open instances, so cite QMBL by its concept DOI, which always resolves to the latest release:"}</p>
+  <blockquote class="citation">${esc(c.head)}, <em>${esc(c.title)}</em>, Zenodo (${esc(c.year)}).
+  <a href="https://doi.org/${esc(c.doi)}">${esc(c.doi)}</a></blockquote>
   <p>Individual energies should cite the primary paper named on the row, not this site.</p>
 </section>`;
 
