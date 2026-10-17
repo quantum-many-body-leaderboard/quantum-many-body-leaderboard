@@ -487,10 +487,13 @@ their background), **is included**.
 
 ### 12.3 What is a row
 
-A finite-N energy at the instance's density, cell and twist. Not rows: energies with an
-analytic finite-size correction added, extrapolations to N → ∞, twist averages, correlation
-energies quoted against a Hartree-Fock energy the source does not print, and energies in a
-finite one-particle basis not taken to its limit (they belong to another Hamiltonian).
+A finite-N energy at the instance's density, cell and twist, including an energy in a finite
+one-particle basis (since 2026-10-17): the basis spans part of the instance's Hilbert space, so
+the energy is a claim about the instance, and the row states the basis (number of plane waves or
+orbitals, or the cutoff). Not rows: energies with an analytic finite-size correction added,
+extrapolations to N → ∞, twist averages, and correlation energies quoted against a
+Hartree-Fock energy the source does not print. Until 2026-10-17 finite-basis energies were
+excluded as energies of another Hamiltonian.
 
 ### 12.4 `bound_type`
 
@@ -499,9 +502,14 @@ Section 4 applies unchanged. The recurring cases:
 - VMC with any trial state (Slater-Jastrow, backflow, neural networks): `variational`.
 - Fixed-node and fixed-phase DMC: `projected`. Release-node DMC is `projected` unless the
   source shows the release converged; a claim of exactness is read, not assumed.
-- FCIQMC, coupled cluster and other basis-set methods: a row only when extrapolated to the
-  complete-basis limit, and then `extrapolated`, as is an initiator-FCIQMC energy
-  extrapolated in the initiator threshold.
+- Basis-set methods:
+  - full CI in a finite basis, and FCIQMC the source shows converged to it (no initiator bias,
+    or the initiator threshold taken to its limit): `variational`, since the basis spans a
+    subspace of the Hilbert space and full CI in it is a Ritz upper bound;
+  - initiator FCIQMC at a finite threshold, coupled cluster, distinguishable cluster and other
+    non-variational methods, and any method on a transcorrelated (non-Hermitian) Hamiltonian:
+    `projected`;
+  - a complete-basis-limit extrapolation, or one in the initiator threshold: `extrapolated`.
 - No method is `exact` in track 2 for now. Records follow 6: the lowest unflagged energy of
   any kind holds the record, and its `bound_type` says what kind of number it is.
 
