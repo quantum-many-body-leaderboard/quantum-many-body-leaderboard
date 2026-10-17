@@ -49,6 +49,8 @@ export const FAMILIES = [
   // Bare "VMC" and "VMC + n Lanczos steps" are the Gutzwiller/Jastrow-projected states of
   // Hu, Becca and Sorella; every neural family is matched before this line.
   ["classic VMC", /gutzwiller|jastrow|\bbcs\b|spin liquid|\bmvmc\b|slater|lanczos|\bvmc\b|\brvb\b|pair.?product|projected mean.?field/i],
+  // Basis-set many-body methods of track 2 (2026-10-17): FCIQMC, coupled and distinguishable cluster, MP2.
+  ["FCIQMC / CC", /fciqmc|\bccs?d|\bdcd\b|coupled cluster|\bmp2\b/i],
   // Diffusion Monte Carlo (track 2's fixed-node and fixed-phase projector rows, 2026-10-16), before the lattice
   // projector methods so "fixed-node DMC" is not filed as GFMC.
   ["DMC", /\bdmc\b|diffusion monte carlo|fixed.?phase/i],

@@ -1,0 +1,721 @@
+Eﬀects  of  Backﬂow  Correlation  in the  Three-Dimensional
+           Electron  Gas:  Quantum  Monte  Carlo  Study
+
+
+                                        Yongkyung Kwon
+       Department of Physics and Center for Advanced Materials and Devices,
+                         Kon-Kuk University, Seoul 143-701,  Korea
+
+
+                                         D. M. Ceperley
+         Department of Physics and National Computational  Science Alliance,
+                        University of Illinois, Urbana,  Illinois 61801
+
+
+                                       Richard M. Martin
+               Department of Physics and Materials Research  Laboratory,
+                        University of Illinois, Urbana,  Illinois 61801
+                                           (July 2, 2018)
+
+
+                                            Abstract
+
+
+      The  correlation  energy  of  the  homogeneous  three-dimensional  interacting
+     electron gas is calculated using the variational and ﬁxed-node diﬀusion Monte
+     Carlo methods, with trial functions that include backﬂow and three-body cor-
+     relations.  In the high density regime (rs ≤ 5) the eﬀects of backﬂow dominate
+     over those due to three-body correlations, but the relative importance of the
+     latter increases as the density decreases.  Since the backﬂow correlations vary
+     the  nodes  of  the  trial  function,  this  leads  to  improved  energies  in  the  ﬁxed-
+     node diﬀusion Monte Carlo calculations.  The eﬀects are comparable to those
+     found  for  the  two-dimensional  electron  gas,  leading  to  much  improved  vari-
+     ational  energies  and  ﬁxed-node  diﬀusion  energies  equal  to  the  release-node
+     energies of Ceperley and Alder within statistical and systematic errors.
+     71.10.Ca, 71.15.Nc, 71.15.Pd
+
+
+
+
+
+
+
+
+
+
+
+                                                                               Typeset using REVTEX
+
+                                                  1
+                                            I.  INTRODUCTION
+
+    The  homogeneous  electron  gas  in  three  dimensions  is  the  simplest  model  to  study  the
+eﬀects  of  correlation  between  electrons  in  metals  [1].    Its  correlation  energy,  deﬁned  as
+the  total  ground-state  energy  minus  the  Hartree-Fock  energy,  has  been  used  to  give  the
+exchange-correlation potential in density functional calculations with the Local Density Ap-
+proximation [2,3].  The possible phases which this simple system can display are prototypes
+for understanding interacting electrons in extended matter [4–8].
+    The theoretical study of the interacting electron gas began with Bloch [4] who discovered
+by using the Hartree-Fock approximation that the system would favor a ferromagnetic liquid
+state over the normal paramagnetic state at low electron densities.  Wigner [5] ﬁrst calculated
+the correlation energy of the homogeneous electrons at high density limit, using the second-
+order perturbation theory.  He also pointed out that for suﬃciently low densities the electrons
+would become localized and form an ordered array.  After calculating the correlation energy of
+this electron solid with the Wigner-Seitz approximation [1,8], he proposed an interpolation
+formula  for  the  correlation  energy  in  a  wide  range  of  densities  having  his  high-  and  low-
+density  limits.   The  development  of  the  ﬁeld-theoretic  approaches  in  1950s  led  to  various
+approximate methods [8] to calculate the ground-state properties of the electron gas.  Among
+them, Gell-Mann and Brueckner [9] summed the ring diagrams to compute the correlation
+energy  in  the  high-density  limit.   The  dielectric  function  formalism,  especially  with  the
+self-consistent  treatment  of  the  screening  process  introduced  by  Singwi,  Tosi,  Land,  and
+Sj¨olander [10], gave more accurate ground-state properties at a wider range of densities.
+    On  the  other  hand,  various  stochastic  numerical  methods  known  collectively  as  quan-
+tum  Monte  Carlo  (QMC)  have  been  developed  to  compute  the  properties  of  a  quantum
+many-body  system  such  as  the  electron  gas.  Ceperley  [11]  ﬁrst  applied  variational Monte
+Carlo (VMC)  to calculate  a much  more  accurate  upper  bound to the  ground-state energy
+of the electron gas than is given by Hartree-Fock.  More accurate correlation energies were
+computed by Ceperley and Alder [12] with the diﬀusion Monte Carlo (DMC) method which
+projects the true ground state of a many-body system from a trial state.  Even though the
+DMC  method  gives  the  exact  ground-state  energy  for  a  system  of  many  bosons,  it  has  a
+serious  diﬃculty  in treating fermion systems,  because fermion wave  functions  must be an-
+tisymmetric under particle exchanges [13].  In order to address this problem, Ceperley and
+Alder  [12]  developed  the  released-node  method.   Its  only  limitation  is  that  the  statistical
+ﬂuctuations can grow rapidly at large projection time.  So the statistical noise can dominate
+the signal before converging to the ground state.
+    In  this  work  we  use  the  ﬁxed-node  method  [14,12,15],  where  the  nodal  surface  of  the
+exact  ground-state  wave  function  is  approximated  by  that  of  the  trial  wave  function.  We
+adopt the approach of systematically improving the ﬁxed-node DMC results by using a trial
+function with better nodes, analogous to our work on the two dimensional electron gas [16].
+Unlike the released-node method this method is stable and does not have the convergence
+problem.   It  gives  the  best  upper  bound  to  the  exact  energy  consistent  with  the  assumed
+nodes.
+    Ceperley  and  Alder  used  the  Slater-Jastrow  trial  wave  function  in  both  released-node
+[12] and ﬁxed-node calculations [17], which consists of the Slater determinant of single-body
+orbitals  and  products  of  two-body  correlation  functions.  According  to  their  released-node
+
+
+                                                          2
+calculation,  the  electron  gas  could  exhibit  three  diﬀerent  phases  at  zero  temperature,  the
+paramagnetic  and ferromagnetic  liquids  and  the Wigner  crystal,  depending  on its density.
+More  recently,  Ortiz  and  Ballone  [18]  reported  a  new  ﬁxed-node  DMC  calculations  with
+the Slater-Jastrow wave function.  Their correlation energies were found to be, as expected,
+smaller  in  magnitude  than  Ceperley  and  Alder’s  released-node  calculations,  especially  at
+high metallic densities.  In this paper, we perform a ﬁxed-node DMC calculation using a trial
+function with backﬂow and three-body correlations in addition to two-body correlation.  Our
+calculations in the two-dimensional electron gas [16] showed that the inclusion of the backﬂow
+correlation in a trial state greatly improved the Slater-Jastrow ﬁxed-node results.  We found
+that, although the Slater-Jastrow wave function accounts for most of the correlation energy
+of the electron gas, the remaining errors that are in the Slater-Jastrow function are mostly
+due  to  backﬂow  and  three-body  correlations.   This  is  similar  to  what  has  been  observed
+on  calculations  of  the  other  strongly  correlated  system  of  fermions,  liquid   3He  [19].   Our
+ﬁxed-node  DMC  results  in  three  dimensions  will  be  compared  with  Ceperley  and  Alder’s
+released-node results.
+    All ground-state properties of the electron gas at zero magnetic ﬁelds are determined only
+by the dimensionless density parameter rs = a/a0, where a0 is the Bohr radius, a = (   34πρ)1/3
+is  the  radius  of  a  sphere  which  encloses  one  electron  on  the  average  and  ρ  is  the  number
+density.  With energy units of Rydbergs (Ry) and the length units of a, the Hamiltonian of
+the electron gas is
+
+                                        N∑              ∑       1
+                         H = − 1r2s                rs       |ri − rj|   +  constant ,                                  (1)
+                                       i=1 ∇2i  +  2    i<j
+
+where  the  constant  is  the  term  due  to  the  uniform  background  of  opposite  charge.   We
+consider  the density  range of 1 ≤ rs  ≤ 20, where  Ceperley  and Alder found the system  in
+the normal liquid phase.  We do not consider spin polarized or superconducting states.
+
+
+                                            II.  METHODOLOGY
+
+    In a VMC calculation, one estimates the properties of a quantum state, by assuming a
+trial wave  function ΨT (R) with the correct symmetry,  where R = (r1, r2, · · · , rN) is a 3N-
+dimensional  vector  representing  the  positions  of N  particles.  With  a  set  of  conﬁgurations
+{Ri}  sampled  with  a  probability  density  proportional  to  Ψ2T (R),  the  variational  energy  is
+just the average of local energies, EL(Ri) = HΨT (Ri)/ΨT (Ri).  This method can give a good
+upper bound to the exact energy if the trial state is accurate as it is for the homogeneous
+electron gas [11].
+    Even  more  accurate  ground-state  properties  of  a  many-body  system  can  be  obtained
+with the DMC method, where the Schr¨odinger equation is solved by treating it as a diﬀusion
+equation  [12].  The  solution  of the  Schr¨odinger  equation  in  imaginary  time  t,  −∂|Φ⟩/∂t  =
+( ˆH − ET )|Φ⟩, can be expressed in terms of the exact energy eigenvalues Ei and eigenstates
+φi:
+
+                                Φ(R, t) = ∑
+                                               i   ci exp[−t(Ei − ET )]φi(R).                                          (2)
+
+
+                                                          3
+At  suﬃciently  long  times  only  the  ground  state  φ0  survives  in  Eq.   (2),  if  Φ(R, 0)  is  not
+orthogonal to it.  In order to implement  this idea with a stochastic procedure,  we consider
+the real-space representation of the Schr¨odinger equation:
+                  ∂f(R, t)           N∑
+                      ∂t       =  1r2si=1 ∇i · (∇if − f∇i ln Ψ2T ) − (EL(R) − ET )f  ,                        (3)
+
+where f(R, t) = Φ(R, t)ΨT (R).  Note that the Schr¨odinger equation is multiplied by the trial
+wave  function ΨT (R).  Eq.  (3) can be viewed  as a diﬀusion equation  in a 3N-dimensional
+space with the density of diﬀusing particles f(R, t).  Its second term imposes a drift and the
+ﬁnal term gives rise to a branching process by which the sampled conﬁgurations converge to
+the lowest-energy state.  The initial ensemble of conﬁgurations {R} with probability density
+f(R, 0) = Ψ2T (R) is evolved forward in time by the above diﬀusion equation and reaches the
+equilibrium  distribution f(R, ∞) = φ0(R)ΨT (R) at large enough t.  From this distribution
+of random walks, the exact ground-state energy E0 = ⟨φ0| ˆH|ΨT ⟩/⟨φ0|ΨT ⟩ can be estimated
+as the average of the local energy:  EL(R) = HΨT (R)/ΨT (R).
+    The diﬀusion equation formulation described above requires for implementation that the
+population density  f(R, t) be  non-negative.  For Bose  systems,  this is  not a problem  since
+their ground-state wave functions can be chosen to be non-negative.  However, fermion wave
+functions  are  antisymmetric,  change  sign,  and  have  nodes.   This  leads  to  the  famous  sign
+problem  [13]  in  the  QMC  calculations  of  Fermi  systems.   The  apparent  limitation  of  the
+diﬀusion  analogy  in  this  case  can  be  dealt  with  by  treating  positive  and  negative  regions
+separately.   One  easy  way  to  accomplish  this  is  not  to  allow  diﬀusion  between  these  two
+regions,  which  corresponds  to  the  fixed-node  approximation  [14,12].   If  ΨT  were  to  have
+the  exact  nodes  of the  ground state,  one  could  treat  the  fermion  system  immediately  and
+exactly,  since  f  would  never  change  sign.   Unfortunately,  the  exact  location  of  the  nodes
+in many-fermion systems is not known [20].  The ﬁxed-node approximation is based on the
+requirement  that  φ0(R)ΨT (R)  be  non-negative.   The  ﬁxed-node  DMC  energy  is  an  upper
+bound to the exact energy; the best upper bound with the given nodes, and usually lies well
+below the variational energy [20].
+    Another way to deal with the sign problem is to use the released-node method [12] which
+puts no constraints  on the nodal structure of the true ground-state wave function.  In this
+method,  there  is  a  population  of  positive  random  walks  which  give  positive  contributions
+to any average, and a population of negative walks with negative contributions.  Whenever
+a  random  walk  diﬀuses  across  the  nodes  of  the  trial  function,  the  sign  of  its  contribution
+changes.   Even  though  it  can  be  shown  that  the  diﬀerence  population  converges  to  the
+antisymmetric fermion ground state, it does not proceed without problems.  Since both the
+positive and negative populations grow geometrically with a large number of projections, the
+statistical ﬂuctuations in the average increase exponentially [12].  So for this method to be
+successful the diﬀusion process needs to converge to the ground state before the ﬂuctuations
+become large.  As the system size gets larger, the ﬂuctuations grow.  Hence, the ﬁxed-node
+method is more useful for systems with many fermions.
+
+
+                              III. MONTE  CARLO  CALCULATIONS
+
+
+
+                                                          4
+                                            A.  Trial  Wave  Function
+
+    In  all  QMC  methods  mentioned  above,  a  good  trial  function  is  very  important  for  ac-
+curate results.  The convergence  time in a released-node calculation can be reduced with a
+better trial function while the nodes of a trial function determine the ultimate accuracy of
+a ﬁxed-node calculation.  The usual choice of a trial function is of the Slater-Jastrow type
+
+                                                                       N∑
+                                  ΨT (R)  =  det(ϕmn)  exp[−
+                                                                      i<j u(rij)] ,                                           (4)
+
+where  ϕmn  =  eikm·rn  for  a  homogeneous  liquid  phase.   The  nodes  are  determined  by  only
+the  Slater  determinant.    We  use  the  two-body  correlation  function  u(r)  that  minimizes
+the  variational  energy  in  the  Random  Phase  Approximation  [21,11].  With  this  trial  wave
+function, Ceperley calculated the ground-state properties of the electron gas, using the VMC
+[11], the ﬁxed-node [17] and the released-node DMC method [12].
+    In  order  to  improve  the  nodes,  we  consider  a  more  complicated  trial  function  which
+includes backflow and three-body correlations [16].  Our wave function has the form of
+
+                                                         N∑                   N∑
+                   ΨT (R) = det(eiki·xj)  exp[−                          2        G(l) · G(l)] ,                         (5)
+                                                        i<j ˜u(rij) − λT      l=1
+
+where xi’s are quasiparticle coordinates deﬁned as:
+
+                                                      N∑
+                                        xi = ri +        η(rij) (ri − rj) ,                                                   (6)
+                                                     j⁄=i
+
+
+
+                                                     N∑
+                                          G(l) =        ξ(rli) (rl − ri) ,                                                     (7)
+                                                    i⁄=l
+
+and
+
+                                          ˜u(r) = u(r) − λT ξ2(r) r2 .                                                     (8)
+
+In addition to the two-body correlation, this trial function includes the three-body correla-
+tion, G(l) · G(l), and the state-dependent correlation, k · (ri − rj)η(rij), which incorporates
+the hydrodynamic backﬂow [22].  We call ξ(r) the “three-body correlation function” and η(r)
+the  “backﬂow  correlation  function”.  Note  that  it  is  the  backﬂow  correlation  which  makes
+the nodes of the wave function diﬀerent from those of the Slater-Jastrow trial function.
+    Our calculations are done for N  electrons in a cube with periodic boundary conditions.
+The Ewald method [23] is used for the Coulomb potential and the two-body correlation u(r)
+to minimize size eﬀects.  The higher-order correlation functions, η(r) and ξ(r), are required
+to go to zero smoothly at a cutoﬀ distance rc  set to half the side of the simulation cell we
+use:
+
+                                 f(r)  −→  f(r) + f(2rc − r) − 2f(rc) .                                           (9)
+
+                                                            5
+The backﬂow and the three-body correlation function are parametrized as
+
+                                        η(r) = λB      1 + sBrrB + wBr + r4  ,                                                    (10)
+
+and
+                                      ξ(r) = exp[−(r − rT )2/w2T ] .                                                   (11)
+
+This functional form for η(r) satisﬁes the long-range behavior ( ∼ 1/r3 ) in three dimensions
+predicted  by  the  local-energy  method  of  Ref.  [16].   It  should  be  noted  that  the  optimized
+η(r) goes to zero rapidly at the edge of the simulation box.  Our three-body correlation has
+the same form as used for liquid  3He in Ref. [24].
+    In order to optimize our higher-order correlation functions, we minimize the variance of
+the local energy [25], deﬁned by
+                                          ∫ dR Ψ2T (R) ( EL(R) − Ev )2
+                                VΨT  =               ∫ dR Ψ2T (R)                .                                           (12)
+
+If our trial function ΨT  were an exact eigenfunction of the Hamiltonian, the variance would
+be zero.  Because the variance is a non-linear function of the parameters we cannot be certain
+that we have achieved converged results for this class of trial functions.
+    The  optimum  variational  parameters  that  we  have  obtained  as  a  function  of  density,
+are  given  in  Table  I.   Fig.   (1)  shows  the  eﬀect  (in  the  logarithm  of  the  wave  function)
+of  two  electrons  a  distance  r  apart  coming  from  the  three-body  term.   There  is  a  very
+strong density dependence.  The eﬀect is almost negligible at rs = 1 but as large as 10% at
+rs  ≥ 10.  Negative values imply that electron conﬁgurations in which  the “forces” (coming
+from ξ(r)) are not “balanced” are slightly  enhanced.  Fig.  (2) shows  the magnitude of the
+displacement of the quasiparticle coordinate caused by an electron a distance r away.  This
+is an estimate of the distance that the free-fermion nodal surfaces are displaced by backﬂow.
+The strongest eﬀects are observed when two electrons are very close, for distances less than
+the  average  nearest  neighbor  distance  which  is  2 in  the  units  we  have  used.  We  also note
+that  the  backﬂow  potential  is  attractive  for  rs  ≥  10.  We  expect  that  the  displacement  of
+the quasiparticle coordinates is on the order of 0.01 a.  Assuming that this is the case, the
+released-node  calculation  with  a  relatively  short  projection  time  should  be  able  to  correct
+the nodal surfaces from those of a free fermion trial function.
+    The main diﬃculties in the use of the backﬂow wave function is that ﬁrstly, the implemen-
+tation is considerably more complex than for the Slater-Jastrow form, and secondly, because
+update formulas cannot be used to speed up single particle moves, Monte Carlo moves are
+of updating all particles  simultaneously.  Details and fuller discussion  of the  algorithm are
+given in Ref. [16].
+
+
+                                          B.  Ground  State  Energy
+
+    We  ﬁrst  calculated  the  ground-state  energy  of  the  system  with  N  =  54  electrons  at  a
+density range of 1 ≤ rs ≤ 20 by both VMC and ﬁxed-node DMC methods.  Table II shows
+the results obtained from the improved trial wave functions in Eq.  (5) as well as the Slater-
+Jastrow wave functions.  It can be seen that both VMC and ﬁxed-node calculations with the
+
+                                                           6
+trial functions including backﬂow correlation improve signiﬁcantly the Slater-Jastrow results
+at  all  densities  considered.   However,  the  three-body  correlation  is  found  to  have  minimal
+eﬀect for rs ≤ 5, which corresponds to typical metallic densities.
+    Fig.   (3)  shows  the  eﬀects  of  backﬂow  and  three-body  correlations  on  the  correlation
+energy  that  is  missed  by  the  Slater-Jastrow  wave  function  both  from  the  variational  and
+the ﬁxed-node calculation.  In the following discussion, our best results (the backﬂow ﬁxed-
+node  energies)  are  assumed  to  be  exact.   We  will  examine  this  assumption  at  the  end  of
+this  section.    At  high  densities  of  rs  ≤  5,  the  eﬀect  due  to  the  three-body  correlation
+is  negligible  and  the  backﬂow  eﬀect  is  dominant.   However,  as  the  density  decreases,  the
+three-body  eﬀect  increases  while  the  backﬂow  eﬀect  decreases.  We  can conclude  from the
+trends of Fig.  (3) that at the density where Wigner crystallization occurs, estimated to be
+rs ∼ 100 by Ceperley and Alder [12], the eﬀect in the energy of the three-body term will be
+much larger than the backﬂow term.  This is consistent with the expectation that backﬂow
+correlation is energetically less important as electrons are localized by strong correlation at
+low densities.  Note, however, that the actual eﬀect of the backﬂow correlation on the wave
+function decreases with density, as shown in Fig.  (2).
+    The combined eﬀects of both higher-order correlations in the variational wave function
+account  for  60%  to  80%  of  the  correlation  energy  missing  in  the  Slater-Jastrow  function.
+At  high  densities  (rs  ≤  5),  this  variational  energy  is  shown  to  be  roughly  as  good  as  the
+Slater-Jastrow ﬁxed-node DMC energy, which captures 70 to 80% of the missing correlation
+energy throughout our density range.
+    The backﬂow and three-body eﬀects in the electron gas discussed above are very similar
+to the situation in two dimensions.  See Fig.  (4) of Ref. [16].  The only notable diﬀerence is
+that at the lowest density considered (rs = 20), the backﬂow eﬀect is more important than
+the  static  three-body correlation  in three  dimensions  while  two  correlations  have  virtually
+equal  importance  in  two  dimensions.   This  can  be  understood  in  terms  of  the  increased
+importance of correlations in lower dimensions for the same value of rs; for example, this is
+reﬂected in the fact that Wigner crystalization occurs at smaller rs in two dimensions than
+in three dimensions [26].
+    Fig.   (4)  shows  the  correlation  energies  missing  from  the  Slater-Jastrow  wave  function
+and from the three-body and backﬂow  wave  function divided  by  the  kinetic  energy.  Since
+the kinetic energy operator does not commute with the Hamiltonian, the kinetic energy can-
+not be computed directly with the distribution φ0(R)ΨT (R) sampled through the diﬀusion
+process  in  Eq.  (3).  It  has  been  estimated  by  making  an  extrapolation  between  the  VMC
+and  the  DMC  results  [13].   It  is  clear  from  the  ﬁgure  that  the  missing  correlation  energy
+from both types of trial wave functions becomes a smaller fraction of the kinetic energy at
+higher densities.
+    Since our calculation has been done on the system with a ﬁnite number of electrons, we
+extrapolate the energies to the thermodynamic limit to compare with other calculations.  We
+follow the extrapolation scheme based upon the Fermi liquid theory [27,26], which assumes
+that  the  energy  per  particle  for  a  ﬁnite  system  with  the  periodic  boundary  condition  is
+related to the bulk energy by
+
+                                 EN  = E∞ + b1(rs)∆TN + b2(rs) 1N  .                                            (13)
+
+Here, EN  (E∞) is the total energy per electron of the ﬁnite (inﬁnite) system and ∆TN  is the
+
+                                                          7
+free particle kinetic energy diﬀerences between two systems.  We determine the parameters
+E∞, b1, and b2 by a least-squares ﬁt to VMC calculations with Slater-Jastrow trial functions
+at  diﬀerent  values  of  N  = 54, 66, 114, 162, 246.  In  Table  III  are  shown  the  energies,  ﬁtted
+parameters,  and the  χ2  value  of the  ﬁt.  The  reasonable  values  of χ2  show  that the  Fermi
+liquid theory completely explains the size dependence  of the energy to statistical accuracy
+of the VMC energies over this range of particle numbers.  To extract the extrapolated three-
+body and backﬂow DMC energy for the inﬁnite system, E3BF −DMC∞             , we did the DMC runs
+only at N  = 54 whose results are shown in Table II and then use the parameters determined
+from VMC  to get  E3BF −DMC∞             .  It  is  assumed  that the  size  dependences  for the  VMC  (SJ)
+and  the  DMC  (3BF)  results  are  the  same.   This  assumption  needs  to  be  tested  in  future
+calculations.  The same procedure was successfully applied to assess the ﬁnite-size eﬀects in
+our previous QMC calculation for the two-dimensional electrons [16].
+    One  can  see  in  Table  III  that  our extrapolated  backﬂow  ﬁxed-node  energies  are  lower,
+even if the diﬀerences are small, than Ceperley and Alder’s released-node results as well as
+Ortiz  and  Ballone’s  Slater-Jastrow  ﬁxed-node  results.   Our  present  results  show  that  the
+calculations of Ceperley and Alder only got approximately half of the Slater-Jastrow ﬁxed-
+node  error  with  their  released-node  procedure  due  to  computer  limitations  at  that  time.
+Considering  that  a  ﬁxed-node  energy  is  an  upper  bound  to  the  true  ground-state  energy,
+this validates our assertion that our backﬂow ﬁxed-node results are accurate.
+    Since  the  ﬁxed-node  results  depend  only  on  the  nodal  structures  of the  trial  functions
+used,  one  can  speculate  that  the  nodal  locations  of  the  backﬂow  wave  function  are  fairly
+close to those of the exact ground state.  Without more investigation, we cannot quantify this
+statement, because there is not a simple relationship between nodal locations and ﬁxed-node
+energy.  The accuracy  of the backﬂow  nodes was  also shown  in our previous  released-node
+(transient-estimate) calculation for the two-dimensional electron gas [28].
+    Although comparison with well-converged  exact results is the best method of assessing
+the accuracy of a ﬁxed-node result for the energy, in the remainder of this section we develop
+two other methods that require only the VMC and ﬁxed-node DMC energies.  Both methods
+rely  on  the  fact  that  the  errors  in  the  variational  energy  EV MC,  the  variance  of  the  local
+energy V , and the ﬁxed-node energy EF N  should all be quadratic in the diﬀerence between
+a trial function and the true ground state.  Thus, as a trial function is signiﬁcantly improved
+in going from a two-body level (Slater-Jastrow) to a three-body level (backﬂow and three-
+body),  one  can  estimate  the  exact  energy  by  the  relative  improvements  of  the  variational
+energy relative to the variance and the ﬁxed-node energy.
+    The variances of the local energy (Eq.  (12)) for the various trial wave functions, are given
+in Table II and plotted in Fig.  (5) at rs = 10.  As can be seen, the variance decreases roughly
+proportional to the drop in energy for the four trial functions considered.  The dotted line in
+Fig.  (5) represents a linear ﬁt and the triangle our best (backﬂow) ﬁxed-node energy.  There
+is no fundamental reason why the energy and variance for general trial functions would have
+a linear relationship.  However, in practice this relation is often observed [16].  The observed
+linear relationship both validates our optimization procedure and provides an independent
+estimate of the exact energy.
+    Shown  in  Table  II  is  our  estimate  of  the  error  of  the  computed  backﬂow  ﬁxed-node
+energy  obtained  from the  energies  and  variances  of the  best  (backﬂow  +  three-body)  and
+worst (Slater-Jastrow) trial functions, which is based on the following assumption:
+
+
+                                                          8
+                                             V (k)       = constant.                                                      (14)
+                                        E(k)V MC − E0
+ǫV  in Table II is the diﬀerence between this extrapolation E0 and our best ﬁxed-node energy.
+We extrapolated using only the results from the best and worst trial functions to minimize
+the  extrapolation error.  There  is  the  Temple  lower  bound [29] to the  ground-state energy
+which involves the energy and the variance.  However, it is not useful for many-body systems.
+Because our procedure is not rigorous, there is no guarantee that the estimate will lie below
+our computed best ﬁxed-node result.  In fact at rs = 10 the estimate lies above it.  Our next
+extrapolation procedure does not have this problem.
+    In  going  from  the  two-body  to  three-body  level,  one  can  also  assume  that  the  nodal
+positions improve at the same rate as the variational energy so that we can assume:
+
+                                         E(k)F N − E0    = constant.                                                      (15)
+                                        E(k)V MC − E0
+Using this equation with our best and worst energies in both VMC and DMC calculations,
+we determine E0  and hence the error in the backﬂow ﬁxed-node energy is shown as ǫF N  in
+Table II.  Again this  procedure has no fundamental validity  since  it is  possible to improve
+the  variational  energy  without  aﬀecting  the  nodes  by  improving  the  bosonic  correlations.
+This  estimate  shows  that  considerably  larger  corrections  might  be  expected  from  exact
+calculations, from 0.6mRy at rs = 1 to 0.1mRy at rs = 20.
+    It can be seen in Table II that the estimated ﬁxed-node errors (ǫV  and ǫF N) are smaller
+at all densities considered than the energy improvements due to the nodal change from the
+Slater-Jastrow function to the backﬂow wave function.
+
+
+                                             IV.  CONCLUSION
+
+    We have studied the correlation energy of the interacting three-dimensional electron gas,
+using  VMC  and  ﬁxed-node  DMC  calculations  including  the  three-body  and  the  backﬂow
+correlation.  The additional correlation energy due to backﬂow is dominant over the three-
+body eﬀect in the high density regime but the relative importance of the former decreases as
+the density is reduced.  This is the same trend as was found for the two-dimensional electron
+gas  [16]  except  that  the  importance  of  backﬂow  is  more  signiﬁcant  in  higher  dimensions,
+especially  at  low  densities.   This  is  due  to  the  fact  that  in  two  dimensions  the  eﬀects  of
+interactions  are  larger  than  in  three  dimensions  at  a  given  rs  and  other  eﬀects  tend  to
+dominate more over the eﬀects of backﬂow.
+    The variational wave  function with backﬂow  and three-body correlations is a large im-
+provement  over  the  Slater-Jastrow  function.   We  ﬁnd  that  these  higher-order  correlations
+account for 60 to 80% of the remaining correlation energy beyond the Slater-Jastrow vari-
+ational  results.   Since  backﬂow  changes  the  nodes,  the  ﬁxed-node  DMC  results  are  also
+signiﬁcantly  improved.    The  ﬁxed-node  method  based  upon  the  Slater-Jastrow  nodes  is
+found to capture no more than 80% of the remaining correlation energy.
+    After  making  a  careful  ﬁnite-size  analysis,  we  have  compared  our  backﬂow  ﬁxed-node
+energies  with  Ceperley  and  Alder’s  released-node  results.  These  two  independent  calcula-
+tions using diﬀerent methods are found to give nearly identical results within statistical and
+
+                                                          9
+systematic errors.  From a linear extrapolation to zero variance of the local energy, we ﬁnd
+further evidence that our backﬂow ﬁxed-node results are very close to the true ground-state
+energy.
+    For future  work,  we  conclude  that  one  should  be  able  to  use  the  much  improved  wave
+functions,  better  released-node  methods  [30],  with  more  size-dependence  studies  and  full
+utilization  of current  computer  hardware  to  achieve  an  order  of magnitude  more  accurate
+results for the energy of the electron gas than was done nearly two decades ago.
+
+
+                                     V.  ACKNOWLEDGEMENT
+
+    This work has been supported by the Korea Science and Engineering Foundation under
+grant 96-0207-045-2 and through its SRC program, and by the National Science Foundation
+under grant DMR 94-224-96.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       10
+                                           REFERENCES
+
+ [1] D. Pines, Elementary Excitations in Solids (Addison-Wesley, New York, 1963).
+ [2] W. Kohn and L. J. Sham, Phys. Rev. 140, A1133 (1965).
+ [3] R. G. Parr and W. Yang, Density-Functional Theory of Atoms and Molecules (Oxford
+     University Press, New York, 1989).
+ [4] F. Bloch, Z. Phys. 57, 545 (1929).
+ [5] E. Wigner, Phys. Rev. 46, 1002 (1934); Trans. Faraday Soc. 34, 678 (1938).
+ [6] A. W. Overhauser, Phys. Rev. Lett. 3, 414 (1959); ibid. 4, 462 (1960); Phys. Rev. 128,
+     1437 (1962).
+ [7] K. Moulopoulos and N. W. Ashcroft, Phys. Rev. Lett. 69, 2555(1992).
+ [8] G. D. Mahan, Many-Particle Physics (Plenum, New York, 1991).
+ [9] M. Gell-Mann and K. A. Brueckner, Phys. Rev. 106, 364 (1957).
+[10] K. S. Singwi, M. P. Tosi, R. H. Land, and A. Sj¨olander, Phys. Rev. 176, 589 (1968).
+[11] D. M. Ceperley, Phys. Rev. B 18, 3126 (1978).
+[12] D. M. Ceperley and B. J. Alder, Phys. Rev. Lett. 45, 566 (1980).
+[13] K. Schmidt and M. H. Kalos, in Applications of the Monte Carlo method in Statistical
+     Physics, edited by K. Binder (Springer-Verlag, Berlin, 1984).
+[14] J. B. Anderson, J. Chem. Phys. 63, 1499 (1975); 65, 4121 (1976)
+[15] P. J. Reynolds, D. M. Ceperley,  B. J. Alder, and J. W. A. Lester, J. Chem. Phys. 77,
+     5593 (1982).
+[16] Y. Kwon, D. M. Ceperley, and R. M. Martin, Phys. Rev. B 48, 12037 (1993).
+[17] D. M. Ceperley,  in Recent  Progress in  Many  Body  Theories ed. J. Zabolitzky, Lecture
+     Notes in Physics, 142, Springer-Verlag (1981).
+[18] G. Ortiz and P. Ballone, Europhys. Lett. 23, 7 (1993); Phys. Rev. B 50, 1391 (1994).
+[19] S. Moroni, S. Fantoni and G. Senatore, Phys. Rev. B 52 13547 (1995).
+[20] D. M. Ceperley, J. Stat. Phys. 63, 1237 (1991).
+[21] T. Gaskell, Proc. Phys. Soc. London 77, 1182(1961).
+[22] R. P. Feynman and M. Cohen, Phys. Rev. 102, 1189 (1956).
+[23] P. Ewald, Ann. Phys. 64, 253 (1921).
+[24] R. M. Panoﬀ and J. Carlson, Phys. Rev. Lett. 62, 1130 (1989).
+[25] C. J. Umrigar, K. G. Wilson, and J. W. Wilkins, Phys. Rev. Lett. 60, 1719 (1988).
+[26] B. Tanatar and D. M. Ceperley, Phys. Rev. B 39, 5005 (1989).
+[27] D. M. Ceperley and B. J. Alder, Phys. Rev. B 36, 2092 (1987).
+[28] Y. Kwon, D. M. Ceperley, and R. M. Martin, Phys. Rev. B 53, 7376 (1996).
+[29] G. Temple, Proc. R. Soc. London, Ser. A 119, 22 (1928).
+[30] M. Caﬀarel and D. M. Ceperley, J. Chem. Phys. 97, 8415 (1992).
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     11
+                                                        FIGURES
+    FIG.  1.      The  three-body  contribution  to  the  logarithm  of  the  wave  function  for  a  pair  of
+electrons  separated  by  a distance r.  Solid  line,  rs  = 1;  dotted,  rs  = 5;  dot-dashed, rs  = 10;  long
+dashed, rs = 20.
+
+
+    FIG. 2.     The  change  in  quasi-electron  coordinate  due  to  a  pair  of  electrons  separated  by  a
+distance r.  Solid line, rs = 1; dotted, rs = 5; dot-dashed, rs = 10; long dashed, rs = 20.
+
+
+    FIG. 3.  Eﬀects of three-body and backﬂow correlations as a function of the density of the system.
+The vertical  axis  shows  ∆E/∆ESJ  = (E − E3BFDMC)/(ESJV    − E3BFDMC),that  is,  top  axis  corresponds
+to  the  Slater-Jastrow  variational  energy  ESJV     and  bottom  axis  to  the  ﬁxed-node  DMC  energy
+E3BFDMC, calculated with our best trial function including three-body and backﬂow correlations.  The
+diamonds show the eﬀect of only three-body correlation, the circles the eﬀect of only backﬂow and
+the squares represent the combined eﬀect of both correlations.  Finally, the ﬁlled triangles show the
+result using the ﬁxed-node DMC method with free-fermion nodes of the Slater-Jastrow function.
+
+
+    FIG. 4.  The energy missing from the Slater-Jastrow wave function (⋄) and from the three-body
+and backﬂow wave function (•) divided by the kinetic energy as a function of the density parameter
+rs.  The vertical axis shows (EV  − E3BFDMC)/ < T  >.
+
+
+    FIG. 5.  Variational energy versus the variance of local energy at rs = 10.  Each point • repre-
+sents  one  variational  calculation:   from  higher  to  lower  energies,  the  Slater-Jastrow,  three-body,
+backﬂow,   and  (backﬂow  +  three-body)  results.     The  ﬁlled  triangle  represents  our  backﬂow
+ﬁxed-node  result  and  the  dotted  line  shows  a  linear  ﬁt  through  •  points.   The  statistical  errors
+of the data are smaller than the sizes of the symbols.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                             12
+                                                                      TABLES
+     TABLE I.  Optimized variational  parameters of  three-body  and backﬂow   correlation  functions
+for N  = 54.
+   rs                λB                   sB                   rB                  wB                   λT                    rT                   wT
+ 1.0               0.025               0.395               0.210              0.689               0.006               0.293              0.949
+ 5.0               0.105               0.158               0.180              0.670              -0.060              0.286              1.176
+10.0               0.959              -0.672              0.247              3.788              -0.258              0.257              0.918
+20.0               1.249              -0.938              0.275              3.787              -0.255              0.252              0.911
+
+
+
+
+
+
+     TABLE II.   VMC and ﬁxed-node (FN) DMC energies E  and the variances of the local energy
+V  obtained  with  various  trial  wave  functions  for  N  = 54  (SJ:  the  Slater-Jastrow  function,  3BD:
+three-body correlation, BF: backﬂow correlation).  The energies are in units of Ry per electron and
+the variances in units of r4s(Ry/electron)2.  Also shown are our estimations of the ﬁxed-node error
+ǫ in the backﬂow ﬁxed-node DMC calculation.
+                                       rs = 1.0                      rs = 5.0                       rs = 10.0                      rs = 20.0
+     ESJV MC                         1.0669(6)                  -0.15558(7)                  -0.10745(2)                  -0.06333(1)
+   ESJ+3BDV MC                           1.0663(5)                  -0.15569(5)                  -0.10773(2)                  -0.06348(1)
+    ESJ+BFV MC                          1.0617(4)                  -0.15729(5)                  -0.10829(2)                  -0.06365(1)
+ESJ+3BD+BFV MC                               1.0613(4)                  -0.15735(5)                  -0.10835(2)                  -0.06378(2)
+
+       ESJF N                          1.0619(4)                  -0.15734(3)                  -0.10849(2)                  -0.06388(1)
+ESJ+3BD+BFF N                                  1.0601(2)                  -0.15798(4)                  -0.10882(2)                  -0.06403(1)
+
+       V SJ                           0.0213(4)                    0.0266(3)                       0.074(1)                        0.189(3)
+   V SJ+3BD                      0.0205(4)                    0.0229(4)                       0.054(2)                        0.144(3)
+    V SJ+BF                       0.0054(3)                    0.0069(2)                       0.027(1)                        0.111(2)
+V SJ+3BD+BF                   0.0053(2)                    0.0066(2)                       0.026(1)                        0.079(2)
+
+        ǫV                             0.0007(6)                  -0.00005(8)                   0.00002(5)                    0.00007(4)
+       ǫF N                           0.0006(4)                   0.00036(8)                    0.00027(5)                    0.00013(3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                            13
+     TABLE III.  Size dependence in the Slater-Jastrow  VMC method of normal electron  liquid at
+1 ≤ rs ≤ 20 and χ2-ﬁt parameters.  Also shown are the extrapolated  DMC energies at an inﬁnite
+system (ESJ−DMC∞             and E3BF −DMC∞              ), Ceperley and Alder’s released-node result (CA∗), and Ortiz
+and Ballone’s Slater-Jastrow ﬁxed-node result (OB∗∗).
+
+
+                                                rs = 1.0                   rs = 5.0                   rs = 10.0                   rs = 20.0
+                     N  = 54                1.0669(6)               -0.15558(7)               -0.10745(2)               -0.06333(1)
+                     N  = 66                1.1496(5)               -0.15166(4)               -0.10637(2)               -0.06303(1)
+ESJV                 N  = 114               1.2079(5)               -0.14867(3)               -0.10552(2)               -0.06278(1)
+                    N  = 162               1.1162(4)               -0.15238(3)               -0.10642(1)               -0.06270(1)
+                    N  = 246               1.1938(3)               -0.14886(3)               -0.10548(1)               -0.06275(1)
+
+        ESJ−V MC∞                                    1.1795(4)               -0.14914(3)               -0.10549(2)               -0.06273(1)
+            b1(rs)                             1.096(6)                    1.18(1)                      1.21(2)                      1.22(3)
+            b2(rs)                              -1.16(5)                  -0.134(4)                   -0.051(2)                  -0.0181(7)
+               χ2                                    1.20                          1.29                           2.22                           2.26
+
+        ESJ−DMC∞                                    1.1744(4)               -0.15094(4)               -0.10654(2)               -0.06329(1)
+       E3BF −DMC∞                                      1.1726(2)               -0.15158(5)               -0.10687(2)               -0.06344(1)
+             CA∗                               1.174(1)                 -0.1512(1)                -0.10675(5)               -0.06329(3)
+            OB∗∗                              1.181(1)                 -0.1514(3)                         -                                 -
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                            14
+
+
+
+0.08
+
+
+0.06
+
+
+0.04
+
+
+0.02
+
+
+0.000.0        5.0       10.0      15.0      20.0      25.0
+
+                                   rs
+

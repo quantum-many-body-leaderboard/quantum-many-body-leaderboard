@@ -1,0 +1,627 @@
+     Iterative backﬂow renormalization procedure for many-body ground state wave
+                           functions of strongly interacting normal Fermi liquids
+
+                     Michele Taddei,1  Michele Ruggeri,2  Saverio Moroni,2  and Markus Holzmann3, 4, 5
+               1Dipartimento  di  Fisica,  Sapienza  Universit`a  di  Roma,  Piazzale  A.  Moro  2,  I-00185,  Roma,  Italy
+                                 2DEMOCRITOS  National  Simulation  Center,  Istituto  Oﬃcina  dei
+                             Materiali  del  CNR  and  SISSA,  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                         3LPTMC,  UMR  7600  of  CNRS,  Universit´e  Pierre  et  Marie  Curie,  Paris,  France
+                      4LPMMC,  UMR  5493  of  CNRS,  Universit´e  Grenoble  Alpes,  F-38100  Grenoble  France
+                                5Institut  Laue  Langevin,  BP  156,  F-38042  Grenoble  Cedex  9,  France
+                                                            (Dated:  June 13, 2021)
+                  We show how a ground state trial wavefunction of a Fermi liquid can be systematically improved
+               introducing a sequence of renormalized coordinates through an iterative backﬂow transformation.
+               We apply this scheme to calculate the ground state energy of liquid 3He in two dimensions at freezing
+               density  using  variational  and  ﬁxed-node  diﬀusion  Monte  Carlo.   Comparing  with  exact  transient
+               estimate results for systems with small number of particles,  we ﬁnd that variance extrapolations
+               provide accurate results for the true ground state together with stringent lower bounds.  For larger
+               systems these bounds can in turn be used to quantify the systematic bias of ﬁxed-node calculations.
+               These wave functions are size consistent and the scaling of their computational complexity with the
+               number of particles is the same as for standard backﬂow wave functions.
+
+               PACS numbers:  PACS:
+
+
+                    I.    INTRODUCTION                                      to approach very closely the  exact ground state energy.
+                                                                            Since their evaluation remains of similar complexity and
+  To overcome the fermion-sign problem, many fermion                        scaling with increasing system size as the usual backﬂow
+Quantum Monte Carlo (QMC) calculations rely on the                          wave function, their use is not limited to small systems.
+ﬁxed-node (FN) approximation where the nodes of a trial                     We explicitly demonstrate the size consistency of our new
+wavefunction, ψT , are imposed as a boundary condition                      trial wave functions and discuss the possibility to obtain
+on the many-body Schr¨odinger equation which can then                       lower bounds to the ground state energy.
+be solved by projector Monte Carlo methods1.  Since the
+nodal surfaces of the exact ground state wavefunction are                   II.    ITERATED RENORMALIZATION OF WAVE
+in general unknown, the energies of FN calculations do                                                 FUNCTION
+not converge to the exact ground state energy but remain
+above them by an unknown amount.  Although methods
+which  do  not  rely  on  the  FN  approximation  have  been                   Let us start by considering the standard Slater-Jastrow
+developed2–6, they are in general limited to small systems                  type trial wave function with backﬂow,
+as their computational cost grows exponentially with sys-
+tem size.  Therefore, FN-QMC calculations still provide                                       Ψ(0)T   = detφk(qi[R])e−U[R].                  (1)
+the  most  accurate  values  of  ground  state  properties  of
+extended fermion systems.                                                   Antisymmetry  is  ensured  by  the  Slater  determinant  of
+  Modiﬁcation  of  the  nodes  of  a  many-fermion  wave                    single  particle  orbitals, φk(r), k  =  1,...,N,  where,  in-
+function  to  explicitly  include  correlations  remains  a                 stead  of  the  bare  coordinates ri, i  =  1,...,N,  many-
+formidable task.  Slater determinants based on Backﬂow                      body  backﬂow  coordinates, qi,  are  used  as  arguments.
+(BF)  coordinates  present  one  possibility7–10,  and  back-               Both  backﬂow  coordinates, Q  =  (q1,..., qN),  and  the
+ﬂow  wave  functions  have  been  routinely  used  over  the                symmetric Jastrow potential, U, depend explicitly on all
+last  years  in  QMC  calculations  of  the  electron-gas11–13              coordinates, R  =  (r1, r2,..., rN),  as  indicated.   In  the
+and liquid 3He14–18.  Generalization of the backﬂow wave                    standard  form, U  = ∑i<ju(rij) +∑i Gi(R)· Gi(R)
+function to include three body correlations was shown to                    with Gi =∑j(ri−rj)ξ(rij), qi = ri +∑j(ri−rj)η(rij),
+be necessary to stabilize the unpolarized phase of liquid                   and rij  = |ri− rj|.   The  radial  functions u, ξ  and η
+3He against spin-polarization19.                                            can be parametrized and optimized by minimization of
+  Here  we  propose  new  correlated  trial  wave  functions                the variational energy.  Generalizations to include higher
+based on iterative backﬂow transformations and use them                     correlations  into  both  backﬂow  and  Jastrow  potentials
+to study liquid 3He in two dimensions.  We show that this                   are possible19 but will not be considered here.
+new class of trial wave functions systematically lower the                     Once  the  backﬂow  and  Jastrow  potentials  have  been
+energy and its variance.  Our results illustrate the pos-                   determined,  diﬀerent  occupations  of  the  orbitals  inside
+sibility to extrapolate variational (VMC) and FN diﬀu-                      the  Slater  determinant  of  Eq.  (1)  can  be  used  to  ap-
+sion  (DMC)  Monte  Carlo  calculations  to  zero  variance                 proximate also low-lying excited states of the systems20,
+                                                                                                                                                  2
+
+in  close  analogy  to  Landau’s  Fermi  liquid  description.                   III.    TWO DIMENSIONAL LIQUID  3HE AT
+As  in  the  correlated  basis  functions  approach21,22,  let                                  FREEZING DENSITY
+us consider the eﬀective Hamiltonian within these non-
+orthogonal  basis  states.   For  a  Fermi  liquid,  we  expect                In order to illustrate the accuracy of the renormaliza-
+non-diagonal  matrix  elements  of  the  eﬀective  Hamilto-                 tion procedure to describe the ground state wave function
+nian to be strongly suppressed compared to those of the                     of  highly  correlated  Fermi  liquids,  we  perform  calcula-
+bare plane-wave states.  However, instead of diagonaliz-                    tions  for  the  ground  state  energy  of  liquid  3He  in  two
+ing  the  eﬀective  Hamiltonian,  let  us  search  again  for  a            dimensions  at  a  density ρ  =  0.060˚A−2,  near  freezing4.
+trial wave function to represent the ground state of the                    We compare VMC and ﬁxed node DMC energies to ex-
+eﬀective Hamiltonian.  Assuming a smoothly varying ef-                      act results obtained by the nominally exact transient es-
+fective interaction, we may again consider to represent it                  timate (TE)  method  of Ref.  3,  for  systems of N  = 26
+as a backﬂow wave function,  Ψ(1)T  .  However,  this time,                 (N  =  29)  unpolarized  (polarized)  3He  atoms  interact-
+the new backﬂow coordinates, q(1)i   , and the new Jastrow                  ing with the HFDHE2 potential23.  Furthermore we test
+potential, U (1), are built upon the old backﬂow coordi-                    the size-consistency of our trial functions, comparing the
+nates, Q(1)[Q(0)], and U (1)[Q(0)] with Q(0)≡ Q.  Thus                      gain in variational energy obtained by the renormaliza-
+we are naturally led to an iterative renormalization pro-                   tion procedure for the unpolarized system at two diﬀerent
+cedure                                                                      sizes, N  = 26 and N  = 58.  The results are collected in
+                                                                            Table I.
+         Ψ(α)                                                                  Every  iteration  introduces  three  new  potentials  (for
+            T → Ψ(α+1)T       = detφk(q(α+1)i       )e−U(α+1)        (2)    backﬂow, two- and three-body Jastrow function), each of
+                                                                            which, generically indicated here asf(r), is parametrized
+with a renormalized Jastrow potential                                       in the form
+                          [∑                   )                                      {
+           U (α) =∑             u(β)(q(β−1)                                 f(r) =      (rC−r)3[∑5n=1anrn−1 +a6/ra7]                   if r<rC
+                                         ij                                             0                                                        if r≥rC.
+                     β≤α    i<j
+                                                          ]                                                                                     (5)
+                  +∑     G(β)i   (Qβ−1)· G(β)i   (Qβ−1)            (3)      For the backﬂow and three-body Jastrow potentials we
+                      i                                                     setrC = 7˚A  and drop the McMillan term (a6 = 0), while
+and renormalized backﬂow coordinates                                        for  the  two-body  Jastrow  potential  we  choose  a  cutoﬀ
+                                                                            value rC  close to half the side of the simulation box.  In
+                                                                            Fig.  1  we  show  the  optimized  potentials u(α), ξ(α)  and
+             q(α)i    = ri +∑    y(β)i                                       (4)η(α) of the Ψ(4)T   wave function for a system with N = 26
+                            β≤α                                             and ζ  =  0.   The  backﬂow  coordinate  transformations
+                           (                     )                )         across diﬀerent iterations implicitly build up many-body
+   y(α)i   [Q(α−1)] =∑       q(α−1)i  − q(α−1)j    η(α)(q(α−1)ij            correlations  at  all  orders,  so  that  eventually  not  all  of
+                       j⁄=i                                                 the optimized potentials have an obvious physical inter-
+                                                                            pretation:  for instance the pair distribution functions g
+(in Eqs.  (3) and (4), Q(−1)  stands for R).  At each it-                   of the bare coordinates and of the renormalized coordi-
+eration new potentials parametrizing the additional Jas-                    nates at subsequent iteration levels, shown in Fig. 2, fea-
+trow and backﬂow functions are introduced, and all the                      ture increasingly wide correlation holes and high peaks
+potentials u(β), ξ(β)  and η(β),  with β ≤ α,  have  to  be                 for increasing level, despite the two-body potentials u(α)
+optimized.                                                                  turning from repulsive for α = 0 to attractive for α = 4.
+  In  the  appendix  we  show  how  the  evaluation  of  the                Note that all the g’s feature the structure of simple liq-
+renormalized wave functions and their derivatives needed                    uids (albeit with increasingly classical character), which
+to  calculate  the  local  energy  can  be  eﬃciently  imple-               supports the heuristic derivation given in Section II: each
+mented with a number of operations proportional toN 3.                      iteration essentially renormalizes the Slater Jastrow wave
+Thus, the overall cost of calculation is not dramatically                   function without qualitative changes.
+altered  compared  to  the  usual  (zeroth  order)  backﬂow                    With  the  choice  of  Eq.  (5),  the  renormalization  pro-
+wave function.  For a system of N = 26 particles we ﬁnd                     cedure requires 17 variational parameters per level, and
+that the CPU time to move all the particles and calculate                   the corresponding optimization procedure (carried out by
+the local energy with iterated backﬂow of order 1 to 4 is                   correlated  sampling24  in  this  work)  becomes  rather  de-
+a factor 5, 9, 13, 17 larger than that of the zeroth order,                 manding.  Therefore we have tried two simpler iterative
+respectively; furthermore, forN = 58, fourth order back-                    schemes, one in which no renormalized Jastrow is present,
+ﬂow takes 12.5 times longer than forN = 26, close to the                    and one in which only the new potentials added at theα-
+N 3  scaling.  The corresponding ﬁgures for the eﬃciency                    th iteration are optimized, leaving the other unchanged
+of the calculation of the energy are even more favorable,                   from previous iterations.  However, these simpler options
+because  the  variance  is  lower  for  improved  wave  func-               lead to higher values in energy, both for VMC and DMC.
+tions.                                                                      We have also considered an improved wave function with
+                                                                                                                                                3
+
+                                N=26, ζ = 0                            N=58, ζ = 0                            N=29, ζ = 1
+                    ET/N        σ2/N      ∆    EDMC/N       ET/N      σ2/N      ∆    EDMC/N       ET/N        σ2/N     ∆     EDMC/N
+         PW         3.011(1)    28.29          2.419(2)     2.900(1)   28.07         2.373(2)     2.5831(6)    7.51          2.402(1)
+         BF(0)      2.688(1)    13.05   0.323  2.353(2)     2.584(1)   13.34  0.316  2.283(2)     2.5133(5)    5.34  0.070   2.4005(6)
+         BF(1)      2.471(1)      4.58  0.540  2.336(2)     2.356(2)    4.93  0.544               2.4383(3)    2.20  0.145   2.3918(5)
+         BF(2)      2.4258(8)     2.86  0.585  2.3284(9)    2.313(2)    3.25  0.587               2.4193(3)    1.54  0.164   2.3877(4)
+         BF(3)      2.4049(9)     2.47  0.606  2.3223(4)    2.297(2)    2.67  0.603               2.4136(2)    1.36  0.170   2.387(1)
+         BF(4)      2.400(1)      2.29  0.611  2.323(1)     2.292(1)    2.49  0.608  2.232(1)     2.4109(7)    1.25  0.173   2.3869(5)
+         VMCext                   2.338(5)                               2.217(2)                               2.384(6)
+         DMCext                   2.317(3)                               2.216(3)                               2.379(1)
+         LBext                    2.275(14)                              2.149(12)                              2.390(26)
+         TE                       2.307(7)                                                                      2.375(3)
+
+TABLE I.  Ground-state energy per particle, in K, of liquid  3He in two dimensions atρ = 0.060˚A−2, obtained with Variational
+(ET/N) and ﬁxed node Diﬀusion Monte Carlo (EDMC/N) using diﬀerent types of trial wave functions:  Slater-Jastrow wave
+function without backﬂow (PW), and with α-times iterated backﬂow (BF(α)). ζ is the spin polarization and N  is the number
+of particles.  ∆ is the gain in VMC energy per particle relative to the PW value,  and σ2  is the variance of the VMC total
+energy.  TE indicates unbiased results calculated with the transient estimate method of Ref.  3.  VMCext, DMCext  and LBext
+are the extrapolations to zero variance of ET/N, EDMC/N  and of the lower bound (ET−√σ2)/N, respectively.  Statistical
+uncertainties  on  the  last  digit(s)  are  given  in  parentheses.   All  values  are  given  for  periodic  boundary  conditions  (Γ  point)
+without tail corrections23.
+
+
+diﬀerent backﬂow potentials for parallel and antiparallel                  |Ej⟩, of energy Ej, we have|ΨT⟩ =∑jcj|Ej⟩ where cj
+spins. The gain in energy is∼ 10 mK in VMC, but hardly                     are the expansion coeﬃcients, with∑j|cj|2 = 1 assum-
+visible  in  DMC  (<∼  1  mK)  beyond  the  second  backﬂow                ing normalized states.  We can now write
+iteration.  Finally, we have tested the accuracy of using                                          ET  =E0 + ∆TCT                          (7)
+potentials optimized for N  = 26 to perform simulations
+with N  = 58 particles:  at the fourth backﬂow iteration,                  withCT  =∑M
+the DMC energy is higher by a non negligible amount,                       where  ∆ ≡ E1− E0  denotes  the  energy  gap  betweenj⁄=0|cj|2 and ∆T≡∑i(Ei−E0)c2i/CT≥ ∆,
+5±2 mK. All these results are listed in Table II.                          ground and ﬁrst excited state of the system.  Similarly,
+                                                                           we obtain for the variance
+IV.    ZERO-VARIANCE EXTRAPOLATION AND                                                         σ2 =   ∆2TCT− (∆TCT )2                    (8)
+                      LOWER BOUNDS
+                                                                           where    ∆2T≡∑i(Ei−E0)2c2i/CT≥ ∆2T .
+  Our VMC and FN-DMC results for the energy expec-                            Using Eqs. (7) and (8) we have
+tation  values EX  =⟨ΨX|H|ΨX⟩  of  the  diﬀerent  (nor-                                                        √                      
+malized)  wave  functions,  provide  strict  upper  bounds                     ET−√σ2 =E0− ∆TCT                      ∆2T              ,     (9)
+for  the  true  ground  state  energy, E0≤ EX,  where  the                                                           ∆2TCT − 1− 1
+subscript X  stands  for T  or DMC  as  appropriate  and
+ΨDMC  is the FN ground state.  Within VMC, we have                         and  we  see  that  the  expression  for  the  lower  bound,
+also  access  to  the  variance  of  the  energy  in  the  trial           Eq. (6), remains valid forCT≤           ∆2T/2∆2T , orET−E0≤
+state, σ2  =⟨ΨT|(H−ET )2|ΨT⟩.   As  the  variance  ap-                     ∆2T/2∆T .  Note that this condition is less stringent than
+proaches  zero  for  any  exact  eigenstate,  its  value  for  a           the assumption thatET  is closer to the ground state en-
+given  trial  wave  function  can  be  used  to  quantify  the             ergy than to any of the other eigenstates used previously.
+distance to the closest eigenfunction.  Under the assump-                     To go further, let us assume that the trial wave func-
+tion  that  the  trial  energy  is  closer  to  the  ground  state         tion has a signiﬁcant overlap only with the ground state
+energy than to any of the other eigenstates, the inequal-                  wave function, whereas the components of excited staes,
+ityσ2≥ (E0−ET )2 leads to a lower bound for the ground                     ci  with i > 0,  are broadly distributed.  We expect this
+state energy25:                                                            assumption to be reasonably satisﬁed for extended sys-
+                        E0≥ET−√σ2.                           (6)           tems, where the excited states approach a continuum in
+                                                                           the thermodynamic limit.  Improving the wave function
+In  the  following,  we  will  use  the  information  on  the              via our iterative renormalization, the excited state con-
+variance  obtained  by  VMC  to  extrapolate  to  the  exact               tributions decrease almost uniformly, such that CT→ 0
+ground state energy.                                                       whereas ∆T  and       ∆2T  remain roughly constant.  In this
+  Let us ﬁrst analyse in more detail how the trial wave                    case  we  can  neglect  terms  of  order C2T  in  Eq.  (8)  and
+function approaches the ground state wave function.  Ex-                   insert it in Eq. (7), and obtain
+panding our trial wave function in the exact eigenstates,                                   ET  =E0 +Aσ2,    for σ2→ 0              (10)
+                                                                                                                                                   4
+
+                                                N = 26, ζ = 0                                                      N = 58, ζ = 0
+                             ET/N                                        EDMC/N                              ET/N                EDMC/N
+           0           I          II         III        0           I          II         III          0         IV         0          IV
+   PW                                                                                                  2.900(1)  2.909(2)
+   BF(0)                                                                                               2.584(1)  2.592(2)   2.289(2)   2.288(1)
+   BF(1)   2.471(1)    2.599(2)   2.515(1)   2.461(1)   2.336(2)    2.337(2)   2.337(2)
+   BF(2)   2.4258(8)   2.585(2)   2.480(1)   2.413(1)   2.3284(9)   2.335(2)   2.332(1)   2.3256(9)
+   BF(3)   2.4049(9)   2.584(2)   2.472(1)   2.398(1)   2.3223(4)   2.335(2)   2.326(1)   2.3215(4)
+   BF(4)   2.400(1)    2.580(2)   2.470(1)   2.390(2)   2.323(1)    2.331(1)   2.325(3)   2.324(1)     2.292(1)  2.298(2)   2.232(1)   2.237(1)
+
+TABLE  II.  Some  of  the  energies  of  Table  I  compared  to  the  corresponding  values  obtained  with  downgraded  or  upgraded
+wave  functions.   Entries  0:   energies  from  Table  I;  entries  I:  downgraded  wave  functions  with  omitted  Jastrow  factors  of
+the  quasi-coordinates;  entries  II:  downgraded  wave  functions  with  Jastrow  and  backﬂow  potentials  from  previous  iterations
+not repotimized; entries III: upgraded wave functions with diﬀerent like-spin and unlike-spin backﬂow potentials; entries IV:
+downgraded wave functions for N = 58 with Jastrow and backﬂow potentials optimized for N = 26.
+
+
+with A = ∆T/∆2T .  Therefore,  with good enough trial                        the  4th  iteration  compared  to  the  usual  backﬂow  trial
+functions,  we  expect  that  a  (nearly)  linear  extrapola-                wave function (0 iterations) is about 290mK within VMC
+tion  of  the  variational  energy  to  zero  variance  closely              and 30mK for FN-DMC. More important, we have shown
+approaches the exact ground state energy, with the coef-                     that  the  true  ground  state  energy  can  be  obtained  by
+ﬁcient of the linear term providing a numerical estimate                     variance extrapolation with intrinsic a-posteriori checks
+of the validity of the lower bound of Eq. (6), i.e.                          of the consistency and validity of the extrapolation.  For
+                       ET−E0≤ 1/(2A).                       (11)             small  number  of  atoms, N ∼  26,  we  have  shown  that
+                                                                             the obtained results are in agreement with unbiased cal-
+The  lower  bound,  in  turn,  can  be  made  stricter  by  ex-              culations using transient estimates, but variance extrap-
+trapolation  to  zero  variance  of ET−√σ2  with  a  lead-                   olation  can  be  used  also  to  quantify  the  ﬁxed-node  er-
+ing square-root term.  These variance extrapolations are                     ror of larger systems.  For systems with N  = 58 atoms,
+shown in Figs (3), (4) and (5) and listed in Table I.                        the ﬁxed-node error of our best wave function is around
+  All  of  the  above  extrapolations  are  valid  for CT →                  20mK.
+0.  Using a general estimate for the overlap of the trial                       Thus,  apart from signiﬁcant VMC and FN-DMC en-
+wave function with the ground state26, CT ≡ 1−c20≥                           ergy  gains,  the  iterative  backﬂow  renormalization  pro-
+1− exp[−(ET−E0)2/2σ2]≈  1− exp[−A2σ2],  we  can                              cedure  also  leads  to  a  general  strategy  to  quantify  the
+a-posteriori  check  the  consistency  of  the  energy  versus               ﬁxed-node error of the calculations.  In combination with
+variance extrapolation, see Fig. 6.                                          ﬁnite-size extrapolations based on the analytical informa-
+  Finally,  one  would  like  to  use  variance  extrapolation               tions contained in the trial wave function28,29, the meth-
+with  the  ﬁxed-node  energies  to  obtain  even  better  re-                ods  presented  in  the  paper  provide  an  important  step
+sults.  However, within DMC, the variance⟨ΨDMC|(H−                           towards the control of the accuracy of QMC calculations
+EDMC)2|ΨDMC⟩  is  zero  inside  any  nodal  pocket27  and                    suﬀering from a Fermion sign problem.
+cannot be used anymore as a measure of the quality of
+the wave function.  The most natural assumption is then
+to postulate that the variance σ2  calculated in VMC is                                        ACKNOWLEDGMENTS
+a  good  measure  of  the  quality  of  the  wave  function  in
+DMC as well.  This allows us to use the same extrapola-                         MH thanks Bernard Bernu and David Ceperley for dis-
+tion for DMC energies as in the case of VMC, as shown                        cussions.   Computer  time  at  CNRS-IDRIS  is  acknowl-
+in Figs. (3), (4) and (5), but without obtaining a lower                     edged, Project No.  i2014051801.
+bound.  The DMC energy extrapolated to zero variance,
+listed in Table I, happens to diﬀer from the TE value by
+just the combined error bar, 10 mK for ζ = 0 and 4 mK                                   Appendix A: Computational details
+for ζ = 1.
+
+                                                                                Let us suppose that qαi , are backﬂow coordinates i =
+                     V.    CONCLUSIONS                                       1,...N  and α  =  1,...d,  where d  is  the  spatial  dimen-
+                                                                             sion, and we have already computed the following partial
+  In  this  paper  we  have  introduced  new,  highly  corre-                derivatives
+lated wave functions for accurate descriptions of normal                                       Qαβ
+Fermi liquids based on generalized backﬂow coordinates                                            ij ≡∇αiqβj                                       (A1)
+which are iteratively improved.  For liquid  3He at freez-                                        ~Qβj≡ ∆qβj ≡∑        ∇αi∇αiqβj                 (A2)
+ing  density,  the  energy  gain  of  these  wave  functions  at                                                   iα
+                                                                                                                                                5
+
+We will further need                                                       whereu denotes the function andu′ (u′′) its ﬁrst (second)
+                       Qβγ          Qαβ                                    derivative.  The gradient of the Jastrow factor can then
+                         lm =∑         il Qαγim                      (A3)  be calculated by the chain rule
+                                 iα
+which is already needed for computation of the local en-                        ∇αiU =∑        Vβ                        u′(qlm)
+                                                                                                 l Qαβil ,  Vβl   =∑        qlm  qβlm       (A9)
+ergy  of  the  Slater  determinant  using  orbitals  based  on                             lβ                       m⁄=l
+the above backﬂow coordinates11, which we will shortly                     and
+remind.                                                                                                     ∑          [              ]
+                                                                              ∆U =∑         Vβl ~Qβl  +∑        Wβγlm   Qβγll −  Qβγlm     (A10)
+                 1.    Backﬂow determinant                                              lβ             l⁄=m βγ
+
+  The gradient and the laplacian of a determinant, D =                     with
+detϕki, with backﬂow coordinates in the orbitals, ϕki≡                                   (                       )qβ
+                                                                               Wβγ         u′′(qlm)− u′(qlm)          lmqγlm
+ϕk(qi), can be calculated as follows                                              lm  =                   qlm         q2lm    +δβγu′(qlm)qlm
+     ∇αi  logD =∑        Fβ                                                                                                                (A11)
+                           jjQαβij                                       (A4)We see that the overall cost of the quasi-particle Jastrow
+                     jβ                                                    factor and its derivatives needed for the local energy is of
+                                         [∑              ]
+       ∆ logD =∑         Fαii~Qαi  +∑          Vimϕαβ      Qαβ             order of N 3, needed to build the matrix            Qβγlm, Eq. (A3).
+                                                      mi     ii            Since this matrix is already needed in the calculation of
+                     iα             iαβ     m                              usual backﬂow wave function11, the iterated Jastrow does
+                    −∑      FαijFβjiQαβji                              (A5)not lead to a signiﬁcant slow down compared to the usual
+                       ijαβ                                                backﬂow.
+where
+                                                                                        3.    Iterated backﬂow coordinates
+    ϕαki≡ ∂ϕki∂qαi ,  ϕαβki ≡ ∂2ϕki∂qαi∂qβ,  Fαij =∑      Vikϕαkj
+                                       i              k                       We now construct new backﬂow coordinates
+                                                                (A6)
+and Vik is the inverse of the backﬂow matrix                                                        yαi  =∑qαijη(qij)                     (A12)
+                          ∂D                                                                               j⁄=i
+              Vik =  1D  ∂ϕki,  ∑       Vikϕkj =δij           (A7)
+                                     k                                     where η is the corresponding potential.  In order to cal-
+The computational complexity is of order N 3 for the in-                   culate the local energy for backﬂow orbitals in the Slater
+                                                                           determinant based on yαi , we need the following deriva-
+version of the orbital matrix, Vik, as well as for the com-                tives
+putation of the matrices Fαij  and       Qαβij  .                                             Yαβ
+  Note  that  this  part  of  the  calculations  does  not  de-                                ij ≡∇αiyβj,  ~Yαi ≡ ∆yαi               (A13)
+pend  on  the  speciﬁc  form  of  the  backﬂow  coordinates.               In  order  to  calculate  them,  we  will  use  the  chain  rule,
+The  computation  of  the  gradient  and  laplacian  of  the               based on the following partial derivatives
+local energy based on Eq (A4) and Eq (A5) do only de-
+pend on the actual values of the orbital matrix, ϕki, and                        ∂yβj         ∑
+its  partial  derivatives,  Eqs.  (A6),  and  on  the  gradient                  ∂qαi   =δij       ˙yαβin − ˙yαβij
+and laplacian of the backﬂow coordinates, Eq (A1) and                                          n
+Eq. (A2).  Therefore, Eq. (A4) and Eq. (A5) can be still                       ∂2yγk   =δijk   ∑    ¨yαβγ
+used to calculate the local energy of determinants con-                      ∂qαi∂qβ                 kn −δjk¨yαβγki −δij ¨yαβγjk −δik¨yαβγkj
+taining  iterated  backﬂow  coordinates,  as  long  as  their                        j           n
+derivatives are provided in the form of Eqs (A1), (A2),                    where
+and (A3).
+                                                                                      ˙yαβij   = η′(qij)qij  qαijqβij +η(qij)δαβ
+             2.    Iterated Jastrow correlations                                              [                    ]qαijqβ
+                                                                                    ¨yαβγ      η′′(qij− η′(qij)          ijqγij
+                                                                                     ij    =                 qij        q2ij
+  We can now build a Jastrow factor based on the dis-                                                    [                              ]
+tances between two quasi-particles,                                                           +η′(qij)    qαijδβγ +qβ
+                                                                                                  qij                 ijδαγ +qγijδαβ
+                         U =∑       u(qlm)                         (A8)    and we have used that  ˙yαβ
+                               l<m                                                                        ii   = ¨yαβγii     = 0.
+                                                                                                                                                       6
+
+  The ﬁnal derivatives needed, Eqs. (A13), can then be                         therefore  be  calculated  from  those  of  the  vectors  using
+written as                                                                     the chain rule.  Generalizations to build iterated many-
+          Yαβ            ˙yγβ [Qαγ            ]                                body Jastrow and backﬂow coordinates based on quasi-
+            ij   =∑       jn      ij −Qαγin                                    particle tensors19 are straightforward and do not increase
+                     nγ                                                        the complexity of the calculation.
+            ~Yαi   =∑         [~Qβ         ]
+                         ˙yαβin   i− ~Qβn
+                     nβ           [                          ]
+                    +∑      ¨yαβγ   Qβγ      Qβγ        Qβγ       (A14)                          5.    Higher order iterations
+                             in       ii  +    nn− 2      in
+                       nαβ
+                                                                                  At the zeroth order of iteration, the backﬂow coordi-
+Again, these operations can be done in order ofN 3 com-                        nates,  qi,  are  symmetric  functions  of  the  bare  coordi-
+putations.                                                                     nates.  Higher order iterations of the backﬂow are built
+                                                                               from symmetric expressions based on the previous back-
+                                                                               ﬂow coordinates, such that the overall wave function re-
+              4.    Iterated n-body correlations                               mains antisymmetric.  Above,  we have explicitly shown
+                                                                               how  to  calculate  the  gradient  and  the  laplacian  of  the
+  Above we have explicitly shown how to calculate gradi-                       quasi-particle coordinates of the ﬁrst backﬂow iteration,
+ent and laplacian of a scalar two-body Jastrow potential                       q(1)i ≡ qi + yi without increasing the overall complexity
+and of quasi-particle coordinates constructed from back-                       of the calculation.  These are the only additional infor-
+ﬂow coordinates.  The structure of our three-body corre-                       mation needed to calculate the local energy of the ﬁrst
+lation in Eq. (3) is actually a scalar product between two                     iterated backﬂow determinant, and from the structure it
+vectors with identical structure as the backﬂow coordi-                        is clear that this procedure can be iterated to higher order
+nates.  Gradient and laplacian of the three body term can                      without increasing the complexity of the calculations.
+
+
+
+
+
+
+
+ 1  P.J.  Reynolds,   D.M.  Ceperley,   B.J.  Alder,   and  W.A.               17  S. Moroni, S. Fantoni, and G. Senatore, Phys. Rev. B 52,
+   Lester, J. Chem. Phys. 77, 5593 (1982).                                        13547 (1995).
+ 2  D.M. Ceperley and B.J. Alder,  J. Chem. Phys. 81,  5833                    18  F.H. Zong, D.M. Ceperley, S. Moroni, and S. Fantoni, Mol.
+   (1984).                                                                        Phys. 101, 1705 (2003).
+ 3  G. Carleo, S. Moroni, F. Becca, and S. Baroni, Phys. Rev.                  19  M. Holzmann,  B. Bernu,  and D.M. Ceperley,  Phys. Rev.
+   B 83, 060411(R) (2011).                                                        B 74, 104510 (2006).
+ 4  M. Nava, A. Motta, D. E. Galli, E. Vitali, and S. Moroni                   20  W.L. McMillan, Phys. Rev. 138, A442 (1965).
+   Phys. Rev. B 85, 184401 (2012).                                             21  E. Feenberg,  Theory  of  Quantum  Fluids, Academic, New
+ 5  J. J. Shepherd, G. Booth, A. Gr¨uneis, and A. Alavi, Phys.                    York (1969).
+   Rev. B 85, 081103(R) (2012).                                                22  E. Krotscheck in Introduction to modern methods of quan-
+ 6  F. Pederiva, S. A. Vitiello, K. Gernoth, S. Fantoni, and L.                   tum many-body theory and their applications, A. Fabrocini,
+   Reatto, Phys. Rev. B 53, 15129 (1996); F. Calcavecchia, F.                     S Fantoni, and E. Krotscheck (ed.), World Scientiﬁc Sin-
+   Pederiva, M. H. Kalos, and T. D. K¨uhne, arXiv:1404.6944                       gapore (2002).
+   (2014).                                                                     23  R. A. Aziz, V. P. S. Nain, J. S. Carley, W. L. Taylor and
+ 7  V. R. Pandharipande and N. Itoh, Phys. Rev. A 8, 2564                         G.  T.  McConville,  J.  Chem.  Phys 70,  4330  (1979).  The
+   (1973).                                                                        potential is made to vanish at half the side of the simulation
+ 8  K. E. Schmidt and V. R. Pandharipande, Phys. Rev. B 19,                       box by a rigid shift.
+   2504 (1979).                                                                24  D.  M.  Ceperley  and  M.  H.  Kalos  in  Monte  Carlo  Meth-
+ 9  E. Manousakis, S. Fantoni, V. R. Pandharipande, and Q.                        ods in Statistical Physics, K. Binder (ed.), Springer-Verlag,
+   N. Usmani, Phys. Rev. B 28, 3770 (1983).                                       1979.
+10  S. A. Vitiello, K. E. Schmidt, and S. Fantoni, Phys. Rev.                  25  G. Temple, Proc. Roy. Soc. Ser. A 119, 276 (1928).
+   B 55, 5647 (1997).                                                          26  C.  Mora  and  X.  Waintal,  Phys.  Rev.  Lett.  99,  030403
+11  Y. Kwon, D. M. Ceperley and R. M. Martin, Phys. Rev.                          (2007).
+   B 48, 12037 (1993).                                                         27  Unless  the  nodes  are  exact,  the  FN-DMC  wave  function
+12  Y. Kwon, D. M. Ceperley and R. M. Martin, Phys. Rev.                          will have a discontinuous derivative at the nodal surface.
+   B 58   6800 (1998).                                                            Nevertheless,  one  can  show  that  the  energy  expectation
+13  M. Holzmann, D. M. Ceperley, C. Pierleoni and K. Esler,                       value  of  a  FN-DMC  wave  function  still  provides  an  up-
+   Phys. Rev. E68, 046707 (2003).                                                 per bound to the true ground state wave function having
+14  K. E. Schmidt, M. A. Lee, M. H. Kalos, and G.V. Chester,                      continuous derivatives everywhere.
+   Phys. Rev. Lett. 47, 807 (1981).                                            28  S. Chiesa, D.M. Ceperley, R.M. Martin, and M. Holzmann,
+15  R.  M.  Panoﬀ  and  J.  Carlson,  Phys.  Rev.  Lett. 62,  1130                Phys. Rev. Lett. 97, 076404 (2006).
+   (1989).                                                                     29  M.  Holzmann,  B.  Bernu,  V.  Olevano,  R.M.  Martin,  and
+16  J.  Casulleras  and  J.  Boronat,  Phys.  Rev.  Lett. 84,  3121               D.M.  Ceperley,  Phys.  Rev.  B  79,  041308(R)  (2009);  M.
+   (2000).                                                                        Holzmann,  B.  Bernu,  C.  Pierleoni,  J.  McMinis,  D.  M.
+                                                                                                                                                     7
+
+Ceperley, V. Olevano, and L. Delle Site, Phys. Rev. Lett.
+107, 110402 (2011).
+                                                                                                                                                                        8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  1.   Optimized  potentials  of  the  trial  function  Ψ(4)T    for
+N  =  26, ζ  =  0.   The  lines  are  broken  where  the  pair  dis-
+tribution functions of the relevant (quasi)coordinates become
+negligibly small, g(r)<∼ 10−3 (see Fig. 2).
+                                                                                                                                                              9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Pair correlation functions calculated in a VMC simu-
+lation with the BF(4) trial function using the bare coordinates
+{ri} (solid line),  and the renormalized backﬂow coordinates
+{q(0)i },{q(2)i },  and{q(4)i }  (dotted,  dash-dotted  and  dashed
+lines,  respectively).   The  statistical  noise  reaches  its  maxi-
+mum value∼ 0.003 at the highest peak.
+                                                                                                                                                          10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.  The VMC and DMC energies per particle of N = 26
+unpolarized  3He atoms in two dimensions as a function of the
+variance σ2/N.   Each  point  corresponds  to  a  diﬀerent  trial
+function  (PW  and  BF(α)  with α  =  0  to  4,  from  higher  to
+lower variance).  The TE energy has been subtracted.  Their
+dependence is nearly linear, and their extrapolations to zero
+variance, the entries VMCext and DMCext of Table I, are very
+close to the exact result.  We further show the energy lower
+bound (ET−√σ2)/N, whose extrapolation to zero variance,
+the entry LBext of Table I, is also very close to the exact re-
+sult.  The dashed line is a rough estimate of the ﬁrst excited
+state (the diﬀerence between the two slowest exponential de-
+cay constants in the fermionic signal of the TE procedure3).
+It shows that the condition for the validity of the energy lower
+bound (see text) are met by the iterated backﬂow trial func-
+tions.  The dotted line is the alternate estimate 1/(2AN) of
+Eq. (11) for the validity of the lower bound.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.  Same as Fig.  3, forN = 29 spin-polarized 3He atoms.
+Both the estimate of the ﬁrst excited state,∼ 0.6 K, and the
+value of 1/(2AN), 0.772 K, are oﬀ scale.
+                                                                                                                                                         11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.  Same as Fig.  3, for N  = 58 unpolarized  3He atoms.
+In the lack of TE results,  we take a reference energy E0/N
+halfway between VMCext and LBext.  Also, we do not have an
+estimate of the ﬁrst excited state.  Comparison of the dotted
+line with that of Fig. 3 shows that the range ofET−E0 where
+the lower bound is expected to be valid shrinks as 1/N.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6.     Points connected by thin lines :  the lower bound
+{1− exp[−(ET−E0)2/2σ2]}/N  to  the  missing  overlap  per
+particle between trial function and ground state,CT/N (with
+E0  replaced by the zero-variance extrapolation of ET ).  The
+points  refer  to  trial  functions  from  PW  to  BF(4),  in  order
+of decreasing variance.  Thick lines:  the approximation{1−
+exp[−A2σ2]}/N obtained using only the linear term of the ﬁt
+of energy vs.  variance.
