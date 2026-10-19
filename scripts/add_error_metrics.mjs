@@ -1,26 +1,14 @@
-// Attach an error bar or an energy variance to a row that was imported without one.
+// Attach an error bar or an energy variance to a row imported without one, from
+// passes/error-metrics/error-metrics-YYYY-MM-DD.json (DATA.md, the `error_metrics` block).
+// `measured_by` is "authors" (the authors' data release, or files they sent, committed under
+// sources/) or "qmbl" (measured on the checkpoint the authors published, with their network and
+// sampler). `reported_as` must be found verbatim in `source_file` (parts separated by " | ").
+// A number is attached only where the source's energy agrees with the row's within 2 combined
+// sigma. A field the row already carries is never overwritten; a later pass replaces an earlier
+// pass's block whole. The row's `energy` stays what the paper prints.
 //
-// A pass is error-metrics-YYYY-MM-DD.json: one object per row, naming where the number was
-// found. Two kinds of source, told apart by `measured_by`:
-//   - "authors": the authors' own data release (a repository, a Zenodo record, a notebook's
-//     stored output) holds the variance or the error bar of the state behind the printed
-//     energy, which the paper itself does not print. The case that opened this: Moss et
-//     al.'s pickle behind arXiv:2505.20406 (see add_repo_data_rows.mjs).
-//     Files the authors sent for the entry count, committed under sources/ as received
-//     (the pyrochlore measurement of arXiv:2509.13746, 2026-09-19).
-//   - "qmbl": we measured it ourselves, on the checkpoint the authors published, with their
-//     network and sampler. Only a measurement on *their* state goes on *their* row; a state
-//     we trained is a new row (hub, Seeding Var(E)).
-// Either way the row's `energy` stays what the paper prints; the block records where the
-// added numbers came from, and `reported_as` must be found verbatim in `source_file` (parts
-// separated by " | "), so a clone can check every value without the network.
-//
-// A number is attached only to the state it belongs to: the source's energy must agree with
-// the row's within 2 combined sigma. A field the row already carries is never overwritten;
-// a later pass replaces an earlier pass's block whole, as for `compute`.
-//
-// Conventions a source may state its variance in, converted once here (spin models store
-// Pauli totals, so an S.S variance of the total energy is x16):
+// variance_convention values, converted here (spin models store Pauli totals, so an S.S
+// variance of the total energy is x16):
 //   var_total_pauli   Var(H) of the stored total energy (spin models)
 //   var_as_stored     Var(H) of the total energy in the instance's stored convention, any
 //                     model (Hubbard stores totals as printed, so no factor applies)
