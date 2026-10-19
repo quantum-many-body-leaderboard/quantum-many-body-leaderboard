@@ -1,7 +1,6 @@
-// Find the FRONTIER CLAIMS in a paper, not every energy. A record claim is an energy
-// sitting in a sentence that asserts it: "best variational energy", "state of the art",
-// "improves on the previous best", "we reach/obtain". Everything else in these papers is
-// ED benchmarking on small lattices and is not what QMBL needs.
+// Find the record claims in a paper: an energy in a sentence that asserts it ("best
+// variational energy", "state of the art", "improves on the previous best", "we
+// reach/obtain"). harvest_tables.mjs collects the table energies.
 import fs from "node:fs";
 const strip = s => s.replace(/<[^>]+>/g," ").replace(/&nbsp;|&#[0-9]+;|&[a-z]+;/g," ").replace(/\s+/g," ");
 const CLAIM = /(state[- ]of[- ]the[- ]art|best (?:known |reported )?(?:variational )?energ|lowest (?:variational )?energ|previous best|improv\w+ (?:up)?on|outperform\w*|new record|surpass\w*|we (?:obtain|reach|achieve|find|report)|more accurate than)/i;
