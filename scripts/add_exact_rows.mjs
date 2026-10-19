@@ -1,12 +1,7 @@
-// Exactly solved instances: benchmarks whose ground-state energy is known to within a
-// stated error, so that a paper reporting on them can be scored by its distance from the
-// answer rather than ranked against other papers. Most of these instances have no
-// variational row at all yet; that is the point of carrying them.
-//
-// Every table below was read from the paper's own text (PDF layout mode or arXiv HTML),
-// parsed by column position or table cell, and the literal here checked value by value
-// against that parse. Energies are stored in the instance's convention (DATA.md): Hubbard
-// as totals, Heisenberg as Pauli totals, 4 N x the S.S energy per site.
+// Instances with a known exact energy and their exact rows, read from the papers' tables (PDF
+// layout mode or arXiv HTML) by column position or table cell; each literal below was checked
+// value by value against that parse. Energies are stored in the instance's convention
+// (DATA.md): Hubbard as totals, Heisenberg as Pauli totals, 4N x the S.S energy per site.
 import fs from "node:fs";
 
 const CHECKED = "2026-09-15";
@@ -269,7 +264,7 @@ console.log("batch B2: 4 exact rows computed by QMBL (pyrochlore-2x2x2_32_P; Hub
 // group's even sector at k = (0,0), A1 + B1, 2026-10-09) to 6.4e-13. The same run reproduces the exact rows at
 // J2 = 0.5 and Schulz, Ziman & Poilblanc's printed 0.2, 0.55 and 0.65 (checks/README.md). Chen et
 // al. quote -0.51565739 here, citing Schulz et al., who have no J2 = 0.45 row; Golubev et al.'s ED
-// lies 6.1e-7 below it (SWEEP.md, instance-gap pass).
+// lies 6.1e-7 below it (arXiv:2606.04558, Table I).
 put("J1J2/square_36_P_0.45",
   { model: "J1J2", lattice: "square", n_sites: 36, boundary: "P", params: { J2: 0.45 }, dof: 36, einf: 0 },
   { energy: -74.2546644341862, sigma: null,

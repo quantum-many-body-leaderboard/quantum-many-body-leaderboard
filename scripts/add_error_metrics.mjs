@@ -1,26 +1,14 @@
-// Attach an error bar or an energy variance to a row that was imported without one.
+// Attach an error bar or an energy variance to a row imported without one, from
+// passes/error-metrics/error-metrics-YYYY-MM-DD.json (DATA.md, the `error_metrics` block).
+// `measured_by` is "authors" (the authors' data release, or files they sent, committed under
+// sources/) or "qmbl" (measured on the checkpoint the authors published, with their network and
+// sampler). `reported_as` must be found verbatim in `source_file` (parts separated by " | ").
+// A number is attached only where the source's energy agrees with the row's within 2 combined
+// sigma. A field the row already carries is never overwritten; a later pass replaces an earlier
+// pass's block whole. The row's `energy` stays what the paper prints.
 //
-// A pass is error-metrics-YYYY-MM-DD.json: one object per row, naming where the number was
-// found. Two kinds of source, told apart by `measured_by`:
-//   - "authors": the authors' own data release (a repository, a Zenodo record, a notebook's
-//     stored output) holds the variance or the error bar of the state behind the printed
-//     energy, which the paper itself does not print. The case that opened this: Moss et
-//     al.'s pickle behind arXiv:2505.20406 (see add_repo_data_rows.mjs).
-//     Files the authors sent for the entry count, committed under sources/ as received
-//     (the pyrochlore measurement of arXiv:2509.13746, 2026-09-19).
-//   - "qmbl": we measured it ourselves, on the checkpoint the authors published, with their
-//     network and sampler. Only a measurement on *their* state goes on *their* row; a state
-//     we trained is a new row (hub, Seeding Var(E)).
-// Either way the row's `energy` stays what the paper prints; the block records where the
-// added numbers came from, and `reported_as` must be found verbatim in `source_file` (parts
-// separated by " | "), so a clone can check every value without the network.
-//
-// A number is attached only to the state it belongs to: the source's energy must agree with
-// the row's within 2 combined sigma. A field the row already carries is never overwritten;
-// a later pass replaces an earlier pass's block whole, as for `compute`.
-//
-// Conventions a source may state its variance in, converted once here (spin models store
-// Pauli totals, so an S.S variance of the total energy is x16):
+// variance_convention values, converted here (spin models store Pauli totals, so an S.S
+// variance of the total energy is x16):
 //   var_total_pauli   Var(H) of the stored total energy (spin models)
 //   var_as_stored     Var(H) of the total energy in the instance's stored convention, any
 //                     model (Hubbard stores totals as printed, so no factor applies)
@@ -32,7 +20,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { SPIN_MODELS, perSiteDivisor, vScore } from "./units.mjs";
 
-const PASSES = fs.readdirSync(".").filter(f => /^error-metrics-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
+const DIR = "passes/error-metrics";
+const PASSES = fs.readdirSync(DIR).filter(f => /^error-metrics-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
 const MEASURED_BY = new Set(["authors", "qmbl"]);
 
 function varianceTotal(e, inst) {
@@ -66,7 +55,7 @@ let attached = 0;
 const problems = [];
 for (const file of PASSES) {
   const date = file.slice(14, 24);
-  for (const e of JSON.parse(fs.readFileSync(file, "utf8"))) {
+  for (const e of JSON.parse(fs.readFileSync(path.join(DIR, file), "utf8"))) {
     const at = `${e.instance_id} ${e.reference_includes}`;
     if (!MEASURED_BY.has(e.measured_by)) { problems.push(`${at}: measured_by ${e.measured_by}`); continue; }
     const text = e.source_file && fs.existsSync(e.source_file) ? fs.readFileSync(e.source_file, "utf8") : null;

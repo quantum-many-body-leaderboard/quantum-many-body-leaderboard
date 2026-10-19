@@ -1,738 +1,197 @@
-# Literature sweep: refresh targets
-
-Method (fixed, see RULES.md §8): take content from **arXiv HTML parsed locally**, never from an
-LLM summary of a table; that was caught mangling columns and inventing electron counts on
-2026-09-10. Then check for a **peer-reviewed version** (Nature/Science/PRX/PRL/PRB/PRResearch/
-Nat. Phys./Nat. Commun. all count) and record `journal_ref` + `doi`. Preprint-only rows are
-flagged and rank weaker. Where arXiv and journal versions disagree on a number, the journal
-version wins and the discrepancy is recorded.
-
-Second pass on every paper: **harvest its bibliography**. Comparison tables cite the results
-they are beating, and reviews aggregate SOTA across models we have not touched. That is how the
-triangular/kagome/pyrochlore instances get found: nobody wrote a SOTA note for them.
-
-## Track 2, the citation screen (2026-10-19)
-
-The eleven seeds of 2026-10-17 had 1880 citing papers (OpenAlex and Semantic Scholar, `cited_by.mjs`); 571 matched
-electron-gas title words, 235 with an arXiv id after dropping finite-temperature, response and other-Hamiltonian
-titles; 159 texts fetched (77 failed: journal-only). Ranked by printed energies and model words, 19 were read by four
-agents. Pass `sweep-rows-2026-10-19-heglit2.json` (`qmbl-runs/qmbl-worklist/2026-10-19-heglit2/make_rows.mjs`):
-**131 rows, 29 new instances.**
-
-- Totals: Fantoni (arXiv:1304.7298, N = 66 DMC, Ry), Holzmann et al.'s benchmark (1001.5002, fcc cells N = 54-226, the
-  Ewald column), Lee, Malone & Morales (1905.04361, ph-AFQMC at N = 54 and 114), Azadi & Drummond's crystals
-  (2201.08743, bcc N = 27 and 64), and the Gamma rows of 2405.00425 (2D square cell, N = 90).
-- Correlation energies, stored as QMBL's HF + E_c: 1905.04361 (N = 14, AFQMC at M plane waves), 1706.09923
-  (CCSD-CCSDTQ5 and FCIQMC at the basis limit), 1712.07524 (transcorrelated FCIQMC), and 1310.6806's full CCD.
-- Cross-checks: 1905.04361's quoted FN-DMC and FCIQMC totals equal the primaries QMBL carries; 1310.6806's CCD and
-  1706.09923's CCSDT agree with 1511.05752's CCSD and CCSDT to 0.1 mHa per electron at N = 14, rs = 1.
-- **Held:**
-  - (Added the same day as `approximate`, RULES.md 4:) 1310.6806's channel-truncated CCD and RPA variants, 238 rows.
-    They over-correlate, up to 22 mHa per electron below every accurate value at N = 14, rs = 1, and would have taken
-    records under the lowest-energy rule; as `approximate` they hold a record only where nothing else is published
-    (three N = 54 densities). 1202.4990's MP2 rows moved from `extrapolated` to `approximate`.
-  - 2405.00425 at the Baldereschi twist (its printed HF energy, -0.0194515, is not QMBL's -0.0195866 at (1/4, 1/4))
-    and its N = 302 table (cell not stated); twist averages everywhere; quoted numbers; 1307.3081 (N not printed).
-  - Pointers to read next: Spink, Needs & Drummond PRB 88, 085121; Zong, Lin & Ceperley PRE 66, 036703; the
-    supplements of 2201.08743 and 1905.04361; the data repositories of 1906.04372 and 1706.09923.
-
-## Track 2, correlation energies (2026-10-19)
-
-RULES.md 12.3 amended: a correlation energy on a closed-shell Gamma instance is a row, stored as QMBL's Hartree-Fock
-energy (`checks/heg-hf/hf.mjs`) plus the printed E_c. Pass `sweep-rows-2026-10-19-hegcorr.json`
-(`qmbl-runs/qmbl-worklist/2026-10-19-hegcorr/make_rows.mjs`, from the readings of 2026-10-16 and 10-17):
-**72 rows, 4 new instances** (N = 14 at rs = 0.1, N = 38 at rs = 0.5, 1, 2).
-
-- arXiv:2202.05183 Tables I and III (FermiNet, Slater-Jastrow-backflow VMC and DMC, N = 14), 1201.4691 (FCIQMC at
-  M = 114-2368 spin orbitals, 1/M and single-point basis limits, N = 14, 38, 54), 1202.4990 (MP2 at the basis limit),
-  1511.05752 (CCSD and CCSDT at the basis limit).
-- **Check of the reconstruction:** arXiv:2202.05183's 16-determinant FermiNet E_c at rs = 1 plus QMBL's HF energy gives
-  0.568904 Ha per electron, the total arXiv:2305.07240 prints for that state. arXiv:1511.05752 prints no unit or cell;
-  its FCIQMC column reprints 1201.4691's basis-limit values, which fixes both.
-- Finite-basis FCIQMC is `variational` at rs = 0.5 and 1, where 1201.4691 shows the initiator error converged
-  (Figs. 8 and 15), and `projected` at rs = 2 and 5.
-- arXiv:2202.05183 prints the same E_c, -0.5254(1), for Slater-Jastrow-backflow VMC and DMC at rs = 1; both rows keep it.
-
-## Track 2, beyond neural networks (2026-10-17): DMC, FCIQMC and coupled cluster
-
-RULES.md 12.3 and 12.4 were amended the same day: finite-basis energies are rows (full CI in a basis is
-`variational`; initiator FCIQMC, coupled cluster and transcorrelated methods `projected`; basis-limit extrapolations
-`extrapolated`). Seeds: the eleven primaries behind the 2026-10-16 papers' comparisons, resolved on Crossref and
-Semantic Scholar; texts fetched for ten (Tanatar & Ceperley 1989 has no arXiv version). Three reader agents.
-Pass `sweep-rows-2026-10-17-heglit.json` (`qmbl-runs/qmbl-worklist/2026-10-17-heg-lit/make_rows.mjs`):
-**136 rows, 17 new instances.**
-
-- arXiv:0801.0518 (López Ríos et al. 2006): N = 54 at rs = 0.5-20, Hartree-Fock, Slater-Jastrow and backflow VMC and
-  fixed-node DMC. Its Hartree-Fock energies match QMBL's to their error bars at all six densities
-  (`checks/heg-hf/convention-check-2026-10-17.json`).
-- cond-mat/9803092 (Kwon, Ceperley & Martin 1998): N = 54-246, VMC and DMC with backflow and three-body terms (Ry).
-- arXiv:1109.2635 (Shepherd et al. 2012): N = 54 initiator FCIQMC at 2838 spin orbitals (`projected`) and its 1/M
-  extrapolation (`extrapolated`).
-- arXiv:2103.03176 (Liao et al. 2021): CCD, DCD and their transcorrelated forms at the complete-basis limit, N = 14 and 54.
-- `cited_by.mjs` pages OpenAlex by page number: cursor paging now returns HTTP 401 from the second page.
-- **Held:** correlation energies whose reference energy is not printed (arXiv:1201.4691, 1202.4990, 1511.05752; 63
-  values), quoted numbers (32), arXiv:1002.2101 (cell shape not stated), and non-energies.
-  arXiv:1711.01993 and 1501.02199 are about helium, not the electron gas.
-
-## The first track-2 pass (2026-10-16): the electron gas
-
-The papers behind another leaderboard's 199 electron-gas results, read under RULES.md 12 (adopted the same day). Three reader
-agents read the committed text of arXiv:2202.04622, 2305.07240, 2604.15888, 2607.08616, 2607.25872, 2201.03156,
-2202.05183, 2203.15472 and 2405.19397. Pass `sweep-rows-2026-10-16-heg.json`, generated by
-`qmbl-runs/qmbl-worklist/2026-10-16-heg/make_rows.mjs`, which re-finds every printed string in `sources/<id>.txt`
-and converts Ry and totals to Hartree per electron. **300 rows on 68 new instances** (63 in 3D, 5 in 2D).
-
-- **Conventions checked, not assumed.** QMBL's own Hartree-Fock energy (`checks/heg-hf/`) against one printed energy
-  per paper fixes unit, normalisation, cell and Madelung term together. It confirmed bcc for arXiv:2202.05183 (sc or fcc
-  would put the energy 2.6 to 5.1 Ha above HF) and matches arXiv:2607.08616's implied HF energy to seven digits.
-- **Build:** models `HEG2D`, `HEG3D` (`units.mjs`, `readme_table.mjs`, `site.mjs`), rs and the spin polarization ζ in
-  the ladders, and a DMC method family (`views.mjs`) so fixed-node and fixed-phase DMC are not filed as GFMC.
-- **Held:**
-  - Quoted numbers (70), read in their primaries in a later pass: López Ríos et al. (PRE 74, 066701) backflow VMC and
-    DMC, Liao et al. (PRR 3, 033072) transcorrelated FCIQMC and DCD (rows only at a complete-basis limit), Tanatar &
-    Ceperley (PRB 39, 5005), Shepherd, Booth & Alavi (JCP 136, 244101), and the quotes of papers already read.
-  - arXiv:2405.19397 (23): the N = 56 cell is "rectangular, commensurate with a triangular lattice" with no side ratio.
-  - Not rows under 12.3 (43): correlation energies against unprinted HF energies (arXiv:2202.05183 Tables I and III,
-    2607.08616's E_corr), finite-temperature components (2201.03156).
-  - arXiv:2305.07240's N = 128, rs = 110 MP-NQS value, printed with two bracketed errors of unstated meaning.
-- **Second reading:** pending, with the next pass (`--source sweep-allresults-2026-10-16`).
-
-## Lattice results another leaderboard lists, read from their papers (2026-10-16)
-
-A comparison with the result files of another NQS leaderboard (35 papers, 2026-10-16) found
-about 20 lattice results and 10 lattice instances QMBL did not carry. Their numbers were not copied: four reader
-agents read the nine papers behind them from the committed text, every number each paper prints on those
-instances. Pass `sweep-rows-2026-10-16-nqspapers.json`, generated by
-`qmbl-runs/qmbl-worklist/2026-10-16-nqspapers/make_rows.mjs` from the readers' files; the generator re-finds each
-printed string on its cited line of `sources/<id>.txt` and stops otherwise. **202 rows, 16 new instances; no
-existing record moves.**
-
-- **Papers.** arXiv:2606.25600 (hyperbolic RNNs, open-boundary TFIM; v1 text, every energy identical in v2),
-  2111.10420 App. H (PNAS 119, e2122059119), 2101.08787 Table II (PRX 11, 041021), 2609.22618, 2608.12465,
-  2507.10705 (PNAS 123, e2535288123), 2604.21978, 2604.25775 (PRX Intelligence 1, 023001), 2511.07566 Table V.
-  Texts fetched for this pass: `sources/{2111.10420,2609.22618}.txt`. The PNAS and APS copies returned 403 on
-  2026-10-16; the arXiv version read is on each row.
-- **New instances (16):**
-  - t-t' Hubbard, U = 8, n = 0.875, periodic: `Hubbard/square_{64,144,256,400,576}_P_*_8_t12_-0.2` and
-    `square_256_P_112_8_t12_{-0.1,-0.3}`. A t12 instance named with its t2 value: VarBench's `_t12` (Eq. (S6),
-    t2 = -0.25) came with one value; the papers' H = -t sum - t' sum<<ij>> is the same form, so t2 = t'. The README
-    label states t2, and t2 is a coupling of the size ladders (`ladders.mjs`).
-  - `TFIsing/square_{64,100}_O_3` and `square_144_O_{2,4}`, from arXiv:2606.25600 (Pauli matrices, totals).
-  - `Hubbard/rectangular-4x12_48_P_21_8` (arXiv:2507.10705 Table IV).
-  - `Hubbard/square_16_P_4_{0.1,0.59948425,1,2.15443469}` (arXiv:2111.10420 Table II, with the paper's ED). The
-    table rounds U; QMBL's ED pins its 0.6 and 2.15 to the grid 10^(k/9)
-    (`checks/hubbard-u-labels/results-2026-10-16/`).
-- **Held (listed by the generator on stderr):**
-  - arXiv:2606.25600's run averages (31): a mean over differently initialised states is not one state's energy.
-  - Quoted numbers (34), read in their own primaries in a later pass: among them Gu et al. (arXiv:2507.02644) on 8x8,
-    12x12 and 16x16 at t' = -0.2, Liang's earlier 12x12 values (PRB 113, 155121), DQMC references printed without
-    their source, and Ref. 38's unextrapolated pyrochlore DMRG.
-  - Misprints: Table II of arXiv:2111.10420 repeats the U = 7.75 ED string under U = 10, and its "Unrestricted hidden
-    spin" cells at U = 7.75 and 10 read swapped (the U = 10 one sits below the ED).
-  - Instances outside this pass (51): 16x16 open (t' = 0 and -0.2), 32x16 and 32x32 tori, 12x12 at δ = 1/6 and
-    U = 2-15, the 288-site tilted torus, 24x4 at U = 4, 4x4 at n = 7/8, the attractive model at δ = 1/8 with
-    U = -2 and on 12x12, and the pyrochlore clusters 4x2^2x{3,4,6} and 4x2x4x6.
-  - Not determined by the text: arXiv:2609.22618's 4x4 benchmark (t' not stated) and arXiv:2511.07566's Table I
-    (cluster size not stated).
-- **Second reading:** pending (qmbl-verify `--source sweep-allresults-2026-10-16`).
-
-## The record-attempts pass (2026-10-07): numbers found by the literature dossiers
-
-The literature summaries written for the record-attempts project (three tracks:
-J1-J2 away from J2 = 0.5, the 6x48 Hubbard stripes, 16x16 Hubbard with t') listed published numbers
-QMBL did not carry. Pass `sweep-rows-2026-10-07-records.json`, generated by
-`qmbl-runs/qmbl-worklist/2026-10-07-records/make_rows.mjs` from the committed text; it reproduces the
-file byte for byte. **143 rows, 29 new instances; one record moves.**
-
-- **Eight primary sources.** Six texts are fetched for this pass (`sources/{2108.13830,2112.02187,2502.01264,
-  2406.12207,1112.3331,2111.04623}.txt`). The published MLST article's text is committed as
-  `sources/doi-10.1088-2632-2153-acc56a.txt` (CC-BY); its Table 1 is in the journal version only.
-  - Li et al., IEEE TPDS 33, 2846 (2022), Table 4: CNN, L = 10-18, J2 = 0.44-0.60, 28 rows, no σ.
-  - Liang et al., MLST 4, 015035 (2023), Table 1: the same CNN after one Lanczos step, L = 10-18, J2 = 0.46-0.60,
-    23 rows, no σ. The table differs from Li et al.'s by the Lanczos step: Li's 10x10 J2 = 0.5 value equals the
-    p = 0 value in Liang et al.'s text.
-  - Nomura & Imada, PRX 11, 031034, note [73]: RBM+PP with a 6x6 sublattice structure on 18x18 at J2 = 0.5,
-    −0.496275(3).
-  - Xu, Shi, Vitali, Qin & Zhang, PRR 4, 013239 (2022), Table II: constrained-path AFQMC on the fully periodic 48x6
-    and 48x8 tori at U = 8, δ = 1/12, trial states with λ = 6, 8, 12 stripes; `projected`, 6 rows.
-  - Wang, He & Lu, PRB 113, 085120 (2026), Table IV: ResNet sign and amplitude networks with Lanczos steps
-    (SLL and VMCL) at 6x6 and 10x10, 24 rows.
-  - Lin, Guo, He, Xie & Lu, PRB 109, 235133 (2024), Tables I and III: PEPS trial states (`variational`) and
-    fixed-node GFMC on them (`projected`) at 6x6 and 10x10, 26 rows.
-  - Wang, Gu, Verstraete & Wen, PRB 94, 075143 (2016), Table I: D = 9 TPS on L x L tori, extrapolated in the
-    contraction dimension (`extrapolated`), L = 4-16, J2 = 0.45-0.60, 25 rows.
-  - Marino, Becca & Tocchio, SciPost Phys. 12, 180 (2022), Tables 1 and 2: stripe and uniform VMC on Lx x 6 tori,
-    t' = 0, 10 rows. "The error bar on the energy is always smaller than 10^-4" is one statement for the
-    table, so no σ (2026-09-17).
-- **Record moved:** `J1J2/square_324_P_0.5`, Hu et al.'s VMC with one Lanczos step −0.49611(1) → Nomura & Imada's
-  RBM+PP −0.496275(3). The CNN rows below it (Liang et al.'s −0.49651) have no σ.
-- **New instances (29):**
-  - `J1J2/square_{100,144,196,256,324}_P_{0.44,0.46,0.48}` and `square_{144,196,256,324}_P_0.6`.
-  - `J1J2/square_{144,256}_P_{0.45,0.52}` and `square_64_P_{0.48,0.52}`, which carry only TPS extrapolations.
-  - `Hubbard/rectangular-6x{16,32,64}_*_P_*_8` (n = 7/8) and `Hubbard/rectangular-8x48_384_P_176_8` (δ = 1/12).
-  - None of them has a record: their rows have no σ, or are extrapolated or projected.
-- **Four cells already carried.** The duplicate check drops Li's 16x16 and Liang's 10x10 values at J2 = 0.5.
-  The generator skips two more by name, Li's 10x10 J2 = 0.5 and Liang's 10x10 J2 = 0.6: their references are
-  rewritten by `apply_corrections.mjs` after the duplicate check runs, so the check cannot see them.
-- **Held:**
-  - Marino et al.'s t' ≠ 0 values (Table 2, 24 numbers): QMBL has no instance naming for a t2 value yet.
-  - Wang et al.'s 4x4 and 6x6 cells at J2 = 0.48 and 0.52, and 4x4 at 0.55, where no instance exists. Their
-    instances need an exact row first; the paper prints ED values for them.
-  - Xu et al.'s Table I (edge pinning fields) and Table III (twist averaging).
-  - Every quote of a number QMBL carries from its primary.
-- **Second reading (qmbl-verify 2026-10-07, run `qmbl-runs/qmbl-verify-2026-10-07`, applied the same day; all 6 applied).**
-  - The reading: 7 reader groups, each with a skeptic; 223 proposals; skeptics upheld 135 of 135.
-  - No energy was misread.
-  - What the generator got wrong, and what now guards against it:
-    - Two titles were typed from memory and were wrong (Lin et al.'s and Xu et al.'s; 32 rows). A generator copies a
-      title from the source or Crossref, never from memory.
-    - "PEPS" in a method string matched the deterministic regex, so Lin et al.'s PEPS and GFMC energies counted as
-      deterministic: `sampled: true` on their 26 rows.
-    - The duplicate check cannot see a state that a group reuses under a new name: Wang-He-Lu's L = 10 p = 0 rows are
-      their earlier aCNN(C4v) values, so they are removed (`removals.mjs`).
-  - Method details fixed in `method_names.mjs`:
-    - the TPS fit is quadratic in 1/Dc²;
-    - Lin's PEPS are iPEPS tensors tiled on the torus;
-    - Li et al.'s label is the paper's own.
-  - Two energies take the finer digits the MLST text prints.
-  - Li et al.'s 30 CNN rows carry a note: their energies are means over a local-energy window.
-  - The t12 and t12_UV1V2 records stay, with the open boundary-sign question on the rows.
-- **Not pursued (2026-10-07):** naming for t' ≠ 0 instances, and QMBL-computed 4x4 and 6x6 exact energies at
-  J2 = 0.48, 0.52 and 0.55.
-
-## The triangular pass (2026-09-28): Table 1 of arXiv:2602.02665 and the papers it quotes
-
-The 2026-09-15 readers found Viteritti, Rende, Sachdev & Carleo's Table 1 but had nowhere to put it.
-It covers the triangular Heisenberg model on periodic L x L clusters at L = 18, 24, 30, 42, and
-QMBL's largest triangular instance had 256 sites. A separate file, `sweep-rows-2026-09-28-triangular.json`,
-keeps these rows apart from the instance-gap pass's file of the same date. It is generated by
-`qmbl-runs/qmbl-worklist/2026-09-28-triangular/make_rows.mjs` (+ `make_primary.mjs`) from the
-committed text. `add_allresults_rows.mjs` now accepts a `-<label>` suffix on the file name.
-**18 rows, 4 new instances:** `Heisenberg/triangular_{324,576,900,1764}_P`.
-
-- **Own rows of arXiv:2602.02665 (8):** the fully symmetrised ViT (`variational`) and the zero-variance
-  value (`extrapolated`) at each L. The ViT holds the record on all four instances. Compute is
-  paper-scope: 25,000 GH200-h for everything, P ≈ 4.5e5, M = 2^14, stages 5000/500/100 at 1/9/108
-  evaluations per amplitude (b = 3, C6v).
-- **RNN (3), from the primary, not the quote:** Table 1's RNN column (−0.54861(1), −0.54810(1),
-  −0.54793(1)) is the s = 4, r = 0.158 run of Moss et al. (arXiv:2505.20406). Its data release is
-  already committed, and it gives Monte-Carlo errors of 4–7e-5, not 1e-5. `add_repo_data_rows.mjs`
-  adds L = 18, 24, 30 alongside the L = 12 row it already carried.
-- **Read at the primary (4):** Ghorbani, Tocchio & Becca 2016 (arXiv:1512.03356) Table I at J'/J = 1:
-  120° magnetic state −0.54542(1) and U(1) Dirac spin liquid −0.53565(2) on 18x18. Mezzacapo & Cirac
-  2010 (arXiv:1006.4480) Table 2: EPS −0.5459(1) at N = 324 and −0.54700(8) at N = 144.
-- **Quoted, `secondary` (3):**
-  - p-BCS −0.53570(1) (Yunoki & Sorella 2006). The arXiv PDF of cond-mat/0602180 returned HTTP 500,
-    so there is no committed text. The same string is in Table II of arXiv:1512.03356, "on the 18 × 18 cluster".
-  - RVB −0.54716(3) (Heidarian, Sorella & Becca 2009). Not located in the committed text of arXiv:0902.2338,
-    which plots its finite sizes (Fig. 3) and prints −0.5470(1) for L → ∞. The same string is in
-    Table II of arXiv:1512.03356.
-  - 30x30 Jastrow-Gutzwiller −0.545348, no error bar. It is attributed to arXiv:1512.03356, whose
-    committed text has no 30x30 data. Not located there.
-- **Not taken:** the EPS N = 36 value is already carried as a secondary row on `triangular_36_P`;
-  upgrading it to primary is left to qmbl-verify. The other rows of Yunoki & Sorella's Table 2
-  (RVB, FN, FNE, spin waves, GFMCSR) wait for its text.
-- **Open:** the three quoted values that could not be located at their primary.
-
-## The instance-gap pass (2026-09-28): tables read before their instances existed
-
-A table is read against the instances that exist on the day. The 2026-09-15 reading of
-arXiv:2606.04558 (Golubev, Iakovlev & Mazurenko, Table I) and the 2026-09-14 reading of
-arXiv:2206.14307 (Chen, Hendry, Weinberg & Feiguin, Tables 2, 4, 5) came before the
-6x6/8x8/10x10 tori at J2 = 0.45 and 0.55 (and 8x8 at 0.4) were created on 2026-09-16. Their cells
-for those instances, and for J2 values no instance had, were dropped as unmatched and never
-revisited. The gap surfaced when the authors of arXiv:2606.04558 sent error data for all 14 of
-their J2 values.
-
-Pass `sweep-rows-2026-09-28.json`, generated by `qmbl-runs/qmbl-worklist/2026-09-28/make_rows.mjs`,
-which parses every number from the committed text (the generator reproduces the file byte for byte):
-**51 rows, 15 new instances**. The other 60 of the 111 candidate cells were already on their instance.
-
-- **Four primary tables:**
-  - Golubev et al., Table I: 20 ViT rows and 2 quotes.
-  - Chen et al., Tables 2, 4 and 5: 10 RBM rows and 6 CNN quotes of Choo et al. 2019.
-  - Nomura & Imada, PRX 11, 031034, Table I: 8 RBM+PP rows at 6x6 and 8x8, J2 = 0.4–0.55, without the
-    sublattice structure. Fetched for this pass; never read before.
-  - Schulz, Ziman & Poilblanc 1996, Table II: the 36-site exact energy at J2 = 0.1, 0.2, 0.55 and 0.65. The text
-    is committed as `sources/cond-mat-9402061.txt`. The same column reproduces the exact rows QMBL carries
-    at J2 = 0, 0.3, 0.4, 0.5 and 0.6 to 1e-6.
-- **New instances:** `J1J2/square_36_P_{0.1,0.2,0.65}`, `square_64_P_{0.1,0.2,0.3,0.6,0.65,0.7,0.8,0.9,1}`,
-  `square_100_P_{0.1,0.2,0.65}`.
-  - The three 6x6 instances hold Schulz's exact energy as their record.
-  - 10x10 J2 = 0.2 goes to Chen et al.'s RBM −0.592847(9).
-  - The other eleven carry only ViT rows without σ, so they have no record.
-- **Records moved:**
-  - 8x8 J2 = 0.4, 0.45 and 0.55 go to Nomura & Imada's Table I RBM+PP (−0.525653(1), −0.511331(1),
-    −0.488820(2)). The previous holder was Hu et al.'s VMC with two Lanczos steps.
-  - 6x6 J2 = 0.55 now has an exact row (Schulz, −0.495178). Before it, Gong et al.'s DMRG held the record.
-- **QMBL's Lanczos settles the 6x6 exact energies** (`qmbl-runs/qmbl-ed-2026-09-28`, E2's `ed_sym.py`
-  unchanged, an AMD EPYC 9654 server, 60 min, 72 GB). It computed the C4v one-dimensional sectors with even spin at
-  k = 0, and at M for J2 = 0.45 and 0.65. First it reproduced the stored J2 = 0.5 exact energy to all 12 digits.
-  - Ground-state energy per site: −0.638095436 (J2 = 0.1), −0.599046322 (0.2), −0.515657392 (0.45),
-    −0.495177700 (0.55), −0.506587859 (0.65), each in k = 0 A1.
-  - Schulz is correctly rounded at 0.2, 0.55 and 0.65. At 0.1 Schulz's −0.638096 lies 5.6e-7 *below* the
-    ground state, 1.13x the half-width of its six decimals. The row stays for now: RULES.md §11 covers an
-    exact row above the ground state, not one below.
-  - Golubev et al.'s "ED (this work)" is correctly rounded at 0.1 and 0.2. It is 7.0e-7 above at 0.55,
-    and *below* at 0.45 (6.1e-7) and 0.65 (2.1e-6). None of their values is added; their column also
-    deviates at J2 = 0.4 and 0.7–1.0 (removed 2026-09-18).
-  - Chen et al.'s quoted −0.51565739 at J2 = 0.45 matches ours to 1e-8. Their citation, Schulz, has no
-    J2 = 0.45 row.
-- **Added after the Lanczos:** `J1J2/square_36_P_0.65`, with Schulz's exact row and Golubev et al.'s ViT.
-- **Open:**
-  - The 6x6 exact energy at J2 = 0.45: add our Lanczos as a QMBL-computed row, or Chen et al.'s quote as secondary?
-  - At J2 = 0.1: keep Schulz's row or replace it with Golubev's correctly rounded value?
-  - Chen et al.'s J2 = 1.2 and 1.5 values have no instance and are not part of this pass.
-- **Quotes that are not in their primary:** Golubev et al.'s "8x8 (previous works) [23]" values at
-  J2 = 0.4, 0.45 and 0.55 appear nowhere in Nomura & Imada's text or tables. The one at J2 = 0.5
-  (−0.498460) is the primary's with-sublattice value −0.498460(6), printed in App. B with an error bar
-  the quote drops. All of them stay `secondary` rows under the quoting paper, as the two added on
-  2026-09-15 did.
-- The authors' variances (Mazurenko, 2026-09-28) also attach to the new 10x10 ViT rows:
-  `error-metrics-2026-09-28.json` now covers all 14 J2 values of their extended data.
-
-## The all-results pass (2026-09-15): every published number, not only records
-
-The table records what the field has published, so a weaker or older energy is a row like
-any other. `match_tables.mjs --all` drops nothing for its distance from the record: it bands
-cells (SUB-EXACT, BEATS, FILLS, WEAKER), rescues a cell that misses only by a unit convention
-(factor 4 for Pauli vs S.S, N for per-site vs total) and says which factor it applied, and
-removes values the instance already carries. Readers then go paper by paper, and every row
-that claims a record, sits below an exact value or is filed with low confidence gets a second,
-adversarial reading. Rows and their evidence are data in `sweep-rows-2026-09-15.json`;
-`add_allresults_rows.mjs` converts units and appends.
-
-Two rounds on the cached and newly fetched sources added **195 energies from 59 papers**.
-Chasing quotes found two primary tables worth more than the papers quoting them, both parsed
-by column from the committed text: **Gong et al. 2014** (arXiv:1311.5962, Table I, DMRG at
-4096/6144/8192 SU(2) states and the truncation-error extrapolation on L x L J1-J2 tori) and
-**Hu, Becca, Parola & Sorella 2013** (arXiv:1304.2630, Tables I-IV, VMC with 0/1/2 Lanczos
-steps and the variance extrapolation, to L = 18).
-
-What the readers got wrong, and what now guards against it:
-
-- **Site count is not geometry.** An 8x32 cylinder was filed on the 16x16 torus; both have
-  256 sites. Evidence must name the dimensions.
-- **Error bars.** 38 rows lost their printed error bar and one "(7)" was read as sigma = 7,
-  which let a sub-exact energy take a record. Sigma is parsed from the printed string.
-- **Method strings are data.** "mean field initialised" in a sampled method matched the
-  deterministic-method test in `units.mjs` and exempted the row from the sigma rule.
-- **A superscript citation glued onto the last digits** (-1.1147 [44] read as -1.114744).
-- **Quoted rows.** VarBench's own numbers come back under a second paper's name, and a
-  rounded quote of an exact value is that value, not a new one.
-
-The matcher is capped less by tags than by sizes: most papers state the lattice in the caption
-or the body rather than in the table, so of 479 papers outside the full-text scan only 103 have
-a sized cell. A Haiku screen of the 227 unsized papers passed 5; a deterministic check of the
-other 222 (family words, 8+ negative 4-decimal numbers, size tokens) passed 5 more.
-
-## The backwards sweep (2026-09-14, evening): 161 candidates becomes 7940
-
-With paging, loud failure and `--since 2019` in place, the sweep was rerun through the
-arxiv.org search fallback, the API having been 429 for over three hours by then.
-
-**7940 unique candidates, 1927 peer reviewed**, against 161 before. Not a 49× improvement
-in the literature but a measurement of how much of it the old harvester could not see. The
-per-query audit in `sweep-queries.tsv` names the three queries that hit the page cap
-(`vscore`, `minsr-opt`, `nqs-any`) rather than letting them read as complete; they want a
-higher `--max-pages` on the next run.
-
-The year distribution is the answer to "is the backlog worth mining":
-
-| 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 |
-|---|---|---|---|---|---|---|---|
-| 389 | 520 | 600 | 674 | 746 | 854 | 1131 | 3026 |
-
-2019–2023 is 2929 candidates that no sweep has ever seen, against 4157 from 2025–26. And
-the zero-coverage families finally have a pool to triage: Impurity 84, TFIsing 32,
-shuriken 25, tV 23, pyrochlore 174, kagome 177.
-
-PDFs were fetched and layout-extracted for the whole prior pool: **214 committed source
-texts, up from 8**, which took the table harvest from 385 PDF cells to 2179.
-
-**Impurity: nobody has published on these Hamiltonians (2026-09-15).** The 12 instances are
-VarBench's own bath discretisations (`vendor/varbench/Impurity/HamParams`), so no other
-paper's total energy is comparable. All 247 papers citing VarBench or the FTPS paper
-(PRX 7, 031013) in Semantic Scholar and OpenAlex were screened, 215 in full text, for the
-instance names and stored energies (`sweep-cites.tsv`): none uses them but VarBench itself.
-
-### TFIsing had no coverage because it could not be matched, not because nobody published
-
-The family showed 0 of 7 instances covered. Three independent defects made a match
-arithmetically impossible, each sufficient alone.
-
-**A factor of 4.** TFIsing sat in `SPIN_MODELS` and inherited the `4*N` divisor that
-Heisenberg and J1-J2 need for the Pauli→S·S conversion. Its Hamiltonian
-`-Σ sᶻsᶻ - h Σ sˣ` is already in Pauli operators with no S·S term to rescale, so per-site
-is `E/N`. Under `4*N`, `chain_32_P_1` read −0.3184 where the literature quotes −1.2738;
-every cell missed by 4×.
-
-Not a judgment call: the chain is exactly solvable, and `validate.mjs` now asserts it every
-run. Summing `−2√(h² − 2h cos k + 1)` over `k = π(2n+1)/N` reproduces all three stored PBC
-exact rows, `chain_32_P_1` to 7e-15, and `E/N = −1.27375` sits just below `−4/π = −1.27324`
-as PBC at criticality must.
-
-**272 TFIsing cells had no size token.** Finite-size tables name sizes in the leftmost
-column and nowhere else. A bare integer alone in a row label is now read as a size. Chains
-needed the converse: on a chain the linear size *is* the site count, and 1D papers write L,
-not N; no chain instance in any family had an `L=` token before.
-
-**Nothing checked boundary conditions**, though §2 makes them part of the instance. An
-open-chain N=32 value matched the *periodic* `chain_32_P_1` on size alone, 0.92% away, a
-gap that is entirely the boundary condition.
-
-### arXiv:2605.13807: a variational energy below its own exact column
-
-The first TFIsing candidate the sweep ever produced is a defect, not a record.
-
-Its exact column at N=10 is **−1.2381490**, reproducing `TFIsing/chain_10_O_1`'s stored
-exact row to seven digits: instance, unit convention and open boundary confirmed in one
-step, which is the convention check of §8 passing on a family that had never had one.
-
-But its `1D LRU` variational energy at N = 10, 24 and 32 sits **below** its own exact
-column, while sitting correctly above at N = 6, 8, 12, 16, 48, 64 and 96. At N=10 that is
-−1.2381549 against −1.2381490, about 8σ on the paper's own error bar.
-
-Suspicion fell on the harvester first, a column shift having just been fixed one commit
-earlier. It is not: these cells came through the HTML path, which has real cell boundaries,
-and an independent matrix-free Lanczos ED (`checks/tfim_obc_ed.mjs`) reproduces the paper's
-exact column at N = 6…16 to seven decimals. The columns are right and the inversion is real.
-
-**This is the second source reporting a sub-exact variational energy on this one 10-site
-instance.** VarBench's own `RBM (alpha = 1)` row is 2.3e-5 below exact, already resolved in
-`checks/` as an optimization-trace minimum rather than a converged measurement. Two
-unrelated groups making the same class of error on the smallest instance on the board is a
-pattern, and the cheapest argument QMBL has for requiring a variance next to an energy.
-
-## The pipeline pass (2026-09-14, earlier): the pool was never a census
-
-Every number below the line was harvested by a pipeline that reported its own coverage
-incorrectly. Four defects, each of which made the result look complete when it was not.
-
-**The candidate pool was a floor.** `sweep_search.mjs` asked arXiv for `max_results=40`
-with no paging, so all twelve queries were truncated at 40 hits regardless of how many
-matched. "161 unique candidates since 2025" was twelve queries capped, not twelve queries
-answered. It now pages until it reaches the date floor, and a page cap that binds is
-reported as TRUNCATED with the hit count it abandoned.
-
-**A network failure was indistinguishable from an empty result.** `get()` returned `""`
-after its retries, so an HTTP 429 logged as `<tag>: 0 since 2025`, character for
-character what a query matching nothing logged. Any sweep run during an arXiv outage
-would have been recorded as a sweep that found nothing new. A failed request is now a
-hard error, named in `sweep-queries.tsv`, printed in a banner, non-zero exit; and the
-candidate file is merged rather than replaced, so a partial run can only ever add.
-
-This is not hypothetical. `export.arxiv.org/api` returned 429 to every request for over
-an hour on 2026-09-14 while `arxiv.org` served PDFs and HTML normally. The two are rate
-limited separately, so `--via auto` now falls back to the arxiv.org search UI. The
-queries stay defined once, in API syntax, and are parsed into groups: the search UI
-applies operators left to right with no grouping, so `A AND (B OR C)` is expanded into
-its cartesian product of flat AND queries and unioned rather than trusting its
-precedence. 21 queries become 101 sub-queries.
-
-**The date floor was hard-coded at 2025-01-01.** 54 of the first 97 accepted rows came
-from pre-2025 papers, and arXiv has no HTML before ~Dec 2023, so the backlog had never
-been *searched*, let alone read. `--since` now defaults to 2019.
-
-**The table harvester only read HTML.** For the entire pre-2024 literature the only
-machine-readable form is pypdf layout-mode text, so those tables were reachable only by
-hand. `harvest_tables.mjs` now mines them too. It is a different parsing problem: there
-are no cell boundaries, only character offsets; a dash is a minus before a digit and a
-missing entry otherwise, where the HTML path flattens both; and layout mode strips the
-spaces out of justified captions, so keyword tests run against the despaced form as well.
-
-### The off-by-one that invented a record
-
-Matching a value to its header by nearest position is wrong on its own, and wrong
-*systematically*: headers are centred over columns whose values are right-aligned, so
-every value sits left of its own header and lands on the previous one.
-
-On arXiv:2206.14307 this filed the J2 = 0.4 energy under J2 = 0.7 and reported it as
-beating `J1J2/square_100_P_0.7` by 0.96%. What exposed it was not the size of the claim
-but an impossibility one row up: the same table's *exact diagonalization* column, read
-the same way, came out **below** the instance's own exact row. No variational number can
-sit under an exact one on the same instance, so the columns had shifted; the tell was
-internal consistency, not plausibility.
-
-A row carrying exactly as many energies as there are header cells settles the alignment
-by order alone. Those rows now calibrate one offset per table, applied to the ragged rows
-where a missing entry makes the counts disagree. Verified against the paper: the 10×10
-RBM row reads J2 = 0.0, 0.2, 0.4, 0.6, 0.7 as printed, the 6×6 row 0.5, 0.55, 0.6.
-
-**The rows added by hand from this paper earlier today are unaffected and were
-re-verified against lines 299–304 and 442–444: −0.51889(2) really is the J2 = 0.7
-column.** The human reading was right; only the automated assignment was wrong. That is
-the argument for the method note in §8 rather than against it.
-
-### Instance discipline: the coupling, and where it is stated
-
-Within a family, instances differ *only* by a coupling (J1J2 by J2, tV by V, TFIsing by
-the transverse field h), and nothing checked it. One 4×4 spinless-fermion energy came
-back as a candidate for both `tV/square_16_P_5_0.01` and `tV/square_16_P_5_0.1`, two
-different Hamiltonians, on size alone. Same failure mode as the t′ case in §2, and higher
-volume, since J1J2 is the largest family on the board.
-
-Where the coupling is stated decides what it is worth. A caption routinely enumerates
-every value in the table ("J2 = 0.0, 0.2, 0.4, 0.6, 0.7"), so a check that reads captions
-lets every column match every sibling. The column header is specific to the cell and
-wins, then the row label; a coupling known only from the caption is marked as such.
-Deliberately not matched: `alpha`. In an NQS paper that is the hidden-unit density, and
-reading it as J2 would reject most of the largest family on the board.
-
-### Shuriken: a thermodynamic-limit trap, caught before it became three records
-
-The first paper the fixed sweep surfaced for a zero-coverage family was
-**arXiv:2211.16932** (Schmoll, Kshetrimayum, Naumann, Eisert & Iqbal), a peer-reviewed
-2022 tensor-network study of the spin-1/2 Heisenberg AFM on the Shuriken lattice. All
-four shuriken instances hold exactly one row each, every one of them the frozen VarBench
-import, so any second row would have been the first competition they have ever had.
-
-It is **rejected**: iPEPS/iPESS on an *infinite* lattice, the same ground as 2510.04907
-below. Its best energy, −0.440908 per site, sits within 1% of three of the four
-instances (inside the matcher's BEATS window) and below all three:
-
-| instance | record E/N | −0.440908 would be |
+# Literature sweep: method
+
+How published energies get into QMBL: papers are found, their text is committed, the numbers
+are read from that text, written to a pass file, and the build converts and appends them.
+What counts as a row, and which version of a paper is the source of record, is in
+[RULES.md](RULES.md): instances in [§2](RULES.md#2-instances), `bound_type` in
+[§4](RULES.md#4-bound_type), provenance and the journal version in
+[§8](RULES.md#8-provenance), the electron gas in
+[§12](RULES.md#12-track-2-the-homogeneous-electron-gas).
+
+## 1. Finding papers
+
+All tools are run by hand from the repository root. None is part of the build, and none
+writes to `data/`.
+
+- `scripts/sweep_search.mjs` runs keyword queries against arXiv and writes
+  `sweep-candidates.tsv` and a per-query audit, `sweep-queries.tsv`.
+  - It pages until it reaches the date floor (`--since`, default 2019-01-01).
+  - A page cap that binds (`--max-pages`, default 40) is reported as TRUNCATED with the hit
+    count it did not read. Raise `--max-pages` for those queries.
+  - A failed request is a hard error: it is named in `sweep-queries.tsv`, printed, and the
+    exit code is non-zero.
+  - New candidates are merged into the existing file; `--fresh` replaces it.
+  - The arXiv API and the arxiv.org search page are rate-limited separately. `--via auto`
+    (the default) uses the API and falls back to the search page. The search page has no
+    operator grouping, so each `A AND (B OR C)` query is expanded into flat AND queries.
+- `scripts/harvest_refs.mjs <seed ids>` reads the bibliographies of seed papers and writes
+  `sweep-refs.tsv`. Comparison tables and reviews cite results that keyword search misses.
+- `scripts/cited_by.mjs --seed <arxiv-id|doi>` lists the papers citing a seed, from OpenAlex
+  and Semantic Scholar merged, into `sweep-cites-<tag>.tsv`. A failed request is a hard
+  error, so an outage cannot read as "no citing papers". This is how an instance that one
+  paper defined is screened for later work.
+- `scripts/scan_fulltext.mjs` scores the candidates on their full text and caches the arXiv
+  HTML under `sources/`; it writes `sweep-fulltext.tsv`.
+- `scripts/extract_claims.mjs` and `scripts/triage_claims.mjs` find sentences that claim a
+  record ("state of the art", "lowest energy") and drop those that cannot map to a finite
+  instance. They miss papers that print a table without such a sentence; the table harvest
+  below does not.
+
+These outputs are working files: they are gitignored and not read by the build.
+
+## 2. Source text
+
+A number is read from the paper's text as committed under `sources/`, never from an LLM
+summary of a table.
+
+- arXiv HTML is cached by `scan_fulltext.mjs`. arXiv has no HTML for most papers before
+  about December 2023.
+- `scripts/fetch_pdfs.mjs <arxiv-id> ...` downloads the PDF and extracts its text with pypdf
+  into `sources/<id>.txt`. The text is committed; the PDF is gitignored. Layout mode keeps
+  column positions and tells a minus sign from a missing entry; it is used unless it comes
+  back much shorter than the default mode. The mode used is recorded in
+  `sources/_extraction.tsv`.
+- A journal version, a supplement or an authors' data file is committed under `sources/`
+  the same way, with its origin in the file name.
+
+## 3. Harvesting and matching tables
+
+- `scripts/harvest_tables.mjs` takes every energy cell out of every data table in
+  `sources/`, from the HTML table cells and from the pypdf layout text, and writes
+  `sweep-tables.tsv`.
+  - Zero-width characters and mathematical bold digits are normalised before parsing.
+  - In layout text a dash is a minus sign before a digit and a missing entry otherwise.
+  - Column alignment in PDF tables: a row with as many energies as header cells fixes one
+    column offset per table, which is applied to the rows with missing entries.
+- `scripts/match_tables.mjs` maps cells onto instances and ranks what is worth reading. It
+  writes no row. With `--all` it keeps every cell and bands it against the instance:
+  SUB-EXACT (below the exact energy), BEATS (below the record), FILLS (within 1% above it),
+  WEAKER. `--tsv <file>` writes the worklist.
+  - A cell that misses only by a unit convention is kept, with the factor named: 4 for Pauli
+    against S·S, N for a total against a per-site energy.
+  - Size: `harvest_tables.mjs` reads a bare integer alone in a row label as a linear size;
+    on a chain the linear size is the site count; `L x W` matches in either order.
+  - Boundary conditions must agree.
+  - Couplings must agree: J2, V, h, the Hubbard filling and t′. A coupling is taken from the
+    column header first, then the row label, then the caption, and one known only from the
+    caption is marked as such. `alpha` is not read as a coupling (in NQS papers it is the
+    hidden-unit density).
+  - Papers rejected as a whole are listed in `REJECTED` in the script and counted, not
+    matched. See [Rejected papers](#rejected-papers).
+  - Values the instance already carries are removed.
+
+Most papers state the lattice size in the caption or the body, not in the table, so many
+papers have no cell with a size. Those are read by a person or an agent from the text.
+
+## 4. Reading
+
+The matcher only says which paper to open. Readers then go paper by paper through the
+committed text and take every finite-size ground-state energy the paper prints on an
+instance QMBL carries or should carry, not only records.
+
+- **Convention check.** Before a paper's rows are written, a value it prints is compared with
+  one QMBL already carries: its exact-diagonalization column against the stored exact rows,
+  or, for the electron gas, its Hartree-Fock energy against QMBL's own (`checks/heg-hf/`).
+  The check fixes the unit, the normalisation, the cell and the meaning of the coupling
+  labels together.
+- **Geometry.** The evidence names the lattice dimensions, not only the site count: an 8x32
+  cylinder and the 16x16 torus both have 256 sites.
+- **Error bars.** Sigma is parsed from the printed string: `(7)` is seven units of the last
+  printed digit. A superscript citation next to the last digits is not part of the number.
+- **Quoted numbers.** A number the paper quotes from another paper is read in that primary
+  and is `secondary` only where the primary cannot be read ([RULES.md §8](RULES.md#8-provenance)).
+  A rounded quote of an exact value is that value, not a new row.
+- **Thermodynamic-limit values** (iPEPS, extrapolations to infinite size or ξ → ∞) are not
+  rows on a finite instance ([RULES.md §2](RULES.md#2-instances)).
+- **Method strings are data.** A method string decides whether a row counts as sampled or
+  deterministic ([DATA.md](DATA.md#sampled-or-deterministic-sampled)), so it is copied as
+  printed.
+- **Second reading.** Every row that would take a record, sits below an exact energy, or was
+  filed with low confidence is read a second time by a separate reader who tries to refute
+  it.
+
+## 5. Pass files
+
+A pass is one reading of a set of papers. Its rows are data in one file under `passes/`,
+applied by the build in date order:
+
+| file | applied by | contents |
 |---|---|---|
-| `Heisenberg/shuriken_96_P` | −0.438260 | a false record, −0.604% |
-| `Heisenberg/shuriken_216_P` | −0.437600 | a false record, −0.756% |
-| `Heisenberg/shuriken_384_P` | −0.437129 | a false record, −0.865% |
-| `Heisenberg/shuriken_24_P` | −0.448329 | above it, +1.655% |
+| `passes/rows/sweep-rows-YYYY-MM-DD[-label].json` | `scripts/add_allresults_rows.mjs` | rows, read per site |
+| `passes/stored-rows/<date>-<label>.json` | `scripts/add_stored_rows.mjs` | rows already in the stored convention |
+| `passes/coverage/sweep-coverage-YYYY-MM-DD[-cites].json` | `scripts/add_coverage.mjs` | [`coverage`](DATA.md#when-the-literature-was-last-checked-coverage) entries |
+| `passes/compute/compute-rows-YYYY-MM-DD.json` | `scripts/add_compute.mjs` | [`compute`](DATA.md#what-a-number-cost-the-compute-block) blocks |
+| `passes/error-metrics/error-metrics-YYYY-MM-DD.json` | `scripts/add_error_metrics.mjs` | [`error_metrics`](DATA.md#where-an-added-error-bar-or-variance-came-from-the-error_metrics-block) blocks |
 
-Nothing about the *number* would have caught this, and the near-miss at N=24 is what the
-pattern looks like from the inside: a thermodynamic-limit value tracks finite-size ones
-closely enough to pass any plausibility check, and crosses them at some size. Only the
-finite-versus-infinite rule in §2 rejects it.
+A second pass on the same day takes a `-<label>` suffix. Each `sweep-rows` file is written
+by a generator script, kept outside the repository with the pass's working notes, that re-finds
+every printed string on its cited line of `sources/<id>.txt` and stops if it does not.
 
-## The table pass (2026-09-14): mine the comparison table, not the claim
+A `sweep-rows` file is a JSON array with one object per row:
 
-The 09-13 sweep read claim *sentences* ("state of the art", "we reach"). That only finds papers
-that brag in prose about one headline number, which is why it produced four J1-J2 rows and
-nothing at all for the frustrated magnets: those papers print a table of sizes and never write
-the sentence. `scripts/harvest_tables.mjs` now pulls every energy cell out of every data table
-in the cached sources (134 tables, 2611 cells) and `scripts/match_tables.mjs` maps them onto
-instances, ranking by position against the current record.
+| field | meaning |
+|---|---|
+| `instance_id` | the instance, `<model>/<name>` |
+| `create` | the instance header (model, lattice, n_sites, boundary, params, ...), on the rows of a new instance |
+| `eps`, `sigma_per_site` | energy and error bar per site, in the instance's per-site convention ([DATA.md](DATA.md#units-and-conventions)) |
+| `var_per_site`, `var_rel` | variance as σ²/N, or relative variance; `variance_as_reported` is the printed form |
+| `tol` | how close a stored row must be, per site, to count as the same number |
+| `origin` | `own` (the paper's result) or `quoted` |
+| `arxiv`, `reference`, `peer_reviewed` | the source |
+| `method`, `bound_type` | as published, and its [`bound_type`](RULES.md#4-bound_type) |
+| `reported_as`, `evidence`, `convention_check` | the printed string, where it was read, and the convention check |
+| `confidence`, `verified_by` | the reader's confidence and who read it (first and second reading) |
+| `compute`, `defect` | an optional `compute` block and defect flag |
 
-**The highest-yield source is the table a paper prints of *other people's* numbers.** Several
-rows found this way are 2019–2023 results that had been beating a VarBench record since before
-VarBench froze.
+`add_allresults_rows.mjs` converts `eps` and `sigma_per_site` into the instance's stored
+convention, skips a value the instance already carries, and writes each row with
+`source: sweep-allresults-<date>`.
 
-Two ar5iv details cost most of the recall on the first attempt, and any future scraper needs
-both: energies are glued together with **zero-width characters**, which `\s` does not match,
-and a paper's **own results are rendered in mathematical bold digits** (U+1D7CE and up), which
-are not `[0-9]`. Fixing those two took the harvest from 2182 cells to 2611 and surfaced the
-triangular and square-Heisenberg candidates the first pass missed entirely.
+A `stored-rows` file holds the rows of the passes of 2026-09-10 to 2026-09-15 as they are
+stored: `{ about, instances: [{ instance_id, create, rows }] }`. `about` names the source
+tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills `dof`,
+`einf` and `v_score`. New passes use `sweep-rows`.
 
-Instance discipline lives in the matcher, not in review: Hubbard filling and t′ must agree, or
-arXiv:2604.25775's t′=−0.2 column reads as a 0.4% "record" against the t′=0 16×16 instance.
+## 6. Running a pass
 
-### Accepted: 30 rows, 6 records, 1 new instance
+1. Run the finding tools of section 1 for the families or seeds of the pass.
+2. Fetch and commit the text of every paper to read (`fetch_pdfs.mjs`, `scan_fulltext.mjs`).
+3. Run `harvest_tables.mjs`, then `match_tables.mjs --all --tsv <worklist>`.
+4. Read each paper (section 4) and write the generator; it writes `passes/rows/sweep-rows-<date>.json`.
+5. Add method labels for the new method strings to `scripts/method_names.mjs`.
+6. Run `bash scripts/build.sh` and read its output: duplicates skipped, new instances,
+   `validate.mjs` issues.
+7. Have the second reading done; its results go to `scripts/corrections.mjs` and
+   `scripts/verifications.mjs`.
+8. If the pass screened papers for instances, add a `sweep-coverage` file.
 
-*Dated log, 2026-09-14.* "New record" below means the record under RULES.md §6 as it stood that
-day, when only a variational row could hold one. Since the amendment of 2026-09-16 the exact
-energy is the record wherever an instance has one, so on `triangular_36_P`, `square_36_P`,
-`square_100_P` and `square_100_O` these rows are the best variational bounds below an exact
-record, not the record. The table is left as written.
+## Passes
 
-| instance | row | source | via |
-|---|---|---|---|
-| `Heisenberg/triangular_36_P` | **−0.560313(3)** Group CNN, **new record**, was DMRG χ=2048 | arXiv:2211.07749 (2023) | 2505.20406 Tab. 5 |
-| `Heisenberg/triangular_36_P` | −0.5601(4) LCN; −0.55922 GCNN; −0.5562(2) RNN | 2206.07370, 2104.05085, 2505.20406 | 2505.20406 Tab. 5 |
-| `Heisenberg/square_36_P` | **−0.67887(2)** 2D RNN, **new record** | arXiv:2502.17144 | own Tab. 5 |
-| `Heisenberg/square_100_P` | **−0.67155260(3)** CNN+MinSR, **new record** | Chen & Heyl, Nat. Phys. 20, 1476 (2024) | 2502.17144 Tab. 5 |
-| `Heisenberg/square_100_O` | **−0.628656(9)** 2D TRNN, **new record** as of 2026-09-14 (the exact QMC row holds the instance since 2026-09-16); plus first exact row | arXiv:2207.14314; QMC arXiv:2601.20189 | 2605.13807 Tab. 2 |
-| `Heisenberg/square_256_O` | **new instance** (16×16 OBC), 4 rows incl. exact QMC | arXiv:2605.13807 | own Tab. 2 |
-| `Hubbard/square_64_P_28_8` | **−0.7458(6)** JBf 8×8 torus, **new record**, +5 rows, all with Var(E) | *PRB* 113, 245104, arXiv:2510.11710 | own Tab. 1 |
-| `Hubbard/rectangular-4x8_32_PO_14_8` | −0.73342(8) HFDS, −0.7332(6) JBf, both with Var(E) | arXiv:2510.11710 | own Tab. 1 |
+| file | what was read |
+|---|---|
+| `passes/stored-rows/*.json` (eight files) | the first passes: claim sentences, comparison tables and PDFs read on 2026-09-10 to 2026-09-15; each file's `about` names its tables |
+| `sweep-rows-2026-09-15.json` | every number the table harvest of the cached sources mapped onto an instance, including Gong et al. 2014 Table I (DMRG on J1-J2 tori) and Hu, Becca, Parola & Sorella 2013 Tables I-IV |
+| `sweep-rows-2026-09-17.json` | Wang, He & Lu, PRB 109, 245120 (arXiv:2308.09664) |
+| `sweep-rows-2026-09-28.json` | tables read before their J1-J2 instances existed: Golubev et al. (arXiv:2606.04558) Table I, Chen et al. (arXiv:2206.14307) Tables 2, 4, 5, Nomura & Imada (PRX 11, 031034) Table I, Schulz, Ziman & Poilblanc 1996 Table II |
+| `sweep-rows-2026-09-28-triangular.json` | Table 1 of arXiv:2602.02665 and the primaries it quotes |
+| `sweep-rows-2026-10-07-records.json` | J1-J2 away from J2 = 0.5, 6x48 Hubbard stripes, 16x16 Hubbard with t′ |
+| `sweep-rows-2026-10-16-nqspapers.json` | nine papers behind lattice results another leaderboard lists |
+| `sweep-rows-2026-10-16-heg.json` | electron gas: nine NQS papers |
+| `sweep-rows-2026-10-17-heglit.json` | electron gas: the primaries those papers compare with (DMC, FCIQMC, coupled cluster) |
+| `sweep-rows-2026-10-19-hegcorr.json` | electron gas: correlation energies stored as QMBL Hartree-Fock + E_c ([RULES.md §12](RULES.md#12-track-2-the-homogeneous-electron-gas)) |
+| `sweep-rows-2026-10-19-heglit2.json` | electron gas: papers citing the 2026-10-17 primaries |
 
-The `2510.11710` rows matter out of proportion to their count: it reports six ansätze on one
-instance under identical conditions **with σ²/M for each**, so they arrive V-score-computable.
-Their V-scores order exactly with their energies (8.9e-3 at the record, 2.9e-2 at the worst),
-which is §9.3's internal-consistency check passing across a whole instance at once.
+## Rejected papers
 
-### Pyrochlore: checked, records confirmed current (a result in itself)
+Every energy in these papers is a thermodynamic-limit value or a lower bound, so no value
+maps onto a finite instance. `match_tables.mjs` suppresses them.
 
-`arXiv:2604.11880` Table 9 is a careful literature comparison for the pyrochlore Heisenberg AFM
-that separates finite-size from thermodynamic values and variational from extrapolated ones.
-Two entries touch QMBL instances and **neither is a new row**:
-
-- `mVMC, Astrakhantsev et al., 4×4³, N=256, −0.4831(1)` is the same result as our existing
-  record −0.4830957 on `pyrochlore-4x4x4_256_P`, quoted to fewer digits. The stalest instance
-  in the table (V-score 1.1e-1) is stale because **nobody has beaten it**, not because we
-  stopped looking.
-- `mVMC-RBM/Lanczos, Pohle et al., L=2, N_s=128, −0.49229(7)` quotes the value Pohle et al. print
-  in their own Supplemental Material (Table SI) and Appendix B. **Corrected 2026-09-16:** this
-  note first called it a rounded re-quote of the stored −0.4922012. It is not. The two differ by
-  9e-5 (1.1 sigma), and −0.4922012 is not printed in arXiv:2311.11561 at all: it is Pohle's own
-  VarBench submission of 2022-02-26, 21 months before the preprint, never updated to the paper's
-  value. Both are carried as separate measurements; the paper's value holds the record.
-
-Everything else in that table is a thermodynamic-limit or extrapolated estimate.
-
-## The PDF pass (2026-09-14): the papers no sweep could see
-
-`scripts/fetch_pdfs.mjs` downloads an arXiv PDF and extracts its text with pypdf into
-`sources/<id>.txt`, which **is committed** (the PDF itself stays ignored) so a row's number
-remains checkable from a clone. This exists because of a blind spot in every sweep so far:
-**arXiv has no HTML for papers before roughly Dec 2023**, so the entire pre-2024 literature,
-which is where most *primary* sources live, was invisible to the harvester.
-
-### arXiv:2206.14307 (2022): the J2 ≠ 0.5 column, filled
-
-A Lanczos-recursion paper carrying a full J2 sweep at 6×6 and 10×10. **Eight new records**:
-`square_36_P` at J2 = 0.4, 0.6, 0.8, 1.0 and `square_100_P` at J2 = 0.4, 0.7, 0.8, 1.0.
-
-This corrects the provisional read recorded below. The J2 ≠ 0.5 instances were not stale
-because the 2025-26 field concentrated on the maximally frustrated point; they were **never
-populated from the literature that already existed in 2022**. One of them was still held by a
-plain α=1 RBM while a published p-step Lanczos result sat 8.5e-3 lower.
-
-Convention was verified before a single row was written, and this is the pattern to reuse:
-the paper prints its own **exact-diagonalization column** at 6×6, which agrees with the exact
-rows already on those instances at J2 = 0.4, 0.7, 0.8 and 1.0 to six significant digits (max
-deviation 4.3e-7). That fixes the unit convention, the meaning of the J2 label and the cluster
-geometry in one step. Every 6×6 value added then sits above its instance's exact row.
-
-### Five rows upgraded from `secondary` to `primary`
-
-The pre-2024 primaries behind rows added in the table pass were fetched and all five values
-located in the paper that produced them, with the quoted passage now on the row:
-arXiv:2211.07749, 2206.07370, 2104.05085 (triangular 36) and 2206.14307 (square 36 and 100).
-This matters most for `triangular_36_P`, whose record no longer rests on a quote of a quote.
-
-### Kagome, RESOLVED 2026-09-14: the instance is open, with no record
-
-`arXiv:2605.28861` (Kamal, Kufel, Vu, Laumann & Yao) is a Comment on Ðurić et al.,
-*Phys. Rev. X* 15, 011047 (2025), which reported a G-CNN energy **1.78% below the best DMRG
-benchmark** on a 108-site kagome cluster and claimed a spinon pair-density-wave ground state.
-The Comment shows the single-spin-flip update rule used at N=108 does not conserve total
-magnetisation, so the Markov chains freeze (acceptance collapses to exactly zero beyond 5000
-iterations), and with ergodic exchange updates the same ansatz converges **≈3.5% above** DMRG.
-Re-evaluating the spin-flip-optimised parameters under ergodic sampling raises the energy from
-≈−46.2 to ≈−42.6 against a DMRG value of ≈−47.3.
-
-The Comment itself only quotes figure-read approximations, so the precise numbers were taken
-from the two primary sources instead, both fetched as PDF: **arXiv:2401.02866** (the PRX paper)
-gives `E0 = -48.18(0)` against the DMRG benchmark `-47.33964` it compares to, and
-**arXiv:1205.4858** (Depenbrock, McCulloch & Schollwöck, *PRL* 109, 067201) gives that DMRG
-value in its own Table I as the 108-site torus, `-0.4383(3)`.
-
-`Heisenberg/kagome-6x6_108_P` is now open, with both rows and the defect flag. **It ends with no
-eligible record**, and that is the right answer: its only `variational` row is flagged, and the
-DMRG row is `extrapolated` because Depenbrock et al. state their energies are "extrapolated in
-the truncation error of single-site DMRG". Worked case now in RULES.md §9, new objection ground
-in §10.
-
-The 48-site cluster is a separate story and **gains a legitimate new record**: -0.4304323 →
--0.4375 (Ðurić GCNN). The Comment does not reach it (Ðurić et al. use the ergodic exchange
-update below 108 sites), and the instance's existing exact row -0.4387039 equals that paper's
-own ED value -21.057787063/48 to eight digits, which confirms cluster and convention.
-
-### Still blocked
-
-- **Kagome.** RESOLVED: instance open, dispute recorded, 48-site record taken (see above).
-  `2510.04907`'s kagome values stay rejected (iPEPS, ξ→∞). Open: the precise DMRG benchmark at
-  N=48, where the Comment reports ~0.09% relative error but quotes no number.
-- **Triangular above L=6.** `2505.20406` reports L=6…30 finite-size energies in *figures*;
-  Tab. 2 carries only their V-scores and Tab. 6 only thermodynamic-limit values. Its −0.5497
-  (OBC) and −0.5517569(9) (PBC) are **E∞/N, not finite-size**; the earlier note below reads as
-  if they were rows, and importing them would have been a false record at every triangular size.
-- **Square J1-J2 at J2 ≠ 0.5.** RESOLVED by the PDF pass above: 8 new records. The provisional
-  read below was wrong about the cause, and is kept only to show how it failed.
-
-## Harvest (2026-09-12)
-
-`scripts/sweep_search.mjs` -> **161 unique candidates since 2025, 39 peer reviewed**
-(`sweep-candidates.tsv`, scored by whether the abstract promises a usable energy).
-`scripts/harvest_refs.mjs` mines seed bibliographies -> `sweep-refs.tsv` (56 distinct cited
-arXiv ids from 7 seeds, 49 not already in the candidate list).
-
-Peer-reviewed, highest scoring, not yet mined:
-
-| arXiv | journal | why |
-|---|---|---|
-| 2510.11710 | Phys. Rev. B 113, 245104 | *comparison* of symmetrized determinant NQS - comparison papers carry benchmark tables |
-| 2506.08329 | Phys. Rev. B 113, 085134 | neuralized fermionic tensor networks |
-| 2510.04907 | Phys. Rev. B 113, 045117 | PEPS on the triangular lattice |
-| 2502.13454 | Phys. Rev. Lett. 134 | Hubbard with finite fermionic PEPS |
-| 2512.14414 | Phys. Rev. B 113, 155127 | single-layer variational tensor network states |
-
-Preprint-only but high value: 2604.21978 (intertwined orders in the Hubbard model),
-2608.12465 (t-t' Hubbard), 2605.28861 (the kagome Comment).
-
-**Confirmed from the harvest:** neither 2510.26906 (NNBF) nor 2604.25775 (ACE) has a journal
-version, so the -0.766073(6) provenance problem in RULES.md 8 cannot be resolved by checking a
-published version - there is none.
-
-Two leads found only through the citation graph, neither in the keyword search:
-
-- **2503.10462** Chen, Naik & Heyl, *Convolutional transformer wave functions* - 10x10 square
-  J1-J2, E/N = **-0.4976764**. Above their own ResNet -0.4976921, so not a record, but a row.
-- **2502.17144** Moss et al. - RNN wavefunctions to 30x30. No J1-J2 energies in the text; numbers
-  are likely in figures. Needs a closer look.
-
-## Status 2026-09-11
-
-Only **4 of 177** instances have any post-2024 row (`scripts/staleness.mjs`).
-
-### Triangular: best lead
-
-- **arXiv 2505.20406**, "Leveraging recurrence in neural network wavefunctions for large-scale
-  simulations": RNN wavefunctions on the triangular-lattice AFM Heisenberg model, with both OBC
-  and PBC results and an explicit **"Appendix J: Comparison of results to benchmarks and other
-  methods"**. VarBench's triangular records are *2D Gated RNN*, so this is thedirect successor.
-  Carries e.g. -0.5497 (OBC) and -0.5517569(9) (PBC). **Sizes and convention must be matched
-  before any row is written**: VarBench stores Pauli totals, this paper quotes S.S per site.
-  Preprint as of the search; check for a journal version.
-- arXiv 2510.04907, *Phys. Rev. B 113, 045117 (2026)*: PEPS on the triangular lattice. Peer reviewed.
-- arXiv 2602.14892, *Phys. Rev. Lett. 137, 056703*: competing states, S=1/2 triangular J1-J2.
-- arXiv 2606.31021, 2607.14766: triangular J1-J2 (preprints).
-
-### Kagome
-
-- **arXiv 2605.28861**: a *Comment on* "Spin-1/2 Kagome Heisenberg Antiferromagnet: Machine
-  Learning Discovers...". A Comment disputes a published result, so it is high-value for exactly
-  the kind of defect QMBL exists to record. Downloaded.
-- arXiv 2602.12998 / 2507.20308: variational study of kagome magnetization plateaus.
-- arXiv 2512.16131, *Quantum Frontiers 4, 22 (2025)*: review; mine its references.
-
-### Pyrochlore
-
-- arXiv 2509.13746: competing valence bond crystal orders in the pyrochlore ground state.
-- arXiv 2601.07800: rigorous Anderson-type **lower** bounds. Not a variational upper bound, so it
-  is not a record, but it bounds the instance from below and is worth carrying.
-
-### Square J1-J2 at J2 != 0.5: likely genuinely stale, not merely unchecked
-
-Checked 2505.03466 (PRResearch 7, 043099 (2025)), 2606.02794 (scaling laws) and now
-2503.10462 (convolutional transformer): **all three report J2 = 0.5 and nothing else.** The 28 J1-J2 square papers since 2025 are phase-diagram, dynamics, magnon and
-classical-MC studies, not variational-energy papers. Provisional read: the 2025-26 NQS literature
-concentrated on the maximally frustrated point, leaving `square_100_P_0.4/0.7/0.8/0.9/1.0` at
-their 2024 values, one of which is still a plain alpha=1 RBM. Worth confirming before claiming it.
-
-## Leads examined and REJECTED (2026-09-13)
-
-Recorded because a rejected lead is a result: without instance discipline each of these
-would have produced a false record.
-
-- **2510.04907** (*Phys. Rev. B* 113, 045117): triangular −0.55136 and kagome −0.43929.
-  Both are **iPEPS on an infinite lattice**, and the kagome value is an explicit
-  `ξ→∞` extrapolation. QMBL instances are finite lattices, so neither maps onto
-  `kagome-8x8_192_P` or any triangular instance. Dropping them into a finite instance
-  would have manufactured records out of thermodynamic-limit numbers. Admitting these
-  needs a thermodynamic-limit instance class, which is a scope decision, not an import.
-- **2604.21978**: 8×8 Hubbard PBC, U=8, 1/8 doping, but at **t′ = −0.2**. Our
-  `square_64_P_28_8` is t′ = 0, a different Hamiltonian. Needs a new instance; the
-  VarBench naming convention for t′ variants (`_t12`) is not yet decoded, so this is
-  parked rather than guessed.
-
-## Accepted this pass
-
-| instance | row | source | peer reviewed |
-|---|---|---|---|
-| `J1J2/square_100_P_0.5` | **−0.4976939(2)** CNN-MPS, **new record** | arXiv:2603.14425 | no |
-| `J1J2/square_256_P_0.5` | **−0.4969140(5)** CNN-MPS, **new record** | arXiv:2603.14425 | no |
-| `J1J2/square_400_P_0.5` | **−0.4967987(6)** CNN-MPS, **new instance** (20×20) | arXiv:2603.14425 | no |
-| `Hubbard/rectangular-4x16_64_P_28_8` | −0.76413 HFPS | arXiv:2507.10705 | no |
-
-Still to mine: 2502.14091 (*PRL* 136, Shastry-Sutherland, check finite vs iPEPS first),
-2502.13454 (*PRL* 134, Hubbard + PEPS), 2506.08329 (*PRB* 113), 2605.13807, 2502.17144.
+- arXiv:2211.16932: iPEPS/iPESS on the infinite shuriken lattice. Its −0.440908 per site
+  would sit below the records of the 96-, 216- and 384-site shuriken instances.
+- arXiv:2510.04907: iPEPS on the infinite triangular and kagome lattices; the kagome value
+  is an extrapolation to ξ → ∞.
+- arXiv:2310.05844 and arXiv:2604.01555: SDP lower bounds and reference values quoted from
+  other work.
+- arXiv:2505.20406 Tables 2 and 6 print V-scores and thermodynamic-limit energies; its
+  finite-size energies are plotted, except at L = 6 (Table V). The rows at L = 12 to 30 come
+  from the authors' data release (`scripts/add_repo_data_rows.mjs`).

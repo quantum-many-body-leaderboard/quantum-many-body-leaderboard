@@ -1,0 +1,454 @@
+{
+  "about": "Rows read from the source text (arXiv HTML parsed locally, or pypdf text) of Chen & Heyl (Nat. Phys. 20, 1476), Rende et al. (Commun. Phys. 7, 260), Nutakki, Shokry & Vicentini (Phys. Rev. Research 7, 043099), Gu et al. (arXiv:2604.25775; Nat. Commun. 17, 7838), Loehr & Clark (arXiv:2510.26906) and arXiv:2507.01856. Spin energies printed as S.S per site are stored as Pauli totals (x 4N); Hubbard energies per site as totals (x N). Row notes cite this file by its earlier form, scripts/add_literature.mjs (git history).",
+  "instances": [
+    {
+      "instance_id": "J1J2/square_100_P_0.5",
+      "rows": [
+        {
+          "energy": -199.07684,
+          "sigma": 0.00016,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ResNet2 (64 conv layers, >1e6 params), MinSR",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Chen & Heyl, Nat. Phys. 20, 1476 (2024), arXiv:2302.01941",
+          "peer_reviewed": true,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.4976921 (+/- 4e-7) per site in S.S units",
+            "note": "PDF text: \"to attain the best variational energy E/N = -0.4976921(4)\"",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -199.086,
+          "sigma": 0.0036,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ResNet2 MinSR, zero-variance extrapolation",
+          "bound_type": "extrapolated",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Chen & Heyl, Nat. Phys. 20, 1476 (2024), arXiv:2302.01941",
+          "peer_reviewed": true,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.497715 (+/- 0.000009) per site in S.S units",
+            "note": "PDF text: \"estimate the ground-state energy E_GS/N = -0.497715(9) by zero-variance extrapolation\". NOT a variational bound.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -199.0536,
+          "sigma": 0.0004,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "fViT (vision transformer, 2.7e5 params)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Rende, Viteritti, Bardone, Becca & Goldt, A simple linear algebra identity to optimize large-scale neural network quantum states, Commun. Phys. 7, 260 (2024), arXiv:2310.05715",
+          "peer_reviewed": true,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.497634 (+/- 0.000001) per site in S.S units",
+            "note": "Primary located 2026-09-15: Table I of arXiv:2310.05715, last row, Deep ViT, 267720 parameters, marked present work (read from the PDF in reading order). Also quoted as fViT [16] in Table 1 of arXiv:2505.03466, where this row was first found.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -199.0332,
+          "sigma": 0.0024,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ConvNext (6,3,3)[2,2], 2.6e5 params",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Nutakki, Shokry & Vicentini, Phys. Rev. Research 7, 043099 (2025), arXiv:2505.03466",
+          "peer_reviewed": true,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.497583 (+/- 0.000006) per site in S.S units",
+            "note": "Table 1 of arXiv:2505.03466, their own result. Paper states L=10, PBC, S.S per site.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "J1J2/square_256_P_0.5",
+      "create": {
+        "model": "J1J2",
+        "lattice": "square",
+        "n_sites": 256,
+        "boundary": "P",
+        "params": {
+          "J2": 0.5
+        },
+        "dof": 256,
+        "einf": 0
+      },
+      "rows": [
+        {
+          "energy": -508.6374912,
+          "sigma": 0.0008192,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ResNet2 (64 conv layers), MinSR",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Chen & Heyl, Nat. Phys. 20, 1476 (2024), arXiv:2302.01941",
+          "peer_reviewed": true,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.4967163 (+/- 8e-7) per site in S.S units",
+            "note": "PDF text: \"our approach yields the best variational energy E/N = -0.4967163(8) ... on such a large lattice\" (16x16). No VarBench instance existed for this size.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Hubbard/rectangular-4x16_64_P_28_8",
+      "rows": [
+        {
+          "energy": -49.05408,
+          "sigma": 0.00128,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ACE (16 conv layers) trial state + fixed-node GFMC",
+          "bound_type": "projected",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.76647 (+/- 0.00002) per site",
+            "note": "Sec. III.3.1: \"a GFMC calculation with the ACE trial wave-function gives an even lower energy of -0.76647(2)\". Fixed-node: upper bound but node-dependent.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -49.03872,
+          "sigma": 0.00064,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ACE (16 conv layers) + full symmetry projection",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.76623 (+/- 0.00001) per site",
+            "note": "Sec. III.3.1: \"reach a new state-of-the-art energy of -0.76623(1)\".",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -48.9984,
+          "sigma": 0.00064,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "NNBF, 32 determinants + free projection to the fully symmetric state",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Loehr & Clark, arXiv:2510.26906 (2025-10-30)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.7656 (+/- 0.00001) per site",
+            "note": "Sec. III: \"further projected at essentially no cost to the fully symmetric state to reach an energy of -0.76560(1)\". This is the best 4x16 number in arXiv:2510.26906v1.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -48.95104,
+          "sigma": 0.00128,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "NNBF, symmetry optimization with 32 determinants",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Loehr & Clark, arXiv:2510.26906 (2025-10-30)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.76486 (+/- 0.00002) per site",
+            "note": "Same section, before the free projection.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -48.93696,
+          "sigma": 0.00064,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ACE (16 conv layers), no explicit symmetry",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.76464 (+/- 0.00001) per site",
+            "note": "Sec. III.3.1: \"achieves a ground-state energy of -0.76464(1)\".",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -48.83072,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Transformer backflow + MARCH optimizer",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., Solving the Hubbard model with neural quantum states, Nat. Commun. 17, 7838 (2026), arXiv:2507.02644, doi:10.1038/s41467-026-74028-6",
+          "peer_reviewed": true,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.76298 per site",
+            "note": "Supp. Sec. 4.1: \"our NQS yields a ground state energy of -0.76298\" on 16x4 PBC. Instance identity confirmed: same passage quotes HFDS -0.753(2), matching the VarBench row -0.753000(47). No error bar given.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Hubbard/square_256_P_112_8",
+      "rows": [
+        {
+          "energy": -194.1248,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ACE (16 conv layers) trial state + fixed-node GFMC",
+          "bound_type": "projected",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.7583 per site",
+            "note": "Read directly from the Table 1 HTML of arXiv:2604.25775, column t'=0 PBC (16x16, U=8, delta=1/8). ACE Table 1 energies are WITHOUT symmetry projection (Sec. III.C.2), so they are not the ansatz floor.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -193.8688,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ACE (16 conv layers), no symmetry projection",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.7573 per site",
+            "note": "Read directly from the Table 1 HTML of arXiv:2604.25775, column t'=0 PBC (16x16, U=8, delta=1/8). ACE Table 1 energies are WITHOUT symmetry projection (Sec. III.C.2), so they are not the ansatz floor.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -193.6128,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Transformer backflow",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.7563 per site",
+            "note": "Read directly from the Table 1 HTML of arXiv:2604.25775, column t'=0 PBC (16x16, U=8, delta=1/8). ACE Table 1 energies are WITHOUT symmetry projection (Sec. III.C.2), so they are not the ansatz floor.",
+            "secondary_of": "ACE Table 1 row 'Transformer [13]' = arXiv:2507.02644"
+          }
+        },
+        {
+          "energy": -193.536,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "SCALE (1 conv layer) trial state + fixed-node GFMC",
+          "bound_type": "projected",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.756 per site",
+            "note": "Read directly from the Table 1 HTML of arXiv:2604.25775, column t'=0 PBC (16x16, U=8, delta=1/8). ACE Table 1 energies are WITHOUT symmetry projection (Sec. III.C.2), so they are not the ansatz floor.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -193.3312,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Tensor-Backflow + Lanczos",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Investigating the Fermi-Hubbard model by the tensor-backflow method, arXiv:2507.01856",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.7552 per site",
+            "note": "Primary located 2026-09-15: Table I of arXiv:2507.01856, n = 0.875, U = 8, 16x16 PBC, column Ep = 1 (one Lanczos step). First found quoted in Table 1 of arXiv:2604.25775 as Tensor-Backflow+Lanczos [21].",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -192.7424,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "SCALE (1 conv layer), no symmetry projection",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.7529 per site",
+            "note": "Read directly from the Table 1 HTML of arXiv:2604.25775, column t'=0 PBC (16x16, U=8, delta=1/8). ACE Table 1 energies are WITHOUT symmetry projection (Sec. III.C.2), so they are not the ansatz floor.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -192.384,
+          "sigma": 0.0256,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "HFPS + symmetry projection",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Gu et al., arXiv:2604.25775 (2026-04-28)",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.7515 (+/- 0.0001) per site",
+            "note": "Read directly from the Table 1 HTML of arXiv:2604.25775, column t'=0 PBC (16x16, U=8, delta=1/8). ACE Table 1 energies are WITHOUT symmetry projection (Sec. III.C.2), so they are not the ansatz floor.",
+            "secondary_of": "ACE Table 1 row 'HFPS+sym [31]'"
+          }
+        },
+        {
+          "energy": -192.2304,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Tensor-Backflow",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned from the source text during verification",
+          "reference": "Investigating the Fermi-Hubbard model by the tensor-backflow method, arXiv:2507.01856",
+          "peer_reviewed": false,
+          "source": "literature-2025-26",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-10",
+            "method": "source text/table parsed locally (arXiv HTML or pypdf), no LLM transcription",
+            "reported_as": "-0.7509 per site",
+            "note": "Primary located 2026-09-15: Table I of arXiv:2507.01856, n = 0.875, U = 8, 16x16 PBC, column Ep = 0. First found quoted in Table 1 of arXiv:2604.25775 as Tensor-Backflow [21].",
+            "secondary_of": null
+          }
+        }
+      ]
+    }
+  ]
+}

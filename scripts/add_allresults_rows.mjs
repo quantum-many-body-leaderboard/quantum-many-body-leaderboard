@@ -1,34 +1,15 @@
-// Rows from the all-results pass, 2026-09-15: every published finite-size ground-state
-// energy the table harvest could map onto an instance, not only the ones that challenge a
-// record. A 2017 simple-update PEPS 0.4% above the record is a row like any other; the
-// database records what the field has published, and the leaderboard ranks what is eligible.
-//
-// Pipeline: `match_tables.mjs --all` banded 4586 cell-instance pairs from 44 cached papers;
-// one reader per batch of papers mapped each distinct cell to an instance or rejected it;
-// every row that claimed a record, sat below an exact value or was filed with low confidence
-// was re-read by a second, adversarial reader (35 re-read, 22 refuted, most of them
-// duplicates or the wrong boundary condition). The rows and their evidence are data, in
-// sweep-rows-<date>.json; this script only converts units and appends.
-//
-// One file per pass, sweep-rows-YYYY-MM-DD.json, applied in date order; the date names the
-// pass in each row's source (sweep-allresults-<date>) and verified.checked_on. Later passes
-// see the rows of earlier ones, so a value read twice is skipped by the duplicate check below.
-// A second pass on the same day, run by another session, takes a suffix
-// (sweep-rows-YYYY-MM-DD-<label>.json) so neither regenerates over the other's rows.
-//
-// What the reading caught, so the next pass does not repeat it:
-// - site count is not geometry: an 8x32 cylinder and the 16x16 torus both have 256 sites;
-// - a superscript citation glued onto the last digits (-1.1147 [44] read as -1.114744);
-// - a comparison table's "Exact" column that is really DMRG at finite bond dimension;
-// - quoted VarBench rows coming back under a second paper's name.
-//
-// The rows were read before the exactly solved batches of the same day landed, so the
-// duplicate check runs here, against the tree as built, and reports what it skipped.
+// Rows from passes/rows/sweep-rows-YYYY-MM-DD[-label].json (SWEEP.md, "Pass files"), applied
+// in file-name order. Each row is a per-site reading; this script converts energy, error bar and
+// variance into the instance's stored convention (units.mjs), creates an instance from a row's
+// `create` header where needed, and appends. The date names the pass in each row's `source`
+// (sweep-allresults-<date>) and in `verified.checked_on`. A value the instance already carries,
+// from an earlier pass or build step, is skipped and counted.
 import fs from "node:fs";
 import { perSiteDivisor, expectedDof, expectedEinf, vScore } from "./units.mjs";
 
-const PASSES = fs.readdirSync(".").filter(f => /^sweep-rows-\d{4}-\d{2}-\d{2}(-[a-z0-9]+)?\.json$/.test(f)).sort()
-  .map(f => ({ file: f, date: f.slice(11, 21), rows: JSON.parse(fs.readFileSync(f, "utf8")) }));
+const DIR = "passes/rows";
+const PASSES = fs.readdirSync(DIR).filter(f => /^sweep-rows-\d{4}-\d{2}-\d{2}(-[a-z0-9]+)?\.json$/.test(f)).sort()
+  .map(f => ({ file: f, date: f.slice(11, 21), rows: JSON.parse(fs.readFileSync(`${DIR}/${f}`, "utf8")) }));
 const REASON = {
   variational: "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
   extrapolated: "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
@@ -63,7 +44,7 @@ for (const [id, rows] of Object.entries(byInst)) {
        (x.verified?.note || "").includes(r.arxiv) || (x.bound_type === "exact" && r.bound_type === "exact")));
     if (dup) { skipped.push(`${id} ${r.reported_as} [${r.arxiv}] = "${dup.method.slice(0, 40)}"`); continue; }
     const energy = +(r.eps * div).toPrecision(12);
-    // sigma^2/N_site as printed; totals scale with the site count (as in add_worklist_rows). A relative
+    // sigma^2/N_site as printed; totals scale with the site count. A relative
     // variance (<E^2>-<E>^2)/<E>^2 is dimensionless, so it converts with the stored energy itself.
     const varTot = r.var_rel != null ? +(r.var_rel * energy * energy).toPrecision(8)
       : r.var_per_site == null ? null : +(r.var_per_site * inst.n_sites).toPrecision(8);

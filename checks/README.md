@@ -3,7 +3,7 @@
 Reruns that settle a specific claim about a row. Each one exists because
 `scripts/validate.mjs` flagged something that could not be resolved by reading.
 
-## `tfim_obc_ed.mjs`: is arXiv:2605.13807's variational column below its own exact column?
+## `tfim-obc-ed/`: is arXiv:2605.13807's variational column below its own exact column?
 
 **Question.** The first TFIsing candidate the sweep ever produced came from
 arXiv:2605.13807 (parallel-scan recurrent NQS), whose transverse-field Ising chain table
@@ -31,9 +31,9 @@ below (first read as an optimization-trace minimum; withdrawn 2026-09-21, see th
 groups making the same class of error on the same tiny instance is a pattern, not a
 coincidence, and it is an argument for reporting converged energies with their variance.
 
-**Reproduce.** `node checks/tfim_obc_ed.mjs` (seconds, no GPU).
+**Reproduce.** `node checks/tfim-obc-ed/tfim_obc_ed.mjs` (seconds, no GPU).
 
-## `tfising_rbm_check.py`: the three `RBM (alpha = 1)` rows below exact
+## `tfising-rbm-check/`: the three `RBM (alpha = 1)` rows below exact
 
 **Question.** VarBench's TFIsing `RBM (alpha = 1)` rows sit below the exact ground state
 by 3.8 to 10.4 sigma. Is the energy wrong, or is the error bar wrong?
@@ -43,7 +43,7 @@ by *full summation*: the RBM's true variational energy with zero Monte-Carlo err
 variational principle then gives a hard answer instead of a statistical one. Three seeds per
 instance; the training trace is kept so its minimum can be compared against the published value.
 
-**Result** (`results-tfising-rbm.json`, an AMD EPYC 9554 server with NVIDIA L40S cards, netket 3.22.4, 2026-09-11).
+**Result** (`tfising-rbm-check/results-tfising-rbm.json`, an AMD EPYC 9554 server with NVIDIA L40S cards, netket 3.22.4, 2026-09-11).
 
 | | chain_10_P_1 | chain_10_O_1 |
 |---|---|---|
@@ -68,7 +68,7 @@ cannot produce them. The flag stands; the "trace minimum" mechanism does not.
 **Reproduce.**
 
 ```bash
-CUDA_VISIBLE_DEVICES="" JAX_PLATFORMS=cpu python tfising_rbm_check.py   # ~45 min, CPU, 16 cores
+CUDA_VISIBLE_DEVICES="" JAX_PLATFORMS=cpu python checks/tfising-rbm-check/tfising_rbm_check.py   # ~45 min, CPU, 16 cores
 ```
 
 ## `tfising-rbm-varbench-rerun/`: the linked VarBench program, run as pinned
@@ -299,7 +299,7 @@ B3). `ed_sym.py` at k = 0 and M, every C4v irrep, spin inversion even, on the sa
 (`c2v_axes`, A1 + B1 at k = 0, 31,601,346 states, 2026-10-09) gives -74.25466443418684, 6.4e-13
 from it, residual 4.0e-10. Chen et al. quote
 -0.51565739 at this coupling, which matches to 1e-8; Golubev et al.'s ED lies 6.1e-7 below it
-(`SWEEP.md`).
+(arXiv:2606.04558, Table I).
 
 **The 32-site t-V chains (ruling of 2026-10-02).** VarBench's exact rows on `tV/chain_32_P_16_1`,
 `_2` and `_4` link a lattice-symmetries script that fixes every symmetry sector to 0, and their

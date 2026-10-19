@@ -2,14 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 node scripts/emit.mjs | tail -n +2
-node scripts/add_literature.mjs
-node scripts/add_sweep_rows.mjs
-node scripts/add_sweep2_rows.mjs
-node scripts/add_sweep3_rows.mjs
-node scripts/add_pdf_rows.mjs
-node scripts/add_kagome_rows.mjs
-node scripts/add_triangular_rows.mjs
-node scripts/add_worklist_rows.mjs
+node scripts/add_stored_rows.mjs
 node scripts/add_exact_rows.mjs
 node scripts/add_allresults_rows.mjs
 node scripts/add_repo_data_rows.mjs
