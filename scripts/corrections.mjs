@@ -1,30 +1,31 @@
 // Corrections to rows whose stored value disagrees with the source it cites, or whose source
 // was misattributed (RULES.md 11). Applied by apply_corrections.mjs.
 //
-// The vendored VarBench snapshot is never edited. Since 2026-09-30 a row QMBL added itself is
-// corrected here too, like an imported row, and no longer in its input file: an edit there left
-// no trace on the row, and generic JSON lines repeat across rows, so a line edit can hit the
-// wrong one. A loader that is itself wrong (a bond count, a unit) is still fixed in place, with
-// the old value kept on its rows (add_exact_rows.mjs, the L x 2L cylinders). Every correction
-// here keeps the value it replaces on the row, in `corrections[].from`. A row that is suspect for reasons the source does not settle is
+// The vendored VarBench snapshot is never edited. A row QMBL added itself is corrected here
+// too, like an imported row, and its input file stays as it is: an edit there leaves no trace
+// on the row, and generic JSON lines repeat across rows. A loader that is itself wrong (a bond
+// count, a unit) is fixed in place, with the old value kept on its rows (add_exact_rows.mjs,
+// the L x 2L cylinders). Every correction here keeps the value it replaces on the row, in
+// `corrections[].from`. A row that is suspect for reasons the source does not settle is
 // flagged in defects.mjs and keeps its value.
 //
 // match: instance as it stands after relabels.mjs, the published method string, and the
-//        energy within 1e-9, all against the values BEFORE any correction applies.
+//        energy within 1e-9, all against the values before any correction applies.
 // field: energy | sigma | energy_variance | dof | einf | method | bound_type | reference |
 //        peer_reviewed | provenance | baseline | sampled | defect (defect only to null)
 //        `method` is the published string (the short name and detail follow in method_names.mjs);
 //        `sampled` (true or false) states whether the energy is a Monte Carlo estimate, read from the
 //        source (RULES.md 6), and its `from` is the verdict the method string gave the row.
 //        compute.<field> (a compute pass's statement: parameters, samples, ..., scope, confidence,
-//        reported_as, source, note), verified.note and verified.secondary_of are fields inside a block another script
-//        writes, and that script may write it again: such an entry states the value it replaces,
-//        `from`, or for text the one passage it rewrites, `edit: [old, new]` in place of `to`, and
-//        the build stops if the block no longer holds it. A correction never creates a block.
+//        reported_as, source, note), verified.note and verified.secondary_of are fields inside a
+//        block another script writes, and that script may write it again: such an entry states
+//        the value it replaces, `from`, or for text the one passage it rewrites, `edit: [old, new]`
+//        in place of `to`, and the build stops if the block no longer holds it. A correction never
+//        creates a block.
 //        params is the instance's own (RULES.md 2): the match names the instance alone, the entry
 //        states `from`, and the old value stays on the instance, in its `corrections`.
-// to:    the corrected value in the STORED convention (RULES.md 5); `conversion` shows the arithmetic.
-// source_entry: the verification proposal and ruling behind the entry.
+// to:    the corrected value in the stored convention (RULES.md 5); `conversion` shows the arithmetic.
+// source_entry: the verification proposal behind the entry.
 export const CORRECTIONS = [
   // qmbl-verify 2026-09-17, ruling 3a: the 4x4 exact diagonalizations cite the paper they
   // come from, not a run script that computes a different U.
