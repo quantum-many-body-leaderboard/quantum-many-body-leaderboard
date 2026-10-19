@@ -23,7 +23,7 @@ const FRONTIER = [
   ["J1J2/square_100_P_0.5", "J1-J2 square 10×10, J2 = 0.5"],
   ["Hubbard/square_256_P_112_8", "Hubbard square 16×16, U = 8, n = 0.875"],
 ];
-const BOUNDS = { variational: 0, projected: 1, extrapolated: 2 };
+const BOUNDS = { variational: 0, projected: 1, extrapolated: 2, approximate: 2 }; // approximate (RULES.md 4) shares the extrapolations' colour
 
 
 function frontierPanel([id, title]) {

@@ -8,7 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { recordEligible, exactEligible, isSampled, noErrorMetrics, publishedMethod, methodLabel } from "./units.mjs";
+import { recordEligible, approximateEligible, exactEligible, isSampled, noErrorMetrics, publishedMethod, methodLabel } from "./units.mjs";
 
 export function collect() {
   const instances = [];
@@ -66,7 +66,8 @@ export function exactRecordOf(inst) {
 // record where no exact row exists, and the closest challenger where one does. The
 // medal-table views count only instances where this IS the record (RULES.md 7).
 export function lowestEnergyOf(inst) {
-  return [...inst.rows].sort((a, b) => a.energy - b.energy).find(recordEligible) ?? null;
+  const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
+  return sorted.find(recordEligible) ?? sorted.find(approximateEligible) ?? null;
 }
 
 export function summarize(instances) {
@@ -87,7 +88,7 @@ export function summarize(instances) {
     // held_by_variational / _projected / _extrapolated: no exact row, so the lowest
     // unflagged energy is, and this is its kind.
     // The none_* keys say why an instance has neither, in the order they are tested.
-    records: { held: 0, held_by_exact: 0, held_by_variational: 0, held_by_projected: 0, held_by_extrapolated: 0,
+    records: { held: 0, held_by_exact: 0, held_by_variational: 0, held_by_projected: 0, held_by_extrapolated: 0, held_by_approximate: 0,
       none_flagged: 0, none_sector_only: 0, none_unclassified: 0, none_no_rows: 0 },
     // Unflagged sampled energies published without an error bar. They rank like any other
     // row (RULES.md 6, since 2026-10-08); an error bar would let close results share a rank.

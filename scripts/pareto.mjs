@@ -33,7 +33,7 @@ import { W, PAD, n, text, hline, dot, legend, header, footnote, doc, textWidth, 
 const OUT = "figures";
 const instances = collect();
 const { write, written } = writer(OUT);
-const BOUNDS = { variational: 0, projected: 1, extrapolated: 2, exact: 3 };
+const BOUNDS = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, exact: 3 };
 
 
 const MODEL = { J1J2: "J1-J2", Heisenberg: "Heisenberg", Hubbard: "Hubbard", TFIsing: "TFIM", tV: "t-V", Impurity: "impurity" };

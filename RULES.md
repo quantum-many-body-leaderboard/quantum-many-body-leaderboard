@@ -67,6 +67,18 @@ flagged row (6), the class beside a record is how a reader knows what was claime
   sign-problem-free QMC where that is established. QMC is exact only within its statistical
   error bar, not to the printed digits: such a row must state `sigma`, and is shown
   everywhere as **`exact (stochastic)`**.
+- **`approximate`** (2026-10-19): the energy of a method built on a fixed approximation that
+  converges to that approximation, not to the exact energy, so that its error has no known
+  sign. The class is a list of method families, not a judgment per row: the random-phase
+  approximation and its corrections (SOSEX), finite-order perturbation theory (MP2, MP3),
+  coupled cluster restricted to some of its terms (ring-, ladder- or mosaic-only CCD), and
+  density-functional energies. Full coupled cluster at any truncation (CCSD, CCSDT, ...)
+  stays `projected`: each is a rung of a hierarchy that reaches the exact energy. An
+  `approximate` row is listed with the others but holds the record only on an instance where
+  no other unflagged row exists (6). Case: on the 14-electron gas at rs = 1, ring-, crossed-ring-
+  and mosaic-only CCD gives 0.5465 Ha per electron, 22 mHa below FCIQMC, CCSDTQ5 and
+  transcorrelated FCIQMC, which agree to 0.1 mHa; under the lowest-energy rule it would have
+  held the record.
 
 Worked cases that fixed the boundaries:
 
@@ -118,7 +130,8 @@ instance is solved, otherwise the **lowest energy of any other kind** - `variati
 `projected` or `extrapolated`, with or without an error bar - that is not flagged (6.1). Every
 published result counts. The `bound_type` beside the record says what kind of number holds it
 (4): a record held by an extrapolation is an estimate of the ground-state energy, not an
-energy any state reached.
+energy any state reached. An `approximate` row (4) holds the record only where no row of the other
+kinds exists (2026-10-19).
 
 Until 2026-10-08 only a `variational` energy could hold the record, and a sampled one only
 with its `sigma`; `projected` and `extrapolated` rows and sampled rows without an error bar
@@ -517,6 +530,7 @@ Section 4 applies unchanged. The recurring cases:
     non-variational methods, and any method on a transcorrelated (non-Hermitian) Hamiltonian:
     `projected`;
   - a complete-basis-limit extrapolation, or one in the initiator threshold: `extrapolated`.
+- RPA, MP2 and channel-truncated coupled cluster are `approximate` (4).
 - No method is `exact` in track 2 for now. Records follow 6: the lowest unflagged energy of
   any kind holds the record, and its `bound_type` says what kind of number it is.
 

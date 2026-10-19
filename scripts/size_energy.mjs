@@ -30,7 +30,7 @@ fs.mkdirSync(DIR, { recursive: true });
 const { write, written } = writer(OUT);
 const figures = energyFigures(collect());
 
-const KIND = { variational: 0, projected: 1, extrapolated: 2, exact: 3 };
+const KIND = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, exact: 3 };
 const perSite = inst => perSiteDivisor(inst) ?? 1;
 // The lowest record per site among instances drawn at one x; Infinity where none has one.
 const recordAt = insts => Math.min(...insts.flatMap(i => { const r = recordOf(i); return r ? [r.energy / perSite(i)] : []; }));

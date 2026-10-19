@@ -27,8 +27,10 @@ agents. Pass `sweep-rows-2026-10-19-heglit2.json` (`qmbl-runs/qmbl-worklist/2026
 - Cross-checks: 1905.04361's quoted FN-DMC and FCIQMC totals equal the primaries QMBL carries; 1310.6806's CCD and
   1706.09923's CCSDT agree with 1511.05752's CCSD and CCSDT to 0.1 mHa per electron at N = 14, rs = 1.
 - **Held:**
-  - 1310.6806's channel-truncated CCD (rings, mosaics, ladders) and RPA variants (238): they over-correlate, up to
-    22 mHa per electron below every accurate value at N = 14, rs = 1, and would take records under 6; pending a ruling.
+  - (Added the same day as `approximate`, RULES.md 4:) 1310.6806's channel-truncated CCD and RPA variants, 238 rows.
+    They over-correlate, up to 22 mHa per electron below every accurate value at N = 14, rs = 1, and would have taken
+    records under the lowest-energy rule; as `approximate` they hold a record only where nothing else is published
+    (three N = 54 densities). 1202.4990's MP2 rows moved from `extrapolated` to `approximate`.
   - 2405.00425 at the Baldereschi twist (its printed HF energy, -0.0194515, is not QMBL's -0.0195866 at (1/4, 1/4))
     and its N = 302 table (cell not stated); twist averages everywhere; quoted numbers; 1307.3081 (N not printed).
   - Pointers to read next: Spink, Needs & Drummond PRB 88, 085121; Zong, Lin & Ceperley PRE 66, 036703; the

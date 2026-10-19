@@ -23,7 +23,7 @@ const SUBTITLE = "Results are placed by their relative gap to the instance's ene
 const CAPTION = "The energies on the open problems, placed by their relative gap to each instance's energy to beat so that " +
   "different Hamiltonians share one axis; a better energy is lower. Colour is the kind of number, a diamond is a verified entry, " +
   "and a slashed mark is a flagged row.";
-const BOUNDS = { variational: 0, projected: 1, extrapolated: 2 };
+const BOUNDS = { variational: 0, projected: 1, extrapolated: 2, approximate: 2 }; // approximate (RULES.md 4) shares the extrapolations' colour
 const Y0 = 1e-8, Y1 = 1;
 const DIAMOND = 5.8; // the half-size of an entry's mark (chart.mjs diamond)
 

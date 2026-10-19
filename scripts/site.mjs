@@ -179,11 +179,12 @@ const yearOf = r => paperYear(r, cache);
 // The year column: a paper's year, or for QMBL's own runs the year the run finished.
 const yearCell = r => (r.computed_by === "qmbl" ? +(r.verified?.checked_on || "").slice(0, 4) || null : yearOf(r));
 
-const BOUND_ORDER = ["variational", "projected", "extrapolated", "exact", null];
+const BOUND_ORDER = ["variational", "projected", "extrapolated", "approximate", "exact", null];
 const BOUND_LABEL = {
   variational: "Strict variational upper bounds",
   projected: "Projected or fixed-node estimates",
   extrapolated: "Extrapolations",
+  approximate: "Approximate methods (no bound)",
   exact: "Numerically exact",
   null: "Not yet classified",
 };
@@ -191,6 +192,7 @@ const BOUND_NOTE = {
   variational: "Where the instance is not solved, the record is the lowest unflagged energy in this group or among the projected and extrapolated ones, with or without an error bar; where it is solved, the exact energy is the record and the lowest of these is the closest challenger.",
   projected: "Variational only within a constraint: fixed-node, constrained-path, GFMC on a trial state. Node- or constraint-dependent, so not cleanly comparable to each other or to strict bounds. Like any unflagged energy, one holds the record where it is the lowest on an unsolved instance.",
   extrapolated: "Zero-variance, bond-dimension or Trotter-error extrapolations. Not a bound: no ansatz reached the number itself. Like any unflagged energy, one holds the record where it is the lowest on an unsolved instance.",
+  approximate: "Methods built on a fixed approximation that converges to that approximation, not to the exact energy: RPA, finite-order perturbation theory, coupled cluster restricted to some of its terms. Their error has no known sign, so they are listed but rank only where nothing else is published (rules &sect;4).",
   exact: "Exact diagonalization, an exact solution, or sign-problem-free QMC where that is established: the answer, not a claim about it, and therefore the record wherever one exists. QMC is exact only within its statistical error bar, which it must state, and its rows read exact (stochastic); an exact diagonalization outranks it. A diagonalization resolved by symmetry sector is listed for the ground state's sector only; the lowest energies of the other sectors are the instance's spectrum, in its JSON, and hold nothing.",
   null: "The method string does not say whether the energy is sign-problem-free or constrained, so no bound_type could be assigned without guessing.",
 };
@@ -1087,7 +1089,7 @@ function instancePage(inst) {
           ? stochasticExact(rec)
             ? "exact (stochastic) energy: sign-problem-free QMC, exact within its error bar, and the state of the art on this instance"
             : "exact energy: the instance is solved, and this is the state of the art on it"
-          : `lowest unflagged energy published, ${{ variational: "a strict variational bound", projected: "a projected estimate", extrapolated: "an extrapolation, not a bound" }[rec.bound_type]}`}
+          : `lowest unflagged energy published, ${{ variational: "a strict variational bound", projected: "a projected estimate", extrapolated: "an extrapolation, not a bound", approximate: "an approximate method, the only kind published here" }[rec.bound_type]}`}
           (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>)</p>
       </div>`
     : `<div class="record-box none">
