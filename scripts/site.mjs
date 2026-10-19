@@ -100,7 +100,7 @@ function datasetLd() {
   return {
     "@context": "https://schema.org", "@type": "Dataset",
     name: "QMBL: the Quantum Many-Body Leaderboard",
-    description: `Published ground-state energies for ${summary.instances} lattice Hamiltonian instances (Heisenberg, J1-J2, Hubbard, t-V, transverse-field Ising, impurity models), ${summary.rows} energies with method, error bar where published and bound type, every row citing its primary paper.`,
+    description: `Published ground-state energies: ${summary.rows} energies on ${summary.instances} Hamiltonian instances. Each row gives method, bound type, error bar where published, and its primary paper.`,
     url: "https://qmbl.org/", sameAs: [`https://doi.org/${DOI}`, `https://arxiv.org/abs/${ARXIV}`, REPO], identifier: `https://doi.org/${DOI}`,
     license: "https://www.apache.org/licenses/LICENSE-2.0",
     isAccessibleForFree: true, dateModified: BUILT,
@@ -130,12 +130,12 @@ function page({ url, title, description, body, wide = false, jsonld = null, css 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="${esc(ogTitle ?? title ?? "QMBL: the Quantum Many-Body Leaderboard")}">
+<meta property="og:title" content="${esc(ogTitle ?? (title === null ? "QMBL: the Quantum Many-Body Leaderboard" : `${title} · QMBL`))}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://qmbl.org${url}">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>\n` : ""}<header class="site">
-  <a class="wordmark" href="/">${logoSvg()}<b>QMBL<span class="tagline">the quantum many-body leaderboard</span></b><span class="badge beta" title="QMBL is in beta: the data and the site are still being checked and re-cut">beta</span></a>
+  <a class="wordmark" href="/">${logoSvg()}<b>QMBL<span class="tagline">the quantum many-body leaderboard</span></b><span class="badge beta" title="QMBL is in beta: data and site are still being checked.">beta</span></a>
   <nav>${NAV.map(([href, label]) =>
     `<a href="${href}"${href === url ? ' aria-current="page"' : ""}>${label}</a>`).join("")}
     <a class="ext" href="${REPO}" aria-label="QMBL on GitHub" title="Source and data on GitHub">${GITHUB_MARK}</a>
@@ -158,7 +158,7 @@ ${CITE_SCRIPT}
 // RULES.md and DATA.md are read on GitHub. /rules/ and /data/ existed as rendered pages
 // until 2026-09-16 and are linked from outside, so each keeps a page that forwards to the
 // file - fragment included, so a link to a section still lands on that section.
-function redirectPage(url, target, title) {
+function redirectPage(target, title) {
   return `<!doctype html>
 <html lang="en">
 <meta charset="utf-8">
@@ -167,7 +167,7 @@ function redirectPage(url, target, title) {
 <link rel="canonical" href="${target}">
 <title>${title} &middot; QMBL</title>
 <script>location.replace("${target}" + location.hash);</script>
-<p>${title} now lives on GitHub: <a href="${target}">${target}</a></p>
+<p>${title} is on GitHub: <a href="${target}">${target}</a></p>
 </html>
 `;
 }
@@ -189,11 +189,11 @@ const BOUND_LABEL = {
   null: "Not yet classified",
 };
 const BOUND_NOTE = {
-  variational: "Where the instance is not solved, the record is the lowest unflagged energy in this group or among the projected and extrapolated ones, with or without an error bar; where it is solved, the exact energy is the record and the lowest of these is the closest challenger.",
-  projected: "Variational only within a constraint: fixed-node, constrained-path, GFMC on a trial state. Node- or constraint-dependent, so not cleanly comparable to each other or to strict bounds. Like any unflagged energy, one holds the record where it is the lowest on an unsolved instance.",
-  extrapolated: "Zero-variance, bond-dimension or Trotter-error extrapolations. Not a bound: no ansatz reached the number itself. Like any unflagged energy, one holds the record where it is the lowest on an unsolved instance.",
-  approximate: "Methods built on a fixed approximation that converges to that approximation, not to the exact energy: RPA, finite-order perturbation theory, coupled cluster restricted to some of its terms. Their error has no known sign, so they are listed but rank only where nothing else is published (rules &sect;4).",
-  exact: "Exact diagonalization, an exact solution, or sign-problem-free QMC where that is established: the answer, not a claim about it, and therefore the record wherever one exists. QMC is exact only within its statistical error bar, which it must state, and its rows read exact (stochastic); an exact diagonalization outranks it. A diagonalization resolved by symmetry sector is listed for the ground state's sector only; the lowest energies of the other sectors are the instance's spectrum, in its JSON, and hold nothing.",
+  variational: "Energies that a variational state reached (VMC, DMRG and MPS at finite bond dimension, PEPS, NQS, VQE). Each is an upper bound on the ground-state energy.",
+  projected: "Variational only within a constraint: fixed-node, constrained-path, GFMC on a trial state. Each depends on its node or constraint, so two of them are not cleanly comparable to each other or to strict bounds.",
+  extrapolated: "Zero-variance or bond-dimension extrapolations. These are not bounds: no ansatz reached the number.",
+  approximate: "Methods that converge to a fixed approximation and not to the exact energy: RPA, finite-order perturbation theory, coupled cluster restricted to some of its terms. Their error has no known sign, so one holds the record only where no other unflagged energy is published (rules &sect;4).",
+  exact: "Exact diagonalization, an exact solution, or sign-problem-free QMC where that is established. An exact energy is the record. QMC is exact only within its error bar, which it must state, and reads exact (stochastic); an exact diagonalization outranks it. For a diagonalization resolved by symmetry sector only the ground state's sector is listed; the lowest energies of the other sectors are the instance's spectrum, in its JSON, and hold no record.",
   null: "The method string does not say whether the energy is sign-problem-free or constrained, so no bound_type could be assigned without guessing.",
 };
 
@@ -234,8 +234,8 @@ const FLAGS = {
   "dof-mismatch": ["wrong site count (dof)", "The stored degrees of freedom do not match the instance's site count, so a V-score computed from them would be wrong."],
   "wrong-instance": ["wrong instance", "The numbers were uploaded to the wrong instance and belong to another one."],
   "sampling-nonergodic": ["non-ergodic sampling", "The Monte Carlo chains did not sample ergodically, so the low energy is a sampling artifact."],
-  "trace-readout": ["read off a training trace", "The energy is read off an optimisation trace, with an error bar that covers sampling fluctuation only; no separate converged measurement or variance is reported."],
-  "sigma-understated": ["error bar understated", "The printed error bar is a standard error of a resampling mean, not the uncertainty of the energy; the authors have been asked which they intend."],
+  "trace-readout": ["read off a training trace", "The energy is read off an optimisation trace, with no separate converged measurement or variance. Its error bar covers sampling only."],
+  "sigma-understated": ["error bar understated", "The printed error bar is the standard error of a resampling mean, not the uncertainty of the energy."],
   "exact-above-variational-bound": ["above a variational bound", "This exact (stochastic) energy sits above a variational upper bound by more than its error bar explains, so the bar is understated; the bound keeps the record."],
 };
 const flagLabel = r => FLAGS[r.defect.flag]?.[0] ?? r.defect.flag;
@@ -301,7 +301,7 @@ function hamiltonian(inst) {
         note: `Spinless fermions, t = 1, V = ${p.V}, ${p.Nf} particles on ${inst.n_sites} sites.` };
     default:
       return { formula: null,
-        note: `An impurity model from the upstream set (<code>${esc(inst.lattice)}</code>). Its Hamiltonian is defined by VarBench rather than here, so it is identified by name rather than restated, and it has no meaningful per-site energy.` };
+        note: `An impurity model from VarBench (<code>${esc(inst.lattice)}</code>). VarBench defines its Hamiltonian, so it is not restated here. It has no meaningful per-site energy.` };
   }
 }
 
@@ -312,9 +312,9 @@ function variantNote(inst) {
   const notes = `<a href="https://github.com/varbench/varbench/blob/main/Hubbard/supplements/Imada_group_overview.md">VarBench's notes on these runs</a> and Eq. (S6) of its supplement`;
   // t12 instances named with their t2 (2026-10-16) come from papers, not VarBench: H = -t sum - t' sum<<ij>> + U sum, t2 = t'.
   if (/_t12_-?[\d.]+$/.test(inst.instance_id))
-    return `This instance is a <code>t12</code> variant: a next-nearest-neighbour hopping t<sub>2</sub>, written as in VarBench's Eq. (S6), so t<sub>2</sub> is the t&prime; of the sources' H = &minus;t &sum;&#10216;ij&#10217; &minus; t&prime; &sum;&#10216;&#10216;ij&#10217;&#10217; + U &sum; n<sub>i&uarr;</sub>n<sub>i&darr;</sub>. Couplings from the Hamiltonian each source prints (see the rows).`;
+    return `This instance is a <code>t12</code> variant with a next-nearest-neighbour hopping t<sub>2</sub>, written as in VarBench's Eq. (S6). t<sub>2</sub> is the t&prime; of the sources' H = &minus;t &sum;&#10216;ij&#10217; &minus; t&prime; &sum;&#10216;&#10216;ij&#10217;&#10217; + U &sum; n<sub>i&uarr;</sub>n<sub>i&darr;</sub>. The couplings are those each source prints (see the rows).`;
   if (/_UV1V2(?=_|$)/.test(inst.instance_id))
-    return `This instance is the <code>t12</code> variant with the <code>UV1V2</code> interactions: a next-nearest-neighbour hopping t<sub>2</sub>, and density-density terms on nearest (V<sub>1</sub>) and next-nearest neighbours (V<sub>2</sub>), each bond once, between the total densities n<sub>i</sub> = n<sub>i&uarr;</sub> + n<sub>i&darr;</sub> as mVMC, the program behind its row, defines them (Eq. (S6) prints them between equal spins). Couplings from ${notes}.`;
+    return `This instance is the <code>t12</code> variant with the <code>UV1V2</code> interactions: a next-nearest-neighbour hopping t<sub>2</sub>, and density-density terms on nearest (V<sub>1</sub>) and next-nearest neighbours (V<sub>2</sub>), each bond once. The densities are the total densities n<sub>i</sub> = n<sub>i&uarr;</sub> + n<sub>i&darr;</sub>, as mVMC, the program behind its row, defines them; Eq. (S6) prints them between equal spins. Couplings from ${notes}.`;
   if (/_t12(?=_|$)/.test(inst.instance_id))
     return `This instance is the <code>t12</code> variant: a next-nearest-neighbour hopping t<sub>2</sub>, written as in Eq. (S6). Couplings from ${notes}.`;
   return null;
@@ -343,7 +343,7 @@ const FIGURES = [
   ["size-vs-accuracy", "The best published energies, by system size",
     "The energies on instances with an exact ground-state energy, placed by its relative gap to it so that different Hamiltonians share one axis; a better energy is lower. Colour is the kind of number, and a slashed mark is a flagged row."],
   ["size-vs-accuracy-by-family", "The best energies by system size, one panel per method family",
-    "Each panel colours one family's energies over all the others in grey and joins the family's best energy at each size."],
+    "Each panel shows one family's energies in colour and all others in grey, and joins the family's best energy at each size."],
 ];
 
 // A row of badges switching between panels, CSS-only: a radio input per badge, the checked
@@ -409,14 +409,19 @@ function computeInstances(id, group, entry) {
 const computeTabs = (axes, prefix = "") => axes.flatMap(([, figs], a) => [[`${prefix}cost-${a}`, computeModels(figs).length],
   ...computeModels(figs).map((g, m) => [`${prefix}cost-${a}-${m}`, g.length])]);
 const COMPUTE_TABS = computeTabs(COMPUTE_AXES);
+// The section's lead names the axes it has, so it stays true where /open-problems/ has fewer.
+const COST_AXIS_TEXT = { "stated hours": hours => `stated GPU or CPU hours (${hours} instances)`,
+  "estimated FLOPs": () => "estimated FLOPs", parameters: () => "parameter count" };
+const COUNT_WORDS = ["no", "one", "two", "three"];
 function computeSwitcher(axes = COMPUTE_AXES, prefix = "", hours = COST_FIGS.length) {
   if (!axes.length) return "";
+  const named = axes.map(([label]) => COST_AXIS_TEXT[label](hours));
+  const list = named.length > 1 ? `${named.slice(0, -1).join(", ")}${named.length > 2 ? "," : ""} and ${named.at(-1)}` : named[0];
+  const flops = axes.some(([label]) => label === "estimated FLOPs")
+    ? ` FLOPs are estimated from the stated parameter, sample and step counts, or from the sweep schedules of public DMRG run scripts (<a href="${DATA}#how-a-flop-count-is-estimated">how</a>).` : "";
   return `<section class="tabs" id="energy-vs-compute">
   <h2>The best published energies, by cost</h2>
-  <p class="muted">Skim through three kinds of cost: compute hours, estimated FLOPs and number of parameters. Papers state compute cost
-  in hours on GPU/CPU on ${hours} instances. Many more papers state the number of parameters, samples and optimisation steps, and
-  public DMRG run scripts state their sweeps, which imply a count of floating-point operations that we estimate (<a href="${DATA}#how-a-flop-count-is-estimated">how</a>). On top,
-  we plot the parameter count alone.</p>
+  <p class="muted">Cost on ${COUNT_WORDS[axes.length]} ${axes.length === 1 ? "axis" : "axes"}: ${list}.${flops}</p>
   ${tabs(`${prefix}cost-axis`, axes.map(([label, figs, entry], a) => [label, `<div class="tabs">${tabs(`${prefix}cost-${a}`, computeModels(figs).map((g, m) =>
     [esc(modelName(g[0].model)), `<div class="tabs">${computeInstances(`${prefix}cost-${a}-${m}`, g, entry)}</div>`]))}</div>`]))}
 </section>`;
@@ -441,9 +446,9 @@ const ENERGY_FIGS = [...Map.groupBy(energyFigures(instances)
   .filter(f => fs.existsSync(`figures/${f.group === "other" ? f.name : f.stops[0].name}.svg`)), f => f.group)];
 const otherEntry = f => [f.name, f.title, "Energies on Hamiltonians published at one size, with the coupling or filling that differs between them along x."];
 const stopEntry = (f, facet, s) => [s.name, [f.title, facet.label, f.axis && `${f.axis} = ${s.label}`].filter(Boolean).join(", "),
-  "Energy against the number of sites; colour is the kind of number and the line joins the record at each size."];
+  "Energy against the number of sites. Colour shows the bound type; the line joins the record at each size."];
 const stripEntry = f => [f.strip, `${f.title}: the record at each ${f.axis} and size`,
-  "One line per size, the larger the darker, and on each stop the number of energies it stands for; the marked stop is the one whose energies are shown below."];
+  "One line per size, darker for larger sizes. The number over each stop is its count of energies; the marked stop is shown below."];
 
 // Every slider on the page with its id, so that the HTML and the stylesheet agree.
 const SLIDERS = ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [] : figs.map((f, k) => ({ id: `slide-${j}-${k}`, f }))));
@@ -602,7 +607,7 @@ const FIG_SCRIPT = `<script>
     list = rows.length > 1;
     tip.innerHTML = !list
       ? cards.get(rows[0]) + '<span class="go">Click to open this row in the table</span>'
-      : '<b class="count">' + (a.dataset.head || rows.length + ' rows at this point, best first') + '</b><div class="list">' +
+      : '<b class="count">' + (a.dataset.head || rows.length + ' energies at this point, best first') + '</b><div class="list">' +
         rows.map(r => '<a class="card" href="/instances/#' + r + '">' + cards.get(r) + "</a>").join("") +
         '</div><span class="go">' + (pin ? "Click a row to open it in the table; Escape closes the list" : "Click a row to open it in the table, or the mark to keep the list open") + "</span>";
     tip.classList.toggle("list", list);
@@ -647,7 +652,7 @@ const FIG_SCRIPT = `<script>
 function homePage() {
   const [overview, byFamily] = FIGURES;
   const figures = [figure(overview), `<details class="fig-more">
-  <summary>Look at the best published energies, by method family</summary>
+  <summary>Best published energies by method family</summary>
 ${figure(byFamily)}
 </details>`, energySwitcher(), computeSwitcher()].join("\n");
   const linked = new Set([...[...figures.matchAll(/href="\/instances\/#(r-[\w-]+)"/g)].map(m => m[1]),
@@ -656,7 +661,7 @@ ${figure(byFamily)}
     .map(r => `<div data-row="${rowId(inst, r)}">${rowCard(r, inst)}</div>`));
   if (cards.length !== linked.size) throw new Error(`figures link ${linked.size} rows, ${cards.length} found in data/: a figure is older than the data`);
   const body = `
-<h1>State-of-the-art ground-state energies</h1>
+<h1>Best published ground-state energies</h1>
 <p class="lead">QMBL is a live record book of the state of the art in quantum many-body simulation. Browse
 through the leaderboard figures below interactively or look at the pure data in the
 <a href="/instances/">table</a>. Scientists and AI systems should use the shared results to build on
@@ -672,11 +677,11 @@ ${FIG_SCRIPT}
   <a href="https://arxiv.org/abs/${ARXIV}">arXiv:${ARXIV}</a> (2026).</blockquote>
   <p>To cite the data itself, use the concept DOI, which always resolves to the latest release:
   <a href="https://doi.org/${DOI}">${DOI}</a>.</p>
-  <p>Individual energies should cite the primary paper named on the row, not this site.</p>
+  <p>Individual energies should be cited to the primary paper named on the row, not to this site.</p>
 </section>`;
   return page({
     url: "/", title: null, body, wide: true, jsonld: datasetLd(),
-    description: `Published ground-state energies for ${summary.instances} lattice Hamiltonian instances, with the record on each, every row citing its primary paper.`,
+    description: `Published ground-state energies for ${summary.instances} Hamiltonian instances, with the record on each, every row citing its primary paper.`,
   });
 }
 
@@ -877,7 +882,7 @@ function allRows(inst) {
   }).join("");
   return `${rec ? "" : `
     <p class="muted">No record: ${esc(noRecordReason(inst))}.</p>`}
-    <table class="next"><thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>kind</th><th>method</th><th>source</th><th>year</th></tr></thead><tbody>${rows}</tbody></table>
+    <table class="next"><thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>bound type</th><th>method</th><th>source</th><th>year</th></tr></thead><tbody>${rows}</tbody></table>
     <p class="links"><a href="${jsonUrl(inst)}">JSON</a></p>`;
 }
 
@@ -916,12 +921,13 @@ function instancesPage() {
       <p class="muted"><span class="count">${group.length} instances</span>, energies as <code>${perSiteLabel(group[0])}</code></p>
       ${badges}
       <div class="scroll"><table class="leaderboard">
-        <thead><tr><th>instance</th><th>energy</th><th>method</th><th>source</th><th>rows</th></tr></thead>
+        <thead><tr><th>instance</th><th>energy</th><th>method</th><th>source</th><th>energies</th></tr></thead>
         <tbody>${rows.join("")}</tbody></table></div>
     </section>`;
   }).join("\n");
 
   const body = `
+<h1>Table</h1>
 <p class="search"><input id="filter" type="search" placeholder="Filter by Hamiltonian, lattice, size, coupling or method…" autocomplete="off" spellcheck="false">
 <span id="filter-count" class="muted"></span></p>
 <div class="quick models"><span class="muted">Hamiltonian</span>${MODELS.filter(([m]) => instances.some(i => i.model === m))
@@ -1011,7 +1017,7 @@ addEventListener("load", reveal);
 reveal();
 </script>`;
   return page({ url: "/instances/", title: "Table", body, wide: true,
-    description: `Every Hamiltonian instance in QMBL: ${summary.instances} instances across ${MODELS.length} models, with the record energy and method for each.` });
+    description: `Every Hamiltonian instance in QMBL: ${summary.instances} instances across ${MODELS.filter(([m]) => instances.some(i => i.model === m)).length} models, with the record energy and method for each.` });
 }
 
 // ---------------------------------------------------------------------- instance page
@@ -1064,7 +1070,7 @@ function instancePage(inst) {
 
   const flagged = sorted.filter(r => r.defect).map(r => `
     <details class="defect">
-      <summary><b>${esc(flagLabel(r))}</b> &mdash; ${esc(shorten(methodLabel(r), 60))}, ${energyCell(r, inst)}</summary>
+      <summary><b>${esc(flagLabel(r))}</b>, ${esc(shorten(methodLabel(r), 60))}, ${energyCell(r, inst)}</summary>
       <p><b>Finding.</b> ${esc(r.defect.finding)}</p>
       ${r.defect.diagnosis ? `<p><b>Diagnosis.</b> ${esc(r.defect.diagnosis)}</p>` : ""}
       ${r.defect.ruled_out ? `<p><b>Ruled out.</b> ${esc(r.defect.ruled_out)}</p>` : ""}
@@ -1073,7 +1079,7 @@ function instancePage(inst) {
 
   const verified = sorted.filter(r => r.verified).map(r => `
     <details class="verified">
-      <summary>${energyCell(r, inst)} &mdash; ${esc(shorten(methodLabel(r), 60))}</summary>
+      <summary>${energyCell(r, inst)}, ${esc(shorten(methodLabel(r), 60))}</summary>
       <p class="muted">Checked ${esc(r.verified.checked_on)} &middot; ${esc(r.verified.method)}</p>
       ${r.verified.reported_as ? `<p><b>Reported as.</b> ${esc(r.verified.reported_as)}</p>` : ""}
       ${r.verified.note ? `<p>${esc(r.verified.note)}</p>` : ""}
@@ -1087,8 +1093,8 @@ function instancePage(inst) {
         <p>${esc(methodLabel(rec))}</p>
         <p class="muted">${citeHtml(rec)} &middot; ${rec.bound_type === "exact"
           ? stochasticExact(rec)
-            ? "exact (stochastic) energy: sign-problem-free QMC, exact within its error bar, and the state of the art on this instance"
-            : "exact energy: the instance is solved, and this is the state of the art on it"
+            ? "exact (stochastic) energy: sign-problem-free QMC, exact within its error bar"
+            : "exact energy: the instance is solved"
           : `lowest unflagged energy published, ${{ variational: "a strict variational bound", projected: "a projected estimate", extrapolated: "an extrapolation, not a bound", approximate: "an approximate method, the only kind published here" }[rec.bound_type]}`}
           (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>)</p>
       </div>`
@@ -1131,13 +1137,13 @@ ${recordBox}
 
 <section>
   <h2>Every published energy</h2>
-  <p>Grouped by what the number is. Where the instance is not solved, the lowest unflagged energy of any group is the record.</p>
+  <p>Grouped by what the number is. On a solved instance the exact energy is the record; otherwise the lowest unflagged energy of any group holds it (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>).</p>
   ${groups}
 </section>
 
 ${flagged ? `<section><h2>Flagged rows</h2>
-  <p>A flag withholds the record and nothing else: the row stays listed, in rank order.
-  <a href="${RULES}#10-pending-confirmed-objections">Rules &sect;10</a> is how a flag is lifted or upheld.</p>
+  <p>A flagged row stays listed in rank order but cannot hold the record.
+  <a href="${RULES}#10-pending-confirmed-objections">Rules &sect;10</a> says how a flag is lifted or upheld.</p>
   ${flagged}</section>` : ""}
 
 ${verified ? `<section><h2>How these numbers were read</h2>
@@ -1167,30 +1173,30 @@ function contributePage() {
   const b = summary.sampled_no_sigma;
   const costed = instances.flatMap(i => i.rows).filter(r => r.compute?.gpu_hours != null || r.compute?.cpu_core_hours != null || r.compute?.parameters != null).length;
   const body = `
-<h2>Open an issue</h2>
-<p>All of it goes through <a href="${REPO}/issues">GitHub issues</a>.</p>
+<h1>Contribute</h1>
+<p>Everything goes through <a href="${REPO}/issues">GitHub issues</a>.</p>
 <ul>
-  <li><b>A missing result.</b> Use the <a href="${REPO}/issues/new?template=new-result.yml">new result form</a>:
-  the instance, the energy as printed, its error bar, the method, and where in the paper it is.
-  Anything missing renders as <code>n/a</code> rather than blocking the row
+  <li>To add a missing result, use the <a href="${REPO}/issues/new?template=new-result.yml">new result form</a>.
+  Give the instance, the energy as printed, its error bar, the method, and where in the paper it is.
+  A missing field shows as <code>n/a</code> and does not block the row
   (<a href="${RULES}#3-required-fields">rules &sect;3</a>).</li>
-  <li><b>A missing instance.</b> Use the <a href="${REPO}/issues/new?template=new-instance.yml">new instance form</a>:
-  the Hamiltonian, cluster, boundaries, couplings and sector, and the paper that defines it.</li>
-  <li><b>A number is wrong, or attributed to the wrong paper.</b> Name the instance and what it
-  should be. Rows are corrected in place and the history stays in git.</li>
-  <li><b>An error bar we could not find.</b> ${b.rows} sampled energies across ${b.instances}
-  instances are listed without one, because none was found in the source we read. They rank like
+  <li>To add a missing instance, use the <a href="${REPO}/issues/new?template=new-instance.yml">new instance form</a>.
+  Give the Hamiltonian, cluster, boundaries, couplings and sector, and the paper that defines it.</li>
+  <li>If a number is wrong or attributed to the wrong paper, name the instance and what it
+  should be. Rows are corrected in place; git keeps the history.</li>
+  <li>If you know an error bar we could not find, tell us. ${b.rows} sampled energies on ${b.instances}
+  instances are listed without one, because the source we read gives none. They rank like
   any other row; with an error bar, results that agree within it share a rank
   (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>).</li>
-  <li><b>An objection to a row.</b> Wrong symmetry sector, a mis-declared <code>bound_type</code>,
-  an error bar with no autocorrelation correction: these are technical disputes with a process,
-  <a href="${RULES}#10-pending-confirmed-objections">rules &sect;10</a>.</li>
-  <li><b>What a number cost.</b> GPU-hours &times; device, parameter count, wall-clock. ${costed}
-  rows state at least one of these, which is what the <a href="/#energy-vs-compute">energy-versus-cost
-  figure</a> is drawn from; yours can join them
-  (<a href="${DATA}#what-a-number-cost-the-compute-block">the format is specified</a>). Parameter,
+  <li>To object to a row, open an issue on a technical ground, for example a wrong symmetry sector,
+  a misdeclared <code>bound_type</code> or an error bar with no autocorrelation correction.
+  <a href="${RULES}#10-pending-confirmed-objections">Rules &sect;10</a> lists the grounds and gives the process.</li>
+  <li>To add what a number cost, give the GPU or CPU hours with the device, the parameter count, or the wall-clock time.
+  ${costed} energies state GPU or CPU hours or a parameter count; the
+  <a href="/#energy-vs-compute">energy-versus-cost figures</a> use them
+  (<a href="${DATA}#what-a-number-cost-the-compute-block">format</a>). Parameter,
   sample and iteration counts together, or a DMRG run's sweep schedule, let the site
-  <a href="/#energy-vs-compute">estimate a FLOP count</a> where no hours were stated.</li>
+  <a href="/#energy-vs-compute">estimate a FLOP count</a> where no hours are stated.</li>
 </ul>`;
   return page({ url: "/contribute/", title: "Contribute", body,
     description: "How to correct a row, add a published result, supply a missing error bar, or object to a record in QMBL." });
@@ -1231,20 +1237,21 @@ function llmsTxt() {
   const lines = [
     "# QMBL: the Quantum Many-Body Leaderboard",
     "",
-    `> The best published ground-state energies for ${summary.instances} lattice Hamiltonian instances (${summary.rows} energies, ${summary.records.held} with a record, ${summary.records.held_by_exact} of them solved exactly). Read-only, generated from the repository's data/ directory, Apache-2.0.`,
+    `> The best published ground-state energies for ${summary.instances} Hamiltonian instances (${summary.rows} energies, ${summary.records.held} with a record, ${summary.records.held_by_exact} of them solved exactly). Read-only, generated from the repository's data/ directory, Apache-2.0.`,
     "",
     "Every row is one published claim about one Hamiltonian instance and carries the energy, its",
     "error bar, the method, the primary reference, and a `bound_type`: strict variational bound,",
-    "projected/fixed-node estimate, zero-variance extrapolation, or numerically exact (exact (stochastic)",
-    "for sign-problem-free QMC, which is exact within its stated error bar). An exact",
-    "energy is the record wherever one exists; otherwise the lowest energy that is not flagged",
-    "holds it, of any kind and with or without an error bar. Energies are stored as totals",
-    "and quoted per site; the conversion is in DATA.md. Individual energies must be cited to the",
-    "primary paper named on the row, not to this site.",
+    "projected/fixed-node estimate, zero-variance or bond-dimension extrapolation, approximate",
+    "method, or numerically exact. Sign-problem-free QMC is labelled exact (stochastic): it is exact",
+    "within its stated error bar. An exact energy is the record wherever one exists; otherwise the",
+    "lowest unflagged energy holds it, of any kind and with or without an error bar, and an",
+    "approximate energy holds it only where no other unflagged energy exists (RULES.md section 6).",
+    "Energies are stored as totals and quoted per site; the conversion is in DATA.md. Individual",
+    "energies should be cited to the primary paper named on the row, not to this site.",
     "",
     "## Pages",
     ...(OPEN_PROBLEMS ? openProblemsLlms(OPEN_PROBLEMS) : []),
-    "- [Leaderboard](https://qmbl.org/): the accuracy and cost figures, and how to cite.",
+    "- [Leaderboard](https://qmbl.org/): the accuracy, energy and cost figures, and how to cite.",
     `- [Table](https://qmbl.org/instances/): every one of the ${summary.instances} instances, with its record and every energy.`,
     `- [Rules](${RULES}): what counts as a record, ties, provenance, objections.`,
     `- [Data](${DATA}): row format, units and conventions, error metrics, defects.`,
@@ -1561,8 +1568,8 @@ fs.rmSync(OUT, { recursive: true, force: true });
 
 write("index.html", homePage());
 write("instances/index.html", instancesPage());
-write("rules/index.html", redirectPage("/rules/", RULES, "Rules"));
-write("data/index.html", redirectPage("/data/", DATA, "Data"));
+write("rules/index.html", redirectPage(RULES, "Rules"));
+write("data/index.html", redirectPage(DATA, "Data"));
 write("contribute/index.html", contributePage());
 if (OPEN_PROBLEMS) {
   const op = openProblemsPages(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
@@ -1607,7 +1614,7 @@ write("api/instances.json", JSON.stringify(instances.map(i => {
 write("api/qmbl.json", JSON.stringify({
   name: "QMBL: the Quantum Many-Body Leaderboard",
   url: "https://qmbl.org/", repository: REPO, license: "Apache-2.0", doi: DOI,
-  built: BUILT, note: "Individual energies must be cited to the primary paper named on the row.",
+  built: BUILT, note: "Individual energies should be cited to the primary paper named on the row.",
   summary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 
