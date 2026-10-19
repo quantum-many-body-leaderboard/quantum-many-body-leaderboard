@@ -102,7 +102,7 @@ const LEGEND = t => [
   { kind: "dot", color: t.series[0], label: "Variational bound" },
   { kind: "dot", color: t.series[1], label: "Projected" },
   { kind: "dot", color: t.series[2], label: "Extrapolated" },
-  { kind: "dot", color: t.series[3], label: "Exact" },
+  { kind: "dot", color: t.series[3], label: "Exact and exact (stochastic)" },
   { kind: "flag", color: t.ink2, label: "Flagged, see the row" },
   { kind: "line", color: t.ink2, label: "Record" },
 ];

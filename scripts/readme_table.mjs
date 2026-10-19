@@ -9,7 +9,7 @@
 // compared the README against the front page.
 import fs from "node:fs";
 import path from "node:path";
-import { perSiteDivisor, perSiteLabel, isSampled, noErrorMetrics, methodLabel, recordEligible } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, isSampled, noErrorMetrics, methodLabel, recordEligible, stochasticExact } from "./units.mjs";
 import { collect, recordOf, summarize, noRecordKey } from "./summary.mjs";
 import { citeCell } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
@@ -169,7 +169,7 @@ function row(inst, label, cache) {
   const challenger = next
     ? `${(next.energy / f).toFixed(q.decimals)}${marks(next)} (${gapAbove(rec, next, f, q.decimals)}) ${shorten(methodLabel(next), 34)} ${citeCell(next, cache)}`
     : "none";
-  return `| ${label} | **${q.text}**${marks(rec)} | ${shorten(methodLabel(rec), 46)} ${citeCell(rec, cache)} | ${challenger} |`;
+  return `| ${label} | **${q.text}**${marks(rec)}${stochasticExact(rec) ? " exact (stochastic)" : ""} | ${shorten(methodLabel(rec), 46)} ${citeCell(rec, cache)} | ${challenger} |`;
 }
 
 function main() {

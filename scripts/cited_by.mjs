@@ -19,7 +19,7 @@
 import fs from "node:fs";
 
 const MAILTO = process.env.QMBL_MAILTO;
-const UA = `qmbl-sweep/1.0 (quantum-many-body-leaderboard; mailto:${MAILTO})`;
+const UA = `qmbl-sweep/1.0 (quantum-many-body-leaderboard${MAILTO ? `; mailto:${MAILTO}` : ""})`;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const argv = process.argv.slice(2);

@@ -414,8 +414,8 @@ write("error-metrics", t => {
       x += w;
     });
   });
-  const fn = footnote(t, "Bars are shares of each source's rows. A deterministic energy (DMRG at a stated bond dimension) needs no error bar " +
-    "to hold a record; a sampled one does. QMBL's own runs are not counted.", top + groups.length * pitch + 4);
+  const fn = footnote(t, "Bars are shares of each source's rows. No energy needs an error bar to hold a record, " +
+    "but a sampled one should state it. QMBL's own runs are not counted.", top + groups.length * pitch + 4);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, "Which error metrics the rows carry, by where they came from",
     groups.map(g => `${g.label} (${g.total} rows): ${METRICS.map(([k, label]) => `${label} ${g.by[k]}`).join(", ")}`).join("; "), parts);

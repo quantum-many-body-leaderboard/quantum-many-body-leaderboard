@@ -1207,9 +1207,7 @@ function notFoundPage() {
   return page({ url: "/404.html", title: "Not found", description: "Page not found.", body: `
 <pre class="ticks" aria-hidden="true">${ticks}</pre>
 <h1>Not found</h1>
-<p class="lead">That page does not exist. Instance URLs look like
-<code>/i/J1J2/square_100_P_0.5/</code> and are listed in full on
-<a href="/instances/">the instances page</a>.</p>` });
+<p class="lead">That page does not exist.</p>` });
 }
 
 // ------------------------------------------------------------------------ machine api

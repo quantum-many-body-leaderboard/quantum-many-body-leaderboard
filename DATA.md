@@ -170,7 +170,7 @@ the sources of the 95 published rows that stated two of parameters, samples and 
 the third, including the authors' code and run data; 153 of its 278 blocks carry all three.
 Where it found a stored number to be a different quantity (a final evaluation's sample count
 stored as the per-step count), the later block holds the per-step number and its note the old
-one. A VQE shot count per estimated quantity is not a per-step sample count and stays in the note. The fourth (2026-09-27) followed a verification of every family against its papers and code (`qmbl-runs/cost-routes-2026-09-24/verify/`): 235 blocks gained what the run states about how it evaluated its state, in three objects that, like `sweep_schedule`, are statements and never costs. `evaluation` holds the training stages, the network evaluations per amplitude (a symmetry sum, several determinants), the sampler proposals per kept sample, whether the local energy skips vanishing terms, complex parameters, a dense read-out head and the optimiser's solve; `vmc_schedule` (kind `mvmc`) the def-file settings of an mVMC run; `circuit_schedule` a VQE script's gates and runs. The next section says how each enters the estimate.
+one. A VQE shot count per estimated quantity is not a per-step sample count and stays in the note. The fourth (2026-09-27) followed a verification of every family against its papers and code: 235 blocks gained what the run states about how it evaluated its state, in three objects that, like `sweep_schedule`, are statements and never costs. `evaluation` holds the training stages, the network evaluations per amplitude (a symmetry sum, several determinants), the sampler proposals per kept sample, whether the local energy skips vanishing terms, complex parameters, a dense read-out head and the optimiser's solve; `vmc_schedule` (kind `mvmc`) the def-file settings of an mVMC run; `circuit_schedule` a VQE script's gates and runs. The next section says how each enters the estimate.
 
 A statement a later reading finds wrong is corrected like any stored value, in
 [`scripts/corrections.mjs`](scripts/corrections.mjs) (`compute.parameters`, `compute.note`,
@@ -477,8 +477,7 @@ NSPGaussLeg), S the samples per step (NVMCSample × processes), n = Nsize, r and
 update of a hop (2n, 6n²) or an exchange (2n², 34n²), c_x = 4 for complex inputs, and SR the
 complex O O† product and Cholesky on every process (NSRCG 0) or 100 conjugate-gradient
 iterations per step (NSRCG 1). The acceptance a is bounded by 1, which overstates sampling about
-twice. Calibrated on QMBL's own short runs of VarBench's inputs on an EPYC 9654 (2026-09-25,
-`qmbl-runs/cost-routes-2026-09-24/calib/`): 4.6-17 GFLOP/s per core over Hubbard 8×8 and
+twice. Calibrated on QMBL's own short runs of VarBench's inputs on an EPYC 9654 (2026-09-25): 4.6-17 GFLOP/s per core over Hubbard 8×8 and
 pyrochlore 128 and 432, against 7-18x too high or 6.6x too low before the complex arithmetic,
 the per-sample Pfaffian recomputation and the realistic CG count were in. Every estimate is
 `low`: the scripts are simplified templates of the published runs.
