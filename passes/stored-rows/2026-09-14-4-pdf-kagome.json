@@ -1,0 +1,112 @@
+{
+  "about": "Duric, Chung, Yang & Sengupta (Phys. Rev. X 15, 011047, arXiv:2401.02866) and Depenbrock, McCulloch & Schollwoeck (Phys. Rev. Lett. 109, 067201, arXiv:1205.4858) on the 48- and 108-site kagome tori, PDF text extracted with pypdf. The DMRG energies are extrapolated in the truncation error and are therefore extrapolated, not variational (RULES.md 4). The 108-site G-CNN row carries a defect flag (scripts/defects.mjs, from the Comment arXiv:2605.28861). Energies: S.S per site x 4N. Row notes cite this file by its earlier form, scripts/add_kagome_rows.mjs (git history).",
+  "instances": [
+    {
+      "instance_id": "Heisenberg/kagome-4x4_48_P",
+      "rows": [
+        {
+          "energy": -84,
+          "sigma": 0.04,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "GCNN (6 layers, 6 feature maps), symmetric ansatz",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Ðurić, Chung, Yang & Sengupta, Spin-1/2 Kagome Heisenberg Antiferromagnet: Machine Learning Discovery of the Spinon Pair-Density-Wave Ground State, Phys. Rev. X 15, 011047 (2025), arXiv:2401.02866",
+          "peer_reviewed": true,
+          "source": "sweep-pdf-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv PDF text extracted locally with pypdf, no LLM transcription",
+            "reported_as": "-0.4375 per site in S.S units",
+            "note": "Sec. III: \"R = (E_GCNN - E_ED)/E_ED ~ 0.3% with E_ED = -21.057787063 and E_GCNN = -21.00 +/- 0.01\" on the 48-site (4x4x3) PBC cluster, chi0 sector. Total energy in S.S units; E/N = -0.4375. The instance's existing exact row is -0.4387039, i.e. -21.057787063/48 to 8 digits, which confirms the cluster and the convention. Sampling here is the ergodic spin-exchange update, so the objection in arXiv:2605.28861 does not apply to this size.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -84.1536,
+          "sigma": 0.0384,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "DMRG, truncation-error extrapolated (Torus 4)",
+          "bound_type": "extrapolated",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Depenbrock, McCulloch & Schollwoeck, Nature of the Spin Liquid Ground State of the S=1/2 Heisenberg Model on the Kagome Lattice, Phys. Rev. Lett. 109, 067201 (2012), arXiv:1205.4858",
+          "peer_reviewed": true,
+          "source": "sweep-pdf-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv PDF text extracted locally with pypdf, no LLM transcription",
+            "reported_as": "-0.4383 per site in S.S units",
+            "note": "Table I row \"Torus 4 -0.4383(2)\". The paper states energies are \"extrapolated in the truncation error of single-site DMRG\", so this is not a strict variational bound (RULES.md 4). Sits above the exact -0.4387039 on this instance.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Heisenberg/kagome-6x6_108_P",
+      "create": {
+        "model": "Heisenberg",
+        "lattice": "kagome-6x6",
+        "n_sites": 108,
+        "boundary": "P",
+        "params": {},
+        "dof": 108,
+        "einf": 0
+      },
+      "rows": [
+        {
+          "energy": -192.72,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "GCNN, spinon pair-density-wave state (chi0, P_Z2 = -1, q = (pi, pi/sqrt3))",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Ðurić, Chung, Yang & Sengupta, Spin-1/2 Kagome Heisenberg Antiferromagnet: Machine Learning Discovery of the Spinon Pair-Density-Wave Ground State, Phys. Rev. X 15, 011047 (2025), arXiv:2401.02866",
+          "peer_reviewed": true,
+          "source": "sweep-pdf-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv PDF text extracted locally with pypdf, no LLM transcription",
+            "reported_as": "-0.4461111111111111 per site in S.S units",
+            "note": "Sec. III (end of the 108-site paragraph) and Fig. 5 caption: \"The obtained ground state energy E0 = -48.18(0) is ~1.78% lower than the ground state energy obtained with DMRG calculations (E_DMRG = -47.33964)\"; same value in arXiv v1 (Fig. 12 caption, \"E_chi0 = -48.18(0)\"). Total in S.S units; E/N = -0.4461111. The only error statement is the parenthesised (0): a statistical error that rounds to zero at the 0.01 level, while the other five 108-site states in the same figure carry (3)-(8). No variance, acceptance rate or autocorrelation time is printed in either version. A near-zero error bar from 2^13 samples of a non-eigenstate is itself a symptom of frozen Markov chains, so no sigma is recorded. Sampler stated by the paper: single spin flips over the whole Hilbert space, no S^z_tot = 0 sector (Sec. III end). DISPUTED - see the defect flag.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -189.3456,
+          "sigma": 0.1296,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "DMRG, truncation-error extrapolated (Torus 6)",
+          "bound_type": "extrapolated",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Depenbrock, McCulloch & Schollwoeck, Nature of the Spin Liquid Ground State of the S=1/2 Heisenberg Model on the Kagome Lattice, Phys. Rev. Lett. 109, 067201 (2012), arXiv:1205.4858",
+          "peer_reviewed": true,
+          "source": "sweep-pdf-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv PDF text extracted locally with pypdf, no LLM transcription",
+            "reported_as": "-0.4383 per site in S.S units",
+            "note": "Table I row \"Torus 6 -0.4383(3)\", the 108-site torus (\"we also consider tori of up to 108 sites\"). E/N x 108 = -47.336, consistent with the -47.33964 that Ðurić et al. quote as the DMRG benchmark. Extrapolated in the truncation error, so not a strict bound (RULES.md 4).",
+            "secondary_of": null
+          }
+        }
+      ]
+    }
+  ]
+}

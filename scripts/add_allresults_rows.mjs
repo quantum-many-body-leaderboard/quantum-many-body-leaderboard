@@ -64,7 +64,7 @@ for (const [id, rows] of Object.entries(byInst)) {
        (x.verified?.note || "").includes(r.arxiv) || (x.bound_type === "exact" && r.bound_type === "exact")));
     if (dup) { skipped.push(`${id} ${r.reported_as} [${r.arxiv}] = "${dup.method.slice(0, 40)}"`); continue; }
     const energy = +(r.eps * div).toPrecision(12);
-    // sigma^2/N_site as printed; totals scale with the site count (as in add_worklist_rows). A relative
+    // sigma^2/N_site as printed; totals scale with the site count. A relative
     // variance (<E^2>-<E>^2)/<E>^2 is dimensionless, so it converts with the stored energy itself.
     const varTot = r.var_rel != null ? +(r.var_rel * energy * energy).toPrecision(8)
       : r.var_per_site == null ? null : +(r.var_per_site * inst.n_sites).toPrecision(8);

@@ -191,7 +191,7 @@ if (process.env.QMBL_VERBOSE) skipped.forEach(s => console.log("  dup", s));
 
 // CTWF's own 10x10 J1-J2 energy (arXiv:2503.10462). The paper plots it in Fig. 2 as a relative
 // error and a rescaled variance, and prints no number for it; the -0.4976764(7) that used to carry
-// the CTWF name is the factored attention it quotes (add_sweep_rows.mjs). The authors' Zenodo
+// the CTWF name is the factored attention it quotes (passes/stored-rows/2026-09-13-frontier.json). The authors' Zenodo
 // record (10.5281/zenodo.14035975, 10x10_J1J2.csv, md5 98556b24d20bffeb69bb300bd696bda4, copied
 // verbatim into sources/) holds the plotted values. Its error bar is printed "(0)", i.e. below
 // half a unit in the sixth decimal, which is not a sigma, so none is stored: the row cannot hold a

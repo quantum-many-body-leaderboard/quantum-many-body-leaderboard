@@ -1,0 +1,176 @@
+{
+  "about": "Cells of the match_tables.mjs worklist that sat below a record and stood after the paper was read: arXiv:2507.10705 Table IV, arXiv:2606.00924 Table IV, arXiv:2507.02644, the PNAS supplement of arXiv:2111.10420, and arXiv:2509.13746. Hubbard energies per site x N; spin energies S.S per site x 4N; a per-site variance x N (fermions) or x 16N (spins). The pyrochlore row's energy is the authors' measurement of the same state; the printed value is kept in its corrections field (RULES.md 11). Row notes cite this file by its earlier form, scripts/add_worklist_rows.mjs (git history).",
+  "instances": [
+    {
+      "instance_id": "Hubbard/rectangular-4x8_32_P_14_8",
+      "rows": [
+        {
+          "energy": -24.5408,
+          "sigma": 0.00032,
+          "energy_variance": 0.52224,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "HFPS (hidden-fermion Pfaffian state)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Chen, Wan, Sengupta & Georges, Neural network-augmented Pfaffian wave-functions for scalable simulations of interacting fermions, Proc. Natl. Acad. Sci. U.S.A. 123, e2535288123 (2026), arXiv:2507.10705",
+          "peer_reviewed": true,
+          "source": "sweep-worklist-2026-09-15",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-15",
+            "method": "arXiv PDF text extracted locally with pypdf in layout mode, no LLM transcription",
+            "reported_as": "-0.76690(1) per site, sigma^2/N_site = 0.016320",
+            "note": "Table IV of arXiv:2507.10705, \"Raw data of Fig. 7 in the L x 4 lattice with 1/8 doping and U = 8\", row 8 x 4; Sec. III states Fig. 7 shows \"L x 4 PBC lattices\". 32 sites, 28 electrons, U = 8, periodic: this instance. The same table's 16 x 4 value -0.76413(3) is the HFPS row on rectangular-4x16_64_P_28_8, and its 4 x 4 value -0.74177(5) sits 3e-5 above the ED energy -0.7418 quoted by arXiv:2606.00924. New record, 0.47% below the VarBench HFDS row -0.7633125 and below the RHB -0.7641(3) of arXiv:2606.00924 on the same lattice. Variance: sigma^2/N_site stored as a total (x 32). Its V-score, 2.7e-3, is ~25x the VarBench HFDS row's 1.1e-4 at a higher energy; the HFDS variance is the likelier outlier, since on 4x16 the same VarBench ansatz has ten times the per-site variance and this paper puts HFDS 3e-4 above exact already at 4x4. Read from the arXiv version; the PNAS version was not compared (pnas.org refuses this sandbox).",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -24.4512,
+          "sigma": 0.0096,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "RHB (hierarchical backflow K = 2 + nonlocal FNN factor, Ndet = 5, Nneuron = 100)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Zhou, Zhou & Liu, Locality-Induced Hierarchical Backflow Wavefunctions for Correlated Fermions, arXiv:2606.00924",
+          "peer_reviewed": false,
+          "source": "sweep-worklist-2026-09-15",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-15",
+            "method": "arXiv PDF text extracted locally with pypdf in layout mode, no LLM transcription",
+            "reported_as": "-0.7641 per site, table-wide sampling error ~0.0003",
+            "note": "Table IV of arXiv:2606.00924, \"Energies per site for the Hubbard model at nh = 0.125, U = 8 for different systems under periodic boundary conditions. The energy sampling errors are around 0.0003\", row 4 x 8, column RHB (Ndet = 5, Nneuron = 100, the setting adopted for all large-scale runs after Table III). Instance identity: the same row's HFDS column, -0.7633, is the VarBench HFDS row -0.7633125. sigma is the caption's table-wide \"around 0.0003\". Layout mode shifts this row one column left in sweep-tables.tsv; read here from the printed table. Internal check: the same ansatz gives -0.7410 on 4 x 4 against ED -0.7418 (Table III), above exact as it must be.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Hubbard/square_64_P_32_8",
+      "rows": [
+        {
+          "energy": -33.65248,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Transformer backflow + MARCH optimizer",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Gu et al., Solving the Hubbard model with neural quantum states, Nat. Commun. 17, 7838 (2026), arXiv:2507.02644, doi:10.1038/s41467-026-74028-6",
+          "peer_reviewed": true,
+          "source": "sweep-worklist-2026-09-15",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-15",
+            "method": "arXiv PDF text extracted locally with pypdf in layout mode, no LLM transcription",
+            "reported_as": "-0.52582 per site, no error bar",
+            "note": "Supplementary Table S1 of arXiv:2507.02644, \"Benchmark energy in pure Hubbard model at half-filling with PBC\", column 8 x 8, row \"NQS\"; the AFQMC reference in the same table is -0.5262(5). Same method string as this paper's 16 x 4 row. No error bar. It sits 1.6e-4 per site below the stored AFQMC exact row -0.5256563(78) - see the defect flag. Read from the arXiv supplement; the Nat. Commun. version was not compared.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Hubbard/square_36_PA_18_2",
+      "rows": [
+        {
+          "energy": -43.4844,
+          "sigma": 0.0036,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 8, fully parametrized hidden sub-matrix, hidden-unit density alpha = 78)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Robledo Moreno, Carleo, Georges & Stokes, Fermionic wave functions from neural-network constrained hidden states, Proc. Natl. Acad. Sci. U.S.A. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+          "peer_reviewed": true,
+          "source": "sweep-worklist-2026-09-15",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-15",
+            "method": "PNAS supplementary PDF (via Europe PMC, PMC9371695) extracted locally, cross-read against the arXiv version; no LLM transcription",
+            "reported_as": "-1.2079(1) per site, no variance",
+            "note": "PNAS SI Table 5 (identical to arXiv SI Table V), \"Variational energy per site in the L x L Hubbard model at half filling with periodic boundary conditions along one of the sides of the square and anti-periodic boundary conditions along the other side\", row L = 6, column U = 2. SI Sec. 6: N_hidden = 8, alpha = 78 for 6x6; no projection or constraint stated, nor what the error bar is. Column alignment checked: the VarBench HFDS rows for 6x6 at U = 4, 6, 8 and 8x8 at U = 2, 4, 8 match the printed digits. As a total, -43.4844 sits 3.4e-4 (relative) above the sign-free AFQMC value -43.499(2) for this lattice (Qin, Shi & Zhang, PRB 94, 085103 (2016), Table IV, PBC-APBC) and above the non-interacting bound -59.712813.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Hubbard/square_64_PA_32_6",
+      "rows": [
+        {
+          "energy": -42.0736,
+          "sigma": 0.0128,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 16, fully parametrized hidden sub-matrix, hidden-unit density alpha = 1)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Robledo Moreno, Carleo, Georges & Stokes, Fermionic wave functions from neural-network constrained hidden states, Proc. Natl. Acad. Sci. U.S.A. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+          "peer_reviewed": true,
+          "source": "sweep-worklist-2026-09-15",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-15",
+            "method": "PNAS supplementary PDF (via Europe PMC, PMC9371695) extracted locally, cross-read against the arXiv version; no LLM transcription",
+            "reported_as": "-0.6574(2) per site, no variance",
+            "note": "PNAS SI Table 5 (identical to arXiv SI Table V), \"Variational energy per site in the L x L Hubbard model at half filling with periodic boundary conditions along one of the sides of the square and anti-periodic boundary conditions along the other side\", row L = 8, column U = 6. SI Sec. 6: N_hidden = 16, alpha = 1 for 8x8, the settings in the VarBench method string. Column alignment checked as for square_36_PA_18_2. As a total, -42.0736 sits 2.3e-3 (relative) above the sign-free AFQMC value -42.17(2) for this lattice (Qin, Shi & Zhang, PRB 94, 085103 (2016), Table IV, PBC-APBC), as a variational energy must, and fits the paper's size trend at U = 6 (-0.68135, -0.6609, -0.6574 for L = 4, 6, 8).",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Heisenberg/pyrochlore-4x4x4_256_P",
+      "rows": [
+        {
+          "energy": -497.238062785,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Generalized RVB ansatz, unrestricted VMC optimization (no quantum-number projection)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Closely competing valence bond crystal orders in the ground state of the spin-1/2 antiferromagnetic Heisenberg model on the pyrochlore lattice: a large scale unrestricted variational study, arXiv:2509.13746",
+          "peer_reviewed": false,
+          "source": "sweep-worklist-2026-09-15",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-15",
+            "method": "arXiv PDF text extracted locally with pypdf in layout mode, no LLM transcription",
+            "reported_as": "E0 ~ -0.4855 J/site, approximate, no error bar",
+            "note": "Sec. A: \"The obtained ground state energy is E0 ~ -0.5118 J/site for the L = 2 cluster and E0 ~ -0.4855 J/site for the L = 4 cluster\", periodic boundary conditions on both; the L = 4 cluster carries Nv = 4N^2 = 262144 parameters, so N = 256. Units: the same passage quotes the mVMC energy -0.5162 J/site for L = 2, which is the pyrochlore-2x2x2_32_P record -0.516266 in the S.S per-site convention. Approximate and without an error bar. It is 0.5% below the VarBench mVMC record -0.4830957, although the ansatz has no symmetry projection and sits above mVMC at L = 2 - which says more about that record than about this row. 2026-09-19: the authors measured the fixed state on request, E/N = -0.4855840(29) J with Var(H) = 4.894(22) J^2 (see corrections and error_metrics on this row).",
+            "secondary_of": null
+          },
+          "corrections": [
+            {
+              "field": "energy",
+              "to": -497.238062785,
+              "reported_as": "energy_total_J =  -1.2430951569637037E+002 | energy_per_site_J =  -4.8558404568894675E-001",
+              "location": "sources/2509.13746-authors-pyro-result.dat, the authors' dedicated Monte Carlo measurement of the optimized L = 4 state (Rong Cheng, 2026-09-19; README in sources/2509.13746-authors-README_QMBL.txt)",
+              "version_read": "private correspondence, data files as received 2026-09-19 (zip sha256 da066f4b244e886c82bf347a2b5e43cecd0e12369ccfa240b809170c71b79dcc)",
+              "conversion": "S.S total x 4 = Pauli total; per site -0.48558404568894675 x 1024",
+              "checked_on": "2026-09-19",
+              "reason": "The paper gives the energy as approximate to four decimals; the authors measured the same fixed state with 8,388,608 samples over 256 chains and obtained E/N = -0.4855840(29) J, one unit of the last printed digit below the printed value and 29 sigma of the new error bar, so a sigma cannot sit on the printed number. Corrected to the measured value with the printed one kept here (ruling 2026-09-19).",
+              "source_entry": "qmbl-runs/repo-data-census/search/replies/2509.13746-cheng-2026-09-19.txt, ruling 1 (2026-09-19)",
+              "from": -497.152
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
