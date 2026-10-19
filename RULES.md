@@ -1,22 +1,19 @@
 # QMBL rules
 
-Version 0.1 (draft, 2026-09-11). These rules exist so that accepting or rejecting a
-row is a matter of citing a clause, not of anyone's judgment about anyone's work.
-Where a rule was written in response to a concrete case, the case is named.
+Release 0.4.0 (2026-10-08). This file on `main` can contain changes made after that
+release. Each accept or reject of a row cites a clause of this file.
 
 ## 1. Scope
 
-Track 1 covers **ground-state energies of lattice Hamiltonians** computed by any method.
-Track 2, open since 2026-10-16, covers **ground-state energies of the homogeneous electron
-gas** in a periodic cell, in two and three dimensions (12). A row is a claim about one
-(Hamiltonian instance, method) pair.
+Track 1 covers ground-state energies of lattice Hamiltonians computed by any method.
+Track 2 covers ground-state energies of the homogeneous electron gas in a periodic cell, in
+two and three dimensions (§12). A row is a claim about one (Hamiltonian instance, method)
+pair.
 
 Out of scope for now: real-time dynamics, finite temperature, molecules, atoms, quantum dots
 and other continuum systems with an external potential. Each needs its own instance
-definition (12 is the pattern), and none opens before track 2 has had its first
-verification pass. Until 2026-10-16 this section closed every continuum system, on the
-ground that it needs an accuracy metric track 1 does not provide; track 2 ranks by energy
-like track 1 and computes no V-score (12.2).
+definition (§12 is the pattern). None opens before track 2 has had its first verification
+pass. Track 2 ranks by energy like track 1 and computes no V-score (§12.2).
 
 ## 2. Instances
 
@@ -24,242 +21,218 @@ An instance is a fully specified Hamiltonian: model, lattice, site count, bounda
 conditions, and every coupling. Rows are comparable only within an instance.
 
 Instance identity is part of the claim. A submitter asserting a record must state the
-symmetry sector and particle number; if a paper's number turns out to be from a
-different sector, the row moves rather than competes.
+symmetry sector and particle number. If a paper's number is from a different sector, the
+row moves to the instance of that sector and does not compete here.
 
 ## 3. Required fields
 
 | field | required | notes |
 |---|---|---|
 | `energy` | yes | in the instance's stored convention (§5) |
-| `sigma` | for a ranked row | the error bar on the mean, with §6 |
+| `sigma` | no, asked for | the error bar on the mean, and how it was estimated (§6); required for an `exact (stochastic)` row (§4) |
 | `bound_type` | yes | one of §4; never guessed |
 | `method` | yes | the method's name alone: `DMRG`, `HFPS`, `AFQMC` |
-| `method_detail` | yes, may be empty | what tells this row apart from other rows of that method: architecture size, projection, Lanczos steps, trial state, what an extrapolation sends to zero. Never the kind, the instance or the source |
-| `method_as_published` | yes | the method string exactly as the source printed it; a corrected one quotes a label the source prints, word for word, and what explains it goes to `method_detail` (2026-10-02) |
+| `method_detail` | yes, may be empty | what tells this row apart from other rows of that method (see below) |
+| `method_as_published` | yes | the method string exactly as the source printed it (see below) |
 | `reference` | yes | §8 |
 | `dof`, `einf` | yes | checked against the instance (§9) |
 | `energy_variance` | no | renders `n/a`; enables the V-score |
 | `sampled` | no | whether the energy is a Monte Carlo estimate, stated where the source settles it; decides whether §6 asks for `sigma` |
 | compute | no, requested | GPU-hours x device, parameter count, samples, iterations, wall-clock; parameters, samples and iterations together let the site estimate a FLOP count ([DATA.md](DATA.md#how-a-flop-count-is-estimated)) |
 
+`method_detail` holds, for example, the architecture size, the projection, the Lanczos
+steps, the trial state, or what an extrapolation sends to zero. It never holds the kind of
+number, the instance or the source. A corrected `method_as_published` quotes a label the
+source prints, word for word; what explains the label goes to `method_detail`.
+
 A missing field never excludes a row. Only §6 and §7 govern what can hold a record.
 
 ## 4. `bound_type`
 
-Every row declares exactly one. **This is the field that keeps the table honest**: energies
-from different classes are different claims, and since a record can be of any class but a
-flagged row (6), the class beside a record is how a reader knows what was claimed.
+Every row declares exactly one. Energies of different classes are different claims. A
+record can be of any class (§6), so its class tells the reader what was claimed.
 
-- **`variational`**: a strict variational upper bound on the ground-state energy in the
+- `variational`: a strict variational upper bound on the ground-state energy in the
   stated sector. VMC, DMRG and MPS at finite bond dimension, PEPS, NQS, VQE and other
   parameterised circuits, and p-step Lanczos applied to a variational state.
-- **`projected`**: variational only within a constraint, or otherwise biased. Fixed-node
+- `projected`: variational only within a constraint, or otherwise biased. Fixed-node
   and constrained-path methods, GFMC on a trial state, constraint-release schemes.
-  Still an upper bound in most cases, but node- or constraint-dependent, so two projected
-  energies from different trial states are not cleanly comparable to each other or to
-  variational ones.
-- **`extrapolated`**: the reported number is an extrapolation, not an achieved energy:
-  zero-variance or bond-dimension extrapolation. **Not a bound.** No ansatz ever reached it.
-  Sign-problem-free QMC taken to its own limits (Δτ → 0, β → ∞) stays `exact`; its detail
-  says so (2026-09-17).
-- **`exact`**: numerically exact for this instance: exact diagonalization, exact solution,
-  sign-problem-free QMC where that is established. QMC is exact only within its statistical
-  error bar, not to the printed digits: such a row must state `sigma`, and is shown
-  everywhere as **`exact (stochastic)`**.
-- **`approximate`** (2026-10-19): the energy of a method built on a fixed approximation that
-  converges to that approximation, not to the exact energy, so that its error has no known
-  sign. The class is a list of method families, not a judgment per row: the random-phase
-  approximation and its corrections (SOSEX), finite-order perturbation theory (MP2, MP3),
-  coupled cluster restricted to some of its terms (ring-, ladder- or mosaic-only CCD), and
-  density-functional energies. Full coupled cluster at any truncation (CCSD, CCSDT, ...)
-  stays `projected`: each is a rung of a hierarchy that reaches the exact energy. An
-  `approximate` row is listed with the others but holds the record only on an instance where
-  no other unflagged row exists (6). Case: on the 14-electron gas at rs = 1, ring-, crossed-ring-
-  and mosaic-only CCD gives 0.5465 Ha per electron, 22 mHa below FCIQMC, CCSDTQ5 and
-  transcorrelated FCIQMC, which agree to 0.1 mHa; under the lowest-energy rule it would have
-  held the record.
+  It is an upper bound in most cases, but it depends on the node or the constraint. Two
+  projected energies from different trial states are therefore not cleanly comparable to
+  each other or to variational ones.
+- `extrapolated`: the reported number is an extrapolation: zero-variance or bond-dimension
+  extrapolation. It is not a bound: no state reached this energy.
+- `exact`: numerically exact for this instance: exact diagonalization, exact solution,
+  sign-problem-free QMC where that is established. Sign-problem-free QMC taken to its own
+  limits (Δτ → 0, β → ∞) stays `exact`, and its detail says so. QMC is exact only within its
+  statistical error bar, not to the printed digits. It stays `exact` because it is unbiased.
+  Its label reads `exact (stochastic)` everywhere, and the row must state `sigma` (§9.4).
+- `approximate`: the energy of a method built on a fixed approximation. The method converges
+  to that approximation and not to the exact energy, so its error has no known sign. The class
+  is a fixed list of method families: the random-phase approximation and its corrections
+  (SOSEX), finite-order perturbation theory (MP2, MP3), coupled cluster restricted to some of
+  its terms (ring-, ladder- or mosaic-only CCD), and density-functional energies. Full coupled
+  cluster at any truncation (CCSD, CCSDT, ...) stays `projected`: each is a rung of a hierarchy
+  that reaches the exact energy. An `approximate` row is listed with the others. It holds the
+  record only on an instance where no other unflagged row exists (§6).
+  Case: on the 14-electron gas at rs = 1, ring-, crossed-ring- and mosaic-only CCD gives
+  0.5465 Ha per electron. That is 22 mHa below FCIQMC, CCSDTQ5 and transcorrelated FCIQMC,
+  which agree to 0.1 mHa. The CCD row is the lowest energy on the instance and does not hold
+  the record.
 
-Worked cases that fixed the boundaries:
+Cases:
 
-- *"exact grad" is not an exact energy.* 21 rows read `VQE + symm. circuit (64 pars.,
+- "exact grad" is not an exact energy. 21 rows read `VQE + symm. circuit (64 pars.,
   exact grad, statevector)`. That describes how the gradient was computed. They are
-  `variational`. Rule order in `scripts/bound_type.mjs` is load-bearing for this reason.
-- *p-step Lanczos stays variational.* A Lanczos step applied to a variational state is a
-  variational improvement, not a projection.
-- *Zero-variance extrapolation is its own class.* Chen & Heyl report both a variational
+  `variational`. For this reason the rule order in `scripts/bound_type.mjs` matters.
+- p-step Lanczos stays variational. A Lanczos step applied to a variational state gives
+  a variational state.
+- Zero-variance extrapolation is its own class. Chen & Heyl report both a variational
   −0.4976921(4) and an extrapolated −0.497715(9) on 10x10 J1-J2: an energy a wave function
-  reached, and an estimate of the ground-state energy. Both can hold a record since
-  2026-10-08 (6), and the class says which kind does.
-- *Stochastic exact says so.* An energy with an error bar is an estimate, so a QMC row is not
-  exact in the sense a diagonalization is. It stays `exact` - unbiased, and on most of its
-  instances the most precise number there is - but its label reads `exact (stochastic)` and
-  its error bar is required (§9.4), so no reader takes it for a diagonalization (2026-09-16).
-- *A method name is not a guarantee, so the row is read.* `QMC (continuous-time expansion)`
-  on the six t-V instances sat `null` for a week because the string does not say projector
-  or finite temperature and the rows sit above ED. Reading VarBench's run files settled it:
-  they are VarBench's own ground-state projector LCT-INT runs, sign exactly 1, and the gap
-  to ED is 0.6-0.7 of their own error bar, which had been filed in the variance column. They
-  are `exact (stochastic)` since 2026-09-19; the one that sits 2.76 sigma above a DMRG bound
-  (square, V = 4) is flagged and holds no record. The classifier still returns `null` for
-  the string; the class is set per row in `scripts/corrections.mjs`.
-- *When in doubt, `null`.* Bare `QMC` and `AFQMC` strings are unresolved: sign-problem-free
+  reached, and an estimate of the ground-state energy. Either can hold a record (§6), and the
+  class says which kind does.
+- A method name is not a guarantee, so the row is read. The string
+  `QMC (continuous-time expansion)` on the six t-V instances does not say projector or
+  finite temperature. VarBench's run files show ground-state projector LCT-INT runs with
+  sign exactly 1; the gap to ED is 0.6-0.7 of their error bar. They are `exact (stochastic)`.
+  The one that sits 2.76 sigma above a DMRG bound (square, V = 4) is flagged and holds no
+  record. The classifier returns `null` for the string; the class is set per row in
+  `scripts/corrections.mjs`.
+- When in doubt, `null`. Bare `QMC` and `AFQMC` strings are unresolved: sign-problem-free
   (exact) and constrained-path (projected) are different classes and the string does not say.
-  The one bare `QMC` row (Heisenberg, open 10x10) was read the same way: the ALPS loop
+  The one bare `QMC` row (Heisenberg, open 10x10) was read for this reason: the ALPS loop
   algorithm at T = 1e-4, converged in T by the authors' statement, exact (stochastic).
 
 ## 5. Units and conventions
 
 Stored conventions follow VarBench and are asserted per instance, not per row:
 
-- Spin models are written with **Pauli matrices** and stored as **totals**. Papers quote
+- Spin models are written with Pauli matrices and stored as totals. Papers quote
   `E/N` in the `S.S` convention: `E/N = energy / (4 * n_sites)`.
-- Hubbard and t-V are stored as **totals**; papers quote **per site**.
+- Hubbard and t-V are stored as totals; papers quote per site.
 - `dof` is the spin count for spin models, `N_up + N_dn` for Hubbard, and the particle
-  count for **spinless** t-V.
+  count for spinless t-V.
 - `einf` is `0` for traceless spin Hamiltonians, `U * N_up * N_dn / n_sites` for the plain
   Hubbard model. Hopping terms are traceless, so a `t'` variant keeps the same `einf`;
   extra density-density terms do not.
 
-Any submitted number is converted by the loader, never by hand.
+Any submitted number is converted by the loader, never by hand. The conventions of every
+model are listed in [DATA.md](DATA.md#units-and-conventions).
 
 ## 6. Records and ties
 
-The record for an instance is its **state-of-the-art energy**: the `exact` energy where the
-instance is solved, otherwise the **lowest energy of any other kind** - `variational`,
-`projected` or `extrapolated`, with or without an error bar - that is not flagged (6.1). Every
-published result counts. The `bound_type` beside the record says what kind of number holds it
-(4): a record held by an extrapolation is an estimate of the ground-state energy, not an
-energy any state reached. An `approximate` row (4) holds the record only where no row of the other
-kinds exists (2026-10-19).
+On a solved instance the record is the `exact` energy. Otherwise the record is the lowest
+energy of any other class (`variational`, `projected` or `extrapolated`), with or without an
+error bar, that is not flagged (§6.1). Every published result counts. An `approximate` row
+(§4) holds the record only where no unflagged row of another class exists. The `bound_type`
+beside the record says what kind of number holds it (§4). A record held by an extrapolation
+is an estimate of the ground-state energy; no state reached it.
 
-Until 2026-10-08 only a `variational` energy could hold the record, and a sampled one only
-with its `sigma`; `projected` and `extrapolated` rows and sampled rows without an error bar
-were listed but held nothing, and 47 instances had no record at all. Both
-conditions were dropped on 2026-10-08, so that no published result is listed as unable to hold a record.
-
-- **A solved instance has a record, and exact diagonalization holds it.** The exact energy is
-  the answer, so it is the state of the art on that instance by definition; every other row
-  on it is ranked by its distance to it, and the lowest one at or above it is the closest
-  challenger, not the record. An extrapolation can overshoot the exact energy; it then sits
-  below the record and still does not hold it. Until 2026-09-16 this document said the opposite ("`exact` rows
-  never hold it") and the table reported solved instances as having "nothing to compete for".
-  That was inherited from VarBench, which uses exact energies as references for the V-score
-  rather than as results, and it misread ED as something other than the state of the art.
-- **Among several exact rows the most precise holds the record, not the lowest.** Exact rows
-  are estimates of one number, so the lowest of them is the luckiest, not the best: exact
-  diagonalization (no error bar) outranks sign-problem-free QMC, and a smaller error bar
-  outranks a larger one. Two exact rows that disagree beyond their stated precision are a
-  `defect` to raise on the row (11), not a ranking question.
-- **Sector-resolved exact diagonalization holds the record only in the ground-state sector.** A
-  row such as `Exact Diagonalization 0.C1.A -1` states the lowest energy in one symmetry sector,
-  which is the ground-state energy only if that sector is the ground state's. Case:
-  `J1J2/triangular_48_P_0.125` carries all 48 sectors of Wietek et al. (PRX 14, 021010), whose
-  App. B names Γ.A1 (spin-flip +1) as the ground state; that row holds the record, and the
-  other 47 are not rows but the instance's `spectrum` (rulings of 2026-09-16 and 2026-09-30;
-  [DATA.md](DATA.md#the-lowest-energy-of-each-symmetry-sector-spectrum)), where they hold
-  nothing. `groundStateExact` in `scripts/units.mjs` draws the line.
-- Rows whose error bars overlap at **2 sigma** share the rank. A row without `sigma` is
-  compared by its energy alone.
-- **An error bar is asked for, not required.** A sampled row without `sigma` ranks and can
-  hold the record like any other (2026-10-08). Where `sigma` is given it must state
-  how it was estimated: an error bar that ignores autocorrelation understates by around an
-  order of magnitude, which is enough to make or break a tie. Report the blocking or binning
-  analysis, or the raw chain.
-- **A deterministic energy has no `sigma` to give.** DMRG at a stated bond dimension, exact
+- On a solved instance the exact energy holds the record. The exact energy is the answer.
+  Every other row on the instance ranks behind it by its distance to it; the lowest of them
+  at or above it is the closest challenger. An extrapolation can overshoot the exact energy.
+  It then sits below the record and does not hold it.
+- Among several exact rows the most precise holds the record. Exact rows are estimates of
+  one number, so the lowest of them is not the best: exact diagonalization (no error bar)
+  comes before sign-problem-free QMC, and a smaller error bar comes before a larger one. Two
+  exact rows that disagree beyond their stated precision are a `defect` to raise on the row
+  (§11).
+- Sector-resolved exact diagonalization holds the record only in the ground-state sector. A
+  row such as `Exact Diagonalization 0.C1.A -1` states the lowest energy in one symmetry
+  sector. That is the ground-state energy only if the sector is the ground state's. Case:
+  `J1J2/triangular_48_P_0.125` carries all 48 sectors of Wietek et al. (PRX 14, 021010).
+  Their App. B names Γ.A1 (spin flip +1) as the ground state. That row holds the record. The
+  other 47 are not rows: they are the instance's `spectrum`
+  ([DATA.md](DATA.md#the-lowest-energy-of-each-symmetry-sector-spectrum)) and hold nothing.
+  `groundStateExact` in `scripts/units.mjs` draws the line.
+- Rows whose error bars overlap at 2 sigma share the rank. A row without `sigma` is compared
+  by its energy alone.
+- An error bar is asked for and is not required. A sampled row without `sigma` ranks and can
+  hold the record like any other row. Where `sigma` is given, the row must state how it was
+  estimated. An error bar that ignores autocorrelation can understate the error by about 10x,
+  which changes ties. Report the blocking or binning analysis, or the raw chain.
+- A deterministic energy has no `sigma`. DMRG at a stated bond dimension, exact
   diagonalization, statevector circuits and tensor-network contractions carry no statistical
-  error; their convergence control is the bond dimension (`compute.bond_dimension`) or the
-  truncation error (`method_detail`). 231 of the 942 variational rows are of this kind
-  (2026-10-02).
-- **Sampled or deterministic is read from the source, per row** (2026-09-30). The
-  method's name does not settle it. A finite PEPS whose energy is a Monte Carlo average over
-  spin configurations, an MPS-RNN, a PEPS + CNN state or a Gutzwiller-projected mean-field
-  state is sampled although its string reads like a tensor network or a mean field; a circuit
-  whose shots estimate only the gradient reports an exact energy. Where a reader established
-  it, the row carries `sampled` (true or false), set in `scripts/corrections.mjs` with the
-  evidence, and that decides. Where the field is absent, `scripts/units.mjs` falls back on the
-  method string: explicit deterministic markers, and anything not so marked counts as sampled.
-- Case: the 4x4 J1-J2 VQE rows. `exact grad, statevector` and `2^14 samples/grad` appear as
-  separate rows on the same instance, and until 2026-09-30 this section read the second as a
-  sampled energy that reports no `sigma` and is eligible for nothing. The program behind both
-  (VarBench's `observables.py`) prints the exact statevector energy of the circuit state; the
-  2^14 shots estimate only the gradient and the metric, as the VarBench supplement says. Both
-  rows are deterministic, the shot rows carry `sampled: false`, and on the four instances where
-  that variant sits lower (J2 = 0.15, 0.3, 0.4, 0.7) it is now the best variational bound. The
-  string said what was sampled; only the program said which number.
-- A row without `energy_variance` is completely fine. The V-score renders `n/a` and nothing is
-  inferred or reconstructed. Most of the literature stops at the energy, and a missing V-score
-  is never held against a row; it only means the row cannot be compared across instances.
-- **A row with no error metric we could find is marked, not penalised.** Where neither a
-  `sigma` nor an `energy_variance` turned up in the source that was read, there is currently no
-  way to judge how converged the number is, and a reader comparing two energies should see that
-  rather than infer it from two blank cells. The marker is `o` in `scripts/records.mjs` and a
-  circle in the README table, derived at display time from the two absent fields.
-
-  **The marker describes our search, not the authors.** The figure may be in a supplement, a
-  companion paper, or the group's own records; what the row records is that we did not find it.
-  It is therefore an open question addressed to whoever can close it - the row stays in the
-  table and in rank order, and closing it takes one message. It is deliberately **not** a
-  `defect` (11), which asserts a suspected error and withholds the record: missing data is not
-  an error, and by 3 it excludes nothing. `exact` rows are not marked, since an exact
-  diagonalization has no error to report and nothing is missing. Stochastic exact rows are,
-  and the validator requires their `sigma` (§9.4).
+  error. Their convergence control is the bond dimension (`compute.bond_dimension`) or the
+  truncation error (`method_detail`).
+- Whether an energy is sampled is read from the source, per row. The method's name does not
+  settle it. A finite PEPS whose energy is a Monte Carlo average over spin configurations, an
+  MPS-RNN, a PEPS + CNN state and a Gutzwiller-projected mean-field state are sampled,
+  although their strings read like a tensor network or a mean field. A circuit whose shots
+  estimate only the gradient reports an exact energy. Where a reader established it, the row
+  carries `sampled` (true or false) with the evidence, and that decides
+  ([DATA.md](DATA.md#sampled-or-deterministic-sampled)). Where the field is absent,
+  `scripts/units.mjs` reads the method string: explicit deterministic markers, and anything
+  not so marked counts as sampled.
+  Case: the 4x4 J1-J2 VQE rows. `exact grad, statevector` and `2^14 samples/grad` are
+  separate rows on the same instance. The program behind both (VarBench's `observables.py`)
+  prints the exact statevector energy of the circuit state. The 2^14 shots estimate only the
+  gradient and the metric, as the VarBench supplement says. Both rows are deterministic, and
+  the shot rows carry `sampled: false`. On the four instances where the shot variant sits
+  lower (J2 = 0.15, 0.3, 0.4, 0.7) it is the best variational bound.
+- A row without `energy_variance` has V-score `n/a`. Nothing is inferred or reconstructed.
+  Most of the literature stops at the energy. A missing V-score is never held against a row
+  (§3); the row only cannot be compared across instances.
+- A row whose source, as read, shows neither `sigma` nor `energy_variance` gets a marker (a
+  circle in the README table, `o` in `scripts/records.mjs`). The marker means we did not find
+  a metric ([DATA.md](DATA.md#error-metrics)). The row keeps its rank, and one message from
+  the authors closes the question. The marker is not a `defect` (§11) and by §3 excludes
+  nothing. Exact diagonalization rows are not marked: they have no error to report.
+  `exact (stochastic)` rows are marked like other rows, and the validator requires their
+  `sigma` (§9.4).
 
 ### 6.1 A flagged row cannot hold a record
 
-A row carrying a `defect` is displayed in rank order, in place, with its flag - and is skipped
-when the record is assigned. Suspicion is enough to withhold a record; it is never enough to
-hide or delete a row (11). Section 10 is how a flag gets lifted or upheld.
+A row carrying a `defect` is shown in rank order, in place, with its flag, and is skipped
+when the record is assigned. Suspicion is enough to withhold a record. It is never enough to
+hide or delete a row (§11). Section 10 is how a flag is lifted or upheld.
 
-This exists because the opposite happened on first implementation: **5 of 7 flagged rows held
-their instance record**, including the three TFIsing `RBM (alpha = 1)` rows that sit 3.8 to 10.4 sigma
-below an exact solution. Ranking purely on energy promotes precisely the
-numbers that are wrong, because being wrong downward is what makes a number look like a record.
+Reason: a number that is wrong downward looks like a record. Example: the three TFIsing
+`RBM (alpha = 1)` rows sit 3.8 to 10.4 sigma below an exact solution (§9).
 
 ## 7. Aggregate
 
-The headline is **records held**: the number of instances where a group holds the record.
+The headline is records held: the number of instances where a group holds the record.
 There is no cross-instance score. The V-score is shown where `energy_variance` is present
 and is never ranked on.
 
-**Aggregates over methods count only records on unsolved instances.** The medal table,
-records by ansatz family and records by year are statements about methods competing; an
-exact energy is the answer rather than a method's claim, and counting it would hand the most
-records to whoever ran exact diagonalization on the most small instances. The per-instance
-record is still the exact energy where one exists (6); the aggregates simply say over which
-instances they are computed. A record held by a projected or extrapolated energy counts for
-its method like any other (since 2026-10-08).
+Aggregates over methods count only records on unsolved instances. The medal table, records
+by ansatz family and records by year compare methods. An exact energy is the answer, not a
+method's claim. Counting exact energies would reward whoever ran exact diagonalization on the
+most small instances. The per-instance record is still the exact energy where one exists
+(§6); the aggregates only choose the instances they count. A record held by a projected or
+extrapolated energy counts for its method like any other.
 
 ## 8. Provenance
 
-- **arXiv preprint minimum.** Rows flag whether the source is peer reviewed.
-- **The journal version is the source of record (2026-10-15).** Where a paper is published,
-  its row is read from the journal version (main text and supplement) and cites it. The arXiv
-  version is read alongside; where the two differ, the journal value is stored and the
-  difference is noted on the row. A row read from an arXiv version alone says so in its
-  provenance: it is admissible, but it is not fully verified, and it is read again once the
-  journal version appears.
+- arXiv preprint minimum. Rows flag whether the source is peer reviewed.
+- The journal version is the source of record. Where a paper is published, its row is read
+  from the journal version (main text and supplement) and cites it. The arXiv version is read
+  alongside. Where the two differ, the journal value is stored and the difference is noted on
+  the row. A row read from an arXiv version alone says so in its provenance. It is
+  admissible but not fully verified, and it is read again once the journal version appears.
 - Preprint-only sources older than 12 months are flagged `stale-preprint`.
-- A row whose number is quoted from a *different* paper than the one that produced it is
+- A row whose number is quoted from a different paper than the one that produced it is
   marked `secondary` and names both.
-- **A number first printed in a dataset is cited to the dataset**, with the author's paper
-  kept as the method reference and the upload named (who, when, commit). Case: the
-  single-cluster VAFQMC energies S. Sorella uploaded to VarBench in February 2022 are in no
-  version of PRB 107, 115133, whose tables print twist averages only; they are printed in the
-  VarBench dataset (Wu et al., Science 386, 296 (2024)) and cite it. The same holds for the t-V
-  VMC energies the first author of arXiv:2406.09077 uploaded before that paper existed. This is
-  not the inadmissible case below: the number is printed, just not in the paper (2026-09-30). It also holds for an author's upload that the paper shows only as a plotted point,
-  which is not read (below): the shuriken mVMC energies of PRB 104, L220408 and the open 10x10
-  Tensor-RNN energy of PRR 5, L032001 cite the dataset (2026-10-02).
-- **A private communication printed in a paper is admissible, as `secondary`.** Case: Nomura's
+- A number first printed in a dataset is cited to the dataset. The author's paper stays the
+  method reference, and the upload is named (who, when, commit). This is not the inadmissible
+  case below: the number is printed, in the dataset. The rule also holds for an author's
+  upload that the paper shows only as a plotted point, which is not read (below).
+  Cases: the single-cluster VAFQMC energies S. Sorella uploaded to VarBench in February 2022
+  are in no version of PRB 107, 115133, whose tables print twist averages only. They are
+  printed in the VarBench dataset (Wu et al., Science 386, 296 (2024)) and cite it. The same
+  holds for the t-V VMC energies the first author of arXiv:2406.09077 uploaded before that
+  paper existed, the shuriken mVMC energies of PRB 104, L220408, and the open 10x10
+  Tensor-RNN energy of PRR 5, L032001.
+- A private communication printed in a paper is admissible, as `secondary`. Case: Nomura's
   12x12 and 16x16 RBM+PP energies exist only as the "Ref. [7]" cells of Roth, Szabo &
-  MacDonald, PRB 108, 054410 (2023), numbers Nomura shared with them; the paper of the method,
-  PRX 11, 031034, prints none. The rows cite "Nomura, private communication, in Roth, Szabo &
-  MacDonald, PRB 108, 054410 (2023)" (2026-09-30).
-- **A table outranks a figure.** Where the source prints a number in a table, the row carries
-  the table's value; a value decoded from a figure's plotted points is not used, even where the
-  table truncates (2026-09-30: PRX 11, 041021, Table II against Fig. 2(a)).
-- **A cited number that cannot be found in the cited source is not admissible.** Case:
+  MacDonald, PRB 108, 054410 (2023), numbers Nomura shared with them. The paper of the
+  method, PRX 11, 031034, prints none. The rows cite "Nomura, private communication, in
+  Roth, Szabo & MacDonald, PRB 108, 054410 (2023)".
+- A table outranks a figure. Where the source prints a number in a table, the row carries
+  the table's value. A value decoded from a figure's plotted points is not used, even where
+  the table truncates. Case: PRX 11, 041021, Table II against Fig. 2(a).
+- A cited number that cannot be found in the cited source is not admissible. Case:
   arXiv 2604.25775 reports "the previous best result −0.766073(6) from NNBF [24]", citing
   Loehr & Clark arXiv 2510.26906. That value appears nowhere in the only public version of
   that paper, whose best 4x16 energy is −0.76560(1); its lower −0.768337(2) is a 4x8 number.
@@ -267,219 +240,215 @@ its method like any other (since 2026-10-08).
 
 ### 8.1 Venue type
 
-"Peer reviewed" is not one thing. A number in *Phys. Rev. B* has been refereed by people who
-check physics numerics; the same number in a machine-learning conference proceedings has been
-refereed for machine-learning contribution. Both are peer reviewed; only one is evidence about
-the energy. Rows therefore record the venue, and a physics-numerics venue outranks an ML venue
-when the two disagree.
+A number in *Phys. Rev. B* was refereed by people who check physics numerics. The same
+number in machine-learning conference proceedings was refereed for its machine-learning
+contribution. Rows record the venue. A physics-numerics venue outranks an ML venue when they
+disagree.
 
 `peer_reviewed` follows the venue that printed the number. A privately provided number printed
 in a refereed paper is peer reviewed (Ferrari & Becca's VMC energies in Choo, Neupert & Carleo,
-PRB 100, 125124; Nomura's numbers in PRB 108, 054410), and so is a number in refereed
-machine-learning proceedings (SIAM SDM); the reference tells the two kinds of venue apart
-(2026-09-30).
+PRB 100, 125124; Nomura's numbers in PRB 108, 054410). So is a number in refereed
+machine-learning proceedings (SIAM SDM). The reference tells the two kinds of venue apart.
 
-Case: arXiv:2607.00398 (conference proceedings) claims -0.49782(3) on 10x10 J1-J2, described in
-its own abstract as "statistically consistent with the variational state of the art". It is 1.3e-4
-below the best variational energy, i.e. an unclaimed record, and on 8x8 it beats the field by
-1.1e-3 while reporting a variance 6x-14x worse - the tension in 9.3. Both rows are listed
-and flagged: the 8x8 row `energy-variance-inconsistent` (the paper prints three different
-variances for the same state and defines none), the 10x10 row `trace-readout` (the number is
-the tail of a 110-iteration training trace, Fig. 3, with a bar the authors call sampling
-fluctuation only; no variance is printed at 10x10; the arXiv LaTeX source's earlier draft
-reports -0.4960 for the same protocol). Note what is *not* claimed: there is no exact
-reference at either size, so nothing here is proof of error, only grounds for objection.
+Case: arXiv:2607.00398 (conference proceedings) claims -0.49782(3) on 10x10 J1-J2. Its
+abstract calls this "statistically consistent with the variational state of the art". The
+value is 1.3e-4 below the best variational energy, a record the paper does not claim. On 8x8
+it is 1.1e-3 below the other rows and reports a variance 6x-14x worse: the tension of §9,
+check 3. Both rows are listed and flagged.
+- The 8x8 row is `energy-variance-inconsistent`: the paper prints three different variances
+  for the same state and defines none.
+- The 10x10 row is `trace-readout`: the number is the tail of a 110-iteration training trace
+  (Fig. 3), with a bar the authors call sampling fluctuation only. No variance is printed at
+  10x10. The earlier draft in the arXiv LaTeX source reports -0.4960 for the same protocol.
+
+No exact reference exists at either size. The flags are grounds for objection, not proof of
+error.
 
 ### 8.2 `baseline`: collected versus computed
 
-VarBench did two different things, and the imported rows must say which. A row whose
-reference cites a **paper** is one VarBench *collected* from the literature. A row whose
-only reference is a run script in `varbench/methods` is one VarBench *computed itself*,
-and carries `baseline: true`. Of the 578 imported rows, **369 are computed and 209
-collected**.
+Imported VarBench rows are either collected or computed. A row whose reference cites a paper
+is one VarBench collected from the literature. A row whose only reference is a run script in
+`varbench/methods` is one VarBench computed itself, and carries `baseline: true`.
+`baseline_rows` in `data/_summary.json` counts these rows, and `baseline_records` counts the
+records held by a baseline row that is not `exact`.
 
-The distinction matters because the two are different kinds of claim. A collected row is
-somebody's published result, defended in a paper. A computed row is a **reference
-calculation** - the same ansatz run across the instance set so the V-score would have
-something to measure against. `Jastrow baseline` is named as one. Nobody ever claimed
-state of the art for a plain `RBM (alpha = 1)`; it is the floor, not a contender.
+A collected row is a published result, defended in a paper. A computed row is a reference
+calculation: the same ansatz run across the instance set, so the V-score has something to
+measure against. `Jastrow baseline` is named as one. No paper claims state of the art for a
+plain `RBM (alpha = 1)`.
 
-The evidence that these are reference runs rather than results is in what they report.
-Rows VarBench computed carry `energy_variance` **76%** of the time and `sigma` 46%; rows
-citing a paper carry variance **35%** and sigma **90%**. That inversion is the V-score's
-fingerprint: the metric needs Var(E), almost no paper publishes it, so the benchmark had
-to produce it. The same ansatz then recurs across dozens of instances - exact
-diagonalization on 74, `RBM (alpha = 1)` on 44, `Jastrow baseline` on 44.
+Computed rows usually carry an energy variance, which the V-score needs and few papers print;
+collected rows usually carry an error bar and no variance. The same ansatz recurs across many
+instances: exact diagonalization, `RBM (alpha = 1)` and `Jastrow baseline` most often.
 
-A baseline row is a full citizen of the table: it ranks, it can hold a record, and it is
-cited to the VarBench paper. The flag changes nothing about eligibility. It exists so
-that "record held by `RBM (alpha = 1)`" reads as *nobody has published a better number
-for this instance*, rather than as a defended claim - because those are the instances
-worth attacking, and one of those readings finds them and the other does not.
+A baseline row is ranked like any other row: it can hold a record, and it is cited to the
+VarBench paper. The flag changes nothing about eligibility. It shows that no published number
+beats the reference run on that instance.
 
 QMBL's own runs carry `computed_by: "qmbl"` instead ([DATA.md](DATA.md#rows-qmbl-computed-computed_by)):
 reference calculations of the common ansätze on one machine under one protocol
-([`checks/cost/`](checks/cost/README.md)), made so the cost axes have points that are
-comparable across methods. The same reading applies, and the same eligibility: the row
-ranks, can hold a record, and is cited to its run script, job and commit.
+([`checks/cost/`](checks/cost/README.md)), so the cost axes have points that are comparable
+across methods. The same reading and the same eligibility apply: the row ranks, can hold a
+record, and is cited to its run script, job and commit. A QMBL record means no published
+energy on that instance is lower.
 
 ## 9. Validation
 
-`scripts/validate.mjs` runs on every change and checks:
+`scripts/validate.mjs` runs on every build and checks:
 
 1. `dof` and `einf` against the instance definition (§5).
 2. The V-score recomputed from the row's own energy, variance, dof and einf.
-3. **Energy against the row's own variance.** Where a row reports both, the V-score must be
+3. Energy against the row's own variance. Where a row reports both, the V-score must be
    consistent with the energy: a state further from an eigenstate cannot also be lower in
-   energy. This is the check that works where **no exact reference exists at all** - ED for
-   frustrated 2D models reaches roughly 6x6, so 8x8 and 10x10 J1-J2 have no exact row and
-   never will. Being lower than an *extrapolated* ground state proves nothing on its own,
-   since the extrapolation may carry systematic error; being lower than the field while
-   reporting a worse variance is grounds for objection.
-
-   **It is not proof, because the inference only runs one way.** A small variance means
-   close to *an* eigenstate, not to the ground state. A state pinned near a competing,
-   excited configuration has little variance and a large energy error, and a better state
-   below it will then report the worse variance. Case (2026-09-15): VarBench's HFDS rows on
-   the four 4xL Hubbard instances at 1/8 doping are each pinned to lambda = 8 stripe order,
-   among near-degenerate stripe states. Their variance per unit energy error is 0.18-1.6,
-   against 6-80 for every other Hubbard row with an exact or DMRG reference - including on
-   the open-boundary instances, where extrapolated DMRG is an independent check. HFPS sits
-   0.47% below HFDS on 4x8 with 25x its variance, and is the better state. The check stands; what it establishes is a question to
-   the authors, which is how the HQT case in 8.1 is carried.
-4. **The variational principle**: no `variational` row may sit below an `exact` row in the
+   energy. This check works where no exact reference exists. ED reaches about 6x6 for
+   frustrated 2D models, so 8x8 and 10x10 J1-J2 have no exact row. An energy below an
+   extrapolated ground state proves nothing on its own, since the extrapolation may carry
+   systematic error. An energy below the other rows with a worse variance is grounds for
+   objection.
+   The check is not proof, because the inference runs one way only. A small variance means
+   the state is close to an eigenstate, not necessarily to the ground state. A state pinned
+   near a competing excited configuration has little variance and a large energy error, and
+   a better state below it then reports the worse variance. A failure is a question to the
+   authors, as for the arXiv:2607.00398 rows (§8.1). Case: the HFDS rows below.
+4. The variational principle: no `variational` row may sit below an `exact` row in the
    same instance. The lowest state of one sector other than the ground state's is not a row
-   (§6), since an unconstrained state may legitimately sit below it; the validator checks
-   that no level of a `spectrum` lies below the ground state. A violation counts only past
-   3 sigma - the row's own, combined in quadrature with the exact row's where that row is
-   stochastic - or past a relative 1e-8 when neither states one. A stochastic exact row
-   without `sigma` is itself an issue. A row is flagged below the exact energy only if the
-   whole interval its printed digits allow lies below it (2026-10-02): the HQT
-   energy -0.6735 on the 8 x 8 torus, printed to four decimals, stands for anything in
-   [-0.67355, -0.67345], which holds the SSE value -0.67349005, so it carries no flag,
-   although its stored total sits 0.0025 under the exact row's. The validator sees only the
-   stored digits and still lists such a row.
+   (§6), since an unconstrained state may sit below it; the validator checks that no level
+   of a `spectrum` lies below the ground state. A violation counts only past 3 sigma (the
+   row's own, combined in quadrature with the exact row's where that row is stochastic), or
+   past a relative 1e-8 when neither states one. A stochastic exact row without `sigma` is
+   itself an issue. A row is flagged below the exact energy only if the whole interval its
+   printed digits allow lies below it. Case: the HQT rows below.
 
-Six issues survive these checks on the imported VarBench data. They are carried as known
-defects attached to the row (§11), not silently corrected.
+Six issues survive these checks on the imported VarBench data. They are carried as defects
+attached to the row (§11) and are not silently corrected. [UPSTREAM.md](UPSTREAM.md) lists
+the issues in the VarBench data.
 
-**Case 2026-09-11, reopened 2026-09-21: the three TFIsing `RBM (alpha = 1)` rows.** They
-sit 3.8 to 10.4 sigma below an exact solution, which no variational state can be. A first
-rerun (netket 3.22.4, complex RBM, 2000 SR steps, full summation over all 1024 basis states)
-concluded that the published numbers were minima of the optimization trace. The deep-source
-pass of 2026-09-19 withdrew that diagnosis: the values were entered in VarBench on
-2023-01-09 without code or log, replacing uploads that sat *above* the exact energy; the
-program the rows link was written eighteen months later and, run as pinned, gives energies
-above the exact value with an unbiased final estimate; and the stored error bars identify the
-numbers as final 2^20-sample estimates, not trace points. The flag stands - the numbers
-violate the variational principle and no published source says how they were produced - but
-the mechanism is unknown, not "a trace minimum". Evidence in `checks/` (both reruns) and in
-the defect block on each row. A diagnosis is written for the rows it was established on and
-attached to those rows alone: keying it by flag name put this one on five unrelated rows
-until 2026-09-21.
+Cases:
 
-This is why §6 asks how a stated sigma was estimated, and why §10 admits
-"violates the variational principle against a known exact reference" as grounds for
-objection. A leaderboard that ranked on energy alone, with no exact-reference check, would
-have carried all three as records.
-
-**The case none of the above would catch: kagome, 108 sites (2026-09-14).** Ðurić et al.,
-*Phys. Rev. X* 15, 011047 (2025), report a spinon pair-density-wave ground state at
-E₀ = −48.18 on a 108-site cluster, 1.78% below the DMRG benchmark of −47.33964 they compare
-against. A Comment (arXiv:2605.28861) shows the single-spin-flip update used at that size
-does not conserve total magnetisation. As the network concentrates on the physical
-S<sup>z</sup><sub>tot</sub> = 0 sector the acceptance rate collapses to *exactly zero* beyond
-5000 iterations, so the chains freeze and the average is taken over a non-representative set
-of configurations. Under the magnetisation-preserving exchange update the same architecture
-converges to ≈ −45.6, and re-evaluating the spin-flip-optimised *parameters* ergodically gives
-≈ −42.6; the published number lies below all of them.
-
-Three things make this the sharpest case in this document:
-
-1. **No check on the number itself could have caught it.** DMRG at finite bond dimension is
-   an upper bound too, so an energy below it is not evidence of error; ordinarily it is just
-   a better state. There is no exact reference at 108 sites. The refutation had to come from
-   the *sampler*, which is why §10 now admits non-ergodic sampling as its own ground.
-2. **The record is an extrapolation.** There is no exact energy at 108 sites, its only
-   `variational` row is flagged, and the DMRG row is `extrapolated`: Depenbrock et al. state
-   their energies are "extrapolated in the truncation error of single-site DMRG", which lies
-   below any energy an MPS achieved. Until 2026-10-08 that left the instance with no record;
-   since then the extrapolation holds it (6), labelled as one. Without the flag, a table
-   ranking on energy would have printed a refuted number as the record.
-3. **DMRG is not one `bound_type`.** At a *stated bond dimension* it is a strict variational
-   bound; *extrapolated in the truncation error* it is not. The same method name maps to two
-   different classes depending on one sentence in the methods section.
+- HFDS on the four 4xL Hubbard instances at 1/8 doping (check 3). VarBench's HFDS rows on
+  these instances are each pinned to lambda = 8 stripe order, among near-degenerate stripe
+  states. The variances were submitted by the HFDS author. Their variance per unit energy
+  error is 0.18-1.6, against 6-80 for every other Hubbard row with an exact or DMRG
+  reference, including on the open-boundary instances, where extrapolated DMRG is an
+  independent check. Their V-scores therefore understate the energy error 10-70x. HFPS sits
+  0.47% below HFDS on 4x8 with 25x its variance, and is the better state. The rows are not
+  flagged.
+- HQT on the 8 x 8 torus (check 4). The energy -0.6735, printed to four decimals, stands for
+  anything in [-0.67355, -0.67345]. That interval holds the SSE value -0.67349005, so the row
+  carries no flag, although its stored total sits 0.0025 under the exact row's.
+- The three TFIsing `RBM (alpha = 1)` rows (check 4): `TFIsing/chain_10_P_1`,
+  `chain_10_O_1` and `chain_32_P_0.5`. They sit 3.8 to 10.4 sigma below the exact
+  free-fermion energy, which no variational state can do. The values were entered in VarBench
+  on 2023-01-09 without code or log, replacing uploads that sat above the exact energy. The
+  program the rows link was written eighteen months later. Run as pinned, it gives energies
+  above the exact value with an unbiased final estimate. The stored error bars identify the
+  numbers as final 2^20-sample estimates, not points of the optimisation trace. The cause is
+  unknown. The flag stays: the numbers violate the variational principle, and no published
+  source says how they were produced. Evidence: both reruns in `checks/` (the first with
+  netket 3.22.4, a complex RBM, 2000 SR steps and an exact sum over all 1024 basis states),
+  and the defect block on each row. A diagnosis is attached only to the rows it was
+  established on, never by flag name.
+- Kagome, 108 sites (no check catches it). Ðurić et al., *Phys. Rev. X* 15, 011047 (2025),
+  report a spinon pair-density-wave ground state at E₀ = −48.18 on a 108-site cluster, 1.78%
+  below the DMRG benchmark of −47.33964 they compare against. A Comment (arXiv:2605.28861)
+  shows the single-spin-flip update used at that size does not conserve total magnetisation.
+  As the network concentrates on the physical S<sup>z</sup><sub>tot</sub> = 0 sector, the
+  acceptance rate falls to exactly zero beyond 5000 iterations. The chains freeze, and the
+  average is taken over a non-representative set of configurations. With the
+  magnetisation-preserving exchange update the same architecture converges to ≈ −45.6.
+  Re-evaluating the spin-flip-optimised parameters ergodically gives ≈ −42.6. The published
+  number lies below all of them. What the case shows:
+  1. No check on the number can catch it. DMRG at finite bond dimension is an upper bound
+     too, so an energy below it is not evidence of error. No exact reference exists at 108
+     sites. The refutation came from the sampler, so §10 admits non-ergodic sampling as its
+     own ground.
+  2. The record is an extrapolation. No exact energy exists at 108 sites, the only
+     `variational` row is flagged, and the DMRG row is `extrapolated`: Depenbrock et al.
+     state their energies are "extrapolated in the truncation error of single-site DMRG",
+     which lies below any energy an MPS achieved. The extrapolation holds the record (§6),
+     labelled as one. The flag keeps the refuted number from holding it.
+  3. DMRG is not one `bound_type`. At a stated bond dimension it is a strict variational
+     bound; extrapolated in the truncation error it is not. One sentence in the methods
+     section decides the class.
 
 ## 10. Pending, confirmed, objections
 
-Anyone may object by opening an issue against the row. An objection must be specific and
-technical. A new row is **`pending`** for 30 days and **`confirmed`** if no objection is unresolved. Admissible grounds:
+Anyone may object by opening an issue on the row. An objection must be specific and
+technical. A new row is `pending` for 30 days, then `confirmed` if no objection is
+unresolved. Admissible grounds:
 
 - wrong symmetry sector, particle number, or boundary conditions;
 - wrong unit convention (§5);
 - `bound_type` misdeclared (§4);
 - `sigma` estimated without autocorrelation correction (§6);
 - the energy violates the variational principle against a known exact reference (§9);
-- **the sampling is non-ergodic**: the Monte Carlo update rule is incompatible with a
+- the sampling is non-ergodic: the Monte Carlo update rule is incompatible with a
   conservation law or symmetry of the Hamiltonian, so the reported average is taken over a
   non-representative set of configurations (§9, the kagome case);
 - the number cannot be located in the cited source (§8).
 
 The submitter may correct or withdraw. A confirmed row is overturned only by an objection
-that meets the same bar. Rulings cite a clause.
+that meets the same bar. Every decision on an objection cites a clause. A flag is lifted by a
+correction of `defect` to null in `scripts/corrections.mjs`; the finding stays on the row, in
+`from` (§11).
 
 ## 11. Corrections
 
-Errors found by the maintainers are corrected in public with the reason recorded on the row.
-Rows are never silently corrected. A row that duplicates another, or is not an energy of its
-instance, is removed, with the ruling and reason listed in `scripts/removals.mjs`. A row declared
-`exact` that independent recomputation places above the ground-state energy, by more than the
-precision it is printed to, is removed on the same footing (2026-09-18): the table carries
-one exact energy per instance and a number that is not it states nothing an exact row may claim.
-The same holds below the ground state, where a per-site rounding was multiplied back to a total
-(the 4x4 Hubbard rows at half filling, 2026-09-30). The removal names the recomputation and the
-value that stands; where no other exact row carries it, QMBL's recomputed row does
+Errors are corrected in public, with the reason recorded on the row. Rows are never silently
+corrected. A row that fails a check is flagged in place (§6.1) and is never deleted, except
+under the removal rules below.
+
+A row that duplicates another, or is not an energy of its instance, is removed, with the
+reason listed in `scripts/removals.mjs`. A row declared `exact` that independent
+recomputation places above the ground-state energy, by more than the precision it is printed
+to, is removed in the same way. The table carries one exact energy per instance, and a number
+that is not that energy states nothing an exact row may claim. The same holds below the
+ground state where a per-site rounding was multiplied back to a total (case: the 4x4 Hubbard
+rows at half filling). The removal names the recomputation and the value that stands. Where
+no other exact row carries that value, QMBL's recomputed row does
 (`scripts/add_exact_rows.mjs`, batch B2).
 
-Where the printed value of an exact row is QMBL's recomputed energy rounded or truncated to the
-printed digits, the row keeps its citation and carries QMBL's digits, with the printed value in
-`corrections` and the recomputation named; where the paper's value is better, the row keeps it
-(2026-09-30). Worked case: Schulz, Ziman & Poilblanc's 6x6 J1-J2 energies print six
-decimals per site; at J2 = 0.2, 0.55 and 0.65 they are the recomputed energies rounded, and the
-rows carry the full values (`checks/exact-recompute-2026-09/`). At J2 = 0.1 the printed -0.638096
-is neither (the recomputation gives -0.638095436); the row keeps the paper's value, and the
-recomputation is recorded on its verification (ruling of the same day).
+Where the printed value of an exact row is QMBL's recomputed energy rounded or truncated to
+the printed digits, the row keeps its citation and carries QMBL's digits. The printed value
+goes to `corrections`, and the recomputation is named. Where the paper's value is better, the
+row keeps it. Case: Schulz, Ziman & Poilblanc's 6x6 J1-J2 energies print six decimals per
+site. At J2 = 0.2, 0.55 and 0.65 they are the recomputed energies rounded, and the rows carry
+the full values (`checks/exact-recompute-2026-09/`). At J2 = 0.1 the printed -0.638096 is
+neither (the recomputation gives -0.638095436). That row keeps the paper's value, and the
+recomputation is recorded on its verification.
 
 Every other correction keeps the old value on the row, listed with its source and reason in
-`scripts/corrections.mjs`. That holds for rows QMBL added itself as for imported ones (since
-2026-09-30; before, such a row was fixed in its loader's input, which left no trace on the row),
-for what a row states beside its energy, a compute block's fields and a verification's note, and
-for an instance's couplings, whose old values stay on the instance.
-A loader that is itself wrong, a bond count or a unit, is fixed in place, and the values it
-published before stay on its rows. An instance whose name carries a different parameter from the
-one its rows were computed at, a coupling or an impurity's bath size, is renamed, with the old
-name and the reason recorded on it (`scripts/relabels.mjs`); rows computed at the named
-parameter keep the old name.
+`scripts/corrections.mjs`. This holds for imported rows and for rows QMBL added itself; for
+what a row states beside its energy (a compute block's fields, a verification's note); and
+for an instance's couplings, whose old values stay on the instance. The shape of these fields
+is in [DATA.md](DATA.md#provenance-and-defects).
+
+A loader that is itself wrong (a bond count, a unit) is fixed in place, and the values it
+published before stay on its rows.
+
+An instance whose name carries a different parameter from the one its rows were computed at
+(a coupling, or an impurity's bath size) is renamed, with the old name and the reason
+recorded on it (`scripts/relabels.mjs`). Rows computed at the named parameter keep the old
+name.
 
 ## 12. Track 2: the homogeneous electron gas
 
-Adopted 2026-10-16. Sections 2 to 11 apply to track 2 as to track 1; this section states
-what differs.
+Sections 2 to 11 apply to track 2 as to track 1. This section states what differs.
 
 ### 12.1 Instance
 
 An instance is fixed by its dimension (2 or 3), the electron numbers `N_up` and `N_dn`, the
 density parameter `rs` (bohr), the simulation cell and the twist.
 
-- **Cell:** `sc`, `bcc`, `fcc` (3D), `square`, `triangular` (2D), or a rectangular or rhombic
+- Cell: `sc`, `bcc`, `fcc` (3D), `square`, `triangular` (2D), or a rectangular or rhombic
   cell with its side ratios stated. Its volume is `N (4π/3) rs³` in 3D and `N π rs²` in 2D.
   The cell shape changes the energy at fixed N and rs, so two shapes are two instances.
-- **Twist:** the boundary condition ψ(r + L) = e^{iθ} ψ(r). `Gamma` (θ = 0) unless stated.
+- Twist: the boundary condition ψ(r + L) = e^{iθ} ψ(r). `Gamma` (θ = 0) unless stated.
   A fixed twist other than Gamma is an instance of its own when the source gives its vector:
   its energy is the ground-state energy of the Hamiltonian with that boundary condition.
-  A **twist-averaged energy is not a row**: it averages the ground-state energies of many
+  A twist-averaged energy is not a row: it averages the ground-state energies of many
   Hamiltonians and is the ground-state energy of none.
-- **Id:** `HEG3D/<cell>_<N>_P_<N_up>_<N_dn>_<rs>` (model `HEG2D` or `HEG3D`), for example
+- Id: `HEG3D/<cell>_<N>_P_<N_up>_<N_dn>_<rs>` (model `HEG2D` or `HEG3D`), for example
   `HEG3D/sc_54_P_27_27_1`; a twist other than Gamma adds `_tw<label>`.
 
 ### 12.2 Hamiltonian, units and storage
@@ -487,25 +456,24 @@ density parameter `rs` (bohr), the simulation cell and the twist.
 `H = -1/2 Σ_i ∇_i² + Σ_{i<j} v_E(r_i - r_j) + N ξ / 2`, in Hartree atomic units. `v_E` is the
 Ewald-summed Coulomb interaction with all periodic images and a uniform neutralizing
 background, and `ξ`, the Madelung term (each electron's interaction with its own images and
-their background), **is included**.
+their background), is included.
 
-- Stored as the **total energy in Hartree**; tables and the site show Hartree per electron.
+- Stored as the total energy in Hartree; tables and the site show Hartree per electron.
 - Rydberg sources are converted by the loader (× 1/2), never by hand. A source that leaves the
   Madelung term out, or writes the Ewald sum another way, is converted by the loader from the
   convention it states, and the row says which. A source that states no convention is
-  `needs_review` until it is found (10). The check that fixes a convention is a Hartree-Fock
+  `needs_review` until it is found (§10). The check that fixes a convention is a Hartree-Fock
   energy the source prints, compared with QMBL's own for the instance.
 - `dof` is N. No `einf` is defined, so no V-score is computed; `Var(E)/N` is stored where
-  printed (9).
+  printed (§9).
 
 ### 12.3 What is a row
 
 A finite-N energy at the instance's density, cell and twist, including an energy in a finite
-one-particle basis (since 2026-10-17): the basis spans part of the instance's Hilbert space, so
-the energy is a claim about the instance, and the row states the basis (number of plane waves or
-orbitals, or the cutoff). Not rows: energies with an analytic finite-size correction added,
-extrapolations to N → ∞ and twist averages. Until 2026-10-17 finite-basis energies were
-excluded as energies of another Hamiltonian.
+one-particle basis. The basis spans part of the instance's Hilbert space, so the energy is a
+claim about the instance; the row states the basis (number of plane waves or orbitals, or the
+cutoff). Not rows: energies with an analytic finite-size correction added, extrapolations to
+N → ∞ and twist averages.
 
 A correlation energy E_c = E - E_HF is a row where the Hartree-Fock energy is unique: on a
 closed-shell instance at the Gamma point, where each spin fills whole shells of plane waves and
@@ -513,7 +481,7 @@ the Hartree-Fock determinant is therefore the single plane-wave determinant of l
 energy. The row stores E_HF + E_c, with E_HF from QMBL's own calculation
 (`checks/heg-hf/hf.mjs`), and says so; the printed E_c stays on the row as `reported_as`.
 On an open shell several determinants tie and E_HF depends on the source's choice, so a
-correlation energy there is not a row unless the source prints its E_HF (2026-10-19).
+correlation energy there is not a row unless the source prints its E_HF.
 
 ### 12.4 `bound_type`
 
@@ -530,9 +498,8 @@ Section 4 applies unchanged. The recurring cases:
     non-variational methods, and any method on a transcorrelated (non-Hermitian) Hamiltonian:
     `projected`;
   - a complete-basis-limit extrapolation, or one in the initiator threshold: `extrapolated`.
-- RPA, MP2 and channel-truncated coupled cluster are `approximate` (4).
-- No method is `exact` in track 2 for now. Records follow 6: the lowest unflagged energy of
-  any kind holds the record, and its `bound_type` says what kind of number it is.
+- RPA, MP2 and channel-truncated coupled cluster are `approximate` (§4).
+- No method is `exact` in track 2 for now. Records follow §6.
 
 ### 12.5 Site
 
