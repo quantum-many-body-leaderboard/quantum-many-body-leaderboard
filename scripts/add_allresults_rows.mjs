@@ -27,8 +27,9 @@
 import fs from "node:fs";
 import { perSiteDivisor, expectedDof, expectedEinf, vScore } from "./units.mjs";
 
-const PASSES = fs.readdirSync(".").filter(f => /^sweep-rows-\d{4}-\d{2}-\d{2}(-[a-z0-9]+)?\.json$/.test(f)).sort()
-  .map(f => ({ file: f, date: f.slice(11, 21), rows: JSON.parse(fs.readFileSync(f, "utf8")) }));
+const DIR = "passes/rows";
+const PASSES = fs.readdirSync(DIR).filter(f => /^sweep-rows-\d{4}-\d{2}-\d{2}(-[a-z0-9]+)?\.json$/.test(f)).sort()
+  .map(f => ({ file: f, date: f.slice(11, 21), rows: JSON.parse(fs.readFileSync(`${DIR}/${f}`, "utf8")) }));
 const REASON = {
   variational: "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
   extrapolated: "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
