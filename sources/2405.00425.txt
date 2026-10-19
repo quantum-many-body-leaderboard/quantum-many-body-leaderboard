@@ -1,0 +1,997 @@
+Quantum Monte Carlo study of the phase diagram of the two-dimensional uniform
+electron liquid
+Sam Azadi, 1, ∗ N. D. Drummond, 2 and Sam M. Vinko 1, 3
+1Department of Physics, Clarendon Laboratory, University of Oxford,
+Parks Road, Oxford OX1 3PU, United Kingdom
+2Department of Physics, Lancaster University, Lancaster LA1 4YB, United Kingdom
+3Central Laser Facility, STFC Rutherford Appleton Laboratory, Didcot OX11 0QX, United Kingdom
+(Dated: May 2, 2024)
+We present a study of spin-unpolarized and spin-polarized two-dimensional uniform electron liq-
+uids using variational and diffusion quantum Monte Carlo (VMC and DMC) methods with Slater-
+Jastrow-backflow trial wave functions. Ground-state VMC and DMC energies are obtained in the
+density range 1 ≤ rs ≤ 40. Single-particle and many-body finite-size errors are corrected using
+canonical-ensemble twist-averaged boundary conditions and extrapolation of twist-averaged energies
+to the thermodynamic limit of infinite system size. System-size-dependent errors in Slater-Jastrow-
+backflow DMC energies caused by partially converged VMC energy minimization calculations are
+discussed. We find that, for 1 ≤ rs ≤ 5, optimizing the backflow function at each twist lowers the
+twist-averaged DMC energy at finite system size. However, nonsystematic system-size-dependent
+effects remain in the DMC energies, which can be partially removed by extrapolation from multiple
+finite system sizes to infinite system size. We attribute these nonsystematic effects to the close com-
+petition between fluid and defected crystal phases at different system sizes at low density. The DMC
+energies in the thermodynamic limit are used to parameterize a local spin density approximation
+correlation functional for inhomogeneous electron systems. Our zero-temperature phase diagram
+shows a single transition from a paramagnetic fluid to a hexagonal Wigner crystal at rs = 35(1),
+with no region of stability for a ferromagnetic fluid.
+The two-dimensional (2D) uniform electron liquid
+(UEL) is an important model system in condensed
+matter physics and plasma physics [1–10]. The 2D
+UEL model consists of a system of electrons moving
+in 2D in a uniform, inert, neutralizing background, in-
+teracting via the Coulomb potential. 2D UELs are
+realized in numerous semiconductor heterostructures,
+e.g., a 2D UEL can be observed at the interface of
+metal-oxide-semiconductor structures [11], metal-oxide-
+semiconductor field-effect transistors [12, 13], quantum
+wells [13, 14], and MgZnO/ZnO heterostructures [15].
+According to the 2D UEL phase diagram reported in
+Ref. 9, the ground state is a non-spin-polarized (param-
+agnetic) liquid from high density down to the point of
+Wigner crystallization. However, in the absence of crys-
+tallization, lowering the density would eventually make
+the paramagnetic fluid phase unstable with respect to
+a spin-polarized (ferromagnetic) fluid. An experimen-
+tal study of nonequilibrium transport in low-density 2D
+electron systems at zero external magnetic field suggests
+that a fully spin polarized fluid is stable before crystal-
+lization [16], which was also reported by some previous
+theoretical studies [3, 8]. On the other hand, more recent
+experimental work has not found a region of stability for
+the ferromagnetic fluid [15]. In this work we update the
+real-space quantum Monte Carlo (QMC) calculations re-
+ported in Ref. 9 to include additional long-range backflow
+∗ sam.azadi@physics.ox.ac.uk
+terms in trial wave functions and we look at a broader
+range of system sizes, resulting in a small modification
+to the crystallization density. Nevertheless, in agreement
+with the earlier work, our present QMC calculations yield
+no density range for the stability of fully or partially spin-
+polarized 2D UELs.
+We have carried out QMC calculations for 2D UELs
+with spin polarizations of ζ = 0, 0.5, and 1 within the
+density range 1 ≤ rs ≤ 40, where rs is the radius of the
+circle that contains one electron on average in units of
+the Bohr radius. We have focused on reducing finite-size
+(FS) errors [17–20] by using twist-averaging (TA) and ex-
+trapolation techniques [2, 21, 22]. In this work we discuss
+errors in DMC calculations near the crystallization den-
+sity introduced during wave function (WF) optimization,
+whose effects may be exaggerated by FS extrapolation.
+Slater-Jastrow-backflow (SJB) WFs [23, 24] with plane
+wave orbitals exp(iG · r) were used in our QMC calcula-
+tions for fluid phases. Details of the SJB WF have been
+explained in our recent studies [25–27]; the principle dif-
+ference from Ref. 9 is the inclusion of a long-range two-
+body backflow term π that is expanded in a plane-wave
+basis. This term lowers the variational energy in finite
+cells, and is intended to make the treatment of two-body
+correlations in different simulation cells more consistent,
+to aid extrapolation to the thermodynamic limit. We
+used the variational and diffusion quantum Monte Carlo
+(VMC and DMC) methods [28] as implemented in the
+casino package [29]. To impose fermionic antisymme-
+try in our DMC calculations we have used the fixed-node
+approximation [30], where the nodal surface is forced to
+arXiv:2405.00425v1  [cond-mat.str-el]  1 May 2024
+2
+TABLE I. TA DMC energies of paramagnetic 146-electron 2D
+UELs. The DMC calculations were performed using either the
+same Jastrow factor and backflow function, optimized at zero
+twist, for all twists (DMC0) or SJB wave functions separately
+optimized at each twist (DMC 1).
+rs
+TA DMC energy (Ha/el.) Difference (Ha/el.)
+DMC0 DMC1
+1 −0.210731(7) −0.210957(5) −0.225(8) × 10−3
+2 −0.258378(9) −0.258501(6) −0.12(1) × 10−3
+5 −0.149595(4) −0.149637(2) −0.042(5) × 10−3
+be the same as that of the trial WF. The variational
+parameters in the Jastrow factor and backflow functions
+were optimized within VMC by minimizing either the en-
+ergy variance [31, 32] or the mean absolute deviation of
+the local energies from the median [33], then minimizing
+the energy expectation value [31, 34]. We used a target
+population of 2560 walkers in our DMC calculations. At
+rs = 1, 2, 5, 10, 15, 20, 25, 30, 35, and 40 we used DMC
+time steps of τ = 0.005, 0.01, 0.05, 1, 1.5, 2, 3, 4, 5, and 6
+Ha−1, respectively. Random errors due to TA are larger
+than the time-step bias in each case. Our DMC energies
+obtained at various system sizes using a hexagonal sim-
+ulation cell are reported in the Supplemental Material
+[35].
+Except where otherwise stated, our Jastrow factors
+and backflow functions were optimized at zero twist (i.e.,
+pure periodic boundary conditions). For paramagnetic
+2D UELs with densities rs = 1, 2, and 5, and system size
+N = 146, we tested separately optimizing the Jastrow
+factor and backflow function at each twist. The results
+are listed in Table I. We have used 30 random twists in
+our analysis. Our analysis shows that separately opti-
+mizing the Jastrow factor and backflow function at each
+twist reduces the TA DMC energy by−0.225(9)×10−3/rs
+Ha/el. for paramagnetic 2D UELs at N = 146. These re-
+sults demonstrate the existence of significant, quasiran-
+dom FS errors in TA energies in which the same backflow
+function is used for all twists.
+WF optimization is challenging at large system sizes
+(N ≳ 150) and at densities near the solid-liquid phase
+transition ( rs ≳ 20) [35]. Our final WFs are obtained
+by energy minimization, but usually this requires a rea-
+sonable first approximation to the WF, obtained using
+a different method. Although unreweighted variance
+minimization exhibits superior numerical stability to en-
+ergy minimization at high and intermediate densities, we
+found numerical instabilities in variance minimization for
+systems with large N and low density. Numerical in-
+stability in variance minimization can occur when the
+nodes of the trial WF are altered during minimization.
+Near the transition density we find that numerical insta-
+bilities become more severe at large system size due to
+the increased likelihood of producing a wave function for
+the “wrong” phase (e.g., a defected crystal wave func-
+tion instead of a fluid wave function) and the growth of
+complexity of the energy landscape in parameter space.
+Minimizing a more robust measure of the spread of the lo-
+cal energies, such as the mean absolute deviation (MAD)
+from the median local energy [33], provides a much lower
+variational energy (Table II), because the MAD is less
+sensitive to divergent local energies [29].
+We found that more than a dozen cycles of VMC
+configuration-generation and energy minimization are of-
+ten required to converge adequately in the regime of large
+N and large rs, as shown in Fig. 1. The magnitude of
+the effect is significant on the scale of the FS error, even
+if the subsequent use of DMC weakens the dependence
+on the backflow function. A related observation is that
+the TA VMC and DMC energies per particle are often
+higher than suggested by extrapolation from smaller sys-
+tem sizes (see Figs. 2 and 3). In finite UELs of a given
+density and spin polarization, either Wigner crystal-like
+or Fermi fluid-like states may be energetically favored at
+different system sizes N , different simulation cell shapes,
+and different twists. Fluid energies fluctuate as a function
+of N due to shell-filling effects in reciprocal space, while
+crystal energies fluctuate as a function of N due to spa-
+tial commensurability effects in real space. Furthermore,
+there may be many near-degenerate low-energy states,
+e.g., due to different defected Wigner crystals in a par-
+ticular cell. Even if a fluid trial wave function is used,
+it may be energetically advantageous for the system to
+approximate a floating Wigner crystal when the wave
+function is optimized. Conversely, at particular supercell
+sizes, it may be advantageous for a Wigner crystal wave
+function to try to approximate a fluid excited state. For
+certain simulation cells it may be especially difficult to
+find the lowest-energy fluid or crystal wave function. We
+can try to tip the balance in favor of our selected phase
+by using “magic” numbers of electrons (such that the
+occupied plane-wave orbitals form a closed-shell configu-
+ration in reciprocal space) for fluid phases, and by using
+square numbers of electrons for crystals, such that defect-
+free lattices are commensurate with the simulation cell.
+However, this is not guaranteed to prevent wave-function
+optimization giving an approximation to an excited state
+of the wrong phase. Although a Jastrow factor exp( J)
+cannot truly introduce nodes, if J becomes large and neg-
+ative then it may introduce “quasinodes” that affect the
+DMC energy over any reasonable imaginary time scale.
+Figure 1 shows the energy minimization process for the
+paramagnetic liquid phase with system sizes N = 218,
+242, 254, and 302 and densities of rs = 30 and 35. The
+SJB WFs used for energy minimization were initially op-
+timized by MAD minimization. The problem of slow con-
+vergence with optimization cycle can be observed in Fig.
+1 and in the Supplemental Material [35]. These figures
+also show occasional jumps suggestive of wave-function
+parameters moving from one local minimum-energy con-
+figuration to another.
+Residual canonical-ensemble TA errors in the Hartree–
+Fock kinetic and exchange energies around the crystal-
+lization density are orders of magnitude smaller than the
+3
+-0.74
+-0.72
+-0.7
+-0.68
+-0.66
+-0.64
+-0.62
+-0.6
+-0.58
+-0.56
+-0.54
+ 0  20  40  60  80  100
+rs=30 - ζ=0
+Energy+31(mHa/el)
+Opt. number
+N=218-Hex
+N=218-Squ
+N=242-Hex
+N=242-Squ
+N=254-Hex
+N=254-Squ
+N=302-Hex
+N=302-Squ
+-0.52
+-0.5
+-0.48
+-0.46
+-0.44
+-0.42
+-0.4
+-0.38
+-0.36
+ 0  20  40  60  80  100
+rs=35 - ζ=0
+Energy+27(mHa/el)
+Opt. number
+N=218 N=242 N=254 N=302
+FIG. 1. SJB VMC energy against energy minimization cycle
+for paramagnetic 2D UELs with density parameters rs = 30
+(top panel) and 35 (bottom panel). The systems studied had
+N = 218, 242, 254, and 302 electrons. The initial WF was
+optimized by minimizing the mean absolute deviation from
+the median local energy. The real WF was optimized at zero
+twist. The energies of the 2D UELs at rs = 30 were obtained
+using hexagonal and square simulation cells.
+fluctuations in the DMC energy shown in Fig. 3; hence
+residual momentum quantization effects in the TA en-
+ergy cannot explain the nonsystematic system-size de-
+pendence. Other sources of nonsystematic FS error, such
+as Ruderman-Kittel oscillations being forced to be com-
+mensurate with the simulation cell, may be present in
+Fig. 2. Such nonsystematic FS errors are at least par-
+tially averaged out by extrapolation to the thermody-
+namic limit.
+We investigated this issue further. First, we investi-
+gated how the initial SJB WF optimization depends on
+the number of configurations and the twist. The results
+are summarized in Table II. They indicate that the op-
+timized energy for a large system at low density does
+not depend strongly on the number of configurations or
+the twist wavevector, but does depend on the optimiza-
+tion method. Because the local energy diverges at nodes,
+the unweighted variance and MAD landscapes depend
+strongly on the sampled configurations. Nevertheless,
+it is clear that MAD minimization provides much bet-
+ter results than variance minimization and hence better
+starting points for energy minimization. Second, we com-
+pared the FS behavior with Slater-Jastrow (SJ) and SJB
+WFs. The fixed-node SJ-DMC energy is independent
+of the Jastrow factor. Figure 2 shows that the TA SJ-
+DMC energies behave in a nonsystematic manner as a
+function of system size, and that this behavior is further
+exaggerated by the inclusion of backflow. This demon-
+strates (i) that the nonsystematic behavior is not sim-
+ply a result of difficulties optimizing wave functions and
+(ii) that applying analytic FS corrections [17–19] to re-
+sults obtained at a single fixed cell size is unreliable be-
+cause nonsystematic FS effects cannot be removed by
+this approach. Third, we examined the static structure
+(SF) factor and momentum-density (MD) of a param-
+agnetic 2D UEL with N = 254 at rs = 30 obtained by
+VMC at a single twist. The results are presented in the
+Supplemental Material [35]. We have not found signif-
+icant WF-optimization-dependent or system-size depen-
+dent anomalies in the SF and MD (e.g., the MD retains
+its discontinuity at the Fermi wavevector); unfortunately
+one cannot straightforwardly check for the wrong phase
+emerging, as the SJB wave function does not truly permit
+a change of phase. Fourth, we compared the energies of
+2D UELs at rs = 30 obtained using hexagonal and square
+simulation cells with system sizes 62 ≤ N ≤ 302 [35].
+The Wigner crystal energies used in our phase diagram
+(Fig. 4) were calculated using hexagonal simulation cells.
+Since the Madelung energy of a square lattice is higher,
+using a square lattice would have made crystal-like wave
+functions less competitive. Fifth, we performed SJ-VMC,
+SJ-DMC, and DMC with only the Slater trial wave func-
+tion (S-DMC) calculations for paramagnetic Fermi fluids
+at rs = 30 in square cells with N = 90 electrons. We
+chose three different initial wave functions for the opti-
+mization (Starting points 1–3) and optimized the Jas-
+trow factor by energy minimization at either Γ ( ks = 0)
+or the Baldereschi point [ ks = (1/4)b1 + (1/4)b2, where
+b1 and b2 are the supercell reciprocal lattice vectors].
+The DMC calculations were performed at time steps of
+2 and 8 Ha −1, with populations in inverse proportion to
+the time step, and the energies were extrapolated linearly
+to zero time step and infinite population. Hartree-Fock
+and VMC energies are shown in Table III, while DMC
+energies with and without a Jastrow factor are shown in
+Table IV.
+As expected, the choice of twist for optimization has
+only a small effect on the fluid energy at this low density.
+Indeed, twist averaging only has a small effect on the
+fluid energy. Starting points 2 and 3 produce wave func-
+tions that give a significantly lower VMC energy than
+the Hartree-Fock energy, i.e., they introduce correlations
+that lower the energy. But the energy obtained is not
+as low as the energy obtained in starting point 1. Hence
+there are issues with local minima.
+The S-DMC energy obtained with the HF wave func-
+tion is lower than the SJ-DMC energy obtained using
+the wave functions from starting points 2 and 3, despite
+the fact that the HF energy is higher than the SJ-VMC
+energies. Hence these Jastrow factor introduce features
+(“quasinodes”) that are difficult for DMC to remove (i.e.,
+4
+TABLE II. Optimized energy of paramagnetic 2D UELs at rs = 30 with N = 302 electrons. Only polynomial and plane-wave
+two-body Jastrow terms were used. The energies were calculated using different numbers of configurations Nconf. Two different
+optimization methods, unreweighted variance minimization (“varmin”) and MAD minimization (“madmin”), were used. Three
+twists, with fractional coordinates k0 = (0, 0), k1 = (1/3, 1/3), and k2 = (1/4, 1/2), were used. All the energies are in Ha/el.
+The energies which are lower than −0.031 Ha/el. are highlighted in bold.
+Nconf
+Twist k0 Twist k1 Twist k2
+“varmin” “madmin” “varmin” “madmin” “varmin” “madmin”
+1920 −0.027955(7) −0.019491(8) −0.025725(2) −0.0315169(4) −0.025009(2) −0.0314244(5)
+3840 −0.019497(8) −0.019508(8) −0.028892(8) −0.019487(9) −0.0307900(8) −0.0315429(4)
+7680 −0.0307833(9) −0.0314710(4) −0.01950(1) −0.019496(9) −0.029414(3) −0.0315166(4)
+9600 −0.025907(2) −0.0315087(4) −0.019502(9) −0.019496(8) −0.028948(2) −0.01948(1)
+11520 −0.019503(8) −0.0315034(4) −0.030772(3) −0.0315255(4) −0.0308548(6) −0.01949(1)
+15360 −0.019492(8) −0.019523(9) −0.0313126(5) −0.01948(2) −0.030773(1) −0.019507(9)
+19200 −0.027983(2) −0.019519(8) −0.030738(2) −0.019494(9) −0.01947(1) −0.0315176(5)
+-0.96
+-0.94
+-0.92
+-0.9
+-0.88
+-0.86
+-0.84
+-0.82
+ 0.0008 0.0009  0.001  0.0011 0.0012
+rs=30 - ζ=0
+N=254
+N=254
+EDMC+31 (mHa/el)
+ N -5/4
+SJ
+SJB
+FIG. 2. TA DMC energies for paramagnetic (ζ = 0) 2D UELs
+with density parameter rs = 30 obtained using SJ and SJB
+wave functions. The differences between the SJB and SJ ener-
+gies for N = 218, 242, 254, and 302 are −0.041(2), −0.042(4),
+−0.068(1), and −0.037(2) mHa/el., respectively.
+TABLE III. Hartree-Fock (HF) and SJ-VMC energies for 90-
+electron Fermi fluids in a square simulation cell, with the wave
+function being optimized from three different random starting
+points at the Γ point and at the Baldereschi point of the
+square simulation cell.
+ks Start Energy (Ha/el.)
+HF TA HF SJ-VMC TA SJ-VMC
+Γ 1 −0.0196518 −0.0196034 −0.0317373(2) −0.0317344(2)
+Γ 2 −0.0196518 −0.0196034 −0.0251398(8) −0.025177(2)
+Γ 3 −0.0196518 −0.0196034 −0.0271506(7) −0.02716(1)
+Bald. 1 −0.0194515 −0.0196034 −0.0317356(2) −0.0317350(2)
+Bald. 2 −0.0194515 −0.0196034 −0.02495(1) −0.02500(1)
+Bald. 3 −0.0194515 −0.0196034 −0.0277466(6) −0.027726(7)
+would require much smaller time steps). Since the HF
+wave function clearly corresponds to a fluid phase, it is
+reasonable to conclude that the SJ wave functions from
+starting points 2 and 3 do not correspond to a fluid phase.
+The S-DMC energy is in fairly good agreement with the
+SJ-DMC energy obtained with the good Jastrow factor
+TABLE IV. As Table III, but using S-DMC and SJ-DMC
+calculations.
+ks Start Energy (Ha/el.)
+S-DMC TA S-DMC SJ-DMC TA SJ-DMC
+Γ 1 −0.03151(2) −0.03151(2) −0.031919(1) −0.031903(1)
+Γ 2 −0.03151(2) −0.03151(2) −0.02676(7) −0.02683(4)
+Γ 3 −0.03151(2) −0.03151(2) −0.02848(2) −0.02849(2)
+Bald. 1 −0.03151(2) −0.03159(2) −0.031899(2) −0.031898(1)
+Bald. 2 −0.03151(2) −0.03159(2) −0.02670(2)
+Bald. 3 −0.03151(2) −0.03159(2) −0.02901(2) −0.02901(2)
+obtained in starting point 1. The remaining small dif-
+ference is very likely because of the need to extrapolate
+the S-DMC energy to zero time step a bit more carefully.
+Hence the Jastrow factor obtained in starting point 1 is
+very likely to describe a fluid phase.
+Overall the picture is consistent with the idea that op-
+timization of the wave function can get trapped in local
+minima that are not fluid-like, and DMC is unable to
+repair the situation when this happens. Some system
+sizes are more prone to problems with wave function op-
+timization than others, due to the relative availability of
+crystal-like local minima. A disturbing feature is that
+one can optimize a wave function and lower the VMC
+energy, and yet the DMC energy is worse than not hav-
+ing a Jastrow factor at all. Having a more complex trial
+wave function is not a guarantee that the calculation is
+improved: it can make it easier to fall into unwanted lo-
+cal minima. All these conclusions apply more strongly in
+the case of SJB wave functions, which directly affect the
+DMC energy, even in the limit of zero time step.
+We calculated the TA DMC energy for all the system
+sizes shown in Fig. 1. The energy at the thermodynamic
+limit is obtained by a linear extrapolation of the TA DMC
+energy as a function of N −5/4 [10]. Figure 3 shows the
+extrapolation of TA DMC energies of two sets of data
+points labeled as “nonglobal minima” and “global min-
+ima.” All the TA DMC energies at the infinite system
+size limit presented in the rest of this paper are obtained
+5
+-1.08
+-1.06
+-1.04
+-1.02
+-1
+-0.98
+-0.96
+-0.94
+-0.92
+-0.9
+-0.88
+-0.86
+ 0  0.002  0.004  0.006
+rs=30 - ζ=0
+EDMC+31 (mHa/el)
+ N -5/4
+global minima
+nonglobal minima
+FIG. 3. Extrapolation of TA DMC fluid energies to the
+thermodynamic limit of infinite system size for paramagnetic
+(ζ = 0) 2D UELs with density parameter rs = 30. The red
+data points are assumed to be trapped in nonglobal minima
+during optimization and do not correspond to the fluid ground
+state.
+using the extrapolation of TA DMC of systems that we
+believe correspond to the fluid ground state.
+Table V lists our TA DMC energies at the thermody-
+namic limit for 2D UELs with spin polarizations ζ = 0,
+0.5, and 1, and density parameters 1 ≤ rs ≤ 40. We
+compare our results with the previous works of Drum-
+mond and Needs [9, 10]. The energies extrapolated to
+infinite system size are slightly lower than those obtained
+by Drummond and Needs. There are two major differ-
+ences between our work and the previous ones. First, we
+used the two-body plane-wave backflow π term [25, 26],
+giving additional variational freedom in simulation cells
+of finite size. Second, we used larger system sizes and
+hexagonal simulation cells. These differences do not mat-
+ter in principle, but in practice they affect the extrapo-
+lation to infinite system size.
+We used our DMC energies extrapolated to infinite
+system size to calculate the phase diagram of the 2D
+UEL (Fig. 4). The ferromagnetic and antiferromagnetic
+crystal energies used in our phase diagram calculation
+are taken from Ref. 9. We find that the paramagnetic
+Fermi fluid transitions to a hexagonal Wigner crystal at
+rs = 35(1). The previous work by Drummond and Needs
+[9] predicted a value of rs = 31(1) for this phase transi-
+tion. Similar to the previous phase diagram predicted by
+Drummond and Needs [9], we find no region of stability
+for the polarized fluid phase with spin polarizations of
+ζ = 0.5 or 1.
+The correlation energy Ec is approximately given by
+the difference between the TA DMC energy at the ther-
+modynamic limit and the Hartree-Fock energy. Our cor-
+relation energy results are shown in Table VI. We fit our
+TA DMC correlation energies to the Pad´ e function [3]
+Ec(rs, ζ) = aζ × 1 + bζr1/2s
+1 + bζr1/2s + cζrs + dζr3/2s , (1)
+which has the correct asymptotic behavior at high and
+20 25 30 35 40 45
+rs
+0.809
+0.810
+0.811
+0.812
+0.813
+0.814
+0.815
+0.816(E + vM0/rs) r1.5s  (Ha/el)
+Para-fluid-Prs.wrk
+Ferro-fluid-Prs.wrk
+= 0.5-fluid-Prs.wrk
+Para-fluid-Drummond
+Ferro-fluid-Drummond
+Ferro. crystal
+AntiFerro. crystal
+FIG. 4. DMC energy extrapolated to infinite system size
+as a function of rs for 2D UELs with spin polarizations
+ζ = 0, 0.5, and 1. Our results (“Prs-wrk”) are compared
+with those of Drummond and Needs [9], which include para-
+magnetic ( ζ = 0) and ferromagnetic fluids ( ζ = 1), and fer-
+romagnetic and antiferromagnetic hexagonal Wigner crystals.
+The Madelung energy of a hexagonal lattice, −vM0/rs, where
+vM0 = −0.50751467391482663 is the Madelung constant at
+rs = 1, has been subtracted from all the DMC energies.
+low densities [3], i.e., Ec(rs) = a − acrs + O(r3/2s ) at
+small rs, while Ec(rs → ∞) = ( ab/d)r−1s + a(1/d −
+bc/d2)r−3/2s + O(r−2s ) at large rs. The fitting parame-
+ters a, b, c, and d are listed in Table VII.
+In summary, we have used SJB WFs to perform VMC
+and DMC calculations for 2D UELs with spin polar-
+izations ζ = 0, 0.5, and 1 within the density range
+1 ≤ rs ≤ 40. We have corrected single-particle and many-
+body FS errors by canonical-ensemble TA and extrapo-
+lation of the TA energies to infinite system size. We
+find that separately optimizing the Jastrow factor and
+backflow function at each twist improves the TA DMC
+energy for the density range 1 ≤ rs ≤ 5 and possibly be-
+yond. Optimization of the trial wave function is challeng-
+ing near the transition density because the complexity of
+the energy landscape makes it difficult to find the ground
+state corresponding to the Fermi fluid. We predict that
+the paramagnetic 2D UEL transforms to a Wigner crystal
+at rs = 35(1). We have not found any region of stability
+for 2D UELs with spin polarizations ζ = 0.5 or 1.
+6
+TABLE V. DMC energy in Ha/el. in the infinite system-size limit for 2D UELs with spin polarizations ζ = 0, 0.5, and 1 and
+density parameters 1 ≤ rs ≤ 40. The results of Drummond and Needs are taken from Refs. 9 and 10.
+rs
+Present work Drummond and Needs
+ζ = 0 ζ = 0.5 ζ = 1 ζ = 0 ζ = 1
+1 −0.21017(6) . . . 0 .12626(4) −0.2104(6) . . .
+2 −0.25846(7) . . . −0.19453(1) . . . . . .
+5 −0.14998(2) . . . −0.143714(2) −0.14963(3) . . .
+10 −0.085568(5) . . . −0.084585(6) −0.085399(6) . . .
+15 −0.06138(2) . . . −0.059731(1) . . . . . .
+20 −0.046388(1) −0.0462813(1) −0.046236(1) −0.046305(4) −0.046213(3)
+25 −0.037807(3) −0.0377575(1) −0.037754(1) −0.037774(2) −0.037740(2)
+30 −0.0319383(2) −0.0319153(1) −0.031919(2) −0.031926(1) −0.031913(1)
+35 −0.0276718(4) . . . −0.027668(7) −0.027665(1) −0.027657(1)
+40 −0.0244226(3) . . . −0.0244289(1) −0.024416(1) −0.024416(1)
+TABLE VI. SJB-DMC correlation energy in the limit of in-
+finite system size for 2D UELs with spin polarizations ζ = 0
+and 1.
+rs
+Correlation energy (Ha/el.)
+ζ = 0 ζ = 1
+1 −0.10996(6) −0.02491(4)
+2 −0.08335(7) −0.02012(1)
+5 −0.04993(2) −0.013948(2)
+10 −0.03054(5) −0.009702(6)
+15 −0.02359(2) −0.007587(1)
+20 −0.017627(1) −0.006295(1)
+25 −0.014598(3) −0.005401(1)
+30 −0.012487(2) −0.004736(2)
+35 −0.0109311(4) −0.004232(7)
+40 −0.0097298(3) −0.0038332(1)
+TABLE VII. Fitting parameters for the SJB-DMC correlation
+energy [Eq. (1)] of paramagnetic ( ζ = 0) and ferromagnetic
+(ζ = 1) 2D UELs.
+Parameter ζ = 0 ζ = 1
+a (Ha/el.) −0.1842 −0.0426
+b 3.2320 28 .8732
+c 1.6027 16 .5990
+d 1.2541 4 .6858
+[1] G. Giuliani and G. Vignale, Quantum Theory of the Elec-
+tron Liquid (Cambridge University Press, Cambridge,
+UK, 2005).
+[2] D. M. Ceperley, Phys. Rev. B 18, 3126 (1978).
+[3] B. Tanatar and D. M. Ceperley, Phys. Rev. B 39, 5005
+(1989).
+[4] P. Gori-Giorgi, S. Moroni, and G. B. Bachelet, Phys. Rev.
+B 70, 115102 (2004).
+[5] S. D. Palo, M. Botti, S. Moroni, and G. Senatore, Phys.
+Rev. Lett. 94, 226405 (2005).
+[6] D. Varsano, S. Moroni, and G. Senatore, Europhys. Lett.
+53, 348 (2001).
+[7] C. Attaccalite, S. Moroni, P. Gori-Giorgi, and G. B.
+Bachelet, Phys. Rev. Lett. 88, 256601 (2002).
+[8] F. Rapisarda and G. Senatore, Aust. J. Phys. 49, 161
+(1996).
+[9] N. D. Drummond and R. J. Needs, Phys. Rev. Lett. 102,
+126402 (2009).
+7
+[10] N. D. Drummond and R. J. Needs, Phys. Rev. B 79,
+085414 (2009).
+[11] T. Ando, A. B. Fowler, and F. Stern, Rev. Mod. Phys.
+54, 437 (1982).
+[12] P. Phillips, Y. Wan, I. Martin, S. Knysh, and D. Dali-
+dovich, Nature 395, 253 (1998).
+[13] J. Davies, The Physics of Low-Dimensional Semiconduc-
+tors (Cambridge University Press, 1997).
+[14] S. Datta, Electronic Transport in Mesoscopic Systems
+(Cambridge University Press, 1995).
+[15] J. Falson, I. Sodemann, B. Skinner, D. Tabrea,
+Y. Kozuka, A. Tsukazaki, M. Kawasaki, K. von Klitz-
+ing, and J. H. Smet, Nat. Mat. 21, 311 (2022).
+[16] A. Ghosh, C. J. B. Ford, M. Pepper, H. E. Beere, and
+D. A. Ritchie, Phys. Rev. Lett. 92, 116601 (2004).
+[17] S. Chiesa, D. M. Ceperley, R. M. Martin, and M. Holz-
+mann, Phys. Rev. Lett. 97, 076404 (2006).
+[18] N. D. Drummond, R. J. Needs, A. Sorouri, and W. M. C.
+Foulkes, Phys. Rev. B 78, 125106 (2008).
+[19] M. Holzmann, R. C. Clay, III, M. A. Morales, N. M.
+Tubman, D. M. Ceperley, and C. Pierleoni, Phys. Rev. B
+94, 035126 (2016).
+[20] P. R. C. Kent, R. Q. Hood, A. J. Williamson, R. J. Needs,
+W. M. C. Foulkes, and G. Rajagopal, Phys. Rev. B 59,
+1917 (1999).
+[21] D. M. Ceperley, G. V. Chester, and M. H. Kalos, Phys.
+Rev. B 16, 3081 (1977).
+[22] C. Lin, F. H. Zong, and D. M. Ceperley, Phys. Rev. E
+64, 016702 (2001).
+[23] P. L´ opez R ´ ıos, A. Ma, N. D. Drummond, M. D. Towler,
+and R. J. Needs, Phys. Rev. E 74, 066701 (2006).
+[24] N. D. Drummond, M. D. Towler, and R. J. Needs, Phys.
+Rev. B 70, 235119 (2004).
+[25] S. Azadi, N. Drummond, and S. M. Vinko, Phys. Rev. B
+108, 115134 (2023).
+[26] S. Azadi, N. D. Drummond, and S. M. Vinko, Phys. Rev.
+B 107, L121105 (2023).
+[27] S. Azadi and N. D. Drummond, Phys. Rev. B 105,
+245135 (2022).
+[28] W. M. C. Foulkes, L. Mitas, R. J. Needs, and G. Ra-
+jagopal, Rev. Mod. Phys. 73, 33 (2001).
+[29] R. J. Needs, M. D. Towler, N. D. Drummond,
+P. L´ opez R ´ ıos, and J. R. Trail, J. Chem. Phys. 152,
+154106 (2020).
+[30] J. B. Anderson, J. Chem. Phys. 65, 4121 (1976).
+[31] C. J. Umrigar, K. G. Wilson, and J. W. Wilkins, Phys.
+Rev. Lett. 60, 1719 (1988).
+[32] N. D. Drummond and R. J. Needs, Phys. Rev. B 72,
+085124 (2005).
+[33] D. Bressanini, G. Morosi, and M. Mella, J. Chem. Phys.
+116, 5345 (2002).
+[34] C. J. Umrigar, J. Toulouse, C. Filippi, S. Sorella, and
+R. G. Hennig, Phys. Rev. Lett. 98, 110201 (2007).
+[35] Raw quantum Monte Carlo data for all the systems stud-
+ied are presented in the Supplemental Material.
+Quantum Monte Carlo study of the phase diagram of the two-dimensional uniform
+electron liquid (Supplemental Material)
+Sam Azadi∗
+Department of Physics, Clarendon Laboratory, University of Oxford,
+Parks Road, Oxford OX1 3PU, United Kingdom
+N. D. Drummond
+Department of Physics, Lancaster University, Lancaster LA1 4YB, United Kingdom
+Sam M. Vinko
+Department of Physics, Clarendon Laboratory, University of Oxford,
+Parks Road, Oxford OX1 3PU, United Kingdom
+(Dated: May 2, 2024)
+TABLE I. Twist-averaged diffusion Monte Carlo energy EDMC for N -electron two-dimensional uniform electron liquids with
+spin polarization ζ = 0 and density parameter rs. N = ∞ represents the energy in the limit of infinite system size. Slater-
+Jastrow-backflow wave functions were used.
+rs N E DMC (Ha/el.) rs N E DMC (Ha/el.)
+1 146 −0.211457(5) 20 62 −0.046445(1)
+1 218 −0.210922(5) 20 110 −0.0464184(8)
+1 302 −0.210708(6) 20 146 −0.0464077(8)
+1 ∞ − 0.21017(6) 20 218 −0.046401(1)
+. . . . . . . . . 20 242 −0.046399(1)
+2 146 −0.25901(6) 20 ∞ −0.046388(1)
+2 218 −0.258831(6) . . . . . . . . .
+2 302 −0.258665(5) 25 62 −0.0378521(7)
+2 ∞ − 0.25846(7) 25 110 −0.0378329(4)
+. . . . . . . . . 25 146 −0.0378238(5)
+5 146 −0.150113(2) 25 254 −0.0378136(5)
+5 218 −0.150069(2) 25 ∞ −0.037807(3)
+5 302 −0.150024(4) . . . . . . . . .
+5 ∞ − 0.14998(2) 30 62 −0.0319681(9)
+. . . . . . . . . 30 170 −0.0319466(5)
+10 62 −0.085709(2) 30 254 −0.0319435(4)
+10 110 −0.085643(2) 30 ∞ −0.0319383(2)
+10 170 −0.085612(1) . . . . . . . . .
+10 302 −0.085582(3) 35 62 −0.0276932(8)
+10 ∞ −0.085568(5) 35 122 −0.0276811(3)
+. . . . . . . . . 35 254 −0.0276751(7)
+15 62 −0.060214(1) 35 ∞ −0.0276718(4)
+15 100 −0.060177(1) . . . . . . . . .
+15 170 −0.060160(1) 40 62 −0.0244424(2)
+15 242 −0.060148(2) 40 110 −0.0244321(2)
+15 ∞ − 0.06138(2) 40 146 −0.0244295(2)
+. . . . . . . . . 40 ∞ −0.0244226(3)
+∗ sam.azadi@physics.ox.ac.uk
+arXiv:2405.00425v1  [cond-mat.str-el]  1 May 2024
+2
+-0.2588
+-0.2586
+-0.2584
+-0.2582
+-0.258
+-0.2578
+-0.2576
+-0.2574
+-0.2572
+-0.257
+-0.2568
+-0.2566
+-0.2564
+ 0  10  20  30  40  50  60  70  80
+EDMC ( Ha/el)
+# twist
+N=62
+N=110
+N=146
+N=218
+N=302
+N=398
+N=482
+FIG. 1. Diffusion Monte Carlo energy EDMC against randomly sampled twist for two-dimensional uniform electron liquids
+with density parameter rs = 2 and polarization ζ = 0 with a Slater-Jastrow wave function. Energies are obtained for different
+system sizes N and different number of twists. 80 random twists are used for N = 62 and smaller number of random twists
+are used for the other system sizes.
+3
+-0.258
+-0.2578
+-0.2576
+-0.2574
+-0.2572
+-0.257
+-0.2568
+ 0  0.001 0.002 0.003 0.004 0.005 0.006
+rs=2 - ζ=0
+EDMC ( Ha/el)
+N -5/4
+ 4.4
+ 4.5
+ 4.6
+ 4.7
+ 4.8
+ 4.9
+ 5
+ 5.1
+ 5.2
+ 0  0.001 0.002 0.003 0.004 0.005 0.006
+Var. (a.u/el)*10-3
+N -5/4
+FIG. 2. (Left panel) Twist-averaged diffusion Monte Carlo energy EDMC with a Slater-Jastrow wave function as a function of
+system size for paramagnetic two-dimensional uniform electron liquids with rs = 2. (Right panel) Variational quantum Monte
+Carlo energy variance at zero twist as a function of system size.
+TABLE II. As Table I, but for a fully ferromagnetic two-dimensional uniform electron liquid with spin polarization ζ = 1.
+rs N E DMC (Ha/el.) rs N E DMC (Ha/el.)
+1 55 0 .124298(6) 20 55 −0.0462735(5)
+1 91 0 .125157(5) 20 91 −0.0462584(4)
+1 169 0 .125782(2) 20 139 −0.0462488(2)
+1 ∞ 0.12626(4) 20 169 −0.0462449(2)
+. . . . . . . . . 20 ∞ − 0.046236(1)
+2 55 −0.195569(3) . . . . . . . . .
+2 91 −0.195089(2) 25 55 −0.0377815(4)
+2 139 −0.194848(1) 25 91 −0.0377695(4)
+2 169 −0.194792(1) 25 139 −0.0377639(2)
+2 ∞ − 0.19453(1) 25 169 −0.0377603(2)
+. . . . . . . . . 25 ∞ − 0.037754(1)
+5 55 −0.143992(2) . . . . . . . . .
+5 91 −0.143865(1) 30 55 −0.0319418(3)
+5 139 −0.1438037(8) 30 91 −0.0319340(2)
+5 169 −0.1437819(5) 30 139 −0.0319296(2)
+5 ∞ −0.143714(2) 30 169 −0.0319243(1)
+. . . . . . . . . 30 ∞ − 0.031919(2)
+10 55 −0.084688(1) . . . . . . . . .
+10 91 −0.0846419(7) 35 55 −0.0276857(3)
+10 139 −0.0846251(4) 35 91 −0.0276788(2)
+10 169 −0.0846088(4) 35 139 −0.0276739(1)
+10 ∞ −0.084585(6) 35 169 −0.0276719(1)
+. . . . . . . . . 35 ∞ − 0.027668(7)
+15 55 −0.0597888(9) . . . . . . . . .
+15 91 −0.0597629(5) 40 91 −0.0244397(2)
+15 139 −0.0597489(4) 40 139 −0.0244353(1)
+15 169 −0.0597451(3) 40 169 −0.02443388(9)
+15 ∞ −0.059731(1) 40 ∞ −0.0244289(1)
+4
+-1.3
+-1.25
+-1.2
+-1.15
+-1.1
+-1.05
+-1
+-0.95
+ 0  5  10  15  20
+rs=10 - ζ=0
+Energy+84(mHa/el)
+Opt. number
+N=62 N=110 N=146 N=170
+-1.1
+-1.05
+-1
+-0.95
+-0.9
+-0.85
+-0.8
+ 0  20  40  60  80  100  120  140
+rs=10 - ζ=0
+Energy+84(mHa/el)
+Opt. number
+N=218 N=242 N=302
+-0.84
+-0.82
+-0.8
+-0.78
+-0.76
+-0.74
+-0.72
+-0.7
+-0.68
+-0.66
+-0.64
+ 0  5  10  15  20
+rs=15 - ζ=0
+Energy+59(mHa/el)
+Opt. number
+N=62 N=110 N=146 N=170
+-0.66
+-0.65
+-0.64
+-0.63
+-0.62
+-0.61
+-0.6
+-0.59
+ 0  10  20  30  40  50  60  70  80
+rs=15 - ζ=0
+rs=15 - ζ=0
+Energy+59(mHa/el)
+Opt. number
+N=218 N=242 N=302
+-0.2
+-0.15
+-0.1
+-0.05
+ 0
+ 0  5  10  15  20
+rs=20 - ζ=0
+Energy+46(mHa/el)
+Opt. number
+N=62 N=110 N=146 N=170
+-0.055
+-0.05
+-0.045
+-0.04
+-0.035
+-0.03
+-0.025
+-0.02
+-0.015
+-0.01
+-0.005
+ 0
+ 0  10  20  30  40  50  60  70  80
+rs=20 - ζ=0
+Energy+46(mHa/el)
+Opt. number
+N=218 N=242 N=302
+-0.68
+-0.66
+-0.64
+-0.62
+-0.6
+-0.58
+-0.56
+-0.54
+ 0  5  10  15  20  25  30
+rs=25 - ζ=0
+Energy+37(mHa/el)
+Opt. number
+N=62 N=110 N=146 N=170
+-0.56
+-0.54
+-0.52
+-0.5
+-0.48
+-0.46
+-0.44
+ 0  10  20  30  40  50  60  70  80  90
+rs=25 - ζ=0
+Energy+37(mHa/el)
+Opt. number
+N=218 N=242 N=254 N=302
+FIG. 3. Slater-Jastrow-backflow variational quantum Monte Carlo total energy against energy minimization cycle for different
+system sizes and density parameters for the paramagnetic two-dimensional uniform electron liquid at zero twist. The initial
+wave function was optimized by either unreweighted variance minimization or minimization of the mean absolute deviation
+from the median local energy.
+5
+-0.84
+-0.82
+-0.8
+-0.78
+-0.76
+-0.74
+-0.72
+-0.7
+ 0  5  10  15  20  25  30  35  40  45  50
+rs=30 - ζ=0
+Energy+31(mHa/el)
+Opt. number
+N=62-Hex
+N=62-Squ
+N=146-Hex
+N=146-Squ
+N=170-Hex
+N=170-Squ
+-0.74
+-0.72
+-0.7
+-0.68
+-0.66
+-0.64
+-0.62
+-0.6
+-0.58
+-0.56
+-0.54
+ 0  20  40  60  80  100
+rs=30 - ζ=0
+Energy+31(mHa/el)
+Opt. number
+N=218-Hex
+N=218-Squ
+N=242-Hex
+N=242-Squ
+N=254-Hex
+N=254-Squ
+N=302-Hex
+N=302-Squ
+-0.6
+-0.58
+-0.56
+-0.54
+-0.52
+-0.5
+-0.48
+-0.46
+ 0  5  10  15  20  25  30  35  40
+rs=35 - ζ=0
+Energy+27(mHa/el)
+Opt. number
+N=62 N=146 N=162
+-0.52
+-0.5
+-0.48
+-0.46
+-0.44
+-0.42
+-0.4
+-0.38
+-0.36
+ 0  20  40  60  80  100
+rs=35 - ζ=0
+Energy+27(mHa/el)
+Opt. number
+N=218 N=242 N=254 N=302
+FIG. 4. As Fig. 3, but for lower densities. In the case of rs = 30, the energies are calculated using hexagonal (Hex) and square
+(Squ) simulation cells.
+0.0 0.5 1.0 1.5 2.0 2.5
+k/kF
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5n(k)
+Spin-Unpolarised rs=30
+N = 218
+N = 242
+N = 254
+N = 302
+0 1 2 3 4 5
+k/kF
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2S(k)
+Spin-Unpolarised rs=30
+N = 62
+N = 146
+N = 170
+N = 218
+N = 242
+N = 254
+N = 302
+FIG. 5. Momentum density n(k) and static structure factor S(k) of paramagnetic two-dimensional uniform electron liquids
+using SJB WF with density parameter rs = 30 at different system sizes N obtained by variational quantum Monte Carlo at
+zero twist. kF is the Fermi wavevector.
+6
+TABLE III. Twist-averaged SJB-WF diffusion quantum Monte Carlo energies EHexDMC and ESquDMC of two-dimensional uniform
+electron liquids at rs = 30 obtained using hexagonal and square simulation cells. δE = EHexDMC − ESquDMC.
+N E HexDMC (Ha/el) ESquDMC (Ha/el) δE (mHa/el.)
+62 −0.0319681(9) −0.0319468(7) −0.021(1)
+146 −0.0319262(7) −0.0319272(9) 0 .001(1)
+170 −0.0319466(5) −0.0319219(8) −0.0247(9)
+218 −0.031916(1) −0.031911(1) −0.004(2)
+242 −0.031904(3) −0.031901(1) −0.003(4)
+254 −0.0319435(4) −0.0318921(8) −0.051(1)
+302 −0.031882(1) −0.031869(2) −0.013(2)

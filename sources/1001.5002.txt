@@ -1,0 +1,750 @@
+Benchmark Quantum Monte Carlo calculations of
+the ground-state kinetic, interaction, and  total
+energy of the three-dimensional electron gas
+
+                  I G Gurtubay1,2,  R  Gaudoin2  and  J M  Pitarke1,3
+                  1  Materia Kondentsatuaren Fisika Saila, Zientzia eta Teknologia Fakultatea, Euskal
+                  Herriko Unibertsitatea, 644 Posta kutxatila, E-48080 Bilbo, Basque Country, Spain
+                  2Donostia International Physics Center (DIPC), Manuel de Lardizabal Pasealekua,
+                  E-20018 Donostia, Basque Country, Spain
+                  3  CIC nanoGUNE Consolider and Centro de F´ısica Materiales CSIC-UPV/EHU,
+                  Tolosa Hiribidea 76, E-20018 Donostia, Basque Country, Spain
+                  E-mail: idoia.gurtubay@ehu.es
+
+                  Abstract.    We   report  variational  and   diﬀusion   Quantum  Monte  Carlo  ground-
+                  state  energies of  the  three-dimensional electron gas  using  a  model  periodic  Coulomb
+                  interaction and backﬂow corrections for N=54, 102, 178, and 226 electrons.  We remove
+                  ﬁnite-size eﬀects by extrapolation and we ﬁnd lower energies than previously reported.
+                  Using  the  Hellman-Feynman  operator  sampling  method  introduced  in  Phys.    Rev.
+                  Lett.  99, 126406 (2007), we compute accurately, within the ﬁxed-node approximation,
+                  the  separate  kinetic  and  interaction  contributions  to  the  total  ground-state  energy.
+                  The  diﬀerence  between  the  interaction  energies  obtained  from  the  original  Slater-
+                  determinant nodes and the backﬂow-displaced nodes is found to be considerably larger
+                  than the diﬀerence between the corresponding kinetic energies.
+
+
+
+                  PACS numbers:  71.10.Ca, 71.15.-m
+
+
+Submitted to:  JPCM
+Benchmark Quantum Monte Carlo calculations                                                                  2
+
+1.  INTRODUCTION
+
+The homogeneous electron gas (HEG), which represents the simplest possible prototype
+of  a  many-fermion  system,  has  been  over  the  years  a  topic  of  intense  research,  as  it
+often provides  a good approximation for the description  of valence electrons  in simple
+metals  and  represents  the  basic  ingredient  for  local  and  semilocal  density-functional
+approximations.
+     One of the ﬁrst exhaustive calculations of the ground-state energy of an interacting
+three-dimensional (3D) HEG was performed by Ceperley [1], using stochastic numerical
+methods.   In  this  work,  Ceperley  used  variational  Monte  Carlo  (VMC)  to  obtain  an
+upper  bound  to  the  ground-state  energy.  More  accurate  ground-state energies  can  be
+computed  by  using  the  more  sophisticated  diﬀusion  Monte  Carlo  (DMC)  approach,
+which  projects  out the true ground state of the system  from a trial wave  function [2].
+However, this method yields a bosonic ground state even for a fermionic system which
+needs  to have  an antisymmetric  ground state.  In order to overcome  this problem,  the
+ﬁxed-node (FN) approximation [3] has been applied; this approximation constrains the
+nodes of the ground-state wave function to those of a trial wave function.  In spite of this
+constraint,  the  FN  method  has  proven  to  be  useful  for  the  calculation  of  the  ground-
+state energy and other electronic properties for atoms [4, 5], molecules [6, 7], solids [8, 9]
+and the two-dimensional (2D) electron gas [10, 11, 12].  As an alternative to overcome
+the sign-problem for fermions, Ceperley and Alder [13] developed the so-called released-
+node DMC, which has the limitation that statistical ﬂuctuations grow very rapidly and
+statistical noise can dominate the signal even before converging to the ground state.  The
+size  of  the  system  that  can  be  simulated  is  also  limited  in  this  method.   Nonetheless,
+these released-node data have been widely used in the framework of density-functional
+calculations.
+     With the improvement of computing capabilities and algorithms, new calculations
+have  been  attempted  in  order  to  improve  the  Ceperley-Alder  DMC  data.   Ortiz  and
+Ballone  [14]  extended  these  calculations  to  larger  system  sizes  and  polarized  systems.
+Kwon et al.  [15] introduced backﬂow and three-body correlations in the wave function,
+showing  an  improvement  in  the  FN  result  beyond  that  given  by  Slater-Jastrow  wave
+functions for a given ﬁnite system (see also [16], [17] and [18]).  Both Ortiz and Ballone
+[14]  and  Kwon  et  al.   [15]  studied  the  size  dependence  and  extrapolated  their  results
+to the thermodynamic limit; however, they assumed that the size dependence for VMC
+and DMC is the same, and they used VMC data to extrapolate the corresponding DMC
+calculations.
+     Fixed-node DMC is known to yield the exact ground-state energy of a many-electron
+system  for  a  given  nodal  structure.   Nevertheless,  the  DMC  expectation  value  of  any
+operator that does not commute with the Hamiltonian diﬀers from the exact value, the
+error being linear in the  diﬀerence  between  the  trial and the  projected  wave  function.
+Recently, an eﬀective method based on the Hellman-Feynman (HF) theorem was devised
+to  calculate  the  exact  expectation  value  of  such  an  operator  [19]  as,  for  example,  the
+Benchmark Quantum Monte Carlo calculations                                                                  3
+
+interaction energy.
+      In  this  paper,  we  use  the  HF  sampling  introduced  in  [19]  to  report  benchmark
+DMC  calculations  of  the  two  (kinetic  and  interaction)  separate  contributions  to  the
+ground-state  energy  of  a  paramagnetic  3D  electron  gas  with  rs   =  2.‡  We  include
+backﬂow  correlation  eﬀects  and  we  demonstrate  that  previously  extrapolated  results
+are artiﬁcially lowered by assuming that the VMC and DMC size dependences coincide.
+However,  we  ﬁnd  that  DMC  size  dependences  are  similar  with  or  without  backﬂow
+correlation  eﬀects.   The  use  of  the  HF  sampling  allows  to  compute  the  exact  (within
+the  ﬁxed  node  approximation)  interaction  energy  in  the  framework  of  the  modiﬁed
+periodic  Coulomb  (MPC)  scheme,  and  we  show  that  this  interaction  energy  can  also
+be  obtained  from  the  integration  of  the  spherically  averaged  wave-vector  dependent
+diagonal structure factor [20].  Furthermore, we ﬁnd that the HF-sampling scheme works
+eﬃciently even for very large systems.
+      Hartree atomic units (a.u.)  are used throughout, i.e., ℏ = |e| = me = 4πǫ0=1.  The
+atomic unit of energy is e2/a0 = 27.2 eV, a0 being the Bohr radius.  All the calculations
+presented in this work have been performed by using the casino code [21].
+
+2.  QUANTUM MONTE  CARLO
+
+In    VMC    the    ground-state    energy,    EVMC,    is    estimated    as    the    expectation
+value    of    the    Hamiltonian    with    an    approximate    trial    wave    function,     ΨT :
+EVMC  =  ⟨ ˆH⟩VMC  =  ⟨ΨT | ˆH|ΨT ⟩/⟨ΨT |ΨT ⟩.  The integrals are evaluated by importance-
+sampled Monte Carlo integration.  The trial wave function contains parameters, whose
+values are obtained from an optimization procedure formulated within VMC. There are
+no  restrictions  on  the  form  of the  trial  wave  function,  and  VMC  does  not  suﬀer  from
+a fermion sign problem.  However, the choice of the approximate trial wave function is
+very important, as it directly determines the accuracy of the calculation.  We have used
+VMC methods mainly to optimize the parameters involved  in the trial wave functions
+by  variance  and  energy  minimization;  our  most  accurate  calculations,  however,  have
+been performed within DMC.
+      In   DMC   the   ground-state   component   of   a   trial   wave   function   is   projected
+out   by   evolving   an   ensemble   of   electronic   conﬁgurations   using   the   imaginary-
+time  Schr¨odinger  equation.     The  fermionic  symmetry  is  maintained  by  the  ﬁxed-
+node  approximation  [3],  in  which  the  nodal  surface  of  the  DMC  wave  function  is
+constrained  to  equal  that  of  the  trial  wave  function.    The  ﬁxed-node  DMC  energy,
+EFN   =   ⟨ ˆH⟩FN   =   ⟨ΨFN0   | ˆH|ΨFN0   ⟩/⟨ΨFN0   |ΨFN0   ⟩,  is  higher  than  the  exact  ground-state
+energy ⟨ ˆH⟩   =  ⟨Ψ0| ˆH|Ψ0⟩/⟨Ψ0|Ψ0⟩, and they become equal only when the ﬁxed nodal
+surface  is  that  of  the  exact  ground  state,  Ψ0.  Apart  from  the  ﬁxed-node  error,  DMC
+yields the true ground-state energy independently of the form chosen for the trial wave
+function.  The ﬁxed-node error can be reduced by optimizing the nodal surfaces of the
+
+‡  rs  is  the  dimensionless  parameter  rs  =  a/a0  where  a0  is  the  Bohr  radius  and  a  is  the  radius  of  a
+sphere that encloses one electron on average.
+Benchmark Quantum Monte Carlo calculations                                                                  4
+
+trial wave function.
+
+2.1.  The Slater-Jastrow backﬂow trial wave function
+
+The standard Slater-Jastrow (SJ) wave function can be written as
+                  ΨSJ(R) = eJ(R)ΨS(R),                                                                                 (1)
+where R is a 3N-dimensional vector denoting the position ri of each electron.  The nodes
+of ΨSJ(R) are deﬁned by the Slater part of the wave function, ΨS(R), which takes the
+form ΨS  =  D↑ D↓, Dσ  being a Slater determinant of single-particle orbitals of spin σ.
+In the case of a HEG, these orbitals are Hartree-Fock solutions for the ﬁnite periodically
+repeated  electron  gas,  which  are simply  plane  waves.  The  number  of electrons  N  has
+been  chosen  such  that  the  ground  state  is  a  closed  shell  conﬁguration,  so  the  wave
+function can be chosen to be real and there is no degeneracy.  The Jastrow correlation
+factor, eJ(R), contains an electron-electron and a plane-wave term, as described in [22].
+We did not include a symmetric three-electron Jastrow term.§  The Jastrow factor, being
+a positive deﬁnite function, keeps electrons away from each other and greatly improves
+wave functions in general, but it does not modify the nodal surface of the wave function.
+      One  way  of  reducing  the  FN  error  is  to  alter  the  nodes  of  the  wave  function  by
+introducing  backﬂow  correlations  [16],  thus  replacing  the  coordinates  R  in  the  Slater
+part of the wave function by the collective coordinates X. The Slater-Jastrow backﬂow
+(SJB) trial wave function reads
+                  ΨSJB(R) = eJ(R)ΨS(X).                                                                               (2)
+The new coordinates for each electron are given by
+                  xi = ri + ξi(R),                                                                                             (3)
+ξi being the backﬂow displacement of particle i, which depends on the position of every
+electron in the system.  Details of the speciﬁc form of the backﬂow function used for the
+HEG can be found in [16].
+
+2.2.  Hellman-Feynman sampling
+
+Given an arbitrary operator  ˆO, the ﬁxed-node DMC method yields by construction the
+normalized expectation value ⟨ ˆO⟩FN−DMC   =   ⟨ΨT | ˆO|ΨFN0   ⟩/⟨ΨT |ΨFN0   ⟩, which is not the
+true FN ground-state expectation value ⟨ ˆO⟩FN   =  ⟨ΨFN0   | ˆO|ΨFN0   ⟩/⟨ΨFN0   |ΨFN0   ⟩, unless the
+operator  ˆO commutes with the Hamiltonian, the leading term of this error being linear in
+the diﬀerence between ΨT  and ΨFN0   .  In conjuntion with VMC, this error can be reduced
+by one order by using the so-called extrapolated estimator, 2⟨ ˆO⟩FN−DMC − ⟨ ˆO⟩VMC.  In
+practice, extrapolated estimators work well when the trial wave function is very close to
+the ground state, but they can be untrustworthy when the trial wave function is poor.  A
+
+§  We  found  that  for  the  density  considered  in  this  work,  the  eﬀect  of  the  three-body  term  was  not
+statistically signiﬁcant in conjunction with backﬂow, which gives the best energy.  This is in agreement
+with [16].
+Benchmark Quantum Monte Carlo calculations                                                                  5
+
+correct sampling for these operators can be achieved by using future walking [23, 24] or
+reptation Monte-Carlo [25]; however,  these methods aim at sampling ΨFN0   ΨFN0    instead
+of the regular DMC distribution [2], ΨT ΨFN0   , so they are not straightforward additions
+to the DMC algorithm.
+      An alternative to achieve  a correct sampling  of operators (diagonal in real space)
+that  do  not  commute  with  the  Hamiltonian  has  been  reported  recently  [19].    The
+advantage of this so-called HF sampling is that it samples the usual DMC distribution,
+ΨT ΨFN0   ,  and  it  is,  therefore,  straightforward  to  implement  on  a  DMC  algorithm.   We
+give  here  a  sketch  of the  method;  a detailed  derivation  can  be  found  in  [19].  Given  a
+Hamiltonian  of the form   ˆH(α) =  ˆH + α ˆO  and  the  associated  ﬁxed-node  ground-state
+energy EFN(α) = ⟨ ˆH(α)⟩FN, ﬁrst-order perturbation theory for ΨFN0    yields a ﬁxed-node
+equivalent of the HF theorem‖               ⏐⏐⏐α=0.                                                                                (4)
+
+                   ⟨ ˆO⟩FN  =  ∂EFN(α)∂α
+Direct  application  of  the  HF  derivative  to  the  regular  DMC  algorithm  at  timestep  i
+gives:                               ⏐⏐⏐α=0 =            (                      )
+
+                   OEi   =  ∂Ei(α)∂α           OLi  − t   ELi Xi −    ELi  ·Xi    ,                                      (5)
+
+t is an auxiliary parameter and            OLi  is the standard DMC estimator at time step i:
+                           Nw∑
+                   OLi  =       ωi,j  OLi,j,                                                                                         (6)
+                             j
+where  ωi,j  is  the  total  weight  of  walker  j,  and  OLi,j  =   ˆOΨT /ΨT  with  the  trial  wave
+function,  ΨT , evaluated for walker  j  at time step i.                Xi  is the DMC estimator at time
+                                                                 i∑
+step i of a new variable per operator Xi,j   =    1i                OLk,j.  The ﬁxed-node DMC estimate,
+                                                               k=1
+which we call ⟨ ˆO⟩FN−DMC, is obtained averaging Equation (6) over all i.()
+      The correction term, ∆OEi   = −t             ELi Xi −    ELi  ·Xi    , involves information which can
+be directly obtained from the DMC algorithm, such as the local energy, ELi,j =  ˆHΨT /ΨT ,
+and the new variable,        Xi, which involves no more than an extra summation step during
+the  sampling.   The  true  FN  estimate,  which  we  call  ⟨ ˆO⟩HF ,  is  obtained  averaging  OEi
+over all i.
+      Exponentially  limiting the depth  of the history in Xi,j  allows one to considerably
+improve  sampling  and  reduce  statistical  noise  without  reintroducing  a  signiﬁcant  bias
+[27].
+
+3.  Details  of  the calculations
+
+We have studied an unpolarized 3D HEG consisting of 54, 102, 178, and 226 electrons
+in a face-centered-cubic simulation cell subject to periodic boundary conditions.
+
+‖  The  Hellman-Feynman  theorem  has  also  been  applied  previously  in  QMC  for  deriving  accurate
+expectation values of observables [26].
+Benchmark Quantum Monte Carlo calculations                                                                  6
+
+     The parameters in the SJB trial wave functions were obtained by ﬁrst minimizing
+the variance of the local energy [28, 29] and then minimizing the energy [30].  The speciﬁc
+forms of the Jastrow and backﬂow functions are described in [22] and [16].  The 2-body
+Jastrow term (U) and backﬂow (η) terms consist on power expansions in the electron-
+electron distance with expansion orders NU=Nη=8 and the parameters were allowed to
+depend on the spin parameters of the electron pairs.  The cutoﬀ lengths at which both
+U  and η go smoothly to zero, LU  and Lη, were optimized, but they adjusted themselves
+to the maximum allowed values, i.e., the Wigner-Seitz radius.  The plane-wave term in
+the Jastrow factor included 128 reciprocal-lattice vectors of the simulation cell.  We used
+a suﬃciently small time step (0.003 a.u.), to avoid ﬁnite-time-step errors, and a target
+population of 800 conﬁgurations in all our DMC calculations, making population-control
+bias negligible.
+     Because our QMC calculations are performed using a ﬁnite simulation cell subject
+to periodic boundary conditions,¶ the energy per particle is calculated at several system
+sizes and then the results are extrapolated to inﬁnite system size.  Finite-size eﬀects in
+the  kinetic  energy  are  typically  taken  into  account  by  noting  that  they  are  roughly
+proportional to the corresponding ﬁnite-size  errors in the Hartree-Fock kinetic  energy.
+Coulomb  ﬁnite-size  eﬀects  in  the  interaction  energy  of  a  HEG,  which  arise  from  the
+spurious  interaction  between  an  electron  and  the  periodically  repeated  copies  of  its
+exchange-correlation (xc) hole, can be reduced either by adding the correction proposed
+by  Chiesa  et  al.  [33]  to the  usual  Ewald  energy  or by  using  the  MPC  [31,  34, 35, 36]
+interaction.  In  this  work,  Coulomb  ﬁnite-size  eﬀects  were  reduced  by  using  the  MPC
+scheme, where the Hartree energy is calculated with the Ewald interaction while the xc
+energy is calculated using 1/r within the minimum image convention, that is, reducing
+the  interelectron  distance  into  the  Wigner-Seitz  cell  of  the  simulation  cell.  The  MPC
+interaction  was  used  for  the  branching  factors  and  for  computing  energies  in  DMC.
+According  to  Drummond  et  al.   [31]  the  Ewald  interaction  distorts  less  the  xc  hole
+when calculating branching factors in DMC. However  MPC branching is faster and so
+potentially allows bigger systems.  The trade-oﬀ is therefore between better convergence
+due  to  the  xc  hole  being  more  accurate,  or  due  to  being  able  to  go  to bigger  systems
+quicker.  We have chosen the latter.
+
+4.  Results and  discussion
+
+4.1.  Ground-state total energy
+
+VMC  and  DMC  ground-state  total  energies  of  a  HEG  of  rs  =  2  for  N=54,  102,  178,
+and 226 electrons, as obtained by using either SJ or SJB trial wave functions within the
+MPC scheme,  are given in table 1.  These energies are also displayed by open symbols
+
+¶  We  used  the  Gamma  point  only.   The  recent  analysis  of  Drummond  et  al.   [31]  showed  that  the
+Γ-point extrapolated SJ-DMC energies of a HEG agree within error bars with the results obtained by
+using the more sophisticated twist-averaged boundary conditions [32].
+Benchmark Quantum Monte Carlo calculations                                                                  7
+
+in ﬁgure 1 with their corresponding error bars, which are less than 20% of the symbol
+size.  Both VMC and DMC ground-state energies show the usual ﬁnite-size eﬀects.  For
+comparison,  table  1  also  displays  the  DMC-SJ  energies  obtained  by  using  the  Ewald
+interaction.
+
+
+                    Table  1.  VMC and DMC ground-state total energies, EVMC  and EDMC, as obtained
+                    with the  use of SJ and SJB trial wave functions  for a  HEG of rs=2 for  N= 54, 102,
+                    178,  and  226  electrons  and  the  MPC  interaction.   The  column  denoted  with  Ewald
+                    shows  the  DMC  energies  for  the  SJ  wave  function  and  the  Ewald  interaction.   The
+                    entry N  = ∞ corresponds to the extrapolated values obtained from Equation (7).
+                                               SJ wave function                                        SJB wave function
+                                            MPC                                 Ewald                                 MPC
+                    N        EVMC  (Ha/e)     EDMC  (Ha/e)     EDMC  (Ha/e)     EVMC  (Ha/e)     EDMC  (Ha/e)
+
+                    54       0.00847(2)          0.00693(4)          0.00426(2)          0.00656(2)          0.00579(2)
+                    102     0.00328(1)          0.00202(2)          0.00081(2)          0.001398(8)        0.00077(2)
+                    178     0.01057(1)          0.00950(2)          0.00892(2)          0.008510(8)        0.00801(1)
+                    226     0.003490(8)        0.00246(2)          0.00202(2)          0.001710(5)        0.00123(1)
+                    ∞       0.003886(5)        0.00301(1)          0.00331(3)          0.002021(4)        0.001621(7)
+
+
+     0.010                                               EVMC  SJ
+                                                         EDMC  SJ
+                                                         EVMC  SJB
+     0.008                                               EDMC  SJB
+
+     0.006
+
+     0.004
+
+     0.002
+
+     0.000             54              102                        178             226
+                                              Number of electrons (N)
+
+                    Figure  1.    (Color  online)  Big  open  symbols:   VMC  and  DMC  ground-state  total
+                    energies,  EVMC  and  EDMC,  from  table  1.   Horizontal dotted  lines:  The  extrapolated
+                    values E∞ (also quoted in table 1), as obtained from Equation (7).  Small ﬁlled symbols:
+                    The extrapolated values, EN −b1 ∆THF(N)− b2N , that we have obtained from Equation
+                    (7) for each N  and ﬁxed values of b1 and b2.
+Benchmark Quantum Monte Carlo calculations                                                                  8
+
+      The  issue  of  ﬁnite-size  corrections  to  the  kinetic  and  interaction  contributions  to
+the ground-state energy has been adressed  by Ceperley  and co-workers [1, 37, 10, 15].
+They proposed separate extrapolation terms for the kinetic and interaction contributions
+using the following extrapolation formula:
+
+                  EN  = E∞ + b1 ∆THF(N) + b2N ,                                                                    (7)
+
+where   E∞,   b1,   and  b2   are  parameters  to  be  ﬁtted.     ∆THF(N)  is  the  diﬀerence
+between   the   Hartree-Fock   kinetic   energies   of   the   ﬁnite   and   inﬁnite   systems,
+∆THF(N)    =    THF(N)   −   THF(∞),  and  the  term  b2/N  accounts  for  the  ﬁnite-size
+eﬀects arising in the interaction energy.  Recently it has been shown that the b2/N  term
+also corrects for the neglect of long-range correlation eﬀects in the kinetic energy [33].
+      Ortiz and Ballone [14] considered an extrapolation of the form
+                                                   (N                    )−1
+                  EN  = E∞ + ∆THF(N) −                b0  −        1∆vHF(N)    ,                                        (8)
+
+with  only  2  parameters  to  be  ﬁtted,  E∞  and  b0.    ∆vHF(N)  in  Equation  (8)  is  the
+diﬀerence between the Hartree-Fock exchange energies of the ﬁnite and inﬁnite system,
+∆vHF(N)  =  vHF(N) − vHF(∞).    +   Equation  (7)  and  (8)  were  found  to  yield  similar
+results.   We  have  found,  however,  that  Equation  (7)  yields  in  all  cases  better  ﬁts  of
+the QMC data, so that all our extrapolations have been carried out by using Equation
+(7).∗   The  horizonal  dotted  lines  of  ﬁgure  1  display  the  extrapolated  values  E∞  (also
+quoted  in  table  1)  that  we  have  found  from  Equation  (7).   These  extrapolated  values
+indicate that the optimization of the nodes of the trial wave function (which is achieved
+by replacing the SJ trial wave  function by the SJ-backﬂow  trial wave  function) lowers
+the  ground-state  energy  considerably:♯  2  mHa/e  at the  VMC  level  and  1.4 mHa/e  at
+the DMC level; moreover, the optimized VMC-SJB ground-state energy happens to be
+1 mHa/e lower than its ﬁxed-node counterpart DMC-SJ.
+      Our extrapolated VMC and DMC ground-state total energies, E∞, are compared in
+table 2 and ﬁgure 2 to the corresponding energies reported in [1, 13, 14, 15].  These are:
+(i) the original VMC calculation of Ceperley [1], (ii) the released-node DMC calculation
+of Ceperley and Alder [13], (iii) the ﬁxed-node VMC and DMC calculations of Ortiz and
+Ballone [14] and Kwon et  al.  [15],  and (iv) the backﬂow  DMC calculation of Kwon et
+al.  [15].  We note that the DMC calculations reported by Ortiz and Ballone (OB-DMC-
+SJ)[14]  and  Kwon  et  al.   (KCM-DMC-SJ  and  KCM-DMC-SJB)  [15],  were  all  carried
+out  by  ﬁrst  ﬁtting  within  VMC  the  E∞,  b0,  b1,  and  b2  parameters  entering  Equation
+(7) and (8) and then using the VMC parameters b0, b1, and b2 to derive E∞ for a given
+N  from either  Equation (7) or (8);  hence,  in order to compare  to the results  reported
+
++  Since the exchange hole entering the Hartree-Fock exchange energy is very long ranged compared to
+the  exchange-correlation hole, the ﬁnite-size correction ∆vHF(N) entering Equation (8) might not be
+appropriate in an extrapolation scheme for QMC energies.
+∗  The adjusted R-squared values for the ﬁts  are:  VMC-SJ: 0.999995, VMC-SJB: 0.999395, DMC-SJ:
+0.999004, and DMC-SJB: 0.999983.
+♯  This corroborates the result reported in [16] to a small system of 54 electrons.
+Benchmark Quantum Monte Carlo calculations                                                                  9
+
+
+                    Table  2.  Top:  The extrapolated VMC and DMC ground-state total energies E∞  of
+                    table  1,  as  obtained  with  the  use  of  SJ  and  SJB  trial  wave  functions  for  a  HEG  of
+                    rs  =  2.  Middle:  The  VMC  calculation of  Cerperley  (C-VMC)  [1],  the  released-node
+                    DMC calculation of Ceperley and Alder (CA-DMC-RN) [13], the ﬁxed-node VMC and
+                    DMC calculations of Ortiz and Ballone (OB-VMC-SJ and OB-DM-SJ) [14] and Kwon
+                    et al.  (KCM-VMC-SJ and KCM-DMC-SJ) [15], and the backﬂow DMC calculation of
+                    Kwon et  al.  (KCM-DMC-SJB) [15].  Bottom:  DMC  ground-state total energies,  but
+                    now  obtained  by  using  (as  in  [14]  and  [15])  the  VMC  parameters  b1  and  b2  (which
+                    diﬀer considerably from the corresponding DMC parameters) to derive E∞ for a given
+                    N  from Equation (7) (DMC-SJ* and DMC-SJB*).
+                                               E∞  (Ha/e)     Reference
+
+                    VMC-SJ                       0.003886(5)     This work
+                    VMC-SJB                     0.002021(4)     This work
+                    DMC-SJ                       0.00301(1)       This work
+                    DMC-SJB                    0.001621(7)     This work
+                    C-VMC                         0.002955                [1]
+                    CA-DMC-RN              0.002055               [13]
+                    OB-VMC-SJ                0.0051(2)              [14]
+                    OB-DMC-SJ                0.0033(2)              [14]
+                    KCM-VMC-SJ            0.004096               [15]a
+                    KCM-DMC-SJ            0.002431               [15]a
+                    KCM-DMC-SJB          0.001812               [15]a
+                    DMC-SJ*                     0.00266(1)       This work
+                    DMC-SJB*                  0.001380(8)     This work
+
+                    a  These  numbers  for  rs=2  were  obtained  by  using  an  updated  form  of  Equation  (2)
+                    of  [38],  which  was  originally  derived  by  ﬁtting  three  values  of  rs  (rs=  1,  5  and  10)
+                    of [15]  and we  have  now ﬁtted  with  the  four  available values  of  rs  (rs=  1,  5,  10 and
+                    20) of [15] for each case (VMC-SJ, DMC-SJ and DMC-SJB). Diﬀerences between the
+                    energies derived from Equation (2) of [38] and the numbers reported here for rs=2 are
+                    within 7 × 10−5 Ha/e.
+
+
+by  these  authors  we  have  performed  additional  DMC  ﬁts  (DMC-SJ*  and  DMC-SJB*
+represented  by  dotted  lines  in  ﬁgure  2)  by  following  this  approximate  extrapolation
+procedure.  With this aim, we  have calculated E∞  from the DMC-SJ(B) data and the
+b1 and b2 parameters of the VMC-SJ ﬁt for each system size N, and then we have ﬁtted
+a horizontal line to obtain the extrapolated DMC-SJ(B)* value reported in table 2.
+      We  ﬁnd  that  (i)  our  DMC-SJ*  calculation  is  very  close  to  the  corresponding
+calculation  reported  by  Kwon  et  al.   (KCM-DMC-SJ)  [15],  and  (ii)  our  DMC-SJB*
+calculation  is  considerably  lower  than  the  corresponding  KCM-DMC-SJB  calculation,
+which is a signature of the better quality of our SJB trial wave functions.  We note that
+our  calculations  were  performed  using  the  MPC  interaction,  while  in  the  calculations
+reported  in  the  above  references  the  Ewald  interaction  was  used.    Hence,  we  have
+repeated our DMC-SJ and DMC-SJB calculations using the usual 1/r Ewald interaction;
+these calculations (shown in table 1 for DMC-SJ) indicate that in both cases the Ewald
+Benchmark Quantum Monte Carlo calculations                                                                10
+       0.006
+
+
+       0.005                                              OB-VMC-SJ
+
+
+       0.004                                              KCM-VMC-SJ
+                                                          VMC-SJ
+                                                          OB-DMC-SJ
+       0.003                                              DMC-SJ
+                                                          C-VMC
+                                                          DMC-SJ*
+                                                          KCM-DMC-SJ
+       0.002                                              CA-DMC-RN
+                                                          VMC-SJB
+                                                          KCM-DMC-SJB
+                                                          DMC-SJB
+                                                          DMC-SJB*
+       0.001
+
+                Figure 2.  (Color online) Schematic representation of the extrapolated energies quoted
+                in table 2.
+
+
+extrapolated  energy  is  at  most  0.3  mHa/e  above  the  MPC  extrapolated  result,  which
+reﬂects  the  fact  that  after  extrapolation  to  N  →  ∞  the  usual  Ewald  energy  yields
+fairly good results.  We note, however, that the diﬀerence between the MPC and Ewald
+DMC-SJ energy reported in table 1 for each N is signiﬁcantly smaller than the ﬁnite-size
+correction proposed in [33] (∆V  = ωp/(4N), where ωp  is the plasmon energy).  This is
+because the MPC and Ewald energies in table 1 were obtained using diﬀerent interaction
+schemes in the branching part of the calculation, i.  e., MPC and Ewald, respectively.  We
+have performed additional calculations of MPC energies using the Ewald interaction in
+the branching factors, and we have found that only when the same interaction (Ewald)
+is  used  in  the  branching  part of  the  calculation,  the  diﬀerence  between  the  MPC  and
+Ewald energies agrees with the correction proposed by Chiesa et.  al [33].
+Benchmark Quantum Monte Carlo calculations                                                                11
+
+      At   this   point,   we   focus   our   attention   on   a   comparison   between   the   DMC
+extrapolated values  that we  have  obtained by  (i) ﬁtting within  DMC the E∞, b1,  and
+b2 parameters entering Equation (7) (DMC-SJ and DMC-SJB) and (ii) using the VMC
+parameters  b1  and  b2  to  derive  E∞  for  a  given  N  from  Equation  (7)  (DMC-SJ*  and
+DMC-SJB*).  Our calculations indicate that the size-dependences  for VMC and DMC
+diﬀer considerably;†† indeed, the DMC-SJ* and DMC-SJB* extrapolated values are too
+low,  i.e.,  the  use  of  VMC  data  to  extrapolate  the  corresponding  DMC  calculations
+yields  artiﬁcially  lowered  extrapolations.    Hence,  the  KCM-DMC-SJB  ground-state
+energy  reported  by  Kwon  et  al.   [15]  nearly  coincides  with  our  more  accurate  DMC
+extrapolation  (DMC-SJB)  as  a  result  of  two  competing  eﬀects:   the  KCM-DMC-SJB
+extrapolated energy is (i) higher than our better optimized DMC-SJB* calculation and
+(ii) too low due to the assumption (in the extrapolation procedure) that the VMC and
+DMC size dependences coincide.
+      Finally, we note that although the ﬁtting parameters b1  and b2  entering Equation
+(7)  are  not  transferable  from  VMC  to  DMC  calculations  they  are  indeed  transferable
+from DMC-SJ to the more expensive  DMC-SJB calculations:  The error introduced by
+using the DMC-SJ parameters b1 and b2 to derive the DMC-SJB E∞ for a given N  from
+Equation (7) is found to be of no more than 0.04(1) mHa/e.
+
+4.2.  Interaction energy
+
+The  interaction  energy,  ˆU,  is  a  local  operator  (i.e.,  diagonal  in  real  space)  that  does
+not  commute  with  the  Hamiltonian.   Hence,  for  an  accurate  calculation  of  the  true
+expectation  value  of   ˆU  we  have  applied  the  HF-based  method  of  [19]  described  in
+section  2.2.  Figure 3  and  table 3  show  the  results  that we  have  obtained  for the  true
+(HF)  ﬁxed-node  interaction  energies  UFN  =  ⟨ ˆU⟩HF  of  a  HEG  of  rs  =  2  for  N  =  54,
+102, 178, and 226 electrons, as obtained by using either SJ or SJB trial wave functions.
+Also shown are the ﬁxed-node interaction energies UFN−DMC = ⟨ ˆU⟩FN−DMC  that we have
+obtained by  using the  standard DMC estimator,  which  are subject  to an error that is
+linear in the diﬀerence between ΨT  and ΨFN0   .
+      In order to obtain the extrapolated value U∞  from our ﬁnite-size calculations,  we
+use the ﬁtting equation
+
+                  UN  = U∞ +  bN                                                                                               (9)
+
+for each set of data.  The 1/N  term does not aim at correcting the long-ranged errors,
+as  we  are  using  the  MPC  interaction.  It  turns  out,  however,  that  the  residual  eﬀects
+including  shell-ﬁlling  and  the  distortion  of  the  xc  hole  due  to  the  ﬁnite  size  geometry
+also seem to be well described by a 1/N ﬁt.  The extrapolated values are displayed by the
+entry N  = ∞ of table 3 and the solid lines of ﬁgure 3, together with the result of using
+
+††Since  the  form  and  optimisation  of  the  trial  wave  function  entering  VMC  calculations  is  size-
+dependent,  in  general,  there  is  no  reason  to  expect  VMC  and  DMC  ﬁnite-size  extrapolations  to  be
+the same.
+Benchmark Quantum Monte Carlo calculations                                                                12
+
+
+                    Table  3.   Top:  The  ﬁxed-node  interaction  energy  of  a  HEG  with  rs=2  for  N=  54,
+                    102, 178, and 226 electrons, as obtained by using the HF-based method of [19] (UFN )
+                    and  by  using  the  standard DMC  estimator  (UFN−DMC);  both  SJ  and  SJB  trial  wave
+                    functions  have been  used.  The  entry N  = ∞ corresponds to  the  extrapolated values
+                    obtained from Equation (9).  Bottom:  The extrapolated estimator 2UFN−DMC − UVMC
+                    for the inﬁnite system.  All energies are in Ha/e.
+
+                                 SJ wave function                 SJB wave function
+                    N              UFN             UFN−DMC            UFN            UFN−DMC
+                    54       -0.2993(1)       -0.29839(9)     -0.3009(1)     -0.30050(9)
+                    102     -0.29872(8)     -0.2980(1)       -0.3005(1)     -0.2999(1)
+                    178     -0.29782(7)     -0.29741(6)     -0.3001(1)     -0.29958(9)
+                    226     -0.2978(1)       -0.29689(9)     -0.2996(1)     -0.2991(1)
+                    ∞       -0.2973(1)       -0.29679(8)     -0.2994(1)     -0.2990(1)
+
+
+                                        2UDMC − UVMC   (Ha/e)
+                     SJ (N  = ∞)      -0.29764(8)
+                    SJB(N  = ∞)     -0.2997(1)
+
+
+
+                    Table  4.  The  ﬁxed-node  extrapolated interaction energy  (U∞)  for  each  system size
+                    as obtained from the ﬁts of Equation (9) of the interaction energies of table 3.
+
+                                 SJ wave function                SJB wave function
+                    N              UFN             UFN−DMC            UFN           UFN−DMC
+                    54       -0.2970(2)       -0.2967(2)       -0.2993(2)     -0.2990(2)
+                    102     -0.2975(1)       -0.2971(1)       -0.2997(1)     -0.2991(1)
+                    178     -0.29714(9)     -0.29689(7)     -0.2996(1)     -0.2991(1)
+                    226     -0.2973(1)       -0.29648(9)     -0.2992(1)     -0.2988(1)
+
+
+the extrapolated estimator 2UFN−DMC −UVMC for the inﬁnite system (dotted and dashed-
+dotted  lines).   We  see  that  while  the  true  interaction  energy  UFN  is  overestimated  by
+the standard DMC estimator UFN−DMC  (the error being linear in the diﬀerence between
+ΨT  and  ΨFN0   ),  it  is  underestimated  by  the  extrapolated  estimator  2UFN−DMC − UVMC
+(the  error  this  time  being  quadratic  in  the  diﬀerence  between  ΨT  and  ΨFN0   ).   On  the
+other  hand,  we  see  that  as  in  the  case  of  the  ground-state  total  energy  the  eﬀect  of
+backﬂow  (included  in  the  calculations  labeled  SJB)  is  to  lower  the  interaction  energy
+by  a  rigid  shift  of  about  2  mHa/e.   Finally,  we  note  that  error  bars  in  ﬁgure  3  are
+approximately the size of the symbols (about 0.1 mHa/e), even for the largest systems
+under consideration.  Table 4 summarizes the extrapolated values for each system size,
+U∞ = UN − b/N, for all the cases shown in table 3.
+      In  a  recent  paper  [39],  it  was  demonstrated  that  accurate  calculations  of  the
+interaction contribution to the ground-state energy of an arbitrary many-electron system
+can be obtained from the knowledge of the spherically averaged wavevector-dependent
+Benchmark Quantum Monte Carlo calculations                                                                13
+    -0.2960
+                             UFN-DMC   SJ
+                             UFN          SJ
+    -0.2970                  UFN-DMC   SJB
+                             UFN          SJB
+
+    -0.2980
+
+
+    -0.2990
+
+
+    -0.3000
+
+
+    -0.3010         54          102                  178         226                                ∞
+                                          Number of electrons (N)
+
+                   Figure  3.   (Color  online)  Open  symbols:   The  ﬁxed-node  interaction  energies  UFN
+                   and UFN−DMC  quoted in table  3.  Open symbols joined by solid horizontal lines:  The
+                   extrapolated interaction  energies  obtained  from  Equation  (9).   Black  dotted  and  red
+                   dashed-dotted  lines:  The  extrapolated estimator  2UFN−DMC − UVMC  for  the  inﬁnite
+                   system, as obtained with the use of SJ (black dotted line) and SJB (red dashed-dotted
+                   line) trial wave functions.
+
+
+diagonal structure factor Sk  as follows∫
+
+                   U  =  1π     [Sk − 1] dk,                                                                                  (10)
+
+where Sk  is the spherical average of the diagonal structure factor in Fourier space:∫∫
+
+                   Sk = 1 + 4πN         drn(r)        du u2 sin(ku)ku    nxc(r, u).                                     (11)
+
+Here,  N  is  the  particle  number,  n(r)  is  the  electron  density  at  r,  and  nxc(r, u)  is  the
+spherically averaged exchange-correlation hole density nxc(r, r′) at r′ around an electron
+at r.  If one samples  the structure factor using only correlations within the simulation
+cell, then Equation (10) represents the k-resolved MPC interaction [20].
+      The  structure  factor  can  be  computed  using  VMC  [39],  standard  DMC,  or  the
+HF-based  DMC  [20].    Since  the  spherically  averaged  structure  factor  is  a  diagonal
+function  in  real  space,  HF-based  DMC  calculations  should  yield  the  exact  ﬁxed-node
+Sk.    Figure  4  exhibits  VMC,  standard-DMC  (FN-DMC)  and  HF-based  DMC  (FN)
+calculations  of Sk  for a HEG  with  rs  = 2 and  N=102 electrons,  as obtained  with  the
+use  of  SJ  wave  functions.   Equation  (10)  then  yields  the  following  VMC,  standard-
+DMC,  and  HF-based  DMC  interaction  energies:   -0.29717(3)  Ha/e,  -0.2979(1)  Ha/e,
+Benchmark Quantum Monte Carlo calculations                                                                14
+
+and   -0.29871(8)  Ha/e,   respectively,   which   agree   with   our   calculated   expectation
+values  ⟨ ˆU⟩VMC  =  −0.29719(3)  Ha/e,  ⟨ ˆU⟩FN−DMC  =  −0.2980(1)  Ha/e,  and  ⟨ ˆU⟩HF   =
+−0.29872(8) Ha/e (see also table 3), as expected.
+           0
+                                                                                       VMC
+      -0.2                                                                             FN-DMC
+                                                                                       FN
+
+      -0.4
+
+      -0.6
+
+      -0.8
+
+          -10                 1                 2                 3                 4
+                                                    k  (a.u.-1)
+
+                   Figure  4.  (Color online) VMC, standard-DMC, and HF-based DMC calculations of
+                   the spherically averaged structure factor Sk of a HEG with rs=2 and N=102 electrons,
+                   as obtained with the use of SJ trial wave functions.
+
+
+4.3.  Kinetic energy
+
+
+
+                   Table  5.  Standard-DMC (top) and HF-based DMC (bottom) kinetic and interaction
+                   energies, as obtained in the thermodinamic limit (N  → ∞) with the use of SJ and SJB
+                   wave functions.  ∆ = |SJ − SJB| denotes the absolute value of the diﬀerence between
+                   the SJ and SJB calculations.
+                                       U∞  (Ha/e)     T∞(Ha/e)
+                   FN-DMC SJ        -0.29679(8)     0.29980(8)
+                   FN-DMC SJB     -0.2990(1)       0.3006(1)
+                   ∆=|SJ-SJB|        22(1)10−4       8(1)10−4
+
+                   FN SJ                   -0.2973(1)       0.3003(1)
+                   FN SJB                -0.2994(1)       0.3011(1)
+                   ∆=|SJ-SJB|        22(1)10−4       8(1)10−4
+
+
+      Assuming that the ground-state interaction and total energies have been correctly
+extrapolated,   the  kinetic  energy  can  be  obtained  in  the  thermodynamic  limit  as
+Benchmark Quantum Monte Carlo calculations                                                                15
+
+T∞ = E∞ − U∞.  Table 5 shows standard-DMC and the more accurate HF-based DMC
+calculations  of T∞,  as  obtained  from  the  corresponding  standard-DMC  and  HF-based
+DMC  calculations  of  U∞  (also  quoted)  with  the  use  of  either  SJ  or  SJB  trial  wave
+functions.   The  absolute  value  of  the  diﬀerence  between  the  SJ  and  SJB  calculations
+(∆ = |SJ−SJB|) is also shown in this table.  We note that this diﬀerence is considerably
+larger for the interaction energy, both in the case of the standard DMC approach and
+in  the  case  of  the  more  accurate  HF-based  DMC  approach.   This  is  an  indication  of
+the ﬁxed-node error being smaller in the kinetic energy than in the interaction energy.
+Indeed,  the  correlation  contribution  to  the  kinetic  energy  is  always  smaller  than  the
+corresponding contribution to the interaction energy.
+
+5.  Conclusions
+
+We have presented benchmark VMC and DMC ground-state energies of a 3D HEG with
+rs = 2 and N=54, 102, 178, and 226 electrons, using an MPC interaction and backﬂow
+corrections.   We  have  extrapolated  our  ﬁnite-size  calculations  to  the  thermodynamic
+limit,  and  we  have  found  lower  energies  than  previously  reported,  thus  showing  the
+good  quality  of  our  ﬁxed-node  trial  wave  functions.   We  have  shown  that  previously
+extrapolated results are artiﬁcially lowered by assuming that the VMC and DMC size
+dependences (which we analyze independently) coincide.  We have used the HF operator
+sampling  method  introduced  in  [19]  to  compute  accurate  values  of  the  kinetic  and
+interaction contributions to the ground-state energy.  We also show that these values, as
+obtained with the use of the MPC interaction, coincide with the result one obtains from
+the spherically averaged structure factor.  Our calculations indicate that our HF-based
+DMC approach yields very accurate results even for very large systems.  Finally, we have
+found that the  diﬀerence  between  the interaction  energies  that we  obtain using  either
+the  original  Slater-determinant  nodes  or  the  backﬂow-displaced  nodes  is  considerably
+larger  than  the  diﬀerence  between  the  corresponding  kinetic  energies.   A  combination
+of (i) the fact that our Hellman-Feynman operator sampling method allows, within the
+ﬁxed-node approximation, to calculate accurately the kinetic-energy contribution to the
+ground-state energy and (ii) the fact that the ﬁxed-node error is smaller in the kinetic
+energy than in the interaction and total ground-state energy leads us to the conclusion
+that our kinetic energies should be of great use in the construction of accurate kinetic-
+energy functionals.
+
+Acknowledgments
+
+This    work   was   partially   supported    by   the   Basque    Government    (Grant   No.
+GIC07IT36607)  and  the  Spanish  Ministerio  de  Educaci´on  y  Ciencia  (Grant.    No.
+FIS2006-01343 and CSD2006-53).  Computing facilities were provided by the Donostia
+International Physics  Center (DIPC) and the SGI/IZO-SGIker UPV/EHU (supported
+by  the  National Program for the Promotion  of Human Resources  within  the National
+Benchmark Quantum Monte Carlo calculations                                                                16
+
+Plan of Scientiﬁc Research, Development and Innovation-Fondo Social Europeo, MCyT
+and the Basque Government).
+
+References
+
+ [1]  D.  M.  Ceperley.   Ground  state  of  the  fermion  one-component  plasma:  A  Monte  Carlo  study  in
+        two and three dimensions.   Phys. Rev. B, 18:3126, 1978.
+ [2]  W. M. C. Foulkes, L. Mita˘s, R. J. Needs, and G. Rajagopal.   Quantum Monte Carlo simulations
+        of solids.   Rev. Mod. Phys., 73:33, 2001.
+ [3]  James B. Anderson.  Quantum chemistry by random walk. H  2P, H+3  D3h  1A’1, H2  3Σ+u , H4  1Σ+g ,
+        Be  1S.   J. Chem. Phys., 65:4121, 1976.
+ [4]  A.  Ma,  N.  D.  Drummond,  M.  D.  Towler,  and  R.  J.  Needs.   All-electron  quantum  Monte  Carlo
+        calculations for the noble gas atoms He to Xe.   Phys. Rev. E, 71:066704, 2005.
+ [5]  N. D. Drummond, P. L´opez R´ıos, A. Ma, J. R. Trail, G. G. Spink, M. D. Towler, and R. J. Needs.
+        Quantum  Monte  Carlo  study  of  the  Ne  atom and  the  Ne+  ion.   J.  Chem.  Phys.,  124:224104,
+        2006.
+ [6]  I.  G.  Gurtubay,  N.  D.  Drummond,  M.  D.  Towler,  and  R.  J.  Needs.    Quantum  Monte  Carlo
+        calculations  of  the  dissociation  energies  of  three-electron  hemibonded  radical  cationic  dimers.
+        J. Chem.  Phys., 124:024318, 2006.
+ [7]  I.  G.  Gurtubay  and  R.  J.  Needs.   Dissociation  energy  of  the  water  dimer  from  quantum  Monte
+        Carlo calculations.   J. Chem. Phys., 127:124306, 2007.
+ [8]  Ryo Maezono, A. Ma, M. D. Towler, and R. J. Needs.   Equation of state and Raman frequency of
+        diamond from quantum Monte Carlo simulations.   Phys. Rev. Lett., 98:025701, 2007.
+ [9]  E.  Sola,  J.  P.  Brodholt,  and  D.  Alf`e.   Equation  of  state  of  hexagonal  closed  packed  iron  under
+        earths core conditions from quantum Monte Carlo calculations.  Phys. Rev. B, 79:024107, 2009.
+[10]  B. Tanatar and  D.  M.  Ceperley.   Ground  state of the  two-dimensional electron gas.   Phys.  Rev.
+        B, 39:5005, 1989.
+[11]  Claudio  Attaccalite,  Saverio Moroni,  Paola  Gori-Giorgi,  and  Giovanni  B.  Bachelet.   Correlation
+        energy and spin polarization in the 2D electron gas.   Phys. Rev. Lett, 88:256601, 2002.
+[12]  N.  D.  Drummond  and  R.  J.  Needs.    Quantum  Monte  Carlo  study  of  the  ground  state  of  the
+        two-dimensional fermi ﬂuid.   Phys. Rev. B, 79(085414), 2009.
+[13]  D. M. Ceperley and B. J. Alder.   Ground state of the electron gas by a stochastic method.   Phys.
+        Rev. Lett., 45:566, 1980.
+[14]  G.  Ortiz  and  P.  Ballone.   Correlation  energy,  structure  factor,  radial  distribution  function,  and
+        momentum distribution of the spin-polarized uniform electron gas.  Phys. Rev. B, 50:1391, 1994.
+[15]  Yongkyung Kwon, D. M. Ceperley, and Richard M. Martin.  Eﬀects of backﬂow correlation in the
+        three-dimensional electron gas:  Quantum Monte Carlo study.   PRB, 58:6800, 1998.
+[16]  P. L´opez R´ıos, A. Ma, N. D. Drummond, M. D. Towler, and R. J. Needs.  Inhomogeneous backﬂow
+        transformations in quantum Monte Carlo.   Phys. Rev. E, 74:066701, 2006.
+[17]  F. H. Zong, C. Lin,  and D.  M. Ceperley.   Spin polarization of the low-density three-dimensional
+        electron gas.   Phys. Rev. E, 66:036703, 2002.
+[18]  M. Holzmann, D. M. Ceperley, C. Pierleoni, and K. Esler.   Backﬂow correlations for the electron
+        gas and metallic hydrogen.   Phys. Rev. E, 68:046707, 2003.
+[19]  R.  Gaudoin  and  J.  M.  Pitarke.   Hellman-Feynman  operator  sampling  in  diﬀusion  Monte  Carlo
+        calculations.   Phys. Rev. Lett., 99:126406, 2007.
+[20]  R. Gaudoin, I. G. Gurtubay, and J. M. Pitarke.   To be published.
+[21]  R. J.  Needs,  M.  D.  Towler,  N  .D  Drummond,  and P. L´opez  R´ıos.   casino  version  2.1.400  User
+        Manual.   University of Cambridge, Cambridge, 2007.
+[22]  N. D. Drummond, M. D. Towler, and R. J. Needs.  Jastrow correlation factor for atoms, molecules,
+        and solids.   Phys. Rev. B, 70:235119, 2004.
+[23]  M. H. Kalos.   Stochastic wave function for atomic helium.   J. Comput. Phys., 1:257, 1966.
+Benchmark Quantum Monte Carlo calculations                                                                17
+
+[24]  N. R. Barnett, P. J. Reynolds, and W. A. Lester.   Monte Carlo algorithms for expectation values
+        of coordinate operators.   J. Comput. Phys., 96:258, 1991.
+[25]  Stefano  Baroni  and  Saverio  Moroni.   Reptation  quantum  Monte  Carlo:  A  method  for  unbiased
+        ground-state averages and imaginary-time correlations.   Phys. Rev. Lett., 82:4745, 1999.
+[26]  Roland Assaraf and Michel Caﬀarel.  Zero-variance zero-bias principle for observables in quantum
+        Monte Carlo:  Application to forces.   J. Chem. Phys., 119:10536, 2003.
+[27]  R. Gaudoin and J. M. Pitarke.   To be published.
+[28]  P.  R.  C.  Kent,  R.  J.  Needs,  and  G.  Rajagopal.   Monte  Carlo  energy  and  variance-minimization
+        techniques for optimizing many-body wave functions.   Phys. Rev. B, 59:12344, 1999.
+[29]  N. D. Drummond and R. J. Needs.  Variance-minimization scheme for optimizing Jastrow factors.
+        Phys. Rev. B, 72:085124, 2005.
+[30]  M. D. Brown.  Energy Minimisation in Variational Quantum Monte Carlo.  PhD thesis, University
+        of Cambridge, 2007.
+[31]  N. D. Drummond, R. J. Needs, A. Sorouri, and W. M. C. Foulkes.  Finite-size errors in continuum
+        quantum Monte Carlo calculations.   Phys. Rev. B, 78:125106, 2008.
+[32]  C.  Lin,  F.  H.  Zong,  and  D.  M.  Ceperley.    Twist-averaged  boundary  conditions  in  continuum
+        quantum Monte Carlo algorithms.   Phys. Rev. E, 64:016702, 2001.
+[33]  Simone Chiesa, David M. Ceperley, Richard M. Martin, and Markus Holzmann.   Finite-size error
+        in many-body simulations with long-range interactions.   Phys. Rev. Lett., 97:076404, 2006.
+[34]  Louisa  M.  Fraser,  W.  M.  C.  Foulkes,  G.  Rajagopal,  R.  J.  Needs,  S.  D.  Kenny,  and  A.  J.
+        Williamson.   Finite-size eﬀects and coulomb interactions in quantum Monte Carlo calculations
+        for homogeneous systems with periodic boundary conditions.   Phys. Rev. B, 53, 1996.
+[35]  A. J. Williamson, G. Rajagopal, R. J. Needs, L. M. Fraser, W. M. C. Foulkes, Y. Wang, and M.-Y.
+        Chou.  Elimination of coulomb ﬁnite-size eﬀects in quantum many-body simulations.  Phys. Rev.
+        B, 55:R4851, 1997.
+[36]  P.  R.  C.  Kent,  Randolph  Q.  Hood,  A.  J.  Williamson,  R.  J.  Needs,  W.  M.  C.  Foulkes,  and
+        G. Rajagopal.  Finite-size errors in quantum many-body simulations of extended systems.  Phys.
+        Rev. B, 59:1917, 1999.
+[37]  D. M. Ceperley and B. J. Alder.  Ground state of solid hydrogen at high pressures.  Phys. Rev. B,
+        36:2092, 1987.
+[38]  J. M. Pitarke.   Comment on Diﬀusion Monte Carlo study of jellium surfaces:  Electronic densities
+        and pair correlation functions.   Phys. Rev. B, 70:087401, 2004.
+[39]  R.  Gaudoin  and  J.  M.  Pitarke.    Quantum  Monte  Carlo  modelling  of  the  spherically  averaged
+        structure factor of a many-electron system.   Phys. Rev. B, 75:155105, 2007.

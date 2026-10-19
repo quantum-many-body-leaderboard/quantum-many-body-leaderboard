@@ -1,0 +1,443 @@
+A study of the dense  Uniform Electron Gas with high orders of Coupled
+Cluster
+          Verena A. Neufeld1,      a) and Alex J. W. Thom1
+          Department  of Chemistry,  Lensﬁeld Road,  Cambridge,  CB2 1EW, United Kingdom
+          (Dated:  27 September 2018)
+          We investigate the accuracies of diﬀerent coupled cluster levels in a ﬁnite  model solid, the 14 electron spin-
+          non-polarised  uniform  electron  gas.   For  densities  between  rs  =  0.5  a0  and  rs  =  5  a0,  we  calculate  ground
+          state  correlation  energies  with  stochastic  coupled  cluster  ranging  from  coupled  cluster  singles  and  doubles
+          (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5).  We ﬁnd the need to add
+          triple excitations for an accuracy of 0.01eV/electron beyond rs  = 0.5 a0.  Quadruple excitations start being
+          signiﬁcant  past  rs  =  3  a0.   At  rs  =  5  a0,  CCSD  gives  a  correlation  energy  with  a  16%  error  and  CCSDT
+          is  in  error  by  2%  compared  to  the  CCSDTQ5  result.   CCSDTQ5  gives  an  energy  in  agreement  with  full
+          conﬁguration interaction quantum Monte Carlo results.
+
+          PACS numbers:  05.10.Ln,02.70.Ss,31.15.bw,31.15.V-,71.10.Ca
+
+
+I.    INTRODUCTION                                                           in the  thermodynamic limit  in the  uniform electron gas
+                                                                             whereas it is unclear whether coupled cluster singles and
+  Coupled  cluster  theory1–3        is  known  as  the  gold  stan-         doubles  (CCSD)  does28,29.  DMC  scales as  O(n3)23               and
+dard  of  ab  initio  molecular  simulations  giving  energies               can give the exact answer provided suﬃcient a priori  in-
+to  chemical accuracy of  about 1  kcal mol−1  (see  review                  formation about the wavefunction is available.  FCIQMC
+Ref.   4).   Moreover,  its  accuracy  is  systematically  im-               gives exact energies within  a ﬁnite  basis set without re-
+provable as more excitation levels are added.  Driven by                     quiring  a  priori  knowledge  of  the  wavefunction.   Most
+the need for systematically improvable methods in solids,                    such  calculations  are  now  performed  with  the  initiator
+coupled cluster  is  now increasingly being  applied to  pe-                 approximation25       that  adds  a  bias  to  the  energy  which
+riodic  systems,  see  e.g.   Refs.      5–12.   In  this  paper  we         can be systematically reduced as more Monte Carlo par-
+apply  the  stochastic  coupled  cluster  method13,14           to  the      ticles are added to the system.  FCIQMC has so far been
+dense uniform electron gas to assess the performance of                      applied to small systems, including LiH (3×3×3 k point
+coupled cluster in periodic systems at representative elec-                  mesh with 2 electrons and 2 orbitals per k point) and di-
+tron densities.  Performing coupled cluster stochastically                   amond (2×2×2 k  points  with 8 electrons and 8 orbitals
+can often  reduce the  memory  requirements  and  compu-                     per k point)8.  Since FCIQMC samples the whole Hilbert
+tational scaling.  It can therefore reach higher basis sets                  space, it is often more expensive than a level of coupled
+and  coupled  cluster  levels  than  conventional implemen-                  cluster that is suﬃcient for accurate energies.
+tations.                                                                        The system we study here is the uniform electron gas
+  While  coupled  cluster  is  just  starting  to  emerge  as  a             (UEG)30–32      which  is  a  simple  model  for  a  periodic  sys-
+useful tool for solid calculations, density functional the-                  tem  where  the  positive  lattice  potential  of  the  atomic
+ory  (DFT)15,16     is  one  of  the  most  widely  used  ab  ini-           nuclei is approximated by a uniform positive background
+tio  electronic structure methods in extended systems.  It                   potential;  the  energies  of  electron  gases  play  an  impor-
+scales  favourably  (O(n3)  or  even  O(n)  (see  e.g.    Ref.               tant role in density  functional theory31–33.  There exists
+17)  where  n  is  a  measure  for  the  system  size)  but  it              accurate  ground  state  energy  data  for  the  high  density
+is  not  systematically  improvable  and  it  can  have  diﬃ-                regime based on the ﬁnite UEG with the FCIQMC34–36
+culties  with  strongly  correlated  systems18.    These  and                and DMC37–45       methods.  Versions of coupled cluster have
+other  shortcomings  have  led  to  an  interest  in  apply-                 been  applied  to  the  UEG  in  the  thermodynamic  limit,
+ing  alternative  methods  to  periodic  systems.    Besides                 see  e.g.26,46,47.   CCSD  and  CCSDT  have  been  applied
+coupled  cluster,  these  include  for  example  the  random                 to  the  ﬁnite  three-dimensional  (3D)  UEG14,29,34,48–50.
+phase  approximation  (RPA)19–21,  second  order  Møller-                    Shepherd50      has  extrapolated  ﬁnite  CCSD/CCD  results
+Plesset  perturbation  theory  (MP2)22,  diﬀusion  Monte                     in the 3D UEG to the thermodynamic limit and has com-
+Carlo  (DMC)23       and  (initiator)  full  conﬁguration  inter-            pared them to Ceperley and Alder’s DMC energies37                  (see
+action  quantum  Monte  Carlo  (FCIQMC)8,24,25.    RPA                       ﬁgure 2c in Ref.     50).  Using these DMC energies as a ref-
+yields  a  ground  state  energy  that  is  equal  to  the  en-              erence,  the  extrapolated  CCSD  correlation  energy  has
+ergy  output  of  a  version  of  ring  diagram  coupled  clus-              an  error  of  under  10%  at  rs  =  1.0  a0  which  increases
+ter doubles (CCD)26,27.  MP2 has been shown to diverge                       to  about  20%  at  rs  =  5.0  a0.   Another  recent  study14
+                                                                             has performed initiator and non-initiator stochastic cou-
+                                                                             pled cluster in the CCSD and CCSDT levels on the dense
+                                                                             14 electron 3D UEG. The diﬀerence between CCSD and
+a)Electronic mail:  van26@cam.ac.uk                                          CCSDT was found to be signiﬁcant even in the low cor-
+                                                                                                                                                      2
+                                                                                                        (        )
+relation regime at rs < 1.0 a0.  rs is the radius of a sphere                 reference, Ψ0 = exp         −τ ˆH    Ψref, where imaginary time,
+that on average contains one electron.  In this paper, we                     τ  → ∞.  After  some manipulation,13,14             this yields an it-
+apply  coupled  cluster  up  to  the  CCSDTQ5  level  which                   erative equation for the amplitudes ti,
+included  quintuple  excitations  directly  to  the  14  elec-
+tron  non-spin-polarized  UEG  in  the  range  rs  =  0.5  to                           ti(τ + δτ) = ti(τ) − δτ ⟨Di|  ˆH − E |Ψ(τ)⟩ .        (3)
+5.0  a0  which  is  representative  of  some  common  simple
+solids  (e.g.   see  Ref.   30).   We  compare  with  (initiator)             Monte Carlo particles are placed on the excitors ˆai.  They
+FCIQMC36        and  MP234      results.   Using  coupled  cluster            are  then  propagated  to  sample  equation            3 which  is  ex-
+levels  from  CCSD  to  CCSDTQ5,  we  aim  to  answer  the                    plained  in  more  detail  in  the  following  paragraph.   At
+question  what  coupled  cluster  level  is  needed  to  accu-                convergence, the average population on an excitor ˆai cor-
+rately  model  simple  ﬁnite  solids  with  certain  densities,               responds to its coeﬃcient ti.  These particles do not have
+represented by the rs  parameter, with coupled cluster.                       to be discrete and can take real-valued weights53,54.
+                                                                                 We start the Monte Carlo sampling by randomly pick-
+II.    COUPLED CLUSTER MONTE CARLO                                            ing  a  cluster  (i.e.   a  combination)  of  excitors  that  are
+                                                                              occupied  by  particles.  They  act  on  the  reference  deter-
+                                                           13,14              minant  to  yield  an  excited  determinant  Dn.   The  three
+  Coupled   Cluster   Monte   Carlo   (CCMC)                       is   a     major steps are13,24:
+stochastic version of the coupled cluster method1–4.  The
+energies  obtained  are  consistent  with  conventional  cou-                      •  Spawn:  Another determinant Dm that may be un-
+pled cluster while often saving computational and mem-                                occupied  or  occupied  is  randomly  chosen.  With  a
+ory  cost13,14,51.     Recent  developments  include  linked                          probability proportional to | ⟨Dm|  ˆH |Dn⟩ |,  Monte
+CCMC52,  the  initiator  approximation for  CCMC14                  and               Carlo particles can spawn to ˆam.
+the  even  selection  feature51.   This  section  gives  a  brief
+overview over the method which is described more thor-                             •  Death/Birth:   With  a  probability  proportional  to
+oughly in the literature13,14.                                                        | ⟨Dn|  ˆH  − S − EHF |Dn⟩ |  a  particle  is  placed  on
+  Coupled cluster theory solves the Schr¨odinger equation                             an.  S is the population-controlling shift, described
+for the ground state energy.  The ground state wavefunc-                              below, and EHF  is the Hartree-Fock energy.
+tion  Ψ0  is  constructed  from  the  reference  wavefunction                      •  Annihilation:  Finally, particles of opposite sign on
+Ψref  using the ansatz                                                                the same excitor are removed.
+
+                         Ψ0 ∝ exp( ˆT )Ψref,                             (1)  The ground state correlation energy is estimated by the
+where   ˆT   =  ∑                                                             projected energy
+                   i tiˆai.   Wavefunctions  are  expressed  in  a
+Slater  determinant  Di  basis.   In  this  study,  Ψref  =  D0,
+the  Hartree-Fock  Slater  determinant.    ˆai  are  excitors,                               Eproj.(τ) =  ⟨D0|  ˆH − EHF |Ψ(τ)⟩⟨D0|Ψ(τ)⟩                         (4)
+that produce excited Slater determinants ˆaiD0 = Di.  ti
+are the corresponding coeﬃcients of ˆai.  If the sum is over                  and,  independently,  by  the  above-mentioned shift.   The
+all possible ˆai, Ψ0 will tend to the full conﬁguration inter-                shift is usually set to zero at the beginning and when the
+action  (FCI)  wavefunction.   Coupled  cluster  theory  has                  particle number N  is high enough (when we have passed
+the advantage over doing (F)CI that it can truncate the                       the plateau phase of the sampling13,55) it is varied as24
+sum for  ˆT  to only include some excitors ˆai while still be-                                                           (      N(τ)        )
+ing  size  consistent.  Coupled  cluster  singles and  doubles
+(CCSD)  for  example  only  includes  excitors  that  excite                       S(τ) = S(τ − Zδτ) −    γZδτ  ln          N(τ − Zδτ)              (5)
+one or two electrons whereas CCSDT also includes exci-
+tors that excite three electrons from the reference and so                    where γ is a damping parameter and Z  is the number of
+on.   Due  to  the  exponential  in  equation        1,  higher  order        iterations to pass before the shift is updated.
+excitations are still present indirectly, created by a com-                      Franklin et al.52     have modiﬁed equation          3 (which later
+bination of lower order ones and therefore dependent on                       had E replaced by the sum of the shift S and the Hartree
+their coeﬃcients ti.                                                          Fock energy EHF) to
+  Stochastic Coupled Cluster makes use of the sparsity of
+the wavefunction, and uses sampling to decrease compu-                          ti(τ + δτ) = ti(τ) − δτ ⟨Di|  ˆH − Eproj. − EHF |Ψ(τ)⟩ −
+tational and memory costs.  To understand the sampling                                                                       δτ(Eproj. − S)ti(τ),
+algorithm, we ﬁrst project the Schr¨odinger equation onto                                                                                           (6)
+some determinant ⟨Dm| giving a set of equations
+                      ⟨Dm|  ˆH − E |Ψ0⟩ = 0.                         (2)      which we use as well.  We use equation              4 to ﬁnd an esti-
+                                                                              mate of for Eproj..  This change does not aﬀect the Spawn
+Instead of explicitly solving these equations, the ground                     and Annihilation steps.  If a single excitor an was selected
+state  wavefunction  is  formed  by  a  projection  from  the                 before the Spawn  step, the  (modiﬁed) Death/Birth  step
+                                                                                                                                                       3
+
+causes  a  particle  to  die/be  created  on  an  with  a  prob-               the CBS CCSD result.  This is similar to the idea of focal
+ability  proportional  to  | ⟨Dn|  ˆH  − S − EHF |Dn⟩ |.   For                 point analysis as described in e.g.  Ref.           62.
+composite  clusters,  i.e.  if  two  or  more excitors were  se-                  Shepherd  et  al.34     have  shown  that  for  MP2,  the  cor-
+lected and collapsed to an, the probability is proportional                    relation energy for a ﬁnite basis set with M  spinorbitals
+to | ⟨Dn|  ˆH − Eproj.(τ) − EHF |Dn⟩ | instead as we do not                    goes  as  1/M  in  the  leading  order  for  large  M.    They
+sample the third term on the right hand side of equation                       and other studies14,35,36,50,63,64       have used this trend and
+6 then.                                                                        shown  that  it  also  holds  reasonably well  for  CCSD  and
+   For  our  stochastic  calculations,  we  have  made  use  of                FCI(QMC).  These  studies  have  usually  excluded  points
+development  versions  of  the  HANDE  code56.   We  have                      with  larger  1/M  that  were  no  longer  in  the  region  in
+used  the  cluster  multispawn  feature57          and  the  full  non-        which 1/M  is a good ﬁt.
+composite  cluster  selection  described  in  Ref.            57  using           In this study, we have decided to modify this approach
+one MPI process divided up into OpenMP threads when                            to  allow higher  orders  of  1/M  to  be  considered as  well.
+running  CCMC.  We  have  also  run  some  FCIQMC  cal-                        This accounts for the fact that 1/M  is merely a leading
+culations to compare our CCMC results to and we used                           order term and by adding higher orders we allow for cor-
+the conventional and initiator versions for FCIQMC24,25                        rection  terms  to  account  for  the  part  of  the  energy  not
+while  only  using  non-initiator  CCMC.  The  error  bars                     accounted for by 1/M.  There are two aspects that need
+of  the  data  presented  here  were  estimated  by  reblock-                  to be considered when choosing the best ﬁt curve:  What
+ing  analysis58    using  pyblock59       and  the  correlation  en-           polynomial are we ﬁtting, i.e.  what is the  highest order
+ergies  are  obtained  from  the  projected  energy.   For  the                of 1/M  to include, and how many points with high 1/M
+data  presented  here,  the  projected  energy  agrees  with                   should be excluded from the ﬁt?
+the  shift  within  2σ.   Errors  were  combined  in  quadra-                     Starting with the lowest order polynomial to ﬁt (1/M
+ture.    We  found  no  signiﬁcant  population  control  bias                  when ﬁtting CCSD and a constant when ﬁtting coupled
+using a reweighting scheme used in DMC60                 and adapted
+to FCIQMC61.                                                                   cluster  diﬀerences),  we  ﬁrst  ﬁt  all  the  data  points  and
+                                                                               then  start  excluding  points  with  lowest  M.    For  each
+                                                                               ﬁt,  we  calculate  χ2  over  number  of  degrees  of  freedom( f(xi)−yi)2  where  yi  is  a  data  value,
+III.    UNIFORM ELECTRON GAS                                                   #d.o.f..   χ2  =  ∑i          σi
+                                                                               f(xi)  is  its  ﬁtted  value  and  σi  is  the  standard  devia-
+   We  used  a  plane  wave  basis  and  studied  the  14  elec-               tion  of  yi65.   As  soon  as  we  reach  a  local  minimum  in
+tron non-spin-polarised electron gas.  The simulation was                      the χ2/#d.o.f.  value, we stop removing points and note
+performed  in  three  dimensional  k  space,  where  the  set                  down  the  value  at  1/M  =  0  given  by  the  ﬁt  at  the  lo-
+of  k  are  the  wavevectors of  the  M/2  plane  waves,  with                 cal minimum.  If no local minimum can be found before
+a cubic simulation box with sides of length L.  A kinetic                      there are as few data points left as the number of ﬁtting
+energy  cutoﬀ  was  used  to  select  the  plane  waves.   In  k               parameters,  then  the  search  for  a  best  ﬁt  for  the  ﬁrst
+space and using second quantisation, the Hamiltonian is                        polynomial  was  unsuccessful.   We  then  repeat  this  pro-
+expressed as                                                                   cedure  of  consecutively  removing  data  points  with  the
+ˆH = ∑     1                                   1   4π                          next order polynomials,  initially  starting with  a  full  set
+                            kˆck +     ∑                   k+qˆc†k′+qˆckˆck′.  of data points again.  We  ﬁt linear, quadratic and cubic
+        k  2 (k2 + VM)ˆc†           q⁄=0,k,k′  2 |q|2L3 ˆc†                    polynomials  and  a  constant  as  well  if  we  are  ﬁtting  to
+                                                                     (7)       diﬀerences.   Finally,  we  compare  the  results  of  the  ﬁts
+                                                                               at  local  minima  in  the  number  of  points  at  1/M  =  0.
+ˆc†k/ˆck creates/annihilates an electron with momentum k                       If  the  lowest  order  ﬁt  result  agrees  with  the  higher  or-
+and VM is the Madelung constant that does not aﬀect the                        der  ones  within  2σ,  we  accept  it  as  the  CBS  result.   If
+                                        1                                      it  does  not  agree  with  all  the  higher  ones,  we  compare
+correlation energy.  rs = ( 3L34πN )3  where N  is the number
+of electrons.                                                                  the  second  lowest  order  ﬁt  result  to  its  higher  order  ﬁt
+                                                                               results, etc.  This process can continue up comparing the
+                                                                               CBS results  from the  highest  two  polynomials.  If  there
+IV.    EXTRAPOLATION TO COMPLETE BASIS SET                                     is still no CBS result at the end, then the extrapolation
+LIMIT                                                                          was not successful and a CBS value has to be estimated
+                                                                               (see results section for individual cases).
+   Coupled  cluster  singles  and  doubles  (CCSD)  is  the                       As  an  example,  ﬁgure       1  shows  the  best  ﬁts  with  the
+least  expensive  level  of  coupled  cluster.   Owing  to  mo-                lowest  χ2/#d.o.f.   for  rs  =  0.5  a0  CCSD  and  14  elec-
+mentum  and  spin  conservation,  CCSD  is  equivalent  to                     trons.  The linear and the quadratic ﬁt intercepts do not
+CCD in the UEG. At ﬁrst, we extrapolated CCSD calcu-                           agree within 2σ.  The quadratic and cubic ﬁts agree which
+lations  to  the  complete  basis  set (CBS)  limit  for  the 14               meant that we took the quadratic ﬁt intercept as the CBS
+electron UEG.  We  then  estimated  the  CBS  limit  of  the                   result.  We have used the curve         ﬁt function in the SciPy66
+other  truncation  levels  studied  by  extrapolating  energy                  optimize  module  for  curve  ﬁtting  and  Matplotlib67               for
+diﬀerences between truncation levels and adding this  to                       plotting.   The  standard  errors  of  the  correlation energy
+                                                                                                                                                       4
+
+
+
+      −0.44                              −0.586                                                                                       M  = 66
+                                                                                       0.000                                          M  = 162
+      −0.48                              −0.588                                                                                       M  = 358
+                                                                                     −0.001                                           M  = 1030
+
+      −0.52     0                  0.0005
+
+      −0.56                                                                          −0.002
+
+
+      −0.60                                                                          −0.003
+            0.000             0.005             0.010             0.015                        0.5  1.0          2.0          3.0                        5.0
+                                        1/M                                                                            rs(a0)
+
+ FIG. 1:  Extrapolating correlation energy against 1/M                                (a) CCSD - CCSDT correlation  energy diﬀerence
+
+for rs  = 0.5 a0  CCSD and 14 electrons with the best ﬁt                               0.0004
+ linear line (blue, dashed, excluding three data points)                                                                               M  = 66
+  giving b0 = -0.58866(5) ha, best quadratic ﬁt (green,                                0.0002                                          M  = 162
+     solid line, excluding two data points) with b0 =                                                                                  M  = 358
+   -0.58850(6) ha and best cubic ﬁt (red, long dashes,
+ excluding one data point), giving b0  = -0.58848(7) ha.                               0.0000
+The CBS limit is then taken to be -0.58850(6) ha from
+ the quadratic ﬁt, as the linear ﬁt and the quadratic ﬁt
+do not agree within 2σ whereas the quadratic and cubic                               −0.0002
+  ﬁts agree within 2σ.  The CBS result is shown with a
+ light blue horizontal line that has a thickness of twice
+                               its error.                                            −0.0004
+                                                                                                0.5  1.0          2.0          3.0                        5.0
+                                                                                                                       rs(a0)
+were treated as absolute and not relative weights.
+                                                                                   (b) CCSDT - CCSDTQ correlation energy diﬀerence
+
+V.    RESULTS                                                                          0.0004
+                                                                                                                                       M  = 66
+   Figure   2  shows  how  the  diﬀerences  in  correlation  en-                       0.0002                                          M  = 162
+ergy between consecutive coupled cluster levels vary with
+rs for diﬀerent numbers of spinorbitals M.  As a reference,
+an accuracy of 0.01 eV/electron = 0.00037 ha/electron is                               0.0000
+shown  with  dashed  horizontal  lines.   This  is  of  a  simi-
+lar  order  of  magnitude  as  chemical  accuracy  (ca.   0.04
+eV/molecule23).   To  distinguish  solid  phases  from  each                         −0.0002
+other,  enthalpy  diﬀerences  of  about  0.1  eV/atom  often
+need  to  be  resolved  and  at  room  temperature  an  accu-                        −0.0004
+racy of 0.01 eV in the energy is desired (see Ref.                68  for                       0.5  1.0          2.0          3.0                        5.0
+details).  We have therefore chosen 0.01 eV/electron as a                                                              rs(a0)
+guide for energies to be of suﬃcient accuracy.
+   The CCSD to CCSDTQ5 CBS values are summarized                                  (c) CCSDTQ - CCSDTQ5 correlation energy diﬀerence
+in  table  I.  Note  that  while  ﬁgure       2  quotes  energies  in
+energies per  electron, table       I  shows energies for 14 elec-              FIG. 2:  Coupled cluster energy per electron diﬀerences
+trons.  First,  the  CCSD  CBS  value  was  found  and  then                      at spinorbitals M  = 66, 162, 358, 1030.  The dashed
+the CBS limit of diﬀerences between consecutive coupled                         horizontal lines show an accuracy of 0.01 eV/electron.
+cluster  levels  were  added  on  to  ﬁnd  the  CBS  limit  of
+the  other  truncation  levels.   For  rs  up  to  2.0  a0,  earlier
+CCSD  and  CCSDT  results14             are  shown  as  well.   MP2
+results34   and FCIQMC are given for comparison.  For rs
+=  0.5,  1.0,  2.0  and  5.0  a0  FCIQMC  values  from  Shep-
+                                                                                                                                                  5
+
+herd et al.36   are given and additionally for rs  = 0.5 and
+1.0 a0, new FCIQMC CBS results are presented for com-                                                CCSD
+parison.  When  using  the  initiator  approximation25,  the                       0.15
+FCIQMC  correlation energies  values  for  a  certain  num-                                          CCSDT
+ber of spinorbitals M were estimated by ﬁtting horizontal                                            CCSDTQ
+lines to energy against number of Monte Carlo particles                            0.10
+curves, consecutively removing data points with the least
+number of particles.  The energy at the global minimum
+in  χ2/#d.o.f.   when  ﬁtting  a  horizontal line  is  taken  as
+the  energy  result.   The  error  in  the  average  number  of                    0.05
+particles  was  very  small  and  therefore  ignored.  For  the
+(i)FCIQMC results with rs  = 0.5 and 1.0 a0, the initia-
+tor approximation was used for M  greater then 358 and                             0.00
+66  respectively.   The  initiator  method  was  not  used  for                            0.5  1.0          2.0          3.0                         5.0
+CCMC calculations in this study.                                                                                 rs(a0)
+
+
+VI.    DISCUSSION                                                              FIG. 3:  Fractional diﬀerence of CCSD, CCSDT and
+                                                                                 CCSDTQ correlation energies to the CCSDTQ5
+  Figure    2a  shows  that  CCSD  gives  an  accuracy  worse                  correlation energy as a function of rs.  Some coupled
+than 0.01 eV/electron for rs greater than 0.5 a0 as the dif-                 cluster correlation energies were estimated as described
+ference between CCSD and CCSDT is greater than 0.01                                                       in table  I.
+eV/electron.  Considering ﬁgure          2b, CCSDT seems to be
+suﬃcient up to rs = 2.0 a0.  As the diﬀerences in correla-
+tion energy increase in magnitude with M  and the M  =                      performs worse than CCSD and vice versa for higher rs in
+162 energy for rs = 3.0 a0 is close to 0.01 eV/electron, one                the regime studied (see table        I). MP2 gives a less accurate
+should be cautious about using CCSDT for rs  = 3.0 a0.                      answer than CCSDT and higher truncation levels for all
+Figure   2c  shows  that  the  diﬀerence  between  CCSDTQ                   studied rs.
+and  CCSDTQ5  is  not  negligible  for  rs  greater  than  2.0                 We  present  new  extrapolated  FCIQMC  results  for  rs
+a0.                                                                         = 0.5 and 1.0 a0, which are similar to  but do not agree
+  Of  course,  this  analysis  implicitly  assumes  that  the               with  Shepherd  et  al.’s36      values.    Similarly,  our  CCSD
+energy is  monotonically decreasing with coupled cluster                    and CCSDT values for rs  = 0.5 and 1.0 a0  do not agree
+level.  If the diﬀerence to the next excitation level is big-               within  2σ  with  Spencer  et  al.’s14      values.  Our  CBS  cor-
+ger  than  0.01  eV/electron,  we  expect  the  diﬀerence  to               relation energies are less negative.  We can explain these
+the true energy also to be greater than 0.01 eV/electron.                   deviations by considering the shape of the extrapolation
+However, we found that in our case, the energy was mono-                    curves such as ﬁgure       1.  Our CCSD calculations went up
+tonically decreasing and the CCSDTQ5 result agrees very                     to 18342/11150 spinorbitals for rs  = 0.5/1.0 a0 and that
+well  with  FCIQMC,  see  table        I.  This  supports  our  ap-         was our starting point to extrapolate higher truncations
+proach  of  comparing  the  energy  diﬀerence  to  the  next                and  FCIQMC  from.   Shepherd  et  al.36            and  Spencer  et
+excitation level when assessing accuracies.                                 al.14  only considered M up to 4218 at most.  If fewer data
+  Figure    3  shows  the  diﬀerence  in  correlation  energy               points  with  low 1/M  are present  and a  linear  ﬁt  is  em-
+found with  CCSD,  CCSDT and CCSDTQ  to  the corre-                         ployed (as Shepherd et al.36        and Spencer et al.14     did), the
+lation energy found with CCSDTQ5 as a fraction of the                       intercept with the y  axis, the CBS energy estimate, will
+CCSDTQ5 correlation energy.  Given that the CCSDTQ5                         be more negative than in the case where lower 1/M  are
+energy shown in table        I is merely a lower bound for the              present and higher ﬁts are allowed.  Our FCIQMC values
+true magnitude of the CCSDTQ5 energy, the errors pre-                       quoted in table      I were found by extrapolating the diﬀer-
+sented  here  are  also  lower  bounds.   The  error  in  CCSD              ence  between  the  CCSDTQ/CCSDT  and  the  FCIQMC
+is at least 16% for rs  = 5.0 a0  and for CCSDT it is still                 values for rs  = 0.5/1.0 a0  as CCSDTQ/CCSDT was the
+as big as about 2%.  The error of CCSDTQ is small but                       highest coupled cluster data set that contained the high-
+noticable for rs  = 5.0 a0.  This means that for a study of                 est  M  used  in  our  FCIQMC  study  for  rs  =  0.5/1.0  a0
+a solid with rs ≈ 4 a0  say, e.g.  sodium, CCSD may give                    respectively.  Had we instead extrapolated FCIQMC di-
+a correlation energy that is oﬀ by over 12% and the error                   rectly,  the  results  would  have  been  -0.59497(4)  ha  (in-
+with CCSDT is  still over 1%.  As  the energy diﬀerences                    stead of -0.59467(9) ha) with a linear ﬁt for rs = 0.5.  For
+between  coupled  cluster  levels  increase  with  rs,  proper-             this  direct ﬁt  we  included  spinorbitals  up to  M  =  4218
+ties  such  as  the  lattice  parameter  or  the  bulk  modulus             and when we extrapolated diﬀerences, we used informa-
+will be underestimated by low orders of coupled cluster.                    tion from the CCSD result with spinorbitals up to 18342.
+                                                                            This shows that it is crucial to include large numbers of
+  As  Shepherd  et  al.34     already  noted,  for  low  rs,  MP2           virtual  orbitals  to  converge  to  the  correct  answer.   We
+                                                                                                                                                               6
+
+TABLE I: Summary of complete basis set extrapolated results for the correlation energy of the 14 electron uniform
+                                                               electron gas in hartrees.
+
+                  rs  = 0.5 a0                              rs  = 1.0 a0                              rs  = 2.0 a0                            rs  = 3.0 a0         rs  = 5.0 a0
+CCSD              -0.58850(6)/-0.5897(1)a            -0.51450(9)/-0.5155(3)a b           -0.4096(10)/-0.4094(1)a          -0.3395(1)           -0.2531(3)
+CCSDT             -0.59457(7)/-0.5965(2)a            -0.5307(2)/-0.5317(3)a              -0.4407(10)/-0.4354(4)a          -0.3780(3)c          -0.2970(4)d
+CCSDTQ            -0.59465(8)                              -0.5311(2)                                -0.4432(10)e         -0.3833(3)ce         -0.3015(4)d f
+CCSDTQ5           -0.5947(2)e                        -0.5311(2)f                         -0.4434(10)e f                   -0.3837(3)cef        -0.3025(4)d f
+FCIQMC            -0.59467(9)g/-0.5969(3)h           -0.5313(2)i/-0.5325(4)h             -0.4447(4)h                                           -0.306(1)h
+MP2               -0.575442(1)j                      -0.499338(2)j                       -0.398948(2)j                                         -0.255664(4)j
+
+
+a This (initator) CCSD/CCSDT value is from Spencer et al.14
+b Also compare to -0.5152(5) from ﬁgure 7 in Shepherd et al.34             as quoted by Spencer et al.14
+c The CCSDT to CCSD energy diﬀerence for rs = 3.0 a0 was estimated by the mean of a constant, linear, quadratic and cubic ﬁt with
+  lowest χ2/#d.o.f.  if multiple ﬁts were available.
+d The CCSDT to CCSD energy diﬀerence for rs = 5.0 a0 was estimated by the mean of a constant, linear and quadratic ﬁt with lowest
+
+e The CCSDTQ to CCSDT diﬀerence for rs = 2.0 and 3.0 a0 and the CCSDTQ5 to CCSDTQ diﬀerence for rs = 0.5 a0 was estimatedχ2/#d.o.f.  if multiple ﬁts were available.
+
+  by the mean of a linear ﬁt and the data point with lowest 1/M.
+f The CCSDTQ to CCSDT diﬀerence for rs = 5.0 a0 and the CCSDTQ5 to CCSDTQ diﬀerence for rs = 1.0, 2.0, 3.0 and 5.0 a0 was
+  estimated by the CCSDTQ to CCSDT diﬀerence at 66 spinorbitals.
+g (i)FCIQMC value of rs = 0.5 a0 was estimated by the CCSDTQ value plus the diﬀerence of CCSDTQ to (i)FCIQMC extrapolated
+  value.
+h This iFCIQMC data is from Shepherd et al.36
+i (i)FCIQMC value of rs = 1.0 a0 was estimated by the CCSDT value plus the diﬀerence of CCSDT to (i)FCIQMC extrapolated value.
+j The MP2 data is from Shepherd et al.34
+
+
+believe that the disagreement of the CCSD and CCSDT                                for   Materials   Science   for   funding   under   grant   num-
+values for rs = 0.5 and 1.0 a0 with Spencer et al.’s14                  val-       ber  EP/L015552/1.   A.J.W.T.  thanks  the  Royal  Soci-
+ues  may  also  be  due  to  initiator  energies  that  are  not                   ety  for  a  University  Research  Fellowship  under  grant
+converged fully.  We have not used the initiator approxi-                          UF110161.  This work used the UK Research Data Facil-
+mation for coupled cluster data here.                                              ity (http://www.archer.ac.uk/documentation/rdf-guide)
+                                                                                   and   ARCHER  UK  National   Supercomputing   Service
+                                                                                   (http://www.archer.ac.uk)  under  ARCHER  Leadership
+VII.    SUMMARY AND CONCLUSIONS                                                    project with grant e507.
+
+                                                                                    1F. Coester and H. K¨ummel,        Nucl. Phys. 17, 477 (1960).
+                                                                                    2J.  ˇCiˇzek,J. Chem. Phys. 45, 4256 (1966).
+   We  have  shown  that  CCSD  and  CCSDT  are  limited                            3J.  ˇCiˇzek and J. Paldus,  Int. J. Quantum Chem. 5, 359 (1971).
+for  modelling  ﬁnite  solids  that  can  be  described  by  the                    4R. J. Bartlett and M. Musia/suppressl,Rev. Mod. Phys. 79, 291 (2007).
+14 electron uniform electron gas with rs greater than 2.0                           5S.  Hirata,   I.  Grabowski,   M.  Tobita,     and  R.  J.  Bartlett,
+a0.    A  comparison  with  CCSDTQ5  has  shown  that  if                            Chem. Phys. Lett. 345, 475 (2001).
+an  accuracy  of  0.01  eV/electron  is  desired,  CCSDT  is                        6S.  Hirata,   R.  Podeszwa,   M.  Tobita,     and  R.  J.  Bartlett,
+required beyond rs = 0.5 a0 and CCSDTQ is worth con-                                 J. Chem. Phys. 120, 2581 (2004).
+                                                                                    7A.  Gr¨uneis,  G.  H.  Booth,  M.  Marsman,  J.  Spencer,  A.  Alavi,
+sidering beyond rs  = 3.0 a0.  At rs  = 5.0 a0, CCSD only                            and G. Kresse,    J. Chem. Theory Comput. 7, 2780 (2011).
+reproduces up to about 84% of the correlation energy and                            8G.   H.   Booth,    A.   Gr¨uneis,   G.   Kresse,       and   A.   Alavi,
+CCSDT up to about 98%.                                                               Nature 493, 365 (2013).
+                                                                                    9A. Gr¨uneis,  J. Chem. Phys. 143, 102817 (2015).
+   This study has demonstrated that there can be a need                            10A. Gr¨uneis,  Phys. Rev. Lett.  115, 066402 (2015).
+for  coupled  cluster  orders  beyond  CCSDT  when  mod-                           11K. Liao and A. Gr¨uneis,     J. Chem. Phys. 145, 141102 (2016).
+elling ﬁnite correlated solid-state systems.                                       12J.  McClain,  Q.  Sun,  G.  K.-L.  Chan,    and  T.  C.  Berkelbach,
+                                                                                     J. Chem. Theory Comput. 13, 1209 (2017),            arXiv:1701.04832.
+                                                                                   13A. J. W. Thom,      Phys. Rev. Lett.  105, 263004 (2010).
+                                                                                   14J.        S.        Spencer        and        A.        J.        W.        Thom,
+ACKNOWLEDGMENTS                                                                      J. Chem. Phys. 144, 084108 (2016),         arXiv:1511.05752.
+                                                                                   15W. Kohn and L. J. Sham,        Phys. Rev. 140, A1133 (1965).
+                                                                                   16P. Hohenberg and W. Kohn,         Phys. Rev. 136, B864 (1964).
+   We   thank   Dr.        Pablo   L´opez   R´ıos   for   helpful                  17C.-K. Skylaris, P. D. Haynes, A. A. Mostoﬁ,   and M. C. Payne,
+discussions   on   ﬁtting,   especially   the   idea   of   using                    J. Chem. Phys. 122, 084119 (2005).
+χ2/(number   of   degrees   of   freedom).       For   the   re-                   18A.     J.     Cohen,      P.     Mori-S´anchez,          and     W.     Yang,
+search   data   supporting   this   publication   and   more                         Chem. Rev. 112, 289 (2012).
+                                                                                   19D. Bohm and D. Pines,       Phys. Rev. 82, 625 (1951).
+information,  see  https://doi.org/10.17863/CAM.14336.                             20D. Pines and D. Bohm,       Phys. Rev. 85, 338 (1952).
+V.A.N.   would  like  to   acknowledge  the  EPSRC  Cen-                           21D. Bohm and D. Pines,       Phys. Rev. 92, 609 (1953).
+tre  for  Doctoral  Training  in  Computational  Methods                           22C. Møller and M. S. Plesset,      Phys. Rev. 46, 618 (1934).
+                                                                                                                                                                                  7
+
+
+23W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,   and  G.  Rajagopal,                     57J.  S.  Spencer,  R.  S.  T.  Franklin,  V.  A.  Neufeld,  W.  A.  Vigor,
+  Rev. Mod. Phys. 73, 33 (2001).                                                                and A. J. W. Thom, (unpublished).
+24G.    H.    Booth,     A.    J.    W.    Thom,         and    A.    Alavi,                 58H. Flyvbjerg and H. G. Petersen,            J. Chem. Phys. 91, 461 (1989).
+  J. Chem. Phys. 131, 054106 (2009).                                                         59See    https://github.com/jsspencer/pyblock                     for   information
+25D.      Cleland,       G.      H.      Booth,            and      A.      Alavi,              and code.
+  J. Chem. Phys. 132, 041103 (2010).                                                         60C.   J.   Umrigar,   M.   P.   Nightingale,      and   K.   J.   Runge,
+26D.           L.           Freeman,           Phys. Rev. B 15, 5512 (1977),                    J. Chem. Phys. 99, 2865 (1993).
+  arXiv:arXiv:1011.1669v3.                                                                   61W. A. Vigor, J. S. Spencer, M. J. Bearpark,  and A. J. W. Thom,
+27G.   E.   Scuseria,   T.   M.   Henderson,      and   D.   C.   Sorensen,                     J. Chem. Phys. 142, 104101 (2015),              arXiv:1407.1753.
+  J. Chem. Phys. 129, 231101 (2008).                                                         62A. L. L. East and W. D. Allen,            J. Chem. Phys. 99, 4638 (1993).
+28J. J. Shepherd and A. Gr¨uneis,            arXiv[physics.chem-ph]  (2012),                 63J.   J.   Shepherd,   T.   M.   Henderson,      and   G.   E.   Scuseria,
+  arXiv:1208.6103v1.                                                                            J. Chem. Phys. 140, 124102 (2014),              arXiv:1310.6806.
+29J.            J.            Shepherd            and            A.            Gr¨uneis,     64J.   J.   Shepherd,   T.   M.   Henderson,      and   G.   E.   Scuseria,
+  Phys. Rev. Lett.  110, 226401 (2013),             arXiv:1310.6059.                            Phys. Rev. Lett. 112, 133002 (2014),              arXiv:1310.6425.
+30R. M. Martin, in       Electron.  Struct.     (Cambridge University Press,                 65G.  McPherson,        Stat.  Sci.  Investig.,  Springer  Texts in Statistics
+  Cambridge, 2004) pp. 100–118.                                                                 (Springer New York, New York, NY, 1990).
+31G.  Giuliani  and  G.  Vignale,  in         Quantum  Theory  Electron  Liq.                66E.  Jones,  T.  Oliphant,  P.  Peterson  et  al.,  SciPy:   Open  source
+  (Cambridge University Press, Cambridge, 2005) pp. 1–68.                                       scientiﬁc tools for Python. See        https://www.scipy.org/            for more
+32P.-F.          Loos          and          P.          M.          W.          Gill,           information.
+  WIREs Comput. Mol. Sci. 6, 410 (2016),                 arXiv:1601.03544.                   67J. D. Hunter,      Comput. Sci. Eng. 9, 90 (2007).
+33G.  Giuliani  and  G.  Vignale,  in         Quantum  Theory  Electron  Liq.                68L.         K.         Wagner         and         D.         M.         Ceperley,
+  (Cambridge University Press, Cambridge, 2005) pp. 327–404.                                    Reports Prog. Phys. 79, 094501 (2016),               arXiv:1602.01344.
+34J.  J.  Shepherd,  A.  Gr¨uneis,  G.  H.  Booth,  G.  Kresse,    and                       69J.  S.  Spencer,   N.  S.  Blunt,   W.  A.  Vigor,   F.  D.  Malone,
+  A. Alavi,    Phys. Rev. B 86, 035111 (2012),             arXiv:1202.4990.                     W.  M.  C.  Foulkes,  J.  J.  Shepherd,     and  A.  J.  W.  Thom,
+35J.   J.   Shepherd,   G.   Booth,   A.   Gr¨uneis,      and   A.   Alavi,                     J. Open Res. Softw. 3, 1 (2015),           arXiv:1407.5407.
+  Phys. Rev. B 85, 081103 (2012),             arXiv:1109.2635.
+36J.     J.     Shepherd,     G.     H.     Booth,          and     A.     Alavi,
+  J. Chem. Phys. 136, 244101 (2012),               arXiv:1201.4691.
+37D. M. Ceperley and B. J. Alder,           Phys. Rev. Lett.  45, 566 (1980).
+38G. Ortiz and P. Ballone,         Phys. Rev. B 50, 1391 (1994).
+39G. Ortiz and P. Ballone,         Phys. Rev. B 56, 9970 (1997).
+40G.       Ortiz,        M.       Harris,               and       P.       Ballone,
+  Phys. Rev. Lett.  82, 5317 (1999).
+41Y.    Kwon,     D.    M.    Ceperley,         and    R.    M.    Martin,
+  Phys. Rev. B 58, 6800 (1998).
+42M.  Holzmann,  D.  M.  Ceperley,  C.  Pierleoni,    and  K.  Esler,
+  Phys. Rev. E 68, 046707 (2003).
+43P.       L´opez       R´ıos,         A.       Ma,         N.       D.       Drum-
+  mond,       M.      D.      Towler,             and      R.      J.      Needs,
+  Phys. Rev. E - Stat. Nonlinear, Soft Matter Phys. 74, 066701 (2006),
+  arXiv:0801.0518.
+44N.           D.           Drummond,             R.           J.           Needs,
+  A.       Sorouri,                and       W.       M.       C.       Foulkes,
+  Phys. Rev. B - Condens. Matter Mater. Phys. 78, 125106 (2008),
+  arXiv:0806.0957.
+45G.   G.   Spink,    R.   J.   Needs,       and   N.   D.   Drummond,
+  Phys. Rev. B 88, 085121 (2013),             arXiv:1307.5794.
+46R.         F.         Bishop         and         K.         H.         L¨uhrmann,
+  Phys. Rev. B 17, 3757 (1978).
+47R.         F.         Bishop         and         K.         H.         L¨uhrmann,
+  Phys. Rev. B 26, 5523 (1982).
+48A.     Roggero,      A.     Mukherjee,           and     F.     Pederiva,
+  Phys. Rev. B 88, 115138 (2013),             arXiv:1304.1549.
+49J. McClain, J. Lischner, T. Watson, D. A. Matthews, E. Ronca,
+  S.   G.   Louie,    T.   C.   Berkelbach,       and   G.   K.-L.   Chan,
+  Phys. Rev. B 93, 235139 (2016),             arXiv:1512.04556.
+50J.        J.        Shepherd,        J. Chem. Phys. 145, 031104 (2016),
+  arXiv:1605.05699.
+51C.       J.       C.       Scott       and       A.       J.       W.       Thom,
+  J. Chem. Phys. 147, 124105 (2017),               arXiv:1706.07017.
+52R.  S.  T.  Franklin,  J.  S.  Spencer,  A.  Zoccante,   and  A.  J.  W.
+  Thom,     J. Chem. Phys. 144, 044111 (2016),              arXiv:1511.08129.
+53F. R. Petruzielo, A. A. Holmes, H. J. Changlani, M. P. Nightin-
+  gale,  and C. J. Umrigar,         Phys. Rev. Lett. 109, 230201 (2012).
+54C. Overy, G. H. Booth, N. S. Blunt, J. J. Shepherd, D. Cleland,
+  and A. Alavi,      J. Chem. Phys. 141, 244117 (2014).
+55J.    S.    Spencer,    N.    S.    Blunt,        and    W.    M.    Foulkes,
+  J. Chem. Phys. 136, 054110 (2012),               arXiv:1110.5479.
+56See Ref.    69  and   http://www.hande.org.uk/             for information and
+  code.

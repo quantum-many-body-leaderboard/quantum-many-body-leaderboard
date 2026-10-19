@@ -11,6 +11,29 @@ Second pass on every paper: **harvest its bibliography**. Comparison tables cite
 they are beating, and reviews aggregate SOTA across models we have not touched. That is how the
 triangular/kagome/pyrochlore instances get found: nobody wrote a SOTA note for them.
 
+## Track 2, the citation screen (2026-10-19)
+
+The eleven seeds of 2026-10-17 had 1880 citing papers (OpenAlex and Semantic Scholar, `cited_by.mjs`); 571 matched
+electron-gas title words, 235 with an arXiv id after dropping finite-temperature, response and other-Hamiltonian
+titles; 159 texts fetched (77 failed: journal-only). Ranked by printed energies and model words, 19 were read by four
+agents. Pass `sweep-rows-2026-10-19-heglit2.json` (`qmbl-runs/qmbl-worklist/2026-10-19-heglit2/make_rows.mjs`):
+**131 rows, 29 new instances.**
+
+- Totals: Fantoni (arXiv:1304.7298, N = 66 DMC, Ry), Holzmann et al.'s benchmark (1001.5002, fcc cells N = 54-226, the
+  Ewald column), Lee, Malone & Morales (1905.04361, ph-AFQMC at N = 54 and 114), Azadi & Drummond's crystals
+  (2201.08743, bcc N = 27 and 64), and the Gamma rows of 2405.00425 (2D square cell, N = 90).
+- Correlation energies, stored as QMBL's HF + E_c: 1905.04361 (N = 14, AFQMC at M plane waves), 1706.09923
+  (CCSD-CCSDTQ5 and FCIQMC at the basis limit), 1712.07524 (transcorrelated FCIQMC), and 1310.6806's full CCD.
+- Cross-checks: 1905.04361's quoted FN-DMC and FCIQMC totals equal the primaries QMBL carries; 1310.6806's CCD and
+  1706.09923's CCSDT agree with 1511.05752's CCSD and CCSDT to 0.1 mHa per electron at N = 14, rs = 1.
+- **Held:**
+  - 1310.6806's channel-truncated CCD (rings, mosaics, ladders) and RPA variants (238): they over-correlate, up to
+    22 mHa per electron below every accurate value at N = 14, rs = 1, and would take records under 6; pending a ruling.
+  - 2405.00425 at the Baldereschi twist (its printed HF energy, -0.0194515, is not QMBL's -0.0195866 at (1/4, 1/4))
+    and its N = 302 table (cell not stated); twist averages everywhere; quoted numbers; 1307.3081 (N not printed).
+  - Pointers to read next: Spink, Needs & Drummond PRB 88, 085121; Zong, Lin & Ceperley PRE 66, 036703; the
+    supplements of 2201.08743 and 1905.04361; the data repositories of 1906.04372 and 1706.09923.
+
 ## Track 2, correlation energies (2026-10-19)
 
 RULES.md 12.3 amended: a correlation energy on a closed-shell Gamma instance is a row, stored as QMBL's Hartree-Fock

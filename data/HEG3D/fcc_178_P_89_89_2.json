@@ -1,0 +1,40 @@
+{
+  "model": "HEG3D",
+  "lattice": "fcc",
+  "n_sites": 178,
+  "boundary": "P",
+  "params": {
+    "N_up": 89,
+    "N_dn": 89,
+    "rs": 2,
+    "twist": "Gamma"
+  },
+  "instance_id": "HEG3D/fcc_178_P_89_89_2",
+  "rows": [
+    {
+      "energy": 1.58776,
+      "sigma": 0.00356,
+      "energy_variance": null,
+      "dof": 178,
+      "einf": null,
+      "v_score": null,
+      "method": "Fixed-node DMC",
+      "method_detail": "Slater-Jastrow wave function, Ewald interaction; DMC time step 0.003 a.u., target population 800, expansion orders Nu=Neta=8",
+      "method_as_published": "SJ-DMC [Slater-Jastrow wave function, Ewald interaction; DMC time step 0.003 a.u., target population 800, expansion orders Nu=Neta=8] (arXiv:1001.5002)",
+      "family": "DMC",
+      "bound_type": "projected",
+      "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
+      "reference": "I G Gurtubay, R Gaudoin and J M Pitarke, Benchmark Quantum Monte Carlo calculations of the ground-state kinetic, interaction, and total energy of the three-dimensional electron gas, J. Phys.: Condens. Matter 22, arXiv:1001.5002, doi:10.1088/0953-8984/22/6/065501",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-19",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-19",
+        "method": "source text of arXiv:1001.5002 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "0.00892(2)",
+        "note": "Table 1, N=178, column 'SJ DMC Ewald'; sources/1001.5002.txt line 275; printed in Ha per electron; version read: arXiv text in sources/; journal copy not read | No Hartree-Fock energy is printed. The text states the interaction used: 'Coulomb finite-size effects were reduced by using the MPC scheme, where the Hartree energy is calculated with the Ewald interaction while the xc energy is calculated using 1/r within the minimum image convention' (txt lines 234-238). The MPC columns are therefore NOT the Ewald Hamiltonian of RULES 12.2. The 'Ewald' column of Table 1 (SJ-DMC) is the usual Ewald interaction (txt line 264 and text lines 'using the usual 1/r Ewald interaction'). The Madelung term is not mentioned. Indirect check with QMBL hf.mjs (3 fcc N/2 N",
+        "secondary_of": null
+      }
+    }
+  ]
+}

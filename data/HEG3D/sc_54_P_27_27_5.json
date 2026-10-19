@@ -510,6 +510,56 @@
         "note": "Table II, row rs=5.0, column TC-DCD; sources/2103.03176.txt line 392; printed in Ha per electron; version read: arXiv text, Tables I and II; APS copy not read | 'Total energy (a.u./electron), including the Madelung constant' (Table captions), 14 and 54 electrons in a simple cubic cell; the CC energies are extrapolated to the complete basis (linear in 1/M, Sec. IV). At N = 54, rs = 1 the DCD value agrees with arXiv:0801.0518's backflow DMC to 1e-4 Ha.",
         "secondary_of": null
       }
+    },
+    {
+      "energy": -4.09806,
+      "sigma": 0.0027,
+      "energy_variance": null,
+      "dof": 54,
+      "einf": null,
+      "v_score": null,
+      "method": "ph-AFQMC",
+      "method_detail": "RHF trial, time step 0.005 a.u., 2880 walkers; basis M=1419 (Table V caption: 'Both ph-AFQMC and i-FCIQMC numbers are obtained from M = 1419",
+      "method_as_published": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=1419 (Table V caption: 'Both ph-AFQMC and i-FCIQMC numbers are obtained from M = 1419] (arXiv:1905.04361)",
+      "family": "AFQMC / GFMC",
+      "bound_type": "projected",
+      "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
+      "reference": "Joonho Lee, Fionn D. Malone, Miguel A. Morales, An Auxiliary-Field Quantum Monte Carlo Perspective on the Ground State of the Dense Uniform Electron Gas: An Investigation with Hartree-Fock Trial Wavefunctions, J. Chem. Phys. 151, 064122, arXiv:1905.04361, doi:10.1063/1.5109572",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-19",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-19",
+        "method": "source text of arXiv:1905.04361 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.07589(5)",
+        "note": "Table V, rs=5.0, column ph-AFQMC; sources/1905.04361.txt line 678; printed in Ha per electron; version read: arXiv text in sources/; journal copy not read | Eq. (19) (txt line 210): H = T + Vee + E_M; txt lines 232-237: 'the Madelung energy E_M is included to account for the self-interaction of the Ewald sum under periodic boundary conditions. For simplicity we use the formula proposed by Schoof and co-workers' E_M ~ -2.837297 (3/4pi)^(1/3) N^(2/3)/rs (Eq. 22, txt line 238-239). So the Madelung term is included, but through the approximate closed form (Ref 76: T. Schoof, S. Groth, J. Vorberger, M. Bonitz, PRL 115, 130402 (2015)), not through a stated Ewald sum. No Hartree-Fock energy is printed. Reader's own check (python, scratch-R8/hf.py, NOT QM",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -4.03510572305,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 54,
+      "einf": null,
+      "v_score": null,
+      "method": "CCD",
+      "method_detail": "full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)",
+      "method_as_published": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "family": "FCIQMC / CC",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
+      "reference": "James J. Shepherd, Thomas M. Henderson, and Gustavo E. Scuseria, Coupled Cluster Channels in the Homogeneous Electron Gas, J. Chem. Phys. 140, 124102, arXiv:1310.6806, doi:10.1063/1.4867783",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-19",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-19",
+        "method": "source text of arXiv:1310.6806 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "E_c = -0.995",
+        "note": "Table II, rs=5.0, column CCD; sources/1310.6806.txt line 465; printed in Ha, total; printed correlation energy -0.995, E = E_HF + E_c with E_HF = -0.0562982541305 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read | Sec. II (txt line 64-81): HF eigenvalues with the zero-momentum integral given by 'vM, the Madelung constant ... defined uniquely for a cell geometry and box length, and here we calculate it to be vM L ~ 2.8372'. No Ewald-sum statement beyond that. The paper prints correlation energies only, which do not depend on the Madelung term, and no Hartree-Fock energy.",
+        "secondary_of": null
+      }
     }
   ]
 }

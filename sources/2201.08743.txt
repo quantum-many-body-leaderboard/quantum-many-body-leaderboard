@@ -1,0 +1,918 @@
+               Low-density Phase Diagram of the Three-Dimensional Electron Gas
+
+                                                                  Sam  Azadi∗
+                                Department  of  Physics,  Clarendon  Laboratory,  University  of  Oxford,
+                                          Parks  Road,  Oxford  OX1  3PU,  United  Kingdom  and
+                                            Department  of  Physics,  Imperial  College  London,
+                                         Exhibition  Road,  London  SW7  2AZ,  United  Kingdom
+
+                                                              N.  D.  Drummond
+                       Department  of  Physics,  Lancaster  University,  Lancaster  LA1  4YB,  United  Kingdom
+                                                            (Dated:  June 17, 2022)
+                  Variational and diﬀusion quantum Monte Carlo methods are employed to investigate the zero-
+                temperature phase diagram of the three-dimensional homogeneous electron gas at very low density.
+                Fermi  ﬂuid  and  body-centered  cubic  Wigner  crystal  ground  state  energies  are  determined  using
+                Slater-Jastrow-backﬂow  and  Slater-Jastrow  many-body  wave  functions  at  diﬀerent  densities  and
+                spin  polarizations  in  ﬁnite  simulation  cells.   Finite-size  errors  are  removed  using  twist-averaged
+                boundary  conditions  and  extrapolation  of  the  energy  per  particle  to  the  thermodynamic  limit  of
+                inﬁnite  system  size.   Unlike  previous  studies,  our  results  show  that  the  electron  gas  undergoes  a
+                ﬁrst-order quantum phase transition directly from a paramagnetic ﬂuid to a body-centered cubic
+                crystal at density parameter rs = 86.6(7), with no region of stability for an itinerant ferromagnetic
+                ﬂuid.
+
+
+                    I.    INTRODUCTION                                       high to intermediate density (smallrs) the kinetic energy
+                                                                             dominates, leading to the well-known Fermi ﬂuid behav-
+  The three-dimensional homogeneous electron gas (3D-                        ior of the 3D-HEG at typical metallic densities.  On the
+HEG)  has  been  of  fundamental  interest  in  physics  and                 other  hand,  the  Coulomb  energy  dominates  the  kinetic
+chemistry  since  the  early  days  of  quantum  mechanics                   energy at low density (large rs), fundamentally altering
+because  it  is  the  simplest  realistic  bulk  electronic  sys-            the physics of the 3D-HEG.  In the low-density limit, the
+tem capable of exhibiting strong correlation eﬀects [1–6].                   ground-state wave function is an antisymmetrized prod-
+The electron-electron interaction strength, and therefore                    uct ofδ-functions centered on body-centered cubic (bcc)
+the coupling between the electrons, is controlled by the                     lattice sites to minimize the Coulomb energy, as ﬁrst pre-
+electron  density.   The  3D-HEG  models  the  electrons  in                 dicted by Wigner [2].  Here, we calculate the critical den-
+bulk metals, but more importantly it has long provided                       sity  parameter rs  at  which  there  is  a  zero-temperature
+a  testbed  for  the  development  of  ideas,  concepts,  and                phase transition from a Fermi ﬂuid to a Wigner crystal.
+methods in condensed matter physics.  For example, the                       Furthermore, Bloch suggested that the spin-unpolarized
+ground-state energy of the 3D-HEG provides the start-                        (paramagnetic)  Fermi  ﬂuid  should  make  a  spontaneous
+ing point for most of the exchange-correlation function-                     transition to a spin polarized (ferromagnetic) Fermi ﬂuid
+als that have enabled the widespread success of density                      at largers before crystallization [1], because aligning the
+functional theory (DFT).  In this work we focus on the                       electron spins causes the spatial wave function to be fully
+low-density energy and phase behavior of the 3D-HEG.                         antisymmetric,  so  that  electrons  do  not  approach  each
+  Theory plays a crucial role in the study of dilute 3D-                     other and the Coulomb energy is reduced.
+HEGs due to the lack of a material platform that sup-                          Quantum Monte Carlo (QMC) methods have long been
+ports a 3D electron system with both very high quality                       used to provide accurate estimates of properties of 3D-
+(homogeneity) and low density.  It is convenient to char-                    HEGs [7–14].  For example, ground state QMC energies
+acterize the density of the 3D-HEG by the dimensionless                      of the 3D-HEG [9] are employed in parameterizations of
+parameter rs  deﬁned  as  the  radius  of  the  sphere  that                 the  local-density  approximation  to  the  DFT  exchange-
+contains one electron on average in units of the Bohr ra-                    correlation  functional  [15].    However,  calculating  the
+dius.  In Hartree atomic units the 3D-HEG Hamiltonian                        phase diagram is challenging because of the tiny energy
+is  ˆH =−(1/2)∑i∇2i +∑i>j 1/|ri− rj|, where ri is the                        diﬀerences  between  competing  phases.   Previous  QMC
+position of electron i and the electron-electron Coulomb                     simulations  have  indicated  that  decreasing  the  density
+interaction is in practice evaluated using Ewald summa-                      of a 3D-HEG causes a continuous transition from a spin-
+tion in a ﬁnite cell.  The Coulomb interaction scales as                     unpolarized (paramagnetic) ﬂuid to a fully spin-polarized
+1/rs, while the kinetic energy operator scales as 1/r2s .  At                (ferromagnetic)  ﬂuid  at  a  density  of  about rs  =  50(2)
+                                                                             [11].  The phase transition to a Wigner crystal was pre-
+                                                                             dicted  to  take  place  at  density  parameter rs  =  106(1)
+                                                                             [11,  16].   Because  of  the  fundamental  role  of  the  3D-
+∗ sam.azadi@physics.ox.ac.uk
+                                                                             HEG in condensed matter physics, the determination of
+                                                                                                                                                  2
+
+its zero-temperature phase diagram and ground-state en-                     conditions  due  to  momentum  quantization  eﬀects.   For
+ergy is a problem that should be revisited from time-to-                    a  suﬃciently  large  periodic  cell  of  a  given  shape,  there
+time using state-of-the-art computational methods.                          must be a narrowly avoided crossing of energy levels as
+  In this work we have used the continuum variational                       a  function  of rs  near  the  crystallization  density,  with
+and diﬀusion Monte Carlo (VMC [7, 17] and DMC [9])                          S(Gprim) changing signiﬁcantly near the avoided cross-
+methods  in  real  space  to  obtain  3D-HEG  ground  state                 ing,  where  Gprim  is  a  primitive-cell  reciprocal  lattice
+energies at diﬀerent densities and spin polarizations.  In                  point  of  the  bcc  Wigner  crystal,  resulting  in  a  smooth
+the  VMC  method,  parameters  in  a  trial  wave  function                 crossover  from  Fermi  ﬂuid  to  “ﬂoating”  [20,  21]  crys-
+are optimized according to the variational principle, with                  tal  behavior.    For  the  inﬁnite  3D-HEG,  however,  the
+energy expectation values calculated by Monte Carlo in-                     center-of-mass  kinetic  energy  per  electron  vanishes  and
+tegration in the 3N-dimensional space of electron posi-                     hence broken-translational-symmetry crystal wave func-
+tion  vectors.   In  the  DMC  method,  the  imaginary-time                 tions are degenerate with ﬂoating crystal wave functions.
+Schr¨odinger equation is used to evolve a statistical ensem-                The avoided crossing of energy levels therefore becomes
+ble of electronic conﬁgurations towards the ground state.                   a true crossing of energy levels with diﬀerent symmetry.
+Fermionic antisymmetry is maintained by the ﬁxed-phase                      Furthermore, E(rs) ceases to depend on the simulation
+approximation, in which the complex phase of the wave                       cell shape and choice of twisted boundary conditions.  At
+function is constrained to equal that of an approximate                     rs →  0,  the  interaction  potential  is  negligible  and  we
+wave  function  optimized  within  VMC.   For  real  wave                   have  a  homogeneous  ground-state  ﬂuid  wave  function.
+functions (which occur when the system has time-reversal                    At rs→∞, the kinetic energy is negligible and we have
+symmetry,  e.g.,  under  pure  periodic  boundary  condi-                   a bcc crystal.  The symmetry of the ground state of the
+tions),  the  ﬁxed-phase  approximation  reduces  to  con-                  inﬁnite  3D-HEG  must  therefore  change  at  some  ﬁnite
+straining the nodal surface of the wave function.  Hence-                   rs, i.e., there is a zero-temperature phase transition [2].
+forth we refer to “ﬁxed nodes” rather than “ﬁxed phases”                    The charge density ρ(Gprim) =⟨ˆρ(Gprim)⟩ is an appro-
+to avoid confusion with thermodynamic “phases”; our ac-                     priate order parameter for the ﬂuid-to-crystal transition,
+tual ﬂuid calculations used complex wave functions and                      being  zero  in  the  ﬂuid  phase  and  nonzero  in  the  crys-
+the  ﬁxed-phase  approximation,  while  our  crystal  calcu-                tal  phase.   The  crystallization  transition  is  expected  to
+lations used real wave functions and the ﬁxed-node ap-                      be ﬁrst order, corresponding to a crossing of crystal and
+proximation.                                                                ﬂuid energy levels as functions of rs  with the order pa-
+  Fixed-node  DMC  ﬁnds  the  variational  lowest-energy                    rameter being nonzero at the crossing point in the crystal
+state with the same nodal surface as the trial wave func-                   phase.  The following numerical results provide some evi-
+tion.  Thus the topology of the trial wave function’s nodal                 dence conﬁrming that the Wigner crystal charge density
+surface selects the quantum state under study. The DMC                      is nonzero at the crystallization density.
+energy with an antisymmetric trial wave function is an
+upper bound on the fermionic ground-state energy; fur-
+thermore, the error in the DMC energy of any quantum                                         II.    CALCULATING THE
+state approximated by the trial wave function is second                         ZERO-TEMPERATURE PHASE DIAGRAM
+order in the error in the trial nodal surface.
+  In  a  ﬁnite  cell  the  eigenfunctions  of  the  3D-HEG                                     A.    QMC methodology
+Hamiltonian  must  all  be  homogeneous  (i.e.,  must  sat-
+isfy the many-body Bloch theorems [18, 19] with an in-                         In QMC studies of the phase diagram of the 3D-HEG,
+ﬁnitesimal “primitive cell”) and hence eigenvalue cross-                    we look for a ﬁrst-order phase transition by calculating
+ings as a function of the single parameter rs are avoided                   the  DMC  energy  as  a  function  of  density  parameter rs
+by the von Neumann-Wigner theorem.  The true ground                         for trial wave functions that model the ground-state ﬂuid
+state energy per electron E(rs) of the 3D-HEG in a ﬁ-                       and the ground-state crystal.  For the ﬂuid phases we use
+nite periodic cell of a given shape,  electron number N,                    Slater determinants of plane-wave orbitals, multiplied by
+and  spin-polarization ζ  =  (N↑−N↓)/N  is  therefore  a                    Jastrow  correlation  factors  that  do  not  alter  the  nodal
+smooth function ofrs.  The ground-state static structure                    surface [7–9].  We evaluate the orbitals at quasiparticle
+factor S(G)  = ⟨ˆρ(−G)ˆρ(G)⟩−⟨ˆρ(−G)⟩⟨ˆρ(G)⟩,  where                        coordinates related to the actual electron coordinates by
+ˆρ(G)  = ∑i exp(iG· ˆri),  describes  the  Fourier  compo-                  continuous backﬂow (BF) transformations [22–25], allow-
+nents  of  the  pair  density  and  therefore  shows  whether               ing variational optimization of the nodal surface without
+the  3D-HEG  is  ﬂuid-like  or  crystal-like;  this  too  is  a             changing  its  topology.   The  nodal  topology  of  the  ﬂuid
+smooth function of rs in a given ﬁnite cell.  In fact there                 trial  wave  function  is  therefore  the  same  as  that  of  a
+is  a  diﬀerent E(rs)  curve  for  each  system  size N,  spin              Slater determinant of plane waves, i.e., the wave function
+polarization,  cell  shape,  and  choice  of  twisted  bound-               of a free electron gas.  This model is not exact: as directly
+ary conditions.  For example a bcc simulation cell with                     revealed by full conﬁguration interaction QMC calcula-
+N  a  cubic  number  strongly  favors  crystalline  behavior.               tions,  the  exact  ground-state  wave  function  of  the  3D-
+The  ﬂuid  energy  per  particle  ﬂuctuates  quasirandomly                  HEG is in fact a linear combination of many ground- and
+with  system  size N,  cell  shape,  and  twisted  boundary                 excited-state Slater determinants of plane waves [13, 26].
+                                                                                                                                                 3
+
+Nevertheless,  the  single-determinant  Slater-Jastrow-BF                   of-mass kinetic energy.  We examine the performance of
+(SJB)  model  of  the  ﬂuid  phase  is  reasonably  accurate                analytic expressions [38, 39].
+because,  by  construction,  it  always  leads  to  a  signiﬁ-                 We  studied  the  ﬂuid  phase  at rs  =  30,  40,  50,  60,
+cantly  lower  variational  energy  than  the  Hartree-Fock                 70,  80,  and  100.   For  each  density,  QMC  calculations
+wave function (a single determinant of plane waves), and                    were performed for simulation cells with 130≤N≤ 274.
+Hartree-Fock  theory  itself  becomes  arbitrarily  accurate                The energies were calculated for spin polarizationsζ = 0,
+at high density (rs→ 0), where it provides the ﬁrst two                     0.25, 0.5, 0.75, and 1.  Antiferromagnetic and ferromag-
+terms in the high-energy expansion of the 3D-HEG en-                        netic bcc crystalline phases were investigated at rs = 80,
+ergy [27].  Furthermore, Landau’s Fermi liquid theory [4]                   90, 100, and 125 for simulation cells with N  = 64, 216,
+requires that low-lying excited states of the Fermi ﬂuid                    and 512 electrons.  Our DMC energies were extrapolated
+are adiabatically connected to the corresponding excited                    linearly or quadratically to zero time step, with the tar-
+states of a free electron gas, implying that the relevant                   get walker population being varied in inverse proportion
+parts of the nodal surface of the Fermi ﬂuid must be qual-                  to the time step.  The energies and variances calculated
+itatively the same as that of a single determinant of plane                 using Slater-Jastrow (SJ) and SJB wave functions for dif-
+waves.  The release-node method [9], in which walkers are                   ferent system sizes are reported in the Supplemental Ma-
+equilibrated in ﬁxed-node DMC and then brieﬂy allowed                       terial [28].  The computational and technical details are
+to cross nodes and change the sign of their weights, is able                discussed in the following sections.
+to move nodes but is unlikely to be able to change the
+nodal topology; we expect this approach to give similar
+results to the ﬁxed-node SJB-DMC method.                                                   B.    Fluid phase wave function
+  Our model of the Wigner crystal is a Slater determi-
+nant of single-Gaussian orbitals centered on bcc lattice                       For the ﬂuid phase of the three-dimensional homoge-
+sites and made periodic by summing over images, multi-                      neous electron gas (3D-HEG) we used a Slater-Jastrow-
+plied by a Jastrow correlation factor.  It therefore explic-                backﬂow  (SJB)  trial  spatial  wave  function  Ψ(R)   =
+itly breaks translational symmetry, leading to anO(N−1)                     eJ(R)S(X(R)),   where  R   =   (r1,..., rN)  is  the  3N-
+ﬁnite-size (FS) error due to the center-of-mass kinetic en-                 dimensional  vector  of  electron  coordinates.   The  anti-
+ergy [28].  The Gaussian exponent was determined using                      symmetric  Slater  part S  is  a  product  of  determinants
+a formula that minimizes the ﬁxed-node DMC energy in                        of single-particle orbitals for spin-up and spin-down elec-
+a large 216-electron cell [16, 28].  The Slater determinant                 trons.   The  single-particle  orbitals  in S  are  of  the  free-
+of Gaussian orbitals describes the ground state of an Ein-                  electron form ψk(r) = exp(ik· r), where wavevector k is
+stein model of a vibrating electron lattice.  In principle                  a reciprocal lattice vector of the simulation cell oﬀset by
+a  better  model  of  the  ground  state  of  a  vibrating  elec-           twist vector ks,  where ks  lies in the supercell Brillouin
+tron  lattice  would  be  provided  by  an  antisymmetrized                 zone. The Jastrow exponentJ, which is symmetric under
+product of Gaussian functions of quasiharmonic normal                       electron exchange, takes the form
+coordinates [29, 30].  However, our Jastrow factor and BF
+function allow an approximate description of this quasi-                                                N∑             N∑
+harmonic behavior, with additional ﬂexibility.                                              J(R) =         u(rij) +        p(rij),                (1)
+  Our Jastrow factor and BF functions contained poly-                                                  i<j            i<j
+nomial  and  plane-wave  expansions  in  electron-electron                  where u  is  a  smoothly  truncated,  isotropic  polynomial
+separation [25, 31].  For the Wigner crystal the Jastrow                    function  of  minimum-image  electron-electron  distance
+factor also contained a plane-wave expansion in electron                    rij, and p is a plane-wave expansion in electron-electron
+position.  The wave functions were optimized by variance                    separation rij  [31].  The u term is of form
+minimization  [32,  33]  followed  by  energy  minimization
+[34].   The  casino  package  was  used  for  all  our  QMC                    u(r) = (r−Lu)CΘ(Lu−r)
+calculations [35].                                                                          (        [                     ]       Nu∑      )
+  Monte Carlo-sampled canonical twist-averaged bound-                                    ×    α0 +         Γ                 r +       αlrl   ,(2)
+ary conditions (TABC) were used to reduce quasirandom                                                  (−Lu)C  + α0CLu            l=2
+single-particle  FS  errors  in  Fermi  ﬂuid  energies  due  to
+momentum  quantization  eﬀects  [36,  37].   Twist  averag-                 where  the  cutoﬀ  length Lu  is  less  than  or  equal  to  the
+ing is unnecessary for Wigner crystals, which have local-                   radius of the largest sphere that can be inscribed in the
+ized orbitals and do not have Fermi surfaces.  Systematic                   Wigner-Seitz cell of the simulation cell, C  = 3 speciﬁes
+FS errors due to the use of the Ewald interaction rather                    how smooth the function is at the cutoﬀ length, Θ is the
+than 1/r  to evaluate the interaction between each elec-                    Heaviside step function, and{αl} are optimizable param-
+tron and its exchange-correlation hole and the neglect of                   eters, which diﬀer for parallel- and antiparallel-spin elec-
+long-range two-body correlations were removed by ﬁtting                     trons.  To satisfy the Kato cusp conditions [40], Γ = 1/2
+E(N) =E(∞) +b/N to the twist-averaged DMC energy                            for  opposite-spin  electrons  and  Γ  =  1/4  for  same-spin
+data  at  diﬀerent  system  sizes  [38].   This  also  removed              electrons.  We chose Nu  = 8.  The p term has the sym-
+the FS bias in Wigner crystal energies due to the center-                   metry of the simulation-cell Bravais lattice and allows a
+                                                                                                                                                  4
+                                                                                                                        (
+description of correlation in the “corners” of the simula-                  only those Gaussian functions exp             −C|r− Rp− Rs|2)
+tion cell.  Its form is                                                     whose value at the closest point to Rp+Rs in the Wigner-
+                                   ∑                                        Seitz simulation cell containing r was greater than 10−7.
+                p(r) =∑       aA         cos(G· r),                (3)      It  was  veriﬁed  that  truncating  the  sum  in  this  manner
+                          A       G∈A+                                      does not introduce statistically signiﬁcant errors at the
+where A   represents   a   star   of   symmetry-equivalent,                 densities considered in this work:  see Table I and note
+nonzero, simulation-cell reciprocal-lattice vectors G, and                  that  the  eﬀects  of  truncating  the  sum  are  reduced  in
+A+ is a subset of A that consists of one out of each±G                      larger  simulation  cells;  our  production  Wigner  crystal
+pair.  The{aA} are optimizable parameters.  We used 46                      calculations used cell sizes of N = 64, 216, and 512 elec-
+stars of G vectors in p.                                                    trons.
+  Including a backﬂow transformation in the trial wave
+function, the Slater part of the wave function S is evalu-                  TABLE  I.  Convergence  of  variational  Monte  Carlo  (VMC)
+ated at transformed “quasiparticle” coordinates X(R) =                      energy  with  respect  to  a  parameter g  controlling  the  num-
+R + ξ(R), where                                                             ber  of  periodic  images  retained  in  the  Wigner  crystal  or-
+                          N∑                 N∑                             bitals of Eq. (6).  We only retained those Gaussian functions
+              ξi(R) =         η(rij)rij +        π(rij)             (4)     exp (−C|r− Rp− Rs|2) whose value at the closest point of
+                                                                            the Wigner-Seitz simulation cell containing r was greater than
+                         j⁄=i               j⁄=i                            10−g.  Results are shown for a ferromagnetic bcc Wigner crys-
+is the backﬂow displacement of electron i. η  is a cusp-                    tal atrs = 90 withN = 27 electrons in the simulation cell and
+                                                                            Gaussian exponent C = 0.000148 a.u.  An SJB wave function
+less,  smoothly  truncated,  isotropic  polynomial  function                optimized with g = 7 was used in each case.
+of  minimum-image  electron-electron  distance rij.   The                         g   No. terms in Eq. (6)  SJB-VMC energy (Ha/el.)
+polynomial coeﬃcients are optimizable parameters, and                             1                   8       −0.0084224(3)
+are diﬀerent for parallel- and antiparallel-spin electrons                        2                  24       −0.00849361(7)
+[25].   The  form  of η(r)  is  mathematically  equivalent  to                    3                  27       −0.00849268(7)
+that  of  the  Jastrow u(r)  term  [Eq.  (2),  with  Γ  =  0                      5                  27       −0.00849263(7)
+for same-spin electrons and optimizable for opposite-spin                         7                  27       −0.00849253(7)
+electrons].  Typically we used Nη = 8 in the polynomial                           15                46       −0.00849254(7)
+expansions.  The π term has the form of the gradient of                           25                91       −0.00849253(6)
+a Jastrow p term [Eq. (3)]:
+             π(r) =−∑         cA   ∑     sin(G· r) G,            (5)           In Fig. 1 we plot diﬀusion Monte Carlo (DMC) energy
+                                                                            against the logarithm of the Gaussian exponentC for bcc
+                           A      G∈A+                                      Wigner crystals atrs = 100 andrs = 125.  It is clear that
+where the cA are optimizable parameters.  As the gradi-                     the formula [16]
+ent of a scalar ﬁeld, the π term is irrotational.  We used                                             C = 0.11r−3/2
+44 stars of G vectors in π.  The backﬂow transformation                                                             s                                  (7)
+preserves the antisymmetry of the Slater wave function.                     provides near-optimal exponents, especially for antiferro-
+The parameters in the Jastrow factor and backﬂow func-                      magnetic Wigner crystals.  By using Eq. (7) we achieve
+tion were optimized by variance minimization and energy                     greater  consistency  between  system  sizes  and  densities
+minimization.                                                               than would result from separately optimizing C  in each
+                                                                            case.  At small system size there is a tendency forC to be
+             C.    Crystal phase wave function                              underestimated relative to the thermodynamic limit, to
+                                                                            reduce the center-of-mass kinetic energy.  For both ferro-
+  The trial wave functions for our Wigner crystal calcu-                    magnetic and antiferromagnetic crystals the error in the
+lations were of later-Jastrow (SJ) form, apart from some                    DMC energy from using the formula is comparable with
+test calculations with SJB wave functions.  The orbitals                    the statistical error bars on the data, and is clearly much
+in  the  Slater  determinants  consisted  of  Gaussian  func-               smaller than the diﬀerence between the ﬂuid and crystal
+tions centered on body-centered cubic (bcc) lattice sites                   energies,  even  at rs  =  100,  close  to  the  crystallization
+within  the  simulation  cell,  made  periodic  by  summing                 density.  A slightly more accurate expression for the opti-
+over simulation-cell images:                                                mal Gaussian exponent for ferromagnetic crystals would
+                                (                                           beCferro = 0.068r−3/2s      ; however, for consistency, we have
+          φRp(r) =∑        exp    −C|r− Rp− Rs|2),        (6)               used Eq. (7) for all our production calculations.  By con-
+                       Rs                                                   trast,  within Hartree-Fock (HF) theory the low-density
+                                                                            Gaussian exponent is CHF = 1/(2r3/2s   ) [3, 16].
+where Rp  is a primitive-cell lattice point within the su-                     Our Wigner crystal Jastrow factors were of the same
+percell (which indexes the orbital) and Rs is a simulation-                 form as the Fermi ﬂuid Jastrow factors described in the
+cell   lattice   point.      In   practice   the   sum   contained          previous section, except that we used 7 stars of reciprocal
+                                                                                                                                                  5
+
+                                                                            nent and backﬂow function lower the VMC energy and
+                                                                            variance.   However,  we  cannot  assume  that  optimizing
+                                                                            an overall wave function leads to an improved nodal sur-
+                                                                            face.   In  fact  the  DMC  energies  obtained  using  SJ  and
+                                                                            SJB wave functions and either Eq. (7) or VMC energy
+                                                                            minimization to determine C  are all in statistical agree-
+                                                                            ment with each other.  Because SJ quantum Monte Carlo
+                                                                            (QMC) calculations are much cheaper and allow us to ex-
+                                                                            plore larger system sizes, we have used SJ wave functions
+                                                                            in our production calculations.
+
+
+                                                                                       D.    Finite-size eﬀects in ﬂuid phases
+
+                                                                               For twist averaging we used random twists{ks} rather
+                                                                            than a grid of twists for the following reasons.  (i) Using
+                                                                            random twists is similar to adding three more dimensions
+                                                                            to the 3N-dimensional integrals evaluated in QMC, and
+                                                                            Monte Carlo integration is eﬃcient in high-dimensional
+                                                                            spaces.  (ii) A truly systematic approach to twist averag-
+                                                                            ing should use ks in each supercell Brillouin zone (BZ) de-
+                                                                            ﬁned by the reoccupancies of the plane-wave orbitals, and
+                                                                            the corresponding results should be weighted by the size
+                                                                            of that BZ.  However, the complexity of the nested BZs
+                                                                            grows very rapidly with the number of electrons N  [36],
+FIG. 1.  DMC energy against logarithm of Gaussian exponent                  making  this  approach  infeasible  for  large  system  sizes.
+C  for ferromagnetic and antiferromagnetic bcc Wigner crys-                 On the other hand, a regular grid-based approach eﬀec-
+tals (a) at rs = 100 and (b) at rs = 125, using SJ trial wave               tively gives a random sampling of the nested BZs.  (iii)
+functions.   The  energy  has  been  extrapolated  to  zero  time           Monte  Carlo  sampling  of ks  is  easily  extensible:  if  the
+step and inﬁnite system size in each case.  The solid curves                error  is  too  large,  it  can  be  reduced  by  including  more
+show quadratic ﬁts to the energies of ferromagnetic and anti-               random twists.
+ferromagnetic crystals as functions of ln(C), while the dashed                 To twist average, we used the HF kinetic energy (THF)
+curve shows a quartic ﬁt.  The horizontal line in (a) shows the             and exchange energy (XHF) as correlators and ﬁt
+twist-averaged paramagnetic Fermi ﬂuid energy (with the dot-                          E(ks) =⟨E⟩TA +c [THF(ks)−⟨THF⟩TA]
+ted lines indicating error bars), while the vertical line shows
+the Gaussian exponent given by Eq. (7).                                                           +d [XHF(ks)−⟨XHF⟩TA]               (9)
+
+                                                                            to the DMC energy per particle at a given system size,
+lattice vectors in the plane-wave two-body term p,  and                     where ks is the twist, and⟨E⟩TA,c, andd are ﬁtting pa-
+we also used a plane-wave one-body term of the form                         rameters.  The twist-averaged (TA) HF energies⟨THF⟩TA
+                                   ∑                                        and⟨XHF⟩TA  are  cheap  to  evaluate  and  were  obtained
+                q(r) =∑       bB         cos(G· r),                (8)      using billions of twists.
+                          B      G∈B+                                          Analytical   expressions   have   been   derived   for   the
+                                                                            leading-order [38] and next-to-leading-order [39] system-
+where B   represents   a   star   of   symmetry-equivalent,                 atic ﬁnite-size (FS) corrections to the energy per particle
+nonzero  primitive-cell  reciprocal-lattice  vectors G,  and                of a 3D homogeneous electron gas in a ﬁnite periodic cell
+B+ is a subset of B that consists of one out of each±G                      in which the interaction between the particles is of Ewald
+pair.  The{bB} are optimizable parameters.  We used 7                       form and the system is assumed to be well-described by a
+stars of G vectors in q.  The q  term has the symmetry                      SJ wave function. The leading-order and next-to-leading-
+of the Wigner crystal lattice and allows a description of                   order FS corrections to the energy per electron of a Fermi
+anisotropic warping of the Gaussian orbitals.                               ﬂuid are
+  For  a  ferromagnetic  bcc  Wigner  crystal  at rs  =  100                            √3                        [
+with N  =  64  electrons,  we  performed  test  calculations                 ∆E =               −   C3D             (1 +ζ)2/3 + (1−ζ)2/3],
+using a backﬂow function of the form described in Sec.                                2Nr3/2s      πr2s (2N)4/3
+II B, but with 8 stars in the π term.  The VMC and DMC                                                                                        (10)
+energies  and  the  VMC  variances  obtained  with  SJ  and                 where C3D  =  5.083  in  a  face-centered  cubic  simulation
+SJB wave functions, using either Eq. (7) or VMC energy                      cell (for ﬂuid phases) and 5.086 in a bcc simulation cell
+minimization to determine the orbital Gaussian exponent                     (for  crystal  phases).    As  explained  in  Ref.  41,  back-
+C, are shown in Table II. Optimizing the Gaussian expo-                     ﬂow correlations lead to additional, negativeO(r−2s N−1)
+                                                                                                                                                    6
+
+
+TABLE II. VMC energy and variance and DMC energy for a ferromagnetic Wigner crystal at density parameter rs = 100 with
+N  = 64 electrons, using SJ and SJB wave functions and using either Eq. (7) or VMC energy minimization to determine the
+Gaussian orbital exponent C.
+                Wave function    C (a.u.)        VMC energy (Ha/el.)  VMC variance (Ha2)  DMC energy (Ha/el.)
+                SJ                    0.00011 [Eq. (7)]  −0.0076719(3)               0.00000329    −0.00769616(8)
+                SJ                     0.0001553 (opt.)  −0.0076737(2)               0.00000274    −0.0076957(2)
+                SJB                  0.00011 [Eq. (7)]  −0.0076786(2)               0.00000252    −0.00769619(9)
+                SJB                  0.0001503 (opt.)  −0.0076803(2)               0.00000201    −0.0076960(1)
+
+
+FS corrections to the energy per particle, approximately
+given by ∆EBF =−THF/(3N), where THF is the HF ki-
+netic energy per particle.  There is also a nonsystematic
+FS error in the canonical ensemble TA energy per parti-
+cle of a Fermi ﬂuid due to the incorrect shape of the TA
+Fermi surface; this error has an envelope that decays as
+O(r−2s N−4/3) [36].
+  It is reasonable to assume that Eq. (10) holds approxi-
+mately for Wigner crystals, although the static structure
+factor diﬀers between ﬂuids and crystals, so the correc-
+tions should not really be exactly the same.
+  The  TA  SJB-DMC  energy  of  a  paramagnetic  Fermi
+ﬂuid at rs = 100 is plotted against the reciprocal of sys-
+tem size in Fig. 2.  The results of adding in the leading-                   FIG. 2.  TA SJB-DMC energy against inverse of system size
+order  correction  of  Eq.  (10)  and  the  leading-order  plus              for a paramagnetic Fermi ﬂuid at rs = 100.  Also shown are
+next-to-leading-order FS corrections are also shown.  At                     the eﬀects of applying the ﬁrst and second terms of Eq. (10),
+these  low  densities  the  next-to-leading-order  correction                and the eﬀects of ﬁtting various FS scaling laws to the result-
+is negligible in comparison with the leading-order correc-                   ing data.
+tion (and also the backﬂow correction is relatively small).
+Nevertheless, the leading-order FS correction does not re-
+move all the systematic FS errors.  Near the crystalliza-
+tion density the single-determinant wave function form is
+increasingly inappropriate, and it is possible that other
+FS eﬀects may be present in the correlations implicitly
+described  by  DMC.    It  is  clear  from  Fig.  2  that  the
+leading-order analytic corrections do not remove all FS
+eﬀects at rs = 100.  We therefore believe the most accu-
+rate treatment of systematic FS eﬀects is to extrapolate
+to inﬁnite system size using theO(N−1) FS-error scaling
+implied by the leading-order theory.
+  The SJ-DMC energy of a ferromagnetic Wigner crys-
+tal  at rs  =  100  is  plotted  against  system  size  in  Fig.
+3.   It  appears  that  the  leading-order O(N−1)  behavior
+is not completely eliminated by either the long-range FS
+correction  of  Eq.  (10)  or  the  subtraction  of  the  center-
+of-mass  kinetic  energy.   Equation  (10)  was  derived  for                FIG. 3.  SJ-DMC energy against inverse of system size for a
+a ﬂuid phase; the static structure factor and long-range                     ferromagnetic  bcc  Wigner  crystal  at rs  =  100.   Also  shown
+two-body Jastrow factor are diﬀerent in a crystal phase,                     are the eﬀects of applying the ﬁrst term of Eq. (10) and of
+which would lead to a diﬀerent prefactor.  Once again the                    subtracting an estimate of the center-of-mass kinetic energy,
+best policy would appear to be to regard the theory of                       together with ﬁts of E(N) = E(∞) +bN−1  to the resulting
+FS eﬀects as providing the appropriate scaling law to ﬁt                     energy data.
+to the data.
+  SJ-DMC energies as functions of system sizeN for dif-
+ferent spin polarizations (ζ = 0, 0.25, 0.5, 0.75, and 1) are
+illustrated in Fig. 4.  The SJ-DMC energies in the inﬁnite
+system size limit for diﬀerent densities and polarizations                   ous density and polarization are plotted in Fig. 5 against
+are listed in Table III.                                                     system size.  The SJB-DMC energies extrapolated to in-
+  The TA SJB-DMC energies of the ﬂuid phase for vari-                        ﬁnite system are presented in Table IV.
+                                                                                                                                                    7
+
+
+TABLE III.  TA SJ-DMC energy of the Fermi ﬂuid extrapolated from diﬀerent system sizes (130<N < 274) with 300 random
+twists at each N  to the thermodynamic limit.  Energies are in mHa/el.  The numbers in parentheses indicate statistical errors.
+The DMC energies were not extrapolated to zero time step.
+                                     ζ       0.0               0.25              0.50             0.75              1.0
+                                 rs
+                                 30  −22.5336(7) −22.534(3) −22.522(1) −22.500(4) −22.446(3)
+                                 40  −17.5518(4) −17.551(4) −17.552(1) −17.550(2) −17.523(1)
+                                 50  −14.4003(4)−14.4034(1)−14.4046(4)−14.407(2) −14.399(1)
+                                 60  −12.2235(2)−12.2237(1)−12.2286(1)−12.231(2)−12.2303(8)
+                                 70  −10.6278(5) −10.629(1) −10.6310(4)−10.634(3)−10.6374(5)
+                                 80  −9.404(1) −9.406(1) −9.4101(6) −9.413(1) −9.4161(5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  4.     TA  Fermi  ﬂuid  SJ-DMC  energies  as  functions  of            FIG. 5.     TA SJB-DMC energies against system size N  for
+system size N  at diﬀerent spin polarizations ζ.  The dotted                 diﬀerent spin polarizations ζ.  The dotted lines represent ex-
+line represents the extrapolation to inﬁnite system size. These              trapolations to inﬁnite system size.  The DMC energies were
+SJ-DMC  energies  have  not  been  extrapolated  to  zero  time              not extrapolated to zero time step.
+step.
+
+
+
+TABLE  IV.   TA  SJB-DMC  energies  of  the  Fermi  ﬂuid  ex-                         E.    Finite-size eﬀects in crystal phases
+trapolated to the thermodynamic limit from diﬀerent system
+sizes (130<N < 274).  Energies are in mHa/el.  The numbers
+in parentheses indicate statistical errors.  The DMC energies                   In  our  broken-symmetry  model  of  a  Wigner  crystal
+were not extrapolated to zero time step.                                     there is an additional FS error due to the center-of-mass
+              ζ      0.0               0.50                1.0               kinetic energy.
+         rs
+         30  −22.617(8) −22.5862(5) −22.4804(6)                                 At  low density,  individual electrons occupy  Gaussian
+         40  −17.612(4) −17.597(2) −17.555(2)                                orbitals φRp(r) = exp(−C|r− Rp|2), where Rp is a bcc
+         60  −12.254(3) −12.2492(4) −12.2413(1)                              primitive-cell lattice vector,  and C  is a Gaussian expo-
+         80  −9.4250(9) −9.421(1) −9.4242(2)                                 nent.  Let s be the oﬀset to the center-of-mass position.
+         100 −7.6702(4)−7.669976(7) −7.6717(9)                               Assuming  a  rigid  displacement  of  the  lattice  by s,  the
+                                                                             center-of-mass  wave  function  is  Φ(s)  =  exp(−NCs2).
+                                                                                                                                                      8
+
+The resulting center-of-mass kinetic energy is
+                               ∫ Φ∗∇2sΦd3s
+              TCM =−  12N         ∫|Φ|2d3s    = 3C2 .           (11)
+
+Hence the center of mass kinetic energy per particle falls
+oﬀ as 3C/(2N).  There is therefore an additional FS cor-
+rection, on top of those discussed in Sec. II D, to be ap-
+plied to the energy per particle of a Wigner crystal:
+
+           ∆TCM =−TCMN    =− 3C2N ≈−   0.332Nr3/2           ,        (12)
+                                                        s
+where in the last step we have inserted the approximate
+expression for the Gaussian exponent C in a bcc Wigner
+crystal  obtained  by  minimizing  the  DMC  energy  in  a
+large simulation cell [16], Eq. (7).  The center-of-mass ki-
+netic energy correction partially oﬀsets the leading-order                    FIG. 6.   SJ-DMC energy against the inverse of system sizeN
+FS correction of Eq. (10).                                                    for the crystal phase.  The dotted line shows the extrapolation
+  Where the crystal orbitals are highly localized within                      to inﬁnite system size. ζ = 0 and 1 are the spin polarizations
+the  supercell,  twist  averaging  cannot  have  much  eﬀect                  of the system (antiferromagnetic and ferromagnetic crystals,
+on the energy per particle.  If the simulation-cell Bloch                     respectively).  The DMC energies have been extrapolated to
+vector ks is nonzero then the crystal orbitals are                            zero time step.
+                        (
+ φRp(r) =∑         exp    −C|r− Rp− Rs|2)           exp (iks· Rs),
+               Rs
+                                                                   (13)
+where Rp  is a primitive-cell lattice point within the su-
+percell (which indexes the orbital) and Rs is a simulation-
+cell lattice point.  This is the usual prescription for creat-
+ing Bloch orbitals from localized functions; one can easily
+check that φRp(r + R′s) = exp(iks· R′s)φRp(r).
+  For a large simulation cell at low density, at most one of(
+the Gaussian functions exp           −C|r− Rp− Rs|2)             in Eq.
+(13) is non-negligible at any given point r in the simula-
+tion cell.  So the exp(iks· Rs) factor just contributes an
+unobservable phase to each orbital within the simulation
+cell.  Hence we do not twist average our crystal energies.
+  The  SJ-DMC  energies  of  ferromagnetic  Wigner  crys-
+tals  at  diﬀerent  densities rs  =  80,  90,  100,  and  125  as
+functions  of  system  size  are  plotted  in  Fig.  6.   The  en-            FIG. 7.   Extrapolated estimates of the electronic charge den-
+ergies  extrapolated  to  inﬁnite  system  size  are  listed  in              sities  of  antiferromagnetic  (AF)  and  ferromagnetic  (F)  bcc
+Table V.                                                                      Wigner crystals plotted along a straight line in the [100] di-
+                                                                              rection.  Results are shown for two density parameters in the
+TABLE V.  SJ-DMC energy of the crystal phase extrapolated                     vicinity  of  the  crystallization  density.   The  charge  densities
+to  zero  time  step  and  the  thermodynamic  limit  of  inﬁnite             have  been  obtained  by  extrapolated  estimation  (twice  the
+system size.  The numbers in parentheses indicate statistical                 DMC charge density minus the VMC charge density), which
+and ﬁtting errors.                                                            largely removes errors that are linear in the error in the trial
+                                                                              wave function.  Furthermore, the charge densities have been
+             rs    Antiferromagnetic  FerromagneticEnergy (mHa/el.)           extrapolated  to  inﬁnite  system  size,  assuming  the  FS  error
+                                                                              goes asN−1.  The shaded regions indicate one standard error
+             80  −9.4200(2)  −9.41999(9)                                      about the mean.
+             90  −8.4585(1)   −8.4581(1)
+             100  −7.6769(1)   −7.6774(1)
+             125  −6.24472(6)  −6.24508(6)                                    by  ﬁtting ρ∞(r) +b(r)N−1  to  the  charge  density  data
+                                                                              ρN(r)  at  each  point r.   Here, ρ∞(r)  and b(r)  were  ﬁt-
+  The  electronic  charge  densities  of  antiferromagnetic                   ting  parameters  at  each  point r. O(N−1)  FS  errors  in
+and  ferromagnetic  crystals  are  plotted  in  Fig.  7.   The                the charge density arise due to the center-of-mass kinetic
+charge densities were extrapolated to inﬁnite system size                     energy, which leads to a tendency for the orbitals to de-
+                                                                                                                                                     9
+
+localize in a ﬁnite cell.
+  It  is  clear  that  the  charge  density  is  nonuniform  at
+the crystallization density, providing some numerical ev-
+idence that the phase transition is ﬁrst order.  The diﬀer-
+ences between ferromagnetic and antiferromagnetic crys-
+tals are too small to resolve, but it is clear that increasing
+rs  has the eﬀect of making the charge density relatively
+localized, as expected.
+
+
+
+                   F.    DMC time-step bias
+
+  The variation of the DMC energy with time step is in-
+vestigated in this section.  Figure 8 shows TA SJB-DMC
+energies against time step.  The population is varied in
+inverse proportion to the time step.  For all the studied
+system  sizes,  densities,  and  spin  polarizations  the  bias
+at  ﬁnite  time  step  is  always  positive.   Our  ﬁnal  results
+were linearly extrapolated to zero time step (and hence
+inﬁnite population) in every case.
+
+
+
+
+
+                                                                              FIG. 9.     TA SJB-DMC energies against system size N  for
+                                                                              diﬀerent spin polarizations ζ.  The DMC energies are extrap-
+                                                                              olated to zero time step.  The dotted line represents the ex-
+                                                                              trapolation to inﬁnite system size.
+
+
+
+                                                                              TABLE VI.  TA SJB-DMC energies of the ﬂuid phases of the
+                                                                              3D-HEG extrapolated to the thermodynamic limit from dif-
+                                                                              ferent system sizes (130<N < 274).  Energies are in mHa/el.
+                                                                              The numbers in parentheses indicate statistical errors.  The
+                                                                              DMC energies were extrapolated to zero time step.
+                                                                                                    ζ       0.0                1.0
+                                                                                                rs
+                                                                                                30  −22.6191(7)−22.4819(7)
+                                                                                                40  −17.6143(3)−17.5558(7)
+FIG. 8.     TA SJB-DMC energy against time step τ  for the                                      60  −12.2556(3)−12.2418(5)
+paramagnetic (ζ = 0) and ferromagnetic (ζ = 1) ﬂuid phases                                      80  −9.4259(4) −9.4246(3)
+at diﬀerent system sizes N.                                                                     100 −7.6709(3) −7.6720(4)
+
+
+  Figure  9  shows  SJB-DMC  energies  of  paramagnetic
+and ferromagnetic ﬂuid phases, extrapolated to zero time
+step, at three diﬀerent system sizes.  TA SJB-DMC en-
+ergies extrapolated to inﬁnite system size and zero time
+step are listed in Table VI.
+  The SJ-DMC energy of bcc Wigner crystals is plotted
+against  time  step  in  Fig.  10.   Time  steps  in  the  range
+10–80  Ha−1  were  used  in  our  calculations.   At rs  =  80
+the data are better ﬁtted by a quadratic function of time                     FIG. 10.  SJ-DMC energy against time step for bcc Wigner
+step  than  a  linear  function  of  time  step;  however,  the               crystals at (a) rs = 80 and (b) rs = 100.  Results are shown
+quadratic ﬁt is no better than the linear ﬁt at rs = 100.                     for  both  antiferromagnetic  and  ferromagnetic  crystals.   The
+However,  even  at rs  =  80,  the  diﬀerence  between  the                   system  size  is N  =  64  electrons.   The  target  population  is
+results of linear and quadratic time-step extrapolation is                    varied in inverse proportion to the time step.
+not statistically signiﬁcant.
+                                                                                                                                                    10
+
+          III.    RESULTS AND DISCUSSION                                      and  the  exact  ground-state  energy  per  electron,  where
+                                                                              the  latter  is  approximated  by  our  DMC  results.   The
+ A.    SJ-DMC magnetic phase diagram for the ﬂuid                             procedure  developed  by  von  Barth  and  Hedin  [42]  and
+                               phases                                         Perdew  and  Zunger  [15]  to  interpolate  between ζ  =  0
+                                                                              and ζ = 1 was applied to our SJ-DMC correlation ener-
+  The SJ-DMC phase diagram (Fig. 11, left panel) shows                        gies (Fig. 12, top panel).  The well-known Perdew-Zunger
+that  the  spin  polarized  state ζ  =  0.5  has  lower  energy               expression for the correlation energy per electron of the
+than the paramagnetic phase at rs > 40.  The ﬂuid with                        3D-HEG is [15]
+ζ  =  0.75  becomes  more  stable  than  the  ﬂuid  with ζ  =                    Ec(rs,ζ) =Epara
+0.5 at rs≈ 46,  and the 3D-HEG system adopts a fully                                              c     (rs) +[Eferroc     (rs)−Eparac     (rs)]f(ζ),(14)
+polarized state ζ = 1 at rs≈ 62.                                              which  has  the  same ζ-dependence  as  the  exchange  en-
+                                                                              ergy [42], f(ζ) =  (1+ζ)4/3+(1−ζ)4/3−22(21/3−1)        .  This interpolation
+                                                                              is exact for the exchange part of the energy and is likely
+                                                                              to be reasonable for the correlation energy too.  The in-
+                                                                              terpolation scheme is very successful at low densities, as
+                                                                              illustrated in Fig. 12.
+                                                                                 Following Ceperley [8] we ﬁt
+
+                                                                                Epara,ferroc           (rs) =        γpara,ferro1 +βpara,ferrors +βpara,ferro(15)
+                                                                                                             1   √               2     rs
+FIG.  11.      (Left  panel)  SJ-DMC  spin  polarization  energy
+of the 3D-HEG multiplied by r3/2s     against density parameter               to our Fermi ﬂuid correlation energies.
+rs.  (Right panel) SJ-DMC spin polarization energy of the 3D-                    The ﬁtting parameters γ, β1, and β2  for diﬀerent po-
+HEG multiplied byrs3/2 against spin polarizationζ at various                  larizations are listed in Table VII.
+densities.
+
+                                                                              B.    SJB-DMC magnetic phase diagram for the ﬂuid
+                                                                                                              phases
+
+                                                                                 According to our SJB-DMC results for the ﬂuid phases,
+                                                                              the  paramagnetic  ﬂuid  phase  (ζ  =  0)  is  stable  for  the
+                                                                              entire  density  range rs <  85.5(2)  (Fig.  13,  left  panel).
+                                                                              There is no room for stability of the partially polarized
+                                                                              ζ = 0.5 ﬂuid phase.
+
+
+
+
+FIG. 12.    Correlation energies obtained in SJ-DMC calcula-
+tions for the ﬂuid phase (symbols), together with the ﬁt to Eq.
+(1) of the main text (lines).  Error bars on the QMC data are
+shown, but are smaller than the symbols.  The DMC energies
+were not extrapolated to zero time step.
+
+
+
+
+TABLE VII.  Parameters in Eq. (2) of the main text, obtained
+by ﬁtting to SJ-DMC data that have been TA and extrapo-
+lated to inﬁnite system size, but not to zero time step.                      FIG.  13.     (Left  panel)  SJB-DMC  relative  energies  of  ﬂuid
+         ζ      γ       β1      β2    χ2                                      phases  of  the  3D-HEG  are  plotted  against rs  for  diﬀerent
+         0.0 −0.122(5)   0.923(45)  0.287(10)   1.25                          spin  polarizations ζ  in  the  thermodynamic  limit  of  inﬁnite
+         0.25 −0.104(7)   0.758(67)  0.252(15)  10.573                        system  size.   (Right  panel)  SJB  spin  polarization  energy  of
+         0.5 −0.110(5)   0.937(51)  0.275(10)  3.137                          the  3D-HEG  multiplied  by rs3/2  at  various  densities.   The
+         0.75−0.091(14)  0.938(189)  0.250(36)  0.412                         DMC energies were not extrapolated to zero time step.
+         1.0 −0.052(5)   0.808(97)  0.166(13)   6.58
+                                                                                 Figure  14  shows  the  SJB-DMC  correlation  energy  of
+  The correlation energy of a Fermi ﬂuid is deﬁned as the                     the ﬂuid phase as a function of spin polarization at dif-
+diﬀerence between the Hartree-Fock energy per electron                        ferent densities.  BF correlations lower the energy of the
+                                                                                                                                                 11
+
+                                                                             phases.
+
+
+
+                                                                             TABLE VIII.  Parameters in the interpolation formula of Eq.
+                                                                             (15) for the correlation energy of a Fermi ﬂuid, obtained by
+                                                                             ﬁtting to our SJB-DMC energy data at diﬀerent spin polar-
+                                                                             izations ζ.  The reduced χ2 values for the ﬁts are also shown.
+                                                                                        ζ      γ (Ha/el)  β1    β2   χ2
+                                                                                        0 (para.) −0.13(1)   1.0(1)  0.32(3)  0.92
+                                                                                        0.5   −0.15(1)   1.3(1)  0.36(2)  10.96
+                                                                                        1 (ferro.)−0.062(6)  0.97(8)  0.19(1)  5.51
+
+
+
+
+
+
+
+
+                                                                                                   C.    Phase diagram
+
+
+                                                                               The DMC energies of diﬀerent phases of the 3D-HEG,
+                                                                             extrapolated  to  the  thermodynamic  limit,  are  plotted
+                                                                             against rs  in  Fig.  15.   Our  Wigner  crystal  energies  are
+                                                                             in good agreement with the results reported in Ref. 16.
+                                                                             However, our Fermi ﬂuid energies are substantially higher
+                                                                             than those of Ref. 11, leading to a signiﬁcant revision of
+                                                                             the crystallization density, which is now predicted to oc-
+                                                                             cur at rs = 86.6(7).  We investigate possible reasons for
+                                                                             the disagreement with Ref. 11 in the next section, ﬁnding
+                                                                             that the treatment of ﬁnite-size eﬀects is the most likely
+                                                                             source of disagreement.
+FIG. 14.    Correlation energies obtained in SJB-DMC calcu-                    The ferromagnetic ﬂuid becomes more stable than the
+lations for the ﬂuid phase (symbols), together with the ﬁt of
+Eq. (14) (lines).  Error bars on the QMC data are shown, but                 paramagnetic ﬂuid in the immediate vicinity of the crys-
+are smaller than the size of the symbols.                                    tallization density;  hence we do not predict a region of
+                                                                             stability  for  itinerant  ferromagnetism  in  the  3D-HEG.
+                                                                             The absence of a region of stability for the ferromagnetic
+paramagnetic  ﬂuid  more  than  the  ferromagnetic  ﬂuid.                    ﬂuid has also recently been predicted by Holzmann and
+SJ-DMC predicts that a fully spin-polarized ﬂuid phase                       Moroni,  who performed DMC calculations for the ﬂuid
+becomes  stable  at rs  =  63(1),  whereas  our  SJB-DMC                     phases of the 3D-HEG in a 66-electron simple cubic cell
+results do not show a statistically signiﬁcant region for                    and applied ﬁnite-size corrections to their data [43].  The
+the  ferromagnetic  ﬂuid  phase.   Same-spin  electrons  are                 curves ﬁtted to our DMC energy data for ferromagnetic
+kept apart by the antisymmetry of the many-body wave                         and  antiferromagnetic  bcc  crystals  cross  at rs  =  93(3),
+function, while opposite-spin electrons are only separated                   which is just inside the region of stability for the Wigner
+by correlation eﬀects,  so that an accurate treatment of                     crystal.   However,  in  the  region  of  stability,  the  diﬀer-
+correlations lowers the energies of paramagnetic phases                      ences  between  our  ferromagnetic  and  antiferromagnetic
+more than ferromagnetic phases.  Hence any future im-                        crystal DMC energies are statistically insigniﬁcant.
+provements  in  QMC  trial  wave  functions  are  expected                     Path integral Monte Carlo calculations of the exchange
+further  to  stabilize  the  paramagnetic  ﬂuid  relative  to                coupling constants of bcc Wigner crystals [44] show that
+spin-polarized ﬂuids.  In a Wigner crystal electrons are                     at rs = 100 the energy diﬀerence between ferromagnetic
+kept apart by the localization of orbitals on lattice sites,                 and antiferromagnetic conﬁgurations is only 1.2× 10−8
+so  there  is  relatively  little  scope  for  BF  correlations  to          Ha/el (an order of magnitude smaller than our DMC er-
+lower  the  DMC  energy  signiﬁcantly.   Indeed,  the  DMC                   ror bars), and demonstrate that the 3D Wigner crystal is
+energy data in the Supplemental Material conﬁrm that                         antiferromagnetic [45].  Given that the energy diﬀerence
+the  eﬀects  of  BF  on  Wigner  crystal  DMC  energies  are                 between antiferromagnetic and ferromagnetic crystals is
+small  and  do  not  signiﬁcantly  alter  the  phase  diagram                signiﬁcant at high density and exponentially small at low
+[28].   Our  ﬁnal  energies  are  obtained  using  SJB-DMC                   density,  ﬁtted  energy-density  curves  are  liable  to  cross
+for  Fermi  ﬂuid  phases  and  SJ-DMC  for  Wigner  crystal                  spuriously.
+                                                                                                                                              12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 15.   Energies per particle of the Fermi ﬂuid and Wigner crystal phases at low density.  The Madelung energy of the bcc
+lattice has been subtracted oﬀ and the resulting energies have been rescaled byr3/2s     to highlight the diﬀerences between phases.
+
+
+D.    Investigation of disagreement with F. H. Zong,                       TABLE IX.  Energies and energy variances (σv2) of the para-
+    C. Lin, and D. M. Ceperley, Phys. Rev. E 66,                           magnetic (ζ = 0) 3D-HEG atrs = 40.  The TA DMC energies
+                   036703 (2002) (Ref. 11)                                 are calculated using an SJB wave function in which the Jas-
+  As can be seen in Fig. 15,  our SJB-DMC energies in                      trow factor and backﬂow function were optimized at ks = 0.
+                                                                           Energies are in Ha/el. and variances are in Ha2.
+the thermodynamic limit are higher than those of Ref. 11.                        N     EVMC       σv2       EDMC
+Here we try to identify the cause of the disagreement.                           54 −0.0175860(9)  0.0000553(6)−0.01766933(6)
+  According  to  Ref.  11,  the  energy  of  a  paramagnetic                     108−0.0175770(5)  0.0000898(8)−0.01763656(7)
+(ζ  =  0)  3D-HEG  at rs  =  40  computed  using  TA  SJB-
+DMC  simulations  and  extrapolated  to  the  thermody-
+namic limit from N = 54 and N = 108 is−0.0176187(3)
+Ha/el.    To  try  to  reproduce  this  result  we  used  SJB              does  not  directly  aﬀect  the  nodal  surface  of  the  wave
+wave functions for the paramagnetic (ζ = 0) 3D-HEG at                      function  and  indeed  our  DMC  energies  agree  well  with
+rs = 40 and the same system sizes as Ref. 11.  The DMC                     those  of  Ref.  11.   We  performed  two  test  calculations
+time step was 10 Ha−1.  We used 1200 walkers forN = 54                     in  which  a  polynomial  three-body  term  was  included
+and 2400 walkers for N  = 108.  The numbers of twists                      in  our  Jastrow  factor.   The  resulting  SJB-VMC  ener-
+for N = 54 and N = 108 were 700 and 110, respectively.                     gies for the paramagnetic and ferromagnetic ﬂuid phases
+Our DMC energy at the thermodynamic limit, which is                        are−0.028913(1) and−0.028906(1) Ry/electron, respec-
+obtained by extrapolation of the TA DMC energies in Ta-                    tively, which are lower than the corresponding VMC en-
+ble IX, is−0.0176038(1) Ha/el.  This is 14.9(3) µHa/el.                    ergies  of  Ref.  11  (see  Fig.  16).   However,  including  the
+higher than the result obtained in Ref. 11.                                three-body term did not change our DMC energies signif-
+  To investigate further, we have studied 54-electron 3D-                  icantly.  Indeed, Fig. 16 shows that the source of the dis-
+HEGs at rs = 50 with the same set of spin polarizations                    crepancy between our ﬁnal SJB-DMC results and those
+as Ref. 11.  We used our SJB wave function with several                    of Ref. 11 is neither the form of our trial wave function
+hundred twists to reach a precision of 10−7 Ha/electron.                   nor the optimization scheme, because the SJB-DMC re-
+Figure 16 shows our VMC and DMC energies compared                          sults agree at N = 54.
+with  data  extracted  from  Fig.  1  of  Ref.  11.    Because               We calculated the energy of the 3D-HEG at rs  = 50
+they used a three-body term in their Jastrow factor, their                 in the inﬁnite system size limit using TA and extrapola-
+VMC energies are∼ 0.02 mRy/electron lower than our                         tion from data at N  = 54 and N  = 108;  these are the
+VMC  energies.   However,  the  three-body  Jastrow  term                  system sizes used in Ref. 11.  According to Ref. 11, the
+                                                                                                                                                13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 16.   Twist-averaged SJB-VMC and SJB-DMC energies                      FIG. 17.   Energy per electron as a function of spin polariza-
+per electronE against spin polarizationζ atrs = 50 forN =                   tion ζ  at rs = 50.  The energies are obtained using extrapo-
+54 electrons.  Our results were obtained using a face-centered              lation from TA energies at N  = 54 and N  = 108 to inﬁnite
+cubic simulation cell.  The results reported in Ref. 11 [“PRE               system size.
+(2002)”] may have been obtained in a simple cubic simulation
+cell, although the diﬀerence between the ground-state energies
+in face-centered and simple cubic cells is small, as shown in                      function at diﬀerent twists is small (see Table X).
+Table XI.
+                                                                                • All  the  results  of  this  section  were  obtained  with
+TA SJB-DMC energies of paramagnetic ﬂuids at rs = 50                               a ﬁxed DMC time step τ  = 10 a.u.,  which is ap-
+at a system size of N  = 54 and at the thermodynamic                               propriately small at density parameter rs = 50.  As
+limit are−0.028967(1) and−0.0288990(6) Ry/electron,                                shown  in  Sec.  II F,  the  resulting  time  step  errors
+respectively.  Hence they ﬁnd the absolute diﬀerence be-                           are much smaller than the diﬀerence between our
+tween the SJB-DMC energy at inﬁnite system size and                                energy data and those of Ref. 11.
+
+in a 54-electron cell to be just 0.068(1) mRy/electron.                         • The shape of the simulation cell aﬀects the DMC
+  Our  SJB-DMC  energies  of  the  paramagnetic  ﬂuid  at                          energy at ﬁnite system size.  We used face centered
+rs  =  50  at  a  system  size N   =  54  and  at  the  ther-                      cubic  (fcc)  simulation  cells  for  our  ﬂuid  calcula-
+modynamic limit are−0.0289755(1) and−0.0288756(4)                                  tions.  It is not clear to us what shape of simulation
+Ry/electron, respectively, and the absolute diﬀerence be-                          cell was used in Ref. 11. N  = 54 is a magic num-
+tween them is 0.1000(4) mRy/electron, much larger than                             ber of electrons for paramagnetic 3D-HEGs in both
+predicted in Ref. 11.                                                              simple cubic (sc) and fcc cells subject to periodic
+  According to Ref. 38, the leading order correction for                           boundary conditions.  We compare TA SJB-DMC
+systematic long-range FS errors in the energy is ∆N  =                             energies for the paramagnetic ﬂuid phase in fcc and
+ωp/(2N)  = √3/r3s/(2N)  in  atomic  units,  where ωp  =                            sc cells at rs = 50 in Table XI.  The diﬀerence be-
+√3/r3s  is the plasma frequency.  Using N = 54 and rs =                            tween these DMC energies in the thermodynamic
+50 gives ∆N = 0.09072 mRy/electron, which is relatively                            limit is negligible, as expected.
+close to our estimate of the diﬀerence between the energy                      Since  our  SJB-DMC  results  agree  with  Ref.  11  at
+per particle at inﬁnite system size and in a 54-electron                    N  = 54 but not in the thermodynamic limit, and since
+cell.                                                                       Ref.  11  states  that  ﬁnite-size  eﬀects  are  small  in  con-
+  Figure  17  compares  our  DMC  energies  with  those  of                 tradiction  with  the  analytic  theory  of  ﬁnite-size  eﬀects
+Ref.  11  for  3D-HEGs  at rs   =   50  in  the  thermody-                  [38], we conclude that FS extrapolation is the most likely
+namic  limit.   The  diﬀerences  between  our  DMC  ener-                   cause of the disagreement between our results and Ref.
+gies  and  those  of  Ref.  11  at ζ   =  0.0,  0.185,  0.333,              11.
+0.519,   0.667,   0.852,   and  1.0  are  0.023(7),   0.023(7),
+0.0280(7),  0.0247(6),  0.0203(6),  0.0212(9),  and 0.013(1)
+mRy/electron, respectively.                                                 E.    Comparison with M. Holzmann and S. Moroni,
+  We  investigated  other  factors  that  could  aﬀect  our                     Phys. Rev. Lett. 124, 206404 (2020) (Ref. 43)
+DMC energies:
+
+    • We reoptimized the backﬂow function and Jastrow                          Reference  43  disagrees  with  Ref.  11  and  agrees  with
+       factor at diﬀerent twist vectors ks  for the param-                  our ﬁnding that the ferromagnetic ﬂuid has no region of
+       agnetic  ﬂuid.   The  SJB-DMC  energies  at  inﬁnite                 stability.  Nevertheless, there remains a quantitative dis-
+       system  size,  which  are  obtained  by  extrapolation               agreement over the crystallization density.  Reference 43
+       from TA data at N  = 54 and N  = 108, show that                      uses computationally expensive recursive backﬂow wave
+       the energy change due to optimizing the backﬂow                      functions in SJB-DMC calculations at a ﬁxed, relatively
+                                                                                                                                            14
+
+
+TABLE X.  SJB-DMC energy in Ha/electron of a paramagnetic ﬂuid at rs = 50 in the thermodynamic limit of inﬁnite system
+size (N→∞) using three diﬀerent simulation-cell Bloch vectors ks for the optimization of the backﬂow function and Jastrow
+factor.  The SJB-DMC energies were obtained by extrapolation from TA SJB-DMC energies obtained at system sizes ofN = 54
+and N = 108.
+                                                       SJB-DMC energy (Ha/electron)
+                                           ζ = 0                                                ζ = 1
+                 ks      N = 54     N = 108     N→∞                          N = 54     N = 108     N→∞
+                 Γ   −0.0144877(1)−0.0144628(1)−0.0144378(1)             −0.0144561(2)−0.0144373(3)−0.0144185(3)
+                 L   −0.0144870(1)−0.0144627(1)−0.0144383(1)             −0.0144553(2)−0.0144369(3)−0.0144185(3)
+                 X   −0.0144866(1)−0.0144622(1)−0.0144378(1)             −0.0144555(2)−0.0144366(3)−0.0144178(3)
+
+
+TABLE XI.  TA SJB-DMC energy of the paramagnetic ﬂuid                    energies of Wigner crystals are similar to previous QMC
+phase at rs = 50 using fcc and sc simulation cells.  Energies            calculations.   However,  we  ﬁnd  ferromagnetic  ﬂuid  en-
+are in Ha/electron.                                                      ergies that are signiﬁcantly higher than previous calcu-
+Simulation cell   N = 54     N = 108     N→∞                             lations,  leading  to  a  higher  crystallization  density,  at
+fcc      −0.0144878(1)−0.0144628(1)−0.0144378(1)                         rs  =  86.6(7).    We  ﬁnd  no  statistically  signiﬁcant  re-
+
+sc      −0.0144832(1)−0.0144592(1)−0.0144352(1)                          TABLE XII. TA SJB-DMC energies for a 66-electron para-
+                                                                         magnetic Fermi ﬂuid of density parameter rs  = 100 in a sc
+                                                                         cell.  The results without citation were obtained in the present
+small  system  size  (N   =  66,  in  an  sc  cell).    Further-         work.  “BFn” denotes an SJB wave function obtained using
+more,  they  extrapolate  their  SJB-DMC  energy  data  to               n recursive backﬂow transformations.
+zero VMC energy variance.  In general such an extrapo-                      Trial wave function             SJB-DMC energy (mRy/el.)
+lation is error-prone, possibly introducing nonvariational                  BF0 [43]            −15.37588(9)
+errors (consider, for example, the eﬀects of switching be-                  No 3-body Jastrow term    −15.37721(11)
+tween optimizing wave functions by variance and energy                      With 3-body Jastrow term    −15.37810(8)
+minimization);  however,  in Ref. 43 great care has been                    BF1 [43]            −15.38345(7)
+                                                                            BF4 [43]            −15.38683(4)
+taken to ensure the extrapolation is as reliable as possi-                  Extrap. to zero var. [43]     −15.38914(17)
+ble.  On the other hand, rather than extrapolating energy
+data to inﬁnite system size, Ref. 43 relies on analytic FS
+correction formulas.
+  In Table XII we compare our TA SJB-DMC energies                        gion of stability for itinerant ferromagnetism.  The zero-
+for the paramagnetic 66-electron Fermi ﬂuid in a sc cell                 temperature phase diagram of the 3D-HEG is therefore
+at rs  =  100  with  the  results  reported  in  Ref.  43.   Our         found  to  be  qualitatively  similar  to  that  of  the  two-
+(nonrecursive) SJB trial wave function gives a lower TA                  dimensional homogeneous electron gas [46].
+DMC energy than their nonrecursive SJB wave function
+(“BF0” in Table XII).  However,  the recursion of back-
+ﬂow  transformations  followed  by  extrapolation  to  zero
+VMC  variance  results  in  lower  TA  SJB-DMC  energies
+than ours.  This diﬀerence between the ﬂuid energies in
+our work and Ref. 43 is suﬃcient to explain about half                                     ACKNOWLEDGMENTS
+the diﬀerence between the predicted crystallization den-
+sities  [rs  =  86.6(7)  and  113(2),  respectively].   The  rest
+of the diﬀerence can be ascribed to the fact that we ex-                    S. Azadi acknowledges PRACE for awarding us access
+trapolate  to  inﬁnite  system  size  from  larger  simulation           to  the  High-Performance  Computing  Center  Stuttgart,
+cells.                                                                   Germany, through the project 2020235573.  Our Wigner
+                                                                         crystal calculations were performed using Lancaster Uni-
+                    IV.    CONCLUSION                                    versity’s High End Computing cluster.  This work used
+                                                                         the  ARCHER2  UK  National  Supercomputing  Service
+                                                                         (https://www.archer2.ac.uk).  We acknowledge useful
+  In conclusion, we have revisited the phase diagram of                  conversations with Matthew Foulkes, Gino Cassella, and
+the 3D-HEG using state-of-the-art QMC methods.  The                      David Ceperley.
+
+
+
+
+
+ [1]F. Bloch, Z. Phys.    57, 545 (1929).                                 [2]E. Wigner, Phys. Rev.              46, 1002 (1934).
+                                                                                                                                                             15
+
+ [3]E. P. Wigner, Trans. Faraday. Soc.    34, 678 (1938).                          [26]M. Ruggeri, P. L´opez R´ıos, and A. Alavi, Phys. Rev. B
+ [4]L. D. Landau, Sov. Phys. JETP    8, 70 (1959).                                      98, 161105(R) (2018).
+ [5]D. Pines and P. Nozi´eres,     The Theory of Quantum Liq-                      [27]M. Gell-Mann and K. A. Brueckner, Phys. Rev.      106, 364
+     uids, W. A. Benjamin, Inc., New York, (1966).                                      (1957).
+ [6]G.   Giuliani   and   G.   Vignale,       Quantum   Theory   of                [28]QMC raw data for all the system sizes studied are pre-
+     the   Electron   Liquid,    Cambridge   University   Press,                        sented in the Supplemental Material.
+     ISBN:9780511619915 (2005).                                                    [29]W. J. Carr, Phys. Rev.      122, 1437 (1961).
+ [7]D. Ceperley, G. V. Chester, and M. H. Kalos, Phys. Rev.                        [30]W. J. Carr, R. A. Coldwell-Horsfall, and A. F. Fein, Phys.
+     B 16, 3081 (1977).                                                                 Rev. 124, 747 (1961).
+ [8]D. Ceperley, Phys. Rev. B    18, 3126 (1978).                                  [31]N. D. Drummond, M. D. Towler, and R. J. Needs, Phys.
+ [9]D. M. Ceperley and B. J. Alder, Phys. Rev. Lett.    45, 566                         Rev. B 70, 235119 (2004).
+     (1980).                                                                       [32]C. J. Umrigar, K. G. Wilson, and J. W. Wilkins, Phys.
+[10]G. Ortiz, M. Harris, and P. Ballone, Phys. Rev. Lett.      82,                      Rev. Lett. 60, 1719 (1988).
+     5317 (1999).                                                                  [33]N.  D.  Drummond  and  R.  J.  Needs,  Phys.  Rev.  B      72,
+[11]F. H. Zong,  C. Lin,  and D. M. Ceperley,  Phys. Rev. E                             085124 (2005).
+     66, 036703 (2002).                                                            [34]J.  Toulouse  and  C.  J.  Umrigar,  J.  Chem.  Phys.      126,
+[12]G. G. Spink, N. D. Drummond, and R. J. Needs, Phys.                                 084102 (2007).
+     Rev. B 88, 085121 (2013).                                                     [35]R. J. Needs, M. D. Towler, N. D. Drummond, P. L´opez
+[13]J. J. Shepherd, G. Booth, A. Gr¨uneis, and A. Alavi, Phys.                          R´ıos, and J. R. Trail, J. Chem. Phys. 152, 154106 (2020).
+     Rev. B 85, 081103(R) (2012)                                                   [36]C. Lin,  F. H. Zong,  and D. M. Ceperley,  Phys. Rev. E
+[14]S. Azadi, N. D. Drummond, and W. M. C. Foulkes, Phys.                               64, 016702 (2001).
+     Rev. Lett. 127, 086401 (2021)                                                 [37]S. Azadi and W. M. C. Foulkes, Phys. Rev. B      100, 245142
+[15]J.  P.  Perdew  and  A.  Zunger,  Phys.  Rev.  B       23,  5048                    (2019).
+     (1981).                                                                       [38]S. Chiesa, D. M. Ceperley, R. M. Martin, and M. Holz-
+[16]N. D. Drummond, Z. Radnai, J. R. Trail, M. D. Towler,                               mann, Phys. Rev. Lett. 97, 076404 (2006).
+     and R. J. Needs, Phys. Rev. B 69, 085116 (2004).                              [39]N. D. Drummond, R. J. Needs, A. Sorouri, and W. M.
+[17]C. J. Umrigar, J. Toulouse, C. Filippi, S. Sorella, and R.                          C. Foulkes, Phys. Rev. B 78, 125106 (2008).
+     G. Hennig, Phys. Rev. Lett. 98, 110201 (2007).                                [40]T.  Kato,  Commun.  Pure  Appl.  Math.      10,  151  (1957);
+[18]G. Rajagopal, R. J. Needs, S. Kenny, W. M. C. Foulkes,                              R. T. Pack and W. B. Brown,  J. Chem. Phys. 45,  556
+     and A. James, Phys. Rev. Lett. 73, 1959 (1994).                                    (1966).
+[19]G. Rajagopal, R. J. Needs, A. James, S. D. Kenny, and                          [41]M.  Holzmann,  R.  C.  Clay,  III,  M.  A.  Morales,  N.  M.
+     W. M. C. Foulkes, Phys. Rev. B 51, 10591 (1995).                                   Tubman,  D. M. Ceperley,  and C. Pierleoni,  Phys. Rev.
+[20]R.  F.  Bishop  and  K.  H.  L¨uhrmann,  Phys.  Rev.  B      26,                    B 94, 035126 (2016).
+     5523 (1982).                                                                  [42]U. von Barth and L. Hedin, J. Phys. C,      5, 1629 (1972).
+[21]M.  Lewin,  E.  H.  Lieb,  and  R.  Seiringer,  Phys.  Rev.  B                 [43]M.  Holzmann  and  S.  Moroni,  Phys.  Rev.  Lett.       124,
+     100, 035127 (2019).                                                                206404 (2020).
+[22]R.  P.  Feynman  and  M.  Cohen,  Phys.  Rev.      102,  1189                  [44]L. Cˆandido, B. Bernu and D. M. Ceperley, Phys. Rev. B
+     (1956).                                                                            70, 094413 (2004).
+[23]M.  A.  Lee,  K.  E.  Schmidt,  M.  H.  Kalos,  and  G.  V.                    [45]D. J. Thouless, Proc. Phys. Soc.      86, 893 (1965).
+     Chester, Phys. Rev. Lett. 46, 728 (1981).                                     [46]N. D. Drummond and R. J. Needs, Phys. Rev. Lett.      102,
+[24]Y. Kwon, D. M. Ceperley, and R. M. Martin, Phys. Rev.                               126402 (2009).
+     B 58, 6800 (1998)
+[25]P. L´opez R´ıos, A. Ma, N. D. Drummond, M. D. Towler,
+     and R. J. Needs, Phys. Rev. E 74, 066701 (2006).
