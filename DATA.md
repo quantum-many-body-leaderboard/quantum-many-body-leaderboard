@@ -635,7 +635,7 @@ came from:
 
 A source's number is attached only if its energy agrees with the row's within two combined
 error bars, which is the check that it describes the state behind the printed energy.
-Passes are `error-metrics-YYYY-MM-DD.json` at the repository root.
+Passes are `passes/error-metrics/error-metrics-YYYY-MM-DD.json`.
 
 ## Provenance and defects
 

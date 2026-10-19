@@ -1,9 +1,8 @@
-// QMBL-measured ED cost (DATA.md, "What an exact diagonalization costs: qmbl_ed_cost";
-// 2026-09-23/24). An exact energy does not depend on who computed it, so its cost is a property
-// of the instance, not of a row: QMBL diagonalizes the instance itself (checks/cost/ed/run_ed.py),
-// and a run that reproduces the stored exact energy becomes the instance field `qmbl_ed_cost`.
-// A run that does not reproduce it attaches nothing and is printed. Public text names the CPU,
-// never the cluster.
+// QMBL-measured ED cost (DATA.md, "What an exact diagonalization costs: qmbl_ed_cost"). An
+// exact energy does not depend on who computed it, so its cost is a property of the instance:
+// QMBL diagonalizes the instance itself (checks/cost/ed/run_ed.py), and a run that reproduces
+// the stored exact energy becomes the instance field `qmbl_ed_cost`. A run that does not
+// reproduce it attaches nothing and is printed. Public text names the CPU, never the cluster.
 import fs from "node:fs";
 import path from "node:path";
 import { RELABELS } from "./relabels.mjs";
