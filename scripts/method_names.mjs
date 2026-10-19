@@ -633,6 +633,29 @@ Object.assign(NAMES, {
   "TC-DCD (k_c = 4), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = 4 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
 });
 
+// Pass 2026-10-19-hegcorr (SWEEP.md), track 2: correlation energies stored as QMBL Hartree-Fock + E_c (RULES.md 12.3):
+// arXiv:2202.05183 Tables I and III, 1201.4691 (FCIQMC), 1202.4990 (MP2), 1511.05752 (stochastic CC).
+Object.assign(NAMES, {
+  "SJB-VMC (N = 14 table)": ["Slater-Jastrow-backflow", "single determinant"],
+  "SJB-DMC (N = 14 table)": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow; extrapolated: Δτ → 0", { family: "DMC" }],
+  "FermiNet (1 dense determinant, N = 14 table)": ["FermiNet", "1 dense determinant, 4 layers 256/32", { family: "other NQS" }],
+  "FermiNet (16 dense determinants, N = 14 table)": ["FermiNet", "16 dense determinants, 4 layers 256/32", { family: "other NQS" }],
+  "FermiNet (1 block determinant, N = 14 table)": ["FermiNet", "1 block determinant, 4 layers 256/32", { family: "other NQS" }],
+  "FermiNet (16 block determinants, N = 14 table)": ["FermiNet", "16 block determinants, 4 layers 256/32", { family: "other NQS" }],
+  "i-FCIQMC (M = 114 spin orbitals)": ["FCIQMC", "initiator (n_add = 3), 114 spin orbitals", { family: "FCIQMC / CC" }],
+  "i-FCIQMC (M = 186 spin orbitals)": ["FCIQMC", "initiator (n_add = 3), 186 spin orbitals", { family: "FCIQMC / CC" }],
+  "i-FCIQMC (M = 358 spin orbitals)": ["FCIQMC", "initiator (n_add = 3), 358 spin orbitals", { family: "FCIQMC / CC" }],
+  "i-FCIQMC (M = 778 spin orbitals)": ["FCIQMC", "initiator (n_add = 3), 778 spin orbitals", { family: "FCIQMC / CC" }],
+  "i-FCIQMC (M = 1850 spin orbitals)": ["FCIQMC", "initiator (n_add = 3), 1850 spin orbitals", { family: "FCIQMC / CC" }],
+  "i-FCIQMC (M = 2368 spin orbitals)": ["FCIQMC", "initiator (n_add = 3), 2368 spin orbitals", { family: "FCIQMC / CC" }],
+  "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)": ["FCIQMC", "initiator (n_add = 3), run at 1850 spin orbitals; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "i-FCIQMC, single-point basis-limit estimate (run at M = 922)": ["FCIQMC", "initiator (n_add = 3), run at 922 spin orbitals; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "i-FCIQMC, single-point basis-limit estimate (run at M = 778)": ["FCIQMC", "initiator (n_add = 3), run at 778 spin orbitals; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "MP2, complete-basis limit": ["MP2", "extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "CCSD (initiator stochastic CC), complete-basis limit": ["CCSD", "initiator stochastic coupled cluster at the infinite-population limit; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "CCSDT (initiator stochastic CC), complete-basis limit": ["CCSDT", "initiator stochastic coupled cluster at the infinite-population limit; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+});
+
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],

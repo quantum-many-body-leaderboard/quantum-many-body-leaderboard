@@ -11,6 +11,23 @@ Second pass on every paper: **harvest its bibliography**. Comparison tables cite
 they are beating, and reviews aggregate SOTA across models we have not touched. That is how the
 triangular/kagome/pyrochlore instances get found: nobody wrote a SOTA note for them.
 
+## Track 2, correlation energies (2026-10-19)
+
+RULES.md 12.3 amended: a correlation energy on a closed-shell Gamma instance is a row, stored as QMBL's Hartree-Fock
+energy (`checks/heg-hf/hf.mjs`) plus the printed E_c. Pass `sweep-rows-2026-10-19-hegcorr.json`
+(`qmbl-runs/qmbl-worklist/2026-10-19-hegcorr/make_rows.mjs`, from the readings of 2026-10-16 and 10-17):
+**72 rows, 4 new instances** (N = 14 at rs = 0.1, N = 38 at rs = 0.5, 1, 2).
+
+- arXiv:2202.05183 Tables I and III (FermiNet, Slater-Jastrow-backflow VMC and DMC, N = 14), 1201.4691 (FCIQMC at
+  M = 114-2368 spin orbitals, 1/M and single-point basis limits, N = 14, 38, 54), 1202.4990 (MP2 at the basis limit),
+  1511.05752 (CCSD and CCSDT at the basis limit).
+- **Check of the reconstruction:** arXiv:2202.05183's 16-determinant FermiNet E_c at rs = 1 plus QMBL's HF energy gives
+  0.568904 Ha per electron, the total arXiv:2305.07240 prints for that state. arXiv:1511.05752 prints no unit or cell;
+  its FCIQMC column reprints 1201.4691's basis-limit values, which fixes both.
+- Finite-basis FCIQMC is `variational` at rs = 0.5 and 1, where 1201.4691 shows the initiator error converged
+  (Figs. 8 and 15), and `projected` at rs = 2 and 5.
+- arXiv:2202.05183 prints the same E_c, -0.5254(1), for Slater-Jastrow-backflow VMC and DMC at rs = 1; both rows keep it.
+
 ## Track 2, beyond neural networks (2026-10-17): DMC, FCIQMC and coupled cluster
 
 RULES.md 12.3 and 12.4 were amended the same day: finite-basis energies are rows (full CI in a basis is
