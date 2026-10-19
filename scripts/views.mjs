@@ -1,18 +1,12 @@
-// Definitions shared by the views of the table: the figures (figures.mjs), the README
-// leaderboard (readme_table.mjs) and the site (site.mjs). A
-// chart that counted "contested" or "tensor network" differently from the table printed
-// beside it would contradict that table, so all of them import these rather than keeping
-// a copy each.
+// Definitions shared by the figures (figures.mjs), the README leaderboard (readme_table.mjs)
+// and the site (site.mjs), so that they all count "contested" and the method families the
+// same way.
 
-// A record on an instance nobody else has attempted says something very different from
-// a record won against nine rivals. "Contested" is the cut used throughout.
+// An instance with at least CONTESTED published rows is "contested".
 export const CONTESTED = 5;
 
-// The instances the field actually competes on, in the order they are shown. Curated,
-// not top-N-by-anything: an automatic ranking by V-score surfaces the stale J2 != 0.5
-// baselines instead and buries 10x10 (the internal view of those is staleness.mjs).
-// The site's front page leads with this table; the README lists every instance instead
-// (readme_table.mjs) and no longer renders it.
+// Instances chosen by hand, in the order the site's front page shows them first. The README
+// lists every instance instead (readme_table.mjs).
 export const FRONTIER = [
   ["J1J2/square_64_P_0.5", "J1-J2 square 8x8, J2 = 0.5"],
   ["J1J2/square_100_P_0.5", "J1-J2 square 10x10, J2 = 0.5"],
@@ -27,7 +21,7 @@ export const FRONTIER = [
 export const variationalRows = i => i.rows.filter(r => r.bound_type === "variational");
 
 // Families are matched by regular expression against the `method` string, first match
-// wins, in this order - so a row naming both an architecture and its optimiser lands in
+// wins, in this order, so a row naming both an architecture and its optimiser lands in
 // the architecture it names first.
 export const FAMILIES = [
   ["tensor network", /\bdmrg\b|\bmps\b|\bpeps\b|tensor.?network|\bmera\b/i],
@@ -49,9 +43,9 @@ export const FAMILIES = [
   // Bare "VMC" and "VMC + n Lanczos steps" are the Gutzwiller/Jastrow-projected states of
   // Hu, Becca and Sorella; every neural family is matched before this line.
   ["classic VMC", /gutzwiller|jastrow|\bbcs\b|spin liquid|\bmvmc\b|slater|lanczos|\bvmc\b|\brvb\b|pair.?product|projected mean.?field/i],
-  // Basis-set many-body methods of track 2 (2026-10-17): FCIQMC, coupled and distinguishable cluster, MP2.
+  // Basis-set many-body methods of track 2: FCIQMC, coupled and distinguishable cluster, MP2.
   ["FCIQMC / CC", /fciqmc|\bccs?d|\bdcd\b|coupled cluster|\bmp2\b/i],
-  // Diffusion Monte Carlo (track 2's fixed-node and fixed-phase projector rows, 2026-10-16), before the lattice
+  // Diffusion Monte Carlo (track 2's fixed-node and fixed-phase projector rows), before the lattice
   // projector methods so "fixed-node DMC" is not filed as GFMC.
   ["DMC", /\bdmc\b|diffusion monte carlo|fixed.?phase/i],
   ["AFQMC / GFMC", /afqmc|fixed.?node|\bgfmc\b|\bvafqmc\b|\bfn\b/i],
