@@ -6,20 +6,19 @@
 //                                fill and the arrows crystallise into Neel order, hold and melt;
 //                                the arrows jitter with T; the bar is the arrows' bond order (the
 //                                share of antiparallel neighbour pairs, 0 at random, 1 when
-//                                ordered - a domain wall still counts as ordered, as the eye sees
-//                                it). Blue is spin up, grey spin down. Nothing from the
-//                                leaderboard is plotted.
+//                                ordered; a domain wall still counts as ordered, as the eye sees
+//                                it). Blue is spin up, grey spin down. No leaderboard data.
 //   figures/lattice-strip.gif    the footer: a cosine potential (an optical lattice) sliding by
-//                                while its depth breathes - one atom per well when deep,
+//                                while its depth breathes: one atom per well when deep,
 //                                delocalised dots when shallow.
 //   figures/qmbl-ticks-slant.txt "QMBL" in the Ticks Slant figlet font, plain text, for wherever a
 //                                <pre> is wanted (site footer).
 //
-// Not part of build.sh: needs ImageMagick (convert), ffmpeg and DejaVu Sans Mono, and the GIFs are
-// committed. Regenerate with:  node scripts/ascii.mjs
+// Run by hand, outside build.sh: needs ImageMagick (convert), ffmpeg and DejaVu Sans Mono. The GIFs
+// are committed. Regenerate with:  node scripts/ascii.mjs
 //
 // The header with another tagline, and nothing else, goes wherever --out says. The README of
-// QMBL: Open Problems opens with it (2026-10-09: a version of QMBL's GIF):
+// QMBL: Open Problems opens with it:
 //   node scripts/ascii.mjs --tagline "open problems" --out ../open-problems/figures/open-problems-ascii.gif
 import { execFileSync } from "node:child_process";
 import { writeFileSync, rmSync, mkdtempSync } from "node:fs";

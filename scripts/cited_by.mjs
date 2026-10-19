@@ -1,18 +1,10 @@
-// Who has cited this paper? The cheapest way to ask whether anyone has computed a second
-// energy for an instance that only one paper ever touched.
+// List the papers that cite the seed papers, to find second calculations on instances whose
+// parameters no abstract names (e.g. one column of a doping scan). Writes a TSV for screening;
+// the result backs an instance's `coverage` entry.
 //
-// The keyword sweep cannot find those papers: an instance like Hubbard/square_256_P_113_8
-// is one column of one doping scan, and nobody else writes its parameters in an abstract.
-// The citation graph can, because a second calculation on the same Hamiltonian cites the
-// first. This is the method that settled the Impurity family (247 citing papers screened,
-// none of them uses VarBench's bath discretisations), and it is what lets an instance carry
-// a `coverage` entry saying the literature was checked and nothing newer exists.
-//
-// Two registries, merged, because neither is complete: OpenAlex indexes preprints
-// inconsistently and Semantic Scholar misses some journal-only records.
-//
-// A failed request is a hard error, never an empty result (SWEEP.md): an outage that logs
-// as "0 citing papers" would be recorded as a screen that found nothing.
+// Merges OpenAlex and Semantic Scholar: OpenAlex indexes preprints inconsistently and
+// Semantic Scholar misses some journal-only records. A failed request is a hard error
+// (SWEEP.md), so an outage is never recorded as "0 citing papers".
 //
 // usage: node scripts/cited_by.mjs --seed 10.1103/physrevb.107.115133 --seed 2311.11561 \
 //          [--tag sorella-2023] [--out sweep-cites-sorella.tsv]
@@ -59,8 +51,8 @@ async function openalexCiting(seed) {
   const work = await get(`https://api.openalex.org/works/${key}?mailto=${MAILTO}`);
   if (!work) return { work: null, citing: [] };
   const citing = [];
-  // Page numbers, not cursors: since 2026-10 OpenAlex answers a cursor's second page with HTTP 401
-  // without an API key, while page=2.. still works (up to 10,000 results).
+  // Page numbers: without an API key OpenAlex answers a cursor's second page with HTTP 401,
+  // while page=2.. works (up to 10,000 results).
   for (let n = 1; ; n++) {
     const page = await get(`https://api.openalex.org/works?filter=cites:${work.id.split("/").pop()}` +
       `&per-page=200&page=${n}&mailto=${MAILTO}`);

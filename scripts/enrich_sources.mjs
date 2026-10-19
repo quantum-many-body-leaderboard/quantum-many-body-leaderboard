@@ -1,10 +1,9 @@
 // Resolve every paper identifier in the table to authors, institutions and countries,
 // and cache the result in sources/openalex.json.
 //
-// Run by hand, NOT from build.sh: this is the only script that touches the network, and
-// the build must stay offline and byte-idempotent. The cache is committed, so a rebuild
-// on a fresh clone produces the same tables without an API key or a connection. Only
-// identifiers missing from the cache are fetched; pass --refresh to re-fetch everything.
+// Run by hand, outside build.sh: it is the only script that uses the network, and the build
+// stays offline and byte-idempotent. The cache is committed. Only identifiers missing from
+// the cache are fetched; pass --refresh to re-fetch everything.
 //
 //   node scripts/enrich_sources.mjs [--refresh]
 //
@@ -14,8 +13,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { collect } from "./summary.mjs";
 
-// NOT under data/: emit.mjs wipes that directory on every build, and this cache is an
-// expensive network artefact that must survive a rebuild. It is committed.
+// Kept outside data/, which emit.mjs wipes on every build. The cache is committed.
 const CACHE = "sources/openalex.json";
 // OpenAlex "polite pool": a contact address in the User-Agent, from QMBL_MAILTO when set.
 const MAILTO = process.env.QMBL_MAILTO;
@@ -23,8 +21,8 @@ const UA = { headers: { "User-Agent": `qmbl/0.1${MAILTO ? ` (mailto:${MAILTO})` 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // A reference may carry an arXiv id, a journal DOI, both, or only a link to a run
-// script. VarBench cited code rather than papers for a large part of its table, so
-// "no identifier" is a common and honest outcome, not a parse failure.
+// script. VarBench cites code for a large part of its table, so null ("no identifier") is a
+// common, valid result.
 export function identify(ref) {
   ref = ref || "";
   const arxiv = ref.match(/arxiv\.org\/abs\/(\d{4}\.\d{4,5})|arXiv:\s?(\d{4}\.\d{4,5})/i);
@@ -46,13 +44,10 @@ const affiliations = w => ({
   countries: [...new Set((w.authorships || []).flatMap(a => a.countries || []))],
 });
 
-// The FIRST author's affiliation, kept separately from the paper-wide lists. A paper
-// with twelve authors across four countries has no single country; the first author's
-// institution is the one defensible choice, and it is what the by-country view uses.
-//
-// Note what this is NOT: it is an institution's country, not anyone's nationality.
-// A Chinese researcher at ETH counts as CH here. The field name says "institution"
-// so that no reader has to guess which of the two was meant.
+// The first author's affiliation, kept separately from the paper-wide lists. A paper with
+// authors in several countries has no single country, so the by-country view uses the
+// first author's institution. The country is the institution's country (a researcher at
+// ETH counts as CH), never a nationality.
 const firstAuthor = w => {
   const a = (w.authorships || [])[0];
   return {
@@ -61,9 +56,9 @@ const firstAuthor = w => {
   };
 };
 
-// DataCite mints the arXiv DOIs, so it has every preprint the moment it is posted -
-// including the recent ones OpenAlex has not indexed yet. Thinner data (rarely any
-// affiliation), but it is authors and a year where the alternative is nothing.
+// DataCite mints the arXiv DOIs, so it has every preprint as soon as it is posted,
+// including recent ones OpenAlex has not indexed yet. It gives authors and a year but
+// rarely any affiliation.
 // Names arrive as "Chen, Ao", which is flipped here so one surname rule serves both.
 async function resolveDatacite(id) {
   const doi = id.doi || `10.48550/arXiv.${id.arxiv}`;
@@ -103,7 +98,7 @@ async function resolve(id) {
   let merged_from = null;
   // Preprint records in OpenAlex usually carry the author list but no affiliations. The
   // published version of the same paper does, so when we land on a bare preprint we look
-  // it up by title and take the affiliations from there - the authors stay the preprint's.
+  // it up by title and take the affiliations from there. The authors stay the preprint's.
   if (!institutions.length && w.display_name) {
     await sleep(150);
     const q = `https://api.openalex.org/works?filter=title.search:${encodeURIComponent(w.display_name)}&per_page=5`;
@@ -132,21 +127,18 @@ async function resolve(id) {
     institutions,
     countries,
     ...first,
-    // Recorded so a later reader can tell a genuine "no affiliation data" from one we
-    // patched in from the published version of the same paper.
+    // Set when the affiliations come from the published version of the same paper.
     affiliations_from: merged_from,
     source_api: "openalex",
     checked_on: new Date().toISOString().slice(0, 10),
   };
 }
 
-// Read the committed cache, with locally-parsed affiliations layered on top. Every
-// consumer goes through this rather than reading the files directly, so there is one
-// place that knows what to do when either is absent.
+// Read the committed cache, with locally parsed affiliations layered on top. Every consumer
+// reads through this function, which also handles a missing file.
 //
-// The local layer only fills gaps: where a registry supplied a first-author affiliation
-// it wins, because it is the checkable one. affiliations_local.mjs only ever writes
-// entries the registries left empty, so in practice the two do not overlap.
+// The local layer only fills gaps: a registry's first-author affiliation wins, because it
+// can be checked. affiliations_local.mjs only writes entries the registries left empty.
 const LOCAL = "sources/affiliations-local.json";
 export function sources() {
   const base = fs.existsSync(CACHE) ? JSON.parse(fs.readFileSync(CACHE, "utf8")) : {};
@@ -161,15 +153,12 @@ export function sources() {
   return base;
 }
 
-// The identifier of the paper a row's number is from, or null. Not simply the first
-// identifier in the reference: a quoted row names the original and then where it was read,
-// "Y. Nomura and M. Imada, Phys. Rev. X 11, 031034 (2021) (cited as ref [7] in Table I of
-// arXiv:2211.07749)", and when the original carries no identifier of its own the first one
-// in the string is the quoting paper's. Until 2026-09-16 the site and the README credited
-// such numbers to the quoting paper's authors (Nomura & Imada's as "Roth et al. (2022)").
-// So a "(cited ... )" or "(quoted ... )" clause is cut before looking, and an identifier
-// that verified.secondary_of names as the quoting source is refused as well, which covers
-// the clause-less forms ("arXiv:1903.06713 (footnote [39] there)").
+// The identifier of the paper a row's number is from, or null. A quoted row names the
+// original and then where it was read, "Y. Nomura and M. Imada, Phys. Rev. X 11, 031034
+// (2021) (cited as ref [7] in Table I of arXiv:2211.07749)", so the first identifier in the
+// string can be the quoting paper's. A "(cited ... )" or "(quoted ... )" clause is cut before
+// looking, and an identifier that verified.secondary_of names as the quoting source is
+// refused, which covers the clause-less forms ("arXiv:1903.06713 (footnote [39] there)").
 const QUOTING = /\([^()]*\b(?:cited|quoted)\b[^()]*\)/gi;
 export function paperOf(row) {
   const id = identify((row.reference || "").replace(QUOTING, ""));
@@ -214,5 +203,5 @@ async function main() {
   console.log(`${CACHE}: ${Object.keys(sorted).length} sources, ${withInst} with institutions`);
 }
 
-// Network access only when run directly - importing this module must never fetch.
+// Network access only when run directly; importing this module never fetches.
 if (process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`) await main();

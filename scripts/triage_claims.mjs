@@ -1,6 +1,6 @@
-// For every claim sentence, decide whether it can map to a FINITE QMBL instance.
-// Infinite-lattice and extrapolated numbers are the main false-record hazard
-// (2510.04907 would have produced two), so they are classified out automatically.
+// For every claim sentence, decide whether it can map to a finite QMBL instance.
+// Infinite-lattice and extrapolated numbers look like records but are not comparable,
+// so they are classified out.
 import fs from "node:fs";
 const strip = s => s.replace(/<[^>]+>/g," ").replace(/&nbsp;|&#[0-9]+;|&[a-z]+;/g," ").replace(/\s+/g," ");
 const CLAIM = /(state[- ]of[- ]the[- ]art|best (?:known |reported )?(?:variational )?energ|lowest (?:variational )?energ|previous best|improv\w+ (?:up)?on|outperform\w*|new record|surpass\w*|we (?:obtain|reach|achieve|report)|more accurate than)/i;

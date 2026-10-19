@@ -1,16 +1,8 @@
 // Extract the first author's affiliation from the paper itself, for the sources where
-// OpenAlex has none.
+// OpenAlex has none (mostly recent arXiv preprints). Reads the cached papers in sources/.
 //
-// Why this exists: every source missing an affiliation is an arXiv preprint, and that
-// is not a random gap - it is the newest work, which is where the current frontier and
-// several of the record-holding groups are. Building a by-country view on OpenAlex
-// alone reported China once while the papers holding four of the nine frontier records
-// are from the Chinese Academy of Sciences and Peking University. The affiliations are
-// printed on the papers we already downloaded, so we read them there.
-//
-// Output goes to sources/affiliations-local.json, a SEPARATE committed file rather than
-// an edit to the OpenAlex cache, so that `enrich_sources.mjs --refresh` cannot silently
-// discard it. Run by hand after a sweep adds papers:
+// Writes sources/affiliations-local.json, a separate committed file, so that
+// `enrich_sources.mjs --refresh` does not overwrite it. Run by hand after a sweep adds papers:
 //
 //   node scripts/affiliations_local.mjs
 import fs from "node:fs";
@@ -24,8 +16,8 @@ const OUT = "sources/affiliations-local.json";
 // more specific names are tested first ("South Korea" before "Korea").
 const COUNTRIES = [
   // "State Key Laboratory" is a PRC national programme, so the phrase identifies the
-  // country on its own - which matters because those affiliation lines often name the
-  // laboratory and put the university on a separate line that gets split away.
+  // country on its own. Such lines often name the laboratory and put the university on a
+  // separate line.
   ["CN", /\bchina\b|\bp\.?\s?r\.?\s?china\b|beijing|shanghai|hefei|shenzhen|tsinghua|peking university|chinese academy|state key laborator|bytedance/i],
   ["US", /\bu\.?\s?s\.?a\.?\b|\bunited states\b|massachusetts|california|new york|illinois|princeton|harvard|\bmit\b|flatiron/i],
   ["JP", /\bjapan\b|tokyo|kyoto|osaka|riken|waseda/i],
@@ -52,8 +44,8 @@ const COUNTRIES = [
   ["BR", /\bbrazil\b|são paulo|sao paulo|rio de janeiro/i],
 ];
 // Email domains settle cases the institution name cannot. "Northeastern University"
-// is in Boston and also in Shenyang; "@northeastern.edu" is decisively the former,
-// since a Chinese university would be .edu.cn. Checked before the name patterns.
+// is in Boston and also in Shenyang; "@northeastern.edu" is the former, since a Chinese
+// university would be .edu.cn. Checked before the name patterns.
 const TLDS = [
   [/@[\w.-]+\.edu\.cn\b|@[\w.-]+\.ac\.cn\b|@[\w.-]+\.cn\b/i, "CN"],
   [/@[\w.-]+\.ac\.uk\b|@[\w.-]+\.uk\b/i, "GB"],
@@ -73,15 +65,15 @@ const countryOf = text => {
 const strip = s => s.replace(/<[^>]+>/g, " ").replace(/&[a-z]+;/gi, " ").replace(/\s+/g, " ").trim();
 
 // arXiv's LaTeXML HTML marks up authors and their affiliations explicitly. We take the
-// block up to the SECOND author's name, so the affiliations we read belong to the first.
+// block up to the second author's name, so the affiliations we read belong to the first.
 function fromHtml(html) {
   const block = html.match(/<div class="ltx_authors">([\s\S]{0,24000}?)<\/div>\s*<\/div>/)
     || html.match(/<div class="ltx_authors">([\s\S]{0,24000})/);
   if (!block) return null;
   // Class attributes carry several classes at once ("ltx_contact ltx_role_affiliation")
-  // and the spans nest, so matching them by regex is fragile - a lazy close bracket
-  // swallows the next affiliation or stops inside the label. Strip the tags first and
-  // work on the text, where "Affiliation:" is a reliable separator.
+  // and the spans nest, so a regex on the tags can swallow the next affiliation or stop
+  // inside the label. The tags are stripped first; in the text, "Affiliation:" is a
+  // reliable separator.
   const names = [...block[1].matchAll(/<span class="[^"]*ltx_personname[^"]*">([\s\S]{0,300}?)<\/span>/g)];
   const firstName = names.length
     ? strip(names[0][1]).replace(/\s*(thanks|affiliation):.*$/i, "").trim()
@@ -94,10 +86,10 @@ function fromHtml(html) {
 
   // Two layouts. Normally each author is followed by their own affiliations, so slicing
   // at the second name isolates the first author. But "ltx_authors_1line" lists all
-  // eighteen names first and the affiliations afterwards, where that slice cuts the
-  // first affiliation mid-sentence. So: use the sliced region when it yields a country,
-  // and otherwise fall back to the first affiliation in the document, which belongs to
-  // the first author under both layouts.
+  // names first and the affiliations afterwards, where that slice cuts the first
+  // affiliation mid-sentence. So the sliced region is used when it yields a country, and
+  // otherwise the first affiliation in the document, which belongs to the first author
+  // under both layouts.
   let affs = [];
   if (names.length > 1) affs = segments(strip(block[1].slice(0, block[1].indexOf(names[1][0]))));
   if (!affs.some(a => countryOf(a))) {
@@ -107,7 +99,7 @@ function fromHtml(html) {
   // A single affiliation line is sometimes split across spans, so that the line naming
   // the university and the line naming the city sit apart ("... School of Intelligence
   // Science and Technology" / "Peking University"). When no one line carries a country,
-  // test them joined - they are all the same author's affiliations either way.
+  // test them joined: they are all the same author's affiliations either way.
   const withCountry = affs.find(a => countryOf(a));
   const institution = withCountry || affs[0];
   // Fall back through progressively weaker evidence: a single affiliation naming a
@@ -119,8 +111,8 @@ function fromHtml(html) {
 }
 
 // PDF text extracts: affiliations sit in the first ~2000 characters, unstructured. We
-// only look for a country name there, since parsing institution lines out of running
-// text is guesswork - a country is the one thing stated unambiguously.
+// only look for a country name there: institution lines are hard to parse out of running
+// text, and the country is stated unambiguously.
 function fromText(txt) {
   const head = txt.slice(0, 2500);
   const cc = countryOf(head);
