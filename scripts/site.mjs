@@ -2,17 +2,14 @@
 //
 // Generated from data/ by the same modules the README is generated from: units.mjs for
 // every conversion, summary.mjs for what a record is, readme_table.mjs for how an
-// instance is named and how a number is quoted. The site and the README therefore cannot
-// disagree about a number - if they ever do, one of those modules is wrong and both
-// surfaces are wrong together, which is the only kind of disagreement worth having.
+// instance is named and how a number is quoted, so the site and the README show the same numbers.
 //
 // The figures on the front page are the committed figures/*.svg, drawn by size_accuracy.mjs
 // and pareto.mjs from the same data/; this script inlines them, so that a mark standing for
 // a row can link to that row in the table and show a card for it on hover. A figure carries
 // its own title and subtitle, so the page puts nothing above it; the title and caption
 // listed here are its accessible label.
-// RULES.md and DATA.md are not rendered here - they live on GitHub, and /rules/ and
-// /data/ redirect there so links that predate the change keep resolving.
+// RULES.md and DATA.md are read on GitHub; /rules/ and /data/ redirect there.
 //
 // No dependencies and no build step: plain strings, written once. `_site/` is generated
 // output and is never committed.
@@ -62,17 +59,16 @@ const esc = s => String(s)
   .replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 // QMBL: Open Problems (open_problems.mjs), built only where its repository is checked out
-// beside this one or at OPEN_PROBLEMS_DIR; without it the site is built as before. Its targets
+// beside this one or at OPEN_PROBLEMS_DIR; without it those pages are left out. Its targets
 // are this build's instances with no exact energy (the checkout's scripts/targets.mjs).
 const OPEN_PROBLEMS = await loadOpenProblems(instances);
 
-// The front page is the leaderboard (the figures), /instances/ the table. The URLs stay -
-// they are what is linked and cited.
+// The front page is the leaderboard (the figures), /instances/ the table.
 const NAV = [
   ["/", "Leaderboard"],
   ["/instances/", "Table"],
 ];
-// Open Problems is a button at the very right of the menu, after Cite (2026-10-09).
+// Open Problems is a button at the very right of the menu, after Cite.
 const opButton = url => (OPEN_PROBLEMS
   ? `<a href="${OPEN_PROBLEMS_URL}" class="op"${url.startsWith(OPEN_PROBLEMS_URL) ? ' aria-current="page"' : ""}>Open Problems</a>` : "");
 
@@ -116,7 +112,7 @@ function datasetLd() {
 }
 
 // `css` is a page's own stylesheet, after the site's (open-problems.css). `ogTitle` is the
-// link-preview title where the page title alone would hide QMBL on an X card (2026-10-09).
+// link-preview title; by default a subpage's title followed by " · QMBL".
 function page({ url, title, description, body, wide = false, jsonld = null, css = null, ogTitle = null }) {
   const head = title === null ? "QMBL: the Quantum Many-Body Leaderboard" : `${title} &middot; QMBL`;
   return `<!doctype html>
@@ -155,9 +151,8 @@ ${CITE_SCRIPT}
 }
 
 // ---------------------------------------------------------------------- redirects
-// RULES.md and DATA.md are read on GitHub. /rules/ and /data/ existed as rendered pages
-// until 2026-09-16 and are linked from outside, so each keeps a page that forwards to the
-// file - fragment included, so a link to a section still lands on that section.
+// /rules/ and /data/ forward to RULES.md and DATA.md on GitHub, fragment included, so a link
+// to a section lands on that section.
 function redirectPage(target, title) {
   return `<!doctype html>
 <html lang="en">
@@ -216,13 +211,13 @@ function energyCell(row, inst, decimals) {
 }
 
 // A table with a sigma column prints the energy without the bracketed digit, at the
-// precision its own sigma sets, so the error bar is written once (2026-09-28).
+// precision its own sigma sets, so the error bar is written once.
 const bareEnergyCell = (row, inst) => energyCell(row, inst, quoteRow(row, inst).decimals);
 
 // The site prints none of the README's markers for a missing error bar (the circle, the
 // dagger): the sigma column says n/a. Methods print as methodLabel (units.mjs); the published
 // string, searched but not shown, loses the source's own "(this work)" or "(Ours)", since the
-// source column names the paper (2026-09-17).
+// source column names the paper.
 const methodText = method => method.replace(/\s*\((?:this work|ours)\)/gi, "");
 
 // A flagged row's badge names its flag, and hovering it says what that kind of flag means in
@@ -251,8 +246,8 @@ function citeHtml(row) {
 }
 
 // What the instance page says about its own currency: when the newest number here was
-// published and - only where an instance carries a `coverage` entry (DATA.md) - when its
-// literature was last checked, how, and whether that check found anything. No sentence claims a search that was not run.
+// published and, where the instance has a `coverage` entry (DATA.md), when its literature
+// was last checked, how, and what that check found.
 function coverage(inst) {
   const years = inst.rows.map(yearOf).filter(Boolean);
   const newest = years.length ? Math.max(...years) : null;
@@ -264,11 +259,10 @@ function coverage(inst) {
   return `${rows} Literature last checked <strong>${last.checked_on}</strong> (${last.method}): ${n} paper${n === 1 ? "" : "s"} read, ${last.found} of them with an energy on this page.`;
 }
 
-// Written out because an instance is only a claim if the Hamiltonian is stated. Couplings
-// come from the instance's own params; J1 = 1 and t = 1 set the energy scale.
+// The Hamiltonian, written out. Couplings come from the instance's own params; J1 = 1 and
+// t = 1 set the energy scale.
 function hamiltonian(inst) {
   const p = inst.params ?? {};
-  const s = (x, y) => `<span class="ham">${x}</span>${y ?? ""}`;
   const sum = sub => `&sum;<sub>${sub}</sub>`;
   const nn = "&#10216;ij&#10217;";
   const nnn = "&#10216;&#10216;ij&#10217;&#10217;";
@@ -305,12 +299,12 @@ function hamiltonian(inst) {
   }
 }
 
-// The Hubbard variants VarBench names by suffix. Their couplings are VarBench's notes on these runs
-// and Eq. (S6) of its supplement, in params since 2026-10-02 (corrections.mjs), and the formula above
+// The Hubbard variants VarBench names by suffix. Their couplings, from VarBench's notes on these
+// runs and Eq. (S6) of its supplement, are in params (corrections.mjs) and the formula above
 // writes them out; this says where they come from and what the density terms couple.
 function variantNote(inst) {
   const notes = `<a href="https://github.com/varbench/varbench/blob/main/Hubbard/supplements/Imada_group_overview.md">VarBench's notes on these runs</a> and Eq. (S6) of its supplement`;
-  // t12 instances named with their t2 (2026-10-16) come from papers, not VarBench: H = -t sum - t' sum<<ij>> + U sum, t2 = t'.
+  // t12 instances named with their t2 come from papers, not VarBench: H = -t sum - t' sum<<ij>> + U sum, t2 = t'.
   if (/_t12_-?[\d.]+$/.test(inst.instance_id))
     return `This instance is a <code>t12</code> variant with a next-nearest-neighbour hopping t<sub>2</sub>, written as in VarBench's Eq. (S6). t<sub>2</sub> is the t&prime; of the sources' H = &minus;t &sum;&#10216;ij&#10217; &minus; t&prime; &sum;&#10216;&#10216;ij&#10217;&#10217; + U &sum; n<sub>i&uarr;</sub>n<sub>i&darr;</sub>. The couplings are those each source prints (see the rows).`;
   if (/_UV1V2(?=_|$)/.test(inst.instance_id))
@@ -349,8 +343,7 @@ const FIGURES = [
 // A row of badges switching between panels, CSS-only: a radio input per badge, the checked
 // one showing its panel, so the switch works without the script and the inputs stay in the
 // keyboard order. The first badge is checked. The stylesheet is written before any page, so
-// the rules for each switch come from tabRules() at module level, into TAB_CSS. (An "All"
-// badge showing every panel at once went with the stacked energy figures, 2026-09-18.)
+// the rules for each switch come from tabRules() at module level, into TAB_CSS.
 function tabs(id, items, lead = "") {
   return `${items.map((_, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k ? "" : " checked"}>`).join("")}
   <div class="tab-labels">${lead}${items.map(([label], k) => `<label for="${id}-${k}">${label}</label>`).join("")}</div>
@@ -375,8 +368,8 @@ const costEntry = inst => [costFigureName(inst), `${modelName(inst.model)} ${ins
 
 // The estimated-FLOPs figures (flops.mjs): the same construction on an estimate from the
 // parameter, sample and iteration counts a paper states, for the instances where two or
-// more rows state all three. Never on the hours axis: that would be the conversion DATA.md
-// forbids. Ordered like the cost figures.
+// more rows state all three. The estimate has its own axis, never the hours axis (DATA.md).
+// Ordered like the cost figures.
 const FLOPS_FIGS = instances.filter(inst => fs.existsSync(`figures/${flopsFigureName(inst)}.svg`)).sort(byFrontier);
 const PARAMS_FIGS = instances.filter(inst => fs.existsSync(`figures/${paramsFigureName(inst)}.svg`)).sort(byFrontier);
 const paramsEntry = inst => [paramsFigureName(inst), `${modelName(inst.model)} ${instanceLabel(inst)}: the best energies at each parameter count`,
@@ -384,13 +377,10 @@ const paramsEntry = inst => [paramsFigureName(inst), `${modelName(inst.model)} $
 const flopsEntry = inst => [flopsFigureName(inst), `${modelName(inst.model)} ${instanceLabel(inst)}: the best energies at each estimated cost in FLOPs`,
   "Every energy on this instance whose paper states its parameter, sample and iteration counts, against the floating-point operations those imply."];
 
-// Front page: one section for both axes (2026-09-21, in place of a section per
-// axis), in three rows of badges (2026-09-23, in place of one badge per instance):
-// the axis, "stated hours", "estimated FLOPs" or "parameters", then the model, then the instance, each
-// row holding only what has a figure on the axis above it. The axes stay separate figures:
-// the merge is of the sections, never of the axes. An instance badge says only what tells
-// it from its neighbours; what they all share (lattice, coupling, filling) stands once in
-// front of the row, as the slider's axis name does.
+// Front page: one section for all cost axes, in three rows of badges: the axis, then the
+// model, then the instance, each row holding only what has a figure on the axis above it.
+// Each axis keeps its own figures. An instance badge says only what tells it from its
+// neighbours; what they all share stands once in front of the row.
 const COMPUTE_AXES = [["stated hours", COST_FIGS, costEntry], ["estimated FLOPs", FLOPS_FIGS, flopsEntry], ["parameters", PARAMS_FIGS, paramsEntry]].filter(([, figs]) => figs.length);
 const computeModels = figs => MODELS.map(([m]) => figs.filter(inst => inst.model === m).sort(byGeometry)).filter(g => g.length);
 // An instance's label as parts, the lattice split off its size: "square 8x8, J2 = 0.5"
@@ -427,21 +417,11 @@ function computeSwitcher(axes = COMPUTE_AXES, prefix = "", hours = COST_FIGS.len
 </section>`;
 }
 // The published energies of every Hamiltonian, drawn by size_energy.mjs into figures/energy/
-// in the shape ladders.mjs gives them: per model and lattice a figure, one strip and its
-// stops; per model an "other" figure for what was published at one size and shares no
-// strip. Which exist is read off the directory, as for the cost figures. Two rows of
-// badges, the model (and Other) and then the lattice; under them the figure as a slider
-// (2026-09-18, in place of a stack of panels; 2026-09-21, one slider per figure
-// with the facets as groups along its strip, in place of a slider per facet): the strip is
-// the record at each stop and size, a badge under each stop picks its panel, and the stop
-// with most energies is the one shown first. Radio inputs, as the badges are, so the arrow
-// keys walk the stops and it works without the script; the strip's cursor for the chosen
-// stop is a group the stylesheet shows. The badges sit at the strip's x positions, in per
-// cent of its width, as the strip is drawn at 920 px and shown at whatever width the
-// column has, and the axis's name stands before each group's badges. With the script, the
-// column of a stop in the strip selects it too, and the count mark over a stop lists its
-// energies as the overview figure's count marks do. A figure without an axis has no strip:
-// its panels are stacked, each under its facet's label (2026-09-21).
+// in the shape ladders.mjs gives them: per model and lattice a figure with one strip and its
+// stops, per model an "other" figure for Hamiltonians published at one size. Badges pick the
+// model and lattice; the figure is a slider of radio inputs (keyboard and no-script work),
+// a badge under each stop at the strip's x position in per cent of its width, the stop with
+// most energies shown first. A figure without an axis has no strip: its panels are stacked.
 const ENERGY_FIGS = [...Map.groupBy(energyFigures(instances)
   .filter(f => fs.existsSync(`figures/${f.group === "other" ? f.name : f.stops[0].name}.svg`)), f => f.group)];
 const otherEntry = f => [f.name, f.title, "Energies on Hamiltonians published at one size, with the coupling or filling that differs between them along x."];
@@ -486,9 +466,9 @@ const tabCss = (axes, groups, sliders, prefix = "") => [tabRules(`${prefix}cost-
   ...groups.map(([, figs], j) => tabRules(`${prefix}energy-${j}`, figs.length)), ...sliders.map(sliderRules)].join("\n");
 const TAB_CSS = tabCss(COMPUTE_AXES, ENERGY_FIGS, SLIDERS);
 
-// The same two sections on /open-problems/ (2026-10-09: "all figures just like on main
-// QMBL page"), for its instances: every energy figure in which one of them is drawn, shown whole
-// as here, solved sizes included, and the cost figures of those instances. Their switches have
+// The same two sections on /open-problems/, for its instances: every energy figure in which
+// one of them is drawn, shown whole, solved sizes included, and the cost figures of those
+// instances. Their switches have
 // ids of their own, op-, whose rules go into that page's own stylesheet (open-problems.css).
 const OPEN = new Set(OPEN_PROBLEMS?.targets.map(t => t.instance_id) ?? []);
 const isOpen = inst => OPEN.has(inst.instance_id);
@@ -504,7 +484,7 @@ const opFigureSections = () => [energySwitcher(OP_ENERGY_FIGS, OP_SLIDERS, "op-"
 // presentation attribute in the cascade. The two themes list their colours in the same
 // slots, so slot k in light becomes slot k in dark; a light colour sitting in two slots
 // must darken the same way in both, and a figure using a colour outside the light theme
-// fails the build rather than staying light on a dark page.
+// fails the build.
 const FIG_COLOURS = new Map();
 {
   const light = Object.values(THEMES.light).flat(), dark = Object.values(THEMES.dark).flat();
@@ -516,12 +496,10 @@ const FIG_COLOURS = new Map();
 const FIG_DARK = [...FIG_COLOURS].filter(([l, d]) => l !== d)
   .map(([l, d]) => `  figure.chart [fill="${l}"] { fill: ${d}; }\n  figure.chart [stroke="${l}"] { stroke: ${d}; }`).join("\n");
 
-// The figure's own <title> would show as the browser's tooltip over the whole chart and
-// fight the row cards, and four inlined figures would repeat its id, so it and <desc> are
-// dropped here and the entry's title and caption label the figure instead. Marks are
-// links but not tab stops: four hundred of them per figure would bury the page's keyboard
-// order, and the table they point to is the accessible form of the same rows. `source` is a
-// figure drawn with the page rather than read from figures/ (open_problems_figure.mjs).
+// The figure's own <title> and <desc> are dropped (a tooltip over the whole chart, and an id
+// repeated per inlined figure); the entry's title and caption label it instead. Marks are
+// links but not tab stops; the table is the accessible form of the same rows. `source` is a
+// figure drawn with the page instead of read from figures/ (open_problems_figure.mjs).
 function figure([name, title, caption], cls = "", source = null) {
   const file = source == null ? `figures/${name}.svg` : `${name} (drawn with the page)`;
   if (source == null) for (const v of [name, `${name}-dark`])
@@ -551,21 +529,11 @@ function rowCard(r, inst) {
 }
 const cardSource = r => { const c = citeRef(r, cache); return esc([c.text, c.also?.text, c.note].filter(Boolean).join(", ")); };
 
-// One card per row a figure links to, in a <template> so it is neither rendered nor read
-// out; the script below moves a card into the floating box while its mark is hovered.
-// A mark that stands for several rows (size_accuracy.mjs merges marks that would cover each
-// other) names them in `data-rows`, best first: hovering lists their cards, each a link to
-// its row. A single card follows the pointer and goes when the pointer leaves its mark,
-// but a list sits still beside its mark and takes the pointer, so the reader can move onto
-// it by any path, scroll it and pick a row: it closes 200 ms after the pointer has left
-// both mark and list, a moment that a return to either cancels, and a mark the pointer
-// passes over on the way takes over only if the pointer rests on it. Clicking the mark
-// keeps the list open regardless, until a click elsewhere or Escape. Scrolling the page
-// closes whatever is open: the box is fixed and would part from its mark. A mark's
-// `data-head` replaces the list's heading (the strips' count marks, whose rows span sizes).
-// Clicking a stop's column in a strip, its count mark included (size_energy.mjs, `col`),
-// checks its radio, as its badge does; a strip's mark does not pin its list, which shows
-// while the pointer is on the mark (2026-09-21).
+// One card per row a figure links to, in a <template>; the script below shows a card in a
+// floating box while its mark is hovered. A mark for several rows (`data-rows`, best first)
+// shows a list that stays beside the mark, closes 200 ms after the pointer leaves both, and
+// stays open after a click until a click elsewhere or Escape. Scrolling closes the box.
+// Clicking a stop's column in a strip checks its radio, as its badge does.
 const FIG_SCRIPT = `<script>
 (() => {
   document.addEventListener("click", e => {
@@ -687,9 +655,8 @@ ${FIG_SCRIPT}
 
 // ------------------------------------------------------------------------ browse page
 // A row is the instance and its record; clicking it opens every energy published for it
-// below, in rank order, so the shape of the competition on an instance is one click away
-// rather than a page away. The instance page still exists at its stable URL for search
-// engines, llms.txt and the API, and is not linked from here; the JSON is.
+// below, in rank order. The instance page keeps its stable URL for search engines, llms.txt
+// and the API and is not linked from here; the JSON is.
 
 // The badge families: the lattice name without its cell spec (kagome-36a -> kagome), and
 // four size bands. Both are per model, and a band or lattice that no instance of the model
@@ -703,17 +670,13 @@ const SIZE_BANDS = [
 ];
 const sizeBand = inst => SIZE_BANDS.find(([, test]) => test(inst.n_sites))[0];
 
-// The Table's text box matches words, in any order, against what an instance is (Hamiltonian,
-// lattice, size, boundary, couplings, filling) and against the methods of its rows: "hubbard
-// 16x16 U=8 afqmc" finds the 16x16 U = 8 Hubbard instances carrying an AFQMC energy. The
-// method words have to come from one row, so "variational monte carlo" does not match an
-// instance where one row says variational and another Monte Carlo. A word with a digit has to
-// match whole, so 0.5 does not find J2 = 0.55; any other word matches as a prefix, so "heis"
-// finds Heisenberg. The aliases are the other names a reader types for the same thing, each a
-// fact about the instance or the row (vendor/varbench for the impurity codes).
+// The Table's text box matches words, in any order, against what an instance is and against
+// the methods of one of its rows: "hubbard 16x16 U=8 afqmc". A word with a digit matches
+// whole (0.5 does not find J2 = 0.55); any other word matches as a prefix ("heis"). The
+// aliases are other names a reader types for the same thing (vendor/varbench for impurity codes).
 //
-// searchWords is the one tokeniser for both sides - the page embeds its source - so a query is
-// cut into words exactly as the index was: "U = 8", "U=8" and "u=8.0" are all the word u=8.
+// searchWords is the one tokeniser for both sides (the page embeds its source), so a query is
+// cut into words as the index was: "U = 8", "U=8" and "u=8.0" are all the word u=8.
 function searchWords(text) {
   const s = String(text).toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "")
     .replace(/&asymp;|≈|~/g, "=").replace(/[×*]/g, "x")
@@ -844,16 +807,9 @@ function searchIndex(inst, name) {
 }
 
 
-// Every row of the instance, the record marked, challengers with their gap above it in a
-// column of its own, per site (2026-09-28). sigma
-// is shown because 62% of rows carry one (2026-09-16); Var(E) and the V-score, on 36%, stay
-// on the instance page. The Table names a method alone; its detail, bond dimension and
-// sector are on the instance page (2026-09-29).
 // Distance to the record, per site: 0 on the record, the gap to it for an unflagged row of
-// any kind but exact, n/a elsewhere (2026-09-28; every such kind since 2026-10-08).
-// The Table's opened row and the instance page both show it. Only a solved instance can
-// have such a row below its record - an extrapolation can overshoot the exact energy - and
-// that distance is shown negative.
+// any kind but exact, n/a elsewhere. A row below the record (an extrapolation that overshoots
+// an exact energy) shows a negative distance. The Table's opened row and the instance page use it.
 function distanceCell(r, inst) {
   const rec = recordOf(inst);
   if (r === rec) return "0";
@@ -863,6 +819,8 @@ function distanceCell(r, inst) {
   return esc(gapAbove(rec, r, f, decimals).replace(/^\+/, ""));
 }
 
+// Every row of the instance, the record marked, with sigma and the distance to the record.
+// Var(E), the V-score and the method detail are on the instance page.
 function allRows(inst) {
   const rec = recordOf(inst);
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
@@ -887,8 +845,7 @@ function allRows(inst) {
 }
 
 // The Table's energy column: the record, or on an instance without one the lowest unflagged
-// row, else the lowest row. Whether it is a record, and why not, shows when the row opens
-// (2026-09-29).
+// row, else the lowest row. Whether it is a record, and why not, shows when the row opens.
 function bestRow(inst) {
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
   return sorted.find(r => !r.defect) ?? sorted[0];
@@ -1299,7 +1256,6 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; lett
 h1 { font-size: 2.1rem; margin: 0 0 0.6rem; }
 h2 { font-size: 1.45rem; margin: 2.6rem 0 0.6rem; }
 h3 { font-size: 1.1rem; margin: 2rem 0 0.4rem; }
-h4, h5, h6 { font-family: var(--sans); font-size: 1rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0.8rem 0; max-width: 46em; }
 .muted { color: var(--muted); }
 .lead { font-size: 1.15rem; color: var(--ink2); max-width: 42em; }
@@ -1349,8 +1305,7 @@ footer.site p.developed-at a { color: var(--ink); line-height: 0; padding: 0.5re
 footer.site svg.eth-logo { height: 1.1rem; width: auto; display: block; }
 
 figure { margin: 2.2rem 0 0; }
-figure picture, figure img, figure.chart svg { display: block; width: 100%; max-width: 920px; height: auto; }
-figure img, figure.chart svg { border: 1px solid var(--grid); border-radius: 3px; background: var(--surface); }
+figure.chart svg { display: block; width: 100%; max-width: 920px; height: auto; border: 1px solid var(--grid); border-radius: 3px; background: var(--surface); }
 figure.chart a.pt { cursor: pointer; }
 figure.chart a.pt > :nth-child(2) { transform-box: fill-box; transform-origin: center; transition: transform 80ms; }
 figure.chart a.pt:hover > :nth-child(2) { transform: scale(1.45); }
@@ -1396,7 +1351,6 @@ td.record .num { font-weight: 600; color: var(--record); }
 .badge.flag { color: var(--flag); border-color: var(--flag); }
 .badge.flag[title] { cursor: help; }
 .wordmark .badge.beta { margin-left: 0.3rem; font-family: var(--sans); font-weight: 400; font-size: 0.75rem; padding: 0.15rem 0.6rem; color: var(--flag); border-color: var(--flag); letter-spacing: 0.06em; text-transform: uppercase; }
-.legend { font-size: 0.9rem; color: var(--ink2); max-width: 46em; }
 .citation { max-width: none; }
 
 section[data-model] h2 { font-size: 2.1rem; margin-top: 3rem; }
@@ -1454,7 +1408,6 @@ table.next tr.target > td:first-child, .rows tr:target > td:first-child { box-sh
   font-family: var(--mono); font-size: 1.05rem; background: var(--surface);
   border: 1px solid var(--grid); border-radius: 3px; padding: 0.9rem 1rem; overflow-x: auto;
 }
-.ham { white-space: nowrap; }
 dl.facts { display: flex; flex-wrap: wrap; gap: 0.4rem 2rem; margin: 1rem 0; }
 dl.facts dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
 dl.facts dd { margin: 0; }
@@ -1492,7 +1445,6 @@ p.search { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem
   opacity: 0; transition: opacity 0.1s;
 }
 h1:hover .anchor, h2:hover .anchor, h3:hover .anchor, h4:hover .anchor { opacity: 1; color: var(--muted); }
-hr { border: 0; border-top: 1px solid var(--grid); margin: 2rem 0; }
 pre.ticks { font-family: var(--mono); font-size: clamp(7px, 1.6vw, 13px); line-height: 1.2; color: var(--muted);
   margin: 0 0 2rem; overflow: hidden; white-space: pre; }
 .tabs > input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -1551,9 +1503,8 @@ ${FIG_DARK}
 // that page links: every page carries the menu button, but not that page's figures.
 const OP_CSS = OPEN_PROBLEMS ? OPEN_PROBLEMS_PAGE_CSS + OP_TAB_CSS + "\n" : "";
 
-// The stylesheet's URL carries a hash of its contents. Pages serves both the page and the
-// stylesheet with a ten-minute cache, and they expire separately: a new page on an old
-// stylesheet had its new switch sections unstyled and hidden (2026-09-17).
+// The stylesheet's URL carries a hash of its contents, so a new page never loads an old
+// stylesheet from the cache.
 const CSS_VERSION = createHash("sha1").update(CSS).digest("hex").slice(0, 10);
 const OP_CSS_VERSION = createHash("sha1").update(OP_CSS).digest("hex").slice(0, 10);
 
