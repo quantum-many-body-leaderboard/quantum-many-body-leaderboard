@@ -605,16 +605,6 @@ Check [RULES.md](RULES.md) for how a record is decided.
 
 Check [DATA.md](DATA.md) for stored units, conventions, error-metrics, and provenance and defect handling.
 
-## Roadmap
-
-| Item | Status |
-|---|---|
-| Ground-state energy dataset | ✅ Live in [`data/`](data/) |
-| Interactive website | ✅ [qmbl.org](https://qmbl.org) |
-| Versioned releases with a DOI | ✅ [Zenodo](https://doi.org/10.5281/zenodo.22753734) |
-| Checking newer papers for every instance | 🔄 Ongoing |
-| arXiv posting | ⏳ Planned |
-
 ## Contributing
 
 **New entries**: use the [new result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-result.yml)
@@ -633,18 +623,11 @@ record.
 
 ## Citing
 
-Releases are archived on Zenodo, so a paper can cite a frozen comparison set rather than
-a moving table.
+> T. Zerweck and J. Carrasquilla, *QMBL: the Quantum Many-Body Leaderboard*,
+> [arXiv:2610.22387](https://arxiv.org/abs/2610.22387) (2026).
 
-- **Concept DOI: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734)** always resolves to the
-  latest release. Cite this one unless you need a specific snapshot.
-- **v0.4.0: [10.5281/zenodo.23239245](https://doi.org/10.5281/zenodo.23239245)**.
-- **v0.3.0: [10.5281/zenodo.23184426](https://doi.org/10.5281/zenodo.23184426)**.
-- **v0.2.0: [10.5281/zenodo.22799412](https://doi.org/10.5281/zenodo.22799412)**.
-- **v0.1.0: [10.5281/zenodo.22753735](https://doi.org/10.5281/zenodo.22753735)**.
-
-> T. Zerweck and J. Carrasquilla, *QMBL: the Quantum Many-Body Leaderboard*, v0.4.0, Zenodo (2026).
-> [10.5281/zenodo.23239245](https://doi.org/10.5281/zenodo.23239245)
+To cite the data itself, use the Zenodo concept DOI, which always resolves to the latest
+release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
 Many imported rows, instances, stored conventions and the V-score come from
 **VarBench**, the dataset published with the V-score paper. Its `baseline: true` rows are
