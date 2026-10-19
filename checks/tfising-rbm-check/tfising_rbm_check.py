@@ -12,7 +12,7 @@ training we evaluate the SAME parameters by full summation, which gives the RBM'
 true variational energy with zero Monte-Carlo error. The variational principle then
 gives a hard answer rather than a statistical one.
 """
-import json, sys, time
+import json, os, sys, time
 import numpy as np
 import netket as nk
 
@@ -90,8 +90,9 @@ if __name__ == "__main__":
         run("P", True, -12.784906442999322, -12.785231, 0.000048),
         run("O", False, -12.381489999654734, -12.381718, 0.000022),
     ]
-    with open("results-tfising-rbm.json", "w") as f:
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results-tfising-rbm.json")
+    with open(out, "w") as f:
         json.dump({"netket": nk.__version__, "n_iter": N_ITER,
                    "n_samples_train": N_SAMPLES_TRAIN, "n_samples_measure": N_SAMPLES_MEASURE,
                    "results": res}, f, indent=2)
-    print("\nwrote results-tfising-rbm.json", flush=True)
+    print(f"\nwrote {out}", flush=True)
