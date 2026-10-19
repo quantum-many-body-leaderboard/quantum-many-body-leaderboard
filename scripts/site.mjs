@@ -1139,7 +1139,7 @@ ${flagged ? `<section><h2>Flagged rows</h2>
   ${flagged}</section>` : ""}
 
 ${verified ? `<section><h2>How these numbers were read</h2>
-  <p>Rows added after the VarBench import record where the number came from.</p>
+  <p>Where each number below was read, and how it was checked.</p>
   ${verified}</section>` : ""}
 
 <section>
