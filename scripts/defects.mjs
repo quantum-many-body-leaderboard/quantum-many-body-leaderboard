@@ -2,13 +2,13 @@
 // defect is attached to the row and travels with it. Each entry: match (instance, method,
 // energy within 1e-9), flag, finding (the evidence, with the source of every claim), and an
 // optional `shared` key naming a block in SHARED (diagnosis / ruled_out / evidence written for
-// that row or that group of rows). A shared block is attached ONLY through `shared`: keying
-// it by flag name spread the TFIsing RBM diagnosis onto every below-exact row until
-// 2026-09-21. `source_entry` names the verification proposal the finding was written from.
+// that row or that group of rows). A shared block is attached only through `shared`, never by
+// flag name, since one flag covers rows with different diagnoses. `source_entry` names the
+// verification proposal the finding was written from.
 //
-// Findings rewritten 2026-09-21 from the deep-source pass qmbl-verify-2026-09-19-flagged
-// (upload history, released code, appendices, arXiv versions, a rerun of the VarBench scripts);
-// evidence per row in that run's out/<group>/report.md.
+// Findings come from the deep-source pass qmbl-verify-2026-09-19-flagged (upload history,
+// released code, appendices, arXiv versions, a rerun of the VarBench scripts); evidence per row
+// in that run's out/<group>/report.md.
 export const DEFECTS = [
   {
     "match": {

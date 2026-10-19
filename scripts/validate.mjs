@@ -32,8 +32,8 @@ for (const m of fs.readdirSync("data")) {
         const v = vScore(r.energy_variance, r.dof, r.energy, r.einf);
         if (v == null || Math.abs(v - r.v_score) > 1e-9 * v) issues.push(`VSCORE ${at}: stored ${r.v_score}, recomputed ${v}`); }
       // Variational principle: no strict bound may sit below an exact row in the same
-      // instance. Every exact row states the ground-state energy: the lowest state of ONE
-      // symmetry sector, which an unconstrained variational state may legitimately sit
+      // instance. Every exact row states the ground-state energy: the lowest state of one
+      // symmetry sector, which an unconstrained variational state may validly sit
       // below, is not a row (apply_spectrum.mjs moves it to the instance's `spectrum`,
       // checked below), and a row still carrying one is an issue of its own. Violations
       // within 3 sigma, or under a relative 1e-8 where no error bar is stated, are tolerated
@@ -53,17 +53,17 @@ for (const m of fs.readdirSync("data")) {
           const gap = r.energy - o.energy;
           const sigma = o.sigma != null || refSigma != null ? Math.hypot(o.sigma ?? 0, refSigma ?? 0) : null;
           const realViolation = sigma != null ? gap > 3 * sigma : rel > 1e-8;
-          // A ruling that lifted this row's flag (a `defect` correction to null, RULES.md 10) has
-          // judged this relation, e.g. a printed interval that holds the exact energy (RULES.md
-          // 9.4): counted with the tolerated ones, not an issue.
+          // A row whose flag was lifted (a `defect` correction to null, RULES.md 10) has had this
+          // relation checked, e.g. a printed interval that holds the exact energy (RULES.md 9.4):
+          // it is counted with the tolerated ones and is not an issue.
           const ruled = (o.corrections || []).some(c => c.field === "defect" && c.to === null);
           (realViolation && !ruled ? issues : rounding).push(
             `BOUND ${at}: variational ${o.energy} below ${stochasticExact(r) ? "exact (stochastic)" : "exact"} ${r.energy} (rel ${rel.toExponential(1)}) "${o.method.slice(0,38)}"`);
         }
       }
-      // `compute` is self-reported and unfalsifiable, so what the validator can check is
-      // that it says where it came from and that nothing normalised has crept in: an
-      // "H100-equivalent" column would be an argument, not a measurement (DATA.md).
+      // `compute` is self-reported, so the validator checks that it names its source and
+      // that it holds no normalised value such as an "H100-equivalent" (see DATA.md,
+      // "What a number cost: the `compute` block").
       if (r.compute != null) {
         checkedC++;
         const c = r.compute;
@@ -118,7 +118,7 @@ for (const m of fs.readdirSync("data")) {
         }
       }
       // A row QMBL computed itself (DATA.md, `computed_by`) must name its run and carry the
-      // measured cost that is its reason to exist; anything else claiming the field is wrong.
+      // measured cost; any other row that carries the field is an issue.
       if (r.computed_by != null) {
         if (r.computed_by !== "qmbl") issues.push(`RUN ${at}: computed_by ${r.computed_by}`);
         if (!/checks\/cost\//.test(r.reference || "")) issues.push(`RUN ${at}: reference does not name checks/cost/`);
@@ -156,8 +156,8 @@ for (const m of fs.readdirSync("data")) {
       if (leak.length) issues.push(`${at}: names the cluster (${leak.join(", ")}); public text names the hardware only`);
     }
     // `coverage` is instance level: when its literature was last checked and by what.
-    // A check that found nothing is as real as one that added a row, so `found: 0` is
-    // valid and is what an instance page needs in order not to read as authoritative.
+    // A check that found nothing counts the same as one that added a row, so `found: 0` is
+    // valid; an instance page needs it in order not to read as authoritative.
     if (inst.coverage != null) {
       if (!Array.isArray(inst.coverage)) issues.push(`COVERAGE ${inst.instance_id}: not an array`);
       else for (const [j, c] of inst.coverage.entries()) {
@@ -199,16 +199,13 @@ for (const m of fs.readdirSync("data")) {
     }
   }
 }
-// The TFIsing unit convention, asserted rather than assumed.
+// The TFIsing unit convention, checked against the exact solution.
 //
-// Grouping TFIsing with the Heisenberg models put it on the 4*N divisor, so every
-// per-site energy in that family read a factor of 4 too small and no literature value
-// could ever match one - most of why the family shows 0 of 7 instances covered. The
-// convention is not a matter of opinion here: the transverse-field Ising CHAIN is
-// exactly solvable, so the stored number can be derived. H = -sum s^z s^z - h sum s^x
-// with PBC has ground state -sum_k 2 sqrt(h^2 - 2h cos k + 1) over the antiperiodic
-// momenta k = pi(2n+1)/N. If that stops reproducing the stored `exact` rows, either the
-// convention or the reference data has moved, and both are worth stopping for.
+// The transverse-field Ising chain is exactly solvable, so the stored number can be derived.
+// H = -sum s^z s^z - h sum s^x with PBC has ground state -sum_k 2 sqrt(h^2 - 2h cos k + 1)
+// over the antiperiodic momenta k = pi(2n+1)/N. A mismatch with the stored `exact` rows means
+// the convention or the reference data has changed. The per-site divisor is N (Pauli
+// convention); the Heisenberg models use 4N.
 const tfisingExactPBC = (N, h) => {
   let E = 0;
   for (let n = 0; n < N / 2; n++) {
