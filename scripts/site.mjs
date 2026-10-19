@@ -36,11 +36,12 @@ const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body
 const RULES = `${REPO}/blob/main/RULES.md`;
 const DATA = `${REPO}/blob/main/DATA.md`;
 const DOI = "10.5281/zenodo.22753734";
+const ARXIV = "2610.22387";
 const SNAPSHOT = "varbench@2024-10-22";
 const BUILT = new Date().toISOString().slice(0, 10);
 
-// The citation the Cite button copies and the front page prints, from CITATION.cff so a
-// release bump changes it in one place.
+// The citation the Cite button copies and the front page prints is the paper; the data line
+// below it reads the release from CITATION.cff so a release bump changes it in one place.
 const CFF = fs.readFileSync("CITATION.cff", "utf8");
 const cffField = k => CFF.match(new RegExp(`^${k}:\\s*"?([^"\\n]+)"?\\s*$`, "m"))?.[1];
 const VERSION = cffField("version");
@@ -49,7 +50,7 @@ if (!VERSION || !RELEASED) throw new Error("CITATION.cff: version or date-releas
 const CITE_HEAD = "T. Zerweck and J. Carrasquilla";
 const CITE_TITLE = "QMBL: the Quantum Many-Body Leaderboard";
 const CITE_TAIL = `v${VERSION}, Zenodo (${RELEASED.slice(0, 4)}).`;
-const CITATION = `${CITE_HEAD}, ${CITE_TITLE}, ${CITE_TAIL} https://doi.org/${DOI}`;
+const CITATION = `${CITE_HEAD}, ${CITE_TITLE}, arXiv:${ARXIV} (2026). https://arxiv.org/abs/${ARXIV}`;
 
 const cache = sources();
 const instances = collect();
@@ -102,7 +103,7 @@ function datasetLd() {
     "@context": "https://schema.org", "@type": "Dataset",
     name: "QMBL: the Quantum Many-Body Leaderboard",
     description: `Published ground-state energies for ${summary.instances} lattice Hamiltonian instances (Heisenberg, J1-J2, Hubbard, t-V, transverse-field Ising, impurity models), ${summary.rows} energies with method, error bar where published and bound type, every row citing its primary paper.`,
-    url: "https://qmbl.org/", sameAs: [`https://doi.org/${DOI}`, REPO], identifier: `https://doi.org/${DOI}`,
+    url: "https://qmbl.org/", sameAs: [`https://doi.org/${DOI}`, `https://arxiv.org/abs/${ARXIV}`, REPO], identifier: `https://doi.org/${DOI}`,
     license: "https://www.apache.org/licenses/LICENSE-2.0",
     isAccessibleForFree: true, dateModified: BUILT,
     keywords: ["ground-state energy", "quantum many-body", "variational Monte Carlo", "neural quantum states", "DMRG", "quantum Monte Carlo", "Hubbard model", "J1-J2 model", "Heisenberg model", "benchmark"],
@@ -672,7 +673,9 @@ ${FIG_SCRIPT}
 
 <section class="cite" id="cite">
   <h2>Citing QMBL</h2>
-  <p>Cite the dataset by its concept DOI, which always resolves to the latest release:</p>
+  <blockquote class="citation">${esc(CITE_HEAD)}, <em>${esc(CITE_TITLE)}</em>,
+  <a href="https://arxiv.org/abs/${ARXIV}">arXiv:${ARXIV}</a> (2026).</blockquote>
+  <p>To cite the data itself, use the concept DOI, which always resolves to the latest release:</p>
   <blockquote class="citation">${esc(CITE_HEAD)}, <em>${esc(CITE_TITLE)}</em>, ${esc(CITE_TAIL)}
   <a href="https://doi.org/${DOI}">${DOI}</a></blockquote>
   <p>Individual energies should cite the primary paper named on the row, not this site.</p>
@@ -1261,7 +1264,8 @@ function llmsTxt() {
     "- [Instance index](https://qmbl.org/api/instances.json): id, label, URL and record per instance.",
     "- [Summary](https://qmbl.org/api/summary.json): the counts behind the headline numbers.",
     `- [Repository](${REPO}): source data, build scripts, rules.`,
-    `- Citation: https://doi.org/${DOI} (concept DOI, always the latest release).`,
+    `- Citation: https://arxiv.org/abs/${ARXIV} (the paper).`,
+    `- Data citation: https://doi.org/${DOI} (concept DOI, always the latest release).`,
     "",
     "## Instances",
     ...instances.map(i => `- [${instanceLabel(i)}](https://qmbl.org${instUrl(i)}): ${i.instance_id}, ${i.rows.length} energies, JSON at https://qmbl.org${jsonUrl(i)}.`),
