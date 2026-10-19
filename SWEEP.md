@@ -512,8 +512,7 @@ instances, ranking by position against the current record.
 
 **The highest-yield source is the table a paper prints of *other people's* numbers.** Several
 rows found this way are 2019–2023 results that had been beating a VarBench record since before
-VarBench froze. The dataset's problem is not only that it stopped; it is that it never mined
-the benchmark tables in the first place.
+VarBench froze.
 
 Two ar5iv details cost most of the recall on the first attempt, and any future scraper needs
 both: energies are glued together with **zero-width characters**, which `\s` does not match,
