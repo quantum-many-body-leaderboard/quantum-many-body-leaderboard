@@ -299,7 +299,7 @@ B3). `ed_sym.py` at k = 0 and M, every C4v irrep, spin inversion even, on the sa
 (`c2v_axes`, A1 + B1 at k = 0, 31,601,346 states, 2026-10-09) gives -74.25466443418684, 6.4e-13
 from it, residual 4.0e-10. Chen et al. quote
 -0.51565739 at this coupling, which matches to 1e-8; Golubev et al.'s ED lies 6.1e-7 below it
-(`SWEEP.md`).
+(arXiv:2606.04558, Table I).
 
 **The 32-site t-V chains (ruling of 2026-10-02).** VarBench's exact rows on `tV/chain_32_P_16_1`,
 `_2` and `_4` link a lattice-symmetries script that fixes every symmetry sector to 0, and their
