@@ -1,21 +1,15 @@
 // Fetch arXiv PDFs for papers whose HTML is unusable, and extract their text.
 //
-// Two cases need this. Papers before ~Dec 2023 have no arXiv HTML at all, which is
-// most of the PRIMARY sources behind rows we could otherwise only carry as `secondary`.
-// And some recent papers render as an abstract stub - the kagome Comment 2605.28861 is
-// 71 KB with no bibliography and no energies.
+// Papers before ~Dec 2023 have no arXiv HTML, and some recent papers render only as an
+// abstract stub.
 //
-// The extracted text is written to sources/<id>.txt and is COMMITTED, unlike the PDF
-// itself: a number in a row has to stay checkable from a clone, and .gitignore already
-// excludes sources/*.pdf.
+// The text goes to sources/<id>.txt and is committed so every row stays checkable from a
+// clone; the PDFs (sources/*.pdf) are gitignored.
 //
-// EXTRACTION MODE (added 2026-09-14). pypdf's default text extraction renders a missing
-// table entry ("---") and a minus sign as the same character, so columns cannot be
-// assigned - this is what blocked arXiv:2211.07749's Table III until it was re-extracted
-// by hand. Layout mode preserves column positions and keeps the two apart. Both modes are
-// now run in one pass and layout is kept unless it comes back substantially shorter,
-// which happens on a few PDFs whose text layer defeats it. The choice is logged, and
-// recorded in sources/_extraction.tsv so a row's provenance names the mode it was read in.
+// Extraction mode: pypdf's default mode renders a missing table entry ("---") and a minus
+// sign as the same character. Layout mode keeps column positions and keeps the two apart.
+// Both run in one pass, and layout is kept unless it comes back substantially shorter.
+// The choice is recorded in sources/_extraction.tsv.
 //
 // Usage: node scripts/fetch_pdfs.mjs <arxiv-id> [<arxiv-id> ...]
 //        node scripts/fetch_pdfs.mjs --from sweep-candidates.tsv [--limit N] [--reextract]
@@ -96,8 +90,8 @@ for (const [i, id] of ids.entries()) {
     if (!downloaded) { failed.push(`${id}:fetch`); console.error(`  ${id}: PDF FETCH FAILED`); await sleep(3000); continue; }
   }
 
-  // pypdf via uv - there is no system python in this environment. spawnSync rather than
-  // execFileSync because the chosen extraction mode comes back on stderr.
+  // pypdf via uv (no system python here). spawnSync, because the chosen extraction mode
+  // comes back on stderr.
   const r = spawnSync("uv", ["run", "--quiet", "--with", "pypdf", "python", "-c", PY, pdf], {
     encoding: "utf8", maxBuffer: 64 * 1024 * 1024,
   });

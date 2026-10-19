@@ -1,22 +1,16 @@
-// Harvest every ENERGY CELL out of every data table in the cached sources.
+// Harvest every energy cell from every data table in the cached sources (sources/*.html
+// and sources/*.txt) into sweep-tables.tsv. Complements extract_claims.mjs, which reads
+// claim sentences; most finite-size energies are only in tables.
 //
-// Why this exists: extract_claims.mjs mines claim SENTENCES ("state of the art",
-// "we reach"), which only finds papers that brag in prose about one headline number.
-// That is why the 2026-09-13 sweep produced four J1-J2 rows and nothing at all for
-// kagome, pyrochlore or triangular: those papers report a table of sizes and never
-// write the sentence. The table is where the leaderboard's missing rows actually are.
-//
-// Two things about ar5iv HTML make naive parsing useless. Displayed equations are also
-// <table>, so a table counts as DATA only if it has several rows and several numeric
-// cells. And every formula carries an <annotation> holding its LaTeX, which doubles
-// every symbol ("4 x 4 4\times 4") unless it is removed before the tags are stripped.
+// ar5iv HTML notes: displayed equations are also <table>, so a table counts as data only
+// if it has several rows and several numeric cells. Every formula carries an <annotation>
+// with its LaTeX, which is removed before the tags are stripped so symbols are not doubled.
 import fs from "node:fs";
 
-// Two invisible ar5iv habits cost this harvester most of its recall on the first pass.
-// It glues numbers together with ZERO-WIDTH characters, which \s does not match, so
-// "-0.560313<U+200B>(3)" fails a [0-9.()] test. And it renders the paper's OWN results -
-// the bold ones, i.e. exactly the new numbers we are hunting - with MATHEMATICAL BOLD
-// digits (U+1D7CE and up), which are not [0-9]. Both are normalised away up front.
+// ar5iv joins numbers with zero-width characters, which \s does not match, so
+// "-0.560313<U+200B>(3)" fails a [0-9.()] test. It also renders bold results (often the
+// paper's own numbers) with mathematical bold digits (U+1D7CE and up), which are not [0-9].
+// Both are normalised here.
 const ZERO_WIDTH = /[​-‏⁠﻿­]/g;
 const mathDigits = s => s.replace(/[\u{1D7CE}-\u{1D7FF}]/gu,
   c => String((c.codePointAt(0) - 0x1D7CE) % 10));
@@ -50,17 +44,14 @@ const sizeTokens = txt => {
   return [...s];
 };
 
-// A finite-size table usually names its sizes in the leftmost column and nowhere else:
-// arXiv:2605.13807's transverse-field Ising chain series labels its rows "6", "8", "10",
-// "12", ... with the size named only in the column header, "e exact (N)". Under the
-// patterns above those cells carry NO size token at all and can never match an instance -
-// 272 of the TFIsing cells were in exactly that state, which is most of the rest of why
-// the family showed no coverage.
+// A finite-size table often names its sizes only in the leftmost column, e.g. rows
+// "6", "8", "10", ... under a header "e exact (N)" (arXiv:2605.13807). The patterns above
+// give such cells no size token.
 //
-// A bare integer standing alone as the row label is therefore read as a size, ambiguously:
-// both N = n and L = n are emitted, and the matcher decides which one an instance answers
-// to. Only the row LABEL is treated this way. The same number in a data cell is an energy
-// or an error bar, and the caption is full of reference numbers and bond dimensions.
+// So a bare integer standing alone as the row label is read as a size, ambiguously: both
+// N = n and L = n are emitted, and the matcher decides which one an instance answers to.
+// Only the row label is treated this way. The same number in a data cell is an energy or
+// an error bar, and the caption is full of reference numbers and bond dimensions.
 const BARE_SIZE = /^([0-9]{1,4})$/;
 const labelSizeTokens = label => {
   const m = String(label).trim().match(BARE_SIZE);
@@ -92,17 +83,14 @@ function tablesOf(h) {
 }
 
 // ---------------------------------------------------------------------------------
-// PDF TEXT TABLES
+// PDF text tables
 // ---------------------------------------------------------------------------------
-// arXiv has no HTML before ~Dec 2023, so for the entire pre-2024 backlog - which is
-// where the primary sources live, and where 54 of the first 97 accepted rows came from -
-// pypdf's layout-mode text is the only machine-readable form. Three things make it a
-// different parsing problem from the HTML path, and all three are handled here:
+// arXiv has no HTML before ~Dec 2023, so for older papers pypdf's layout-mode text is the
+// only machine-readable form. It differs from the HTML path in three ways:
 //
-//   * There are no cell boundaries. What layout mode preserves instead is CHARACTER
-//     OFFSET, so a column header is matched to a value by position on the line, not by
-//     token index - headers are centred while values are right-aligned, so index
-//     alignment fails on almost every real table.
+//   * There are no cell boundaries. Layout mode keeps character offsets, so a column
+//     header is matched to a value by position on the line. Headers are centred and
+//     values are right-aligned, so matching by token index fails on most tables.
 //   * A dash is two different things. "-0.5603734" uses U+2212 as a minus; "---" marks a
 //     missing entry. The HTML path flattens all dashes to "-", which here would turn
 //     every empty cell into a number. A dash is a minus only when a digit follows it.
@@ -110,9 +98,8 @@ function tablesOf(h) {
 //     as "TABLEIII.Optimisedground-stateenergies(inunitsof...". The words survive intact,
 //     so keyword tests are run against both the raw and the despaced form.
 //
-// This path is tuned for RECALL. Every hit is a worklist entry that gets read before any
-// row is written (RULES.md 8), so a spurious table costs a glance and a missed one costs
-// a record.
+// This path is tuned for recall. Every hit is a worklist entry that is read before any
+// row is written (RULES.md 8).
 
 // a dash followed by a digit is a minus sign; any other dash is an empty cell
 const dashes = s => s.replace(/[−–—‒‐]\s*(?=[0-9])/g, "-")
@@ -125,12 +112,9 @@ const hits2 = (re, s) => re.test(s) || re.test(s.replace(/\s+/g, ""));
 
 // Split a header line into cells, keeping each cell's centre column.
 //
-// Runs of 2+ spaces are the usual separator, but a header whose cells are themselves
-// "key = value" pairs is often set with single spaces - "10x10 J2 = 0.0 J2 = 0.2 J2 = 0.4"
-// collapses to ONE cell under the space rule, and then every energy in the row is
-// labelled with the whole header. That is the column-misassignment this project's method
-// note warns about, and on arXiv:2206.14307 it put a J2 = 0.6 energy under J2 = 0.7.
-// So both splits are tried and the finer one wins.
+// Runs of 2+ spaces are the usual separator, but a header whose cells are "key = value"
+// pairs is often set with single spaces: "10x10 J2 = 0.0 J2 = 0.2 J2 = 0.4" is one cell
+// under the space rule. Both splits are tried and the finer one wins.
 const KEYVAL = /[A-Za-zͰ-Ͽᵀ0-ᵿf_{}\\'′\/0-9]+\s*[=:]\s*[0-9]+(?:\.[0-9]+)?(?:\s*\/\s*[0-9]+)?/gu;
 function headerCells(line) {
   const bySpace = [];
@@ -144,9 +128,9 @@ function headerCells(line) {
   return byKeyVal.length > bySpace.length ? byKeyVal : bySpace;
 }
 
-// Every energy on a line, with the column it sits at. Scanned as a pattern rather than
-// tokenised, because layout mode sometimes runs the last cell of one row into the first
-// cell of the next ("0.0022(5)108 -0.55315(3)"), and tokenising loses both.
+// Every energy on a line, with the column it sits at. Scanned as a pattern: layout mode
+// sometimes runs the last cell of one row into the first cell of the next
+// ("0.0022(5)108 -0.55315(3)"), and tokenising loses both.
 const LINE_ENERGY = /(?<![0-9.])-?[0-9]{1,3}\.[0-9]{4,}(?:\(\s?[0-9]{1,4}\))?/g;
 function energyTokens(line) {
   const out = [];
@@ -179,8 +163,8 @@ function textTables(raw) {
       if (isData[k]) break;
       header = lines[k]; break;
     }
-    // caption: nearest "TABLE n." within 25 lines, in EITHER direction. Two-column PDFs
-    // routinely put it after the body in reading order - 2211.07749 does.
+    // caption: nearest "TABLE n." within 25 lines, in either direction. Two-column PDFs
+    // often put it after the body in reading order.
     let cap = "", best = 1e9;
     for (let k = Math.max(0, a - 25); k < Math.min(lines.length, b + 25); k++) {
       if (!CAPTION_RE.test(lines[k])) continue;
@@ -203,15 +187,12 @@ for (const f of fs.readdirSync("sources").filter(f => f.endsWith(".txt") && !f.s
 
   for (const tbl of textTables(raw)) {
     const cells = headerCells(tbl.header);
-    // Nearest-header-by-position is off by one on its own: headers are centred over
-    // columns whose values are right-aligned, so every value sits left of its own header
-    // and lands on the previous one. On arXiv:2206.14307 that filed the J2 = 0.4 energy
-    // under J2 = 0.7 and reported it as beating that instance's record by 0.96%.
+    // Nearest header by position alone is off by one: headers are centred over columns
+    // whose values are right-aligned, so each value sits left of its own header.
     //
-    // A row carrying exactly as many energies as there are header cells fixes the
-    // alignment exactly - order is unambiguous there. Those rows calibrate a single
-    // offset for the block, which is then applied to the ragged rows, where a missing
-    // entry makes the counts disagree and only position can decide.
+    // A row with exactly as many energies as header cells has an unambiguous order. Those
+    // rows calibrate one offset for the block, which is then applied to the ragged rows,
+    // where a missing entry makes the counts disagree and only position can decide.
     const deltas = [];
     for (const line of tbl.rows) {
       const e = energyTokens(line);
@@ -230,8 +211,8 @@ for (const f of fs.readdirSync("sources").filter(f => f.endsWith(".txt") && !f.s
       if (!ens.length) continue;
       // tokens before the first energy are the row label
       const label = line.slice(0, ens[0].index).replace(/\s+/g, " ").trim().slice(0, 70);
-      // layout mode occasionally glues two table rows onto one line; flag rather than
-      // guess, so triage knows the row label may belong to the other half
+      // layout mode occasionally glues two table rows onto one line; flag it so triage
+      // knows the row label may belong to the other half
       const glued = cells.length && ens.length > cells.length ? 1 : 0;
 
       const exact = cells.length && ens.length === cells.length;   // order is unambiguous
@@ -297,8 +278,8 @@ for (const f of files) {
   }
 }
 
-// The same number reached through both paths is one candidate, not two. HTML wins: it
-// has real cell boundaries, so its row label and column header are the trustworthy ones.
+// The same number reached through both paths counts as one candidate, and the HTML copy is
+// kept: it has real cell boundaries, so its row label and column header are reliable.
 const seenCell = new Set();
 out.sort((a, b) => (a.src === b.src ? 0 : a.src === "html" ? -1 : 1));   // html first, so it wins
 const rows = out.filter(r => {

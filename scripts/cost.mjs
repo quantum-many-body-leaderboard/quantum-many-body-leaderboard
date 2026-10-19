@@ -53,8 +53,8 @@ export const parametersOf = c => (c?.parameters > 0 ? { value: c.parameters, uni
 // site says how many state a cost instead of drawing one mark on an axis.
 export const MIN_COSTED = 2;
 
-// Where an instance's own cost figure is written, relative to the repository root; the
-// estimated-FLOPs figure (flops.mjs) sits beside it under figures/flops/.
+// Where an instance's own figures are written, relative to figures/: hours under cost/,
+// estimated FLOPs (flops.mjs) under flops/, parameter counts under params/.
 export const costFigureName = inst => `cost/${inst.instance_id.replace("/", "--")}`;
 export const flopsFigureName = inst => `flops/${inst.instance_id.replace("/", "--")}`;
 export const paramsFigureName = inst => `params/${inst.instance_id.replace("/", "--")}`;

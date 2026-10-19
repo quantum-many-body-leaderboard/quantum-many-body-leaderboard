@@ -11,8 +11,8 @@
 // Heisenberg cylinders). An impurity "lattice" names the impurity problem (TB-DMFT-SOC) and
 // is kept whole.
 //
-// Ladders sharing model and lattice are one figure - an impurity problem's lattice is its
-// first two words - and the site shows one figure at a time behind two rows of badges, the
+// Ladders sharing model and lattice are one figure (an impurity problem's lattice is its
+// first two words), and the site shows one figure at a time behind two rows of badges, the
 // model and then the lattice: one badge per figure rather than per ladder, as the ladders of
 // a figure differ only in boundary and couplings.
 //
@@ -23,7 +23,7 @@ import { MODELS, BOUNDARY, geometry } from "./readme_table.mjs";
 import { groundStateExact } from "./units.mjs";
 import { W, PAD } from "./chart.mjs";
 
-const COUPLINGS = ["J2", "h", "U", "V", "t2", "rs"]; // t2: the t12 variants at more than one t2 (2026-10-16)
+const COUPLINGS = ["J2", "h", "U", "V", "t2", "rs"]; // t2: the t12 variants at more than one t2
 
 // Particles per site: Hubbard files carry Nf = N_up = N_dn, t-V is spinless.
 // The electron gas (track 2) has no filling; its spin polarization zeta = (N_up - N_dn) / N plays
@@ -43,10 +43,9 @@ const variantsOf = inst => inst.instance_id.split("/")[1].split("_").slice(2)
 const gcd = (a, b) => (b ? gcd(b, a % b) : a);
 
 // The rows a figure draws: a bound, a projection, an extrapolation or a ground-state exact
-// energy. A flagged row is drawn too, with a slashed mark (2026-09-18: the reader
-// sees the number and that it is contested; RULES.md 6.1 keeps it off the records and so
-// off the record line), except a row flagged wrong-instance, whose energy belongs on
-// another axis. Rows without a bound type are not, nor the minimum of a sector other than
+// energy. A flagged row is drawn too, with a slashed mark, so the reader sees the number and
+// that it is contested; RULES.md 6.1 keeps it off the record line. A row flagged
+// wrong-instance is not drawn, as its energy belongs to another instance. Rows without a bound type are not, nor the minimum of a sector other than
 // the ground state's, which the build moves to the instance's `spectrum` (DATA.md).
 const BOUNDS = new Set(["variational", "projected", "extrapolated", "approximate"]);
 export const drawnRows = inst => inst.rows.filter(r => r.defect?.flag !== "wrong-instance" && (r.bound_type === "exact" ? groundStateExact(r) : BOUNDS.has(r.bound_type)));
@@ -155,8 +154,8 @@ function scansOf(instances) {
 
 // The strip a slider shows above its panel (size_energy.mjs): its plot box is shared with the
 // site, which sets a badge under each stop at the stop's x. Stops sit at even spacing in their
-// own order, as the couplings of an "other" panel do: placed by value, the badges for J2 = 0.4,
-// 0.45, 0.5, 0.55, 0.6 ran into each other (2026-09-18). Above the plot is room for
+// own order, as the couplings of an "other" panel do, since badges placed by value (J2 = 0.4,
+// 0.45, 0.5, 0.55, 0.6) run into each other. Above the plot is room for
 // the size lines to move apart when the strip is hovered (size_energy.mjs), and above that
 // the facet labels and the legend.
 export const STRIP = { left: PAD + 56, right: W - PAD - 10, top: 92, bottom: 252, labelY: 40 };
@@ -171,17 +170,16 @@ const valueLabel = at => (typeof at === "number" ? String(Number(at.toPrecision(
 // The figures on the site, in model order with the "other" figures last. A figure (a model
 // and lattice) is shown as facets, a facet being the ladders that differ only in the
 // figure's axis: the coupling or filling with most distinct values among the ladders drawn
-// at two sizes or more (J2 for J1-J2, U for Hubbard). On the site a figure is one slider
-// (2026-09-21, in place of a slider per facet): one strip of the record at every
+// at two sizes or more (J2 for J1-J2, U for Hubbard). On the site a figure is one slider:
+// one strip of the record at every
 // stop and size, the facets as groups along it with an empty slot between them, a badge
 // under each stop, and one panel per stop, the stop with most energies shown first. A
 // ladder published at one size is a stop like any other where its facet has a ladder with
-// sizes (2026-09-18: J2 = 0.35 at 36 sites belongs beside J2 = 0.3 and 0.4, not
-// under Other); where nothing in its facet has, it goes to the model's "other" figure, the
+// sizes (J2 = 0.35 at 36 sites sits beside J2 = 0.3 and 0.4); where nothing in its facet has, it goes to the model's "other" figure, the
 // scan panels of what was published at one size. A figure without an axis is one facet per
 // ladder, each a single stop, and has no strip: its panels are stacked, each under its
-// facet's label (2026-09-21: periodic over open, not a strip of two); nor has a
-// figure of one stop, the panel alone.
+// facet's label (periodic over open); a figure of one stop has no strip either, only the
+// panel.
 export function energyFigures(instances) {
   const figs = [], single = [];
   for (const f of ladderFigures(instances)) {

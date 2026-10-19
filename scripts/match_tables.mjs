@@ -1,7 +1,7 @@
 // Map harvested table cells (sweep-tables.tsv) onto QMBL instances and rank what is
-// worth reading. This is the step that turns 2000 numbers into a worklist.
+// worth reading. Prints the worklist; --tsv <file> also writes it as a table.
 //
-// A cell is a CANDIDATE for an instance when the paper is about that model and lattice
+// A cell is a candidate for an instance when the paper is about that model and lattice
 // and the cell's size token matches the instance's. It is then scored by where it sits
 // relative to the instance's current record, in the instance's own per-site convention:
 //
@@ -31,10 +31,9 @@ for (const r of tsv("sweep-fulltext.tsv")) {
   paperModels[r.arxiv] = r.models || "";
   paperMeta[r.arxiv] = { pr: r.peer_reviewed, jr: r.journal_ref || "", ti: r.title || "" };
 }
-// Papers fetched as PDFs after the full-text scan are missing from sweep-fulltext.tsv, and
-// without a title the lattice exclusion below cannot see what a paper is about: arXiv:
-// 2010.03563's pyrochlore N = 64 energy matched a 64-site Hubbard instance, and they were
-// all labelled preprints. The candidate pool carries title and review status for every one.
+// Papers fetched as PDFs after the full-text scan are missing from sweep-fulltext.tsv. The
+// lattice exclusion below needs their title, and the candidate pool carries title and
+// review status for every one.
 for (const r of tsv("sweep-candidates.tsv"))
   paperMeta[r.arxiv] ||= { pr: r.peer_reviewed, jr: r.journal_ref || "", ti: r.title || "" };
 // Papers citing VarBench or the FTPS paper, fetched for the Impurity screen, are in neither
@@ -42,11 +41,10 @@ for (const r of tsv("sweep-candidates.tsv"))
 for (const r of tsv("sweep-cites.tsv").filter(r => r.arxiv))
   paperMeta[r.arxiv] ||= { pr: r.doi && !/^10\.48550\//i.test(r.doi) ? "yes" : "no", jr: r.venue || "", ti: r.title || "" };
 
-// Papers fetched as PDFs after the full-text scan have no entry in sweep-fulltext.tsv, and
-// the family check below rejects every cell of an untagged paper: 591 of the 604 papers
-// fetched on 2026-09-15 matched nothing for that reason alone. Tag them from their own
-// committed text with the scanner's patterns. A word counts when the title has it or the
-// text repeats it: one mention is usually a citation of someone else's model.
+// Papers missing from sweep-fulltext.tsv have no model tags, and the family check below
+// rejects every cell of an untagged paper. Tag them from their committed text with the
+// scanner's patterns. A word counts when the title has it or the text repeats it (3+
+// times): one mention is usually a citation of someone else's model.
 const MODEL_WORDS = [["kagome", /kagome/gi], ["triangular", /triangular/gi], ["pyrochlore", /pyrochlore/gi],
   ["J1J2", /J\s*_?1\s*[-–]\s*J\s*_?2/gi], ["Hubbard", /Hubbard/gi], ["shuriken", /shuriken/gi],
   ["Shastry", /Shastry[- ]Sutherland/gi], ["tV", /spinless fermion|t-V model/gi],
@@ -67,14 +65,12 @@ const LATTICE_WORD = {
 const instanceTokens = inst => {
   const t = new Set([`N=${inst.n_sites}`]);
   const lat = inst.lattice.toLowerCase();
-  // On a chain the linear size IS the site count, and chain papers label their tables
-  // with L far more often than with N. Without this every chain instance could only ever
-  // be matched by a table that happened to say "N =", which no 1D paper does.
+  // On a chain the linear size is the site count, and chain papers label their tables
+  // with L far more often than with N.
   if (lat === "chain") t.add(`L=${inst.n_sites}`);
   const m = lat.match(/(\d+)x(\d+)(?:x(\d+))?$/);          // rectangular-4x16, kagome-8x8
   if (m) t.add(m[0]);
-  // papers write either order: arXiv:2507.10705 prints "8 × 4" for rectangular-4x8, and
-  // its record-beating HFPS energy was never compared with that instance
+  // papers write either order, e.g. "8 × 4" for rectangular-4x8
   if (m && !m[3] && m[1] !== m[2]) t.add(`${m[2]}x${m[1]}`);
   // L x L only when the lattice name states no dimensions of its own: rectangular-4x16 has
   // 64 sites but is not 8x8, and pyrochlore-4x4x4_256 is not 16x16.
@@ -95,10 +91,7 @@ const instanceTokens = inst => {
 
 // --- instance discipline (RULES.md 2) -------------------------------------------
 // A Hubbard energy is only comparable at the same filling and the same t'. Both are
-// stated in the caption or the column header, and getting either wrong manufactures a
-// record: arXiv:2604.25775's t'=-0.2 column matches the t'=0 16x16 instance on size
-// alone and sits 0.4% "below" its record, and the same paper's delta=1/8 number looks
-// like a record against any instance with a different electron count.
+// stated in the caption or the column header; a mismatch in either can look like a record.
 
 // doping delta = 1 - n, where n = 2 Nf / Ns. Written as n_h, delta, or "1/8 doping".
 const instanceDoping = inst =>
@@ -116,18 +109,13 @@ function statedDoping(txt) {
 const statedHalfFilling = txt => /half[- ]fill/i.test(txt);
 
 // --- the coupling that names the instance ------------------------------------------
-// Within a family, instances differ ONLY by a coupling: J1J2 by J2, tV by V, TFIsing by
-// the transverse field h. Nothing checked it, so a cell matched on size alone - which is
-// how one 4x4 spinless-fermion energy came back as a candidate for BOTH tV/square_16_P_5_0.01
-// and tV/square_16_P_5_0.1, two different Hamiltonians. Same failure mode as the t' case
-// in RULES.md 2, and higher volume: J1J2 is the largest family on the board and the
-// 2026-09-14 PDF pass had to verify every J2 label by hand for exactly this reason.
+// Within a family, instances of the same size differ only by a coupling: J1J2 by J2, tV by
+// V, TFIsing by the transverse field h. A cell must match it as well as the size (RULES.md 2).
 //
 // A table often states several values at once ("for J2 = 0.4, 0.6 and 0.8"), so all of
 // them are collected: the cell survives if the instance's coupling is among them.
 const COUPLING = {
-  // NOT alpha: in an NQS paper "alpha = 1" is the hidden-unit density, not a coupling,
-  // and treating it as J2 would reject most of the largest family on the board.
+  // alpha is excluded: in an NQS paper "alpha = 1" is the hidden-unit density.
   J1J2:    { key: "J2", re: /(?:J\s*_?\{?2\}?\s*\/\s*J\s*_?\{?1\}?|J\s*_?\{?2\}?|J\s*['′]\s*\/\s*J)\s*[=:]\s*/gi },
   tV:      { key: "V",  re: /(?:V\s*\/\s*t|\bV\b)\s*[=:]\s*/gi },
   TFIsing: { key: "h",  re: /(?:h\s*\/\s*J|\bh\b|\bΓ\b|transverse[- ]field(?:\s+strength)?)\s*[=:]\s*/gi },
@@ -162,12 +150,11 @@ function statedTprime(txt) {
 
 // A cell that is itself an exact reference or an extrapolation is not a variational
 // record claim; it is still worth seeing, but labelled so it is never imported as one.
-// Certification papers (arXiv:2310.05844, 2604.01555) print SDP relaxation energies, which
-// are LOWER bounds and sit below the ground state by construction - 83 false candidates,
-// most of them "below the record". An explicit label or header decides; the caption only
+// SDP relaxation energies (e.g. arXiv:2310.05844, 2604.01555) are lower bounds and sit below
+// the ground state by construction. An explicit label or header decides; the caption only
 // when those name no method, because a caption like "SDP lower bound compared to QMC"
-// covers the reference columns too. A bare "QMC" header is the reference column of a
-// variational paper, not its result.
+// covers the reference columns too. A bare "QMC" header is usually the reference column of
+// a variational paper.
 const LOWER = /lower[- ]bound|\bE?SDP\b/i;
 const cellKind = (txt, caption = "") =>
   LOWER.test(txt) ? "lower bound"
@@ -191,16 +178,13 @@ const cells = tsv("sweep-tables.tsv").map(c => ({
 const hits = [];
 
 // Papers rejected as a whole in SWEEP.md: every energy in them is a thermodynamic-limit
-// value, so no cell can map onto a finite instance. They also keep resurfacing, because
-// iPEPS tables are indexed by bond dimension and the harvester reads a bare "4" row label
-// as a linear size - arXiv:2211.16932's chi_B = 4, 6, 8 rows match the 96-, 216- and
-// 384-site shuriken clusters. Suppressed here, but counted in the summary.
+// value, so no cell can map onto a finite instance. iPEPS tables are indexed by bond
+// dimension, which the harvester can read as a linear size. Suppressed here, but counted
+// in the summary.
 //
-// The two certification papers are here for the same reason, read 2026-09-15: every energy
-// in them is an SDP lower bound or a reference value quoted from ED, DMRG, QMC or NQS work.
-// The lower-bound rule below catches most of their cells, but layout mode glues the ratio
-// column "(Eexact - ESDP)/|Eexact|" onto its neighbours, and 22 cells came out headed
-// "|Eexact|" or "value" and passed as exact or variational.
+// The two certification papers are listed too: every energy in them is an SDP lower bound
+// or a reference value quoted from other work, and layout mode can strip the lower-bound
+// label from some of their cells.
 const REJECTED = {
   "2211.16932": "iPEPS/iPESS on the infinite shuriken lattice",
   "2510.04907": "iPEPS on infinite triangular and kagome lattices",
@@ -209,13 +193,11 @@ const REJECTED = {
 };
 
 // ---------------------------------------------------------------- all-results mode
-// The 1% window answers "is this a record?". The database answers a second question -
-// what has anyone ever published on this instance - and for that a weaker energy is a
-// row like any other ("every published number gets a row"). Under --all nothing is
-// dropped for distance from the record; cells are banded instead, and a cell that misses
-// only by a unit convention (Pauli vs S.S is a factor 4, per-site vs total a factor N)
-// is rescued and labelled rather than written off as a different quantity. Every rescue
-// is a question for the reader, never an import: the label says which factor was applied.
+// The 1% window finds records. --all lists every published number for an instance, since
+// every published number gets a row. Under --all no cell is dropped for distance from the
+// record; cells are banded instead. A cell that matches only after a unit convention factor
+// (Pauli vs S.S is a factor 4, per-site vs total a factor N) is kept and labelled with the
+// factor applied, for the reader to check. It is never imported as is.
 const ALL = process.argv.includes("--all");
 const TSV_OUT = (() => { const i = process.argv.indexOf("--tsv"); return i >= 0 ? process.argv[i + 1] : null; })();
 const conventionFactors = n => [
@@ -228,16 +210,15 @@ for (const inst of instances) {
   const div = perSiteDivisor(inst);
   if (div == null) continue;
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
-  // The reference for matching is the best variational bound, not the record: on a
-  // solved instance the exact energy is the record, but a paper's number is judged by
-  // where it sits relative to the field and to the exact floor separately. An instance
+  // The reference for matching is the best bound (recordEligible: variational, projected
+  // or extrapolated, unflagged). The exact floor is compared separately. An instance
   // with no eligible bound (every variational row flagged) still takes rows, so under
   // --all the reference is its best number.
   const rec = sorted.find(recordEligible) ?? (ALL ? sorted[0] : null);
   if (!rec) continue;
   const recEps = rec.energy / div;
-  // Sector-resolved ED rows are lowest-in-sector energies, not ground states, and are
-  // excluded from the floor for the same reason validate.mjs excludes them.
+  // Sector-resolved ED rows are lowest-in-sector energies and are excluded from the floor,
+  // as in validate.mjs.
   const exactRow = sorted.find(groundStateExact);
   const exactEps = exactRow ? exactRow.energy / div : null;
   const onInstance = inst.rows.map(r => r.energy / div);
@@ -278,11 +259,9 @@ for (const inst of instances) {
       if (tp && tp !== instanceTprime(inst)) continue;
     }
 
-    // Boundary conditions are part of the instance (RULES.md 2) and nothing checked them.
-    // arXiv:2605.13807's transverse-field Ising chains are OPEN; matched on size alone its
-    // N = 32 value came back as a candidate for TFIsing/chain_32_P_1, which is PERIODIC,
-    // sitting 0.92% away - a gap that is the boundary condition, not an improvement.
-    // Mixed boundaries (PA, PO) are skipped: a paper states those too rarely to test.
+    // Boundary conditions are part of the instance (RULES.md 2). A cell is dropped when the
+    // text states only the other boundary condition. Mixed boundaries (PA, PO) are skipped:
+    // a paper states those too rarely to test.
     const wantOpen = inst.boundary === "O", wantPeriodic = inst.boundary === "P";
     if (wantOpen || wantPeriodic) {
       const saysOpen = /\bOBC\b|open boundar|open chain|\bopen\b\s+(?:chain|lattice|system)/i.test(blob);
@@ -291,12 +270,9 @@ for (const inst of instances) {
       if (saysPeriodic && !saysOpen && wantOpen) continue;
     }
 
-    // The coupling that distinguishes this instance from its siblings must agree, and
-    // WHERE it is stated decides the question. A caption routinely enumerates every
-    // value in the table ("J2 = 0.0, 0.2, 0.4, 0.6, 0.7"), so reading the caption alone
-    // lets every column match every sibling instance. The column header is specific to
-    // this cell and wins; the row label is next; the caption is only a fallback for
-    // tables that have neither.
+    // The coupling that distinguishes this instance from its siblings must agree. A caption
+    // often lists every value in the table ("J2 = 0.0, 0.2, 0.4, 0.6, 0.7"), so the column
+    // header wins, then the row label; the caption is a fallback for tables with neither.
     let coupNote = "";
     const spec = COUPLING[inst.model];
     if (spec) {
@@ -335,7 +311,7 @@ for (const inst of instances) {
     const dup = onInstance.some(e => Math.abs(e - eps) <= Math.abs(e) * 1e-6);
     hits.push({ inst: inst.instance_id, fresh, recEps, rec: rec.method, ...c, rel, eps, conv, dup,
       exactEps,
-      // classify from the row label and column header - the caption names every method in
+      // classify from the row label and column header: the caption names every method in
       // the table, so it is consulted only for lower bounds and only as a fallback
       kind: cellKind(`${c.label} ${c.col}`, c.caption), fillNote: fillNote + coupNote,
       verdict: !ALL ? (eps < recEps ? "BEATS" : "FILLS")
@@ -358,9 +334,8 @@ uniq.sort((a, b) => (a.verdict === b.verdict ? a.rel - b.rel : a.verdict === "BE
 
 console.log(`${cells.length} harvested cells x ${instances.length} instances -> ${uniq.length} candidates\n`);
 if (ALL) {
-  // The worklist is grouped by PAPER, because the paper is what a reader opens: the
-  // convention, the boundary condition and whether a column is the authors' own result
-  // or a quote of someone else's are settled once per paper, not once per cell.
+  // The worklist is grouped by paper: the convention, the boundary condition and whether a
+  // column is the authors' own result or a quote are settled once per paper.
   const keep = uniq.filter(h => !h.dup);
   const cols = ["arxiv", "peer_reviewed", "title", "instance", "verdict", "eps", "err", "rel_pct",
     "kind", "convention", "src", "table", "row_label", "col_header", "sizes", "note",

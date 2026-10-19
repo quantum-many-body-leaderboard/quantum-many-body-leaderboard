@@ -1,5 +1,4 @@
-// Score candidates on their FULL TEXT, not the abstract. Abstracts almost never
-// quote energies; tables do. Caches HTML under sources/ so reruns are free.
+// Score candidates on their full text. Abstracts almost never quote energies; tables do. Caches HTML under sources/ so reruns are free.
 import fs from "node:fs";
 const strip = s => s.replace(/<[^>]+>/g, " ").replace(/&nbsp;|&#[0-9]+;|&[a-z]+;/g, " ").replace(/\s+/g, " ");
 const MODELS = [["kagome",/kagome/i],["triangular",/triangular/i],["pyrochlore",/pyrochlore/i],

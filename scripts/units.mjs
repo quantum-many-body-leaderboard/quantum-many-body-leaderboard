@@ -1,6 +1,5 @@
-// Unit and bookkeeping conventions for the VarBench schema.
-// Getting these wrong is the single most likely source of a wrong record,
-// so every rule here is stated once and reused rather than inlined per script.
+// Unit and bookkeeping conventions for the VarBench schema, and the record eligibility rules.
+// Every script imports them from here, so each rule is written once.
 
 export const SPIN_MODELS = new Set(["Heisenberg", "J1J2", "TFIsing"]);
 // Track 2 (RULES.md 12): the homogeneous electron gas, stored as totals in Hartree; n_sites holds N.
@@ -8,14 +7,13 @@ export const HEG_MODELS = new Set(["HEG2D", "HEG3D"]);
 
 // Is the reported energy a Monte-Carlo estimate, or a deterministic contraction?
 // Only a sampled energy has an error bar to report: DMRG at a stated bond dimension, exact
-// diagonalization and statevector circuits carry no statistical error at all. Since
-// 2026-10-08 no row needs a sigma to hold a record (RULES.md 6); the distinction still
-// decides the README's dagger marker and which rows the error-bar counts ask about.
+// diagonalization and statevector circuits carry no statistical error at all. No row needs a
+// sigma to hold a record (RULES.md 6); the distinction decides the README's dagger marker and
+// which rows the error-bar counts ask about.
 //
-// Which kind a row is, is a statement read from its source, per row (2026-09-30,
-// qmbl-verify 2026-09-29 ruling 2). A row whose reader established it carries `sampled`,
-// true or false, set in corrections.mjs with the evidence, and that decides. The method
-// string is only the fallback where the field is absent, because a name is not the answer:
+// Which kind a row is, is read from its source, per row. A row whose reader established it
+// carries `sampled`, true or false, set in corrections.mjs with the evidence, and that
+// decides. The method string is only the fallback where the field is absent, as a name can mislead:
 // the VQE "2^14 samples/grad" rows print the exact statevector energy (the shots estimate
 // only the gradient), and a finite PEPS evaluated by Monte Carlo, an MPS-RNN or a projected
 // mean-field state is sampled although its string matches a deterministic marker.
@@ -28,31 +26,23 @@ export const HEG_MODELS = new Set(["HEG2D", "HEG3D"]);
 // only at the start of the string ("ED", "ED (this work)"): "aCNN, sign structure fixed to
 // the exact (ED) one" is a sampled network that names ED as its reference.
 const DETERMINISTIC = /\bdmrg\b|\bmps\b|\bpeps\b|\bmera\b|tensor network|statevector|exact diagonaliz|exact solution|bethe ansatz|hartree|mean[- ]field|truncation error|bond dimension|\bfci\b|full configuration|^HF$|^ED\b/i;
-// Every caller asks about the row, never about a method string, so the row's own statement
-// wins wherever there is one. Until 2026-09-30 this took the string; a caller still passing
-// one would silently read "sampled", so that fails loudly instead.
+// Takes the row, never a method string, so the row's own statement wins wherever there is
+// one. A string argument would read as "sampled", so it throws.
 export function isSampled(r) {
   if (r == null || typeof r !== "object") throw new TypeError("isSampled takes a row (its `sampled` field decides), not a method string");
   return r.sampled ?? !DETERMINISTIC.test(publishedMethod(r) || "");
 }
 
-// Did WE find any error metric for this row? Neither a sigma nor an energy variance
-// turned up in the source that was read, so there is currently no way to judge how
-// converged the number is.
-//
-// The claim is about our search, not about the authors. The figure may well be in a
-// supplement, a companion paper, or the group's own records - which is exactly why the
-// row is marked rather than demoted: the marker is an open question addressed to whoever
-// can close it. Deliberately NOT a `defect`, which asserts a suspected error and
-// withholds the record; RULES.md 3 says a missing field excludes nothing. `exact` rows
-// are not marked - an exact diagonalization has no error to report, so nothing is
-// missing there - except stochastic ones (below), whose error bar is part of the claim.
+// True when QMBL found neither a sigma nor an energy variance for this row in the source it
+// read (the circle marker; DATA.md, error metrics). It is not a `defect` and withholds
+// nothing (RULES.md 3). `exact` rows are not marked, as an exact diagonalization has no error
+// to report, except stochastic ones (below), whose error bar is part of the claim.
 export const noErrorMetrics = r =>
   (r.bound_type !== "exact" || stochasticExact(r)) && r.sigma == null && r.energy_variance == null;
 
 // Sign-problem-free QMC is `exact` within its statistical error bar, not to the printed
 // digits (RULES.md 4): such a row must state sigma, and every surface prints its class as
-// "exact (stochastic)" (2026-09-16). The method name (AFQMC, SSE QMC, QMC) tells it
+// "exact (stochastic)". The method name (AFQMC, SSE QMC, QMC) tells it
 // apart from exact diagonalization and exact solutions.
 const STOCHASTIC = /\bqmc\b|\bafqmc\b|monte carlo|stochastic series/i;
 export const stochasticExact = r => r.bound_type === "exact" && STOCHASTIC.test(r.method || "");
@@ -61,12 +51,12 @@ export const stochasticExact = r => r.bound_type === "exact" && STOCHASTIC.test(
 export const boundLabel = r => stochasticExact(r) ? "exact (stochastic)" : (r.bound_type ?? "unclassified");
 
 // The method string exactly as the source printed it. Rows carry a short `method` name and a
-// `method_detail` (scripts/method_names.mjs, 2026-09-17); the published string stays on the
+// `method_detail` (scripts/method_names.mjs); the published string stays on the
 // row, and the rules written against it (the fallback of isSampled, the row id) keep reading it.
 export const publishedMethod = r => r.method_as_published ?? r.method;
 
 // A row's method as every surface prints it: the name, then what tells it apart from other
-// rows of that name - the bond dimension from `compute`, the detail, the symmetry sector. An
+// rows of that name: the bond dimension from `compute`, the detail, the symmetry sector. An
 // extrapolation's bond dimension is the largest it was fitted from, a cost and not the state,
 // so its detail says what went to the limit instead.
 export function methodLabel(r) {
@@ -77,19 +67,16 @@ export function methodLabel(r) {
 }
 
 // Sector-resolved exact diagonalization: VarBench's "Exact Diagonalization 0.C1.A -1" is the
-// lowest state in ONE symmetry sector, not the ground state, so an unconstrained variational
+// lowest state in one symmetry sector, not the ground state, so an unconstrained variational
 // energy may legitimately sit below it and it cannot stand in for the instance's exact
 // energy. Such a row carries `sector` (scripts/method_names.mjs); where the instance has its
 // ground-state row, apply_spectrum.mjs moves it off the rows into the instance's `spectrum`,
 // and the record, the validator, the figures and the table matcher ask groundStateExact.
 //
-// The one sector row that IS the ground state. J1J2/triangular_48_P_0.125 carries all 48
+// The one sector row that is the ground state. J1J2/triangular_48_P_0.125 carries all 48
 // (k.irrep, spin-flip) sectors of the Sz = 0 space from Wietek et al., PRX 14, 021010, whose
-// App. B names Gamma.A1 (spin-flip +1) as the ground state; the qmbl-verify pass of
-// 2026-09-15 confirmed the number against the paper's own upload, and ruled on
-// 2026-09-16 (qmbl-verify DECISIONS.md, 3c; reconfirmed 2026-09-30) that this row stays and
-// the other 47 move to a per-instance spectrum record, which the build does since 2026-09-30.
-// The sector named here is the row that stays.
+// App. B names Gamma.A1 (spin-flip +1) as the ground state; the number matches the paper's
+// own upload. This row stays a row; the other 47 go to the instance's `spectrum`.
 const RULED_GROUND_STATE_SECTOR = "Gamma.D6.A1, spin flip +1";
 
 // Does this exact row state the ground-state energy, rather than a sector minimum?
@@ -98,49 +85,36 @@ export const groundStateExact = r =>
 
 // An exact row that states the instance's ground-state energy: exact diagonalization, an
 // exact solution, or sign-problem-free QMC where that is established (RULES.md 4). Such a
-// row IS the record wherever one exists (RULES.md 6): the answer outranks every claim
-// about it. A flagged exact row is skipped like any other (6.1).
+// row is the record wherever one exists (RULES.md 6). A flagged exact row is skipped like
+// any other (6.1).
 export const exactEligible = r => groundStateExact(r) && !r.defect;
 
-// Where no exact row exists, the record is the lowest energy of any other kind -
-// variational, projected or extrapolated, with or without an error bar - that carries no
-// unresolved defect (RULES.md 6, 6.1). On an instance with an eligible exact row this
-// decides the closest challenger, not the record. Until 2026-10-08 only a variational bound
-// could hold a record, and a sampled one only with its sigma; both were dropped, so
-// that every published result counts and nothing is listed as unable to hold a record.
+// Where no exact row exists, the record is the lowest variational, projected or extrapolated
+// energy, with or without an error bar, that carries no unresolved defect (RULES.md 6, 6.1).
+// On an instance with an eligible exact row this decides the closest challenger.
 const RECORD_KINDS = new Set(["variational", "projected", "extrapolated"]);
 export const recordEligible = r => RECORD_KINDS.has(r.bound_type) && !r.defect;
-// `approximate` (RULES.md 4, 2026-10-19): a method of a fixed approximation that converges to that approximation,
-// not to the exact energy (RPA, MP2, channel-truncated coupled cluster). Listed, never ranked against the other
-// kinds: such a row holds the record only on an instance where no other unflagged row exists.
+// `approximate` (RULES.md 4): a method that converges to a fixed approximation, not to the
+// exact energy (RPA, MP2, channel-truncated coupled cluster). Such a row holds the record only
+// on an instance where no other unflagged row exists.
 export const approximateEligible = r => r.bound_type === "approximate" && !r.defect;
 
-// VarBench writes spin Hamiltonians with PAULI matrices (sigma.sigma) and stores
-// TOTAL energies. NQS papers quote E/N in the S.S convention. Factor 4 N_sites.
+// VarBench writes spin Hamiltonians with Pauli matrices (sigma.sigma) and stores
+// total energies. NQS papers quote E/N in the S.S convention. Factor 4 N_sites.
 // Fermionic models (Hubbard, tV) are stored as totals; papers quote per site.
 //
-// TFIsing is the exception, and grouping it with the Heisenberg models was a factor-4
-// error (found 2026-09-14). Its Hamiltonian is -sum s^z s^z - h sum s^x, already written
-// in Pauli operators with no S.S term to rescale, so the per-site energy is E/N.
-//
-// This is checkable rather than a matter of opinion: TFIsing/chain_32_P_1 is the critical
-// 1D transverse-field Ising chain, where the free-fermion ground state is exact. Summing
-// -2 sqrt(h^2 - 2h cos k + 1) over the antiperiodic momenta k = pi(2n+1)/N reproduces the
-// stored total -40.760032 to 7e-15, and E/N = -1.2738 sits just below the thermodynamic
-// limit -4/pi = -1.2732, as it must for PBC at criticality. Under the 4N divisor the same
-// instance read -0.3184, so every TFIsing cell in the literature missed by a factor of 4
-// and the family could never produce a single match - which is most of why it shows
-// 0 of 7 instances covered. scripts/validate.mjs asserts the identity on every run.
+// TFIsing is the exception: its Hamiltonian is -sum s^z s^z - h sum s^x, already in Pauli
+// operators with no S.S term to rescale, so the per-site energy is E/N. Check:
+// TFIsing/chain_32_P_1 is the critical chain, whose free-fermion ground state is exact.
+// Summing -2 sqrt(h^2 - 2h cos k + 1) over the antiperiodic momenta k = pi(2n+1)/N reproduces
+// the stored total -40.760032 to 7e-15, and E/N = -1.2738 sits just below the thermodynamic
+// limit -4/pi = -1.2732, as it must for PBC at criticality. scripts/validate.mjs asserts the
+// identity on every build.
 export function perSiteDivisor(inst) {
   if (inst.model === "TFIsing" || HEG_MODELS.has(inst.model)) return inst.n_sites;
   if (SPIN_MODELS.has(inst.model)) return 4 * inst.n_sites;
   if (inst.model === "Hubbard" || inst.model === "tV") return inst.n_sites;
   return null; // Impurity: no meaningful per-site energy
-}
-
-export function toPerSite(energy, inst) {
-  const d = perSiteDivisor(inst);
-  return d == null ? null : energy / d;
 }
 
 export function perSiteLabel(inst) {
@@ -154,7 +128,7 @@ export function perSiteLabel(inst) {
 // VarBench filenames carry Nf = N_up = N_dn.
 export function expectedDof(inst) {
   if (SPIN_MODELS.has(inst.model) || HEG_MODELS.has(inst.model)) return inst.n_sites;
-  // t-V is SPINLESS, so Nf is already the total particle number.
+  // t-V is spinless, so Nf is already the total particle number.
   if (inst.model === "tV") return inst.params?.Nf ?? null;
   if (inst.params?.Nf != null) return 2 * inst.params.Nf;
   return null;

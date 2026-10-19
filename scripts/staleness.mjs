@@ -1,6 +1,7 @@
-// Which instances most likely have a beaten record? Rank refresh targets.
+// Internal sweep-planning tool, not run by the build: which instances most likely have a newer
+// published energy? It takes the lowest variational row as the record, not the RULES.md 6 record.
 // Signal 1: no post-2024 row at all (nothing from the 2025-26 sweep).
-// Signal 2: the record's V-score - high means lots of room, so the frontier moved.
+// Signal 2: the record's V-score. A high V-score means lots of room, so the frontier has likely moved.
 import fs from "node:fs"; import path from "node:path";
 import { perSiteDivisor, perSiteLabel, methodLabel } from "./units.mjs";
 const rows = [];

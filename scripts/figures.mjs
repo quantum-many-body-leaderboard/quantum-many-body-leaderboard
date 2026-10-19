@@ -1,4 +1,5 @@
-// Generate figures/*.svg - the README numbers, drawn. The drawing kit is chart.mjs.
+// Generate the summary figures in figures/: record over time, rows per instance, record status
+// by model, records by family, error metrics and records by year. The drawing kit is chart.mjs.
 import { recordEligible, perSiteDivisor, perSiteLabel } from "./units.mjs";
 import { collect, recordOf } from "./summary.mjs";
 import { sources } from "./enrich_sources.mjs";
@@ -6,6 +7,7 @@ import { citeRef, paperYear } from "./cite.mjs";
 import { CONTESTED, FAMILIES, variationalRows } from "./views.mjs";
 import { W, PAD, n, text, hline, hbar, vbar, onFill, dot, slashed, legend, header, footnote, doc, textWidth, pct, niceStep, writer, shortLabel } from "./chart.mjs";
 import { layoutLabels, insetFrame, meets } from "./labels.mjs";
+import { MODELS as MODEL_NAMES } from "./readme_table.mjs";
 
 const OUT = "figures";
 const cache = sources();
@@ -16,9 +18,8 @@ const { write, written } = writer(OUT);
 const yearOf = r => paperYear(r, cache);
 
 // ---------------------------------------------------------- 1. the record over time
-// Curated like the README frontier table, and for the same reason: these are the two
-// instances the field competes on, and between them they show both kinds of story - a
-// record taken again and again, and a record that newer, lower-looking numbers did not take.
+// Two instances chosen by hand from views.mjs FRONTIER. Between them they show a record taken
+// again and again, and a record that newer numbers that look lower did not take.
 const FRONTIER = [
   ["J1J2/square_100_P_0.5", "J1-J2 square 10×10, J2 = 0.5"],
   ["Hubbard/square_256_P_112_8", "Hubbard square 16×16, U = 8, n = 0.875"],
@@ -135,12 +136,12 @@ write("record-over-time", t => {
   const years = panels.flatMap(p => p.pts.map(q => q.year));
   const x0 = Math.min(...years) - 0.6, x1 = Math.max(...years) + 0.6;
 
-  const h = header(t, "The record over time on two frontier instances",
+  const h = header(t, "The record over time on two instances",
     "Energy per site of every dated result, by publication year. " +
     "A slashed mark is a flagged row.");
   const lg = legend(t, [
     { kind: "dot", color: t.series[0], label: "Variational bound" },
-    { kind: "dot", color: t.series[1], label: "Projected (fixed-node)" },
+    { kind: "dot", color: t.series[1], label: "Projected" },
     { kind: "dot", color: t.series[2], label: "Extrapolated" },
     { kind: "flag", color: t.ink2, label: "Flagged, see the row" },
     { kind: "line", color: t.ink2, label: "Standing record" },
@@ -155,9 +156,8 @@ write("record-over-time", t => {
 
   panels.forEach((panel, k) => {
     const bottom = top + plotH;
-    // Linear in energy. A log scale of the gap to the record cannot place the record itself
-    // (a gap of zero) and has to pin it to an arbitrary floor, which makes every record look
-    // like an outlier however close its rivals are.
+    // Linear in energy: a log scale of the gap to the record cannot place the record itself,
+    // whose gap is zero.
     const es = panel.pts.map(p => p.e);
     const span = Math.max(...es) - Math.min(...es);
     const step = niceStep(span / 5);
@@ -194,8 +194,8 @@ write("record-over-time", t => {
     // projected energy, placed as the cost figures place theirs (labels.mjs): beside the mark
     // where that covers nothing, else in a lane above or below with a line to it, marks drawn
     // as one named together. Where some still find no room, the band they lie in is boxed and
-    // enlarged in an inset in a top corner of the plot; what is left after that is numbered
-    // and named in a key under the panel.
+    // enlarged in an inset in a top corner of the plot. Any mark left after that is numbered
+    // and named in a key under the panel (no current figure needs one).
     const named = lp.filter(p => p.labelled && p.r !== panel.rec);
     const layout = (avoid, hide = new Set()) => layoutLabels({ pts: lp, named: new Set(named.filter(p => !hide.has(p))), X, Y, front: [],
       left, right, top, bottom, nameOf: nameOfRow, nameAll: true, avoid, lines: segBoxes });
@@ -246,7 +246,7 @@ write("record-over-time", t => {
   const fn = footnote(t, `Energies per site: ${units}. Not shown: rows with no publication year, ${undated}${ownRuns}. ` +
     "Year is the source's publication year. The line steps down only when an unflagged row beats the standing record.", end + 22);
   parts.push(fn.svg);
-  return doc(t, fn.bottom + 24, "The record over time on two frontier instances",
+  return doc(t, fn.bottom + 24, "The record over time on two instances",
     `Energy per site versus publication year for ${FRONTIER.map(f => f[1]).join(" and ")}.`, parts);
 });
 
@@ -269,14 +269,14 @@ write("rows-per-instance", t => {
     parts.push(text(cx, base + 18, String(k), { size: 11, fill: t.muted, anchor: "middle", nums: true }));
   });
   parts.push(text((left + right) / 2, base + 40, "variational rows on the instance", { size: 12, fill: t.ink2, anchor: "middle" }));
-  const fn = footnote(t, "Each bar counts instances. Exact, projected and extrapolated rows are not counted: this is how many variational bounds each instance has drawn.", base + 70);
+  const fn = footnote(t, "Each bar counts instances by their number of variational rows. Exact, projected and extrapolated rows are not counted.", base + 70);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, "How many published variational energies each instance has",
     `Histogram of variational rows per instance: ${hist.map((c, k) => `${k}: ${c}`).join(", ")}.`, parts);
 });
 
 // ------------------------------------------------------------ 3. record status by model
-const MODELS = { Heisenberg: "Heisenberg", J1J2: "J1-J2", Hubbard: "Hubbard", tV: "Spinless t-V", TFIsing: "Transverse-field Ising", Impurity: "Impurity" };
+const MODELS = Object.fromEntries(MODEL_NAMES);
 
 // A solved instance's record is its exact energy (RULES.md 6); the competition categories
 // describe the other records only, since "contested" is about how many results were
@@ -304,7 +304,7 @@ write("record-status", t => {
   const tally = k => models.reduce((s, m) => s + m.by[k], 0);
   const h = header(t, "Record status of every instance, by model",
     `${held} of ${instances.length} instances have a record, ${tally("exact")} of them solved. Of the ${held - tally("exact")} records on unsolved instances, ` +
-    `${tally("single")} stand on a single published number and ${tally("contested")} were taken on instances with ${CONTESTED} or more rows.`);
+    `${tally("single")} stand on a single published number. ${tally("contested")} are on instances with ${CONTESTED} or more rows.`);
   const lg = legend(t, STATUS.map(([, label, color]) => ({ kind: "square", color, label })), h.bottom + 34);
   const top = lg.bottom + 26, pitch = 36, bh = 22, left = PAD + 190, right = W - PAD - 36;
   const max = Math.max(...models.map(m => m.total));
@@ -331,9 +331,8 @@ write("record-status", t => {
 });
 
 // --------------------------------------------------------------- 4. records by family
-// The medal table counts records not held by an exact energy (RULES.md 7). An exact
-// energy is the answer, not an ansatz, and counting it would hand the most records to
-// whoever ran exact diagonalization on the most small instances.
+// Counts records not held by an exact energy (RULES.md 7). Counting exact energies would give
+// the most records to whoever diagonalized the most small instances.
 write("records-by-family", t => {
   const allCount = {}, hard = {};
   for (const i of instances) {
@@ -351,8 +350,7 @@ write("records-by-family", t => {
   const varHeld = Object.values(allCount).reduce((a, b) => a + b, 0);
   const h = header(t, "Records by ansatz family",
     `Over the ${varHeld} records on unsolved instances; the ${solved} solved instances, where the exact energy is the record, are left out. ` +
-    "Counting every instance rewards whichever method was run on the most easy problems, so " +
-    `the contested bars count only instances with ${CONTESTED}+ published rows, which is where the field is actually competing.`);
+    `The contested bars count only instances with ${CONTESTED} or more published rows.`);
   const lg = legend(t, [
     { kind: "square", color: t.series[0], label: "Records, all unsolved instances" },
     { kind: "square", color: t.series[1], label: `Records, contested instances (${CONTESTED}+ rows)` },
@@ -370,7 +368,7 @@ write("records-by-family", t => {
     parts.push(text(X(f.hard) + 6, y + bh + 12.5, String(f.hard), { size: 11.5, fill: t.ink2, nums: true }));
   });
   parts.push(`<path d="M${n(left) - 0.5} ${n(top - 6)}V${n(top + fams.length * pitch - 8)}" stroke="${t.grid}" stroke-width="1"/>`);
-  const fn = footnote(t, "Each method name belongs to one family (scripts/method_names.mjs); where names blur, read the families as indicative.",
+  const fn = footnote(t, "Each method name belongs to one family (scripts/method_names.mjs). Some names fit more than one family, so the families are approximate.",
     top + fams.length * pitch + 16);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, "Records by ansatz family",
@@ -422,8 +420,7 @@ write("error-metrics", t => {
 });
 
 // ------------------------------------------------------------ 6. standing records by year
-// Records not held by an exact energy, as in the family chart: an exact energy has no year
-// of setting a record in the sense meant here, and most cite a run script anyway.
+// Records not held by an exact energy, as in the family chart.
 write("records-by-year", t => {
   const recs = instances.map(recordOf).filter(r => r && r.bound_type !== "exact");
   const dated = recs.map(yearOf).filter(Boolean);
@@ -448,7 +445,7 @@ write("records-by-year", t => {
     if (count[k]) parts.push(text(cx, yTop - 7, String(count[k]), { size: 12, fill: t.ink2, anchor: "middle", nums: true }));
     parts.push(text(cx, base + 18, String(y), { size: 11, fill: t.muted, anchor: "middle", nums: true }));
   });
-  const fn = footnote(t, "A record counts in the year of the paper that set it. Records later beaten are gone from this chart, so old years count survivors, not output.", base + 48);
+  const fn = footnote(t, "A record counts in the year of the paper that set it. A record that was later beaten is not counted, so early years show only records that still stand.", base + 48);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, "Standing records by the year their source was published",
     years.map((y, k) => `${y}: ${count[k]}`).join(", "), parts);
