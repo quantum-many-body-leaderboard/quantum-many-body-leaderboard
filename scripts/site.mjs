@@ -1128,8 +1128,7 @@ ${recordBox}
   <p class="muted">${/^HEG/.test(inst.model)
     ? `Stored as a total energy in Hartree (<a href="${RULES}#12-track-2-the-homogeneous-electron-gas">rules &sect;12</a>); quoted here as
     <code>${perSiteLabel(inst)}</code>, the energy per electron`
-    : `Stored as a total energy in the convention of
-    <a href="https://doi.org/10.1126/science.adg9774">VarBench</a>; quoted here as
+    : `Stored as a total energy; quoted here as
     <code>${perSiteLabel(inst)}</code>, which is what the papers report`}
     (<a href="${DATA}#units-and-conventions">how the conversion works</a>).</p>
 </section>
@@ -1245,7 +1244,7 @@ function llmsTxt() {
     "projected/fixed-node estimate, zero-variance extrapolation, or numerically exact (exact (stochastic)",
     "for sign-problem-free QMC, which is exact within its stated error bar). An exact",
     "energy is the record wherever one exists; otherwise the lowest energy that is not flagged",
-    "holds it, of any kind and with or without an error bar. Energies are stored as totals in VarBench's convention",
+    "holds it, of any kind and with or without an error bar. Energies are stored as totals",
     "and quoted per site; the conversion is in DATA.md. Individual energies must be cited to the",
     "primary paper named on the row, not to this site.",
     "",

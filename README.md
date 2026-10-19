@@ -658,7 +658,7 @@ record.
 To cite the data itself, use the Zenodo concept DOI, which always resolves to the latest
 release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
-<!-- varbench-count -->531 of QMBL’s 2273 rows (23 %)<!-- /varbench-count --> are imported from **VarBench**, the dataset published with the V-score paper. If you use an imported row, cite that paper too:
+531 of QMBL’s 2273 rows (23 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported row, cite that paper too:
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)
