@@ -1,0 +1,545 @@
+{
+  "about": "Rows read from comparison tables, arXiv HTML parsed locally: Table 5 of arXiv:2505.20406 (triangular 6x6, periodic), Table 5 of arXiv:2502.17144 (square, periodic) and Table 2 of arXiv:2605.13807 (square, open). A number the table quotes names the paper that produced it as its reference; such a row is secondary, unless the number was then found in that paper's own PDF: the row is then primary, its note gives the passage after 'CONFIRMED IN PRIMARY SOURCE' and verified.found_via names the comparison table. Rows that name a primary carry peer_reviewed null. Energies: S.S per site x 4N (Pauli totals). Row notes cite this file by its earlier form, scripts/add_sweep2_rows.mjs (git history).",
+  "instances": [
+    {
+      "instance_id": "Heisenberg/triangular_36_P",
+      "rows": [
+        {
+          "energy": -80.685072,
+          "sigma": 0.000432,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Group CNN (deep, symmetry-projected)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Roth, Szabo & MacDonald, High-accuracy variational Monte Carlo for frustrated magnets with deep neural networks, arXiv:2211.07749 (2023)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "found in the citing paper's comparison table, then confirmed in the primary source's own PDF (pypdf); no LLM transcription",
+            "reported_as": "-0.560313 (+/- 0.000003) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2505.20406 (TLAHM, L=6 triangular lattice, PBC, E/N in S.S units), parsed from the arXiv HTML. Row \"Group Convolutional Neural Network [32]\" = arXiv:2211.07749. Sits 6.0e-5 ABOVE the exact -0.5603734 already on this instance, as a variational bound must. CONFIRMED IN PRIMARY SOURCE - arXiv:2211.07749, results table: \"J2/J1 N GCNN ... Exact/Interpolated ... 0 36 -0.560313(3) - -0.5603734\" - the GCNN energy at J2/J1 = 0, N = 36, printed beside the exact value.",
+            "secondary_of": null,
+            "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, arXiv:2505.20406v3 (2025-10-13)"
+          }
+        },
+        {
+          "energy": -80.6544,
+          "sigma": 0.0576,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Lattice Convolutional Network",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, arXiv:2206.07370 (2022)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "found in the citing paper's comparison table, then confirmed in the primary source's own PDF (pypdf); no LLM transcription",
+            "reported_as": "-0.5601 (+/- 0.0004) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2505.20406 (TLAHM, L=6 triangular lattice, PBC, E/N in S.S units), parsed from the arXiv HTML. Row \"Lattice Convolutional Network [49]\" = arXiv:2206.07370. CONFIRMED IN PRIMARY SOURCE - arXiv:2206.07370, results table: \"Triangular 36 0 - -0.55889 -0.5601(4) -0.5603734\" - the special-kernel LCN energy at J2 = 0 on the 36-site triangular lattice.",
+            "secondary_of": null,
+            "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, arXiv:2505.20406v3 (2025-10-13)"
+          }
+        },
+        {
+          "energy": -80.52768,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Group CNN",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Roth & MacDonald, Group Convolutional Neural Networks Improve Quantum State Accuracy, arXiv:2104.05085 (2021)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "found in the citing paper's comparison table, then confirmed in the primary source's own PDF (pypdf); no LLM transcription",
+            "reported_as": "-0.55922 per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2505.20406 (TLAHM, L=6 triangular lattice, PBC, E/N in S.S units), parsed from the arXiv HTML. Row \"Group Convolutional Neural Network [104]\" = arXiv:2104.05085. No error bar is given in the table. CONFIRMED IN PRIMARY SOURCE - arXiv:2104.05085, results table: \"J2 = 0 ... ED [28] -0.5603734 ... G-CNN -0.55922\".",
+            "secondary_of": null,
+            "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, arXiv:2505.20406v3 (2025-10-13)"
+          }
+        },
+        {
+          "energy": -80.0928,
+          "sigma": 0.0288,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "2D RNN wavefunction (iterative retraining, s=4.0, r=0.158)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, arXiv:2505.20406v3 (2025-10-13)",
+          "peer_reviewed": false,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.5562 (+/- 0.0002) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2505.20406 (TLAHM, L=6 triangular lattice, PBC, E/N in S.S units), parsed from the arXiv HTML. The citing paper's own result.",
+            "secondary_of": null,
+            "found_via": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Heisenberg/square_36_P",
+      "rows": [
+        {
+          "energy": -97.756992,
+          "sigma": 0.000288,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "RBM + Lanczos recursion",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Chen, Hendry, Weinberg & Feiguin, Systematic improvement of neural network quantum states using a Lanczos recursion, arXiv:2206.14307 (2022)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "found in the citing paper's comparison table, then confirmed in the primary source's own PDF (pypdf); no LLM transcription",
+            "reported_as": "-0.678868 (+/- 0.000002) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Row \"RBM+Lanczos [40]\" = arXiv:2206.14307. CONFIRMED IN PRIMARY SOURCE - arXiv:2206.14307 Table 4: \"6x6 -0.678873(4) 2.51799(6) -0.678868(2) 2.51(2)\" - Energy(QMC) beside Energy(RBM).",
+            "secondary_of": null,
+            "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144"
+          }
+        },
+        {
+          "energy": -97.75728,
+          "sigma": 0.00288,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "2D RNN wavefunction (best variational)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144",
+          "peer_reviewed": true,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.67887 (+/- 0.00002) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Row \"This work (best RNN)\".",
+            "secondary_of": null,
+            "found_via": null
+          }
+        },
+        {
+          "energy": -97.75008,
+          "sigma": 0.00144,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "CNN",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Choo, Neupert & Carleo, Two-dimensional frustrated J1-J2 model studied with neural network quantum states, Phys. Rev. B 100, 125124 (2019)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.67882 (+/- 0.00001) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Row \"CNN [33]\" = Phys. Rev. B 100, 125124 (2019).",
+            "secondary_of": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144",
+            "found_via": null
+          }
+        },
+        {
+          "energy": -97.75753488,
+          "sigma": 0.00001008,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "2D RNN wavefunction, zero-variance extrapolation",
+          "bound_type": "extrapolated",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144",
+          "peer_reviewed": true,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.67887177 (+/- 7e-8) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Row \"This work (zero-variance)\". The paper states in the Table 3 caption that these extrapolated values can fall below the reference energies and that this is \"an artifact of the zero-variance extrapolation\" - not an achieved energy, so NOT a bound (RULES.md 4).",
+            "secondary_of": null,
+            "found_via": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Heisenberg/square_100_P",
+      "rows": [
+        {
+          "energy": -268.62104,
+          "sigma": 0.000012,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "CNN + MinSR",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Chen & Heyl, Empowering deep neural quantum states through efficient optimization, Nat. Phys. 20, 1476 (2024), arXiv:2302.01941",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.6715526 (+/- 3e-8) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Row \"VMC - CNN+MinSR [12]\" = Chen & Heyl, Nat. Phys. 20, 1476 (2024).",
+            "secondary_of": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144",
+            "found_via": null
+          }
+        },
+        {
+          "energy": -268.6076,
+          "sigma": 0.0016,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "RBM + Lanczos recursion",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Chen, Hendry, Weinberg & Feiguin, Systematic improvement of neural network quantum states using a Lanczos recursion, arXiv:2206.14307 (2022)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "found in the citing paper's comparison table, then confirmed in the primary source's own PDF (pypdf); no LLM transcription",
+            "reported_as": "-0.671519 (+/- 0.000004) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Row \"RBM+Lanczos [40]\" = arXiv:2206.14307. CONFIRMED IN PRIMARY SOURCE - arXiv:2206.14307 Table 4: \"10x10 0.671549(4) 5.3124(3) -0.671519(4) 5.38(6)\" - Energy(QMC) beside Energy(RBM).",
+            "secondary_of": null,
+            "found_via": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144"
+          }
+        },
+        {
+          "energy": -268.604,
+          "sigma": 0.008,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "2D RNN wavefunction (best variational)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144",
+          "peer_reviewed": true,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.67151 (+/- 0.00002) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Row \"This work (best RNN)\".",
+            "secondary_of": null,
+            "found_via": null
+          }
+        },
+        {
+          "energy": -268.54,
+          "sigma": null,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "CNN",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Choo, Neupert & Carleo, Two-dimensional frustrated J1-J2 model studied with neural network quantum states, Phys. Rev. B 100, 125124 (2019)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.67135 per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Row \"CNN [33]\" = Phys. Rev. B 100, 125124 (2019). No error bar given.",
+            "secondary_of": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144",
+            "found_via": null
+          }
+        },
+        {
+          "energy": -268.638,
+          "sigma": 0.0002,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "2D RNN wavefunction, zero-variance extrapolation",
+          "bound_type": "extrapolated",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144",
+          "peer_reviewed": true,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.671595 (+/- 5e-7) per site in S.S units",
+            "note": "Read from Table 5 of arXiv:2502.17144 (SLAHM, E/N in S.S units), parsed from the arXiv HTML. Zero-variance extrapolation, not an achieved energy (RULES.md 4).",
+            "secondary_of": null,
+            "found_via": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Heisenberg/square_100_O",
+      "rows": [
+        {
+          "energy": -251.46244,
+          "sigma": 0.00008,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "QMC (stochastic series expansion)",
+          "bound_type": "exact",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Sandvik, High-precision ground state parameters of the two-dimensional spin-1/2 Heisenberg model on the square lattice, arXiv:2601.20189 (2026)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.6286561 (+/- 2e-7) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"QMC [49]\" = arXiv:2601.20189. The square-lattice Heisenberg AFM is bipartite and sign-problem-free, so SSE QMC is numerically exact here (RULES.md 4).",
+            "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+            "found_via": null
+          }
+        },
+        {
+          "energy": -251.4624,
+          "sigma": 0.0036,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "2D tensorized-GRU RNN wavefunction, best variational",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.628656 (+/- 0.000009) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"2D TRNN [40]\". Bibliography item [40] of arXiv:2605.13807 is Moss et al. 2025 (arXiv:2502.17144), whose Table 5 prints this value as \"This work (best RNN)\", OBC 10x10; until 2026-09-16 this row credited Hibat-Allah, Melko & Carrasquilla 2022, a misread of the citation number (the arXiv HTML numbers its bibliography differently from the printed text). It sits 1e-7 below the QMC reference, well inside its own 9e-6 error bar.",
+            "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+            "found_via": null
+          }
+        },
+        {
+          "energy": -251.4548,
+          "sigma": 0.0016,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "2D minGRU (3 layers, c4v symmetry, parallel scan)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+          "peer_reviewed": false,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.628637 (+/- 0.000004) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"2D minGRU (ours)\".",
+            "secondary_of": null,
+            "found_via": null
+          }
+        },
+        {
+          "energy": -251.4508,
+          "sigma": 0.0004,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "PixelCNN (deep autoregressive)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Sharir, Levine, Wies, Carleo & Shashua, Deep Autoregressive Models for the Efficient Variational Simulation of Many-Body Quantum Systems, Phys. Rev. Lett. 124, 020503 (2020)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.628627 (+/- 0.000001) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"PixelCNN [52]\" = Phys. Rev. Lett. 124, 020503 (2020).",
+            "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+            "found_via": null
+          }
+        },
+        {
+          "energy": -251.4404,
+          "sigma": 0.0008,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Finite PEPS, gradient optimization",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Liu, Dong, Han, Guo & He, Gradient optimization of finite projected entangled pair states, Phys. Rev. B 95, 195154 (2017)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.628601 (+/- 0.000002) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"PEPS [33]\" = Phys. Rev. B 95, 195154 (2017). Finite PEPS on the 10x10 lattice, not an infinite-lattice value.",
+            "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+            "found_via": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Heisenberg/square_256_O",
+      "create": {
+        "model": "Heisenberg",
+        "lattice": "square",
+        "n_sites": 256,
+        "boundary": "O",
+        "params": {},
+        "dof": 256,
+        "einf": 0
+      },
+      "rows": [
+        {
+          "energy": -658.9764608,
+          "sigma": 0.0002048,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "QMC (stochastic series expansion)",
+          "bound_type": "exact",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Sandvik, High-precision ground state parameters of the two-dimensional spin-1/2 Heisenberg model on the square lattice, arXiv:2601.20189 (2026)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.6435317 (+/- 2e-7) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"QMC [49]\" = arXiv:2601.20189.",
+            "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+            "found_via": null
+          }
+        },
+        {
+          "energy": -658.948096,
+          "sigma": 0.003072,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "2D minGRU (3 layers, c4v symmetry, parallel scan)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+          "peer_reviewed": false,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.643504 (+/- 0.000003) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. The citing paper's own result; 29 GPU-days on a single L40S.",
+            "secondary_of": null,
+            "found_via": null
+          }
+        },
+        {
+          "energy": -658.890752,
+          "sigma": 0.001024,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "PixelCNN (deep autoregressive)",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Sharir, Levine, Wies, Carleo & Shashua, Deep Autoregressive Models for the Efficient Variational Simulation of Many-Body Quantum Systems, Phys. Rev. Lett. 124, 020503 (2020)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.643448 (+/- 0.000001) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"PixelCNN [52]\".",
+            "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+            "found_via": null
+          }
+        },
+        {
+          "energy": -658.832384,
+          "sigma": 0.003072,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Finite PEPS, gradient optimization",
+          "bound_type": "variational",
+          "bound_type_reason": "assigned during source verification (RULES.md 4)",
+          "reference": "Liu, Dong, Han, Guo & He, Gradient optimization of finite projected entangled pair states, Phys. Rev. B 95, 195154 (2017)",
+          "peer_reviewed": null,
+          "source": "sweep-tables-2026-09-14",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-14",
+            "method": "arXiv HTML parsed locally from a benchmark comparison table, no LLM transcription",
+            "reported_as": "-0.643391 (+/- 0.000003) per site in S.S units",
+            "note": "Read from Table 2 of arXiv:2605.13807 (2D Heisenberg, square lattice, OBC, E/N in S.S units), parsed from the arXiv HTML. Column \"PEPS [33]\".",
+            "secondary_of": "Parallel Scan Recurrent Neural Quantum States, arXiv:2605.13807",
+            "found_via": null
+          }
+        }
+      ]
+    }
+  ]
+}

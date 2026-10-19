@@ -1,0 +1,261 @@
+{
+  "about": "Rows read from Table 1 and the claim sentences of arXiv:2603.14425 (CNN-MPS, T-MPS, and the ViT and factored-attention values it lists), Sec. III and Table IV of arXiv:2507.10705 (HFPS), and the abstract of arXiv:2607.00398 (HQT), arXiv HTML parsed locally. The factored-attention value -0.4976764(7) is the private communication arXiv:2503.10462 Sec. III quotes as ref. [48]. Spin energies: S.S per site x 4N; Hubbard: per site x N; a per-site variance is stored as a total (x N for fermions, x 16N for spins). Row notes cite this file by its earlier form, scripts/add_sweep_rows.mjs (git history).",
+  "instances": [
+    {
+      "instance_id": "J1J2/square_100_P_0.5",
+      "rows": [
+        {
+          "energy": -199.07756,
+          "sigma": 0.00008,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "CNN-MPS (h,D,l)=(32,20,20), Marshall sign transformation",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "arXiv:2603.14425, Disentangling Tensor Network States with Deep Neural Networks",
+          "peer_reviewed": false,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.4976939 (+/- 2e-7) per site in S.S units",
+            "note": "Read from Table 1 of arXiv:2603.14425 (square-lattice J1-J2 at J2/J1=0.5, PBC, E per site in S.S units), parsed from the arXiv HTML. Claim: \"the best energy obtained by CNN-MPS is -0.4976939(2) ... which is lower than the best previously reported result\". Supersedes Chen & Heyl -0.4976921(4) as the record for this instance.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -199.07692,
+          "sigma": 0.00008,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "T-MPS",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "arXiv:2603.14425, Disentangling Tensor Network States with Deep Neural Networks",
+          "peer_reviewed": false,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.4976923 (+/- 2e-7) per site in S.S units",
+            "note": "Read from Table 1 of arXiv:2603.14425 (square-lattice J1-J2 at J2/J1=0.5, PBC, E per site in S.S units), parsed from the arXiv HTML.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -199.07056,
+          "sigma": 0.00028,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Factored-attention transformer (improved, Ns = 2^14, Np = 434760)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "L. L. Viteritti, R. Rende, and F. Becca, private communication (2024) (cited as ref [48] in Sec. III of arXiv:2503.10462)",
+          "peer_reviewed": null,
+          "source": "sweep-2026-09-13",
+          "provenance": "secondary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.4976764 (+/- 7e-7) per site in S.S units",
+            "note": "Read from Table 1 of arXiv:2603.14425 (square-lattice J1-J2 at J2/J1=0.5, PBC, E per site in S.S units), parsed from the arXiv HTML. Credited there to CTWF, but arXiv:2503.10462 Sec. III prints it as the factored attention of ref. [48] (private communication): \"With more samples Ns = 2^14 and more parameters Np = 434760, the factored attention is possible to reach variational energy -0.4976764(7) ... while still less accurate than CTWF\"; the authors' Zenodo CSV (10.5281/zenodo.14035975, sources/2503.10462-zenodo-10x10_J1J2.csv) lists it as \"Improved factored attention (not shown in figure), 434760, -0.4976764(7)\". Relabelled 2026-09-17.",
+            "secondary_of": "arXiv:2503.10462"
+          }
+        },
+        {
+          "energy": -199.128,
+          "sigma": 0.012,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Holographic Quantum Transformer (HQT), zero-shot 8x8->10x10 transfer",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Guo, Xiao, Liu & Li, Holographic Quantum Transformer: A Generalist Neuro-Symbolic Architecture for Solving Frustrated Systems via Generative Attention, Proc. 32nd ACM SIGKDD Conf. on Knowledge Discovery and Data Mining V.2 (KDD '26), pp. 11028-11037, arXiv:2607.00398, doi:10.1145/3770855.3818932",
+          "peer_reviewed": true,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.49782 (+/- 0.00003) per site in S.S units",
+            "note": "Abstract: \"This zero-shot protocol yields an energy of E/N = -0.49782(3), statistically consistent with the variational state of the art\". It is not consistent: it is 1.3e-4 BELOW the best variational energy (CNN-MPS -0.4976939(2)) and 1.05e-4 below the zero-variance extrapolated ground state -0.497715(9), i.e. below the ground state itself, which no variational energy can be. See the defect flag.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "J1J2/square_256_P_0.5",
+      "rows": [
+        {
+          "energy": -508.839936,
+          "sigma": 0.000512,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "CNN-MPS",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "arXiv:2603.14425, Disentangling Tensor Network States with Deep Neural Networks",
+          "peer_reviewed": false,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.496914 (+/- 5e-7) per site in S.S units",
+            "note": "Read from Table 1 of arXiv:2603.14425 (square-lattice J1-J2 at J2/J1=0.5, PBC, E per site in S.S units), parsed from the arXiv HTML. Claim: \"For L=16, CNN-MPS yields the lowest variational energy, -0.4969140(5), compared with the previously best reported value -0.4967163(8)\".",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -508.708864,
+          "sigma": 0.001024,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "T-MPS",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "arXiv:2603.14425, Disentangling Tensor Network States with Deep Neural Networks",
+          "peer_reviewed": false,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.496786 (+/- 0.000001) per site in S.S units",
+            "note": "Read from Table 1 of arXiv:2603.14425 (square-lattice J1-J2 at J2/J1=0.5, PBC, E per site in S.S units), parsed from the arXiv HTML.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "J1J2/square_400_P_0.5",
+      "create": {
+        "model": "J1J2",
+        "lattice": "square",
+        "n_sites": 400,
+        "boundary": "P",
+        "params": {
+          "J2": 0.5
+        },
+        "dof": 400,
+        "einf": 0
+      },
+      "rows": [
+        {
+          "energy": -794.87792,
+          "sigma": 0.00096,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "CNN-MPS (h,D,l)=(32,15,20)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "arXiv:2603.14425, Disentangling Tensor Network States with Deep Neural Networks",
+          "peer_reviewed": false,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.4967987 (+/- 6e-7) per site in S.S units",
+            "note": "Read from Table 1 of arXiv:2603.14425 (square-lattice J1-J2 at J2/J1=0.5, PBC, E per site in S.S units), parsed from the arXiv HTML. 20x20; no VarBench instance existed for this size.",
+            "secondary_of": null
+          }
+        },
+        {
+          "energy": -794.7712,
+          "sigma": 0.0016,
+          "energy_variance": null,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "ViT with symmetry restoration",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Approaching the Thermodynamic Limit with Neural-Network Quantum States, arXiv:2602.02665",
+          "peer_reviewed": false,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.496732 (+/- 0.000001) per site in S.S units",
+            "note": "Read from Table 1 of arXiv:2603.14425 (square-lattice J1-J2 at J2/J1=0.5, PBC, E per site in S.S units), parsed from the arXiv HTML. Listed in Table 1 as the L=20 ViT 2026 value; matches the source paper's own symmetry-restoration sequence.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "Hubbard/rectangular-4x16_64_P_28_8",
+      "rows": [
+        {
+          "energy": -48.90432,
+          "sigma": 0.00192,
+          "energy_variance": 2.002112,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "HFPS (hidden-fermion Pfaffian state)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Chen, Wan, Sengupta & Georges, Neural network-augmented Pfaffian wave-functions for scalable simulations of interacting fermions, Proc. Natl. Acad. Sci. U.S.A. 123, e2535288123 (2026), arXiv:2507.10705",
+          "peer_reviewed": true,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.76413 (+/- 0.00003) per site",
+            "note": "Sec. III: \"The energy we obtain in the 16x4 lattice is E/N = -0.76413, outperforming a recent result E/N = -0.76298 produced by Transformer-NNBF\". Instance identity confirmed by that comparison value; the number is independently quoted as the HFPS result by both arXiv:2604.25775 and arXiv:2510.26906. No error bar in Sec. III; Table IV of the same paper (raw data of Fig. 7, L x 4 PBC lattices, 1/8 doping, U = 8) gives -0.76413(3) and sigma^2/N_site = 0.031283, added 2026-09-15. Published as PNAS 123, e2535288123 (2026); read from the arXiv version, the journal version not compared.",
+            "secondary_of": null
+          }
+        }
+      ]
+    },
+    {
+      "instance_id": "J1J2/square_64_P_0.5",
+      "rows": [
+        {
+          "energy": -128.0256,
+          "sigma": 0.0256,
+          "energy_variance": 1.4336,
+          "dof": null,
+          "einf": null,
+          "v_score": null,
+          "method": "Holographic Quantum Transformer (HQT)",
+          "bound_type": "variational",
+          "bound_type_reason": "variational ansatz; energy is a strict upper bound (assigned during source verification)",
+          "reference": "Guo, Xiao, Liu & Li, Holographic Quantum Transformer: A Generalist Neuro-Symbolic Architecture for Solving Frustrated Systems via Generative Attention, Proc. 32nd ACM SIGKDD Conf. on Knowledge Discovery and Data Mining V.2 (KDD '26), pp. 11028-11037, arXiv:2607.00398, doi:10.1145/3770855.3818932",
+          "peer_reviewed": true,
+          "source": "sweep-2026-09-13",
+          "provenance": "primary",
+          "verified": {
+            "checked_on": "2026-09-13",
+            "method": "arXiv HTML parsed locally, no LLM transcription",
+            "reported_as": "-0.5001 (+/- 0.0001) per site in S.S units",
+            "note": "Abstract: \"HQT reaches a ground-state energy per site of -0.5001(1)\" on 8x8 at J2=0.5. That is 1.1e-3 below the best known variational energy for this instance (RBM+PP, -0.4989635), on a well-studied lattice. See the defect flag.",
+            "secondary_of": null
+          }
+        }
+      ]
+    }
+  ]
+}

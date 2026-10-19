@@ -117,13 +117,14 @@ applied by the build in date order:
 
 | file | applied by | contents |
 |---|---|---|
-| `passes/rows/sweep-rows-YYYY-MM-DD[-label].json` | `scripts/add_allresults_rows.mjs` | rows |
+| `passes/rows/sweep-rows-YYYY-MM-DD[-label].json` | `scripts/add_allresults_rows.mjs` | rows, read per site |
+| `passes/stored-rows/<date>-<label>.json` | `scripts/add_stored_rows.mjs` | rows already in the stored convention |
 | `passes/coverage/sweep-coverage-YYYY-MM-DD[-cites].json` | `scripts/add_coverage.mjs` | [`coverage`](DATA.md#when-the-literature-was-last-checked-coverage) entries |
 | `passes/compute/compute-rows-YYYY-MM-DD.json` | `scripts/add_compute.mjs` | [`compute`](DATA.md#what-a-number-cost-the-compute-block) blocks |
 | `passes/error-metrics/error-metrics-YYYY-MM-DD.json` | `scripts/add_error_metrics.mjs` | [`error_metrics`](DATA.md#where-an-added-error-bar-or-variance-came-from-the-error_metrics-block) blocks |
 
-A second pass on the same day takes a `-<label>` suffix. Each row file is written by a
-generator script, kept outside the repository with the pass's working notes, that re-finds
+A second pass on the same day takes a `-<label>` suffix. Each `sweep-rows` file is written
+by a generator script, kept outside the repository with the pass's working notes, that re-finds
 every printed string on its cited line of `sources/<id>.txt` and stops if it does not.
 
 A `sweep-rows` file is a JSON array with one object per row:
@@ -146,6 +147,11 @@ A `sweep-rows` file is a JSON array with one object per row:
 convention, skips a value the instance already carries, and writes each row with
 `source: sweep-allresults-<date>`.
 
+A `stored-rows` file holds the rows of the passes of 2026-09-10 to 2026-09-15 as they are
+stored: `{ about, instances: [{ instance_id, create, rows }] }`. `about` names the source
+tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills `dof`,
+`einf` and `v_score`. New passes use `sweep-rows`.
+
 ## 6. Running a pass
 
 1. Run the finding tools of section 1 for the families or seeds of the pass.
@@ -161,8 +167,9 @@ convention, skips a value the instance already carries, and writes each row with
 
 ## Passes
 
-| `passes/rows/` file | what was read |
+| file | what was read |
 |---|---|
+| `passes/stored-rows/*.json` (eight files) | the first passes: claim sentences, comparison tables and PDFs read on 2026-09-10 to 2026-09-15; each file's `about` names its tables |
 | `sweep-rows-2026-09-15.json` | every number the table harvest of the cached sources mapped onto an instance, including Gong et al. 2014 Table I (DMRG on J1-J2 tori) and Hu, Becca, Parola & Sorella 2013 Tables I-IV |
 | `sweep-rows-2026-09-17.json` | Wang, He & Lu, PRB 109, 245120 (arXiv:2308.09664) |
 | `sweep-rows-2026-09-28.json` | tables read before their J1-J2 instances existed: Golubev et al. (arXiv:2606.04558) Table I, Chen et al. (arXiv:2206.14307) Tables 2, 4, 5, Nomura & Imada (PRX 11, 031034) Table I, Schulz, Ziman & Poilblanc 1996 Table II |
