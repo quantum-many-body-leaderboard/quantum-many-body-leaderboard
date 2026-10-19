@@ -1,34 +1,21 @@
-// Generate figures/energy-vs-compute*.svg, figures/energy-vs-parameters*.svg and one
-// figures/cost/<instance>*.svg per instance with enough costed energies: on one
-// instance, what the best published energies are at each cost. The question is not how
-// far a number sits from the exact answer but which results are the best ones (
-// 2026-09-16), so the axis is the energy itself and the frontier runs through whatever
-// holds it at each cost - an exact diagonalization with its CPU-hours as readily as a
-// variational bound with its GPU-hours. Panels are per instance, as energies of different
-// Hamiltonians are not comparable, and only instances with enough costed rows are drawn.
+// Generate figures/energy-vs-compute*.svg, energy-vs-flops*.svg and energy-vs-parameters*.svg,
+// and one figure per instance with enough costed energies in figures/cost/, figures/flops/ and
+// figures/params/. The y axis is the energy per site; each instance has its own panel, as
+// energies of different Hamiltonians are not comparable.
 //
-// Costs come from the `compute` blocks (DATA.md) and only from them, read by cost.mjs.
-// Three axes: hours, parameter count, and estimated FLOPs. A GPU-hour and a CPU core-hour
-// share the hours axis with different marks and are never converted into each other - the
-// reader sees the unit, and DATA.md forbids any equivalence. The FLOPs axis is an estimate
-// evaluated by flops.mjs from the stated parameter, sample and iteration counts (
-// 2026-09-21); it is drawn in its own figures and never on the hours axis, since turning
-// one into the other is the conversion DATA.md forbids. The per-instance figures are hours
-// (figures/cost/) and estimated FLOPs (figures/flops/): cost means compute (
-// 2026-09-16), and they are what the site shows, on the front page behind a badge per
-// instance and in the instance's row of the table.
+// Costs come only from the `compute` blocks: hours and parameter counts through cost.mjs,
+// estimated FLOPs through flops.mjs. GPU-hours and CPU core-hours share the hours axis with
+// different marks; FLOPs have their own figures. No cost is converted into another (DATA.md).
 //
-// The frontier is the staircase of results nothing beats for less: sorted by cost, a row
-// is on it when its energy is below every cheaper row that could hold a record (RULES.md
-// 6: any unflagged row of any kind, with or without an error bar, or a ground-state exact
-// energy). Until 2026-10-08 projections, extrapolations and sampled energies without an
-// error bar were drawn hollow and kept off the frontier.
+// The frontier is the staircase of results nothing beats for less: sorted by cost, a row is on
+// it when its energy is below every cheaper row that could hold a record (RULES.md 6).
 import fs from "node:fs";
 import { recordEligible, exactEligible, boundLabel, perSiteDivisor, perSiteLabel } from "./units.mjs";
 import { collect, recordOf, rowId } from "./summary.mjs";
 import { hoursOrEdOf, parametersOf, MIN_COSTED, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { estimatedFlopsOf } from "./flops.mjs";
 import { stairs, layoutLabels, meets, insetFrame } from "./labels.mjs";
+import { MODELS, BOUNDARY } from "./readme_table.mjs";
 import { W, PAD, n, text, hline, dot, legend, header, footnote, doc, textWidth, niceStep, writer, log, logScale, pow10, shortLabel, rowHref, linked } from "./chart.mjs";
 
 const OUT = "figures";
@@ -37,12 +24,13 @@ const { write, written } = writer(OUT);
 const BOUNDS = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, exact: 3 };
 
 
-const MODEL = { J1J2: "J1-J2", Heisenberg: "Heisenberg", Hubbard: "Hubbard", TFIsing: "TFIM", tV: "t-V", Impurity: "impurity" };
+// Panel titles use the README table's model and boundary names (readme_table.mjs).
+const MODEL = Object.fromEntries(MODELS);
 function instLabel(i) {
   const side = Math.sqrt(i.n_sites);
-  const lat = i.lattice.replace(/^rectangular-/, "").replace(/^square$/, Number.isInteger(side) ? `${side}×${side}` : "square");
-  const extra = i.params.J2 != null ? `, J2 = ${i.params.J2}` : i.params.U != null ? `, U = ${i.params.U}, n = ${(2 * i.params.Nf / i.n_sites).toFixed(3).replace(/0+$/, "")}` : "";
-  const bc = { O: ", open", PO: ", cylinder", PA: ", periodic-antiperiodic", A: ", antiperiodic" }[i.boundary] ?? "";
+  const lat = i.lattice.replace(/^rectangular-/, "").replace(/x/g, "×").replace(/^square$/, Number.isInteger(side) ? `${side}×${side}` : "square");
+  const extra = i.params.J2 != null ? `, J2 = ${i.params.J2}` : i.params.U != null ? `, U = ${i.params.U}, n = ${(2 * i.params.Nf / i.n_sites).toFixed(3).replace(/\.?0+$/, "")}` : "";
+  const bc = i.boundary in BOUNDARY ? `, ${BOUNDARY[i.boundary]}` : i.boundary === "A" ? ", antiperiodic" : "";
   return `${MODEL[i.model] ?? i.model} ${lat}${/×|x/.test(lat) ? "" : ` ${i.n_sites}`}${extra}${bc}`;
 }
 
@@ -67,9 +55,9 @@ function frontierOf(pts) {
   return out;
 }
 
-// Square marks for CPU core-hours, circles for everything else. Every result is a mark and
-// only a mark (2026-09-23): no whisker for a derived cost, which the footnote counts
-// instead. Same surface ring and filled/hollow convention as dot().
+// Square marks for CPU core-hours, circles for everything else. A derived cost has no
+// whisker; the footnote counts those rows. Same surface ring and filled/hollow convention
+// as dot().
 function mark(t, x, y, color, filled, unit, href) {
   const out = [];
   if (unit === "cpu") {
@@ -83,19 +71,16 @@ function mark(t, x, y, color, filled, unit, href) {
 
 // One instance's energies against their cost, into the box given: the energy axis is
 // linear and per site, the cost axis logarithmic, the frontier as a staircase with its
-// points named. Every result is a dot - an exact diagonalization or a QMC energy as much as
-// a variational one - and only a result with a cost can be placed; a record that states no
-// cost is named in a line of text under the axis, never drawn as a line across it
-// (2026-09-23). QMBL's own runs are all named, so none is read as published.
-// A mark is named by its method alone, its detail in the row's card on hover (
-// 2026-09-29); QMBL's own runs keep "QMBL" in the name, so none is read as published
-// (2026-09-23). The colour says the kind of number.
+// points named. Every result with a cost is a dot, of any bound type; a record that states no
+// cost is named in a line of text under the axis. A mark is named by its method alone, with
+// the detail in the row's card on hover; QMBL's own runs keep "QMBL" in the name, so none
+// reads as published. The colour is the bound type.
 const markName = r => shortLabel({ ...r, method_detail: undefined, compute: undefined, bound_type: "variational", defect: undefined });
 
 // The figures whose energy axis is broken in two, the few high energies above and the crowd
-// below (2026-10-07, after option D of the paper's figure 2): picked by eye from the
-// 21 on which breaking it named the marks better or spread a crowd; on the others one scale
-// reads as well. Names as costFigureName, flopsFigureName and paramsFigureName give them.
+// below. The list is chosen by hand: on these a break names the marks better or spreads a
+// crowd; on the others one scale reads as well. Names as costFigureName, flopsFigureName and
+// paramsFigureName give them.
 const BROKEN = new Set([
   "cost/Heisenberg--triangular_36_P", "cost/J1J2--square_36_P_0.5", "flops/J1J2--square_36_P_0.5",
   "params/Heisenberg--square_36_P", "params/Hubbard--rectangular-4x16_64_P_28_8", "params/J1J2--square_100_P_0.4",
@@ -105,10 +90,10 @@ const brokenAxes = new Map();
 
 // An instance's own figure: every mark named in place where it can be. Where two or more
 // marks still find no room, their region is boxed and drawn again, enlarged, in an inset in
-// the plot's top right corner, a second crowd's in the top left (2026-09-29: no
-// second panel under the plot). A figure in BROKEN takes, instead, the broken axis that names
-// its marks best - fewest numbered, then fewest names on lines, then the shortest lines, then
-// the most spread up the plot - and no inset. Returns the y the footnote starts at.
+// the plot's top right corner, a second crowd's in the top left. A figure in BROKEN takes,
+// instead, the broken axis that names its marks best (fewest numbered, then fewest names on
+// lines, then the shortest lines, then the most spread up the plot) and no inset. Returns the
+// y the footnote starts at.
 function drawInstance(t, parts, inst, pts, g) {
   if (BROKEN.has(g.name)) {
     if (!brokenAxes.has(g.name)) {
@@ -150,7 +135,7 @@ const toRows = (rows, svg) => (rows.length > 1
 
 // The marks, each linked to its row; marks drawn as one, within 6 px (as layoutLabels groups
 // their names), all carry the whole pile, best first, so hovering whichever lies on top lists
-// every row under it, as its name does (2026-10-06).
+// every row under it, as its name does.
 function drawMarks(t, parts, pts, X, Y) {
   const piles = [];
   for (const p of pts) {
@@ -359,9 +344,8 @@ function drawPanel(t, parts, inst, pts, { px, left, right, top, bottom, xLabel, 
     if (tag) { parts.push(text(r.x0 + 1, r.y0 - 4, tag, { size: 10, fill: t.muted, weight: 600 })); z.tagRect = { x0: r.x0, x1: r.x0 + 9, y0: r.y0 - 14, y1: r.y0 }; }
     drawInset(t, parts, inst, inBox, front.filter(p => inBox.includes(p)), frame, box, nameOf, tag ? `Box ${tag}, enlarged` : "The boxed region, enlarged");
   });
-  // An instance's own figure names every mark (2026-09-24: a dot without a name
-  // cannot be read); the small overview panels name the frontier only, where naming them
-  // all piles the labels on each other.
+  // An instance's own figure names every mark, as a dot without a name cannot be read; the
+  // small overview panels name the frontier only, where naming them all piles the labels up.
   const hide = new Set(zooms.flatMap(z => z.inBox));
   const named = [...new Set([...front, ...(nameAll ? pts : [])])].filter(p => !hide.has(p));
   const L = layoutLabels({ pts, named, X, Y, front, left, right, top, bottom, nameOf, nameAll, avoid: [...zooms.flatMap(z => [z.rect, z.frame, ...(z.tagRect ? [z.tagRect] : [])]), ...gapBox] });
@@ -420,8 +404,8 @@ const HOURS_LEGEND = t => [
   { kind: "dot", color: t.series[3], label: "Exact" },
   { kind: "line", color: t.series[0], label: "Frontier" },
 ];
-// The marks, the derived hours and QMBL's own runs (2026-09-18 and 09-23): the
-// no-conversion rule and the bound kinds are said in the page text and the legend.
+// The marks, the derived hours and QMBL's own runs. The no-conversion rule and the bound
+// types are stated in the page text and the legend.
 function HOURS_FOOTER(all, overview = false) {
   const cpu = all.filter(p => p.cost.unit === "cpu").length, der = all.filter(p => p.cost.derived).length;
   const own = all.filter(p => p.r.computed_by === "qmbl").length;
@@ -430,7 +414,7 @@ function HOURS_FOOTER(all, overview = false) {
   return (cpu ? `Circles are GPU-hours, squares CPU core-hours (${rows(cpu)}).` : "Every mark is GPU-hours.") +
     (der ? ` For ${rows(der)} the hours are devices × wall-clock, multiplied here.` : "") +
     (own ? ` Labels marked QMBL are QMBL's own reference runs${overview ? "; each instance's own figure names all of them" : ""}.` : "") +
-    (ed.length ? ` An exact energy marked "cost measured by QMBL" is placed at what diagonalizing the instance cost QMBL, on ${[...new Set(ed.map(p => `${p.inst.qmbl_ed_cost.cores} core${p.inst.qmbl_ed_cost.cores === 1 ? "" : "s"} of an ${p.inst.qmbl_ed_cost.cpu}`))].join(" or ")}, with only particle number or Sz conserved.` : "");
+    (ed.length ? ` An exact energy marked "cost measured by QMBL" is placed at what diagonalizing the instance cost QMBL. QMBL ran it on ${[...new Set(ed.map(p => `${p.inst.qmbl_ed_cost.cores} core${p.inst.qmbl_ed_cost.cores === 1 ? "" : "s"} of an ${p.inst.qmbl_ed_cost.cpu}`))].join(" or ")}, conserving only particle number or Sz.` : "");
 }
 const describeHours = panels => panels.map(({ inst, pts }) => `${instLabel(inst)}: ${pts.map(p => `${shortLabel(p.r)} ${Math.round(p.cost.value)} ${p.cost.unit === "cpu" ? "CPU-h" : "GPU-h"}${p.cost.derived ? " (derived)" : ""} ${p.e.toFixed(6)}`).join(", ")}`).join("; ");
 
@@ -438,7 +422,7 @@ const hoursPanels = costFigure({
   name: "energy-vs-compute",
   title: "The best energies at each cost, instance by instance",
   subtitle: panels => `Every energy whose paper, or QMBL's own run, states what it cost in hours, on the ${panels.length} instances with at least two such rows. ` +
-    "Colour is the kind of number.",
+    "Colour shows the bound type.",
   costOf: hoursOrEdOf, minRows: MIN_COSTED,
   xLabel: "hours, as reported",
   legendItems: HOURS_LEGEND,
@@ -447,8 +431,8 @@ const hoursPanels = costFigure({
 });
 
 // One figure per instance with at least MIN_COSTED energies costed in hours. The directory
-// is emptied first, so an instance that loses a cost loses its figure rather than keeping
-// a stale one the site would still inline.
+// is emptied first, so an instance that loses a cost also loses its figure, which the site
+// would otherwise still inline.
 const COST_DIR = "figures/cost";
 fs.rmSync(COST_DIR, { recursive: true, force: true });
 fs.mkdirSync(COST_DIR, { recursive: true });
@@ -477,20 +461,20 @@ const FLOPS_LEGEND = t => [
 ];
 // One sentence per model drawn (flops.mjs): what it counts and what it leaves out.
 const FLOPS_MODEL = {
-  "nqs-v2": "Network estimates: iterations × samples × (connected configurations + sampler proposals + 3) × forward-pass FLOPs × evaluations per amplitude, " +
-    "stage by stage, from the counts the paper or run script states, with the optimizer's solve where the code is known; pre-training is not counted.",
-  "mvmc-v2": "mVMC estimates: Pfaffian updates, ratios and recomputations over every projection term plus the SR solve, from the run's def files, " +
-    "with the acceptance bounded by 1 (about twice the measured sampling).",
-  "vqe-v1": "VQE estimates: state-vector gate, metric-tensor and energy-derivative work of the run script's natural-gradient schedule.",
-  "dmrg-v1": "DMRG estimates: the dense tensor contractions of every sweep in the run script's schedule, plus its variance evaluations; " +
-    "the saving from conserved quantum numbers is not counted, so a symmetric code does less arithmetic than this.",
+  "nqs-v2": "Network estimates count iterations × samples × (connected configurations + sampler proposals + 3) × forward-pass FLOPs × evaluations per amplitude, " +
+    "stage by stage, from the counts the paper or run script states. They include the optimizer's solve where the code is known, and leave out pre-training.",
+  "mvmc-v2": "mVMC estimates count Pfaffian updates, ratios and recomputations over every projection term, plus the SR solve, from the run's def files. " +
+    "They take the acceptance at its bound of 1, about twice the measured sampling.",
+  "vqe-v1": "VQE estimates count the state-vector gate, metric-tensor and energy-derivative work of the run script's natural-gradient schedule.",
+  "dmrg-v1": "DMRG estimates count the dense tensor contractions of every sweep in the run script's schedule, plus its variance evaluations. " +
+    "They leave out the saving from conserved quantum numbers, so a symmetric code does less arithmetic than this.",
 };
 function FLOPS_FOOTER(all) {
   const models = [...new Set(all.map(p => p.cost.estimate.model))].sort((a, b) => b.localeCompare(a));
   const low = all.filter(p => p.cost.derived).length;
   const own = all.filter(p => p.r.computed_by === "qmbl").length;
   return "Every mark is an estimate, good to an order of magnitude. " + models.map(m => FLOPS_MODEL[m]).join(" ") +
-    (low ? ` ${low} of these estimate${low === 1 ? "" : "s"} needed an assumption (an architecture detail, or a Lanczos count taken from the calibration run).` : "") +
+    (low ? ` ${low} of these estimates needed an assumption (an architecture detail, or a Lanczos count taken from the calibration run).` : "") +
     (own ? ` Labels marked QMBL are QMBL's own reference runs (${own} row${own === 1 ? "" : "s"}).` : "");
 }
 const describeFlops = panels => panels.map(({ inst, pts }) => `${instLabel(inst)}: ${pts.map(p => `${shortLabel(p.r)} ${p.cost.value.toExponential(1)} FLOPs (estimated${p.cost.derived ? ", low confidence" : ""}) ${p.e.toFixed(6)}`).join(", ")}`).join("; ");
@@ -499,7 +483,7 @@ const flopsPanels = costFigure({
   name: "energy-vs-flops",
   title: "The best energies at each estimated cost in FLOPs, instance by instance",
   subtitle: panels => `Every published energy whose paper or run script states enough to estimate its cost in floating-point operations, on the ${panels.length} instances with at least two such rows. ` +
-    "Colour is the kind of number.",
+    "Colour shows the bound type.",
   costOf: estimatedFlopsOf, minRows: MIN_COSTED,
   xLabel: "FLOPs, estimated",
   legendItems: FLOPS_LEGEND,
@@ -525,7 +509,7 @@ for (const { inst, pts } of flopsPanels) {
 }
 
 // Parameter count: the same construction on the ansatz size the paper prints, for the
-// instances with at least three such rows (2026-09-23), overview and one figure per instance.
+// instances with at least three such rows, overview and one figure per instance.
 const PARAMS_LEGEND = t => [
   { kind: "dot", color: t.series[0], label: "Variational bound" },
   { kind: "dot", color: t.series[1], label: "Projected" },
@@ -540,7 +524,7 @@ const paramPanels = costFigure({
   name: "energy-vs-parameters",
   title: "The best energies at each parameter count, instance by instance",
   subtitle: panels => `Every published energy whose paper states the ansatz's parameter count, on the ${panels.length} instances with at least three such rows. ` +
-    "Colour is the kind of number.",
+    "Colour shows the bound type.",
   costOf: parametersOf, minRows: 3,
   xLabel: "variational parameters",
   legendItems: PARAMS_LEGEND,
