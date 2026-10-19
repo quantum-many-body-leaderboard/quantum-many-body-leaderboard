@@ -9,7 +9,7 @@ for (const id of process.argv.slice(2)) {
   const sorted = [...d.rows].sort((a, b) => a.energy - b.energy);
   for (const r of sorted) {
     const mark = r.defect ? "!" : r.bound_type === "variational" ? " "
-      : r.bound_type === "projected" ? "P" : r.bound_type === "extrapolated" ? "X" : "?";
+      : r.bound_type === "projected" ? "P" : r.bound_type === "extrapolated" ? "X" : r.bound_type === "approximate" ? "A" : "?";
     const v = r.v_score ? r.v_score.toExponential(1) : "  n/a ";
     // "o" = no error metric found for this row, neither a sigma nor a variance.
     const err = noErrorMetrics(r) ? "o" : " ";

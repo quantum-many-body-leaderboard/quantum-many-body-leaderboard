@@ -234,6 +234,7 @@ export function shortLabel(r) {
     s = /fixed.?node/i.test(r.method) ? `${trial ?? "trial state"} + fixed-node` : `${s}, projected`;
   }
   if (r.bound_type === "extrapolated") s += ", extrapolated";
+  if (r.bound_type === "approximate") s += ", approximate";
   if (r.defect) s += ", flagged";
   return s;
 }

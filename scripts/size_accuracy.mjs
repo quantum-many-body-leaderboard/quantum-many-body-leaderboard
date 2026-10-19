@@ -45,7 +45,7 @@ const OUT = "figures";
 const instances = collect();
 const { write, written } = writer(OUT);
 
-const BOUNDS = { variational: 0, projected: 1, extrapolated: 2 };
+const BOUNDS = { variational: 0, projected: 1, extrapolated: 2, approximate: 2 }; // approximate (RULES.md 4) shares the extrapolations' colour
 const FLOOR = 1e-8; // relative gaps below this are drawn on the exact line, and counted
 
 // The reference an instance's rows are measured against, and what kind it is.

@@ -110,6 +110,10 @@ export const exactEligible = r => groundStateExact(r) && !r.defect;
 // that every published result counts and nothing is listed as unable to hold a record.
 const RECORD_KINDS = new Set(["variational", "projected", "extrapolated"]);
 export const recordEligible = r => RECORD_KINDS.has(r.bound_type) && !r.defect;
+// `approximate` (RULES.md 4, 2026-10-19): a method of a fixed approximation that converges to that approximation,
+// not to the exact energy (RPA, MP2, channel-truncated coupled cluster). Listed, never ranked against the other
+// kinds: such a row holds the record only on an instance where no other unflagged row exists.
+export const approximateEligible = r => r.bound_type === "approximate" && !r.defect;
 
 // VarBench writes spin Hamiltonians with PAULI matrices (sigma.sigma) and stores
 // TOTAL energies. NQS papers quote E/N in the S.S convention. Factor 4 N_sites.

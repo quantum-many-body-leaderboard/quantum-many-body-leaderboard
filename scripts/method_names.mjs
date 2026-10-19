@@ -707,6 +707,19 @@ Object.assign(NAMES, {
   "fixed-nodes DMC [SJ trial function; time step tau = 0.01 (not ed); 4 walker numbers; 'optimal nw' 40] (arXiv:1304.7298)": ["Fixed-node DMC", "SJ trial function; time step tau = 0.01 (not ed); 4 walker numbers; 'optimal nw' 40", { family: "DMC" }],
 });
 
+// arXiv:1310.6806 channel-truncated CCD and RPA variants, track 2 `approximate` rows (RULES.md 4, 2026-10-19).
+Object.assign(NAMES, {
+  "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["lmCCD", "ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "lmrCCD [ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["lmrCCD", "ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["mCCD", "mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["rmCCD", "rings and mosaics; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["rxmCCD", "rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["dRPA + SOSEX", "dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["dRPA", "direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["dRPA + SOSEX", "dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+  "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["dRPA", "direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
+});
+
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],

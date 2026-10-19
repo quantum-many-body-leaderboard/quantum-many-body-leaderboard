@@ -48,7 +48,7 @@ const gcd = (a, b) => (b ? gcd(b, a % b) : a);
 // off the record line), except a row flagged wrong-instance, whose energy belongs on
 // another axis. Rows without a bound type are not, nor the minimum of a sector other than
 // the ground state's, which the build moves to the instance's `spectrum` (DATA.md).
-const BOUNDS = new Set(["variational", "projected", "extrapolated"]);
+const BOUNDS = new Set(["variational", "projected", "extrapolated", "approximate"]);
 export const drawnRows = inst => inst.rows.filter(r => r.defect?.flag !== "wrong-instance" && (r.bound_type === "exact" ? groundStateExact(r) : BOUNDS.has(r.bound_type)));
 
 export const modelName = model => MODELS.find(([m]) => m === model)?.[1] ?? model;
