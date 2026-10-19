@@ -121,7 +121,7 @@ write("size-vs-accuracy", t => {
     { kind: "dot", color: t.series[0], label: "Variational bound" },
     { kind: "dot", color: t.series[1], label: "Projected (fixed-node)" },
     { kind: "dot", color: t.series[2], label: "Extrapolated" },
-    { kind: "dot", color: t.series[3], label: "Exact (diagonalization or QMC)" },
+    { kind: "dot", color: t.series[3], label: "Exact and exact (stochastic)" },
     FLAGGED(t),
   ], h.bottom + 34);
   const top = lg.bottom + 28, bottom = top + 380, left = PAD + 62, right = W - PAD - 8;

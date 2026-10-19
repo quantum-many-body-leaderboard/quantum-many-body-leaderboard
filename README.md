@@ -47,20 +47,20 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | pyrochlore 3x3x3 (432 sites) | **-0.4924(2)** | mVMC (max.-flippable dimer initial state;... [Pohle et al. (2023)](https://doi.org/10.48550/arxiv.2311.11561) | -0.4923 (+1.0e-4) mVMC (random initial state;... [Pohle et al. (2023)](https://doi.org/10.48550/arxiv.2311.11561) |
 | pyrochlore 4x4x4 (256 sites) | **-0.485584(3)** | VMC (generalized RVB) [Cheng & Li (2026)](https://doi.org/10.1103/dsr3-sjt6) | -0.483100 (+2.5e-3) mVMC (projected: SU(2)... [Astrakhantsev et al. (2021)](https://doi.org/10.1103/physrevx.11.041021) |
 | pyrochlore 4x4x4 (1024 sites) | **-0.4921(2)** | mVMC (Lanczos steps; extrapolated: variance →... [Pohle et al. (2023)](https://doi.org/10.48550/arxiv.2311.11561) | -0.4880 (+4.1e-3) mVMC (1 Lanczos step; projected:... [Pohle et al. (2023)](https://doi.org/10.48550/arxiv.2311.11561) |
-| rectangular 10x20, periodic/open | **-0.6599522(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 12x24, periodic/open | **-0.6612549(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 14x28, periodic/open | **-0.6622809(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 16x32, periodic/open | **-0.6630939(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 18x36, periodic/open | **-0.6637496(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 20x40, periodic/open | **-0.6642865(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 24x48, periodic/open | **-0.6651098(6)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 32x64, periodic/open | **-0.6661668(6)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 48x96, periodic/open | **-0.6672462(6)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 4x8, periodic/open | **-0.6623181(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 64x128, periodic/open | **-0.6677918(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| rectangular 6x12, periodic/open | **-0.6570101(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 10x20, periodic/open | **-0.6599522(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 12x24, periodic/open | **-0.6612549(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 14x28, periodic/open | **-0.6622809(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 16x32, periodic/open | **-0.6630939(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 18x36, periodic/open | **-0.6637496(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 20x40, periodic/open | **-0.6642865(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 24x48, periodic/open | **-0.6651098(6)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 32x64, periodic/open | **-0.6661668(6)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 48x96, periodic/open | **-0.6672462(6)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 4x8, periodic/open | **-0.6623181(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 64x128, periodic/open | **-0.6677918(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 6x12, periodic/open | **-0.6570101(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
 | rectangular 6x8 | **-0.6759867** | ED [Wietek & Läuchli (2018)](https://doi.org/10.1103/physreve.98.033309) | none |
-| rectangular 8x16, periodic/open | **-0.6583592(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| rectangular 8x16, periodic/open | **-0.6583592(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
 | shuriken, 24 sites | **-0.4483291** | ED [Astrakhantsev et al. (2021)](https://doi.org/10.1103/physrevb.104.l220408) | none |
 | shuriken, 96 sites | **-0.43826(1)** | mVMC (projected: SU(2), point group) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | shuriken, 216 sites | **-0.4376(1)** | mVMC (projected: SU(2), point group) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
@@ -70,47 +70,47 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 6x6 | **-0.6788721** | ED [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/ed_lattice_symmetries.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.6788710 (+1.1e-6) GVMC (ConvNeXt backflow + complex... [Hendry et al. (2025)](https://doi.org/10.48550/arxiv.2507.10287) |
 | square, 40 sites | **-0.6773713** | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) | none |
 | square, 50 sites | **-0.675102** | ED [Wietek & Läuchli (2018)](https://doi.org/10.1103/physreve.98.033309) | none |
-| square 8x8, open | **-0.6190371(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6190345 (+2.7e-6) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 8x8 | **-0.67349005(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.67348200 (+8.0e-6) RBM (symmetric: spin parity... [Chen et al. (2022)](https://doi.org/10.48550/arxiv.2206.14307) |
-| square 10x10, open | **-0.6286561(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6286560 (+1.2e-7) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 10x10 | **-0.67155266(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.67155260 (+6.0e-8) ResNet (64 conv layers, 16... [Chen & Heyl (2023)](https://doi.org/10.48550/arxiv.2302.01941) |
-| square 12x12, open | **-0.6352007(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6352006 (+1.3e-7) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 12x12 | **-0.67068192(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.67061864 (+6.3e-5) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 14x14, open | **-0.6399410(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6399286 (+1.2e-5) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 14x14 | **-0.67023225(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.67013830 (+9.4e-5) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 16x16, open | **-0.6435317(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6435218 (+9.8e-6) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 16x16 | **-0.66997660(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66986638 (+1.1e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 18x18, open | **-0.6463451(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6463365 (+8.6e-6) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 18x18 | **-0.66982043(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66968155 (+1.4e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 20x20, open | **-0.6486091(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6485899 (+1.9e-5) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 20x20 | **-0.66971967(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66959053 (+1.3e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 22x22, open | **-0.6504689(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 22x22 | **-0.66965176(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 24x24, open | **-0.6520251(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6519824 (+4.3e-5) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 24x24 | **-0.66960434(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66943804 (+1.7e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 26x26, open | **-0.6533456(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 26x26 | **-0.66957017(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 28x28, open | **-0.6544806(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 28x28 | **-0.66954496(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66937341 (+1.7e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 30x30 | **-0.66952595(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 32x32, open | **-0.6563289(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 32x32 | **-0.66951133(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66929567 (+2.2e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
-| square 36x36 | **-0.66949091(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 40x40 | **-0.66947776(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 44x44 | **-0.66946889(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 48x48, open | **-0.6606690(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 48x48 | **-0.66946274(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 52x52 | **-0.66945833(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 56x56 | **-0.66945502(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 60x60 | **-0.66945260(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 64x64, open | **-0.6628515(4)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 64x64 | **-0.66945072(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 72x72 | **-0.66944815(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 80x80 | **-0.66944645(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 88x88 | **-0.66944530(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 96x96, open | **-0.6650415(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 96x96 | **-0.66944454(3)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
-| square 128x128, open | **-0.6661389(2)** | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 8x8, open | **-0.6190371(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6190345 (+2.7e-6) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 8x8 | **-0.67349005(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.67348200 (+8.0e-6) RBM (symmetric: spin parity... [Chen et al. (2022)](https://doi.org/10.48550/arxiv.2206.14307) |
+| square 10x10, open | **-0.6286561(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6286560 (+1.2e-7) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 10x10 | **-0.67155266(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.67155260 (+6.0e-8) ResNet (64 conv layers, 16... [Chen & Heyl (2023)](https://doi.org/10.48550/arxiv.2302.01941) |
+| square 12x12, open | **-0.6352007(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6352006 (+1.3e-7) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 12x12 | **-0.67068192(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.67061864 (+6.3e-5) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 14x14, open | **-0.6399410(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6399286 (+1.2e-5) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 14x14 | **-0.67023225(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.67013830 (+9.4e-5) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 16x16, open | **-0.6435317(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6435218 (+9.8e-6) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 16x16 | **-0.66997660(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66986638 (+1.1e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 18x18, open | **-0.6463451(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6463365 (+8.6e-6) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 18x18 | **-0.66982043(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66968155 (+1.4e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 20x20, open | **-0.6486091(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6485899 (+1.9e-5) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 20x20 | **-0.66971967(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66959053 (+1.3e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 22x22, open | **-0.6504689(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 22x22 | **-0.66965176(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 24x24, open | **-0.6520251(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.6519824 (+4.3e-5) 2D RNN (tensorized GRU) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 24x24 | **-0.66960434(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66943804 (+1.7e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 26x26, open | **-0.6533456(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 26x26 | **-0.66957017(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 28x28, open | **-0.6544806(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 28x28 | **-0.66954496(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66937341 (+1.7e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 30x30 | **-0.66952595(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 32x32, open | **-0.6563289(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 32x32 | **-0.66951133(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | -0.66929567 (+2.2e-4) 2D RNN [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) |
+| square 36x36 | **-0.66949091(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 40x40 | **-0.66947776(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 44x44 | **-0.66946889(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 48x48, open | **-0.6606690(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 48x48 | **-0.66946274(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 52x52 | **-0.66945833(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 56x56 | **-0.66945502(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 60x60 | **-0.66945260(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 64x64, open | **-0.6628515(4)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 64x64 | **-0.66945072(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 72x72 | **-0.66944815(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 80x80 | **-0.66944645(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 88x88 | **-0.66944530(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 96x96, open | **-0.6650415(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 96x96 | **-0.66944454(3)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
+| square 128x128, open | **-0.6661389(2)** exact (stochastic) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) | none |
 | triangular 4x4 | **-0.5347197** | ED [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_16_P/ed_netket.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.5340324 (+6.9e-4) VQE (SR; symmetric: unspecified) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | triangular 6x6 | **-0.5603734** | ED [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/ed_lattice_symmetries.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.5603130 (+6.0e-5) GCNN (deep; projected:... [Roth et al. (2022)](https://doi.org/10.48550/arxiv.2211.07749) |
 | triangular, 48 sites | **-0.558603** | ED [Wietek & Läuchli (2018)](https://doi.org/10.1103/physreve.98.033309) | none |
@@ -309,81 +309,81 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 4x4, U = 7.74264, n = 0.625 | **-1.1002331** | ED QMBL, checks/hubbard-u-labels/ (exact… | -1.1002331 (+<1e-7) DMRG (bond dimension 7000) [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 4x4, U = 8, n = 0.625 | **-1.0943979** | ED [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_8/ed_lattice_symmetries.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -1.0943979 (+<1e-7) DMRG (bond dimension 7000) [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_8.jl), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 4x4, U = 10, n = 0.625 | **-1.0564725** | ED [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_10/ed_lattice_symmetries.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -1.0564725 (+<1e-7) DMRG (bond dimension 7000) [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_10.jl), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
-| square 4x4, U = 2, n = 1 | **-1.1265(4)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.1248 &#9675; (+1.7e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 4x4, U = 2, n = 1 | **-1.1265(4)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.1248 &#9675; (+1.7e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
 | square 4x4, U = 4, n = 1 | **-0.8513659** | ED QMBL… | -0.8511400 (+2.3e-4) TQS [Yamazaki et al. (2026)](https://doi.org/10.1103/bjxb-8tsk) |
-| square 4x4, U = 6, n = 1 | **-0.6588(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6577 &#9675; (+1.1e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 4x4, U = 6, n = 1 | **-0.6588(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6577 &#9675; (+1.1e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
 | square 4x4, U = 8, n = 1 | **-0.5293047** | ED QMBL… | -0.5291900 (+1.1e-4) PITQS [Yamazaki et al. (2026)](https://doi.org/10.1103/bjxb-8tsk) |
-| square 4x4, periodic/antiperiodic, U = 2, n = 1 | **-1.2571(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.2569 (+1.9e-4) HFDS (full hidden sub-matrix) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 4x4, periodic/antiperiodic, U = 4, n = 1 | **-0.9121(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.9120 (+1.2e-4) HFDS (full hidden sub-matrix) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 4x4, periodic/antiperiodic, U = 6, n = 1 | **-0.6814(4)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6814 (+<1e-4) HFDS (full hidden sub-matrix) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 4x4, periodic/antiperiodic, U = 8, n = 1 | **-0.5404(5)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5401 (+2.8e-4) HFDS (full hidden sub-matrix) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 4x4, periodic/antiperiodic, U = 2, n = 1 | **-1.2571(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.2569 (+1.9e-4) HFDS (full hidden sub-matrix) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 4x4, periodic/antiperiodic, U = 4, n = 1 | **-0.9121(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.9120 (+1.2e-4) HFDS (full hidden sub-matrix) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 4x4, periodic/antiperiodic, U = 6, n = 1 | **-0.6814(4)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6814 (+<1e-4) HFDS (full hidden sub-matrix) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 4x4, periodic/antiperiodic, U = 8, n = 1 | **-0.5404(5)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5401 (+2.8e-4) HFDS (full hidden sub-matrix) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
 | square 6x6, U = 4, n &asymp; 0.6667 | **-1.18525(4)** | CP-AFQMC (constraint release) [Shi & Zhang (2013)](https://doi.org/10.1103/physrevb.88.125132) | -1.18340 (+1.8e-3) VAFQMC (N_l = 4) [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |
-| square 6x6, U = 2, n = 1 | **-1.1516(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.1506 &#9675; (+9.8e-4) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
-| square 6x6, U = 4, n = 1 | **-0.8574(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.8554 &#9675; (+2.0e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
-| square 6x6, U = 6, n = 1 | **-0.6594(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 6x6, U = 8, n = 1 | **-0.5278(6)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5266 &#9675; (+1.2e-3) Hierarchical backflow (K = 2) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 6x6, U = 2, n = 1 | **-1.1516(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.1506 &#9675; (+9.8e-4) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 6x6, U = 4, n = 1 | **-0.8574(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.8554 &#9675; (+2.0e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 6x6, U = 6, n = 1 | **-0.6594(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 6x6, U = 8, n = 1 | **-0.5278(6)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5266 &#9675; (+1.2e-3) Hierarchical backflow (K = 2) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
 | square 6x6, U = 4, n &asymp; 1.3333 | **0.14809(4)** | CP-AFQMC (constraint release) [Shi & Zhang (2013)](https://doi.org/10.1103/physrevb.88.125132) | none |
-| square 6x6, periodic/antiperiodic, U = 2, n = 1 | **-1.20831(6)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.20790 (+4.1e-4) HFDS (8 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 6x6, periodic/antiperiodic, U = 4, n = 1 | **-0.8731(6)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.8717 (+1.3e-3) HFDS (8 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 6x6, periodic/antiperiodic, U = 6, n = 1 | **-0.6622(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6609 (+1.3e-3) HFDS (8 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 6x6, periodic/antiperiodic, U = 8, n = 1 | **-0.5281(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5271 (+1.0e-3) HFDS (8 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 6x6, periodic/antiperiodic, U = 2, n = 1 | **-1.20831(6)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.20790 (+4.1e-4) HFDS (8 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 6x6, periodic/antiperiodic, U = 4, n = 1 | **-0.8731(6)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.8717 (+1.3e-3) HFDS (8 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 6x6, periodic/antiperiodic, U = 6, n = 1 | **-0.6622(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6609 (+1.3e-3) HFDS (8 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 6x6, periodic/antiperiodic, U = 8, n = 1 | **-0.5281(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5271 (+1.0e-3) HFDS (8 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
 | square, 50 sites, U = 8, n = 0.84 | **-0.82328(3)** | VAFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 8x8, U = 4, n = 0.4375 | **-1.07180(2)** | CP-AFQMC (constraint release) [Shi & Zhang (2013)](https://doi.org/10.1103/physrevb.88.125132) | none |
 | square 8x8, U = 4, n = 0.6875 | **-1.1858(2)** | CP-AFQMC (constraint release) [Shi & Zhang (2013)](https://doi.org/10.1103/physrevb.88.125132) | -1.1846 &#9675; (+1.2e-3) Tensor backflow (direct... [Liang (2025)](https://doi.org/10.48550/arXiv.2507.01856) |
-| square 8x8, U = -8, n &asymp; 0.7813 | **-3.6258(1)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
-| square 8x8, U = -4, n &asymp; 0.7813 | **-2.39630(9)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
+| square 8x8, U = -8, n &asymp; 0.7813 | **-3.6258(1)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
+| square 8x8, U = -4, n &asymp; 0.7813 | **-2.39630(9)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 8x8, U = 4, n &asymp; 0.7813 | **-1.13253(3)** | CP-AFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) | -1.13048 (+2.1e-3) VAFQMC (N_l = 4) [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |
 | square 8x8, U = 8, n &asymp; 0.7813 | **-0.9252(1)** | CP-AFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) | -0.9148 (+1.0e-2) mVMC + RBM (Lanczos steps, α = 8... [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_25_8/mVMC/mVMC.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
-| square 8x8, U = -8, n = 0.875 | **-4.01700(9)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -4.01690 (+1.0e-4) Transformer backflow (Pfaffian) [Viteritti et al. (2026)](https://doi.org/10.48550/arxiv.2604.21978) |
-| square 8x8, U = -4, n = 0.875 | **-2.60123(8)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
+| square 8x8, U = -8, n = 0.875 | **-4.01700(9)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -4.01690 (+1.0e-4) Transformer backflow (Pfaffian) [Viteritti et al. (2026)](https://doi.org/10.48550/arxiv.2604.21978) |
+| square 8x8, U = -4, n = 0.875 | **-2.60123(8)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 8x8, U = 4, n = 0.875 | **-1.01923(6)** | CP-AFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) | -1.01391 (+5.3e-3) VAFQMC (N_l = 4) [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |
 | square 8x8, U = 8, n = 0.875 | **-0.7616(1)** | CP-AFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) | -0.7493 (+1.2e-2) Fixed-node GFMC (trial state: VMC... [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 8x8, U = 8, n = 0.875, t12 (t2 = -0.2) | **-0.7540(4)** | Transformer backflow (Pfaffian; extrapolated:... [Viteritti et al. (2026)](https://doi.org/10.48550/arxiv.2604.21978) | -0.7506 (+3.4e-3) Transformer backflow (Pfaffian;... [Viteritti et al. (2026)](https://doi.org/10.48550/arxiv.2604.21978) |
-| square 8x8, U = -8, n = 1 | **-4.52589(9)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -4.52583 &dagger; (+5.7e-5) HFPS (CNN Jastrow; symmetric:... [Chen et al. (2026)](https://doi.org/10.1073/pnas.2535288123) |
-| square 8x8, U = -4, n = 1 | **-2.86037(6)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -2.85958 &dagger; (+8.0e-4) HFPS (CNN Jastrow; symmetric:... [Chen et al. (2026)](https://doi.org/10.1073/pnas.2535288123) |
-| square 8x8, U = 2, n = 1 | **-1.16359(8)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.16260 &#9675; (+9.9e-4) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
-| square 8x8, U = 4, n = 1 | **-0.86036(6)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.85916 (+1.2e-3) mVMC + RBM (Lanczos steps, α = 4;... [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_32_4/mVMC/mVMC.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
-| square 8x8, U = 6, n = 1 | **-0.6587(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6554 &#9675; (+3.3e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
-| square 8x8, U = 8, n = 1 | **-0.52566(8)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.52459 (+1.1e-3) mVMC + RBM (Lanczos steps, α = 4;... [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_32_8/mVMC/mVMC.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
-| square 8x8, periodic/antiperiodic, U = 2, n = 1 | **-1.19231(5)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.19003 (+2.3e-3) HFDS (16 hidden fermions, 1-layer... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 8x8, periodic/antiperiodic, U = 4, n = 1 | **-0.8642(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.8622 (+2.0e-3) HFDS (16 hidden fermions, 1-layer... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 8x8, periodic/antiperiodic, U = 6, n = 1 | **-0.6589(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6574 (+1.5e-3) HFDS (16 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 8x8, periodic/antiperiodic, U = 8, n = 1 | **-0.5259(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5244 (+1.5e-3) HFDS (16 hidden fermions, 1-layer... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
-| square 8x8, periodic/open, U = 8, n = 1 | **-0.5005(2)** | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.5000 (+4.1e-4) DMRG (extrapolated: truncation... [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_64_PO_32_8.jl), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
+| square 8x8, U = -8, n = 1 | **-4.52589(9)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -4.52583 &dagger; (+5.7e-5) HFPS (CNN Jastrow; symmetric:... [Chen et al. (2026)](https://doi.org/10.1073/pnas.2535288123) |
+| square 8x8, U = -4, n = 1 | **-2.86037(6)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -2.85958 &dagger; (+8.0e-4) HFPS (CNN Jastrow; symmetric:... [Chen et al. (2026)](https://doi.org/10.1073/pnas.2535288123) |
+| square 8x8, U = 2, n = 1 | **-1.16359(8)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.16260 &#9675; (+9.9e-4) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 8x8, U = 4, n = 1 | **-0.86036(6)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.85916 (+1.2e-3) mVMC + RBM (Lanczos steps, α = 4;... [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_32_4/mVMC/mVMC.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
+| square 8x8, U = 6, n = 1 | **-0.6587(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6554 &#9675; (+3.3e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 8x8, U = 8, n = 1 | **-0.52566(8)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.52459 (+1.1e-3) mVMC + RBM (Lanczos steps, α = 4;... [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_32_8/mVMC/mVMC.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
+| square 8x8, periodic/antiperiodic, U = 2, n = 1 | **-1.19231(5)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.19003 (+2.3e-3) HFDS (16 hidden fermions, 1-layer... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 8x8, periodic/antiperiodic, U = 4, n = 1 | **-0.8642(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.8622 (+2.0e-3) HFDS (16 hidden fermions, 1-layer... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 8x8, periodic/antiperiodic, U = 6, n = 1 | **-0.6589(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6574 (+1.5e-3) HFDS (16 hidden fermions, full... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 8x8, periodic/antiperiodic, U = 8, n = 1 | **-0.5259(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5244 (+1.5e-3) HFDS (16 hidden fermions, 1-layer... [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |
+| square 8x8, periodic/open, U = 8, n = 1 | **-0.5005(2)** exact (stochastic) | AFQMC (extrapolated: Δτ → 0) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.5000 (+4.1e-4) DMRG (extrapolated: truncation... [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_64_PO_32_8.jl), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 10x10, U = 4, n = 0.8 | **-1.1135(2)** | CP-AFQMC (constraint release) [Shi & Zhang (2013)](https://doi.org/10.1103/physrevb.88.125132) | -1.1110 (+2.5e-3) VAFQMC (N_l = 4) [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |
-| square 10x10, U = 2, n = 1 | **-1.16908(4)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.16770 &#9675; (+1.4e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
-| square 10x10, U = 4, n = 1 | **-0.8612(4)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.8585 &#9675; (+2.7e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
-| square 10x10, U = 6, n = 1 | **-0.6580(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6550 &#9675; (+3.0e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
-| square 10x10, U = 8, n = 1 | **-0.5254(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5249 &#9675; (+4.8e-4) Transformer backflow [Gu et al. (2026)](https://doi.org/10.1038/s41467-026-74028-6) |
-| square 10x10, periodic/antiperiodic, U = 2, n = 1 | **-1.18505(4)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 10x10, periodic/antiperiodic, U = 4, n = 1 | **-0.8620(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 10x10, periodic/antiperiodic, U = 6, n = 1 | **-0.6576(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 10x10, periodic/antiperiodic, U = 8, n = 1 | **-0.5249(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 10x10, U = 2, n = 1 | **-1.16908(4)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -1.16770 &#9675; (+1.4e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 10x10, U = 4, n = 1 | **-0.8612(4)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.8585 &#9675; (+2.7e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 10x10, U = 6, n = 1 | **-0.6580(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.6550 &#9675; (+3.0e-3) Hierarchical backflow (K = 1) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |
+| square 10x10, U = 8, n = 1 | **-0.5254(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5249 &#9675; (+4.8e-4) Transformer backflow [Gu et al. (2026)](https://doi.org/10.1038/s41467-026-74028-6) |
+| square 10x10, periodic/antiperiodic, U = 2, n = 1 | **-1.18505(4)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 10x10, periodic/antiperiodic, U = 4, n = 1 | **-0.8620(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 10x10, periodic/antiperiodic, U = 6, n = 1 | **-0.6576(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 10x10, periodic/antiperiodic, U = 8, n = 1 | **-0.5249(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
 | square 12x12, U = 4, n &asymp; 0.8056 | **-1.1089(2)** | CP-AFQMC (constraint release) [Shi & Zhang (2013)](https://doi.org/10.1103/physrevb.88.125132) | -1.1061 &#9675; (+2.8e-3) Tensor backflow (direct... [Liang (2025)](https://doi.org/10.48550/arXiv.2507.01856) |
 | square 12x12, U = 8, n = 0.875, t12 (t2 = -0.2) | **-0.74425(1)** | SBP (symmetric: unspecified) [Rende et al. (2026)](https://doi.org/10.48550/arxiv.2608.12465) | none |
-| square 12x12, U = 2, n = 1 | **-1.17187(5)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 12x12, U = 4, n = 1 | **-0.8608(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 12x12, U = 6, n = 1 | **-0.6574(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 12x12, U = 8, n = 1 | **-0.5246(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5244 &#9675; (+1.8e-4) Transformer backflow [Gu et al. (2026)](https://doi.org/10.1038/s41467-026-74028-6) |
-| square 12x12, periodic/antiperiodic, U = 2, n = 1 | **-1.18133(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 12x12, periodic/antiperiodic, U = 4, n = 1 | **-0.8610(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 12x12, periodic/antiperiodic, U = 6, n = 1 | **-0.6574(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 12x12, periodic/antiperiodic, U = 8, n = 1 | **-0.5249(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5224 &#9675; (+2.5e-3) Tensor backflow (1 Lanczos step) [Liang (2025)](https://doi.org/10.48550/arXiv.2507.01856) |
-| square 14x14, U = 2, n = 1 | **-1.17337(3)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 14x14, U = 4, n = 1 | **-0.8606(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 14x14, U = 6, n = 1 | **-0.6569(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 14x14, U = 8, n = 1 | **-0.5247(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 14x14, periodic/antiperiodic, U = 2, n = 1 | **-1.17926(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 14x14, periodic/antiperiodic, U = 4, n = 1 | **-0.8607(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 14x14, periodic/antiperiodic, U = 6, n = 1 | **-0.6570(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 14x14, periodic/antiperiodic, U = 8, n = 1 | **-0.5246(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 12x12, U = 2, n = 1 | **-1.17187(5)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 12x12, U = 4, n = 1 | **-0.8608(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 12x12, U = 6, n = 1 | **-0.6574(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 12x12, U = 8, n = 1 | **-0.5246(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5244 &#9675; (+1.8e-4) Transformer backflow [Gu et al. (2026)](https://doi.org/10.1038/s41467-026-74028-6) |
+| square 12x12, periodic/antiperiodic, U = 2, n = 1 | **-1.18133(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 12x12, periodic/antiperiodic, U = 4, n = 1 | **-0.8610(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 12x12, periodic/antiperiodic, U = 6, n = 1 | **-0.6574(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 12x12, periodic/antiperiodic, U = 8, n = 1 | **-0.5249(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5224 &#9675; (+2.5e-3) Tensor backflow (1 Lanczos step) [Liang (2025)](https://doi.org/10.48550/arXiv.2507.01856) |
+| square 14x14, U = 2, n = 1 | **-1.17337(3)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 14x14, U = 4, n = 1 | **-0.8606(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 14x14, U = 6, n = 1 | **-0.6569(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 14x14, U = 8, n = 1 | **-0.5247(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 14x14, periodic/antiperiodic, U = 2, n = 1 | **-1.17926(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 14x14, periodic/antiperiodic, U = 4, n = 1 | **-0.8607(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 14x14, periodic/antiperiodic, U = 6, n = 1 | **-0.6570(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 14x14, periodic/antiperiodic, U = 8, n = 1 | **-0.5246(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
 | square 16x16, U = 8, n &asymp; 0.8281 | **-0.83788(6)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 16x16, U = 8, n &asymp; 0.8438 | **-0.81198(6)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 16x16, U = 8, n &asymp; 0.8516 | **-0.79896(5)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 16x16, U = 8, n &asymp; 0.8594 | **-0.78530(6)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.77524 (+1.0e-2) VMC (stripe λ = 8 + Jastrow +... [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 16x16, U = 8, n &asymp; 0.8672 | **-0.77196(6)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
-| square 16x16, U = -8, n = 0.875 | **-4.01629(5)** | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
-| square 16x16, U = -4, n = 0.875 | **-2.60067(6)** | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
+| square 16x16, U = -8, n = 0.875 | **-4.01629(5)** exact (stochastic) | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
+| square 16x16, U = -4, n = 0.875 | **-2.60067(6)** exact (stochastic) | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 16x16, U = 4, n = 0.875 | **-1.02916(2)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -1.02139 (+7.8e-3) VMC (uniform + Jastrow + backflow) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 16x16, U = 6, n = 0.875 | **-0.86592(2)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.85627 (+9.7e-3) VMC (stripe λ = 8 + Jastrow +... [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 16x16, U = 8, n = 0.875 | **-0.75865(3)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.75830 &#9675; (+3.5e-4) Fixed-node GFMC (trial state: ACE... [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |
@@ -399,19 +399,19 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 16x16, U = 8, n &asymp; 0.9141 | **-0.68678(5)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 16x16, U = 8, n &asymp; 0.9219 | **-0.67215(5)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 16x16, U = 8, n = 0.9375 | **-0.64053(5)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
-| square 16x16, U = -8, n = 1 | **-4.52446(6)** | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
-| square 16x16, U = -4, n = 1 | **-2.8605(1)** | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
-| square 16x16, U = 2, n = 1 | **-1.17420(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 16x16, U = 4, n = 1 | **-0.8605(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 16x16, U = 6, n = 1 | **-0.6570(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 16x16, U = 8, n = 1 | **-0.5243(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 16x16, U = -8, n = 1 | **-4.52446(6)** exact (stochastic) | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
+| square 16x16, U = -4, n = 1 | **-2.8605(1)** exact (stochastic) | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
+| square 16x16, U = 2, n = 1 | **-1.17420(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 16x16, U = 4, n = 1 | **-0.8605(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 16x16, U = 6, n = 1 | **-0.6570(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 16x16, U = 8, n = 1 | **-0.5243(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
 | square 16x16, periodic/antiperiodic, U = 8, n &asymp; 0.8359 | **-0.82333(3)** | VAFQMC (stripe λ = 8) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.79875 (+2.5e-2) mVMC + RBM (Lanczos steps, α = 1;... [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 16x16, periodic/antiperiodic, U = 8, n &asymp; 0.8359, t12 (t2 = -0.25) | **-0.79937(4)** | mVMC + RBM (Lanczos steps, α = 1, 4x4 RBM... [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
 | square 16x16, periodic/antiperiodic, U = 8, n &asymp; 0.8359, t12 (t2 = -0.25), UV1V2 | **1.25918(3)** | mVMC + RBM (Lanczos steps, α = 2, 1x1 RBM... [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | none |
-| square 16x16, periodic/antiperiodic, U = 2, n = 1 | **-1.17798(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 16x16, periodic/antiperiodic, U = 4, n = 1 | **-0.8605(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 16x16, periodic/antiperiodic, U = 6, n = 1 | **-0.6571(2)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
-| square 16x16, periodic/antiperiodic, U = 8, n = 1 | **-0.5244(1)** | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5243 (+1.5e-4) VAFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
+| square 16x16, periodic/antiperiodic, U = 2, n = 1 | **-1.17798(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 16x16, periodic/antiperiodic, U = 4, n = 1 | **-0.8605(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 16x16, periodic/antiperiodic, U = 6, n = 1 | **-0.6571(2)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | none |
+| square 16x16, periodic/antiperiodic, U = 8, n = 1 | **-0.5244(1)** exact (stochastic) | AFQMC (Δτ = 0.01) [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) | -0.5243 (+1.5e-4) VAFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 20x20, U = 8, n = 0.875, t12 (t2 = -0.2) | **-0.74382(1)** | SBP (symmetric: unspecified) [Rende et al. (2026)](https://doi.org/10.48550/arxiv.2608.12465) | none |
 | square 24x24, U = 8, n = 0.875, t12 (t2 = -0.2) | **-0.74397(1)** | SBP (transfer-learned from 20x20; symmetric:... [Rende et al. (2026)](https://doi.org/10.48550/arxiv.2608.12465) | none |
 
@@ -433,8 +433,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 6x6, V = 0.1, n &asymp; 0.3611 | **-0.7594596** | ED [Humeniuk et al. (2022)](https://doi.org/10.48550/arxiv.2210.05871) | -0.7594593 (+2.3e-7) DMRG (bond dimension 4096) [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_0.1/dmrg.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 6x6, V = 1, n &asymp; 0.3611 | **-0.6132603** | ED [Humeniuk et al. (2022)](https://doi.org/10.48550/arxiv.2210.05871) | -0.6132263 (+3.4e-5) DMRG (bond dimension 4096) [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_1/dmrg.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 6x6, V = 10, n &asymp; 0.3611 | **-0.220223** | ED [Humeniuk et al. (2022)](https://doi.org/10.48550/arxiv.2210.05871) | -0.220124 (+9.9e-5) DMRG (bond dimension 4096) [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_10/dmrg.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
-| square 8x8, V = 1, n = 0.5 | **-0.4607(4)** | CT-QMC (ground-state projector, Θ = 40... [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_1/lct_int.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.4591 (+1.6e-3) DMRG (bond dimension 4096) [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_1/dmrg.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
-| square 8x8, V = 2, n = 0.5 | **-0.292(1)** | CT-QMC (ground-state projector, Θ = 40... [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_2/lct_int.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.291 (+1.2e-3) DMRG (bond dimension 4096) [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_2/dmrg.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
+| square 8x8, V = 1, n = 0.5 | **-0.4607(4)** exact (stochastic) | CT-QMC (ground-state projector, Θ = 40... [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_1/lct_int.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.4591 (+1.6e-3) DMRG (bond dimension 4096) [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_1/dmrg.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
+| square 8x8, V = 2, n = 0.5 | **-0.292(1)** exact (stochastic) | CT-QMC (ground-state projector, Θ = 40... [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_2/lct_int.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.291 (+1.2e-3) DMRG (bond dimension 4096) [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_2/dmrg.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) |
 | square 8x8, V = 4, n = 0.5 | **-0.1601344** | DMRG (bond dimension 4096) [run script](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_4/dmrg.sh), [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | -0.1597047 &#9675; (+4.3e-4) Hartree-Fock [Humeniuk et al. (2022)](https://doi.org/10.48550/arxiv.2210.05871) |
 
 </details>
@@ -649,9 +649,8 @@ days and `confirmed` if no objection is unresolved.
 the admissible grounds are listed in
 [§10](RULES.md#10-pending-confirmed-objections).
 
-**If your row has no error bar, send the error bar.** A sampled energy without one is
-listed but ranks for nothing, and several such rows sit below their instance's current
-record.
+**If your row has no error bar, send the error bar.** A sampled energy without one still
+ranks and can hold the record, but a reader cannot tell whether it beats its neighbours.
 
 ## Citing
 

@@ -470,7 +470,7 @@ for (let D = 2; D <= 7; D++) {
   NAMES[`PEPS (D = ${D}) + fixed-node GFMC`] = ["Fixed-node GFMC", `trial state: PEPS, D = ${D}`, { family: "AFQMC / GFMC" }];
 }
 
-// Pass 2026-10-16-ketworks (SWEEP.md): the labels its generator writes. arXiv:2606.25600 (hyperbolic RNNs on the
+// Pass 2026-10-16-nqspapers (SWEEP.md): the labels its generator writes. arXiv:2606.25600 (hyperbolic RNNs on the
 // open-boundary TFIM), 2111.10420 App. H, 2101.08787 Table II, 2609.22618 (tensor backflow; PF = the pinning field
 // used while optimising), 2608.12465 (SBP), 2507.10705, 2604.21978 (T = translations, R = C4 rotations), 2604.25775,
 // 2511.07566 Table V.

@@ -17,8 +17,9 @@ import { collect } from "./summary.mjs";
 // NOT under data/: emit.mjs wipes that directory on every build, and this cache is an
 // expensive network artefact that must survive a rebuild. It is committed.
 const CACHE = "sources/openalex.json";
-const MAILTO = process.env.QMBL_MAILTO; // OpenAlex "polite pool" - faster and rate-limit-friendly
-const UA = { headers: { "User-Agent": `qmbl/0.1 (mailto:${MAILTO})` } };
+// OpenAlex "polite pool": a contact address in the User-Agent, from QMBL_MAILTO when set.
+const MAILTO = process.env.QMBL_MAILTO;
+const UA = { headers: { "User-Agent": `qmbl/0.1${MAILTO ? ` (mailto:${MAILTO})` : ""}` } };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // A reference may carry an arXiv id, a journal DOI, both, or only a link to a run
