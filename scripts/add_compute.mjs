@@ -18,7 +18,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const PASSES = fs.readdirSync(".").filter(f => /^compute-rows-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
+const DIR = "passes/compute";
+const PASSES = fs.readdirSync(DIR).filter(f => /^compute-rows-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
 const BLOCK = ["parameters", "gpu_hours", "device", "n_devices", "samples", "wall_clock",
   "cpu_core_hours", "bond_dimension", "iterations", "sweep_schedule", "evaluation", "vmc_schedule", "circuit_schedule",
   "reported_as", "source", "scope", "confidence", "note"];
@@ -44,7 +45,7 @@ let attached = 0, replaced = 0, skipped = 0;
 const unmatched = [];
 for (const file of PASSES) {
   const date = file.slice(13, 23);
-  for (const c of JSON.parse(fs.readFileSync(file, "utf8"))) {
+  for (const c of JSON.parse(fs.readFileSync(path.join(DIR, file), "utf8"))) {
     // A block with no quote cannot be checked against the paper and the validator rejects
     // it; the readers left reported_as empty only where nothing applies (a Hartree-Fock
     // baseline has no run to cost).

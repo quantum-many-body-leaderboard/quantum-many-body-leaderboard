@@ -112,15 +112,15 @@ instance QMBL carries or should carry, not only records.
 
 ## 5. Pass files
 
-A pass is one reading of a set of papers. Its rows are data in one file in the repository
-root, applied by the build in date order:
+A pass is one reading of a set of papers. Its rows are data in one file under `passes/`,
+applied by the build in date order:
 
 | file | applied by | contents |
 |---|---|---|
-| `sweep-rows-YYYY-MM-DD[-label].json` | `scripts/add_allresults_rows.mjs` | rows |
-| `sweep-coverage-YYYY-MM-DD[-cites].json` | `scripts/add_coverage.mjs` | [`coverage`](DATA.md#when-the-literature-was-last-checked-coverage) entries |
-| `compute-rows-YYYY-MM-DD.json` | `scripts/add_compute.mjs` | [`compute`](DATA.md#what-a-number-cost-the-compute-block) blocks |
-| `error-metrics-YYYY-MM-DD.json` | `scripts/add_error_metrics.mjs` | [`error_metrics`](DATA.md#where-an-added-error-bar-or-variance-came-from-the-error_metrics-block) blocks |
+| `passes/rows/sweep-rows-YYYY-MM-DD[-label].json` | `scripts/add_allresults_rows.mjs` | rows |
+| `passes/coverage/sweep-coverage-YYYY-MM-DD[-cites].json` | `scripts/add_coverage.mjs` | [`coverage`](DATA.md#when-the-literature-was-last-checked-coverage) entries |
+| `passes/compute/compute-rows-YYYY-MM-DD.json` | `scripts/add_compute.mjs` | [`compute`](DATA.md#what-a-number-cost-the-compute-block) blocks |
+| `passes/error-metrics/error-metrics-YYYY-MM-DD.json` | `scripts/add_error_metrics.mjs` | [`error_metrics`](DATA.md#where-an-added-error-bar-or-variance-came-from-the-error_metrics-block) blocks |
 
 A second pass on the same day takes a `-<label>` suffix. Each row file is written by a
 generator script, kept outside the repository with the pass's working notes, that re-finds
@@ -151,7 +151,7 @@ convention, skips a value the instance already carries, and writes each row with
 1. Run the finding tools of section 1 for the families or seeds of the pass.
 2. Fetch and commit the text of every paper to read (`fetch_pdfs.mjs`, `scan_fulltext.mjs`).
 3. Run `harvest_tables.mjs`, then `match_tables.mjs --all --tsv <worklist>`.
-4. Read each paper (section 4) and write the generator; it writes `sweep-rows-<date>.json`.
+4. Read each paper (section 4) and write the generator; it writes `passes/rows/sweep-rows-<date>.json`.
 5. Add method labels for the new method strings to `scripts/method_names.mjs`.
 6. Run `bash scripts/build.sh` and read its output: duplicates skipped, new instances,
    `validate.mjs` issues.
@@ -161,7 +161,7 @@ convention, skips a value the instance already carries, and writes each row with
 
 ## Passes
 
-| pass file | what was read |
+| `passes/rows/` file | what was read |
 |---|---|
 | `sweep-rows-2026-09-15.json` | every number the table harvest of the cached sources mapped onto an instance, including Gong et al. 2014 Table I (DMRG on J1-J2 tori) and Hu, Becca, Parola & Sorella 2013 Tables I-IV |
 | `sweep-rows-2026-09-17.json` | Wang, He & Lu, PRB 109, 245120 (arXiv:2308.09664) |

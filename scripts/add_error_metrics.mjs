@@ -32,7 +32,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { SPIN_MODELS, perSiteDivisor, vScore } from "./units.mjs";
 
-const PASSES = fs.readdirSync(".").filter(f => /^error-metrics-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
+const DIR = "passes/error-metrics";
+const PASSES = fs.readdirSync(DIR).filter(f => /^error-metrics-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
 const MEASURED_BY = new Set(["authors", "qmbl"]);
 
 function varianceTotal(e, inst) {
@@ -66,7 +67,7 @@ let attached = 0;
 const problems = [];
 for (const file of PASSES) {
   const date = file.slice(14, 24);
-  for (const e of JSON.parse(fs.readFileSync(file, "utf8"))) {
+  for (const e of JSON.parse(fs.readFileSync(path.join(DIR, file), "utf8"))) {
     const at = `${e.instance_id} ${e.reference_includes}`;
     if (!MEASURED_BY.has(e.measured_by)) { problems.push(`${at}: measured_by ${e.measured_by}`); continue; }
     const text = e.source_file && fs.existsSync(e.source_file) ? fs.readFileSync(e.source_file, "utf8") : null;
