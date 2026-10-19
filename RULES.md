@@ -491,9 +491,16 @@ A finite-N energy at the instance's density, cell and twist, including an energy
 one-particle basis (since 2026-10-17): the basis spans part of the instance's Hilbert space, so
 the energy is a claim about the instance, and the row states the basis (number of plane waves or
 orbitals, or the cutoff). Not rows: energies with an analytic finite-size correction added,
-extrapolations to N → ∞, twist averages, and correlation energies quoted against a
-Hartree-Fock energy the source does not print. Until 2026-10-17 finite-basis energies were
+extrapolations to N → ∞ and twist averages. Until 2026-10-17 finite-basis energies were
 excluded as energies of another Hamiltonian.
+
+A correlation energy E_c = E - E_HF is a row where the Hartree-Fock energy is unique: on a
+closed-shell instance at the Gamma point, where each spin fills whole shells of plane waves and
+the Hartree-Fock determinant is therefore the single plane-wave determinant of lowest kinetic
+energy. The row stores E_HF + E_c, with E_HF from QMBL's own calculation
+(`checks/heg-hf/hf.mjs`), and says so; the printed E_c stays on the row as `reported_as`.
+On an open shell several determinants tie and E_HF depends on the source's choice, so a
+correlation energy there is not a row unless the source prints its E_HF (2026-10-19).
 
 ### 12.4 `bound_type`
 
