@@ -37,7 +37,6 @@ const RULES = `${REPO}/blob/main/RULES.md`;
 const DATA = `${REPO}/blob/main/DATA.md`;
 const DOI = "10.5281/zenodo.22753734";
 const ARXIV = "2610.22387";
-const SNAPSHOT = "varbench@2024-10-22";
 const BUILT = new Date().toISOString().slice(0, 10);
 
 // The citation the Cite button copies and the front page prints is the paper; the data is
@@ -250,18 +249,13 @@ function citeHtml(row) {
 }
 
 // What the instance page says about its own currency: when the newest number here was
-// published, whether anything has been added since the VarBench snapshot, and - only where
-// an instance carries a `coverage` entry (DATA.md) - when its literature was last checked,
-// how, and whether that check found anything. No sentence claims a search that was not run.
+// published and - only where an instance carries a `coverage` entry (DATA.md) - when its
+// literature was last checked, how, and whether that check found anything. No sentence claims a search that was not run.
 function coverage(inst) {
-  const added = inst.rows.filter(r => r.source !== SNAPSHOT);
   const years = inst.rows.map(yearOf).filter(Boolean);
   const newest = years.length ? Math.max(...years) : null;
-  const when = newest ? `Newest published number here: <strong>${newest}</strong>.` :
+  const rows = newest ? `Newest published number here: <strong>${newest}</strong>.` :
     "No row here carries a publication year.";
-  const rows = added.length
-    ? `${when} ${added.length} row${added.length === 1 ? "" : "s"} added from the 2026-09 literature sweep, on top of the VarBench snapshot of 2024-10-22.`
-    : `${when} Nothing has been added to this instance since the VarBench snapshot of 2024-10-22.`;
   const last = (inst.coverage ?? []).at(-1);
   if (!last) return rows;
   const n = last.screened?.length ?? last.screened_count;
