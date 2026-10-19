@@ -7,7 +7,7 @@ What the files in `data/` contain and how to read them. The leaderboard is in
 
 `data/<Model>/<instance>.json`, one file per instance, plus `data/_summary.json`.
 
-This is the row currently holding the 10×10 J1-J2 record, with its long text fields cut:
+An example row (J1-J2, square 10×10, J2 = 0.5), long text fields cut:
 
 ```json
 {
@@ -32,7 +32,7 @@ This is the row currently holding the 10×10 J1-J2 record, with its long text fi
         "checked_on": "2026-09-13",
         "method": "arXiv HTML parsed locally, no LLM transcription",
         "reported_as": "-0.4976939 (+/- 2e-7) per site in S.S units",
-        "note": "Read from Table 1 of arXiv:2603.14425 ... Supersedes Chen & Heyl -0.4976921(4) as the record for this instance.",
+        "note": "Read from Table 1 of arXiv:2603.14425 ...",
         "secondary_of": null
       },
       "compute": {
@@ -45,66 +45,64 @@ This is the row currently holding the 10×10 J1-J2 record, with its long text fi
 }
 ```
 
-A method is stored three ways. `method` is its name alone. `method_detail` holds what tells
-the row apart from other rows of that name (architecture size, projection, Lanczos steps,
-trial state, what an extrapolation sends to zero) and never repeats the kind, the instance
-or the source. `method_as_published` is the string exactly as the source printed it. A bond
-dimension, parameter count or sample count lives in `compute`, not in the detail, and the
+A method is stored three ways:
+- `method` is its name alone.
+- `method_detail` holds what tells the row apart from other rows of that name: architecture
+  size, projection, Lanczos steps, trial state, what an extrapolation sends to zero. It never
+  repeats the kind, the instance or the source.
+- `method_as_published` is the string exactly as the source printed it.
+
+A bond dimension, parameter count or sample count lives in `compute`, not in the detail. The
 site prints the three as one label: "CNN-MPS (bond dimension 20, h = 32, l = 20, Marshall
-sign)". `family` groups methods for the figures, and `sector` marks an exact diagonalization
-restricted to one symmetry sector (on a row, only the ground state's sector; the others are
-the instance's `spectrum`, below). All of these are assigned in
-[`scripts/method_names.mjs`](scripts/method_names.mjs), one entry per published string.
+sign)". `family` groups methods for the figures. `sector` marks an exact diagonalization
+restricted to one symmetry sector. On a row, `sector` is the ground state's sector. Other
+sectors are in `spectrum` (below).
 
 Symmetry and extrapolation are written in fixed slots after the free text, separated by
-"; " and in this order: `symmetric:` (built into the ansatz or the tensors, or named without
-saying how), `projected:` (projected onto, as the source says) and `extrapolated:` (what goes
-to zero or infinity, how in brackets): "72 hidden units; projected: K = 0, spin parity
-(even), A1", "snake path; symmetric: SU(2); extrapolated: χ → ∞ (linear in two-site
-variance)". Groups come from one list (`SYMMETRY_TERMS`). A source that names no group
-reads `unspecified`, which after a named group means further groups the source does not
-name. The validator rejects symmetry or extrapolation wording outside a slot.
+"; ". The order is `symmetric:`, `projected:`, `extrapolated:`.
+- `symmetric:` a symmetry built into the ansatz or the tensors, or named without saying how.
+- `projected:` a projection, as the source states it.
+- `extrapolated:` what goes to zero or infinity, with the method in brackets.
 
-`baseline: true` marks a row VarBench **computed itself** rather than collected from a
-paper: a reference calculation run across the instance set so the V-score would have
-something to measure against, not a published state-of-the-art claim. 376 of the 583
-imported rows are of this kind. 76 of VarBench's own exact diagonalizations hold their
-instance's record, as any exact energy does ([§6](RULES.md#6-records-and-ties)), and 28
-of its other reference runs do (23 variational, 3 projected, 2 extrapolated; 2026-10-08),
-which means *no published result has ever beaten the benchmark's own reference run on
-those instances*
-(`baseline_records` in `data/_summary.json` counts the latter). See
-[§8.2](RULES.md#82-baseline-collected-versus-computed).
+Examples: "72 hidden units; projected: K = 0, spin parity (even), A1" and "snake path;
+symmetric: SU(2); extrapolated: χ → ∞ (linear in two-site variance)". Group names come from a
+fixed list in [`scripts/method_names.mjs`](scripts/method_names.mjs). A source that names no
+group reads `unspecified`. After a named group, `unspecified` means further groups the source
+does not name. The validator rejects symmetry or extrapolation wording outside a slot.
+
+`baseline: true` marks a row that VarBench computed as a reference run for the V-score. No
+paper published it. [RULES.md §8.2](RULES.md#82-baseline-collected-versus-computed) defines
+the field and how such a row ranks. The counts are generated: `baseline_rows` and
+`baseline_records` in `data/_summary.json`.
 
 ### Rows QMBL computed: `computed_by`
 
 `computed_by: "qmbl"` marks a row QMBL ran itself, under the protocol in
-[`checks/cost/README.md`](checks/cost/README.md): the common ansätze on one machine, so
-that the table has cost figures that are comparable across methods (2026-09-21).
-It is the QMBL analogue of VarBench's `baseline`, and the same reading applies: a QMBL run
-holding a record means nobody has published a better number, not that QMBL claims one. A
-run is QMBL's implementation, hyperparameters and budget, never the authors', and its
-method string says so ("ViT (...), QMBL cost-to-reproduce run"); a state QMBL trained is
-never attached to anyone else's row. The row's `reference` names the run, the Slurm job
-and the commit; `verified.reported_as` and `compute.reported_as` quote the committed
-results file under `checks/cost/results/`; every `compute` field is measured in the
-run's own process, `scope: row`, `confidence: high`. The validator requires all of it.
-Rows are attached by [`scripts/add_cost_runs.mjs`](scripts/add_cost_runs.mjs).
+[`checks/cost/README.md`](checks/cost/README.md): the common ansätze on one machine, so that
+cost figures are comparable across methods. It is read like VarBench's `baseline`
+([RULES.md §8.2](RULES.md#82-baseline-collected-versus-computed)).
 
-`energy` and `sigma` are stored in the instance's own convention; `v_score` is derived,
-never supplied. `verified` records where the number was read from and how: table
-parsed from arXiv HTML locally, never an LLM's summary of a table, after that was caught
-mangling columns and inventing electron counts. `defect` appears on a flagged row and
-carries the reason.
+- The run uses QMBL's implementation, hyperparameters and budget, not the authors'. Its
+  method string says so ("ViT (...), QMBL cost-to-reproduce run").
+- A state QMBL trained is never attached to another's row. It is a row of its own.
+- `reference` names the run and the commit.
+- `verified.reported_as` and `compute.reported_as` quote the committed results file under
+  `checks/cost/results/`.
+- Every `compute` field is measured in the run's own process, with `scope: row` and
+  `confidence: high`.
 
-**A missing field never excludes a row**: completeness is a property of the row, not an
-admission gate, and only [RULES.md §6](RULES.md#6-records-and-ties) and
-[§6.1](RULES.md#61-a-flagged-row-cannot-hold-a-record) govern what can hold a record.
+The validator requires all of these.
+
+`energy` and `sigma` are stored in the instance's own convention. `v_score` is derived,
+never supplied. `verified` records where the number was read and how. `defect` appears on a
+flagged row and carries the reason.
+
+A missing field does not exclude a row. [RULES.md §6](RULES.md#6-records-and-ties) and
+[§6.1](RULES.md#61-a-flagged-row-cannot-hold-a-record) decide which rows can hold a record.
 
 ## What a number cost: the `compute` block
 
-Optional, per row. It is what makes the accuracy-versus-cost view possible: an energy is
-only half of a result, and the field argues informally about the other half.
+Optional, per row. It records the cost a source states for a result.
 
 ```json
 "compute": {
@@ -127,15 +125,18 @@ only half of a result, and the field argues informally about the other half.
 
 The four fields after `wall_clock` are the cost metrics of methods that are not neural
 networks: CPU core-hours and bond dimension for tensor networks and exact diagonalization,
-sample and iteration counts for Monte Carlo. They are recorded in their own units and never
-translated into GPU-hours. `scope` says what the statement covers - this row, this ansatz
-across sizes, or the paper as a whole - and `confidence` drops to `medium` where a count
-was evaluated from a formula the paper prints or from an architecture the paper, its code or
-its run script states in full (the formula and its inputs are in `note`), `low` where the only statement is second-hand
-or an acknowledgement naming a supercomputer.
+sample and iteration counts for Monte Carlo. They are stored in their own units and never
+converted to GPU-hours.
 
-A DMRG row whose run script is public also carries `sweep_schedule`, what the script states
-about the run rather than what it cost:
+- `scope` is `row` (this row), `ansatz` (this ansatz across sizes) or `paper` (the paper as
+  a whole).
+- `confidence` is `high` by default. It is `medium` when a count was evaluated from a formula
+  the paper prints, or from an architecture the paper, its code or its run script states in
+  full; the formula and its inputs are in `note`. It is `low` when the only statement is
+  second-hand or an acknowledgement naming a supercomputer.
+
+A DMRG row whose run script is public also carries `sweep_schedule`, the run's settings as
+its script states them:
 
 ```json
 "sweep_schedule": {
@@ -156,66 +157,62 @@ of that rung alone). `variance_after` lists the sweeps after which the script ev
 ⟨ψ|H H|ψ⟩. `eigensolver_applications` is the most effective-Hamiltonian applications per
 two-site update the code's eigensolver makes, with the source it was read from. `lattice` is
 the site order and couplings the script builds its MPO from, so the MPO's size can be
-recomputed. None of this is a cost. It is the input to the one estimate QMBL makes for
-DMRG (next section).
+recomputed. None of this is a cost. These settings are the input to the DMRG FLOP estimate
+(next section).
 
-Blocks are attached by `scripts/add_compute.mjs` from `compute-rows-<date>.json`, one file
-per reading pass, applied in date order; the first (2026-09-16) read all 130 papers behind
-the non-baseline rows in full, appendices and supplements included, and found a statement
-in 81 of them. The second (2026-09-23) read the run script behind each of the 99 VarBench
-DMRG rows in [github.com/varbench/methods](https://github.com/varbench/methods) at
-`ed31bb0` for its sweep schedule; no script records a time. The third (2026-09-24)
-read the run scripts of the 187 other VarBench variational rows at the same commit and reread
-the sources of the 95 published rows that stated two of parameters, samples and iterations for
-the third, including the authors' code and run data; 153 of its 278 blocks carry all three.
-Where it found a stored number to be a different quantity (a final evaluation's sample count
-stored as the per-step count), the later block holds the per-step number and its note the old
-one. A VQE shot count per estimated quantity is not a per-step sample count and stays in the note. The fourth (2026-09-27) followed a verification of every family against its papers and code: 235 blocks gained what the run states about how it evaluated its state, in three objects that, like `sweep_schedule`, are statements and never costs. `evaluation` holds the training stages, the network evaluations per amplitude (a symmetry sum, several determinants), the sampler proposals per kept sample, whether the local energy skips vanishing terms, complex parameters, a dense read-out head and the optimiser's solve; `vmc_schedule` (kind `mvmc`) the def-file settings of an mVMC run; `circuit_schedule` a VQE script's gates and runs. The next section says how each enters the estimate.
+[`scripts/add_compute.mjs`](scripts/add_compute.mjs) attaches the blocks from
+`compute-rows-<date>.json`, one file per reading pass, applied in date order. A block is read
+from the source paper with its appendices and supplement, its code or its run script. The
+VarBench rows are read from their run scripts in
+[github.com/varbench/methods](https://github.com/varbench/methods) at `ed31bb0`; no VarBench
+run script records a time.
 
-A statement a later reading finds wrong is corrected like any stored value, in
-[`scripts/corrections.mjs`](scripts/corrections.mjs) (`compute.parameters`, `compute.note`,
-...), with the old value kept on the row in `corrections`. The entry states the value or the
-passage it replaces, so a pass that rewrites the block stops the build instead of being
-overwritten unseen. A statement nobody recorded is a new pass's to add, not a correction.
+- `samples` is the per-step sample count. A final-evaluation count goes in `note`. A VQE shot
+  count per estimated quantity is not a per-step sample count and also goes in `note`.
+- Three objects hold what a run states about how it evaluated its state. Like
+  `sweep_schedule`, they are statements, never costs. The next section says how each enters
+  the estimate.
+  - `evaluation`: the training stages, the network evaluations per amplitude (a symmetry sum,
+    several determinants), the sampler proposals per kept sample, whether the local energy
+    skips vanishing terms, complex parameters, a dense read-out head and the optimiser's solve.
+  - `vmc_schedule` (kind `mvmc`): the def-file settings of an mVMC run.
+  - `circuit_schedule`: a VQE script's gates and runs.
 
-Three rules, and they are the whole design:
+A wrong statement is corrected like any stored value ([Corrections](#corrections)).
 
-- **No normalisation.** GPU-hours are stored raw, next to the device model. There is no
-  H100-equivalent column and there will not be one: a conversion factor between hardware
-  generations is an argument, not a measurement, and it would be the first thing disputed.
-  The validator rejects any field that looks normalised.
-- **Self-reported and unfalsifiable.** Nothing here is checked against a run. `reported_as`
-  carries the authors' own words so a reader can see what was claimed, and is required.
-- **Never estimated.** A field nobody stated is `null`, not a guess from the ansatz size.
-  Counting the parameters of an architecture stated in full is not a guess; a count that
-  needs any choice the source leaves open (a bias, a width, which symmetry) stays `null`, and
-  one the source fixes only indirectly (a spin-parity doubling its own sample-count rule
-  implies) is `low`.
-  "20 A100 GPUs for four days" fills `n_devices`, `device` and `wall_clock` and leaves
-  `gpu_hours` null; a figure gives its own "GPU-days" as hours and the note says so. A view
-  that multiplies devices by wall-clock does that at draw time and marks the point as
-  derived; the stored fields stay as reported. The one estimate QMBL makes, a FLOP count
-  from stated counts (parameters, samples and iterations for a network; the sweep schedule
-  for DMRG), is evaluated at build time and never stored (next section).
+The block follows three rules:
 
-A missing `compute` block excludes nothing, exactly like a missing variance.
+- GPU-hours are stored raw, next to the device model. There is no H100-equivalent column. A
+  conversion factor between GPU generations is not measured. The validator rejects any field
+  that looks normalised.
+- Nothing in the block is checked against a run. `reported_as` carries the authors' own words
+  and is required.
+- A field the source does not state is `null`, not a guess from the ansatz size. Counting the
+  parameters of an architecture stated in full is not a guess. A count that needs a choice the
+  source leaves open (a bias, a width, which symmetry) stays `null`. A count the source fixes
+  only indirectly (a spin-parity doubling that its own sample-count rule implies) is `low`.
+
+Example: "20 A100 GPUs for four days" fills `n_devices`, `device` and `wall_clock` and leaves
+`gpu_hours` null. A value the source gives in GPU-days is stored in hours, and `note` says
+so. A view that multiplies devices by wall-clock marks the point as derived. The FLOP
+estimate is computed at build time and never stored
+([How a FLOP count is estimated](#how-a-flop-count-is-estimated)).
 
 ### What an exact diagonalization costs: `qmbl_ed_cost`
 
-An exact energy is the same whoever computes it, so what it costs belongs to the instance, not
-to a row. QMBL diagonalizes the instance itself and stores the cost **once per instance**, as the
-field `qmbl_ed_cost` (2026-09-23/24). Duplicate rows would make one Hamiltonian look
-like several results.
-- **What is run:** [`checks/cost/ed/run_ed.py`](checks/cost/ed/run_ed.py) builds the
-  Hamiltonian in NetKet in VarBench's conventions. It conserves only particle number or total
-  Sz, with no lattice symmetry, so the cost is that of plain sparse Lanczos in a standard tool,
-  not the least an expert code could spend.
-- **How it is solved:** it stores the matrix and finds the lowest eigenvalue with SciPy's
-  `eigsh`, counting the matrix-vector products (the Lanczos steps).
-- **The clock:** from process start to the eigenvalue, on one core. The product is
-  single-threaded, so more cores would only sit idle.
-- **What is recorded:** the protocol-v1.4 hardware record sits beside the wall-clock
-  ([`checks/cost/README.md`](checks/cost/README.md)).
+An exact energy is the same whoever computes it, so its cost belongs to the instance, not to
+a row. QMBL diagonalizes the instance itself and stores the cost once per instance, in
+`qmbl_ed_cost`. Duplicate rows would make one Hamiltonian look like several results.
+- [`checks/cost/ed/run_ed.py`](checks/cost/ed/run_ed.py) builds the Hamiltonian in NetKet in
+  VarBench's conventions. It conserves only particle number or total Sz, with no lattice
+  symmetry. The cost is that of plain sparse Lanczos in NetKet and SciPy. A symmetry-adapted
+  code would spend less.
+- It stores the matrix and finds the lowest eigenvalue with SciPy's `eigsh`, counting the
+  matrix-vector products (the Lanczos steps).
+- The clock runs from process start to the eigenvalue. The matrix-vector product is
+  single-threaded, so one core is used.
+- The hardware record defined in [`checks/cost/README.md`](checks/cost/README.md) sits beside
+  the wall-clock.
 
 ```json
 "qmbl_ed_cost": {
@@ -229,18 +226,18 @@ like several results.
 ```
 
 Rules:
-- **The energy must reproduce.** A run's energy has to agree with the stored exact energy to
-  1e-8, relative. If it does not, nothing is attached and the build prints the mismatch; a
-  number in the table is never changed from here.
-- **The CPU is named, never the cluster.** The validator rejects the cluster's name anywhere in
-  the field.
-- **Placement in figures:** the exact row it reproduced is drawn on the hours axis at
-  `core_hours`, as a CPU core-hours square named "(cost measured by QMBL)". It is on the
-  frontier like any exact energy. It is never on the FLOPs axis, which holds estimates only.
+- A run's energy must agree with the stored exact energy to 1e-8, relative. If it does not,
+  nothing is attached and the build prints the mismatch. A number in the table is never
+  changed from here.
+- `cpu` names the CPU model only. The validator rejects the cluster's name anywhere in the
+  field.
+- In figures, the exact row the run reproduced is drawn on the hours axis at `core_hours`, as
+  a CPU core-hours square named "(cost measured by QMBL)". It is on the frontier like any
+  exact energy. It is never on the FLOPs axis, which holds estimates only.
 
 Scope ([`checks/cost/ed/worklist.json`](checks/cost/ed/worklist.json)):
 - 67 instances with an exact diagonalization and at most 30 sites.
-- **Not run: six.**
+- Six are not run:
   - Kagome 12, 24 and 30 and shuriken 24: their clusters are defined only in their source
     papers.
   - The 4×4 Hubbard model at half filling: building and storing the matrix needs about 600 GB.
@@ -254,11 +251,14 @@ each optimisation step drew and how many steps were taken (the VarBench rows in 
 scripts). Those three numbers, with the instance and what the paper or code says about how
 the network was evaluated, fix the arithmetic an optimisation took, and
 [`scripts/flops.mjs`](scripts/flops.mjs) turns them into floating-point operations at build
-time (2026-09-21). The model for neural and other variational Monte Carlo states is
-`nqs-v2` (2026-09-27, after a verification of every family against its papers and
-code on 2026-09-25 found `nqs-v1` off by 3-40x wherever a run symmetrised, trained in stages
-or skipped vanishing terms). DMRG, mVMC and the VarBench VQE have their own models at the end
-of this section.
+time. The model for neural and other variational Monte Carlo states is `nqs-v2`. DMRG, mVMC
+and the VarBench VQE have their own models at the end of this section.
+
+An estimate is correct to about one order of magnitude where the run's evaluation is stated.
+FLOPs have their own axis and their own figures (`figures/flops/`,
+`figures/energy-vs-flops.svg`) and never share the hours axis: converting FLOPs to hours would
+need the hardware conversion factor that the `compute` block excludes. On the front page an
+instance with both shows two figures, a badge each.
 
 Per training stage:
 
@@ -280,22 +280,27 @@ Per training stage:
   (m_s = 1); a Markov chain's proposal needs a whole amplitude (m_s = m). The 3 is the forward
   and backward pass of the gradient.
 - `reuse`: how many times a weight is applied in one forward pass, declared per architecture
-  in `ARCH`: once in a dense network (VarBench's and QMBL's `α = 1` RBMs and Nomura's projected
-  RBM are dense), twice for a Jastrow factor's N × N matrix, once per site in a convolution or
-  a recurrent cell, once per patch in a vision transformer or a patch-embedded RNN, once per
-  element of the space group in a group convolution. A row whose network differs from its
-  family (an HFPS with a group-convolutional hidden network, a backflow tensor of which a
-  configuration reads a fraction) states its own. `head` parameters (a dense read-out) run once.
-- `c_x` = 2 for complex parameters on real inputs (4 real FLOPs per multiply-add, not 2), and
-  4 where the code is JAX (NetKet, jVMC and the like): JAX promotes the real input to complex, so
-  every multiply-add is complex by complex, 8 FLOPs, as counted on QMBL's own networks (below;
-  2026-09-29). No published row states complex parameters yet. The SR term is sized
+  in `ARCH`:
+  - a dense network: once (VarBench's and QMBL's `α = 1` RBMs and Nomura's projected RBM are
+    dense);
+  - a Jastrow factor's N × N matrix: twice;
+  - a convolution or a recurrent cell: once per site;
+  - a vision transformer or a patch-embedded RNN: once per patch;
+  - a group convolution: once per element of the space group.
+
+  A row whose network differs from its family (an HFPS with a group-convolutional hidden
+  network, a backflow tensor of which a configuration reads a fraction) states its own. `head`
+  parameters (a dense read-out) run once.
+- `c_x` = 2 for complex parameters on real inputs: 4 real FLOPs per multiply-add instead of 2.
+  In JAX codes (NetKet, jVMC and the like) `c_x` = 4: JAX promotes the real input to complex,
+  so every multiply-add is complex by complex, 8 FLOPs. The count on QMBL's own networks
+  (below) confirms this. No published row states complex parameters yet. The SR term is sized
   on its own (next bullet).
 - `SR`: the optimiser's linear solve where the code is known: the dense S (2 × samples ×
   P² + P³/3), NetKet's on-the-fly S made dense (P matrix-vector products), conjugate gradients
   at their stated iteration count, or MinSR (2 × samples² × P + samples³/3). Not counted where
   the code is unknown. The matrix is the one the code builds (`evaluation.jacobian`, read from
-  the code; 2026-09-29):
+  the code):
   - `real`: real parameters and a real output, samples × P.
   - `complex`: NetKet's complex mode, which every network with a complex output gets unless it
     is declared holomorphic. The real and imaginary parts of the output are stacked into
@@ -303,42 +308,37 @@ Per training stage:
     (an on-the-fly S does not stack the samples).
   - `holomorphic`: a complex samples × P matrix, 4 real FLOPs per complex one.
   Counted on QMBL's eight runs ([checks/cost/README.md](checks/cost/README.md#the-sr-step-counted-2026-09-29)),
-  the complex mode's cost matched exactly: 4 times the unsized term for a dense S with complex
-  parameters, 2 times per conjugate-gradient iteration. Without the statement the term keeps
-  samples × P with `c_x` = 2 for complex parameters. QMBL's own rows use their counted SR step
-  instead (`evaluation.sr_counted`): the Jacobian (3.5-10 forward passes per sample, which the
-  model does not count) plus the dense solve, or the set-up of conjugate gradients, whose
-  iterations the runs do not log.
-  The pass of 2026-09-29 (`compute-rows-2026-09-29.json`) read the statement from the code of
-  the published rows in JAX codes that have an SR term: 86 `real` (VarBench's NetKet RBMs and
-  Jastrows, the MinSR paper's CNN), 11 `complex` (the ViTs of arXiv:2405.18874, TQS and PITQS,
-  ConvNeXt; their SR term rose fourfold). The HFPS rows state nothing, since their run scripts are
-  not public, and nor do the GVMC rows, whose SR is the code's own. Quantax, which ran the HFPS and
-  the MinSR paper's CNN, solves MinSR by an eigendecomposition, which the S³/3 of the model does
-  not cover.
-- **A counted forward pass replaces the modelled one** where the row carries
-  `evaluation.forward_flops`: QMBL's own runs, whose networks are counted from the program JAX
-  traces for them ([checks/cost/README.md](checks/cost/README.md#the-forward-pass-counted-2026-09-29),
-  2026-09-29). On the eight runs the count is 0.99-1.01 times the model for QMBL's ViT,
-  1.2-1.3 times for its GCNN and 2.0-2.1 times for its complex RBMs. JAX promotes the real spin
-  configuration to complex, so a complex network multiplies complex by complex: 8 FLOPs per
-  multiply-add, not the 4 `c_x` = 2 assumed; `c_x` is now 4 for such networks in JAX codes
-  (above). XLA's own cost analysis, which arXiv:2606.02794 used, counts a complex
-  multiply-add as 2 FLOPs like a real one: it agrees with the count to 0.1 % on the real-valued
-  ViT and reads the complex networks 2-4 times low. Compiled for an A100 it counts no matrix
-  product at all (they become cuBLAS calls) and reads 0.5-70 % of the count.
+  the complex mode's cost matched the model exactly: 4 times the unsized term for a dense S
+  with complex parameters, 2 times per conjugate-gradient iteration. Without the statement the
+  term keeps samples × P with `c_x` = 2 for complex parameters. QMBL's own rows use their
+  counted SR step instead (`evaluation.sr_counted`): the Jacobian (3.5-10 forward passes per
+  sample, which the model does not count) plus the dense solve, or the set-up of conjugate
+  gradients, whose iterations the runs do not log.
 
-These are statements about the run, stored in the compute block's `evaluation` object (with
-the stages as a list, each with its own iterations, samples, parameters and m), never costs;
-each is quoted in `reported_as` like the counts. A row without one gets every default, which
-is `nqs-v1`. Still not counted, and said under every figure: attention scores (up to ~20 %),
-pre-training on smaller lattices, and an extra energy estimate some codes make per step. SCALE
-(local updates of at most 18 sites per move) and the transformer backflow (attention over
-several determinants) are not in the model, because against their paper's measured time per
-step it is ten times off in each direction; they have no estimate.
+  Of the published rows in JAX codes with an SR term, 86 are `real` (VarBench's NetKet RBMs
+  and Jastrows, the MinSR paper's CNN) and 11 are `complex` (the ViTs of arXiv:2405.18874,
+  TQS and PITQS, ConvNeXt). The HFPS rows state nothing, because their run scripts are not
+  public. The GVMC rows state nothing, because their SR is the code's own. Quantax, which ran
+  the HFPS and the MinSR paper's CNN, solves MinSR by an eigendecomposition, which the S³/3 of
+  the model does not cover.
+- `forward_flops`: where a row carries `evaluation.forward_flops`, it replaces the modelled
+  forward pass. QMBL's own runs carry it, counted from the program JAX traces for their
+  networks ([checks/cost/README.md](checks/cost/README.md#the-forward-pass-counted-2026-09-29)).
+  On the eight runs the count is 0.99-1.01 times the model for QMBL's ViT, 1.2-1.3 times for
+  its GCNN and 2.0-2.1 times for its complex RBMs at `c_x` = 2. That factor of 2 is the
+  complex-by-complex arithmetic that `c_x` = 4 counts in JAX codes (above).
 
-Against the rows that also state GPU-hours the model implies these achieved rates
-(`node scripts/flops.mjs` prints them all):
+These are statements about the run, stored in the compute block's `evaluation` object (the
+stages as a list, each with its own iterations, samples, parameters and m), never costs. Each
+is quoted in `reported_as` like the counts. A row without an `evaluation` object gets every
+default. Not counted, and stated under every figure: attention scores (up to ~20 %),
+pre-training on smaller lattices, and an extra energy estimate some codes make per step.
+SCALE (local updates of at most 18 sites per move) and the transformer backflow (attention
+over several determinants) have no estimate: against their paper's measured time per step the
+model is ten times off in each direction.
+
+Against the rows that also state GPU-hours, the model implies these achieved rates.
+`node scripts/flops.mjs` prints them all.
 
 | instance | method | estimated FLOPs | stated | achieved |
 |---|---|---|---|---|
@@ -362,45 +362,35 @@ Against the rows that also state GPU-hours the model implies these achieved rate
 | J1-J2 10×10, J2 = 0.5 | RBM α = 1, QMBL run | 6.2e14 | 0.45 h, A100 80 GB (measured) | 0.4 TFLOP/s |
 | triangular 36 | RBM α = 1, QMBL run | 2.9e14 | 0.10 h, A100 80 GB (measured) | 0.8 TFLOP/s |
 
-**The rates now sit where the hardware says they should.** The A100 rows, in double
-precision, run at 0.9-11 TFLOP/s, 5-57 % of its FP64 tensor-core peak (19.5 TFLOP/s, which
-cuBLAS reaches on large matrix products). The fastest are the ViTs, whose step is dominated by
-MinSR's sample-space matrix over 2 × 6000 stacked samples, one large matrix product; their rates
-doubled to tripled when the Jacobian pass of 2026-09-29 gave them NetKet's complex mode. The
-minGRU in single precision on an L40S and the NNBF in TF32 on an H100 run at 7-45 % of their
-peaks. Under `nqs-v1` the same rows
-spread from 0.01 to 366 TFLOP/s, because the symmetrisation, the training stages, the discarded
-samples and the complex arithmetic were missing. QMBL's own small RBMs (1368 and 10200 parameters)
-stay lowest, at 0.4-0.8 TFLOP/s: their steps are too small to fill a card. QMBL's rows use
-their counted forward pass and SR step (above): the J1-J2 RBMs' estimates doubled, and the
-triangular RBM's rose 3.7-fold, most of it from its dense S of 2736 real parameters. **An estimate is good
-to an order of magnitude** where the run's evaluation is stated, and no better; that is why it
-has its own axis and its own figures (`figures/flops/`, `figures/energy-vs-flops.svg`) and is
-never placed on the hours axis. Turning FLOPs into hours would need exactly the conversion
-factor the first rule forbids. Nothing on the FLOPs axis is a reported number, so the two axes
-are never mixed: on the front page an instance with both shows them as two figures, a badge
-each.
+The A100 rows run at 0.9-11 TFLOP/s in double precision, 5-57 % of the FP64 tensor-core peak
+(19.5 TFLOP/s, which cuBLAS reaches on large matrix products). The fastest are the ViTs, whose
+step is dominated by MinSR's sample-space matrix over 2 × 6000 stacked samples, one large
+matrix product. The minGRU in single precision on an L40S and the NNBF in TF32 on an H100 run
+at 7-45 % of their peaks. QMBL's own small RBMs (1368 and 10200 parameters) are lowest, at
+0.4-0.8 TFLOP/s: their steps are too small to fill a card. QMBL's rows use their counted
+forward pass and SR step (above).
 
-Three rules, the same shape as the block's own:
+The estimate follows these rules:
 
-- **An input nobody stated is never guessed.** Parameters, samples and iterations must all
-  be on the row, the architecture must be in `ARCH`, and the instance must be on a lattice
-  whose bond count the script writes; the `evaluation` statements are quoted or take their
-  defaults. For DMRG the sweep schedule, eigensolver setting and site order must be in the run
-  script. Otherwise there is no estimate. The estimate is `medium` confidence when those hold
-  and `low` when an architectural assumption was needed (a transformer whose patch size the
-  paper does not state) or the block itself is `low`.
-- **Nothing is stored.** The estimate is a function of the row and its instance, recomputed
-  on every build; changing the model changes every figure at once and no data file.
-- **DMRG only where the schedule is stated.** A bond dimension alone does not fix a DMRG
-  cost, so only rows with a `sweep_schedule` get one (below): the VarBench rows, from their
-  run scripts, and QMBL's own. No DMRG paper in the table states its sweep schedule, a PEPS
-  needs its contraction dimension, and the four exact diagonalizations that state seconds per
-  matrix-vector product do not state the Lanczos iteration count.
+- An input the source does not state is never guessed. Parameters, samples and iterations
+  must all be on the row, the architecture must be in `ARCH`, and the instance must be on a
+  lattice whose bond count the script writes. The `evaluation` statements are quoted or take
+  their defaults. For DMRG the sweep schedule, eigensolver setting and site order must be in
+  the run script. Otherwise there is no estimate.
+- The estimate is `medium` confidence when those conditions hold. It is `low` when an
+  architectural assumption was needed (a transformer whose patch size the paper does not
+  state) or when the block itself is `low`.
+- Nothing is stored. The estimate is a function of the row and its instance, recomputed on
+  every build. A change to the model changes every figure at once and no data file.
+- Only rows with a `sweep_schedule` get a DMRG estimate (below): the VarBench rows, from their
+  run scripts, and QMBL's own. A bond dimension alone does not fix a DMRG cost. No DMRG paper
+  in the table states its sweep schedule, a PEPS needs its contraction dimension, and the four
+  exact diagonalizations that state seconds per matrix-vector product do not state the
+  Lanczos iteration count.
 
 #### DMRG: `dmrg-v1`
 
-For a row with a `sweep_schedule` (2026-09-23), `flops.mjs` counts the dense tensor
+For a row with a `sweep_schedule`, `flops.mjs` counts the dense tensor
 contractions of two-site DMRG:
 
     FLOPs = Σ over sweeps  2 × Σ over the N − 1 two-site updates
@@ -412,33 +402,36 @@ contractions of two-site DMRG:
     ⟨H²⟩        = Σ over sites  2 d D² χ_l χ_r (χ_l + χ_r) + 4 d² D³ χ_l χ_r
 
 `d` is the site dimension (2 for spins and spinless fermions, 4 for Hubbard). The bond
-dimension at a bond in a sweep is the least of three numbers: the sweep's maximum, the
-reached bond dimension the row states (a 16-site tV run capped at 4096 reached 74), and the
-exact limit d^min(b, N − b). `n_apply` is the code's own eigensolver setting: at most 3 for
-ITensors.jl 0.6.16's defaults (Krylov dimension 3, one pass) and for ITensor C++ at
-`niter = 2` (one application, then one per Davidson iteration). For TeNPy, whose Lanczos stops
-adaptively, it is the count measured on the calibration run (`checks/cost/calibration/`).
+dimension at a bond in a sweep is the least of three numbers:
+- the sweep's maximum;
+- the reached bond dimension the row states (a 16-site tV run capped at 4096 reached 74);
+- the exact limit d^min(b, N − b).
+
+`n_apply` is the code's own eigensolver setting:
+- at most 3 for ITensors.jl 0.6.16's defaults (Krylov dimension 3, one pass);
+- at most 3 for ITensor C++ at `niter = 2` (one application, then one per Davidson
+  iteration);
+- for TeNPy, whose Lanczos stops adaptively, the count measured on the calibration run
+  (`checks/cost/calibration/`).
+
 `D`, the MPO bond dimension, is 2 + k × the largest number of sites on the smaller side of
 any cut in the script's site order with a coupling across that cut. `k` is the number of
 operators per bond: 3 for S⁺S⁻ + S⁻S⁺ + SᶻSᶻ and for tV, 1 for the Ising ZZ, 4 for the two spin
 species' hops. For QMBL's runs this bound reproduces the MPO bond dimension TeNPy logs,
 68 on the J1-J2 10×10 torus and 41 on triangular 36.
 
-Not counted, and said under every figure that shows a DMRG estimate:
-- **conserved quantum numbers.** The model is dense, and block-sparse tensors skip most of
-  the contraction, increasingly so as χ grows.
-- **the noise or mixer term, the eigensolver's orthogonalisation, and memory traffic.**
+Not counted, and stated under every figure that shows a DMRG estimate:
+- conserved quantum numbers: the model is dense, and block-sparse tensors skip most of the
+  contraction, more so as χ grows;
+- the noise or mixer term, the eigensolver's orthogonalisation, and memory traffic.
 
-**Calibration.** The check is QMBL's own DMRG rungs, whose wall-clock is measured on
-8 cores (TeNPy 1.1.1, Sz conserved,
-[`checks/cost/`](checks/cost/README.md)). TeNPy's Lanczos stops adaptively, so its count is
-measured: every rung since protocol v1.4 records its own, **2.6-3.8 effective-Hamiltonian
-applications per update** over the six rungs (3.76, 2.72 and 2.64 on the triangular ladder,
-3.83, 3.06 and 3.00 on J1-J2). A repeat of the triangular-36 χ = 500 rung measured it first
-(`checks/cost/calibration/dmrg-cal-tri-36.json`, the same energy to all printed digits): 3964
-applications over 1053 Lanczos updates, 3.76 per update, from 2 to 20; the 35 updates on the
-smallest blocks were solved by full diagonalisation. Each rung's schedule covers every sweep
-up to the end of that rung, because the wall-clock does too.
+Calibration: QMBL's six DMRG rungs (TeNPy 1.1.1, Sz conserved, wall-clock measured on 8
+cores, [`checks/cost/`](checks/cost/README.md)) measure 2.6-3.8 effective-Hamiltonian
+applications per update: 3.76, 2.72 and 2.64 on the triangular ladder, 3.83, 3.06 and 3.00
+on J1-J2. A repeat of the triangular-36 χ = 500 rung
+(`checks/cost/calibration/dmrg-cal-tri-36.json`) gave the same energy to all printed digits.
+Each rung's schedule covers every sweep up to the end of that rung, because the wall-clock
+does too.
 
 | instance | rung | estimated FLOPs | measured | achieved per core |
 |---|---|---|---|---|
@@ -449,38 +442,42 @@ up to the end of that rung, because the wall-clock does too.
 | J1-J2 10×10, J2 = 0.5 | χ = 1000 | 1.3e16 | 44.6 core-h, EPYC 7742 | 80 GFLOP/s |
 | J1-J2 10×10, J2 = 0.5 | χ = 2000 | 9.4e16 | 181.5 core-h, EPYC 7742 | 145 GFLOP/s |
 
-**The implied rate grows with χ, four- to sixfold from χ = 500 to 2000.**
-One of these cores peaks at about 40-55 GFLOP/s in double precision. From χ ≈ 1000 upward
+The implied rate grows four- to sixfold from χ = 500 to 2000. One of these cores peaks at about 40-55 GFLOP/s in double precision. From χ ≈ 1000 upward
 the model therefore counts more arithmetic than the run did: blocks with different Sz are
 never multiplied, and that saving grows with χ. Below it, the run spends time on things the
 model does not count.
 
-The clock is itself uncertain. The calibration repeat took 3.4 core-h on one node and
-8.7 core-h on another of the same partition, for the same sweeps and the same energy, and the
-J1-J2 ladder reached χ = 2000 in 221 core-h on an EPYC 7763 node and in 182 core-h on an EPYC
-7742 node, again with the same three energies.
+The clock is itself uncertain:
+- the calibration repeat took 3.4 core-h on one node and 8.7 core-h on another of the same
+  partition, for the same sweeps and the same energy;
+- the J1-J2 ladder reached χ = 2000 in 221 core-h on an EPYC 7763 node and in 182 core-h on
+  an EPYC 7742 node, with the same three energies.
 
-**A DMRG estimate is therefore good to an order of magnitude, like a network's.** It
-overstates the work of a large-χ run by up to a factor of three against peak. It shares an
-axis with the network estimates and, like them, never the hours axis.
+A DMRG estimate has the same order-of-magnitude accuracy as a network's (above). It
+overstates the work of a large-χ run by up to a factor of three against peak.
 
 #### mVMC: `mvmc-v2`
 
 For a row whose compute block carries its mVMC def-file settings (`vmc_schedule`, kind
-`mvmc`: the VarBench mVMC + RBM rows, read from their inputs and `mVMC.sh`; 2026-09-27),
+`mvmc`: the VarBench mVMC + RBM rows, read from their inputs and `mVMC.sh`),
 `flops.mjs` counts the Pfaffian arithmetic over every projection term:
 
     FLOPs = c_x [ P_tot N_QP (r + a u) + N_it S N_QP (n_conn r + n²) + (a P_tot / N + N_it S) N_QP (7/3) n³ ] + SR
 
-with P_tot the proposals of all processes over the run, N_QP the projection terms (NMPTrans ×
-NSPGaussLeg), S the samples per step (NVMCSample × processes), n = Nsize, r and u the ratio and
-update of a hop (2n, 6n²) or an exchange (2n², 34n²), c_x = 4 for complex inputs, and SR the
-complex O O† product and Cholesky on every process (NSRCG 0) or 100 conjugate-gradient
-iterations per step (NSRCG 1). The acceptance a is bounded by 1, which overstates sampling about
-twice. Calibrated on QMBL's own short runs of VarBench's inputs on an EPYC 9654 (2026-09-25): 4.6-17 GFLOP/s per core over Hubbard 8×8 and
-pyrochlore 128 and 432, against 7-18x too high or 6.6x too low before the complex arithmetic,
-the per-sample Pfaffian recomputation and the realistic CG count were in. Every estimate is
-`low`: the scripts are simplified templates of the published runs.
+with
+- P_tot: the proposals of all processes over the run;
+- N_QP: the projection terms (NMPTrans × NSPGaussLeg);
+- S: the samples per step (NVMCSample × processes);
+- n = Nsize;
+- r and u: the ratio and update of a hop (2n, 6n²) or an exchange (2n², 34n²);
+- c_x = 4 for complex inputs;
+- SR: the complex O O† product and Cholesky on every process (NSRCG 0), or 100
+  conjugate-gradient iterations per step (NSRCG 1).
+
+The acceptance a is bounded by 1, which overstates sampling about twice. Calibrated on QMBL's
+short runs of VarBench's inputs (EPYC 9654): 4.6-17 GFLOP/s per core over Hubbard 8×8 and
+pyrochlore 128 and 432. Every estimate is `low`: the scripts are simplified templates of the
+published runs.
 
 #### VQE: `vqe-v1`
 
@@ -509,11 +506,8 @@ Per instance, not per row, and appended to rather than overwritten:
 ]
 ```
 
-**A check that found nothing is a result and is recorded as one** (`found: 0`). Only 116 of
-341 instances have any 2025-26 row, so a site that says nothing about its own currency
-reads as more authoritative than it is. This is the field the instance pages quote, and it
-is why "we looked, and there is nothing newer" is worth the same bookkeeping as a new row.
-`screened` names the papers when there are few, `screened_count` replaces it when there are
+A check that found nothing is recorded with `found: 0`. The instance pages quote this field.
+`screened` names the papers when there are few. `screened_count` replaces it when there are
 many. `found` is how many of the screened papers the instance carries an energy from, read
 off its rows at build time, so it cannot disagree with the page.
 
@@ -522,7 +516,7 @@ off its rows at build time, so it cannot disagree with the page.
 Per instance, not per row. A diagonalization resolved by symmetry sector states the lowest
 energy in each sector, and only the ground state's sector is a ground-state energy: that row
 stays a row and holds the record, and the minima of the other sectors are the instance's
-`spectrum` (2026-09-16 and 2026-09-30). One instance has one:
+`spectrum`. One instance has one:
 `J1J2/triangular_48_P_0.125`, whose 48 sectors of the S<sup>z</sup> = 0 space come from
 Wietek et al. (PRX 14, 021010), App. B naming Γ.A1 (spin flip +1) the ground state. One of
 its 47 entries, the compute block cut:
@@ -538,14 +532,11 @@ its 47 entries, the compute block cut:
 ]
 ```
 
-**A level of the spectrum is not a result.** Each entry is the complete row it was, lowest
-first, moved by [`scripts/apply_spectrum.mjs`](scripts/apply_spectrum.mjs) after every
-overlay has run, so a correction or verification written against the row still lands on it.
-Entries hold no record, are not drawn and are not counted in `rows`; `data/_summary.json`
-counts them as `spectrum_entries`. The validator requires each to be exact and to name its
-sector, and none to lie below the ground state. Which sector is the ground state is a ruling
-(`groundStateExact` in [`scripts/units.mjs`](scripts/units.mjs)): an instance with no
-ground-state row keeps its sector rows as rows, and the validator reports them.
+Spectrum entries are not results. Each entry is the full row, lowest energy first. Entries
+hold no record, are not drawn and are not counted in `rows`. `data/_summary.json` counts them
+as `spectrum_entries`. The validator requires each entry to be exact and to name its sector,
+and no entry to lie below the ground state. An instance with no ground-state row keeps its
+sector rows as rows, and the validator reports them.
 
 ## Units and conventions
 
@@ -565,53 +556,50 @@ loader, never by hand.
 count for **spinless** t-V. `einf` is `0` for traceless spin Hamiltonians and
 `U * N_up * N_dn / n_sites` for the plain Hubbard model.
 
-Two Hubbard instances carry further couplings, which VarBench names by suffix and `params`
-states in the form of VarBench's Eq. (S6). `_t12` adds a next-nearest-neighbour hopping,
-`-t2 Σ⟨⟨ij⟩⟩σ (c†iσ cjσ + h.c.)` beside `-t1 Σ⟨ij⟩σ (...)`, with t1 = 1 and t2 = -0.25;
-`_t12_UV1V2` also `V1 Σ⟨ij⟩ ni nj + V2 Σ⟨⟨ij⟩⟩ ni nj`, V1 = 1, V2 = 0.5, each bond once,
-between total densities ni = ni↑ + ni↓, as mVMC, the program behind its row, defines them
-(Eq. (S6) prints these terms between equal spins). The density terms are not traceless, so
-that instance's `einf` is not checked.
+Two Hubbard instances carry further couplings. VarBench names them by suffix, and `params`
+states them in the form of VarBench's Eq. (S6).
+- `_t12` adds a next-nearest-neighbour hopping, `-t2 Σ⟨⟨ij⟩⟩σ (c†iσ cjσ + h.c.)`, beside
+  `-t1 Σ⟨ij⟩σ (...)`, with t1 = 1 and t2 = -0.25.
+- `_t12_UV1V2` also adds `V1 Σ⟨ij⟩ ni nj + V2 Σ⟨⟨ij⟩⟩ ni nj`, with V1 = 1 and V2 = 0.5. Each
+  bond is counted once. The densities are total densities, ni = ni↑ + ni↓, as mVMC, the
+  program behind its row, defines them. Eq. (S6) prints these terms between equal spins. The
+  density terms are not traceless, so the `einf` of this instance is not checked.
 
-Since 2026-10-16 a t12 instance from a paper carries its t2 in the name, `_t12_<t2>` (for example
-`Hubbard/square_64_P_28_8_t12_-0.2`), because several t2 values share a size; `params` holds
-t1 = 1 and t2. The papers write `-t Σ⟨ij⟩ - t' Σ⟨⟨ij⟩⟩ + U Σ ni↑ni↓`, the form of Eq. (S6), so t2 is
-their t'. The README label states t2, and t2 is a coupling of the size ladders (`ladders.mjs`).
-
-Getting these wrong is the single most likely source of a false record, which is why
-they are stated once and reused rather than inlined per script.
+A t12 instance from a paper carries its t2 in the name, `_t12_<t2>` (for example
+`Hubbard/square_64_P_28_8_t12_-0.2`), because several t2 values share a size. `params` holds
+t1 = 1 and t2. The papers write `-t Σ⟨ij⟩ - t' Σ⟨⟨ij⟩⟩ + U Σ ni↑ni↓`, the form of Eq. (S6), so
+t2 is their t'. The README label states t2, and t2 is a coupling of the size ladders.
 
 ## Error metrics
 
-Some rows carry no error information at all: no error bar, no energy variance, nothing
-that says how converged the number is. Those rows are marked **&#9675;** in the README
-leaderboard and `o` in `scripts/records.mjs`.
+Some rows have no error bar and no energy variance. The README leaderboard marks them
+&#9675; (`o` in `scripts/records.mjs`). The marker means QMBL found no error metric in the
+source it read. The number may still exist in a supplement, a companion paper or the
+authors' own records. The row stays in the table and in rank order, and it is not a `defect`.
+`exact` rows are not marked: an exact diagonalization has no error to report. An exact
+(stochastic) row must state its `sigma` (the validator checks this).
 
-**The marker is about our search, not about the authors.** It records that we did not
-find an error metric in the source we read, and that figure may well exist in a
-supplement, in a companion paper, or in the group's own records. So the number stays in
-the table and stays in the ranking; what the marker says is that the row still wants
-verification, and that a single message from the people who produced it would close the
-question. It is not a judgement on the work, and it is not a `defect`: that field means
-something specific here and withholds the record.
+A sampled energy with an energy variance but no error bar is marked &dagger; in the README.
 
-If one of these is yours, see [Contributing](README.md#contributing): the error bar, the
-variance, or the checkpoint all resolve it.
+If one of these rows is yours, see [Contributing](README.md#contributing). Sending the error
+bar, the variance or the checkpoint removes the marker.
 
 ### Sampled or deterministic: `sampled`
 
-Whether a row's energy is a Monte Carlo estimate decides whether a missing `sigma` is a missing
-error bar: the README marks such a row with &dagger; where it has a variance, and the Contribute
-page counts them. No row needs a `sigma` to hold a record
-([RULES.md §6](RULES.md#6-records-and-ties), since 2026-10-08). Where a reader established it from the
-source, the row says so: `sampled: true` or `false`, set in
-[`scripts/corrections.mjs`](scripts/corrections.mjs) with the evidence, and the verdict the
-method string gave stays in `corrections[].from`. Where the field is absent, the method string
-decides: explicit deterministic markers (DMRG, PEPS, MPS, statevector, exact diagonalization,
-mean field, ...) in [`scripts/units.mjs`](scripts/units.mjs), everything else sampled. The field
-exists because the string misleads both ways (2026-09-30): VarBench's
-"2^14 samples/grad" VQE rows print the exact statevector energy, and a finite PEPS evaluated by
-Monte Carlo, an MPS-RNN or a projected mean-field state is sampled.
+Whether a row's energy is a Monte Carlo estimate decides whether a missing `sigma` is a
+missing error bar (the &dagger; marker above; the Contribute page counts these rows).
+[RULES.md §6](RULES.md#6-records-and-ties) says how such a row ranks.
+
+- Where a reader established it from the source, the row carries `sampled: true` or `false`,
+  set in [`scripts/corrections.mjs`](scripts/corrections.mjs) with the evidence. The verdict
+  the method string gave stays in `corrections[].from`.
+- Where the field is absent, the method string decides: explicit deterministic markers (DMRG,
+  PEPS, MPS, statevector, exact diagonalization, mean field, ...) in
+  [`scripts/units.mjs`](scripts/units.mjs), everything else sampled.
+
+The method string misleads both ways. VarBench's "2^14 samples/grad" VQE rows print the exact
+statevector energy. A finite PEPS evaluated by Monte Carlo, an MPS-RNN or a projected
+mean-field state is sampled.
 
 ### Where an added error bar or variance came from: the `error_metrics` block
 
@@ -633,11 +621,12 @@ came from:
 ```
 
 - `fields` names what the block set; nothing a row already carried is overwritten.
-- `measured_by` is `authors` when the number is in the authors' own data release (a
-  repository, a Zenodo record, a notebook's stored output, or the output files the authors
-  sent for the entry, committed under `sources/` as received), and `qmbl` when we measured it
-  on the checkpoint the authors published, with their network. A state we trained
-  ourselves is never attached to someone else's row; it is a row of its own.
+- `measured_by` is `authors` when the number is in the authors' own data release: a
+  repository, a Zenodo record, a notebook's stored output, or output files the authors sent
+  for the entry, committed under `sources/` as received.
+- `measured_by` is `qmbl` when QMBL measured it on the checkpoint the authors published, with
+  their network. A state QMBL trained is a row of its own
+  ([`computed_by`](#rows-qmbl-computed-computed_by)).
 - `source_file` is committed under `sources/`, and every ` | `-separated part of
   `reported_as` appears in it verbatim, so each value can be checked from a clone.
 - `conversion` is the convention the source states its variance in (`var_total_pauli`,
@@ -650,49 +639,72 @@ Passes are `error-metrics-YYYY-MM-DD.json` at the repository root.
 
 ## Provenance and defects
 
-Rows cite **the primary paper that produced the number**. Where a number is quoted from
-a different paper than the one that produced it, the row is marked `secondary` and names
-both; a private communication printed in a paper is cited that way too. A number first
-printed in a dataset cites the dataset, naming the upload (who, when, commit) and keeping
-the author's paper as the method reference: VarBench uploads that no paper prints cite
-Wu et al., Science 386, 296 (2024) ([§8](RULES.md#8-provenance)). arXiv preprint is the
-minimum bar; rows record whether the source is peer reviewed and at what kind of venue,
-because a number refereed by a physics-numerics journal and the same number refereed for
-machine-learning contribution are not equal evidence ([§8.1](RULES.md#81-venue-type));
-`peer_reviewed` follows the venue that printed the number.
+Each row cites the primary paper that produced the number. A number quoted from another paper
+is marked `secondary`, and the row names both papers. `peer_reviewed` follows the venue that
+printed the number. [RULES.md §8](RULES.md#8-provenance) says which paper is primary and how
+datasets and private communications are cited; [§8.1](RULES.md#81-venue-type) gives the venue
+types.
 
-The validator in [`scripts/validate.mjs`](scripts/validate.mjs) runs on every build and
-checks `dof` and `einf` against the instance definition, the V-score against the row's
-own inputs, the row's energy against its own reported variance, and the variational
-principle against any exact row in the same instance (combining the two error bars where
-the exact row is stochastic QMC), and that every stochastic exact row states its sigma.
+[`scripts/validate.mjs`](scripts/validate.mjs) runs in every build. It checks:
+- `dof` and `einf` against the instance definition;
+- the V-score against the row's own inputs;
+- the row's energy against its own reported variance;
+- the variational principle against any exact row on the same instance, combining the two
+  error bars where the exact row is exact (stochastic);
+- that every exact (stochastic) row states its `sigma`.
 
-Rows that fail are **flagged in place, never silently corrected and never deleted** (a
-duplicate, or a number that is not an energy of its instance, is removed under
-[RULES.md §11](RULES.md#11-corrections)). The
-flag withholds the record and nothing else; [§10](RULES.md#10-pending-confirmed-objections) is the process for lifting
-or upholding it. A value the maintainers corrected is listed in `corrections` on the row,
-each entry with the value it replaced (`from`), where the new one was read, and why, on
-imported rows and, since 2026-09-30, on rows QMBL added itself alike
-([`scripts/corrections.mjs`](scripts/corrections.mjs)). A field of the row's `compute` block or
-of its verification is corrected the same way (`compute.parameters`, `verified.note`, and
-`verified.secondary_of` where the paper a number was quoted from turns out to have produced it), and
-so are an instance's `params`, whose old value stays in the instance's own `corrections`. An exact row whose printed value is
-QMBL's recomputed energy rounded or truncated carries QMBL's digits, the printed value in
-`corrections` ([RULES.md §11](RULES.md#11-corrections)). `verified` records a check that
-found nothing wrong, and an independent re-read of a row QMBL added itself is
-`verified.second_read`. A reading of the published version of a paper (RULES.md §8) is
-`verified.journal_read` where the row already carries a reading, and the row's `verified`
-where it carries none; it names the journal file read and the arXiv version compared. An instance renamed because its upstream name
-carries the wrong coupling or size has `relabelled` (the old id, the reason and the evidence);
-the old id, where rows were computed at that coupling, stays with `split` and an exact row QMBL
-computed ([`checks/hubbard-u-labels/`](checks/hubbard-u-labels/)). The size case is an impurity
-model's bath: `Impurity/SB-DMFT-MI-HF_10` was VarBench's `SB-DMFT-MI-HF_9`, whose rows were run
-with ten bath sites per spin-orbital. One worked case is in [`checks/`](checks/): three TFIsing `RBM (alpha = 1)` energies
-sit up to 10 sigma below an exact solution; the program the rows link, rerun as pinned,
-gives energies above it, and the stored numbers were uploaded in 2023 without code or log,
-so the flag stays and the mechanism is recorded as unknown. A `defect` carries `flag`,
-`finding` (the evidence, with the source of every claim), optionally `diagnosis`,
-`ruled_out` and `evidence` (a shared block written for that row or group of rows, never
-attached by flag name alone) and `source_entry` (the verification proposal it was
-written from).
+[RULES.md §9](RULES.md#9-validation) has the full list.
+
+Rows that fail a check are flagged in place. A duplicate, or a number that is not an energy of
+its instance, is removed ([RULES.md §11](RULES.md#11-corrections)). The flag withholds the
+record and nothing else. [RULES.md §10](RULES.md#10-pending-confirmed-objections) is the
+process for lifting or upholding it.
+
+### Corrections
+
+Each correction is listed in `corrections` on the row, with the old value (`from`), where the
+new one was read, and why. This holds for imported rows and for rows QMBL added
+([`scripts/corrections.mjs`](scripts/corrections.mjs)). The same shape covers:
+- a field of the row's `compute` block (`compute.parameters`, `compute.note`);
+- a field of its verification (`verified.note`, and `verified.secondary_of` where the paper a
+  number was quoted from turns out to have produced it);
+- an instance's `params`, whose old value stays in the instance's own `corrections`.
+
+An exact row whose printed value is QMBL's recomputed energy rounded or truncated carries
+QMBL's digits, with the printed value in `corrections`.
+
+### Verifications
+
+`verified` records a check that found nothing wrong. An independent re-read of a row QMBL
+added itself is `verified.second_read`. A reading of the published version of a paper
+([RULES.md §8](RULES.md#8-provenance)) is `verified.journal_read` where the row already
+carries a reading, and the row's `verified` where it carries none. It names the journal file
+read and the arXiv version compared.
+
+### Relabels
+
+An instance renamed because its upstream name carries the wrong coupling or size has
+`relabelled`: the old id, the reason and the evidence. Where rows were computed at the old
+coupling, the old id stays, with `split` and an exact row QMBL computed
+([`checks/hubbard-u-labels/`](checks/hubbard-u-labels/)). The cases are listed in
+[`scripts/relabels.mjs`](scripts/relabels.mjs).
+
+### Defects
+
+A `defect` carries:
+- `flag`: the kind of problem;
+- `finding`: the evidence, with the source of every claim;
+- optionally `diagnosis`, `ruled_out` and `evidence`, from a shared block written for that row
+  or group of rows, never attached by flag name alone;
+- `source_entry`: the verification proposal it was written from.
+
+```json
+"defect": {
+  "flag": "sampling-nonergodic",
+  "finding": "what the source states, with the file and lines of every claim",
+  "diagnosis": "...",
+  "ruled_out": "...",
+  "evidence": "...",
+  "source_entry": "..."
+}
+```
