@@ -1,6 +1,7 @@
 import fs from "node:fs"; import path from "node:path";
 import { instances, readTable, num } from "./parse.mjs";
 import { classify } from "./bound_type.mjs";
+import { vScore } from "./units.mjs";
 
 // model -> names of the trailing params after lattice_N_BC
 const PARAMS = { J1J2:["J2"], Hubbard:["Nf","U"], tV:["Nf","V"], TFIsing:["h"], Heisenberg:[], Impurity:[] };
@@ -8,8 +9,8 @@ const NEEDS_REVIEW = new Set(["QMC","AFQMC"]); // bare strings: sign-problem-fre
 // ", Extrap Energy = -12.762823 +/- 2.e-6)" and its spellings: minus sign, magnitude, error bar.
 const EXTRAP_IN_METHOD = /,\s*extrap(?:olated)?\s+(?:energy|eng)\s*=?\s*-\s*([\d.]+)\s*\+\/-\s*([\d.]+(?:e[-+]?\d+)?)\s*\)$/i;
 
-// Clean rebuild: data/ is fully derived from vendor/ + scripts/, never edited by hand,
-// so wipe it first. Without this, add_literature.mjs double-appends to instances it created.
+// Clean rebuild: data/ is derived from vendor/ and scripts/ and never edited by hand, so wipe
+// it first. Otherwise add_literature.mjs appends twice to instances it created.
 fs.rmSync("data", { recursive: true, force: true });
 
 const summary = { instances:0, rows:0, by_bound:{}, needs_review:[], vscore_rows:0, no_variance:0, no_sigma:0 };
@@ -22,29 +23,25 @@ for (const it of instances()) {
     // Seven DMRG rows print a second number inside the method string: the energy
     // extrapolated in the truncation error, with its error bar. The row's own energy is the
     // one reached at the stated bond dimension, so the row is classified without that clause
-    // (the word "extrapolated" in it made Heisenberg/square_100_O an extrapolated row), and
-    // the extrapolated number becomes a row of its own below (2026-09-17).
+    // (the word "extrapolated" in it would make the row extrapolated), and the extrapolated
+    // number becomes a row of its own below.
     const extrap = method.match(EXTRAP_IN_METHOD);
     let { bound_type, reason } = classify(extrap ? method.replace(EXTRAP_IN_METHOD, ")") : method);
     const review = NEEDS_REVIEW.has(method) || bound_type === null;
     if (review) { bound_type = null; reason = "ambiguous: bare method string, sign-problem-free vs constrained undetermined"; }
     const energy = num(r["energy"]), sigma = num(r["sigma"]);
     const variance = num(r["energy variance"]), dof = num(r["dof"]), einf = num(r["einf"]);
-    let v_score = null;
-    if (variance != null && !Number.isNaN(variance) && dof && einf != null && energy !== einf)
-      v_score = dof * variance / Math.pow(energy - einf, 2);
+    const v_score = Number.isNaN(variance) ? null : vScore(variance, dof, energy, einf);
     if (v_score != null) summary.vscore_rows++;
     if (variance == null || Number.isNaN(variance)) summary.no_variance++;
     if (sigma == null || Number.isNaN(sigma)) summary.no_sigma++;
     const key = bound_type || "needs-review";
     summary.by_bound[key] = (summary.by_bound[key]||0)+1;
     if (review) summary.needs_review.push(`${it.model}/${it.stem}: "${method}"`);
-    // VarBench did two different things, and its Reference column is where they are
-    // told apart. A row citing a paper is one VarBench COLLECTED from the literature.
-    // A row whose only reference is a run script in varbench/methods is one VarBench
-    // COMPUTED itself - a baseline, run across the instance set to give the V-score a
-    // denominator, not a result anybody published as state of the art. Conflating the
-    // two makes a reference calculation look like a defended SOTA claim.
+    // VarBench's Reference column tells collected rows from computed ones. A row citing a
+    // paper is one VarBench collected from the literature. A row whose only reference is a run
+    // script in varbench/methods is one VarBench computed itself: a baseline, run across the
+    // instance set to give the V-score a denominator (see RULES.md 8.2).
     const reference = r["reference"] || "";
     const citesPaper = /\[paper\]|arxiv|doi\.org|10\.\d{4}\//i.test(reference);
     const baseline = !citesPaper && /github\.com\/varbench\/methods/.test(reference);
@@ -66,7 +63,6 @@ for (const it of instances()) {
   fs.writeFileSync(path.join(dst, it.stem + ".json"), JSON.stringify(out, null, 2) + "\n");
   summary.instances++; summary.rows += rows.length;
 }
-// Import stats only, deliberately NOT written to data/_summary.json: rows are still
-// appended after this by add_literature.mjs and add_sweep_rows.mjs. scripts/summary.mjs
-// owns that file and runs last.
+// Import stats only, printed and not written to data/_summary.json: add_literature.mjs and
+// add_sweep_rows.mjs append rows after this. scripts/summary.mjs writes that file and runs last.
 console.log(JSON.stringify({ ...summary, needs_review: summary.needs_review }, null, 2));
