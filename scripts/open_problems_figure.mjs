@@ -57,7 +57,7 @@ export function openProblemsFigure(targets, entries, entryHref) {
   const h = header(t, TITLE, SUBTITLE);
   const lg = legend(t, [
     { kind: "dot", color: t.series[0], label: "Variational bound" },
-    { kind: "dot", color: t.series[1], label: "Projected (fixed-node)" },
+    { kind: "dot", color: t.series[1], label: "Projected" },
     { kind: "dot", color: t.series[2], label: "Extrapolated" },
     ...(ents.length ? [{ kind: "diamond", color: t.ink, label: "Verified entry" }] : []),
     FLAGGED(t),

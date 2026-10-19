@@ -1,12 +1,7 @@
-// Regenerate the leaderboard block in README.md from data/.
-//
-// A stale leaderboard in the README of a leaderboard is the worst failure this repo
-// has available, so the table is never hand-edited: build.sh rewrites it between the
-// markers below on every build.
-// The instance labels, the quoting convention and the no-record reasons are exported
-// because the site (site.mjs) renders the same table in HTML. Two copies of "how an
-// instance is named" would drift, and the drift would be invisible until someone
-// compared the README against the front page.
+// Regenerate the leaderboard block in README.md from data/. build.sh rewrites it between the
+// markers below on every build; it is never edited by hand. The instance labels, the quoting
+// convention and the no-record reasons are exported so that the site (site.mjs) names
+// instances the same way.
 import fs from "node:fs";
 import path from "node:path";
 import { perSiteDivisor, perSiteLabel, isSampled, noErrorMetrics, methodLabel, recordEligible, stochasticExact } from "./units.mjs";
@@ -22,15 +17,14 @@ const END = "<!-- END LEADERBOARD -->";
 const VB_COUNT = /\d+ of QMBL’s \d+ rows \(\d+ %\)/;
 
 // Physics convention: one significant digit of uncertainty in parentheses, and the
-// energy quoted to exactly that decimal place. Quoting digits past the error bar is
-// how a table invents precision nobody claimed.
+// energy quoted to exactly that decimal place, so the table shows no digits past the
+// error bar.
 export function quote(energy, sigma) {
   // A stated sigma of exactly 0 is how the upstream tables write "deterministic" on an
   // exact diagonalization. There is no last digit for it to qualify, and taking its
   // logarithm asks for infinitely many decimals, so it is quoted like a row with none.
   // Without a sigma the energy is quoted to at most 7 decimals with the padding zeros
-  // dropped, so a printed -0.4988 is not shown as -0.4988000 (2026-10-08: such rows can
-  // hold records since then, 64 of them with padding).
+  // dropped, so a printed -0.4988 is not shown as -0.4988000.
   if (sigma == null || !(sigma > 0)) {
     const text = energy.toFixed(7).replace(/\.?0+$/, "");
     return { text, decimals: text.split(".")[1]?.length ?? 0 };
@@ -41,8 +35,8 @@ export function quote(energy, sigma) {
   return { text: `${energy.toFixed(decimals)}(${digit})`, decimals };
 }
 
-// Method strings run to 60+ characters and would otherwise be cut mid-word, which
-// reads as a typo rather than as an abbreviation.
+// Method strings run to 60+ characters; they are cut at a space or comma, as a cut
+// mid-word reads as a typo.
 export function shorten(method, max) {
   if (method.length <= max) return method;
   const cut = method.slice(0, max);
@@ -51,8 +45,8 @@ export function shorten(method, max) {
 }
 
 // Markers shown against a number, in precedence order. A row carrying no error metric
-// at all gets the circle and nothing else - the dagger would be redundant, since a
-// sampled row with no variance has no sigma either.
+// at all gets the circle and nothing else: a sampled row with no variance has no sigma
+// either, so the dagger would add nothing.
 export function marks(r) {
   if (noErrorMetrics(r)) return " &#9675;";
   if (isSampled(r) && r.sigma == null) return " &dagger;";
@@ -107,8 +101,8 @@ export function instanceLabel(inst) {
     parts.push(`n ${shown === fill ? "=" : "&asymp;"} ${shown}`);
   }
   // The Hubbard variants VarBench names by suffix keep that name in the label; their couplings
-  // (t2, V1, V2) are in params and written out on the instance page. Since 2026-10-16 several t2
-  // values share a size, so a t12 label also states t2.
+  // (t2, V1, V2) are in params and written out on the instance page. Several t2 values share a
+  // size, so a t12 label also states t2.
   for (const v of inst.instance_id.matchAll(/_(t12|UV1V2)(?=_|$)/g)) parts.push(v[1] === "t12" && p.t2 != null ? `t12 (t2 = ${p.t2})` : v[1]);
   return parts.join(", ");
 }
@@ -145,10 +139,9 @@ export function challengerOf(inst, rec) {
 }
 
 // How far above the record the challenger sits, per site, to two figures: "+1.7e-3".
-// Relative to nothing, because the table is already per site in the papers' convention
-// and that is the number a reader subtracts by hand. A gap under the record's quoted
-// precision - DMRG converged to the exact energy at 1e-13 - is not a number the table
-// stands behind, so it prints as below that precision rather than as twelve-digit noise.
+// Absolute, as the table is per site in the papers' convention. A gap under the record's
+// quoted precision (DMRG converged to the exact energy at 1e-13) prints as below that
+// precision.
 export function gapAbove(rec, next, f, decimals) {
   const gap = (next.energy - rec.energy) / f;
   return gap < 10 ** -decimals ? `+<1e-${decimals}` : `+${gap.toExponential(1)}`;
@@ -178,7 +171,7 @@ function main() {
   const cache = sources();
 
   const lines = [];
-  lines.push(`### All ${s.instances} Hamiltonian instances (click to unravel)`);
+  lines.push(`### All ${s.instances} Hamiltonian instances (click a model to expand)`);
   lines.push("");
   const known = new Set(MODELS.map(([m]) => m));
   for (const inst of instances)
@@ -192,10 +185,9 @@ function main() {
     lines.push("", ...HEADER, ...group.map(i => row(i, instanceLabel(i), cache)), "", "</details>", "");
   }
 
-  // The legend (bound_type, bold, circle, dagger) and the table-wide counts are the maintainer's
-  // hand-written "## Details" section below the END marker since 2026-09-16 (2eb98a3), so
-  // the generator emits nothing after the last </details>; the counts live in
-  // data/_summary.json and on the site's front page.
+  // The legend (bound_type, bold, circle, dagger) is in the hand-written "## Details" section
+  // below the END marker, so the generator emits nothing after the last </details>; the
+  // table-wide counts are in data/_summary.json and on the site's front page.
 
   let readme = fs.readFileSync("README.md", "utf8");
   const rows = instances.flatMap(inst => inst.rows);
