@@ -1,32 +1,8 @@
-// arXiv candidate harvester for the refresh sweep. Writes sweep-candidates.tsv.
-//
-// Rewritten 2026-09-14. The previous version made its output a FLOOR rather than a
-// census, and said nothing about either reason:
-//
-//   1. `max_results=40` with no paging. Every query was truncated at 40 hits no matter
-//      how many matched, so the "161 unique candidates" of 2026-09-12 was 12 queries
-//      capped at 40, not 12 queries answered.
-//   2. `get()` returned "" on any HTTP or network failure. A 429 from arXiv (which this
-//      environment hits routinely) logged as "<tag>: 0 since 2025", indistinguishable
-//      from a query that genuinely matched nothing.
-//
-// Both are fixed. The harvester pages until it reaches the date floor, and a failed
-// request is a hard error: it is named in `sweep-queries.tsv`, printed in a banner, and
-// sets a non-zero exit code. A page cap that binds is reported as TRUNCATED with the hit
-// count it gave up on, so a bounded harvest never reads as a complete one.
-//
-// The date floor is now a parameter. 54 of the first 97 accepted rows came from pre-2025
-// papers, and arXiv has no HTML at all before ~Dec 2023 (see fetch_pdfs.mjs), so the
-// backlog is mined by the same tool with a different --since.
-//
-// Output is MERGED into the existing candidate file by default: a partial run can only
-// ever add candidates, never silently drop the ones a previous run found. --fresh opts
-// out.
-//
-// There are also two ways to reach arXiv, and they are rate-limited separately. The API
-// at export.arxiv.org returned 429 to every request for over an hour on 2026-09-14 while
-// arxiv.org served PDFs and HTML normally, so --via auto falls back to the arxiv.org
-// search UI rather than let an outage produce an empty sweep.
+// arXiv candidate harvester for the refresh sweep. Writes sweep-candidates.tsv (merged into
+// the existing file unless --fresh) and a per-query audit in sweep-queries.tsv.
+// Pages each query down to the --since date. A failed request is a hard error (non-zero exit);
+// a page cap that binds is reported as TRUNCATED. --via auto falls back from the arXiv API
+// to the arxiv.org search UI, which is rate-limited separately.
 //
 // Usage: node scripts/sweep_search.mjs [--since 2019-01-01] [--max-pages 40]
 //                                      [--only tag,tag] [--out sweep-candidates.tsv]
@@ -34,10 +10,8 @@
 import fs from "node:fs";
 
 // --- queries ----------------------------------------------------------------------
-// The first block is the original 2026-09-12 set. The second targets the families with
-// ZERO post-2024 coverage: tV (0/14 instances), Impurity (0/12), TFIsing (0/7), plus
-// pyrochlore and shuriken, which had only one thin keyword each. Nobody has ever run a
-// query written for these; the old set reached them only incidentally.
+// The first block covers the main families. The second targets families with no post-2024
+// coverage: tV (0/14 instances), Impurity (0/12), TFIsing (0/7), plus pyrochlore and shuriken.
 const Q = [
  ["triangular-nqs", `cat:cond-mat.str-el AND abs:"triangular" AND (abs:"neural network" OR abs:"variational Monte Carlo" OR abs:"tensor network")`],
  ["kagome-energy",  `cat:cond-mat.str-el AND abs:"kagome" AND (abs:"ground-state energy" OR abs:"ground state energy" OR abs:"DMRG")`],
@@ -64,8 +38,8 @@ const Q = [
  // TFIsing: chain L=10,32 and square 36/144/400 at h = 0.5, 1, 3.
  ["tfising-bench",  `cat:cond-mat.str-el AND (abs:"transverse-field Ising" OR abs:"transverse field Ising") AND (abs:"ground-state energy" OR abs:"ground state energy" OR abs:"benchmark" OR abs:"tensor network" OR abs:"quantum Monte Carlo")`],
  ["ising-2d-var",   `(abs:"2D Ising" OR abs:"two-dimensional Ising" OR abs:"square-lattice Ising") AND (abs:"variational" OR abs:"neural network" OR abs:"PEPS")`],
- // pyrochlore and shuriken, without the "variational"/"ground state" narrowing that
- // kept the old queries from seeing DMRG and QMC papers on these lattices.
+ // pyrochlore and shuriken, without the "variational"/"ground state" narrowing, so DMRG
+ // and QMC papers on these lattices match too.
  ["pyrochlore-heis", `abs:"pyrochlore" AND (abs:"Heisenberg" OR abs:"spin liquid" OR abs:"spin ice") AND (abs:"energy" OR abs:"DMRG" OR abs:"tensor network" OR abs:"Monte Carlo")`],
  ["shuriken-lat",   `abs:"shuriken" OR abs:"square-kagome" OR abs:"squagome" OR abs:"square kagome"`],
  // A broad net for the ansatz literature, which names its lattice only in the body.
@@ -88,17 +62,13 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const strip = s => s.replace(/\s+/g, " ").trim();
 
 // --- fallback: arxiv.org/search ----------------------------------------------------
-// export.arxiv.org/api and arxiv.org are rate-limited separately, and the API is the one
-// that goes first: on 2026-09-14 it returned 429 to every request for over an hour while
-// arxiv.org served PDFs and HTML normally. With only the API path, a sweep in that state
-// harvests nothing at all, which is the same outcome the old silent-failure bug produced
-// and the reason the pool has never been a census.
+// export.arxiv.org/api and arxiv.org are rate-limited separately. The API can return 429
+// for an hour or more while arxiv.org still serves pages, so this path keeps a sweep going.
 //
-// The queries stay defined ONCE, in API syntax, and are parsed into groups here. The
-// search UI applies its operators left to right with no grouping, so `A AND (B OR C)`
-// cannot be expressed - instead the OR groups are expanded into their cartesian product
-// of flat AND queries and the results unioned. More requests, but no reliance on the
-// UI's operator precedence.
+// The queries are defined once, in API syntax, and parsed into groups here. The search UI
+// applies its operators left to right with no grouping, so `A AND (B OR C)` cannot be
+// expressed. The OR groups are expanded into their cartesian product of flat AND queries
+// and the results are unioned.
 const FIELD_UI = { abs: "abstract", ti: "title", all: "all", au: "author" };
 
 function parseQuery(q) {
@@ -141,8 +111,8 @@ function searchUrl(terms, cat, since, start, size) {
     p.append(`terms-${i}-term`, t.phrase);
     p.append(`terms-${i}-field`, FIELD_UI[t.field] || "all");
   });
-  // the UI filters by ARCHIVE, not by category, so cat:cond-mat.str-el becomes cond-mat.
-  // That is slightly broader than the API query, which costs recall nothing.
+  // the UI filters by archive (no category filter), so cat:cond-mat.str-el becomes cond-mat.
+  // That is slightly broader than the API query and loses no recall.
   if (cat) {
     p.append("classification-physics", "y");
     p.append("classification-physics_archives", cat.split(".")[0]);
@@ -199,8 +169,8 @@ async function getSearchPage(terms, cat, since, start, size) {
   return { ok: false, err: last };
 }
 
-// A request either returns an Atom feed or it FAILS. There is no third outcome that
-// looks like an empty result set - that conflation is the bug this rewrite exists for.
+// A request either returns an Atom feed or fails. A failure is never reported as an empty
+// result set.
 async function getPage(q, start) {
   const url = `http://export.arxiv.org/api/query?search_query=${encodeURIComponent(q)}` +
               `&sortBy=submittedDate&sortOrder=descending&start=${start}&max_results=${PAGE}`;
@@ -256,8 +226,7 @@ const FAM = [
 const audit = [];
 let hardFail = 0, newThisRun = 0;
 
-// score and merge one paper. Shared by both harvest paths so the two can never disagree
-// about what a candidate is worth.
+// Score and merge one paper. Both harvest paths use it, so they score candidates the same way.
 function record({ id, d, ti, ab, jr, doi }, tag) {
   const fam = FAM.filter(([, re]) => re.test(`${ti} ${ab}`)).map(([n]) => n);
   // score: does the abstract promise an energy we could actually use?

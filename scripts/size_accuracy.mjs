@@ -1,37 +1,22 @@
-// Generate figures/size-vs-accuracy*.svg: how far each published energy sits from its
-// instance's reference, against system size. Compute is one cost of a result; the other
-// question the field asks is how a method's accuracy holds up as N grows, and n_sites is
-// on every instance, so this view needs nothing the rows do not already carry.
+// Generate figures/size-vs-accuracy*.svg and figures/size/*.svg: published energies against
+// system size, placed by their relative gap to a reference energy so that Hamiltonians of
+// different energy scales share one axis.
 //
-// Size runs along x and the distance up y. The two exact-referenced figures draw it as a
-// plain log scale (2026-09-17), 10^-8 at the bottom and 10^0 at the top, so a
-// better energy is lower and the exact energy - distance zero, off any log scale - is the
-// line below the plot. The per-Hamiltonian figures keep the scale turned upside down
-// (2026-09-16), a better energy higher and the record holders in a band above.
+// The two overview figures use only instances with an exact energy, on a plain log scale from
+// 10^-8 to 10^0; the exact energy (gap zero) is a line below the plot, and sign-problem-free QMC
+// counts as exact. A row closer than 10^-8 sits on that line. A row below the exact energy
+// within twice the joint error bar is placed by the size of its gap; a row further below is not
+// drawn, and the footnote counts it. No row is drawn closer than its own relative error bar.
+// Marks that would cover each other at one size merge into one mark with a count; on the site
+// it lists them (site.mjs, FIG_SCRIPT).
 //
-// The question every figure here asks is which published results are the best (
-// 2026-09-16); the relative gap is only the mechanic that lets Hamiltonians of different
-// energy scales share one axis. It is taken against the exact energy wherever an instance
-// has one. The two exact-referenced figures use
-// only such instances. The per-Hamiltonian figures (figures/size/, one per model, lattice
-// and boundary, a panel per ladder of sizes, see ladders.mjs) fall back to the record where
-// no exact row exists, and say so per size; there the record holder sits in the band at
-// the top. A row below the energy it is measured against is a triangle there, as the log
-// scale shows only the size of the distance.
+// The per-Hamiltonian figures (one per model, lattice and boundary, a panel per ladder of
+// sizes, see ladders.mjs) turn the scale upside down, so a better energy is higher. A size with
+// no exact energy uses the record as its reference and says so by colour; the record holder
+// sits in a band above the plot, and a row below its reference is a triangle.
 //
-// The two exact-referenced figures draw an "exact" line below the 10^-8 gridline instead
-// (2026-09-17), with sign-problem-free QMC counted as exact. A row closer than
-// 10^-8 sits on that line, above or below. A row below the exact energy within twice the
-// joint error bar is placed by the size of its gap, since inside the error bar the sign
-// says nothing. A row further below than that has no place on either axis, so it is not
-// drawn and the footnote counts it. No row is drawn closer to exact than its own error bar
-// allows: its height is the larger of the gap and sigma / |E_exact| (so a VMC energy that
-// lands within 1e-8 by chance is not drawn as exact). The overview draws the exact rows
-// themselves on the line. Marks that would cover each other at one size are merged into
-// one mark showing how many rows it holds; on the site it lists them (site.mjs, FIG_SCRIPT).
-// None of these draws a V-score, a variance or a
-// distance-to-record for the record itself, so nothing here says how well converged a
-// standing record is - that is the beatable-records question, which stays off the site.
+// No figure here shows a V-score, a variance or a gap for the record itself: QMBL does not rank
+// records by how beatable they are.
 import fs from "node:fs";
 import { recordEligible, exactEligible } from "./units.mjs";
 import { collect, recordOf, exactRecordOf } from "./summary.mjs";
@@ -56,15 +41,14 @@ function referenceOf(inst) {
   return rec ? { row: rec, kind: "record" } : null;
 }
 
-// Every row that is a result rather than the answer: a bound or an extrapolation with a
-// stated bound type, flagged rows included and marked as such (2026-09-18), except
-// a row flagged wrong-instance, whose energy belongs on another axis. `gap` is relative to the reference energy;
-// extrapolations and projections may land below an exact reference, and so may a sampled
-// bound without an error bar below a record. The axis shows the absolute value, so such a
-// row is `below`; it is `under` when it lies below by more than twice the joint error bar
-// and further than the floor, which the exact-referenced figures leave undrawn unless the
-// row is flagged. `shown` is
-// the height those figures draw: the gap, but never less than the row's own relative error bar.
+// Every non-exact row with a bound type, flagged rows included and marked, except a row
+// flagged wrong-instance, whose energy belongs to another instance. `gap` is relative to the
+// reference energy. Extrapolations and projections may land below an exact reference, and a
+// sampled bound without an error bar may land below a record; the axis shows the absolute
+// value, so such a row is `below`. It is `under` when it lies below by more than twice the
+// joint error bar and further than the floor; the exact-referenced figures leave it undrawn
+// unless it is flagged. `shown` is the height those figures draw: the gap, but never less
+// than the row's own relative error bar.
 function points(inst, ref) {
   return inst.rows
     .filter(r => r.bound_type in BOUNDS && r.defect?.flag !== "wrong-instance" && r !== ref.row)
@@ -108,8 +92,8 @@ const floored = all.filter(p => p.shown < FLOOR).length;
 const lifted = all.filter(p => p.shown > p.gap).length;
 const UNDER = `${under} ${under === 1 ? "row lies" : "rows lie"} below the exact energy by more than twice the error bar and ${under === 1 ? "is" : "are"} not drawn.`;
 const Y_LABEL = "relative gap to the instance's exact energy (lower is better)";
-// The largest size at which the overview draws a model other than Heisenberg or Hubbard
-// (2026-09-18: the subtitle says so, and points to the per-Hamiltonian figures).
+// The largest size at which the overview draws a model other than Heisenberg or Hubbard; the
+// subtitle states it.
 const LAST_OTHER = Math.max(...all.filter(p => !["Heisenberg", "Hubbard"].includes(p.inst.model)).map(p => p.inst.n_sites));
 
 // ------------------------------------------------------ 1. every row against an exact energy
@@ -119,7 +103,7 @@ write("size-vs-accuracy", t => {
     `Above size ${LAST_OTHER} there are only Heisenberg and Hubbard model results, because they have an exact ground-state energy as reference. For other Hamiltonians at larger system sizes, see below.`);
   const lg = legend(t, [
     { kind: "dot", color: t.series[0], label: "Variational bound" },
-    { kind: "dot", color: t.series[1], label: "Projected (fixed-node)" },
+    { kind: "dot", color: t.series[1], label: "Projected" },
     { kind: "dot", color: t.series[2], label: "Extrapolated" },
     { kind: "dot", color: t.series[3], label: "Exact and exact (stochastic)" },
     FLAGGED(t),
@@ -129,7 +113,7 @@ write("size-vs-accuracy", t => {
   const { X, Y } = logPlot(t, parts, { left, right, top, bottom, x0: X0, x1: X1, y0: Y0, y1: Y1, xTicks: XT, xLabel: "sites", yLabel: Y_LABEL, exact: true });
   parts.push(...marks(t, [...all, ...exacts], X, Y, p => t.series[p.exact ? 3 : BOUNDS[p.r.bound_type]]));
   const fn = footnote(t, "Height is |E − E_exact| / |E_exact| on a log scale, so that a better energy is lower. " +
-    "Hovering over a dot lists the result and clicking leads to the table entry and source.", bottom + EXACT_RISE + 58);
+    "On the site, hovering over a dot lists the result, and clicking it opens the table entry and source.", bottom + EXACT_RISE + 58);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, "The best published energies, by system size",
     `Number of sites (x) against relative gap to the exact ground-state energy (y, log scale, lower is better) for ${all.length} published energies and ${exacts.length} exact energies on ${exactRef.length} exactly solved instances.`, parts);
@@ -137,12 +121,10 @@ write("size-vs-accuracy", t => {
 
 // ------------------------------------------------------------- 2. the same, by method family
 // Small multiples on shared axes: the family's rows in colour over every row in grey,
-// with the family's best gap at each size as a line. Same caveat as above about the line:
-// it joins different Hamiltonians, so it shows the family's reach, not one problem.
-// The grey backdrop is the same cloud in every panel, so it is drawn once and placed with
-// <use>: every row, the panel's own family included, since a coloured mark's surface ring
-// covers its grey twin. One copy instead of one per panel took the file from 334 KB to
-// 126 KB with the row links added, small enough for the front page to inline.
+// with the family's best gap at each size as a line, which joins different Hamiltonians.
+// The grey backdrop is the same in every panel, so it is drawn once and placed with <use>:
+// every row, the panel's own family included, since a coloured mark's surface ring covers
+// its grey twin. One copy keeps the file small enough for the front page to inline.
 write("size-vs-accuracy-by-family", t => {
   const names = [...FAMILIES.map(f => f[0]), "other"].filter(f => all.some(p => p.fam === f));
   const cols = 2, rows = Math.ceil(names.length / cols);
@@ -169,8 +151,8 @@ write("size-vs-accuracy-by-family", t => {
   });
   const y = top0 + (rows - 1) * pitch + plotH + EXACT_RISE + 62;
   const fn = footnote(t, "Each method name belongs to one family (scripts/method_names.mjs); 'other' holds exact methods and names no family covers. " +
-    "A slashed mark is a flagged row, and a number counts the rows a mark holds. Axes, the exact line and the error-bar floor as in the figure above: " +
-    `a better energy is lower. ${UNDER}`, y);
+    "A slashed mark is a flagged row, and a number counts the rows a mark holds. Axes and the exact line as in the figure above: " +
+    `a better energy is lower. No dot sits closer to exact than its own error bar. ${UNDER}`, y);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, "The best published energies by system size, one panel per method family",
     names.map(f => `${f}: ${all.filter(p => p.fam === f).length} energies`).join("; "), parts);
@@ -268,7 +250,7 @@ for (const f of FIGS) write(f.name, t => {
   const h = header(t, title,
     `${f.panels.length === 1 ? "One Hamiltonian" : `${f.panels.length} Hamiltonians, one panel per set of couplings`}, at every size with a published result. ` +
     "Each size is placed against its exact energy where it has one (sizes in grey), otherwise against the standing record (sizes in orange), " +
-    "whose holder then sits in the band above the plot. One line per method family through its best energy at each size; a better energy is higher.");
+    "whose holder then sits in the band above the plot. One line per method family through its best energy at each size. Here the axis is inverted: a better energy is higher.");
   const lg = legend(t, [
     { kind: "line", color: t.series[0], label: "Best at each size" },
     { kind: "line", color: t.recessive[1], label: "One method family" },
@@ -279,8 +261,8 @@ for (const f of FIGS) write(f.name, t => {
   const parts = [h.svg, lg.svg];
   const end = grid(f.panels.length, lg.bottom + 90, { plotH: f.panels.length === 1 ? 240 : 200, gap: 120,
     draw: (k, box) => ladderPanel(t, parts, f.panels[k], box) });
-  const fn = footnote(t, "Sizes are numbers of sites. A family's line joins its best energy at each size, whichever paper set it, so a line is a family's " +
-    "reach rather than one calculation. Where the reference is the record, the heights say how far behind the others are and nothing about the record itself.", end + 44);
+  const fn = footnote(t, "Sizes are numbers of sites. A family's line joins its best energy at each size, whichever paper set it, so one line can join " +
+    "several calculations. Where the reference is the record, the heights show how far the other rows are from it, and nothing about the record itself.", end + 44);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, title, f.panels.map(L => `${L.title}, sizes ${L.sizes.join(", ")}`).join("; "), parts);
 });

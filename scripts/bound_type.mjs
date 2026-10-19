@@ -1,19 +1,19 @@
-// bound_type classifier for VarBench method strings. First match wins; order is load-bearing.
+// bound_type classifier for VarBench method strings. First match wins, so the order of the rules matters.
 export const RULES = [
   // 0. Explicitly disclaimed by VarBench itself as not a strict upper bound
   [/no strict upper bound|constraint release/i, "projected"],
   // 1. Projector / constrained methods: bound only within a constraint, or biased.
-  //    NOTE: p-step Lanczos is deliberately NOT here - it is a strict variational upper bound.
+  //    p-step Lanczos is not here: it is a strict variational upper bound.
   [/fixed[- ]node|^fn\b|\bfn on the state\b|\bcp[- ]afqmc\b|constrained[- ]path|\bgfmc\b|green'?s function monte carlo|\bpower method\b/i, "projected"],
-  // 2. Variational circuits BEFORE the exact rule: "exact grad" / "exact grads & metric"
+  // 2. Variational circuits come before the exact rule: "exact grad" / "exact grads & metric"
   //    describes how the gradient was computed, not the energy. 21 VQE rows depend on this.
   [/\bvqe\b|\bcircuit\b|\bpqc\b|variational quantum/i, "variational"],
   // 3. Numerically exact / exactly solved.
-  //    NOTE: "QMC (continuous-time expansion)" and bare "QMC" are deliberately NOT here:
-  //    the string does not say ground-state projector vs finite temperature. Both fall
-  //    through to null and are classified per row in corrections.mjs (the six t-V rows are
-  //    VarBench's own sign-free projector LCT-INT runs, the Heisenberg square_100_O row the
-  //    ALPS loop algorithm at T = 1e-4; exact (stochastic) since 2026-09-19).
+  //    "QMC (continuous-time expansion)" and bare "QMC" are not here: the string does not say
+  //    ground-state projector or finite temperature. Both fall through to null and are
+  //    classified per row in corrections.mjs (the six t-V rows are VarBench's own sign-free
+  //    projector LCT-INT runs, the Heisenberg square_100_O row the ALPS loop algorithm at
+  //    T = 1e-4; both are exact (stochastic)).
   [/exact diagonalization|exact solution|numerically exact|full configuration interaction|\bfci\b|\bbethe ansatz\b/i, "exact"],
   // 4. Extrapolation is the reported number (bond dim, zero-variance, Trotter)
   [/extrapolat/i, "extrapolated"],

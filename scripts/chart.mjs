@@ -1,5 +1,5 @@
 // The drawing kit shared by every figure script (figures.mjs, size_accuracy.mjs,
-// pareto.mjs): themes, text metrics, marks, legend, header, footnote and the SVG document.
+// size_energy.mjs, pareto.mjs): themes, text metrics, marks, legend, header, footnote and the SVG document.
 //
 // Every figure is written twice, light and dark. GitHub chooses between the two with a
 // <picture> element keyed on the viewer's GitHub theme; an SVG that switched itself on
@@ -9,7 +9,7 @@
 // figure changes in git exactly when its numbers do.
 //
 // Colours are the validated default palette of the dataviz method (categorical slots in
-// fixed order, an ordinal blue ramp, recessive greys). Nothing here is picked by eye.
+// fixed order, an ordinal blue ramp, recessive greys).
 import fs from "node:fs";
 import { rowId } from "./summary.mjs";
 
@@ -100,8 +100,8 @@ export function tri(t, x, y, color, filled, href) {
 
 // A flagged row (RULES.md 6.1) is drawn where its energy puts it, as an outline with a
 // slash across it: the reader sees the number and that it is contested, and the row says
-// why. It is drawn last and has no surface under it, so the mark it sits on - often the
-// record, which a flagged extrapolation tends to coincide with - stays visible through it;
+// why. It is drawn last and has no surface under it, so the mark it sits on (often the
+// record, which a flagged extrapolation tends to coincide with) stays visible through it;
 // the halo under the slash keeps the slash legible on a filled mark of its own colour.
 // `base` is the shape, "dot" or "tri".
 export function slashed(t, x, y, color, href, base = "dot") {
@@ -200,7 +200,7 @@ const ABBREVIATED = { "Hierarchical backflow": "HB", "Residual hierarchical back
   "Transformer backflow": "Transformer BF", "Tensor backflow": "Tensor BF", "Slater-backflow-Jastrow": "SBJ" };
 const LABEL_MAX = 26;
 // A row QMBL computed itself (DATA.md, computed_by) is marked "QMBL" in its label, in every
-// figure, so it is never read as a published result (2026-09-23).
+// figure, so it is never read as a published result.
 // A label names a slot's groups or limit without the slot's key ("aCNN (C4v)", "RNN (variance
 // → 0)"), and a slot that names no group by its key alone ("GCNN (deep, projected)");
 // method_names.mjs describes the slots.

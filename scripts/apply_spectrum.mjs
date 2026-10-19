@@ -1,14 +1,9 @@
-// A diagonalization resolved by symmetry sector states the lowest energy in each sector, and
-// only the ground state's sector is a ground-state energy. That row stays a row and holds the
-// record; every other sector's minimum leaves the rows for the instance's `spectrum` (DATA.md;
-// ruled 2026-09-16 and reconfirmed 2026-09-30 for J1J2/triangular_48_P_0.125). A level
-// of the spectrum is not a result, and as a row it had to be excluded by every consumer in turn.
-//
-// Runs once the rows are final, after the overlays and the method names (which assign `sector`):
-// a correction or verification written against a sector row lands on it before it moves, and
-// each entry keeps the complete row. Which sector is the ground state is a ruling
-// (groundStateExact, units.mjs), never a guess, so an instance with no ground-state row keeps its
-// sector rows as rows, printed here and reported by the validator.
+// Moves each non-ground-state sector minimum from an instance's rows to its `spectrum`
+// (see DATA.md, "The lowest energy of each symmetry sector: `spectrum`"). Reads and rewrites data/.
+// Runs after the overlays and the method names (which assign `sector`), so corrections and
+// verifications land on a sector row before it moves; each spectrum entry keeps the complete
+// row. The ground-state sector comes from groundStateExact (units.mjs); an instance with no
+// ground-state row keeps its sector rows as rows, printed here and reported by the validator.
 import fs from "node:fs"; import path from "node:path";
 import { groundStateExact } from "./units.mjs";
 

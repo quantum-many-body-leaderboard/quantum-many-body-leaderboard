@@ -1,6 +1,5 @@
 // Instances whose name carries a different coupling or size from the one their rows were computed
-// at (RULES.md 11; ruling 2026-09-16, extended 2026-09-17; the impurity bath size below,
-// qmbl-verify 2026-09-29).
+// at (see RULES.md 11). Read by apply_relabels.mjs.
 //
 // VarBench's Hubbard couplings between 1 and 10 are the grid 10^(k/9). The 14-site chain
 // instances carry the grid value to eight decimals; five 4x4 instance names carry a rounded
@@ -11,7 +10,7 @@
 // below the ground state, which no eigenvalue can. The DMRG rows were run at the named U,
 // taken from the file name. Evidence and codes: checks/hubbard-u-labels/.
 //
-// So the instance moves to the grid U, and the rows computed at the named U stay behind on an
+// The instance moves to the grid U, and the rows computed at the named U stay behind on an
 // instance of their own, with the ground state at that U as its exact row (`keep`, `exact`).
 // Where the two ground states differ by less than any row could resolve, nothing stays behind.
 //
@@ -64,10 +63,9 @@ export const RELABELS = [
   },
   {
     // The DMRG run script here is a copy of the U = 10 file, so the script does not say at which U the
-    // row ran; its energy is a valid bound at 7.74264 and at 7.74263683. Until 2026-10-02 it moved with
-    // the instance. The sibling 5 + 5 script and the variance pattern of the 4 + 4 DMRG series place it
-    // at 7.74264, so it stays there with the ground state at that U (qmbl-verify 2026-09-29, VB2#46;
-    // ruling E6, 2026-10-02).
+    // row ran; its energy is a valid bound at 7.74264 and at 7.74263683. The sibling 5 + 5 script and
+    // the variance pattern of the 4 + 4 DMRG series place it at 7.74264, so it stays there with the
+    // ground state at that U.
     from: "Hubbard/square_16_P_4_7.74264", to: "Hubbard/square_16_P_4_7.74263683", params: { U: 7.74263683 },
     reason: "The name's 7.74264 rounds the coupling of this Hamiltonian, 7.74263683 (10^(8/9)). The exact diagonalization, -16.509154825265142, is the ground state there; at U = 7.74264 the ground state is 6.1e-7 higher, so the stored exact energy sat below the ground state of the instance as named.",
     keep: [{ method: "DMRG (MaxBondDim ~3200)", energy: -16.5091541,
@@ -77,8 +75,7 @@ export const RELABELS = [
   {
     // Ground states at the two couplings differ by 3.0e-9. The DMRG row, run at 4.64158882, resolves
     // them: its variance puts it within 7e-11 of the ground state there, and it sits 2.2e-9 below the
-    // one at 4.64158883. Until 2026-10-02 it moved with the instance, inside the validator's 1e-8 band;
-    // now it stays at its own U (qmbl-verify 2026-09-29, VB2#15; ruling E6, 2026-10-02).
+    // one at 4.64158883, inside the validator's 1e-8 band. It stays at its own U.
     from: "Hubbard/chain_14_P_4_4.64158882", to: "Hubbard/chain_14_P_4_4.64158883", params: { U: 4.64158883 },
     reason: "The name's 4.64158882 misrounds the coupling of this Hamiltonian, 4.6415888336 (10^(6/9)). The exact diagonalization, -10.896957984833337, is the ground state at U = 4.64158883 and 3.03e-9 above the ground state at 4.64158882.",
     keep: [{ method: "DMRG (MaxBondDim ~1500)", energy: -10.896957987,
@@ -86,8 +83,7 @@ export const RELABELS = [
     exact: [-10.896957987861226, -10.896957987860604],
   },
   {
-    // qmbl-verify 2026-09-29, VA2-10-1103-physrevx-7-031013#2 and #5 (skeptic upheld). Nothing was
-    // computed at nine bath sites, so both rows move and nothing stays behind.
+    // Nothing was computed at nine bath sites, so both rows move and nothing stays behind.
     from: "Impurity/SB-DMFT-MI-HF_9", to: "Impurity/SB-DMFT-MI-HF_10", params: {}, n_sites: 10,
     reason: "The name's 9 is the run script's Nbath (varbench/methods scripts/Impurity/SB-DMFT-MI-HF_9.py, line 17); at U = 8 and half filling the script discretises the bath with Nb = Nbath + 1 = 10 sites per spin-orbital (lines 41-44), and the Hamiltonian file it was run on (HamParams/SB-DMFT-MI_9.h5) holds ten. Both rows were computed there: QMBL's exact diagonalization on eleven orbitals per spin (the impurity and ten bath sites; N_up = 6, N_dn = 5, dimension 213444) reproduces both to 1e-13, and the stored E_inf follows only from the ten-site bath.",
     keep: [], exact: null,

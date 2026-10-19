@@ -2,7 +2,7 @@
 // apply_defects.mjs and apply_removals.mjs, whose matches are written against the uncorrected
 // values, and before apply_method_names.mjs and validate.mjs, which must see the corrected ones.
 //
-// Every entry is matched against the rows as they stand BEFORE this script changes anything,
+// Every entry is matched against the rows as they stand before this script changes anything,
 // so two corrections on one row (say energy and sigma) both match the original energy.
 import fs from "node:fs";
 import { CORRECTIONS } from "./corrections.mjs";
@@ -12,13 +12,13 @@ import { vScore, publishedMethod, isSampled } from "./units.mjs";
 const FIELDS = new Set(["energy", "sigma", "energy_variance", "dof", "einf", "method", "bound_type", "reference", "peer_reviewed", "provenance", "baseline", "sampled", "defect"]);
 // Fields inside a block another script writes: a compute pass's statement (add_compute.mjs) and a
 // verification's note. A pass that is read again rewrites its block, so an entry here states what it
-// replaces, `from`, or for text the one passage it rewrites, `edit: [old, new]`, and the build stops
-// when the block no longer holds that, rather than overwrite a newer reading unseen. A correction
-// never creates a block: a statement nobody recorded is a compute pass's to add.
+// replaces, `from`, or for text the one passage it rewrites, `edit: [old, new]`. The build stops
+// when the block no longer holds that value, so a newer reading is never overwritten unseen. A
+// correction never creates a block: only a compute pass adds a statement.
 const NESTED = {
   compute: new Set(["parameters", "gpu_hours", "device", "n_devices", "samples", "wall_clock", "cpu_core_hours",
     "bond_dimension", "iterations", "reported_as", "source", "scope", "confidence", "note"]),
-  // secondary_of names the paper a quoted number was read in; a later reading may find that paper
+  // secondary_of names the paper a quoted number was read in; a new reading may find that paper
   // produced it (it is then the row's reference, and the reading was of the primary source)
   verified: new Set(["note", "secondary_of"]),
 };

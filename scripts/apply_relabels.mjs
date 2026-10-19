@@ -1,10 +1,9 @@
 // Apply scripts/relabels.mjs: move each listed instance to its corrected name, parameters and
 // size, leaving behind, on an instance of their own, the rows computed at the old coupling.
 //
-// Runs after every script that attaches rows, compute or coverage by instance id (they were
-// written against VarBench's names) and before the defects, removals and corrections, which
-// name the instances as they are after this. A pass that has already written to the new id
-// is merged into, not overwritten.
+// Runs after every script that attaches rows, compute or coverage by instance id (they use
+// VarBench's names) and before the defects, removals and corrections, which use the names
+// after this step. If a pass has already written to the new id, the rows are merged into it.
 import fs from "node:fs";
 import { RELABELS } from "./relabels.mjs";
 import { expectedEinf, vScore, publishedMethod } from "./units.mjs";

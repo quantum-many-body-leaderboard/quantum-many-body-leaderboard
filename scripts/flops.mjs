@@ -1,44 +1,8 @@
-// What a row's optimisation cost in floating-point operations, ESTIMATED from what its paper
-// states (DATA.md, "How a FLOP count is estimated"). Nothing here is stored: the estimate is
-// evaluated at build time from the row's `compute` block and its instance, and every figure
-// that draws one says so. The stored fields stay as reported (DATA.md, "Never estimated").
-//
-// The first model, `nqs-v1`, counts network evaluations (`nqs-v2`, below, adds what the run states
-// about how it evaluated the network; without such statements it is nqs-v1). One optimisation step draws `samples`
-// configurations and, for each, evaluates the network for the local energy (once per
-// off-diagonal Hamiltonian term that connects to the configuration), for the sampler (one
-// sweep of N single-site proposals for Markov-chain sampling, one pass for an autoregressive
-// draw) and for the gradient (forward plus backward, three forward-equivalents):
-//
-//   FLOPs = iterations x samples x (n_conn + k_sample + 3) x FLOPs_forward
-//   FLOPs_forward = 2 x parameters x reuse (+ 2/3 N_e^3 for a determinant or Pfaffian)
-//
-// `reuse` is how many times a weight is applied in one forward pass: once in a dense
-// network, once per site in a convolution or a recurrent cell, once per patch in a vision
-// transformer. `n_conn` is a property of the instance (bonds for Heisenberg, sites for the
-// transverse-field Ising model, four per bond for Hubbard). Excluded, and stated on every
-// surface that shows the estimate: the stochastic-reconfiguration solve, symmetry projections
-// that sum the network over a point group, attention scores, and any pre-training on smaller
-// lattices. Under nqs-v2 the published rows that also state hours on a named GPU run at 5-60 %
-// of their device's peak in the precision they used, and QMBL's own runs at 0.26-3.7 TFLOP/s on one
-// A100, so an estimate is good to about an order of magnitude and never better (calibration
-// table in DATA.md). Three rules follow from that:
-//
-// - An input nobody stated is never guessed. Parameters, samples and iterations must all be
-//   on the row; the architecture must be in ARCH; the instance's lattice must be one whose
-//   bond count is written below. Otherwise there is no estimate.
-// - Estimates and reported hours never share an axis. FLOPs cannot be turned into hours
-//   without a conversion factor, and DATA.md forbids that conversion.
-// - Confidence is `medium` when the inputs are the row's own and the architecture is fully
-//   stated, `low` when an architectural assumption was needed (a transformer whose patch
-//   size is not stated) or the compute block is itself low confidence.
-//
-// DMRG has its own model, `dmrg-v1` (below), for rows whose compute block carries the sweep
-// schedule the run script states: the 99 VarBench DMRG rows (read from their scripts, compute
-// pass 2026-09-23) and QMBL's own DMRG rungs. A DMRG row from a paper states no sweep schedule
-// and gets no estimate; a PEPS needs its contraction dimension; the 28 impurity FTPS rows are
-// not on any cost figure. The four exact-diagonalization rows that state seconds per
-// matrix-vector product do not state the Lanczos iteration count.
+// Estimates what a row's optimisation cost in floating-point operations from what its paper
+// states: models nqs-v1, nqs-v2, dmrg-v1, mvmc-v2 and vqe-v1. Reads a row's `compute` block and
+// its instance; stores nothing. The site and the figure scripts call it at build time.
+// See DATA.md, "How a FLOP count is estimated", for the formulas, what is excluded, the
+// calibration and the rules (no input is guessed; estimates never share an axis with hours).
 
 import fs from "node:fs";
 
@@ -47,8 +11,7 @@ import fs from "node:fs";
 // the entry's `patch`), "group" (sites x the lattice's point group, a group convolution's
 // kernel applied at every element of the space group; sites alone where the method detail
 // says translations), or a number; `sampling` is "mcmc" or "ar" (autoregressive); `det` adds
-// the determinant or Pfaffian of a fermionic state. Entries after Tensor backflow: compute
-// pass 2026-09-24.
+// the determinant or Pfaffian of a fermionic state.
 export const ARCH = {
   "RBM": { reuse: "sites", sampling: "mcmc", note: "translation-symmetric RBM: each hidden unit is evaluated at every translation" },
   "RBM (dense)": { reuse: 1, sampling: "mcmc", note: "dense RBM (NetKet's nk.models.RBM): every weight is applied once" },
@@ -74,7 +37,7 @@ export const ARCH = {
   "ACE": { reuse: "sites", sampling: "mcmc", det: true },
   // SCALE (local updates of at most 18 sites per move) and the transformer backflow (attention and several
   // determinants) are not in the model: against the per-step times their paper measures (arXiv:2604.25775)
-  // nqs counting is 10x off in each direction (verification of 2026-09-25), so they get no estimate.
+  // nqs counting is 10x off in each direction, so they get no estimate.
   "NNBF": { reuse: 1, sampling: "mcmc", det: true, note: "the MLP backflow, one pass per configuration; several determinants and symmetry projections are not counted" },
 };
 
@@ -82,11 +45,10 @@ export const ARCH = {
 // QMBL's own `α = 1` run are NetKet's dense RBM; the plain "RBM" entry is the translation-symmetric one.
 // An RBM whose detail names the groups it is projected onto (Nomura's K = 0, A1, parity projected RBM) is dense too; its
 // projection sum is the row's evaluation.evaluations_per_amplitude.
-// A row renamed after it was estimated keeps the architecture it was estimated as, by its published
-// string: the ResNet1 of Heisenberg/square_100_P was the short name CNN until the verification pass
-// of 2026-09-29 named it ResNet, and stays costed as a CNN. No ResNet entry, which would give the
-// other ResNet rows estimates nobody has checked (2026-10-02). The same holds for the 10x10
-// ResNet2 of 34,944 parameters, a "Deep CNN" until its re-identification (ruling E4, 2026-10-02).
+// ESTIMATED_AS maps a published string to the architecture its estimate uses where the short
+// name has no ARCH entry: the ResNet1 of Heisenberg/square_100_P and the 10x10 ResNet2 of 34,944
+// parameters are costed as CNNs. There is no ResNet entry, so other ResNet rows get no estimate
+// until their architecture is checked.
 const ESTIMATED_AS = { "ResNet1 (MinSR)": "CNN", "ResNet2": "CNN" };
 export const archOf = r => ARCH[ESTIMATED_AS[r.method_as_published ?? r.method] ?? (r.method === "RBM" && (/^α = \d+(, QMBL run(, H100 size ladder)?)?$/.test(r.method_detail || "") || /\bprojected: (?!unspecified)/.test(r.method_detail || "")) ? "RBM (dense)" : r.method)];
 
@@ -129,7 +91,7 @@ function nnnBondsOf(inst) {
 // local energy to every bond) every term counts. With "nonzero" (a code that evaluates only
 // non-vanishing matrix elements, the row's `evaluation.local_energy`) a spin bond counts when
 // its spins are antiparallel, two thirds of them in the antiferromagnetically correlated
-// configurations these codes sample (0.63-0.73 measured, verification 2026-09-25), and a hop when its target is empty:
+// configurations these codes sample (0.63-0.73 measured), and a hop when its target is empty:
 // N_e x z x (1 - n_sigma), which at doping 1/8 is a quarter of the four-per-bond count.
 export function connectedOf(inst, rule = "all") {
   const b = bondsOf(inst);
@@ -168,8 +130,8 @@ export function flopsOf(r, inst) {
   return nqsFlopsOf(r, inst);
 }
 
-// `nqs-v2` (2026-09-27, after the verification of 2026-09-25): nqs-v1 plus what the run
-// states about how it evaluated the network (the block's `evaluation`, DATA.md). Per stage
+// `nqs-v2`: nqs-v1 plus what the run states about how it evaluated the network (the block's
+// `evaluation`, DATA.md). Per stage
 //   FLOPs = iterations x samples x [(n_conn + 3) x m + proposals x (m, or 1 for an autoregressive draw)] x forward
 //         + iterations x SR
 //   forward = c_x x 2 x ((P - head) x reuse + head) (+ c_x x (2/3) N_e^3 for a determinant)
@@ -177,14 +139,13 @@ export function flopsOf(r, inst) {
 // sized by the Jacobian the code builds (below). Without an `evaluation` block every factor takes its
 // nqs-v1 value.
 // Where the forward pass was counted from the program JAX traces for the network
-// (`evaluation.forward_flops`, QMBL's own runs: checks/cost/forward_flops.py, 2026-09-29),
+// (`evaluation.forward_flops`, QMBL's own runs: checks/cost/forward_flops.py),
 // that count replaces the modelled forward; everything else in the formula stays.
 // The SR term is sized by the matrix the code solves (`evaluation.jacobian`, read from the code;
-// 2026-09-29, after the counted SR steps of checks/cost/sr_flops.py matched NetKet's modes
-// exactly): "real", a real S x P Jacobian; "complex", NetKet's complex mode, which stacks the real
+// the counted SR steps of checks/cost/sr_flops.py match NetKet's modes exactly): "real", a real S x P Jacobian; "complex", NetKet's complex mode, which stacks the real
 // and imaginary parts of a complex output (2S rows) and splits complex parameters into real pairs
 // (P_r columns), all in real arithmetic; "holomorphic", a complex S x P Jacobian (4 real FLOPs per
-// complex one). Without the statement, S x P with c_x = 2 for complex parameters, as before.
+// complex one). Without the statement, S x P with c_x = 2 for complex parameters.
 // QMBL's own runs carry their counted SR step (`evaluation.sr_counted`) and use it instead.
 function srFlops(sr, P, S, cx, forward, m) {
   switch (sr?.kind) {
@@ -222,7 +183,7 @@ function nqsFlopsOf(r, inst) {
   } else reuse = arch.reuse;
   // Complex weights on real inputs: 4 real FLOPs per multiply-add, not 2. A JAX code (NetKet, jVMC, ...)
   // promotes the real input to complex, so every multiply-add is complex by complex, 8 FLOPs: counted
-  // on QMBL's own networks (checks/cost/forward_flops.py), c_x = 4 there (2026-09-29). The SR
+  // on QMBL's own networks (checks/cost/forward_flops.py), c_x = 4 there. The SR
   // term has its own factor: c_x = 2 unless `evaluation.jacobian` says how the code builds its matrix.
   const jaxCode = /netket|\bjax\b|jvmc|flax|quantax/i.test(ev.code || "");
   const cx = ev.complex ? (jaxCode ? 4 : 2) : 1, cxSR = ev.complex ? 2 : 1;
@@ -343,7 +304,7 @@ function vqeFlopsOf(r, inst) {
 // dimension the row states, and the exact limit min(d^b, d^(N-b)). D is 2 + k x (the largest
 // number, over the cuts of the site order the script uses, of sites on one side with a coupling
 // across it, taking the smaller side), k the operators per bond (3 for S+S- + S-S+ + SzSz, 1 for
-// the Ising ZZ, 3 for tV, 4 for the two spin species' hops) — the rank bound an OpSum or MPO graph
+// the Ising ZZ, 3 for tV, 4 for the two spin species' hops): the rank bound an OpSum or MPO graph
 // reaches; a code that logs its MPO (TeNPy) gives D directly. Not counted, and said with every
 // estimate: the saving from conserved quantum numbers (block-sparse tensors; the model is dense),
 // the noise or mixer term, the eigensolver's orthogonalisation, and memory traffic.

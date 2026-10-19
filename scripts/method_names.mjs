@@ -1,5 +1,5 @@
 // Every published method string, mapped to a short name, the detail that tells rows of the
-// same method apart, and the method family (2026-09-17). The published string stays
+// same method apart, and the method family. The published string stays
 // on the row as `method_as_published`; nothing here changes an energy or a bound_type.
 //
 // `method` is the name alone. `detail` carries what distinguishes a row: architecture size,
@@ -11,14 +11,14 @@
 // the detail, since compute holds only what was stated exactly.
 //
 // Entry: [method, detail, extra], extra = { family, bond_dimension, parameters, samples,
-// sector, extrapolated, instance_detail } - `extrapolated` replaces the detail on the row VarBench
+// sector, extrapolated, instance_detail }. `extrapolated` replaces the detail on the row VarBench
 // printed as an extrapolation inside a DMRG string (emit.mjs), which shares the string with its
 // finite-bond-dimension row. `instance_detail` ({ instance: detail }) replaces it on the instances
 // named, where one printed label names different networks: a corrected published string quotes
-// the source's label, and what tells the rows apart is the detail (2026-10-02).
+// the source's label, and what tells the rows apart is the detail.
 //
 // Symmetry and extrapolation are written in slots, after the free text and separated from it
-// and from each other by "; ", in this order (2026-09-29):
+// and from each other by "; ", in this order:
 //   symmetric: <groups>     built into the ansatz or the tensors, or named without saying how
 //   projected: <groups>     projected onto, as the source says
 //   extrapolated: <X → 0 or χ → ∞> (<how>)
@@ -33,7 +33,7 @@ export const SYMMETRY_TERMS = new Set(["SU(2)", "U(1) charge", "U(1) spin", "tra
   "C4", "C4v", "C6v", "sublattice", "full symmetry group", "unspecified",
   "unspecified (symmetry optimization)", "unspecified (symmetrized variants)"]);
 const SLOTS = ["symmetric", "projected", "extrapolated"];
-const EXTRAPOLATION = /^(?:(?:variance|truncation error|Δτ|1\/M) → 0|χ → ∞)(?: \([^()]+\))?$/; // 1/M: the one-particle basis size (track 2, 2026-10-17)
+const EXTRAPOLATION = /^(?:(?:variance|truncation error|Δτ|1\/M) → 0|χ → ∞)(?: \([^()]+\))?$/; // 1/M: the one-particle basis size (track 2)
 // Symmetry or extrapolation wording outside a slot. A Gutzwiller projection removes double
 // occupancy; it is part of the state, not a symmetry.
 const LOOSE = /symmetr|projection|(?<!Gutzwiller)-projected|→ [0∞]|extrapolat/i;
@@ -71,7 +71,7 @@ export const NAMES = {
   "QMC": ["QMC", "loop algorithm, ALPS, T = 1e-4, converged in T"],
   "QMC (stochastic series expansion)": ["SSE QMC", ""],
   "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64": ["SSE QMC", ""],
-  "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64": ["SSE QMC", ""], // L > 30 in Sandvik's Table 1 (qmbl-verify 2026-10-15)
+  "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 64": ["SSE QMC", ""], // L > 30 in Sandvik's Table 1
   "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32": ["SSE QMC", ""], // arXiv:2601.20189 Sec. IV: the open L x L and L x 2L tables ran at beta/L = 32 only
   "QMC (continuous-time expansion)": ["CT-QMC", "ground-state projector, Θ = 40, free-fermion trial state; LCT-INT of PRB 91, 235151"],
   "AFQMC (Metropolis), numerically exact": ["AFQMC", ""],
@@ -89,7 +89,7 @@ export const NAMES = {
 
   // ---------------------------------------------------------------- tensor networks
   "DMRG": ["DMRG", ""],
-  // A deterministic energy needs no sigma (RULES.md 6); a bracket its source prints goes to the detail (ruling E3, 2026-10-02).
+  // A deterministic energy needs no sigma (RULES.md 6); a bracket its source prints goes to the detail.
   "DMRG (8x4)": ["DMRG", "truncation error ~1e-5; printed -0.736329(9) per site"], // PRB 113, 245104, Fig. 2 caption: "a bond dimension of 8000 with maximum truncation error of ≃1×10−5"; Table I
   "DMRG keeping 4096 states": ["DMRG", "", { bond_dimension: 4096 }],
   "DMRG on the L x L torus, 4096 SU(2) states": ["DMRG", "symmetric: SU(2)", { bond_dimension: 4096 }],
@@ -100,7 +100,7 @@ export const NAMES = {
   "DMRG, truncation-error extrapolated (Torus 4)": ["DMRG", "extrapolated: truncation error → 0"],
   "DMRG, truncation-error extrapolated (Torus 6)": ["DMRG", "extrapolated: truncation error → 0"],
   "SU(2) DMRG, extrapolated (χ→∞, linear fit vs two-site variance), snake path": ["DMRG", "snake path; symmetric: SU(2); extrapolated: χ → ∞ (linear in two-site variance)"],
-  "DMRG on TPU (bond dimension = 32768)": ["DMRG", "on TPUs; printed -3.18197(2) per site", { bond_dimension: 32768 }], // PRX Quantum 4, 010317, Fig. 3 caption (ruling E3)
+  "DMRG on TPU (bond dimension = 32768)": ["DMRG", "on TPUs; printed -3.18197(2) per site", { bond_dimension: 32768 }], // PRX Quantum 4, 010317, Fig. 3 caption
   "DMRG (max truncation error ~ 1.0E-12)": ["DMRG", "truncation error ~1e-12"],
   "DMRG (max truncation error ~ 1.0E-13)": ["DMRG", "truncation error ~1e-13"],
   "DMRG (max truncation error ~ 1.0E-14)": ["DMRG", "truncation error ~1e-14"],
@@ -147,7 +147,7 @@ export const NAMES = {
   "2D RNN wavefunction, zero-variance extrapolation": ["2D RNN", "extrapolated: variance → 0"],
   "2D tensorized-GRU RNN wavefunction, best variational": ["2D RNN", "tensorized GRU"],
   "2D tensorized-GRU RNN, zero-variance extrapolation": ["2D RNN", "tensorized GRU; extrapolated: variance → 0"],
-  "2D minGRU (ours)": ["minGRU", "6 layers, d_h = 512, b = 2; symmetric: C4v"], // arXiv:2605.13807 Table 4: the cold-start network (compute pass 2026-09-27)
+  "2D minGRU (ours)": ["minGRU", "6 layers, d_h = 512, b = 2; symmetric: C4v"], // arXiv:2605.13807 Table 4: the cold-start network
   "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)": ["minGRU", "3 layers, d_h = 256, b = 2, iterative retraining; symmetric: C4v"], // Table 5
   "2D pRNN wave function (Marshall-sign-rotated, GRU cell, d_h=200) + Adam optimizer": ["pRNN", "GRU, hidden dimension 200, Marshall sign, Adam"],
   "2D pRNN wave function (Marshall-sign-rotated, GRU cell, d_h=200) + minSR optimizer (regularized)": ["pRNN", "GRU, hidden dimension 200, Marshall sign, MinSR"],
@@ -214,7 +214,7 @@ export const NAMES = {
   // one (more than one million parameters, p. 3) in Fig. 2b.
   "ResNet2 (MinSR)": ["ResNet", "16 conv layers, 16 channels, MinSR", { instance_detail: { "J1J2/square_100_P_0.5": "30 conv layers, 64 channels, more than one million parameters, MinSR" } }],
   // The 34,944-parameter ResNet2 on 10x10, labelled as in the authors' figure data (data/Fig2b.csv), which is
-  // where its energy is printed; Rende et al. quote it as a 146,320-parameter "Deep CNN" (ruling E4, 2026-10-02).
+  // where its energy is printed; Rende et al. quote it as a 146,320-parameter "Deep CNN".
   "ResNet2": ["ResNet", "16 conv layers, 16 channels, MinSR"],
   "ResNet2 MinSR, zero-variance extrapolation": ["ResNet", "MinSR; extrapolated: variance → 0"],
   "ConvNext (6,3,3)[2,2], 2.6e5 params": ["ConvNeXt", "(6,3,3)[2,2]", { parameters: 2.6e5 }],
@@ -415,8 +415,9 @@ export const NAMES = {
 };
 
 // A short name whose rows all belong to one family, so the family never depends on which
-// published spelling a row carries ("Exact diagonalization (Lanczos)" was classic VMC, "CNN1 (VMC,
-// 100 SR steps)" classic VMC, "2D Recurrent Neural Network (2DRNN)" other NQS). Names missing here
+// published spelling a row carries (by spelling alone, "Exact diagonalization (Lanczos)" would be
+// classic VMC, "CNN1 (VMC, 100 SR steps)" classic VMC, "2D Recurrent Neural Network (2DRNN)" other
+// NQS). Names missing here
 // ("VMC", split between classic and backflow states) keep the family views.mjs gives the
 // published string.
 export const FAMILY = {
@@ -425,7 +426,7 @@ export const FAMILY = {
 };
 
 // QMBL's own cost-to-reproduce runs (checks/cost/README.md): the detail says whose
-// implementation and budget the number is, since a "ViT" row here is not the authors' code.
+// implementation and budget the number is, since a "ViT" row here runs QMBL's code.
 const QMBL_RUN = ", QMBL cost-to-reproduce run";
 Object.assign(NAMES, {
   ["RBM (alpha = 1)" + QMBL_RUN]: ["RBM", "α = 1, QMBL run"],
@@ -442,7 +443,7 @@ for (const k of Object.keys(NAMES).filter(k => k.endsWith(QMBL_RUN))) {
   NAMES[k + LADDER] = [name, [head + LADDER, ...slots].join("; "), ...(extra ? [extra] : [])];
 }
 
-// Pass 2026-10-07-records (SWEEP.md): the strings its generator writes.
+// Rows of sweep-rows-2026-10-07-records.json (SWEEP.md): the strings its generator writes.
 Object.assign(NAMES, {
   "RBM+PP (6 x 6 sublattice structure)": ["RBM + PP", "6x6 sublattice structure; projected: momentum, spin parity, point group (simplified)"], // arXiv:2005.14142 note [73], 18 x 18
   "CP-AFQMC (half-filled stripe, λ = 6, fully periodic, no pinning fields)": ["CP-AFQMC", "trial state: half-filled stripe, λ = 6", { family: "AFQMC / GFMC" }],
@@ -451,7 +452,7 @@ Object.assign(NAMES, {
   // arXiv:2502.01264 Table IV: ResNet-v2 sign and amplitude networks; SLL = supervised-learning Lanczos,
   // VMCL = the Lanczos superposition with its amplitude networks re-optimised by VMC
   "NQS Lanczos SLL (p = 0)": ["ResNet", "amplitude network with the Marshall sign (initial state, no Lanczos step)", { family: "CNN / ResNet" }],
-  "CNN model with 106529 variational parameters": ["CNN", "", { parameters: 106529 }], // arXiv:2108.13830 p. 2, the paper's own label (qmbl-verify 2026-10-07)
+  "CNN model with 106529 variational parameters": ["CNN", "", { parameters: 106529 }], // arXiv:2108.13830 p. 2, the paper's own label
   "NQS Lanczos SLL (p = 1)": ["ResNet", `sign and amplitude networks, supervised-learning Lanczos, ${LANCZOS(1)}`, { family: "CNN / ResNet" }],
   "NQS Lanczos SLL (p = 2)": ["ResNet", `sign and amplitude networks, supervised-learning Lanczos, ${LANCZOS(2)}`, { family: "CNN / ResNet" }],
   "NQS Lanczos VMCL (p = 1, ANet1)": ["ResNet", `sign and amplitude networks, VMC-optimised Lanczos, ${LANCZOS(1)}`, { family: "CNN / ResNet" }],
@@ -470,7 +471,7 @@ for (let D = 2; D <= 7; D++) {
   NAMES[`PEPS (D = ${D}) + fixed-node GFMC`] = ["Fixed-node GFMC", `trial state: PEPS, D = ${D}`, { family: "AFQMC / GFMC" }];
 }
 
-// Pass 2026-10-16-nqspapers (SWEEP.md): the labels its generator writes. arXiv:2606.25600 (hyperbolic RNNs on the
+// Rows of sweep-rows-2026-10-16-nqspapers.json (SWEEP.md): the labels its generator writes. arXiv:2606.25600 (hyperbolic RNNs on the
 // open-boundary TFIM), 2111.10420 App. H, 2101.08787 Table II, 2609.22618 (tensor backflow; PF = the pinning field
 // used while optimising), 2608.12465 (SBP), 2507.10705, 2604.21978 (T = translations, R = C4 rotations), 2604.25775,
 // 2511.07566 Table V.
@@ -548,7 +549,7 @@ Object.assign(NAMES, {
   "HFPS (filled stripe, Table V)": ["HFPS", "filled stripe"],
 });
 
-// Pass 2026-10-16-heg (SWEEP.md), track 2: the labels its generator writes for arXiv:2202.04622 (WAP-net), 2305.07240
+// Rows of sweep-rows-2026-10-16-heg.json (SWEEP.md), track 2: the labels its generator writes for arXiv:2202.04622 (WAP-net), 2305.07240
 // (MP-NQS), 2604.15888, 2607.08616, 2607.25872 (Fermi Sets), 2201.03156, 2202.05183 and 2203.15472 (DeepSolid).
 Object.assign(NAMES, {
   "WAP-net (n_d = 1)": ["WAP-net", "n_d = 1", { family: "other NQS" }],
@@ -593,7 +594,7 @@ Object.assign(NAMES, {
   "DeepSolid (1 determinant)": ["DeepSolid", "1 determinant, 3 layers 256/32", { family: "other NQS" }],
 });
 
-// Pass 2026-10-17-heg-lit (SWEEP.md), track 2: arXiv:0801.0518 (López Ríos et al.), cond-mat/9803092 (Kwon, Ceperley
+// Rows of sweep-rows-2026-10-17-heglit.json (SWEEP.md), track 2: arXiv:0801.0518 (López Ríos et al.), cond-mat/9803092 (Kwon, Ceperley
 // & Martin), 1109.2635 (Shepherd et al., FCIQMC), 2103.03176 (Liao et al., CC and transcorrelated CC).
 Object.assign(NAMES, {
   "i-FCIQMC (2M = 2838 spin orbitals)": ["FCIQMC", "initiator (n_add = 3), 2838 spin orbitals", { family: "FCIQMC / CC" }],
@@ -633,7 +634,7 @@ Object.assign(NAMES, {
   "TC-DCD (k_c = 4), complete-basis limit": ["TC-DCD", "correlator cutoff k_c = 4 × 2π/L; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
 });
 
-// Pass 2026-10-19-hegcorr (SWEEP.md), track 2: correlation energies stored as QMBL Hartree-Fock + E_c (RULES.md 12.3):
+// Rows of sweep-rows-2026-10-19-hegcorr.json (SWEEP.md), track 2: correlation energies stored as QMBL Hartree-Fock + E_c (RULES.md 12.3):
 // arXiv:2202.05183 Tables I and III, 1201.4691 (FCIQMC), 1202.4990 (MP2), 1511.05752 (stochastic CC).
 Object.assign(NAMES, {
   "SJB-VMC (N = 14 table)": ["Slater-Jastrow-backflow", "single determinant"],
@@ -656,7 +657,7 @@ Object.assign(NAMES, {
   "CCSDT (initiator stochastic CC), complete-basis limit": ["CCSDT", "initiator stochastic coupled cluster at the infinite-population limit; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
 });
 
-// Pass 2026-10-19-heglit2 (SWEEP.md), track 2: the papers of the 2026-10-17 citation screen; labels carry the paper.
+// Rows of sweep-rows-2026-10-19-heglit2.json (SWEEP.md), track 2: the papers of the 2026-10-17 citation screen; labels carry the paper.
 Object.assign(NAMES, {
   "SJ-VMC [Jastrow optimised at Gamma from random starting point 1] (arXiv:2405.00425)": ["Slater-Jastrow", "Jastrow optimised at Gamma from random starting point 1"],
   "SJ-VMC [Jastrow optimised at Gamma from random starting point 2] (arXiv:2405.00425)": ["Slater-Jastrow", "Jastrow optimised at Gamma from random starting point 2"],
@@ -707,7 +708,7 @@ Object.assign(NAMES, {
   "fixed-nodes DMC [SJ trial function; time step tau = 0.01 (not ed); 4 walker numbers; 'optimal nw' 40] (arXiv:1304.7298)": ["Fixed-node DMC", "SJ trial function; time step tau = 0.01 (not ed); 4 walker numbers; 'optimal nw' 40", { family: "DMC" }],
 });
 
-// arXiv:1310.6806 channel-truncated CCD and RPA variants, track 2 `approximate` rows (RULES.md 4, 2026-10-19).
+// arXiv:1310.6806 channel-truncated CCD and RPA variants, track 2 `approximate` rows (RULES.md 4).
 Object.assign(NAMES, {
   "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["lmCCD", "ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],
   "lmrCCD [ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)": ["lmrCCD", "ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)", { family: "FCIQMC / CC" }],

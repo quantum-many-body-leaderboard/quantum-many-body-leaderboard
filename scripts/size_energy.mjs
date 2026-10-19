@@ -1,22 +1,17 @@
 // Generate figures/energy/*.svg, the front page's view of every Hamiltonian: the published
-// energies as they are, with no reference to measure them against (2026-09-17: the
-// direct view instead of the relative gap). The shape is ladders.mjs's, which the site reads
-// the same way: per model and lattice, stops along an axis (J2, U, the filling) grouped in
-// facets, each stop a figure of one panel, energy against sites; and per figure with two
-// stops or more one strip, the record at each stop and size, which the site puts above the
-// panel as the slider that picks the stop (2026-09-18: one panel at a time, chosen
-// on the coupling, instead of a stack of panels; 2026-09-21: one strip for the whole figure,
-// the facets as groups along it, instead of a strip per facet). Per model one "other" figure for the Hamiltonians
-// published at a single size that share no strip - every t-V instance is one of them - with
-// a panel per set that shares lattice, boundary and size, the coupling or filling that
-// varies along x.
+// energies themselves, with no reference energy. The shape is ladders.mjs's, which the site
+// reads the same way: per model and lattice, stops along an axis (J2, U, the filling) grouped
+// in facets, each stop a figure of one panel, energy against sites. A figure with two stops or
+// more also has one strip, the record at each stop and size, which the site shows above the
+// panel as the slider that picks the stop. Per model, one "other" figure holds the Hamiltonians
+// published at a single size that share no strip (every t-V instance is one of them), with a
+// panel per set that shares lattice, boundary and size and the varying coupling or filling
+// along x.
 //
-// Energy is per site (the impurity problems in total energy) on a linear axis, lower is
-// lower as in the cost figures. Every drawn row (ladders.mjs, drawnRows) is a mark coloured
-// by its kind, slashed where the row is flagged, and a line joins the record at each size
-// or coupling (RULES.md 6: any unflagged row can hold it); a flagged row cannot hold a record
-// (RULES.md 6.1), so the line passes it by. The directory is emptied first, as figures/cost/ is, so the site never
-// inlines a figure whose panels have gone.
+// Energy is per site (the impurity problems in total energy) on a linear axis. Every drawn row
+// (ladders.mjs, drawnRows) is a mark coloured by its bound type, slashed where the row is
+// flagged, and a line joins the record at each size or coupling (RULES.md 6). The directory is
+// emptied first, as figures/cost/ is, so the site never inlines a figure whose panels are gone.
 import fs from "node:fs";
 import { recordEligible, perSiteDivisor, perSiteLabel } from "./units.mjs";
 import { collect, recordOf, rowId } from "./summary.mjs";
@@ -77,8 +72,8 @@ function panel(t, parts, { title, slots, X, xLabel }, box) {
   if (recs.length > 1)
     parts.push(`<path d="${recs.map(([x, e], k) => `${k ? "L" : "M"}${n(x)} ${n(Y(e))}`).join("")}" fill="none" stroke="${t.ink2}" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>`);
   // Hollow under filled, exact energies on top of the bounds that sit on them, and the
-  // flagged outlines last, over whatever they coincide with - set off to the right where a
-  // sound mark would sit under them, as a flagged extrapolation tends to sit on the record.
+  // flagged outlines last, over whatever they coincide with, and set off to the right where a
+  // sound mark would sit under them (a flagged extrapolation often sits on the record).
   for (const p of [...pts].sort((a, b) => a.flagged - b.flagged || a.eligible - b.eligible || (a.r.bound_type === "exact") - (b.r.bound_type === "exact")))
     parts.push(p.flagged ? slashed(t, p.x + (pts.some(q => !q.flagged && q.x === p.x && Math.abs(Y(q.e) - Y(p.e)) < 14) ? 11 : 0), Y(p.e), t.series[KIND[p.r.bound_type]], rowHref(p.inst, p.r))
       : dot(t, p.x, Y(p.e), t.series[KIND[p.r.bound_type]], p.eligible, rowHref(p.inst, p.r)));
@@ -108,8 +103,8 @@ const LEGEND = t => [
 ];
 
 // A stop: its ladder alone, full width. The title is the model and lattice, the facet and
-// the stop, with no subtitle and no footnote (2026-09-18): the legend says what the
-// marks are and the per-site label above the panel says the unit.
+// the stop, with no subtitle and no footnote: the legend says what the marks are and the
+// per-site label above the panel says the unit.
 function stopFigure(f, facet, s) {
   write(s.name, t => {
     const L = s.ladder;
@@ -129,14 +124,13 @@ function stopFigure(f, facet, s) {
 // site's list (largest size first, lowest energy first at a size). The cursor is a group
 // per stop, hidden in the file and shown by the site's stylesheet for the chosen one.
 //
-// Hover states the site's stylesheet drives (2026-09-21). Each facet is a group
+// Hover states the site's stylesheet drives. Each facet is a group
 // (`grp`) and each stop a column in it (`col`: a hit area over the column, the stop's dots,
 // its count mark), so that the pointer over a column hovers both. Over a group its size
 // lines move apart, up by EX per size rank, so that seven lines coinciding at this scale
-// read as seven (class `ex`, the shift in `--ex`; the size at each line's end `exl`) - only
-// that group, not the figure. A dense group (more stops than DENSE) does not move apart, its
-// lines being fragments that lose their dots, and has no hover state (a fan of the stop's
-// sizes was tried and cut: unnecessary). The hit area (`hit`, with the stop's index) and
+// read as seven (class `ex`, the shift in `--ex`; the size at each line's end `exl`), in that
+// group only. A dense group (more stops than DENSE) does not move apart, as its lines are
+// fragments that lose their dots, and has no hover state. The hit area (`hit`, with the stop's index) and
 // the count mark both select the stop like its badge; the hit area sits under the marks so
 // that a count mark keeps the pointer and its list. Only theme colours, at varying opacity,
 // so that dark mode recolours the strip like any figure.
@@ -211,12 +205,12 @@ for (const f of figures) {
     for (const facet of f.facets) for (const s of facet.stops) stopFigure(f, facet, s);
     continue;
   }
-  // The "other" figure: the varying quantity along x, evenly spaced. Title alone, no footnote
-  // (2026-09-18); the per-site label above the panels says the unit.
+  // The "other" figure: the varying quantity along x, evenly spaced. Title alone, no footnote;
+  // the per-site label above the panels says the unit.
   write(f.name, t => {
     const specs = f.scans.map(s => ({ title: s.label, slots: s.slots, xLabel: s.x }));
-    const h = header(t, f.title, "Every Hamiltonian of this model with energies published at only one size and no strip to join, grouped where they " +
-      "share lattice, boundary and size; the coupling or filling that differs between them runs along x. Colour is the kind of number, and a slashed mark is a flagged row.");
+    const h = header(t, f.title, "Hamiltonians of this model published at one size only. Each panel shares lattice, boundary and size; " +
+      "the coupling or filling that differs runs along x. Colour shows the bound type, and a slashed mark is a flagged row.");
     const lg = legend(t, LEGEND(t), h.bottom + 34);
     const parts = [h.svg, lg.svg];
     parts.push(text(W - PAD, lg.bottom + 30, perSiteLabel(f.scans[0].slots[0].members[0]), { size: 11, fill: t.muted, anchor: "end" }));

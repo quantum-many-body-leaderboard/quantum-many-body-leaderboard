@@ -1,7 +1,7 @@
-// Rows removed from the table, each with the ruling and its reason (RULES.md §11). The
-// scripts that add these rows still read them from their sources; apply_removals.mjs takes
-// them out after every row is in, so a removal is one line here and never a silent edit of
-// an import script.
+// Rows removed from the table, each with its `ruled` and `reason` fields (see RULES.md 11).
+// The scripts that add these rows still read them from their sources; apply_removals.mjs takes
+// them out after every row is in, so each removal is one entry here and the import scripts
+// stay unchanged.
 export const REMOVALS = [
   // Duplicates: the same number carried twice. The row read from the original paper stays.
   {
@@ -71,10 +71,10 @@ export const REMOVALS = [
     reason: "The paper's own ED, stored by VarBench as -0.5168078 per site (first-author upload ef22cb4): PRX 11, 041021 plots it at j2/j1 = 0 in Fig. 2(a) and truncates it to -0.5168 in Table II (qmbl-verify 2026-09-29, VJ2-journal-other#9). Two diagonalizations of the same 32-site cluster (VarBench's StdFace geometry) on an AMD EPYC 9654 server give the ground state -66.15792523719963, over the whole S^z = 0 space and in the fully symmetric sector of the space group, agreeing to 1.2e-11 (checks/pyrochlore-32-ed/). The stored value sits 6.5e-3 above it, 65x the 1e-4 it is printed to, so it is not the ground-state energy at its own precision. The recomputed energy is carried on this instance (add_exact_rows.mjs, batch B2).",
   },
   // Declared exact, but a per-site rounding times N that lies below the ground state: QMBL's
-  // recomputed row replaces it (ruling 2026-09-30, the pyrochlore-32 mechanism). Its U = 4
-  // sibling, -13.62192 = -0.85137 x 16 on Hubbard/square_16_P_8_4, needs no entry here: that
-  // per-site quote is QMBL's -13.6218548212 rounded to its printed digits, so
-  // add_allresults_rows.mjs skips it as the exact row already carried (see batch B2).
+  // recomputed row replaces it. Its U = 4 sibling, -13.62192 = -0.85137 x 16 on
+  // Hubbard/square_16_P_8_4, needs no entry here: that per-site quote is QMBL's -13.6218548212
+  // rounded to its printed digits, so add_allresults_rows.mjs skips it as the exact row already
+  // carried.
   {
     match: { instance: "Hubbard/square_16_P_8_8", method: "ED", energy: -8.46896 },
     ruled: "2026-09-30: QMBL's recomputed row stands, the quoted row is removed",
@@ -82,7 +82,7 @@ export const REMOVALS = [
   },
   // Declared the ground state, but the lowest level of the one symmetry sector the paper diagonalised:
   // QMBL's diagonalisation of the cluster's other q = 0 sectors finds a lower level, and its row replaces
-  // this one (rulings R3, 2026-10-02, and E1, 2026-10-03; the pyrochlore-32 mechanism).
+  // this one.
   {
     match: { instance: "J1J2/square_40_P_0.6", method: "Exact diagonalization (Lanczos)", energy: -76.73472152 },
     ruled: "2026-10-03 (ruling R3 of 2026-10-02): QMBL's recomputed row stands, the A+ sector minimum is removed",
@@ -105,7 +105,7 @@ export const REMOVALS = [
     reason: "arXiv:2502.01264 Table IV 'SLL (p=0)' at L = 10 is the energy of its initial state, Ref. [35]'s aCNN(C4v) (-0.483490(5), arXiv:2308.09664 Table III row aCNN(C4v), column J2/J1 = 0.55), which QMBL carries from arXiv:2308.09664 itself.",
   },
   // Withdrawn in review: printed in the arXiv version only; the published version dropped or
-  // replaced the number (qmbl-verify 2026-10-15, journal-version pass).
+  // replaced the number.
   {
     "match": {
       "instance": "J1J2/square_36_P_0.5",
