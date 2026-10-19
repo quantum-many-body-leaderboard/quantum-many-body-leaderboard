@@ -1,5 +1,4 @@
-// The figure at the top of /open-problems/ (2026-10-09: "can we have figure
-// 'Leaderboard' and table?"): the home page's "The best published energies, by system size"
+// The figure at the top of /open-problems/: the home page's "The best published energies, by system size"
 // (size_accuracy.mjs) for the open problems, with its frame, marks, merged marks, colours and
 // legend (size_marks.mjs, chart.mjs) and its hover cards (site.mjs), every mark linking to its
 // row in the Table. The reference is each instance's energy to beat, its best variational
@@ -21,7 +20,7 @@ const TITLE = "The best published energies on the open problems, by system size"
 const SUBTITLE = "Results are placed by their relative gap to the instance's energy to beat, QMBL's best variational energy, " +
   "so that different Hamiltonians share one axis. A better energy is lower.";
 const CAPTION = "The energies on the open problems, placed by their relative gap to each instance's energy to beat so that " +
-  "different Hamiltonians share one axis; a better energy is lower. Colour is the kind of number, a diamond is a verified entry, " +
+  "different Hamiltonians share one axis; a better energy is lower. Colour shows the bound type, a diamond is a verified entry, " +
   "and a slashed mark is a flagged row.";
 const BOUNDS = { variational: 0, projected: 1, extrapolated: 2, approximate: 2 }; // approximate (RULES.md 4) shares the extrapolations' colour
 const Y0 = 1e-8, Y1 = 1;
@@ -69,8 +68,8 @@ export function openProblemsFigure(targets, entries, entryHref) {
     xTicks: [10, 30, 100, 300, 1000].filter(v => v >= X0 && v <= X1), xLabel: "sites",
     yLabel: "relative gap to the energy to beat (lower is better)", lanes: ["energy to beat", "estimates below it"] });
   const Y = g => (g < 0 ? lane(1) : gapY(g));
-  // Sizes lie closer together here than on the home figure, so marks merge across sizes as well
-  // (2026-10-09: the lines must not overlap, as the home figure's exact line does not).
+  // Sizes lie closer together here than on the home figure, so marks merge across sizes as well,
+  // and no two marks overlap.
   const drawn = marksAcross(t, pts, X, Y, p => t.series[BOUNDS[p.r.bound_type]]);
   parts.push(...drawn.svgs);
   // An entry is drawn at the nearest place clear of every other mark, as a flagged group is.
