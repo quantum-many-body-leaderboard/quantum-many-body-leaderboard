@@ -40,8 +40,8 @@ const ARXIV = "2610.22387";
 const SNAPSHOT = "varbench@2024-10-22";
 const BUILT = new Date().toISOString().slice(0, 10);
 
-// The citation the Cite button copies and the front page prints is the paper; the data line
-// below it reads the release from CITATION.cff so a release bump changes it in one place.
+// The citation the Cite button copies and the front page prints is the paper; the data is
+// cited by the concept DOI. The release year comes from CITATION.cff.
 const CFF = fs.readFileSync("CITATION.cff", "utf8");
 const cffField = k => CFF.match(new RegExp(`^${k}:\\s*"?([^"\\n]+)"?\\s*$`, "m"))?.[1];
 const VERSION = cffField("version");
@@ -49,7 +49,6 @@ const RELEASED = cffField("date-released");
 if (!VERSION || !RELEASED) throw new Error("CITATION.cff: version or date-released not found");
 const CITE_HEAD = "T. Zerweck and J. Carrasquilla";
 const CITE_TITLE = "QMBL: the Quantum Many-Body Leaderboard";
-const CITE_TAIL = `v${VERSION}, Zenodo (${RELEASED.slice(0, 4)}).`;
 const CITATION = `${CITE_HEAD}, ${CITE_TITLE}, arXiv:${ARXIV} (2026). https://arxiv.org/abs/${ARXIV}`;
 
 const cache = sources();
@@ -675,9 +674,8 @@ ${FIG_SCRIPT}
   <h2>Citing QMBL</h2>
   <blockquote class="citation">${esc(CITE_HEAD)}, <em>${esc(CITE_TITLE)}</em>,
   <a href="https://arxiv.org/abs/${ARXIV}">arXiv:${ARXIV}</a> (2026).</blockquote>
-  <p>To cite the data itself, use the concept DOI, which always resolves to the latest release:</p>
-  <blockquote class="citation">${esc(CITE_HEAD)}, <em>${esc(CITE_TITLE)}</em>, ${esc(CITE_TAIL)}
-  <a href="https://doi.org/${DOI}">${DOI}</a></blockquote>
+  <p>To cite the data itself, use the concept DOI, which always resolves to the latest release:
+  <a href="https://doi.org/${DOI}">${DOI}</a>.</p>
   <p>Individual energies should cite the primary paper named on the row, not this site.</p>
 </section>`;
   return page({
