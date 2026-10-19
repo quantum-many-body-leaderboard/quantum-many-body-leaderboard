@@ -1,13 +1,8 @@
 // Where each name goes on a scatter plot: beside its mark where that covers nothing, else in a
 // lane above or below with a line to it, marks drawn as one named together; and where an
-// inset goes.
-//
-// A verbatim copy of stairs(), layoutLabels(), meets() and insetFrame() in pareto.mjs at
-// 77d3c2e (2026-09-29), for the record-over-time figure; pareto.mjs, which another
-// session is still changing, is to import them from here once that settles. Points are placed
-// at X(p.cost.value), Y(p.e). One addition: `lines`, boxes a name keeps clear of but a lane's
-// line may cross (the record-over-time figure's full-width record line, which would otherwise
-// close every lane).
+// inset goes. Used by pareto.mjs and the record-over-time figure in figures.mjs. Points are
+// placed at X(p.cost.value), Y(p.e). `lines` are boxes a name keeps clear of but a lane's
+// line may cross (the full-width record line in the record-over-time figure).
 import { textWidth } from "./chart.mjs";
 
 // The frontier's staircase as horizontal and vertical segments on screen.
@@ -17,11 +12,10 @@ export const stairs = (front, X, Y) => front.slice(1).flatMap((p, i) => {
 });
 
 // Where each name goes, for the marks `pts` at X/Y inside left/right/top/bottom. Beside its
-// mark where that covers nothing - no other mark, label or line, not the frontier, nothing in
+// mark where that covers nothing: no other mark, label or line, not the frontier, nothing in
 // `avoid`. In an instance's own figure (`nameAll`) a name with no such spot, or one that would
 // sit off its mark's row in a crowd, where it reads as a neighbour's, goes in a lane above or
-// below the mark with a vertical line to it (2026-09-29, in place of numbers and an
-// enlarged panel); what is still left is numbered. Marks drawn as one, within 6 px, are named
+// below the mark with a vertical line to it; what is still left is numbered. Marks drawn as one, within 6 px, are named
 // together, a line per method in the order they lie from top to bottom ("ViT ×2" where two
 // share one). Every name links to its rows, so on the site hovering it shows their cards.
 export function layoutLabels({ pts, named, X, Y, front, left, right, top, bottom, nameOf, nameAll, avoid = [], lines: crossable = [] }) {
@@ -34,7 +28,7 @@ export function layoutLabels({ pts, named, X, Y, front, left, right, top, bottom
   const blocked = (x0, x1, y0, y1) => avoid.filter(r => x0 < r.x1 && r.x0 < x1 && y0 < r.y1 && r.y0 < y1).length;
   const onLine = (x0, x1, y0, y1) => crossable.filter(r => x0 < r.x1 && r.x0 < x1 && y0 < r.y1 && r.y0 < y1).length;
   // A mark is clear of a name when its dot misses the glyph box; the small overview panels,
-  // which name the frontier only, keep their older, looser margin.
+  // which name the frontier only, use a looser margin.
   const [above, below] = nameAll ? [10, 12] : [9, 9];
   const covers = (x0, x1, ty, own) => centres.filter(([cx, cy]) => !mine(cx, cy, own) && cx + 6 > x0 && cx - 6 < x1 && cy > ty - above && cy < ty + below).length +
     crosses(x0, x1, ty) + blocked(x0 - 1, x1 + 1, ty - 5, ty + 7) + onLine(x0 - 1, x1 + 1, ty - 5, ty + 7);
@@ -155,7 +149,7 @@ export function layoutLabels({ pts, named, X, Y, front, left, right, top, bottom
     }
     // Numbered marks, left to right, the number in the first free spot touching the mark. The
     // number links to the mark's row as the mark does, so on the site hovering either shows
-    // the row's card, which names it; no key under the axis (2026-09-29).
+    // the row's card, which names it; there is no key under the axis.
     const keyed = order.filter(it => !at.has(it)).flatMap(it => it.ps.map((p, i) => ({ p, mx: it.own[i][0], my: it.own[i][1] })))
       .sort((a, b) => a.mx - b.mx || a.my - b.my);
     keyed.forEach((kd, i) => {
@@ -203,12 +197,11 @@ export function layoutLabels({ pts, named, X, Y, front, left, right, top, bottom
   return { lines: out, leaders: best.leaders, keyed: best.keyed, crosses };
 }
 
-// Also verbatim from pareto.mjs: where an inset goes.
 export const meets = (a, r) => a.x0 < r.x1 && r.x0 < a.x1 && a.y0 < r.y1 && r.y0 < a.y1;
 
 // An inset's frame: in the plot's top right corner, clear of the marks, the frontier and what
 // is in `avoid` (the boxes, other insets), else the top left; null where neither holds 240 x
-// 120 px. Its size is what its marks need - `wT` by `hT` - or as near as the free space allows.
+// 120 px. Its size is what its marks need, `wT` by `hT`, or as near as the free space allows.
 export function insetFrame(centres, segs, avoid, { left, right, top, bottom }, wT, hT) {
   const free = r => !avoid.some(a => meets({ x0: a.x0 - 6, x1: a.x1 + 6, y0: a.y0 - 6, y1: a.y1 + 6 }, r)) && !centres.some(([cx, cy]) => meets({ x0: cx - 10, x1: cx + 10, y0: cy - 10, y1: cy + 10 }, r)) &&
     !segs.some(g => meets({ x0: g.x0 - 2, x1: g.x1 + 2, y0: Math.min(g.y0, g.y1) - 2, y1: Math.max(g.y0, g.y1) + 2 }, r));
