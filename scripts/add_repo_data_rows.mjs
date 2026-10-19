@@ -1,37 +1,16 @@
-// Rows from a paper's own data release, where the number a row needs is plotted in the
-// paper but printed nowhere in it.
+// Rows from authors' data releases, where the paper plots an energy but prints none.
 //
-// The case that opened this pass: Moss et al. (arXiv:2502.17144) ran their 2D RNN on the
-// square-lattice Heisenberg AFM up to 32x32 periodic and 24x24 open, and Table III prints
-// only the zero-variance extrapolation per L; the energies the wavefunctions actually
-// reached appear as points in Fig. 3(a) and Fig. 12(a). Table V prints the achieved
-// ("best RNN") energy for L = 6 and L = 10 only. So the table carried an `extrapolated`
-// row on every large size and no `variational` row from the paper at all, and asked why
-// (2026-09-16). The authors' repository (github.com/mschuylermoss/HeisenbergRNN, commit
-// 29bf62ac28, "reproduce figures") commits the pickle behind those figures: final
-// energy, variance and Monte-Carlo standard error for every (boundary, schedule s, rate r,
-// L). Read locally with pickle + numpy, copied whole into
-// sources/2502.17144-repo-final_energy_data.json so a clone can check every row; the
-// four values Table V does print are reproduced to their printed digits, which is the
-// check that the file is the paper's data and the units are the paper's (E/N, S.S).
-//
-// The variance column is the variance of the per-site local energy, Var(H)/N^2: the
-// repository's own V-score notebook computes N * var / E^2 from it and its commented
-// reference lines reproduce VarBench's V-scores for DMRG 6x6/10x10 and the Jastrow
-// baseline, and std_error^2 * 10^4 = var with the 10^4 samples the Fig. 3 caption states.
-// Totals therefore scale with N^2 here, not with N as for a printed sigma^2/N_site
-// (add_allresults_rows).
-//
-// One row per (instance): the run the authors call their best RNN. With periodic boundaries
-// that is the lowest energy over the ten training schedules; with open ones the authors take
-// the lowest over the s = 2 and 4 schedules only (HeisenbergRNN get_zer_var_energies.ipynb,
-// cell 8: which_scales = [2.0, 4.0]), which is what Table V prints at L = 6 (-0.603517(6), the
-// s = 2 run; the s = 0.5 run is lower). The two rules differ at open L = 8 alone, where the
-// lowest of all ten is the s = 0.5 run, 0.99 sigma below the SSE energy. Until 2026-10-02 the
-// open rows took the lowest of all ten; where that gave another run, its values stay on the
-// row in `corrections` (qmbl-verify 2026-09-29, VP7#45; ruling E8, 2026-10-02). The
-// run that produced each row is named in the note. Sizes Table V already covers are skipped
-// by the duplicate check against the tree as built.
+// Square lattice, Moss et al. (arXiv:2502.17144): the pickle behind Figs. 3(a) and 12(a) in
+// github.com/mschuylermoss/HeisenbergRNN (commit 29bf62ac28), copied whole into
+// sources/2502.17144-repo-final_energy_data.json: final energy, variance and Monte-Carlo
+// standard error for every (boundary, schedule s, rate r, L). The file reproduces the four
+// values Table V prints. The variance is that of the per-site local energy, Var(H)/N^2, so
+// totals scale with N^2 (a printed sigma^2/N_site scales with N, add_allresults_rows.mjs).
+// One row per instance, the run the authors call their best RNN: the lowest over the ten
+// schedules with periodic boundaries, over s = 2 and 4 with open ones
+// (get_zer_var_energies.ipynb, cell 8). Where the lowest of all ten is another run (open
+// L = 8), that run's values are kept in the row's `corrections`. Sizes already carried are
+// skipped by the duplicate check.
 import fs from "node:fs";
 import { perSiteDivisor, expectedDof, expectedEinf, vScore } from "./units.mjs";
 
@@ -55,7 +34,7 @@ const COMPUTE = {
     note: "Parameter count is for the OBC (tensorized-GRU) 2D RNN with d_h = 256, shared across all L, so scope is the ansatz. No hardware or run time is stated for the OBC runs. The step count for this row follows from the schedule formula with the (s, r) named in the verification note but is not printed as a number, so iterations stays null." },
 };
 
-// the authors' best run per (boundary, L), and the lowest of all ten, which the open rows took until 2026-10-02
+// the authors' best run per (boundary, L), and the lowest of all ten
 const AUTHORS_SCALES = { open: [2, 4] };
 const lowest = keep => {
   const m = new Map();
@@ -132,13 +111,11 @@ if (process.env.QMBL_VERBOSE) skipped.forEach(s => console.log("  dup", s));
 // sources/2505.20406-repo-final_energies_data.json. The paper prints its finite-size energy
 // only at L = 6 (Table V, -0.5562(2)) and the V-scores of its most accurate schedule, s = 4.0,
 // r = 0.158, at every L (Table II); the file reproduces both. L = 6 is already on its
-// instance from Table V and gets its variance through add_error_metrics.mjs; L = 12 was
-// added on 2026-09-16, and L = 18, 24, 30 on 2026-09-28, once the mining pass on Table 1 of
-// arXiv:2602.02665 created those instances (sweep-rows-2026-09-28-triangular.json). That
-// table quotes these three runs as -0.54861(1), -0.54810(1), -0.54793(1): the same values,
-// with an error bar the primary does not have (its Monte-Carlo error is 4-7e-5), so the rows
-// are the primary's, not the quote. The open-boundary runs (Appendix I) are not taken
-// yet: this file holds one open-boundary schedule (SquareMS basis, s = 1.0, r = 0.475,
+// instance from Table V and gets its variance through add_error_metrics.mjs; this block adds
+// L = 12, 18, 24 and 30. Table 1 of arXiv:2602.02665 quotes the last three runs as
+// -0.54861(1), -0.54810(1), -0.54793(1), with an error bar the primary does not have (its
+// Monte-Carlo error is 4-7e-5); the rows carry the primary's. The open-boundary runs
+// (Appendix I) are not taken: this file holds one open-boundary schedule (SquareMS basis, s = 1.0, r = 0.475,
 // T0 = 0.25) at L = 6, 12, 18, while the three obc_*_data_plotting.pkl files beside it hold
 // lower energies with no L attached, so which run is the paper's best at L = 12 needs the
 // plotting notebook read first.
@@ -190,8 +167,9 @@ if (process.env.QMBL_VERBOSE) skipped.forEach(s => console.log("  dup", s));
 }
 
 // CTWF's own 10x10 J1-J2 energy (arXiv:2503.10462). The paper plots it in Fig. 2 as a relative
-// error and a rescaled variance, and prints no number for it; the -0.4976764(7) that used to carry
-// the CTWF name is the factored attention it quotes (passes/stored-rows/2026-09-13-frontier.json). The authors' Zenodo
+// error and a rescaled variance, and prints no number for it; the -0.4976764(7) credited to CTWF in
+// Table 1 of arXiv:2603.14425 is the factored attention it quotes
+// (passes/stored-rows/2026-09-13-frontier.json). The authors' Zenodo
 // record (10.5281/zenodo.14035975, 10x10_J1J2.csv, md5 98556b24d20bffeb69bb300bd696bda4, copied
 // verbatim into sources/) holds the plotted values. Its error bar is printed "(0)", i.e. below
 // half a unit in the sixth decimal, which is not a sigma, so none is stored: the row cannot hold a

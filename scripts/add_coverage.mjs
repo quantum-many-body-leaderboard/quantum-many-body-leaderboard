@@ -1,14 +1,9 @@
-// Instance-level `coverage` (DATA.md): when an instance's literature was checked, by what
-// method, against which papers, and how many of them carry an energy for it. A check that
-// found nothing is recorded too - it is what lets an instance page say how current it is.
-//
-// One file per checking pass, appended in date order: sweep-coverage-YYYY-MM-DD.json for a
-// table-harvest pass, sweep-coverage-YYYY-MM-DD-cites.json for a citation screen; the date
-// is the pass's checked_on. Every such file in passes/coverage/ is applied. `found` counts the screened papers
-// that the instance carries at least one energy from, read off the rows as built (reference,
-// or the note of a row quoted from it), so it can never disagree with the page. A reader's
-// own "has results" judgement is not used: in the first pass it said no for papers whose
-// rows were already on the instance.
+// Instance-level `coverage` (DATA.md, "When the literature was last checked") from
+// passes/coverage/: sweep-coverage-YYYY-MM-DD.json for a table-harvest pass and
+// sweep-coverage-YYYY-MM-DD-cites.json for a citation screen, appended in date order (harvest
+// before cites on the same day); the file's date is each entry's `checked_on`. A check that found
+// nothing is recorded too. `found` counts the screened papers the instance carries an
+// energy from, read off the built rows (reference, secondary_of, or the note of a quoted row).
 import fs from "node:fs";
 
 const KINDS = {

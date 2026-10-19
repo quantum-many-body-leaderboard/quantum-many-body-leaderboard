@@ -1,12 +1,7 @@
-// Exactly solved instances: benchmarks whose ground-state energy is known to within a
-// stated error, so that a paper reporting on them can be scored by its distance from the
-// answer rather than ranked against other papers. Most of these instances have no
-// variational row at all yet; that is the point of carrying them.
-//
-// Every table below was read from the paper's own text (PDF layout mode or arXiv HTML),
-// parsed by column position or table cell, and the literal here checked value by value
-// against that parse. Energies are stored in the instance's convention (DATA.md): Hubbard
-// as totals, Heisenberg as Pauli totals, 4 N x the S.S energy per site.
+// Instances with a known exact energy and their exact rows, read from the papers' tables (PDF
+// layout mode or arXiv HTML) by column position or table cell; each literal below was checked
+// value by value against that parse. Energies are stored in the instance's convention
+// (DATA.md): Hubbard as totals, Heisenberg as Pauli totals, 4N x the S.S energy per site.
 import fs from "node:fs";
 
 const CHECKED = "2026-09-15";
