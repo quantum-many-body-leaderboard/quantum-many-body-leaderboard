@@ -1,0 +1,1822 @@
+Radial  distribution  function in a diﬀusion Monte Carlo simulation  of a Fermion ﬂuid
+between the ideal  gas and the Jellium model
+
+        Riccardo Fantoni1, a)
+        Dipartimento  di  Scienze  dei  Materiali  e  Nanosistemi,  Universit`a  Ca’
+        Foscari  Venezia,  Calle  Larga  S.  Marta  DD2137,  I-30123  Venezia,
+        Italy
+
+        (Dated:  5 August 2021)
+
+        We study, through the diﬀusion Monte Carlo method, a spin one-half fermion ﬂuid, in
+        the three dimensional Euclidean space, at zero temperature.  The point particles, im-
+        mersed in a uniform “neutralizing” background, interact with a pair-potential which
+        can be continuously changed from zero to the Coulomb potential depending on a pa-
+        rameter µ.  We determine the radial distribution functions of the system for various
+        values of density,  µ, and polarization.  We discuss  about the importance,  in a com-
+        puter experiment, of the choice of suitable estimators to measure a physical quantity.
+        The radial distribution function is determined through the usual histrogram estima-
+        tor and through an estimator determined via the use of the Hellmann and Feynman
+        theorem.  In a diﬀusion Monte Carlo simulation the latter route introduces a new bias
+        to the measure of the radial distribution function due to the choice of the auxiliary
+        function.  This bias is independent from the usual one due to the choice of the trial
+        wave  function.   A  brief  account  of  the  results  from  this  study  were  presented  in  a
+        recent communication [R. Fantoni, Solid state Communications, 159, 106 (2013)].
+
+        PACS numbers:  05.30.Fk,67.10.Fj,67.85.Lm,71.10.Ay,71.10.Ca,07.05.Tp,06.20.Dk
+        Keywords:  Variational Monte Carlo, Diﬀusion Monte Carlo, Estimators, Radial dis-
+        tribution function, Structure factor, Jellium
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a)Electronic mail:  rfantoni@ts.infn.it
+
+
+                                                       1
+I.    INTRODUCTION
+
+
+   The  Jellium  model  is  a  system  of  pointwise  electrons  of  charge  e  and  number  density
+n in the three dimensional Euclidean space ﬁlled with an uniform neutralizing background
+of  charge  density  −en.   The  zero  temperature,  ground-sate,  properties  of  the  statistical
+mechanical system thus depends just on the electronic density n or the Wigner-Seitz radius
+rs = (3/4πn)1/3/a0  where a0  is Bohr radius.  The model can be used for example as a ﬁrst
+approximation to describe free electrons in metallic elements1 (2 ≲ rs ≲ 4) or a white dwarf2
+(rs ≃ 0.01).
+   When  an  impurity  of charge  q  is  added  to  the  system,  the  screening  cloud  of  electrons
+will  experience  the  Friedel  oscillations.    In  the  Thomas-Fermi  description  of  the  static
+screening  an  electric  potential  qvH(r)  (the  Hartree  potential)  is  created  by  the  impurity
+and by  the redistribution  of the electronic  charge n(r) − n.  It obeys the Poisson  equation
+qe∇2vH(r) = 4πe[−qδ(r) − en(r) + en] and the equilibrium condition on the electrochemical
+potential, µc(n(r)) + qevH(r) = constant.  An analytic solution can be obtained for |q| ≪ 1,
+when  we  ﬁnd  n(r) − n  ≃  −qevH(r)∂n/∂µc  by  expansion  of  µc  around  the  homogeneous
+state.  Assuming ∂n/∂µc  is positive and with the deﬁnition ks =√4πe2∂n/∂µc  the Poisson
+equation yields
+
+
+                                                 vH(r) =  e−ksrr     .                                                            (1)
+
+
+It is clear from this result that the quantity 1/ks measures the distance over which the self
+consistent potential associated with the impurity penetrates into the electron gas.  Thus, 1/ks
+has the meaning of a screening length.  The Thomas-Fermi value of the screening length is
+obtained by replacing the thermodynamic quantity ∂n/∂µc  by its value for non-interacting
+fermions,  using  for µc  the  Fermi energy.  Clearly  we  have  that vH(r) → 1/r  as 1/ks  → ∞
+and vH(r) → 0 as 1/ks → 0.  Also vH  is short ranged.
+   It is important to study the ground-state properties of a model of point fermions of spin
+one-half interacting with a bare pair-potential vµ(r) which can be continuously changed from
+zero (µ → 0, ideal gas) to the Coulomb potential (µ → ∞, Jellium model) depending on a
+parameter µ.  And we chose the following functional form
+
+
+                                                vµ(r) =  erf(µr)r       .                                                           (2)
+
+                                                         2
+Still the ﬂuid is immersed in a static uniform background of continuously distributed point
+particles  which  interact  with  the  particles  of the ﬂuid  with  the  same  pair-potential but  of
+opposite sign.
+   A  major  challenge  in  the  Kohn-Sham  scheme  of  Density  Functional  Theory  is  to  de-
+vise  approximations  to the exchange-correlation  functional that accurately  describes  near-
+degeneracy  or  long-range  correlation  eﬀects  such  as  van  der  Waals  forces.   Among  recent
+progresses  to  circumvent  this  problem,  we  mention  “range-separated”  density  functional
+schemes which combine the Kohn-Sham formalism with either random-phase approximation3
+or multideterminantal approaches4.  Such schemes require a local density functional for par-
+ticles  interacting  via modiﬁed  potentials deﬁned  in terms  of a suitable  parameter µ which
+either softens the core or suppresses the long-range tail.  Further insight into electronic cor-
+relations in molecules  and materials can be gained through the analysis of the on-top pair
+correlation function5.
+   Within Quantum Monte Carlo, the Diﬀusion Monte Carlo is the method of choice for the
+calculation  of  ground-state properties  of appropriate  reference  homogeneous  systems,  (the
+path integral method6  can be used to extend the study to non-zero temperatures degener-
+ate  systems7),  the  most  relevant  example  being  the  correlation  energy  of  the  electron  gas
+obtained  by  Ceperley  and  Alder  back  in  19808.  This  is  even  more  so  in  the  present  days,
+since better wave-functions and optimization methods have been developed, better schemes
+to minimize ﬁnite-size eﬀect have been devised, and vastly improved computational facilities
+are available.
+   Recently,  Zecca  et  al.9  have  provided  a  Local  Density  functional  for  short-range  pair
+potentials v(r) = erfc(µr)/r, whereas Paziani et al.10  have developed a Local Spin Density
+functional for the softened-core, long range case, v(r) = erf(µr)/r.
+   It  is  the  purpose  of  this  work  to  build  on  previous  work9,10  and  provide  the  Radial
+Distribution  Function  (RDF),  most  notably  the  on-top  value,  i.e.   its  value  at  contact,  at
+a zero radial distance,  for the pair potential of Ref.  10, given  in Eq.  (2).  A brief account
+of the results from this study has been presented in a recent communication11.  Aim of the
+present  work  is  to give  a  complete  and  detailed  account  of  the  calculations  that  has  been
+carried on for such a study.
+   We  performed  ﬁxed-nodes  Diﬀusion  Monte  Carlo  simulations12  where  we  used  mod-
+ern  techniques13  to  optimize  Slater-Jastrow  wave-functions  with  backﬂow  and  three-body
+
+                                                         3
+correlations14  and  Hellmann  and  Feynman  (HFM)  measures15  to  calculate  the  RDF,  par-
+ticularly  the  on-top  value,  which  suﬀers  from  poor  statistical  sampling  in  its  conven-
+tional  histogram  implementation.   Twist-averaged  boundary  conditions16  and  RPA-based
+corrections17 to minimize ﬁnite-size eﬀects were not found essential for the RDF calculation.
+   For the fully polarized and unpolarized ﬂuid, we explored a range of densities and of the
+parameter µ.  This required simulating several diﬀerent systems.  We also needed to evaluate
+and extrapolate out, for representative cases, time-step errors, population control bias, and
+size eﬀects.  We plan to explore intermediate polarizations in a future work.
+   In  the  study  we  use  two  kinds  of  Jastrow-correlation-factors,  one  better  for  the  near-
+Jellium systems and one better for the near-ideal systems.
+   An  important  component  of  a  computer  experiment  of  a  system  of  many  particles,  a
+ﬂuid, is the determination of suitable estimators to measure, through a statistical average, a
+given physical quantity, an observable.  Whereas the average from diﬀerent estimators must
+give  the  same  result,  the  variance,  the  square  of  the  statistical  error,  can  be  diﬀerent  for
+diﬀerent estimators.  We compare the measure of the histogram estimator for the RDF with
+a particular HFM one.
+   In ground state Monte Carlo simulations18,19, unlike classical Monte Carlo simulations20–22
+and  path  integral  Monte  Carlo  simulations6,  one  has  to  resort  to  the  use  of  a  trial  wave
+function18, Ψ.  While this is not a source of error, bias, in diﬀusion Monte Carlo simulation19
+of a system  of Bosons,  it is for a system  of Fermions,  due to the sign  problem23.  Another
+source of bias inevitably present in all three experiments is the ﬁnite size error.
+   In a ground state Monte Carlo simulation, the energy has the zero-variance principle24:
+as the trial wave function approaches the exact ground state, the statistical error vanishes.
+In  a  diﬀusion  Monte  Carlo  simulation  of  a  system  of  Bosons  the  local  energy  of  the  trial
+wave function, EL(R) = [HΨ(R)]/Ψ(R), where R denotes a conﬁguration of the system of
+particles  and  H  is  the  Hamiltonian,  which  we  will  here  assume  to  be  real,  is  an  unbiased
+estimator for the ground state.  For Fermions the ground state energy measurement is biased
+by  the sign  problem.  For observables  O  which  do not commute  with the  Hamiltonian the
+local estimator OL(R) = [OΨ(R)]/Ψ(R), is inevitably biased by the choice of the trial wave
+function.  A way to remedy to this bias can be the use of the forward walking method25,26 or
+the reptation quantum Monte Carlo method27, to reach pure estimates.  Otherwise this bias
+can be made of leading order δ2 with δ = φ0 −Ψ, where φ0 is the ground state wave function,
+
+                                                        4
+introducing the extrapolated measure              Oext  = 2⟨OL⟩f − ⟨OL⟩fvmc, where the ﬁrst statistical
+average,  the  mixed  measure,  is  over  the  diﬀusion  Monte  Carlo  (DMC)  stationary  proba-
+bility  distribution  f  and  the  second,  the  variational  measure,  over  the  variational  Monte
+Carlo  (VMC)  probability  distribution  fvmc,  which  can  also  be  obtained  as  the  stationary
+probability distribution of a DMC without branching28.
+   One  may  follow  diﬀerent  routes  to  determine  estimators  as  the  direct  microscopic  one,
+the virial route through the use of the virial theorem, or the thermodynamic route through
+the use of thermodynamic identities.  This aspect of ﬁnding out diﬀerent ways of calculating
+quantum properties in some ways resembles experimental physics.  The theoretical concept
+may be perfectly well deﬁned but it is up to the ingenuity of the experimentalist to ﬁnd the
+best  way  of  doing  the  measurement.   Even  what  is  meant  by  “best”  is  subject  to  debate.
+In an unbiased  experiment  the diﬀerent routes to the same observable must give the same
+average.
+   In this work we propose to use the Hellmann and Feynman theorem as a direct route for
+the  determination  of  estimators  in  a  diﬀusion  Monte  Carlo  simulation.  Some  attempts  in
+this direction have been tried before29,30.  The novelty of our approach is a diﬀerent deﬁnition
+of the correction to the variational measure, necessary in the diﬀusion experiment,  respect
+to Ref.29  and the  fact that the  bias  stemming  from the  sign  problem  does  not exhaust  all
+the bias due to the choice of the trial wave function, respect to Ref.30.
+   The  work  is  organized  as  follows:  in  Sec.   II  we  introduce  the  ﬂuid  model;  in  Sec.   III
+we  describe  the  Ewald  sums  technique  to  treat  the  long  range  pair-potential;  in  Sec.   IV
+we describe  the ﬁxed-nodes  Diﬀusion Monte Carlo (DMC) method;  in Sec.  V we  describe
+several  diﬀerent  ways  to evaluate expectation  values in a DMC calculation;  in Sec.  VI we
+describe the choice of the trial wave-function;  in Sec.  VII we deﬁne the RDF and describe
+some  of  its  exact  properties;  the  numerical  results  for  the  RDF  are  presented  in  Section
+VIII; Sec.  IX is for ﬁnal remarks.
+
+
+
+II.    THE MODEL
+
+
+   The Jellium is an assembly of N electrons of charge e moving in a neutralizing background.
+The average particle number density is n = N/Ω, where Ω is the volume of the ﬂuid.  In the
+volume  Ω there is a uniform neutralizing  background  with a charge density  ρb  = −en.  So
+
+                                                        5
+that the total charge of the system is zero.
+    In this paper lengths will be given in units of a = (4πn/3)−1/3.  Energies will be given in
+Rydbergs ℏ2/(2ma20), where m is the electron mass and a0 = ℏ2/(me2) is the Bohr radius.
+    In these units the Hamiltonian of Jellium is
+                                                 N∑
+                                  H = − 1r2s         ∇∇∇2ri + V (R) ,                                                              (3)
+                                             (  i=1                                  )
+                                                            1          N∑
+                                   V  =  1rs    2∑     |ri − rj| +         r2i  + v0     ,                                      (4)
+                                                  i<j                  i=1
+where  R = (r1, r2, . . . , rN)  with  ri  the  coordinate  of the  ith  electron,  rs  = a/a0,  and  v0  a
+constant containing the self energy of the background.
+    The  kinetic  energy  scales  as  1/r2s  and  the  potential  energy  (particle-particle,  particle-
+background,  and  background-background  interaction)  scales  as  1/rs,  so  for  small  rs  (high
+electronic densities), the kinetic energy dominates and the electrons behave like an ideal gas.
+In the limit of large rs, the potential energy dominates and the electrons crystallize  into a
+Wigner crystal8,31.  No liquid phase is realizable within this model as the pair-potential has
+no attractive parts even though a superconducting state32 may still be possible (see chapter
+8.9 of Ref.  33).
+
+
+A.    Modiﬁed  long  range  pair-potential
+
+    The  ﬂuid  model  studied  in  this  work  is  obtained  modifying  the  Jellium  by  replacing
+the  1/r  Coulomb  potential  between  the  electrons  with  the  following  long range  bare  pair-
+potential10
+
+                                                  vµ(r) =  erf(µr)r       ,                                                           (5)
+
+whose Fourier transform is
+
+                                                  ˜vµ(k) = 4πk2 e−  k24µ2  .                                                          (6)
+
+When  µ  →  ∞,  we  recover  the  standard  Jellium  model;  in  the  opposite  limit  µ  →  0,  we
+recover the non-interacting electron gas.  Notice that vµ  is a long range pair-potential with
+a  penetrable  core,  vµ(0)  =  2µ/√π.   So  µ  controls  the  penetrability  of  two  particles.   For
+this kind of system  it is lacking a detailed study of the RDF. In this work we will only be
+concerned about the ﬂuid phase.
+
+                                                            6
+III.    EWALD SUMS
+
+
+   Periodic boundary conditions are necessary for extrapolating results of the ﬁnite system
+to the thermodynamic limit.  Suppose the bare pair-potential, in inﬁnite space, is v(r),
+                                   ∫     dk                                ∫
+                          v(r) =       (2π)3 e−ik·r˜v(k) ,     ˜v(k) =         dr eik·rv(r) .                             (7)
+
+The best pair-potential of the ﬁnite system is given by the image potential
+
+                                      vI(r) =∑        v(|r + L|) − ˜v(0)/Ω .                                             (8)
+                                                   L
+where  the  L  sum  is  over  the  Bravais  lattice  of  the  simulation  cell  L  =  (mxL, myL, mzL)
+where  mx, my, mz  range over  all positive  and negative  integers  and Ω = L3.  We have  also
+added  a  uniform  background  of the  same  density  but  opposite  charge.  Converting  this  to
+k-space and using the Poisson sum formula we get
+
+                                                           ′∑
+                                           vI(r) =  1Ω         ˜v(k)e−ik·r ,                                                   (9)
+                                                           k
+where the prime indicates that we omit the k = 0 term; it cancels out with the background.
+The k sum is over reciprocal lattice vectors  of the simulation box kn = (2πnx/L, 2πny/L,
+2πnz/L) where nx, ny, nz  range over all positive and negative integers.
+   Because both sums, Eq.  (8) and Eq.  (9), are so poorly convergent21 we follow the scheme
+put  forward  by  Natoli  et  al.34  for approximating  the  image  potential  by  a  sum  in  k-space
+and a sum in r-space,
+
+                           va(r) =∑       vs(|r + L|) + ∑          vl(k)eik·r − ˜v(0)/Ω ,                            (10)
+                                       L                    |k|≤kc
+
+where  vs(r)  is  chosen  to  vanish  smoothly  as  r  approaches  rc,  where  rc  is  less  than  half  of
+the  distance  across  the  simulation  box  in  any  direction.   If  either  rc  or  kc  go  to  inﬁnity
+then va → vI.  Natoli et al.  show that in order to minimize the error in the potential, it is
+appropriate to minimize χ2 =∫Ω[vI(r) − va(r)]2 dr/Ω.  And choose for vs(r) an expansion in
+a ﬁxed number of radial functions.  This same technique has also been applied to treat the
+Jastrow-correlation-factor described in section VI A.
+   Now let us work with N  particles of charge e in a periodic box and let us compute the
+total  potential  energy  of  the  unit  cell.   Particles  i  and  j  are  assumed  to  interact  with  a
+
+                                                          7
+potential e2v(rij) = e2v(|ri − rj|).  The potential energy for the N  particle system is
+
+                                        V  =∑      e2vI(rij) +∑       e2vM  ,                                             (11)
+                                              i<j                  i
+where vM  =  12 limr→0[vI(r) − v(r)] is the interaction of a particle with its own images; it is a
+Madelung constant35 for particle i interacting with the perfect lattice of the simulation cell.
+If this term were not present,  particle i would only see N − 1 particles in the surrounding
+cells instead of N.
+
+
+IV.    THE FIXED-NODES DIFFUSION  MONTE  CARLO (DMC) METHOD
+
+
+   Consider the Schr¨odinger equation for the many-body wave-function, φ(R, t) (the wave-
+function  can  be  assumed  to  be  real,  since  both  the  real  and  imaginary  parts  of the  wave-
+function  separately  satisfy  the  Schr¨odinger  equation),  in  imaginary  time,  with  a  constant
+shift ET  in the zero of the energy.  This is a diﬀusion equation in a 3N-dimensional space36.
+If  ET  is  adjusted  to  be  the  ground-state  energy,  E0,  the  asymptotic  solution  is  a  steady
+state solution, corresponding to the ground-state eigenfunction φ0(R) (provided  φ(R, 0) is
+not orthogonal to φ0).
+   Solving  this  equation  by  a  random-walk  process  with  branching  is  ineﬃcient,  because
+the branching rate, which is proportional to the total potential V (R), can diverge to +∞.
+This leads to large ﬂuctuations in the weights of the diﬀusers and to slow convergence when
+calculating averages.  However, the ﬂuctuations, and hence the statistical uncertainties, can
+be greatly reduced19  by the technique of importance sampling37.
+   One  simply  multiplies  the  Schr¨odinger  equation  by  a  known  trial  wave-function  Ψ(R)
+that  approximate  the  unknown  ground-state  wave-function,  and  rewrites  it  in  terms  of  a
+new probability distribution
+
+                                           f(R, t) = φ(R, t)Ψ(R) ,                                                   (12)
+
+whose normalization is given in Eq.  (A1).  This leads to the following diﬀusion equation
+
+           − ∂f(R, t)∂t       = −λ∇∇∇2f(R, t) + [EL(R) − ET ]f(R, t) + λ∇∇∇ · [f(R, t)F(R)] .        (13)
+
+Here λ = ℏ2/(2m), t is the imaginary time measured in units of ℏ, EL(R) = [HΨ(R)]/Ψ(R)
+is the local energy of the trial wave-function, and
+
+                                             F(R) = ∇∇∇ ln Ψ2(R) .                                                     (14)
+
+                                                         8
+The three terms on the right hand side of Eq.  (13) correspond, from left to right, to diﬀusion,
+branching, and drifting, respectively.
+   At suﬃciently long times the solution to Eq.  (13) is
+
+                               f(R, t) ≈ N0Ψ(R)φ0(R) exp[−(E0 − ET )t] ,                                  (15)
+
+where  N0  = ∫ φ0(R)φ(R, 0) dR.   If  ET  is  adjusted  to  be  E0,  the  asymptotic  solution  is
+a  stationary  solution  and  the  average  ⟨EL(R)⟩f  of  the  local  energy  over  the  stationary
+distribution gives the ground-state energy E0.  If we set the branching to zero EL(R) = ET
+then  this  average  would  be  equal  to  the  expectation  value ∫ Ψ(R)HΨ(R) dR,  since  the
+stationary  solution  to  Eq.   (13)  would  then  be  f  =  fvmc  =  Ψ2.   In  other  words,  without
+branching we would obtain the variational energy of Ψ, rather than E0, as in a Variational
+Monte Carlo (VMC) calculation.
+   The time evolution of f(R, t) is given by
+                                                     ∫
+                                       ′, t + τ) =                 ′, R; τ)f(R, t) ,                                    (16)
+                                 f(R                    dRG(R
+
+
+                                          ′, R; τ) = Ψ(R′)⟨R′| exp[−τ(H − ET )]|R⟩Ψ−1(R) is a tran-
+where the Green’s function G(R
+
+                                                                                         ′  in  a  time  τ.   Thus  G
+sition  probability  for  moving  the  set  of  coordinates  from  R  to  R
+is  a  solution  of  the  same  diﬀerential  equation,  Eq.   (13),  but  with  the  initial  condition
+
+      ′, R; 0) = δ(R′ − R).  For short times τ  an approximate solution for G is
+G(R
+
+
+              ′, R; τ) = (4πλτ)−3N/2e−|R′−R−λτF(R)|2/4λτ e−τ{[EL(R)+EL(R′)]/2−ET } + O(τ 2) .   (17)
+       G(R
+
+To compute the ground-state energy and other expectation values, the N-particle distribu-
+tion  function  f(R, t)  is  represented,  in  diﬀusion  Monte  Carlo,  by  an  average  over  a  time
+series  of generations of walkers  each of which  consists  of a ﬁxed  number  of nw  walkers.  A
+walker  is  a  pair  (Rα, ωα),  α  =  1, 2, . . . , nw,  with  Rα  a  3N-dimensional  particle  conﬁgu-
+ration  with  statistical  weight  ωα.   At  time  t,  the  walkers  represent  a  random  realization
+of  the  N-particle  distribution,  f(R, t)  = ∑nwα=1 ωtαδ(R − Rtα).    The  ensemble  is  initial-
+ized  with  a  VMC  sample  from  f(R, 0)  =  Ψ2(R),  with  ω0α  =  1/nw  for  all  α.   Note  that
+if  the  trial  wave-function  were  the  exact  ground-state  then  there  would  be  no  branching
+and  it  would  be  suﬃcient  nw   =  1.    A  given  walker  (Rt, ωt)  is  advanced  in  time  (dif-
+fusion  and  drift)  as  Rt+τ  =  Rt + χ + λτ∇∇∇ ln Ψ2(Rt)  where  χ  is  a  normally  distributed
+random 3N-dimensional vector with variance 2λτ  and zero mean38.  In order to satisfy de-
+tailed balance we accept the move with a probability A(R, R′; τ) = min[1, W (R, R′)], where
+
+                                                          9
+W (R, R′) = [G(R, R′; τ)Ψ2(R′)]/[G(R′, R; τ)Ψ2(R)].  This step would be unnecessary if G
+were the exact Green’s function, since W  would be unity.  Finally, the weight ωtα is replaced
+by ωt+τα    = ωtα∆ωtα (branching), with ∆ωtα = exp{−τ[(EL(Rtα) + EL(Rt+τα   ))/2 − ET ]}.
+   However, for the diﬀusion interpretation to be valid, f  must always be positive, since it
+is  a probability  distribution.  But  we  know  that the  many-fermions  wave-function  φ(R, t),
+being antisymmetric  under exchange  of a pair of particles  of the parallel spins,  must  have
+nodes,  i.e.  points R where  it vanishes.  In the ﬁxed-nodes  approximation one restricts  the
+diﬀusion process to walkers that do not change the sign of the trial wave-function.  One can
+easily demonstrate that the resulting energy, ⟨EL(R)⟩f, will be an upper bound to the exact
+ground-state energy; the best possible upper bound with the given boundary condition23.
+   A  detailed  description  of  the  algorithm  used  for  the  DMC  calculation  can  be  found  in
+Ref.  28.
+
+
+
+V.    EXPECTATION VALUES IN  DMC
+
+
+   In a DMC calculation there are various diﬀerent possibilities to measure the expectation
+value of a physical  observable,  as for example  the RDF. If ⟨O⟩f  is the measure  and ⟨. . .⟩f
+the statistical average over the probability distribution f  we will,  in the following, use the
+word estimator to indicate the function O itself, unlike the more common use of the word to
+indicate the usual Monte Carlo estimator∑Ni=1 Oi/N  of the average, where {Oi} is the set
+obtained evaluating O over a ﬁnite number N  of points distributed according to f.  Whereas
+the average from diﬀerent estimators must give the same result, the variance, the square of
+the statistical error, can be diﬀerent for diﬀerent estimators.
+
+
+
+1.     The  local  estimator  and  the  extrapolated  measure
+
+
+   To  obtain  ground-state  expectation  values  of  quantities  O  that  do  not  commute  with
+the Hamiltonian we introduce the local estimator OL(R) = [OΨ(R)]/Ψ(R) and then com-
+pute  the  average  over  the  DMC  walk,  the  so  called  mixed  measure,             Omix  =  ⟨OL(R)⟩f  =
+∫ φ0(R)OΨ(R) dR/∫ φ0(R)Ψ(R) dR.  This  is  inevitably  biased  by  the  choice  of  the  trial
+
+wave-function.  A way to remedy to this bias is the use of the forward walking method25,26 or
+the reptation quantum Monte Carlo method27 to reach pure estimates.  Otherwise this bias
+
+                                                      10
+can be made of leading order δ2, with δ = φ0 − Ψ, introducing the extrapolated measure
+
+                                            Oext = 2Omix −       Ovar  ,                                                    (18)
+
+where   Ovar  = ⟨OL⟩fvmc  is  the  variational measure.  If the  mixed  measure  equals  the  varia-
+tional measure then the trial wave-function has maximum overlap with the ground-state.
+
+
+2.     The  Hellmann  and  Feynman  measure
+
+   Toulouse  et  al.15,29  observed  that the  zero-variance  property  of the  energy24  can  be  ex-
+tended to an arbitrary observable, O, by expressing  it as an energy derivative through the
+use of the Hellmann-Feynman theorem.
+   In  a  DMC  calculation  the  Hellmann-Feynman  theorem  takes  a  form  diﬀerent  from  the
+one in a VMC calculation.  Namely we start with the eigenvalue expression (Hλ −Eλ)Ψλ = 0
+for the ground-state of the perturbed Hamiltonian Hλ = H + λO, take the derivative with
+respect to λ, multiply on the right by the ground-state at λ = 0, φ0, and integrate over the
+particle coordinates to get
+                      ∫                                  ∫          (∂Eλ               )
+                          dR φ0(Hλ − Eλ)∂Ψλ∂λ   =           dR φ0       ∂λ   − ∂Hλ∂λ     Ψλ .                      (19)
+
+Then we notice that due to the Hermiticity of the Hamiltonian, at λ = 0 the left hand side
+vanishes, so that we get11             ∫ dR φ0OΨλ
+                                                       ⏐⏐⏐⏐            ⏐⏐⏐⏐λ=0  .                                            (20)
+                                        ∫ dR φ0Ψλ            =  ∂Eλ∂λ
+                                                        λ=0
+This relation holds only in the λ → 0 limit unlike the more common form39 which holds for
+any λ.  Also it resembles Eq.  (3) of Ref.  30.
+   Given  Eλ   = ∫ dRφ0(R)HλΨλ(R)/∫ dRφ0(R)Ψλ(R)  the  “Hellmann  and  Feynman”
+(HFM) measure in a DMC calculation is
+                                     ⏐⏐⏐⏐λ=0 ≈ ⟨OL(R)⟩f + ⟨∆OαL(R)⟩f + ⟨∆Oβ
+                   OHF M  =  dEλdλ                                                     L(R)⟩f  .                   (21)
+
+The α correction is11
+                                                  [HΨ′                ] Ψ′(R)
+                                  ∆OαL(R) =          Ψ′   − EL(R)       Ψ(R)  .                                       (22)
+
+This expression coincides with Eq.  (18) of Ref.  15.  In a VMC calculation this term, usually,
+does  not  contribute  to  the  average,  with  respect  to  fvmc  =  Ψ2,  due  to  the  Hermiticity  of
+
+                                                       11
+the  Hamiltonian.  This  is  of course  not  true  in  a  DMC  calculation.  We  will  then  deﬁne  a
+Hellmann and Feynman variational (HFMv) estimator as OHF Mv = OL(R) + ∆OαL(R).  The
+β  correction is11
+
+                                      ∆OβL(R) = [EL(R) − E0]Ψ′(R)Ψ(R)  ,                                           (23)
+
+where E0 = Eλ=0.  Which diﬀers from Eq.  (19) of Ref.  15 by a factor of one half.  This term
+is necessary in a DMC calculation not to bias the measure.  The extrapolated Hellmann and
+Feynman measure will then be
+
+                                     OHFM-ext = 2OHFM − ⟨OHFMv⟩fvmc  .                                         (24)
+
+Both  corrections  α  and  β  to  the  local  estimator  depends  on  the  auxiliary  function,  Ψ′  =
+∂Ψλ/∂λ|λ=0.  Of course if we had chosen Ψλ=0, on the left hand side of Eq.  (21), as the exact
+ground  state  wave-function,  φ0,  instead  of  the  trial  wave-function,  then  both  corrections
+would have vanished.  When the trial wave-function is suﬃciently close to the exact ground
+state  function  a  good  approximation  to  the  auxiliary  function  can  be  obtained  from  ﬁrst
+order perturbation theory for λ ≪ 1.  So the Hellmann and Feynman measure is aﬀected by
+the new source of bias due to the choice of the auxiliary function independent from the bias
+due to the choice of the trial wave-function.
+   It  is  convenient  to  rewrite  Eqs.   (22)  and  (23)  in  terms  of  the  logarithmic  derivative
+Q(R) = Ψ′(R)/Ψ(R) as follows
+
+                                               N∑
+                        ∆OαL(R) = − 1r2s           [∇∇∇2rkQ(R) + 2vk(R) · ∇∇∇rkQ(R)] ,                          (25)
+                                              k=1
+                        ∆OβL(R) = [EL(R) − E]Q(R) ,                                                               (26)
+
+where vk(R) = ∇∇∇rk ln Ψ(R) is the drift velocity of the trial wave-function.  For each observ-
+able a speciﬁc form of Q has to be chosen.
+
+
+VI.    TRIAL WAVE-FUNCTION
+
+   We chose the trial wave-function of the Bijl-Dingle-Jastrow40  or product form
+                                                             (                )
+                                    Ψ(R) ∝ D(R) exp            −∑      u(rij)     .                                         (27)
+                                                                  i<j
+
+                                                        12
+   The function D(R) is the exact wave-function of the non-interacting fermions (the Slater
+determinant) and serves to give the trial wave-function the desired antisymmetry
+
+                               D(R) =      1√N+! det(ϕ+n,m)     1√N−! det(ϕ−n,m) ,                                  (28)
+
+where  for  the  ﬂuid  phase  ϕσn,m  =  eikn·rmδσm,σ/√Ω  with  kn  a  reciprocal  lattice  vector  of
+the  simulation  box  such  that  |kn|  ≤  kσF ,  σ  the  z-component  of  the  spin  (±1/2),  rm  the
+coordinates of particle m, and σm its spin z-component.  For the unpolarized ﬂuid there are
+two separate determinants for the spin-up and the spin-down states because the Hamiltonian
+is spin independent.  For the polarized ﬂuid  there is a single  determinant.  For the general
+case of N+ spin-up particles the polarization will be ζ = (N+ − N−)/N  and the Fermi wave-
+vector for the spin-up (spin-down) particles will be k±F  = (1±ζ)1/3kF  with kF  = (3π2n)1/3 =
+(9π/4)1/3/(a0rs) the Fermi wave-vector of the paramagnetic ﬂuid.  On the computer we ﬁll
+closed  shells  so  that  Nσ  is  always  odd.  We  only  store  kn  for  each  pair  (kn, −kn)  and  use
+sines and cosines instead of exp(ikn · ri) and exp(−ikn · rj).
+   The  second  factor  (the  Jastrow  factor)  includes  in  an  approximate  way  the  eﬀects  of
+particle correlations, through the “Jastrow-correlation-factor”, u(r), which is repulsive.
+
+
+A.    The  Jastrow-correlation-factor
+
+   Neglecting the cross term between the Jastrow and the Slater determinant in Eq.  (A6)
+(third term) and the Madelung constant, the variational energy per particle can be approx-
+imated as follows,
+                            ∫ Ψ(R)HΨ(R) dR                            ′∑
+   eV  =  ⟨EL(R)⟩fN        =          N                ≈ eF +   12Ω      [e2˜vµ(k) − 2λk2˜u(k)][S(k) − 1] +
+                                                                      k
+             1     ′∑
+          NΩ2         λk · k′˜u(k)˜u(k′)⟨ρk+k′ρ−kρ−k′⟩f + . . .  ,                                                     (29)
+                  k,k′
+where eF  = (3/5)λ∑σ Nσ(kσF )2/N  is the non-interacting fermions energy per particle,  ˜u(k)
+is the Fourier transform of the Jastrow-correlation-factor u(r), ˜vµ(k) = 4π exp(−k2/4µ2)/k2
+is  the  Fourier  transform  of  the  bare  pair-potential,  S(k)  is  the  static  structure  factor  for
+a  given  u(r) (see  Sec.  VII 3),  ρk  =∑Ni=1 exp(ik · ri)  is  the  Fourier transform  of the  total
+number  density  ρ(r)  = ∑i δ(r − ri),  and  the  trailing  dots  stand  for  the  additional  terms
+coming from the exclusion  of the j  = k  term in the last term of Eq.  (A6).  Next we make
+
+                                                        13
+the Random Phase Approximation41 and we keep only the terms with k + k′ = 0 in the last
+term.  This gives
+
+                              ′∑{                                                                      }
+        eV  ≈ eF +   12Ω            [e2˜vµ(k) − 2λk2˜u(k)][S(k) − 1] − 2nλ[k˜u(k)]2S(k)                   + . . .  .    (30)
+                              k
+In  the  limit  k   →   0  we  have  to  cancel  the  Coulomb  singularity  and  we  get  ˜u2(k)   =
+me2˜vµ(k)/(ℏ2nk2) ≃ [(4πe2/k2)/(ℏωp)]2 (where ωp =√4πne2/m is the plasmon frequency)
+or in adimensional units
+                                                     √  rs  4π
+                                           ˜u(k) =       3  k2  ,     small k .                                               (31)
+
+This determines the correct behavior of  ˜u(k) as k → 0 or the long range behavior of u(r)
+                                                      √rs    1
+                                            u(r) =        3  r  ,     large r .                                                 (32)
+
+    Now to construct the approximate Jastrow-correlation-factor, we start from the expres-
+sion
+                                                ′∑
+                             ǫ = eF +   12Ω        [e2˜vµ(k) − Aλk2˜u(k)][S(k) − 1] ,                             (33)
+                                                k
+and use the following perturbation approximation, for how S(k) depends on  ˜u(k)42,
+                                               1
+                                             S(k) =     1Sx(k) + Bn˜u(k) ,                                                 (34)
+where A and B  are constant to be determined and Sx(k) the structure factor for the non-
+interacting fermions (see Eq.  (62)), which is Sx =∑σ Sxσ,σ  with
+                                                      nσ  yσ
+                                      Sxσ,σ(k) =       nσn 2 (3 − y2σ)  yσ < 1
+                                                        n                      else                                                (35)
+where nσ = Nσ/Ω and yσ = k/(2kσF ).
+    Minimizing ǫ with respect to u(k), we obtain43
+                                                          [    1                       ]1/2
+                             Bn˜u(k) = −    1Sx(k) +        Sx(k) + Bne2˜vµ(k)λAk2           ,                              (36)
+
+This  form  is  optimal  at  both  long  and  short  distances  but  not  necessarily  in  between.   In
+particular, for any value of ζ, the small k behavior of ˜u(k) is√2rs/3AB(4π/k2) which means
+that                                                √
+                                          u(r) =         2rs   1
+                                                        3AB    r  ,     large r .                                               (37)
+
+                                                           14
+The large k behavior of ˜u(k) is (rs/A)˜vµ(k)/k2, for any value of ζ, which in r space translates
+into
+                                                 ⏐⏐⏐⏐r=0 =
+                                         du(r)               − rs2A  µ → ∞                                          (38)
+                                           dr               0         µ ﬁnite
+
+In  order  to  satisfy  the  cusp  condition  for  particles  of  antiparallel  spins  (any  reasonable
+Jastrow-correlation-factor  has  to  obey  to  the  cusp  conditions  (see  Ref.   13  Section  IVF)
+which  prevent  the  local  energy  from diverging  whenever  any  two  electrons  (µ = ∞) come
+together)  we  need  to  choose  A  =  1,  then  the  correct  behavior  at  large  r  (31)  is  obtained
+ﬁxing B = 2 (see Note 44).  We will call this Jastrow J1 in the following.
+   It turns out that, at small µ, but not for the Coulomb case, a better choice is given by45
+                                                      [(    1     )2                   ]1/2
+                          2n˜u(k) = −    1Sx(k) +         Sx(k)       + 2ne2˜vµ(k)λk2         ,                           (39)
+
+
+which still has the correct long (37) and short (38) range behaviors.  We will call this Jastrow
+J2  in the following.  This  is expected  since,  diﬀerently  from J1,  J2  satisﬁes  the additional
+exact requirement limµ→0 u(r) = 0, as immediately follows from the deﬁnition (39).  Then, as
+conﬁrmed by our results (see Sec.  VIII E)), at small µ (and any rs), the trial wave-function
+is expected to be very close to the stationary solution of the diﬀusion problem.
+
+
+B.    The  backﬂow  and  three-body  correlations
+
+   As shown in Appendix A, the trial wave-function of Eq.  (27) can be further improved by
+adding three-body (3B) and backﬂow (BF) correlations14,46 as follows
+                                                  [                      N∑                ]
+                          Ψ(R) =  ˜D(R) exp         −∑      ˜u(rij) −        G(l) · G(l)      .                          (40)
+                                                        i<j             l=1
+Here
+
+                                ˜D(R) =      1√                   √
+                                               N+! det( ˜ϕ+n,m)     1N−! det( ˜ϕ−n,m) ,                                  (41)
+
+with  ˜ϕσn,m = eikn·xmδσm,σ/√Ω and xm  quasi-particle coordinates deﬁned as
+
+                                                        N∑
+                                         xi = ri +         η(rij)(ri − rj) .                                               (42)
+                                                       j⁄=i
+
+                                                         15
+The displacement of the quasi-particle coordinates xi from the real coordinate ri incorporates
+eﬀects of hydrodynamic backﬂow47, and changes the nodes of the trial wave-function.  The
+backﬂow correlation function η(r), is parametrized as14
+
+                                          η(r) = λB      1 + sBrrB + wBr + r4  ,                                                 (43)
+
+which has the long-range behavior ∼ 1/r3.
+   Three-body correlations are included through the vector functions
+
+                                                     N∑
+                                         G(i) =         ξ(rij)(ri − rj) .                                                (44)
+                                                    j⁄=i
+We call ξ(r) the three-body correlation function which is parametrized as48
+
+                                        ξ(r) = a exp{−[(r − b)c]2}  .                                              (45)
+
+To cancel the two-body term arising from G(l) · G(l), we use  ˜u(r) = u(r) − 2ξ2(r)r2
+   The backﬂow and three-body correlation functions are then chosen to decay to zero with
+a zero ﬁrst derivative at the edge of the simulation box.
+
+
+C.    Optimized  parameters
+
+   Optimizing the trial wave-function (see Ref.  13 Section VII) is extremely important for
+a ﬁxed-nodes DMC calculation as, even  if the Jastrow-correlation-factor is parameter free,
+the backﬂow changes the nodes.  We carefully studied how the RDF depends on the quality
+of the trial wave-function  choosing  a simple  Slater determinant  (S) (Eq.  (27) without  the
+Jastrow  factor),  a Slater-Jastrow  (SJ)  (Eq.  (27)),  and  a Slater-Jastrow  with  the  backﬂow
+and three-body corrections (SJ+BF+3B) (Eq.  (40)).
+   In Table I we report the optimized parameters for the backﬂow and three-body correlation
+functions for a system of N  = 54 and ζ = 0 at various rs and µ.  We have used these values
+of the parameters in all subsequent calculations, unrespective of the value of ζ.
+   In Fig.  1 we show the optimized η and ξ for N  = 54, ζ = 0, rs = 10.  The optimization of
+the 7 parameter dependent  trial wave-function  gives  a backﬂow  correlation η  ordered in µ
+but a three-body correlation ξ  erratic in µ.  As one moves away from the Coulomb µ → ∞
+case  the  system  of  particles  becomes  less  interacting  and  the  relevance  of  the  backﬂow
+and  three-body  correlations  diminishes.   This  is  supported  by  the  fact  that  at  µ =  4, 2, 1,
+
+                                                        16
+TABLE I. Optimized variational parameters of backﬂow and three-body correlation  functions for
+
+N  = 54 and ζ = 0 and various combinations af rs  and µ.
+
+ rs                µ                      λB                          sB                          rB                         wB                          a                             b                         c
+ 10              1/2                      -                              -                             -                             -                             -                             -                          -
+ 10                1                 8.408d-4               1.658d+2              -1.383d-3                 3.168                     0.447                     -0.212                 1.036
+ 10                2                 7.189d-5               9.793d+2              9.478d-6                 0.446                 1.379d+1                 -3.688                 0.450
+ 10                4                 1.116d-4               6.522d+2              -2.553d-5                 0.179                 5.981d+1                 -4.773                 0.462
+ 10               ∞                   0.781                     -0.499                     0.324                    2.958                     0.514                     0.327                 1.358
+  5               1/2                      -                              -                             -                             -                             -                             -                          -
+  5                 1                        -                              -                             -                             -                             -                             -                          -
+  5                 2                 2.768d-2                  -0.420                     0.893                    -0.673                1.322d+6                 -9.003                 0.408
+  5                 4                    0.331                     -0.680                     1.467                    1.442                 2.729d+1                 -2.607                 0.659
+  5                ∞                   0.161                     -0.585                     0.335                    0.841                     0.802                  -7.310d-2              1.344
+  2               1/2                      -                              -                             -                             -                             -                             -                          -
+  2                 1                        -                              -                             -                             -                             -                             -                          -
+  2                 2                        -                              -                             -                             -                             -                             -                          -
+  2                 4                 5.272d-2                  -1.616                     1.732                 1.687d-2                804.135                  -2.875                 0.847
+  2                ∞                5.018d-2                  -1.221                     0.393                    0.681                     1.655                     -0.596                 1.229
+  1               1/2                      -                              -                             -                             -                             -                             -                          -
+  1                 1                        -                              -                             -                             -                             -                             -                          -
+  1                 2                        -                              -                             -                             -                             -                             -                          -
+  1                 4                 1.187d-2                  -6.834                     0.495                    1.295                     0.186                     0.489                 4.739
+  1                ∞               2.1945d-2                 -3.086                     0.320                    1.631                     0.306                     0.367                 2.467
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+in  correspondnce  of  the  erratic  behavior,  the  eﬀect  of  the  three-body  correlations  on  the
+expectation value of the energy is irrelevant.
+
+                                                                                                                  17
+       2.5                                 µ=∞                       0.9                                 µ=∞
+                                            µ=4                      0.8                                  µ=4
+       2.0                                  µ=2                                                           µ=2
+                                            µ=1                      0.7                                  µ=1
+
+                                                                     0.6
+       1.5                                                           0.5
+
+       1.0                                                           0.4
+
+                                                                     0.3
+       0.5                                                           0.2
+
+                                                                     0.1
+
+       0.00.0     0.5    1.0     1.5    2.0     2.5    3.0           0.00.0     0.5     1.0    1.5     2.0    2.5     3.0
+
+                                 r/a                                                            r/a
+
+
+
+
+FIG.  1.   Shows  the  optimized  correlation  functions  η  and  ξ  for  N  =  54, ζ  =  0,  and  rs  =  10  and
+
+diﬀerent values of µ.
+
+
+VII.    THE  RADIAL DISTRIBUTION FUNCTION  (RDF)
+
+    The  main  purpose  of  the  present  work  is  to  determine  the  radial  distribution  function
+(RDF) of our ﬂuid model through the DMC calculation.
+
+
+1.     Deﬁnition  of  the  radial  distribution  function
+
+    The spin-resolved RDF is deﬁned as49,50⟨∑                                                ⟩
+
+                                                                                     ′ − rj)
+                                      ′) =         i,j⁄=i δσ,σiδσ′,σjδ(r − ri)δ(r
+                           gσ,σ′(r, r                         nσ(r)nσ′(r′)                       ,                            (46)
+                                             ⟨  N∑                    ⟩
+                                 nσ(r) =             δσ,σiδ(r − ri)       ,                                                        (47)
+                                                i=1
+where  here,  and  in  the  following,  ⟨. . .⟩  will  denote  the  expectation  value  respect  to  the
+ground-state.   Two  exact  conditions  follow  immediately  from  the  deﬁnition:   i.   the  zero-
+moment sum rule
+                               ∑    ∫
+                                                                           ′) − 1] = −N  ,                               (48)
+                                        drdr′ nσ(r)nσ(r′)[gσ,σ′(r, r
+                               σ,σ′
+
+                                                           18
+also known  as  the  charge  (monopole) sum  rule  in  the  sequence  of multipolar sum  rules  in
+the framework of charged ﬂuids51, ii.  gσ,σ(r, r) = 0 due to the Pauli exclusion principle.
+   For  the  homogeneous  and  isotropic  ﬂuid  nσ(r)  =  Nσ/Ω  where  Nσ  is  the  number  of
+
+                                                                                          ′|, so that
+particles of spin σ and gσ,σ′  depends only on the distance r = |r − r
+                                                         ⟨∑                              ⟩
+                           gσ,σ′(r) =    1         Ω             δσ,σiδσ′,σjδ(r − rij)       .                            (49)
+                                         4πr2  NσNσ′       i,j⁄=i
+
+The total (spin-summed) radial distribution function will be
+                  g(r) =  1     ∑    nσnσ′gσ,σ′(r)
+                            n2   σ,σ′
+                            (1 + ζ    )2               (1 − ζ    )2
+                         =       2        g+,+(r) +         2        g−,−(r) + 1 − ζ 22     g+,−(r) .                 (50)
+
+
+2.     From  the  structure  to  the  thermodynamics
+
+
+   As it is well known the knowledge of the RDF gives access to the thermodynamic prop-
+erties of the system.  The mean potential energy per particle can be directly obtained from
+g(r) and the bare pair-potential vµ(r) as follows
+                                             nσnσ′   ∫
+                                 ep =∑         2n        dr e2vµ(r)[gσ,σ′(r) − 1] ,                                    (51)
+                                        σ,σ′
+where we have explicitly taken into account of the background contribution.  Suppose that
+ep(rs) is known as a function of the coupling strength rs.  The virial theorem for a system
+with Coulomb interactions (v∞(r) = 1/r) gives N(2ek + ep) = 3P Ω with P  = −d(Ne0)/dΩ
+the pressure and e0 = ek + ep the mean total ground-state energy per particle.  We then ﬁnd
+
+                             ep(rs) = 2e0(rs) + rs de0(rs)                 d
+                                                           drs     =  1rs drs [r2se0(rs)] ,                               (52)
+
+which integrates to
+                                                             ∫   rs
+                                      e0(rs) = eF +  1r2s
+                                                              0    dr′s r′sep(r′s) .                                          (53)
+   We  can  rewrite  the  ground-state  energy  per  particle  of  the  ideal  Fermi  gas,  in  reduced
+units, as
+                                                  (9π)2/3  3
+                                           eF  =     4         10φ5(ζ) 1r2s  ,                                                (54)
+
+
+                                                         19
+where φn(ζ) = (1 − ζ)n/3 + (1 + ζ)n/3.  And for the exchange potential energy per particle in
+the Coulomb case
+                                                   (  2    )1/3 9π
+                                         exp = −      3π5         8  φ4(ζ) 1rs  ,                                              (55)
+
+
+which follows from Eq.  (51) and Eqs.  (59)-(60).  The expression for ﬁnite µ can be found in
+Ref.  10 (see their Eqs.  (15)-(16)).
+
+
+
+3.     Deﬁnition  of  the  static  structure  factor
+
+
+   If we introduce the microscopic spin dependent number density
+
+
+                                                        N∑
+                                           ρσ(r) =          δσ,σiδ(r − ri) ,                                                 (56)
+                                                       i=1
+
+and its Fourier transform ρk,σ, then the spin-resolved static structure factors are deﬁned as
+Sσ,σ′(k) = ⟨ρk,σρ−k,σ′⟩/N, which, for the homogeneous and isotropic ﬂuid, can be rewritten
+as
+                                                   ∫
+               Sσ,σ′(k) =  nσn δσ,σ′ + nσnσ′n         [gσ,σ′(r) − 1]e−ik·r dr + nσnσ′n    (2π)3δ(k) ,            (57)
+
+
+From  now  on  we  will  ignore  the  delta  function  at  k  =  0.  The  total (spin-summed)  static
+structure  factor  is  S   = ∑σ,σ′ Sσ,σ′.    Due  to  the  charge  sum  rule  (48)  we  must  have
+limk→0 S(k)  =  0.   In  Sec.   VII B 2  we  will  show  that  the  small  k  behavior  of  S(k)  has
+to start from the term of order k2.
+
+
+
+A.    Analytic expressions  for  the non-interacting  fermions
+
+
+   Usually  gσ,σ′  is  conventionally  divided  into  the  (known)  exchange  and  the  (unknown)
+correlation terms
+
+
+                                                gσ,σ′ = gxσ,σ′ + gcσ,σ′  ,                                                      (58)
+
+
+where the exchange term corresponds to the uniform system of non-interacting fermions.
+
+                                                          20
+1.     Radial  distribution  function
+
+
+    We thus have (from the deﬁnition of the RDF (46) and using Slater determinants for the
+wave-function)
+
+
+
+                                             gx+,−(r) = 1 ,                                                                         (59)[3j1(kσF r)]2
+
+                                              gxσ,σ(r) = 1 −           kσF r         ,                                               (60)
+
+
+
+where  j1(x)  =  [sin(x) − x cos(x)]/x2  is  the  spherical  Bessel  function  of  the  ﬁrst  kind  and
+(kσF )3 = 6π2nσ  is the Fermi wave-number for particles of spin σ.
+
+
+
+
+2.     Static  structure  factor
+
+
+    Again we will have the splitting Sσ,σ′ = Sxσ,σ′ + Scσ,σ′  into the exchange and the correlation
+parts.  So that for the non-interacting fermions we get
+
+
+
+                     Sx+,−(k) = 0 ,                                                                                                     (61)()2()
+
+                      Sxσ,σ(k) =  nσn  − n2σn Θ(2kσF − k)  3π2(kσF )3       1 −   k2kσF        2 +   k2kσF
+                                         
+                                =  nσ        1                          k > 2kσF()3  k < 2kσF,                                                 (62)
+                                     n      3  k            k
+                                             4 kσF  −   116 kσF
+
+
+where Θ(x) is the Heaviside step function.
+
+
+
+
+B.    RDF sum  rules
+
+
+    Both the behavior of the RDF at small  r  and at large r  has to satisfy to general  exact
+relations or sum rules.
+
+                                                              21
+1.     Cusp  conditions
+
+
+    When  two  electrons  (µ  =  ∞)  get  closer  and  closer  together,  the  behavior  of  gσ,σ′(r)  is
+governed by the exact cusp conditions52
+                                      d           ⏐⏐⏐⏐r→0 = 0 ,                                                                     (63)
+
+                                      drgσ,σ(r)⏐⏐⏐⏐r→0 =   3                   ⏐⏐⏐⏐r→0  ,                                       (64)
+                                     d3                            d2
+                                    dr3 gσ,σ(r)⏐⏐⏐⏐r→0 =  12a0    dr2 gσ,σ(r)
+                                     d
+                                     drg+,−(r)              a0 g+,−(0) ,                                                       (65)
+
+where in the adimensional units a0 → 1/rs.  For ﬁnite µ we only have the condition gσ,σ(0) =
+0 due to Pauli exclusion principle.
+
+
+2.     The  Random  Phase  Approximation  (RPA)  and  the  long  range  behavior
+of  the  RDF
+
+    Within  the  linear  density  response  theory53,54  one  introduces  the  space-time  Fourier
+transform,  χ(k, ω),  of  the  linear  density  response  function.    Which  is  related  through
+the  ﬂuctuation  dissipation  theorem,  S(k, ω)  =  −(2ℏ/n)Θ(ω)Imχ(k, ω),  to  the  space-time
+Fourier transform, S(k, ω) (dynamic structure factor), of the van Hove correlation function55,
+⟨ρ(r, t)ρ(0, 0)⟩/n, where ρ(r, t) = exp(iHt/ℏ)ρ(r) exp(−iHt/ℏ).
+    In the Random Phase Approximation (RPA) we have56
+
+                                             1
+                                       χRP A(k, ω) =       1χ0(k, ω) − e2˜vµ(k) ,                                          (66)
+
+where χ0 is the response function of the non-interacting Fermions (ideal Fermi gas), known
+as the Lindhard susceptibility57.  This corresponds to taking the “proper polarizability” (the
+response to the Hartree potential) equal to the response of the ideal Fermi gas58.  The RPA
+static structure factor is then recovered from the ﬂuctuation dissipation theorem as follows
+                                                         ∫   ∞ dω
+                                    SRP A(k) = −ℏn              π  ImχRP A(k, ω) .                                      (67)
+                                                          0
+where
+
+                                ImχRP A =                       Imχ0(1 − e2˜vµReχ0)2 + (e2˜vµImχ0)2  ,                                  (68)
+
+
+                                                           22
+   The small k behavior of the RPA structure factor is exact56.  One ﬁnds
+
+                                       SRP A(k) =   ℏk22mωp  ,     k ≪ kF  ,                                             (69)
+
+where ωp =√4πne2/m is the plasmon frequency33.  This is also known as the second-moment
+sum rule for the exact RDF and can be rewritten as n∫ dr r2[g(r) − 1] = −6(ℏ/2mωp).  We
+can then say that g(r)−1 has to decay faster than r−5 at large r.  The fourth-moment (or com-
+pressibility) sum rule links the thermodynamic compressibility, χ = [nd(n2de0/dn)/dn]−1,58
+to the fourth-moment of the RDF. For the equivalent classical system it is well known that
+the correlation functions have to decay faster than any inverse power of the distance51,59,60
+(in  accord  with  the  Debye-H¨ukel  theory).   We  are  not  aware  of  the  existence  of  a  similar
+result for the zero temperature quantum case.
+
+
+VIII.    RESULTS OF  THE  CALCULATION
+
+   We  considered  fourty  systems  corresponding  to  rs  = 1, 2, 5, 10,  µ  =  ∞, 4, 2, 1, 1/2, ζ  =
+0, 1.  For each system we calculated the RDF using the histogram estimator in a variational,
+mixed, and extrapolated measure and a particular HFM measure.  Before starting with the
+simulations we determined the optimal values for the time step τ  and the number of walkers
+nw  for each density.
+
+
+A.    Extrapolations
+
+   For the  Coulomb  case,  µ →  ∞,  we  made  extrapolations  in  time  step  τ  and  number  of
+walkers  nw  for  each  value  of  rs  within  our  DMC  simulations.   Given  a  relative  precision
+δe0 = ∆e0/exp, where e0 = ⟨EL⟩f/N, ∆e0 is the statistical error on e0, and exp  is the exchange
+energy per particle (see Eq.  (55)), we set as our target relative precision δe0 = 10−2%.
+
+
+1.     In  time  step
+
+   Our results are summarized  in Table II. As the characteristic  dimension  of one particle
+diﬀusing walk is σ = √2λτ  or√2τ/r2s  in adimensional units, this has to remain of the order
+of  the  mean  nearest  neighbor  separation  a  which  is  chosen  to  be  a  constant  in  our  units.
+Then we expect that at lower rs  one needs to choose smaller time steps τ.  For this reason
+
+                                                       23
+TABLE II. Extrapolation in time step for N  = 66 unpolarized electrons (µ = ∞) at a ﬁxed number
+of nw = 600 walkers with a trial wave-function of the SJ type.  We run the simulation for 3 diﬀerent
+
+time  steps  and  did  a  linear  ﬁt  of  the  (τ, e0)  data,  e0  = a + bτ.  The optimal  τ  is  the  largest  one
+
+compatible with the target precision.
+
+rs                                                   a                                                            b                                                  χ2                                         optimal τ
+10                                         -0.107456(7)                                         0.00010(2)                                         0.9                                              0.09
+ 5                                          -0.153352(4)                                         0.00024(3)                                         0.1                                              0.07
+ 2                                           -0.00416(8)                                            0.003(2)                                           4.4                                              0.01
+ 1                                           1.14579(7)                                             0.032(9)                                           1.1                                             0.003
+
+
+
+TABLE  III. Extrapolation  in number of  walkers  for N  = 66  unpolarized electrons  (µ = ∞) with
+
+a  time  step  τ  =  0.1  for  rs  =  10, 5,  τ  =  0.05  for  rs  =  2,  and  τ  =  0.01  for  rs  =  1  with  a  trial
+wave-function  of  the  SJ  type.  We  run  the  simulation  for  4  diﬀerent  numbers  of  walkers  and  did
+
+a linear ﬁt of the (1/nw, e0) data, e0 = a + b/nw.  The optimal nw  is the smallest one compatible
+
+with the target precision.
+
+rs                                                   a                                                          b                                                χ2                                         optimal nw
+10                                        -0.107443(3)                                        0.0032(4)                                        0.1                                                354
+ 5                                         -0.153329(6)                                        0.0044(7)                                        0.2                                                243
+ 2                                         -0.004036(6)                                        0.0026(7)                                        0.2                                                 56
+ 1                                           1.14609(6)                                            0.01(1)                                          1.2                                                 40
+
+
+we chose diﬀerent time steps in the simulations of the Table:  τ  = 0.5, 0.1, 0.05 for rs = 10,
+τ  = 0.3, 0.1, 0.05 for rs  = 5,  τ  = 0.05, 0.03, 0.005 for rs  = 2,  and τ  = 0.01, 0.005, 0.001 for
+rs = 1.  Note that, at ﬁxed rs, the statistical errors increase as the time step diminishes.
+
+
+
+
+2.     In  the  number  of  walkers
+
+
+     Our  results  are  summarized  in  Table  III.  The  ﬂuctuations  of  the  statistical  weight  of
+a  walker  depend  on  the  ﬂuctuations  of  the  local  energy,  i.e.   by  the  quality  of  the  trial
+wave-function.  The quality of the trial wave-function worsens as rs becomes larger (for the
+strongly correlated system), and one expects that the necessary number of walkers increases.
+This  is  in  agreement  with  the  results  of  the  Table.   Note  that,  at  ﬁxed  rs,  the  statistical
+errors increase as the number of walkers diminishes.
+
+                                                                                   24
+B.    Eﬀect  of backﬂow  and  three-body  correlations
+
+
+
+   In Fig.  2 we show the mixed measure of the RDF calculated in DMC for N  = 162, ζ  =
+0, µ = ∞, rs = 10 with diﬀerent kinds of trial wave-functions.  Of course in a VMC calcula-
+tion using the Slater determinant wave-function gives us gxσ,σ′, the RDF of the ideal gas (see
+Eqs.  (59)-(60)).
+
+
+
+
+
+
+
+
+
+
+
+
+                                  1.2
+
+
+
+                                  1.0      g+-
+
+
+
+                                  0.8
+
+
+
+                                  0.6                     g++
+
+
+
+                                  0.4
+
+
+
+                                  0.2
+                                                                         SJS
+
+                                  0.0                             SJ+BF+3B
+                                    0.0  0.5  1.0   1.5  2.0  2.5  3.0  3.5  4.0
+                                                           r/a
+
+
+
+FIG. 2.  Shows the mixed measure of the RDF calculated in DMC for N  = 162, ζ  = 0, µ = ∞, rs =
+
+10 with a S, SJ, SJ+BF+3B trial wave-function.
+
+
+
+
+
+
+
+
+
+   In Fig.  3 we show the diﬀerence between the RDF calculated with the SJ wave-function
+and the one calculated with the SJ+BF+3B wave-function using the variational, the mixed,
+and the extrapolated measure.
+
+                                                       25
+       0.02                                                          0.020
+
+
+       0.01
+                                                                     0.015
+       0.00
+
+      -0.01                                                          0.010
+
+
+      -0.02                                                          0.005
+
+      -0.03                                                          0.000
+
+
+      -0.04
+                                                                     -0.005
+      -0.05                             extrapolated                                                  extrapolatedmixed
+                                         variationalmixed                                              variational
+      -0.06                                                          -0.0100.0 0.5  1.0   1.5  2.0  2.5  3.0  3.5   4.0
+           0.0  0.5  1.0   1.5  2.0  2.5  3.0   3.5  4.0
+                                  r/a                                                            r/a
+
+
+
+
+FIG. 3.  Shows the diﬀerence between the RDF calculated with the SJ wave-function and the one
+
+calculated  with the SJ+BF+3B wave-function  using the variational, the mixed, and the extrapo-
+lated  measure.  The  results  are  for  N  = 162, ζ  = 0, µ  = ∞.  On  the  left  the  like  RDF  is  used  at
+
+rs = 10, on the right the unlike RDF at rs = 1.
+
+
+
+
+
+    With the extrapolated measure the results from the SJ computation diﬀers by less than
+0.005  from  the  ones  from  the  SJ+BF+3B.  We  then  decided  to  perform  our  subsequent
+calculations using the SJ trial wave-function.
+
+
+
+
+
+
+
+C.    Size  eﬀects
+
+
+    In order to estimate the size eﬀects on the RDF calculation we performed a series of VMC
+calculation  with  the  SJ  wave-function  on  an  unpolarized  system  with  diﬀerent  number  of
+particles.   The  results  (see  Fig.   4)  show  that  the  size  dependence  mainly  aﬀects  the  long
+range behavior of the RDF and the on-top value for the unlike one.
+
+                                                           26
+       0.025   N1=66, N2=54                                           0.040   N1=66, N2=54
+              N1=162, N2=66                                                  N1=162, N2=66
+       0.020                                                          0.030
+
+       0.015
+       0.010                                                          0.020
+
+
+       0.005                                                          0.010
+
+       0.000                                                          0.000
+
+
+      -0.005
+      -0.010                                                         -0.010
+
+
+      -0.0150.0   0.5    1.0   1.5    2.0   2.5    3.0    3.5        -0.0200.0   0.5    1.0   1.5    2.0   2.5    3.0    3.5
+
+                                   r/a                                                            r/a
+
+
+
+
+FIG. 4.  Shows the diﬀerence between the RDF of two systems of electrons (µ = ∞) at rs = 10 and
+
+ζ = 0 with diﬀerent sizes N1 and N2.  The RDF are calculated in VMC with the SJ wave-function.
+On  the  left  the  diﬀerence  of  the  like  RDF  is  shown  and  on  the  right  the  diﬀerence  of  the  unlike
+
+RDF is shown.
+
+
+    In the simulation the RDF is deﬁned on r ∈ [0, rmax] with rmax = L/2 where L = Ω1/3 =
+(4πN/3)1/3  is the size of the simulation box.  To minimize size eﬀects we chose to perform
+our RDF calculation with  N  = 162 in the unpolarized  case and N  = 147 in the polarized
+case.
+
+
+
+D.    The  HFM  measure
+
+
+    From the deﬁnition (49), we can write the RDF as
+
+                                               gσ,σ′(r) =  ⟨Iσ,σ′(r, R)⟩Ωnσnσ′      .                                                   (70)
+
+Since the operator Iσ,σ′  is diagonal in coordinate representation  then Iσ,σ′  = (Iσ,σ′)L.  Indi-
+cating with Ωr  the solid angle spanned by the r vector, we can write
+                                                                     ∫   dΩr
+                                 Iσ,σ′(r, R) =∑         δσ,σiδσ′,σj       4π  δ(r − rij) ,                                  (71)
+                                                  i,j⁄=i
+
+                                                            27
+which is the usual histogram estimator21.  Following Toulouse15 we choose for Q the following
+expression
+                                                     ∑                ∫   dΩr       1
+                            Qσ,σ′(r, R) = − r2s8π         δσ,σiδσ′,σj      4π   |r − rij|  ,                             (72)
+                                                     i,j⁄=i
+
+so that (using the identities ∇∇∇2rij1/|r − rij| = −4πδ(r − rij) and ∇∇∇rif(rkj) = ∇∇∇rkjf(rkj)[δik −
+δij], for a given function f) the ﬁrst term in Eq.  (25) exactly cancels the histogram estimator
+Iσ,σ′.  Then the HFMv estimator is
+                                            ∑                         ∫   dΩr
+                   IHFMvσ,σ′    (r, R) =   12π   δσ,σiδσ′,σjvi(R) ·        4π ∇∇∇rij      1|r − rij|
+                                           i,j⁄=i
+                                    = −  1    ∑    δσ,σiδσ′,σjvi(R) · rij
+                                          4π  i,j⁄=i                     r3ij [1 + sgn(rij − r)] ,                  (73)
+
+which goes to zero at large r  (see Note 61).  The correct (taking care of the missing factor
+of two in Ref.  15) β  correction is
+                                                          ∑                ∫   dΩr       1
+             ∆Iβσ,σ′(r, R) = −[EL(R) − E0] r2s8π               δσ,σiδσ′,σj      4π   |r − rij|
+                                                          i,j⁄=i             (rij + r − |rij − r|     )
+                              = −[EL(R) − E0]  r2s         ∑    δσ,σiδσ′,σj                               .           (74)
+                                                     16π   i,j⁄=i                       rijr
+
+Note that also ⟨∆Iβσ,σ′(r, R)⟩ goes to zero at large r.  This particular HFM measure needs to
+be shifted gσ,σ′(r) = gHFMσ,σ′  (r) + 1.  We chose to do the shift as follows:  gσ,σ′(r) = gHFMσ,σ′  (r) +
+gmixσ,σ′(L/2)−gHFMσ,σ′  (L/2).  Nonetheless it is expected to give better results for the on-top value
+of  the  RDF  where  the  histogram  estimator  of  Eq.  (49),  after  the  necessary  discretization
+of the Dirac delta function, leads,  in the measure,  to a statistical average divided by zero.
+Moreover it does not suﬀer from any discretization error and can be calculated for any value
+of r.
+   In  Fig.   5  we  show  a  comparison  for  the  RDF  of  the  N  =  162, ζ  =  0, µ  =  ∞, rs  =  10
+system,  calculated  in DMC SJ with various kinds of measures.  The  length of the run was
+always  the  same  50  blocks  of  500  steps  each.   From  the  ﬁgure  one  can  see  that  with  our
+choice of the β  correction the HFM measure has the correct average value (coinciding with
+the usual histogram estimator).  From the ﬁgure it is also evident that the HFM measure is
+much  less  eﬃcient  than the other measures  (clearly  with a suﬃcient  number  of blocks  the
+statistical error on the HFM measure can be made small at will).
+
+                                                         28
+                                    1.4
+
+
+                                    1.2
+
+
+                                    1.0      g+-
+
+
+                                    0.8
+
+                                    0.6                      g++
+
+
+                                    0.4
+
+
+                                    0.2
+
+
+                                    0.0                                  mixed
+                                                                   extrapolated
+                                   -0.2                                     HF
+                                      0.0   0.5  1.0  1.5  2.0  2.5   3.0  3.5  4.0
+                                                             r/a
+
+
+
+
+FIG. 5.  Shows the RDF of the N  = 162, ζ = 0, µ = ∞, rs = 10 system, calculated in DMC SJ with
+
+various kinds of measures:  mixed histogram (mixed), extrapolated histogram (extrapolated), and
+HFM (HFM) with the choice of Eq.  (72).
+
+
+   This ineﬃciency is entirely due to the ZB correction (essential in the DMC calculation).
+From  its  deﬁnition  (see  Eq.   (74))  one  can  see  that  it  is  the  small  diﬀerence  of  two  large
+terms involving the (extensive) total energy .  So the statistical error on the HFM measure is
+completely dominated by that of the β part, the α part having statistical errors comparable
+with the ones of the usual histogram estimator, as shown in the left panel of Fig.  6.
+
+
+E.    Choice of  the Jastrow
+
+   We noticed  that at small rs, µ, and r  the variational measure  for the unlike  RDF, with
+the chosen Jastrow J1 of Eq.  (36), deviates strongly from the mixed one.  This is no longer
+so with the modiﬁed Jastrow J2  of Eq.  (39) which at small µ gives also better variational
+energies  (but  not  for  µ  →  ∞  where  J1  is  better.   Note  that  the  Jastrow  factor  does  not
+change  the  nodes  of  the  wave-function  so  the  energies  calculated  from  the  diﬀusion  with
+J1  or J2 coincide).  The extrapolated measures do not change appreciably in the two cases
+apart from near  r  = 0.  In  Fig.  6 we  show  the  diﬀerence  for the two  calculations  with  J1
+and J2 for the ζ  = 0, rs = 1, µ = 1 model.  From the inset in the left panel we can see that
+
+                                                         29
+among the two extrapolated measures there is a diﬀerence of the order of 0.005.
+
+
+
+
+
+      1.08                                                            1.01
+
+      1.06                                                            1.00
+
+      1.04                                                            0.99                 0.002
+                                                                      0.98                 0.001
+      1.02                                                                                 0.000
+                                                                      0.97                -0.001
+      1.00                                                                                -0.002
+                                                                      0.96                -0.003
+      0.98                                                                                -0.004
+                                                                      0.95                -0.005
+      0.96                                                                                -0.006      ext. J1-ext. J2
+                                                                      0.94                -0.007
+      0.94                                                                                      0.0   1.0  2.0   3.0  4.0
+                                         extrapolated                 0.93
+                                          variationalmixed                                             extrapolated J2variational J2
+      0.92                                      HFM                   0.92                                   mixed J2
+      0.90                                     HFMv                   0.91                             extrapolated J1
+         0.0   0.5  1.0   1.5   2.0  2.5   3.0  3.5   4.0  4.5            0.0  0.5   1.0   1.5  2.0   2.5  3.0   3.5  4.0   4.5
+                                  r/a                                                              r/a
+
+
+
+
+FIG.  6.   Unlike  RDF  for  the  unpolarized  ﬂuid  of  Paziani10  at  rs  =  1  and  µ  =  1  with  N  =  162.
+
+On  the  left  the  calculation  with  the  Jastrow  J1  of  Eq.   (36)  with  various  measures:  variational
+histogram  (variational)  and  variational  HFMv  (HFMv)  using  the  estimator  of  Eq.   (73),  mixed
+
+histogram  (mixed)  and  HFM  (HFM),  and  extrapolated  histogram  (extrapolated).   On  the  right
+
+the calculation with the Jastrow J2 of Eq.  (39) with the histogram variational (variational), mixed
+(mixed),  and extrapolated  (extrapolated)  measures.  In the inset is  shown the diﬀerence between
+
+the  histogram  extrapolated  measure  of  the  calculation  with  J1  and  the  histogram  extrapolated
+
+measure of the calculation with J2.  105  Monte Carlo steps were used in the simulations.
+
+
+
+    Our  results  with  the  two  Jastrow  factors  show  that  J1  is  better  than  J2  for  the  near-
+Jellium systems (µ large) while J2 is better than J1 for the near-ideal systems (µ small).
+
+
+
+F.     The histogram  estimator
+
+
+    In Fig.  7 we show the DMC results for the histogram extrapolated measure of the RDF
+of  our  ﬂuid  model  at  ζ  =  0.   The  time  step,  τ,  and  number  of  walkers,  nw,  were  chosen
+according to the indications given in subsection VIII A. Fig.  8 is for the ζ = 1 case.
+
+                                                              30
+             1.2
+                       g+-                                            g+-
+             1.0
+
+
+             0.8                                       rs=1                                              rs=2
+
+
+             0.6
+
+
+             0.4                  g++                                             g++
+
+                                                   µ=∞µ=4                                             µ=∞µ=4
+             0.2                                   µ=2                                                µ=2
+                                                 µ=1/2µ=1                                           µ=1/2µ=1
+             0.0
+                       g+-                                            g+-
+             1.0
+
+
+             0.8                                       rs=5                                              rs=10
+
+
+             0.6
+
+
+             0.4                  g++                                             g++
+                                                   µ=∞                                                µ=∞
+             0.2                                   µ=4                                                µ=4
+                                                   µ=2                                                µ=2
+                                                   µ=1                                                µ=1
+             0.0                                 µ=1/2                                              µ=1/2
+                0.0  0.5   1.0  1.5  2.0   2.5  3.0  3.5   4.0 0.0   0.5  1.0   1.5   2.0   2.5   3.0   3.5  4.0
+                                       r/a                                               r/a
+
+
+
+FIG.  7.  Shows  the  histogram  extrapolated  measure  for  the  RDF  of  a  system  of  162  unpolarized
+
+(ζ  = 0) particles  calculated  using the SJ trial wave-function.  The VMC  calculation  was  made of
+106 steps while the DMC by 105.  The trial wave-function used was of the SJ type with the Jastrow
+
+J1 of Eq.  (36).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                             31
+            1.2
+
+
+            1.0
+
+
+            0.8                                      rs=1                                           rs=2
+
+
+            0.6
+
+
+            0.4                 g++                                           g++
+
+                                                µ=∞µ=4                                          µ=∞µ=4
+            0.2                                 µ=2                                             µ=2
+                                              µ=1/2µ=1                                        µ=1/2µ=1
+            0.0
+
+
+            1.0
+
+
+            0.8                                      rs=5                                           rs=10
+
+
+            0.6
+
+
+            0.4                 g++                                           g++
+                                                µ=∞                                             µ=∞
+            0.2                                 µ=4                                             µ=4
+                                                µ=2                                             µ=2
+                                                µ=1                                             µ=1
+            0.0                               µ=1/2                                           µ=1/2
+               0.0  0.5  1.0  1.5   2.0  2.5  3.0  3.5  4.00.0   0.5  1.0   1.5   2.0  2.5   3.0   3.5  4.0
+                                     r/a                                           r/a
+
+
+
+FIG. 8.  Shows the histogram extrapolated measure for the RDF of a system of 147 fully polarized
+
+(ζ  = 1) particles  calculated  using the SJ trial wave-function.  The VMC  calculation  was  made of
+106 steps while the DMC by 105.  The trial wave-function used was of the SJ type with the Jastrow
+
+J1 of Eq.  (36).
+
+
+
+
+
+
+
+
+   In  Table  IV  we  show  the  on-top values  for  the  unlike  RDF, g+−(0),  of the  unpolarized
+system, calculated with the histogram variational, the histogram mixed, the histogram ex-
+trapolated measure, the HFM measure, and the HFM extrapolated measure (of Eq.  (24)).
+
+                                                         32
+TABLE  IV.  Contact  values  for  the  unlike  RDF  of  the  unpolarized  ﬂuid  of  Paziani10,  at  various
+rs  and µ, from the histogram  variational (variational),  mixed (mixed), and extrapolated (extrap-
+
+olated)  measures,  and  the  HFM  (HFM)  and  HFM  extrapolated  (HFM-ext)  measures.   The  trial
+
+wave-function used was of the SJ type with the Jastrow J1 of Eq.  (36).  The last column gives the
+error σav =√σ2K/N  (σ2  is the variance, K the correlation  time of the random walk, and N  the
+
+number of Monte Carlo steps) on the HFM measure.  162 particles were used with 105 × nw Monte
+
+Carlo steps.
+
+rs                  µ                 variational                   mixed                   extrapolated                 HFM                HFM-ext               σav  on HFM
+10               1/2                  1.085(8)                   1.000(4)                      0.91(1)                     1.0006                  0.9222                          0.03
+10                  1                    0.706(6)                   0.644(3)                     0.582(8)                    0.6474                  0.5949                          0.03
+10                  2                    0.219(4)                   0.182(1)                     0.146(4)                    0.1798                  0.1450                          0.06
+10                  4                    0.053(2)                  0.0506(8)                    0.048(2)                    0.0460                  0.0394                          0.07
+10                 ∞                  0.0074(6)                 0.0096(3)                   0.0118(8)                   0.0045                  0.0029                          0.09
+ 5                 1/2                  1.129(8)                   1.034(3)                      0.94(1)                     1.0277                  0.9381                          0.03
+ 5                   1                    0.850(7)                   0.796(3)                     0.743(9)                    0.7912                  0.7325                          0.02
+ 5                   2                    0.448(5)                   0.405(2)                     0.362(6)                    0.4022                  0.3565                          0.02
+ 5                   4                    0.214(3)                   0.199(1)                     0.184(4)                    0.1960                  0.1782                          0.03
+ 5                  ∞                   0.080(2)                  0.0799(8)                    0.080(2)                    0.0625                  0.0557                          0.03
+ 2                 1/2                  1.158(8)                  1.0618(4)                     0.97(1)                     1.0545                  0.9484                          0.04
+ 2                   1                    1.003(8)                   0.927(3)                     0.852(9)                    0.9270                  0.8561                          0.03
+ 2                   2                    0.754(7)                   0.697(3)                     0.639(9)                    0.6919                  0.6299                          0.02
+ 2                   4                    0.549(6)                   0.511(2)                     0.473(7)                    0.5127                  0.4687                          0.02
+ 2                  ∞                   0.376(4)                   0.349(2)                     0.323(5)                    0.3236                  0.3030                          0.02
+ 1                 1/2                  1.171(8)                   1.077(3)                      0.98(1)                     1.0705                  0.9683                          0.02
+ 1                   1                    1.077(8)                   0.994(3)                      0.91(1)                     0.9938                  0.9070                          0.02
+ 1                   2                    0.924(8)                   0.855(3)                     0.787(9)                    0.8640                  0.8053                          0.02
+ 1                   4                    0.784(7)                   0.730(2)                     0.676(8)                    0.7295                  0.6628                          0.01
+ 1                  ∞                   0.645(6)                   0.602(2)                     0.560(7)                    0.5771                  0.5263                          0.01
+
+
+IX.    CONCLUSIONS
+
+
+      We studied  through Variational and Diﬀusion Monte  Carlo techniques  the ﬂuid  of spin
+one-half particles  interacting with the bare pair-potential vµ(r) = erf(µr)/r  and immersed
+in  a uniform counteracting  background.  When  µ → ∞  the  system  reduces  to the  Jellium
+model  whereas  when  µ  →  0  it  reduces  to  the  ideal  Fermi  gas.   We  performed  a  detailed
+analysis  of the  spin-resolved  Radial Distribution  Function for this  system  as  a function  of
+the density parameter rs = 1, 2, 5, 10 and the penetrability parameter µ = 1/2, 1, 2, 4, ∞ at
+two values of the polarization, ζ = 0, 1.
+
+                                                                                           33
+   Initially we carefully ﬁne tuned our DMC calculation determining the optimal values for
+the  time step  τ  and the  number  of walkers  nw  for each  value  of the  density  parameter  rs.
+Increasing the system size N the RDF extends its range [0, rmax] at larger rmax.  We estimated
+that  for  N  ≥  66  the  size  dependence  of  the  RDF  is  lower  than  2%.   As  a  compromise
+between computational cost and reduction of the size eﬀects, the largest uncontrolled source
+of uncertainty  on our  RDF measurements,  we  chose  to perform the  RDF calculation  with
+N  = 162 in the unpolarized case and N  = 147 in the polarized case.
+   We calculated the RDF using two diﬀerent routes:  through the usual histogram estimator
+and through a particular HFM measure.  As expected, in the VMC calculations the HFMv
+estimator gives better results for the on-top value of the RDF. In the DMC calculation the
+inclusion of the β correction (which must be omitted in the VMC calculation) is indispens-
+able.  Moreover the ZV estimator is zero for r > rmax  so it has to be shifted by +1.  From
+our variational and ﬁxed nodes diﬀusion Monte Carlo experiments turns out that although
+in the variational measure the average of the histogram estimator agrees with the average of
+the HFMv estimator within the square root of the variance of the average σav =√σ2K/N ,
+where σ2 is the variance, K the correlation time of the random walk, and N  the number of
+Monte Carlo steps, and the two σav are comparable, in the diﬀusion experiment, where one
+has  to  add  the  β  correction  not to  bias  the  average,  the  Hellmann  and Feynman  measure
+has an average in agreement with the one of the histogram estimator but the σav increases.
+This  is  to  be  expected  from  the  extensive  nature  of  the  β  correction  in  which  the  energy
+appears.  Of course the averages from the extrapolated Hellmann and Feynman measure and
+the extrapolated measure for the histogram estimator also agree.
+   In the simulation,  for the  Coulomb  case,  µ → ∞,  we  made  extrapolations in  time step
+and number of walkers for each value of rs.  Given a relative precision δe0  = ∆e0/exp, where
+e0  =  ⟨EL⟩f/N,  ∆e0  is  the  statistical  error  on  e0,  and  exp  is  the  exchange  energy,  we  set
+as  our  target  relative  precision  δe0  =  10−2%.   The  extrapolated  values  of  the  time  step
+and  number  of  walkers  was  then  used  for  all  other  values  of  µ.   We  chose  the  trial  wave
+function of the Bijl-Dingle-Jastrow40 form as a product of Slater determinats and a Jastrow
+factor.  The pseudo potential was chosen  as in Ref.43, J2,  which is expected  to give better
+results for Jellium.  Comparison with the simulation of the unpolarized ﬂuid at rs = 1 and
+µ  =  1  with  the  pseudo  potential  of  Ref.45,  J1,  for  which  the  trial  wave  function  becomes
+the  exact  ground state  wave  function  in the  µ → 0 limit,  show  that the  two  extrapolated
+
+                                                       34
+measures of the unlike histogram estimator diﬀer one from the other by less than 7 × 10−3,
+the largest diﬀerence being at contact (see Fig.  1).  The use of more sophisticated trial wave
+functions, taking into account the eﬀect of backﬂow and three-body correlations, is found to
+aﬀect the measure by even less in the range of densities considered.  For the same reason we
+discarded the use of the twist-averaged boundary conditions16 and only worked with periodic
+boundary conditions.  In Table IV we compare the contact values of the unlike RDF of the
+unpolarized ﬂuid at various rs and µ from the measures of the histogram estimator and the
+HFM measures.  We see that there is disagreement between the measure from the histogram
+estimator and the HFM measure only in the Coulomb µ → ∞ case at rs = 1, 2.
+   Our results complement the ones of Paziani et al.10 which only reported a limited number
+of  RDF  data.   We  plan,  in  the  future,  to  complete  the  calculation  at  intermediate  polar-
+izations,  0  <  ζ  <  1,  complementing  the  work  of  Ortiz  and  Ballone62,  and  Ceperley  and
+coworkers14.
+   We  believe  it  is  still  an  open  problem  the  one  of  determining  the  relationship  between
+the  choice  of  the  auxiliary  function,  the  bias  it  introduces  in  the  Hellmann  and  Feynman
+measure, and the variance of this measure.
+
+
+Appendix  A: Jastrow, backﬂow,  and  three-body
+
+   In terms of the stochastic process governed by f(R, t) one can write, using Kac theorem63,64∫⟨[∫   τ]⟩
+
+                               dR f(R, τ) =        exp    −
+                                                              0   dt EL(Rt)       DRW  ,                             (A1)
+where  ⟨. . .⟩DRW  means  averaging  with  respect  to  the  diﬀusing  and  drifting  random  walk.
+Choosing  a complete  set  of orthonormal wave-functions  Ψi  we  can write  for the true  time
+dependent many-body wave-function∫                                                ∫
+
+                 φ(R, τ) =∑        Ψi(R)       dR′Ψi(R′)φ(R′, τ) ≈ Ψ(R)              dR f(R, τ)
+                                i     ⟨      [   ∫   τ             ]⟩
+                           = Ψ(R)       exp   −
+                                                   0   dt EL(Rt)      DRW  ,                                           (A2)
+where  Ψ is the wave-function,  of the set,  of maximum  overlap with the true ground-state,
+the trial wave-function.  Assuming that at time zero we are already close to the stationary
+solution, for suﬃciently small τ  we can approximate⟨[∫   τ]⟩
+
+                                 exp   −
+                                            0   dt EL(Rt)      DRW ≈ e−τEL(Rτ ) .                                 (A3)
+
+                                                       35
+By antisymmetrising we get the Fermion wave-function
+
+                                     φF (R, τ) ≈ A[e−τEL(R)Ψ(R)]  ,                                           (A4)
+
+where given a function f(R) we deﬁne the operator (a symmetry of the Hamiltonian)
+                                                       ∑
+                                    A[f(R)] =   1NP         (−1)P f(P R) ,                                          (A5)
+                                                         P
+here NP  = N+!N−! is the total number of allowed permutations P .
+   This is called the local energy method to improve a trial wave-function.  Suppose we start
+from a simple unsymmetrical product of single particle plane waves of N+ spin-up particles
+with k < k+F  occupied and N− spin-up particles with k < k−F  occupied, for the zeroth order
+trial  wave-function.   Equation  (A4)  will  give  us  a  ﬁrst  order  wave-function  of  the  Slater-
+Jastrow type (see equation (27)).  If we start from an unsymmetrical Hartree-Jastrow trial
+wave-function the local energy with the Jastrow factor has the form
+                                                                                   ⏐⏐⏐⏐⏐∇∇∇i        ⏐⏐⏐⏐⏐2
+       EL = V  − λ∑        −k2i  − 2iki · ∇∇∇i  ∑   u(rjk) − ∇∇∇2i ∑    u(rjk) +        ∑    u(rjk)     ,  (A6)
+
+
+                        i                        j<k                 j<k                 j<k
+
+where V  = V (R) is the total potential energy and rij = |rij| = |ri − rj|.  Then the antisym-
+metrized second order wave-function has the form in Eq.  (40), which includes backﬂow (see
+the third term), which is the correction inside the determinant and which aﬀects the nodes,
+and three-body boson-like correlations (see last term) which do not aﬀect the nodes.
+
+
+ACKNOWLEDGMENTS
+
+   The  MC  simulations  presented  were  carried  out  at  the  Center  for  High  Performance
+Computing  (CHPC),  CSIR  Campus,  15  Lower  Hope  St.,  Rosebank,  Cape  Town,  South
+Africa.
+
+
+REFERENCES
+
+
+ 1N.  W.  Ashcroft  and  N.  D.  Mermin,  Solid  State  Physics  (Harcourt,  Inc.,  Forth  Worth,
+
+  1976).
+
+ 2S. L. Shapiro  and S. A.  Teukolsky,  Black  Holes,  White  Dwarfs,  and  Neutron  Stars.  The
+
+  Physics of Compact Objects  (John Wiley & Sons, Inc., Germany, 1983).
+
+                                                      36
+ 3W. Zhu, J. Toulouse, A. Savin, and G. Angyan, J. Chem. Phys. 132, 244108 (2010).
+
+ 4J. Toulouse, P. Gori-Giorgi, and A. Savin, Theor. Chem. Acc. 114, 305 (2005).
+
+ 5P. Gori-Giorgi and A. Savin, Phys. Rev. A 3, 032506 (2006).
+
+ 6D. M. Ceperley, Rev. Mod. Phys. 67, 279 (1995).
+
+ 7D. M. Ceperley, in Monte Carlo and Molecular Dynamics of Condensed Matter  Systems,
+
+  edited by K. Binder and G. Ciccotti (Editrice Compositori, Bologna, Italy, 1996).
+
+ 8D. M. Ceperley and B. J. Alder, Phys. Rev. Lett. 45, 566 (1980).
+
+ 9L. Zecca, P. Gori-Giorgi, S. Moroni, and G. B. Bachelet, Phys. Rev. B 70, 205127 (2004).
+
+10S. Paziani, S. Moroni, P. Gori-Giorgi, and G. B. Bachelet, Phys. Rev. B 73, 155111 (2006).
+
+11R. Fantoni, Solid State Communications 159, 106 (2013).
+
+12J. Kolorenc and L. Mitas, Rep. Prog. Phys. 74, 026502 (2011).
+
+13W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Rajagopal,  Rev.  Mod.  Phys.  73,  33
+
+  (2001).
+
+14Y. Kwon, D. M. Ceperley, and R. M. Martin, Phys. Rev. B 58, 6800 (1998).
+
+15J. Toulouse, R. Assaraf, and C. J. Umrigar, J. Chem. Phys. 126, 244112 (2007).
+
+16C. Lin, F. H. Zong, and D. M. Ceperley, Phys. Rev. E 64, 016702 (2001).
+
+17S. Chiesa, D. M. Ceperley, R. M. Martin, and M. Holzmann, Phys. Rev. Lett. 97, 076404
+
+  (2006).
+
+18W. L. McMillan, Phys. Rev. A 138, 442 (1965).
+
+19M. H. Kalos, D. Levesque, and L. Verlet, Phys. Rev. A 9, 2178 (1974).
+
+20R. W. Hockney and J. W. Eastwood, ”Computer Simulation Using Particles”  (McGraw-
+
+  Hill, 1981).
+
+21M. P. Allen and D. J. Tildesley, Computer Simulation of Liquids (Clarendon Press, Oxford,
+
+  1987).
+
+22D. Frenkel and B. Smit, Understanding Molecular Simulation (Academic Press, San Diego,
+
+  1996).
+
+23D. M. Ceperley, J. Stat. Phys. 63, 1237 (1991).
+
+24D. M.  Ceperley  and M.  H.  Kalos,  in  Monte  Carlo  Methods  in  Statistical  Physics,  edited
+
+  by K. Binder (Springer-Verlag, Heidelberg, 1979), p. 145.
+
+25K. S. Liu, M. H. Kalos, and G. V. Chester, Phys. Rev. A 10, 303 (1974).
+
+26R. N. Barnett, P. J. Reynolds, and W. A. Lester, Jr., J. Comp. Phys. 96, 258 (1991).
+
+27S. Baroni and S. Moroni, Phys. Rev. Lett. 82, 4745 (1999).
+
+
+                                                    37
+28C. J. Umrigar, M. P. Nightingale, and K. J. Runge, J. Chem. Phys. 99, 2865 (1993).
+
+29R. Assaraf and M. Caﬀarel, J. Chem. Phys. 119, 10536 (2003).
+
+30R. Gaudoin and J. M. Pitarke, Phys. Rev. Lett. 99, 126406 (2007).
+
+31E. Wigner, Phys. Rev. 46, 1002 (1934).
+
+32A. J. Leggett, Rev. Mod. Phys. 47, 331 (1975).
+
+33G. F. Giuliani and G. Vignale, Quantum Theory of the Electron Liquid  (Cambridge Uni-
+
+  versity Press, Cambridge, 2005).
+
+34V. Natoli and D. M. Ceperley, Comput. Phys. 117, 171 (1995).
+
+35N. H. March and M. P. Tosi, Coulomb Liquids  (Academic Press, London, 1984).
+
+36J. B. Anderson, J. Chem. Phys. 65, 4121 (1976).
+
+37J.  M.  Hammersley  and  D.  C.  Handscomb,  Monte  Calro  Methods  (Chapman  and  Hall,
+
+  London, 1964), pp. 57-59.
+
+38M. H. Kalos and P. A. Whitlock, Monte Carlo Methods  (Wiley-Vch Verlag GmbH & Co.,
+
+  Germany, 2008).
+
+39L.  D.  Landau  and  E.  M.  Lifshitz,  Quantum  Mechanics.  Non-relativistic  Theory,  vol.  3
+
+  (Pergamon Press, 1977), 3rd ed., course of Theoretical Physics. Eq. (11.16).
+
+40A.  Bijl,  Physica  7,  869  (1940);  R.  B.  Dingle,  Philos.  Mag.  40,  573  (1949);  R.  Jastrow,
+
+  Phys. Rev. 98, 1479 (1955).
+
+41R. P. Feynman, Statistical Mechanics:  A Set of Lectures  (W. A. Benjamin Inc., London,
+
+  Amsterdam, Don Mills, Sydney, Tokyo, 1972), section 9.6.
+
+42T. Gaskell, Proc. Phys. Soc. 77, 1182 (1961).
+
+  T. Gaskell, Proc. Phys. Soc. 80, 1091 (1962).
+
+43D. M. Ceperley, in Proceedings of the International School of Physics Enrico Fermi, edited
+
+  by G. F. Giuliani and G. Vignale (IOS Press, Amsterdam, 2004), pp. 3–42, course CLVII.
+
+44Note  that  the  probability  distribution  in  a  variational  calculation  is  (from  Eq.  (27))
+
+  Ψ2(R)  ∝  D2(R) exp[−2U(R)]  with  U(R)  = ∑i<j u(rij).  Then  if  one  formally  writes
+  D2(R) = exp[−2W (R)], Ψ2 becomes the probability distribution for a classical ﬂuid with
+  potential  W  + U  at  an  inverse  temperature  β  =  2.  Then  one  sees  that  with  the  choice
+  B = 2, Eq (34) coincides with the well known Random Phase Approximation in the theory
+  of classical ﬂuids (see Ref. 53 Section 6.5) where W  is the potential of the reference ﬂuid
+  and U  the perturbation.
+
+45D. Ceperley, Phys. Rev. B 18, 3126 (1978).
+
+
+                                                     38
+46Y. Kwon, D. M. Ceperley, and R. M. Martin, Phys. Rev. B 48, 12037 (1993).
+
+47R. P. Feynman and M. Cohen, Phys. Rev. 102, 1189 (1956).
+
+48R. M. Panoﬀ and J. Carlson, Phys. Rev. Lett. 62, 1130 (1989).
+
+49T. L. Hill, Statistical Mechanics  (McGraw-Hill, New York, 1956).
+
+50E. Feenberg, Theory of Quantum Fluids  (Academic Press, 1967).
+
+51Ph. A. Martin, Rev. Mod. Phys. 60, 1075 (1988).
+
+52J. C. Kimball, Phys. Rev. A 7, 1648 (1973).
+
+  A. K. Rajagopal, J. C. Kimball, and M. Banerjee, Phys. Rev. B 18, 2339 (1978).
+  M. Hoﬀmann-Ostenhof, T. Hofmann-Ostenhof, and H. Stremnitzer, Phys. Rev. Lett. 68,
+  3857 (1992).
+
+53J.  P.  Hansen  and  I.  R.  McDonald,  Theory  of  simple  liquids  (Academic  Press,  London,
+
+  1986), 2nd ed.
+
+54Note  that,  unlike  in  the  classical  case,  in  quantum  statistical  physics  even  the  linear  re-
+
+  sponse to a static perturbation requires the use of imaginary time correlation functions51.
+
+55L. van Hove, Phys. Rev. 95, 249 (1954).
+
+56D. Pines and P. Nozi`eres, Theory of Quantum Liquids  (Benjamin, New York, 1966).
+
+57J. Lindhard, Mat.-Fys. Medd. 28 (1954).
+
+58M.  P.  Tosi,  in  Electron  Correlation  in  the  Solid  State,  edited  by  N.  H.  March  (Imperial
+
+  College Press, London, 1999), chap. 1, pp. 1–42.
+
+59A. Alastuey and Ph. A. Martin, J. Stat. Phys. 39, 405 (1985).
+
+60M.  J. Lighthill,  Introduction  to  Fourier  Analysis  and  Generalized  Functions  (Cambridge
+
+  University Press, 1959), theorem 19.
+
+61Note     that     with     the     given     choice     of     Q     we     obtain     ⟨∆IZV
+                                                                                              σ,σ′(r, R)⟩Ψ2     =
+  −∫∂ΩN Ψ2(R)∇∇∇Qσ,σ′(r, R) · dS/r2s  =  −Ωnσnσ′,  for  all  r  with  r  ∈  Ω,  instead  of  zero
+  as normally expected. This is ultimately related to the behavior of the auxiliary function
+  Ψ′ = QΨ on the border of ΩN.
+
+62G. Ortiz and P. Ballone, Phys. Rev. B 50, 1391 (1994).
+
+63M. Kac, Probability and Related Topics in Physical Sciences  (Interscience Publisher Inc.,
+
+  New York, 1959).
+
+64Proceedings of the Second Berkeley Symposium on Probability and Statistics (University of
+
+  California Press, Berkeley, 1951), sec. 3.
+
+
+
+                                                      39

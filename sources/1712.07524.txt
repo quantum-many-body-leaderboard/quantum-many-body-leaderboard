@@ -1,0 +1,1432 @@
+Combining the Transcorrelated method with Full
+
+Conﬁguration Interaction Quantum Monte Carlo:
+    application to the homogeneous electron gas
+
+
+                               Hongjun Luo∗,† and Ali Alavi∗,†,‡
+
+
+    †Max-Planck-Institut for Solid State Research, Heisenbergstraße 1, 70569 Stuttgart,
+
+                                               Germany
+  ‡Department of Chemistry, University of Cambridge, Lensﬁeld Road, Cambridge, CB2
+
+                                       1EW, United Kingdom
+
+
+                           E-mail:  h.luo@fkf.mpg.de; a.alavi@fkf.mpg.de
+
+
+                                               Abstract
+
+      We suggest an eﬃcient method to resolve electronic cusps in electronic structure cal-
+
+      culations, through the use of an eﬀective transcorrelated Hamiltonian.  This eﬀective
+
+      Hamiltonian  takes  a  simple  form  for  plane  wave  bases,  containing  up  to  two-body
+
+      operators only, and its use incurs almost no additional computational overhead com-
+
+      pared to that of the original Hamiltonian.  We apply this method in combination with
+
+      the full conﬁguration interaction quantum Monte Carlo (FCIQMC) method to the ho-
+
+      mogeneous electron gas.  As a projection technique, the non-Hermitian nature of the
+
+      transcorrelated Hamiltonian does not cause complications or numerical diﬃculties for
+
+      FCIQMC. The rate of convergence of the total energy to the complete basis set limit
+
+      is improved fromO(M−1) toO(M−5/3), where M is the total number of orbital basis
+
+      functions.
+
+      PACS numbers:  71.10.Ca, 31.15.V-, 71.15.-m, 02.70.Ss
+
+                                                    1
+1    Introduction
+
+
+Electron correlation can be roughly classiﬁed into static correlation and dynamic correlation.
+
+In conventional conﬁguration descriptions of the many-body wave function, the two diﬀerent
+
+types of electron correlation are treated in the same way, i.e., by linear expansion in terms
+
+of Slater determinants.1 While such a conﬁguration description oﬀers a natural and eﬃcient
+
+way to deal with static correlation, it, however, does not treat dynamic correlation eﬃciently,
+
+and thus usually leads to a slow convergence to the complete basis limit (CBL). The main
+
+problem  is  that,  due  to  the  Coulomb  singularity  of  the  electronic  interaction,  the  short-
+
+range  dynamic  correlation  introduces  non-smoothness  into  the  many-body  wave  function,
+which  can  not  be  approximated  eﬃciently  by  orbital  product  expansions.   This  problem
+
+is even more severe for those methods aiming at high accuracy,  such as full conﬁguration
+
+interaction (FCI) methods and high-order coupled-cluster methods.  On the other hand, the
+
+non-smoothness of the many-body wave function can be locally resolved and is expressed as
+
+the well known Kato cusp condition2
+
+                                             ∂Ψ  ⏐⏐⏐⏐rij=0
+                                            ∂rij         = 12 Ψ|rij=0.                                                 (1)
+
+
+Incorporating  this  property  into  the  construction  of  many-body  wave  functions  should  in
+
+principle speed up convergence to the CBL.
+
+    One way of incorporating the cusp condition is to introduce explicitly correlated basis
+
+functions for the expansion of the many body-wave function.  In the last few decades, various
+
+explicit correlation methods (e.g., R12 and F12 methods 3–9) have been suggested and have
+
+achieved  a  high  level  of  success.   The  main  feature  of  these  methods  is  that,  instead  of
+
+the conventional approximation of the cusp in terms of orbital product expansions, electron
+
+pair geminal functions are directly used in the construction of the basis of the many-body
+
+wave function.  These geminal functions describe the cusps very eﬃciently,  although they
+
+also  make  the  involved  calculations  highly  non-linear.   For  example,  in  these  calculations
+
+
+                                                         2
+one has to deal with various kind of orthogonality constraints, which lead to multi-electron
+
+integrals (three, four and even higher-body electron integrals).  These integrals are usually
+
+approximated by resolution of identity (RI) techniques. 3–5,10
+
+    Electron cusps can also be eﬃciently described by using the Jastrow ansatz 11
+
+
+                               Ψ(R) =eτ(R)Φ(R),       R = (r1, r2,··· , rN),                                (2)
+
+
+where Φ is an anti-symmetric reference function andτ is a symmetric pair correlation factor
+
+                                              τ(R) = 1      ∑    u(ri, rj).                                                  (3)
+                                                         2  i⁄=j
+
+
+The  correlation  factor  can  be  constructed  to  fulﬁll  the  cusp  condition  (1),  and  thus  the
+
+regularity of the reference function Φ is higher than that of the wave function Ψ.  Fournais et
+
+al.12 have proven that the correlation factor can improve the regularity of the wave function
+
+from C0,1  to C1,1.   In  Appendix  A  we  will  show  that  this  will  lead  to  a  speedup  of  basis
+convergence  for  three  dimensional  non  spin-polarised  systems  from M−1  to M−5/3. ¶   In
+
+order to guarantee size consistency, the correlation factor has to take an exponential form.
+
+This  makes  the  Jastrow  ansatz  highly  non-linear  and  any  variational  treatment  leads  to
+
+extremely  high-dimensional  integrals.   Presently  the  Jastrow  ansatz  is  primarily  used  in
+
+various quantum Monte Carlo methods, such as variational Monte Carlo (VMC) and diﬀusion
+
+Monte Carlo (DMC) methods,15–17  where the involved integrals can be evaluated directly
+
+in the high dimensional space.  The exponential correlation factor has also been treated by
+
+various expansions, such as the linked cluster expansion,18,19 random phase approximations
+
+(RPA),20  Fermi hypernetted chain (FHNC) method.21,22  These sophisticated methods are
+
+   ¶  It  has  been  found  that C1,1  is  the  optimal  regularity  for  the  product  ansatz,  and  thus  we  can  only
+expect a M−5/3  convergence for the Jastrow ansatz.  However, it has been pointed out by Fournais  et  al.
+that higher order regularity can be expected for a more general additive ansatz. 13 This is consistent with the
+early work of Kutzelnigg and Morgen, 14 where, based on such an additive ansatz, diﬀerent cusp conditions
+are  applied  to  diﬀerent  types  of  electron  pairs,  and  thus  a  higher  order  convergence  (such  as M−7/3)  is
+achieved.  Unfortunately such kind of additive ansatz is not size consistent.
+
+
+                                                            3
+highly nonlinear and diﬃcult to implement in practical calculations.
+
+    For an eﬃcient treatment of the exponential correlation factor, a relatively simple method,
+
+the  transcorrelated  (TC)  method,23–30  was  suggested  by  Boys  and  Handy  roughly  half  a
+
+century  ago.   By  using  a  similarity  transformation, e−τ ˆHeτ,  the  exponential  correlation
+
+factor is removed from the involved equations.  The original TC method of Boys and Handy
+
+was  designed  for  the  single-determinant  Jastrow  ansatz  and  contains  two  equations,  for
+
+the calculation of the correlation factor τ  and the orbitals respectively.  Initial calculations
+
+demonstrated that this method can eﬃciently recover much of the correlation energy.  On
+
+the other hand the resulting non-Hermitian eﬀective Hamiltonian cannot prevent the energy
+
+from falling below the exact one.  The lack of a variational bound is considered to a severe
+
+problem and has hampered a broad application of the TC method for quite a long time.
+    Recently, there has been renewed interest in the development of the TC method.  Ten-no
+
+used  the  TC  Hamiltonian  in  the  perturbation  and  the  coupled  electron-pair  approxima-
+
+tions.31 In this approach, the correlation factor τ  is a ﬁxed local geminal satisfying the cusp
+
+condition, while the reference function is treated by conventional conﬁguration expansions.
+
+The reference function Φ is much smoother than the many-body wave function Ψ and, as
+
+a consequence,  the conﬁguration expansion of Φ converges much faster.  The price to pay
+
+is the introduction of a three-body operator in the eﬀective Hamiltonian, as well as various
+
+numerical  problems  due  to  non-Hermiticity.   The  non-Hermiticity  problem  is  more  severe
+
+for self consistent optimization methods.  Hino et al.  suggested to use biorthogonal basis
+
+to deal with the TC Hamiltonian.32  Umezawa et al.  optimized the orbitals by minimizing
+
+the energy variance.33,34  Luo has suggested a general variational method for simultaneous
+optimizations of the correlation factor and the reference function. 35,36 Yanai et al.  have used
+
+a  truncated  canonically  transformed  Hamiltonian  to  eliminate  the  non-Hermiticity  of  the
+
+eﬀective Hamiltonian.37,38 Gr¨uneis et al.  recently oﬀered a detailed discussion on the choice
+
+of correlation factors.39
+
+    In this work we incorporate the TC method into the full conﬁguration-interaction quan-
+
+
+                                                        4
+tum Monte Carlo (FCIQMC) method,40–42 aiming at highly accurate calculations on periodic
+
+systems.  FCI in principle provides the most accurate description of the wavefunction, within
+
+an orbital representation, and the results are usually used to benchmark other calculation
+
+results.  However, FCI methods are also extremely expensive, with the computational cost
+
+scaling exponentially with respect to the system size.  On the other hand, the extremely large
+
+FCI expansion is also very sparse, so that the vast majority of expansion coeﬃcients are es-
+
+sentially zero.  This sparsity, however, usually has no regular pattern, especially for strongly
+
+correlated systems.  The recently developed FCIQMC method and its ‘initiator’ adaptation
+
+(i−FCIQMC)41,43 oﬀers a way to detect and make use of this sparsity.  This method is based
+
+on Monte Carlo simulations of the dynamic evolution of the many-body wave function with
+
+imaginary time:
+                                         Ψ(t) =e−t( ˆH−E0)Ψ(t = 0),                                               (4)
+
+which leads to the ground state wave function in the long-time limit Ψ0 = Ψ(t→∞).  The
+
+FCI  expansion  coeﬃcients  are  simulated  by  a  set  of  walkers  which  evolve  over  imaginary
+
+time.  In the long-time limit, a steady distribution of the walkers is reached and the corre-
+
+sponding projection energy, in the large-walker limit, converges to the FCI energy.  With this
+
+method, FCI-quality calculations have been achieved on larger molecular systems 44 and even
+
+periodic systems.42 F12 methods have also been combined with the FCIQMC technique44,45
+
+as universal a posteriori corrections46,47 involving contractions of the the one- and two-body
+matrices with F12 integrals.
+
+    For periodic systems, plane waves are usually the most appropriate basis functions.  How-
+
+ever their smooth and non-local properties make the slow convergence in the description of
+
+electronic cusps an even more severe problem.  This problem is tremendously enhanced in
+
+FCIQMC with large basis sets, aiming to reach the CBL. In this work we design an explicit
+
+correlation method to resolve this problem in such calculations.  In FCIQMC, the matrix
+
+elements of the interaction operators (e.g., the two-body Coulomb operators, etc.)  are used
+
+intensively and thus have to be either stored eﬃciently or calculated repeatedly on the ﬂy.
+
+                                                        5
+One advantage of the plane wave basis is that the two-body Coulomb matrix can be simply
+
+evaluated and need not be stored, alleviating the memory bottlenecks associated with storing
+
+the 4-index integrals of large systems.  We would like to keep this advantage,  so that the
+
+application of the intended explicit correlation method will not be limited to small systems.
+
+This requires that the involved eﬀective potential and their matrix elements should be as
+
+simple as possible.  In the next section, we will describe the new TC method designed for
+
+plane wave basis.  In section 3, we will present our initial test calculations on three dimen-
+
+sional homogeneous electron gas models and, this will be followed by some conclusions and
+
+discussions in section 4.
+
+
+2    Method
+
+
+Following the idea of Ten-no,31 for a givenN electron system with a given basis set, we take
+
+a  ﬁxed  correlation  factor τ  in  the  Jastrow  ansatz  (2)  and,  try  to  determine  the  reference
+
+function Φ by solving approximately an eigenvalue equation
+
+
+                                                  ˆHTCΦ =EΦ,                                                         (5)
+
+
+where the eﬀective Hamiltonian, the transcorrelated Hamiltonian, has a ﬁnite Baker-Campbell-
+
+Hausdorﬀ expansion, upto a double commutator, owing to the fact that the correlation factor
+
+τ(R) is purely a function of the spatial coordinates of the electrons:
+
+
+                         ˆHTC ≡ e−τ ˆHeτ
+
+                                 =    ˆH + [ ˆH,τ] + 12[[ ˆH,τ],τ]
+                                                (1
+                                 =    ˆH−∑         2▽2iτ + (▽iτ)· ▽i + 12(▽iτ)2)         .                           (6)
+                                             i
+
+Here the TC Hamiltonian is non-Hermitian, owing to the presence of the single commutator
+term [ ˆH,τ].  For any eigenvalue of such operators,  the corresponding left and right eigen-
+
+                                                         6
+vectors are usually diﬀerent.  In solving this type of eigenvalue equations,  approximations
+
+based on a variational treatment are usually troubled by the non-Hermitian nature of the
+
+matrix.  Projection methods, however, such as the Power method provide a route forward
+
+for such matrices.48 Unlike standard FCI methods, the FCIQMC method is not a variational
+
+method but rather a stochastic version of the Power method.  For the Jastrow ansatz, the
+
+time evolution of the wave function can be represented as
+
+
+                                      Ψ(t)   = eτΦ(t),                                                                 (7)
+
+                                       Φ(t)   = e−t( ˆHTC−E0)Φ(t = 0),                                           (8)
+
+
+where equation (8) can be simply derived from equation (4)
+
+
+                       Φ(t)   = e−τe−t( ˆH−E0)eτΦ(t = 0)(           )M
+
+                               =     limM→∞e−τ   1− t( ˆH−E0)M           eτΦ(t = 0),
+                                          (      (                     )    )M
+                               =     limM→∞  e−τ    1− t( ˆH−E0)M        eτ      Φ(t = 0),
+                                          (                       )M
+                               =     limM→∞  1− t( ˆHTC−E0)M            Φ(t = 0),
+
+                               = e−t( ˆHTC−E0)Φ(t = 0).                                                               (9)
+
+
+It is worth noticing that equation (8) is not constructed based on the eigenvalue equation
+(5), where one may get frustrated due to the non-Hermiticity and lack of variational bounds
+
+on  ˆHTC.  The equivalence of equation (4) and equation (8) reveals that methods based on
+
+these  equations  (such  as  FCIQMC)  can  handle  properly  the  non-Hermiticity  due  to  such
+
+kind  of  similarity  transformations.   Following  equation  (8),  the  FCIQMC  method  can  be
+
+directly used for the TC Hamiltonian  ˆHTC.  The only diﬀerence is that here we are dealing
+
+with  non-Hermitian  operators,  so  that  the  involved  matrix  elements  are  non-symmetric.
+
+In calculations of these matrix elements, the operators should not be mixed up with their
+
+                                                         7
+Hermitian conjugates (i.e., these operators should only be applied on to the right hand side).
+
+    For periodic systems, the orbital basis functions to be used are plane waves,
+
+
+                                              φp,σ(r) =    1√Ω0eip·r,                                                  (10)
+
+
+where Ω0 is the formal volume of the inﬁnite system.  All operators in the eﬀective Hamilto-
+
+nian can then be represented in terms of second quantisation.49 The ﬁxed correlation factor,
+
+assumed to be spin-independent, can be expressed as
+
+                     τ   =   1  ∑    u0(ri− rj)
+                              2   ij
+                                ∑    ∑
+                         =   12           ⟨p− k, q + k|u0|p, q⟩a†p−k,σa†q+k,σ′aq,σ′ap,σ
+                                 σσ′ kpq
+                         =     1    ∑    ∑    ˜u0(k)a†
+                              2Ω0                     p−k,σa†q+k,σ′aq,σ′ap,σ,                                       (11)
+                                    σσ′  kpq
+
+where  ˜u0(k) =∫ eik·ru0(r)d3r is the Fourier transformation of u0.  Here the two-body cor-
+
+relation factor is assumed to be a function of rij  = ri− rj, due to translational symmetry.
+
+Similarly, for the other required two-body operators, we have the following expressions
+
+                            ˆW    =     1  ∑    ∑     ˜w0(k) a†
+                                      2Ω0                       p−k,σa†q+k,σ′aq,σ′ap,σ,                           (12)
+                                            σσ′ kpq
+                  1 ∑    ▽2iτ   = −  1       ∑    ∑    k2˜u0(k)a†
+                  2                     2Ω0                        p−k,σa†q+k,σ′aq,σ′ap,σ,                        (13)
+                      i                       σσ′  kpq
+                ∑                          ∑    ∑
+                    (▽iτ)▽i   =     12Ω0            (p− q)· k ˜u0(k)a†p−k,σa†q+k,σ′aq,σ′ap,σ,             (14)
+                 i                          σσ′ kpq
+
+where  ˆW  is the electronic (Coulomb) potential.  The double commutator in equation (6) is
+
+
+
+
+
+
+
+
+
+                                                          8
+more complicated and gives rise to a three-body operator and a two-body operator
+
+    1 ∑(▽iτ)2   =   1        ∑   ▽iu0(ri− rj)· ▽iu0(ri− rk) + 1            ∑    (▽iu0(ri− rj))2
+    2   i                 2  ijk                                         2  ij
+                                 ∑     ∑
+                     =     12Ω20              ˜u0(k)˜u0(k′)k′· k a†p−k,σa†q+k′,σ′a†s+k−k′,σ′′as,σ′′aq,σ′ap,σ
+                                σσ′σ′′kk′pqs
+                          +  1    ∑    ∑    F((▽u0)2)(k) a†
+                             2Ω0                                p−k,σa†q+k,σ′aq,σ′ap,σ,                           (15)
+                                   σσ′ kpq
+
+whereF  denotes Fourier transformation.  A complete treatment of the three-body operator
+
+would be expensive, and we would like to treat it only approximately.
+
+    Periodic systems are usually treated by the supercell approach, 17 where the inﬁnite sys-
+
+tem is approximated by periodically arranged replicas of a ﬁnite cell Ω = L3.  Due to this
+
+artiﬁcial periodic boundary condition, the p vector of the plane wave basis (10) is discretized
+
+(i.e., p =  2πL n,  n∈Z3), and to make the basis ﬁnite we take a cutoﬀ|p|≤kc.
+
+    In  the  supercell  approach, u0  and w0  have  to  fulﬁll  the  periodic  boundary  conditions.
+
+The periodic w0 is usually constructed via periodic summation.17 Following the same idea,
+
+we  construct  the  periodic  correlation  factor u0  by  applying  the  periodic  summation  on  a
+
+local function u
+                                           u0(r) = ∑        u(r + nL).                                               (16)
+                                                      n∈Z3
+However such summations are not practically needed if we work in k-space, since
+
+                               ˜u0(k)
+                                 Ω0    =  ˜u(k)Ω ,        for k = 2πL m,  m∈Z3.                                (17)
+
+The only thing which needs to be taken care of is that the inverse Fourier transformation of
+
+u0 does not exist, and instead, there is a Fourier series
+
+                                                          ∑
+                                  u0(r2− r1) =  1Ω               ˜u(k)eik·(r2−r1).                                   (18)
+                                                       k=2πm/L
+
+
+
+                                                          9
+The  two-body  operator  (▽u0)2  is  very  important  for  the  short  range  correlation  and,  it
+
+is  closely  related  to  the  inﬁnite  summation  of  all  ladder  diagrams  in  the  linked  cluster
+
+expansion.19 By taking the periodic summation, (▽u0)2 can be expressed as
+
+                        (▽u0)2 =− 1         ∑
+                                       Ω2   k,k′ k· k′˜u(k)˜u(k′)eik·(r2−r1)eik′·(r2−r1),                        (19)
+
+
+whose Fourier transformation is now
+                                                 (    ∑                                    )
+                     F((▽u0)2)(k) =−Ω0             1                                          .                    (20)
+                                             Ω     Ω   k′  (k− k′)· k′˜u(k− k′)˜u(k′)
+
+    As explained before, the correlation factorτ is designed here mainly to capture the short
+
+range cusp.  In the short range limit, we have the asymptotic solution 49
+
+
+                                         ˜u(k) =−4πk4,  when k∼∞,                                            (21)
+
+
+which is the cusp condition expressed in the k-space.  This expression is derived for unlike
+
+spin pairs, while for electron pairs with the same spin ˜u(k)∼− 2πk4 .  In principle we can use
+any kind of local function u in the TC calculation, as long as it satisﬁes the cusp condition.
+
+However, since we intend to introduce approximations in the treatment of the three-body
+
+term, we want u to be small and to vanish in the CBL. Therefore we design the following
+
+correlation factor                                 
+                                                      − 4πk4, |k|>kc,
+                                          ˜u(k) =                                                           (22)
+                                                      0,  |k|≤kc,
+
+wherekc is the cutoﬀ parameter of the basis set.  The idea behind this construction is simple:
+since the wave function can already be described by a conﬁguration description up to the
+
+given level of resolution (characterized by kc), it is only needed to be improved in the ﬁner
+
+region of resolution by means of the correlation factor.  In real space the above correlation
+
+
+
+
+                                                        10
+factor becomes:                             (                                      )
+
+                              u(r) =−rπ       si(kcr) + cos(kcr)kcr     + sin(kcr)(kcr)2,                               (23)
+
+where si(x) =−∫∞           sinx
+                       x    x dx is the sine integral.  A sketch of u(r) is presented in Figure 1,
+which looks like a small “hole” with the depth  =−2/πkc  and the width∼ π/kc.  Taylor
+
+expansion of u in the small r region can be calculated for the leading terms
+
+
+                                           u(r) =−  2πkc + r2 +··· ,                                              (24)
+
+
+where the second term satisfy the cusp condition for unlike spin pairs.  In the large r region,
+
+the magnitude of u(r) decades like 1/r2.
+
+
+
+
+                                                      π
+                                                      kc
+
+
+
+
+                                −  2πkc
+
+                           Figure 1:  A sketch of the correlation factor u(r).
+
+
+    In principle, we can also use a spin-dependent correlation factor, namely to reduce the
+
+correlation  factor  for  parallel  spin  pairs  by  one  half.   However,  the  existence  of  exchange
+
+“holes”  between  parallel-spin  electrons  keeps  them  largely  apart  anyway,  and  as  a  conse-
+
+quence the system energy is not very sensitive to the cusp between such pairs.  Therefore the
+
+use of spin-dependent correlation factors does not signiﬁcantly improve the convergence rate
+
+of energy.  Rather, spin-dependent Jastrow factors induce undesirable spin contamination 50
+into the wave function, so that the wave function can not be an eigenstate of S2.
+
+    With the above short ranged correlation factor,  we can largely ignore the complicated
+
+
+                                                         11
+three-body operator in equation (15) and take only a simple RPA type contribution from it.
+
+This contribution is represented by a two-body operator
+
+                              N− 2     ∑    ∑   k2˜u2(k) a†
+                                2Ω2                          p−k,σa†q+k,σ′aq,σ′ap,σ,                               (25)
+                                       σσ′  kpq
+
+which is generated by a contraction of the a†s+k−k′,σ′′as,σ′′  pairs in equation (15) (i.e., by a
+
+summation of those terms where k = k′).  This term makes the dominant contribution of the
+
+three-body operator to the long range correlation, and is closely related to the summation of
+
+all ring diagrams in the linked cluster expansion.51–53 In the current method, the correlation
+
+factor is short ranged and, therefore the contribution of these terms will be very small.  In the
+applications studied in this paper, namely the homogeneous electron gas in thers range from
+
+0.5 to 5, this contribution was less than 1% of the total correlation energy.  We nevertheless
+
+keep it in the method for two reasons:  ﬁrstly it partly recovers the three-body contributions
+
+and, secondly it can be used to estimate the magnitude of error due to the missing three-
+
+body terms.  Last but not least, the use of this term incurs almost no extra computational
+
+cost.
+
+    Putting all terms together, we have the following two-body eﬀective potential
+
+                          ˆWeﬀ   =     1  ∑    ∑
+                                      2Ω             ˜weﬀ(k, p, q) a†p−k,σa†q+k,σ′aq,σ′ap,σ,                   (26)
+                                           σσ′ kpq
+                ˜weﬀ(k, p, q)   =    ˜w(k) +k2˜u(k)− (p− q)· k˜u(k)− Ne− 2Ω  k2˜u2(k)
+                                           ∑
+                                     + 1Ω
+                                            k′  (k− k′)· k′˜u(k− k′)˜u(k′),                                     (27)
+
+where  ˜w(k) is the original Coulomb potential
+
+                                                      
+                                                         4π
+                                             ˜w(k) =     k2,   k⁄= 0,                                           (28)
+                                                      0,     k = 0.
+
+
+
+
+                                                         12
+In equation (27), the last term coming fromF((▽u)2)(k) is only a function of k and can be
+
+easily prepared and stored before the FCIQMC simulation.  Unlike other terms, this term is
+
+non-zero at k = 0.  Practical implementation of this TC method in FCIQMC calculations is
+
+straightforward.  We need only to replace the pure electronic Coulomb potential  ˜w with the
+
+TC eﬀective potential  ˜weﬀ, and this requires only a very small modiﬁcation of the existing
+
+code.  Since calculation of the Coulomb potential makes up only a very small portion of the
+
+total computational cost of the FCIQMC method, use of the eﬀective potential will not make
+
+the computations more expensive.
+
+
+3    Results
+
+
+Homogeneous electron gases (HEG) are important models for the investigation of electron
+
+correlation  in  solids.   They  also  play  a  fundamental  role  in  the  development  of  density
+
+functional theory (DFT).54 These models have been intensively studied by variational and
+
+diﬀusion  quantum  Monte  Carlo  simulations.55–59  The  DMC  method  is  very  eﬃcient  and
+can be applied to fairly large systems.  On the other hand this method does not solve the
+
+problem completely, owing to the ﬁxed-node approximation, even though this can be reduced
+
+by means of back-ﬂow and multi-determinant techniques.  The FCIQMC method contains in
+
+principle no bias, and oﬀers a way to investigate the ﬁxed node error.  Recently the FCIQMC
+
+method has been used to investigate the three dimensional HEG model.60–62 Due to the cusp
+
+singularity of the wave functions, the calculation suﬀers from slow convergence with respect
+
+to the basis size, with the error of the calculated energy being proportional toM−1,M being
+
+the total number of basis functions.  Extrapolations based on this M−1 behavior are used to
+
+estimate the results in the CBL. For an accurate result, calculations need to be performed on
+
+fairly large basis sets in order to reach theM−1 regime, and the computational cost increases
+
+sharply with basis size.
+    In order to study the eﬃciency of the new TC method, we have performed calculations
+
+
+
+                                                      13
+on  the  same  3D  HEG  systems  as  investigated  in  the  previous  studies. 60,61  Two  diﬀerent
+
+supercell sizes are used, containing 14 and 54 electrons respectively.  For the 14 electron cell,
+
+calculations  are  carried  out  on  four  diﬀerent  densities  with  Wigner-Seitz  radius rs  =  0.5,
+
+1.0, 2.0 and 5.0 respectively.  For the 54 electron cell, we can only get converged results for
+
+rs = 0.5 and 1.0, since the required total number of walkers increases rapidly withrs.  We use
+
+the initiator-FCIQMC (i-FCIQMC) method with the initiator parameter set to be 3.0.  In
+
+addition we used the semi-stochastic method63 using the|D| = 10000 leading determinants
+
+in the deterministic space64 as implemented in the NECI code.65
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure  2:  (a)  Total  correlation  energy  as  a  function  of M−1  calculated  by  FCIQMC  and
+FCIQMC-TC methods for the 14 electron system with rs = 0.5.  (b) The same results but
+presented as a function of M−5/3.
+
+
+    In Figure 2(a), the total correlation energy as a function of M−1 is presented for the 14
+
+electron system with rs  = 0.5, where the two diﬀerent results are calculated by FCIQMC
+
+method with the eﬀective TC Hamiltonian (FCIQMC-TC) and the original FCIQMC method
+respectively. HereM, the number of spin orbital basis functions, is chosen to be 114, 186, 358,
+
+514, 778 and 1850 respectively.  The FCIQMC result shows an asymptotic linear convergence
+
+with respect to M−1,  while the result of FCIQMC-TC has a higher order of convergence.
+
+According to the theoretical analysis in Appendix A, the best asymptotic convergence we
+
+can expect isM−5/3.  We also present the same results in Figure 2(b) as functions of M−5/3.
+
+
+                                                       14
+The result of FCIQMC-TC shows a roughly linear behavior in the large M  region, and in
+
+the small M  region the convergence is faster.  The asymptotic M−5/3 convergence behavior
+
+oﬀers a possibility of extrapolations to the CBL, in case of need.  For the result in Figure
+
+2, such an extrapolation is not necessary, since 1850−5/3 is already very close to the origin
+
+(∞−5/3) and the FCIQMC-TC result has already converged at 0.1 milihartree (mEh) level.
+
+
+
+
+
+
+
+
+
+
+
+Figure  3:   Total  correlation  energy  as  a  function  of M−1  calculated  by  FCIQMC  and
+FCIQMC-TC methods for the 14 electron system with rs = 1.0, 2.0 and 5.0 respectively.
+
+
+    Similar behaviors are observed for other densities of the 14 electron system.  In Figure 3,
+
+the  convergence  with  respect  to M−1  of  the  two  diﬀerent  calculations  are  presented  for
+
+rs  = 1.0, 2.0 and 5.0 respectively in three plots.  It turns out that for larger rs  the result
+
+converges faster.  For rs = 1.0 the FCIQMC-TC energy has converged within a milihartree
+error at M  = 514, while for rs = 2.0 and 5.0 such a convergence can already been reached
+
+at M  = 358 and 186 respectively.  However, this does not mean that simulations for larger
+
+rss are easier, since the required number of walkers (Nw) increases sharply with rs, in order
+
+to reduce the initiator error.  For rs  = 0.5∼  2.0,  calculations are performed mostly with
+
+Nw  =  107∼  108,  while  for rs  =  5.0  we  need Nw  =  109  already  at M  =  114∼  358  and
+
+even Nw = 1010 at M = 514 and 778.  For such systems, in order to demonstrate the M−5/3
+
+asymptotic convergence we have to deal with larger basis sets, which will require even larger
+
+Nw’s,  but  on  the  other  hand  such  diﬃcult  calculations  are  not  needed  for  our  accuracy
+
+requirement.
+
+    Computations  on  the  54-electron  systems  are  much  more  expensive  and  with  present
+
+computational resources we can get converged results only for rs  = 0.5 and rs  = 1.0.  For
+
+                                                       15
+Figure  4:   Total  correlation  energy  as  a  function  of M−5/3  calculated  by  FCIQMC  and
+FCIQMC-TC methods for the 54 electron systems with rs = 0.5 and rs = 1.0.
+
+
+rs = 0.5, calculations are performed with 6 diﬀerent basis sets withM = 246→ 1850, where
+
+Nw = 108 is found to be suﬃcient for all of them.  Forrs = 1.0, we can get converged results
+
+forM up to 1030.  ForM = 246, 358 and 514, the number of walkersNw is taken to be 1010,
+
+while for M = 778 and 1030 we need Nw = 2× 1010.  In Figure 4, the results for 54-electron
+
+systems  are  presented  as  functions  of M−5/3  for rs  =  0.5  and rs  =  1.0.   The  asymptotic
+
+behaviors are clearer than those of the 14-electron systems for the FCIQMC-TC results and
+
+extrapolations are used to evaluate the results in the CBL.
+
+Table  1:  Total  correlation  energies  in  the  complete  basis  limit  for  a  variety  of N  and rs
+calculated with FCIQMC-TC method.  Extrapolation based on M−5/3 behavior is used for
+the 54-electron systems.  The results are compared with the previous FCIQMC results 61,62
+and the back-ﬂow DMC results.58
+
+
+         rs                                                  Ecorr   (a.u.)
+       (a.u.)      N          FCIQMC-TC        FCIQMC61         FCIQMC62       BF-DMC
+         0.5        14         -0.5948(2)             -0.5959(7)         -0.59467(9)
+                   54           -2.425(1)               -2.435(7)                                    -2.387(2)
+         1.0        14         -0.5309(2)             -0.5316(4)          -0.5313(2)
+                   54           -2.134(2)               -2.124(3)                                    -2.125(2)
+         2.0        14         -0.4440(3)              -0.444(1)
+         5.0        14         -0.3078(3)              -0.307(1)
+
+
+
+
+
+                                                          16
+    In Table 1 the complete basis limit results are presented for all calculated systems.  The
+
+results  for  the  14-electron  systems  are  simply  taken  from  those  of  the  used  largest  basis
+
+sets.   Within  the  given  error  bars,  these  results  are  already  converged  to  the  CBL.  The
+
+results  for N  =  54  are  obtained  by  extrapolations  based  on  the M−5/3  convergence  rate.
+
+Compared with the previous FCIQMC results, the new results agree well for the 14-electron
+
+systems, with the diﬀerences in total energies≤ 1 mEh.  The new results are also in good
+
+agreement with the recent high-order Coupled-Cluster study of the N = 14 electron system
+
+by Neufeld and Thom.62  The small diﬀerences between the FCIQMC results of Shepherd
+
+et  al.61  and  Neufeld  and  Thom62  for  the  14-electron  systems  arise  because  of  the  use  of
+
+diﬀerent  extrapolation  formulae  to  the  inﬁnite-basis  set  limit,  the  former  being  based  on
+
+M−1  whilst the latter includes higher order terms (b0 +b1M−1 +b2M−2).  This allows the
+use of a larger number of points in the extrapolation procedure (with smaller M), and leads
+
+to somewhat higher extrapolated correlation energies, the implication being that a simple
+
+M−1  extrapolation  tends  to  over-shoot  the  exact  result  unless  a  suﬃciently  large M  has
+
+been reached.  Although the diﬀerences are not large, this indicates that the precise form of
+
+extrapolation is indeed consequential, and provides a further motivation to try to minimize
+
+basis-set errors through analytic means as far as possible.
+
+    For N  = 54,  the new transcorrelated result at rs  = 0.5 is 10 mEh  above the previous
+
+FCIQMC  result  of  Shepherd  et  al.60  based  on  a M−1  extrapolation.   At  this  density,  the
+
+FCIQMC-TC result is about 40 mEh below the back-ﬂow DMC result58 and this indicates
+
+that the ﬁxed-node error of the BF-DMC result is still quite large for rs = 0.5.  Forrs = 1.0,
+
+the previous FCIQMC result for N  = 54 is roughly the same as the BF-DMC result, while
+the  new  result  is  about  10 mEh  below  the  BF-DMC  result.   This  reveals  the  ﬁxed  nodes
+
+error decays very rapidly with rs and, we expect that, at even larger rs the ﬁxed-node error
+
+of BF-DMC will be even smaller and hence can be ignored.
+
+    The  eﬀective  TC  potential  in  equation  (27),  now  denoting  as  ˜weﬀ(k, p, q)  =   ˜w(k) +
+
+˜wTC[˜u](k, p, q), is constructed with ˜u(k) deﬁned in equation (22).  Since ˜u(k) contains only
+
+
+                                                        17
+Figure 5: Energy diﬀerences ∆E(t) att = 0 andt =∞ for 14-electron systems withM = 358
+presented for all diﬀerent densities rs = 0.5∼ 5.0.
+
+
+high  frequency  terms,  it  might  be  expected  that  the  eﬀective  potential  ˜wTC  has  a  weak
+coupling  to  the  low  frequency  basis  space  and  thus  this  potential  behaves  roughly  like  a
+
+constant potential in the dynamic evolution.  If this would be the case, it should be expected
+
+that the energy diﬀerence produced by  ˜wTC
+
+
+                              ∆E(t) =EFCIQMC(t)−EFCIQMC-TC(t),                              (29)
+
+
+should be approximately independent of imaginary time.  In Figure 5, such energy diﬀerences
+
+for  the  14-electron  systems  with rs  =  0.5∼  5.0  and  on  the  basis M  =  358  is  presented
+for t  =  0  and t  =∞.   In  the  calculation,  the  initial  wave  function  are  always  chosen  as
+
+the Hartree-Fock (HF) wave function.  It can be seen that at high density ∆E(0) is close
+
+to  ∆E(∞),  but  at  low  density  they  are  quite  diﬀerent.   This  indicates  that  the  eﬀective
+
+potential  ˜wTC  does have a coupling to the wave function, especially at low density region.
+
+
+                                                         18
+It  turns  out  that,  for  a  given  number  of  particles N  and  a  given  basis  size M,  ∆E(0)  is
+
+independent of rs.  This can be easily understood by scaling arguments.  At HF level, the
+
+kinetic energy∝ r−2s    and the exchange energy∝ r−1s  , because the corresponding operators
+− 1 ∑
+  2    i ▽2i  and∑ij 1/rij  scale like r−2s    and r−1s    respectively.  By referring to equation 6, we
+get the expression of ∆E(0)
+
+                                                           ∑
+                                   ∆E(0) =⟨ΦHF|12              (▽iτ)2|ΦHF⟩.                                      (30)
+                                                             i
+
+Based on equation (11) and equation (23), it is not diﬃcult to ﬁnd that∑i(▽iτ)2 scales as
+
+a constant of rs and, therefore ∆E(0) does not depend on rs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 6: CI coeﬃcient of the Hartree-Fock determinant in the ﬁnal solutions of wave function
+with the two diﬀerent methods presented for diﬀerent basis sets.  The results is calculated
+for the 14-electron system with rs = 2.0.
+
+
+    The conclusion that the eﬀective potential  ˜wTC couples to the wave function can also be
+
+veriﬁed by looking at the diﬀerence of the ﬁnal solutions of wave function between the two
+
+
+                                                        19
+diﬀerent methods.  In Figure 6, the CI coeﬃcient of the Hartree-Fock determinant (C0) in
+
+the ﬁnal solutions of wave function with the two diﬀerent methods is presented for diﬀerent
+
+basis  sets.   The  results  is  calculated  for  the  14-electron  system  with rs  =  2.0. C0  of  the
+
+FCIQMC-TC result is found clearly larger than that of the FCIQMC result.  This also serves
+
+as an evidence that the eﬀective potential does couples to the wave function space.  In the
+
+Figure, it can be found that both curves show a rough 1/√M convergence.  For the FCIQMC
+
+result, this can be easily understood based on variational argument, that since the energy
+
+converges likeM−1, the wave function should converge like 1/√M.  As for the FCIQMC-TC
+
+result, where the energy converges like M−5/3, the variational argument can not be applied,
+
+since the Hamiltonian is not ﬁxed and itself depends on the basis.
+
+
+4    Conclusions
+
+
+In this work, we have designed a simple but eﬃcient transcorrelated method for plane wave
+
+basis functions. The eﬀective Hamiltonian contains only several two-body operators and thus
+can be easily implemented.  In order to systematically reduce the error due to the neglect of
+
+the three-body operator in the original transcorrelated Hamiltonian, the correlation factor
+
+is constructed in a natural and systematic way according to the basis set.  As an initial test,
+
+this simple eﬀective Hamiltonian is used in FCIQMC calculations of homogeneous electron
+
+gas models.  The results demonstrate that, with the same computational cost, this simple
+
+method can improve the FCIQMC convergence rate from O(M−1) to O(M−5/3).
+
+    We have also demonstrated that the eﬀective transcorrelated Hamiltonian does couple
+
+to the wave function and changes the dynamic evolution of the FCIQMC simulations.  This
+
+means that the FCIQMC-TC results can not be precisely estimated based on an a posteriori
+
+use of the eﬀective Hamiltonian.
+
+    The eﬀective Hamiltonian, in principle, can also be applied to other projection methods
+such as the coupled cluster method.  Due to the simple structure of the eﬀective Hamiltonian,
+
+
+
+                                                      20
+its implementation should be easier than usual F12 methods.  We are currently working on
+
+this implementation.
+
+    Generalization  of  this  method  to  other  type  of  basis  is  straightforward  and  the  basis
+
+dependent correlation factors can be constructed as follows:  take ﬁrst a usual F12 factor,
+
+for example a Slater type geminal f(r12) = exp(−γr12), then the correlation factor can be
+
+constructed by projection against the current (orthonormal) basis set{φi, i = 1,··· ,M}
+
+
+                                                               M∑
+                           u(r1, r2)   = f(|r1− r2|)−             Fijφi(r1)φj(r2),                              (31)
+                                            ∫                  i,j
+                                 Fij   =       f(|r1− r2|)φi(r1)φj(r2)d3r1d3r2.                            (32)
+
+
+The eﬀective two-body transcorrelated potential can then be calculated with this correla-
+
+tion factor.  Comparing with the plane wave basis, the expressions may become redundant.
+
+Therefore  the  induced  one-body  and  two-body  matrix  elements  have  to  be  prepared  and
+
+stored.  We plan to work on this in the near future.
+
+
+Acknowledgments
+
+
+We thank A. Gr¨uneis, J. Brand, P. Jeszenszki and D. Tew for helpful discussions.  Calcula-
+
+tions are partly carried out on Hydra clusters in Supercomputing Center Garching.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       21
+Appendix
+
+
+A    Regularities and Convergence Rates
+
+
+The regularity of many body wave functions Ψ isC0,1 and the non-smoothness comes largely
+
+from the cusps between electron pairs.  (In the present analysis we concentrate only on the
+
+electronic cusps, and ignore the electron-nuclear cusps.)  For a understanding of the relation
+
+between the regularity and the convergence rate, it is enough to take the example of a two
+
+electron system, which is essentially a one body problem in the center of mass coordinate.
+Due to the electronic cusp, the short range behavior of the exact wave function for a three
+
+dimensional non spin-polarised system looks like| ˜ψ(k)|∝k−4,  fork→∞.  This means that
+
+for a ﬁnite plane wave basis with a cutoﬀ atkc, the error of wave function due to the missing
+
+resolution for the cusp can be estimated as
+                                                    
+
+                                                       1
+                                                       k4, |k|>kc,
+                                         δ ˜ψ(k)∝                                                        (33)
+                                                       0, |k|≤kc.
+
+
+The  error  of  a  variational  energy  can  then  be  approximated  as  (ignoring  any  change  of
+
+normalisation):
+
+
+                              δE ≈⟨δψ| ˆH|δψ⟩            ∫
+
+                                           ≈            12   δ ˜ψ(k)k2δ ˜ψ(k)d3k
+
+                                           ∝             1k3c,                                                              (34)
+
+
+where we have used that fact that the leading contribution comes from the kinetic energy.  By
+
+using a Jastrow factor, the regularity of the wave function is improved to C1,1, which means
+that now the ﬁrst order derivatives of ψ is in C0,1.  This leads to an asymptotic short range
+
+behavior of the gradient of the reference function|~▽φ(k)|∝k−4,  for k→∞.  Similarly, the
+
+                                                       22
+energy error for a ﬁnite basis set can be estimated as
+
+                                                      ∫
+                                         δE ≈   12       |δ~▽φ(k)|2d3k
+
+                                               ∝    1k5c.                                                                   (35)
+
+
+Since the basis size M∝ k3c, we see that the Jastrow factor improves the convergence rate
+
+fromO(M−1) toO(M−5/3).
+
+
+References
+
+
+ (1)  Helgaker, T.;  Jørgensen, P.;  Olsen, J.  Molecular  Electronic-Structure  Theory;  Wiley:
+
+      New York, 1999.
+
+ (2)  Kato,  T.  On  the  Eigenfunctions  of  Many-Particle  Systems  in  Quantum  Mechanics.
+
+      Commun. Pure Appl. Math. 1957, 10, 151–177.
+
+ (3)  Kutzelnigg, W. r12-Dependent terms in the wave function as closed sums of partial
+
+      wave amplitudes for large l. Theoret. Chim. Acta 1985, 68, 445–469.
+
+ (4)  Kutzelnigg, W.;  Klopper, W. Wave functions with terms linear in the interelectronic
+
+      coordinates  to  take  care  of  the  correlation  cusp.  I.  General  theory.  J.  Chem.  Phys.
+
+      1991, 94, 1985–2001.
+
+ (5)  Klopper, W.; Manby, F. R.; Ten-no, S.; Valeev, E. F. R12 methods in explicitly corre-
+
+      lated molecular electronic structure theory. Int. Rev. in Phys. Chem. 2006, 25, 427–468.
+
+ (6)  H¨attig, C.; Klopper, W.; K¨ohn, A.; Tew, D. Explicitly correlated electrons in molecules.
+
+      Chem. Rev. 2012, 112, 4–47.
+
+ (7)  Tew, D.; H¨attig, C.; Bachorz, R. A.; Klopper, W. Recent Progress in Coupled Cluster
+
+
+
+
+                                                        23
+      Methods - Theory and Applications. Dordrecht/Heidelberg/London/New York, 2010;
+
+      pp 535–572.
+
+ (8)  Werner,  H.-J.;  Adler,  T.  B.;  Knizia,  G.;  Manby,  F.  R.  Recent  Progress  in  Coupled
+
+      Cluster Methods - Theory and Applications. Dordrecht/Heidelberg/London/New York,
+
+      2010; pp 573–620.
+
+ (9)  Kong,  L.;  Bischoﬀ,  F.  A.;  Valeev,  E.  F.  Explicitly  Correlated  R12/F12  Methods  for
+
+      Electronic Structure. Chem. Rev. 2012, 112, 75–107.
+
+(10)  Valeev, E. F. Improving on the resolution of the identity in linear R12 ab initio theories.
+
+      Chem. Phys. Lett. 2004, 395, 190–195.
+
+(11)  Jastrow, R. Many-body problems with strong forces. Phys. Rev. 1955, 98, 1479–1484.
+
+(12)  Fournais, S.; Hoﬀmann-Ostenhof, M.; Hoﬀmann-Ostenhof, T.; Østergaard Sørensen, T.
+
+      Sharp  Regularity  Results  for  Coulombic  Many-Electron  Wave  Functions.  Commun.
+      Math. Phys. 2005, 255, 183–227.
+
+(13)  Fournais, S.; Hoﬀmann-Ostenhof, M.; Hoﬀmann-Ostenhof, T.; Østergaard Sørensen, T.
+
+      Analytic Structure of Many-Body Coulombic Wave Functions. Commun. Math. Phys.
+
+      2009, 289, 291–310.
+
+(14)  Kutzelnigg, W.; Morgen, J. D. Rates of convergence of the partial-wave expansions of
+
+      atomic correlation energies. J. Chem. Phys. 1992, 96, 4484–4508.
+
+(15)  Ceperley, D. Ground state of the fermion one-component plasma: A Monte Carlo study
+
+      in two and three dimensions. Phys. Rev. 1978, 18, 3126–3138.
+
+(16)  Umrigar, C. J.;  Nightingale, M. P.;  Runge, K. J. A diﬀusion Monte-Carlo algorithm
+
+      with very small time-step errors. J. Chem. Phys. 1993, 99, 2865–2890.
+
+(17)  Foulkes,  W.  M.  C.;  Mitas,  L.;  Needs,  R.  J.;  Rajagopal,  G.  Quantum  Monte  Carlo
+
+      simulations of solids. Rev. Mod. Phys. 2001, 73, 33–83.
+
+                                                      24
+(18)  Clark,  J.  W.;  Westhaus,  P.  Cluster  expansions  in  many-fermion  theory.  I.  “  Factor-
+
+      cluster” formalisms. J. Math. Phys. 1968, 9, 131–148.
+
+(19)  Talman, J. Linked-cluster expansion for Jastrow-type wave functions and its application
+
+      to the electron-gas problem. Phys. Rev 1974, A 10, 1333–1344.
+
+(20)  Gaudoin, R.; Nekovee, M.; Foulkes, W. M. C.; Needs, R. J.; Rajagopal, G. Inhomoge-
+
+      neous random-phase approximation and many-electron trial wave function. Phys. Rev.
+
+      2001, B 63, 115115.
+
+(21)  Krotscheck, E. Variations on the electron-gas. Ann. Phys. (N.Y.) 1984, 155, 1–55.
+
+(22)  Krotscheck, E. Theory of inhomogeneous quantum seytems. III. Variational wave func-
+      tions for Fermi ﬂuids. Phys. Rev. 1985, B 31, 4267–4278.
+
+(23)  Boys, S. F. Some Bilinear Convergence Characteristics of the Solutions of Dissymmetric
+
+      Secular Equations. Proc. Roy. Soc. 1969, A 309, 195–208.
+
+(24)  Boys, S. F.; Handy, N. C. A Condition to Remove the Indeterminacy in Interelectronic
+
+      Correlation Functions. Proc. Roy. Soc. 1969, A 309, 209–220.
+
+(25)  Boys, S. F.; Handy, N. C. The Determination of Energies and Wavefunctions with Full
+
+      Electronic Correlation. Proc. Roy. Soc. 1969, A 310, 43–61.
+
+(26)  Boys, S. F.; Handy, N. C. A Calculation for the Energies and Wavefunctions for States
+
+      of Neon with Full Electronic Correlation Accuracy. Proc. Roy. Soc. 1969, A 310, 63–78.
+
+(27)  Boys, S. F.;  Handy, N. C. A First Solution,  for LiH, of a  Molecular Transcorrelated
+
+      Wave Equation by Means of Restricted Numerical Integration. Proc. Roy.  Soc. 1969,
+
+      A 311, 309–329.
+
+(28)  Handy,  N.  C.  Energies  and  expectation  values  for  Be  by  transcorrelated  method.  J.
+
+      Chem. Phys. 1969, 51, 3205–3212.
+
+
+                                                       25
+(29)  Handy,  N.  C.  The  transcorrelated  method  for  accurate  correlation  energies  using
+
+      gaussian-type functions. Mol. Phys. 1972, 23, 1–27.
+
+(30)  Handy, N. C. Towards and understanding of the form of correlated wavefunctions for
+
+      atoms. J. Chem. Phys. 1973, 58, 279–287.
+
+(31)  Ten-no,  S.  A  feasible  transcorrelated  method  for  treating  electronic  cusps  using  a
+
+      fronzen Gaussina geminal. Chem. Phys. Lett. 2000, 330, 169–174.
+
+(32)  O. Hino, Y. T.; Ten-no, S. Biorthogonal approach for explicitly correlated calculations
+
+      using the transcorrelated Hamiltonian. J. Chem. Phys. 2001, 115, 7865–7871.
+
+(33)  Umezawa,  N.;  Tsuneyuki,  S.  Transcorrelated  method  for  electronic  systems  coupled
+      with variational Monte Carlo calculation. J. Chem. Phys. 2003, 119, 10015–10031.
+
+(34)  Umezawa, N.; Tsuneyuki, S.; Ohno, T.; Shiraishi, K.; Chikyow, T. A practical treat-
+
+      ment  for  the  three-body  interactions  in  the  transcorrelated  variational  Monte  Carlo
+
+      method: Application to atoms from lithium to neon. J. Chem. Phys. 2005, 122, 224101.
+
+(35)  Luo, H. Variational transcorrelated method. J. Chem. Phys. 2010, 133, 154109.
+
+(36)  Luo, H. Complete optimisation of multi-conﬁguration Jastrow wave functions by vari-
+
+      ational transcorrelated method. J. Chem. Phys. 2011, 135, 024109.
+
+(37)  Yanai, T.; Chan, G. K.-L. Canonical transformation theory for multireference problems.
+
+      J. Chem. Phys. 2006, 124, 194106.
+
+(38)  Yanai,  T.;  Shiozaki,  T.  Canonical  transcorrelated  theory  with  projected  Slater-type
+
+      geminals. J. Chem. Phys. 2012, 136, 084107.
+
+(39)  Gr¨uneis, A.; Hirata, S.; Ohnishi, Y.; Ten-no, S. Perspective:  Explicitly correlated elec-
+
+      tronic structure theory for complex systems. J. Chem. Phys. 2017, 146, 080901.
+
+
+
+
+                                                       26
+(40)  Booth, G. H.;  Thom, A. J. W.;  Alavi, A. Fermion Monte Carlo without ﬁxed nodes:
+
+      A game of life,  death,  and annihilation in Slater determinant space.  J.  Chem.  Phys.
+
+      2009, 131, 054106.
+
+(41)  Cleland, D.; Booth, G.; Alavi, A. Communications: Survival of the ﬁttest: Accelerating
+
+      convergence  in  full  conﬁguration-interaction  quantum  Monte  Carlo.  J.  Chem.  Phys.
+
+      2010, 132, 041103.
+
+(42)  Booth,  G.  H.;  Gr¨uneis,  A.;  Kresse,  G.;  Alavi,  A.  Towards  an  exact  description  of
+
+      electronic wavefunctions in real solids. Nature (London) 2013, 493, 365–370.
+
+(43)  Booth, G.; Cleland, D.; Thom, A.; Alavi, A. Breaking the carbon dimer: The challenges
+
+      of multiple bond dissociation with full conﬁguration interaction quantum Monte Carlo
+      methods. J. Chem. Phys. 2011, 135, 084104.
+
+(44)  Kersten,  J.  A.  F.;  Booth,  G.  H.;  Alavi,  A.  Assessment  of  multireference  approaches
+
+      to explicitly correlated full conﬁguration interaction quantum Monte Carlo.  J.  Chem.
+
+      Phys. 2016, 145, 054117.
+
+(45)  Booth, G.; Cleland, D.; Alavi, A.; Tew, D. An explicitly correlated approach to basis
+
+      set  incompleteness  in  full  conﬁguration  interaction  quantum  Monte  Carlo.  J.  Chem.
+
+      Phys. 2012, 137, 164112.
+
+(46)  Torheyden, M.; Valeev, E. F. Universal perturbative explicitly correlated basis set in-
+
+      completeness correction. J. Chem. Phys. 2009, 131, 171103.
+
+(47)  Kong, L.; Valeev, E. F. SF-[2](R12):  A spin-adapted explicitly correlated method ap-
+
+      plicable to arbitrary electronic states. J. Chem. Phys. 2011, 135, 214105.
+
+(48)  Golub, G.; Loan, C. V. Matrix Computations, Third Edition; Johns Hopkins University
+
+      Press, 1996.
+
+
+
+
+                                                       27
+(49)  Luo,  H.  Transcorrelated  calculations  of  homogeneous  electron  gases.  J.  Chem.  Phys.
+
+      2012, 136, 224111.
+
+(50)  Filippi, C.; Umrigar, C. J. Multiconﬁguration wave functions for quantum Monte Carlo
+
+      calculations of ﬁrst-row diatomic molecules. J. Chem. Phys. 1996, 105, 213–226.
+
+(51)  Armour, E. A. G. The calculation of the ground-state energy of the free-electon gas by
+
+      the transcorrelated method. J. Phys. 1980, C 13, 343–348.
+
+(52)  Gaskell, T. The Collective Treatment of a Fermi Gas:  II.  Proc.  Phys.  Soc. 1961,  77,
+
+      1182–1192.
+
+(53)  Gaskell,  T.  The  Collective  Treatment  of  Many-body  Systems:  III.  Proc.  Phys.  Soc.
+
+      1962, 80, 1091–1100.
+
+(54)  Kohn, W.; Sham, L. J. Self-Consistent Equations Including Exchange and Correlation
+
+      Eﬀects. Phys. Rev. 1965, A 140, 1133–1138.
+
+(55)  Ceperley, D.;  Alder, B. J. Ground State of the electon Gas by a Stochastic Method.
+
+      Phys. Rev. Lett. 1980, 45, 566–569.
+
+(56)  Fraser,  L.  M.;   Foulkes,  W.  M.  C.;   Rajagopal,  G.;   Needs,  R.  J.;   Kenny,  S.  D.;
+
+      Williamson, A. J. Finite-size eﬀects and Coulomb interactions in quantum Monte Carlo
+
+      calculations for homogeneous systems with periodic boundary conditions.  Phys.  Rev.
+
+      1996, B53, 1814–1832.
+
+(57)  Kwon,  Y.;  Ceperley,  D.;  Martin,  R.  M.  Eﬀects  of  backﬂow  correlation  in  the  three-
+
+      dimensional electron gas:  Quantum Monte Carlo study. Phys. Rev. 1998, B 58, 6800–
+
+      6806.
+
+(58)  L´opez R´ıos, P.; Ma, A.; Drummond, N. D.; Towler, M. D.; Needs, R. J. Inhomogeneous
+
+      backﬂow  transformations  in  quantum  Monte  Carlo  calculations.  Phys.  Rev. 2006,  E
+
+      74, 066701.
+
+                                                       28
+(59)  Drummond, N. D.;  Needs, R. J.;  Sorouri, A.;  Foulkes, W. M. C. Finite-size errors in
+
+      continuum quantum Monte Carlo calculations. Phys. Rev. 2008, B 78, 125106.
+
+(60)  Shepherd, J. J.;  Booth, G.;  Gr¨uneis, A.;  Alavi, A. Full conﬁguration interaction per-
+
+      spective on the homogeneous electron gas. Phys. Rev. 2012, B 85, 081103(R).
+
+(61)  Shepherd, J. J.; Booth, G. H.; Alavi, A. Investigation of the full conﬁguration interac-
+
+      tion quantum Monte Carlo method using homogeneous electron gas models. J. Chem.
+
+      Phys. 2012, 136, 244101.
+
+(62)  Neufeld, V. J.; Thom, A. A study of the dense uniform electron gas with high orders
+
+      of coupled cluster. J. Chem. Phys. 2017, 147, 194105.
+
+(63)  Petruzielo, F.; Holmes, A.; Changlani, H.; Nightingale, M.; Umrigar, C. Semistochastic
+
+      Projector Monte Carlo Method. Phys. Rev. Lett. 2012, 109, 230201.
+
+(64)  Blunt,  N.;  Smart,  S.;  Kersten,  J.;  Spencer,  J.;  Booth,  G.;  Alavi,  A.  Semi-stochastic
+
+      full conﬁguration interaction quantum Monte Carlo:  Developments and application. J.
+
+      Chem. Phys. 2015, 142, 184107.
+
+(65)  Booth, G.; Smart, S.; Alavi, A. Linear-scaling and parallelisable algorithms for stochas-
+
+      tic quantum chemistry. Molecular Physics 2014, 112, 1855–1869.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       29

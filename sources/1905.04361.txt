@@ -1,0 +1,1007 @@
+  An Auxiliary-Field Quantum Monte Carlo Perspective on the Ground State of the
+Dense Uniform Electron Gas:  An Investigation with Hartree-Fock Trial Wavefunctions
+
+                                                                Joonho  Lee∗
+                        College  of  Chemistry,  University  of  California,  Berkeley,  California  94720,  USA.
+
+                                            Fionn  D.  Malone†  and  Miguel  A.  Morales‡
+                              Quantum  Simulations  Group,  Lawrence  Livermore  National  Laboratory,
+                                           7000  East  Avenue,  Livermore,  CA,  94551  USA.
+
+                  We assess the utility ofHartree-Fock (HF)trial wavefunctions in performing phaseless auxiliary-
+               ﬁeld quantum Monte Carlo (ph-AFQMC) on the uniform electron gas (UEG) model.The combina-
+               tion of ph-AFQMC with spin-restricted HF (RHF+ph-AFQMC), was found to be highly accurate
+               and eﬃcient for systems containing up to 114 electrons in 2109 orbitals, particularly for rs≤ 2.0.
+               Compared to spin-restricted coupled-cluster (RCC) methods, we found that RHF+ph-AFQMC per-
+               forms better than CC with singles, doubles, and triples (RCCSDT) and similarly to or slightly worse
+               than CC with singles, doubles, triples, and quadruples (RCCSDTQ) for rs≤ 3.0 in the 14-electron
+               UEG model.  With the 54-electron, we found RHF+ph-AFQMC to be nearly exact for rs≤ 2.0 and
+               pointed out potential biases in existing benchmarks.  Encouraged by these, we performed RHF+ph-
+               AFQMC on the 114-electron UEG model for rs≤ 2.0 and provided new benchmark data for future
+               method development.We found that the UEG models with   rs = 5.0 remain to be challenging for
+               RHF+ph-AFQMC. Employing non-orthogonal conﬁguration expansions or unrestricted HF states
+               as trial wavefunctions was also found to be ineﬀective in the case of the 14-electron UEG model
+               with rs = 5.0.  We emphasize the need for a better trial wavefunction for ph-AFQMC in simulat-
+               ing strongly correlated systems.With the 54-electron and 114-electron UEG models, we stress the
+               potential utility of RHF+ph-AFQMC for simulating dense solids.
+
+
+                   I.    INTRODUCTION                                      in order to compare directly with experiments.  This is
+                                                                           in contrast with DMC which works in real space and di-
+  Describing   electron   correlation   in   a   scalable   way            rectly  in  the  CBS  limit.   Second,  incorporating  widely
+that   can   handle   hundreds   of   electrons   is   a   grand           used  Jastrow  factors  (JFs)  into  AFQMC  is  quite  chal-
+challenge  in  quantum  chemistry  and  condensed  mat-                    lenging.  JFs are economical ways to incorporate residual
+ter  physics.   State-of-the-art  methods  include  coupled-               electron  correlation  by  enforcing  cusp  conditions  either
+cluster (CC) methods1–7   , density matrix renormalization                 between electrons and nuclei or among electrons.  Lastly,
+group (DMRG) methods8,9  ,  and quantum Monte Carlo                        unlike FN-DMC, ph-AFQMC is not variational14.
+(QMC) approaches10–12    .  Each method exhibits diﬀerent                     Despite  these  issues,   AFQMC  oﬀers  a  number  of
+weaknesses and strengths and therefore they have been                      promising  advantages  precisely  because  it  works  di-
+applied to solve a diﬀerent class of problems in chemistry                 rectly  in  an  orbital-based  basis.     In  particular,   all-
+and condensed matter physics.                                              electron,  frozen core and non-local pseudopotential cal-
+  In  this  work,   we  will  focus  on  a  projector  QMC                 culations  can  be  performed  with  no  additional  approx-
+method,   namely,   the  auxiliary-ﬁeld  QMC  (AFQMC)                      imations.     Furthermore,  as  most  quantum  chemistry
+                                                                           methods  are  performed  with  a  ﬁnite  basis  set,  many
+approach11,13    .   Projector  Monte  Carlo  methods,  while              tricks  used  in  quantum  chemistry  can  be  used  to  im-
+formally exact, typically impose a constraint in the imag-                 prove AFQMC as well.  For instance, tensor hyper con-
+inary time propagation in order to overcome the fermion                    traction approaches15–20      have recently been employed to
+sign problem and achieve a polynomial scaling algorithm.                   reduce  the  memory  requirement  of  AFQMC21,22    .   Em-
+Both, diﬀusion Monte Carlo (DMC)10 and AFQMC en-                           ploying  explicitly  correlated  basis  functions  (similar  in
+force  this  constraint  using  a  trial  wavefunction,  which             spirit  to  JFs  for  DMC)  should  also  be  possible  to  re-
+can in principle be systematically improved towards the                    duce the basis set incompleteness error of AFQMC23.  In
+exact  result.   These  constraints  lead  to  the  phaseless-             addition to this, computing properties other than the to-
+AFQMC (ph-AFQMC) and ﬁxed-node (FN-DMC) algo-                              tal  energy,  which  has  historically  been  a  challenge  for
+rithms both of which scale likeO(N3)−O(N4) with the                        projector QMC methods, can be more straightforwardly
+number of electrons N.                                                     achieved  in  AFQMC24.   Recent  examples  include  one-
+  Although the formalism of DMC and AFQMC are very                         and  two-particle  reduced  density  matrices24,  imaginary
+similar, there are some key diﬀerences between the two.                    time correlation functions25–27      as well as forces28.
+First, AFQMC works in the second-quantized framework                          AFQMC has been successfully applied in recent years
+common to most quantum chemical methods, and intro-                        to  a  number  of  challenging  problems  in  both  quantum
+duces a ﬁnite basis set. Therefore, AFQMC energies need                    chemistry29–33     and solid state physics34–36    .  However, the
+to be extrapolated to the complete basis set (CBS) limit                   broad applicability of the method is not as well under-
+                                                                                                                                                  2
+
+stood as more traditional quantum chemistry approaches                      entails.   One  can  tune  the  magnitude  of  dynamic  and
+which  have  seen  decades  worth  of  sustained  develop-                  static correlation at the Hamiltonian level using a single
+ment  and  benchmarking.   The  primary  limiting  factor                   parameter (for a ﬁxed number of electrons) through the
+of  AFQMC  is  the  choice  of  trial  wavefunction.   Single-              dimensionless Wigner-Seitz radius rs. For low rs values,
+determinant trial wavefunctions from Hartree–Fock (HF)                      the  electron  density  is  high,  the  distance  between  elec-
+or density functional theory calculations have shown re-                    trons is short, and electrons are all paired. In this regime,
+markable accuracy for a broad range of applications in-                     diagrammatic  resummation  techniques  such  as  random
+cluding  the  two-dimensional  Hubbard  model37,  dipole-                   phase approximation (RPA) and low-order perturbation
+bound  anions38  and  solid  state  applications39–42    ,  with            theory  based  on  RHF  references  are  highly  accurate59.
+total  energies  often  approaching  the  accuracy  of  cou-                We  call  this  regime  “weakly  correlated”.   On  the  other
+pled cluster singles and doubles with perturbative triples                  hand, for highrs values, electrons are unpaired and spa-
+CCSD(T)22.  However, for more strongly correlated sys-                      tially well-separated and closed-shell RHF references pro-
+tems such as transition metal containing complexes single                   vide qualitatively wrong picture (i.e., it does not describe
+determinant trial wavefunctions are not suﬃciently accu-                    the open-shell nature of the system). In this case, RPA or
+rate and multi determinant trial wavefunctions become                       other low-order perturbation theory based on RHF refer-
+necessary32,33,43–46            .                                           ences fails.  Furthermore, the use of broken symmetry HF
+  Often   short   determinantal   expansions   from   com-                  references  does  not  provide  accurate  description  either
+plete    active    space    self-consistent    ﬁeld    (CASSCF)             due to spin contamination.  We call this regime “strongly
+wavefunctions31,33      or  non-orthogonal  multi-Slater  de-               correlated”.This  tunability  allows  for  a  unambiguous
+teraminant   trial   wavefunction32   can   help   to   restore             comparison between the strengths and weaknesses of var-
+the  accuracy  of  the  method.    However,  since  multi-                  ious methods.  Moreover, there exist a number of bench-
+determinant wavefunctions scale exponentially with sys-                     mark  results  both  for  intermediate  system  sizes  within
+tem size, this approach to improving the trial wavefunc-                    the reach of traditional quantum chemistry approaches,
+tion is ultimately limited, particularly for large scale ap-                as well as results for much larger system sizes, and also
+plications.  The search for more economical and accurate                    results extrapolated to the thermodynamic limit.
+trial wavefunctions for AFQMC (and also FN-DMC) is                             Recently, the formally exact full conﬁguration interac-
+an  active  area  of  research  and  no  single  approach  can              tion quantum Monte Carlo method12,60     (FCIQMC) pro-
+achieve both polynomial scaling and broadly consistent                      vided  benchmark  results  for  a  range  of  densities  for  a
+accuracy at the same time.                                                  14- and 54-electron system61,62    .  These FCIQMC studies
+  Our  goal  is  to  assess  the  quality  of  HF  trial  wave-             also  motivated  recent  coupled-cluster  Monte  Carlo63–65
+functions for the Uniform Electron Gas (UEG) model47.                       studies  on  the  14-electron  UEG  model  by  Neufeld  and
+HF  wavefunctions  are  the  simplest  possible  reference                  Thom  where  they  provided  CCSD,  CCSD  and  triples
+states to perform subsequent correlation calculations in                    (CCSDT),  CCSDT  and  quadruples  (CCSDTQ)  with
+quantum  chemistry.   Often,  artiﬁcial  symmetry  break-                   RHF  references  results  for  a  wide  range  of rs  and  ba-
+ing caused by HF wavefunctions causes confusion in un-                      sis sets66.  As the scope of truncated spin-restricted CC
+derstanding  electron  correlation.48,49      It  is  artiﬁcial  be-        (RCC) approaches is relatively well understood, compar-
+cause the symmetry breaking occurs due to the lack of                       ing HF+ph-AFQMC against these results will lead us to
+treatment  for  weak  correlation,  not  strong  correlation.               a better understanding of the scope of HF+ph-AFQMC.
+Artiﬁcial symmetry breaking aﬀects the performance of                       Although the ph-AFQMC has been applied to 3D UEG
+subsequent correlation calculations greatly (especially for                 before to construct the KZK functional67,68     and to small
+weakly correlated systems)50–57    .  In such cases, it is pre-             2D UEG models25,26    , we believe this is the ﬁrst published
+ferred  to  use  spin-restricted  HF  (RHF)  orbitals  as  op-              extensive benchmarking study of the 3D UEG using ph-
+posed to variationally preferred broken symmetry HF or-                     AFQMC.
+bitals.Therefore, one has to be cautious when choosing a                       This paper is organized as follows: (1) we brieﬂy review
+proper HF state for correlation calculations. Nonetheless,                  the  formalism  of  ph-AFQMC  and  the  UEG  model,  (2)
+HF is not only the simplest but also scalable to hundreds                   we analyze the basis set convergence of AFQMC in the
+of electrons.  With HF trials (which we name as HF+ph-                      14-electron  UEG  model  and  compare  its  result  against
+AFQMC), AFQMC scales strictly asO(N3)−O(N4) for                             FCIQMC and CCMC , and (3) we study larger systems
+a  ﬁxed  statistical  accuracy.   Therefore,  it  is  crucial  to           (54-electron and 114-electron) and discuss the AFQMC
+assess the accuracy of HF+ph-AFQMC and understand                           perspectives on simulating the ground state of solids.
+the  scope  of  it  in  simulating  large-scale  chemical  and
+solid-state  systems.   After  all,  the  gold-standard  quan-
+tum chemistry method, CCSD(T)58 is performed on top                                                 II.    METHODS
+of HF states.
+  In the context of this paper, the UEG model provides                         In this section we brieﬂy summarize the basics of the
+us with a simpliﬁed version of the full ab-initio Hamil-                    AFQMC method and the phaseless approximation which
+tonian  for  a  solid,  essentially  omitting  the  electron-ion            leads to the phaseless AFQMC algorithm (ph-AFQMC).
+interaction term and all of the material complications it                   We usenocc to denote the number of occupied molecular
+                                                                                                                                                  3
+
+orbitals (MOs) and nvir  to denote the number of unoc-                      in DMC and has no known solution in general. The phase
+cupied MOs.                                                                 problem can be somewhat mitigated through mean-ﬁeld
+                                                                            subtraction72  (i.e.,  redeﬁning  ˆv′α  =  ˆvα−⟨ˆvα⟩0)  in  Eq.
+                                                                            (4), but the statistics will be eventually swamped by the
+                          A.    AFQMC                                       phase problem.  Note that mean ﬁeld subtraction is es-
+                                                                            sentially  identical  to  normal-ordering  ˆvα  which  ensures
+                  1.    Free-Projection AFQMC                               ˆv′α|Φ0⟩ = 0 for all α.
+
+  The zero-temperature AFQMC algorithm is a stochas-                                              2.    Phaseless AFQMC
+tic  realization  of  power  methods  that  target  the  lowest
+root of the Hamiltonian  ˆH.  The algorithm is based on
+the following identity:                                                        It is possible to eliminate this phase problem entirely
+                            (        )                                      at the sake of introducing biases into the results using the
+        |Ψ0⟩∝  limτ→∞ exp     −τ ˆH   |Φ0⟩ =  limτ→∞|Ψ(τ)⟩,     (1)         so-called phaseless approximation11.  This is achieved by
+                                                                            ﬁrst performing an importance sampling transformation
+where|Ψ0⟩ is the exact ground state and|Φ0⟩ is an initial                   to  the  propagator  such  that  walkers  now  undergo  the
+starting wavefunction satisfying⟨Φ0|Ψ0⟩⁄= 0.  Although                      modiﬁed propagation:
+the  initial  wavefunction |Ψ0⟩  can  diﬀer  from  the  trial                  wn(τ + ∆τ)|ψn(τ + ∆τ)⟩ =
+wavefunction|ΨT⟩, for the purpose of this work we will                          [                                        ]
+assume|Ψ0⟩ =|ΦT⟩ unless mentioned otherwise.  Eq.  (1)                           I(xn, ¯xn,τ, ∆τ) ˆB(∆τ, xn− ¯xn)          wn(τ)|ψn(τ)⟩,    (5)
+is  implemented  stochastically  by  repeatedly  applying  a
+propagator, exp(−∆τ ˆH), to a set of random walkers un-                     where the importance function (in hybrid form) is deﬁned
+til the ground state is reached.  Each walker is comprised                  as
+of a Slater determinant,|ψn(τ)⟩, and a weightwn(τ) such
+that the statistical representation of the wavefunction is                          I(xn, ¯xn,τ, ∆τ) =Sn(τ, ∆τ)exn·¯xn−¯xn·¯xn/2,      (6)
+given by|Ψ(τ)⟩ =∑nwn(τ)|ψn(τ)⟩.
+  In order to practically realize the projection, we ﬁrst                   Sn is the overlap ratio of the n-th walker
+split the Hamiltonian into one-body and two-body oper-
+ators (i.e.,  ˆH  =  ˆH1 +  ˆH2).  For the two-body terms, we                        Sn(τ, ∆τ) =⟨ΨT| ˆB(∆τ, xn− ¯xn)|ψn(τ)⟩
+write them in the sum of squared operators,                                                                     ⟨ΨT|ψn(τ)⟩      ,       (7)
+
+                                      Nα∑
+                         ˆH2 =−1          ˆv2α.                           (2)and ¯xn is an “optimal” force bias which is a shift to the
+                                   2  α                                     Gaussian distribution, given as
+
+Then, we apply the Hubbard-Stratonovich69 transforma-                                     ¯xn(∆τ,τ) =−√∆τ⟨ΨT|ˆv′|ψn(τ)⟩⟨ΨT|ψn(τ)⟩ .            (8)
+tion to rewrite the imaginary-time propagator in terms
+of only one-body operators.  With the symmetric Trotter                     The  phaseless  approximation  (ph)  is  then  deﬁned  as  a
+decomposition, the propagator reads                                         modiﬁcation to this importance function
+                                 ∫
+             exp(−∆τ ˆH)  =          dxp(x) ˆB(∆τ, x),            (3)       Iph(xn, ¯xn,τ, ∆τ) =|I(xn, ¯xn,τ, ∆τ)|×max(0, cos(θn(τ)))
+                                                                                                                                                (9)
+where p(x)  is  the  standard  normal  distribution,  x  is  a              where the phase θn(τ) is given by
+vector of Nα auxiliary ﬁelds and  ˆB is deﬁned as                                               θn(τ) = arg (Sn(τ, ∆τ)).                   (10)
+            ˆB(∆τ, x) =e− ∆τ2   ˆH1e−√∆τx·ˆve− ∆τ2   ˆH1.          (4)
+                                                                            The walker weights and Slater determinants are then up-
+At each time step, each walker draws Gaussian random                        dated as
+numbers to sample one instance of x and provides a sam-                             wn(τ + ∆τ) =Iph(xn, ¯xn,τ, ∆τ)×wn(τ)        (11)
+ple to the HS transformation in Eq.  (3).  The application
+of a one-body operator such as Eq. (4) to a Slater deter-                         |ψn(τ + ∆τ)⟩ =  ˆB(∆τ, xn− ¯xn)|ψn(τ)⟩.            (12)
+minant yields yet another single Slater determinant70,71    .
+  For  a  generic  ab-initio  Hamiltonian  the  propagators                 Evidently, the phaseless approximation ensures that the
+appearing in Eq. (4) will in general be complex and the                     walker weights remain real and non-negative throughout
+weights of the walkers will acquire a phase that will be                    the simulation and therefore removes the phase problem
+distributed  uniformly  in  the  complex  plane  in  the  long              completely.
+imaginary  time  limit30.   This  ‘phase  problem’  is  analo-                 The mixed estimate for the local energy estimator can
+gous to the notorious fermion sign problem encountered                      be  computed  with  the  generalized  Green’s  function  (or
+                                                                                                                                                 4
+
+one-particle reduced density matrix) P,                                     we have  ˆBAB =  ˆBA ˆBB. This proves the size-consistency
+                                 (       (            )−1 C†      )         of free-projection AFQMC.
+Ppq =⟨ΨT|ˆa†pˆaq|ψn(τ)⟩            Cψn     C†                                 It can be also shown that the phaseless constraint is
+           ⟨ΨT|ψn(τ)⟩     =                  ΨT Cψn           ΨT            product separable.  The overlap function in Eq.  (7) can
+                                                                    qp      be written as
+                                                                 (13)
+where Cψn is the occupiedMOcoeﬃcient of     |ψn(τ)⟩ and                                                     ⟨ΨBT| ˆBB|ψBn⟩
+CΨT  the occupiedMOcoeﬃcient of   |ΨT⟩.  Once the sim-                           SABn    =⟨ΨAT| ˆBA|ψAn⟩
+ulation has equilibrated, we will have a statistical repre-                                   ⟨ΨAT|ψAn⟩       ⟨ΨBT|ψBn⟩     =SAnSBn        (18)
+sentation of the ground state wavefunction given by                         where  the  only  assumptions  we  are  making  are  (1)  the
+
+               |Ψ(τ)⟩ =∑wn(τ) |ψn(τ)⟩                                       product separability of the trial wavefunction: |ΨABT ⟩ =
+                            n          ⟨ΨT|ψn(τ)⟩,             (14)         |ΨAT⟩|ΨBT⟩ and (2) the product separability of the slater
+from which we can compute the mixed estimator for the                       determinant  of n-th  walker: |ψABn ⟩  = |ψAn⟩|ψBn⟩.   The
+energy as                                                                   assumption (2) can be satisﬁed as long as we start from
+                                                                            a product separable wavefunction since the propagator is
+                                      ∑                                     product separable.  With this overlap function, one can
+       E(τ) =⟨ΨT| ˆH|Ψ(τ)⟩               nwn(τ)ϵn(τ)∑                       show that the importance function also obeys the product
+                   ⟨ΨT|Ψ(τ)⟩    =           nwn(τ)  ,         (15)          separability and therefore we conclude that ph-AFQMC
+                                                                            is size-consistent.
+where ϵn(τ) is the local energy of a walker,
+
+                    ϵn(τ) =⟨ΨT| ˆH|ψn(τ)⟩⟨ΨT|ψn(τ)⟩ .                   (16)                 B.    Uniform Electron Gas
+
+ We  will  see  how  the  local  energy  evaluation  is  done                 The Hamiltonian for the uniform electron gas (UEG)
+speciﬁcally for the UEG model later.                                        is  given  simply  as  the  sum  of  the  kinetic  energy  and
+                                                                            electron-electron interaction operator (up to a constant):
+
+              3.    Size-consistency of ph-AFQMC                                                   ˆH =  ˆT + ˆVee +EM.                      (19)
+
+  Size-consistency is a property of a wavefunction for iso-                 We  will  work  with  a  basis  of  planewave  spin  orbitals
+lated systemsA andB that asserts the product separabil-                     ⟨rσ|Giσi⟩ =     1L3/2eiGi·rδσ,σi, whereL is the length of the
+ity of a supersystem wavefunction (|ΨAB⟩ =|ΨA⟩|ΨB⟩)                         simulation cell, Gi =  2πL ni for ni a vector of integers and
+and  also  the  additive  separability  of  energy  (EAB   =                σi  is a spin index (either α or β).  We impose a kinetic
+EA+EB). Conﬁguration interaction (CI) based quantum                         energy  cutoﬀ Ecut  and  work  with  a  ﬁnite  basis  of  2M
+chemistry  methods  are  in  general  not  size-consistent.73               spin orbitals.  In this basis the kinetic energy is written
+In particular, the only size-consistent CI methods are CI                   as
+with singles (CIS) and FCI. On the other hand, single-                                                        |G|2
+reference CC methods are size-consistent as long as the                                            ˆT  =∑
+form of wavefunction is parametrized by an exponential                                                          2 a†GaG,                      (20)
+                                                                                                          G
+of the cluster operator.To reliably obtain the thermo-
+dynamic  limit  of  large  systems,  size-consistency  is  nec-             and the electron-electron interaction operator is given by
+essary.   At  the  thermodynamic  limit,  size-inconsistent                                     ∑
+methods  approach  just  mean-ﬁeld  total  energy  and  es-                    ˆVee =   1                 4π
+timate  no  correlation  energy.   Therefore,  CC  methods,                            2Ω                |Q|2a†G1+Qa†G2−QaG2aG1,    (21)
+due to size-consistency, have stood out as a unique tool                                   Q⁄=0,G1,G2
+for simulating bulk systems74.                                              where  Ω  = L3  is  the  simulation  cell  volume,  Q  is  a
+  We will show that ph-AFQMC is also size-consistent                        momentum transfer vector that lives in an enlarged ba-
+as  long  as  the  trial  wavefunction  is  product  separable.             sis of size 4Ecut  and we have dropped the subscript in-
+For isolated systems A and B,  the supersystem Hamil-                       dex  on G  for  simplicity.   Lastly,  the  Madelung  energy
+tonian  separates  into  ˆHA  and  ˆHB.   Furthermore,  these               EM  is included to account for the self-interaction of the
+two operators commute since these systems are isolated.                     Ewald  sum  under  periodic  boundary  conditions75.   For
+Therefore, the propagator is also product separable,                        simplicity  we  use  the  formula  proposed  by  Schoof  and
+
+    exp(−∆τ ˆHAB) = exp(−∆τ ˆHA) exp(−∆τ ˆHB)     (17)                      co-workers76
+The    HS    transformation    can    be    performed    on                                                     (  3  )1/3
+exp(−∆τ ˆHA)   and   exp(−∆τ ˆHB)   separately   so   that                             EM≈−2.837297×              4π        N2/3r−1s ,       (22)
+                                                                                                                                                 5
+
+whereN is the number of electrons in the simulation cell()1/3 is the dimensionless Wigner-SeitzC.    Hartree-Fock Trial Wavefunctions
+cell andrs =      3L3
+                  4πN
+radius.                                                                       In ph-AFQMC, the main source of error is the bias in-
+  The local energy ϵn(τ) for the UEG then reads                            troduced by the phaseless constraint.  The magnitude of
+                                                                           this bias is heavily dependent on the quality of trial wave-
+                                     |G|2                                  functions.   Although  there  are  advanced  options  avail-
+              ϵn(τ) =EM +∑             2 PGG                               able for these such as multideterminantal trials and self-
+                                 G                                         consistently determined single-determinantal trials77, we
+                             ∑     4π    (ΓQ− ΛQ),            (23)         will employ a simple single determinant RHF trial wave-
+                     +   12Ω      |Q|2                                     function  in  most  cases.   In  the  UEG  model,  this  is  an
+                            Q⁄=0                                           M×N  matrix (where N  is the number of electrons and
+where the Coulomb two-body density matrix ΓQ is                            M is the number of planewaves) with 1’s on the diagonal
+                                                                           entries.
+                                                                          Typically, for strongly correlated systems it is useful to
+      ΓQ =    ∑     PG1+Q,G1∑           PG2−Q,G2        (24)           exploit essential symmetry breaking with HF wavefunc-
+                                                                           tions.  It is essential (as opposed to artiﬁcial) in the sense
+                 G1                    G2                                  that the property of a single determinant wavefunction is
+and the exchange two-body density matrix ΛQ is                             qualitatively wrong without it.  An attempt to exploites-
+                                                                           sentialsymmetry breaking typically leads to either spin-
+                                                                           unrestricted  HF  (UHF)  or  spin-generalized  HF  (GHF)
+               ΛQ = ∑        PG1+Q,G2PG2−Q,G1             (25)             trial wavefunctionswhich have a lower energy than RHF.
+                       G1G2                                                Indeed, such essential symmetry breaking was shown to
+                                                                           be powerful when applying ph-AFQMC to bond dissoci-
+The  formation  of  ΓQ  costsO(M2)  whereas  the  forma-                   ation of F278.
+tion of ΛQ takesO(M3) amount of work.  Therefore, the                         An  example  of  artiﬁcial  symmetry  breaking  is  buck-
+evaluation of the exchange contribution is the bottleneck                  minsterfullerene  (C60),  a  stable,  electron  paramagnetic
+in the local energy evaluation.  As noted in Ref.39the                     resonance  silent  (EPR-silent)  molecule79.    There  is  a
+evaluation of the energy (and propagation) can be accel-                   complex,  GHF  (cGHF)  solution48  for  C60  which  was
+erated using fast Fourier transforms, however we did not                   characterized to be an artifact due to the lack of treat-
+use this optimization here.                                                ment  for  weak  correlation  at  the  HF  level49.   In  other
+  The two-body Hamiltonian  ˆVee  needs to be rewritten                    words, orbital optimization in the presence of weak cor-
+as a sum of squares to employ the AFQMC algorithm.  It                     relation  such  as  the  second-order  Møller-Plesset  theory
+was shown in Ref.39that                                                    would  restore artiﬁcial  symmetry  breaking.  Since both
+                          ∑    [ ˆA2(Q) +  ˆB2(Q)]                         experiments80,81     and computations49 suggest that C60 is
+               ˆVee = 1                               ,             (26)   a  stable  closed-shell  molecule,  the  RHF  state  is  more
+                       4 Q⁄=0                                              qualitatively  correct  than  other  broken-symmetry  HF
+                                                                           states.  A detailed study of artiﬁcial versus essential sym-
+where                                                                      metry breaking in ph-AFQMC will be published in our
+                        √                                                  forthcoming paper.
+              ˆA(Q) =        2π    (                  )                       The instability of RHF solutions is expected at all rs
+                           Ω|Q|2     ˆρ(Q) + ˆρ†(Q)     ,          (27)    values  of  the  UEG  model  at  the  thermodynamic  limit
+                                                                           as proven by Overhauser.82–84      As mentioned in Ref.85,
+and                                                                        however,  the  R  to  U  spin-symmetry  breaking  may  not
+                                                                           occur  in  the  UEG  model  with  a  ﬁnite  number  of  elec-
+                        √    2π     (                  )                   trons.  Instead, there is a critical Wigner-Seitz radius (rcs)
+             ˆB(Q) =i                 ˆρ(Q)− ˆρ†(Q)      ,         (28)    below which no UHF solution exists.  This is not surpris-
+                           Ω|Q|2,                                          ing in the context of quantum chemistry since this is the
+                                                                           same concept as “Coulson-Fischer points”86 in molecules.
+with the momentum transfer operator  ˆρ deﬁned as                          Namely, when dissociating molecules there exists a criti-
+                                 (                      )                  cal bond length where the R to U instability occurs.  At
+                                                                           bond distances closer than this, there is no genuine UHF
+     ˆρ(Q) =∑      a†G+QaGΘ        Ecut−|G + Q|22          ,      (29)     solution.
+                G                                                             In  order  to  perform  HF  calculations,  one  must  com-
+where Θ is the Heaviside step function.  The Hubbard-                      pute  the  eﬀective  one-body  operator  called  the  “Fock”
+Stratonovich operators  ˆv are now  ˆA(Q) and  ˆB(Q), and                  operator deﬁned as
+
+the  rest  of  the  AFQMC  algorithm  follows  straightfor-                                              F = ∂E
+wardly.                                                                                                        ∂D                                (30)
+                                                                                                                                              6
+
+where D = CoccC†occ with Cocc being the occupied MO                       where
+coeﬃcient  matrix.   After  some  straightforward  algebra,                                 EHF =⟨ΦHF| ˆT + ˆVee|ΦHF⟩.                 (40)
+we ﬁnd
+                         F = T + J− K                          (31)       The local stability of a given stationary point can then
+                                                                          be tested by diagonalizing the orbital Hessian, M,
+where the kinetic energy matrix, T, reads
+                                                                                                 Mai,bj =  ∂2E∂Θai∂Θbj                       (41)
+                     TG,G′ = 12|G|2δG,G′,                     (32)
+                                                                             We will see whether there is essential symmetry break-
+the Coulomb matrix, J, is                                                 ing in the low rs  regime in the UEG model and try to
+                                ∑     4π     ∂ΓQ                          utilize this essential symmetry breaking when appropri-
+                JG,G′ =   1                                               ate.
+                           2Ω  Q⁄=0  |Q|2  ∂DG,G′               (33)
+
+with                                                                                 III.    COMPUTATIONAL DETAILS
+                                                              
+    ∂ΓQ         ∑     δG,G1+QδG′,G1       ∑DG2−Q,G2                      Unless  otherwise  noted,  the  AFQMC  calculations  in
+  ∂DG,G′  =                                                               this  work  were  performed  by  a  development  version  of
+                   G1                          G2                         QMCPACK87.  PAUXY88  was also used in the initial testing
+                                                                      stages.   Unless  noted  otherwise,  AFQMC  results  below
+             + ∑     DG1+Q,G1∑            δG,G2−QδG′G2                are obtained using QMCPACK. HANDE89,90     was used to cross-
+                  G1                     G2                               check  our  numbers  for  small  systems  that  are  not  pre-
+                                                                (34)      sented in this work.  We used 0.005 a.u.  for the time step
+                                                                          ∆τ  throughout the paper.  This was found to be enough
+and the exchange matrix is given by                                       for systems we considered here.  A total of 2880 walkers
+                                ∑                                         were used and the population bias from this was found
+               KG,G′ =   1            4π     ∂ΛQ                          to be negligible in the results reported here.  The comb91
+                           2Ω        |Q|2  ∂DG,G′               (35)      and pair branching92  population control algorithms are
+                                Q⁄=0                                      used in PAUXY and QMCPACK respectively. The demonstra-
+with                                                                      tion of the convergence of these parameters is available
+                            (                                             in the Supplementary Materials.
+         ∂ΛQ                  δG,G1+QδG′,G2DG2−Q,G1                          All broken symmetry HF calculations were performed
+       ∂DG,G′  = ∑                                                        with a development version of Q-Chem93 and the details
+                     G1G2                                                 for  the  implementation  can  be  found  in  refs.49,94,95.
+                                                     )                    The optimizer used for those HF calculations is geometry
+                  +DG1+Q,G2δG,G2−QδG′,G1                        (36)      direct  minimization  (GDM)  developed  by  Van  Voorhis
+A similar derivation can be found in Ref.85.                              and Head-Gordon96.  The internal stability analysis was
+  With the above Fock matrix, one can perform an HF                       performed  for  all  HF  solutions  to  ensure  the  local  sta-
+calculation by optimizing the HF energy expression with                   bility of each solution97 where we used a ﬁnite-diﬀerence
+respect to the orbital rotation parameter Θvo (a matrix of                orbital Hessian using analytic orbital gradient98. All cal-
+nvir-by-nocc) which relates two diﬀerent MO coeﬃcients                    culations were performed with periodic boundary condi-
+via a unitary transformation,                                             tions; no twist averaging was performed.
+
+
+                         C′ = C exp (∆)                          (37)                              IV.    RESULTS
+
+where the antihermition matrix ∆, which is parametrized                      The UEG model has been explored by multiple meth-
+by Θvo,                                                                   ods  at T  =  0  and  an  extensive  amount  of  benchmark
+                             [0oo −Θ†vo]                                  data are already available.  We compare our ph-AFQMC
+                       ∆ =     Θvo    0vv                       (38)      results  against  other  methods  and  discuss  whether  the
+                                                                          use  of  RHF  trial  wavefunction  is  reliable  for rs ≤  5.0.
+The subscript of each matrix block denotes the dimension                  It is expected that the quality of an RHF wavefunction
+of the corresponding block, o =nnocc and v =nnvir.  An                    degrades as rs  increases (approaching the atomic limit)
+HF solution is deﬁned as a stationary point that satisﬁes                 since electrons tend to localize. rs = 5.0 is a commonly
+                                                                          investigated  intermediate Wigner-Seitz radius  so it will
+                            ∂EHF                                          be interesting to see how ph-AFQMC performs without
+                            ∂Θvo  = 0                              (39)   employing more sophisticated trial wavefunctions.
+                                                                                                                                                 7
+
+  For simplicity, we will refer ph-AFQMC with an RHF                                                  N       Range
+trial wavefunction (RHF+ph-AFQMC) to as ph-AFQMC                                                      14  rcs∈ (3.5, 4.0]
+unless mentioned otherwise.                                                                           54  rcs∈ (4.5, 5.0]
+                                                                                                     114  rcs∈ (2.5, 3.0]
+
+                                                                            TABLE I.  The range for the critical Wigner-Seitz radius, rcs,
+            A.    Broken-Symmetry HF States                                 for the 14-, 54-, and 114-electron UEG models.  Above rcs, the
+                                                                            R to U instability occurs and thus UHF solutions appear.
+
+  We summarize some interesting aspects in the HF solu-
+tions of the UEG model due to its simple form of Hamil-                     rs = 3.5.  The emergent strong correlation as increasing
+tonian:                                                                     rs is most obvious from looking at the momentum distri-
+   1.The MO coeﬃcient matrix of an RHF solution is                          bution (MD) (Fig.1(c)) and natural orbital occupation
+       an identity matrix.  This makes obtaining an UHF                     numbers (NOONs) (Fig.1(d)).  The MD is deﬁned as
+       solution from solving an eigenvalue equation for F                   the diagonal elements of a one-particle reduced density
+       diﬃcult in the following sense.  C from diagonaliz-                  matrix,
+       ing F is always unitary and the subsequent density                                       nk =⟨a†kαakα +a†kβakβ⟩                   (42)
+       matrix D is therefore identity.  Since D is identi-
+       cal to the density matrix of RHF, one obtains an                     The  MD  for  the  UEG  model  was  throughly  studied  in
+       RHF  solution  immediately  after  one  single  diago-               Ref.100.   NOONs  are  the  eigenvalues  of  a  one-particle
+       nalization of F.  A direct energy minimization96 or                  density matrix which is closely related to the MD. Both
+       the use of the HF projector85 is necessary to obtain                 MD  and  NOONs  show  the  increasing  number  of  open-
+       broken-symmetry HF states.                                           shell  electrons  as  increasing  the rs  values.   The  open-
+   2.The RHF energy does not depend on the basis set                        shell  electrons  appear  for rs >  3.5  which  is  consistent
+       size.  However, broken-symmetry solutions depend                     with Fig.1(a) and (b).
+       on the basis set  size.  It is important to converge                    We  also  studied  larger  UEG  models,  54-electron  and
+       their  energies  with  respect  to M  when  discussing               114-electron,  using  UHF.  As  expected,  there  are  many
+       their existence.                                                     more  local  minima  than  the  14-electron  model.    This
+                                                                            makes locating the global minimum even more challeng-
+   3.Both Coulomb and kinetic energies are    minimized                     ing.   These  multiple  minima  lead  to  ambiguity  in  the
+       in  an  RHF  solution.   In  particular,  the  Coulomb               subsequent ph-AFQMC calculations since there are many
+       energy is always zero in RHF.                                        UHF solutions that can be used as trial wavefunctions.
+                                                                            Thorough studies of the UHF solutions in the UEG model
+   4.The  R  to  U  symmetry  breaking  is  driven  by  the                 were presented in Ref.85.  For the purpose of this work,
+       lowering of exchange energy which compensates the                    instead  of  trying  to  locate  the  global  minimum,  we  in-
+       increase in the Coulomb and kinetic energies.                        vestigated the critical Wigner-Seitz radius to determine
+We are interested in the paramagnetic phase of the UEG.                     whether one can employ UHF trial wavefunctions for sim-
+As rs  increases,  the  ferromagnetic  (i.e.,  spin-polarized)              ulating dense UEG models.  We summarize the range for
+                                                                            the  critical  radius  for  each  UEG  model  studied  in  this
+phase  becomes  the  ground  state99.   The  GHF  solution                  work in TableI.
+can  appear  in  the  transition  between  these  two  phases                  Given  TableI,  it  is  necessary  to  employ  RHF  trial
+at  quite  high rs  values.   Other  than  this  transition,  a             wavefunctions for the 14-electron model at rs≤ 3.5, the
+genuine GHF solution does not appear and therefore we                       54-electron model atrs≤ 4.5, and the 114-electron model
+study  only  the  UHF  solutions  for  the  purpose  of  this               atrs≤ 2.5.  We will study the 14-electron model at rs =
+study.                                                                      0.5, 1.0, 2.0, 3.0, 5.0 and investigate the utility of various
+  We discuss the UHF solutions in the 14-electron UEG                       trial wavefunctions including RHF and UHF atrs = 5.0.
+model.  In Fig.1(a), we show the basis set convergence                      We will focus on using RHF trial wavefunctions for the
+behavior  of  UHF.  Unlike  RHF,  the  UHF  energy  does                    54-  and  114-electron  models  at rs  =  0.5, 1.0, 2.0  where
+depend on the basis set size.  For the 14-electron UEG                      there is no R to U instability.  For the 54-electron model
+model, it is suﬃcient to converge the UHF energies over                     at rs  =  5.0,  there  is  a  UHF  solution  with⟨ ˆS2⟩  =  0.94
+rs≤ 10.0 withM = 925.  Based on Fig.1(a), we see that                       which exhibits marginal symmetry breaking.
+the energy lowering from RHF to UHF starts to appear
+for rs >  3.5.   The  critical  Wigner-Seitz  radius  for  the
+14-electron model is rcs∈ (3.5, 4.0].  This is more obvious                              B.    The 14-Electron UEG Model
+from looking at the⟨ ˆS2⟩ value of the UHF solutions for
+M = 943 as a function ofrs as shown in Fig.1(b).  Non-                         We begin by studying the 14-electron UEG which was
+zero⟨ ˆS2⟩ indicates the appearance of a UHF solution.  It                  studied in detail by Shepherd and co-workers in Ref.62.
+is clear that the RHF solution becomes unstable above                       This small benchmark system is helpful as it is accessible
+                                                                                                                                                  8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.   Results of UHF solutions found in the 14-electron UEG model:  (a) the basis set convergence behavior of the energy
+lowering from RHF to UHF with M = 57, 93, 179, 389, 925 over rs∈ [0.5, 10.0], (b)⟨ ˆS2⟩ as a function of rs with M = 925, (c)
+the momentum distribution nk  for various rs  with M  = 925, and (d) the natural orbital occupation numbers (NOONs) for
+various rs with M = 925.  In (a), M = 389 and M = 925 are more or less on top of each other and visually indistinguishable.
+In (c) and (d), curves for rs≤ 3.0 are exactly on top of each other as their occupation numbers are either 2 or 0.
+
+
+to most quantum chemistry methods, whilst still exhibit-                    studies we observe a more or less linear relationship be-
+ing the typical challenges one faces when simulating real                   tween Ec  and  1/M  for M  greater  than  92561,66    .  The
+solids, namely basis set incompleteness error, and strong                   linear  extrapolation  to  the  CBS  limit  when  using  PWs
+correlation (when rs is large).  In addition, it has of late                was thoroughly studied and understood by Shepherd and
+emerged as a standard benchmark system for the UEG66.                       co-workers  in  Ref.101.  We  point  out  that  the  use  of
+                                                                            transcorrelated approaches in AFQMC could greatly ac-
+                                                                            celerate the convergence to the CBS limit103.
+                   1.    Basis Set Convergence                                 FCIQMC    with    the    initiator    approximation    (i-
+                                                                            FCIQMC) is a formally exact approach as long as there
+  The basis set convergence of wavefunction based quan-                     is  no  initiator  bias.   Therefore,  comparing  ph-AFQMC
+tum chemistry methods for the UEG has been explored a                       with i-FCIQMC is a good way to assess the accuracy of
+number of times by various methods61,101,102          and we will           ph-AFQMC.  We  see  that  ph-AFQMC  agrees  well  with
+only brieﬂy comment on it here.  For our purposes, it is                    i-FCIQMC within the error bar up to M  = 179 and it
+suﬃcient to note that the convergence to the CBS limit is                   starts to deviate fromi-FCIQMC beyond that.  However,
+slowest at high densities (low rs) and thus it is suﬃcient                  i-FCIQMC  numbers  for  the  larger M  values  should  be
+to  converge  the  basis  set  error  here.   This  slower  con-            taken cautiously as it has been noted elsewhere that the
+vergence can be understood simply because the electron-                     bias from the initiator approximation was not completely
+electron cusp is more pronounced at high densities (the                     removed66  and that the i-FCIQMC results for rs  = 0.5
+electron are more likely to coalesce). This is seen in Fig.2                may be too low by approximately 1 mEh.
+and TableIIwhere on the order of 2000 PWs are nec-                             Comparing  ph-AFQMC  and  CC  methods  is  perhaps
+essary to converge the total energy to within 1 mHa in                      more relevant for the purpose of this paper.  The UEG
+absolute energy (not per electron).  Similar to previous                    model rs  = 0.5 is relatively weakly correlated and thus
+                                                                                                                                                 9
+
+                                                                             M     ph-AFQMC       i-FCIQMC        RCCSD        RCCSDT        RCCSDTQ
+                                                                                                               rs=1.0
+                                                                             179     -0.5187(6)          N/A    -0.50250(7)   -0.51819(3)    -0.51856(7)
+                                                                            1189     -0.5302(3)    -0.5305(5)           N/A           N/A           N/A
+                                                                            2109     -0.5298(8)          N/A     -0.5133(3)     -0.5290(4)          N/A
+                                                                                                               rs=2.0
+                                                                             81      -0.4181(2)          N/A    -0.40181(4)   -0.41339(3)    -0.41579(2)
+                                                                             925     -0.4438(6)    -0.4431(5)    -0.4077(1)     -0.4388(1)          N/A
+                                                                            2109     -0.4420(9)          N/A     -0.4089(2)           N/A           N/A
+                                                                                                               rs=3.0
+                                                                             81      -0.3590(2)          N/A    -0.32208(3)   -0.35671(3)    -0.36141(5)
+                                                                             179     -0.3723(4)          N/A     -0.3347(1)   -0.37246(5)           N/A
+                                                                             925     -0.3725(5)          N/A     -0.3389(2)           N/A           N/A
+                                                                                                               rs=5.0
+                                                                             179     -0.2701(1)    -0.3017(7)    -0.2510(1)     -0.2925(1)          N/A
+
+FIG.  2.        The  basis  set  convergence  in  the  ph-AFQMC             TABLE III.  The correlation energy comparison between ph-
+correlation   energy,   Ec,   of   the   14-electron   UEG   model          AFQMC,  i-FCIQMC,  RCCSD,  and  RCCSDT  for  the  14-
+at   rs    =    0.5.      The   basis   sets   considered   are   M    =    electron  UEG  model  at  rs  =  1.0, 2.0, 3.0  and  5.0.   The  i-
+57, 93, 179, 389, 925, 1189, 1213, 1419, 2109.   The  ph-AFQMC              FCIQMC numbers were taken from Ref.62and CC numbers
+values are reproduced in TableIIfor clarity.  The inset shows               were  taken  from  Ref.66.   N/A  means  that  the  data  is  not
+the correlation energy for M≥ 389.  Note that the onset of a                available.
+clear 1/M  dependence occurs at least past M = 925.
+
+      M   ph-AFQMC       i-FCIQMC        RCCSD        RCCSDT                to exact.  The results here suggest that ph-AFQMC is a
+      57    -0.5173(1)    -0.5169(1)           N/A           N/A            potentially  powerful  tool  to  handle  such  weakly  corre-
+      93    -0.5592(2)    -0.5589(1)           N/A           N/A            lated systems.  For the rest of this section, we will assess
+     179    -0.5794(2)    -0.5797(3)   -0.57365(1)   -0.57971(3)            the  accuracy  of  ph-AFQMC  for  higher rs  where  there
+     389    -0.5881(2)    -0.5893(3)           N/A           N/A            can  be  a  good  mixture  of  weak  and  strong  correlation.
+     925    -0.5920(8)    -0.5936(3)   -0.58626(4)     -0.5923(1)           Furthermore, the quality of the RHF trial wavefunction
+   1189     -0.5921(2)    -0.5939(4)           N/A           N/A            will  start  to  degrade  so  we  will  show  how  this  aﬀects
+   1213     -0.5926(8)           N/A           N/A           N/A            ph-AFQMC.
+   1419     -0.5925(4)           N/A     -0.5872(1)    -0.5930(2)
+   2109     -0.5931(6)           N/A     -0.5875(1)    -0.5938(1)
+
+TABLE II.   The correlation energy comparison between ph-                                  2.    Assessment for lower densities
+AFQMC,  i-FCIQMC,  RCCSD,  and  RCCSDT  for  the  14-
+electron UEG model at rs  = 0.5.  The i-FCIQMC numbers                        In TableIII, we present the comparison of ph-AFQMC,
+were  taken  from  Ref.61and  CC  numbers  were  taken  from                i-FCIQMC, RCCSD, RCCSDT, and RCCSDTQ for se-
+Ref.66.   N/A  means  that  the  data  is  not  available.   These          lected basis sets.  All of our ph-AFQMC is available in
+calculations were performed using the  PAUXY package.  Error
+bars  were  estimated  using  reblocking104  as  implemented  in            the Supplementary Materials.  At rs = 1.0, ph-AFQMC
+the pyblock package105.                                                     agrees withi-FCIQMC within the error bar of each result
+                                                                            when M = 1189.  Small basis set (M = 179) results sug-
+                                                                            gest that from RCCSDT to RCCSDTQ only small corre-
+CC methods on top of an RHF reference work very well.                       lation energy is gained.  Therefore, we consider RCCSDT
+Neufeld and Thom  found that for rs  = 0.5,  CCSDT is                       to be near-exact for larger basis sets.  Near the CBS limit
+enough to converge the correlation energy with respect to                   (M = 2109), we found that the ph-AFQMC energy is 15-
+the excitation levels66.  Therefore, the CCSDT numbers                      16 mEh  lower than RCCSD and is within the error bar
+in TableIIshould be considered to be exact for a given                      of RCCSDT.
+basis  set.   As  it  is  clear  from  TableII,  the  CCSD  cor-              Atrs = 2.0 ph-AFQMC agrees withi-FCIQMC within
+relation energies are all above those of ph-AFQMC and                       each error bar.  However,  RCCSDT struggles to obtain
+ph-AFQMC agrees with CCSDT up to sub millihartree.                          quantitatively  accurate  results  for M  =  925.   RCCSD
+  These results are particularly encouraging for the fol-                   is  about  36  mEh  above  and  RCCSDT  is  about  5  mEh
+lowing reasons. This dense UEG model may be analogous                       above thei-FCIQMC (and ph-AFQMC) correlation ener-
+to  a  weakly  correlated  molecular  system,  in  the  sense               gies.  Like usual strongly correlated systems, the eﬀect of
+that for a ﬁnite number of electrons it is relatively well                  quadruples is not negligible here and it accounts for about
+described by HF theory.  In such a system, CCSDT (or                        2 mEh correlation energy in a small basis (M = 81).  As
+CCSD(T)) should be more or less exact.  Even if their ab-                   shown in TableIII, ph-AFQMC provides a lower corre-
+solute energies were not exact, the relative energies such                  lation energy than even RCCSDTQ in the M = 81 basis
+as barrier heights and interaction energies should be close                 set.Since  neither  ph-AFQMC  nor  RCCSDTQ  is  vari-
+                                                                                                                                                 10
+
+ational,  such  correlation  energy  comparisons  should  be
+taken with caution.  Nevertheless, since ph-AFQMC and
+i-FCIQMC agree for M = 925 we expect ph-AFQMC to
+be  accurate  (i.e.,  near-exact)  for M  =  81.This  result
+highlights  the  utility  of  RHF+ph-AFQMC.  Namely,  it
+can provide quantitatively accurate results when the role
+of quadruples is not negligible and yet still small enough
+for the RHF trial wavefunction to behave well.
+  Although  at rs  =  0.5, 1.0, 2.0  ph-AFQMC  provides
+more  or  less  exact  correlation  energies,  as  the  density
+is lowered further we ﬁnd that the RHF trial wavefunc-
+tions performance degrades signiﬁcantly.  Not only does
+the ph-AFQMC correlation energy become above RCCS-
+DTQ by about 2 mEh atrs = 3.0, but the stability of the
+simulations suﬀers noticeably.  Nevertheless, at rs = 3.0
+we observe that ph-AFQMC is comparable to RCCSDT
+and is able to reach the CBS limit reliably.
+  However, rs  =  5.0  is  much  more  diﬃcult  to  handle
+with  an  RHF  trial  wavefunction.   This  is  typically  evi-
+denced by an increase in the number of rare event popu-
+lation ﬂuctuation.  These rare events are well understood,
+and arise due a divergent importance function which oc-
+curs when⟨ΨT|φ⟩ approaches zero.  Although these rare                       FIG. 3.  Panel (a) shows the convergence of the ph-AFQMC
+events can be eﬀectively controlled by the use of bounds                    total energy to its equilibrated mean value ( ¯E) as a function
+on the local (and/or hybrid energy)106 they nevertheless                    of  projection  time  for  a  variety  of  values  of  rs.   Note  that
+signify  a  worsening  in  the  quality  of  trial  wavefunction            the data have been shifted and scaled by rs for clarity.  Note
+for a ﬁxed system size.  To demonstrate this, in Fig.3we                    the occurrence of spikes in the local energy increases with rs.
+plot the convergence of the ph-AFQMC energy with pro-                       Here we bounded the local energy during propagation but not
+jection time for a range of densities with M = 93 as well                   when printing the estimator to reveal the degradation in the
+as an estimate for the overlap∑nwn|⟨ΨT|φn⟩|/∑nwn.                           results.   Panel  (b)  plots  the  reduction  in  the  magnitude  in
+We see from Fig.3(a) that as    rs increases the projection                 the  overlap  between  the  walkers  and  the  trial  wavefunction
+time necessary to converge to the ground state increases                    (see main text for deﬁnition) with decreasing rs.  The slower
+as well as the frequency of rare events.  This is correlated                equilibration of the overlap compared to the local energy has
+with a decrease in the magnitude in the overlap as is seen                  been noted previously in Ref.31.
+from Fig.3(b).
+  Indeed, at rs = 5.0 we found that the ph-AFQMC en-
+ergy did not converge monotonically with increasing basis                   hibiting non-variationality for this rs value.  This can be
+set size past M = 389.  Rather, the ph-AFQMC correla-                       conﬁrmed  with  more  sophisticated  CC  methods.109,110
+tion energy decreases in magnitude with increasing basis                    The investigation of the non-variationality of ph-AFQMC
+set size.  This signals a complete breakdown of the phase-                  and CC methods in the context of strong correlation will
+less constraint with this trial wavefunction.  We note that                 be an interesting subject for future study.
+a similar eﬀect can be observed in i-FCIQMC when the                           As  discussed  in  SectionIV A,  above       rs  =  3.5,  UHF
+initiator error is not fully converged for increased basis                  solutions  appear  and  they  can  be  often  powerful  trial
+set sizes, where one ﬁnds that the correlation energy be-                   wavefunctions for ph-AFQMC78.  As in Ref.78, we em-
+gins to plateau as a function of basis set.  This suggests                  ploy  the  spin-projection  technique  to  remove  the  spin-
+that an improved trial wavefunction is necessary to attain                  contamination  completely.    That  is,  we  use  the  RHF
+sensible results for this system.                                           wavefunction as the initial wavefunction while using the
+  It is noteworthy to point out that this unusual behav-                    UHF  wavefunction  for  the  constraints.    As  shown  in
+ior  of  ph-AFQMC  energy  with  respect  to  the  basis  set               SectionII A 3,  because  both  RHF  and  UHF  are  size-
+size  could  indicate  the  “non-variational”  failure  of  ph-             consistent  the  resulting  UHF+ph-AFQMC  performed
+AFQMC. ph-AFQMC is formally non-variational in the                          with  an  RHF  initial  wavefunction  must  be  also  size-
+sense that a variational energy estimator of a given ph-                    consistent.  In TableIV, we present the correlation ener-
+AFQMC  wavefunction  can  be  above  the  mixed  energy                     gies from UHF+ph-AFQMC. Given its substantial sym-
+estimator in Eq.  (15).      14 Similarly, CC methods are also              metry  breaking  at rs  =  5.0  shown  in  Fig.1,  it  is  sur-
+formally non-variational due to their projective nature.                    prising that it does not provide much improvement over
+With an RHF reference, it has shown catastrophic non-                       RHF+ph-AFQMC. The UHF+ph-AFQMC energies are
+variationality for strongly correlated systems.6,107,108         It         about 1 mH lower than the RHF+ph-AFQMC energies
+is possible that RCCSD (and even RCCSDT) is also ex-                        and they are still far away from more accuratei-FCIQMC
+                                                                                                                                                 11
+
+       M         RHF            UHF     NOMSD       i-FCIQMC
+       57  -0.2422(8)   -0.24371(9)    -0.2511(3)    -0.2645(3)
+       93  -0.2677(5)   -0.26837(8)    -0.2786(2)    -0.2928(4)
+      389  -0.2674(6)     -0.2654(2)   -0.2794(4)     -0.304(1)
+
+TABLE IV. Comparison between ph-AFQMC correlation en-
+ergies using a RHF, a UHFand ten determinant NOMSD trial
+wavefunction at rs = 5.0.  Correlation energies are measured
+relative  to  the  RHF  total  energy.  i-FCIQMC  energies  were
+taken from Ref.62.  ph-AFQMC calculations were performed
+using the development version of QMCPACK. Note that the
+M  =  389  RHF+ph-AFQMC  energy  is  above  the M  =  179
+RHF+ph-AFQMC energy in TableIIIand this is an artifact
+of the breakdown of the RHF trial wavefunction.
+
+
+benchmark energies.
+  To  investigate  the  ph-AFQMC  results  at rs  =  5.0
+further,  we  explored  the  use  of  non-orthogonal  multi-
+Slater determinant expansions (NOMSD) as trial wave-
+functions  generated  using  a  version  of  the  projected
+HartreeFock (PHF) algorithm developed by Scuseria and
+co-workers111–113      .  Interested readers are referred to Ref.
+32for further details.  In Fig.4, We ﬁnd an initial rapid
+decrease in the error of the ph-AFQMC correlation en-                       FIG.  4.   Panel  (a)  shows  the  behavior  of  the  relative  error
+ergy and correspondingly a reduction in the ph-AFQMC                        in  the  ph-AFQMC  correlation  energy  as  a  function  of  the
+statistical  variance  in  the  local  energy  estimator.The                number of determinants in the trial wavefunction expansion,
+statistical variance in the estimator should not be con-                    ND.   The  relative  error  is  measured  with  respect  to  the  i-
+fused with the wavefunction variance in variational MC.                     FCIQMC value.  Panel (b) shows the corresponding reduction
+Therefore, it is possible to observe some improvement in                    in statistical variance deﬁned as Var(ND = 1)/Var(ND).
+the statistical error bar while the energy estimator does
+not improve noticeably as observed before32.  This long
+tail in the convergence of the ph-AFQMC energy is in-
+dicative that the system is strongly correlated.  We note
+that the FCI space for M  = 57 contains on the order of                     the total energy of the UEG model in the thermodynamic
+1016 determinants and therefore the improvement in the                      limit is already well understood for solid state densities118
+trial wavefunction via determinantal expansions is even-                    here we instead just study ﬁnite-sized UEG models and
+tually limited by the exponential wall.  We ﬁnd similar                     compare with other available methods when applicable.
+behavior for larger basis sets.
+  TableIVsummarizes our ph-AFQMC results using a                               Following  the  sequence  of  “magic  numbers”  in  the
+10 determinant expansion.  Note that the M  = 93 and                        UEG model, we study larger supercells (54 electrons and
+M  =  389  values  are  roughly  within  error  bars  of  each              114 electrons) with ph-AFQMC for rs = 0.5, 1.0, 2.0.  In
+other, despite thei-FCIQMC correlation energy decreas-                      the  14-electron  UEG  model,  we  obtained  energies  with
+ing by approximately 10 mEh.  We found that for even                        error bars of the order of 1 mEh.  This is important for
+larger  basis  sets  the  RHF+ph-AFQMC  correlation  en-                    molecular  applications  where  we  aim  for  energy  diﬀer-
+ergies lay  above  those at M  = 93.  Nevertheless we see                   ences  between  two  ﬁnite  systems.   On  the  other  hand,
+that by improving the trial wavefunction the ph-AFQMC                       the cost of achieving the same statistical error for larger
+correlation energies begin to slowly approach those of i-                   systems adds an extraO(N) to the computational cost of
+FCIQMC values.  The slow convergence is evidence of the                     ph-AFQMC. This extra cost for sampling may be avoided
+limitation of using multi Slater determinant trial wave-                    by the correlated sampling technique119,120     , but here we
+functions in strongly correlated systems.                                   instead compare the total energy per electron.  This met-
+                                                                            ric is well-suited for ab-initio solids (or extended systems)
+                                                                            in general.
+                    C.    Larger Supercells
+                                                                               High-quality   DMC   numbers   are   available   for   the
+  As  explained  in  SectionII A 3,  ph-AFQMC  is  size-                    54-electron  UEG  model  and  we  compare  ph-AFQMC
+consistent  and  thus  can  reliably  reach  the  thermody-                 against this.  For the 114-electron UEG model, there are
+namic limit using larger super cells along combined with–117             .  Asonly variational MC (VMC) results available so we will
+ﬁnite size corrections and twist averaging67,68,114                         compare against these.
+                                                                                                                                            12
+
+   rs  ph-AFQMC      i-FCIQMC      FN-DMC-SJ       FN-DMC-BF                                       rs  ph-AFQMC
+  0.5   3.22087(2)    3.22086(2)      3.22245(9)      3.22112(4)                                   0.5   3.48453(8)
+   1    0.52967(2)    0.53073(4)      0.53089(9)      0.52989(4)                                   1.0   0.59877(6)
+   2    -0.01429(3)          N/A     -0.01311(2)    -0.013966(9)                                   2.0   0.00487(6)
+   5    -0.07589(5)          N/A    -0.078649(7)    -0.079036(3)
+                                                                          TABLE  VI.    The  total  energy  per  electron  (Eh/e)  of  ph-
+TABLE V.  The total energy per electron (Eh/e) comparison                 AFQMC for the 114-electron UEG model at rs = 0.5, 1.0, 2.0.
+between  ph-AFQMC,  i-FCIQMC,  FN-DMC  with  a  Slater-                   All results were obtained with M = 2109.  The VMC (Slater-
+Jastrow  (SJ) trial  wavefunction,  and DMC  with a  backﬂow              Jastrow) energy at rs = 1.0 is 0.60395(25) Eh/e.122
+(BF)  trial  wavefunction  for  the  54-electron  UEG  model  at
+rs = 0.5, 1.0, 2.0, 5.0.  Both ph-AFQMC and i-FCIQMC num-
+bers are obtained from M  = 1419.  The i-FCIQMC numbers                   below the FN-DMC-BF energy.  With a larger basis set
+were taken from Ref.61and DMC numbers were taken from                     M  =  2109,  the  ph-AFQMC  energy  lies  0.4  mEh/e  be-
+Ref.121.  N/A means that the data is not available.                       low the FN-DMC-BF energy as shown in the Supplemen-
+                                                                          tary Materials.  Further increasing rs to 5.0, we observe
+               1.    The 54-Electron UEG Model                            that ph-AFQMC is no longer comparable to FN-DMC-
+                                                                          SJ  and  FN-DMC-BF  as  expected.As  the  use  of  UHF
+                                                                          and  NOMSD  trials  was  found  to  be  ineﬀective  in  the
+  We  found  that  from M  =  1419  to M  =  2109  the                    14-electron model at rs = 5.0, we did not perform such
+change in Etot/N  at rs = 0.5 is only of the order of 0.1                 calculations here.
+mEh.  We therefore do not perform the CBS extrapola-                        In summary,  for the 54-electron UEG model at rs  =
+tion for the comparison between ph-AFQMC and DMC.                         0.5, 1.0, 2.0,   we  observe  that  ph-AFQMC  can  obtain
+The  reported  ph-AFQMC  numbers  are  obtained  from                     nearly  exact Etot/N.     In  particular,   its  accuracy  is
+M  =  1419  which  enables  a  direct  comparison  between                comparable to other state-of-the-art methods such as i-
+ph-AFQMC  and i-FCIQMC  at rs  =  0.5  and rs  =  1.0.                    FCIQMC and FN-DMC-BF. The general conclusions are
+The ph-AFQMC results forM = 2109 atrs = 0.5, 1.0, 2.0                     similar  to  the  14-electron  UEG  model:   ph-AFQMC  is
+are available in the Supplementary Materials.                             particularly well-suited forrs values smaller than 5 where
+  In  TableV,  we  summarize  the  comparison  between                    there exists moderate strong correlation.  It is encourag-
+ph-AFQMC, i-FCIQMC,  and  DMC  for  the  54-electron                      ing that ph-AFQMC achieved these highly accurate re-
+UEG model.  At rs  = 0.5,  ph-AFQMC and i-FCIQMC                          sults using the simplest trial wavefunction, RHF.
+agree with each other within the error bar.  Shepherd and
+co-workers found that the DMC-BF energy is somewhat
+higher thani-FCIQMC and suggested that the ﬁxed-node                                     2.    The 114-Electron UEG Model
+error with the backﬂow (BF) trial wavefunction may not
+be  small.   Indeed,  we  reach  the  same  conclusion  with                Encouraged by the near-exact accuracy of ph-AFQMC
+ph-AFQMC.  As  explained  in  SectionI,  the  diﬀerence                   for lowrs values in the 14- and 54-electron UEG models,
+between  DMC  and  AFQMC  is  mainly  the  discretiza-                    we used ph-AFQMC to provide benchmark numbers for
+tion  (or  basis  set)  we  work  with.   It  is  interesting  that       the 114-electron UEG model for future method develop-
+the  ﬁxed-node  error  in  FN-DMC  can  be  non-negligible                ment.  The 114-electron UEG model has been relatively
+even with more sophisticated trial wavefunctions such as                  less explored.  For determinant-based algorithms like i-
+Slater-Jastrow (SJ) and BF. It is encouraging that we can                 FCIQMC the sign problem is likely to preclude its appli-
+achieve near-exact accuracy with ph-AFQMC atrs = 0.5                      cation except for very high densities.  On the other hand,
+with this simplest possible RHF trial wavefunction.                       for ph-AFQMC this does not pose a signiﬁcant challenge
+  Atrs = 1.0, ph-AFQMC is in a better agreement (the                      especially when considering rs≤ 2.0.
+diﬀerence is about 0.2 mEh/e) with FN-DMC-BF than                           At rs  =  0.5,  the  total  energy  per  electron  changes
+i-FCIQMC is.In this case,  i-FCIQMC suﬀers from the                       by  0.5  mEh/e  when  increasing M  from  1419  to  2109.
+initiator bias and results into about 1 mEh/e above the                   For  higher rs  values,  we  expect  this  energy  change  to
+FN-DMC-BF  energy.  In  fact,  the  ph-AFQMC  energy                      be smaller.  We will present the ph-AFQMC energies at
+is lower than that of FN-DMC-BF, which may indicate                       rs = 0.5, 1.0, 2.0 all obtained withM = 2109.  We expect
+non-negligible  ﬁxed-node  errors  even  in  FN-DMC-BF.                   that our ph-AFQMC energies reported here have the ba-
+Since ph-AFQMC is not variational while FN-DMC-BF                         sis set incompleteness error of the order of 0.5 mEh/e per
+is,  more  careful  calibration  is  highly  desirable  to  see  if       electron.  Therefore, the numbers reported here may be
+there are indeed ﬁxed-node errors in FN-DMC-BF.ph-                        considered as an upper bound to the ph-AFQMC ener-
+AFQMC agrees better with FN-DMC-BF than does FN-                          gies at the CBS limit.
+DMC-SJ by 1 mEh/e similarly to the rs = 0.5 case.                           The ph-AFQMC results are presented in TableVI. The
+  No i-FCIQMC  results  at rs  =  2.0  due  to  the  sever-               only data available in literature is rs = 1.0 with a VMC
+ity of the sign problem so we instead must compare only                   approach with a Slater-Jastrow wavefunction.  The VMC
+to FN-DMC. We ﬁnd that the ph-AFQMC energy is 1.1                         energy is 0.60395(25) Eh/e122 which is at least 5 mEh/e
+mEh/e  below  the  FN-DMC-SJ  energy  and  0.3  mEh/e                     higher  than  our  ph-AFQMC  energies.   Comparing  ph-
+                                                                                                                                            13
+
+AFQMC energies in TableVand TableVI, we note that                                was simply inadequate compared to FN-DMC-BF
+the ﬁnite-size eﬀect is still very large.  Namely, the energy                    for this case. Overall, RHF+ph-AFQMC was found
+per electron is far from the convergence with respect to                         to be as accurate as or potentially more accurate
+the system size. It will be interesting to investigate ﬁnite-                    than FN-DMC-BF wavefunction for rs up to 2.0.
+size eﬀects with ph-AFQMC in more realistic systems in
+the future.  Although further comparisons are not possi-                     4.We  produced  RHF+ph-AFQMC  energies  of  the
+ble due to the lack of benchmark data, we believe that the                       114-electron problem for rs≤ 2.0 where not many
+ph-AFQMC numbers in TableVIare close to the exact                                benchmark  data  are  available.   Given  its  perfor-
+energies and the correlation energy error is smaller than                        mance  for  the  54-electron  case,   we  expect  the
+1 mEh  per electron given the results for the 54-electron                        RHF+ph-AFQMC  correlation  energy  error  to  be
+model.                                                                           less than 1 mEh per electron.
+
+                    V.    CONCLUSIONS                                       It  is  the  central  message  of  this  paper  that  even
+                                                                          with the simplest trial wavefunction (RHF) ph-AFQMC
+                                                                          is  a  powerful  tool  for  simulating  molecules  and  solids
+  In this paper, we examined the performance of phase-                    where there is no noticeable strong correlation between
+less auxiliary-ﬁeld quantum Monte Carlo (ph-AFQMC)                        electrons.   In  particular,  its  scope  lies  between  CCSD
+with the spin-restricted Hartree-Fock (RHF) trial wave-                   and  CCSDT.  Given  its  low  scaling  (O(N3)−O(N4)),
+function  (i.e.,  RHF+ph-AFQMC)  on  the  uniform  elec-                  RHF+ph-AFQMC remains a promising tool.
+tron gas (UEG) problem.  We considered the 14-electron,                     The  future  study  should  include  a  more  extensive
+54-electron,  and  114-electron  UEG  model.     Through                  benchmark of RHF+ph-AFQMC on more chemically rel-
+these studies, we found the following conclusions:                        evant  systems  such  as  the  W4-11126  set  as  well  as  de-
+   1.In  the  14-electron  case,  we  compared  RHF+ph-                   signing  better  and  yet  compact  trial  wavefunctions  for
+       AFQMC    with    spin-restricted    coupled-cluster                AFQMC. Using dynamically correlated orbitals such as
+       (RCC)  methods.   Compared  to  RCC  with  singles                 those from orbital-optimized Møller-Plesset perturbation
+       and doubles (RCCSD) and CC with singles,  dou-                     theory can be an economical way to go beyond HF trial
+       bles,  and  triples  (RCCSDT),  RHF+ph-AFQMC                       wavefunctions.49,94,95          Some  essential  symmetry  break-
+       performs better than RCCSDT and similarly to or                    ing  in  the  HF  trial  wavefunction  can  potentially  im-
+       slightly worse than RCCSDTQ for rs≤ 3.0.                           prove  the  performance  of  ph-AFQMC  greatly  such  as
+                                                                          using complex, restricted HF orbitals.127,128       Lastly, the
+   2.For  the  14-electron  problem  at  rs  =  5.0  where                ﬁnite-temperature extension of ph-AFQMC has been well
+       CCSDT is inadequate, RHF+ph-AFQMC exhibits                         established129–131      . The assessment of ph-AFQMC for the
+       rare  ﬂuctuations  in  the  energy  estimator,  which              warm dense UEG model132, which has been the subject
+       makes the phaseless approximation diﬃcult to use.                  of  intense  research  of  late76,133–136           is  currently  work  in
+       We  found  that  using  a  small  multi-determinant                progress.
+       trial wavefunction is eﬀective in stabilizing the sim-
+       ulations but still ineﬀective in obtaining highly ac-
+       curate results in such cases.                                                    VI.    ACKNOWLEDGEMENT
+
+   3.In  the  case  of  the  54-electron  UEG  model,  the
+       comparison  with  initiator  full  conﬁguration  inter-              The work of J.L. was partly supported by the CCMS
+       action QMC (i-FCIQMC) and ﬁxed-node diﬀusion                       summer  internship  in  2018  at  the  Lawrence  Livermore
+       MC (FN-DMC) suggested that RHF+ph-AFQMC                            National  Lab.    J.L.  thanks  Martin  Head-Gordon  and
+       is  a  promising  tool  for  simulating  dense  solids.            Soojin Lee for consistent encouragement.  We would like
+       Such  connections  between  dense  solids  and  the                to  thank  Carlos  Jimenez-Hoyos  for  providing  us  access
+       UEG model were previously made in Ref.123–125.                     to the PHF code used to generate NOMSD expansions.
+       RHF+ph-AFQMC  conﬁrmed  that  the  ﬁxed-node                       The  PHF  code  used  in  this  work  was  developed  in  the
+       error in FN-DMC for rs  = 0.5 as noted before in                   Scuseria group at Rice University111–113      .  This work was
+       ani-FCIQMC study. Moreover, RHF+ph-AFQMC                           performed  under  the  auspices  of  the  U.S.  Department
+       revealed  that  the  initiator  bias  in i-FCIQMC  for             of  Energy  (DOE)  by  LLNL  under  Contract  No.   DE-
+       rs  = 1.0 is large (about 1 mEh  per electron) and                 AC52-07NA27344.  Funding support was from the U.S.
+       the ﬁxed-node error in FN-DMC with a back ﬂow                      DOE, Oﬃce of Science, Basic Energy Sciences, Materials
+       trial wavefunction (FN-DMC-BF) may not be neg-                     Sciences and Engineering Division, as part of the Com-
+       ligible (0.3 mEh per electron).  A smilar trend was                putational  Materials  Sciences  Program  and  Center  for
+       observed in the case of rs  = 2.0.  Lastly, rs  = 5.0              Predictive Simulation of Functional Materials (CPSFM).
+       was found to be challenging for RHF+ph-AFQMC                       Computer time was provided by the Livermore Comput-
+       to  tackle  and  the  ph-AFQMC  correlation  energy                ing Facilities.
+                                                                                                                                                          14
+
+
+
+
+
+
+
+ ∗  linusjoonho@gmail.com                                                        29  M.  Motta  and  S.  Zhang,WIREs  Comput.  Mol.  Sci.       8,
+ †  malone14@llnl.gov                                                                e1364 (2018).
+ ‡  moralessilva2@llnl.gov                                                       30  S.  Zhang,  Emergent  Phenomena  in  Correlated  Matter:
+ 1  L. M. Huntington and M. Nooijen, J. Chem. Phys. 133,
+                                                                                     Autumn  School  Organized  by  the  Forschungszentrum
+   184109 (2010).                                                                    J¨ulich  and  the  German  Research  School  for  Simulation
+ 2  R. J. Bartlett and M. Musia l,Rev. Mod. Phys.   79, 291                          Sciences  at  Forschungszentrum  J¨ulich  23-27  September
+   (2007).                                                                           2013;  Lecture  Notes  of  the  Autumn  School  Correlated
+ 3  D. W. Small and M. Head-Gordon, J. Chem. Phys. 137,                              Electrons 2013 3 (2013).
+   114103 (2012).                                                                31  W. Purwanto, S. Zhang,  and H. Krakauer,J. Chem. Phys.
+
+ 4  D. Kats and F. R. Manby,J. Chem. Phys.  139, 021102                              130, 094107 (2009).
+   (2013).                                                                       32  E. J. L. Borda, J. A. Gomez,  and M. A. Morales,J. Chem.
+
+ 5  D.  W.  Small,  K.  V.  Lawler,    and  M.  Head-Gordon,  J.                     Phys. 150, 074105 (2019).
+   Chem. Theory Comput. 10, 2027 (2014).                                         33  J.  Shee,  B.  Rudshteyn,  E.  J.  Arthur,  S.  Zhang,  D.  R.
+
+ 6  J.  Lee,  D.  W.  Small,  E.  Epifanovsky,    and  M.  Head-                     Reichman,  and R. A. Friesner,J. Chem. Theory Comput.
+   Gordon, J. Chem. Theory Comput. 13, 602 (2017).                                   15, 2346 (2019).
+ 7  J.  Lee,  D.  W.  Small,   and  M.  Head-Gordon,  J.  Chem.                  34  W. Purwanto, H. Krakauer, Y. Virgus,  and S. Zhang,J.
+   Phys. 149, 244121 (2018).                                                         Chem. Phys. 135, 164105 (2011).
+ 8  S. R. White and R. L. Martin,                                                35  F.  Ma,  S.  Zhang,   and  H.  Krakauer,New  J.  Phys.        15,
+                                 J. Chem. Phys.           110, 4127
+   (1999).                                                                           093017 (2013).
+ 9  G.  K.-L.  Chan  and  S.  Sharma,                                            36  S. Zhang,  F. D. Malone,   and M. A. Morales,J. Chem.
+                                  Ann.  Rev.  Phys.  Chem.
+   62, 465 (2011).                                                                   Phys. 149, 164102 (2018).
+10  W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,   and  G.  Ra-              37  J. P. F. LeBlanc, A. E. Antipov, F. Becca, I. W. Bulik,
+   jagopal,Rev. Mod. Phys.            73, 33 (2001).                                 G. K.-L. Chan, C.-M. Chung, Y. Deng, M. Ferrero, T. M.
+11  S. Zhang and H. Krakauer,Phys. Rev. Lett.        90, 136401                      Henderson,  C.  A.  Jim´enez-Hoyos,  E.  Kozik,  X.-W.  Liu,
+   (2003).                                                                           A.  J.  Millis,  N.  V.  Prokof’ev,  M.  Qin,  G.  E.  Scuseria,
+12  G. H. Booth,  A. J. W. Thom,   and A. Alavi,J. Chem.                             H.  Shi,  B.  V.  Svistunov,  L.  F.  Tocchio,  I.  S.  Tupitsyn,
+   Phys. 131, 054106 (2009).                                                         S. R. White, S. Zhang, B.-X. Zheng, Z. Zhu,  and E. Gull
+13  S. Zhang, J. Carlson,   and J. E. Gubernatis,Phys. Rev.                          (Simons  Collaboration  on  the  Many-Electron  Problem),
+   B 55, 7464 (1997).                                                                Phys. Rev. X 5, 041041 (2015).
+14  J.  Carlson,  J.  E.  Gubernatis,  G.  Ortiz,   and  S.  Zhang,              38  H. Hao,  J. Shee,  S. Upadhyay,  C. Ataca,  K. D. Jordan,
+   Phys. Rev. B 59, 12788 (1999).                                                    and  B.  M.  Rubenstein,J.  Phys.  Chem.  Lett.            9,  6185
+15  E. G. Hohenstein, R. M. Parrish,  and T. J. Mart´ınez,J.                         (2018).
+                                                                                 39  M.  Suewattana,  W.  Purwanto,  S.  Zhang,  H.  Krakauer,
+   Chem. Phys. 137, 044103 (2012).                                                   and E. J. Walter,Phys. Rev. B        75, 245123 (2007).
+16  R.  M.  Parrish,  E.  G.  Hohenstein,  T.  J.  Mart´ınez,   and
+                                                                                 40  F.  Ma,  S.  Zhang,   and  H.  Krakauer,Phys.  Rev.  B        95,
+   C. D. Sherrill,J. Chem. Phys.            137, 224106 (2012).                      165103 (2017).
+17  E. G. Hohenstein, R. M. Parrish, C. D. Sherrill,  and T. J.
+                                                                                 41  F. Ma, W. Purwanto, S. Zhang,  and H. Krakauer,Phys.
+   Mart´ınez,J. Chem. Phys.       137, 221101 (2012).                                Rev. Lett. 114, 226401 (2015).
+18  J. Lu and L. Ying,J. Comput. Phys.         302, 329 (2015).
+                                                                                 42  W. Purwanto, S. Zhang,  and H. Krakauer,J. Chem. The-
+19  W. Hu, L. Lin,  and C. Yang,J. Chem. Theory Comput.
+   13, 5420 (2017).                                                                  ory. Comput. 9, 4825 (2013).
+                                                                                 43  W. Purwanto, S. Zhang,  and H. Krakauer,J. Chem. Phys.
+20  K. Dong, W. Hu,  and L. Lin,J. Chem. Theory Comput.
+   14, 1311 (2018).                                                                  142, 064302 (2015).
+                                                                                 44  H. Shi and S. Zhang,Phys. Rev. B           88, 125132 (2013).
+21  F. D. Malone,  S. Zhang,   and M. A. Morales,J. Chem.
+                                                                                 45  H.  Shi,  C.  A.  Jim´enez-Hoyos,  R.  Rodr´ıguez-Guzm´an,
+   Theory. Comput. 15, 256 (2019).                                                   G. E. Scuseria,   and S. Zhang,Phys. Rev. B         89, 125129
+22  M.  Motta,  J.  Shee,  S.  Zhang,   and  G.  K.  Chan,  arXiv
+   preprint arXiv:1810.01549  (2018).                                                (2014).
+                                                                                 46  C.-C.   Chang   and   M.   A.   Morales,   arXiv   preprint
+23  C. H¨attig, W. Klopper, A. K¨ohn,  and D. P. Tew,Chem.
+   Rev. 112, 4 (2012).                                                               arXiv:1711.02154  (2017).
+24  M. Motta and S. Zhang,                                                       47  G. Giuliani and G. Vignale, Quantum theory of the elec-
+                           J. Chem. Theory Comput.           13,                     tron liquid  (Cambridge university press, 2005).
+   5367 (2017).                                                                  48  C. A. Jim´enez-Hoyos, R. Rodr´ıguez-Guzm´an,   and G. E.
+25  M. Motta, D. E. Galli, S. Moroni,  and E. Vitali,J. Chem.
+   Phys. 140, 024107 (2014).                                                         Scuseria,J. Phys. Chem. A             118, 9925 (2014).
+                                                                                 49  J. Lee and M. Head-Gordon, Phys. Chem. Chem. Phys.
+26  M. Motta, D. E. Galli, S. Moroni,  and E. Vitali,J. Chem.
+   Phys. 143, 164108 (2015).                                                         21, 4763 (2019).
+                                                                                 50  C.  F.  Jackels  and  E.  R.  Davidson, J.  Chem.  Phys.  64,
+27  E. Vitali,  H. Shi,  M. Qin,   and S. Zhang,Phys. Rev. B
+   94, 085140 (2016).                                                                2908 (1976).
+                                                                                 51  E. R. Davidson and W. T. Borden,J. Phys. Chem.            87,
+28  M.  Motta  and  S.  Zhang,J.  Chem.  Phys.           148,  181101
+   (2018).                                                                           4783 (1983).
+                                                                                                                                                           15
+
+
+52  J. S. Andrews, D. Jayatilaka, R. G. Bone, N. C. Handy,                        85  S.  Zhang  and  D.  M.  Ceperley, Phys.  Rev.  Lett.   100,
+   and R. D. Amos,Chem. Phys. Lett.          183, 423 (1991).                         236404 (2008).
+53  P. Y. Ayala and H. B. Schlegel,J. Chem. Phys.          108, 7560              86  C. Coulson and I. Fischer,Philos. Mag.      40, 386 (1949).
+   (1998).                                                                        87  J. Kim, A. T. Baczewski, T. D. Beaudet, A. Benali, M. C.
+54  A.  D.  McLean,  B.  H.  Lengsﬁeld,  J.  Pacansky,     and                        Bennett, M. A. Berrill, N. S. Blunt, E. J. L. Borda, M. Ca-
+   Y. Ellinger,J. Chem. Phys.        83, 3567 (1985).                                 sula,  D.  M.  Ceperley,  S.  Chiesa,  B.  K.  Clark,  R.  C.  C.
+55  C. Sherrill, M. S. Lee,  and M. Head-Gordon,Chem. Phys.                           III,  K.  T.  Delaney,  M.  Dewing,  K.  P.  Esler,  H.  Hao,
+   Lett. 302, 425 (1999).                                                             O. Heinonen,  P. R. C. Kent,  J. T. Krogel,  I. Kyl¨anp¨a¨a,
+56  T. D. Crawford and J. F. Stanton,J. Chem. Phys.       112,                        Y. W. Li, M. G. Lopez, Y. Luo, F. D. Malone, R. M. Mar-
+   7873 (2000).                                                                       tin, A. Mathuriya, J. McMinis, C. A. Melton, L. Mitas,
+57  J.  Paldus  and  G.  Thiamov´a,J.  Math.  Chem.    44,  88                        M. A. Morales, E. Neuscamman, W. D. Parker, S. D. P.
+   (2007).                                                                            Flores, N. A. Romero, B. M. Rubenstein, J. A. R. Shea,
+58  K.  Raghavachari,   G.  W.  Trucks,   J.  A.  Pople,     and                      H. Shin, L. Shulenburger, A. F. Tillack, J. P. Townsend,
+   M. Head-Gordon, Chem. Phys. Lett. 157, 479 (1989).                                 N. M. Tubman, B. V. D. Goetz, J. E. Vincent, D. C. Yang,
+59  S.-K. Ma and K. A. Brueckner,                                                     Y. Yang, S. Zhang,   and L. Zhao,J. Phys.:  Cond. Mat.
+                                    Phys. Rev.        165, 18 (1968).                 30, 195901 (2018).
+60  D. Cleland, G. H. Booth,   and A. Alavi,J. Chem. Phys.                        88  Seehttps://github.com/fdmalone/pauxy
+   132, 041103 (2010).                                                                                  for  details  on
+61  J. J. Shepherd, G. Booth, A. Gr¨uneis,  and A. Alavi,Phys.                        how to obtain the source code.
+                                                                                  89  J. S. Spencer,  N. S. Blunt,  W. A. Vigor,  F. D. Malone,
+   Rev. B 85, 081103 (2012).                                                          W. M. C. Foulkes, J. J. Shepherd,   and A. J. W. Thom,
+62  J.  J.  Shepherd,  G.  H.  Booth,   and  A.  Alavi,J.  Chem.
+                                                                                      J. Open Res. Softw. 3, 1 (2015).
+   Phys. 136, 244101 (2012).                                                      90  J. S. Spencer, N. S. Blunt, S. Choi, J. Etrych, M.-A. Filip,
+63  A. J. W. Thom,Phys. Rev. Lett.          105, 263004 (2010).
+64  J. S. Spencer and A. J. W. Thom,                                                  W. M. C. Foulkes, R. S. T. Franklin, W. J. Handley, F. D.
+                                        J. Chem. Phys.          144,                  Malone,  V.  A.  Neufeld,  R.  Di  Remigio,  T.  W.  Rogers,
+   084108 (2016).                                                                     C. J. C. Scott, J. J. Shepherd, W. A. Vigor, J. Weston,
+65  R.  S.  T.  Franklin,  J.  S.  Spencer,  A.  Zoccante,    and                     R. Xu,   and A. J. W. Thom,J. Chem. Theory. Comput.
+   A. J. W. Thom,J. Chem. Phys.          144, 044111 (2016).                          15, 1728 (2019).
+66  V. A. Neufeld and A. J. W. Thom,J. Chem. Phys.          147,                  91  T.  E.  Booth  and  J.  E.  Gubernatis,Phys.  Rev.  E            80,
+   194105 (2017).                                                                     046704 (2009).
+67  H. Kwee, S. Zhang,   and H. Krakauer,Phys. Rev. Lett.                         92  L.  K.  Wagner,  M.  Bajdich,   and  L.  Mitas,J.  Comput.
+   100, 126404 (2008).                                                                Phys. 228, 3390 (2009).
+68  F.  Ma,  S.  Zhang,   and  H.  Krakauer,Phys.  Rev.  B        84,             93  Y. Shao, Z. Gan, E. Epifanovsky, A. T. Gilbert, M. Wor-
+   155130 (2011).                                                                     mit,  J.  Kussmann,  A.  W.  Lange,  A.  Behn,  J.  Deng,
+69  J. Hubbard,Phys. Rev. Lett.       3, 77 (1959).                                   X.  Feng,  D.  Ghosh,  M.  Goldey,  P.  R.  Horn,  L.  D.  Ja-
+
+70  D. J. Thouless,Nuc. Phys.              21, 225 (1960).                            cobson, I. Kaliman, R. Z. Khaliullin, T. Ku´s, A. Landau,
+71  D. J. Thouless,Nuc. Phys.              22, 78 (1961).                             J. Liu, E. I. Proynov, Y. M. Rhee, R. M. Richard, M. A.
+72  W.  A.  Al-Saidi,  S.  Zhang,   and  H.  Krakauer,J.  Chem.                       Rohrdanz,  R.  P.  Steele,  E.  J.  Sundstrom,  H.  L.  Wood-
+   Phys. 124, 224101 (2006).                                                          cock,  P.  M.  Zimmerman,  D.  Zuev,  B.  Albrecht,  E.  Al-
+73  R. J. Bartlett and I. Shavitt, Int. J. Quantum Chem. 12,                          guire, B. Austin, G. J. Beran, Y. A. Bernard, E. Berquist,
+   165 (1977).                                                                        K. Brandhorst, K. B. Bravaya, S. T. Brown, D. Casanova,
+74  T.  Gruber,  K.  Liao,  T.  Tsatsoulis,  F.  Hummel,    and                       C.  M.  Chang,  Y.  Chen,  S.  H.  Chien,  K.  D.  Closser,
+   A. Gr¨uneis,Phys. Rev. X         8, 021043 (2018).                                 D. L. Crittenden, M. Diedenhofen, R. A. Distasio, H. Do,
+75  L.  M.  Fraser,  W.  M.  C.  Foulkes,  G.  Rajagopal,  R.  J.                     A.  D.  Dutoi,  R.  G.  Edgar,  S.  Fatehi,  L.  Fusti-Molnar,
+   Needs, S. D. Kenny,  and A. J. Williamson,Phys. Rev. B                             A. Ghysels, A. Golubeva-Zadorozhnaya, J. Gomes, M. W.
+                                                                                      Hanson-Heine, P. H. Harbach, A. W. Hauser, E. G. Ho-
+   53, 1814 (1996).                                                                   henstein,  Z.  C.  Holden,  T.  C.  Jagau,  H.  Ji,  B.  Kaduk,
+76  T. Schoof, S. Groth, J. Vorberger,  and M. Bonitz,Phys.                           K.  Khistyaev,  J.  Kim,  J.  Kim,  R.  A.  King,  P.  Klun-
+   Rev. Lett. 115, 130402 (2015).                                                     zinger, D. Kosenkov, T. Kowalczyk, C. M. Krauter, K. U.
+77  M. Qin, H. Shi,   and S. Zhang,Phys. Rev. B           94, 235119                  Lao,  A.  D.  Laurent,  K.  V.  Lawler,  S.  V.  Levchenko,
+   (2016).                                                                            C. Y. Lin, F. Liu, E. Livshits, R. C. Lochan, A. Luenser,
+78  W. Purwanto, W. Al-Saidi, H. Krakauer,   and S. Zhang,                            P. Manohar,  S. F. Manzer,  S. P. Mao,  N. Mardirossian,
+   J. Chem. Phys. 128, 114309 (2008).                                                 A. V. Marenich, S. A. Maurer, N. J. Mayhall, E. Neuscam-
+79  P. Paul, K.-C. Kim, D. Sun, P. D. W. Boyd,   and C. A.                            man, C. M. Oana, R. Olivares-Amaya, D. P. Oneill, J. A.
+   Reed,J. Am. Chem. Soc.         124, 4394 (2002).                                   Parkhill,  T.  M.  Perrine,  R.  Peverati,  A.  Prociuk,  D.  R.
+80  H.-D. Beckhaus, C. R¨uchardt, M. Kao, F. Diederich,  and                          Rehn,  E. Rosta,  N. J. Russ,  S. M. Sharada,  S. Sharma,
+   C. S. Foote,Angew. Chem. Int. Edit.      31, 63 (1992).                            D. W. Small, A. Sodt, T. Stein, D. St¨uck, Y. C. Su, A. J.
+81  S. Tomita,  J. Andersen,  K. Hansen,   and P. Hvelplund,                          Thom,  T.  Tsuchimochi,  V.  Vanovschi,  L.  Vogt,  O.  Vy-
+   Chem. Phys. Lett. 382, 120 (2003).                                                 drov, T. Wang, M. A. Watson, J. Wenzel, A. White, C. F.
+82  A. Overhauser, Phys. Rev. Lett. 4, 462 (1960).                                    Williams, J. Yang, S. Yeganeh, S. R. Yost, Z. Q. You, I. Y.
+83  A. Overhauser, Phys. Rev. 128, 1437 (1962).                                       Zhang,  X.  Zhang,  Y.  Zhao,  B.  R.  Brooks,  G.  K.  Chan,
+84  A. Overhauser, Phys. Rev. 167, 691 (1968).                                        D.  M.  Chipman,  C.  J.  Cramer,  W.  A.  Goddard,  M.  S.
+                                                                                      Gordon, W. J. Hehre, A. Klamt, H. F. Schaefer, M. W.
+                                                                                      Schmidt, C. D. Sherrill, D. G. Truhlar, A. Warshel, X. Xu,
+                                                                                                                                                           16
+
+    A. Aspuru-Guzik, R. Baer, A. T. Bell, N. A. Besley, J. D.                     115  N. D. Drummond, R. J. Needs, A. Sorouri,  and W. M. C.
+    Chai,  A.  Dreuw,  B.  D.  Dunietz,  T.  R.  Furlani,  S.  R.                      Foulkes,Phys. Rev. B     78, 125106 (2008).
+    Gwaltney,  C.  P.  Hsu,  Y.  Jung,  J.  Kong,  D.  S.  Lam-                   116  M.  Holzmann,  R.  C.  Clay,  M.  A.  Morales,  N.  M.  Tub-
+    brecht,  W. Liang,  C. Ochsenfeld,  V. A. Rassolov,  L. V.                         man, D. M. Ceperley,  and C. Pierleoni,Phys. Rev. B              94,
+    Slipchenko,  J. E. Subotnik,  T. Van Voorhis,  J. M. Her-                          035126 (2016).
+    bert, A. I. Krylov, P. M. Gill,  and M. Head-Gordon,Mol.                      117  C. Lin, F. H. Zong,   and D. M. Ceperley,Phys. Rev. E
+    Phys. 113, 184 (2015).                                                             64, 016702 (2001).
+ 94  J. Lee and M. Head-Gordon, J. Chem. Theory Comput.                           118  D. M. Ceperley and B. J. Alder,
+    14, 5203 (2018).                                                                                                    Phys. Rev. Lett.         45, 566
+ 95  J.  Lee  and  M.  Head-Gordon,  The  Journal  of  Chemical                        (1980).
+                                                                                  119  J. Shee, S. Zhang, D. R. Reichman,   and R. A. Friesner,
+    Physics 150, 244106 (2019).                                                        J. Chem. Theory Comput. 13, 2667 (2017).
+ 96  T.  Van  Voorhis  and  M.  Head-Gordon,Mol.  Phys.                     100,  120  J.  Shee,  E.  J.  Arthur,  S.  Zhang,  D.  R.  Reichman,   and
+    1713 (2002).                                                                       R. A. Friesner,J. Chem. Theory Comput.           14, 4109 (2018).
+ 97  R. Seeger and J. A. Pople,J. Chem. Phys.       66, 3045 (1977),              121  P.  L.  R´ıos,  A.  Ma,  N.  Drummond,  M.  Towler,    and
+    https://doi.org/10.1063/1.434318.                                                  R. Needs, Phys. Rev. E 74, 066701 (2006).
+ 98  S.  M.  Sharada,  D.  St¨uck,  E.  J.  Sundstrom,  A.  T.  Bell,             122  Y. Kwon, D. Ceperley,  and R. M. Martin, Phys. Rev. B
+    and M. Head-Gordon,Mol. Phys.                    113, 1802 (2015).                 58, 6800 (1998).
+ 99  F. H. Zong,  C. Lin,   and D. M. Ceperley,Phys. Rev. E                       123  E. E. Salpeter, Astrophys. J. 134, 669 (1961).
+    66, 036703 (2002).                                                            124  M. Baus and J.-P. Hansen, Phys. Rep. 59, 1 (1980).
+100  M. Holzmann, B. Bernu, C. Pierleoni, J. McMinis, D. M.                       125  S. Huotari, J. A. Soininen, T. Pylkk¨anen, K. H¨am¨al¨ainen,
+    Ceperley, V. Olevano,  and L. Delle Site,Phys. Rev. Lett.                          A. Issolah, A. Titov, J. McMinis, J. Kim, K. Esler, D. M.
+    107, 110402 (2011).                                                                Ceperley, et al., Phys. Rev. Lett. 105, 086403 (2010).
+101  J. J. Shepherd, A. Gr¨uneis, G. H. Booth, G. Kresse,  and                    126  A. Karton, S. Daon,  and J. M. Martin,
+    A. Alavi,Phys. Rev. B    86, 035111 (2012).                                                                               Chem. Phys. Lett.
+102  J.  J.  Shepherd  and  A.  Gr¨uneis,                                              510, 165 (2011).
+                                        Phys.  Rev.  Lett.         110,           127  D. W. Small, E. J. Sundstrom,  and M. Head-Gordon,J.
+    226401 (2013).                                                                     Chem. Phys. 142, 024104 (2015).
+103  H. Luo and A. Alavi,J. Chem. Theory. Comput.    14, 1403                     128  J. Lee, L. W. Bertels,  and M. Head-Gordon, “Kohn-sham
+    (2018).                                                                            density  functional  theory  with  complex,  spin-restricted
+104  H. Flyvbjerg and H. G. Petersen,J. Chem. Phys.            91, 461
+                                                                                       orbitals:  Accessing  a  new  class  of  densities  without  the
+    (1989).                                                                            symmetry dilemma,”  (2019),arXiv:1904.08093.
+105  Seehttps://github.com/jsspencer/pyblockfor  details  on                      129  S. Zhang,Phys. Rev. Lett.    83, 2777 (1999)
+                                                                                                                                     .
+    how to obtain the source code.                                                130  B. M. Rubenstein, S. Zhang,  and D. R. Reichman,Phys.
+106  W. Purwanto, H. Krakauer,  and S. Zhang,Phys. Rev. B
+                                                                                       Rev. A 86, 053606 (2012).
+    80, 214116 (2009).                                                            131  Y. Liu,  M. Cho,   and B. Rubenstein,J. Chem. Theory.
+107  T.  Van  Voorhis  and  M.  Head-Gordon,  J.  Chem.  Phys.
+                                                                                       Comput. 14, 4722 (2018).
+    113, 8873 (2000).                                                             132  T. Dornheim, S. Groth,  and M. Bonitz,Physics Reports
+108  B. Cooper and P. J. Knowles, J. Chem. Phys. 133, 234102
+                                                                                       744, 1 (2018).
+    (2010).                                                                       133  E.  W.  Brown,  B.  K.  Clark,  J.  L.  DuBois,    and  D.  M.
+109  T. Van Voorhis and M. Head-Gordon, Chem. Phys. Lett.
+                                                                                       Ceperley,Phys. Rev. Lett.  110, 146405 (2013).
+    330, 585 (2000).                                                              134  F. D. Malone, N. Blunt, E. W. Brown, D. Lee, J. Spencer,
+110  J. B. Robinson and P. J. Knowles, J. Chem. Phys. 135,
+    044113 (2011).                                                                     W. Foulkes,   and J. J. Shepherd,Phys. Rev. Lett.               117,
+111  C. A. Jim´enez-Hoyos, T. M. Henderson, T. Tsuchimochi,                            115701 (2016).
+                                                                                  135  T.   Dornheim,   S.   Groth,   F.   D.   Malone,   T.   Schoof,
+    and G. E. Scuseria,J. Chem. Phys.             136, 164109 (2012).                  T.  Sjostrom,  W.  M.  C.  Foulkes,   and  M.  Bonitz,Phys.
+112  C. A. Jim´enez-Hoyos, R. Rodr´ıguez-Guzm´an,   and G. E.                          Plasmas 24, 056303 (2017).
+    Scuseria,J. Chem. Phys.             139, 204102 (2013).                       136  T.  Dornheim,  S.  Groth,  J.  Vorberger,   and  M.  Bonitz,
+113  R. Schutski, C. A. Jim´enez-Hoyos,  and G. E. Scuseria,J.
+                                                                                       Phys. Rev. Lett. 121, 255001 (2018).
+    Chem. Phys. 140, 204101 (2014).
+114  S. Chiesa, D. M. Ceperley, R. M. Martin,   and M. Holz-
+    mann,Phys. Rev. Lett.          97, 076404 (2006).

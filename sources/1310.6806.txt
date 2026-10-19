@@ -1,0 +1,657 @@
+                      Coupled Cluster Channels in the Homogeneous Electron Gas
+
+                             James  J.  Shepherd,∗  Thomas  M.  Henderson,  and  Gustavo  E.  Scuseria
+       Department of Chemistry and Department of Physics and Astronomy, Rice University, Houston, TX 77005-1892
+                                                            (Dated:  October 19, 2021)
+                   We discuss diagrammatic modiﬁcations to the coupled cluster doubles (CCD) equations, wherein
+                diﬀerent groups of terms out of rings, ladders, crossed-rings and mosaics can be removed to form
+                approximations to the coupled cluster method, of interest due to their similarity with various types
+                of random phase approximations.  The ﬁnite uniform electron gas is benchmarked for 14- and 54-
+                electron  systems  at  the  complete  basis  set  limit  over  a  wide  density  range  and  performance  of
+                diﬀerent ﬂavours of CCD are determined.  These results conﬁrm that rings generally overcorrelate
+                and ladders generally undercorrelate; mosaics-only CCD yields a result surprisingly close to CCD.
+                We use a recently developed numerical analysis [J. J. Shepherd and A. Gr¨uneis, Phys.  Rev.  Lett.
+                110,  226401 (2013)] to study the behaviours of these methods in the thermodynamic limit.  We
+                determine  that  the  mosaics,  on  forming  the  Brueckner  one-body  Hamltonian,  open  a  gap  in  the
+                eﬀective one-particle eigenvalues at the Fermi energy.  Numerical evidence is presented which shows
+                that methods based on this renormalisation have convergent energies in the thermodynamic limit
+                including mosaic-only CCD, which is just a renormalised MP2.  All other methods including only
+                a single channel, namely ladder-only CCD, ring-only CCD and crossed-ring-only CCD, appear to
+                yield divergent energies; incorporation of mosaic terms prevents this from happening.
+
+                PACS numbers:  31.15.bw,71.10.-w,71.10.Ca
+
+
+                     I.   INTRODUCTION                                        oughly  analysed  [6, 8–11].   This  understanding  forms  a
+                                                                              bridge between ﬁnite basis set work and the energies ob-
+  It has recently been discussed by Scuseria et al. [1,2]                     tained from diﬀusion Monte Carlo, whose complete-basis-
+and  Yang  and  coworkers  [3, 4]  that  the  random  phase                   set ground-state energies have provided a wide range of
+approximation  and  coupled  cluster  doubles  bear  a  for-                  very  accurate  benchmark  data  [12–16].   In  spite  of  the
+mal connection to one another, linking two widely pop-                        wealth of historical literature on the electron gas, there
+ular  methods.    This  relates  to  the  well-known  obser-                  are  still  new  and  interesting  recent  studies  on,  for  in-
+vation  that  the  amplitude  equations  can  be  separated                   stance, the eﬀects of spin-polarisation on correlation fac-
+into sets of terms grouped together by what they repre-                       tors  [17],  determination  of  Landau  Fermi  liquid  theory
+sent in diagrammatic many-body perturbation theory [5].                       parameters  [18, 19]  and  ﬁnite-temperature  simulations
+Rings  represent  particle-hole  contractions,  ladders  rep-                 on the warm-dense gas [20].
+resent particle-particle and hole-hole contractions, what                        Using judicious subsets of diagrams is a common theme
+we  term  mosaics  involve  joint  ladder  and  ring  contrac-                in  many-body  perturbation  theory.    This  is  especially
+tions and renormalise the eigenvalues of the one-particle                     true for the three dimensional electron gas, where an in-
+Hamiltonian, and crossed-rings are the exchange compo-                        appropriate choice of diagrams can easily lead to a diver-
+nents of the Coulomb ring diagrams needed to maintain                         gence in the energy due to problematic terms appearing
+the antisymmetry of the amplitudes.  These oﬀer the pos-                      at every ﬁnite order of perturbation theory [21–24].  This
+sibility of a modiﬁed electronic structure approximation                      was circumvented by Gell-Mann and Brueckner, who cal-
+that takes advantage of intuitions concerning these dia-                      culated the correlation energy for the high-density limit
+grams.                                                                        of the electron gas using an inﬁnite resummation of ring
+  The  aim  of  this  paper  is  to  explore  these  develop-                 diagrams [22]. This corresponded to the so-called random
+ments  further  through  their  application  to  the  homo-                   phase approximation (RPA) energy for the gas described
+geneous  electron  gas  model  in  three  dimensions.   This                  some  years  earlier  by  Bohm  and  Pines  [25–27].   Some-
+is  the  simplest  fully  periodic  condensed  matter  system                 what later, Freeman added to this the idea of ﬁnite-order
+and  has  been  the  subject  of  intense  investigation  over                screened exchange [28].  Bishop and L¨uhrman, at roughly
+many years.  In recent times, the study of the gas with                       the same time, extensively examined the eﬀect of adding
+modern, numerical quantum chemical methods employ-                            various  diagrams  into  equations  built  out  of  a  coupled
+ing ﬁnite electron numbers and basis sets has been made                       cluster ansatz looking more like modern RPA with lin-
+substantially easier.  Full conﬁguration interaction qual-                    earised ladder terms [29–31].  These ideas seem to have
+ity  benchmarks  for  ﬁnite  basis  sets  have  become  avail-                been investigated intermittently since then [32,33].
+able  [6, 7]  and  the  relationship  between  these  and  the                   In the intervening years, the random phase approxima-
+complete basis set limit for plane waves has been thor-                       tion has become a popular and routine electronic struc-
+                                                                              ture  method  [34–45];  for  more  details  the  reader  is  di-
+                                                                              rected  towards  a  selection  of  reviews  [46–48].   Some  of
+                                                                              these focus on the idea that rings describe long-range cor-
+∗ jjs6@rice.edu
+                                                                              relation well [41,44,49–54].  In parallel with this there
+                                                                                                                                                    2
+
+has  been  long-standing  discussion  of  the  use  of  ladders              and the Hartree–Fock eigenvalues are
+for short-range correlation and how it describes the pair
+correlation function [55–65].  It is also interesting to re-                   ϵi = 1               ⟨ij|ji⟩                                               (5)
+mark  that  developments  are  still  being  explored  in  the                       2k2i− ∑j∈occ
+nuclear physics community [66].                                                      {  1
+  There has also been a recent rise in interest in treating                             2k2i−∑j∈occ
+solid  state  problems  with  quantum  chemical  wavefunc-                        =     1            i⁄=j v(ki− kj)−vM,  i∈ occ
+                                                                                        2k2i−∑j∈occv(ki− kj),      i∈ virt.    (6)
+tion theories [11,67–81], and in particular coupled clus-
+ter [8–10,71,74,82–86], where authors are attempting                         Here,  a  ﬁnite  box  size  of  length L  quantises q  =   2π
+to build on its success for molecular systems [87].                          and the zero momentum integral (ka  = ki) is given byL n
+  We aim here to more extensively explore the connec-                        vM, the Madelung constant, which is a feature of the ﬁ-
+tion between coupled cluster on the electron gas and di-                     nite  electron  gas  which  vanishes  in  the  thermodynamic
+agrammatic  ideas.   We  will  predominantly  use  ground-                   limit  found  as N → ∞  and L → ∞.   The  Madelung
+state energy estimates as our method of discussing these                     constant is deﬁned uniquely for a cell geometry and box
+theories.  The rest of this paper is organised as follows.                   length,  and  here  we  calculate  it  to  be vML ≈  2.8372
+We start by introducing our model system and discussing                      where L  is  the  length  of  the  box.   The  box  length  is
+technical considerations, then benchmark the 14 electron                     uniquely deﬁned by the electron number N  and the den-
+problem at the complete basis set limit with the diﬀerent                    sity  parameter rs,  the  radius  that  on  average  encloses
+‘ﬂavours’ of CCD. We show that methods involving ring                        one electron.  Another parameter required for ﬁnite basis
+diagrams generally overcorrelate in the electron gas and                     methods such as coupled cluster is a way of deﬁning the
+methods involving ladder diagrams generally undercorre-                      basis set used.  This is typically a kinetic energy cutoﬀ,
+late.  In other words, the electron gas behaves in common                    and we will use the number of plane-wave spin orbitals,
+with previous observations in diﬀerent systems [88–92].                      M, to express the size of our basis set.  Recently, quan-
+We  then  examine  the  applicability  of  these  ﬁndings  to                tum Monte Carlo benchmarks have become available for
+the thermodynamic limit and discuss the role of mosaics                      the  ﬁnite  basis  sets  [6, 7],  which  are  useful  for  bench-
+in  producing  an  insulating  reference  state  and  circum-                marking  quantum  chemical  methods  [8–10, 94],  and  a
+venting divergences.  Throughout, we will discuss the ex-                    simple extrapolation scheme to obtain complete basis set
+tent to which the conclusions we draw have been already                      limit energies is well-understood [8]. Some authors are at-
+present  in  the  literature,  and  our  aim  is  to  produce  a             tempting to use coupled cluster wave functions to guide
+modern perspective on these views.  This paper sets the                      quantum Monte Carlo simulations [94].
+scene to a separate paper where we discuss range sepa-                          The simplicity of this model is one of the reasons that
+rating CCD to try to achieve higher accuracy energies for                    it has been extremely well studied.  The plane-wave ba-
+the electron gas [93].                                                       sis  is  the  canonical  RHF  basis  and  all  one  and  two-
+                                                                             electron integrals have analytic forms, so they need not
+                                                                             be stored.  Momentum symmetry means amplitude stor-
+                                                                             age is also reduced by a factor ofM compared with other
+                II.   THE ELECTRON GAS                                       coupled cluster codes, and the computational cost scales
+                                                                             asO(M4).  Furthermore, there is a rigorous absence of
+  The Hamiltonian for theN-electron, or simulation-cell,                     single excitations in the plane-wave HEG, caused by mo-
+homogeneous electron gas reads                                               mentum symmetry; single excitations are disallowed from
+                                                                             the exact wavefunction because they necessarily have a
+                    ˆH =T +Vee +Veb +Vbb                    (1)              diﬀerent total momentum quantum number than the ref-
+                                                                             erence  state.   This  means  that  coupled  cluster  singles
+where these terms are the kinetic energy operator for the                    and doubles (CCSD) and coupled cluster doubles (CCD)
+electrons, the electron-electron interaction, the electron-                  are equivalent.  The plane-wave basis set diagonalises the
+background interaction and the background-background                         Fock matrix,  the one-body density matrix and also the
+interaction.  As is well known, there are diﬃculties work-                   one-body Brueckner Hamiltonian [95–97].  The link be-
+ing within periodic systems for Coulomb interactions.  In                    tween the Brueckner Hamiltonian and the mosaic terms
+the electron gas, many terms cancel out and we can take                      will be discussed explicitly at the end of Sec.III.
+advantage of these cancellations to express the four-index                      Our aim is to produce complete basis set coupled clus-
+integrals in a plane wave basis set as                                       ter energies and compare them with the most accurate
+                                                                             data  available  from  quantum  Monte  Carlo  simulations.
+                                                                             The  technical  details  of  our  calculations  are  as  follows.
+                  vijab =⟨ij|ab⟩                                          (2)Coupled cluster calculations are performed on ﬁnite ba-
+                      =v(ka− ki)δka−ki,kj−kb,                (3)             sis sets of size M  and then extrapolated to the complete
+                         {   1                                               basis set (CBS) limit using a 1/M  direct extrapolation
+                v(q) =       L3 4πq2,  q⁄= 0                                 as  described  in  Ref.7and  used  in  a  variety  of  stud-
+                             vM,     q=0.                             (4)    ies  [6, 7, 11, 75, 79, 98–100].   We  note  that  it  is  also
+                                                                                                                                                       3
+
+now  possible  to  use  F12  corrections  in  plane  wave  ba-                 creates a new range of methods and potentially extends
+sis  sets  [10],  but  do  not  use  these  here.   The  conver-               the ﬂexibility of CCD. These choices are inspired by the
+gence  of  the  modiﬁed  CCD  equations  is  aided  by  the                    connections to the RPA discussed in Refs.1and2.  In
+use  of  DIIS  [101].   We  study  in  particular   N  =  14  for              this paper the diﬀerent channels will be preﬁxed to the
+0.1 ≤ rs ≤  100.0  and N  =  54  for  0.5 ≤ rs ≤  20.0,                        abbreviation CCD (for example rCCD denotes CCD with
+for  which  there  is  high-quality  benchmark  data  avail-                   just the rings channel and driver term).  We note in pass-
+able.  We draw benchmark data from a number of quan-                           ing  that  the  modiﬁcation  of  the  CCD  equations  to  ap-
+tum  Monte  Carlo  (QMC)  sources.    For N   =  14  at                        proximately  capture  higher-order  correlations  has  been
+the  high  and  metallic  densities,  0.5 ≤ rs ≤  5.0,  we                     discussed recently in various contexts [109–114].  In par-
+make use of CBS data from full conﬁguration interaction                        ticular,  we  note  that  Kats  and  Manby  have  attempted
+QMC  [6, 85, 102–104],  which  have  been  already  pub-                       to remove a quadratic term due to ring and crossed-ring
+lished  [7].   We  supplement  these  with  diﬀusion  Monte                    diagrams [115], and follow a parameterisation by Hunt-
+Carlo results at rs  = 10.0, 20.0, 50.0 and 100.0 a.u.  ob-                    ingdon and Nooijen to restore the accuracy of their resul-
+tained from collaborators [105,106], which will be pub-                        tant equations for two-electron systems [113].  From this
+lished elsewhere [107].  The data for   N  = 54 come from                      is  it  also  well-known  that  the  smallest  set  of  diagrams
+a previous diﬀusion Monte Carlo study [12].  These have                        required to retain accuracy for two-electron systems us-
+been combined into a single QMC data set that are used                         ing Brueckner orbitals is the hole-hole component of the
+in our plots below, and represent the highest-accuracy re-                     mosaic terms and quadratic ladder terms [113].
+sults to date for these systems.  These benchmarks are for                        Each combination of the channels results in diﬀerent
+the purposes of this study exact.  Full conﬁguration in-                       (approximate)  amplitudes  for  CCD  which  may  yield  a
+teraction quantum Monte Carlo suﬀers from an initiator                         higher or lower non-variational energy
+error [103,104], which can be very eﬀectively reduced or
+removed for the electron gas [7].  Diﬀusion Monte Carlo
+suﬀers  from  a  ﬁxed-node  error,  which  reduces  at  lower                                            Ecorr = 14tabij ¯vijab.                           (9)
+densities where it becomes relatively small [13,16,108].
+
+          III.   MODIFIED CCD EQUATIONS                                           Mosaic terms are slightly diﬀerent to the rest of the di-
+                                                                               agrams because they serve to renormalise the eigenvalues
+                                                                               of the Brueckner one-body Hamiltonian [116]:
+  The central premise of this study lies in modiﬁcation
+of the amplitude equations from CCD to form new CCD-
+like approximations.  For a canonical basis which diago-                                               ˜Fil =ϵiδil− 12 ¯vklcdtcdik                       (10)
+nalises  the  Fock  matrix,  the  CCD  amplitude  equations
+read                                                                                                  ˜Fda =ϵaδad + 12 ¯vklcdtackl                     (11)
+   (ϵi +ϵj−ϵa−ϵb)tabij  = ¯vabij
+              + 1                                                              Here, repeated indices only denote summation in terms
+                 2 ¯vabcdtcdij  + 12 ¯vklijtabkl + 14 ¯vklcdtcdijtabkl         not  involving ϵ.   It  is  important  to  note  that  here  we
+              + ¯vkbcjtacik + ¯vkacitbcjk + ¯vklcdtdbljtacik         (7)       use the deﬁnition of the Brueckner one-body Hamiltonian
+              − ¯vkacjtbcik− ¯vkbcitacjk− ¯vklcdtdaljtbcik                     discussed in Refs.116and117. Using just the driver term
+                       [tabljtcdik−tablitcdjk +tdbjitackl−tdaijtbckl]          and the mosaics, i.e.  mCCD, reduces to a kind of “self-
+              + 1                                                              consistent” Brueckner MP2.
+                 2 ¯vklcd                                                         To be clear about what we mean by this self-consistent
+where in these equations, ¯vijab =vijab−vijba =⟨ij||ab⟩,ϵ are                  MP2,  note  that  the  mosaic-only  CCD  amplitude  equa-
+the  Hartree–Fock  eigenvalues  and  repeated  indices  are                    tions can be cast as
+summed on the right-hand side.  Hole states are labelled
+with i,j,k,  and l  and  particle  states  are  labelled  with                             Fki tabkj +Fkjtabik−Factcbij−Fbctacij  = ¯vabij.        (12)
+a,b,c, and d.  This expression is grouped such that the
+top line represents the driver term, the second line ladder
+terms  (l),  the  third  line  ring  (r)  terms,  the  fourth  line            This is the same as the amplitude equations in MP2 ex-
+crossed-ring (x) terms and the ﬁnal line mosaics (m).                          cept that the eﬀective Hamiltonian elementsFqp  are given
+  For simplicity, it is possible to represent the amplitude                    by  Eqs.10and11rather  than  the  usual  Hartree-Fock
+equations schematically as follows:                                            values;  because  these  elements  depend  on  the t  ampli-
+               0 = driver + rings + crossed-rings                              tudes which, in turn, depend on these elements, the whole
+                    + ladders + mosaics.                           (8)         looks in practice like a self-consistent MP2 even though
+                                                                               the method is fundamentally inﬁnite order.
+  Our idea is to allow each channel to be independently                           This  is  particularly  clear  for  the  case  of  the  HEG,
+added  into  or  excluded  from  a  CCD  calculation.   This                   where F is diagonal in the plane wave basis and we have
+                                                                                                                                                   4
+
+simply                                                                      in which the rings are included only with direct integrals
+                                                                            (¯vabij → vabij );  the  crossed-rings  only  with  exchange  in-
+                    tabij  =             ¯vabij   ,                   (13)  tegrals (¯vabij → vbaij );  and the CCD energy expression is
+                           ϵBi  +ϵBj −ϵBa−ϵBb                               used.  These data are not shown.
+                    ϵBi  =ϵHFi    + 1 ∑    ¯vilcdtcdil,                   (14) In  common  with  molecular  systems,  rCCD  for  the
+                                   2                                        HEG  has  pathological  behaviour  presumably  resulting
+                                      lcd                                   from the equivalent of the Coulson–Fisher point in these
+                    ϵBa  =ϵHFa − 1    ∑    ¯vkladtadkl.                   (15)systems — thers value where there is a symmetry-broken
+                                   2  kld                                   UHF solution.  This transition has been investigated in-
+                                                                            termittently using a variety of methods [123–125].  The
+Here we have made clear with superscripts the distinction                   most recent study places the transition at densities lower
+between Hartree–Fock eigenvalues and Brueckner eigen-                       than rs≃ 3.4 [123].  In contrast, rCCD stops converging
+values.  Where a plane wave with momentum k  has en-                        at around 3.9>rs > 3.8; this diﬀerence is attributed to
+ergy  12k2, Hartree-Fock dresses the kinetic energy to ac-                  symmetry  and  ﬁnite  size  eﬀects.   The  pathology  in  the
+count for the eﬀects of exchange, yielding ϵHF.  One can                    rCCD energy is cured by the inclusion of mosaic terms
+think of this mosaic-only CCD as also incorporating cor-                    as in rmCCD, and these energies then seem reasonable
+relation eﬀects in assigning a single-particle energy to a                  at both the high and low density limits.  Between these
+plane wave.                                                                 two limits, there is overcorrelation as in dRPA but less
+  The Brueckner Hamiltonian has been discussed in the                       severe.  The combination of rings, crossed-rings and mo-
+context of Brueckner coupled cluster [116,118–121] and                      saics  strongly  over-estimate  the  correlation  energy  and
+Brueckner RPA [122].                                                        the energy curve has a spurious minimum.  It is interest-
+                                                                            ing to note that addition of ladders (discussed in more
+                                                                            detail below) completely resolves this minimum and CCD
+   IV.   APPLICATION TO 14-ELECTRON HEG                                     is a reasonable estimate of the correlation energy.
+                                                                               Finally,   it  can  also  be  seen  from  this  ﬁgure  that
+  We now benchmark the 14 electron HEG with a variety                       dRPA+SOSEX when determined from a Kohn–Sham ref-
+of CCD-like methods.  In this section, we focus on a pre-                   erence is surprisingly accurate.  This change of reference
+sentation of our own numerical data, having summarised                      amounts to a changing of the Hartree–Fock eigenvalues
+similar work by other authors in the introduction:  more                    to  just  kinetic  energies  (since  the  constant  exchange-
+comparison is made in Sec.V. We begin with a discus-                        correlation term for the electron gas cancels out).  This
+sion of the rings, crossed-rings and RPA. The rings-only                    has  been  discussed  previously  and  is  not  as  generally
+amplitude equations read                                                    transferable a method as CCSD [98].  The origin of this
+                                                                            might be that on approach to the complete basis set limit
+              0 = ¯vabij  +tabij (ϵa +ϵb−ϵi−ϵj)                             the  dynamic  correlation  is  hugely  overestimated  espe-
+                    + ¯vkbcjtacik + ¯vkacitbcjk + ¯vklcdtdbljtacik.            (16)cially  at  low  densities  [8],  compensating  for  the  failure
+                                                                            to capture energy from low-momentum correlations.
+Rings-only CCD is equivalent to particle-hole RPA when                         Energies from our calculations of CCD methods involv-
+the  above  equations  are  solved,  except  that  a  diﬀerent              ing ladders (and remaining combinations) are shown in
+energy expression is used [1],                                              Fig.1b.  These show that in general addition of ladders
+                                                                            cause  methods  to  undercorrelate,  with  lmCCD  retriev-
+                                                                            ing the least correlation energy.  Removing mosaics from
+                         Ecorr = 12tabij ¯vijab,                         (17)this yields an almost identical result and is not shown.
+                                                                            Adding ladders to rmCCD gives a result that is similar to
+and    this    yields    what    is    commonly    called    the            RPA+SOSEX, and note that a screening eﬀect from lad-
+dRPA+SOSEX   energy.       Removal   of   the   SOSEX                       ders was indeed anticipated by Bishop and L¨uhrman [30].
+term,  which  involves  removing  the  anti-symmetrisation                     Mosaics alone give a surprisingly similar quality result
+from the expression above, yields the dRPA energy.  The                     to CCD, retrieving slightly less correlation energy across
+factor of a half comes from the plasmon formula for the                     the whole of the energy curve.  This is especially remark-
+dRPA energy.                                                                able considering how much less information the mCCD
+  Energies  calculated  using  these  rings-based  methods                  equations  have  compared  with  those  of  CCD.  On  the
+are shown in Fig.1a.  This provides a re-iteration of some                  other  hand,  this  is  perhaps  related  to  the  performance
+well-known  general  trends.   Although  dRPA  generally                    of  MP2  for  this  system.   We  note,  however,  that  the
+overcorrelates,  dRPA+SOSEX  resolves  this  somewhat                       MP2 energy diverges on approach to the thermodynamic
+and resultantly undercorrelates.  The energy from CCD                       limit  and  this  line  is  therefore N-dependent.   Whether
+is considerably improved over dRPA+SOSEX across the                         the mCCD energy diverges will be discussed in Sec.V.
+whole of thers range considered when both use the same                         Thus, the general trend is that methods based on rings
+reference eigenvalues (those of HF). The dRPA+SOSEX                         overestimate the correlation energy and ladders underes-
+energy is similar, for the electron gas, to CCD equations                   timate  the  correlation  energy,  consistent  with  Ref.  [2].
+                                                                                                                                              5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    (a)                                                                (b)
+
+  FIG. 1:  Comparison between diﬀerent types of calculations involving rings (r), crossed-rings (x), ladders (l) and
+mosaics (m).  It can be seen that, in general, ring-based methods overestimate the amount of correlation energy.  We
+    note that, in common with ﬁgures throughout this paper, the legend is ordered top-to-bottom to indicate the
+     ordering of lines from the left-most point of the graph to aid reading in black and white.  (N=14, M→∞).
+
+
+                                                                          limitrs→ 0.  We can see from Fig.1athat the exception
+                                                                          to this is dRPA. The reason for this is well-known, and
+                                                                          comes from a failure of dRPA without second-order ex-
+                                                                          change to capture the constant term of the high-density
+                                                                          expansion [22,126].
+
+
+                                                                                       V.   APPLICABILITY AT THE
+                                                                                         THERMODYNAMIC LIMIT
+
+                                                                             The problem we wish to consider here is the approach
+                                                                          to the inﬁnite particle, or thermodynamic, limit (TDL)
+                                                                          which deals with two issues:  that of size extensivity and
+                                                                          that of divergences.
+                                                                             Size extensivity in the current context is the require-
+    FIG. 2:  All of the ﬂavours of CCD have the same                      ment that as N  grows (whilst keeping the density con-
+functional form of the low-density corresponding to 1/rs                  stant), the energy needs to retain a term that scales as
+    power-law behaviour.  We note that the legend is                      N.  This implies that the correlation energy per particle
+ ordered consistently with lines at the right-most point                  is a non-zero constant in the TDL. This has been shown
+              of the graph.  (N=14, M→∞).                                 explicitly  in  extended  systems  in  work  by  Ohnishi  and
+                                                                          Hirata, using an approach based on the linked-diagram
+                                                                          theorem and thermodynamic scaling with volume [24].
+                                                                             Divergences are more problematic and we begin with
+We were not able to ﬁnd any method that was a marked                      the observation that perturbation theories applied on a
+improvement on CCD. The low-density trend in the en-                      bare  Coulomb  interaction  will  diverge  for  metallic  sys-
+ergy is best shown on a log-log plot of the absolute corre-               tems in three dimensions.  This arises at every order in
+lation energy (Fig.2), where all methods show the correct                 perturbation theory (for 3D) due to the piling up of states
+1/rs limiting behaviour associated with approach to the                   around the Fermi energy.  It is textbook knowledge that
+cross-over to Wigner crystal behaviour.  However, all of                  the divergence in the second-order energy (from a non-
+the CCDs presented here exhibit this behaviour sooner                     interacting starting-point) is due to a sum over momen-
+with  increasing rs  than  the  QMC  results.   We  note  in              tum transfer vectors that behaves as∫               1
+                                                                                                                         q=0  q dq [23].
+particular that ladders remain under correlated even at                      It was ﬁrst shown by Gell-Mann and Brueckner that
+low densities.  Similarly,  most methods seem to exhibit                  this  divergence  can  be  removed  by  performing  a  sum
+appropriate  behaviour  on  approach  to  the  high-density               over the ring diagrams to inﬁnite order,  i.e.  taking the
+                                                                                                                                                       6
+
+RPA rather than second-order approximations to the en-
+ergy  [22].   Overall  this  yields  a  term  in  the  correlation
+energy  that  behaves  as  log(rs),  as  well  as  part  of  the
+constant term.  The physical interpretation of this is that
+the interactions contributing to the diagrams become ef-
+fectively  screened  in  RPA,  where  they  remain  bare  in
+any ﬁnite-order perturbation theory.  In marked contrast,
+the ladders in the ladder-only approximation cannot do
+this, at least in the form posed by Freeman, where they
+have been linearized and still diverge [127].  Instead, the
+ladder-only approximation is only appropriate in two di-
+mensions,  as Freeman explored [127],  or as an addition
+to the RPA as achieved by Bishop and L¨uhrmann [29–
+31].   There  has  been  some  discussion  of  how  to  over-
+come  this  for  three  dimensions,  for  example  by  incor-
+poration of screening eﬀects [58,59,64] or through use
+of  a  modiﬁed  interaction  [55],  although  there  is  some                      FIG. 3:  Graph showing apparent divergences and
+suggestion that simple methods might be prone to fail-                          convergences on approach to the thermodynamic limit.
+ure [63,128].  Notwithstanding this, ladders-only theories                     The method by which these are derived are discussed in
+have still seen some applications (e.g.  Ref.129and130).                        the text.  In particular, each point represents a system
+   A  numerical  investigation  of  these  divergences  is  po-                 with a speciﬁc electron number (14-3006) and basis set
+tentially  more  far-reaching  in  scope  because  the  CCD                          size (M=38-8338) and the gas density is always
+equations are highly non-linear, but developments to this                      rs=1.0 a.u.  This is reproduced with modiﬁcations from
+end  have  been  surprisingly  recent.   To  the  best  of  our                                                Ref.93.
+knowledge,  the  ﬁrst  demonstration  that  real  fully  peri-
+odic  systems  simulations  also  have  divergent  MP2  en-                               N                    HF band gap        mCCD band gap
+ergies  was  due  to  Gr¨uneis  and  coworkers,  who  showed                                                     (a.u.)                  (a.u.)
+that the second-order divergence was visible in energies                                 114                        -0.6950                     -0.9066
+of  sodium  metal  [75].   More  recently,  work  by  Ohnishi                            342                        -0.4332                     -0.7047
+and  Hirata  take  an  approach  inspired  from  thermody-                               682                        -0.2927                     -0.6823
+namics and analyse the MP2 and CCD equations directly                                    970                        -0.2807                     -0.6365
+in terms of their scaling with volume [24,131].                                          1598                       -0.2167                     -0.6705
+   Here,  we will instead follow later work,  due to Shep-                               2090                       -0.1824                     -0.6931
+herd  and  Gr¨uneis  [9, 132],  where  it  was  shown  that  it                          2730                       -0.1654                     -0.6654
+is possible to reproduce the divergent behaviour numer-                                  3006                       -0.1507                     -0.7044
+ically with electron gas models by simulating a series of                         TABLE I: Band gaps for diﬀerent electron numbers
+systems of increasing electron number, N, and basis set                             from Hartree–Fock theory and the renormalised
+size, M, such that N∝∼ M  which corresponds to a ring                              Brueckner Hamiltonian one-particle eigenvalues in
+of  basis  functions  of  ﬁxed  width  around  the  fermi  sur-                                      mCCD (rs = 1.0 a.u.).
+face.  The constant of proportionality does not seem par-
+ticularly important, but the smallest that can easily be
+constructed, and hence the most eﬃcient, is (√2)3 [133].
+This  provides  a  framework  for  ﬁnding  thermodynamic                       energy to plateau out, forming our reference for what a
+limit properties within a ﬁnite-basis method; we discuss                       convergent method looks like.
+the limitations of this approach below.                                           It is possible to identify from this plot three types of
+   Various methods were described for how to track con-                        behaviour.  The ﬁrst type is those methods that simply
+vergences and divergences with system size, but here we                        track the MP2 energy and diverge: lCCD and rCCD. The
+will use the MP2 energy itself as the metric for approach                      second  grouping  is  rxmCCD,  CCD  and  RPA+SOSEX,
+to the thermodynamic limit since it should diverge as L                        methods that ﬁrmly converge.  The third group are those
+to within ﬁnite-size eﬀects.  We note that methods yield-                      methods that would otherwise be ﬁrmly divergent but for
+ing  energies  in  proportion  to  the  MP2  energy  will  also                the  presence  of  mosaics:  mCCD,  lmCCD  and  rmCCD.
+diverge.  Those that do not follow the MP2 energy either                       These seem to be convergent from the point of view that
+converge or diverge at a slower rate.                                          they drift away from their divergent counterpart (MP2,
+   Fig.3shows  the  behaviour  of  the  diﬀerent  channels                     lCCD and rCCD respectively).
+on  approach  to  the  thermodynamic  limit.   We  can  see                       The  divergence  of  lCCD  is  perhaps  not  unexpected
+that  the  MP2  energy  simply  forms  a  diagonal  line  of                   due to prior comments in the literature to this end [29–
+points corresponding to diﬀerent system sizes; CCD and                         31,127],  however,  that rCCD might diverge is perhaps
+RPA+SOSEX in contrast deviate sharply from the MP2                             surprising.    Given  the  equivalence  of  rCCD  with  full
+                                                                                                                                                   7
+
+                                                                             tem holds at this stage in our discussion, in spite of the
+                                                                             discovery of some divergences.  For the rings-only CCD,
+                                                                             mosaics were required to give a meaningful energy curve
+                                                                             free of pathologies.  For the ladders, addition of mosaics
+                                                                             made very little energetic diﬀerence.  As far as generalis-
+                                                                             ing the conclusions we drew to other electron numbers,
+                                                                             it is possible to see that ladders are still the most under-
+                                                                             correlating of all the (mosaic-based) methods, although
+                                                                             rmCCD seems to end up somewhere closer to mCCD for
+                                                                             this basis set size.  The same qualitative features of the 14
+                                                                             electron system are also present in the 54 electron system
+                                                                             (Fig.4).  This mirrors results from molecular systems [2];
+                                                                             it remains to be seen if these results are transferable to
+                                                                             other extended systems.
+                                                                               Another question we need to address is the strength of
+                                                                             this analysis.  One of the limitations that this has is that
+      FIG. 4:  Comparison between diﬀerent types of                          it can only examine divergences or convergences of a cer-
+  calculations involving rings (r), crossed-rings (x) and                    tain length scale — here we choose the MP2 energy diver-
+  mosaics (m) for the 54-electron system.  These show                        gence and the RPA energy convergence as our exemplars.
+strong qualitative resemblance to the 14-electron system                     If the energy of a method diverges or converges on a dif-
+                        shown in Fig.1a.                                     ferent length scale to either MP2 or RPA, this test would
+                                                                             almost certainly fail to notice this.  There is also the ef-
+                                                                             fect of high-lying parts of the momentum space which we
+RPA  [1, 41, 43, 44],  and  the  importance  of  full  RPA                   have omitted from our results:  Could these somehow ef-
+in studying screening interactions [134–136], it would be                    fect the calculation?  There is no available answer to this
+worthwhile investigating this further.  However, such an                     other than to remark that analytically predicted trends
+investigation is beyond the scope of this study.                             are  reproduced  which  lend  credence  to  these  numerical
+  Nevertheless,  both  rCCD  and  lCCD  seem  to  be  sta-                   ﬁndings.  Perhaps one of the troublesome aspects of this
+bilised  in  the  thermodynamic  limit  by  inclusion  of  mo-               analysis is that from Fig.3, it would seem that mosaics
+saic terms.  We rationalise this behaviour of those meth-                    correlate at this basis set size very strongly — far more
+ods by noting the mosaic terms serve to renormalise the                      strongly than RPA. Even if the method turns around as
+one-electron eigenvalues.  In particular for the UEG                         does mCCD, is it just going to be wildly over-correlated?
+                                                                             This is unclear, as we can only approach the thermody-
+                       ϵBi  =ϵHFi    + 12 ¯vilcdtcdil                        (18)namic limit whilst also being far from the complete basis
+                                                                             set limit; we shall leave this as an open question at this
+                       ϵBa  =ϵHFa − 1                                        time.
+                                      2 ¯vkladtadkl                       (19)
+for  occupied i  and  virtual a.    These  in  general  must                                     VI.   CONCLUSIONS
+be solved self-consistently with the corresponding ampli-
+tude equations.  Thus, mCCD is a kind of self-consistent
+second-order perturbation theory from a Brueckner one-                         In conclusion we have used modiﬁed and approximate
+body  Hamiltonian  reference  [137]  where    t  = v/∆˜ϵ  as                 coupled  cluster  doubles  (CCD)  equations,  where  terms
+discussed  earlier.   Because t <  0  and v >  0  [138],  this               have been separated into diﬀerent classes of diagrams, to
+renormalisation serves to open a gap for the HEG. Ta-                        study the energies of ﬁnite electron gases (N  = 14 and
+bleI demonstrates  that  for  a  series  of  systems  up  to                 54)  for  a  wide  variety  of  densities  and  have  compared
+N  = 3006,  the band gap for the renormalised eigenval-                      our ﬁndings to modern quantum Monte Carlo data.  We
+ues remains open.  This implies that all resultant theories                  ﬁnd in general that no combination of channels performs
+are performed with respect to an insulating reference and                    as  well  as  CCD  in  reproducing  energies.   In  particular,
+should be expected to converge, and this explains the be-                    rings-based  approximations  tend  to  overestimate  corre-
+haviour shown in Fig.3.  To conﬁrm this, we artiﬁcially                      lation energies and methods involving ladders underesti-
+gapped the Hartree–Fock eigenspectrum with a constant                        mate correlation energies.
+gap and this shows remarkably similar behaviour to the                         Approaching the thermodynamic limit, we present nu-
+mCCD on approach to the thermodynamic limit.  This is                        merical  ﬁndings  suggesting  that  rings-only  CCD  and
+consistent with the removal of the divergence of the form                    ladders-only CCD diverge at a similar rate to the second-
+∫      1
+ q=0  q+ξ dq,ξ> 0. It is unclear as to whether this, while                   order energy (taken here from MP2).  The rings-only di-
+being beneﬁcial to the convergence of a second-order en-                     vergence can be cured either by removing the antisym-
+ergy, has any physical interpretation.                                       metrization  on  the  four-index  integrals  to  make  direct
+  Much  of  what  we  described  for  the  14  electron  sys-                RPA, or by inclusion of crossed-rings.  We present strong
+                                                                                                                                             8
+
+evidence that inclusion of mosaic terms self-consistently
+renormalises  the  Hartree–Fock  eigenvalues,  opening  a
+band  gap  and  making  methods  including  mosaic  terms
+converge  at  the  thermodynamic  limit.    These  include
+mosaic-only CCD, which is equivalent to self-consistent
+MP2 based on the Brueckner one-body Hamiltonian.
+
+
+
+                 ACKNOWLEDGMENTS
+
+  The  authors  thank  Andreas  Gr¨uneis  for  helpful  dis-
+cussions and the authors of Ref.107for early access to
+their  data.   One  of  us  (JJS)  would  like  to  thank  the
+Royal Commission for the Exhibition of 1851 for a Re-
+search Fellowship (2013–2016).  This work was supported
+by the National Science Foundation (CHE-1102601), the
+Welch  Foundation  (C-0036)  and  DOE-CMCSN  (DE-
+SC0006650).
+                                                                                                                                                                                                       9
+
+
+
+
+
+     rs (a.u.)           lmCCD (a.u.)      lmrCCD (a.u.)      mCCD (a.u.)         CCD (a.u.)        rmCCD (a.u.)     rxmCCD (a.u.)
+          0.5                     -2.038                   -2.184                   -2.394                   -2.372                   -2.620                   -2.885
+          1.0                     -1.600                   -1.799                   -2.055                   -2.052                   -2.423                   -2.941
+          2.0                     -1.119                   -1.331                   -1.592                   -1.620                   -2.077                   -2.977
+          3.0                          -                           -                       -1.299                       -                           -                           -
+          4.0                          -                           -                       -1.098                       -                           -                           -
+          5.0                     -0.591                   -0.756                   -0.952                   -0.995                   -1.413                   -2.576
+          7.5                          -                           -                       -0.717                       -                           -                           -
+         10.0                    -0.331                   -0.440                   -0.577                   -0.609                   -0.919                   -1.839
+         15.0                         -                           -                       -0.416                   -0.440                       -                           -
+         20.0                    -0.176                   -0.242                   -0.327                       -                       -0.545                   -1.131
+
+TABLE II: Complete basis set energies for the 54 electron gas.  Abbreviations are explained in the accompanying
+                                                                              paper, plotted in Fig.4.
+
+
+
+
+
+
+
+
+
+ rs (a.u.)       lmCCD                     mCCD             CCD (a.u.)     rmCCD                      rxmCCD              d+S (KS)           dRPA (KS)             d+S (HF)               dRPA
+                        (a.u.)              (a.u.)                                   (a.u.)              (a.u.)               (a.u.)              (a.u.)              (a.u.)          (HF) (a.u.)
+     0.1             -0.627          -0.659          -0.663          -0.678          -0.699          -0.658          -0.995          -0.635          -0.961
+     0.2             -0.579          -0.634          -0.643          -0.672          -0.713          -0.635          -0.963          -0.594          -0.902
+     0.3             -0.538          -0.611          -0.624          -0.665          -0.728          -0.614          -0.935          -0.559          -0.852
+     0.4             -0.503          -0.589          -0.605          -0.658          -0.743          -0.595          -0.910          -0.528          -0.808
+     0.5             -0.472          -0.569          -0.588          -0.651          -0.758          -0.577          -0.886          -0.502          -0.769
+     0.6             -0.445          -0.549          -0.572          -0.643          -0.774          -0.561          -0.865          -0.478          -0.735
+     0.7             -0.421          -0.531          -0.556          -0.636          -0.790          -0.547          -0.845          -0.457          -0.705
+     0.8             -0.400          -0.515          -0.541          -0.628          -0.807          -0.533          -0.827          -0.438          -0.677
+     0.9             -0.380          -0.499          -0.527          -0.621          -0.824          -0.521          -0.809          -0.421          -0.652
+     1.0             -0.363          -0.484          -0.514          -0.613          -0.841          -0.509          -0.794          -0.406          -0.629
+     2.0             -0.250               -               -0.409          -0.537          -0.993          -0.423          -0.673          -0.301          -0.474
+     3.0             -0.191               -               -0.339          -0.469          -0.994          -0.368          -0.596          -0.244          -0.387
+     4.0             -0.155               -               -0.290          -0.415          -0.917          -0.330          -0.541          -0.206          -0.329
+     5.0             -0.131          -0.223          -0.253          -0.371          -0.833          -0.301          -0.499          -0.180          -0.288
+     6.0             -0.113               -               -0.225          -0.335          -0.756          -0.278          -0.464          -0.159          -0.256
+     7.0             -0.099               -               -0.203          -0.305          -0.691          -0.259          -0.436          -0.144          -0.232
+     8.0             -0.089               -               -0.184          -0.281          -0.634          -0.243          -0.412          -0.131          -0.212
+     9.0             -0.080               -               -0.169          -0.260          -0.586          -0.230          -0.391          -0.121          -0.195
+    10.0            -0.073          -0.136          -0.156          -0.242          -0.545          -0.218          -0.373          -0.112          -0.181
+    15.0            -0.051               -                   -               -0.180          -0.402               -                   -               -0.082          -0.135
+    20.0            -0.039          -0.077          -0.089          -0.144          -0.319               -                   -               -0.066          -0.108
+    30.0            -0.027          -0.055          -0.062          -0.103          -0.227               -                   -               -0.047          -0.078
+    40.0            -0.020          -0.042          -0.048          -0.080          -0.176               -                   -               -0.037          -0.061
+    50.0            -0.016          -0.034          -0.039          -0.066          -0.144               -                   -               -0.030          -0.051
+    60.0            -0.014          -0.029          -0.033          -0.056          -0.122               -                   -               -0.026          -0.043
+    70.0            -0.012          -0.025          -0.028          -0.049          -0.106               -                   -               -0.023          -0.038
+    80.0            -0.010          -0.022          -0.025          -0.043          -0.094               -                   -               -0.020          -0.034
+    90.0            -0.009          -0.020          -0.022          -0.039          -0.084               -                   -               -0.018          -0.030
+   100.0           -0.008          -0.018          -0.020          -0.035          -0.076               -                   -               -0.016          -0.027
+
+TABLE III: Complete basis set energies for the 14 electron gas.  Abbreviations are explained in the accompanying
+                                                 paper, plotted in Fig.2.  “d+S” refers to dRPA+SOSEX.
+                                                                                                                                                               10
+
+
+
+
+
+ [1]G. E. Scuseria, T. M. Henderson,  and D. C. Sorensen,                            [35]A.  Heßelmann  and  A.  G¨orling,Mol.  Phys.              109,  2473
+     J. Chem. Phys. 129, 231101 (2008).                                                    (2011).
+ [2]G. E. Scuseria, T. M. Henderson,   and I. W. Bulik,J.                            [36]F. Furche,J. Chem. Phys.          129, 114105 (2008).
+     Chem. Phys. 139, 104113 (2013).                                                 [37]F. Furche,J. Chem. Phys.          129, 114105 (2008).
+ [3]D.  Peng,   S.  N.  Steinmann,   H.  van  Aggelen,     and                       [38]H. Eshuis, J. Yarkony,   and F. Furche,J. Chem. Phys.
+     W. Yang,J. Chem. Phys.       139, 104112 (2013).                                      132, 234114 (2010).
+ [4]H. van Aggelen, Y. Yang,  and W. Yang,Phys. Rev. A                               [39]H. Eshuis and F. Furche,J. Chem. Phys.          136, 084105
+     88, 030501 (2013).                                                                    (2012).
+ [5]J.     ˇC´ıˇzek,J. Chem. Phys.      45, 4256 (1966).                             [40]J. Paier, B. G. Janesko, T. M. Henderson, G. E. Scuse-
+ [6]J.  J.  Shepherd,  G.  Booth,  A.  Gr¨uneis,   and  A.  Alavi,                         ria,  A. Gr¨uneis,   and G. Kresse,J. Chem. Phys.           132,
+     Phys. Rev. B 85, 081103 (2012).                                                       094103 (2010).
+ [7]J. J. Shepherd, G. H. Booth,   and A. Alavi,J. Chem.                             [41]B. G. Janesko, T. M. Henderson,   and G. E. Scuseria,
+     Phys. 136, 244101 (2012).                                                             J. Chem. Phys. 130, 081105 (2009).
+ [8]J.  J.  Shepherd,  A.  Gr¨uneis,  G.  H.  Booth,  G.  Kresse,                    [42]B. G. Janesko, T. M. Henderson,   and G. E. Scuseria,
+     and A. Alavi,Phys. Rev. B    86, 035111 (2012).                                       J. Chem. Phys. 131, 034110 (2009).
+ [9]J. J. Shepherd and A. Gr¨uneis,Phys. Rev. Lett.            110,                  [43]T. M. Henderson and G. E. Scuseria,Mol. Phys.                 108,
+     226401 (2013).                                                                        2511 (2010).
+[10]A. Gr¨uneis, J. J. Shepherd, A. Alavi, D. P. Tew,   and                          [44]R. M. Irelan, T. M. Henderson,  and G. E. Scuseria,J.
+     G. H. Booth,J. Chem. Phys.      139, 084112 (2013).                                   Chem. Phys. 135, 094105 (2011).
+[11]M. Marsman, A. Gr¨uneis, J. Paier,   and G. Kresse,J.                            [45]B. G. Janesko and G. E. Scuseria,J. Chem. Phys.                 131,
+     Chem. Phys. 130, 184103 (2009).                                                       154106 (2009).
+[12]P. L´opez R´ıos, A. Ma, N. D. Drummond, M. D. Towler,                            [46]H. Eshuis,  J. E. Bates,   and F. Furche,Theor. Chem.
+     and R. J. Needs,Phys. Rev. E          74, 066701 (2006).                              Acc. 131, 1 (2012).
+[13]Y.  Kwon,  D.  M.  Ceperley,   and  R.  M.  Martin,Phys.                         [47]X. Ren, P. Rinke, C. Joas,  and M. Scheﬄer,Journal of
+     Rev. B 58, 6800 (1998).                                                               Materials Science 47, 7447 (2012).
+[14]M. Holzmann, D. M. Ceperley, C. Pierleoni,  and K. Es-                           [48]J. Paier, X. Ren, P. Rinke, G. E. Scuseria, A. Gr¨uneis,
+     ler,Phys. Rev. E     68, 046707 (2003).                                               G. Kresse,   and M. Scheﬄer,New J. Phys.          14, 043002
+[15]G. Ortiz and P. Ballone,Phys. Rev. B                50, 1391 (1994).                   (2012).
+[16]D. M. Ceperley and B. J. Alder,Phys. Rev. Lett.              45,                 [49]J. F. Dobson, A. White,  and A. Rubio,Phys. Rev. Lett.
+     566 (1980).                                                                           96, 073201 (2006).
+[17]G. G. Spink, R. J. Needs,  and N. D. Drummond,Phys.                              [50]J.  Harl  and  G.  Kresse,Phys.  Rev.  Lett.               103,  056401
+     Rev. B 88, 085121 (2013).                                                             (2009).
+[18]N.  D.  Drummond  and  R.  J.  Needs,Phys.  Rev.  B               88,            [51]S. Leb`egue, J. Harl, T. Gould, J. G.       ´Angy´an, G. Kresse,
+     035133 (2013).                                                                        and J. F. Dobson,Phys. Rev. Lett.            105, 196401 (2010).
+[19]N.  D.  Drummond  and  R.  J.  Needs,Phys.  Rev.  B               87,            [52]J. Toulouse, W. Zhu, A. Savin, G. Jansen,   and J. G.
+     045131 (2013).                                                                        ´Angy´an,J. Chem. Phys.     135, 084119 (2011).
+[20]E. W. Brown, J. L. DuBois, M. Holzmann,   and D. M.                              [53]J. G.       ´Angy´an, R.-F. Liu, J. Toulouse,   and G. Jansen,
+     Ceperley,Phys. Rev. B  88, 081102 (2013).                                             J. Chem. Theory Comput. 7, 3116 (2011).
+[21]V. W. Macke, z. Naturforschg.      5a, 192 (1950).                               [54]J.  Toulouse,  I.  C.  Gerber,  G.  Jansen,  A.  Savin,   and
+[22]M.  Gell-Mann  and  K.  A.  Brueckner,Phys.  Rev.             106,                     J. G.  ´Angy´an,Phys. Rev. Lett.     102, 096404 (2009).
+     364 (1957).                                                                     [55]L. Calmels and A. Gold,Phys. Rev. B             57, 1436 (1998).
+[23]R.  D.  Mattuck,       A  guide  to  Feynman  diagrams  in  the                  [56]S. Nagano, K. S. Singwi,  and S. Ohnishi,Phys. Rev. B
+     many-body  problem,  2nd  ed.,  Dover  books  on  physics                             29, 1209 (1984).
+     and chemistry (Dover Publications, New York, 1992).                             [57]H. Yasuhara,Solid State Commun.                 11, 1481 (1972).
+[24]S. Hirata and Y.-y. Ohnishi,Phys. Chem. Chem. Phys.                              [58]H. Yasuhara,J. Phys. Soc. Jpn.                 36, 361 (1974).
+     14, 7800 (2012).                                                                [59]H. Yasuhara,J. Phys. Soc. Jpn.                 37, 579A (1974).
+[25]D. Bohm and D. Pines,Phys. Rev.              92, 609 (1953).                     [60]D. N. Lowy and G. E. Brown,Phys. Rev. B           12, 2138
+[26]D. Pines and D. Bohm,Phys. Rev.              85, 338 (1952).                           (1975).
+[27]D. Bohm and D. Pines,Phys. Rev.              82, 625 (1951).                     [61]K.  Bedell  and  G.  E.  Brown,Phys.  Rev.  B           17,  4512
+[28]D. L. Freeman,Phys. Rev. B                15, 5512 (1977).                             (1978).
+[29]R. F. Bishop and K. H. L¨uhrmann,Phys. Rev. B                   17,              [62]Z. Qian,Phys. Rev. B             73, 035106 (2006).
+     3757 (1978).                                                                    [63]N.  D.  Drummond  and  R.  J.  Needs,Phys.  Rev.  B               79,
+[30]R. F. Bishop and K. H. L¨uhrmann,Phys. Rev. B                   26,                    085414 (2009).
+     5523 (1982).                                                                    [64]K. Awa and T. Asahi,J. Phys. Soc. Jpn.              48, 757 (1980).
+[31]R. F. Bishop,Theoretica chimica acta                80, 95 (1991).               [65]H.  Yasuhara,  H.  Suehiro,   and  Y.  Ousaka,Journal  of
+[32]R. F. Bishop, W. Piechocki,   and G. A. Stevens,Few-                                   Physics C: Solid State Physics 21, 4045 (1988).
+     Body Systems 4, 161 (1988).                                                     [66]G. Hagen,  T. Papenbrock,  A. Ekstr¨om,  K. A. Wendt,
+[33]R. F. Bishop, W. Piechocki,   and G. A. Stevens,Few-                                   G. Baardsen, S. Gandolﬁ, M. Hjorth-Jensen,  and C. J.
+     Body Systems 4, 179 (1988).                                                           Horowitz, Coupled-cluster calculations of nucleonic mat-
+[34]F. Furche,Phys. Rev. B          64, 195120 (2001).                                     ter, arXiv e-print 1311.2925 (2013).
+                                                                                                                                                              11
+
+[67]J.  Paier,  C.  V.  Diaconu,  G.  E.  Scuseria,  M.  Guidon,                    [98]A.  Gr¨uneis,  M.  Marsman,  J.  Harl,  L.  Schimka,    and
+     J.  VandeVondele,    and  J.  Hutter,Phys.  Rev.  B           80,                    G. Kresse,J. Chem. Phys.  131, 154115 (2009).
+     174114 (2009).                                                                 [99]J. Harl and G. Kresse,Phys. Rev. B               77, 045136 (2008).
+[68]R. Dovesi, C. Pisani, C. Roetti,  and V. R. Saunders,J.                       [100]J. Harl, L. Schimka,   and G. Kresse,Phys. Rev. B                 81,
+     Chem. Phys. 81, 2839 (1984).                                                         115126 (2010).
+[69]M. J. Gillan, D. Alf`e, S. de Gironcoli,  and F. R. Manby,                    [101]G. E. Scuseria, T. J. Lee,  and H. F. Schaefer III,Chem.
+     Journal  of  Computational  Chemistry  29,  2098–2106                                Phys. Lett. 130, 236 (1986).
+     (2008).                                                                      [102]G. H. Booth, A. J. W. Thom,   and A. Alavi,J. Chem.
+[70]C. Pisani, L. Maschio, S. Casassa, M. Halo, M. Sch¨utz,                               Phys. 131, 054106 (2009).
+     and  D.  Usvyat,Journal  of  Computational  Chemistry                        [103]D. Cleland, G. H. Booth,  and A. Alavi,J. Chem. Phys.
+     29, 2113–2124 (2008).                                                                132, 041103 (2010).
+[71]P.  Schwerdtfeger,  B.  Assadollahzadeh,    and  A.  Her-                     [104]G. H. Booth, D. Cleland, A. J. W. Thom,  and A. Alavi,
+     mann,Phys. Rev. B         82, 205111 (2010).                                         J. Chem. Phys. 135, 084104 (2011).
+[72]L.  Maschio,   D.  Usvyat,   F.  R.  Manby,   S.  Casassa,                    [105]P. L´opez R´ıos, Personal communication (2013).
+     C.  Pisani,   and  M.  Sch¨utz,Phys.  Rev.  B      76,  075101               [106]R.  J.  Needs,  M.  D.  Towler,  N.  D.  Drummond,    and
+     (2007).                                                                              P. L´opez R´ıos,J. Phys.:  Condens. Matter      22, 023201
+[73]D.   Usvyat,   B.   Civalleri,   L.   Maschio,   R.   Dovesi,                         (2010).
+     C. Pisani,  and M. Sch¨utz,J. Chem. Phys.      134, 214105                   [107]J.  J.  Shepherd,  P.  L.  R´ıos,  N.  D.  Drummond,  R.  J.
+     (2011).                                                                              Needs,  and A. Alavi, In preparation (2013).
+[74]S. Hirata, R. Podeszwa, M. Tobita,  and R. J. Bartlett,                       [108]W. M. C. Foulkes, L. Mitas, R. J. Needs,   and G. Ra-
+     J. Chem. Phys. 120, 2581 (2004).                                                     jagopal,Rev. Mod. Phys.           73, 33 (2001).
+[75]A.  Gr¨uneis,  M.  Marsman,    and  G.  Kresse,J.  Chem.                      [109]F. Neese, F. Wennmohs,  and A. Hansen,J. Chem. Phys.
+     Phys. 133, 074107 (2010).                                                            130, 114108 (2009).
+[76]R. Pino and G. E. Scuseria,J. Chem. Phys.                 121, 8113           [110]W. Meyer,Int. J. Quant. Chem.           5, 341–348 (1971).
+     (2004).                                                                      [111]J. Paldus, J.         ˇC´ıˇzek,   and M. Takahashi,Phys. Rev. A
+[77]M. Del Ben, J. Hutter,  and J. VandeVondele,J. Chem.                                  30, 2193 (1984).
+     Theory Comput. 8, 4177 (2012).                                               [112]R.  J.  Bartlett  and  M.  Musia l,J.  Chem.  Phys.         125,
+[78]H. Geckeis, J. L¨utzenkirchen, R. Polly, T. Rabung,  and                              204105 (2006).
+     M. Schmidt,Chem. Rev.          113, 1016 (2013).                             [113]L. M.  J. Huntington and M. Nooijen,J. Chem. Phys.
+[79]M. Del Ben, J. Hutter,  and J. VandeVondele,J. Chem.                                  133, 184109 (2010).
+     Theory Comput. 9, 2654 (2013).                                               [114]O. Masur, D. Usvyat,   and M. Sch¨utz,J. Chem. Phys.
+[80]D. Usvyat,J. Chem. Phys.         139, 194101 (2013).                                  139, 164116 (2013).
+[81]C. M¨uller and D. Usvyat,J. Chem. Theory Comput.         9,                   [115]D. Kats and F. R. Manby,J. Chem. Phys.        139, 021102
+     5590 (2013).                                                                         (2013).
+[82]C. M¨uller and B. Paulus,Phys. Chem. Chem. Phys.             14,              [116]G. E. Scuseria,Int. J. Quant. Chem.                  55, 165–171 (1995).
+     7605 (2012).                                                                 [117]R. J. Bartlett,Chem. Phys. Lett.            484, 1 (2009).
+[83]S.  J.  Nolan,  P.  J.  Bygrave,  N.  L.  Allan,    and  F.  R.               [118]J.  D.  Watts  and  R.  J.  Bartlett,Int.  J.  Quant.  Chem.
+     Manby,J. Phys.:  Condens. Matter  22, 074201 (2010).                                 52, 195–203 (1994).
+[84]A.  Gr¨uneis,  G.  H.  Booth,  M.  Marsman,  J.  Spencer,                     [119]C. D. Sherrill, A. I. Krylov, E. F. C. Byrd,  and M. Head-
+     A.  Alavi,   and  G.  Kresse,J.  Chem.  Theory  Comput.                              Gordon,J. Chem. Phys.            109, 4171 (1998).
+     7, 2780 (2011).                                                              [120]C. Hampel, K. A. Peterson,   and H.-J. Werner,Chem.
+[85]G.  H.  Booth,  A.  Gr¨uneis,  G.  Kresse,    and  A.  Alavi,                         Phys. Lett. 190, 1 (1992).
+     Nature 493, 365 (2013).                                                      [121]G. E. Scuseria,Chem. Phys. Lett.                   226, 251 (1994).
+[86]M.  Ke¸celi  and  S.  Hirata,Phys.  Rev.  B                82,  115107        [122]J. E. Moussa,J. Chem. Phys.               140, 014107 (2014).
+     (2010).                                                                      [123]L.  Baguet,  F.  Delyon,  B.  Bernu,   and  M.  Holzmann,
+[87]R. J. Bartlett and M. Musia l,Rev. Mod. Phys.       79, 291                           Phys. Rev. Lett. 111, 166402 (2013).
+     (2007).                                                                      [124]S.  Zhang  and  D.  M.  Ceperley, Phys.  Rev.  Lett.        100,
+[88]R. J. Bartlett and D. M. Silver,Chem. Phys. Lett.         29,                         236404 (2008).
+     199 (1974).                                                                  [125]N. D. Drummond, Z. Radnai, J. R. Trail, M. D. Towler,
+[89]H. P. Kelly,Phys. Rev.       144, 39 (1966).                                          and R. J. Needs,Phys. Rev. B          69, 085116 (2004).
+[90]H. P. Kelly,Phys. Rev.       136, B896 (1964).                                [126]L. Onsager, L. Mittag,  and M. J. Stephen,Annalen der
+[91]H. P. Kelly,Phys. Rev.       131, 684 (1963).                                         Physik 473, 71–77 (1966).
+[92]P. N. S. Ostlund and M. F. Bowen,Theoretica Chimica                           [127]D. L. Freeman,Journal of Physics C: Solid State Physics
+     Acta 40, 175 (1975).                                                                 16, 711 (1983).
+[93]J.  J.  Shepherd,  T.  M.  Henderson,    and  G.  E.  Scuse-                  [128]J. Cioslowski and P. Ziesche,Phys. Rev. B           71, 125105
+     ria,  Range  Separated  Brueckner  Coupled  Cluster  Dou-                            (2005).
+     bles Theory, arXiv e-print 1310.6425 (2013).                                 [129]A. Yurtsever and B. Tanatar,Phys. Rev. B                 63, 125320
+[94]A. Roggero, A. Mukherjee,  and F. Pederiva,Phys. Rev.                                 (2001).
+     B 88, 115138 (2013).                                                         [130]L.  Kecke  and  W.  H¨ausler,Phys.  Rev.  B                69,  085103
+[95]H. A. Bethe,Phys. Rev.           103, 1353 (1956).                                    (2004).
+[96]K. A. Brueckner, C. A. Levinson,  and H. M. Mahmoud,                          [131]S. Hirata,Theor. Chem. Acc.                129, 727 (2011).
+     Phys. Rev. 95, 217 (1954).                                                   [132]J. J. Shepherd and A. Gr¨uneis,         Correlation Energy Di-
+[97]K. A. Brueckner,Phys. Rev.            96, 508 (1954).                                 vergences in Metallic Systems, arXiv e-print 1208.6103
+                                                                                          (2012).
+                                                                                                                                                               12
+
+[133]For precise values of        M the reader is referred to Ref.132.              [136]M.  Oshikiri  and  F.  Aryasetiawan,Phys.  Rev.  B            60,
+[134]I. Campillo,  J. M. Pitarke,  A. Rubio,  E. Zarate,   and                             10754 (1999).
+       P. M. Echenique,Phys. Rev. Lett.            83, 2230 (1999).                 [137]R. K. Nesbet,Phys. Rev.           109, 1632 (1958).
+[135]S.  Kurth  and  J.  P.  Perdew,Phys.  Rev.  B                59,  10461        [138]This has been investigated explicitly by looking at the
+       (1999).                                                                             exact wavefunction in Ref.139.
+                                                                                    [139]J. J. Shepherd,         A Quantum Chemical Perspective on the
+                                                                                           Homogeneous Electron Gas, Ph.D. thesis, University of
+                                                                                           Cambridge (2013).
