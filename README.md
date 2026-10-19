@@ -2,12 +2,11 @@
 <!-- Header and footer animations are text-mode GIFs from scripts/ascii.mjs. -->
 <img src="figures/qmbl-ascii.gif" width="920" alt="QMBL: the Quantum Many-Body Leaderboard">
 
-<!-- All badges via shields.io. Zenodo's own badge endpoint (zenodo.org/badge/DOI/....svg)
-     returns 403 and renders as a broken image, so the DOI badge is built here instead. -->
+<!-- All badges via shields.io: Zenodo's own DOI badge returns 403. -->
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22753734-1682D4)](https://doi.org/10.5281/zenodo.22753734)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
-[![entries](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftzerweck%2Fquantum-many-body-leaderboard%2Fmain%2Fdata%2F_summary.json&query=%24.rows&label=entries&color=success)](data/_summary.json)
-[![status: beta](https://img.shields.io/badge/status-beta-eb6834)](#details)
+[![energies](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fquantum-many-body-leaderboard%2Fquantum-many-body-leaderboard%2Fmain%2Fdata%2F_summary.json&query=%24.rows&label=energies&color=success)](data/_summary.json)
+![status: beta](https://img.shields.io/badge/status-beta-eb6834)
 
 **A live record of SOTA published ground-state energies for lattice Hamiltonians.**
 
@@ -619,48 +618,41 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 ## Details
 
-Every row in the dataset further contains a declared `bound_type` saying what kind of quantity the energy value actually is. Also see [units and conventions](DATA.md#units-and-conventions) and [the ranking rules](RULES.md#6-records-and-ties). 
+Every row has a `bound_type` that says what kind of number the energy is
+([RULES.md §4](RULES.md#4-bound_type)).
 
-**Bold** is the record: the exact energy where the instance is solved, otherwise the lowest
-energy that is not flagged, of any kind and with or without an error bar. 
+**Bold** marks the record. [RULES.md §6](RULES.md#6-records-and-ties) says how it is chosen.
 
-**&#9675;** marks a row where **we found no error
-metric** (neither an error bar nor an energy variance) in the source we read; 
+&#9675; marks a row where no error bar and no energy variance was found in the source.
+&dagger; marks a sampled energy with a variance but no error bar. Both rows stay in rank
+order. [Error metrics](DATA.md#error-metrics) defines the markers.
 
-**&dagger;** marks a
-sampled energy with a variance but no error bar. 
-
-Both rows stay in the table and in rank
-order; the marker is an open question regarding ambiguous information (see [error metrics](DATA.md#error-metrics)).
-
-Check [RULES.md](RULES.md) for how a record is decided.
-
-Check [DATA.md](DATA.md) for stored units, conventions, error-metrics, and provenance and defect handling.
+Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and defects:
+[DATA.md](DATA.md).
 
 ## Contributing
 
-**New entries**: use the [new result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-result.yml)
-(instance, number, error bar and how it was estimated, the `bound_type`, and the primary
+To add an energy, use the [new result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-result.yml)
+(instance, energy, error bar and how it was estimated, the `bound_type`, and the primary
 reference), or open a PR with the same. A lattice problem QMBL does not have yet goes
-through the [new instance form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-instance.yml). A row is `pending` for 30
-days and `confirmed` if no objection is unresolved.
+through the [new instance form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-instance.yml).
+A new row is `pending` and then `confirmed`
+([RULES.md §10](RULES.md#10-pending-confirmed-objections)).
 
-**Corrections welcome**: Open an issue against it. Be specific and technical; 
-the admissible grounds are listed in
-[§10](RULES.md#10-pending-confirmed-objections).
+To correct a row, open an issue on that row. Be specific and technical.
+[RULES.md §10](RULES.md#10-pending-confirmed-objections) lists the grounds.
 
-**If your row has no error bar, send the error bar.** A sampled energy without one still
-ranks and can hold the record, but a reader cannot tell whether it beats its neighbours.
+A sampled energy without an error bar is marked &dagger;. Send the error bar so the row can
+be compared with its neighbours.
 
 ## Citing
 
 > T. Zerweck and J. Carrasquilla, *QMBL: the Quantum Many-Body Leaderboard*,
 > [arXiv:2610.22387](https://arxiv.org/abs/2610.22387) (2026).
 
-To cite the data itself, use the Zenodo concept DOI, which always resolves to the latest
-release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
+To cite the data itself, use the Zenodo concept DOI, which resolves to the latest release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
-531 of QMBL’s 2511 rows (21 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported row, cite that paper too:
+531 of QMBL’s 2511 rows (21 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)
