@@ -1,0 +1,65 @@
+{
+  "model": "HEG3D",
+  "lattice": "bcc",
+  "n_sites": 512,
+  "boundary": "P",
+  "params": {
+    "N_up": 256,
+    "N_dn": 256,
+    "rs": 100,
+    "twist": "Gamma"
+  },
+  "instance_id": "HEG3D/bcc_512_P_256_256_100",
+  "rows": [
+    {
+      "energy": -3.91969792,
+      "sigma": 0.00004608,
+      "energy_variance": null,
+      "dof": 512,
+      "einf": null,
+      "v_score": null,
+      "method": "Slater-Jastrow",
+      "method_detail": "antiferromagnetic bcc crystal",
+      "method_as_published": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "S. Azadi & N. D. Drummond, Low-density phase diagram of the three-dimensional electron gas, Phys. Rev. B 105, 245135 (2022), arXiv:2201.08743, doi:10.1103/PhysRevB.105.245135 (Supplemental Material)",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "−0.00765566(9)",
+        "note": "SM Table X, N = 512, row E_VMC, column rs = 100; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 326; printed in Ha per electron | bcc simulation cell of N = n^3 electrons holding a bcc Wigner crystal; crystal energies are not twist-averaged and the twist has no observable effect (main text); the same convention as the main-text crystal rows (Tables I and II), which QMBL carries. | variance reported as 0.0000289(3), not stored: convention not verified",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -3.931648,
+      "sigma": 0.0000512,
+      "energy_variance": null,
+      "dof": 512,
+      "einf": null,
+      "v_score": null,
+      "method": "Fixed-node DMC",
+      "method_detail": "trial state: Slater-Jastrow, antiferromagnetic bcc crystal; extrapolated: Δτ → 0",
+      "method_as_published": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "family": "DMC",
+      "bound_type": "projected",
+      "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
+      "reference": "S. Azadi & N. D. Drummond, Low-density phase diagram of the three-dimensional electron gas, Phys. Rev. B 105, 245135 (2022), arXiv:2201.08743, doi:10.1103/PhysRevB.105.245135 (Supplemental Material)",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "−0.0076790(1)",
+        "note": "SM Table X, N = 512, row E_DMC, column rs = 100; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 328; printed in Ha per electron | bcc simulation cell of N = n^3 electrons holding a bcc Wigner crystal; crystal energies are not twist-averaged and the twist has no observable effect (main text); the same convention as the main-text crystal rows (Tables I and II), which QMBL carries.",
+        "secondary_of": null
+      }
+    }
+  ]
+}
