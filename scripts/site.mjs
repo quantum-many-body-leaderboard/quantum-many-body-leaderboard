@@ -1138,7 +1138,9 @@ function contributePage() {
   A missing field shows as <code>n/a</code> and does not block the row
   (<a href="${RULES}#3-required-fields">rules &sect;3</a>).</li>
   <li>To add a missing instance, use the <a href="${REPO}/issues/new?template=new-instance.yml">new instance form</a>.
-  Give the Hamiltonian, cluster, boundaries, couplings and sector, and the paper that defines it.</li>
+  For a lattice model, give the Hamiltonian, cluster, boundaries, couplings and sector. For the
+  homogeneous electron gas, give the dimension, cell, electron numbers, <code>rs</code> and twist
+  (<a href="${RULES}#121-instance">rules &sect;12.1</a>). In both cases, give the paper that defines it.</li>
   <li>If a number is wrong or attributed to the wrong paper, name the instance and what it
   should be. Rows are corrected in place; git keeps the history.</li>
   <li>If you know an error bar we could not find, tell us. ${b.rows} sampled energies on ${b.instances}
