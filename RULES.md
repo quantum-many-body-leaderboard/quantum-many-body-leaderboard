@@ -371,11 +371,16 @@ Cases:
      bound; extrapolated in the truncation error it is not. One sentence in the methods
      section decides the class.
 
-## 10. Pending, confirmed, objections
+## 10. Review and objections
 
-Anyone may object by opening an issue on the row. An objection must be specific and
-technical. A new row is `pending` for 30 days, then `confirmed` if no objection is
-unresolved. Admissible grounds:
+A submission is an issue or a pull request. It becomes a row only after a maintainer (a
+person with write access to the repository) has checked it against its source (§8, §9). The
+row then carries the check as its verification
+([DATA.md](DATA.md#verifications)). A submission that is not accepted is answered in its
+issue with the clause it fails.
+
+Anyone may object to any row at any time by opening an issue on the row. An objection must
+be specific and technical. Admissible grounds:
 
 - wrong symmetry sector, particle number, or boundary conditions;
 - wrong unit convention (§5);
@@ -387,8 +392,9 @@ unresolved. Admissible grounds:
   non-representative set of configurations (§9, the kagome case);
 - the number cannot be located in the cited source (§8).
 
-The submitter may correct or withdraw. A confirmed row is overturned only by an objection
-that meets the same bar. Every decision on an objection cites a clause. A flag is lifted by a
+A maintainer decides each objection. The submitter may correct or withdraw. A row is
+overturned only by an objection that meets the same bar. Every decision on a submission or an
+objection cites a clause. A flag is lifted by a
 correction of `defect` to null in `scripts/corrections.mjs`; the finding stays on the row, in
 `from` (§11).
 

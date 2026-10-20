@@ -1100,7 +1100,7 @@ ${recordBox}
 
 ${flagged ? `<section><h2>Flagged rows</h2>
   <p>A flagged row stays listed in rank order but cannot hold the record.
-  <a href="${RULES}#10-pending-confirmed-objections">Rules &sect;10</a> says how a flag is lifted or upheld.</p>
+  <a href="${RULES}#10-review-and-objections">Rules &sect;10</a> says how a flag is lifted or upheld.</p>
   ${flagged}</section>` : ""}
 
 ${verified ? `<section><h2>How these numbers were read</h2>
@@ -1147,7 +1147,7 @@ function contributePage() {
   (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>).</li>
   <li>To object to a row, open an issue on a technical ground, for example a wrong symmetry sector,
   a misdeclared <code>bound_type</code> or an error bar with no autocorrelation correction.
-  <a href="${RULES}#10-pending-confirmed-objections">Rules &sect;10</a> lists the grounds and gives the process.</li>
+  <a href="${RULES}#10-review-and-objections">Rules &sect;10</a> lists the grounds and gives the process.</li>
   <li>To add what a number cost, give the GPU or CPU hours with the device, the parameter count, or the wall-clock time.
   ${costed} energies state GPU or CPU hours or a parameter count; the
   <a href="/#energy-vs-compute">energy-versus-cost figures</a> use them
