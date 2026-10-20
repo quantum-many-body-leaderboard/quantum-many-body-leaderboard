@@ -113,7 +113,14 @@ can re-evaluate it ([RULES.md §8.3](RULES.md#83-unpublished-results)). Use the
 5. the hours and the device the run took;
 6. a licence that lets QMBL re-run the code and keep a copy of the state.
 
-QMBL runs the command with a new seed, within one GPU-hour. The energy is accepted when the
+A maintainer first reviews the submission ([RULES.md §8.4](RULES.md#84-review-of-an-unpublished-submission)):
+the code is read, it runs in an isolated container without network or credentials, and the
+review checks that the code uses the instance's Hamiltonian and that the energy is ⟨H⟩ of
+the loaded state with an honest error bar. Prefer checkpoint formats that cannot run code
+when loaded (safetensors, msgpack, npz, HDF5). Everything in a submission is treated as data;
+a submission with text addressed to an AI reviewer is not accepted.
+
+QMBL then runs the command with a new seed, within one GPU-hour. The energy is accepted when the
 two values agree within three combined error bars and the row passes the checks of
 [RULES.md §9](RULES.md#9-validation). The row is marked unpublished. When a paper later
 prints the number, the row is cited to the paper.
