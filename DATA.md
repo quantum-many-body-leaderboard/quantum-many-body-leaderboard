@@ -657,7 +657,7 @@ types.
 
 Rows that fail a check are flagged in place. A duplicate, or a number that is not an energy of
 its instance, is removed ([RULES.md §11](RULES.md#11-corrections)). The flag withholds the
-record and nothing else. [RULES.md §10](RULES.md#10-pending-confirmed-objections) is the
+record and nothing else. [RULES.md §10](RULES.md#10-review-and-objections) is the
 process for lifting or upholding it.
 
 ### Corrections
