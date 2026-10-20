@@ -10353,22 +10353,6 @@ export const CORRECTIONS = [
   },
   {
     "match": {
-      "instance": "Hubbard/square_36_PA_18_2",
-      "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 16. Single hidden layer fully connected net with alpha = 1). Soft mean-field constraint for Neel order.",
-      "energy": -76.162
-    },
-    "field": "sampled",
-    "to": true,
-    "reported_as": "'General expectation values and gradients of the objective function are computed using Markov chain Monte Carlo sampling' (Sec. 2 C, p. 5)",
-    "location": "PNAS 119, e2122059119 (2022), Sec. 2 C (p. 5)",
-    "version_read": "PNAS article PDF and SI Appendix (PMC9371695), pypdf layout; arXiv:2111.10420v2 (VA3)",
-    "conversion": "none",
-    "checked_on": "2026-09-29",
-    "reason": "A variational Monte Carlo energy whose stored sigma is the uploader's Monte Carlo error; the method string's fallback reads 'mean-field' in the upload's 'Soft mean-field constraint' as a deterministic marker. Not named in the ruling's list, but the same case: ruling 2 (2026-09-30) makes sampled vs deterministic a per-row statement from the source. No eligibility change: sigma is stored. The row stays flagged: its number is the 8 x 8 U = 2 upload copied onto the 6 x 6 file; the statement is about the kind of number, which the copy shares.",
-    "source_entry": "VA3-10-1073-pnas-2122059119#28 (qmbl-verify 2026-09-29; skeptic upheld); ruling 2, 2026-09-30"
-  },
-  {
-    "match": {
       "instance": "Hubbard/square_36_PA_18_4",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 16. Single hidden layer fully connected net with alpha = 1). Soft mean-field constraint for Neel order.",
       "energy": -31.3822

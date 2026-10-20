@@ -30,6 +30,11 @@ export const REMOVALS = [
     reason: "The first author's VarBench upload (c810bdc, 2022-07-16) of the 8 x 8, U = 6 HFDS state of Robledo Moreno et al., PNAS 119, e2122059119, with a digit slip (-42.076 -> -42.676): the paper prints -0.6574(2) per site (SI Table 5, row L = 8, column U = 6), which add_worklist_rows.mjs carries from the paper itself as -42.0736, sigma 0.0128. A corrected copy would duplicate that row (qmbl-verify 2026-09-29, VA3-10-1073-pnas-2122059119#34, skeptic upheld). Its below-exact flag goes with it; the upload-only sigma 0.007 and variance 0.82(1) have no printed counterpart.",
   },
   {
+    match: { instance: "Hubbard/square_36_PA_18_2", method: "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 16. Single hidden layer fully connected net with alpha = 1). Soft mean-field constraint for Neel order.", energy: -76.162 },
+    ruled: "2026-10-20: not an energy of its instance; duplicate of Hubbard/square_64_PA_32_2 (qmbl-verify 2026-10-20, BOUND rows)",
+    reason: "VarBench's 6x6 U = 2 file repeats the 8x8 U = 2 line of the same first upload (-76.162 | 0.006 | 0.14(2); VarBench c810bdc, 21f00e5). -76.162 / 64 = -1.1900, PNAS 119, e2122059119, SI Table 5, row L = 8, column U = 2; that energy stays on Hubbard/square_64_PA_32_2. On 36 sites it lies 16.45 below the U = 0 ground state -59.712813, a lower bound for every U >= 0. The paper's 6x6 U = 2 value, -1.2079(1) per site = -43.4844, stays on this instance.",
+  },
+  {
     match: { instance: "Heisenberg/pyrochlore-2x2x2_128_P", method: "mVMC (PP + RBM + 1st step Lanczos, spin-parity projection, Number of RBM neurons: 128)", energy: -252.007 },
     ruled: "2026-10-02: duplicate, the original paper's row stays (apply step of the 2026-09-29 verification pass, the duplicates rule of 2026-09-17)",
     reason: "First author R. Pohle's VarBench upload of 2022-02-26 (380a1fe), 21 months before arXiv:2311.11561 v1, energy never updated; the paper prints the same spin-parity mVMC-RBM/Lanczos state as -0.49229(7) per site (SM Table SI, column psi+ (random), and App. B), which the table carries from the paper itself (-252.05248). The stored -252.007 is printed nowhere. The 2026-09-16 ruling to supersede the VarBench row was not applied until now (qmbl-verify 2026-09-29, VA5-hubbard-heisenberg-tfising-j1j2#21, skeptic upheld).",
