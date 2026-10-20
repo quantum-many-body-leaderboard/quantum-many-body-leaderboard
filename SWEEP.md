@@ -180,6 +180,7 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-10-17-heglit.json` | electron gas: the primaries those papers compare with (DMC, FCIQMC, coupled cluster) |
 | `sweep-rows-2026-10-19-hegcorr.json` | electron gas: correlation energies stored as QMBL Hartree-Fock + E_c ([RULES.md §12](RULES.md#12-track-2-the-homogeneous-electron-gas)) |
 | `sweep-rows-2026-10-19-heglit2.json` | electron gas: papers citing the 2026-10-17 primaries |
+| `sweep-rows-2026-10-20-azadism.json` | electron gas: the bcc Wigner crystals (N = 64, 216, 512) of the Supplemental Material of arXiv:2201.08743, read from the publisher's file; its fluid tables print single-twist energies on open shells without the twist vector and are held |
 | `sweep-rows-2026-10-20-butler.json` | electron gas: the largest-basis CCD of the data release of arXiv:2403.04645, on the instances other papers also carry |
 
 The five passes of 2026-10-16 to 2026-10-19 had their second reading on 2026-10-19 (1079 rows, eight reader groups,

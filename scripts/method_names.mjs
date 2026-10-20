@@ -771,6 +771,14 @@ Object.assign(NAMES, {
   "CCD (3071 plane waves, data release of arXiv:2403.04645)": ["CCD", "3071 plane waves (6142 spin orbitals)", { family: "FCIQMC / CC" }],
 });
 
+// Pass 2026-10-20-azadism (SWEEP.md): the bcc Wigner crystals of the Supplemental Material of arXiv:2201.08743.
+Object.assign(NAMES, {
+  "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)": ["Slater-Jastrow", "ferromagnetic bcc crystal"],
+  "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)": ["Fixed-node DMC", "trial state: Slater-Jastrow, ferromagnetic bcc crystal; extrapolated: Δτ → 0", { family: "DMC" }],
+  "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)": ["Slater-Jastrow", "antiferromagnetic bcc crystal"],
+  "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)": ["Fixed-node DMC", "trial state: Slater-Jastrow, antiferromagnetic bcc crystal; extrapolated: Δτ → 0", { family: "DMC" }],
+});
+
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],
