@@ -348,8 +348,10 @@ like any other row.
    itself an issue. A row is flagged below the exact energy only if the whole interval its
    printed digits allow lies below it. Case: the HQT rows below.
 
-Six issues survive these checks on the imported VarBench data. They are carried as defects
-attached to the row (§11) and are not silently corrected. [UPSTREAM.md](UPSTREAM.md) lists
+Five rows survive check 4: the three TFIsing RBM rows imported from VarBench, and the PEPS row of
+arXiv:1611.09467 and the LRU row of arXiv:2605.13807 that QMBL read from those papers. The
+validator reports the PEPS row twice, once against each exact row of its instance. Each row
+carries a `below-exact` defect (§11) and is not silently corrected. [UPSTREAM.md](UPSTREAM.md) lists
 the issues in the VarBench data.
 
 Cases:
