@@ -180,6 +180,7 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-10-17-heglit.json` | electron gas: the primaries those papers compare with (DMC, FCIQMC, coupled cluster) |
 | `sweep-rows-2026-10-19-hegcorr.json` | electron gas: correlation energies stored as QMBL Hartree-Fock + E_c ([RULES.md §12](RULES.md#12-track-2-the-homogeneous-electron-gas)) |
 | `sweep-rows-2026-10-19-heglit2.json` | electron gas: papers citing the 2026-10-17 primaries |
+| `sweep-rows-2026-10-20-butler.json` | electron gas: the largest-basis CCD of the data release of arXiv:2403.04645, on the instances other papers also carry |
 
 The five passes of 2026-10-16 to 2026-10-19 had their second reading on 2026-10-19 (1079 rows, eight reader groups,
 each with a skeptic). No energy was misread. The fixes went into the pass generators, so the pass files above carry
@@ -201,6 +202,14 @@ maps onto a finite instance. `match_tables.mjs` suppresses them.
   is an extrapolation to ξ → ∞.
 - arXiv:2310.05844 and arXiv:2604.01555: SDP lower bounds and reference values quoted from
   other work.
+- arXiv:1307.5794 (Spink, Needs & Drummond, PRB 88, 085121), cond-mat/0205339 (Zong, Lin & Ceperley, PRE 66, 036703) and
+  cond-mat/0101339 (Lin, Zong & Ceperley, PRE 64, 016702): every finite-N energy printed is twist-averaged or
+  extrapolated to N → ∞, or shown only in figures.
+- Data releases: only the largest basis of a basis-size series is a row, since every basis size approximates the same
+  ground state (2026-10-20). The release of arXiv:1706.09923 (doi:10.17863/CAM.14336) holds several runs per largest
+  basis, many marked by the authors' own analysis, and its largest bases for CCSDTQ and above (66-162 spin orbitals)
+  feed the paper's extrapolation; the paper's basis-limit values, which QMBL carries, are its results. The "mbpt"
+  column of arXiv:2403.04645's release is not used (it does not approach the MP2 basis limit).
 - arXiv:2505.20406 Tables 2 and 6 print V-scores and thermodynamic-limit energies; its
   finite-size energies are plotted, except at L = 6 (Table V). The rows at L = 12 to 30 come
   from the authors' data release (`scripts/add_repo_data_rows.mjs`).

@@ -1,0 +1,570 @@
+  Quantum  Monte  Carlo study  of  the three-dimensional  spin-polarized  homogeneous
+                                                                electron gas
+
+                                                      G.  G.  Spink  and  R.  J.  Needs
+                                     TCM  Group,  Cavendish  Laboratory,  University  of  Cambridge,
+                                    J.  J.  Thomson  Avenue,  Cambridge  CB3  0HE,  United  Kingdom
+
+                                                               N.  D.  Drummond
+                       Department  of  Physics,  Lancaster  University,  Lancaster  LA1  4YB,  United  Kingdom
+                                                           (Dated:  October 13, 2021)
+                  We have studied the spin-polarized  three-dimensional homogeneous  electron  gas using the diﬀu-
+                sion  quantum  Monte  Carlo  method,  with  trial  wave  functions  including  backﬂow  and  three-body
+                correlations  in  the  Jastrow  factor,  and  we  have  used  twist  averaging  to  reduce  ﬁnite-size  eﬀects.
+                Calculations of the pair correlation function, including the on-top pair density, as well as the struc-
+                ture  factor  and  the  total  energy,  are  reported  for  systems  of  118  electrons  in  the  density  range
+                rs = 0.5–20  a.u., and for spin polarizations  of 0, 0.34,  0.66,  and 1.  We consider the spin resolution
+                of the pair correlation  function and structure factor, and the energy of spin polarization.  We show
+                that a control variate method can reduce the variance when twist-averaging, and we have achieved
+                higher accuracy and lower noise than earlier quantum Monte Carlo studies.
+
+                PACS numbers:  71.10.Ca, 02.70.Ss, 71.15.Nc, 67.10.-j
+
+
+                    I.     INTRODUCTION                                      imal  shell  of  radius  r  when  a  spin-α  electron  is  found
+                                                                             at  the  origin  and  nβ  is  the  number  density  of  spin-β
+  The simplicity of the three-dimensional (3D) homoge-                       electrons.   Deﬁning  the  spin  polarization  ζ  as  the  ratio
+neous electron gas (HEG) model,1 consisting of electrons                     ζ = (N↑ − N↓)/(N↑ + N↓), the total PCF g is a weighted
+interacting via the Coulomb potential in a uniform, posi-                    average of the spin-resolved components:
+tive background for charge neutrality, allows the study of                          (1 + ζ    )2         (1 − ζ   )2          (1 − ζ2    )
+important features of the many-electron problem without                        g =       2        g↑↑ +       2       g↓↓ +         2       g↑↓.  (1)
+the complication of a lattice potential.  Early pioneers of
+quantum mechanics discovered much of the phenomenol-                         The on-top pair density g(0) is the value of the PCF at
+ogy of the HEG, including Wigner’s celebrated insight2,3                     contact.  The region around r = 0 is, however, the most
+that  the  ﬂuid  will  crystallize  at  low  density.   More  re-            challenging to sample in a stochastic simulation, partic-
+cently,  the  continuing  research eﬀort  to  understand  the                ularly at low densities, as the electrons are rarely found
+behavior of the HEG is motivated by the model’s appli-                       close  to  one  another.   Toulouse  et  al.10  have  developed
+cation in density functional theory (DFT).                                   a possible solution to  this diﬃculty,  extending the  zero-
+  Quantum  Monte  Carlo  (QMC)  methods  can  provide                        variance zero-bias estimators of Assaraf and Caﬀarel.11 It
+accurate estimates of the static properties of interacting                   has recently been found by Fantoni,12  however, that the
+many-body systems such as the HEG.  The ground state                         zero-bias correction required in DMC calculations signif-
+of the 3D HEG for collinear spins is accepted to be an un-                   icantly increases the variance.  We therefore opted to use
+polarized Fermi ﬂuid at high densities.  As the density de-                  the  traditional  histogram  estimator  of  the  PCF  in  this
+creases, QMC calculations indicate an apparently contin-                     work;  our  simulations  gathered  enough  data  to  ensure
+uous transition to a spin-polarized ﬂuid occurs, starting                    good precision in the reported g(0) values.
+at a density of about rs = 50±2 a.u.4 The transition to a                       In light of the above challenges, while  QMC methods
+Wigner crystal is calculated to occur at about rs = 106±1                    have been very successful in calculating many quantities
+a.u.5  QMC calculations have furnished data used within                      of interest in the HEG, such as the energy and the PCF
+DFT, most notably the energies of the HEG calculated by                      at intermediate distances, the short-range behavior of the
+Ceperley and Alder,3 which are used to parameterize the                      PCF has usually been obtained by ﬁtting QMC data to
+local-density-approximation  exchange-correlation  func-                     some  analytical  function,  which  can  be  constrained  to
+tional.   Semilocal6  and  nonlocal7,8  exchange-correlation                 obey exact results such as the electron-electron cusp con-
+functionals  may  use  additional  properties  of  the  HEG                  ditions.  Even then, however, there is some disagreement
+such  as  the  pair  correlation  function  (PCF)  and,  espe-               between  the  PCFs  obtained  using  diﬀerent  approaches.
+cially, the on-top pair density.9                                            Gori-Giorgi  and  Perdew  developed  an  analytical  model
+  The  PCF  is  a  measure  of  the  spatial  correlations  of               based  on  exact  constraints  and  QMC  energy  data.13,14
+electron  positions  that  arise  from  the  Coulomb  repul-                 The same authors15 extended an approach originally due
+sion and Pauli exclusion.  The spin-resolved PCF of the                      to Overhauser16 using a screened Coulomb potential and
+HEG,  gαβ(r),  is  deﬁned  such  that  nβgαβ(r)4πr2dr  is                    two-electron  wave  functions.     An  alternative  starting
+the  expected number  of spin-β  electrons in an inﬁnites-                   point is aﬀorded by ladder theory, which gave rise to an
+                                                                                                                                                     2
+
+early and widely used result for g(0) due to Yasuhara.17                      plane waves multiplied by a Jastrow factor and included a
+Nagy  et  al.18  oﬀer  insight  into  the  good  agreement  be-               backﬂow transformation.  The  Jastrow factor comprised
+tween  these  results.   More  recently,  Qian19  was  able  to               polynomial  and  plane-wave  expansions  in  the  electron-
+relax  an  approximation  made  in  the  earlier  ladder  the-                electron separation, together with three-body terms.30,31
+ory calculations and obtained a markedly diﬀerent result.                     The electron coordinates in the Slater determinant were
+Although several QMC calculations of PCFs for the un-                         replaced by quasiparticle coordinates obtained by a back-
+polarized 3D HEG have been reported, less attention has                       ﬂow  transformation represented  by  a  polynomial  in  the
+been paid to fully and, especially, partially spin-polarized                  electron-electron  separation.32,33  The  variable  parame-
+systems.12,20–25                                                              ters  in  these  wave  functions  were  optimized  using  vari-
+  In  this  paper  we  present  extensive  results  for  PCFs,                ance minimization34,35  and then linear least-squares en-
+static  structure  factors  (SSFs),  and  energies  for  HEGs                 ergy minimization,36  as this was found to give the most
+containing 118 electrons over the  density range relevant                     accurate trial wave functions.
+to  DFT calculations, rs  = 0.5–20 a.u.  We  consider four                       The  quality  of  our  wave  functions  was  such  that,
+values  of  the  spin  polarization,  ζ  =  0,  40/118,  78/118,              for  unpolarized  and  fully  polarized  systems,  the  VMC
+and 1, although in the text we refer to the intermediate                      and DMC methods  produced essentially identical PCFs
+polarizations  as  0.34  (40/118)  and  0.66  (78/118).   We                  within  the  statistical  precision  we  were  able  to  obtain.
+use  Slater-Jastrow  wave  functions  incorporating  back-                    For  these  systems  we  therefore  report  DMC  expecta-
+ﬂow  and  three-body  correlations,  we  investigate  twist-                  tion  values  rather  than  the  extrapolated  estimators  of-
+averaged boundary conditions and ﬁnite-size eﬀects, and                       ten used in QMC studies.  In partially polarized systems,
+we  are  able  to  gather  suﬃcient  data  to  ensure  that  the              however,  our  trial  wave  functions  led  to  small  but  sta-
+statistical uncertainty is relatively modest.  A variance re-                 tistically  signiﬁcant  diﬀerences  between  the  VMC  and
+duction method is found to improve signiﬁcantly the pre-                      DMC data for minority-spin electrons.  In these cases we
+cision  of  twist-averaged  data  without  introducing  bias.                 have used  extrapolated estimation,37  in  which the  PCF
+We show the spin resolution of the PCFs and the SSFs,                         is  g  =  2gDMC − gVMC,  where  gDMC  and  gVMC  are  the
+and we consider in particular the on-top pair density and                     DMC and VMC PCFs, respectively.
+the  energy of spin polarization as functions  of rs  and ζ.                     We   studied   118-electron   HEGs   in   face-centered-
+We have performed spline ﬁts to our PCF data, which ap-                       cubic  simulation  cells  and  imposed  twisted  boundary
+pear to be  more accurate than polynomial ﬁts.  A short                       conditions38  so that the  wave function picks up a phase
+Fortran 90 program is available to evaluate the spline ﬁts                    when an electron is translated by a simulation-cell lattice
+to our PCF data.26                                                            vector Rs:
+  Our  paper  is  organized  as  follows.   In  Sec.  II  we  dis-            Ψ(r1, . . . , ri + Rs, . . . , rN ) = exp(iks · Rs)Ψ(r1, . . . , rN ).
+cuss the QMC methods used in our calculations.  Section
+III describes our PCF, SSF, and energy data and shows                         The  twist  oﬀset  ks  was  allowed  to  vary  with  uniform
+comparisons to results in the existing literature.  We oﬀer                   probability over the ﬁrst Brillouin zone of the simulation
+our conclusions in Sec. IV. Hartree atomic units are used                     cell  during  our  simulations.   Averaging  in  this  way  has
+throughout this paper, so that ℏ = |e| = me = 4πǫ0 = 1.                       been shown to reduce single-particle ﬁnite-size eﬀects in
+                                                                              the energy.39
+                        II.     METHODS                                          We  investigated  the  remaining  variation  with  system
+                                                                              size  in  the  PCF  using  twist-averaged VMC  simulations
+                                                                              at  rs  =  5  a.u.  and  ζ  =  0.   We  show  the  spin  resolved
+  We  have  used  the  casino27  code  to  perform  varia-                    PCF in  Fig. 1.  This  ﬁgure, like  all  others in  this  paper
+tional  and  diﬀusion  Monte  Carlo28  (VMC  and  DMC)                        except Fig. 12, shows our raw QMC data, rather than a
+calculations.   In  the  VMC  method,  the  Metropolis  al-                   ﬁt to  the data.  The  region around the  ﬁrst peak  in the
+gorithm  is  used  to  generate  a  set  of  conﬁgurations  dis-              antiparallel-spin PCF best shows the variation with sys-
+tributed according to the square modulus of a trial wave                      tem size.  Both g↑↓(r)  (upper curves) and g↑↑(r)  (lower-
+function  over  which  the  local  energy  is  averaged.    In                right curves) exhibit systematic ﬁnite-size errors for small
+the  DMC  method,  an  initial  wave  function  is  evolved                   systems in this region, converging to the thermodynamic
+in  imaginary  time,  which  in  principle  projects  out  the                limit on the scale of the graph at approximately N  = 100
+ground  state.    For  fermionic  systems,  the  antisymme-                   electrons.  (Results for 118- and 226-electron systems are
+try  of  the  wave  function  is,  however,  imposed  via  the                almost indistinguishable on the scale of the graph.)  Some
+ﬁxed-node  approximation,29  in  which  the  nodal  surface                   cancellation of errors occurs when the spin-averaged PCF
+is constrained to remain unchanged during the evolution.                      is calculated.
+Both the VMC and DMC methods give an upper bound                                 The variation with system size appears less pronounced
+to the ground-state energy of the system.  The quality of                     and less systematic at smaller r.  The on-top pair density
+the  parameterization of  the  trial wave  function  and  the                 was unaﬀected within statistical uncertainty.  For systems
+VMC  optimization  procedure  inﬂuence  the  accuracy  of                     with  N  =  54,  118,  and  226  electrons,  there  was  good
+the results and the statistical noise.                                        agreement at small but nonzero distances:  typical diﬀer-
+  Our wave functions consisted of Slater determinants of                      ences  were  of  order  1–5  %.   In  contrast,  the  long-range
+                                                                                                                                                        3
+
+      1.06                                                                     the simulation:
+                                                                                                                ⟨∑      ∑                       ⟩
+      1.04                                                                          gαβ(r) =          Ω4πr2NαNβ              δ(|rj − rl| − r)      ,
+                                                                                                                   j∈α  l∈β
+                                                                                                                        l⁄=j
+      1.02                          N = 18
+                                    N = 30                                     where Ω is the simulation-cell volume and Nα is the num-
+                                    N = 54                                     ber of electrons of spin α.  The SSF is simply related to
+      1.00                          N = 118                                    the Fourier transform of the PCF and is given by
+                                    N = 226
+
+       0.98       7              8              9             10            11     Sαβ(k) =        1√                                  NαNβδk0,
+                                    r  (a.u.)                                                       NαNβ ⟨ρα(k)ρβ(−k)⟩ − √
+
+FIG. 1.  (Color online)  Finite-size eﬀects in the spin-resolved               where ρα(k) = ∑j∈α exp(ik · rj).  Sαβ(k) is then spheri-
+pair  correlation  function  (PCF).  The  upper  curves  are  for              cally averaged in k-space, because the SSF only depends
+antiparallel  spins  and  the  lower-right  curves  are  for  parallel         on  the  magnitude  of  k  in  a  homogeneous  and  isotropic
+spins.  The data are from VMC twist-averaged simulations at                    system.
+rs  =  5  a.u.  and  ζ  = 0,  and  at  the  various  sizes  shown.  The           At  high  densities,  the  variation  in  the  energy  as  the
+region  around  the  ﬁrst  peak  in  the  antiparallel-spin  PCF  is           twist  oﬀset  is  changed  can  be  much  greater  than  other
+shown, where the largest ﬁnite-size eﬀects occur.
+                                                                               sources  of  noise  in  the  simulation.  Twist-averaging can
+                                                                               therefore  be  computationally  expensive  for  high-density
+PCF  is  aﬀected  by  unavoidable  ﬁnite-size  errors due  to                  HEGs,  because  a  large  number  of  twist  angles  are  re-
+                                                                               quired  in  order  to  obtain  a  precise energy  and  the  sim-
+the ﬁnite size of the simulation cell.  Twist-averaging can-                   ulation  must  be  reequilibrated  between  twists,  prevent-
+not remove the  spurious  correlation caused by  the  peri-                    ing  rapid  changes  of  twist  oﬀset  in  a  DMC  calculation.
+odic boundary conditions.  This shows up as a small but                        To circumvent this  diﬃculty, we have used the  Hartree-
+statistically  signiﬁcant variation in  the  long-range oscil-                 Fock  energy  (as  a  function  of  twist  oﬀset)  as  a  control
+lations  from  about  r/rs  /greaterorsimilar  2  for  118  electrons  that  de-variate.42
+creases  in  magnitude  as  the  system  size  increases.   Fig-                  If EQMC denotes the QMC energy, EHFKE the Hartree-
+ure 1 is included as an XMGrace ﬁle in the Supplemen-                          Fock  kinetic  energy,  and  EHFEX  the  exchange  energy
+tal  Material26  accompanying  this  paper,  so  that  other                   as  functions  of  twist  angle, the  standard way of getting
+regions of the graph may be inspected.                                         the  twist-averaged energy  is  ⟨EQMC⟩,  where  the  angled
+   The  energy  is  known  to  converge  much  more  slowly                    brackets denote an average over twists.  Another estima-
+with  system  size  than  the  PCF.38,39  We  have  therefore                  tor is
+applied analytical corrections to our energy data follow-
+ing  the  procedure developed in  Refs.  40 and  39.  Resid-                   θ = EQMC+c1(EHFKE−⟨EHFKE⟩)+c2(EHFEX−⟨EHFEX⟩),
+ual  single-particle  ﬁnite-size  eﬀects  are  removed  by  ad-
+dition  of  the  diﬀerence  between  the  inﬁnite-system  and
+twist-averaged,  ﬁnite-system  Hartree-Fock  kinetic  ener-                    where the {ci} are coeﬃcients that can be chosen to min-
+gies.  The  leading-order correction to  the  Ewald energy,                    imize  the  variance  of  θ.   In  order  to  account  for  the  re-
+and leading- and next-to-leading-order corrections to the                      maining sources of noise, we add the correction above to
+kinetic energy, are also included.  In addition, ﬁnite-size                    the energy data at each time step and, at the end of the
+eﬀects in the energy have previously25  been found to be                       simulation, reblock43  the corrected data to obtain much
+relatively insensitive to ζ, and so a cancellation of errors                   smaller error bars.
+renders ﬁnite-size eﬀects in the energies of spin polariza-                       To  illustrate  the  reduction  in  variance  obtained,  we
+tion  small  even  without  any  correction.   The  analytical                 apply the method to VMC data for two systems in this
+arguments of Holzmann et  al.41  lend further  support to                      section:  ﬁrst a HEG with two up-spin electrons and one
+this conclusion.                                                               down-spin electron at rs  = 0.5 a.u.;  then  a  118-electron
+   We  also examined possible  time-step  and population-                      HEG  at  rs  =  0.5  a.u.  and  ζ  =  0.   The  VMC  method
+control biases and found them to be very small—less than                       allows one to simulate a large number of twist angles in
+one  part in a  thousand of the  correlation energy in test                    parallel,  so  we  are  able  to  compare  the  corrected  data
+cases—so  we  neglect  them  in  what  follows.   All  DMC                     to  accurate twist-averages performed  the  standard way.
+calculations  were performed using  at least  1000 walkers                     It  can  be  seen  in  Tables  I  and  II  that  the  method  suc-
+and time steps for which the acceptance probability was                        cessfully  reduces  the  variance  without  introducing  bias.
+generally greater than 99.7 %.                                                 Although we chose twist oﬀsets randomly throughout the
+   We  accumulate  the  spin-resolved  PCF  as  an  average                    ﬁrst Brillouin zone, the method might also improve con-
+over the  set of conﬁgurations generated in the course of                      vergence of twist-averages using Monkhorst-Pack44 grids.
+                                                                                                                                                                4
+
+TABLE I. Energies from VMC simulations in a HEG at rs =                                    1.4
+
+0.5  a.u.  containing  two  up-spin  electrons  and  one  down-spin                        1.2
+electron.   The  raw  VMC  energies  are  compared  to  the  same
+data after a correction has been applied using HF kinetic and                              1.0
+exchange energies  as described  in the text.  The VMC twist-                              0.8                                                rs = 0.5 a.u.
+averaged energy obtained in the standard way, using just over                                                                                 rs = 1 a.u.
+21 × 106  twist angles, is 3.5484(3)  a.u. per electron.                                   0.6                                                rs = 2 a.u.
+                             VMC energy (a.u./elec.)                                                                                          rs = 3 a.u.
+                 # twists     Raw              Corr.                                       0.4                                                rs = 5 a.u.
+                 10             3.73(40)       3.5480(1)                                                                                      rs = 10 a.u.
+                                                                                           0.2                                                rs = 20 a.u.
+                 20             3.57(39)       3.5480(1)
+                 100           3.42(10)       3.5480(1)                                      00                      1                      2                      3
+                 441           3.51(6)         3.5480(1)                                                                    r / rs
+
+                                                                                   FIG.  2.   (Color  online)  Spin-resolved  pair  correlation  func-
+                                                                                   tions (PCFs) for unpolarized HEGs calculated at the densities
+TABLE II. Energies from VMC simulations in a 118-electron                          shown.  The antiparallel-spin PCFs are translated upwards by
+HEG  at  rs  =  0.5  a.u.  and  ζ  =  0.   The  raw  VMC  energies                 0.2 units.  The data were obtained using twist-averaged DMC
+are  compared  to  the  same  data  after  a  correction  has  been                simulations.
+applied using HF kinetic and exchange energies as described
+in the text.  The VMC twist-averaged energy obtained in the
+standard way, using 4.8 × 106  twist angles, is 3.41378(2)  a.u.                           1.4
+per electron.
+                             VMC energy (a.u./elec.)                                       1.2
+                 # twists     Raw              Corr.                                       1.0
+
+                 10             3.424(4)      3.41377(4)                                   0.8
+                 20             3.424(4)      3.41375(4)                                                                                      ζ = 0
+                 50             3.414(5)      3.41380(3)                                   0.6
+                 156           3.416(2)      3.41377(2)                                    0.4                                                ζ = 0.34
+                                                                                                                                              ζ = 0.66
+                                                                                           0.2                                                ζ = 1
+
+                          III.     RESULTS                                                   00                      1                      2                      3
+                                                                                                                            r / rs
+
+               A.     Pair  Correlation  Function                                  FIG. 3.  (Color online) Variation in the pair correlation  func-
+   Spin-resolved  pair  correlation  functions  (PCFs)  are                        tion (PCF) with spin polarization at rs = 3 a.u.  Antiparallel-
+                                                                                   spin  PCFs  are  translated  upwards  by  0.4  units,   parallel-
+shown  in  Fig.  2  for  the  unpolarized  HEG  at  diﬀerent                       majority-spin PCFs are translated upwards by 0.2 units, and
+densities  using  twist  averaging.  Antiparallel-spin  PCFs                       the  lower  curves  give  the parallel-minority-spin  PCFs.  Note
+are translated upwards by 0.2 units for greater visibility,                        that the ζ = 0 parallel-spin PCF is shown twice (in black) for
+and show much greater variation with density.  For ζ = 0                           comparison  with  both  up-up  and  down-down  spin  PCFs  in
+(and ζ  = 1, not shown) the  VMC and DMC results are                               those cases  where  they diﬀer.  The DMC  data are  shown  for
+very similar, so in the plot we present only DMC data.                             unpolarized  and  fully  polarized  systems,  while  extrapolated
+   We  show  the  variation  of  the  PCFs  with  spin  polar-                     estimates  are  used  for  intermediate  polarizations.  All  of  the
+ization at rs  = 3 a.u. in Fig. 3.  In this ﬁgure, we trans-                       data are twist-averaged.
+late the antiparallel-spin PCFs upwards by 0.4 units and
+the  parallel-majority-spin  PCFs  upwards  by  0.2  units.
+For  ζ   =  0  and  ζ   =  1,  we  have  used  the  DMC  val-                      ing  has  a  signiﬁcant  eﬀect  on  the  energy  data,  but  the
+ues.   For  ζ  =  0.34  and  ζ  =  0.66,  the  extrapolated  es-                   eﬀect  on  the  PCF  data  is  much  smaller.   We  show  in
+timate  is  shown,  because  small  but  statistically  signif-                    Fig. 4 the diﬀerence gTA − gPBC between imposing twist-
+icant  diﬀerences  emerged  between  the  DMC  and  VMC                            averaged  and  periodic  boundary  conditions  for  parallel
+data in the parallel-minority-spin PCFs.  Compared with                            spins.  Noise obscures any clear pattern for the antiparal-
+the parallel-spin PCFs, the antiparallel-spin PCF is rel-                          lel spins, although there is a tendency for the equivalent
+atively insensitive to the degree of spin polarization.                            ﬁgure  to  show a  small dip  before  rising  to  zero,  so  that
+   The  PCF  data  discussed  above  are  twist-averaged to                        g(0) appears to be largely unaﬀected.
+reduce  single-particle  ﬁnite-size  eﬀects.    Twist  averag-                        We compare our results at rs = 5 a.u. and ζ = 0 with
+                                                                                                                                                              5
+
+
+                                                         rs = 0.5 a.u.                    1.0
+       0.010                                             rs = 1 a.u.
+                                                         rs = 2 a.u.                      0.8
+                                                         rs = 3 a.u.                                                         0.3
+                                                         rs = 5 a.u.
+       0.005                                             rs = 10 a.u.                     0.6
+                                                         rs = 20 a.u.                                                        0.2
+             0                                                                            0.4
+                                                                                          0.2                    This work   0.1
+                                                                                                                 GSB                  0.2               0.4
+      -0.005                                                                                                     OB                        r / rs
+              0              1              2              3              4r / rs            00                1                2                3                4
+                                                                                                                           r / rs
+
+FIG.  4.  (Color  online)  Changes  in  the pair  correlation  func-               FIG. 5.  (Color online) Spin-resolved pair correlation functions
+tion  (PCF)  due  to  twist  averaging.    We  plot  parallel-spin                 (PCFs)  for  unpolarized  HEGs  at  rs  =  5  a.u.   We  show  our
+PCFs with twist averaging minus the same quantity evaluated                        raw twist-averaged DMC data, together with the ﬁt to DMC
+without  twist  averaging,  for  the  densities  shown  and  ζ  =  0.              results from  Ortiz and Ballone20  (labeled  OB)  given in their
+Only  DMC  results  are  shown,  as  the  VMC  results  are  very                  paper, and a ﬁt due to Gori-Giorgi, Sacchetti, and Bachelet23
+similar.                                                                           using the DMC data of Ortiz, Harris, and Ballone,22  (labeled
+
+                                                                                   GSB).  The inset shows the low-r region, where the diﬀerences
+                                                                                   are largest.
+QMC  data  from  the  literature  in  Fig.  5.   We  ﬁnd  good
+agreement  with  the  data  of  Gori-Giorgi  et  al.23  for  in-                          0.4
+termediate  r/rs.  Our on-top pair densities  are closer to
+those  of  Ortiz  and  Ballone20  as  shown  in  the  inset,  al-
+though  at  intermediate  r/rs  modest  (of  order  5  %)  dif-                           0.3
+ferences  are  obtained.   The  ﬁgure  shows  our  raw  QMC
+data, whereas the other curves are ﬁts to the QMC data
+of Ortiz, Harris, and Ballone,22 and Ortiz and Ballone20                                  0.2
+respectively.   Both  of  these  ﬁts  obey  the  Kimball  cusp                                         Ortiz & Ballone
+conditions and we are conﬁdent our QMC data are also                                                   GP
+                                                                                                       Holzmann et al.
+consistent  with  these  conditions.   As  mentioned  below,                                           Yasuhara
+our short-range PCFs are well-described by a quadratic                                    0.1          Qian
+                                                                                                       GSB
+of the form g↑↓(r) = a + ar + br2, which satisﬁes the ﬁrst                                             This work
+                                                                                                       Fantoni
+Kimball condition.                                                                          0
+   We show in Fig. 6 our g(0) values for the unpolarized                                      0            2            4            6            8           10rs (a.u.)
+system in comparison to those in the literature.  We have
+averaged our DMC and VMC data in this ﬁgure to reduce
+statistical uncertainty, because the ζ = 0 PCFs produced                           FIG.  6.   (Color  online)  The  on-top  pair  density  g(0)  (multi-
+by  the  two  methods  are  identical  within  the  statistical                    plied by rs) as a function of rs  for unpolarized systems.  The
+precision  we  were  able  to  obtain.   We  used  the  above                      data shown are those of:  our averaged DMC and VMC results,
+quadratic  form  to  estimate  g(0)  from  our  PCF  data  at                      together  with  the  ﬁt  of  Eq.  (2)  (solid  line);  Gori-Giorgi  and
+ﬁnite  distances, g(r),  and obtained good ﬁts  for all sys-                       Perdew;13 Holzmann et al.;24 Yasuhara;17 Qian;19 Gori-Giorgi
+tems.  Our results are in good agreement with the recent                           et  al.;23  Ortiz  and  Ballone;20  and  Fantoni.12  Error  bars  are
+QMC data of Holzmann et al.,24 and the results of Gori-                            shown for our data, those of Holzmann et al.,24 and Fantoni,12
+Giorgi  and  Perdew13  who  used  various  data  including                         but they are mostly smaller than the size of the symbols.  Our
+QMC results, and the results of Yasuhara.17 Our calcula-                           values are slightly smaller than those of Holzmann et  al.24
+tions give signiﬁcantly smaller values of g(0) than those
+of  Gori-Giorgi,  Sacchetti,  and  Bachelet,23  and  those  of
+Qian.19  This  may  suggest  that  Yasuhara’s  scheme  suc-                        used  extrapolated  estimation  due  to  the  small  but  sta-
+cessfully  incorporates  screening  eﬀects  into  the  ladder                      tistically  signiﬁcant  diﬀerences  between  our  VMC  and
+theory  calculations.   Nagy  et  al.18  suggest  that  the  de-                   DMC  results,  although  these  diﬀerences  are  much  less
+scription of screening used by Gori-Giorgi and Perdew is                           pronounced  in  the  antiparallel-spin  PCF  than  in  the
+also an important factor in explaining the success of the                          parallel-minority-spin PCF.   This  increases  the  statisti-
+latter authors’ model.                                                             cal uncertainty in  our  results,  an eﬀect  compounded by
+   We  have  also  obtained  on-top  pair  densities  for  par-                    the increasing sparsity of sampling antiparallel spin coa-
+tially  polarized  systems;   see  Fig.  7.    In  this  case  we                  lescences  as  the  polarization increases.  Nevertheless,  as
+                                                                                                                                                              6
+
+
+TABLE III.  Parameters (in a.u.) obtained from ﬁts to the on-                             1.2
+top pair density as a function of rs using Eq. (2).  The data for
+the unpolarized systems are averaged DMC and VMC results;                                 1.0
+extrapolated estimation is used for the others.
+        ζ               a                   b                  c                d         0.8
+
+        0       0.18315      −0.0784043  1.02232    0.0837741                             0.6                                           rs = 0.5 a.u.
+        0.34  0.284118    −0.110062    1.1618      0.0874753                                                                            rs = 5 a.u.
+        0.66  0.0659538  −0.0590569  0.836458  0.0832258                                  0.4                                           rs = 20 a.u.
+                                                                                          0.2
+       0.3                                                                                  00                   1                  2                  3
+                                                                                                                          k / kF
+                                                       ζ=0
+       0.2                                             ζ=0.34                     FIG.  8.   (Color  online)  Structure  factors  at  ζ  =  0  for  three
+                                                       ζ=0.66                     densities.  The upper curves show S↑↑−S↑↓ and are translated
+                                                                                  upwards by 0.2  units; the lower  curves show  S↑↑ + S↑↓.  The
+                                                                                  lines  are  visual  guides  only.    The  statistical  uncertainty  is
+       0.1                                                                        smaller than the size of the symbols.  The DMC method with
+                                                                                  twist  averaging  was  used,  as  the  VMC  data  are  again  very
+                                                                                  similar.  Intermediate densities lie between the curves shown.
+
+         00            2            4            6            8           10
+                                     rs (a.u.)
+                                                                                  The diﬀerences between the DMC and VMC results are
+FIG.  7.   (Color  online)  The  on-top  pair  density  (multiplied               again  smaller  than  the  statistical  noise,  and  so  we  plot
+by  rs)  as  a  function  of  rs  and  ζ.  Averaged  DMC  and  VMC                DMC values.  The parallel-spin structure factors change
+data are  used  for the unpolarized  systems,  and  extrapolated                  very  slowly  with  density,  and  the  rs-dependence  shown
+estimates for the polarized systems.  Twist averaging was used                    arises almost entirely from the antiparallel-spin structure
+for  all  data  shown.    An  error  bar  is  plotted  for  each  data            factor, which is (mostly) negative and of increasing mag-
+point,  although  some  of  them  are  smaller  than  the  size  of               nitude as the density decreases.
+the  symbols.   The  partially  polarized  systems  show  a  larger                   Twist averaging was used to obtain the results shown
+statistical  uncertainty.  The  lines  are  ﬁts  as  discussed  in  the           in  Fig.  8,  and  its  eﬀect  was  more  pronounced  than  in
+text.                                                                             the PCFs, as shown in Fig. 9, where we plot antiparallel-
+                                                                                  spin SSFs at ζ = 0 with and without twist averaging for
+                                                                                  the  same  three  densities.   Shell-ﬁlling  eﬀects  are  clearly
+expected from Fig. 3, the variation of g(0) with ζ  arises                        visible  in  the  non-twist-averaged  data.   The  VMC  and
+largely from changes in the weights in Eq. (1) rather than                        DMC results are very similar and so we can be conﬁdent
+in  the  spin-resolved  PCFs  themselves.   We  ﬁt  our  g(0)                     that  the  diﬀerences  do  not  arise  from  statistical  noise.
+data to the  following parameterized form in the density                          Small ﬁnite-size eﬀects are visible in the low-|k| structure
+range 0.5 ≤ rs ≤ 20 a.u.:                                                         factor  data.   These  correspond  to  the  inevitable  ﬁnite-
+                                              rs + brs                            size eﬀects in the long-range part of the PCF mentioned
+                   g↑↓(0; rs) =  1 + a√1 + crs + dr3s   ,                    (2)  above.
+
+and we list the optimal ﬁt parameters obtained in Table
+III.  This  functional  form  obeys  the  exact  high  density                                                 C.     Energies
+limit and ﬁts our data well up to rs = 20 a.u., although
+at  rs  =  10  a.u.,  it  tends  to  give  slightly  higher  values                   Twist-averaged DMC energies are reported in Table IV
+than our QMC calculations obtained, typically by about                            for rs = 0.5–20 a.u. and for ζ = 0, 0.34, 0.66, and 1.  The
+2 standard deviations.                                                            data are for ﬁnite (small) time steps such that the DMC
+                                                                                  acceptance  probability  was  almost  always  greater  than
+                 B.     Static  Structure  Factor                                 99.7%.   We  veriﬁed  in  sample  cases  that  the  time-step
+                                                                                  and  population-control biases  were  small:  typically  less
+                                                                                  than  one  part  in  a  thousand  of  the  correlation  energy.
+   Static  structure  factors  (SSFs)  with  ζ  =  0  at  three                   The  ﬁnite-size  eﬀects  in  the  energy  are  substantial  for
+representative densities  are shown in Fig. 8.  The  upper                        the  118-electron  HEGs,  so  we  have  corrected  for  these,
+curves show S↑↑ − S↑↓  and the  lower curves,  S↑↑ + S↑↓.                         as  discussed  in  Sec.  II.  The  data  are  further  corrected
+                                                                                                                                                                 7
+
+          0                                                                         TABLE IV. Energies as a function of density parameter and
+                                                                                    spin polarization.  The DMC data are twist-averaged  and in-
+                                                                                    clude corrections for ﬁnite-size eﬀects, as discussed in the text.
+       -0.1                                          rs = 0.5 a.u.;  TA             Time-step  extrapolation  was  not  performed.  Data  include  a
+                                                     rs = 5 a.u.;     TA            control variate correction.
+                                                     rs = 20 a.u.;   TA
+                                                     rs = 0.5 a.u.; PBC              rs  (a.u.)           ζ  = 0                  ζ  = 0.34               ζ  = 0.66                  ζ  = 1Energy (a.u./elec.)
+       -0.2                                          rs = 5 a.u.;    PBC
+                                                     rs = 20 a.u.;  PBC              0.5                3.43011(4)          3.69287(6)          4.44164(6)          5.82498(2)
+                                                                                     1                    0.58780(1)          0.64919(2)          0.82394(4)          1.14634(2)
+       -0.3                                                                          2                    0.002380(5)        0.016027(6)        0.05475(2)          0.12629(3)
+                                                                                     3                 −0.067075(4)     −0.061604(5)     −0.04608(2)       −0.017278(4)
+            0                   1                  2                  3              5                 −0.075881(1)     −0.074208(4)     −0.069548(4)     −0.060717(5)
+                                        k / kF                                       10              −0.0535116(5)  −0.053214(2)     −0.052375(2)     −0.0507337(5)
+                                                                                     20              −0.0317686(5)  −0.0317156(7)  −0.0315940(7)  −0.0313160(4)
+FIG.  9.     (Color   online)  Eﬀect  of  twist  averaging  on  the
+antiparallel-spin  static  structre  factor  (SSF).  We  plot  SSFs
+at  ζ  =  0  for  three  densities,  with  twist  averaging  (TA)  and              Supplemental Material accompanying this  paper.26  The
+without  (PBC).  Higher  densities  are  towards  the top  of  the                  interpolation  scheme  is  very  successful  at  low  density,
+graph; intermediate densities lie between the data shown and                        whereas our high-density data for intermediate polariza-
+similar eﬀects are seen in parallel-spin SSFs.  Only DMC data
+are plotted as the VMC data are very similar.                                       tions are not reproduced with such high accuracy.
+                                                                                       In  Fig.  11  we  show  our  correlation  energies  together
+                                                                                    with a quartic ﬁt in ζ  at each density:
+
+using  the  control variate  method,  also  discussed in  Sec.                         Ec(rs, ζ) = f0(rs) + Ξ(rs)∆f(rs)ζ2
+II, because twist-averaging would otherwise lead to large                                                                   + [1 − Ξ(rs)] ∆f(rs)ζ4,    (3)
+error bars, especially at high densities.                                           where  ∆f(rs)  =  f1(rs) − f0(rs)  and  fζ(rs)  denotes  the
+   We  ﬁnd  that  the  ground  state  is  unpolarized  for  all                     correlation  energy  at  spin  polarization  ζ.   We  ﬁt  fζ(rs)
+densities studied here, in agreement with the most recent                           for  ζ  = 0  and 1  over the  density  range rs  = 0.5–20 a.u.
+calculations.38 This is also clearly evident in our VMC re-                         using the functional form
+sults, despite the VMC method suﬀering a bias towards
+polarized  systems  due  to  the  relative  ease  with  which                                             fi(rs) =              γi                             (4)
+correlation  eﬀects  in  the  wave  function  may  be  param-                                                                    1
+                                                                                                                       1 + βi1r  2s  + βi2rs
+eterized.   This  bias  decreases  with  increased  variational
+freedom in the trial wave function.                                                 suggested by Ceperley,47  and Perdew and Zunger.45  We
+   Our energies for unpolarized and fully polarized HEGs                            ﬁnd the interpolation
+are shown in Fig. 10, where we also plot for comparison                                                      Ξ(rs) = a + brs + cr2s                          (5)
+the  Ceperley-Alder  data3  and  the  ﬁt  to  the  latter  ob-
+tained by Perdew and Zunger,45 as used in the LSDA.  In                             gives  a  good  ﬁt  to  the  intermediate-ζ  QMC  data.   The
+addition, a recent high-density (RPA) limit for the polar-                          energies  can  be  extrapolated  to  the  high-density  limit
+ized system due to Loos and Gill46 is shown.  The present                           using the method of Perdew and Zunger,45  by matching
+results  follow  the  Perdew-Zunger  ﬁt  closely,  except  at                       the  correlation  energy  and  potential  arising  from  fi  to
+high  density,  where  we  ﬁnd  slightly  smaller  correlation                      the  high-density  expansions  at  rs  =  0.5  a.u.,  although
+energies,  especially  at  full  polarization.   The  ﬁnite-size                    it  is  not  clear  if  the  interpolation  between  unpolarized
+corrections we have applied are signiﬁcantly larger than                            and polarized systems used here will be reliable at higher
+the  diﬀerences  shown  in  Fig.  10,  and  it  is  possible  that                  densities.
+higher order ﬁnite-size corrections would account for the                              All data shown in Fig. 11 have been corrected for ﬁnite-
+diﬀerence  in  energies  obtained.   It  is  worth  noting  that                    size eﬀects, as discussed above.  A control variate correc-
+Ceperley  and  Alder  did  not  perform  QMC  calculations                          tion has also been applied to reduce the statistical uncer-
+at densities higher than rs = 2 a.u. for ζ = 1 and that the                         tainty  arising  from  the  ﬁnite  sample  of  twist  angles,  as
+Loos-Gill result also gives smaller correlation energies in                         discussed in Sec. II. The optimum parameter values used
+this region than the Perdew-Zunger ﬁt.                                              in the ﬁt of Eqs. (3), (4), and (5) are given in Table V.
+   To  compare  our  intermediate-ζ  energies  with  those
+in  the  literature,  we  used  the  procedure  developed  by
+Perdew  and  Zunger  to  interpolate  between  ζ  =  0  and                                                   D.     Fits  to  PCFs
+ζ  = 1.  We used our QMC data for the unpolarized and
+fully polarized systems and interpolated using Eq. (C12)                               We have performed cubic-spline ﬁts to our PCF data.
+in  their  paper.   These  ﬁts  are  included  as  part  of  the                    The spin resolution across the density range rs = 0.5–20
+                                                                                                                                                               8
+
+
+      -0.02                                                                        TABLE V.   Parameters (in a.u.) obtained from the ﬁt to the
+                                    -0.02                                          correlation energy as a function of rs  and ζ  using Eq. (3).
+      -0.04                                                                                               Parameter        Value
+                                    -0.04                                                                 a                      0.575073
+      -0.06           PZ, ζ = 0                                                                           b                      0.0383567
+                      PZ, ζ = 1                                                                           c                   −0.00144917
+      -0.08           ζ = 0         -0.06
+                      ζ = 1                                                                               γ0                 −0.138971
+      -0.10           Loos-Gill                                                                           γ1                 −0.0633399
+                      CA, ζ = 0     -0.08 0.5          1          1.5          2
+                      CA, ζ = 1                     rs (a.u.)                                             β01                    1.04452
+      -0.12                5               10              15              20                             β02                    0.311702
+                                      rs (a.u.)                                                           β11                    0.872563
+                                                                                                          β12                    0.225783
+FIG.  10.   (Color  online)  Correlation  energy  at  ζ  =  0  and  1
+against  density  parameter  rs.    The  present  work  is  simply
+labeled  “ζ  = 0”  and  “ζ  = 1”.  Also  shown  are  the Ceperley-
+Alder QMC data;3 the Perdew-Zunger ﬁt to the latter data;45                        and are accurate for 0 ≤ r/rs  ≤ 3.  For unpolarized and
+and the recent high-density result of Loos and Gill.46 Our data                    fully  polarized  systems,  we  ﬁt  the  DMC  data,  whereas
+are  corrected  for  ﬁnite-size  eﬀects.   Time  step  extrapolation               for partially polarized systems, we provide ﬁts to the ex-
+was not performed.  The statistical error bars are shown, but                      trapolated  estimates  of  the  PCFs.   Note  that  we  used
+are usually smaller than the symbols.                                              down spins as the majority spins in our simulations.  We
+                                                                                   did not impose any exact results as constraints when per-
+           0                                                                       forming the spline ﬁts, in order to give the most accurate
+                                                                                   ﬁt  possible  to  our  raw  data.   As  discussed  above,  our
+                                                                                   QMC  data  are  consistent  with  the  Kimball  cusp  condi-
+      -0.02                                                                        tions,  and  the  spline  ﬁts  follow  the  data  closely  in  all
+                                                                                   systems  studied.  On  the  other  hand,  our  PCF  data  in-
+                                                                                   evitably suﬀer ﬁnite-size eﬀects at large-r, so various sum
+      -0.04                                                                        rules requiring integration of the PCF over all space will
+                                                                                   not be satisﬁed exactly.
+                                                                                      These  spline  ﬁts  are  available  in  the  form  of  a  small
+      -0.06                                                                        Fortran  90  program  that  we  have  written  and  which  is
+                                                                                   included as part of the Supplemental Material accompa-
+                                                                                   nying this article.26 Subroutines from the SLATEC Com-
+      -0.080           0.2         0.4         0.6         0.8           1         mon Mathematical Library48 were used to write this pro-
+                                           ζ                                       gram.  SSFs can be obtained from these data by Fourier
+                                                                                   transformation.
+FIG. 11.  (Color online) Correlation energies obtained in DMC                         We  also  compared  ﬁtting  schemes  previously  used  to
+calculations  together  with  the  ﬁt  of  Eqs.  (3),  (4),  and  (5).             represent  PCF  data  for  these  systems,  including  those
+Dashed  lines  show  the  ﬁt;  square  symbols  the  QMC  data.                    proposed by  Ortiz and Ballone,20  and Gori-Giorgi, Sac-
+Lower  densities  appear  towards  the top  of  the graph;  higher                 chetti,  and  Bachelet.23  The  former  scheme  struggled  to
+densities  towards  the  bottom  of  the  ﬁgure.    From  top-to-                  describe  the  region  around  the  peak  in  the  PCF  with
+bottom, therefore, the densities shown are:  rs = 20, 10, 5, 3,                    quantitative accuracy.  The latter scheme was successful
+2, 1, and 0.5 a.u. Error bars on the QMC data are shown, but                       at high density (for ζ = 0), but less reliable otherwise.23
+are  smaller  than  the  size  of  the  symbols.   Corrections  have
+been  applied  for  ﬁnite-size  eﬀects.   Time-step  extrapolation
+was not performed.                                                                                       IV.     CONCLUSIONS
+
+
+                                                                                      We have investigated ground-state properties of the 3D
+a.u. and spin polarizations ζ  = 0,  0.34, 0.66, and 1 was                         HEG  using  the  VMC  and  DMC  methods.   Our  simula-
+well  represented  by  cubic-spline  ﬁts  with  ten  knots  for                    tions  cover  the  density  range  rs  =  0.5–20 a.u.  and  spin
+each spin-resolved PCF.  The  boundary conditions used                             polarizations ζ = 0, 0.34, 0.66, and 1.  We used highly ac-
+were  those  of  natural  splines:  second  derivatives  set  to                   curate wave functions incorporating backﬂow and three-
+zero at the ﬁrst and last data points.  An example of the                          body  correlations.   Twist  averaging  was  used  to  reduce
+ﬁts obtained is given in Fig. 12, where we plot raw QMC                            ﬁnite-size eﬀects, and we show that this can be performed
+data  together  with  ﬁts  to  the  data.   The  splines  repro-                   eﬃciently using a control variate method.
+duce  our  estimate  for  the  on-top  pair  density  at  r  =  0,                    The spin resolution of the PCF and SSF are reported
+                                                                                                                                                             9
+
+       1.2                                                                        at  each  spin  polarization  studied.   At  ζ  =  0,  we  obtain
+       1.0                                                                        good agreement with  previous  QMC  studies,  except  for
+                                                                                  r/rs ≲ 0.5, where our data are signiﬁcantly smaller than
+       0.8                                                                        those of Gori-Giorgi et  al.23  The eﬀects of twist averag-
+                                                                                  ing on these quantities are shown.  We report the rs- and
+       0.6                                                 g↑↑                    ζ-dependence  of  the  energies  for  118-electron HEGs.  It
+                                                           g↑↓                    is  hoped  that  the  higher  accuracy  and lower  noise than
+       0.4                                                 g↓↓                    earlier QMC studies that we have achieved, particularly
+                                                                                  of the PCFs, will be valuable in, for example, aiding the
+       0.2                                                                        construction of nonlocal density functionals.  A small For-
+                                                                                  tran  90  program  is  available  to  reproduce  spline  ﬁts  to
+         0                                                                        our PCF and SSF data.
+           0                      1                      2                      3r / rs
+
+
+FIG. 12.  (Color online) Cubic-spline ﬁts to our twist-averaged                                       ACKNOWLEDGMENTS
+extrapolated  pair  correlation  function  data  at  rs  =  20  a.u.
+and ζ  = 0.66.  Ten knots were used in the spline ﬁts.  Square                       The  authors  acknowledge  ﬁnancial  support  from  the
+symbols represent the raw QMC data points and lines repre-                        EPSRC.     Computational  resources  were  provided  by
+sent our spline ﬁts to those data.  In all other ﬁgures, we have                  Cambridge  University’s  High  Performance  Computing
+shown the raw QMC data rather than the spline ﬁts displayed
+here.                                                                             Service.   We  thank  P.  L´opez  R´ıos  and  A.  J.  Morris  for
+                                                                                  useful discussions.
+
+
+
+
+
+
+
+ 1  G.  F.  Giuliani  and  G.  Vignale,  Quantum  Theory  of  the                    Phys. Rev. B 56, 9970 (1997).
+   Electron  Liquid, CUP, Cambridge (2005).                                       21  W. E. Pickett and J. Q. Broughton, Phys. Rev. B 48, 14859
+ 2  E. P. Wigner, Phys. Rev. 46, 1002 (1934).                                        (1993).
+ 3  D. M. Ceperley and B. J. Alder, Phys. Rev. Lett. 45, 566                      22  G. Ortiz, M. Harris,  and P. Ballone,  Phys. Rev. Lett. 82,
+   (1980).                                                                           5317 (1999).
+ 4  F. H. Zong, C. Lin, and D. M. Ceperley, Phys. Rev. E 66,                      23  P.  Gori-Giorgi,  F.  Sacchetti,  and  G.  B.  Bachelet,  Phys.
+   036703 (2002).                                                                    Rev.  B  61,  7353  (2000);   Phys.  Rev.  B  66,  159901(E)
+ 5  N.  D.  Drummond,  Z.  Radnai,  J.  R.  Trail,  M.  D.  Towler,                  (2002).
+   and R. J. Needs, Phys. Rev. B 69, 085116 (2004).                               24  M.  Holzmann,  B.  Bernu,  C. Pierleoni,  J.  McMinis,  D. M.
+ 6  J. P. Perdew, Electronic  Structure  of Solids ’91, edited by                    Ceperley,  V. Olevano,  and L. Delle  Site, Phys. Rev. Lett.
+   P. Ziesche and H. Eschrig (Akademie-Verlag, Berlin 1991);                         107, 110402 (2011).
+   J.  P.  Perdew,  K.  Burke,  and  M.  Ernzerhof,  Phys.  Rev.                  25  S. Paziani, S. Moroni, P. Gori-Giorgi, and G. B. Bachelet,
+   Lett. 77, 3865 (1996); 78, 1396 (1997).                                           Phys. Rev. B 73, 155111 (2006).
+ 7  O.  Gunnarsson,  M.  Jonson,  and  B.  I.  Lundqvist,  Phys.                  26  See  Supplemental  Material  at  [URL]  for  the  Fortran  90
+   Lett. A 59, 177 (1976); Phys. Rev. B 20, 3136 (1979).                             program which evaluates spline ﬁts to our PCF data.
+ 8  E. Chac´on and P. Tarazona, Phys. Rev. B 37, 4013 (1988).                     27  R. J. Needs, M. D. Towler, N. D. Drummond, and P. L´opez
+ 9  K. Burke, J. P. Perdew, and M. Ernzerhof, J. Chem. Phys.                         R´ıos, J. Phys.: Condens. Matter 22, 023201 (2010).
+   109, 3760 (1998).                                                              28  W. M. C. Foulkes, L. Mitas, R. J. Needs, and G. Rajagopal,
+10  J. Toulouse, R. Assaraf, and C. J. Umrigar, J. Chem. Phys.                       Rev. Mod. Phys. 73, 33 (2001).
+   126, 244112 (2007).                                                            29  J. B. Anderson, J. Chem. Phys. 65, 4121 (1976).
+11  R.  Assaraf  and  M.  Caﬀarel,  Phys.  Rev.  Lett.  83,  4682                 30  N.  D.  Drummond,  M.  D.  Towler,  and  R.  J.  Needs,  Phys.
+   (1999).                                                                           Rev. B 70, 235119 (2004).
+12  R. Fantoni, Solid State Communications 159, 106 (2013).                       31  P. L´opez R´ıos, P. Seth, N. D. Drummond, and R. J. Needs,
+13  P. Gori-Giorgi and J. P. Perdew, Phys. Rev. B 66, 165118                         Phys. Rev. E 86, 036703 (2012).
+   (2002).                                                                        32  Y. Kwon,  D.  M. Ceperley,  and  R. M.  Martin,  Phys.  Rev.
+14  P.   Gori-Giorgi   and   J.   P.   Perdew,   Phys.   Rev.   B   69,              B 48, 12037 (1993).
+   041103(R) (2004).                                                              33  P.  L´opez  R´ıos,  A.  Ma,  N.  D.  Drummond,  M.  D.  Towler,
+15  P. Gori-Giorgi and J. P. Perdew, Phys. Rev. B 64, 155102                         and R. J. Needs, Phys. Rev. E 74, 066701 (2006).
+   (2001).                                                                        34  C.  J.  Umrigar,  K.  G.  Wilson,  and  J.  W.  Wilkins,  Phys.
+16  A. W. Overhauser, Can. J. Phys. 73, 683 (1995).                                  Rev. Lett. 60, 1719 (1988).
+17  H. Yasuhara, Solid State Commun. 11, 1481 (1972).                             35  N.  D.  Drummond  and  R.  J.  Needs,  Phys.  Rev.  B  72,
+18  I. Nagy, J. I. Juaristi, R. D´ıez Mui˜no, and P. M. Echenique,                   085124 (2005).
+   Phys. Rev. B 67, 073102 (2003).                                                36  C.  J.  Umrigar,  J.  Toulouse,  C.  Filippi,  S.  Sorella,  and  R.
+19  Z. Qian, Phys. Rev. B 73, 035106 (2006).                                         G. Hennig, Phys. Rev. Lett. 98, 110201 (2007).
+20  G.  Ortiz  and  P.  Ballone,  Phys.  Rev.  B  50,  1391  (1994);              37  D. M. Ceperley and M. H. Kalos, Monte Carlo Methods in
+                                                                                                                                                            10
+
+   Statistical Physics, ed. K. Binder, Springer-Verlag, (1979).                   43  H. Flyvbjerg and H. G. Petersen, J. Chem. Phys. 91, 461
+38  C. Lin, F.-H. Zong, and D. M. Ceperley, Phys. Rev. E 64,                          (1989).
+   016702 (2001).                                                                 44  H.  J.  Monkhorst  and  J.  D.  Pack,  Phys.  Rev.  B  13,  5188
+39  N. D. Drummond, R. J. Needs, A. Sorouri, and W. M. C.                             (1976).
+   Foulkes, Phys. Rev. B 78, 125106 (2008).                                       45  J. P. Perdew and A. Zunger, Phys. Rev. B 23, 5048 (1981).
+40  S.  Chiesa,  D.  M.  Ceperley,  R.  M.  Martin,  and  M.  Holz-               46  P.-F.  Loos  and  P.  M.  W.  Gill,  Phys.  Rev.  B  84,  033103
+   mann, Phys. Rev. Lett. 97, 076404 (2006).                                          (2011).
+41  M.  Holzmann,  B. Bernu,  D. M. Ceperley,  J.  Phys.:  Conf.                  47  D. Ceperley, Phys. Rev. B 18, 31263138  (1978).
+   Ser. 321, 012020 (2011).                                                       48  W.  H.  Vandevender  and  K.  H.  Haskell,  ACM  SIGNUM
+42  R. Szechtman, Proceedings of the 2003 Winter Simulation                           Newsletter 17, 16 (1982).
+   Conference, pp 144–149.

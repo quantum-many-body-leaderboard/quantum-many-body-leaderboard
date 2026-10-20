@@ -1,0 +1,739 @@
+         Twist-averaged  Boundary  Conditions  in  Continuum  Quantum  Monte  Carlo
+
+                                                  C. Lin, F.-H. Zong and D. M. Ceperley
+                    Dept.  of  Physics and NCSA, University  of Illinois at Urbana-Champaign,  Urbana,  IL 61801
+
+                    We  develop  and  test  Quantum  Monte  Carlo  algorithms  which  use  a“twist”  or  a  phase  in  the
+                wave  function  for  fermions  in  periodic  boundary  conditions.   For  metallic  systems,  averaging  over
+                the twist results in faster convergence to the thermodynamic limit than periodic boundary conditions
+                for properties involving the kinetic energy with the same computational complexity.  We determine
+                exponents for the rate of convergence to the thermodynamic limit for the components of the energy
+                of coulomb systems.  We show results with twist averaged variational Monte Carlo on free particles,
+                the Stoner model and the electron gas using Hartree-Fock, Slater-Jastrow, three-body and backﬂow
+                wavefunction.   We  also  discuss  the  use  of  twist  averaging  in  the  grand  canonical  ensemble,  and
+                numerical methods to accomplish the twist averaging.
+
+PACS Numbers:  02.70.-c, 82.20.Wt, 71.15.-m
+
+  Almost  all  quantum  Monte  Carlo  (QMC)calculations                       can be restricted to be in the range:
+in periodic boundary conditions have assumed that phase
+of the wavefunction returns to the same value if a parti-                                                −π<θi ≤π.                                  (2)
+cle goes around the periodic boundaries and returns to its
+original position.  However, with  these  boundary  condi-                    For systems with a real potential (e.g.  no magnetic ﬁeld),
+tions, delocalized fermion systems converge slowly to the                     one can further restrict the twist to be in the range [0,π].
+thermodynamic  limit  because  of  shell  eﬀects  in  the  ﬁll-                  For  a  degenerate  Fermi  liquid,  ﬁnite-size  shell  eﬀects
+ing of single particle states.  In this paper we explore an                   are much reduced if the twist angle is averaged over.  We
+alternative  boundary  condition:  one  can  allow particles                  call  this  twist  averaged  boundary  conditions  (TABC)5.
+to pick up a phase when they wrap around the periodic                         This  is  particularly  important  in  computing  properties
+boundaries,                                                                   that  are  sensitive  to  the  single  particle  energies  such
+         Ψ(r1 +Lˆx, r2, · · ·) =eiθxΨ(r1, r2, · · ·).             (1)         as  the  kinetic  energy  and  the  magnetic  susceptibility.
+                                                                              By  reducing  shell  eﬀects,  much  more  accurate  estima-
+The boundary condition θ = 0 is called periodic bound-                        tions of the thermodynamic limit of these properties can
+ary conditions (PBC),θ =π anti-periodic boundary con-                         be  made.    What  makes  this  even  more  important  is
+ditions  (ABC)  and  the  general  condition  with θ  ⁄=  0,                  that  the  most  accurate  quantum  methods  have  compu-
+twisted boundary conditions (TBC)1.                                           tational demands  which  increase  rapidly  with  the  num-
+  In  periodic  boundary  conditions,  the  Hamiltonian  is                   ber  of  fermions.   Examples  of  such  methods  are  exact
+invariant with respect to translating any particle around                     diagonalization6 (exponential increase in CPU time with
+the  periodic boundaries.  According to Bloch’s theorem,                      N), variational Monte Carlo7(VMC) with wavefunctions
+this  implies  that  any  solution  can  be  characterized  by                having  backﬂow  and  three-body  terms8,9  (increases  as
+a  given  twist  angle.   The  twist  angle  also  has  a  physi-             N 4), and transient-estimate and released-node Diﬀusion
+cal origin:  consider a toroidal geometry.  One can either                    Monte  Carlo  methods10  (exponential  increase  with  N).
+rotate  the  torus2  and  go  into  rotating  coordinates,  or                Methods which can extrapolate more rapidly to the ther-
+add  a  magnetic  ﬂux3  to  the  center  of  the  torus.   The                modynamic limit are crucial in obtaining high accuracy.
+physical properties will be unchanged.  In both cases one                     Twist  averaging  is  especially  advantageous  for  stochas-
+can  transform  away  the  perturbation  by  applying  TBC                    tic methods (i.e.  QMC) because the averaging does not
+with  the  twist angle  given by θ = mR2ω/h for  rotation                     necessarily slow down the evaluation of averages, except
+and θ = eφ/(c¯h) for magnetic ﬂux.  A torus is  topologi-                     for the necessity of doing complex rather than real arith-
+cally equivalent to periodic boundary conditions, so that                     metic.
+a  non-zero twist  will  be  allowed in  periodic boundaries.                    The  use  of  twisted  boundary  conditions  is  common-
+The twist is a degree of freedom, or boundary condition,                      place for the solution of the  band structure problem for
+that can be varied to enable a ﬁnite system to approach                       a  periodic  solid.   Band  structure  methods  begin  by  as-
+the  thermodynamic  limit  more  quickly  or  to  make  de-                   suming  the  wavefunction  factors  into  single  particle  or-
+tailed studies of the properties of the quantum state.                        bitals  characterized  by  a  lattice  momentum.    Then  in
+  If  the  periodic  boundaries are  used  in all  three direc-               order to calculate properties of an inﬁnite periodic solid,
+tions,  each  dimension  can  have  an  independent  twist4.                  properties must be averaged by integrating over the ﬁrst
+Hence,  in  3D,  the  twist  is  a  three  component  vector,                 Brillouin zone.  Baldereschi11  pointed out that in an in-
+θi  with i  =  {1, 2, 3}.    The  free  energy  and  hence  all               sulator,  in  integrating  over  the  Brilliouin  zone,  one  can
+equilibrium properties are (triply) periodic3 in the twist:                   with  high  accuracy  replace  the  integral  with  a  “special
+F (θi + 2π) =F (θi) so that each component of the twist                       k-point.”   This  was  generalized  to  a  grid  of  k-points12.
+
+
+                                                                           1
+Twisted boundary conditions has been discussed in con-                         sume  the  simulation  cell  is  a  cube  (or  square  in  2D)  of
+nection with polarization of insulators13; we do not con-                      side L.  To  satisfy  the  twisted  boundary conditions,  the
+sider that here.  The use of twisted boundary conditions is                    wave vectors obey:
+common in the analysis of lattice models6,14.  Gammel15                                               kn = (2πn +θ)/L                               (3)
+showed using perturbation arguments for certain lattice
+models why it will converge faster to the thermodynamic                        where  n  is  an  integer  vector.   These  states  have  energy
+limit  and  applied  it  to  calculating  optical  properties.                 En = (¯h2/2m)k2n.  The ground state in the canonical en-
+Gros16  studied  size  eﬀects  in  the  Hubbard  model  with                   semble consists of theN  lowest energy states; the many-
+exact diagonalization and showed TABC gives exact re-                          body  wavefunction  is  a  determinant  of  those  states.   In
+sults in the grand canonical ensemble for non-interacting                      this section we will ignore spin, since for a non-interacting
+systems.                                                                       system, spin modiﬁes the results only by doubling the de-
+  Though twisted boundary conditions have a long his-                          generacy of each level.  Figure 1 shows the occupation of
+tory   within   quantum   physics,   their   use   in   quantum                states for 13 spin-less fermions in 2D forθ = 0 i.  e.  with
+Monte  Carlo  (QMC)  has  been  limited.    In  continuum                      periodic  boundary  conditions,  and  also  with  a  non-zero
+QMC,  Rajagopal17  used  special  k-points  to  reduce  ﬁ-                     twist.  The occupied states lie within a circle centered at
+nite size errors for calculations of insulators within VMC.                    the origin with radius ≈kF  = 2(πρ)1/2.
+Their use in Diﬀusion Monte Carlo (DMC) results were
+restricted  to  PBC  and  ABC  in  order  to  work  with  real
+wavefunctions.   Kralik  et  al.18  used  generalized  bound-
+ary  conditions  to  compute  the  momentum  distribution
+with VMC for silicon (a semiconductor) and Filippi and
+Ceperley19 for lithium (a metal).  This was done in order
+to enlarge the number of momentum vectors to probe the
+behavior near the fermi surface.  The use of TABC within
+QMC has not been further developed.
+  The applications considered here are for systems with
+a  fermi  surface,  i.e.    metals.    We  begin  by  discussing
+the  method  for  non-interacting  (NI)  fermions.    Fermi
+liquid  theory  asserts  that  the  spectrum  of  states  of  in-
+teracting  liquids  are  intimately  related  to  those  of  the
+non-interacting  fermion  systems,  hence  a  detailed  anal-
+ysis  for  the  NI  system  carries  over  to  strongly  interact-
+ing  fermi  liquids.   We  then  discuss  interacting  systems
+in the Hartree-Fock approximation:  the electron gas and
+the  Stoner  model.   In  the  Stoner  model,  we  show  how
+TABC  can  be  used  to  determine  a  polarization  phase
+transition  at  non-zero  temperature.   Results  for  TABC
+are  given  for  the  interacting  electron  gas  using  a  pair
+product and backﬂow wavefunction in 3d.  The  electron
+gas system has  been  previously treated with  an  extrap-
+olation method  based on Fermi  liquid  theory.  We  show
+that TABC gives the same results in the thermodynamic
+limit  and  verify  the  applicability  of  the  NI  analysis,  in               FIG. 1.  Momentum  distibution for  13 spinless fermions  in
+particular  to  examine  how  the  energy  depends  on  the                    a 2D  square with  side  L = 2π.  The top  panel shows  the oc-
+twist  of a  given system size.  We  then  present VMC  re-                    cupied  states  (closed  symbols)  and  empty  states  (open  sym-
+sults of the polarization energy of the electron gas using                     bols)  with  zero  twist  (circles,  PBC)  and  a  twist  equal  to
+the  new  method.   In  future  publications  we  will  study                  2π(0.3, 0.15) (triangles).  The circle shows the inﬁnite system
+the  low density properties of the  electron gas using this                    fermi  surface.   The  bottom  panel  shows  the  occupied  states
+technique.  The  Appendix  discusses some details  arising                     with  TABC.  The  colored  regions  show  the  occupied  region
+in the implementation of TABC in QMC.                                          for the lowest level (middle square), the third level, up to the
+                                                                               outermost 13th  level.
+
+          I.  NON-INTERACTING  FERMIONS                                           Figure 2 shows the relative error in energy versus the
+                                                                               number  of  fermions  with  PBC.  The  energy  converges
+                                                                               slowly to the exact result.  One sees “cusps” in the curve
+  In  a  non-interacting  homogenous  system  with  PBC,                       at certain values ofN.  These occur at closed-shell values
+the  single  particle  states  are  plane  waves:  exp(ikr)η(σ)                ofN, e.g.  the state depicted in Fig.  1 for PBC is a closed
+where η  is a spin function.  For simplicity, we always as-                    shell since states related by symmetry are either all ﬁlled
+
+
+                                                                           2
+or  all empty.  For  large N  the  curve  is  “quasi-random”,                  on a plane bisecting and perpendicular to the line joining
+with an envelope decaying algebraically as N −ν.                               the origin with an integer vector; precisely the Laue con-
+  We ﬁnd numerically that the exponent of the decay of                         dition for the Bragg planes20  of the  reciprocal lattice of
+the relative error of the energy is approximatelyν = 1.33                      the supercell.  In ﬁg.  3 is shown the dependence of total
+in 2D andν = 1 in 3D (see Table I). To characterize the                        energy on the twist angle for a ﬁxed number of particles.
+approach to the thermodynamic limit, we introduce two                          One sees cusps as the ﬁlled states cross the Bragg planes.
+diﬀerent measures.  Deﬁning the relative scaled errorδN                        The dependence is similar to the band energy of a simple
+as:                                                                            metal.  Later, we  will discuss this  band structure for an
+                   EN  =E∞(1 +N −νδN ),                          (4)           interacting system.  The bandwidth EBW  (the spread of
+                                                                               energy values ﬁg.  3) is deﬁned as:
+we deﬁnea = max |δN |,b = ⟨δN ⟩ andc = ⟨(δN −b)2⟩1/2.
+Table  I  shows  estimates  of  these  coeﬃcients  and  ex-                                E2BW  = (2π)−d ∫        dθ(E(θ) −E∞)2                 (5)
+ponents  obtained  numerically  by  examining  values  of
+10 ≤N  ≤ 104.
+                                                                               depends on the number of particles and scales asEBW  ∝
+                                                                               N −ν  where  the  exponent  is  the  same  as  describes  the
+                                                                               convergence of the KE in PBC.
+                                                                                  There are several alternative procedures by which the
+                                                                               twist  angle  can  be  varied:  i)  one  can  average the  twist
+                                                                               over  all  possible  values,  ii)  the  twist  can  become  a  dy-
+                                                                               namical variable and iii) special values of the twist could
+                                                                               be  used.   Of  these  approaches,  none  are  right  or  wrong
+                                                                               in  general;   which  method  approaches  the  thermody-
+                                                                               namic  limit  faster  depends  on  the  order  of  the  phase
+                                                                               in question, whether fermi liquid, ferromagnetic or anti-
+                                                                               ferromagnetic.   However,  to  compute  a  variety  of  prop-
+                                                                               erties for a metallic systems, we ﬁnd the TABC best re-
+                                                                               duces size eﬀects.
+
+
+                                                                                n        O        d         ν           a             b             c
+                                                                                1        T        2       1.33         4.5          0.37          1.77
+                                                                                8        T        2        1.5        0.47          0.27         0.093
+                                                                                1        N        2       0.67        2.18            0           0.65
+                                                                               16        N        2       0.75        0.71            0           0.52
+                                                                                1        V        2         1         0.50         -0.35         0.069
+                                                                                8        V        2         1         0.38         -0.367        0.0058
+                                                                                1        T        3         1          2.4          0.25           1.0
+                                                                                8        T        3       1.33        0.50         0.292         0.065
+                                                                               16        T        3       1.33        0.35          0.21          0.06
+  FIG. 2.  Relative error of the energy versus number of par-                  32        T        3       1.33        0.35          0.19          0.06
+ticles with PBC (△) and TABC (✷) in 2D and 3D. The points                       1        N        3       0.55        2.97            0           1.00
+shown are only those where the relative error has a local max-                 16        N        3       0.67        0.83            0           0.63
+imum.  Curves are shown only for N  < 100.                                      1        V        3       0.67        0.742        -0.549        0.072
+                                                                               16        V        3       0.67        0.587        -0.582        0.0043
+  Now  consider  twisting  the  boundary  conditions,  i.  e.                    TABLE I.  Coeﬃcients of the asymptotic decay of the error
+using a nonzero phase.  This displaces the set of k-vectors                    in the relative NI energy.  ν is the exponent of the decay.  The
+as shown in the top panel of Fig.  1.  Aside from a set of                     exponents have been determined from the numerical data and
+special twists having zero measure, the energy levels will                     are  accurate  to  about  0.02.   The  amplitude  was  determined
+no  longer  be  degenerate.   (When  we  sort  the  states  to                 numerically  by  examining  the  values  for  10  ≤  N  ≤  10000.
+decide the ﬁlling, all states will have a diﬀerent energy.)                    The  coeﬃcients  are  deﬁned  as  a  ≡  max(|δN |),  b  =  ⟨δN ⟩,
+This is because inversion symmetry and rotational sym-                         c = ⟨[δN −b]2⟩1/2.  n is the number of phase angles used for the
+metry  through 90◦  is  broken.  This  breaking  of  symme-                    summation  in  each  dimension:  θi  =  2πi/n  for  i  =  1, . . . , n.
+tries  and  absence  of  degeneracies  is  a  crucial  diﬀerence               n = 1 corresponds to PBC; d is the dimensionality.  O  is the
+between TBC and PBC.                                                           property:  T ,  the kinetic  energy;  V ,  the  Hartree-Fock  poten-
+  At critical values of the twist, when a ﬁlled and empty                      tial energy of the electron gas; N, the number of particles in
+state have the same energy, the occupation of the states                       the TA-GCE method.
+changes.  The  condition  for  the  degeneracy is  that  k  lie
+
+
+                                                                           3
+                  II.  TWIST  AVERAGING
+
+
+  The twist average of a property  ˆA is deﬁned by:
+
+
+        ⟨ ˆA⟩ = (2π)−d ∫   π
+                            −πdθ⟨ψ(R,θ)| ˆA|ψ(R,θ)⟩            (6)
+
+where it is assumed that the wavefunctionψ(R,θ) is nor-
+malized for eachθ.  The momentum distribution,n(k) is
+a key property to calculate for delocalized quantum sys-
+tems.   A  discontinuity  in n(k)  at  the  Fermi  surface  is
+responsible  for  the  validity  of  Fermi  Liquid  Theory  for
+metals.  The kinetic energy is the second moment of the
+momentum distribution:
+                                    ∫
+                TN  = (¯h2/2m)         dkk2n(k).                      (7)
+
+
+  Let  us  analyze  the  momentum  distribution  for  NI
+fermions in the canonical ensemble.  For any given twist
+θ,  the N  lowest  energy  states  from  those  given  by  Eq.
+3 are occupied.  But any value of k can only be reached                          FIG.  3.    Dependence   of   the   energy   of   NI   unpolarized
+by  a  unique  combination  of  (n,θ)  if θ  is  restricted  by                fermions  on  the  twist  angle  for  N=54  in  3D.  The  solid  line
+Eq.   2.   This  proves  that  the  averaged  momentum  dis-                   shows the energy along the (100) direction, dotted line along
+tribution  is  a  constant  for  states  which  can  be  reached               the (110) direction and dashed line along the (111) direction.
+by some combination of (n,θ) and zero otherwise.  Hence                        The curves are piecewise quadratic, with a cusp when the oc-
+within  TABC,  the  set  of ﬁlled  states  comprises a  “solid                 cupation of the states changes.  We refer to the r.m.s.  spread
+volume” bounded by a Fermi surface.  In contrast, for a                        of energy values as the bandwidth.
+single twist value, the momentum distribution is a point
+set.  The total volume in k-space inside the Fermi surface                        Figure 2 shows the convergence of the error of the ki-
+is  precisely  (2π)dρ,  just  as  it  is  in  the  thermodynamic               netic  energy  within  TABC  versus  the  number  of  parti-
+limit, so the constant is determined by the normalization                      cles.  Numerical estimates of the relative error are given
+condition:                                                                     in Table I. One sees a dramatic improvement in the con-
+                         ∫                                                     vergence with respect to PBC. The exponents governing
+                             dkn(k) = 1.                                 (8)   the  decay  rate  are  larger  and  the  errors  are  up  to  two
+                                                                               orders of magnitude smaller for system sizes in the range
+                                                                               N  ≈ 100.  Note that the TABC kinetic energy must ap-
+As  mentioned  above,  the  Fermi  surface  is  a  subset  of                  proach the exact energy from above.  This is because the
+the  Bragg  planes.   For N  particles  the  occupied  states                  shape of a given volume with the smallest moment of in-
+comprise the union of the ﬁrstN  Brillouin zones20.  The                       ertia is a sphere, so that the distorted shape shown in ﬁg.
+(N + 1)th  electron will go in the (N + 1)th zone, an area                     1  has  a  higher  energy.  Also  shown  in  Table  I  is  depen-
+formed  by  planes  surrounding  the N th  zone.   Figure  1                   dence  of  the  error on  the  number  of  twist  values  in  the
+shows the momentum distribution of 13 spinless fermions                        average.  One needs from 16 to 32 values of θ along each
+in 2D using TABC.                                                              axis  to  achieve  the  full  reduction  in  size  eﬀects  (better
+  In 1D, TABC gives the exact momentum distribution                            than a  percent accuracy in the  relative error of the  size
+because  the  normalization  condition  determines  every-                     eﬀects).  In the Appendix are discussed the relative mer-
+thing.  In higher dimensions the fermi surface is not per-                     its  of performing  the  average on  a  grid versus  sampling
+fectly  circular  (spherical)  as  shown  in  ﬁg.   1.   However,              the twist values from a uniform distribution.
+one  can see  that n(k)  is  much closer to  a  disk  than the                    Let us now examine how the potential energy converges
+momentum  distribution  obtained  with  PBC.  A  perfect                       with PBC and TABC. This will give us some idea of how
+fermi  surface  (no  ﬁnite  size  corrections)  in  any  dimen-                two  particle  correlations  are  aﬀected  by  the  boundary
+sion, can be obtained by allowing variations in the parti-                     conditions since the potential energy is a particular inte-
+cle number and working in the grand canonical ensemble                         gral over  the  pair  correlation function.   The  calculation
+as we discuss below.                                                           performed  below  is  particularly  simple  for  a  power  law
+
+
+                                                                           4
+potential,v(r) =r−n.  In particular, we examine the po-                      TABC.  For  all  values  of N  and  twists  the  potential  en-
+tential energy of an electron gas (n = 1) computed using                     ergy of the ﬁnite systems approaches that of the inﬁnite
+the NI wavefunction (Hartree-Fock approximation).  The                       systems from below.  Twist averaging serves to make the
+NI trial function is valid for high density when the kinetic                 decay more regular but does not reduce its overall mag-
+energy dominates the potential energy.  The potential en-                    nitude which is determined by a charge interacting with
+ergy  (using  the  Ewald  image  potential)  is  conveniently                the  correlation hole  in  the  nearby  supercell.  Similar  ef-
+evaluated  in  Fourier  space  as  a  sum  over  the  structure              fects are expected for other two particle quantities.  The
+factor:                                                                      smoother convergence obtained with TABC should allow
+                         ∑                                                   for more accurate extrapolation to N  → ∞.
+              V  = Nρ2        vk(Sk − 1) +NvM                    (9)
+                           k
+wherevM  is the Madelung energy of a charge interacting                              III.  GRAND  CANONICAL  ENSEMBLE
+with itself andvk is the Fourier transform of the interpar-
+ticle potential.  For a 1/r potential,vk = 2π(d − 1)/kd−1.                      The  use  of  TABC  in  the  grand  canonical  ensemble
+The  values  of  k  in  the  sum  are  k  =  2πn/L  where  n  is             (GCE) gives the exact single particle occupations for NI
+an integer vector.  For the NI wavefunction, the structure                   particles, as shown by Gros16 within the Hubbard model.
+factor at wave-vector q is proportional to the probability                   Suppose (α,N) is a label of the quantum states, both for
+that  after  we  have  displaced  a  ﬁlled  state  by  q  we  are            the number of particles and for other quantum numbers
+still in a ﬁlled state.                                                      such as the momentum and letEα,N (θ) be the energy of
+                                                                             this  state.   Then  the  probability  of  a  given  state  in  the
+             Sq = 1 −  1N ⟨ ∑                                                GCE is proportional to exp(−β(Eα,N (θ) −Nµ)) whereµ
+                             k<k′δ(k − k′ − q)⟩                  (10)        is  the  chemical potential.  In  the  ground state, β  → ∞,
+where the sum is over occupied states and the average is                     the occupied many-body state will be the one minimizing
+over twisted boundary conditions.                                            Eα,N (θ) −Nµ.  Thus N  can depend on θ.
+                                                                                We now show that for a NI system, TABC within the
+                                                                             GCE gives exact single particle properties; i.e.  there are
+                                                                             no  ﬁnite  size eﬀects.  Suppose  the  single  particle energy
+                                                                             levels  are ek.   Then  the  probability  of  occupying  the N
+                                                                             states e1,...,en  is exp(− ∑Nk=1β[ek(θ) −µ]).  In the oc-
+                                                                             cupation  number  ˆnk  basis,  this  probability  distribution
+                                                                             factorizes as:
+                                                                                           ∏   [                                 ]
+                                                                                                 ˆnke−β[ek(θ)−µ] + (1 − ˆnk)                    (11)
+                                                                                            k
+
+                                                                             so  the  probability  of  state k  being  occupied  is  precisely
+                                                                             the fermi distribution law nk  = (exp(β(ek −µ)) + 1)−1.
+                                                                             As the twist angle is varied over its range, each momen-
+                                                                             tum  state  of  the  inﬁnite  system  occurs  precisely  once.
+                                                                             Hence the averaged occupation number is precisely what
+                                                                             it would be in the thermodynamic limit.  The distortion
+                                                                             of the fermi surfaces observed in the lower panel of ﬁg.  1
+                                                                             is a consequence of using the canonical ensemble.
+                                                                                The momentum distribution and hence the kinetic en-
+                                                                             ergy will be exactly equal to their inﬁnite system values.
+                                                                             Other  properties  may  have  ﬁnite  size  corrections,  only
+                                                                             the single particle properties are guaranteed to be exact.
+                                                                             We call this procedure the twist average grand canonical
+                                                                             ensemble (TA-GCE).
+                                                                                With this procedure one does not have a ﬁxed number
+  FIG.  4.   Relative  error  in  the  evaluation  of  the  potential        of particles since for a given twist and fermi wave vector,
+energy  for  an  electron  gas  using  the  Hartree-Fock  wavefunc-          the number of occupied states will vary.  The ﬂuctuations
+tion for N  spinless electrons.  The solid line shows TABC, the              in the number of particles is closely related to a famous
+dashed line PBC.                                                             problem in analytic number theory, “Gauss’ circle prob-
+                                                                             lem”, to determine the number of lattice points inside a
+  Shown  in  ﬁg.    4  is  the  convergence  of  the  potential              circle of area A as its radius tends to inﬁnity21.  As Gauss
+energy  versus  the  number  of  particles  using  PBC  and                  posed the problem, the  center of the circle was ﬁxed on
+
+
+                                                                          5
+a  lattice  site  while  in  TA-GCE  the  circle  is  placed  ran-              E/N  =λ(3π2ρ)5/3
+domly (the shifted circle problem).  It has been shown22                                        10π2     [(1 +ζ)5/3 + (1 −ζ)5/3 +b(1 −ζ2)]
+that  in  2D  one  obtains  the  following  ﬂuctuation  in  the                                                                                     (13)
+particle number for TA-GCE:
+           lim                                                                 where b =  5gρ6λ (3π2ρ)−2/3  and λ = ¯h2/2m. For b< 1.111
+          N→∞⟨(N − (LkF )2/4π)2⟩1/2 ∝N 1/4.             (12)                   the  system  has  an  unpolarized  ground  state  and  for
+                                                                               b >  1.3228  the  ground  state  is  ferromagnetic.   For  in-
+Our  numerical estimates  for  the  convergence are  shown                     termediate couplings, the ground state has a partial spin
+in  Table  I.  Note  that  the  Gauss  circle  problem  diﬀers                 polarization at zero temperature, similar to the behavior
+from the  convergence of the energy in the canonical en-                       suggested26,27  for the electron gas at low density.
+semble since the energy is the average second moment of                           We  performed  a  MC  simulation  of  the  3D  NI  sys-
+the lowestN  points, not the number of points in a circle.                     tem,  within  the  occupation  representation.    The  state
+   The  preceding  discussion  refers  to  NI  systems,  how-                  variables  of  the  system  consist  of  occupation  numbers
+ever,  fermi  liquid  theory  asserts  that  the  low  lying  ex-              (both  spin  and  wavevector)  and  the  twist  angles.   We
+cited  states  of  an  interacting  system  are  in  one-to-one                make Monte Carlo moves consisting of ﬂipping spins and
+correspondence with the NI states.  Hence, as argued by                        moving  the  spatial  occupation  while  keeping  the  parti-
+Gross16 and Gammel15, TA-GCE is likely to reduce ﬁnite                         cle  number  ﬁxed.   If  the  new  state  is  not  already  occu-
+size eﬀects substantially for interacting systems.                             pied,  the  move  was  accepted  with  probability  equal  to
+   For an interacting many-body system, one diﬃculty in                        exp(−β(enew(θ) −eold(θ))).   Fig.   5  shows  the  conver-
+using the GCE is the need to optimize the wavefunction                         gence of magnetization distribution versus the number of
+at  each  twist  value;  in  particular  to  pick  out  which  or-             fermions.  We found that one could determine the phase
+bitals should be occupied.  For an isotropic system having                     transition within a few percent accuracy in the coupling
+a spherical fermi surface, the order of ﬁlling the states is                   constantb using only 54 fermions.  Such accuracy within
+simple.  For a metal with a non-spherical Fermi surface,                       PBC would require thousands of fermions because of the
+the  usual  procedure  is  to  determine  the  ﬁlling  of  single              strong shell eﬀects.
+particle  states  according to  a  mean-ﬁeld  theory  such  as
+the  Kohn-Sham method in density functional theory.  If
+one uses the same procedure within QMC, the Fermi sur-
+face will be substantially unchanged.  Hence, it would be                              1
+better to try other ﬁllings, choosing the one which mini-
+mizes EN −Nµ.
+   There are other problems in using the GCE for charged                             0.8
+systems  in  periodic  boundary  conditions.    Usually  the
+positive  compensating  charge,  either  a  uniform  back-
+ground  or  a  ﬁxed  array  of  charged  nuclei,  is  at  a  ﬁxed                    0.6
+density.   But  if  the  number  of  electrons  ﬂuctuates,  the
+periodic  cell  can  have  a  net  charge,  which  causes  prob-
+lems  in  calculating  the  long-range  potential.   Although                        0.4
+very promising, we do not consider the TA-GCE method
+further in this paper.  The following examples are for the
+canonical ensemble.                                                                  0.2
+
+
+
+                 IV.  THE  STONER  MODEL                                               0
+                                                                                            1                              1.5                              2                              2.5b
+                                                                                  FIG. 5.  Magnetization as a function of b for the 3D Stoner
+   To  test  the  utility  of  TABC  for  determining  a  phase                model.  Circles are the exact results, diamonds for 54 electrons
+transition,  we  simulated  the  Stoner  model,  an  analyti-                  with PBC, squares for 54 electrons with TABC and triangles
+cally soluable model23,24 for strongly correlated fermions,                    for  N=200  with  TABC.  The  temperature  was  T  =  0.224EF
+particularly   related   to   itinerant   magnetism25.      The                and a 83  grid of twist values was used.
+Stoner  model  diﬀers  from  NI  fermions  by  the  addition
+of  a  contact  repulsive  potential:  ∑i<jgδ(rij).   The  en-
+ergy  is  evaluated  within  the  mean  ﬁeld  (Hartree-Fock)                                         V.  ELECTRON  GAS
+approximation  using  the  NI  wavefunction.   For  a  spin
+(1/2) system, the potential energy is E =ENI +gn↑n↓.                              We  now  present  results  for  the  3-D  electron  gas  as
+In 3D the  energy at zero temperature  in the thermody-                        a  test  of  TABC  on  a  correlated  many-body  continuum
+namic limit is:                                                                system.    The  electron  gas  is  a  very  important  model
+
+
+                                                                           6
+in  condensed  matter  physics  being  the  basis  for  the                     Fig.  6 shows the convergence of the VMC energy ver-
+density functional theory method of electronic structure                     sus the number of particles within TABC and PBC. One
+computations.28  The  phase  diagram  of  the  electron  gas                 can see the convergence to the thermodynamic limit that
+at low density is still not resolved27.  The wavefunctions                   was  found  within  the  NI  system  is  also  evident  within
+we  use  are  the  most  accurate  known  for  a  continuum                  VMC  using  the  SJ  wavefunction.    In  addition  to  the
+many-body  system  with  optimized  2-body,  3-body  and                     Slater-Jastrow  trial  functions,  we  also  have  used  opti-
+back  ﬂow  terms.  Variational MC  (VMC)  and  Diﬀusion                      mized backﬂow-three body functions(BF3B)9 which give
+(DMC) are QMC methods appropriate to zero tempera-                           a  more  accurate  description  of  the  low-density  electron
+ture, and Path Integral (PIMC) toT > 0.  In this paper,                      gas.   (They  pick  up  about  3/4  of  the  remaining  corre-
+we will only discuss VMC and DMC. PIMC will be dis-                          lation  energy9  and  break  certain  symmetries  of  the  SJ
+cussed in future publications.                                               wavefunctions.)
+  In  VMC,  one  assumes  an  analytic  form  for  a  trial                     In  the  Diﬀusion  Monte  Carlo  (DMC)  method,   one
+function  ΨT (R)  where R   symbolizes  the  3N   coordi-                    starts with a trial function and uses exp(−tH) to project
+nates.     Then  one  samples  |ΨT (R)|2   using  a  random                  out  the  ground  state  using  a  branching  random  walk.
+walk7.   An  upper  bound  estimate  to  the  exact  ground                  Fermi  statistics  pose  a  signiﬁcant  problem  to  the  pro-
+state energy is the average of the local energy EL(R) =                      jection  method,  since  exact  methods  such  as  transient
+ΨT (R)−1HΨT (R)  over  the  random  walk.   An  accurate                     estimate  or  release-node  QMC  suﬀer  a  exponential  loss
+trial wavefunction is obtained from the NI wavefunction                      of eﬃciency for large numbers of particles.  For this rea-
+by multiplying by pair correlation terms.  The pair prod-                    son the approximate ﬁxed-node method is normally used.
+uct or Slater-Jastrow wave function is:                                      Using the ﬁxed-node method, one obtains the best upper
+                                                                             bound to the energy consistent with an assumed sign of
+           Ψ2(R) =Det(eikirj )e− ∑i<j u(rij ).                (14)           the  wave function.  Both the  FN  method  and the  exact
+                                                                             transient  estimate  can  be  generalized  to  treat  complex-
+                                                                             valued  trial  functions.31  These  methods  are  called  the
+                                                                             ﬁxed-phase and released phase QMC. We have tried both
+                                                                             of these approaches using TABC.32
+         −0.1055                                 3D  rs=10
+                                                                                   VI.  FERMI  LIQUID  THEORY  AND  TABC
+
+         −0.1060                                                                Fermi liquid theory (FLT) for metallic systems allows
+                                                                             both  a  method  to  extrapolate  to  the  thermodynamic
+         −0.1065                                                             limit  and  a  way  of  understanding  the  twist  dependence
+                                                                             of the QMC results.  According to Landau, the low-lying
+                                                                             excitations of an interacting system are in close relation
+         −0.1070                                                             to those of the NI system.
+                                                                                          ∫                    ∫
+                                                                             E =E0 +          dkδnke(k) +         dkdk′δnkδnk′f(k, k′) +...
+
+         −0.10750.000         0.005         0.010         0.015         0.020                                                                   (15)
+  FIG. 6.  Energy  versus the number of  electrons  for  the 3DN−1           where δnk  is  the deviation of the  quasi-particle occupa-
+
+electron gas using SJ wavefunction.  The circles and connect-                tion  from  the  ground  state,  and e(k)  and f(k, k′)  are
+ing  line  are  TABC  with  103  twist  values.  The  ﬁlled  △’s  are        1  and 2  quasiparticle energy  functionals.  For  simplicity
+using PBC. The arrow shows the extrapolation to an inﬁnite                   we  have  not  indicated  dependence  on  spin.  The  energy
+system made using the PBC calculations using Eq.  16.                        functionals are usually further expanded about the fermi
+                                                                             surface  in  spherical  harmonics  and  applied  to  calculate
+  One  can  determine  the  correlation  factor u(r)  either                 properties in the thermodynamic limit.  Here we discuss
+with an analytic argument or by a minimizing of the en-                      how  to  apply  FLT  when  the  “excitation”  is  caused  by
+ergy and/or the variance of an assumed form.  We use a                       the  boundary  conditions.  For  example,  we  consider  the
+parameter-free analytic form so that the systematic size                     momentum distribution shown in ﬁg.  1.  The  change in
+and  twist  eﬀects  are  not  masked  by  noise  in  the  trial              the energy caused by the non-circular shape should also
+function  itself.   For  the  electron  gas  very  accurate  ana-            be given by Eq.  15.
+lytic form for u(r) based on the  energy within the RPA                         We can analyze this dependence by comparing the en-
+approximation29  has as low an energy as those with op-                      ergies of the non-interacting system within a given twist
+timized  parameters.   We  used  optimized  Ewald  sums30                    with the interacting system.  This is done in Fig.  7.  One
+both for the potential and for the correlation factor so as                  sees a linear relation between the two energies, conﬁrm-
+to have the correct long wavelength behavior.                                ing that for these wavefunctions, Fermi liquid theory is an
+
+
+                                                                          7
+appropriate description.  The  slope  is  the  eﬀective  mass
+of the quasi-particles.  Then since the NI inﬁnite  energy
+is known this gives a way of determining the interacting
+system energy.
+
+   Previous calculations on the electron gas have used an-
+other application of FLT, the extrapolation method29,33.
+In this method, one calculates accurate ground state en-
+ergies for a sequence of particle numbers, and determines
+the  eﬀective  mass,  potential  correction and  inﬁnite  sys-
+tem energy by ﬁtting these energies to the relation:
+
+
+
+
+            EN  =E∞ + (m/m∗)∆TN +ǫN −ν                (16)
+
+
+
+
+
+
+where ∆TN  is the deviation of the NI kinetic energy from
+the inﬁnite system andν is the exponent for the potential
+energy given in Table I. Figure 6 shows that the estimate                           FIG. 7.   Plot  of  the  VMC  energy  versus  the  deviation  of
+of the  inﬁnite  system energy obtained using  TABC  and                         the  NI  energy  from  E∞.   Each  phase  angle  is  plotted  sepa-
+the  extrapolation  method  agree  within  errors.   This  is                    rately.   Simulations  are  for  N  =  54  unpolarized  3D  electron
+reassuring, but expected, since both are based on FLT.                           gas  at  rs  =  50.    Since  the  excitations  are  linearly  related,
+                                                                                 Fermi  liquid  theory  describes  the  phase  angle  dependence.
+   However, applied in practice, there are signiﬁcant ad-                        Upper points are the Slater-Jastrow wavefunction, lower ones
+vantages  to  the  TABC  method.  The  ﬁtting  method  re-                       are  done  with  the  backﬂow-3-body  trial  function.   Eﬀective
+quires well converged runs for at least three diﬀerent val-                      masses  (the  slope)  are  respectively  1  and  0.61  for  the  two
+ues  of N.   This  can  be  diﬃcult,  for  example  when  the                    trial functions.
+unit  cell  is  large.   For  example,  suppose  one  is  doing  a
+simulation  of  bcc  hydrogen where  one  is  limited  to  val-                          4e-05
+ues  of N  equal  to  2K3  =  {2, 16, 54, 128, 250...}.   The
+last 3  values  are reasonable to  simulate,  however, if  the                                       3D  rs=40  TABC=103
+unit cell contained 10 electrons, for example, the extrap-
+olation,  would  be  very  diﬃcult  without  further  approx-                            2e-05
+imations.   There  is  also  the  problem  that  convergence
+and trial functions  for  large N  may diﬀer  from that  for
+small N.   For  example,  one  typically  determines m/m∗
+and ǫ  within  VMC  and  then  applies  the  extrapolation                              0e+00
+using the DMC energies.  There are other problems with
+extrapolation.  For example, suppose we have a partially
+spin polarized system with say n1  spin up particles and
+n2  down  particles.   Using  PBC  there  are  no  necessarily
+larger, closed shell systems with precisely the same ratio                              -2e-05
+ζ = (n1 −n2)/(n1 +n2).
+
+   Within TABC, there is the possibility of obtaining re-                               -4e-05
+sults  in  the  thermodynamic  limit,  using  only  quantities                                      0           0.2          0.4          0.6          0.8            1ζ
+computed  for  a  single  value  of N.   Figures  7-8  demon-                       FIG. 8.     Energy  versus  spin  polarization  for  the  3D  elec-
+strate  that  the  kinetic  contribution  is  well  controlled.                  tron  gas  at  rs=40  and  N  = 54.  The  dashed  line  is  with  the
+Other  methods34  are  needed to  make the  potential  cor-                      Slater-Jastow  function,  the  solid  line  with  backﬂow-3-body
+rection  also  for  a  ﬁxed N.   Use  of  TABC  should  make                     trial  function.   Calculations  are  done  using  VMC  with  103
+this more accurate as well, as demonstrated in ﬁg.  4.                           twist values.
+
+
+                                                                              8
+ VII.  OTHER  PROCEDURES  USING  TWISTED                                        The  special  k-point  method  is  not  appropriate  for  a
+                BOUNDARY  CONDITIONS                                         metal  because  of  the  discontinuity  in  properties  at  cer-
+                                                                             tain  twist  values.    One  cannot  replace  the  average  by
+Dynamical   twist   method.      As   an   alternative   to                  a  single  point  because  the  Fermi  surface  is  not  given in
+TABC, one can let the twist angle be  a dynamical vari-                      advance by symmetry, and can change between the inter-
+able  (DTBC)  and  be  determined  self  consistently.   By                  acting  and  non-interacting wave functions.  In  addition,
+dynamical is meant that the probability of a given twist                     it is not expected that the same twist values appropriate
+is proportional to its free energy:                                          for the NI energy, will be appropriate for other quantities
+                                                                             such as the potential energy, or spin susceptibility.  It is
+      P (θ) ∝ exp(−βF (θ)) = ∑            exp(−βEα(θ))         (17)          better  to  have  a  method  which  can  give  a  spectrum  of
+                                      α                                      properties correctly, rather than only the kinetic energy.
+where Eα(θ)  is  the  energy  of  the  state α  with  twist θ.               As we  discuss in the Appendix,  TABC does  not impose
+This distribution of twist angles could be attained within                   an excessive computational burden, and is to be preferred
+QMC by enforcing detailed balance on moves of the twist                      over using only special twist values.
+angle during a random walk.  The expectation of an op-
+eratorA will be:      ∫
+                                                                                                  VIII.  CONCLUSIONS
+  ⟨A⟩DT BC  =  1Z        dθe−βF (θ)⟨Ψα(θ)|A(θ)|Ψα(θ)⟩.    (18)
+At zero temperature, a special set of twist angles, those                       Note  that  there  is  a  signiﬁcant  diﬀerence  in  the  ef-
+which have the lowest energy, will be singled out, so that                   ﬁciency  for  stochastic  (QMC)  methods  versus  explicit
+the  ground  state  energy  will  be EDT BC  =  minθ(E(θ)).                  methods  such  as  density  functional  theory  or  exact  di-
+Clearly EDT BC  ≤ E∞,  in  contrast to  the  TABC  which                     agonalization in regards to the TABC. In explicit meth-
+gives an upper bound.  In general, the dynamical energy,                     ods, computations for each twist require an equal amount
+EDT  converges as slowly to the thermodynamic limit as                       of computer time so that averaging overNG twist values
+does  the  PBC  energy:   the  exponents  and  ﬂuctuations                   will take roughlyNG times as long as a single twist value.
+are  the  same.   The  dynamical  twist  method  is  not  an                 One can use inversion and rotational symmetry to reduce
+improvement  over  PBC  for  approaching  the  thermody-                     this, so that for a grid of 163  points, TABC will require
+namic limit for a metallic system at temperatures much                       only 165 twists.  On the other hand, in QMC all the twists
+lower than the fermi temperatures.                                           reduce  the  statistical  error  of  the  average.   The  twists
+  Although the dynamic twist method is not satisfactory                      are  simply  three more degrees  of  freedom on  top  of  the
+for a Fermi liquid at low temperatures, for certain lattice                  3N  coordinate variables  to  be  averaged over.  However,
+models  such  as  an  antiferromagnetic  Heisenberg  model,                  one must also take into account startup costs associated
+it  can be  a  deﬁnite  improvement over PBC and TABC.                       with each twist, such as re-optimizing the trial wavefunc-
+This is because one can only establish a defect-free N´eel                   tion or equilibrating the random walk.  Neglecting these
+ordering if the unit cell is commensurate with the bound-                    startup  costs,  there  is  no  loss  of  statistical  eﬃciency  in
+ary conditions.  For the Heisenberg model on a triangular                    performing  TABC  so  that  the  gain in  reducing  the  sys-
+lattice, the ground state has a given twist per lattice spac-                tematic error is free.  This is examined in more detail in
+ing.  Using DTBC allows one to establish this twist value                    the Appendix.
+automatically,  without  imposing  it  in  advance.   This  is                  There are many examples where twist averaging can ef-
+equivalent to the classical variable cell method where the                   fect considerable improvement over the use of PBC. We
+dimensions and aspect ratio of the supercell of a crystal                    have been able to perform quite accurate calculations of
+become  dynamical variables,  so  that  one  can determine                   the  polarization  energy  of  the  2  and  3D  electron  gas32
+the most stable crystal lattice structure35  instead of ex-                  and of liquid  3He using backﬂow wavefunctions with on
+amining each crystal structure explicitly.                                   the  order  of  100  fermions.   As  pointed  out  by  Ortiz  et
+                                                                             al.27 calculations on such small systems in PBC have con-
+                                                                             siderable systematic errors.  One property that could be
+Special points For each value ofN  there exists a set of                     computed more accurately with TABC is the estimation
+twist  values  for  which E(θ)  = E∞.   One  can  determine                  of  fermi  liquid  parameters  by  calculating  particle-hole
+these special twist values for the NI system and then per-                   excitation36.   TABC  can  reduce  the  shell  eﬀects  which
+form simulations at only one of those twist values for the                   caused much diﬃculty in that calculation.  A related ex-
+interacting system, thereby getting rid of single particle                   ample  is  in  computation  of  the  charge  response  of  the
+size eﬀects.  This is similar to the special k-point method                  electron  gas37  where  a  considerable  eﬀort  was  made  to
+of  Baldereschi11  for  insulators  where  a  single  k-point  is            cancel  out  eﬀects  of  the  PBC.  We  are  presently  study-
+determined  by  symmetry,  thus  allowing  one  to  replace                  ing the electron gas conﬁned to a slab38 to determine the
+an  integral over the  Brillouin zone  with  evaluation at  a                work  function  and  surface  energy  of  a  metallic  surface.
+single  k-point.   This  method  was  used  within  QMC  by                  The  ﬁlled  states  consist  of  a  set  of  disks,  each of  which
+Rajagopal et al.17.                                                          will  have  a  certain  occupation  number.   By  doing  twist
+
+
+                                                                          9
+averaging we have shown reduced size eﬀects with respect                     earlier,  even  a  factor  of  2.5  in  computer  time  is  worth-
+to PBC.                                                                      while if one is able to approach the thermodynamic limit
+  Experimental systems  are at a non-zero temperature.                       quicker, since QMC methods scale asN ν  with 1 ≤ν ≤ 4
+For NI systems one occupies the states with probability                      or, in the case of exact fermion methods, as exp(γN).  If
+given by the Fermi-Dirac distribution.  Because the Fermi                    TABC saves going to largerN, the additional time doing
+function  at  non-zero  temperature  is  a  continuous  func-                complex arithmetic is well justiﬁed.
+tion, the convergence to the thermodynamic limit will be                        There are several alternatives for performing the twist
+much faster, even with PBC. However in practice, one is                      averaging:
+interested in electronic systems close to the ground state;                      1.  Evaluate as ∑
+the relevant quantity is the thermal deBroglie wavelength                            θi  with weights wi  (with ∑iwiEi using a grid deﬁned by points
+of the electron:  ¯h/(mekbT )1/2 ≈ 32˚A at T  = 300K.  Be-                           speciﬁed by Eq.  2.                 iwi  = 1) in the region
+cause this length is usually larger than the simulation cell
+in QMC, the localization of the density matrix does not                          2.  Sample  the  twist  during  the  QMC  random  walk
+help at reducing fermion ﬁnite size at these temperatures.                           and take the average.
+Using a non-zero temperature just to achieve faster con-                         3.  A combination of the two approaches: working on a
+vergence  to  the  thermodynamic  limit  is  not  practically                        grid that is augmented with random displacements.
+useful.   However,  TABC  is  extendable  to  ﬁnite  temper-
+ature PIMC simulations using the ﬁxed-phase method31                         As we discuss below, all three methods  are satisfactory;
+and will reduce size eﬀects at low temperature.                              there  is  no  fundamental  diﬀerence  in  eﬃciency.    The
+  The TABC method is likely to be valuable for all QMC                       choice  of  whether  to  sample  or  use  a  grid  is  primarily
+calculations in systems with a fermi surface.  The calcula-                  based  on  convenience  and  programming  considerations
+tions  on the  electron gas demonstrate that even though                     and only secondly on eﬃciency.  We  note that all meth-
+it  may  be  a  little  slower  per  step  of  the  random  walk,            ods are easy to parallelize.
+it is better to do TABC than a larger system with peri-
+odic boundary conditions because TABC converges much                         Grid averaging.  First, we must address the question of
+faster to the thermodynamic limit.  The overall eﬃciency                     which  grid  and  integration  rule  to  use.   Since  all  prop-
+of any numerical method is ultimately judged by the com-                     erties  are  periodic  with  respect  to  the  twist,  the  grid
+puter  time  needed  to  reduce  systematic  and  statistical                should be a Bravais lattice with equally weighted points.
+error  below  a  given  value.   TABC  is  eﬀective  in  reduc-              One  must keep in  mind that  the  properties, though pe-
+ing  the  systematic  errors  and  thus  improve  the  overall               riodic and continuous, have discontinuous derivatives at
+eﬃciency.                                                                    the  Bragg planes.  Unless  grid points  can  be  located on
+  This  research  was  supported  by  NSF  DMR-98-02373                      these planes (which is diﬃcult to achieve in practice), the
+and the Department of Physics at the University of Illi-                     integration error will go asǫG ∝ ∆θ2 ∝N −2/D
+nois  Urbana-Champaign.    We  acknowledge  useful  dis-                     is  the  number  of  grid points.  Numerically,  we  ﬁnd  thatG        whereNG
+cussions  with  R.  M.  Martin  and  G.  Bauer.   Computa-                   163  grids  are  needed  for  an  accuracy  of  10−3  (see  table
+tional resources were provided by  the NCSA. We  thank                       I).  This  slowly  convergent, systematic  error is  the  main
+H.  Edelsbrunner  for  references  concerning  Gauss’  circle                drawback  of  the  grid  integration  method.   For  an  insu-
+problem.                                                                     lator with  a  large enough gap to  excitations,  properties
+                                                                             would be analytic for allθ since the occupation of single
+                           APPENDIX                                          particle states will not change as a function of twist angle
+                                                                             and the grid error would converge exponentially fast.
+                                                                                Once a grid is chosen, one can use symmetry (e.g.  in-
+  Here  we  discuss  numerical  details  of  implementing                    version  and  rotation  through  90o)  to  reduce  the  num-
+twist   averaged   boundary   conditions.      Many   of   the               ber  of  grid  points  and  give  them  a  weight  (wi   with
+changes  caused  by  twisted  boundary  conditions  arise                    ∑NG
+                                                                                i=1wi   =   1)  proportional  to  their  multiplicity.     It
+from the need to have complex wavefunctions.  Although                       is  easy  to  show  that  the  optimal  amount  of  computer
+the  wavefunction  and  energies  in  special  cases  are  real              time at each grid point should be chosen proportional to
+(e.g.  PBC and ABC), complex functions are needed for                        wi/ζ(θi)1/2  where  the  MC  eﬃciency  at θi  is  deﬁned  as
+general twist angles.  There is  a factor of roughly 2.5 in                  ζ(θi)  =  1/(var(E(θi))cputime).   We  have  found  on  the
+additional  CPU  time  to  do  the  arithmetic  to  evaluate                 calculations  of  the  electron  gas  described  earlier,  that
+the  determinant  and  its  derivatives.  The  actual impact                 this eﬃciency is independent of the twist angle except at
+on  the  total  speed  is  smaller  than  this  because  the  cal-           the  special  PBC  and  ABC  points  where  real  functions
+culations of two-particle quantities such as the potential                   can  be  used.   Even  though  we  have  symmetry  and  can
+energy  and  correlation  factors  are  still  done  with  real              integrate over a reduced set of twist values, we must in-
+arithmetic;  the  actual penalty of working with non-zero                    tegrate longer at high multiplicity points since they con-
+twist  depends  on  the  number  of  particles  and  the  type               tribute more to the average.  Hence, the symmetry does
+of the trial wavefunction.  However, as we have discussed                    not signiﬁcantly reduce the needed amount of CPU time.
+
+
+                                                                         10
+   Since the calculations at diﬀerent twist angles are un-                      Again, one must equilibrate the conﬁgurations after the
+correlated, one can easily show that the eﬃciency of cal-                       change  of  twist  angle  and  computer  time  used  in  that
+culating  the  twist  averaged energy  is  given  by  the  rela-                process does not reduce the variance of the average.
+tion:                                                                              There  is  an  additional  increase  in  variance  caused by
+                              NG                                                sampling  the  twist  angle.   One  can  show  that  the  eﬃ-
+                  ζ−1/2 =     ∑wiζ−1/2(θi).                        (19)         ciency decreases by a factor:  [1+E2BW/var(Eθ)]−1 where
+
+                              i=1                                               EBW  is the “band-width” deﬁned in Eq.  5.  If one spends
+                                                                                too long at a given twist angle, one is not adequately ex-
+Hence,  the  overall  eﬃciency  of  the  TABC  energy  is  an                   ploring  the  twist  angle  degree  of  freedom.   This  gives  a
+average of the eﬃciencies of the individual twist calcula-                      deﬁnite rule for how often the twist angle should be up-
+tions  and  is  higher  than  that  of  the  slowest  converging                dated:  the  time  spent  at  a  given  twist  angle  should  be
+twist  angle.   The  additional  averaging  over  twist  angle                  much longer than the equilibration time but less than the
+costs nothing in eﬃciency.                                                      time needed to get the error in the energy at that twist
+   However,  this  discussion  did  not  take  into  considera-                 value equal to the “bandwidth” of the system.  If it is not
+tion start-up costs at each twist angle, such as the need                       possible to achieve this relation, the grid scheme should
+to reoptimize the trial wave function at a new twist value,                     be used.
+and equilibration costs.  By equilibration, we mean that
+whenever the twist angle is changed, enough random walk                            With  either  method,  one  can  achieve  more  accurate
+steps must be taken so that the conﬁgurations are sam-                          results and less systematic error by correcting the results
+pled  from  the  new  twist  value.   During  this  equilibra-                  using Fermi liquid theory.  That is, using the twist values
+tion,  averages  cannot  be  taken.    These  computational                     and corresponding energies one can estimate the eﬀective
+costs cause a decrease of eﬃciency by  the factor (useful                       mass and twist averaged energy using a least squares ﬁt
+time)/(total time) and are the main extra computational                         as discussed in Section VI. However, there could be addi-
+penalty  of  the  TABC  method  within  QMC.  Since  the                        tional statistical and systematic error resulting from the
+startup  time  will  scale  with  the  number  of  needed  grid                 ﬁt.
+points,  using  the  above  estimate  of  the  systematic  er-                     Finally,  one  can  combine  the  positive  features  of  two
+ror, ǫG,  we  ﬁnd  that  the  needed  startup  time  scales  as                 methods   using   antithetic   sampling:    use   a   relatively
+ǫ−d/2G       while the time to achieve equivalent statistical er-               coarse grid, but then randomly displace the origin of the
+ror  scales  as ǫ−2.   Hence,  for  very  precise  calculations                 grid  a  number  of  times  during  the  run,  so  as  to  elimi-
+(ǫ → 0) andd< 4, startup costs can be neglected.                                nate  the  systematic  error  of  the  grid  and  estimate  the
+                                                                                true errors.  Since the twist angle will change by a small
+Twist  sampling.  Now consider the second alternative,                          amount,  setup  time  and  equilibration  time  can  be  re-
+where the twist angle is sampled during the random walk.                        duced.  A  related  approach is  to  sample  the  twist  angle
+With this method, we do not have to decide on a grid in                         using  a  quasi-random  number  sequence  so  as  to  reduce
+advance and there is no systematic error of a ﬁnite grid.                       the dispersion of the twist values.
+
+
+                                                                                10 D.  Ceperley  and  B.  J.  Alder,  J.  Chem.  Phys.  81,  5833
+                                                                                   (1984).
+                                                                                11 A. Baldereschi, Phys. Rev. B 7, 5212 (1973).
+                                                                                12 H.  J.  Monkhorst  adn  J.  D.  Pack,  Phys.  Rev.  B  13,  5188
+                                                                                   (1976).
+ 1 We  follow  the  usage  of  others  in  calling  θ  the  twist  angle        13 I. Souza, T. Wilkens and R. M. Martin, Phys. Rev. B 62,
+   rather than the phase angle to avoid confusion with all the                     1666 (2000).
+   other  usages  of  the  word  phase  that  appear  in  quantum               14 R. Julien and R. M. Martin, Phys. Rev. B, 26, 6173 (1982).
+   and statistical physics.                                                     15 E.  Y.  Loh,  Jr.  and  D.  K.  Campbell  Synthetic  Metals  27
+ 2 A. J. Leggett, Physica Fennica, 8, 125 (1973).                                  A499  (1988);  J.  Tinka  Gammel,  D.  K.  Campbell,  and  E.
+ 3 N. Byers and C. N. Yang, Phys. Rev. Letts. 7, 46 (1961).                        Y. Loh, Jr., Synthetic Metals 55-57, 4437 (1993).
+ 4 Note  also  that  all  identical  particles  must  have  the  same           16 C.  Gros,  Z.  Phys.  B  86,  359  (1992);Phys.  Rev.  B  53,
+   twist.                                                                          6865  (1996):  R. Valenti, C. Gros,  P. J.  Hirschfeld  and W.
+ 5 This technique has also been called Integration over Bound-
+                                                                                   Stephan, Phys. Rev. B 44,13203  (1991).
+   ary Conditions (IBC)16  and Phase Randomization15.                           17 G.  Rajagopal,  R.  J.  Needs,  S.  Kenny,  W.  M.  C.  Foulkes
+ 6 D. Poilblanc, Phys. Rev. B 44 9562(1991).
+ 7 D. M. Ceperley, G. V. Chester and M. H. Kalos, Phys. Rev.                       and  A.  James,  Phys.  Rev.  Letts.  73,  1959;  Phys.  Rev.  B
+                                                                                   51, 10591 (1995); Phys. Rev. B 51, 10591 (1995).
+   B 16, 3081 (1977).                                                           18 B.  Krlik,  P.  Delaney,  and  S.  G.  Louie,  Phys.  Rev.  Letts.
+ 8 Y. Kwon, D. M. Ceperley and R. M. Martin, Phys. Rev. B
+                                                                                   80,4253 (1998).
+   48, 12037 (1993).                                                            19 C.  Filippi  and  D.  M.  Ceperley,  Phys.  Rev.  B  59,  7907
+ 9 Y. Kwon, D. M. Ceperley and R. M. Martin, Phys. Rev. B
+                                                                                   (1999).
+   58, 6800 (1998).                                                             20 N. W. Ashcroft and N. D. Mermin Solid State Physics, pg.
+
+
+
+                                                                            11
+   162,  Saunders Co.  The bisecting  plane between  the origin                        171 (1995).
+   and any reciprocal  lattice vector of the Bravais  lattice are                   31 G.  Ortiz,  D.  M.  Ceperley  and  R.  M.  Martin,  Phys.  Rev.
+   Bragg  planes.  The  nth  Brillouin  zone  is  the  set  of  points                 Letts. 71, 2777 (1993).
+   that  can  be  reached  from  the  origin  by  crossing  exactly                 32 C.    Lin,    PhD   thesis,    University   of    Illinois    Urbana-
+   (n-1) Bragg planes.                                                                 Champaign, 2000.
+21 Encyclopedic  Dictionary  of  Mathematics,  ed.  S.  Iyanaga                     33 D.  M.  Ceperley  and  B.  J.  Alder,  Phys.  Rev.  B  36,  2092
+   and Y. Kawada, MIT press 1980, pg. 749.                                             (1987).
+22 D. G. Kendall, Quart. J. Math. (Oxford), 19, 1 (1948).                           34 P. R. C. Kent, R. Q. Hood, A. J. Williamson, R. J. Needs,
+23 E. Stoner, Proc. Roy. Soc. A 165, 372 (1939); A 169, 339                            W. M. C. Foulkes and G. Rajagopal, Phys. Rev. B 59, 1917
+   (1939).                                                                             (1999).
+24 R. A. Suris, Sov. Phys, Solid State 3, 1303 (1961).                              35 M. Parrinello and A. Rahman, Phys. Rev. Letts. 45, 1196
+25 C.  Herring,  in  Magnetism,  vol  IV,  (eds.  G.  T.  Rado  and                    (1980).
+   H. Suhl) (Academic Press, San Diego, 1966).                                      36 Y.  Kwon,  D.  M.  Ceperley,  and  R.  M.  Martin,  Phys.  Rev.
+26 B.  J.  Alder,  D.  M.  Ceperley  and  E.  L.  Pollock,  Int.  J.  of               B 50, 1684 (1994).
+   Qu. Chem. 16, 49 (1982).                                                         37 S.  Moroni,  D.  M.  Ceperley  and  G.  Senatore,  Phys.  Rev.
+27 G. Ortiz, M. Harris and P. Ballone,  Phys. Rev. Letts. 82,                          Lett. 75, 689 (1995);pgs. 183-212 in Quantum Monte Carlo
+   5317 (1999).                                                                        Methods in Physics and Chemistry, eds. M. P. Nightingale
+28 D. M. Ceperley and B. J. Alder, Phys. Rev. Letts. 45, 566                           and C. J. Umrigar, Kluwer, 1999.
+   (1980).                                                                          38 X.  P.  Li,  R.  J.  Needs,  R.  M.  Martin  and  D.  M.  Ceperley,
+29 D. M. Ceperley, Phys. Rev. B 18 3126, (1978).                                       Phys. Rev. B 45, 6124 (1992).
+30 V. Natoli, D. and Ceperley D. M., J. Comput. Physics 117,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               12
