@@ -630,21 +630,6 @@ order. [Error metrics](DATA.md#error-metrics) defines the markers.
 Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and defects:
 [DATA.md](DATA.md).
 
-## Contributing
-
-To add an energy, use the [new result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-result.yml)
-(instance, energy, error bar and how it was estimated, the `bound_type`, and the primary
-reference), or open a PR with the same. A lattice problem QMBL does not have yet goes
-through the [new instance form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-instance.yml).
-A new row is `pending` and then `confirmed`
-([RULES.md §10](RULES.md#10-pending-confirmed-objections)).
-
-To correct a row, open an issue on that row. Be specific and technical.
-[RULES.md §10](RULES.md#10-pending-confirmed-objections) lists the grounds.
-
-A sampled energy without an error bar is marked &dagger;. Send the error bar so the row can
-be compared with its neighbours.
-
 ## Citing
 
 > T. Zerweck and J. Carrasquilla, *QMBL: the Quantum Many-Body Leaderboard*,
@@ -656,6 +641,26 @@ To cite the data itself, use the Zenodo concept DOI, which resolves to the lates
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)
+
+## Contributing
+
+To add an energy, use the [new result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-result.yml).
+To add a lattice problem QMBL does not have yet, use the
+[new instance form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-instance.yml).
+To correct a row, open an issue on that row. Be specific and technical
+([RULES.md §10](RULES.md#10-pending-confirmed-objections)). A sampled energy without an
+error bar is marked &dagger;. Send the error bar so the row can be compared with its
+neighbours.
+
+[CONTRIBUTING.md](CONTRIBUTING.md) gives the details: what happens after you submit, how
+to change the code, and how AI systems submit.
+
+## Contributors
+
+Everyone whose issue or pull request leads to a change is listed here.
+
+<!-- ALL-CONTRIBUTORS-LIST:START -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## License
 
