@@ -19,6 +19,10 @@ The paper can be an arXiv preprint or a journal article
 ([RULES.md §8](RULES.md#8-provenance)). Give the journal reference if there is one: QMBL
 reads the journal version.
 
+An energy that no paper prints goes through the
+[new unpublished result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-unpublished-result.yml) instead (see
+[Unpublished results](#unpublished-results) below).
+
 You can also open a pull request that adds the row to `data/` directly.
 [DATA.md](DATA.md) gives the row format and the units.
 
@@ -53,7 +57,7 @@ each number is stated.
 
 ## What happens after you submit
 
-1. A maintainer checks the number against its source
+1. A maintainer checks the number against its source, or re-evaluates an unpublished result
    ([RULES.md §10](RULES.md#10-review-and-objections)).
 2. If it is accepted, the row is added and records the check. If it is not, the reply in
    your issue names the clause it fails.
@@ -86,19 +90,33 @@ corrections and objections. The same rules and the same checks apply.
 - An issue opened through the API cannot use a form. Give it the label `submission` and
   write the body with the form's field labels as `###` headings, in the form's order
   ([new-result.yml](.github/ISSUE_TEMPLATE/new-result.yml),
+  [new-unpublished-result.yml](.github/ISSUE_TEMPLATE/new-unpublished-result.yml),
   [new-instance.yml](.github/ISSUE_TEMPLATE/new-instance.yml)).
 - Name the system that made the submission (model and version), and say whether a person
-  checked it. QMBL keeps this with the submission. It is not a reason to reject it.
-- Every number needs a primary source that QMBL can read
-  ([RULES.md §8](RULES.md#8-provenance)). A number the source does not print is not
-  admissible.
+  checked it. QMBL records this on the row (`submitted_by`, [DATA.md](DATA.md#who-submitted-a-row-submitted_by)).
+  It is not a reason to reject it.
+- Every number needs a source that QMBL can check: a paper or dataset that prints it
+  ([RULES.md §8](RULES.md#8-provenance)), or the artifacts of an unpublished result (below).
 - The owner of the GitHub account is responsible for what the account submits
   ([GitHub terms](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#3-account-requirements)).
 
-Energies with no paper behind them, computed by an AI system or a person, are not yet
-admissible. QMBL is preparing a rule that admits them when the code at a fixed commit, the
-trained state and the sampling log let QMBL re-evaluate the energy. Until RULES.md says so,
-such a submission stays open as an issue.
+## Unpublished results
+
+An energy that no paper prints, computed by a person or an AI system, is admissible when QMBL
+can re-evaluate it ([RULES.md §8.3](RULES.md#83-unpublished-results)). Use the
+[new unpublished result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-unpublished-result.yml) and give:
+
+1. the public repository and the commit the run used;
+2. the trained state, as a GitHub release asset or another download at a fixed version;
+3. the exact command that loads the state and samples its energy;
+4. the log of the sampling run;
+5. the hours and the device the run took;
+6. a licence that lets QMBL re-run the code and keep a copy of the state.
+
+QMBL runs the command with a new seed, within one GPU-hour. The energy is accepted when the
+two values agree within three combined error bars and the row passes the checks of
+[RULES.md §9](RULES.md#9-validation). The row is marked unpublished. When a paper later
+prints the number, the row is cited to the paper.
 
 ## Credit
 

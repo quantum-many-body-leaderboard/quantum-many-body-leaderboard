@@ -205,7 +205,8 @@ extrapolated energy counts for its method like any other.
 
 ## 8. Provenance
 
-- arXiv preprint minimum. Rows flag whether the source is peer reviewed.
+- arXiv preprint minimum, or the artifacts of §8.3 for a result no paper prints. Rows flag
+  whether the source is peer reviewed.
 - The journal version is the source of record. Where a paper is published, its row is read
   from the journal version (main text and supplement) and cites it. The arXiv version is read
   alongside. Where the two differ, the journal value is stored and the difference is noted on
@@ -292,6 +293,34 @@ across methods. The same reading and the same eligibility apply: the row ranks, 
 record, and is cited to its run script, job and commit. A QMBL record means no published
 energy on that instance is lower.
 
+### 8.3 Unpublished results
+
+An energy that no paper or dataset prints is admissible when the run behind it can be
+re-evaluated. The rule is the same for a person and for an AI system. The submission gives:
+
+- the code, at a fixed commit of a public repository;
+- the trained state or checkpoint, as a GitHub release asset or another public download at a
+  fixed version;
+- an evaluation script that loads the state and samples its energy, with the exact command;
+- the log of the sampling run that produced the energy;
+- a `compute` block with the hours and the device (§3).
+
+Code and state carry a licence that lets QMBL re-run them and keep a copy.
+
+QMBL runs the evaluation script with a new seed, within one GPU-hour on its own hardware. A
+submission that needs more is held open. The submission is accepted when the re-evaluated
+energy agrees with the submitted one within three combined error bars (a deterministic
+energy, such as DMRG or exact diagonalization, to the precision it is given to), and when it
+passes every check of §9. The row then carries the submitted energy and error bar, and its
+verification carries the re-evaluated value. Otherwise the submission is answered with the
+clause it fails (§10).
+
+The row is `provenance: "unpublished"`. Its `reference` names the repository, the commit and
+the checkpoint. QMBL records the checkpoint's SHA-256 and keeps a copy, so the row stays
+checkable if the download disappears. The journal-version and `stale-preprint` rules of §8
+do not apply. Once a paper prints the number, the row is cited to the paper and read from it
+like any other row.
+
 ## 9. Validation
 
 `scripts/validate.mjs` runs on every build and checks:
@@ -374,8 +403,8 @@ Cases:
 ## 10. Review and objections
 
 A submission is an issue or a pull request. It becomes a row only after a maintainer (a
-person with write access to the repository) has checked it against its source (§8, §9). The
-row then carries the check as its verification
+person with write access to the repository) has checked it against its source (§8, §9), or, for an unpublished result, has
+re-evaluated it (§8.3). The row then carries the check as its verification
 ([DATA.md](DATA.md#verifications)). A submission that is not accepted is answered in its
 issue with the clause it fails.
 

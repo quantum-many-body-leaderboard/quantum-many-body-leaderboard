@@ -130,6 +130,42 @@ for (const m of fs.readdirSync("data")) {
         const leak = leaksIn(JSON.stringify(r));
         if (leak.length) issues.push(`RUN ${at}: names the cluster (${leak.join(", ")}); public text names the hardware only`);
       }
+      // `provenance` is one of four values; an unpublished row (RULES.md 8.3) names its
+      // artifacts, carries QMBL's re-evaluation and the measured cost, and came through a
+      // submission (DATA.md, unpublished rows).
+      if (r.provenance != null && !["imported", "primary", "secondary", "unpublished"].includes(r.provenance))
+        issues.push(`PROV ${at}: provenance ${r.provenance}`);
+      if (r.provenance === "unpublished") {
+        const a = r.artifacts || {}, re = r.verified?.reevaluated || {};
+        const url = s => typeof s === "string" && /^https:\/\/\S+$/.test(s);
+        if (!url(a.code) || !/^[0-9a-f]{7,40}$/.test(a.commit || "") || !url(a.checkpoint) || !/^[0-9a-f]{64}$/.test(a.checkpoint_sha256 || "") || !a.evaluation || !url(a.log))
+          issues.push(`UNPUB ${at}: artifacts incomplete (code, commit, checkpoint, checkpoint_sha256, evaluation, log)`);
+        if (!(r.reference || "").includes(a.commit || "\0")) issues.push(`UNPUB ${at}: reference does not name the commit`);
+        if (r.peer_reviewed !== false) issues.push(`UNPUB ${at}: peer_reviewed is ${r.peer_reviewed}`);
+        if (r.computed_by != null || r.baseline) issues.push(`UNPUB ${at}: also computed_by or baseline`);
+        if (!r.submitted_by) issues.push(`UNPUB ${at}: no submitted_by`);
+        const c = r.compute;
+        if (!c || (c.gpu_hours == null && c.cpu_core_hours == null) || !c.device) issues.push(`UNPUB ${at}: no compute block with hours and device`);
+        if (typeof re.energy !== "number" || !/^\d{4}-\d{2}-\d{2}$/.test(r.verified?.checked_on || "") || !re.command || re.seed == null)
+          issues.push(`UNPUB ${at}: no re-evaluation (verified.checked_on, reevaluated.energy, command, seed)`);
+        else if (r.sigma != null && re.sigma != null) {
+          if (Math.abs(r.energy - re.energy) > 3 * Math.hypot(r.sigma, re.sigma))
+            issues.push(`UNPUB ${at}: re-evaluated ${re.energy} is more than three combined error bars from ${r.energy}`);
+        } else if (!re.agreement) issues.push(`UNPUB ${at}: no error bars to compare and no reevaluated.agreement`);
+        const leak = leaksIn(JSON.stringify(r));
+        if (leak.length) issues.push(`UNPUB ${at}: names the cluster (${leak.join(", ")}); public text names the hardware only`);
+      }
+      // `submitted_by` (DATA.md): the account and the issue or pull request a row came
+      // through, and, for an AI system, its name and whether a person checked the submission.
+      if (r.submitted_by != null) {
+        const s = r.submitted_by;
+        if (!s.account || typeof s.account !== "string") issues.push(`SUBMIT ${at}: no account`);
+        if (!/^https:\/\/github\.com\/quantum-many-body-leaderboard\/quantum-many-body-leaderboard\/(issues|pull)\/\d+$/.test(s.issue || ""))
+          issues.push(`SUBMIT ${at}: issue ${s.issue} is not an issue or pull request of the repository`);
+        if (s.system != null && (typeof s.system !== "string" || !s.system.trim())) issues.push(`SUBMIT ${at}: system ${s.system}`);
+        if (s.system == null ? s.human_checked != null : typeof s.human_checked !== "boolean")
+          issues.push(`SUBMIT ${at}: human_checked ${s.human_checked} with system ${s.system}`);
+      }
       // An error bar or variance the paper does not print must say who produced it and be
       // checkable against a committed file (DATA.md, the `error_metrics` block).
       if (r.error_metrics != null) {
