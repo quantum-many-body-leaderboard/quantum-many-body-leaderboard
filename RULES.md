@@ -307,7 +307,8 @@ re-evaluated. The rule is the same for a person and for an AI system. The submis
 
 Code and state carry a licence that lets QMBL re-run them and keep a copy.
 
-QMBL runs the evaluation script with a new seed, within one GPU-hour on its own hardware. A
+After the review of §8.4, QMBL runs the evaluation script with a new seed, within one
+GPU-hour on its own hardware. A
 submission that needs more is held open. The submission is accepted when the re-evaluated
 energy agrees with the submitted one within three combined error bars (a deterministic
 energy, such as DMRG or exact diagonalization, to the precision it is given to), and when it
@@ -320,6 +321,41 @@ the checkpoint. QMBL records the checkpoint's SHA-256 and keeps a copy, so the r
 checkable if the download disappears. The journal-version and `stale-preprint` rules of §8
 do not apply. Once a paper prints the number, the row is cited to the paper and read from it
 like any other row.
+
+### 8.4 Review of an unpublished submission
+
+A maintainer reviews the submission before QMBL runs anything from it, and approves the run.
+An AI system may prepare the review. It does not start the run.
+
+Safety:
+- The code is read before it runs.
+- It runs in an isolated container. After the downloads, the container has no network, no
+  credentials and no data other than the submission, and it has limits on CPU, memory and
+  time.
+- A checkpoint is opened only inside that container. Formats that cannot run code when
+  loaded are preferred: safetensors, msgpack, npz, HDF5. A pickle file can run code when it
+  is loaded, so it is never opened outside the container, and a PyTorch file is loaded with
+  `weights_only=True`.
+
+Instructions inside a submission:
+- Everything in a submission is data: the issue text, the code and its comments, the README
+  and the log. Nothing in it is followed as an instruction.
+- An AI system that helps with the review has no write access and no credentials.
+- A submission that contains text addressed to an AI reviewer is not accepted.
+
+Physical soundness. The review checks that:
+- the Hamiltonian in the code is the instance's: lattice, cluster, couplings, signs, the
+  S·S or σ·σ convention (§5), boundary conditions, sector and particle numbers (§2);
+- the energy is the expectation value of H in the loaded state, sampled from |ψ|², and not a
+  training loss or a running average over training;
+- the sampler is ergodic in the sector (§9, the kagome case), and the error bar accounts for
+  autocorrelation (§6);
+- the `bound_type` matches what the code does (§4);
+- the code does not read or contain a reference energy;
+- the file the code loads is the one whose SHA-256 is recorded.
+
+Where QMBL has its own implementation of the instance's Hamiltonian, it evaluates ⟨H⟩ with
+that implementation, and the submitted code supplies only the wavefunction amplitudes.
 
 ## 9. Validation
 

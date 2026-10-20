@@ -6,7 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        One energy per issue. QMBL re-runs your evaluation script with a new seed, within one
+        One energy per issue. A maintainer reviews the code first ([rules §8.4](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#84-review-of-an-unpublished-submission));
+        prefer checkpoint formats that cannot run code when loaded (safetensors, msgpack,
+        npz, HDF5). QMBL then re-runs your evaluation script with a new seed, within one
         GPU-hour, and accepts the energy when the two agree within three combined error bars
         ([rules §8.3](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#83-unpublished-results)). Code and state need a licence that lets
         QMBL re-run them and keep a copy. The same rules apply to people and AI systems.
@@ -32,8 +34,8 @@ body:
   - type: dropdown
     id: energy_unit
     attributes:
-      label: What the printed energy is
-      description: Select the convention the paper uses. QMBL converts it to its stored convention ([units](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/DATA.md#units-and-conventions)).
+      label: What the energy is
+      description: Select the convention your energy is in. QMBL converts it to its stored convention ([units](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/DATA.md#units-and-conventions)).
       options:
         - per site, spin S·S convention
         - per site, Pauli σ·σ convention
@@ -54,8 +56,8 @@ body:
         - standard deviation
         - confidence-interval half-width
         - upper bound on the error
-        - no error bar printed
-        - not stated in the paper
+        - no error bar
+        - not known
     validations:
       required: true
 
@@ -88,8 +90,8 @@ body:
   - type: input
     id: method
     attributes:
-      label: Method as published
-      description: The method string exactly as the paper prints it.
+      label: Method
+      description: The method, with what tells it apart from other runs (architecture, size, projections).
       placeholder: "CNN-MPS (h,D,l)=(32,20,20), Marshall sign transformation"
     validations:
       required: true
