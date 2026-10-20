@@ -25,15 +25,17 @@ You can also open a pull request that adds the row to `data/` directly.
 ## Add an instance
 
 Use the [new instance form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-instance.yml).
-An instance is one exact problem: Hamiltonian, cluster, boundaries, couplings and sector
-([RULES.md §2](RULES.md#2-instances)). Each of these has to be unambiguous, because
+An instance is one exact problem. For a lattice model it is the Hamiltonian, cluster,
+boundaries, couplings and sector ([RULES.md §2](RULES.md#2-instances)). For the homogeneous
+electron gas it is the dimension, the electron numbers, `rs`, the cell and the twist
+([RULES.md §12.1](RULES.md#121-instance)). Each of these has to be unambiguous, because
 energies are compared only within one instance.
 
 ## Correct a row or object to it
 
 Open a blank issue that names the instance and the row. Say what is wrong and what it
 should be. An objection must be specific and technical.
-[RULES.md §10](RULES.md#10-pending-confirmed-objections) lists the admissible grounds, for
+[RULES.md §10](RULES.md#10-review-and-objections) lists the admissible grounds, for
 example a wrong sector, a misdeclared `bound_type` or an error bar with no autocorrelation
 correction. Rows are corrected in place and keep the finding
 ([RULES.md §11](RULES.md#11-corrections)).
@@ -51,13 +53,15 @@ each number is stated.
 
 ## What happens after you submit
 
-1. The row is added as `pending`.
-2. Anyone may object to it on a ground from
-   [RULES.md §10](RULES.md#10-pending-confirmed-objections).
-3. After 30 days with no unresolved objection, the row is `confirmed`.
-4. Each decision on a row or an objection cites a clause of [RULES.md](RULES.md).
+1. A maintainer checks the number against its source
+   ([RULES.md §10](RULES.md#10-review-and-objections)).
+2. If it is accepted, the row is added and records the check. If it is not, the reply in
+   your issue names the clause it fails.
+3. Anyone may object to any row at any time, on a ground from
+   [RULES.md §10](RULES.md#10-review-and-objections). A maintainer decides.
+4. Each decision on a submission or an objection cites a clause of [RULES.md](RULES.md).
 
-The submitter may correct or withdraw the row at any time.
+The submitter may correct or withdraw a submission at any time.
 
 ## Change the code or the site
 
