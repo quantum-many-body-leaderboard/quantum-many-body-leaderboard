@@ -766,6 +766,11 @@ Object.assign(NAMES, {
   "fixed-nodes DMC [Slater-Jastrow (SJ) trial function; tau = 0.01 (not extrapolated in tau); intercept a of a linear fit e0 = a + b/nw over 4 walker numbers (nw -> ∞ extrapolation, Table III)] (arXiv:1304.7298)": ["Fixed-node DMC", "Slater-Jastrow (SJ) trial function; tau = 0.01 (not fit in tau); intercept a of a linear fit e0 = a + b/nw over 4 walker numbers (nw -> ∞ fit, Table III)", { family: "DMC" }],
 });
 
+// Pass 2026-10-20-butler (SWEEP.md): the largest-basis CCD of the data release of arXiv:2403.04645.
+Object.assign(NAMES, {
+  "CCD (3071 plane waves, data release of arXiv:2403.04645)": ["CCD", "3071 plane waves (6142 spin orbitals)", { family: "FCIQMC / CC" }],
+});
+
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],

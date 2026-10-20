@@ -561,7 +561,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | sc cell, N = 27, rs = 50, polarized | **-0.01457976(5)** | MP-NQS (plane-wave orbitals) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | -0.01457520 (+4.6e-6) Fixed-node DMC (trial state:... [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |
 | sc cell, N = 27, rs = 70, polarized | **-0.01074986(3)** | MP-NQS (plane-wave orbitals) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | -0.01074900 (+8.6e-7) Fixed-node DMC (trial state:... [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |
 | sc cell, N = 27, rs = 90, polarized | **-0.00853156(2)** | MP-NQS (plane-wave orbitals) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | -0.00853140 (+1.6e-7) Fixed-node DMC (trial state:... [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |
-| sc cell, N = 38, rs = 0.5, unpolarized | **3.20691(3)** | FCIQMC (initiator (n_add = 3), run at 922... [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) | none |
+| sc cell, N = 38, rs = 0.5, unpolarized | **3.20691(3)** | FCIQMC (initiator (n_add = 3), run at 922... [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) | 3.20807 &#9675; (+1.2e-3) CCD (3071 plane waves (6142 spin... [10.1063/5.0222773](https://doi.org/10.1063/5.0222773) |
 | sc cell, N = 38, rs = 1, unpolarized | **0.52478(3)** | FCIQMC (initiator (n_add = 3), run at 922... [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) | none |
 | sc cell, N = 38, rs = 2, unpolarized | **-0.01422(5)** | FCIQMC (initiator (n_add = 3), run at 922... [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) | none |
 | sc cell, N = 54, rs = 0.5, unpolarized | **3.2202(2)** | FCIQMC (initiator (n_add = 3); extrapolated:... [10.1103/PhysRevB.85.081103](https://doi.org/10.1103/PhysRevB.85.081103) | 3.2202 (+<1e-4) FCIQMC (initiator (n_add = 3)... [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |
@@ -581,7 +581,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | sc cell, N = 66, rs = 2, unpolarized | **-0.00208(4)** | Fixed-node DMC (Slater-Jastrow (SJ) trial... [10.1140/epjb/e2013-40204-3](https://doi.org/10.1140/epjb/e2013-40204-3) | -0.00202 (+6.2e-5) Fixed-node DMC (Slater-Jastrow... [10.1140/epjb/e2013-40204-3](https://doi.org/10.1140/epjb/e2013-40204-3) |
 | sc cell, N = 66, rs = 20, unpolarized | **-0.031515(5)** | Slater-Jastrow [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) | none |
 | sc cell, N = 66, rs = 5, unpolarized | **-0.076676(2)** | Fixed-node DMC (Slater-Jastrow (SJ) trial... [10.1140/epjb/e2013-40204-3](https://doi.org/10.1140/epjb/e2013-40204-3) | -0.076664 (+1.1e-5) Fixed-node DMC (Slater-Jastrow... [10.1140/epjb/e2013-40204-3](https://doi.org/10.1140/epjb/e2013-40204-3) |
-| sc cell, N = 114, rs = 0.5, unpolarized | **3.48453(8)** | ph-AFQMC (RHF trial, time step 0.005 a.u.... [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | none |
+| sc cell, N = 114, rs = 0.5, unpolarized | **3.48453(8)** | ph-AFQMC (RHF trial, time step 0.005 a.u.... [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | 3.48594 &#9675; (+1.4e-3) CCD (3071 plane waves (6142 spin... [10.1063/5.0222773](https://doi.org/10.1063/5.0222773) |
 | sc cell, N = 114, rs = 1, unpolarized | **0.59877(6)** | ph-AFQMC (RHF trial, time step 0.005 a.u.... [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | 0.60395 (+5.2e-3) Slater-Jastrow [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |
 | sc cell, N = 114, rs = 10, unpolarized | **-0.05276(1)** | Slater-Jastrow [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) | none |
 | sc cell, N = 114, rs = 2, unpolarized | **0.00487(6)** | ph-AFQMC (RHF trial, time step 0.005 a.u.... [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | none |
@@ -637,7 +637,7 @@ Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and d
 
 To cite the data itself, use the Zenodo concept DOI, which resolves to the latest release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
-530 of QMBL’s 2480 rows (21 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
+530 of QMBL’s 2485 rows (21 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)

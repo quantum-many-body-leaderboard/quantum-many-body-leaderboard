@@ -1,0 +1,469 @@
+                            Spin  Polarization  of the  Low Density  3D Electron Gas
+
+                                                  F. H. Zong, C. Lin, and D. M. Ceperley
+                    Dept.  of  Physics and NCSA, University  of Illinois at Urbana-Champaign,  Urbana,  IL 61801
+                    To  determine  the  state  of  spin  polarization  of  the  3D  electron  gas  at  very  low  densities  and
+                zero temperature, we calculate the energy versus spin polarization using Diﬀusion Quantum Monte
+                Carlo  methods  with  backﬂow  wavefunctions  and  twist  averaged  boundary  conditions.   We  ﬁnd  a
+                second order phase transition to a partially polarized phase at rs ∼ 50 ± 2.  The magnetic transition
+                temperature is estimated using an eﬀective mean ﬁeld method, the Stoner model.
+
+PACS Numbers:71.10.Ca, 71.10.Hf, 75.10.Lp, 05.50.Fk
+
+                      I.  INTRODUCTION                                        the potential energy dominates and the electrons crystal-
+                                                                              lize into a Wigner crystal.5 There is a ﬁrst order freezing
+  The three dimensional homogeneous electron gas, also                        transition6 at rs ≈ 100.
+known as the fermion one component plasma or jellium,                            Considering now the spin degrees of freedom, at small
+is  one  of the  simplest  realistic models  in  which electron               rs,  electrons  ﬁll  the  Fermi  sea  with  equal  number  of
+correlation plays an important role.  Despite years of ac-                    up  spin  and  down  spin  electrons  to  minimize  the  to-
+tive  research,  the  properties  of  thermodynamic  phases                   tal  kinetic  energy  and  thus  the  total  energy;  the  sys-
+of  the  electron  gas  are  still  not  known  at  intermediate              tem  is  in  the  paramagnetic  state.    As  the  density  de-
+densities.1  In this paper, we study the spin polarization                    creases and before the freezing transition, there is a pos-
+phase transition of the three dimensional electron gas at                     sibility  that  the  electrons  become  partially  or  totally
+zero temperature with recently improved quantum Monte                         polarized  (ferromagnetic).   The  spin  polarization  is  de-
+Carlo methods.                                                                ﬁned  as  ζ  =  |N↑ − N↓| /N,  where  N↑  and  N↓  are  the
+  There has been recent interest in the low density phases                    number of up and down spin electrons, respectively and
+spurred  by  the  observation  of  a  ferromagnetic  state  in                N  =  N↑ + N↓.   For  paramagnetic  phase  ζ  =  0  and  for
+calcium hexaboride (CaB6) doped with lanthium2.  The                          ferromagnetic phase ζ = 1.
+magnetic  moment  corresponds  to  roughly  10%  of  the                         This  polarization  transition  was  suggested  by  Bloch7
+doping  density.  The  temperatures (600K) and densities                      who  studied  the  polarized  electronic  state  within  the
+(7 × 1019/cm3) of this transition are in rough agreement                      Hartree-Fock  (HF)  approximation.    He  found  the  fer-
+with  the  predicted  transition  in  the  homogeneous  elec-                 romagnetic  state  favored  over  paramagnetic  state  for
+tron  gas.1.  However,  to  make  a  detailed  comparison,  it                rs > 5.45, almost within the density of electrons in met-
+is  necessary  to  correct  for  band  eﬀects.    For  example,               als.  However, HF is not accurate for rs > 0.
+conduction  electrons  are  located  at  the  X-point  of  the                   More accurate energies became available with the de-
+cubic  band  structure  and  thus  have  a  six-fold  degener-                velopment of Monte Carlo methods for many-fermion sys-
+acy.   The  eﬀective  mass  of  electrons  at  this  point  and               tems.   Ceperley8  using  Variational  Monte  Carlo  with  a
+the dielectric constant are also changed signiﬁcantly from                    Slater-Jastrow  trial  function  determined  that  the  tran-
+their vacuum values.3 These eﬀects cast doubt on the vi-                      sition  between  the  polarized  and  unpolarized  phase  oc-
+ability of the electron gas model to explain the observed                     cured  at  rs  =  26 ± 5.   Using  a  more  accurate  method,
+phenomena.  Excitonic models have been proposed to ex-                        diﬀusion  Monte  Carlo  (DMC),6  it  was  estimated  that
+plain the ferromagnetism4.  Whatever the interpretation                       the  polarized  ﬂuid  phase  is  stable  at  rs  =  75 ± 5.   An
+of ferromagnetism in CaB6, the determination of the po-                       extension  to  this  work9  found  the  ζ  =  0.5  partially  po-
+larization energy of the electron gas is important problem                    larized ﬂuid  becomes stable  at roughly rs  ≈ 20 and the
+because of the importance of the model.                                       completely polarized state never stable.
+  The ground state properties of the electron gas are en-                        Recently  Ortiz  et  al.1  applied  similar  methods10  to
+tirely  determined  by  the  density  parameter  rs  =  a/a0                  much  larger  systems  (N   ≤   1930)  in  order  to  reduce
+where  4πρa3/3  =  1  and  a0  is  the  bohr  radius,  possibly               the ﬁnite-size error.  They concluded the transition from
+changed from its vacuum value by band eﬀects.  In eﬀec-                       the  paramagnetic  to  ferromagnetic  transition  is  a  con-
+tive Rydbergs, the Hamiltonian is :                                           tinuous  transition,  occurring  over  the  density  range  of
+
+                    N∑             ∑                                          20 ± 5  ≤  rs  ≤  40 ± 5,  with  a  fully  polarized  state  at
+      H = − 1           ∇2i  +  2            1                                rs ≥ 40.
+                r2si=1          rs  i<j  |ri − rj| + const.         (1)          Due to the very small energy diﬀerences between states
+                                                                              with diﬀerent polarizations, systematic errors greatly af-
+Note  that  the  kinetic  energy  scales  as 1/r2s  and  the  po-             fect  the  QMC  results.   Recent  progress  in  the  quantum
+tential  energy  scales  as  1/rs  so  that  for  small  rs  (high            simulation methods makes it possible to reduce these er-
+electronic density), the kinetic energy dominates, and the                    rors.  Kwon et  al.11  found  that  a  wavefunction incorpo-
+electrons  behave  like  ideal  gas;  in  the  limit  of  large  rs,          rating back-ﬂow and three-body (BF-3B) terms provides
+
+                                                                           1
+a more accurate description:  they obtained a signiﬁcantly                    particle coordinates:
+lower variational and ﬁxed-node  energy.  In another  ad-                                                    N∑
+vance of technique, twist-averaged boundary conditions12                                       xi = ri +         η(rij)(ri − rj).                      (2)
+(TA)  have been shown to reduce the ﬁnite-size error by
+more than an order of magnitude, allowing one to obtain                                                     j⁄=i
+results close to the thermodynamic limit using results for                    The  Slater determinant is  then D = det(eikm·xn) where
+small values of N.  In this paper, we apply these improved                    η(rij) is a function to be optimized.  Then the backﬂow-
+methods  to  the  polarization  transition  in  the  three  di-               three body wavefunction (BF-3B) is:
+mensional electron gas.  We ﬁrst describe the simulation                                                                                     
+method, and then, the results.                                                                                    N∑                   N∑
+                                                                                 ΨT (R) = D↑D↓ exp         −         ~u(rij) − λT2       G2i     (3)
+
+                                                                                                                 i<j                  i=1
+                          II.  METHODS
+                                                                              where
+  The  most  accurate  Quantum  Monte  Carlo  (QMC)                                                        N∑
+method13  at  zero  temperature  is  Projector  or  Diﬀusion                                      Gi =        ξ(rji)(rj − ri)                           (4)
+Monte Carlo (DMC): one starts with a trial function and                                                   j⁄=i
+uses  exp(−tH)  to  project  out  the  ground  state  using                   and
+a  branching  random  walk.   Fermi  statistics  pose  a  sig-
+niﬁcant  problem  for  the  projection  method,  since  exact                             ~u(r) = uRP A(r) − λT ξ2(r)r2 + γ(r).               (5)
+fermion  methods  such  as  transient  estimate  or  release-
+node  QMC  suﬀer  an  exponential  loss  of  eﬃciency  for                    Here  D↑  and  D↓  are  determinants  for  the  up  spin  and
+large  numbers  of  particles.   For  this  reason,  the  ﬁxed-               down  spin  electrons,  ξ(r)  is  the  three-body  correlation
+node approximation is normally used, obtaining the best                       function, and  ˜u is the  Jastrow correlation function.  For
+upper  bound  to  the  energy  consistent  with  an  assumed                  the  electron  gas  an  accurate  analytic  form,15  uRP A(r),
+sign of the wave function.  The generalization of the ﬁxed-                   has  as  low an  energy8  as  those  with  optimized  parame-
+node  method  to  treat  complex-valued  trial  functions  is                 ters.  In the presence of three-body correlation, the RPA
+known as the ﬁxed-phase approximation.14                                      two-body term is  supplemented with an extra Gaussian
+  In  the  simpler,  but  less  accurate  Variational  Monte                  function  γ(r).   Please  refer  to  Kwon  et  al.11  for  further
+Carlo  method  (VMC),  one  assumes  an  analytic  form                       details concerning this wavefunction.  We used optimized
+for  a  trial  function  ΨT (R)  and  samples  |ΨT (R)|2  us-                 Ewald  sums16  both  for  the  potential  and  for  the  corre-
+ing  a  random  walk.     An  upper  bound  to  the  exact                    lation  factor  so  as  to  have  the  correct  long  wavelength
+ground  state  energy  is  the  average  of  the  local  energy               behavior.
+EL(R) = ΨT (R)−1HΨT (R) over the random walk.                                    Though  the  computational  cost  for  BF-3B  wavefunc-
+  The trial wavefunction plays a very important role in                       tion  is  somewhat  greater  than  the  simple  SJ  wavefunc-
+these  two  methods.   With  a  better  trial  wavefunction,                  tion and there is the added cost of optimization for BF-
+not only is the variational energy lower and closer to the                    3B wavefunction, we found accurate trial wavefunctions
+exact  energy,  but  also  the  variance  of  the  local  energy              crucial to compute the small energy diﬀerences between
+is  smaller  so  that  it  takes  less  computer  time  to  reach             diﬀerent polarization states.  We  optimized the  parame-
+desired  accuracy  level.    The  trial  wavefunction  is  also               ters by minimizing a combination of the energy and the
+important  in  ﬁxed-phase  DMC  because  the  solution  is                    variance  for  each  density  and  polarization.   Figure  (1)
+assumed  to  have  the  same  phase  as  the  trial  function.                shows  the  energy  vs.  polarization at  rs  = 50  using  dif-
+One  then solves for the  modulus.  This  implies  that the                   ferent  trial  functions  and  simulation  methods.   The  SJ
+DMC  energy  lies  above  the  exact  ground  state  energy                   trial  function  with  VMC  has  the  highest  energy  for  all
+by  an  amount  proportional to  the  mean  squared  diﬀer-                   polarizations and at this level of accuracy ﬁnds the fully
+ence  of  the  phase  of  the  trial  function  from  the  exact              polarized  phase  to  be  stable,  in  agreement  with  earlier
+phase.   As  this  is  the  only  uncontrolled  approximation,                VMC calculations.8 However, using the best BF-3B trial
+it  is  important  to  carefully  optimize  the  assumed  trial               function, the variational energies are lowered signiﬁcantly
+wavefunction.                                                                 with the unpolarized energy dropping more than the po-
+  For  a  homogeneous  system,  the  non-interacting  (NI)                    larized case so that the polarized phase is no longer sta-
+wavefunction  consists  of  a  Slater  determinant  of  single-               ble.  DMC calculations conﬁrm this result.  Note that the
+electron  plane  waves  orbitals.   To  incorporate  electron                 DMC energies determined using the NI phases (or nodes)
+correlation, one multiplies the NI wavefunction by a pair                     give  energies  lower  than  the  BF-3B  variational energies
+wavefunction, obtaining the so-called Slater-Jastrow (SJ)                     conﬁrming the importance of accurate DMC calculations.
+form.   To  construct  a  better  trial  function,  one  incor-               The use of BF-3B wavefunctions with DMC leads to the
+porates  backﬂow  and  three-body  eﬀects.11  The  particle                   lowest ground state energies, hopefully, very close to the
+coordinates appearing in the determinant become quasi-                        exact energy.
+
+                                                                           2
+      -0.0286                                                                  3  shows  the  polarization  energies  for  N  =  54, 108, 162.
+                                                           rs=50               With TA boundary conditions, there is a remarkable in-
+                       SJ-VMC                                                  sensitivity to the number of electrons.  Even though the
+      -0.0287                                                                  system size is increased threefold, the  change in the en-
+                                                                               ergy versus polarization is almost undetectable.  Consid-
+                                                                               ering only the leading 1/N  correction, we estimated E∞
+                                                                               with N  = 54 and N  = 108.
+      -0.0288
+
+                       BF-VMC
+      -0.0289
+                       SJ-DMC
+                                                       BF-DMC
+        -0.029    0         0.2        0.4        0.6        0.8         1
+                                           ζζ
+  FIG. 1.  Energy  versus  spin  polarization  at  rs  = 50  for  54
+electrons using TA with 103 twist values.  Compared are calcu-
+lations with SJ and BF-3B wavefunctions and with two QMC
+methods:  VMC and DMC.
+
+   After  the  eﬀect  of  the  nodes,  the  dependence  of  the
+energy on the number of electrons is the largest system-
+atic error.  Within periodic boundary conditions (PBC),
+the  phase  picked  up  by  the  wavefunction  as  a  particle
+makes a circuit across the unit cell, is arbitrary.  General
+boundary conditions are:
+
+            Ψ(r1 + L, r2, . . .) = eiθΨ(r1, r2, . . .)                (6)
+
+where L is a lattice vector of the supercell.  If the twist an-
+gle   θ is averaged over, most single-particle ﬁnite-size ef-                     FIG. 2.  The  pair  correlation  function  for  several  polariza-
+fects arising from shell eﬀects in ﬁlling the plane wave or-                   tions  at  rs   =  50  using  DMC.  The  various  curves  are  for
+bitals, are eliminated.  This is particularly advantageous                     ζ   =  0, 0.33, 0.67, 1  with  the  structure  increasing  with  spin
+for  polarization calculations since shell eﬀects  dominate                    polarization.
+the  polarization  energy.   The  extra  eﬀort  in  integrating
+over the twist angles is minimal, since the various calcu-                        Also shown in Fig.  3 is the estimate of the polarization
+lations all serve to reduce the ﬁnal variance of the com-                      energy  from  Ceperley-Alder.6  In  that  work,  size  eﬀects
+puted  properties.   The  eﬀect  of  boundary  conditions  is                  were  estimated  with  Fermi  liquid  corrections.    Rather
+examined in detail in Lin et al.12                                             than BF-3B wavefunctions, corrections using the poten-
+   There  is  a  further  size  eﬀect  in  the  calculation of  the            tially  exact,  release-node  method  were  used.    The  re-
+potential energy due to a charge interacting with its cor-                     sults with PBC and FN-DMC are in agreement with the
+relation  hole  in  neighboring  supercells  as  shown  in  Fig.               present FP-DMC calculations.  However, the present re-
+(6)  of  Lin  et  al.12.   To  correct  this,  we  ﬁt  the  energies           sults have an error bar more than an order of magnitude
+versus N  using the expansion:                                                 smaller  than  those  of  Ceperley-Alder,  primarily  due  to
+                                                                               increased computer performance.
+                EN  = E∞ + a1N  +  a2N 2  + . . . .                      (7)      Though  PBC  with  FLT  corrections  are  adequate  for
+                                                                               unpolarized and fully polarized systems, the precision is
+For  unpolarized systems,  the  ﬁtted  E∞  agrees with  the                    limited for intermediate polarizations.  To estimate ﬁnite
+previous non-twist averaged (PBC) result determined us-                        size eﬀects within FLT, one must perform accurate DMC
+ing extrapolations based on fermi liquid theory (FLT). As                      simulations for  widely  varying system sizes.  In Ortiz  et
+shown in Fig.  2, the  correlation hole is  only weakly de-                    al.,1  the  simulation  size  varied  from  725  ≤  N  ≤  1450.
+pendent on spin polarization at low density:  the peak of                      Within  DMC  it  is  very  time-consuming  to  ensure  uni-
+g(r) only changes from 1.175 to 1.190 as the system goes                       form  accuracy  independent  of  particle  number,  so  that
+from unpolarized to polarized.  Hence, the potential size-                     one typically determines  size  eﬀects  within  VMC,  using
+eﬀect  hardly  changes  the  spin  polarization energy.  Fig.                  the more approximate SJ trial functions.  As we have seen
+
+                                                                            3
+in  Fig.   (1),  the  SJ  trial  functions  are  unreliable  at  low                   -0.0349
+densities.  TA  boundary  conditions  allow a  much better                                                    Ortiz PRL 82, 5317 (1999)      rs=40
+way to estimate  energies in the  thermodynamic limit of                                                      This work, BF-TADMC
+partially polarized fermi liquids since the number of elec-                             -0.035
+trons  can  be  held  ﬁxed  as  the  spin  polarization  varies.
+Small system sizes, allowing use of more accurate but ex-
+pensive trial functions and even exact fermion methods,
+give precise estimates  of the  spin polarization energy in                            -0.0351
+the thermodynamic limit.
+
+
+
+                                                                                       -0.0352
+
+
+
+
+                                                                                                   0         0.2        0.4        0.6        0.8         1
+                                                                                                                             ζ
+                                                                                    FIG. 4.  Comparison of this work with that of Ortiz et al.1
+                                                                                 The ﬁlled diamonds are DMC simulations with TA and BF-3B
+                                                                                 wavefunctions  (this  work).   The  ﬁlled  circles  are  DMC  with
+                                                                                 PBC  and  SJ  wavefunction.1  All  energies  are  extrpolated  to
+                                                                                 the thermodynamic limit.  Errors are given in Table I and are
+                                                                                 smaller than the size of the points.
+
+                                                                                    In  Fig.   4  we  compare  the  total  energy  for  rs  =  40
+                                                                                 calculated  with  DMC  and  TA  and  extrapolated  to  the
+                                                                                 thermodynamic limit with the calculation of much larger
+                                                                                 systems  (N   =  725)  of  Ortiz  et  al.1  The  BF-3B  ener-
+                                                                                 gies  are  lower  energy  and  show  a  diﬀerent  polarization
+                                                                                 energy:   Ortiz’s  calculation  ﬁnds  that  the  polarized  or
+                                                                                 partially  polarized  phase  is  stable  at  this  density,  while
+                                                                                 we  ﬁnd  the  unpolarized phase  is  stable.  This  diﬀerence
+                                                                                 is due to the backﬂow correlations in the trial wavefunc-
+  FIG. 3.  The  polarization  energy  for  various  sized  systems               tion.   Although  backﬂow  energies  are  small,  they  favor
+at  rs  =  50  using  TA  and  DMC.  (circle  54,  square  108,  and             the unpolarized state and hence are crucial for accurate
+triangle  162).  The point at  ζ  = 1 with  the large  error bar is              determination of the polarization transition.
+from Ceperley-Alder.6  Other errors are less than 10−6.
+
+
+
+
+                                                                                                            III.  RESULTS
+
+
+
+
+                                                                                    We  carried out  computations  of the  spin  polarization
+                                                                                 energies  at  electronic  densities  40  ≤  rs  ≤  100.  At  each
+                                                                                 density,  we  performed  DMC  calculations  with  N  =  54
+                                                                                 and N  = 108 electrons using 103 twist angles.  The time
+                                                                                 step was adjusted so that the DMC acceptance ratio was
+                                                                                 in the range 98% − 99%.  Note that when calculating the
+                                                                                 polarization energy, most time step errors will cancel out
+                                                                                 of the polarization energy.  Thus systematic errors in the
+                                                                                 polarization  energy  are  much  smaller  than  in  the  total
+                                                                                 energy.  We then extrapolated the energy to the thermo-
+                                                                                 dynamic  limit  using  Eq.  (7).  The  energies  are  given in
+                                                                                 Table I.
+
+                                                                             4
+  FIG. 5.   The  spin  polarization  energy  of  the  3DEG  times                 FIG. 6.  The square of the spin polarization versus rs.  The
+r3/2s     in Ry/electron at various densities using a polynomial ﬁt             curves were obtained using ﬁts in  the Fig.  (4).  The line is a
+to the data in Table I. The density, rs, is denoted on the right                ﬁt though the points.  The value at rs = 40 was obtained by
+axis.                                                                           extrapolation from physical values of ζ.
+
+
+
+                                                                                   The quoted error bar on the critical density estimates
+                                                                                the  statistical  errors,  not  the  systematic  errors  arising
+   We   then   ﬁt   the   energy   versus   polarization   to   a               from  the  ﬁxed-phase  approximation.   The  experimental
+quadratic polynomial in ζ2.  The results are shown in ﬁg-                       and theoretical results  on polarized helium  give caution
+ure 5.  A polarization transition is  evident.  At rs  = 40,                    on placing too much conﬁdence in the estimate of the po-
+the  system  is  still  paramagnetic,  with  the  unpolarized                   larization transition.  Even using the accurate optimized
+phase  stable.   As  the  density  decreases,  at  rs  ≈  50,  the              BF-3B wavefunctions, the magnetic susceptibility in liq-
+system  becomes  unstable  with  respect  to  spin  ﬂuctua-                     uid  3He does not agree with experiment at low pressure
+tions.   The  partially  polarized  states  become  stable  at                  and  the  polarized  phase  is  nearly  degenerate  with  the
+rs ≥ 60. As the electronic density continues to decrease,                       unpolarized phase at the freezing density.17  The present
+the fully polarized state has a lower energy with respect                       results also do not preclude the existence of phases with
+to  unpolarized  state  at  rs  ≥  80,  however,  we  ﬁnd  that                 other order parameters such as superﬂuids, as occurs in
+the partially polarized state has an even lower energy.                         ground  state  of  liquid   3He.   In  fact,  it  is  rather  likely
+                                                                                that the ground state of the  electron gas will have such
+                                                                                a phase at the lowest ﬂuid densities.
+
+
+                                                                                   However, examination of the variance of the trial func-
+   In Fig.  6 is shown the predicted square of the optimal                      tion suggests that the result for the electron gas may be
+polarization versus density.  We ﬁnd that the equilibrium                       more  reliable  than  for  liquid   3He.   Shown  in  ﬁg.   7  is
+polarization is  described  by  ζ2  =  (rs − r∗s)/62  with  the                 the  variance  of  the  trial  function  at  rs  =  50  for  both
+critical density r∗s  = 50±2.  As the density decreases, the                    the  SF  and  BF-3B  functions.   Although  the  variance  of
+stable state becomes more and more polarized approach                           the  SJ  trial function  depends  on spin  polarization, that
+fully  polarized  at  freezing,  rs  ≈  100.   Quantum  critical                of the BF-3B does not.  Such is  not the  case17  with  liq-
+ﬂuctuations, not present in systems with N  ≤ 162, could                        uid  3He.   Arguments  based  on  variance  extrapolation18
+modify the behavior of the spin polarization energy near                        suggest  that  the  DMC  calculations  with  BF-3B  phases
+the critical density.                                                           should be more reliable than in liquid  3He.
+
+                                                                            5
+                                                                               (i.e.  from Table I.) In addition, assuming g does not have
+                                                                               a very strong density dependence, the Stoner model pre-
+                                                                               dicts that the partially polarized density range should be
+                                                                               quite narrow, from 50 ≤ rs ≤ 54, while as the QMC re-
+                                                                               sults indicate a much broader density range.  Perhaps the
+                                                                               assumption  of  a  zero-range interaction  of  quasiparticles
+                                                                               is too restrictive.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  FIG. 7.  The variance of the SJ and BF-3B trial function as
+a function of spin polarization at rs = 50 using TA and VMC
+with N  = 54.
+
+
+                IV.  THE  PHASE  DIAGRAM
+
+   One  can  use  the  calculated  energies  to  estimate  the
+ﬁnite  temperature  behavior  within  the  Stoner  model,19                       FIG. 8.   The  phase  diagram  of  the  electron  gas.   Conver-
+arising   in   the   theory   of   itinerant   magnetism.20   The              sion  to  units  of  cm  and  K  was  done  using  a0  =  1.3nm  and
+Stoner model diﬀers from Hartree-Fock by replacing the                         Ry = 250K  using estimates3  of the eﬀective mass and the di-
+Coulomb  interaction  by  a  zero  range  one,  a  repulsive                   electric constant of SrB6.  The solid  line the mean-ﬁeld esti-
+delta  function  potential:   ∑i<j gδ(rij).    One  can  view                  mate of the magnetic transition temperature from the Stoner
+this  approach as  the  ﬁrst step to  a  full  Fermi-liquid de-                model, where the spin interaction is estimated from  the zero
+scription  of  the  quasiparticle  interactions,  and  use  the                temperature QMC data.  The dotted line is the energy diﬀer-
+QMC  data  to  determine  the  strength  of  those  interac-                   ence between the unpolarized and partially polarized system.
+tions.  One expects that the Slater-Jastrow trial function
+has screened oﬀ the long-range interaction leaving only a                         Nevertheless, we use this mean ﬁeld model to make a
+short-ranged spin-dependent  term  that  can  be  modeled                      estimate  of  the  transition  temperature  of  the  polarized
+by a contact interaction.                                                      phase.   Fitting  the  energy  to  the  function  given  in  Eq.
+   In  the  Stoner  model,  the  energy  is  evaluated  within                 (8), we obtain estimates of g and the eﬀective mass of the
+the  mean  ﬁeld  (Hartree-Fock)  approximation  using  the                     electrons.  Then,  using  the  free  energy  of  the  ideal  spin
+NI wavefunction.  The energy at zero temperature in the                        (1/2)  partially  polarized  fermi  gas  with  the  additional
+thermodynamic limit is:                                                        spin  interaction,  we  estimate  the  temperature  at  which
+    E ∝ (1 + ζ)5/3 + (1 − ζ)5/3 + 0.054gr2s(1 − ζ2).      (8)                  the  system becomes  polarized by  determining  when  the
+                                                                               spin-stiﬀness  of  the  unpolarized  system  vanishes.   Fig.
+For  gr2s  <  20.5  the  system  has  an  unpolarized  ground                  8  is  the  estimated  phase  diagram  of  the  electron  gas.21
+state  and  for  gr2s  >  24.4  the  ground  state  is  ferromag-              In  this  diagram,  the  eﬀective  mass  and  dielectric  con-
+netic.  For intermediate couplings, the ground state has a                     stant for SrB6, a closely related material to CaB6, have
+partial spin polarization at zero temperature, similar to                      been used3  to convert to units of K  and cm3.  Note that
+the observed behavior of the electron gas at low density.                      both  the  temperatures  and  densities  of  our  calculated
+   Although  the  polarizations  are  qualitatively  correct,                  magnetic transition are four orders of magnitude smaller
+the above functional form does not ﬁt well the DMC data                        than that found experimentally2  in CaB6.  Even assum-
+
+                                                                            6
+ing errors because of uncertainties in material properties                        for the calculation of polarization energies, enabling size-
+and  from  the  mean  ﬁeld  methods  to  estimate  Tc,  these                     converged results  with  fewer  electrons.  Using  relatively
+estimates are very diﬃcult to reconcile with experiment,                          small system sizes allows one to use more accurate trial
+apparently ruling out an electron gas model of ferromag-                          wavefunctions and to fully converge the diﬀusion Monte
+netism  in  this  material.  Also  plotted  on  the  phase  dia-                  Carlo calculations.  We ﬁnd a second order transition to
+gram is the energy diﬀerence between the partially polar-                         a polarized phase at rs = 50 ± 2.
+ized ﬂuid  and the  unpolarized ﬂuid  as another estimate                            In general, methods based on the variational principle
+of the magnetic transition temperature.  Finite tempera-                          such as the ﬁxed-node quantum Monte Carlo method for
+ture QMC calculations would be desirable to conﬁrm the                            many-fermion systems, favor phases with  a higher  sym-
+mean ﬁeld estimate of Tc.  A rough estimate of the limit                          metry, in this case the Wigner crystal and polarized ﬂuid,
+of stability of the Wigner crystal22 is also shown.                               over the more complicated unpolarized phase, (eﬀectively
+   Tanaka  and  Ichimaru23  have  computed  the  polariza-                        a two-component mixture of spin up and down electrons.)
+tion phase diagram of the electron gas both at zero and                           Recall  that  in  HF  one  has  a  polarization  transition  be-
+non-zero temperature using an integral equation method.                           cause antisymmetry is the only way to correlate electrons,
+At zero temperature they  obtain a result similar to  Or-                         however, the correlation is only between like spins; hence,
+tiz  at  al.1,  with  a  continuous  transition  at  rs  ≈  20  and               there is an instability to polarize the system once the po-
+a  fully  polarized  ﬂuid  state  at  a  slightly  higher  density                tential  is  dominant.   But  using  a  SJ  wavefunction  both
+rs  ≈  22.   Apparently  this  approach,  built  on  local  ﬁeld                  like  and  unlike  electrons  are  highly  correlated.   Our  re-
+corrections to  free  fermion response  functions,  is  biased                    sults  demonstrate  that  the  SJ  wavefunctions  still  pref-
+by  the  initial  Hartree-Fock assumption  and  overempha-                        erentially  favors  the  “simple”  phases,  even  using  DMC
+sizes the tendency for ferromagnetism.                                            method.  This  symmetry  argument explains  the  histori-
+   There  is  recent  work  on  the  low  density  electron  gas                  cal tendency for the polarized phase become stable over
+in 2D, studying both the Fermi liquid24  and the Wigner                           a  more  and  more  restricted  range  of  density  and  tem-
+crystal phase.  Using QMC similar techniques in the liq-                          perature as more accurate methods are used.  Our QMC
+uid  phase,  a  polarized  phase  is  found  to  be  stable  be-                  results using the BF-3B wavefunction indicate that there
+tween  26  ≤  rs  ≤  35,  though  the  energy  diﬀerences  are                    is still an instability for spin polarization at very low den-
+even  smaller  than  in  3D.  The  partially  polarized  phase                    sity.  Although examination of the variance indicates that
+is never stable.  In the 2D Wigner crystal, path integral                         the polarized and unpolarized BF-3B trial functions are
+methods25  were  used  to  derive  directly  the  spin  Hamil-                    equally inaccurate, it is still not clear if our ﬁnding of a
+tonian.    It  was  found  that  the  ground  magnetic  state                     polarization transition is an artifact of the assumed trial
+is a  spin liquid though the ferromagnetic state has only                         wavefunction.   Calculations  with  the  new  methods  (TA
+a  slightly  higher  energy  at  melting.   Analogous  calcula-                   and  BF-3B  wavefunctions)  but  with  the  exact  fermion
+tions of the magnetic phase diagram of the WC in 3D are                           methods  are  desirable  to  resolve  the  phase  of  the  elec-
+underway.26                                                                       tron gas at intermediate densities.
+
+
+                        V.  CONCLUSION                                                               ACKNOWLEDGMENTS
+
+   We studied the polarization transition in three dimen-                            This  research  was  supported  by  NSF  DMR01-04399,
+sional electron gas using twist-averaged boundary condi-                          the  Department  of  Physics  at  the  University  of  Illinois
+tions  and  trial  functions  with  backﬂow  and  three  body                     Urbana-Champaign and the CNRS. We acknowledge un-
+correlations.   Twist  averaged  boundary  conditions  have                       published data from G. Ortiz shown in ﬁg.  (3).  Compu-
+a  much  reduced  systematic  ﬁnite-size  error,  especially                      tational resources were provided by the NCSA.
+
+  TABLE I.  Energy  of  the  3DEG  computed  using  TA-  DMC  and  extrapolated  from  N  =  54  and  N  =  108  with  (103  twist
+angles).  Energies are in Ry/electron.  The numbers in parenthesis are standard errors in units of 10−8Ry.
+rs\ζ               0.0                        0.185                      0.333                      0.519                      0.667                      0.852                        1.0
+ 40     -0.03523748(60)                                  -0.03523295(67)                                  -0.03520539(67)                                  -0.03513483(72)
+ 50     -0.02889900(62)   -0.02889900(66)   -0.02889962(68)   -0.02889449(70)   -0.02888835(62)   -0.02887542(70)   -0.02884983(81)
+ 60     -0.02452017(44)   -0.02451866(51)   -0.02452031(48)   -0.02451963(50)   -0.02451747(42)   -0.02451188(46)   -0.02450167(46)
+ 70     -0.02131429(41)   -0.02131381(40)   -0.02131621(39)   -0.02131716(37)   -0.02131593(37)   -0.02131332(39)   -0.02130667(37)
+ 75     -0.02001137(35)   -0.02001191(37)   -0.02001376(36)                                  -0.02001434(44)                                  -0.02000878(33)
+ 85     -0.01784017(30)                                  -0.01784152(32)                                  -0.01784300(32)                                  -0.01784109(32)
+100    -0.01535357(30)                                  -0.01535340(30)                                  -0.01535639(26)                                  -0.01535761(26)
+
+
+
+
+
+
+                                                                              7
+                                                                                     58, 6800 (1998).
+                                                                                  12 C. Lin  and F. H. Zong and  D. M.  Ceperley, Phys. Rev. E
+                                                                                     64, 016702 (2001).
+                                                                                  13 W. M. C. Foulkes, L. Mitas, R. J. Needs and G. Rajagopal,
+
+ 1 G.  Ortiz,  M.  Harris  and  P.  Ballone,  Phys.  Rev.  Lett.  82,                Rev. Mod. Phys. 73, 33 (2001).
+                                                                                  14 G. Ortiz and D. M. Ceperley and R. M. Martin, Phys. Rev.
+   5317 (1999).                                                                      Lett. 71, 2777 (1993).
+ 2 D. P. Young, Nature 397, 386 (1999).                                           15 T. Gaskell, Proc. Phys. Soc. London 77, 1182 (1961).
+ 3 C. O. Rodriguez, R. Weht, and W. E. Pickett, Phys. Rev.                        16 V.  Natoli  and  D.M.  Ceperley  ,  J.  Comp.  Phys.  117,  171
+   Lett. 84, 3903 (2000).                                                            (1995).
+ 4 S.   Murakami,    R.   Shindou,    N.   Nagaosa,    and   A.   S.              17 S.  Moroni,  F.  H.  Zong  and  D.  Ceperley,  to  be  published
+   Mishchenko,  Phys.  Rev.  Lett.  88,  126404  (2002);  M.  E.                     (2002).
+   Zhitomirsky , T. M. Rice, and V. I. Anisimov, Nature 402,                      18 Y. Kwon, D. M. Ceperley and R. M. Martin, Phys. Rev. B
+   251 (1999); L. Balents and C. M. Varma, Phys. Rev. Lett.                          48, 12037 (1993).
+   84, 1264 (2000).                                                               19 E. Stoner, Proc. Roy. Soc. A 165, 372 (1939); A 169, 339
+ 5 E. Wigner, Phys. Rev. 46, 1002 (1934).
+ 6 D. M. Ceperley  and B. J. Alder, Phys. Rev. Lett. 45, 566                         (1939).
+                                                                                  20 C.  Herring,  in  Magnetism,  vol  IV,  (eds.  G.  T.  Rado  and
+   (1980).                                                                           H. Suhl) (Academic Press, San Diego, 1966).
+ 7 F. Bloch, Zeit. Physik 57, 545 (1929).                                         21 R. A. Suris, Sov. Phys. Solid State 3, 1303 (1961).
+ 8 D. Ceperley, Phys. Rev. B 18, 3126 (1978).                                     22 M. D. Jones and D. M. Ceperley, Phys. Rev. Lett. 76, 4572
+ 9 B.  J.  Alder,  D.  M.  Ceperley  and  E.  L.  Pollock,  Int.  J.  of             (1996).
+   Qu. Chem. 16, 49 (1982).                                                       23 S. Tanaka and S. Ichimaru, Phys. Rev. B 39, 1036 (1989);
+10 The method in ref. (1) is essentially the same as in ref. (6),                    S. Ichimaru, Phys. Rev. Lett. 84, 1842 (2000).
+   though  there  are  several  technical  diﬀerences:   more  par-               24 C. Attaccalite, S. Moroni, P. Gori-Giorgi and G. Bachelet,
+   ticles, variance minimization of short-ranged wavefunction                        cond-mat/0109492.
+   rather  than  an  analytic  form  with  correct  long-range  cor-              25 B. Bernu, L. Candido and D. M. Ceperley, Phys. Rev. Lett.
+   relations, and the use of a ﬁxed-node method with a Slater                        86, 870 (2001).
+   Determinant of plane waves.                                                    26 L. Candido, D. M. Ceperley, and B. Bernu, work in progress
+11 Y. Kwon, D. M. Ceperley and R. M. Martin, Phys. Rev. B                            (2002).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              8
