@@ -645,10 +645,10 @@ To cite the data itself, use the Zenodo concept DOI, which resolves to the lates
 ## Contributing
 
 To add an energy, use the [new result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-result.yml).
-To add a lattice problem QMBL does not have yet, use the
+To add an instance QMBL does not have yet, a lattice model or an electron-gas cell, use the
 [new instance form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-instance.yml).
 To correct a row, open an issue on that row. Be specific and technical
-([RULES.md §10](RULES.md#10-pending-confirmed-objections)). A sampled energy without an
+([RULES.md §10](RULES.md#10-review-and-objections)). A sampled energy without an
 error bar is marked &dagger;. Send the error bar so the row can be compared with its
 neighbours.
 
