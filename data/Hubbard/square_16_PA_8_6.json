@@ -93,7 +93,17 @@
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.68135(1)",
         "note": "Appendix H Table V, L=4, U=6; sources/2111.10420.txt line 1275; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-19",
+          "scope": "value",
+          "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+          "location": "SI Table 5 / arXiv Table V, row L = 4, column U = 6",
+          "reported_as": "-0.68135(1) (energy per site, units of t)",
+          "conversion": "-0.68135 x 16 = -10.90160; bar 0.00001 x 16 = 0.00016",
+          "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 8), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+          "source_entry": "SP2-arxiv-2111-10420#7"
+        }
       }
     }
   ]

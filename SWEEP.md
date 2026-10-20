@@ -181,6 +181,15 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-10-19-hegcorr.json` | electron gas: correlation energies stored as QMBL Hartree-Fock + E_c ([RULES.md §12](RULES.md#12-track-2-the-homogeneous-electron-gas)) |
 | `sweep-rows-2026-10-19-heglit2.json` | electron gas: papers citing the 2026-10-17 primaries |
 
+The five passes of 2026-10-16 to 2026-10-19 had their second reading on 2026-10-19 (1079 rows, eight reader groups,
+each with a skeptic). No energy was misread. The fixes went into the pass generators, so the pass files above carry
+them: error bars kept to their printed digits (the generators had rounded them to two digits), method labels that a
+text cleaner had cut, variances the papers print, and three DMRG energies a paper quotes, now cited to the paper that
+computed them. 30 duplicates and two fits a paper prints only to reject them are in `scripts/removals.mjs`; two
+fixed-node energies the source calls biased are flagged in `scripts/defects.mjs`; 699 rows carry the reading in
+`scripts/verifications.mjs`. Rulings of 2026-10-20: FCIQMC is `projected` even with its initiator error converged, and
+methods on a transcorrelated Hamiltonian without its three-body term are `approximate`.
+
 ## Rejected papers
 
 Every energy in these papers is a thermodynamic-limit value or a lower bound, so no value
