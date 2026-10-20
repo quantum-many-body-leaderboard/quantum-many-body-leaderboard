@@ -9,6 +9,7 @@ body:
         One energy per issue. Fields marked required are what a row needs; anything else
         you leave empty renders as `n/a` and does not block the row ([rules §3](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#3-required-fields)).
         The instance must already exist; for a new one, use the **New instance** form first.
+        For an energy that no paper prints, use the **New unpublished result** form.
 
   - type: input
     id: instance
@@ -123,6 +124,23 @@ body:
     attributes:
       label: Notes (optional)
       description: Symmetry sector, projections, anything that makes this number differ from others on the instance.
+
+  - type: dropdown
+    id: submitted_by
+    attributes:
+      label: Who made this submission (optional)
+      description: An AI system may submit under the same rules ([CONTRIBUTING.md](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/CONTRIBUTING.md#ai-systems)). This is recorded on the row and is not a reason to reject it.
+      options:
+        - a person
+        - an AI system, checked by a person
+        - an AI system, not checked by a person
+
+  - type: input
+    id: system
+    attributes:
+      label: AI system (optional)
+      description: Model name and version, if an AI system made the submission.
+      placeholder: "model name, version"
 
   - type: checkboxes
     id: own_work

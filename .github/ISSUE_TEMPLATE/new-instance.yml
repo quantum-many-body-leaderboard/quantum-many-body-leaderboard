@@ -86,3 +86,20 @@ body:
     attributes:
       label: Notes (optional)
       description: Known energies on it, an exact reference if one exists, or anything that tells it apart from an instance QMBL already has.
+
+  - type: dropdown
+    id: submitted_by
+    attributes:
+      label: Who made this submission (optional)
+      description: An AI system may submit under the same rules ([CONTRIBUTING.md](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/CONTRIBUTING.md#ai-systems)). This is recorded on the row and is not a reason to reject it.
+      options:
+        - a person
+        - an AI system, checked by a person
+        - an AI system, not checked by a person
+
+  - type: input
+    id: system
+    attributes:
+      label: AI system (optional)
+      description: Model name and version, if an AI system made the submission.
+      placeholder: "model name, version"

@@ -93,6 +93,55 @@ cost figures are comparable across methods. It is read like VarBench's `baseline
 
 The validator requires all of these.
 
+### Rows no paper prints: `provenance: "unpublished"`
+
+A row admitted under [RULES.md §8.3](RULES.md#83-unpublished-results) has
+`provenance: "unpublished"` and `peer_reviewed: false`. The site marks it "unpublished".
+
+```json
+"reference": "https://github.com/<owner>/<repo> @ 3f2c9e1, checkpoint release v1.0",
+"artifacts": {
+  "code": "https://github.com/<owner>/<repo>", "commit": "3f2c9e1",
+  "checkpoint": "https://github.com/<owner>/<repo>/releases/download/v1.0/state.msgpack",
+  "checkpoint_sha256": "<64 hex digits>",
+  "evaluation": "python evaluate.py --state state.msgpack --samples 1048576",
+  "log": "https://github.com/<owner>/<repo>/releases/download/v1.0/sampling.log"
+},
+"verified": {
+  "checked_on": "2026-11-02", "method": "re-evaluation (RULES §8.3)",
+  "reported_as": "the energy and error bar as submitted",
+  "reevaluated": { "energy": -199.0771, "sigma": 0.0002, "seed": 20261102,
+                   "command": "the evaluation command as run", "gpu_hours": 0.4, "device": "NVIDIA H100" }
+}
+```
+
+- `reference` names the repository and the commit.
+- `artifacts` holds what §8.3 asks for. `checkpoint_sha256` is the hash of the file QMBL
+  downloaded and keeps.
+- `verified.reevaluated` is QMBL's run, in the instance's convention like `energy`. Where
+  either error bar is missing, `reevaluated.agreement` says how the two values were compared.
+- The `compute` block states hours and device.
+
+The validator requires all of these, and checks the three-error-bar agreement where both
+error bars exist.
+
+### Who submitted a row: `submitted_by`
+
+A row that came through an issue or a pull request names it:
+
+```json
+"submitted_by": {
+  "account": "<GitHub login>",
+  "issue": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/12",
+  "system": "<model name and version>", "human_checked": false
+}
+```
+
+`system` is null for a submission a person made. For an AI system it names the system, and
+`human_checked` says whether a person checked the submission. The site shows the system on
+the row. Rows QMBL read from the literature itself do not carry the field: `verified.method`
+says how they were read.
+
 `energy` and `sigma` are stored in the instance's own convention. `v_score` is derived,
 never supplied. `verified` records where the number was read and how. `defect` appears on a
 flagged row and carries the reason.

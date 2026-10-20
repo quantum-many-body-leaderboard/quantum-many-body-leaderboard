@@ -172,7 +172,7 @@ const instUrl = inst => `/i/${inst.instance_id}/`;
 const jsonUrl = inst => `/api/i/${inst.instance_id}.json`;
 const yearOf = r => paperYear(r, cache);
 // The year column: a paper's year, or for QMBL's own runs the year the run finished.
-const yearCell = r => (r.computed_by === "qmbl" ? +(r.verified?.checked_on || "").slice(0, 4) || null : yearOf(r));
+const yearCell = r => (r.computed_by === "qmbl" || r.provenance === "unpublished" ? +(r.verified?.checked_on || "").slice(0, 4) || null : yearOf(r));
 
 const BOUND_ORDER = ["variational", "projected", "extrapolated", "approximate", "exact", null];
 const BOUND_LABEL = {
@@ -240,6 +240,11 @@ const flagBadge = r => {
 };
 
 function citeHtml(row) {
+  // An unpublished row (RULES.md 8.3) cites its code at the commit and its checkpoint.
+  if (row.provenance === "unpublished" && row.artifacts) {
+    const a = row.artifacts, repo = a.code.replace(/^https:\/\/github\.com\//, "");
+    return `<a href="${esc(`${a.code}/tree/${a.commit}`)}">${esc(`${repo} @ ${a.commit}`)}</a>, <a href="${esc(a.checkpoint)}">checkpoint</a>`;
+  }
   const r = citeRef(row, cache);
   const link = (r.url ? `<a href="${esc(r.url)}">${esc(r.text)}</a>` : esc(r.text)) + (r.also ? `, <a href="${esc(r.also.url)}">${esc(r.also.text)}</a>` : "");
   return r.note ? `${link}<span class="muted">, ${esc(r.note)}</span>` : link;
@@ -989,7 +994,9 @@ function rowTable(rows, inst) {
       r.computed_by === "qmbl" ? '<span class="badge">QMBL run</span>' : "",
       r.provenance === "secondary" ? '<span class="badge">quoted from another paper</span>' : "",
       r.peer_reviewed === true ? '<span class="badge">peer reviewed</span>' : "",
-      r.peer_reviewed === false ? '<span class="badge">preprint</span>' : "",
+      r.provenance === "unpublished" ? '<span class="badge">unpublished, re-evaluated by QMBL</span>' : "",
+      r.peer_reviewed === false && r.provenance !== "unpublished" ? '<span class="badge">preprint</span>' : "",
+      r.submitted_by?.system ? `<span class="badge">submitted by ${esc(r.submitted_by.system)}${r.submitted_by.human_checked ? ", checked by a person" : ""}</span>` : "",
     ].filter(Boolean).join(" ");
     const { sigma } = perSite(r, inst);
     return `<tr id="${rowId(inst, r)}" class="${rec ? "is-record" : ""}${r.defect ? " is-flagged" : ""}">
@@ -1206,7 +1213,9 @@ function llmsTxt() {
     "lowest unflagged energy holds it, of any kind and with or without an error bar, and an",
     "approximate energy holds it only where no other unflagged energy exists (RULES.md section 6).",
     "Energies are stored as totals and quoted per site; the conversion is in DATA.md. Individual",
-    "energies should be cited to the primary paper named on the row, not to this site.",
+    "energies should be cited to the primary paper named on the row, not to this site. An energy",
+    "that no paper prints is admitted only after QMBL has re-evaluated the released state behind it",
+    "(RULES.md section 8.3); such rows are marked unpublished.",
     "",
     "## Pages",
     ...(OPEN_PROBLEMS ? openProblemsLlms(OPEN_PROBLEMS) : []),
@@ -1215,6 +1224,7 @@ function llmsTxt() {
     `- [Rules](${RULES}): what counts as a record, ties, provenance, objections.`,
     `- [Data](${DATA}): row format, units and conventions, error metrics, defects.`,
     "- [Contribute](https://qmbl.org/contribute/): corrections, missing results, missing error bars.",
+    `- [CONTRIBUTING.md](${REPO}/blob/main/CONTRIBUTING.md): how people and AI systems submit, including through the GitHub API.`,
     "",
     "## Data",
     "- [Full dump](https://qmbl.org/api/qmbl.json): every instance and row in one JSON file.",

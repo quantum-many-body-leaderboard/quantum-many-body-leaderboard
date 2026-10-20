@@ -1,0 +1,179 @@
+name: New unpublished result
+description: Add an energy that no paper prints, with the code and trained state that let QMBL re-evaluate it.
+title: "[new unpublished result] "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One energy per issue. QMBL re-runs your evaluation script with a new seed, within one
+        GPU-hour, and accepts the energy when the two agree within three combined error bars
+        ([rules §8.3](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#83-unpublished-results)). Code and state need a licence that lets
+        QMBL re-run them and keep a copy. The same rules apply to people and AI systems.
+
+  - type: input
+    id: instance
+    attributes:
+      label: Instance
+      description: The instance id as shown on qmbl.org or in `data/`.
+      placeholder: J1J2/square_100_P_0.5
+    validations:
+      required: true
+
+  - type: input
+    id: energy
+    attributes:
+      label: Energy
+      description: The energy with its error bar, as your sampling log reports it.
+      placeholder: "-0.4976939(2)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: energy_unit
+    attributes:
+      label: What the printed energy is
+      description: Select the convention the paper uses. QMBL converts it to its stored convention ([units](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/DATA.md#units-and-conventions)).
+      options:
+        - per site, spin S·S convention
+        - per site, Pauli σ·σ convention
+        - total, spin S·S convention
+        - total, Pauli σ·σ convention
+        - per site (fermion model)
+        - total (fermion model)
+        - other (explain under Notes)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sigma_meaning
+    attributes:
+      label: What the error bar means
+      options:
+        - standard error of the mean
+        - standard deviation
+        - confidence-interval half-width
+        - upper bound on the error
+        - no error bar printed
+        - not stated in the paper
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sampled
+    attributes:
+      label: Is the energy a Monte Carlo estimate?
+      options:
+        - "yes"
+        - "no"
+        - not stated
+    validations:
+      required: true
+
+  - type: dropdown
+    id: bound_type
+    attributes:
+      label: bound_type
+      description: "What kind of number it is ([rules §4](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#4-bound_type)). variational: an achieved energy of a variational state (VMC, NQS, DMRG at a stated bond dimension, PEPS). projected: fixed-node, constrained-path or GFMC on a trial state. extrapolated: zero-variance or bond-dimension extrapolation. approximate: a method that converges to a fixed approximation, not to the exact energy (RPA, MP2, ring- or ladder-only CCD, density functionals). exact: exact diagonalization, or sign-problem-free QMC, which reads exact (stochastic) and needs an error bar."
+      options:
+        - variational
+        - projected
+        - extrapolated
+        - approximate
+        - exact
+        - not sure
+    validations:
+      required: true
+
+  - type: input
+    id: method
+    attributes:
+      label: Method as published
+      description: The method string exactly as the paper prints it.
+      placeholder: "CNN-MPS (h,D,l)=(32,20,20), Marshall sign transformation"
+    validations:
+      required: true
+
+  - type: input
+    id: code
+    attributes:
+      label: Code
+      description: Public repository URL.
+      placeholder: "https://github.com/<owner>/<repo>"
+    validations:
+      required: true
+
+  - type: input
+    id: commit
+    attributes:
+      label: Commit
+      description: The commit the run used.
+      placeholder: "3f2c9e1"
+    validations:
+      required: true
+
+  - type: input
+    id: checkpoint
+    attributes:
+      label: Trained state
+      description: Download URL of the checkpoint at a fixed version, for example a GitHub release asset.
+      placeholder: "https://github.com/<owner>/<repo>/releases/download/v1.0/state.msgpack"
+    validations:
+      required: true
+
+  - type: textarea
+    id: evaluation
+    attributes:
+      label: Evaluation command
+      description: The exact command that loads the state and samples its energy, and the environment it needs (requirements file, versions).
+      placeholder: "pip install -r requirements.txt && python evaluate.py --state state.msgpack --samples 1048576"
+    validations:
+      required: true
+
+  - type: input
+    id: log
+    attributes:
+      label: Sampling log
+      description: URL of the log of the run that produced the energy.
+    validations:
+      required: true
+
+  - type: textarea
+    id: compute
+    attributes:
+      label: What it cost
+      description: GPU or CPU hours with the device, and parameter count, samples and iterations if you know them.
+      placeholder: "120 GPU-hours on NVIDIA H100; 2.1M parameters, 8192 samples, 20000 iterations"
+    validations:
+      required: true
+
+  - type: input
+    id: licence
+    attributes:
+      label: Licence of code and state
+      placeholder: "Apache-2.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Symmetry sector, projections, anything that makes this number differ from others on the instance.
+
+  - type: dropdown
+    id: submitted_by
+    attributes:
+      label: Who made this submission (optional)
+      description: An AI system may submit under the same rules ([CONTRIBUTING.md](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/CONTRIBUTING.md#ai-systems)). This is recorded on the row and is not a reason to reject it.
+      options:
+        - a person
+        - an AI system, checked by a person
+        - an AI system, not checked by a person
+
+  - type: input
+    id: system
+    attributes:
+      label: AI system (optional)
+      description: Model name and version, if an AI system made the submission.
+      placeholder: "model name, version"
