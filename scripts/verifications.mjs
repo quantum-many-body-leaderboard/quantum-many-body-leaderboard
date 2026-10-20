@@ -22958,4 +22958,10488 @@ export const VERIFICATIONS = [
     "source_entry": "JP2-arxiv-2601-20189 (ambiguous, journal misprint); ruling 2026-10-15",
     "journal": true
   },
+  // qmbl-verify 2026-10-19 (passes 2026-10-16 to 10-19), applied 2026-10-20.
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.63801941
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column lmCCD; sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.627 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.627) = 1496.638019406; stored 1496.63801941 (diff 4.1e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#0"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.60601941
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column mCCD; sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.659 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.659) = 1496.606019406; stored 1496.60601941 (diff 4.1e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#1"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.6020194
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column CCD; sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.663 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.663) = 1496.602019406; stored 1496.6020194 (diff -5.9e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#2"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.58701941
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column rmCCD; sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.678 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.678) = 1496.587019406; stored 1496.58701941 (diff 4.1e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#3"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.56601941
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column rxmCCD; sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.699 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.699) = 1496.566019406; stored 1496.56601941 (diff 4.1e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#4"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.6070194
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column d+S (KS); sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.658 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.658) = 1496.607019406; stored 1496.6070194 (diff -5.9e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#5"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.27001941
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column dRPA (KS); sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.995 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.995) = 1496.270019406; stored 1496.27001941 (diff 4.1e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#6"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.6300194
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column d+S (HF); sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.635 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.635) = 1496.630019406; stored 1496.6300194 (diff -5.9e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#7"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 1496.30401941
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.1, column dRPA (HF); sources/1310.6806v2.txt line 484",
+   "reported_as": "E_c = -0.961 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.1) + E_c = 14 * 106.94750138613233 + (-0.961) = 1496.304019406; stored 1496.30401941 (diff 4.1e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#8"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.73400599
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column lmCCD; sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.579 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.579) = 355.734005989; stored 355.73400599 (diff 1.1e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#9"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.679005989
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column mCCD; sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.634 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.634) = 355.679005989; stored 355.679005989 (diff 9.5e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#10"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.670005989
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column CCD; sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.643 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.643) = 355.670005989; stored 355.670005989 (diff 9.5e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#11"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.641005989
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column rmCCD; sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.672 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.672) = 355.641005989; stored 355.641005989 (diff 9.5e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#12"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.600005989
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column rxmCCD; sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.713 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.713) = 355.600005989; stored 355.600005989 (diff 9.5e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#13"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.67800599
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column d+S (KS); sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.635 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.635) = 355.678005989; stored 355.67800599 (diff 1.1e-9)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#14"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.350005989
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column dRPA (KS); sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.963 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.963) = 355.350005989; stored 355.350005989 (diff 9.5e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#15"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.719005989
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column d+S (HF); sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.594 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.594) = 355.719005989; stored 355.719005989 (diff 9.5e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#16"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.2",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 355.411005989
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.2, column dRPA (HF); sources/1310.6806v2.txt line 485",
+   "reported_as": "E_c = -0.902 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.2) + E_c = 14 * 25.45092899920751 + (-0.902) = 355.411005989; stored 355.411005989 (diff 9.5e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#17"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.821892056
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column lmCCD; sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.538 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.538) = 149.821892056; stored 149.821892056 (diff -1.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#18"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.748892056
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column mCCD; sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.611 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.611) = 149.748892056; stored 149.748892056 (diff -1.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#19"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.735892057
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column CCD; sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.624 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.624) = 149.735892056; stored 149.735892057 (diff 8.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#20"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.694892056
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column rmCCD; sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.665 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.665) = 149.694892056; stored 149.694892056 (diff -1.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#21"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.631892056
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column rxmCCD; sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.728 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.728) = 149.631892056; stored 149.631892056 (diff -1.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#22"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.745892057
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column d+S (KS); sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.614 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.614) = 149.745892056; stored 149.745892057 (diff 8.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#23"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.424892056
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column dRPA (KS); sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.935 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.935) = 149.424892056; stored 149.424892056 (diff -1.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#24"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.800892056
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column d+S (HF); sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.559 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.559) = 149.800892056; stored 149.800892056 (diff -1.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#25"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.3",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 149.507892057
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.3, column dRPA (HF); sources/1310.6806v2.txt line 486",
+   "reported_as": "E_c = -0.852 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.3) + E_c = 14 * 10.739992289725304 + (-0.852) = 149.507892056; stored 149.507892057 (diff 8.5e-10)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#26"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.5736270659
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column lmCCD; sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.503 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.503) = 79.573627066; stored 79.5736270659 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#27"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.487627066
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column mCCD; sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.589 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.589) = 79.487627066; stored 79.487627066 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#28"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.4716270659
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column CCD; sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.605 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.605) = 79.471627066; stored 79.4716270659 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#29"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.418627066
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column rmCCD; sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.658 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.658) = 79.418627066; stored 79.418627066 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#30"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.333627066
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column rxmCCD; sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.743 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.743) = 79.333627066; stored 79.333627066 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#31"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.481627066
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column d+S (KS); sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.595 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.595) = 79.481627066; stored 79.481627066 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#32"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.166627066
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column dRPA (KS); sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.910 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.910) = 79.166627066; stored 79.166627066 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#33"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.5486270659
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column d+S (HF); sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.528 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.528) = 79.548627066; stored 79.5486270659 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#34"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.4",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 79.2686270659
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.4, column dRPA (HF); sources/1310.6806v2.txt line 487",
+   "reported_as": "E_c = -0.808 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.4) + E_c = 14 * 5.7197590761390895 + (-0.808) = 79.268627066; stored 79.2686270659 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#35"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.8965215042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column lmCCD; sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.472 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.472) = 47.896521504; stored 47.8965215042 (diff 3.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#36"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.7995215041
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column mCCD; sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.569 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.569) = 47.799521504; stored 47.7995215041 (diff -9.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#37"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.7805215042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column CCD; sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.588 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.588) = 47.780521504; stored 47.7805215042 (diff 3.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#38"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.7175215042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column rmCCD; sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.651 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.651) = 47.717521504; stored 47.7175215042 (diff 3.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#39"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.6105215041
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column rxmCCD; sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.758 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.758) = 47.610521504; stored 47.6105215041 (diff -9.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#40"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.7915215042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column d+S (KS); sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.577 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.577) = 47.791521504; stored 47.7915215042 (diff 3.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#41"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.4825215042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column dRPA (KS); sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.886 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.886) = 47.482521504; stored 47.4825215042 (diff 3.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#42"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.8665215042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column d+S (HF); sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.502 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.502) = 47.866521504; stored 47.8665215042 (diff 3.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#43"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 47.5995215042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.5, column dRPA (HF); sources/1310.6806v2.txt line 488",
+   "reported_as": "E_c = -0.769 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.5) + E_c = 14 * 3.454894393156926 + (-0.769) = 47.599521504; stored 47.5995215042 (diff 3.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#44"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 31.1438900598
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column lmCCD; sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.445 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.445) = 31.143890060; stored 31.1438900598 (diff -5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#45"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 31.0398900599
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column mCCD; sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.549 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.549) = 31.039890060; stored 31.0398900599 (diff 4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#46"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 31.0168900598
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column CCD; sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.572 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.572) = 31.016890060; stored 31.0168900598 (diff -5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#47"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 30.9458900598
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column rmCCD; sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.643 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.643) = 30.945890060; stored 30.9458900598 (diff -5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#48"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 30.8148900598
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column rxmCCD; sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.774 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.774) = 30.814890060; stored 30.8148900598 (diff -5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#49"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 31.0278900599
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column d+S (KS); sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.561 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.561) = 31.027890060; stored 31.0278900599 (diff 4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#50"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 30.7238900598
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column dRPA (KS); sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.865 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.865) = 30.723890060; stored 30.7238900598 (diff -5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#51"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 31.1108900599
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column d+S (HF); sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.478 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.478) = 31.110890060; stored 31.1108900599 (diff 4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#52"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.6",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 30.8538900599
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.6, column dRPA (HF); sources/1310.6806v2.txt line 489",
+   "reported_as": "E_c = -0.735 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.6) + E_c = 14 * 2.2563492899894677 + (-0.735) = 30.853890060; stored 30.8538900599 (diff 4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#53"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 21.3175111572
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column lmCCD; sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.421 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.421) = 21.317511157; stored 21.3175111572 (diff -3.4e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#54"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 21.2075111573
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column mCCD; sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.531 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.531) = 21.207511157; stored 21.2075111573 (diff 6.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#55"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 21.1825111572
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column CCD; sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.556 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.556) = 21.182511157; stored 21.1825111572 (diff -3.4e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#56"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 21.1025111573
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column rmCCD; sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.636 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.636) = 21.102511157; stored 21.1025111573 (diff 6.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#57"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 20.9485111573
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column rxmCCD; sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.790 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.790) = 20.948511157; stored 20.9485111573 (diff 6.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#58"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 21.1915111572
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column d+S (KS); sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.547 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.547) = 21.191511157; stored 21.1915111572 (diff -3.4e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#59"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 20.8935111573
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column dRPA (KS); sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.845 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.845) = 20.893511157; stored 20.8935111573 (diff 6.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#60"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 21.2815111572
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column d+S (HF); sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.457 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.457) = 21.281511157; stored 21.2815111572 (diff -3.4e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#61"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.7",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 21.0335111573
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.7, column dRPA (HF); sources/1310.6806v2.txt line 490",
+   "reported_as": "E_c = -0.705 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.7) + E_c = 14 * 1.5527507969452774 + (-0.705) = 21.033511157; stored 21.0335111573 (diff 6.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#62"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 15.1183445508
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column lmCCD; sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.400 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.400) = 15.118344551; stored 15.1183445508 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#63"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 15.0033445509
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column mCCD; sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.515 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.515) = 15.003344551; stored 15.0033445509 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#64"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 14.9773445508
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column CCD; sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.541 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.541) = 14.977344551; stored 14.9773445508 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#65"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 14.8903445509
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column rmCCD; sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.628 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.628) = 14.890344551; stored 14.8903445509 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#66"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 14.7113445508
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column rxmCCD; sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.807 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.807) = 14.711344551; stored 14.7113445508 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#67"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 14.9853445508
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column d+S (KS); sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.533 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.533) = 14.985344551; stored 14.9853445508 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#68"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 14.6913445508
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column dRPA (KS); sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.827 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.827) = 14.691344551; stored 14.6913445508 (diff -4.7e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#69"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 15.0803445509
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column d+S (HF); sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.438 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.438) = 15.080344551; stored 15.0803445509 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#70"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.8",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 14.8413445509
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.8, column dRPA (HF); sources/1310.6806v2.txt line 491",
+   "reported_as": "E_c = -0.677 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.8) + E_c = 14 * 1.1084531822033783 + (-0.677) = 14.841344551; stored 14.8413445509 (diff 5.3e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#71"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.9923587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column lmCCD; sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.380 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.380) = 10.992358714; stored 10.9923587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#72"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.8733587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column mCCD; sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.499 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.499) = 10.873358714; stored 10.8733587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#73"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.8453587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column CCD; sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.527 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.527) = 10.845358714; stored 10.8453587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#74"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.7513587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column rmCCD; sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.621 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.621) = 10.751358714; stored 10.7513587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#75"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.5483587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column rxmCCD; sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.824 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.824) = 10.548358714; stored 10.5483587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#76"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.8513587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column d+S (KS); sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.521 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.521) = 10.851358714; stored 10.8513587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#77"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.5633587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column dRPA (KS); sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.809 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.809) = 10.563358714; stored 10.5633587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#78"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.9513587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column d+S (HF); sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.421 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.421) = 10.951358714; stored 10.9513587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#79"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.9",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 10.7203587136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=0.9, column dRPA (HF); sources/1310.6806v2.txt line 492",
+   "reported_as": "E_c = -0.652 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 0.9) + E_c = 14 * 0.8123113366878252 + (-0.652) = 10.720358714; stored 10.7203587136 (diff -3.0e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#80"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 8.12848060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column lmCCD; sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.363 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.363) = 8.128480604; stored 8.12848060354 (diff 2.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#81"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 8.00748060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column mCCD; sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.484 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.484) = 8.007480604; stored 8.00748060354 (diff 2.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#82"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 7.97748060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column CCD; sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.514 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.514) = 7.977480604; stored 7.97748060354 (diff 2.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#83"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 7.87848060353
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column rmCCD; sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.613 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.613) = 7.878480604; stored 7.87848060353 (diff -7.6e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#84"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 7.65048060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column rxmCCD; sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.841 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.841) = 7.650480604; stored 7.65048060354 (diff 2.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#85"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 7.98248060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column d+S (KS); sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.509 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.509) = 7.982480604; stored 7.98248060354 (diff 2.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#86"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 7.69748060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column dRPA (KS); sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.794 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.794) = 7.697480604; stored 7.69748060354 (diff 2.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#87"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 8.08548060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column d+S (HF); sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.406 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.406) = 8.085480604; stored 8.08548060354 (diff 2.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#88"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 7.86248060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=1, column dRPA (HF); sources/1310.6806v2.txt line 493",
+   "reported_as": "E_c = -0.629 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 1) + E_c = 14 * 0.6065343288241165 + (-0.629) = 7.862480604; stored 7.86248060354 (diff 2.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#89"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.636202153017
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column lmCCD; sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.073 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.073) = -0.636202153; stored -0.636202153017 (diff -2.9e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#90"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.699202153017
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column mCCD; sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.136 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.136) = -0.699202153; stored -0.699202153017 (diff -2.9e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#91"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.719202153018
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column CCD; sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.156 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.156) = -0.719202153; stored -0.719202153018 (diff -1.3e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#92"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.805202153017
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column rmCCD; sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.242 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.242) = -0.805202153; stored -0.805202153017 (diff -2.9e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#93"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.10820215302
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column rxmCCD; sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.545 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.545) = -1.108202153; stored -1.10820215302 (diff -3.3e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#94"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.781202153017
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column d+S (KS); sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.218 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.218) = -0.781202153; stored -0.781202153017 (diff -2.9e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#95"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.936202153018
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column dRPA (KS); sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.373 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.373) = -0.936202153; stored -0.936202153018 (diff -1.3e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#96"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.675202153017
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column d+S (HF); sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.112 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.112) = -0.675202153; stored -0.675202153017 (diff -2.9e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#97"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.744202153017
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=10, column dRPA (HF); sources/1310.6806v2.txt line 502",
+   "reported_as": "E_c = -0.181 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 10) + E_c = 14 * -0.040228725215479544 + (-0.181) = -0.744202153; stored -0.744202153017 (diff -2.9e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#98"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0784437174354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=100, column lmCCD; sources/1310.6806v2.txt line 512",
+   "reported_as": "E_c = -0.008 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 100) + E_c = 14 * -0.005031694102526864 + (-0.008) = -0.078443717; stored -0.0784437174354 (diff -2.4e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#99"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0884437174354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=100, column mCCD; sources/1310.6806v2.txt line 512",
+   "reported_as": "E_c = -0.018 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 100) + E_c = 14 * -0.005031694102526864 + (-0.018) = -0.088443717; stored -0.0884437174354 (diff -2.4e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#100"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0904437174354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=100, column CCD; sources/1310.6806v2.txt line 512",
+   "reported_as": "E_c = -0.020 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 100) + E_c = 14 * -0.005031694102526864 + (-0.020) = -0.090443717; stored -0.0904437174354 (diff -2.4e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#101"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.105443717435
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=100, column rmCCD; sources/1310.6806v2.txt line 512",
+   "reported_as": "E_c = -0.035 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 100) + E_c = 14 * -0.005031694102526864 + (-0.035) = -0.105443717; stored -0.105443717435 (diff 3.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#102"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.146443717435
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=100, column rxmCCD; sources/1310.6806v2.txt line 512",
+   "reported_as": "E_c = -0.076 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 100) + E_c = 14 * -0.005031694102526864 + (-0.076) = -0.146443717; stored -0.146443717435 (diff 3.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#103"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0864437174355
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=100, column d+S (HF); sources/1310.6806v2.txt line 512",
+   "reported_as": "E_c = -0.016 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 100) + E_c = 14 * -0.005031694102526864 + (-0.016) = -0.086443717; stored -0.0864437174355 (diff -1.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#104"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0974437174354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=100, column dRPA (HF); sources/1310.6806v2.txt line 512",
+   "reported_as": "E_c = -0.027 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 100) + E_c = 14 * -0.005031694102526864 + (-0.027) = -0.097443717; stored -0.0974437174354 (diff -2.4e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#105"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_15",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.461340946786
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=15, column lmCCD; sources/1310.6806v2.txt line 503",
+   "reported_as": "E_c = -0.051 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 15) + E_c = 14 * -0.02931006762755159 + (-0.051) = -0.461340947; stored -0.461340946786 (diff -2.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#106"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_15",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.590340946786
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=15, column rmCCD; sources/1310.6806v2.txt line 503",
+   "reported_as": "E_c = -0.180 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 15) + E_c = 14 * -0.02931006762755159 + (-0.180) = -0.590340947; stored -0.590340946786 (diff -2.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#107"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_15",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.812340946787
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=15, column rxmCCD; sources/1310.6806v2.txt line 503",
+   "reported_as": "E_c = -0.402 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 15) + E_c = 14 * -0.02931006762755159 + (-0.402) = -0.812340947; stored -0.812340946787 (diff -1.3e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#108"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_15",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.492340946786
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=15, column d+S (HF); sources/1310.6806v2.txt line 503",
+   "reported_as": "E_c = -0.082 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 15) + E_c = 14 * -0.02931006762755159 + (-0.082) = -0.492340947; stored -0.492340946786 (diff -2.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#109"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_15",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.545340946786
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=15, column dRPA (HF); sources/1310.6806v2.txt line 503",
+   "reported_as": "E_c = -0.135 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 15) + E_c = 14 * -0.02931006762755159 + (-0.135) = -0.545340947; stored -0.545340946786 (diff -2.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#110"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 0.0725452646292
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=2, column lmCCD; sources/1310.6806v2.txt line 494",
+   "reported_as": "E_c = -0.250 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 2) + E_c = 14 * 0.023038947473471762 + (-0.250) = 0.072545265; stored 0.0725452646292 (diff 6.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#111"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0864547353716
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=2, column CCD; sources/1310.6806v2.txt line 494",
+   "reported_as": "E_c = -0.409 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 2) + E_c = 14 * 0.023038947473471762 + (-0.409) = -0.086454735; stored -0.0864547353716 (diff -2.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#112"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.21445473537
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=2, column rmCCD; sources/1310.6806v2.txt line 494",
+   "reported_as": "E_c = -0.537 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 2) + E_c = 14 * 0.023038947473471762 + (-0.537) = -0.214454735; stored -0.21445473537 (diff 1.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#113"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.670454735371
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=2, column rxmCCD; sources/1310.6806v2.txt line 494",
+   "reported_as": "E_c = -0.993 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 2) + E_c = 14 * 0.023038947473471762 + (-0.993) = -0.670454735; stored -0.670454735371 (diff 4.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#114"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.100454735372
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=2, column d+S (KS); sources/1310.6806v2.txt line 494",
+   "reported_as": "E_c = -0.423 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 2) + E_c = 14 * 0.023038947473471762 + (-0.423) = -0.100454735; stored -0.100454735372 (diff -6.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#115"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.350454735371
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=2, column dRPA (KS); sources/1310.6806v2.txt line 494",
+   "reported_as": "E_c = -0.673 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 2) + E_c = 14 * 0.023038947473471762 + (-0.673) = -0.350454735; stored -0.350454735371 (diff 4.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#116"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 0.0215452646286
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=2, column d+S (HF); sources/1310.6806v2.txt line 494",
+   "reported_as": "E_c = -0.301 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 2) + E_c = 14 * 0.023038947473471762 + (-0.301) = 0.021545265; stored 0.0215452646286 (diff -4.7e-15)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#117"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.15145473537
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=2, column dRPA (HF); sources/1310.6806v2.txt line 494",
+   "reported_as": "E_c = -0.474 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 2) + E_c = 14 * 0.023038947473471762 + (-0.474) = -0.151454735; stored -0.15145473537 (diff 1.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#118"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.359833026879
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=20, column lmCCD; sources/1310.6806v2.txt line 504",
+   "reported_as": "E_c = -0.039 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 20) + E_c = 14 * -0.022916644777125635 + (-0.039) = -0.359833027; stored -0.359833026879 (diff 7.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#119"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.397833026879
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=20, column mCCD; sources/1310.6806v2.txt line 504",
+   "reported_as": "E_c = -0.077 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 20) + E_c = 14 * -0.022916644777125635 + (-0.077) = -0.397833027; stored -0.397833026879 (diff 7.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#120"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.40983302688
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=20, column CCD; sources/1310.6806v2.txt line 504",
+   "reported_as": "E_c = -0.089 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 20) + E_c = 14 * -0.022916644777125635 + (-0.089) = -0.409833027; stored -0.40983302688 (diff -2.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#121"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.464833026879
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=20, column rmCCD; sources/1310.6806v2.txt line 504",
+   "reported_as": "E_c = -0.144 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 20) + E_c = 14 * -0.022916644777125635 + (-0.144) = -0.464833027; stored -0.464833026879 (diff 7.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#122"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.639833026879
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=20, column rxmCCD; sources/1310.6806v2.txt line 504",
+   "reported_as": "E_c = -0.319 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 20) + E_c = 14 * -0.022916644777125635 + (-0.319) = -0.639833027; stored -0.639833026879 (diff 7.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#123"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.38683302688
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=20, column d+S (HF); sources/1310.6806v2.txt line 504",
+   "reported_as": "E_c = -0.066 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 20) + E_c = 14 * -0.022916644777125635 + (-0.066) = -0.386833027; stored -0.38683302688 (diff -2.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#124"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.42883302688
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=20, column dRPA (HF); sources/1310.6806v2.txt line 504",
+   "reported_as": "E_c = -0.108 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 20) + E_c = 14 * -0.022916644777125635 + (-0.108) = -0.428833027; stored -0.42883302688 (diff -2.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#125"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.847790942946
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=3, column lmCCD; sources/1310.6806v2.txt line 495",
+   "reported_as": "E_c = -0.191 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 3) + E_c = 14 * -0.04691363878181593 + (-0.191) = -0.847790943; stored -0.847790942946 (diff -5.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#126"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.995790942945
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=3, column CCD; sources/1310.6806v2.txt line 495",
+   "reported_as": "E_c = -0.339 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 3) + E_c = 14 * -0.04691363878181593 + (-0.339) = -0.995790943; stored -0.995790942945 (diff 4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#127"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.12579094295
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=3, column rmCCD; sources/1310.6806v2.txt line 495",
+   "reported_as": "E_c = -0.469 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 3) + E_c = 14 * -0.04691363878181593 + (-0.469) = -1.125790943; stored -1.12579094295 (diff -4.6e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#128"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.65079094295
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=3, column rxmCCD; sources/1310.6806v2.txt line 495",
+   "reported_as": "E_c = -0.994 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 3) + E_c = 14 * -0.04691363878181593 + (-0.994) = -1.650790943; stored -1.65079094295 (diff -4.6e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#129"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.02479094294
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=3, column d+S (KS); sources/1310.6806v2.txt line 495",
+   "reported_as": "E_c = -0.368 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 3) + E_c = 14 * -0.04691363878181593 + (-0.368) = -1.024790943; stored -1.02479094294 (diff 5.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#130"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.25279094294
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=3, column dRPA (KS); sources/1310.6806v2.txt line 495",
+   "reported_as": "E_c = -0.596 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 3) + E_c = 14 * -0.04691363878181593 + (-0.596) = -1.252790943; stored -1.25279094294 (diff 5.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#131"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.900790942946
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=3, column d+S (HF); sources/1310.6806v2.txt line 495",
+   "reported_as": "E_c = -0.244 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 3) + E_c = 14 * -0.04691363878181593 + (-0.244) = -0.900790943; stored -0.900790942946 (diff -5.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#132"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.04379094295
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=3, column dRPA (HF); sources/1310.6806v2.txt line 495",
+   "reported_as": "E_c = -0.387 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 3) + E_c = 14 * -0.04691363878181593 + (-0.387) = -1.043790943; stored -1.04379094295 (diff -4.6e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#133"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_30",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.24960689578
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=30, column lmCCD; sources/1310.6806v2.txt line 505",
+   "reported_as": "E_c = -0.027 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 30) + E_c = 14 * -0.01590049255572507 + (-0.027) = -0.249606896; stored -0.24960689578 (diff 1.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#134"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_30",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.27760689578
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=30, column mCCD; sources/1310.6806v2.txt line 505",
+   "reported_as": "E_c = -0.055 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 30) + E_c = 14 * -0.01590049255572507 + (-0.055) = -0.277606896; stored -0.27760689578 (diff 1.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#135"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_30",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.28460689578
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=30, column CCD; sources/1310.6806v2.txt line 505",
+   "reported_as": "E_c = -0.062 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 30) + E_c = 14 * -0.01590049255572507 + (-0.062) = -0.284606896; stored -0.28460689578 (diff 1.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#136"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_30",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.325606895781
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=30, column rmCCD; sources/1310.6806v2.txt line 505",
+   "reported_as": "E_c = -0.103 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 30) + E_c = 14 * -0.01590049255572507 + (-0.103) = -0.325606896; stored -0.325606895781 (diff -8.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#137"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_30",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.44960689578
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=30, column rxmCCD; sources/1310.6806v2.txt line 505",
+   "reported_as": "E_c = -0.227 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 30) + E_c = 14 * -0.01590049255572507 + (-0.227) = -0.449606896; stored -0.44960689578 (diff 1.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#138"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_30",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.269606895781
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=30, column d+S (HF); sources/1310.6806v2.txt line 505",
+   "reported_as": "E_c = -0.047 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 30) + E_c = 14 * -0.01590049255572507 + (-0.047) = -0.269606896; stored -0.269606895781 (diff -8.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#139"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_30",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.300606895781
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=30, column dRPA (HF); sources/1310.6806v2.txt line 505",
+   "reported_as": "E_c = -0.078 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 30) + E_c = 14 * -0.01590049255572507 + (-0.078) = -0.300606896; stored -0.300606895781 (diff -8.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#140"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_4",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.97452612697
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=4, column lmCCD; sources/1310.6806v2.txt line 496",
+   "reported_as": "E_c = -0.155 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 4) + E_c = 14 * -0.05853758049791078 + (-0.155) = -0.974526127; stored -0.97452612697 (diff 7.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#141"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_4",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.10952612697
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=4, column CCD; sources/1310.6806v2.txt line 496",
+   "reported_as": "E_c = -0.290 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 4) + E_c = 14 * -0.05853758049791078 + (-0.290) = -1.109526127; stored -1.10952612697 (diff 7.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#142"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_4",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.23452612697
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=4, column rmCCD; sources/1310.6806v2.txt line 496",
+   "reported_as": "E_c = -0.415 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 4) + E_c = 14 * -0.05853758049791078 + (-0.415) = -1.234526127; stored -1.23452612697 (diff 7.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#143"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_4",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.73652612697
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=4, column rxmCCD; sources/1310.6806v2.txt line 496",
+   "reported_as": "E_c = -0.917 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 4) + E_c = 14 * -0.05853758049791078 + (-0.917) = -1.736526127; stored -1.73652612697 (diff 7.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#144"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_4",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.14952612697
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=4, column d+S (KS); sources/1310.6806v2.txt line 496",
+   "reported_as": "E_c = -0.330 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 4) + E_c = 14 * -0.05853758049791078 + (-0.330) = -1.149526127; stored -1.14952612697 (diff 7.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#145"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_4",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.36052612697
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=4, column dRPA (KS); sources/1310.6806v2.txt line 496",
+   "reported_as": "E_c = -0.541 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 4) + E_c = 14 * -0.05853758049791078 + (-0.541) = -1.360526127; stored -1.36052612697 (diff 7.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#146"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_4",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.02552612697
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=4, column d+S (HF); sources/1310.6806v2.txt line 496",
+   "reported_as": "E_c = -0.206 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 4) + E_c = 14 * -0.05853758049791078 + (-0.206) = -1.025526127; stored -1.02552612697 (diff 7.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#147"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_4",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.14852612697
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=4, column dRPA (HF); sources/1310.6806v2.txt line 496",
+   "reported_as": "E_c = -0.329 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 4) + E_c = 14 * -0.05853758049791078 + (-0.329) = -1.148526127; stored -1.14852612697 (diff 7.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#148"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_40",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.190224501033
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=40, column lmCCD; sources/1310.6806v2.txt line 506",
+   "reported_as": "E_c = -0.020 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 40) + E_c = 14 * -0.012158892930909286 + (-0.020) = -0.190224501; stored -0.190224501033 (diff -2.7e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#149"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_40",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.212224501033
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=40, column mCCD; sources/1310.6806v2.txt line 506",
+   "reported_as": "E_c = -0.042 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 40) + E_c = 14 * -0.012158892930909286 + (-0.042) = -0.212224501; stored -0.212224501033 (diff -2.7e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#150"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_40",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.218224501033
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=40, column CCD; sources/1310.6806v2.txt line 506",
+   "reported_as": "E_c = -0.048 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 40) + E_c = 14 * -0.012158892930909286 + (-0.048) = -0.218224501; stored -0.218224501033 (diff -2.7e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#151"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_40",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.250224501033
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=40, column rmCCD; sources/1310.6806v2.txt line 506",
+   "reported_as": "E_c = -0.080 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 40) + E_c = 14 * -0.012158892930909286 + (-0.080) = -0.250224501; stored -0.250224501033 (diff -2.7e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#152"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_40",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.346224501032
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=40, column rxmCCD; sources/1310.6806v2.txt line 506",
+   "reported_as": "E_c = -0.176 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 40) + E_c = 14 * -0.012158892930909286 + (-0.176) = -0.346224501; stored -0.346224501032 (diff 7.3e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#153"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_40",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.207224501033
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=40, column d+S (HF); sources/1310.6806v2.txt line 506",
+   "reported_as": "E_c = -0.037 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 40) + E_c = 14 * -0.012158892930909286 + (-0.037) = -0.207224501; stored -0.207224501033 (diff -2.7e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#154"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_40",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.231224501032
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=40, column dRPA (HF); sources/1310.6806v2.txt line 506",
+   "reported_as": "E_c = -0.061 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 40) + E_c = 14 * -0.012158892930909286 + (-0.061) = -0.231224501; stored -0.231224501032 (diff 7.3e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#155"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.943548703062
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column lmCCD; sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.131 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.131) = -0.943548703; stored -0.943548703062 (diff 2.1e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#156"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.03554870306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column mCCD; sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.223 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.223) = -1.035548703; stored -1.03554870306 (diff 2.2e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#157"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.06554870306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column CCD; sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.253 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.253) = -1.065548703; stored -1.06554870306 (diff 2.2e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#158"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.18354870306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column rmCCD; sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.371 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.371) = -1.183548703; stored -1.18354870306 (diff 2.2e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#159"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.64554870306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column rxmCCD; sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.833 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.833) = -1.645548703; stored -1.64554870306 (diff 2.2e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#160"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.11354870306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column d+S (KS); sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.301 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.301) = -1.113548703; stored -1.11354870306 (diff 2.2e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#161"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.31154870306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column dRPA (KS); sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.499 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.499) = -1.311548703; stored -1.31154870306 (diff 2.2e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#162"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.992548703062
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column d+S (HF); sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.180 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.180) = -0.992548703; stored -0.992548703062 (diff 2.1e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#163"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.10054870306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=5, column dRPA (HF); sources/1310.6806v2.txt line 497",
+   "reported_as": "E_c = -0.288 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 5) + E_c = 14 * -0.058039193075872166 + (-0.288) = -1.100548703; stored -1.10054870306 (diff 2.2e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#164"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.153748878842
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=50, column lmCCD; sources/1310.6806v2.txt line 507",
+   "reported_as": "E_c = -0.016 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 50) + E_c = 14 * -0.009839205631502859 + (-0.016) = -0.153748879; stored -0.153748878842 (diff -9.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#165"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.171748878841
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=50, column mCCD; sources/1310.6806v2.txt line 507",
+   "reported_as": "E_c = -0.034 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 50) + E_c = 14 * -0.009839205631502859 + (-0.034) = -0.171748879; stored -0.171748878841 (diff 4.0e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#166"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.176748878841
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=50, column CCD; sources/1310.6806v2.txt line 507",
+   "reported_as": "E_c = -0.039 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 50) + E_c = 14 * -0.009839205631502859 + (-0.039) = -0.176748879; stored -0.176748878841 (diff 4.0e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#167"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.203748878841
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=50, column rmCCD; sources/1310.6806v2.txt line 507",
+   "reported_as": "E_c = -0.066 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 50) + E_c = 14 * -0.009839205631502859 + (-0.066) = -0.203748879; stored -0.203748878841 (diff 4.0e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#168"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.281748878841
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=50, column rxmCCD; sources/1310.6806v2.txt line 507",
+   "reported_as": "E_c = -0.144 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 50) + E_c = 14 * -0.009839205631502859 + (-0.144) = -0.281748879; stored -0.281748878841 (diff 4.0e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#169"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.167748878842
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=50, column d+S (HF); sources/1310.6806v2.txt line 507",
+   "reported_as": "E_c = -0.030 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 50) + E_c = 14 * -0.009839205631502859 + (-0.030) = -0.167748879; stored -0.167748878842 (diff -9.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#170"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.188748878842
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=50, column dRPA (HF); sources/1310.6806v2.txt line 507",
+   "reported_as": "E_c = -0.051 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 50) + E_c = 14 * -0.009839205631502859 + (-0.051) = -0.188748879; stored -0.188748878842 (diff -9.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#171"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_6",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.877306031155
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=6, column lmCCD; sources/1310.6806v2.txt line 498",
+   "reported_as": "E_c = -0.113 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 6) + E_c = 14 * -0.054593287939639815 + (-0.113) = -0.877306031; stored -0.877306031155 (diff -4.3e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#172"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_6",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.989306031154
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=6, column CCD; sources/1310.6806v2.txt line 498",
+   "reported_as": "E_c = -0.225 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 6) + E_c = 14 * -0.054593287939639815 + (-0.225) = -0.989306031; stored -0.989306031154 (diff 9.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#173"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_6",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.09930603115
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=6, column rmCCD; sources/1310.6806v2.txt line 498",
+   "reported_as": "E_c = -0.335 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 6) + E_c = 14 * -0.054593287939639815 + (-0.335) = -1.099306031; stored -1.09930603115 (diff 5.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#174"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_6",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.52030603116
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=6, column rxmCCD; sources/1310.6806v2.txt line 498",
+   "reported_as": "E_c = -0.756 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 6) + E_c = 14 * -0.054593287939639815 + (-0.756) = -1.520306031; stored -1.52030603116 (diff -5.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#175"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_6",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.04230603115
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=6, column d+S (KS); sources/1310.6806v2.txt line 498",
+   "reported_as": "E_c = -0.278 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 6) + E_c = 14 * -0.054593287939639815 + (-0.278) = -1.042306031; stored -1.04230603115 (diff 5.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#176"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_6",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.22830603115
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=6, column dRPA (KS); sources/1310.6806v2.txt line 498",
+   "reported_as": "E_c = -0.464 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 6) + E_c = 14 * -0.054593287939639815 + (-0.464) = -1.228306031; stored -1.22830603115 (diff 5.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#177"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_6",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.923306031154
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=6, column d+S (HF); sources/1310.6806v2.txt line 498",
+   "reported_as": "E_c = -0.159 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 6) + E_c = 14 * -0.054593287939639815 + (-0.159) = -0.923306031; stored -0.923306031154 (diff 9.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#178"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_6",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.02030603115
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=6, column dRPA (HF); sources/1310.6806v2.txt line 498",
+   "reported_as": "E_c = -0.256 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 6) + E_c = 14 * -0.054593287939639815 + (-0.256) = -1.020306031; stored -1.02030603115 (diff 5.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#179"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_60",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.129662553487
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=60, column lmCCD; sources/1310.6806v2.txt line 508",
+   "reported_as": "E_c = -0.014 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 60) + E_c = 14 * -0.008261610963349852 + (-0.014) = -0.129662553; stored -0.129662553487 (diff -1.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#180"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_60",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.144662553487
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=60, column mCCD; sources/1310.6806v2.txt line 508",
+   "reported_as": "E_c = -0.029 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 60) + E_c = 14 * -0.008261610963349852 + (-0.029) = -0.144662553; stored -0.144662553487 (diff -1.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#181"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_60",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.148662553487
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=60, column CCD; sources/1310.6806v2.txt line 508",
+   "reported_as": "E_c = -0.033 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 60) + E_c = 14 * -0.008261610963349852 + (-0.033) = -0.148662553; stored -0.148662553487 (diff -1.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#182"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_60",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.171662553486
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=60, column rmCCD; sources/1310.6806v2.txt line 508",
+   "reported_as": "E_c = -0.056 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 60) + E_c = 14 * -0.008261610963349852 + (-0.056) = -0.171662553; stored -0.171662553486 (diff 9.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#183"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_60",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.237662553486
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=60, column rxmCCD; sources/1310.6806v2.txt line 508",
+   "reported_as": "E_c = -0.122 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 60) + E_c = 14 * -0.008261610963349852 + (-0.122) = -0.237662553; stored -0.237662553486 (diff 9.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#184"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_60",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.141662553487
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=60, column d+S (HF); sources/1310.6806v2.txt line 508",
+   "reported_as": "E_c = -0.026 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 60) + E_c = 14 * -0.008261610963349852 + (-0.026) = -0.141662553; stored -0.141662553487 (diff -1.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#185"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_60",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.158662553487
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=60, column dRPA (HF); sources/1310.6806v2.txt line 508",
+   "reported_as": "E_c = -0.043 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 60) + E_c = 14 * -0.008261610963349852 + (-0.043) = -0.158662553; stored -0.158662553487 (diff -1.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#186"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_7",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.807496258502
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=7, column lmCCD; sources/1310.6806v2.txt line 499",
+   "reported_as": "E_c = -0.099 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 7) + E_c = 14 * -0.050606875607291144 + (-0.099) = -0.807496259; stored -0.807496258502 (diff 7.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#187"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_7",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.911496258502
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=7, column CCD; sources/1310.6806v2.txt line 499",
+   "reported_as": "E_c = -0.203 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 7) + E_c = 14 * -0.050606875607291144 + (-0.203) = -0.911496259; stored -0.911496258502 (diff 7.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#188"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_7",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.0134962585
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=7, column rmCCD; sources/1310.6806v2.txt line 499",
+   "reported_as": "E_c = -0.305 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 7) + E_c = 14 * -0.050606875607291144 + (-0.305) = -1.013496259; stored -1.0134962585 (diff 2.1e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#189"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_7",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.3994962585
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=7, column rxmCCD; sources/1310.6806v2.txt line 499",
+   "reported_as": "E_c = -0.691 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 7) + E_c = 14 * -0.050606875607291144 + (-0.691) = -1.399496259; stored -1.3994962585 (diff 2.1e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#190"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_7",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.967496258502
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=7, column d+S (KS); sources/1310.6806v2.txt line 499",
+   "reported_as": "E_c = -0.259 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 7) + E_c = 14 * -0.050606875607291144 + (-0.259) = -0.967496259; stored -0.967496258502 (diff 7.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#191"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_7",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.1444962585
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=7, column dRPA (KS); sources/1310.6806v2.txt line 499",
+   "reported_as": "E_c = -0.436 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 7) + E_c = 14 * -0.050606875607291144 + (-0.436) = -1.144496259; stored -1.1444962585 (diff 2.1e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#192"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_7",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.852496258502
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=7, column d+S (HF); sources/1310.6806v2.txt line 499",
+   "reported_as": "E_c = -0.144 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 7) + E_c = 14 * -0.050606875607291144 + (-0.144) = -0.852496259; stored -0.852496258502 (diff 7.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#193"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_7",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.940496258502
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=7, column dRPA (HF); sources/1310.6806v2.txt line 499",
+   "reported_as": "E_c = -0.232 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 7) + E_c = 14 * -0.050606875607291144 + (-0.232) = -0.940496259; stored -0.940496258502 (diff 7.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#194"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_70",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.111673099592
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=70, column lmCCD; sources/1310.6806v2.txt line 509",
+   "reported_as": "E_c = -0.012 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 70) + E_c = 14 * -0.0071195071137473 + (-0.012) = -0.111673100; stored -0.111673099592 (diff 4.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#195"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_70",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.124673099592
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=70, column mCCD; sources/1310.6806v2.txt line 509",
+   "reported_as": "E_c = -0.025 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 70) + E_c = 14 * -0.0071195071137473 + (-0.025) = -0.124673100; stored -0.124673099592 (diff 4.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#196"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_70",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.127673099593
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=70, column CCD; sources/1310.6806v2.txt line 509",
+   "reported_as": "E_c = -0.028 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 70) + E_c = 14 * -0.0071195071137473 + (-0.028) = -0.127673100; stored -0.127673099593 (diff -5.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#197"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_70",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.148673099592
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=70, column rmCCD; sources/1310.6806v2.txt line 509",
+   "reported_as": "E_c = -0.049 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 70) + E_c = 14 * -0.0071195071137473 + (-0.049) = -0.148673100; stored -0.148673099592 (diff 4.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#198"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_70",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.205673099593
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=70, column rxmCCD; sources/1310.6806v2.txt line 509",
+   "reported_as": "E_c = -0.106 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 70) + E_c = 14 * -0.0071195071137473 + (-0.106) = -0.205673100; stored -0.205673099593 (diff -5.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#199"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_70",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.122673099593
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=70, column d+S (HF); sources/1310.6806v2.txt line 509",
+   "reported_as": "E_c = -0.023 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 70) + E_c = 14 * -0.0071195071137473 + (-0.023) = -0.122673100; stored -0.122673099593 (diff -5.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#200"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_70",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.137673099593
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=70, column dRPA (HF); sources/1310.6806v2.txt line 509",
+   "reported_as": "E_c = -0.038 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 70) + E_c = 14 * -0.0071195071137473 + (-0.038) = -0.137673100; stored -0.137673099593 (diff -5.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#201"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_8",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.743962753307
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=8, column lmCCD; sources/1310.6806v2.txt line 500",
+   "reported_as": "E_c = -0.089 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 8) + E_c = 14 * -0.04678305380761705 + (-0.089) = -0.743962753; stored -0.743962753307 (diff -3.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#202"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_8",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.838962753307
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=8, column CCD; sources/1310.6806v2.txt line 500",
+   "reported_as": "E_c = -0.184 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 8) + E_c = 14 * -0.04678305380761705 + (-0.184) = -0.838962753; stored -0.838962753307 (diff -3.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#203"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_8",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.935962753306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=8, column rmCCD; sources/1310.6806v2.txt line 500",
+   "reported_as": "E_c = -0.281 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 8) + E_c = 14 * -0.04678305380761705 + (-0.281) = -0.935962753; stored -0.935962753306 (diff 6.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#204"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_8",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.28896275331
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=8, column rxmCCD; sources/1310.6806v2.txt line 500",
+   "reported_as": "E_c = -0.634 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 8) + E_c = 14 * -0.04678305380761705 + (-0.634) = -1.288962753; stored -1.28896275331 (diff -3.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#205"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_8",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.897962753306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=8, column d+S (KS); sources/1310.6806v2.txt line 500",
+   "reported_as": "E_c = -0.243 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 8) + E_c = 14 * -0.04678305380761705 + (-0.243) = -0.897962753; stored -0.897962753306 (diff 6.4e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#206"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_8",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.06696275331
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=8, column dRPA (KS); sources/1310.6806v2.txt line 500",
+   "reported_as": "E_c = -0.412 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 8) + E_c = 14 * -0.04678305380761705 + (-0.412) = -1.066962753; stored -1.06696275331 (diff -3.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#207"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_8",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.785962753307
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=8, column d+S (HF); sources/1310.6806v2.txt line 500",
+   "reported_as": "E_c = -0.131 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 8) + E_c = 14 * -0.04678305380761705 + (-0.131) = -0.785962753; stored -0.785962753307 (diff -3.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#208"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_8",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.866962753307
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=8, column dRPA (HF); sources/1310.6806v2.txt line 500",
+   "reported_as": "E_c = -0.212 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 8) + E_c = 14 * -0.04678305380761705 + (-0.212) = -0.866962753; stored -0.866962753307 (diff -3.6e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#209"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_80",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0975642474146
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=80, column lmCCD; sources/1310.6806v2.txt line 510",
+   "reported_as": "E_c = -0.010 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 80) + E_c = 14 * -0.006254589101041261 + (-0.010) = -0.097564247; stored -0.0975642474146 (diff -2.2e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#210"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_80",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.109564247415
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=80, column mCCD; sources/1310.6806v2.txt line 510",
+   "reported_as": "E_c = -0.022 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 80) + E_c = 14 * -0.006254589101041261 + (-0.022) = -0.109564247; stored -0.109564247415 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#211"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_80",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.112564247415
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=80, column CCD; sources/1310.6806v2.txt line 510",
+   "reported_as": "E_c = -0.025 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 80) + E_c = 14 * -0.006254589101041261 + (-0.025) = -0.112564247; stored -0.112564247415 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#212"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_80",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.130564247415
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=80, column rmCCD; sources/1310.6806v2.txt line 510",
+   "reported_as": "E_c = -0.043 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 80) + E_c = 14 * -0.006254589101041261 + (-0.043) = -0.130564247; stored -0.130564247415 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#213"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_80",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.181564247414
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=80, column rxmCCD; sources/1310.6806v2.txt line 510",
+   "reported_as": "E_c = -0.094 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 80) + E_c = 14 * -0.006254589101041261 + (-0.094) = -0.181564247; stored -0.181564247414 (diff 5.8e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#214"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_80",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.107564247415
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=80, column d+S (HF); sources/1310.6806v2.txt line 510",
+   "reported_as": "E_c = -0.020 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 80) + E_c = 14 * -0.006254589101041261 + (-0.020) = -0.107564247; stored -0.107564247415 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#215"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_80",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.121564247415
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=80, column dRPA (HF); sources/1310.6806v2.txt line 510",
+   "reported_as": "E_c = -0.034 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 80) + E_c = 14 * -0.006254589101041261 + (-0.034) = -0.121564247; stored -0.121564247415 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#216"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_9",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.686406367366
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=9, column lmCCD; sources/1310.6806v2.txt line 501",
+   "reported_as": "E_c = -0.080 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 9) + E_c = 14 * -0.043314740526144736 + (-0.080) = -0.686406367; stored -0.686406367366 (diff 2.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#217"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_9",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.775406367365
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=9, column CCD; sources/1310.6806v2.txt line 501",
+   "reported_as": "E_c = -0.169 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 9) + E_c = 14 * -0.043314740526144736 + (-0.169) = -0.775406367; stored -0.775406367365 (diff 1.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#218"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_9",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.866406367365
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=9, column rmCCD; sources/1310.6806v2.txt line 501",
+   "reported_as": "E_c = -0.260 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 9) + E_c = 14 * -0.043314740526144736 + (-0.260) = -0.866406367; stored -0.866406367365 (diff 1.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#219"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_9",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.19240636736
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=9, column rxmCCD; sources/1310.6806v2.txt line 501",
+   "reported_as": "E_c = -0.586 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 9) + E_c = 14 * -0.043314740526144736 + (-0.586) = -1.192406367; stored -1.19240636736 (diff 6.0e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#220"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_9",
+    "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.836406367366
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=9, column d+S (KS); sources/1310.6806v2.txt line 501",
+   "reported_as": "E_c = -0.230 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 9) + E_c = 14 * -0.043314740526144736 + (-0.230) = -0.836406367; stored -0.836406367366 (diff 2.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#221"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_9",
+    "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.997406367366
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=9, column dRPA (KS); sources/1310.6806v2.txt line 501",
+   "reported_as": "E_c = -0.391 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 9) + E_c = 14 * -0.043314740526144736 + (-0.391) = -0.997406367; stored -0.997406367366 (diff 2.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#222"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_9",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.727406367366
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=9, column d+S (HF); sources/1310.6806v2.txt line 501",
+   "reported_as": "E_c = -0.121 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 9) + E_c = 14 * -0.043314740526144736 + (-0.121) = -0.727406367; stored -0.727406367366 (diff 2.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#223"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_9",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.801406367366
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=9, column dRPA (HF); sources/1310.6806v2.txt line 501",
+   "reported_as": "E_c = -0.195 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 9) + E_c = 14 * -0.043314740526144736 + (-0.195) = -0.801406367; stored -0.801406367366 (diff 2.6e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#224"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_90",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0870770591239
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=90, column lmCCD; sources/1310.6806v2.txt line 511",
+   "reported_as": "E_c = -0.009 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 90) + E_c = 14 * -0.00557693279456375 + (-0.009) = -0.087077059; stored -0.0870770591239 (diff -7.5e-15)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#225"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_90",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0980770591238
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=90, column mCCD; sources/1310.6806v2.txt line 511",
+   "reported_as": "E_c = -0.020 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 90) + E_c = 14 * -0.00557693279456375 + (-0.020) = -0.098077059; stored -0.0980770591238 (diff 9.2e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#226"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_90",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.100077059124
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=90, column CCD; sources/1310.6806v2.txt line 511",
+   "reported_as": "E_c = -0.022 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 90) + E_c = 14 * -0.00557693279456375 + (-0.022) = -0.100077059; stored -0.100077059124 (diff -1.1e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#227"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_90",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.117077059124
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=90, column rmCCD; sources/1310.6806v2.txt line 511",
+   "reported_as": "E_c = -0.039 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 90) + E_c = 14 * -0.00557693279456375 + (-0.039) = -0.117077059; stored -0.117077059124 (diff -1.1e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#228"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_90",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.162077059124
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=90, column rxmCCD; sources/1310.6806v2.txt line 511",
+   "reported_as": "E_c = -0.084 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 90) + E_c = 14 * -0.00557693279456375 + (-0.084) = -0.162077059; stored -0.162077059124 (diff -1.1e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#229"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_90",
+    "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.0960770591238
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=90, column d+S (HF); sources/1310.6806v2.txt line 511",
+   "reported_as": "E_c = -0.018 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 90) + E_c = 14 * -0.00557693279456375 + (-0.018) = -0.096077059; stored -0.0960770591238 (diff 9.2e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#230"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_90",
+    "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.108077059124
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table III (N=14), row rs=90, column dRPA (HF); sources/1310.6806v2.txt line 511",
+   "reported_as": "E_c = -0.030 (a.u., total for N=14)",
+   "conversion": "14 * E_HF(hf.mjs 3 sc 7 7 90) + E_c = 14 * -0.00557693279456375 + (-0.030) = -0.108077059; stored -0.108077059124 (diff -1.1e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#231"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 174.289790783
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=0.5, column lmCCD; sources/1310.6806v2.txt line 460",
+   "reported_as": "E_c = -2.038 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 0.5) + E_c = 54 * 3.2653294589462183 + (-2.038) = 174.289790783; stored 174.289790783 (diff -9.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#232"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "lmrCCD [ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 174.143790783
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=0.5, column lmrCCD; sources/1310.6806v2.txt line 460",
+   "reported_as": "E_c = -2.184 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 0.5) + E_c = 54 * 3.2653294589462183 + (-2.184) = 174.143790783; stored 174.143790783 (diff -9.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#233"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 173.933790783
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=0.5, column mCCD; sources/1310.6806v2.txt line 460",
+   "reported_as": "E_c = -2.394 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 0.5) + E_c = 54 * 3.2653294589462183 + (-2.394) = 173.933790783; stored 173.933790783 (diff -9.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#234"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 173.955790783
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=0.5, column CCD; sources/1310.6806v2.txt line 460",
+   "reported_as": "E_c = -2.372 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 0.5) + E_c = 54 * 3.2653294589462183 + (-2.372) = 173.955790783; stored 173.955790783 (diff -9.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#235"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 173.707790783
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=0.5, column rmCCD; sources/1310.6806v2.txt line 460",
+   "reported_as": "E_c = -2.620 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 0.5) + E_c = 54 * 3.2653294589462183 + (-2.620) = 173.707790783; stored 173.707790783 (diff -9.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#236"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 173.442790783
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=0.5, column rxmCCD; sources/1310.6806v2.txt line 460",
+   "reported_as": "E_c = -2.885 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 0.5) + E_c = 54 * 3.2653294589462183 + (-2.885) = 173.442790783; stored 173.442790783 (diff -9.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#237"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 29.1392153878
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=1, column lmCCD; sources/1310.6806v2.txt line 461",
+   "reported_as": "E_c = -1.600 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 1) + E_c = 54 * 0.5692447294034088 + (-1.600) = 29.139215388; stored 29.1392153878 (diff 1.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#238"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "lmrCCD [ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 28.9402153878
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=1, column lmrCCD; sources/1310.6806v2.txt line 461",
+   "reported_as": "E_c = -1.799 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 1) + E_c = 54 * 0.5692447294034088 + (-1.799) = 28.940215388; stored 28.9402153878 (diff 1.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#239"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 28.6842153878
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=1, column mCCD; sources/1310.6806v2.txt line 461",
+   "reported_as": "E_c = -2.055 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 1) + E_c = 54 * 0.5692447294034088 + (-2.055) = 28.684215388; stored 28.6842153878 (diff 1.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#240"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 28.6872153878
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=1, column CCD; sources/1310.6806v2.txt line 461",
+   "reported_as": "E_c = -2.052 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 1) + E_c = 54 * 0.5692447294034088 + (-2.052) = 28.687215388; stored 28.6872153878 (diff 1.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#241"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 28.3162153878
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=1, column rmCCD; sources/1310.6806v2.txt line 461",
+   "reported_as": "E_c = -2.423 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 1) + E_c = 54 * 0.5692447294034088 + (-2.423) = 28.316215388; stored 28.3162153878 (diff 1.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#242"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": 27.7982153878
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=1, column rxmCCD; sources/1310.6806v2.txt line 461",
+   "reported_as": "E_c = -2.941 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 1) + E_c = 54 * 0.5692447294034088 + (-2.941) = 27.798215388; stored 27.7982153878 (diff 1.6e-11)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#243"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -2.42529966156
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=10, column lmCCD; sources/1310.6806v2.txt line 467",
+   "reported_as": "E_c = -0.331 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 10) + E_c = 54 * -0.03878332706593232 + (-0.331) = -2.425299662; stored -2.42529966156 (diff 3.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#244"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "lmrCCD [ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -2.53429966156
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=10, column lmrCCD; sources/1310.6806v2.txt line 467",
+   "reported_as": "E_c = -0.440 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 10) + E_c = 54 * -0.03878332706593232 + (-0.440) = -2.534299662; stored -2.53429966156 (diff 3.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#245"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -2.67129966156
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=10, column mCCD; sources/1310.6806v2.txt line 467",
+   "reported_as": "E_c = -0.577 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 10) + E_c = 54 * -0.03878332706593232 + (-0.577) = -2.671299662; stored -2.67129966156 (diff 3.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#246"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -2.70329966156
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=10, column CCD; sources/1310.6806v2.txt line 467",
+   "reported_as": "E_c = -0.609 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 10) + E_c = 54 * -0.03878332706593232 + (-0.609) = -2.703299662; stored -2.70329966156 (diff 3.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#247"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -3.01329966156
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=10, column rmCCD; sources/1310.6806v2.txt line 467",
+   "reported_as": "E_c = -0.919 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 10) + E_c = 54 * -0.03878332706593232 + (-0.919) = -3.013299662; stored -3.01329966156 (diff 3.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#248"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -3.93329966156
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=10, column rxmCCD; sources/1310.6806v2.txt line 467",
+   "reported_as": "E_c = -1.839 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 10) + E_c = 54 * -0.03878332706593232 + (-1.839) = -3.933299662; stored -3.93329966156 (diff 3.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#249"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_15",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.93981017438
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=15, column mCCD; sources/1310.6806v2.txt line 468",
+   "reported_as": "E_c = -0.416 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 15) + E_c = 54 * -0.028218706932998244 + (-0.416) = -1.939810174; stored -1.93981017438 (diff 1.9e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#250"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_15",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.96381017438
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=15, column CCD; sources/1310.6806v2.txt line 468",
+   "reported_as": "E_c = -0.440 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 15) + E_c = 54 * -0.028218706932998244 + (-0.440) = -1.963810174; stored -1.96381017438 (diff 1.9e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations); record row: holds the record as the only non-approximate row on the instance",
+   "source_entry": "SP1-arxiv-1310-6806#251"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.105562307048
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=2, column lmCCD; sources/1310.6806v2.txt line 462",
+   "reported_as": "E_c = -1.119 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 2) + E_c = 54 * 0.018767364684279215 + (-1.119) = -0.105562307; stored -0.105562307048 (diff 9.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#252"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "lmrCCD [ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.317562307046
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=2, column lmrCCD; sources/1310.6806v2.txt line 462",
+   "reported_as": "E_c = -1.331 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 2) + E_c = 54 * 0.018767364684279215 + (-1.331) = -0.317562307; stored -0.317562307046 (diff 2.9e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#253"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.578562307049
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=2, column mCCD; sources/1310.6806v2.txt line 462",
+   "reported_as": "E_c = -1.592 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 2) + E_c = 54 * 0.018767364684279215 + (-1.592) = -0.578562307; stored -0.578562307049 (diff -7.7e-14)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#254"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -0.606562307048
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=2, column CCD; sources/1310.6806v2.txt line 462",
+   "reported_as": "E_c = -1.620 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 2) + E_c = 54 * 0.018767364684279215 + (-1.620) = -0.606562307; stored -0.606562307048 (diff 9.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#255"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.06356230705
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=2, column rmCCD; sources/1310.6806v2.txt line 462",
+   "reported_as": "E_c = -2.077 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 2) + E_c = 54 * 0.018767364684279215 + (-2.077) = -1.063562307; stored -1.06356230705 (diff -1.1e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#256"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.96356230705
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=2, column rxmCCD; sources/1310.6806v2.txt line 462",
+   "reported_as": "E_c = -2.977 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 2) + E_c = 54 * 0.018767364684279215 + (-2.977) = -1.963562307; stored -1.96356230705 (diff -1.1e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#257"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.36671153079
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=20, column lmCCD; sources/1310.6806v2.txt line 469",
+   "reported_as": "E_c = -0.176 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 20) + E_c = 54 * -0.022050213533140413 + (-0.176) = -1.366711531; stored -1.36671153079 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#258"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "lmrCCD [ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.43271153079
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=20, column lmrCCD; sources/1310.6806v2.txt line 469",
+   "reported_as": "E_c = -0.242 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 20) + E_c = 54 * -0.022050213533140413 + (-0.242) = -1.432711531; stored -1.43271153079 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#259"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.51771153079
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=20, column mCCD; sources/1310.6806v2.txt line 469",
+   "reported_as": "E_c = -0.327 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 20) + E_c = 54 * -0.022050213533140413 + (-0.327) = -1.517711531; stored -1.51771153079 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#260"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -1.73571153079
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=20, column rmCCD; sources/1310.6806v2.txt line 469",
+   "reported_as": "E_c = -0.545 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 20) + E_c = 54 * -0.022050213533140413 + (-0.545) = -1.735711531; stored -1.73571153079 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#261"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -2.32171153079
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=20, column rxmCCD; sources/1310.6806v2.txt line 469",
+   "reported_as": "E_c = -1.131 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 20) + E_c = 54 * -0.022050213533140413 + (-1.131) = -2.321711531; stored -2.32171153079 (diff -4.2e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#262"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_3",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -3.81363487158
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=3, column mCCD; sources/1310.6806v2.txt line 463",
+   "reported_as": "E_c = -1.299 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 3) + E_c = 54 * -0.04656731243657532 + (-1.299) = -3.813634872; stored -3.81363487158 (diff -4.9e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#263"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_4",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -4.18032365376
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=4, column mCCD; sources/1310.6806v2.txt line 464",
+   "reported_as": "E_c = -1.098 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 4) + E_c = 54 * -0.057080067662216655 + (-1.098) = -4.180323654; stored -4.18032365376 (diff -3.0e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#264"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -3.63110572304
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=5, column lmCCD; sources/1310.6806v2.txt line 465",
+   "reported_as": "E_c = -0.591 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 5) + E_c = 54 * -0.056298254130470626 + (-0.591) = -3.631105723; stored -3.63110572304 (diff 5.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#265"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "lmrCCD [ladders, mosaics and rings; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -3.79610572305
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=5, column lmrCCD; sources/1310.6806v2.txt line 465",
+   "reported_as": "E_c = -0.756 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 5) + E_c = 54 * -0.056298254130470626 + (-0.756) = -3.796105723; stored -3.79610572305 (diff -4.6e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#266"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -3.99210572305
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=5, column mCCD; sources/1310.6806v2.txt line 465",
+   "reported_as": "E_c = -0.952 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 5) + E_c = 54 * -0.056298254130470626 + (-0.952) = -3.992105723; stored -3.99210572305 (diff -4.6e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#267"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -4.03510572305
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=5, column CCD; sources/1310.6806v2.txt line 465",
+   "reported_as": "E_c = -0.995 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 5) + E_c = 54 * -0.056298254130470626 + (-0.995) = -4.035105723; stored -4.03510572305 (diff -4.6e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type extrapolated agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#268"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -4.45310572305
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=5, column rmCCD; sources/1310.6806v2.txt line 465",
+   "reported_as": "E_c = -1.413 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 5) + E_c = 54 * -0.056298254130470626 + (-1.413) = -4.453105723; stored -4.45310572305 (diff -4.6e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#269"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -5.61610572304
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=5, column rxmCCD; sources/1310.6806v2.txt line 465",
+   "reported_as": "E_c = -2.576 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 5) + E_c = 54 * -0.056298254130470626 + (-2.576) = -5.616105723; stored -5.61610572304 (diff 5.4e-12)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#270"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_7.5",
+    "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+    "energy": -3.25417874873
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+   "location": "Table II (N=54), row rs=7.5, column mCCD; sources/1310.6806v2.txt line 466",
+   "reported_as": "E_c = -0.717 (a.u., total for N=54)",
+   "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 7.5) + E_c = 54 * -0.04698479164315471 + (-0.717) = -3.254178749; stored -3.25417874873 (diff 3.5e-13)",
+   "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+   "source_entry": "SP1-arxiv-1310-6806#271"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_PA_8_2",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -20.11088
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 5 / arXiv Table V, row L = 4, column U = 2",
+   "reported_as": "-1.25693(1) (energy per site, units of t)",
+   "conversion": "-1.25693 x 16 = -20.11088; bar 0.00001 x 16 = 0.00016",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 8), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#5"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_PA_8_4",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -14.592
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 5 / arXiv Table V, row L = 4, column U = 4",
+   "reported_as": "-0.9120(1) (energy per site, units of t)",
+   "conversion": "-0.9120 x 16 = -14.5920; bar 0.0001 x 16 = 0.0016",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 8), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#6"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_PA_8_6",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -10.9016
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 5 / arXiv Table V, row L = 4, column U = 6",
+   "reported_as": "-0.68135(1) (energy per site, units of t)",
+   "conversion": "-0.68135 x 16 = -10.90160; bar 0.00001 x 16 = 0.00016",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 8), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#7"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_PA_8_8",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -8.6416
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 5 / arXiv Table V, row L = 4, column U = 8",
+   "reported_as": "-0.5401(1) (energy per site, units of t)",
+   "conversion": "-0.5401 x 16 = -8.6416; bar 0.0001 x 16 = 0.0016",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 8), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#8"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_0.1",
+    "method": "USD (RBM) (Table II)",
+    "energy": -19.904895
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 2 / arXiv Table II, row \"USD (RBM)\", column U = 0.1",
+   "reported_as": "-19.904895(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.000004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#13"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_0.59948425",
+    "method": "Jastrow inspired CF (Table II)",
+    "energy": -19.44978
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 2 / arXiv Table II, row \"Jastrow inspired CF\", column U = 0.6",
+   "reported_as": "-19.44978(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.00004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#25"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_1",
+    "method": "USD (Table II)",
+    "energy": -19.07
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 2 / arXiv Table II, row \"USD\", column U = 1",
+   "reported_as": "-19.07(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.04",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#28"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_10",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 2)",
+    "energy": -16.1103
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 1 / arXiv Table I, row U = 10, column \"HFDS (α = 2)\"",
+   "reported_as": "-16.1103(8) (total, units of t)",
+   "conversion": "total as printed; bar 0.0008",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#39"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_10",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 8)",
+    "energy": -16.1329
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 1 / arXiv Table I, row U = 10, column \"HFDS (α = 8)\"",
+   "reported_as": "-16.1329(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.0004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#41"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_2.15443469",
+    "method": "Gutzwiller inspired CF (Table II)",
+    "energy": -18.32346
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 2 / arXiv Table II, row \"Gutzwiller inspired CF\", column U = 2.15",
+   "reported_as": "-18.32346(8) (total, units of t)",
+   "conversion": "total as printed; bar 0.00008",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#57"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 4)",
+    "energy": -17.6897
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 1 / arXiv Table I, row U = 3.6, column \"HFDS (α = 4)\"",
+   "reported_as": "-17.6897(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.0004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#64"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 16)",
+    "energy": -17.6929
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 1 / arXiv Table I, row U = 3.6, column \"HFDS (α = 16)\"",
+   "reported_as": "-17.6929(8) (total, units of t)",
+   "conversion": "total as printed; bar 0.0008",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#66"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "method": "USD (Table II)",
+    "energy": -16.85
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 2 / arXiv Table II, row \"USD\", column U = 3.6",
+   "reported_as": "-16.85(8) (total, units of t)",
+   "conversion": "total as printed; bar 0.08",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#68"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "method": "Unrestricted hidden spin (Table II)",
+    "energy": -17.58288
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 2 / arXiv Table II, row \"Unrestricted hidden spin\", column U = 3.6",
+   "reported_as": "-17.58288(8) (total, units of t)",
+   "conversion": "total as printed; bar 0.00008",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#73"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 0.5)",
+    "energy": -16.4196
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 1 / arXiv Table I, row U = 7.75, column \"HFDS (α = 0.5)\"",
+   "reported_as": "-16.4196(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.0004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#76"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 4)",
+    "energy": -16.4959
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 1 / arXiv Table I, row U = 7.75, column \"HFDS (α = 4)\"",
+   "reported_as": "-16.4959(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.0004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#79"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "method": "USD (Table II)",
+    "energy": -14.36
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 2 / arXiv Table II, row \"USD\", column U = 7.75",
+   "reported_as": "-14.36(8) (total, units of t)",
+   "conversion": "total as printed; bar 0.08",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#84"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "method": "Jastrow inspired CF (Table II)",
+    "energy": -14.1253
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 2 / arXiv Table II, row \"Jastrow inspired CF\", column U = 7.75",
+   "reported_as": "-14.1253(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.0004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#89"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_2.15443469",
+    "method": "HFDS (10 hidden fermions, α = 64)",
+    "energy": -21.211411
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 3 / arXiv Table III, row \"HFSD (α = 64)\", column U = 2.15 (N~ = 10 hidden fermions: main text Fig. 3 caption)",
+   "reported_as": "-21.211411(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.000004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 5), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#97"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_2.15443469",
+    "method": "HFDS (10 hidden fermions, α = 64) + C4",
+    "energy": -21.211811
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 3 / arXiv Table III, row \"HFSD (α = 64)+C4\", column U = 2.15 (N~ = 10 hidden fermions: main text Fig. 3 caption)",
+   "reported_as": "-21.211811(4) (total, units of t)",
+   "conversion": "total as printed; bar 0.000004",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 5), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#98"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_3.59381366",
+    "method": "HFDS (10 hidden fermions, α = 64)",
+    "energy": -19.888814
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+   "location": "SI Table 3 / arXiv Table III, row \"HFSD (α = 64)\", column U = 3.6 (N~ = 10 hidden fermions: main text Fig. 3 caption)",
+   "reported_as": "-19.888814(8) (total, units of t)",
+   "conversion": "total as printed; bar 0.000008",
+   "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 5), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+   "source_entry": "SP2-arxiv-2111-10420#102"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/rect-3x3x2_36_P_18_18_10",
+    "method": "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation",
+    "energy": -1.933741
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2604.15888v2 (local sources/2604.15888.pdf, /arXivID .../2604.15888v2; v2 of 2026-06-03 is the latest); no journal version (arXiv abs has no journal-ref, Crossref title search 2026-10-19 finds none), arXiv only; sources/2604.15888.pdf, pypdf layout mode (pages 20 and 23), cross-checked against sources/2604.15888.txt",
+   "location": "SM Table IV, rs=10, column E iteration=1 (PDF page 23 line 27)",
+   "reported_as": "-1.933741(9) (total, Ha)",
+   "conversion": "-1.933741(9) total Ha (caption 'Total energies, in Hartree'); stored total = printed value, no conversion; sigma 9e-06 total",
+   "note": "value equals the printed cell to <=1e-11 (float noise from the per-electron eps). Cell, N, spin, rs, Gamma (PBC, no twist stated; RULES 12.1 default), Ewald with self-image terms (SM Eq. S33), bound_type variational (Rayleigh quotient of the physical H on the Gaussian-convolved state, main Eqs. 1-5), own computation, peer_reviewed false, method string matches the column; no duplicate on the instance from another paper; sigma agrees.",
+   "source_entry": "SP3-arxiv-2604-15888#1"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/rect-3x3x2_36_P_18_18_80",
+    "method": "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation",
+    "energy": -0.3401708
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2604.15888v2 (local sources/2604.15888.pdf, /arXivID .../2604.15888v2; v2 of 2026-06-03 is the latest); no journal version (arXiv abs has no journal-ref, Crossref title search 2026-10-19 finds none), arXiv only; sources/2604.15888.pdf, pypdf layout mode (pages 20 and 23), cross-checked against sources/2604.15888.txt",
+   "location": "SM Table IV, rs=80, column E iteration=1 (PDF page 23 line 30)",
+   "reported_as": "-0.3401708(9) (total, Ha)",
+   "conversion": "-0.3401708(9) total Ha (caption 'Total energies, in Hartree'); stored total = printed value, no conversion; sigma 9e-07 total",
+   "note": "value equals the printed cell to <=1e-11 (float noise from the per-electron eps). Cell, N, spin, rs, Gamma (PBC, no twist stated; RULES 12.1 default), Ewald with self-image terms (SM Eq. S33), bound_type variational (Rayleigh quotient of the physical H on the Gaussian-convolved state, main Eqs. 1-5), own computation, peer_reviewed false, method string matches the column; no duplicate on the instance from another paper; sigma agrees.",
+   "source_entry": "SP3-arxiv-2604-15888#21"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "FermiNet (n_det = 4), after basis transformation",
+    "energy": 7.96570000001
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2604.15888v2 (local sources/2604.15888.pdf, /arXivID .../2604.15888v2; v2 of 2026-06-03 is the latest); no journal version (arXiv abs has no journal-ref, Crossref title search 2026-10-19 finds none), arXiv only; sources/2604.15888.pdf, pypdf layout mode (pages 20 and 23), cross-checked against sources/2604.15888.txt",
+   "location": "SM Table III, rs=1, column E n_det=4 (PDF page 23 line 11)",
+   "reported_as": "7.96570(7) (total, Ha)",
+   "conversion": "7.96570(7) total Ha (caption 'Total energies, in Hartree'); stored total = printed value, no conversion; sigma 7e-05 total",
+   "note": "value equals the printed cell to <=1e-11 (float noise from the per-electron eps). Cell, N, spin, rs, Gamma (PBC, no twist stated; RULES 12.1 default), Ewald with self-image terms (SM Eq. S33), bound_type variational (Rayleigh quotient of the physical H on the Gaussian-convolved state, main Eqs. 1-5), own computation, peer_reviewed false, method string matches the column; no duplicate on the instance from another paper; sigma agrees.",
+   "source_entry": "SP3-arxiv-2604-15888#51"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "WAP-net (n_d = 1)",
+    "energy": 7.965384
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 1.0, column 'WAP-Net (nd = 1)' (journal text line 426; arXiv text line 517)",
+   "reported_as": "1.137912(9) Ry per particle",
+   "conversion": "1.137912 Ry/e x 1/2 x 14 = 7.965384 Ha total; sigma 0.000009 x 1/2 x 14 = 6.3e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#0"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "WAP-net (n_d = 8)",
+    "energy": 7.96551
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 1.0, column 'WAP-Net (nd = 8)' (journal text line 426; arXiv text line 517)",
+   "reported_as": "1.13793(1) Ry per particle",
+   "conversion": "1.13793 Ry/e x 1/2 x 14 = 7.96551 Ha total; sigma 0.00001 x 1/2 x 14 = 7e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#1"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": 7.96824
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 1.0, column 'EIBVMC' (journal text line 426; arXiv text line 517)",
+   "reported_as": "1.13832(1) Ry per particle",
+   "conversion": "1.13832 Ry/e x 1/2 x 14 = 7.96824 Ha total; sigma 0.00001 x 1/2 x 14 = 7e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#2"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": 7.96565
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 1.0, column 'EIBDMC' (journal text line 426; arXiv text line 517)",
+   "reported_as": "1.13795(1) Ry per particle",
+   "conversion": "1.13795 Ry/e x 1/2 x 14 = 7.96565 Ha total; sigma 0.00001 x 1/2 x 14 = 7e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 1; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#3"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.7728343
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 10.0, column 'WAP-Net (nd = 1)' (journal text line 429; arXiv text line 520)",
+   "reported_as": "-0.1104049(6) Ry per particle",
+   "conversion": "-0.1104049 Ry/e x 1/2 x 14 = -0.7728343 Ha total; sigma 0.0000006 x 1/2 x 14 = 4.2e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#4"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.7728532
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 10.0, column 'WAP-Net (nd = 8)' (journal text line 429; arXiv text line 520)",
+   "reported_as": "-0.1104076(6) Ry per particle",
+   "conversion": "-0.1104076 Ry/e x 1/2 x 14 = -0.7728532 Ha total; sigma 0.0000006 x 1/2 x 14 = 4.2e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#5"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.7722603
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 10.0, column 'EIBVMC' (journal text line 429; arXiv text line 520)",
+   "reported_as": "-0.1103229(7) Ry per particle",
+   "conversion": "-0.1103229 Ry/e x 1/2 x 14 = -0.7722603 Ha total; sigma 0.0000007 x 1/2 x 14 = 4.9e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#6"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.773052
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 10.0, column 'EIBDMC' (journal text line 429; arXiv text line 520)",
+   "reported_as": "-0.110436(1) Ry per particle",
+   "conversion": "-0.110436 Ry/e x 1/2 x 14 = -0.773052 Ha total; sigma 0.000001 x 1/2 x 14 = 7e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 10; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#7"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.10822336
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 100.0, column 'WAP-Net (nd = 1)' (journal text line 432; arXiv text line 523)",
+   "reported_as": "-0.01546048(3) Ry per particle",
+   "conversion": "-0.01546048 Ry/e x 1/2 x 14 = -0.10822336 Ha total; sigma 0.00000003 x 1/2 x 14 = 2.1e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#8"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.10821972
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 100.0, column 'WAP-Net (nd = 8)' (journal text line 432; arXiv text line 523)",
+   "reported_as": "-0.01545996(3) Ry per particle",
+   "conversion": "-0.01545996 Ry/e x 1/2 x 14 = -0.10821972 Ha total; sigma 0.00000003 x 1/2 x 14 = 2.1e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#9"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.10818675
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 100.0, column 'EIBVMC' (journal text line 432; arXiv text line 523)",
+   "reported_as": "-0.01545525(6) Ry per particle",
+   "conversion": "-0.01545525 Ry/e x 1/2 x 14 = -0.10818675 Ha total; sigma 0.00000006 x 1/2 x 14 = 4.2e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#10"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.10828013
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 100.0, column 'EIBDMC' (journal text line 432; arXiv text line 523)",
+   "reported_as": "-0.01546859(5) Ry per particle",
+   "conversion": "-0.01546859 Ry/e x 1/2 x 14 = -0.10828013 Ha total; sigma 0.00000005 x 1/2 x 14 = 3.5e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 100; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#11"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.116662
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 2.0, column 'WAP-Net (nd = 1)' (journal text line 427; arXiv text line 518)",
+   "reported_as": "-0.016666(5) Ry per particle",
+   "conversion": "-0.016666 Ry/e x 1/2 x 14 = -0.116662 Ha total; sigma 0.000005 x 1/2 x 14 = 3.5e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#12"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.116634
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 2.0, column 'WAP-Net (nd = 8)' (journal text line 427; arXiv text line 518)",
+   "reported_as": "-0.016662(5) Ry per particle",
+   "conversion": "-0.016662 Ry/e x 1/2 x 14 = -0.116634 Ha total; sigma 0.000005 x 1/2 x 14 = 3.5e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#13"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.114856
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 2.0, column 'EIBVMC' (journal text line 427; arXiv text line 518)",
+   "reported_as": "-0.016408(5) Ry per particle",
+   "conversion": "-0.016408 Ry/e x 1/2 x 14 = -0.114856 Ha total; sigma 0.000005 x 1/2 x 14 = 3.5e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#14"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.11655
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 2.0, column 'EIBDMC' (journal text line 427; arXiv text line 518)",
+   "reported_as": "-0.01665(1) Ry per particle",
+   "conversion": "-0.01665 Ry/e x 1/2 x 14 = -0.11655 Ha total; sigma 0.00001 x 1/2 x 14 = 7e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 2; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#15"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.4542181
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 20.0, column 'WAP-Net (nd = 1)' (journal text line 430; arXiv text line 521)",
+   "reported_as": "-0.0648883(3) Ry per particle",
+   "conversion": "-0.0648883 Ry/e x 1/2 x 14 = -0.4542181 Ha total; sigma 0.0000003 x 1/2 x 14 = 2.1e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#16"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.4542076
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 20.0, column 'WAP-Net (nd = 8)' (journal text line 430; arXiv text line 521)",
+   "reported_as": "-0.0648868(2) Ry per particle",
+   "conversion": "-0.0648868 Ry/e x 1/2 x 14 = -0.4542076 Ha total; sigma 0.0000002 x 1/2 x 14 = 1.4e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#17"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.4539108
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 20.0, column 'EIBVMC' (journal text line 430; arXiv text line 521)",
+   "reported_as": "-0.0648444(2) Ry per particle",
+   "conversion": "-0.0648444 Ry/e x 1/2 x 14 = -0.4539108 Ha total; sigma 0.0000002 x 1/2 x 14 = 1.4e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#18"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.4544099
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 20.0, column 'EIBDMC' (journal text line 430; arXiv text line 521)",
+   "reported_as": "-0.0649157(5) Ry per particle",
+   "conversion": "-0.0649157 Ry/e x 1/2 x 14 = -0.4544099 Ha total; sigma 0.0000005 x 1/2 x 14 = 3.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 20; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#19"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -1.117683
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 5.0, column 'WAP-Net (nd = 1)' (journal text line 428; arXiv text line 519)",
+   "reported_as": "-0.159669(1) Ry per particle",
+   "conversion": "-0.159669 Ry/e x 1/2 x 14 = -1.117683 Ha total; sigma 0.000001 x 1/2 x 14 = 7e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#20"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -1.117704
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 5.0, column 'WAP-Net (nd = 8)' (journal text line 428; arXiv text line 519)",
+   "reported_as": "-0.159672(1) Ry per particle",
+   "conversion": "-0.159672 Ry/e x 1/2 x 14 = -1.117704 Ha total; sigma 0.000001 x 1/2 x 14 = 7e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#21"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -1.116668
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 5.0, column 'EIBVMC' (journal text line 428; arXiv text line 519)",
+   "reported_as": "-0.159524(1) Ry per particle",
+   "conversion": "-0.159524 Ry/e x 1/2 x 14 = -1.116668 Ha total; sigma 0.000001 x 1/2 x 14 = 7e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#22"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -1.117788
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 5.0, column 'EIBDMC' (journal text line 428; arXiv text line 519)",
+   "reported_as": "-0.159684(3) Ry per particle",
+   "conversion": "-0.159684 Ry/e x 1/2 x 14 = -1.117788 Ha total; sigma 0.000003 x 1/2 x 14 = 2.1e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 5; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#23"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.20471115
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 50.0, column 'WAP-Net (nd = 1)' (journal text line 431; arXiv text line 522)",
+   "reported_as": "-0.02924445(6) Ry per particle",
+   "conversion": "-0.02924445 Ry/e x 1/2 x 14 = -0.20471115 Ha total; sigma 0.00000006 x 1/2 x 14 = 4.2e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#24"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.20470954
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 50.0, column 'WAP-Net (nd = 8)' (journal text line 431; arXiv text line 522)",
+   "reported_as": "-0.02924422(7) Ry per particle",
+   "conversion": "-0.02924422 Ry/e x 1/2 x 14 = -0.20470954 Ha total; sigma 0.00000007 x 1/2 x 14 = 4.9e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#25"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.2046044
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 50.0, column 'EIBVMC' (journal text line 431; arXiv text line 522)",
+   "reported_as": "-0.02922920(2) Ry per particle",
+   "conversion": "-0.0292292 Ry/e x 1/2 x 14 = -0.2046044 Ha total; sigma 0.00000002 x 1/2 x 14 = 1.4e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#26"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.2048011
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 14 (paramagnetic)', row rs = 50.0, column 'EIBDMC' (journal text line 431; arXiv text line 522)",
+   "reported_as": "-0.0292573(2) Ry per particle",
+   "conversion": "-0.0292573 Ry/e x 1/2 x 14 = -0.2048011 Ha total; sigma 0.0000002 x 1/2 x 14 = 1.4e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = N_dn = 7; rs = 50; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#27"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_1",
+    "method": "WAP-net (n_d = 1)",
+    "energy": 19.8787025
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 1.0, column 'WAP-Net (nd = 1)' (journal text line 437; arXiv text line 529)",
+   "reported_as": "2.092495(5) Ry per particle",
+   "conversion": "2.092495 Ry/e x 1/2 x 19 = 19.8787025 Ha total; sigma 0.000005 x 1/2 x 19 = 4.75e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#28"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_1",
+    "method": "WAP-net (n_d = 8)",
+    "energy": 19.8785885
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 1.0, column 'WAP-Net (nd = 8)' (journal text line 437; arXiv text line 529)",
+   "reported_as": "2.092483(5) Ry per particle",
+   "conversion": "2.092483 Ry/e x 1/2 x 19 = 19.8785885 Ha total; sigma 0.000005 x 1/2 x 19 = 4.75e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#29"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_1",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": 19.879168
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 1.0, column 'EIBVMC' (journal text line 437; arXiv text line 529)",
+   "reported_as": "2.092544(7) Ry per particle",
+   "conversion": "2.092544 Ry/e x 1/2 x 19 = 19.879168 Ha total; sigma 0.000007 x 1/2 x 19 = 6.65e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#30"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_1",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": 19.878275
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 1.0, column 'EIBDMC' (journal text line 437; arXiv text line 529)",
+   "reported_as": "2.092450(1) Ry per particle",
+   "conversion": "2.09245 Ry/e x 1/2 x 19 = 19.878275 Ha total; sigma 0.000001 x 1/2 x 19 = 9.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 1; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#31"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_10",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -1.00433715
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 10.0, column 'WAP-Net (nd = 1)' (journal text line 440; arXiv text line 532)",
+   "reported_as": "-0.1057197(2) Ry per particle",
+   "conversion": "-0.1057197 Ry/e x 1/2 x 19 = -1.00433715 Ha total; sigma 0.0000002 x 1/2 x 19 = 1.9e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#32"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_10",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -1.00434665
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 10.0, column 'WAP-Net (nd = 8)' (journal text line 440; arXiv text line 532)",
+   "reported_as": "-0.1057207(2) Ry per particle",
+   "conversion": "-0.1057207 Ry/e x 1/2 x 19 = -1.00434665 Ha total; sigma 0.0000002 x 1/2 x 19 = 1.9e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#33"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_10",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -1.0042355
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 10.0, column 'EIBVMC' (journal text line 440; arXiv text line 532)",
+   "reported_as": "-0.1057090(6) Ry per particle",
+   "conversion": "-0.105709 Ry/e x 1/2 x 19 = -1.0042355 Ha total; sigma 0.0000006 x 1/2 x 19 = 5.7e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#34"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_10",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -1.0044388
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 10.0, column 'EIBDMC' (journal text line 440; arXiv text line 532)",
+   "reported_as": "-0.1057304(6) Ry per particle",
+   "conversion": "-0.1057304 Ry/e x 1/2 x 19 = -1.0044388 Ha total; sigma 0.0000006 x 1/2 x 19 = 5.7e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 10; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#35"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_100",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.146634495
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 100.0, column 'WAP-Net (nd = 1)' (journal text line 443; arXiv text line 535)",
+   "reported_as": "-0.01543521(2) Ry per particle",
+   "conversion": "-0.01543521 Ry/e x 1/2 x 19 = -0.146634495 Ha total; sigma 0.00000002 x 1/2 x 19 = 1.9e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#36"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_100",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.14655878
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 100.0, column 'WAP-Net (nd = 8)' (journal text line 443; arXiv text line 535)",
+   "reported_as": "-0.01542724(3) Ry per particle",
+   "conversion": "-0.01542724 Ry/e x 1/2 x 19 = -0.14655878 Ha total; sigma 0.00000003 x 1/2 x 19 = 2.85e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#37"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_100",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.14666081
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 100.0, column 'EIBVMC' (journal text line 443; arXiv text line 535)",
+   "reported_as": "-0.01543798(2) Ry per particle",
+   "conversion": "-0.01543798 Ry/e x 1/2 x 19 = -0.14666081 Ha total; sigma 0.00000002 x 1/2 x 19 = 1.9e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#38"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_100",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.146707075
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 100.0, column 'EIBDMC' (journal text line 443; arXiv text line 535)",
+   "reported_as": "-0.01544285(2) Ry per particle",
+   "conversion": "-0.01544285 Ry/e x 1/2 x 19 = -0.146707075 Ha total; sigma 0.00000002 x 1/2 x 19 = 1.9e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 100; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#39"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_2",
+    "method": "WAP-net (n_d = 1)",
+    "energy": 1.829776
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 2.0, column 'WAP-Net (nd = 1)' (journal text line 438; arXiv text line 530)",
+   "reported_as": "0.192608(1) Ry per particle",
+   "conversion": "0.192608 Ry/e x 1/2 x 19 = 1.829776 Ha total; sigma 0.000001 x 1/2 x 19 = 9.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#40"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_2",
+    "method": "WAP-net (n_d = 8)",
+    "energy": 1.829757
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 2.0, column 'WAP-Net (nd = 8)' (journal text line 438; arXiv text line 530)",
+   "reported_as": "0.192606(2) Ry per particle",
+   "conversion": "0.192606 Ry/e x 1/2 x 19 = 1.829757 Ha total; sigma 0.000002 x 1/2 x 19 = 1.9e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#41"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_2",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": 1.8300515
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 2.0, column 'EIBVMC' (journal text line 438; arXiv text line 530)",
+   "reported_as": "0.192637(3) Ry per particle",
+   "conversion": "0.192637 Ry/e x 1/2 x 19 = 1.8300515 Ha total; sigma 0.000003 x 1/2 x 19 = 2.85e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#42"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_2",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": 1.8297475
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 2.0, column 'EIBDMC' (journal text line 438; arXiv text line 530)",
+   "reported_as": "0.192605(3) Ry per particle",
+   "conversion": "0.192605 Ry/e x 1/2 x 19 = 1.8297475 Ha total; sigma 0.000003 x 1/2 x 19 = 2.85e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 2; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#43"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_20",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.60820805
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 20.0, column 'WAP-Net (nd = 1)' (journal text line 441; arXiv text line 533)",
+   "reported_as": "-0.0640219(1) Ry per particle",
+   "conversion": "-0.0640219 Ry/e x 1/2 x 19 = -0.60820805 Ha total; sigma 0.0000001 x 1/2 x 19 = 9.5e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#44"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_20",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.6081558
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 20.0, column 'WAP-Net (nd = 8)' (journal text line 441; arXiv text line 533)",
+   "reported_as": "-0.0640164(2) Ry per particle",
+   "conversion": "-0.0640164 Ry/e x 1/2 x 19 = -0.6081558 Ha total; sigma 0.0000002 x 1/2 x 19 = 1.9e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#45"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_20",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.60819
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 20.0, column 'EIBVMC' (journal text line 441; arXiv text line 533)",
+   "reported_as": "-0.0640200(2) Ry per particle",
+   "conversion": "-0.06402 Ry/e x 1/2 x 19 = -0.60819 Ha total; sigma 0.0000002 x 1/2 x 19 = 1.9e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#46"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_20",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.60831635
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 20.0, column 'EIBDMC' (journal text line 441; arXiv text line 533)",
+   "reported_as": "-0.0640333(2) Ry per particle",
+   "conversion": "-0.0640333 Ry/e x 1/2 x 19 = -0.60831635 Ha total; sigma 0.0000002 x 1/2 x 19 = 1.9e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 20; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#47"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_5",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -1.27775095
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 5.0, column 'WAP-Net (nd = 1)' (journal text line 439; arXiv text line 531)",
+   "reported_as": "-0.1345001(7) Ry per particle",
+   "conversion": "-0.1345001 Ry/e x 1/2 x 19 = -1.27775095 Ha total; sigma 0.0000007 x 1/2 x 19 = 6.65e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#48"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_5",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -1.27776995
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 5.0, column 'WAP-Net (nd = 8)' (journal text line 439; arXiv text line 531)",
+   "reported_as": "-0.1345021(5) Ry per particle",
+   "conversion": "-0.1345021 Ry/e x 1/2 x 19 = -1.27776995 Ha total; sigma 0.0000005 x 1/2 x 19 = 4.75e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#49"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_5",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -1.27756
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 5.0, column 'EIBVMC' (journal text line 439; arXiv text line 531)",
+   "reported_as": "-0.134480(1) Ry per particle",
+   "conversion": "-0.13448 Ry/e x 1/2 x 19 = -1.27756 Ha total; sigma 0.000001 x 1/2 x 19 = 9.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#50"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_5",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -1.277826
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 5.0, column 'EIBDMC' (journal text line 439; arXiv text line 531)",
+   "reported_as": "-0.134508(1) Ry per particle",
+   "conversion": "-0.134508 Ry/e x 1/2 x 19 = -1.277826 Ha total; sigma 0.000001 x 1/2 x 19 = 9.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 5; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#51"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_50",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.276734525
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 50.0, column 'WAP-Net (nd = 1)' (journal text line 442; arXiv text line 534)",
+   "reported_as": "-0.02912995(5) Ry per particle",
+   "conversion": "-0.02912995 Ry/e x 1/2 x 19 = -0.276734525 Ha total; sigma 0.00000005 x 1/2 x 19 = 4.75e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#52"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_50",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.27674849
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 50.0, column 'WAP-Net (nd = 8)' (journal text line 442; arXiv text line 534)",
+   "reported_as": "-0.02913142(4) Ry per particle",
+   "conversion": "-0.02913142 Ry/e x 1/2 x 19 = -0.27674849 Ha total; sigma 0.00000004 x 1/2 x 19 = 3.8e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#53"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_50",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.276748965
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 50.0, column 'EIBVMC' (journal text line 442; arXiv text line 534)",
+   "reported_as": "-0.02913147(5) Ry per particle",
+   "conversion": "-0.02913147 Ry/e x 1/2 x 19 = -0.276748965 Ha total; sigma 0.00000005 x 1/2 x 19 = 4.75e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#54"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_50",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.276814705
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 19 (spin-polarised)', row rs = 50.0, column 'EIBDMC' (journal text line 442; arXiv text line 534)",
+   "reported_as": "-0.02913839(8) Ry per particle",
+   "conversion": "-0.02913839 Ry/e x 1/2 x 19 = -0.276814705 Ha total; sigma 0.00000008 x 1/2 x 19 = 7.6e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 19, N_dn = 0; rs = 50; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#55"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_1",
+    "method": "WAP-net (n_d = 1)",
+    "energy": 7.8427475
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 1.0, column 'WAP-Net (nd = 1)' (journal text line 415; arXiv text line 505)",
+   "reported_as": "2.240785(7) Ry per particle",
+   "conversion": "2.240785 Ry/e x 1/2 x 7 = 7.8427475 Ha total; sigma 0.000007 x 1/2 x 7 = 2.45e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#56"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_1",
+    "method": "WAP-net (n_d = 8)",
+    "energy": 7.8425025
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 1.0, column 'WAP-Net (nd = 8)' (journal text line 415; arXiv text line 505)",
+   "reported_as": "2.240715(7) Ry per particle",
+   "conversion": "2.240715 Ry/e x 1/2 x 7 = 7.8425025 Ha total; sigma 0.000007 x 1/2 x 7 = 2.45e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#57"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_1",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": 7.84294
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 1.0, column 'EIBVMC' (journal text line 415; arXiv text line 505)",
+   "reported_as": "2.24084(2) Ry per particle",
+   "conversion": "2.24084 Ry/e x 1/2 x 7 = 7.84294 Ha total; sigma 0.00002 x 1/2 x 7 = 7e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 1; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#58"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_1",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": 7.8428
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 1.0, column 'EIBDMC' (journal text line 415; arXiv text line 505)",
+   "reported_as": "2.24080(1) Ry per particle",
+   "conversion": "2.2408 Ry/e x 1/2 x 7 = 7.8428 Ha total; sigma 0.00001 x 1/2 x 7 = 3.5e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 1; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#59"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_10",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.37197895
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 10.0, column 'WAP-Net (nd = 1)' (journal text line 418; arXiv text line 508)",
+   "reported_as": "-0.1062797(5) Ry per particle",
+   "conversion": "-0.1062797 Ry/e x 1/2 x 7 = -0.37197895 Ha total; sigma 0.0000005 x 1/2 x 7 = 1.75e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#60"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_10",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.3720052
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 10.0, column 'WAP-Net (nd = 8)' (journal text line 418; arXiv text line 508)",
+   "reported_as": "-0.1062872(5) Ry per particle",
+   "conversion": "-0.1062872 Ry/e x 1/2 x 7 = -0.3720052 Ha total; sigma 0.0000005 x 1/2 x 7 = 1.75e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#61"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_10",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.3718316
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 10.0, column 'EIBVMC' (journal text line 418; arXiv text line 508)",
+   "reported_as": "-0.1062376(6) Ry per particle",
+   "conversion": "-0.1062376 Ry/e x 1/2 x 7 = -0.3718316 Ha total; sigma 0.0000006 x 1/2 x 7 = 2.1e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 10; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#62"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_10",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.371966
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 10.0, column 'EIBDMC' (journal text line 418; arXiv text line 508)",
+   "reported_as": "-0.106276(1) Ry per particle",
+   "conversion": "-0.106276 Ry/e x 1/2 x 7 = -0.371966 Ha total; sigma 0.000001 x 1/2 x 7 = 3.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 10; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#63"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_100",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.054225815
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 100.0, column 'WAP-Net (nd = 1)' (journal text line 421; arXiv text line 511)",
+   "reported_as": "-0.01549309(2) Ry per particle",
+   "conversion": "-0.01549309 Ry/e x 1/2 x 7 = -0.054225815 Ha total; sigma 0.00000002 x 1/2 x 7 = 7e-08",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#64"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_100",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.05422564
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 100.0, column 'WAP-Net (nd = 8)' (journal text line 421; arXiv text line 511)",
+   "reported_as": "-0.01549304(1) Ry per particle",
+   "conversion": "-0.01549304 Ry/e x 1/2 x 7 = -0.05422564 Ha total; sigma 0.00000001 x 1/2 x 7 = 3.5e-08",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#65"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_100",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.05416698
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 100.0, column 'EIBVMC' (journal text line 421; arXiv text line 511)",
+   "reported_as": "-0.01547628(7) Ry per particle",
+   "conversion": "-0.01547628 Ry/e x 1/2 x 7 = -0.05416698 Ha total; sigma 0.00000007 x 1/2 x 7 = 2.45e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 100; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#66"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_100",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.05422375
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 100.0, column 'EIBDMC' (journal text line 421; arXiv text line 511)",
+   "reported_as": "-0.0154925(1) Ry per particle",
+   "conversion": "-0.0154925 Ry/e x 1/2 x 7 = -0.05422375 Ha total; sigma 0.0000001 x 1/2 x 7 = 3.5e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 100; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#67"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_2",
+    "method": "WAP-net (n_d = 1)",
+    "energy": 0.776181
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 2.0, column 'WAP-Net (nd = 1)' (journal text line 416; arXiv text line 506)",
+   "reported_as": "0.221766(5) Ry per particle",
+   "conversion": "0.221766 Ry/e x 1/2 x 7 = 0.776181 Ha total; sigma 0.000005 x 1/2 x 7 = 1.75e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#68"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_2",
+    "method": "WAP-net (n_d = 8)",
+    "energy": 0.77595
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 2.0, column 'WAP-Net (nd = 8)' (journal text line 416; arXiv text line 506)",
+   "reported_as": "0.221700(2) Ry per particle",
+   "conversion": "0.2217 Ry/e x 1/2 x 7 = 0.77595 Ha total; sigma 0.000002 x 1/2 x 7 = 7e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#69"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_2",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": 0.7763105
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 2.0, column 'EIBVMC' (journal text line 416; arXiv text line 506)",
+   "reported_as": "0.221803(3) Ry per particle",
+   "conversion": "0.221803 Ry/e x 1/2 x 7 = 0.7763105 Ha total; sigma 0.000003 x 1/2 x 7 = 1.05e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 2; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#70"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_2",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": 0.776153
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 2.0, column 'EIBDMC' (journal text line 416; arXiv text line 506)",
+   "reported_as": "0.221758(4) Ry per particle",
+   "conversion": "0.221758 Ry/e x 1/2 x 7 = 0.776153 Ha total; sigma 0.000004 x 1/2 x 7 = 1.4e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 2; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#71"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_20",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.2258823
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 20.0, column 'WAP-Net (nd = 1)' (journal text line 419; arXiv text line 509)",
+   "reported_as": "-0.0645378(2) Ry per particle",
+   "conversion": "-0.0645378 Ry/e x 1/2 x 7 = -0.2258823 Ha total; sigma 0.0000002 x 1/2 x 7 = 7e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#72"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_20",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.22588265
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 20.0, column 'WAP-Net (nd = 8)' (journal text line 419; arXiv text line 509)",
+   "reported_as": "-0.0645379(3) Ry per particle",
+   "conversion": "-0.0645379 Ry/e x 1/2 x 7 = -0.22588265 Ha total; sigma 0.0000003 x 1/2 x 7 = 1.05e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#73"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_20",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.22568805
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 20.0, column 'EIBVMC' (journal text line 419; arXiv text line 509)",
+   "reported_as": "-0.0644823(3) Ry per particle",
+   "conversion": "-0.0644823 Ry/e x 1/2 x 7 = -0.22568805 Ha total; sigma 0.0000003 x 1/2 x 7 = 1.05e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 20; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#74"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_20",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.2258655
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 20.0, column 'EIBDMC' (journal text line 419; arXiv text line 509)",
+   "reported_as": "-0.064533(4) Ry per particle",
+   "conversion": "-0.064533 Ry/e x 1/2 x 7 = -0.2258655 Ha total; sigma 0.000004 x 1/2 x 7 = 1.4e-05",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 20; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#75"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_5",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.4648875
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 5.0, column 'WAP-Net (nd = 1)' (journal text line 417; arXiv text line 507)",
+   "reported_as": "-0.132825(2) Ry per particle",
+   "conversion": "-0.132825 Ry/e x 1/2 x 7 = -0.4648875 Ha total; sigma 0.000002 x 1/2 x 7 = 7e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#76"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_5",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.4649575
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 5.0, column 'WAP-Net (nd = 8)' (journal text line 417; arXiv text line 507)",
+   "reported_as": "-0.132845(1) Ry per particle",
+   "conversion": "-0.132845 Ry/e x 1/2 x 7 = -0.4649575 Ha total; sigma 0.000001 x 1/2 x 7 = 3.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#77"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_5",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.4647055
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 5.0, column 'EIBVMC' (journal text line 417; arXiv text line 507)",
+   "reported_as": "-0.132773(1) Ry per particle",
+   "conversion": "-0.132773 Ry/e x 1/2 x 7 = -0.4647055 Ha total; sigma 0.000001 x 1/2 x 7 = 3.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 5; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#78"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_5",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.4648385
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 5.0, column 'EIBDMC' (journal text line 417; arXiv text line 507)",
+   "reported_as": "-0.132811(1) Ry per particle",
+   "conversion": "-0.132811 Ry/e x 1/2 x 7 = -0.4648385 Ha total; sigma 0.000001 x 1/2 x 7 = 3.5e-06",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 5; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#79"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_50",
+    "method": "WAP-net (n_d = 1)",
+    "energy": -0.10262623
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 50.0, column 'WAP-Net (nd = 1)' (journal text line 420; arXiv text line 510)",
+   "reported_as": "-0.02932178(3) Ry per particle",
+   "conversion": "-0.02932178 Ry/e x 1/2 x 7 = -0.10262623 Ha total; sigma 0.00000003 x 1/2 x 7 = 1.05e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance; record row",
+   "source_entry": "SP4-arxiv-2202-04622#80"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_50",
+    "method": "WAP-net (n_d = 8)",
+    "energy": -0.102625635
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 50.0, column 'WAP-Net (nd = 8)' (journal text line 420; arXiv text line 510)",
+   "reported_as": "-0.02932161(4) Ry per particle",
+   "conversion": "-0.02932161 Ry/e x 1/2 x 7 = -0.102625635 Ha total; sigma 0.00000004 x 1/2 x 7 = 1.4e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#81"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_50",
+    "method": "IB-VMC (iterative backflow, single determinant)",
+    "energy": -0.10253495
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 50.0, column 'EIBVMC' (journal text line 420; arXiv text line 510)",
+   "reported_as": "-0.0292957(1) Ry per particle",
+   "conversion": "-0.0292957 Ry/e x 1/2 x 7 = -0.10253495 Ha total; sigma 0.0000001 x 1/2 x 7 = 3.5e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 50; bound_type variational (VMC energy of an explicit wave function); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#82"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_7_P_7_0_50",
+    "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+    "energy": -0.1026228
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. B 107, 235139 (2023) publisher PDF (journals.aps.org, fetched 2026-10-19) and arXiv:2202.04622v3 PDF (qmbl/sources), both pypdf layout mode; Table III parsed by script, all 84 cells identical in the two versions",
+   "location": "Table III, block 'Ne = 7 (spin-polarised)', row rs = 50.0, column 'EIBDMC' (journal text line 420; arXiv text line 510)",
+   "reported_as": "-0.0293208(2) Ry per particle",
+   "conversion": "-0.0293208 Ry/e x 1/2 x 7 = -0.1026228 Ha total; sigma 0.0000002 x 1/2 x 7 = 7e-07",
+   "note": "sc cubic box, periodic (Gamma), Ewald sum with Madelung term added (Sec. III A); N_up = 7, N_dn = 0; rs = 50; bound_type projected (fixed-node DMC on the IB trial state); own computation; sigma = standard error of the mean (caption); no variance printed; journal and arXiv agree; no duplicate row on the instance",
+   "source_entry": "SP4-arxiv-2202-04622#83"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.2",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": 1192.87809
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 704), journal SM Table V, row rs = 0.2, column 'FermiNet'",
+   "reported_as": "44.18067(2) Ha per electron",
+   "conversion": "44.18067 * 27 = 1192.87809; sigma 0.00002 * 27 = 0.00054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 7747.",
+   "source_entry": "SP5-arxiv-2202-05183#0"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.2",
+    "method": "SJB-VMC (gas)",
+    "energy": 1192.92345
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 704), journal SM Table V, row rs = 0.2, column 'SJB-VMC Gas'",
+   "reported_as": "44.18235(4) Ha per electron",
+   "conversion": "44.18235 * 27 = 1192.92345; sigma 0.00004 * 27 = 0.00108",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 7779.",
+   "source_entry": "SP5-arxiv-2202-05183#1"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.2",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": 1192.92048
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 704), journal SM Table V, row rs = 0.2, column 'SJB-DMC Gas'",
+   "reported_as": "44.18224(1) Ha per electron",
+   "conversion": "44.18224 * 27 = 1192.92048; sigma 0.00001 * 27 = 0.00027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 7811.",
+   "source_entry": "SP5-arxiv-2202-05183#2"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.2",
+    "method": "SJB-VMC (crystal)",
+    "energy": 1192.990005
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 704), journal SM Table V, row rs = 0.2, column 'SJB-VMC Crystal'",
+   "reported_as": "44.184815(4) Ha per electron",
+   "conversion": "44.184815 * 27 = 1192.990005; sigma 0.000004 * 27 = 0.000108",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 7843.",
+   "source_entry": "SP5-arxiv-2202-05183#3"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.2",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": 1192.98636
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 704), journal SM Table V, row rs = 0.2, column 'SJB-DMC Crystal'",
+   "reported_as": "44.18468(3) Ha per electron",
+   "conversion": "44.18468 * 27 = 1192.98636; sigma 0.00003 * 27 = 0.00081",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 7875.",
+   "source_entry": "SP5-arxiv-2202-05183#4"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.5",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": 170.605008
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 705), journal SM Table V, row rs = 0.5, column 'FermiNet'",
+   "reported_as": "6.318704(2) Ha per electron",
+   "conversion": "6.318704 * 27 = 170.605008; sigma 0.000002 * 27 = 0.000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 7907.",
+   "source_entry": "SP5-arxiv-2202-05183#5"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.5",
+    "method": "SJB-VMC (gas)",
+    "energy": 170.63541
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 705), journal SM Table V, row rs = 0.5, column 'SJB-VMC Gas'",
+   "reported_as": "6.31983(2) Ha per electron",
+   "conversion": "6.31983 * 27 = 170.63541; sigma 0.00002 * 27 = 0.00054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 7939.",
+   "source_entry": "SP5-arxiv-2202-05183#6"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.5",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": 170.633358
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 705), journal SM Table V, row rs = 0.5, column 'SJB-DMC Gas'",
+   "reported_as": "6.319754(7) Ha per electron",
+   "conversion": "6.319754 * 27 = 170.633358; sigma 0.000007 * 27 = 0.000189",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 7971.",
+   "source_entry": "SP5-arxiv-2202-05183#7"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.5",
+    "method": "SJB-VMC (crystal)",
+    "energy": 170.69643
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 705), journal SM Table V, row rs = 0.5, column 'SJB-VMC Crystal'",
+   "reported_as": "6.322090(8) Ha per electron",
+   "conversion": "6.32209 * 27 = 170.69643; sigma 0.000008 * 27 = 0.000216",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8003.",
+   "source_entry": "SP5-arxiv-2202-05183#8"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_0.5",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": 170.6751
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 705), journal SM Table V, row rs = 0.5, column 'SJB-DMC Crystal'",
+   "reported_as": "6.32130(6) Ha per electron",
+   "conversion": "6.3213 * 27 = 170.6751; sigma 0.00006 * 27 = 0.00162",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8035.",
+   "source_entry": "SP5-arxiv-2202-05183#9"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_1",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": 34.061769
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 706), journal SM Table V, row rs = 1.0, column 'FermiNet'",
+   "reported_as": "1.261547(1) Ha per electron",
+   "conversion": "1.261547 * 27 = 34.061769; sigma 0.000001 * 27 = 0.000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8067.",
+   "source_entry": "SP5-arxiv-2202-05183#10"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_1",
+    "method": "SJB-VMC (gas)",
+    "energy": 34.074594
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 706), journal SM Table V, row rs = 1.0, column 'SJB-VMC Gas'",
+   "reported_as": "1.262022(8) Ha per electron",
+   "conversion": "1.262022 * 27 = 34.074594; sigma 0.000008 * 27 = 0.000216",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8099.",
+   "source_entry": "SP5-arxiv-2202-05183#11"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_1",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": 34.073325
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 706), journal SM Table V, row rs = 1.0, column 'SJB-DMC Gas'",
+   "reported_as": "1.261975(2) Ha per electron",
+   "conversion": "1.261975 * 27 = 34.073325; sigma 0.000002 * 27 = 0.000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8131.",
+   "source_entry": "SP5-arxiv-2202-05183#12"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_1",
+    "method": "SJB-VMC (crystal)",
+    "energy": 34.09722
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 706), journal SM Table V, row rs = 1.0, column 'SJB-VMC Crystal'",
+   "reported_as": "1.26286(1) Ha per electron",
+   "conversion": "1.26286 * 27 = 34.09722; sigma 0.00001 * 27 = 0.00027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8163.",
+   "source_entry": "SP5-arxiv-2202-05183#13"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_1",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": 34.08858
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 706), journal SM Table V, row rs = 1.0, column 'SJB-DMC Crystal'",
+   "reported_as": "1.26254(2) Ha per electron",
+   "conversion": "1.26254 * 27 = 34.08858; sigma 0.00002 * 27 = 0.00054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8195.",
+   "source_entry": "SP5-arxiv-2202-05183#14"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_10",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": -1.35864
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 710), journal SM Table V, row rs = 10.0, column 'FermiNet'",
+   "reported_as": "−0.050320(5) Ha per electron",
+   "conversion": "-0.05032 * 27 = -1.35864; sigma 0.000005 * 27 = 0.000135",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8707.",
+   "source_entry": "SP5-arxiv-2202-05183#15"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_10",
+    "method": "SJB-VMC (gas)",
+    "energy": -1.3540527
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 710), journal SM Table V, row rs = 10.0, column 'SJB-VMC Gas'",
+   "reported_as": "−0.0501501(6) Ha per electron",
+   "conversion": "-0.0501501 * 27 = -1.3540527; sigma 6e-7 * 27 = 0.0000162",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8739.",
+   "source_entry": "SP5-arxiv-2202-05183#16"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_10",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": -1.3555026
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 710), journal SM Table V, row rs = 10.0, column 'SJB-DMC Gas'",
+   "reported_as": "−0.0502038(1) Ha per electron",
+   "conversion": "-0.0502038 * 27 = -1.3555026; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8771.",
+   "source_entry": "SP5-arxiv-2202-05183#17"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_10",
+    "method": "SJB-VMC (crystal)",
+    "energy": -1.3575114
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 710), journal SM Table V, row rs = 10.0, column 'SJB-VMC Crystal'",
+   "reported_as": "−0.0502782(7) Ha per electron",
+   "conversion": "-0.0502782 * 27 = -1.3575114; sigma 7e-7 * 27 = 0.0000189",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8803.",
+   "source_entry": "SP5-arxiv-2202-05183#18"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_10",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": -1.3590423
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 710), journal SM Table V, row rs = 10.0, column 'SJB-DMC Crystal'",
+   "reported_as": "−0.0503349(8) Ha per electron",
+   "conversion": "-0.0503349 * 27 = -1.3590423; sigma 8e-7 * 27 = 0.0000216",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8835.",
+   "source_entry": "SP5-arxiv-2202-05183#19"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_2",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": 4.106322
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 707), journal SM Table V, row rs = 2.0, column 'FermiNet'",
+   "reported_as": "0.152086(1) Ha per electron",
+   "conversion": "0.152086 * 27 = 4.106322; sigma 0.000001 * 27 = 0.000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8227.",
+   "source_entry": "SP5-arxiv-2202-05183#20"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_2",
+    "method": "SJB-VMC (gas)",
+    "energy": 4.114611
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 707), journal SM Table V, row rs = 2.0, column 'SJB-VMC Gas'",
+   "reported_as": "0.152393(3) Ha per electron",
+   "conversion": "0.152393 * 27 = 4.114611; sigma 0.000003 * 27 = 0.000081",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8259.",
+   "source_entry": "SP5-arxiv-2202-05183#21"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_2",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": 4.113288
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 707), journal SM Table V, row rs = 2.0, column 'SJB-DMC Gas'",
+   "reported_as": "0.152344(3) Ha per electron",
+   "conversion": "0.152344 * 27 = 4.113288; sigma 0.000003 * 27 = 0.000081",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8291.",
+   "source_entry": "SP5-arxiv-2202-05183#22"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_2",
+    "method": "SJB-VMC (crystal)",
+    "energy": 4.1072535
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 707), journal SM Table V, row rs = 2.0, column 'SJB-VMC Crystal'",
+   "reported_as": "0.1521205(4) Ha per electron",
+   "conversion": "0.1521205 * 27 = 4.1072535; sigma 4e-7 * 27 = 0.0000108",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8323.",
+   "source_entry": "SP5-arxiv-2202-05183#23"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_2",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": 4.106079
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 707), journal SM Table V, row rs = 2.0, column 'SJB-DMC Crystal'",
+   "reported_as": "0.152077(4) Ha per electron",
+   "conversion": "0.152077 * 27 = 4.106079; sigma 0.000004 * 27 = 0.000108",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8355.",
+   "source_entry": "SP5-arxiv-2202-05183#24"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_3",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": -0.187947
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 708), journal SM Table V, row rs = 3.0, column 'FermiNet'",
+   "reported_as": "−0.006961(2) Ha per electron",
+   "conversion": "-0.006961 * 27 = -0.187947; sigma 0.000002 * 27 = 0.000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8387.",
+   "source_entry": "SP5-arxiv-2202-05183#25"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_3",
+    "method": "SJB-VMC (gas)",
+    "energy": -0.180711
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 708), journal SM Table V, row rs = 3.0, column 'SJB-VMC Gas'",
+   "reported_as": "−0.006693(2) Ha per electron",
+   "conversion": "-0.006693 * 27 = -0.180711; sigma 0.000002 * 27 = 0.000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8419.",
+   "source_entry": "SP5-arxiv-2202-05183#26"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_3",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": -0.1820313
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 708), journal SM Table V, row rs = 3.0, column 'SJB-DMC Gas'",
+   "reported_as": "−0.0067419(7) Ha per electron",
+   "conversion": "-0.0067419 * 27 = -0.1820313; sigma 7e-7 * 27 = 0.0000189",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8451.",
+   "source_entry": "SP5-arxiv-2202-05183#27"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_3",
+    "method": "SJB-VMC (crystal)",
+    "energy": -0.186705
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 708), journal SM Table V, row rs = 3.0, column 'SJB-VMC Crystal'",
+   "reported_as": "−0.006915(2) Ha per electron",
+   "conversion": "-0.006915 * 27 = -0.186705; sigma 0.000002 * 27 = 0.000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8483.",
+   "source_entry": "SP5-arxiv-2202-05183#28"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_3",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": -0.188082
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 708), journal SM Table V, row rs = 3.0, column 'SJB-DMC Crystal'",
+   "reported_as": "−0.006966(2) Ha per electron",
+   "conversion": "-0.006966 * 27 = -0.188082; sigma 0.000002 * 27 = 0.000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8515.",
+   "source_entry": "SP5-arxiv-2202-05183#29"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_30",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": -0.608607
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 711), journal SM Table V, row rs = 30.0, column 'FermiNet'",
+   "reported_as": "−0.022541(5) Ha per electron",
+   "conversion": "-0.022541 * 27 = -0.608607; sigma 0.000005 * 27 = 0.000135",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8867.",
+   "source_entry": "SP5-arxiv-2202-05183#30"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_30",
+    "method": "SJB-VMC (gas)",
+    "energy": -0.606177
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 711), journal SM Table V, row rs = 30.0, column 'SJB-VMC Gas'",
+   "reported_as": "−0.0224510(2) Ha per electron",
+   "conversion": "-0.022451 * 27 = -0.606177; sigma 2e-7 * 27 = 0.0000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8899.",
+   "source_entry": "SP5-arxiv-2202-05183#31"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_30",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": -0.6074649
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 711), journal SM Table V, row rs = 30.0, column 'SJB-DMC Gas'",
+   "reported_as": "−0.02249870(5) Ha per electron",
+   "conversion": "-0.0224987 * 27 = -0.6074649; sigma 5e-8 * 27 = 0.00000135",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8931.",
+   "source_entry": "SP5-arxiv-2202-05183#32"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_30",
+    "method": "SJB-VMC (crystal)",
+    "energy": -0.6078213
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 711), journal SM Table V, row rs = 30.0, column 'SJB-VMC Crystal'",
+   "reported_as": "−0.0225119(3) Ha per electron",
+   "conversion": "-0.0225119 * 27 = -0.6078213; sigma 3e-7 * 27 = 0.0000081",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8963.",
+   "source_entry": "SP5-arxiv-2202-05183#33"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_30",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": -0.609174
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 711), journal SM Table V, row rs = 30.0, column 'SJB-DMC Crystal'",
+   "reported_as": "−0.0225620(2) Ha per electron",
+   "conversion": "-0.022562 * 27 = -0.609174; sigma 2e-7 * 27 = 0.0000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8995.",
+   "source_entry": "SP5-arxiv-2202-05183#34"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_5",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": -1.557657
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 709), journal SM Table V, row rs = 5.0, column 'FermiNet'",
+   "reported_as": "−0.057691(4) Ha per electron",
+   "conversion": "-0.057691 * 27 = -1.557657; sigma 0.000004 * 27 = 0.000108",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8547.",
+   "source_entry": "SP5-arxiv-2202-05183#35"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_5",
+    "method": "SJB-VMC (gas)",
+    "energy": -1.551231
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 709), journal SM Table V, row rs = 5.0, column 'SJB-VMC Gas'",
+   "reported_as": "−0.057453(1) Ha per electron",
+   "conversion": "-0.057453 * 27 = -1.551231; sigma 0.000001 * 27 = 0.000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8579.",
+   "source_entry": "SP5-arxiv-2202-05183#36"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_5",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": -1.5525621
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 709), journal SM Table V, row rs = 5.0, column 'SJB-DMC Gas'",
+   "reported_as": "−0.0575023(4) Ha per electron",
+   "conversion": "-0.0575023 * 27 = -1.5525621; sigma 4e-7 * 27 = 0.0000108",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8611.",
+   "source_entry": "SP5-arxiv-2202-05183#37"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_5",
+    "method": "SJB-VMC (crystal)",
+    "energy": -1.5565392
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 709), journal SM Table V, row rs = 5.0, column 'SJB-VMC Crystal'",
+   "reported_as": "−0.0576496(9) Ha per electron",
+   "conversion": "-0.0576496 * 27 = -1.5565392; sigma 9e-7 * 27 = 0.0000243",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8643.",
+   "source_entry": "SP5-arxiv-2202-05183#38"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_5",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": -1.557954
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 709), journal SM Table V, row rs = 5.0, column 'SJB-DMC Crystal'",
+   "reported_as": "−0.057702(1) Ha per electron",
+   "conversion": "-0.057702 * 27 = -1.557954; sigma 0.000001 * 27 = 0.000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 8675.",
+   "source_entry": "SP5-arxiv-2202-05183#39"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_50",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": -0.390906
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 712), journal SM Table V, row rs = 50.0, column 'FermiNet'",
+   "reported_as": "−0.014478(4) Ha per electron",
+   "conversion": "-0.014478 * 27 = -0.390906; sigma 0.000004 * 27 = 0.000108",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9027.",
+   "source_entry": "SP5-arxiv-2202-05183#40"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_50",
+    "method": "SJB-VMC (gas)",
+    "energy": -0.3888891
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 712), journal SM Table V, row rs = 50.0, column 'SJB-VMC Gas'",
+   "reported_as": "−0.0144033(1) Ha per electron",
+   "conversion": "-0.0144033 * 27 = -0.3888891; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9059.",
+   "source_entry": "SP5-arxiv-2202-05183#41"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_50",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": -0.38999043
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 712), journal SM Table V, row rs = 50.0, column 'SJB-DMC Gas'",
+   "reported_as": "−0.01444409(5) Ha per electron",
+   "conversion": "-0.01444409 * 27 = -0.38999043; sigma 5e-8 * 27 = 0.00000135",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9091.",
+   "source_entry": "SP5-arxiv-2202-05183#42"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_50",
+    "method": "SJB-VMC (crystal)",
+    "energy": -0.3902256
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 712), journal SM Table V, row rs = 50.0, column 'SJB-VMC Crystal'",
+   "reported_as": "−0.0144528(1) Ha per electron",
+   "conversion": "-0.0144528 * 27 = -0.3902256; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9123.",
+   "source_entry": "SP5-arxiv-2202-05183#43"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_50",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": -0.3912786
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 712), journal SM Table V, row rs = 50.0, column 'SJB-DMC Crystal'",
+   "reported_as": "−0.0144918(1) Ha per electron",
+   "conversion": "-0.0144918 * 27 = -0.3912786; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9155.",
+   "source_entry": "SP5-arxiv-2202-05183#44"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_70",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": -0.288711
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 713), journal SM Table V, row rs = 70.0, column 'FermiNet'",
+   "reported_as": "−0.010693(3) Ha per electron",
+   "conversion": "-0.010693 * 27 = -0.288711; sigma 0.000003 * 27 = 0.000081",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9187.",
+   "source_entry": "SP5-arxiv-2202-05183#45"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_70",
+    "method": "SJB-VMC (gas)",
+    "energy": -0.2871585
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 713), journal SM Table V, row rs = 70.0, column 'SJB-VMC Gas'",
+   "reported_as": "−0.0106355(1) Ha per electron",
+   "conversion": "-0.0106355 * 27 = -0.2871585; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9219.",
+   "source_entry": "SP5-arxiv-2202-05183#46"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_70",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": -0.2881845
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 713), journal SM Table V, row rs = 70.0, column 'SJB-DMC Gas'",
+   "reported_as": "−0.0106735(1) Ha per electron",
+   "conversion": "-0.0106735 * 27 = -0.2881845; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9251.",
+   "source_entry": "SP5-arxiv-2202-05183#47"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_70",
+    "method": "SJB-VMC (crystal)",
+    "energy": -0.2884248
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 713), journal SM Table V, row rs = 70.0, column 'SJB-VMC Crystal'",
+   "reported_as": "−0.0106824(1) Ha per electron",
+   "conversion": "-0.0106824 * 27 = -0.2884248; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9283.",
+   "source_entry": "SP5-arxiv-2202-05183#48"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_70",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": -0.2892186
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 713), journal SM Table V, row rs = 70.0, column 'SJB-DMC Crystal'",
+   "reported_as": "−0.0107118(1) Ha per electron",
+   "conversion": "-0.0107118 * 27 = -0.2892186; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9315.",
+   "source_entry": "SP5-arxiv-2202-05183#49"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "FermiNet (16 dense determinants)",
+    "energy": -0.229392
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 714), journal SM Table V, row rs = 90.0, column 'FermiNet'",
+   "reported_as": "−0.008496(1) Ha per electron",
+   "conversion": "-0.008496 * 27 = -0.229392; sigma 0.000001 * 27 = 0.000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. FermiNet: 4 layers 512/64, 16 determinants (dense and block coincide for a fully polarized system), 5e4 frozen-parameter samples, reblocked SE; complex wave function for rs <= 1. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9347.",
+   "source_entry": "SP5-arxiv-2202-05183#50"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-VMC (gas)",
+    "energy": -0.2275479
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 714), journal SM Table V, row rs = 90.0, column 'SJB-VMC Gas'",
+   "reported_as": "−0.0084277(1) Ha per electron",
+   "conversion": "-0.0084277 * 27 = -0.2275479; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9379.",
+   "source_entry": "SP5-arxiv-2202-05183#51"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-DMC (gas trial state)",
+    "energy": -0.2291274
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 714), journal SM Table V, row rs = 90.0, column 'SJB-DMC Gas'",
+   "reported_as": "−0.0084862(1) Ha per electron",
+   "conversion": "-0.0084862 * 27 = -0.2291274; sigma 1e-7 * 27 = 0.0000027",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9411.",
+   "source_entry": "SP5-arxiv-2202-05183#52"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-VMC (crystal)",
+    "energy": -0.22930398
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 714), journal SM Table V, row rs = 90.0, column 'SJB-VMC Crystal'",
+   "reported_as": "−0.00849274(7) Ha per electron",
+   "conversion": "-0.00849274 * 27 = -0.22930398; sigma 7e-8 * 27 = 0.00000189",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type variational agrees. arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9443.",
+   "source_entry": "SP5-arxiv-2202-05183#53"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-DMC (crystal trial state)",
+    "energy": -0.2298699
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "arXiv v3 Supplementary Table IV (layout text line 714), journal SM Table V, row rs = 90.0, column 'SJB-DMC Crystal'",
+   "reported_as": "−0.0085137(2) Ha per electron",
+   "conversion": "-0.0085137 * 27 = -0.2298699; sigma 2e-7 * 27 = 0.0000054",
+   "note": "Spin-polarized N = 27 (N_up 27, N_dn 0) in a bcc simulation cell, periodic (Ewald), Gamma not stated but no twist is mentioned anywhere; Madelung convention fixed by the N = 14 E_HF check (journal SM Table IV agrees with QMBL's hf.mjs to <= 5.5e-6 Ha total); QMBL's bcc HF energy (open shell) lies above this value at every rs checked (0.2, 1, 10, 90), while sc lies below it at rs = 1, which confirms the bcc cell. Own computation (FermiNet: own JAX code; SJB: own CASINO runs). bound_type projected agrees (fixed-node DMC on an SJB trial state, extrapolated to zero time step per the SM). arXiv v2, v3 and the journal SM print the same cell; arXiv v1 has no N = 27 table. Loader row: sweep-rows-2026-10-16-heg.json line 9475.",
+   "source_entry": "SP5-arxiv-2202-05183#54"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "FermiNet (1 block determinant, N = 14 table)",
+    "energy": 47.7802115042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2202.05183v3 PDF (identical to qmbl/sources/2202.05183.pdf, md5 f5fdc979), pypdf layout mode, re-extracted by this reader; v1/v2 also extracted; journal PRL 130, 036401 PDF (pypdf layout) and its Supplemental Material (image-only PDF, tesseract OCR at 400 dpi plus a visual check)",
+   "location": "Supplementary Table III (block determinants) (arXiv v3 layout text line 672; journal Table I / SM Table III identical), row 'Block ndet = 1', column rs = 0.5",
+   "reported_as": "E_c = -0.58831(7) Ha (total)",
+   "conversion": "E = 14 * E_HF(QMBL hf.mjs, 3.454894393156926) + E_c = 48.3685215042 + (-0.58831) = 47.7802115042 (stored 47.7802115042); with the paper's own E_HF (journal SM Table IV, 48.368516) the total is 47.7802060, 5.50 microHa away",
+   "note": "Spin-unpolarized N = 14 (7+7), simple cubic cell, Gamma (closed shell; i-FCIQMC benchmark geometry), Ewald with the Madelung term (paper Eq. 1; journal SM Table IV prints E_HF = 48.368516 Ha total, QMBL's 14 x hf.mjs = 48.3685215). The journal SM states the authors computed total energies and subtracted these E_HF. bound_type variational agrees. Own computation. arXiv v1, v2, v3 and journal print the same cell.",
+   "source_entry": "SP5-arxiv-2202-05183#59"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "CCD, complete-basis limit",
+    "energy": 47.77892
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 0.5, column CCD (k_c = 1 in units of 2π/L)",
+   "reported_as": "3.41278 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "3.41278 × 14 = 47.77892",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 3.454894 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#0"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "DCD, complete-basis limit",
+    "energy": 47.77528
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 0.5, column DCD (k_c = 1 in units of 2π/L)",
+   "reported_as": "3.41252 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "3.41252 × 14 = 47.77528",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 3.454894 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#1"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "TC-CCD (k_c = 1), complete-basis limit",
+    "energy": 47.77612
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 0.5, column TC-CCD (k_c = 1 in units of 2π/L)",
+   "reported_as": "3.41258 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "3.41258 × 14 = 47.77612",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed 1 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 3.454894 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#2"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "TC-DCD (k_c = 1), complete-basis limit",
+    "energy": 47.77416
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 0.5, column TC-DCD (k_c = 1 in units of 2π/L)",
+   "reported_as": "3.41244 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "3.41244 × 14 = 47.77416",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed 1 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 3.454894 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#3"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "CCD, complete-basis limit",
+    "energy": 7.9765
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 1, column CCD (k_c = 1 in units of 2π/L)",
+   "reported_as": "0.56975 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "0.56975 × 14 = 7.9765",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.606534 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#4"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "DCD, complete-basis limit",
+    "energy": 7.96726
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 1, column DCD (k_c = 1 in units of 2π/L)",
+   "reported_as": "0.56909 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "0.56909 × 14 = 7.96726",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.606534 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#5"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "TC-CCD (k_c = 1), complete-basis limit",
+    "energy": 7.96474
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 1, column TC-CCD (k_c = 1 in units of 2π/L)",
+   "reported_as": "0.56891 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "0.56891 × 14 = 7.96474",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed 1 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.606534 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#6"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "TC-DCD (k_c = 1), complete-basis limit",
+    "energy": 7.96026
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 1, column TC-DCD (k_c = 1 in units of 2π/L)",
+   "reported_as": "0.56859 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "0.56859 × 14 = 7.96026",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed 1 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.606534 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#7"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "CCD, complete-basis limit",
+    "energy": -0.71918
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 10, column CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.05137 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.05137 × 14 = -0.71918",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.040229 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance. arXiv:1310.6806's full-CCD CBS row on this instance (stored -0.0513716 Ha/e) agrees to the printed digits; it is an independent computation of the same method, not a quote, so not a duplicate.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#8"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "DCD, complete-basis limit",
+    "energy": -0.74046
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 10, column DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.05289 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.05289 × 14 = -0.74046",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.040229 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#9"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "TC-CCD (k_c = √2), complete-basis limit",
+    "energy": -0.7588
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 10, column TC-CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.05420 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.05420 × 14 = -0.7588",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.040229 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#10"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "TC-DCD (k_c = √2), complete-basis limit",
+    "energy": -0.77126
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 10, column TC-DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.05509 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.05509 × 14 = -0.77126",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.040229 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#11"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "CCD, complete-basis limit",
+    "energy": -0.08722
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 2, column CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.00623 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.00623 × 14 = -0.08722",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.023039 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#12"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "DCD, complete-basis limit",
+    "energy": -0.10472
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 2, column DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.00748 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.00748 × 14 = -0.10472",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.023039 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#13"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "TC-CCD (k_c = √2), complete-basis limit",
+    "energy": -0.09898
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 2, column TC-CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.00707 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.00707 × 14 = -0.09898",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.023039 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#14"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "TC-DCD (k_c = √2), complete-basis limit",
+    "energy": -0.112
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 2, column TC-DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.00800 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.00800 × 14 = -0.112",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.023039 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#15"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "CCD, complete-basis limit",
+    "energy": -0.40936
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 20, column CCD (k_c = 2 in units of 2π/L)",
+   "reported_as": "−0.02924 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.02924 × 14 = -0.40936",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.022917 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#16"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "DCD, complete-basis limit",
+    "energy": -0.4249
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 20, column DCD (k_c = 2 in units of 2π/L)",
+   "reported_as": "−0.03035 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.03035 × 14 = -0.4249",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.022917 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#17"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "TC-CCD (k_c = 2), complete-basis limit",
+    "energy": -0.43904
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 20, column TC-CCD (k_c = 2 in units of 2π/L)",
+   "reported_as": "−0.03136 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.03136 × 14 = -0.43904",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed 2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.022917 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#18"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "TC-DCD (k_c = 2), complete-basis limit",
+    "energy": -0.44814
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 20, column TC-DCD (k_c = 2 in units of 2π/L)",
+   "reported_as": "−0.03201 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.03201 × 14 = -0.44814",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed 2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.022917 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#19"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "CCD, complete-basis limit",
+    "energy": -1.06652
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 5, column CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.07618 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.07618 × 14 = -1.06652",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.058039 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#20"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "DCD, complete-basis limit",
+    "energy": -1.09032
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 5, column DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.07788 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.07788 × 14 = -1.09032",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.058039 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#21"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "TC-CCD (k_c = √2), complete-basis limit",
+    "energy": -1.09424
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 5, column TC-CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.07816 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.07816 × 14 = -1.09424",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.058039 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#22"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "TC-DCD (k_c = √2), complete-basis limit",
+    "energy": -1.11006
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 5, column TC-DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "−0.07929 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.07929 × 14 = -1.11006",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.058039 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#23"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "CCD, complete-basis limit",
+    "energy": -0.17654
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 50, column CCD (k_c = √6 in units of 2π/L)",
+   "reported_as": "−0.01261 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01261 × 14 = -0.17654",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.009839 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#24"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "DCD, complete-basis limit",
+    "energy": -0.18522
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 50, column DCD (k_c = √6 in units of 2π/L)",
+   "reported_as": "−0.01323 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01323 × 14 = -0.18522",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.009839 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#25"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "TC-CCD (k_c = √6), complete-basis limit",
+    "energy": -0.189
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 50, column TC-CCD (k_c = √6 in units of 2π/L)",
+   "reported_as": "−0.01350 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01350 × 14 = -0.189",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed √6 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.009839 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#26"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "TC-DCD (k_c = √6), complete-basis limit",
+    "energy": -0.19376
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table I (14 electrons), row rs = 50, column TC-DCD (k_c = √6 in units of 2π/L)",
+   "reported_as": "−0.01384 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01384 × 14 = -0.19376",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 7+7; Madelung included per caption; k_c printed √6 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.009839 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#27"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "CCD, complete-basis limit",
+    "energy": 173.92266
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 0.5, column CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "3.22079 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "3.22079 × 54 = 173.92266",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 3.265329 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#28"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "DCD, complete-basis limit",
+    "energy": 173.90808
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 0.5, column DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "3.22052 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "3.22052 × 54 = 173.90808",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 3.265329 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#29"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "TC-CCD (k_c = √2), complete-basis limit",
+    "energy": 173.92158
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 0.5, column TC-CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "3.22077 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "3.22077 × 54 = 173.92158",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 3.265329 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#30"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "TC-DCD (k_c = √2), complete-basis limit",
+    "energy": 173.91834
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 0.5, column TC-DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "3.22071 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "3.22071 × 54 = 173.91834",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 3.265329 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#31"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "CCD, complete-basis limit",
+    "energy": 28.65726
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 1, column CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "0.53069 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "0.53069 × 54 = 28.65726",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.569245 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#32"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "DCD, complete-basis limit",
+    "energy": 28.62054
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 1, column DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "0.53001 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "0.53001 × 54 = 28.62054",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.569245 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#33"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "TC-CCD (k_c = √2), complete-basis limit",
+    "energy": 28.61028
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 1, column TC-CCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "0.52982 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "0.52982 × 54 = 28.61028",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.569245 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#34"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "TC-DCD (k_c = √2), complete-basis limit",
+    "energy": 28.60272
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 1, column TC-DCD (k_c = √2 in units of 2π/L)",
+   "reported_as": "0.52968 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "0.52968 × 54 = 28.60272",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed √2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.569245 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#35"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "CCD, complete-basis limit",
+    "energy": -2.70864
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 10, column CCD (k_c = 2√2 in units of 2π/L)",
+   "reported_as": "−0.05016 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.05016 × 54 = -2.70864",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.038783 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#36"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "DCD, complete-basis limit",
+    "energy": -2.78478
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 10, column DCD (k_c = 2√2 in units of 2π/L)",
+   "reported_as": "−0.05157 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.05157 × 54 = -2.78478",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.038783 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#37"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "TC-CCD (k_c = 2√2), complete-basis limit",
+    "energy": -2.8242
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 10, column TC-CCD (k_c = 2√2 in units of 2π/L)",
+   "reported_as": "−0.05230 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.05230 × 54 = -2.8242",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed 2√2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.038783 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#38"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "TC-DCD (k_c = 2√2), complete-basis limit",
+    "energy": -2.87388
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 10, column TC-DCD (k_c = 2√2 in units of 2π/L)",
+   "reported_as": "−0.05322 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.05322 × 54 = -2.87388",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed 2√2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.038783 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#39"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "CCD, complete-basis limit",
+    "energy": -0.62748
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 2, column CCD (k_c = 2 in units of 2π/L)",
+   "reported_as": "−0.01162 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01162 × 54 = -0.62748",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.018767 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#40"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "DCD, complete-basis limit",
+    "energy": -0.69444
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 2, column DCD (k_c = 2 in units of 2π/L)",
+   "reported_as": "−0.01286 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01286 × 54 = -0.69444",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.018767 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#41"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "TC-CCD (k_c = 2), complete-basis limit",
+    "energy": -0.71496
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 2, column TC-CCD (k_c = 2 in units of 2π/L)",
+   "reported_as": "−0.01324 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01324 × 54 = -0.71496",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed 2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.018767 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#42"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "TC-DCD (k_c = 2), complete-basis limit",
+    "energy": -0.74466
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 2, column TC-DCD (k_c = 2 in units of 2π/L)",
+   "reported_as": "−0.01379 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01379 × 54 = -0.74466",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed 2 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF 0.018767 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#43"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "CCD, complete-basis limit",
+    "energy": -1.53684
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 20, column CCD (k_c = 3 in units of 2π/L)",
+   "reported_as": "−0.02846 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.02846 × 54 = -1.53684",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.022050 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#44"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "DCD, complete-basis limit",
+    "energy": -1.5795
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 20, column DCD (k_c = 3 in units of 2π/L)",
+   "reported_as": "−0.02925 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.02925 × 54 = -1.5795",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.022050 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#45"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "TC-CCD (k_c = 3), complete-basis limit",
+    "energy": -1.6497
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 20, column TC-CCD (k_c = 3 in units of 2π/L)",
+   "reported_as": "−0.03055 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.03055 × 54 = -1.6497",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed 3 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.022050 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#46"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "TC-DCD (k_c = 3), complete-basis limit",
+    "energy": -1.68102
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 20, column TC-DCD (k_c = 3 in units of 2π/L)",
+   "reported_as": "−0.03113 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.03113 × 54 = -1.68102",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed 3 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.022050 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#47"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "CCD, complete-basis limit",
+    "energy": -4.04568
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 5, column CCD (k_c = √5 in units of 2π/L)",
+   "reported_as": "−0.07492 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.07492 × 54 = -4.04568",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.056298 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#48"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "DCD, complete-basis limit",
+    "energy": -4.1337
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 5, column DCD (k_c = √5 in units of 2π/L)",
+   "reported_as": "−0.07655 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.07655 × 54 = -4.1337",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.056298 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#49"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "TC-CCD (k_c = √5), complete-basis limit",
+    "energy": -4.185
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 5, column TC-CCD (k_c = √5 in units of 2π/L)",
+   "reported_as": "−0.07750 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.07750 × 54 = -4.185",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed √5 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.056298 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#50"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "TC-DCD (k_c = √5), complete-basis limit",
+    "energy": -4.23198
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 5, column TC-DCD (k_c = √5 in units of 2π/L)",
+   "reported_as": "−0.07837 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.07837 × 54 = -4.23198",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed √5 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.056298 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#51"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_50",
+    "method": "CCD, complete-basis limit",
+    "energy": -0.66042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 50, column CCD (k_c = 4 in units of 2π/L)",
+   "reported_as": "−0.01223 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01223 × 54 = -0.66042",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.009458 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#52"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_50",
+    "method": "DCD, complete-basis limit",
+    "energy": -0.68418
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 50, column DCD (k_c = 4 in units of 2π/L)",
+   "reported_as": "−0.01267 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01267 × 54 = -0.68418",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.009458 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#53"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_50",
+    "method": "TC-CCD (k_c = 4), complete-basis limit",
+    "energy": -0.68202
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 50, column TC-CCD (k_c = 4 in units of 2π/L)",
+   "reported_as": "−0.01263 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01263 × 54 = -0.68202",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed 4 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.009458 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#54"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_50",
+    "method": "TC-DCD (k_c = 4), complete-basis limit",
+    "energy": -0.69174
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2103.03176v1 PDF and Phys. Rev. Research 3, 033072 (2021) publisher PDF (journals.aps.org, open access), both pypdf layout mode; second independent reading",
+   "location": "Table II (54 electrons), row rs = 50, column TC-DCD (k_c = 4 in units of 2π/L)",
+   "reported_as": "−0.01281 Ha/electron (\"Total energy (Ha/electron), including the Madelung constant\"; arXiv prints \"a.u./electron\")",
+   "conversion": "-0.01281 × 54 = -0.69174",
+   "note": "Journal and arXiv identical. Simple cubic cell, closed shell at Gamma (Fermi-sphere reference), 27+27; Madelung included per caption; k_c printed 4 matches the method string; CBS limit by linear extrapolation in 1/M from the two leftmost points (Fig. 4 caption) -> extrapolated is right. Below QMBL's HF -0.009458 Ha/e. arXiv:2103.03176 computed the CCD/DCD columns itself (Sec. III: Python/CTF code); the TC-FCIQMC and BF-DMC columns are quotes (journal caption: Refs. [40], [54]/[72]) and are not these rows. No duplicate on the instance.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#55"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_128_P_64_64_110",
+    "method": "MP-NQS (Gaussian orbitals on bcc sites)",
+    "energy": -0.9103488
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table III (N = 128, unpolarized), row rs = 110, column MP-NQS (Gauss)",
+   "reported_as": "−0.0071121(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0071121(2) × 128 = -0.9103488; sigma 2.0e-7 × 128 = 0.0000256",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.004196 Ha/e) by plausible correlation energies. N_up = N_dn = 64 is an open shell at Gamma in the sc cell (cumulative shells 57, 81); this does not affect a variational or fixed-node total energy, only E_c rows (RULES 12.3). VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#56"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_128_P_64_64_200",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.5122944
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table III (N = 128, unpolarized), row rs = 200, column MP-NQS",
+   "reported_as": "−0.0040023(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0040023(2) × 128 = -0.5122944; sigma 2.0e-7 × 128 = 0.0000256",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.002331 Ha/e) by plausible correlation energies. N_up = N_dn = 64 is an open shell at Gamma in the sc cell (cumulative shells 57, 81); this does not affect a variational or fixed-node total energy, only E_c rows (RULES 12.3). VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#58"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_128_P_64_64_200",
+    "method": "MP-NQS (Gaussian orbitals on bcc sites)",
+    "energy": -0.519872
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table III (N = 128, unpolarized), row rs = 200, column MP-NQS (Gauss)",
+   "reported_as": "−0.0040615(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0040615(1) × 128 = -0.519872; sigma 1.0e-7 × 128 = 0.0000128",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.002331 Ha/e) by plausible correlation energies. N_up = N_dn = 64 is an open shell at Gamma in the sc cell (cumulative shells 57, 81); this does not affect a variational or fixed-node total energy, only E_c rows (RULES 12.3). VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#59"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_128_P_64_64_200",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.5110144
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table III (N = 128, unpolarized), row rs = 200, column FN-DMC",
+   "reported_as": "−0.0039923(7) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0039923(7) × 128 = -0.5110144; sigma 7.0e-7 × 128 = 0.0000896",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.002331 Ha/e) by plausible correlation energies. N_up = N_dn = 64 is an open shell at Gamma in the sc cell (cumulative shells 57, 81); this does not affect a variational or fixed-node total energy, only E_c rows (RULES 12.3). FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#60"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": 7.965538
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table I (N = 14, unpolarized), row rs = 1, column MP-NQS",
+   "reported_as": "0.568967(6) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "0.568967(6) × 14 = 7.965538; sigma 0.0000060 × 14 = 0.000084",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.606534 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#61"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.7729764
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table I (N = 14, unpolarized), row rs = 10, column MP-NQS",
+   "reported_as": "−0.0552126(6) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0552126(6) × 14 = -0.7729764; sigma 6.0e-7 × 14 = 0.0000084",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.040229 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#62"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_100",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.10822252
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table I (N = 14, unpolarized), row rs = 100, column MP-NQS",
+   "reported_as": "−0.00773018(3) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.00773018(3) × 14 = -0.10822252; sigma 3.0e-8 × 14 = 4.2e-7",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.005032 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#63"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.117474
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table I (N = 14, unpolarized), row rs = 2, column MP-NQS",
+   "reported_as": "−0.008391(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.008391(1) × 14 = -0.117474; sigma 0.0000010 × 14 = 0.000014",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.023039 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#64"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.4543742
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table I (N = 14, unpolarized), row rs = 20, column MP-NQS",
+   "reported_as": "−0.0324553(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0324553(2) × 14 = -0.4543742; sigma 2.0e-7 × 14 = 0.0000028",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.022917 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#65"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -1.1179616
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table I (N = 14, unpolarized), row rs = 5, column MP-NQS",
+   "reported_as": "−0.0798544(4) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0798544(4) × 14 = -1.1179616; sigma 4.0e-7 × 14 = 0.0000056",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.058039 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#66"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_50",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.20476834
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table I (N = 14, unpolarized), row rs = 50, column MP-NQS",
+   "reported_as": "−0.01462631(6) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.01462631(6) × 14 = -0.20476834; sigma 6.0e-8 × 14 = 8.4e-7",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.009839 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#67"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_1",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": 19.878978
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table IV (N = 19, polarized), row rs = 1, column MP-NQS",
+   "reported_as": "1.046262(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "1.046262(2) × 19 = 19.878978; sigma 0.0000020 × 19 = 0.000038",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (1.061409 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#68"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_10",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -1.0043856
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table IV (N = 19, polarized), row rs = 10, column MP-NQS",
+   "reported_as": "−0.0528624(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0528624(2) × 19 = -1.0043856; sigma 2.0e-7 × 19 = 0.0000038",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.045464 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#69"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_100",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.14664808
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table IV (N = 19, polarized), row rs = 100, column MP-NQS",
+   "reported_as": "−0.00771832(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.00771832(2) × 19 = -0.14664808; sigma 2.0e-8 × 19 = 3.8e-7",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.006062 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#70"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_2",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": 1.829833
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table IV (N = 19, polarized), row rs = 2, column MP-NQS",
+   "reported_as": "0.096307(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "0.096307(1) × 19 = 1.829833; sigma 0.0000010 × 19 = 0.000019",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.109581 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#71"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_20",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.6081919
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table IV (N = 19, polarized), row rs = 20, column MP-NQS",
+   "reported_as": "−0.0320101(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0320101(1) × 19 = -0.6081919; sigma 1.0e-7 × 19 = 0.0000019",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.026943 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#72"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_5",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -1.2777291
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table IV (N = 19, polarized), row rs = 5, column MP-NQS",
+   "reported_as": "−0.0672489(3) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0672489(3) × 19 = -1.2777291; sigma 3.0e-7 × 19 = 0.0000057",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.057237 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#73"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_19_P_19_0_50",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.27677015
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table IV (N = 19, polarized), row rs = 50, column MP-NQS",
+   "reported_as": "−0.01456685(3) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.01456685(3) × 19 = -0.27677015; sigma 3.0e-8 × 19 = 5.7e-7",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.011788 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#74"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_1",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": 28.397817
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 1, column MP-NQS",
+   "reported_as": "1.051771(4) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "1.051771(4) × 27 = 28.397817; sigma 0.0000040 × 27 = 0.000108",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (1.065452 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#75"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_1",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": 28.404
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 1, column FN-DMC",
+   "reported_as": "1.05200(3) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "1.05200(3) × 27 = 28.404; sigma 0.000030 × 27 = 0.00081",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (1.065452 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#76"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_10",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -1.4202405
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 10, column MP-NQS",
+   "reported_as": "−0.0526015(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0526015(2) × 27 = -1.4202405; sigma 2.0e-7 × 27 = 0.0000054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.045381 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#77"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_10",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -1.41858
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 10, column FN-DMC",
+   "reported_as": "−0.052540(6) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.052540(6) × 27 = -1.41858; sigma 0.0000060 × 27 = 0.000162",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.045381 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#78"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_2",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": 2.65842
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 2, column MP-NQS",
+   "reported_as": "0.098460(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "0.098460(2) × 27 = 2.65842; sigma 0.0000020 × 27 = 0.000054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.110708 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#79"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_2",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": 2.66382
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 2, column FN-DMC",
+   "reported_as": "0.09866(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "0.09866(2) × 27 = 2.66382; sigma 0.000020 × 27 = 0.00054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.110708 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#80"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_30",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.6160968
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 30, column MP-NQS",
+   "reported_as": "−0.0228184(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0228184(1) × 27 = -0.6160968; sigma 1.0e-7 × 27 = 0.0000027",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.018878 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#81"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_30",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.615816
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 30, column FN-DMC",
+   "reported_as": "−0.0228080(8) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0228080(8) × 27 = -0.615816; sigma 8.0e-7 × 27 = 0.0000216",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.018878 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#82"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_5",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -1.7969121
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 5, column MP-NQS",
+   "reported_as": "−0.0665523(6) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0665523(6) × 27 = -1.7969121; sigma 6.0e-7 × 27 = 0.0000162",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.057001 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#83"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_5",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -1.793583
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 5, column FN-DMC",
+   "reported_as": "−0.066429(4) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.066429(4) × 27 = -1.793583; sigma 0.0000040 × 27 = 0.000108",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.057001 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#84"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_50",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.39365352
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 50, column MP-NQS",
+   "reported_as": "−0.01457976(5) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.01457976(5) × 27 = -0.39365352; sigma 5.0e-8 × 27 = 0.00000135",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.011777 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#85"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_50",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.3935304
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 50, column FN-DMC",
+   "reported_as": "−0.0145752(6) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0145752(6) × 27 = -0.3935304; sigma 6.0e-7 × 27 = 0.0000162",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.011777 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#86"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_70",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.29024622
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 70, column MP-NQS",
+   "reported_as": "−0.01074986(3) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.01074986(3) × 27 = -0.29024622; sigma 3.0e-8 × 27 = 8.1e-7",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.008550 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#87"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_70",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.290223
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 70, column FN-DMC",
+   "reported_as": "−0.010749(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.010749(2) × 27 = -0.290223; sigma 0.0000020 × 27 = 0.000054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.008550 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#88"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_90",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.23035212
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 90, column MP-NQS",
+   "reported_as": "−0.00853156(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.00853156(2) × 27 = -0.23035212; sigma 2.0e-8 × 27 = 5.4e-7",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.006710 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#89"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_27_P_27_0_90",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.2303478
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table V (N = 27, polarized), row rs = 90, column FN-DMC",
+   "reported_as": "−0.0085314(5) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0085314(5) × 27 = -0.2303478; sigma 5.0e-7 × 27 = 0.0000135",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.006710 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. Fully polarized (Tables IV/V captions), N_dn = 0.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#90"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": 28.60542
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 1, column MP-NQS",
+   "reported_as": "0.52973(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "0.52973(1) × 54 = 28.60542; sigma 0.000010 × 54 = 0.00054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.569245 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#91"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": 28.67076
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 1, column FN-DMC",
+   "reported_as": "0.53094(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "0.53094(2) × 54 = 28.67076; sigma 0.000020 × 54 = 0.00108",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.569245 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#92"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -2.940192
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 10, column MP-NQS",
+   "reported_as": "−0.054448(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.054448(1) × 54 = -2.940192; sigma 0.0000010 × 54 = 0.000054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.038783 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#93"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "MP-NQS (Gaussian orbitals on bcc sites)",
+    "energy": -2.94003
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 10, column MP-NQS (Gauss)",
+   "reported_as": "−0.054445(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.054445(1) × 54 = -2.94003; sigma 0.0000010 × 54 = 0.000054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.038783 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#94"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -2.930526
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 10, column FN-DMC",
+   "reported_as": "−0.054269(8) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.054269(8) × 54 = -2.930526; sigma 0.0000080 × 54 = 0.000432",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.038783 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#95"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_100",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.4146822
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 100, column MP-NQS",
+   "reported_as": "−0.0076793(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0076793(1) × 54 = -0.4146822; sigma 1.0e-7 × 54 = 0.0000054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.004835 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#96"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_100",
+    "method": "MP-NQS (Gaussian orbitals on bcc sites)",
+    "energy": -0.41536962
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 100, column MP-NQS (Gauss)",
+   "reported_as": "−0.00769203(5) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.00769203(5) × 54 = -0.41536962; sigma 5.0e-8 × 54 = 0.0000027",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.004835 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#97"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_100",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.414396
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 100, column FN-DMC",
+   "reported_as": "−0.007674(3) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.007674(3) × 54 = -0.414396; sigma 0.0000030 × 54 = 0.000162",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.004835 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#98"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.758484
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 2, column MP-NQS",
+   "reported_as": "−0.014046(8) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.014046(8) × 54 = -0.758484; sigma 0.0000080 × 54 = 0.000432",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.018767 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#99"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "MP-NQS (Gaussian orbitals on bcc sites)",
+    "energy": -0.7506
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 2, column MP-NQS (Gauss)",
+   "reported_as": "−0.01390(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.01390(1) × 54 = -0.7506; sigma 0.000010 × 54 = 0.00054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.018767 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#100"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.71604
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 2, column FN-DMC",
+   "reported_as": "−0.01326(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.01326(2) × 54 = -0.71604; sigma 0.000020 × 54 = 0.00108",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.018767 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. With the same plane-wave nodes, arXiv:0801.0518 prints SJ-DMC -0.01311(2) (zero-time-step extrapolated); this FN-DMC is 0.15 mHa/e (5 sigma) lower. Not a transcription question; recorded in the report.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#101"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -1.7308296
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 20, column MP-NQS",
+   "reported_as": "−0.0320524(5) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0320524(5) × 54 = -1.7308296; sigma 5.0e-7 × 54 = 0.000027",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.022050 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#102"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "MP-NQS (Gaussian orbitals on bcc sites)",
+    "energy": -1.730592
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 20, column MP-NQS (Gauss)",
+   "reported_as": "−0.0320480(6) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0320480(6) × 54 = -1.730592; sigma 6.0e-7 × 54 = 0.0000324",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.022050 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#103"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -1.726704
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 20, column FN-DMC",
+   "reported_as": "−0.031976(8) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.031976(8) × 54 = -1.726704; sigma 0.0000080 × 54 = 0.000432",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.022050 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#104"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -4.27086
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 5, column MP-NQS",
+   "reported_as": "−0.079090(2) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.079090(2) × 54 = -4.27086; sigma 0.0000020 × 54 = 0.000108",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.056298 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#105"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "MP-NQS (Gaussian orbitals on bcc sites)",
+    "energy": -4.269456
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 5, column MP-NQS (Gauss)",
+   "reported_as": "−0.079064(4) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.079064(4) × 54 = -4.269456; sigma 0.0000040 × 54 = 0.000216",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.056298 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#106"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -4.24818
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 5, column FN-DMC",
+   "reported_as": "−0.07867(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.07867(1) × 54 = -4.24818; sigma 0.000010 × 54 = 0.00054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.056298 Ha/e) by plausible correlation energies. FN-DMC 'obtained using the method in Appendix E/F' (own Slater-Jastrow DMC) -> projected. The same digits as Kwon, Ceperley & Martin's SJ-DMC -0.15734(3) Ry (cond-mat/9803092 row on this instance): same plane-wave nodes, independent computation (caption: own Appendix F method), so not a duplicate.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#107"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_50",
+    "method": "MP-NQS (plane-wave orbitals)",
+    "energy": -0.783081
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 50, column MP-NQS",
+   "reported_as": "−0.0145015(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0145015(1) × 54 = -0.783081; sigma 1.0e-7 × 54 = 0.0000054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.009458 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#108"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_50",
+    "method": "MP-NQS (Gaussian orbitals on bcc sites)",
+    "energy": -0.7829946
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2305.07240v3 PDF (Appendix G) and Phys. Rev. B 110, 035108 (2024) publisher PDF (Appendix F, Tables I-V), both pypdf layout mode; second independent reading",
+   "location": "Table II (N = 54, unpolarized), row rs = 50, column MP-NQS (Gauss)",
+   "reported_as": "−0.0144999(1) Ha per particle (\"Total energy per particle in Hartree\")",
+   "conversion": "-0.0144999(1) × 54 = -0.7829946; sigma 1.0e-7 × 54 = 0.0000054",
+   "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.009458 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#109"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "DMC, SJ nodes",
+    "energy": 174.0123
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 0.5, Wfn. SJ, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "3.22245(9) a.u./electron",
+   "conversion": "3.22245(9) × 54 = 174.0123; sigma 0.000090 × 54 = 0.00486",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF 3.265329 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#113"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "DMC, BF nodes",
+    "energy": 173.94048
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 0.5, Wfn. BF, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "3.22112(4) a.u./electron",
+   "conversion": "3.22112(4) × 54 = 173.94048; sigma 0.000040 × 54 = 0.00216",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF 3.265329 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#116"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "DMC, SJ nodes",
+    "energy": 28.66806
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 1, Wfn. SJ, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "0.53089(9) a.u./electron",
+   "conversion": "0.53089(9) × 54 = 28.66806; sigma 0.000090 × 54 = 0.00486",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF 0.569245 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#119"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "DMC, BF nodes",
+    "energy": 28.61406
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 1, Wfn. BF, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "0.52989(4) a.u./electron",
+   "conversion": "0.52989(4) × 54 = 28.61406; sigma 0.000040 × 54 = 0.00216",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF 0.569245 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#122"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "DMC, SJ3 nodes",
+    "energy": -2.92977
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 10, Wfn. SJ3, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "−0.054255(3) a.u./electron",
+   "conversion": "-0.054255(3) × 54 = -2.92977; sigma 0.0000030 × 54 = 0.000162",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF -0.038783 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#126"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "DMC, BF3 nodes",
+    "energy": -2.939922
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 10, Wfn. BF3, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "−0.054443(2) a.u./electron",
+   "conversion": "-0.054443(2) × 54 = -2.939922; sigma 0.0000020 × 54 = 0.000108",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF -0.038783 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#128"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "DMC, SJ nodes",
+    "energy": -0.70794
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 2, Wfn. SJ, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "−0.01311(2) a.u./electron",
+   "conversion": "-0.01311(2) × 54 = -0.70794; sigma 0.000020 × 54 = 0.00108",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF 0.018767 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#131"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "DMC, BF nodes",
+    "energy": -0.754164
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 2, Wfn. BF, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "−0.013966(9) a.u./electron",
+   "conversion": "-0.013966(9) × 54 = -0.754164; sigma 0.0000090 × 54 = 0.000486",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF 0.018767 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#134"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "DMC, SJ3 nodes",
+    "energy": -1.726542
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 20, Wfn. SJ3, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "−0.031973(3) a.u./electron",
+   "conversion": "-0.031973(3) × 54 = -1.726542; sigma 0.0000030 × 54 = 0.000162",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF -0.022050 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#138"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "DMC, BF3 nodes",
+    "energy": -1.730538
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 20, Wfn. BF3, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "−0.032047(2) a.u./electron",
+   "conversion": "-0.032047(2) × 54 = -1.730538; sigma 0.0000020 × 54 = 0.000108",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF -0.022050 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#140"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "DMC, SJ3 nodes",
+    "energy": -4.247046
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 5, Wfn. SJ3, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "−0.078649(7) a.u./electron",
+   "conversion": "-0.078649(7) × 54 = -4.247046; sigma 0.0000070 × 54 = 0.000378",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF -0.056298 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#144"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "DMC, BF3 nodes",
+    "energy": -4.267944
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "Phys. Rev. E 74, 066701 (2006) publisher PDF (journals.aps.org) and arXiv:0801.0518v1 PDF, pypdf layout mode; second independent reading",
+   "location": "Table I (54 electrons, simple cubic cell), rs = 5, Wfn. BF3, column E_D (PRE 74, 066701 p. 3; arXiv:0801.0518v1 p. 5)",
+   "reported_as": "−0.079036(3) a.u./electron",
+   "conversion": "-0.079036(3) × 54 = -4.267944; sigma 0.0000030 × 54 = 0.000162",
+   "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF -0.056298 Ha/e. No variance is printed for DMC.",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#146"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/square_37_P_37_0_5",
+    "method": "Neural canonical transformation (ground state)",
+    "energy": -5.31801
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.03156v2 PDF, pypdf layout and plain modes; SciPost Phys. 14, 154 not read (scipost.org answers with an Anubis proof-of-work bot check, not bypassed); Tanatar & Ceperley, PRB 39, 5005 (1989) publisher PDF read for the convention; second independent reading",
+   "location": "Fig. 2(b) caption, p. 5, and Sec. 2 text p. 5 ('in the zero-temperature limit, p(K) is nonzero only for ... the closed-shell non-interacting ground state ... reduces to the usual ground-state variational Monte Carlo method')",
+   "reported_as": "−0.28746(8) (Ry per particle; 'We set the energy unit to be Rydberg')",
+   "conversion": "−0.28746 / 2 × 37 = −5.31801 Ha; sigma 0.00008 / 2 × 37 = 0.00148",
+   "note": "Record row. Eq. (2) in Ry with Ewald sum and 'const.' = neutralizing-background energy; spin polarized ('Unless otherwise specified, we will focus on the spin-polarized case'); square periodic box, k = 2πn/L, closed-shell K0 at N = 37 -> Gamma (inferred: twist averaging, 2x2 Monkhorst-Pack, is introduced only for the finite-T effective-mass runs, Appendix C). Madelung convention settled indirectly: the caption compares with Tanatar & Ceperley's N = 37 polarized rs = 5 VMC −0.2863(1) Ry (PRB 39, 5005, Table II, read here; that paper includes each electron's interaction with its own images), 1.2 mRy above; a convention without the Madelung term would differ by xi/2 = 0.072 Ry. −0.14373 Ha/e is 0.0118 Ha/e below QMBL's HF −0.1319137. T = 0 VMC of the NCT state -> variational. What the (8) is (final-state evaluation vs average over late training iterations, Fig. 2(b) is a training curve) is not stated (C7). Own computation. Only row on the instance; Tanatar-Ceperley's N = 37 number is not stored (listed in the report).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#147"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_114_P_57_57_1",
+    "method": "VMC SJ",
+    "energy": 68.8503
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 114, column rs = 1 (txt line 658)",
+   "reported_as": "1.2079(5) Ry per electron",
+   "conversion": "1.2079 Ry/e x 114 / 2 = 68.8503 Ha; sigma 5 in last digit x 114/2 = 0.0285 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 114 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#0"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_114_P_57_57_10",
+    "method": "VMC SJ",
+    "energy": -6.01464
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 114, column rs = 10 (txt line 658)",
+   "reported_as": "-0.10552(2) Ry per electron",
+   "conversion": "-0.10552 Ry/e x 114 / 2 = -6.01464 Ha; sigma 2 in last digit x 114/2 = 0.00114 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 114 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#1"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_114_P_57_57_20",
+    "method": "VMC SJ",
+    "energy": -3.57846
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 114, column rs = 20 (txt line 658)",
+   "reported_as": "-0.06278(1) Ry per electron",
+   "conversion": "-0.06278 Ry/e x 114 / 2 = -3.57846 Ha; sigma 1 in last digit x 114/2 = 0.00057 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 114 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#2"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_114_P_57_57_5",
+    "method": "VMC SJ",
+    "energy": -8.47419
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 114, column rs = 5 (txt line 658)",
+   "reported_as": "-0.14867(3) Ry per electron",
+   "conversion": "-0.14867 Ry/e x 114 / 2 = -8.47419 Ha; sigma 3 in last digit x 114/2 = 0.00171 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 114 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#3"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_162_P_81_81_1",
+    "method": "VMC SJ",
+    "energy": 90.4122
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 162, column rs = 1 (txt line 659)",
+   "reported_as": "1.1162(4) Ry per electron",
+   "conversion": "1.1162 Ry/e x 162 / 2 = 90.4122 Ha; sigma 4 in last digit x 162/2 = 0.0324 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 162 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#4"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_162_P_81_81_10",
+    "method": "VMC SJ",
+    "energy": -8.62002
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 162, column rs = 10 (txt line 659)",
+   "reported_as": "-0.10642(1) Ry per electron",
+   "conversion": "-0.10642 Ry/e x 162 / 2 = -8.62002 Ha; sigma 1 in last digit x 162/2 = 0.00081 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 162 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#5"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_162_P_81_81_20",
+    "method": "VMC SJ",
+    "energy": -5.0787
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 162, column rs = 20 (txt line 659)",
+   "reported_as": "-0.06270(1) Ry per electron",
+   "conversion": "-0.06270 Ry/e x 162 / 2 = -5.0787 Ha; sigma 1 in last digit x 162/2 = 0.00081 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 162 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#6"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_162_P_81_81_5",
+    "method": "VMC SJ",
+    "energy": -12.34278
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 162, column rs = 5 (txt line 659)",
+   "reported_as": "-0.15238(3) Ry per electron",
+   "conversion": "-0.15238 Ry/e x 162 / 2 = -12.34278 Ha; sigma 3 in last digit x 162/2 = 0.00243 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 162 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#7"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_246_P_123_123_1",
+    "method": "VMC SJ",
+    "energy": 146.8374
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 246, column rs = 1 (txt line 660)",
+   "reported_as": "1.1938(3) Ry per electron",
+   "conversion": "1.1938 Ry/e x 246 / 2 = 146.8374 Ha; sigma 3 in last digit x 246/2 = 0.0369 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 246 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#8"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_246_P_123_123_10",
+    "method": "VMC SJ",
+    "energy": -12.97404
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 246, column rs = 10 (txt line 660)",
+   "reported_as": "-0.10548(1) Ry per electron",
+   "conversion": "-0.10548 Ry/e x 246 / 2 = -12.97404 Ha; sigma 1 in last digit x 246/2 = 0.00123 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 246 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#9"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_246_P_123_123_20",
+    "method": "VMC SJ",
+    "energy": -7.71825
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 246, column rs = 20 (txt line 660)",
+   "reported_as": "-0.06275(1) Ry per electron",
+   "conversion": "-0.06275 Ry/e x 246 / 2 = -7.71825 Ha; sigma 1 in last digit x 246/2 = 0.00123 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 246 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#10"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_246_P_123_123_5",
+    "method": "VMC SJ",
+    "energy": -18.30978
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 246, column rs = 5 (txt line 660)",
+   "reported_as": "-0.14886(3) Ry per electron",
+   "conversion": "-0.14886 Ry/e x 246 / 2 = -18.30978 Ha; sigma 3 in last digit x 246/2 = 0.00369 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 246 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#11"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "VMC SJ",
+    "energy": 28.8063
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ, column rs = 1 (txt line 618)",
+   "reported_as": "1.0669(6) Ry per electron",
+   "conversion": "1.0669 Ry/e x 54 / 2 = 28.8063 Ha; sigma 6 in last digit x 54/2 = 0.0162 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#12"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "VMC SJ+3BD",
+    "energy": 28.7901
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+3BD, column rs = 1 (txt line 619)",
+   "reported_as": "1.0663(5) Ry per electron",
+   "conversion": "1.0663 Ry/e x 54 / 2 = 28.7901 Ha; sigma 5 in last digit x 54/2 = 0.0135 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#13"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "VMC SJ+BF",
+    "energy": 28.6659
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+BF, column rs = 1 (txt line 620)",
+   "reported_as": "1.0617(4) Ry per electron",
+   "conversion": "1.0617 Ry/e x 54 / 2 = 28.6659 Ha; sigma 4 in last digit x 54/2 = 0.0108 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#14"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "VMC SJ+3BD+BF",
+    "energy": 28.6551
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+3BD+BF, column rs = 1 (txt line 621)",
+   "reported_as": "1.0613(4) Ry per electron",
+   "conversion": "1.0613 Ry/e x 54 / 2 = 28.6551 Ha; sigma 4 in last digit x 54/2 = 0.0108 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#15"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "DMC SJ",
+    "energy": 28.6713
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row DMC SJ, column rs = 1 (txt line 623)",
+   "reported_as": "1.0619(4) Ry per electron",
+   "conversion": "1.0619 Ry/e x 54 / 2 = 28.6713 Ha; sigma 4 in last digit x 54/2 = 0.0108 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. Fixed-node DMC on the stated trial function: projected. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#16"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "DMC SJ+3BD+BF",
+    "energy": 28.6227
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row DMC SJ+3BD+BF, column rs = 1 (txt line 624)",
+   "reported_as": "1.0601(2) Ry per electron",
+   "conversion": "1.0601 Ry/e x 54 / 2 = 28.6227 Ha; sigma 2 in last digit x 54/2 = 0.0054 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. Fixed-node DMC on the stated trial function: projected. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#17"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "VMC SJ",
+    "energy": -2.90115
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ, column rs = 10 (txt line 618)",
+   "reported_as": "-0.10745(2) Ry per electron",
+   "conversion": "-0.10745 Ry/e x 54 / 2 = -2.90115 Ha; sigma 2 in last digit x 54/2 = 0.00054 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#18"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "VMC SJ+3BD",
+    "energy": -2.90871
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+3BD, column rs = 10 (txt line 619)",
+   "reported_as": "-0.10773(2) Ry per electron",
+   "conversion": "-0.10773 Ry/e x 54 / 2 = -2.90871 Ha; sigma 2 in last digit x 54/2 = 0.00054 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#19"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "VMC SJ+BF",
+    "energy": -2.92383
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+BF, column rs = 10 (txt line 620)",
+   "reported_as": "-0.10829(2) Ry per electron",
+   "conversion": "-0.10829 Ry/e x 54 / 2 = -2.92383 Ha; sigma 2 in last digit x 54/2 = 0.00054 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#20"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "VMC SJ+3BD+BF",
+    "energy": -2.92545
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+3BD+BF, column rs = 10 (txt line 621)",
+   "reported_as": "-0.10835(2) Ry per electron",
+   "conversion": "-0.10835 Ry/e x 54 / 2 = -2.92545 Ha; sigma 2 in last digit x 54/2 = 0.00054 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#21"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "DMC SJ",
+    "energy": -2.92923
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row DMC SJ, column rs = 10 (txt line 623)",
+   "reported_as": "-0.10849(2) Ry per electron",
+   "conversion": "-0.10849 Ry/e x 54 / 2 = -2.92923 Ha; sigma 2 in last digit x 54/2 = 0.00054 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. Fixed-node DMC on the stated trial function: projected. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#22"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "DMC SJ+3BD+BF",
+    "energy": -2.93814
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row DMC SJ+3BD+BF, column rs = 10 (txt line 624)",
+   "reported_as": "-0.10882(2) Ry per electron",
+   "conversion": "-0.10882 Ry/e x 54 / 2 = -2.93814 Ha; sigma 2 in last digit x 54/2 = 0.00054 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. Fixed-node DMC on the stated trial function: projected. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#23"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "VMC SJ",
+    "energy": -1.70991
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ, column rs = 20 (txt line 618)",
+   "reported_as": "-0.06333(1) Ry per electron",
+   "conversion": "-0.06333 Ry/e x 54 / 2 = -1.70991 Ha; sigma 1 in last digit x 54/2 = 0.00027 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#24"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "VMC SJ+3BD",
+    "energy": -1.71396
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+3BD, column rs = 20 (txt line 619)",
+   "reported_as": "-0.06348(1) Ry per electron",
+   "conversion": "-0.06348 Ry/e x 54 / 2 = -1.71396 Ha; sigma 1 in last digit x 54/2 = 0.00027 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#25"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "VMC SJ+BF",
+    "energy": -1.71855
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+BF, column rs = 20 (txt line 620)",
+   "reported_as": "-0.06365(1) Ry per electron",
+   "conversion": "-0.06365 Ry/e x 54 / 2 = -1.71855 Ha; sigma 1 in last digit x 54/2 = 0.00027 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#26"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "VMC SJ+3BD+BF",
+    "energy": -1.72206
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+3BD+BF, column rs = 20 (txt line 621)",
+   "reported_as": "-0.06378(2) Ry per electron",
+   "conversion": "-0.06378 Ry/e x 54 / 2 = -1.72206 Ha; sigma 2 in last digit x 54/2 = 0.00054 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#27"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "DMC SJ",
+    "energy": -1.72476
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row DMC SJ, column rs = 20 (txt line 623)",
+   "reported_as": "-0.06388(1) Ry per electron",
+   "conversion": "-0.06388 Ry/e x 54 / 2 = -1.72476 Ha; sigma 1 in last digit x 54/2 = 0.00027 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. Fixed-node DMC on the stated trial function: projected. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#28"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "DMC SJ+3BD+BF",
+    "energy": -1.72881
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row DMC SJ+3BD+BF, column rs = 20 (txt line 624)",
+   "reported_as": "-0.06403(1) Ry per electron",
+   "conversion": "-0.06403 Ry/e x 54 / 2 = -1.72881 Ha; sigma 1 in last digit x 54/2 = 0.00027 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. Fixed-node DMC on the stated trial function: projected. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#29"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "VMC SJ",
+    "energy": -4.20066
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ, column rs = 5 (txt line 618)",
+   "reported_as": "-0.15558(7) Ry per electron",
+   "conversion": "-0.15558 Ry/e x 54 / 2 = -4.20066 Ha; sigma 7 in last digit x 54/2 = 0.00189 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#30"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "VMC SJ+3BD",
+    "energy": -4.20363
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+3BD, column rs = 5 (txt line 619)",
+   "reported_as": "-0.15569(5) Ry per electron",
+   "conversion": "-0.15569 Ry/e x 54 / 2 = -4.20363 Ha; sigma 5 in last digit x 54/2 = 0.00135 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#31"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "VMC SJ+BF",
+    "energy": -4.24683
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+BF, column rs = 5 (txt line 620)",
+   "reported_as": "-0.15729(5) Ry per electron",
+   "conversion": "-0.15729 Ry/e x 54 / 2 = -4.24683 Ha; sigma 5 in last digit x 54/2 = 0.00135 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#32"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "VMC SJ+3BD+BF",
+    "energy": -4.24845
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row VMC SJ+3BD+BF, column rs = 5 (txt line 621)",
+   "reported_as": "-0.15735(5) Ry per electron",
+   "conversion": "-0.15735 Ry/e x 54 / 2 = -4.24845 Ha; sigma 5 in last digit x 54/2 = 0.00135 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#33"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "DMC SJ",
+    "energy": -4.24818
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row DMC SJ, column rs = 5 (txt line 623)",
+   "reported_as": "-0.15734(3) Ry per electron",
+   "conversion": "-0.15734 Ry/e x 54 / 2 = -4.24818 Ha; sigma 3 in last digit x 54/2 = 0.00081 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. Fixed-node DMC on the stated trial function: projected. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#34"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "DMC SJ+3BD+BF",
+    "energy": -4.26546
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table II, row DMC SJ+3BD+BF, column rs = 5 (txt line 624)",
+   "reported_as": "-0.15798(4) Ry per electron",
+   "conversion": "-0.15798 Ry/e x 54 / 2 = -4.26546 Ha; sigma 4 in last digit x 54/2 = 0.00108 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 54 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. Fixed-node DMC on the stated trial function: projected. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#35"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_66_P_33_33_1",
+    "method": "VMC SJ",
+    "energy": 37.9368
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 66, column rs = 1 (txt line 657)",
+   "reported_as": "1.1496(5) Ry per electron",
+   "conversion": "1.1496 Ry/e x 66 / 2 = 37.9368 Ha; sigma 5 in last digit x 66/2 = 0.0165 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 66 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#36"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_66_P_33_33_10",
+    "method": "VMC SJ",
+    "energy": -3.51021
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 66, column rs = 10 (txt line 657)",
+   "reported_as": "-0.10637(2) Ry per electron",
+   "conversion": "-0.10637 Ry/e x 66 / 2 = -3.51021 Ha; sigma 2 in last digit x 66/2 = 0.00066 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 66 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#37"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_66_P_33_33_20",
+    "method": "VMC SJ",
+    "energy": -2.07999
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 66, column rs = 20 (txt line 657)",
+   "reported_as": "-0.06303(1) Ry per electron",
+   "conversion": "-0.06303 Ry/e x 66 / 2 = -2.07999 Ha; sigma 1 in last digit x 66/2 = 0.00033 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 66 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote. Record row: energy, sigma, cell, boundary, rs and column re-read.",
+   "source_entry": "SP7-heg3d-tfising#38"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_66_P_33_33_5",
+    "method": "VMC SJ",
+    "energy": -5.00478
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:cond-mat/9803092v1 (qmbl sources/cond-mat-9803092.txt, pypdf text; only version on arXiv), independent parse of Tables II and III by line; APS journal copy not read (arXiv only)",
+   "location": "Table III, row N = 66, column rs = 5 (txt line 657)",
+   "reported_as": "-0.15166(4) Ry per electron",
+   "conversion": "-0.15166 Ry/e x 66 / 2 = -5.00478 Ha; sigma 4 in last digit x 66/2 = 0.00132 Ha",
+   "note": "Eq. (1) H in Ry with length unit a = rs a0, '+ constant' from the uniform background; Ewald sums for the Coulomb potential; N electrons in a cube with periodic boundary conditions (sc); N = 66 is a Gamma-point closed shell (twist not stated, inferred from the shell numbers 54, 66, 114, 162, 246). Energy below QMBL's HF energy by a plausible correlation energy, so the background/Madelung term is included. VMC with the stated trial function: variational. No duplicate on the instance: Pescia et al.'s own FN-DMC (SJ) on sc_54 rs = 5 prints the same -0.07867 Ha/e (Appendix F, their own run), an agreement of two computations, not a quote.",
+   "source_entry": "SP7-heg3d-tfising#39"
+  },
+  {
+   "match": {
+    "instance": "TFIsing/square_100_O_3",
+    "method": "Euclidean 2DRNN",
+    "energy": -316.8991
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2606.25600v2 PDF (sources/2606.25600v2.pdf, pypdf layout mode, sources/2606.25600v2.layout.txt); v1 (sources/2606.25600v1.layout.txt) prints the same numbers; no journal version",
+   "location": "Table 3, Best column, row Euclidean 2DRNN (v2 layout line 470)",
+   "reported_as": "−316.8991 (0.0089) total; standard error from 10^4 inference samples, best run of several seeds",
+   "conversion": "none (totals)",
+   "note": "Eq. (17), J = 1, OBC, h = B_x; 'Best' column (best of runs with different seeds), 'standard error (corresponding to VMC sampling)'; 10^4 inference samples. Variational (autoregressive NQS, exact sampling). Energy carries float noise from the per-site round trip (loader issue, not row-by-row).",
+   "source_entry": "SP7-heg3d-tfising#40"
+  },
+  {
+   "match": {
+    "instance": "TFIsing/square_100_O_3",
+    "method": "Lorentz 2DRNN (L_max = 2.0)",
+    "energy": -316.9353
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2606.25600v2 PDF (sources/2606.25600v2.pdf, pypdf layout mode, sources/2606.25600v2.layout.txt); v1 (sources/2606.25600v1.layout.txt) prints the same numbers; no journal version",
+   "location": "Table 3, Best column, row Lorentz 2DRNN (L_max = 2.0) (v2 layout line 473)",
+   "reported_as": "−316.9353 (0.0077) total; standard error from 10^4 inference samples, best run of several seeds",
+   "conversion": "none (totals)",
+   "note": "Eq. (17), J = 1, OBC, h = B_x; 'Best' column (best of runs with different seeds), 'standard error (corresponding to VMC sampling)'; 10^4 inference samples. Variational (autoregressive NQS, exact sampling). Energy carries float noise from the per-site round trip (loader issue, not row-by-row).",
+   "source_entry": "SP7-heg3d-tfising#41"
+  },
+  {
+   "match": {
+    "instance": "TFIsing/square_100_O_3",
+    "method": "DMRG (not exact)",
+    "energy": -316.977
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2606.25600v2 PDF (sources/2606.25600v2.pdf, pypdf layout mode, sources/2606.25600v2.layout.txt); v1 (sources/2606.25600v1.layout.txt) prints the same numbers; no journal version",
+   "location": "Table 3, row DMRG (not exact) (v2 layout line 476)",
+   "reported_as": "-316.9770 (total energy, J = 1, Pauli)",
+   "conversion": "none (total)",
+   "note": "Eq. (17) H = -J sum_<ij> σzσz - B_x sum σx, J = 1.0, open boundary conditions, vertical and horizontal nearest neighbours: QMBL TFIsing with h = B_x = 3.0; 100 sites (10 x 10). v2 relabels the row 'DMRG' (v1: 'DMRG (not exact)'); the method string keeps the v1 label. Provenance not stated in the paper: no bond dimension, code or reference for this size; v2 text line 1581-1585 refers to [7] (Hibat-Allah et al.) only for the practice, and [7] has no 10 x 10 DMRG. The same value appears in Dao's earlier arXiv:2505.22083 Table 4 (no 10 x 10 there); Dao's code repository holds it at full precision, -316.97705 (2D_NQS/inference/2DTFIM_2DNQS_(10,10)_inference_s111.ipynb), with no DMRG script. Taken as Dao's own DMRG (deterministic, variational at an unstated bond dimension). Record row: energy, cell, boundary, h and column re-read; nothing else on the instance is lower.",
+   "source_entry": "SP7-heg3d-tfising#42"
+  },
+  {
+   "match": {
+    "instance": "TFIsing/square_100_O_3",
+    "method": "Euclidean RNN (1D, unrolled 2D lattice)",
+    "energy": -309.1322
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2606.25600v2 PDF (sources/2606.25600v2.pdf, pypdf layout mode, sources/2606.25600v2.layout.txt); v1 (sources/2606.25600v1.layout.txt) prints the same numbers; no journal version",
+   "location": "Table 8 (best results), column (10,10), row Euclidean RNN (v2 layout line 938)",
+   "reported_as": "-309.1322 (0.0780) total; standard error from 10^4 inference samples, best run of several seeds",
+   "conversion": "none (totals)",
+   "note": "Eq. (17), J = 1, OBC, h = B_x; 'Best' column (best of runs with different seeds), 'standard error (corresponding to VMC sampling)'; 10^4 inference samples. Variational (autoregressive NQS, exact sampling). Energy carries float noise from the per-site round trip (loader issue, not row-by-row).",
+   "source_entry": "SP7-heg3d-tfising#43"
+  },
+  {
+   "match": {
+    "instance": "TFIsing/square_144_O_4",
+    "method": "Euclidean 2DRNN",
+    "energy": -593.500599999
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2606.25600v2 PDF (sources/2606.25600v2.pdf, pypdf layout mode, sources/2606.25600v2.layout.txt); v1 (sources/2606.25600v1.layout.txt) prints the same numbers; no journal version",
+   "location": "Table 6, Best column, row Euclidean 2DRNN (v2 layout line 757)",
+   "reported_as": "−593.5006 (0.0072) total; standard error from 10^4 inference samples, best run of several seeds",
+   "conversion": "none (totals)",
+   "note": "Eq. (17), J = 1, OBC, h = B_x; 'Best' column (best of runs with different seeds), 'standard error (corresponding to VMC sampling)'; 10^4 inference samples. Variational (autoregressive NQS, exact sampling). Energy carries float noise from the per-site round trip (loader issue, not row-by-row).",
+   "source_entry": "SP7-heg3d-tfising#69"
+  },
+  {
+   "match": {
+    "instance": "TFIsing/square_64_O_3",
+    "method": "DMRG (not exact)",
+    "energy": -202.5077
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2606.25600v2 PDF (sources/2606.25600v2.pdf, pypdf layout mode, sources/2606.25600v2.layout.txt); v1 (sources/2606.25600v1.layout.txt) prints the same numbers; no journal version",
+   "location": "Table 2, row DMRG (not exact) (v2 layout line 460)",
+   "reported_as": "-202.5077 (total energy, J = 1, Pauli)",
+   "conversion": "none (total)",
+   "note": "Eq. (17) H = -J sum_<ij> σzσz - B_x sum σx, J = 1.0, open boundary conditions, vertical and horizontal nearest neighbours: QMBL TFIsing with h = B_x = 3.0; 64 sites (8 x 8). v2 relabels the row 'DMRG' (v1: 'DMRG (not exact)'); the method string keeps the v1 label. Provenance not stated in the paper: no bond dimension, code or reference for this size; v2 text line 1581-1585 refers to [7] (Hibat-Allah et al.) only for the practice, and [7] has no 8 x 8 DMRG. The same value appears in Dao's earlier arXiv:2505.22083 Table 4 (8 x 8, -202.5077); Dao's code repository holds it at full precision, -202.5077381261612 (2D_NQS/inference/2DTFIM_2DNQS_(8,8)_inference_s111.ipynb), with no DMRG script. Taken as Dao's own DMRG (deterministic, variational at an unstated bond dimension). Record row: energy, cell, boundary, h and column re-read; nothing else on the instance is lower.",
+   "source_entry": "SP7-heg3d-tfising#78"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+    "energy": 47.7726215043
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1201.4691 (qmbl sources/1201.4691.txt, pypdf layout; v2 is the latest arXiv version, the cached text was not tagged with its version); AIP journal copy not read (arXiv only)",
+   "location": "Table II, rs = 0.5, N = 14 (M = 1850, column Ecorr)",
+   "reported_as": "E_c = -0.5959(7) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 3.454894393156926 + (-0.5959) = 47.7726215042 Ha (E_HF from checks/heg-hf/hf.mjs 3 sc 7 7 0.5); sigma 0.0007 total",
+   "note": "Correlation energy relative to the plane-wave HF determinant (basis-independent for the closed-shell Gamma-point gas), total for the cell, Hartree; sc cell, PBC, closed shell. Bound type agrees.",
+   "source_entry": "SP7-heg3d-tfising#98"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "i-FCIQMC (M = 2368 spin orbitals)",
+    "energy": -0.120454735372
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1201.4691 (qmbl sources/1201.4691.txt, pypdf layout; v2 is the latest arXiv version, the cached text was not tagged with its version); AIP journal copy not read (arXiv only)",
+   "location": "Table I, rs = 2, row M = 2368 (txt line 14841)",
+   "reported_as": "E_c = -0.4430(7) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 0.023038947473471762 + (-0.443) = -0.1204547354 Ha (E_HF from checks/heg-hf/hf.mjs 3 sc 7 7 2); sigma 0.0007 total",
+   "note": "Correlation energy relative to the plane-wave HF determinant (basis-independent for the closed-shell Gamma-point gas), total for the cell, Hartree; sc cell, PBC, closed shell. Bound type agrees.",
+   "source_entry": "SP7-heg3d-tfising#118"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "i-FCIQMC (M = 358 spin orbitals)",
+    "energy": -1.11424870306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1201.4691 (qmbl sources/1201.4691.txt, pypdf layout; v2 is the latest arXiv version, the cached text was not tagged with its version); AIP journal copy not read (arXiv only)",
+   "location": "Table I, rs = 5, row M = 358 (txt line 14838)",
+   "reported_as": "E_c = -0.3017(7) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x -0.058039193075872166 + (-0.3017) = -1.1142487031 Ha (E_HF from checks/heg-hf/hf.mjs 3 sc 7 7 5); sigma 0.0007 total",
+   "note": "Correlation energy relative to the plane-wave HF determinant (basis-independent for the closed-shell Gamma-point gas), total for the cell, Hartree; sc cell, PBC, closed shell. Bound type agrees.",
+   "source_entry": "SP7-heg3d-tfising#123"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_114_P_57_57_0.5",
+    "method": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=2109] (arXiv:1905.04361)",
+    "energy": 397.23642
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1905.04361 (qmbl sources/1905.04361.txt, pypdf layout; v2 is the latest arXiv version); J. Chem. Phys. copy not read (arXiv only)",
+   "location": "Table VI (N = 114, M = 2109), rs = 0.5, Eh per electron",
+   "reported_as": "3.48453(8) Eh per electron",
+   "conversion": "3.48453 x 114 = 397.23642 Ha; sigma 0.00008 x 114 = 0.00912",
+   "note": "Eq. (19) H = T + Vee + E_M; plane-wave basis of 2M spin orbitals, M = 2109; PBC, 'no twist averaging was performed' (Gamma), sc cell, closed shell; QMCPACK, time step 0.005 a.u., 2880 walkers; RHF trial: phaseless constraint, projected. Finite-basis value (no CBS extrapolation). The totals agree with independent methods on the same instance (N = 54, rs = 0.5: 3.22087(2) vs i-FCIQMC 3.22086(2), FN-DMC-BF 3.22112(4)), so the Madelung term is the standard one even though Eq. (22) as printed lacks a factor 1/2 if read in hartree. Record row: re-read energy, sigma, N, rs, basis and column; the paper produced the number.",
+   "source_entry": "SP7-heg3d-tfising#132"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_114_P_57_57_1",
+    "method": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=2109] (arXiv:1905.04361)",
+    "energy": 68.25978
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1905.04361 (qmbl sources/1905.04361.txt, pypdf layout; v2 is the latest arXiv version); J. Chem. Phys. copy not read (arXiv only)",
+   "location": "Table VI (N = 114, M = 2109), rs = 1, Eh per electron",
+   "reported_as": "0.59877(6) Eh per electron",
+   "conversion": "0.59877 x 114 = 68.25978 Ha; sigma 0.00006000000000000001 x 114 = 0.00684",
+   "note": "Eq. (19) H = T + Vee + E_M; plane-wave basis of 2M spin orbitals, M = 2109; PBC, 'no twist averaging was performed' (Gamma), sc cell, closed shell; QMCPACK, time step 0.005 a.u., 2880 walkers; RHF trial: phaseless constraint, projected. Finite-basis value (no CBS extrapolation). The totals agree with independent methods on the same instance (N = 54, rs = 0.5: 3.22087(2) vs i-FCIQMC 3.22086(2), FN-DMC-BF 3.22112(4)), so the Madelung term is the standard one even though Eq. (22) as printed lacks a factor 1/2 if read in hartree. Table VI caption quotes Kwon et al.'s VMC (SJ) 0.60395(25) Eh/e, which is the Kwon row already on this instance, not a Lee row. Record row: re-read energy, sigma, N, rs, basis and column; the paper produced the number.",
+   "source_entry": "SP7-heg3d-tfising#133"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_114_P_57_57_2",
+    "method": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=2109] (arXiv:1905.04361)",
+    "energy": 0.55518
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1905.04361 (qmbl sources/1905.04361.txt, pypdf layout; v2 is the latest arXiv version); J. Chem. Phys. copy not read (arXiv only)",
+   "location": "Table VI (N = 114, M = 2109), rs = 2, Eh per electron",
+   "reported_as": "0.00487(6) Eh per electron",
+   "conversion": "0.00487 x 114 = 0.55518 Ha; sigma 0.00006000000000000001 x 114 = 0.00684",
+   "note": "Eq. (19) H = T + Vee + E_M; plane-wave basis of 2M spin orbitals, M = 2109; PBC, 'no twist averaging was performed' (Gamma), sc cell, closed shell; QMCPACK, time step 0.005 a.u., 2880 walkers; RHF trial: phaseless constraint, projected. Finite-basis value (no CBS extrapolation). The totals agree with independent methods on the same instance (N = 54, rs = 0.5: 3.22087(2) vs i-FCIQMC 3.22086(2), FN-DMC-BF 3.22112(4)), so the Madelung term is the standard one even though Eq. (22) as printed lacks a factor 1/2 if read in hartree. Record row: re-read energy, sigma, N, rs, basis and column; the paper produced the number.",
+   "source_entry": "SP7-heg3d-tfising#134"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=1419 (Table V caption: 'Both ph-AFQMC and i-FCIQMC numbers are obtained from M = 1419] (arXiv:1905.04361)",
+    "energy": 173.92698
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1905.04361 (qmbl sources/1905.04361.txt, pypdf layout; v2 is the latest arXiv version); J. Chem. Phys. copy not read (arXiv only)",
+   "location": "Table V (N = 54, M = 1419), rs = 0.5, column ph-AFQMC, Eh per electron",
+   "reported_as": "3.22087(2) Eh per electron",
+   "conversion": "3.22087 x 54 = 173.92698 Ha; sigma 0.00002 x 54 = 0.00108",
+   "note": "Eq. (19) H = T + Vee + E_M; plane-wave basis of 2M spin orbitals, M = 1419; PBC, 'no twist averaging was performed' (Gamma), sc cell, closed shell; QMCPACK, time step 0.005 a.u., 2880 walkers; RHF trial: phaseless constraint, projected. Finite-basis value (no CBS extrapolation). The totals agree with independent methods on the same instance (N = 54, rs = 0.5: 3.22087(2) vs i-FCIQMC 3.22086(2), FN-DMC-BF 3.22112(4)), so the Madelung term is the standard one even though Eq. (22) as printed lacks a factor 1/2 if read in hartree. ",
+   "source_entry": "SP7-heg3d-tfising#191"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=1419 (Table V caption: 'Both ph-AFQMC and i-FCIQMC numbers are obtained from M = 1419] (arXiv:1905.04361)",
+    "energy": 28.60218
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1905.04361 (qmbl sources/1905.04361.txt, pypdf layout; v2 is the latest arXiv version); J. Chem. Phys. copy not read (arXiv only)",
+   "location": "Table V (N = 54, M = 1419), rs = 1, column ph-AFQMC, Eh per electron",
+   "reported_as": "0.52967(2) Eh per electron",
+   "conversion": "0.52967 x 54 = 28.60218 Ha; sigma 0.00002 x 54 = 0.00108",
+   "note": "Eq. (19) H = T + Vee + E_M; plane-wave basis of 2M spin orbitals, M = 1419; PBC, 'no twist averaging was performed' (Gamma), sc cell, closed shell; QMCPACK, time step 0.005 a.u., 2880 walkers; RHF trial: phaseless constraint, projected. Finite-basis value (no CBS extrapolation). The totals agree with independent methods on the same instance (N = 54, rs = 0.5: 3.22087(2) vs i-FCIQMC 3.22086(2), FN-DMC-BF 3.22112(4)), so the Madelung term is the standard one even though Eq. (22) as printed lacks a factor 1/2 if read in hartree. Record row: re-read energy, sigma, N, rs, basis and column; the paper produced the number.",
+   "source_entry": "SP7-heg3d-tfising#192"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=1419 (Table V caption: 'Both ph-AFQMC and i-FCIQMC numbers are obtained from M = 1419] (arXiv:1905.04361)",
+    "energy": -0.77166
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1905.04361 (qmbl sources/1905.04361.txt, pypdf layout; v2 is the latest arXiv version); J. Chem. Phys. copy not read (arXiv only)",
+   "location": "Table V (N = 54, M = 1419), rs = 2, column ph-AFQMC, Eh per electron",
+   "reported_as": "-0.01429(3) Eh per electron",
+   "conversion": "-0.01429 x 54 = -0.77166 Ha; sigma 0.000030000000000000004 x 54 = 0.00162",
+   "note": "Eq. (19) H = T + Vee + E_M; plane-wave basis of 2M spin orbitals, M = 1419; PBC, 'no twist averaging was performed' (Gamma), sc cell, closed shell; QMCPACK, time step 0.005 a.u., 2880 walkers; RHF trial: phaseless constraint, projected. Finite-basis value (no CBS extrapolation). The totals agree with independent methods on the same instance (N = 54, rs = 0.5: 3.22087(2) vs i-FCIQMC 3.22086(2), FN-DMC-BF 3.22112(4)), so the Madelung term is the standard one even though Eq. (22) as printed lacks a factor 1/2 if read in hartree. Record row: re-read energy, sigma, N, rs, basis and column; the paper produced the number.",
+   "source_entry": "SP7-heg3d-tfising#193"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=1419 (Table V caption: 'Both ph-AFQMC and i-FCIQMC numbers are obtained from M = 1419] (arXiv:1905.04361)",
+    "energy": -4.09806
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1905.04361 (qmbl sources/1905.04361.txt, pypdf layout; v2 is the latest arXiv version); J. Chem. Phys. copy not read (arXiv only)",
+   "location": "Table V (N = 54, M = 1419), rs = 5, column ph-AFQMC, Eh per electron",
+   "reported_as": "-0.07589(5) Eh per electron",
+   "conversion": "-0.07589 x 54 = -4.09806 Ha; sigma 0.00005 x 54 = 0.0027",
+   "note": "Eq. (19) H = T + Vee + E_M; plane-wave basis of 2M spin orbitals, M = 1419; PBC, 'no twist averaging was performed' (Gamma), sc cell, closed shell; QMCPACK, time step 0.005 a.u., 2880 walkers; RHF trial: phaseless constraint, projected. Finite-basis value (no CBS extrapolation). The totals agree with independent methods on the same instance (N = 54, rs = 0.5: 3.22087(2) vs i-FCIQMC 3.22086(2), FN-DMC-BF 3.22112(4)), so the Madelung term is the standard one even though Eq. (22) as printed lacks a factor 1/2 if read in hartree. ",
+   "source_entry": "SP7-heg3d-tfising#194"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "FCIQMC [(i)FCIQMC; initiator used for M > 358 at rs=0.5 (txt line 253-255); CBS value estimated as footnote g; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+    "energy": 47.7738515043
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1706.09923 text (sources/1706.09923.txt, pypdf layout of the arXiv PDF); J. Chem. Phys. 147, 194105 not read (AIP not reached), arXiv only",
+   "location": "Table I (txt lines 303-311), row FCIQMC, column rs = 0.5 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total)",
+   "reported_as": "E_c = -0.59467(9)",
+   "conversion": "E = N E_HF + E_c = 14 x 3.45489439316 + (-0.59467) = 47.7738515042 Ha total (stored 47.7738515043); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 0.5 (closed shell); sigma 0.00009 printed, stored 0.0000896 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "Value, cell (14 electrons, cubic box, plane waves, closed shell at Gamma), units (Ha, total correlation energy) and bound_type (CBS extrapolation) agree. Table I footnotes g/i: CBS estimated by extrapolating the FCIQMC - CCSDTQ (rs 0.5) / CCSDT (rs 1.0) difference; initiator for M > 358 / 66 (txt line 253-255). Only correlation energies are printed (no E_HF), so the Madelung convention is QMBL's by construction (RULES 12.3).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#3"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "CCSD [CCMC non-initiator, cubic fit in 1/M, one point excluded (agrees with the quadratic fit within 2 sigma); extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+    "energy": 47.7800415042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1706.09923 text (sources/1706.09923.txt, pypdf layout of the arXiv PDF); J. Chem. Phys. 147, 194105 not read (AIP not reached), arXiv only",
+   "location": "Fig. 1 caption (txt line 199-205): 'best cubic fit (red, long dashes, excluding one data point), giving b0 = -0.58848(7) ha'",
+   "reported_as": "E_c = -0.58848(7)",
+   "conversion": "E = N E_HF + E_c = 14 x 3.45489439316 + (-0.58848) = 47.7800415042 Ha total (stored 47.7800415042); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 0.5 (closed shell); sigma 0.00007 printed, stored 0.00007 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "Value, cell (14 electrons, cubic box, plane waves, closed shell at Gamma), units (Ha, total correlation energy) and bound_type (CBS extrapolation) agree. Cubic fit agrees with the adopted quadratic fit within 2 sigma; the paper takes the quadratic value. Only correlation energies are printed (no E_HF), so the Madelung convention is QMBL's by construction (RULES 12.3).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#5"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "FCIQMC [(i)FCIQMC; initiator used for M > 66 at rs=1.0 (txt line 253-255); CBS value estimated as footnote i; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+    "energy": 7.96018060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1706.09923 text (sources/1706.09923.txt, pypdf layout of the arXiv PDF); J. Chem. Phys. 147, 194105 not read (AIP not reached), arXiv only",
+   "location": "Table I (txt lines 303-311), row FCIQMC, column rs = 1 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total)",
+   "reported_as": "E_c = -0.5313(2)",
+   "conversion": "E = N E_HF + E_c = 14 x 0.606534328824 + (-0.5313) = 7.9601806035 Ha total (stored 7.96018060354); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 1 (closed shell); sigma 0.0002 printed, stored 0.000196 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "Value, cell (14 electrons, cubic box, plane waves, closed shell at Gamma), units (Ha, total correlation energy) and bound_type (CBS extrapolation) agree. Table I footnotes g/i: CBS estimated by extrapolating the FCIQMC - CCSDTQ (rs 0.5) / CCSDT (rs 1.0) difference; initiator for M > 358 / 66 (txt line 253-255). Only correlation energies are printed (no E_HF), so the Madelung convention is QMBL's by construction (RULES 12.3).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#10"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "Tensor backflow (p = 0, PF1, U_UHF = 4, 2484 steps)",
+    "energy": -187.9552
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table III (txt lines 403-412; n = 0.875, U = 8, t′ = -0.2t, 16×16, PBC), row E_p=0, column (PF1, 4, 2484)",
+   "reported_as": "-0.7342(2)",
+   "conversion": "-0.7342 x 256 = -187.9552 (stored -187.9552); sigma 0.0002 x 256 = 0.0512 (stored 0.0512)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#23"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "Tensor backflow (p = 1, PF1, U_UHF = 4, 2484 steps)",
+    "energy": -189.3376
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table III (txt lines 403-412; n = 0.875, U = 8, t′ = -0.2t, 16×16, PBC), row E_p=1, column (PF1, 4, 2484)",
+   "reported_as": "-0.7396(1)",
+   "conversion": "-0.7396 x 256 = -189.3376 (stored -189.3376); sigma 0.0001 x 256 = 0.0256 (stored 0.0256)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#24"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "Tensor backflow (p = 0, PF2, U_UHF = 4, 2152 steps)",
+    "energy": -188.1856
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table III (txt lines 403-412; n = 0.875, U = 8, t′ = -0.2t, 16×16, PBC), row E_p=0, column (PF2, 4, 2152)",
+   "reported_as": "-0.7351(2)",
+   "conversion": "-0.7351 x 256 = -188.1856 (stored -188.1856); sigma 0.0002 x 256 = 0.0512 (stored 0.0512)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#25"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "Tensor backflow (p = 1, PF2, U_UHF = 4, 2152 steps)",
+    "energy": -189.44
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table III (txt lines 403-412; n = 0.875, U = 8, t′ = -0.2t, 16×16, PBC), row E_p=1, column (PF2, 4, 2152)",
+   "reported_as": "-0.7400(1)",
+   "conversion": "-0.74 x 256 = -189.44 (stored -189.44); sigma 0.0001 x 256 = 0.0256 (stored 0.0256)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#26"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "Tensor backflow (p = 0, PF2, U_UHF = 0, 2020 steps)",
+    "energy": -188.1344
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table III (txt lines 403-412; n = 0.875, U = 8, t′ = -0.2t, 16×16, PBC), row E_p=0, column (PF2, 0, 2020)",
+   "reported_as": "-0.7349(7)",
+   "conversion": "-0.7349 x 256 = -188.1344 (stored -188.1344); sigma 0.0007 x 256 = 0.1792 (stored 0.1792)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#27"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "Tensor backflow (p = 1, PF3, U_UHF = 4, 1925 steps)",
+    "energy": -189.4656
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table III (txt lines 403-412; n = 0.875, U = 8, t′ = -0.2t, 16×16, PBC), row E_p=1, column (PF3, 4, 1925)",
+   "reported_as": "-0.7401(2)",
+   "conversion": "-0.7401 x 256 = -189.4656 (stored -189.4656); sigma 0.0002 x 256 = 0.0512 (stored 0.0512)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#28"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "Tensor backflow (p = 0, PF3, U_UHF = 4, 9013 steps)",
+    "energy": -188.416
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table III (txt lines 403-412; n = 0.875, U = 8, t′ = -0.2t, 16×16, PBC), row E_p=0, column (PF3, 4, 9013)",
+   "reported_as": "-0.7360(7)",
+   "conversion": "-0.736 x 256 = -188.416 (stored -188.416); sigma 0.0007 x 256 = 0.1792 (stored 0.1792)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#29"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "Tensor backflow (p = 1, PF3, U_UHF = 4, 9013 steps)",
+    "energy": -189.6448
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table III (txt lines 403-412; n = 0.875, U = 8, t′ = -0.2t, 16×16, PBC), row E_p=1, column (PF3, 4, 9013)",
+   "reported_as": "-0.7408(1)",
+   "conversion": "-0.7408 x 256 = -189.6448 (stored -189.6448); sigma 0.0001 x 256 = 0.0256 (stored 0.0256)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#30"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow (p = 0, No Sym)",
+    "energy": -47.1936
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table II (txt lines 198-208; t′ = -0.2t, U = 8, n = 0.875, 8×8, PBC), row E_p=0, column 'No Sym'",
+   "reported_as": "-0.7374(4)",
+   "conversion": "-0.7374 x 64 = -47.1936 (stored -47.1936); sigma 0.0004 x 64 = 0.0256 (stored 0.0256)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#31"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow (p = 1, No Sym)",
+    "energy": -47.5136
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table II (txt lines 198-208; t′ = -0.2t, U = 8, n = 0.875, 8×8, PBC), row E_p=1, column 'No Sym'",
+   "reported_as": "-0.7424(3)",
+   "conversion": "-0.7424 x 64 = -47.5136 (stored -47.5136); sigma 0.0003 x 64 = 0.0192 (stored 0.0192)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#32"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow (p = 0, T)",
+    "energy": -47.2576
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table II (txt lines 198-208; t′ = -0.2t, U = 8, n = 0.875, 8×8, PBC), row E_p=0, column 'T'",
+   "reported_as": "-0.7384(4)",
+   "conversion": "-0.7384 x 64 = -47.2576 (stored -47.2576); sigma 0.0004 x 64 = 0.0256 (stored 0.0256)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#33"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow (p = 1, T)",
+    "energy": -47.5648
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table II (txt lines 198-208; t′ = -0.2t, U = 8, n = 0.875, 8×8, PBC), row E_p=1, column 'T'",
+   "reported_as": "-0.7432(8)",
+   "conversion": "-0.7432 x 64 = -47.5648 (stored -47.5648); sigma 0.0008 x 64 = 0.0512 (stored 0.0512)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#34"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow (p = 0, R)",
+    "energy": -47.2512
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table II (txt lines 198-208; t′ = -0.2t, U = 8, n = 0.875, 8×8, PBC), row E_p=0, column 'R'",
+   "reported_as": "-0.7383(4)",
+   "conversion": "-0.7383 x 64 = -47.2512 (stored -47.2512); sigma 0.0004 x 64 = 0.0256 (stored 0.0256)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#35"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow (p = 1, R)",
+    "energy": -47.5584
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table II (txt lines 198-208; t′ = -0.2t, U = 8, n = 0.875, 8×8, PBC), row E_p=1, column 'R'",
+   "reported_as": "-0.7431(8)",
+   "conversion": "-0.7431 x 64 = -47.5584 (stored -47.5584); sigma 0.0008 x 64 = 0.0512 (stored 0.0512)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#36"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow (p = 0, T+R)",
+    "energy": -47.328
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table II (txt lines 198-208; t′ = -0.2t, U = 8, n = 0.875, 8×8, PBC), row E_p=0, column 'T+R'",
+   "reported_as": "-0.7395(4)",
+   "conversion": "-0.7395 x 64 = -47.328 (stored -47.328); sigma 0.0004 x 64 = 0.0256 (stored 0.0256)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#37"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow (p = 1, T+R)",
+    "energy": -47.6224
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Table II (txt lines 198-208; t′ = -0.2t, U = 8, n = 0.875, 8×8, PBC), row E_p=1, column 'T+R'",
+   "reported_as": "-0.7441(8)",
+   "conversion": "-0.7441 x 64 = -47.6224 (stored -47.6224); sigma 0.0008 x 64 = 0.0512 (stored 0.0512)",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed').",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#38"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Tensor backflow, zero-variance extrapolation",
+    "energy": -47.712
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2609.22618 v1 text (sources/2609.22618.txt), Tables II and III and Sec. III.A; no journal version",
+   "location": "Sec. III.A (txt line 292-293): 'the extrapolated energy at zero variance is estimated as: -0.7455' (also Fig. 2 caption)",
+   "reported_as": "-0.7455",
+   "conversion": "-0.7455 x 64 = -47.712 (stored -47.712); sigma none printed",
+   "note": "Eq. (8) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, t' = -0.2 (QMBL t2), PBC, n = 0.875. p = 1 is one Lanczos step on the tensor-backflow state: still `variational`. 16×16 pinning fields act only before the counted optimisation steps (caption: 'step number after the pinning field is removed'). The paper calls the extrapolation 'just a demonstration of the method'; no error bar printed; `extrapolated`.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#39"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-VMC [Wigner-crystal Slater determinant of Gaussian orbitals (C = 0.000148 a.u.), SJB optimised with g=7; truncation parameter g=1 keeps 8 terms i] (arXiv:2201.08743)",
+    "energy": -0.2274048
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table I (txt lines 193-209; ferromagnetic bcc Wigner crystal, rs = 90, N = 27, C = 0.000148 a.u., SJB optimised with g = 7), row g = 1",
+   "reported_as": "−0.0084224(3)",
+   "conversion": "-0.0084224 x 27 = -0.2274048 (stored -0.2274048); sigma 3e-7 x 27 = 0.0000081 (stored 0.0000081)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Method string is cut at 140 characters ('... keeps N terms i]' for 'in Eq. (6)'), harmless.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#40"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-VMC [Wigner-crystal Slater determinant of Gaussian orbitals (C = 0.000148 a.u.), SJB optimised with g=7; truncation parameter g=2 keeps 24 terms ] (arXiv:2201.08743)",
+    "energy": -0.22932747
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table I (txt lines 193-209; ferromagnetic bcc Wigner crystal, rs = 90, N = 27, C = 0.000148 a.u., SJB optimised with g = 7), row g = 2",
+   "reported_as": "−0.00849361(7)",
+   "conversion": "-0.00849361 x 27 = -0.22932747 (stored -0.22932747); sigma 7e-8 x 27 = 0.00000189 (stored 0.00000189)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Method string is cut at 140 characters ('... keeps N terms i]' for 'in Eq. (6)'), harmless.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#41"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-VMC [Wigner-crystal Slater determinant of Gaussian orbitals (C = 0.000148 a.u.), SJB optimised with g=7; truncation parameter g=3 keeps 27 terms ] (arXiv:2201.08743)",
+    "energy": -0.22930236
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table I (txt lines 193-209; ferromagnetic bcc Wigner crystal, rs = 90, N = 27, C = 0.000148 a.u., SJB optimised with g = 7), row g = 3",
+   "reported_as": "−0.00849268(7)",
+   "conversion": "-0.00849268 x 27 = -0.22930236 (stored -0.22930236); sigma 7e-8 x 27 = 0.00000189 (stored 0.00000189)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Method string is cut at 140 characters ('... keeps N terms i]' for 'in Eq. (6)'), harmless.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#42"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-VMC [Wigner-crystal Slater determinant of Gaussian orbitals (C = 0.000148 a.u.), SJB optimised with g=7; truncation parameter g=5 keeps 27 terms ] (arXiv:2201.08743)",
+    "energy": -0.22930101
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table I (txt lines 193-209; ferromagnetic bcc Wigner crystal, rs = 90, N = 27, C = 0.000148 a.u., SJB optimised with g = 7), row g = 5",
+   "reported_as": "−0.00849263(7)",
+   "conversion": "-0.00849263 x 27 = -0.22930101 (stored -0.22930101); sigma 7e-8 x 27 = 0.00000189 (stored 0.00000189)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Method string is cut at 140 characters ('... keeps N terms i]' for 'in Eq. (6)'), harmless.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#43"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-VMC [Wigner-crystal Slater determinant of Gaussian orbitals (C = 0.000148 a.u.), SJB optimised with g=7; truncation parameter g=7 keeps 27 terms ] (arXiv:2201.08743)",
+    "energy": -0.22929831
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table I (txt lines 193-209; ferromagnetic bcc Wigner crystal, rs = 90, N = 27, C = 0.000148 a.u., SJB optimised with g = 7), row g = 7",
+   "reported_as": "−0.00849253(7)",
+   "conversion": "-0.00849253 x 27 = -0.22929831 (stored -0.22929831); sigma 7e-8 x 27 = 0.00000189 (stored 0.00000189)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Method string is cut at 140 characters ('... keeps N terms i]' for 'in Eq. (6)'), harmless.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#44"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_27_P_27_0_90",
+    "method": "SJB-VMC [Wigner-crystal Slater determinant of Gaussian orbitals (C = 0.000148 a.u.), SJB optimised with g=7; truncation parameter g=15 keeps 46 terms] (arXiv:2201.08743)",
+    "energy": -0.22929858
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table I (txt lines 193-209; ferromagnetic bcc Wigner crystal, rs = 90, N = 27, C = 0.000148 a.u., SJB optimised with g = 7), row g = 15",
+   "reported_as": "−0.00849254(7)",
+   "conversion": "-0.00849254 x 27 = -0.22929858 (stored -0.22929858); sigma 7e-8 x 27 = 0.00000189 (stored 0.00000189)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Method string is cut at 140 characters ('... keeps N terms i]' for 'in Eq. (6)'), harmless.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#45"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_64_P_64_0_100",
+    "method": "SJ-VMC [Gaussian exponent C = 0.00011 [Eq. (7)]; VMC variance (Ha^2) in the same row: 0.00000329] (arXiv:2201.08743)",
+    "energy": -0.4910016
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table II (txt lines 303-310; ferromagnetic Wigner crystal, rs = 100, N = 64), row SJ, C = 0.00011, column VMC energy",
+   "reported_as": "−0.0076719(3)",
+   "conversion": "-0.0076719 x 64 = -0.4910016 (stored -0.4910016); sigma 3e-7 x 64 = 0.0000192 (stored 0.0000192)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Table II also prints the VMC variance 0.00000329 Ha^2 for this wave function; not stored, and the paper does not say whether it is Var(E_L) of the total or per electron.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#46"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_64_P_64_0_100",
+    "method": "SJ-DMC [Gaussian exponent C = 0.00011 [Eq. (7)]; VMC variance (Ha^2) in the same row: 0.00000329] (arXiv:2201.08743)",
+    "energy": -0.49255424
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table II (txt lines 303-310; ferromagnetic Wigner crystal, rs = 100, N = 64), row SJ, C = 0.00011, column DMC energy",
+   "reported_as": "−0.00769616(8)",
+   "conversion": "-0.00769616 x 64 = -0.49255424 (stored -0.49255424); sigma 8e-8 x 64 = 0.00000512 (stored 0.00000512)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Table II also prints the VMC variance 0.00000329 Ha^2 for this wave function; not stored, and the paper does not say whether it is Var(E_L) of the total or per electron.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#47"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_64_P_64_0_100",
+    "method": "SJ-VMC [Gaussian exponent C = 0.0001553 (opt.); VMC variance (Ha^2) in the same row: 0.00000274] (arXiv:2201.08743)",
+    "energy": -0.4911168
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table II (txt lines 303-310; ferromagnetic Wigner crystal, rs = 100, N = 64), row SJ, C = 0.0001553, column VMC energy",
+   "reported_as": "−0.0076737(2)",
+   "conversion": "-0.0076737 x 64 = -0.4911168 (stored -0.4911168); sigma 2e-7 x 64 = 0.0000128 (stored 0.0000128)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Table II also prints the VMC variance 0.00000274 Ha^2 for this wave function; not stored, and the paper does not say whether it is Var(E_L) of the total or per electron.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#48"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_64_P_64_0_100",
+    "method": "SJ-DMC [Gaussian exponent C = 0.0001553 (opt.); VMC variance (Ha^2) in the same row: 0.00000274] (arXiv:2201.08743)",
+    "energy": -0.4925248
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table II (txt lines 303-310; ferromagnetic Wigner crystal, rs = 100, N = 64), row SJ, C = 0.0001553, column DMC energy",
+   "reported_as": "−0.0076957(2)",
+   "conversion": "-0.0076957 x 64 = -0.4925248 (stored -0.4925248); sigma 2e-7 x 64 = 0.0000128 (stored 0.0000128)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Table II also prints the VMC variance 0.00000274 Ha^2 for this wave function; not stored, and the paper does not say whether it is Var(E_L) of the total or per electron.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#49"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_64_P_64_0_100",
+    "method": "SJB-VMC [Gaussian exponent C = 0.00011 [Eq. (7)]; VMC variance (Ha^2) in the same row: 0.00000252] (arXiv:2201.08743)",
+    "energy": -0.4914304
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table II (txt lines 303-310; ferromagnetic Wigner crystal, rs = 100, N = 64), row SJB, C = 0.00011, column VMC energy",
+   "reported_as": "−0.0076786(2)",
+   "conversion": "-0.0076786 x 64 = -0.4914304 (stored -0.4914304); sigma 2e-7 x 64 = 0.0000128 (stored 0.0000128)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Table II also prints the VMC variance 0.00000252 Ha^2 for this wave function; not stored, and the paper does not say whether it is Var(E_L) of the total or per electron.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#50"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_64_P_64_0_100",
+    "method": "SJB-DMC [Gaussian exponent C = 0.00011 [Eq. (7)]; VMC variance (Ha^2) in the same row: 0.00000252] (arXiv:2201.08743)",
+    "energy": -0.49255616
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table II (txt lines 303-310; ferromagnetic Wigner crystal, rs = 100, N = 64), row SJB, C = 0.00011, column DMC energy",
+   "reported_as": "−0.00769619(9)",
+   "conversion": "-0.00769619 x 64 = -0.49255616 (stored -0.49255616); sigma 9e-8 x 64 = 0.00000576 (stored 0.00000576)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Table II also prints the VMC variance 0.00000252 Ha^2 for this wave function; not stored, and the paper does not say whether it is Var(E_L) of the total or per electron.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#51"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_64_P_64_0_100",
+    "method": "SJB-VMC [Gaussian exponent C = 0.0001503 (opt.); VMC variance (Ha^2) in the same row: 0.00000201] (arXiv:2201.08743)",
+    "energy": -0.4915392
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table II (txt lines 303-310; ferromagnetic Wigner crystal, rs = 100, N = 64), row SJB, C = 0.0001503, column VMC energy",
+   "reported_as": "−0.0076803(2)",
+   "conversion": "-0.0076803 x 64 = -0.4915392 (stored -0.4915392); sigma 2e-7 x 64 = 0.0000128 (stored 0.0000128)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Table II also prints the VMC variance 0.00000201 Ha^2 for this wave function; not stored, and the paper does not say whether it is Var(E_L) of the total or per electron.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#52"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/bcc_64_P_64_0_100",
+    "method": "SJB-DMC [Gaussian exponent C = 0.0001503 (opt.); VMC variance (Ha^2) in the same row: 0.00000201] (arXiv:2201.08743)",
+    "energy": -0.492544
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2201.08743 text (sources/2201.08743.txt); Phys. Rev. B 105, 245135 not read, arXiv only",
+   "location": "Table II (txt lines 303-310; ferromagnetic Wigner crystal, rs = 100, N = 64), row SJB, C = 0.0001503, column DMC energy",
+   "reported_as": "−0.0076960(1)",
+   "conversion": "-0.007696 x 64 = -0.492544 (stored -0.492544); sigma 1e-7 x 64 = 0.0000064 (stored 0.0000064)",
+   "note": "Ha per electron; Ewald interaction stated, Madelung term inside the printed energies (Fig. 15 caption subtracts it); no HF energy printed, so the convention rests on that statement. Gaussian-orbital bcc crystal in a bcc-shaped cell (27 = 3^3, 64 = 4^3 primitive cells); twist not stated for Tables I-II (Γ inferred). Table II also prints the VMC variance 0.00000201 Ha^2 for this wave function; not stored, and the paper does not say whether it is Var(E_L) of the total or per electron.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#53"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_P_28_8_t12_-0.2",
+    "method": "Pfaffian (transformer backflow), zero-variance extrapolation",
+    "energy": -48.256
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2604.21978 v1 text (sources/2604.21978.txt), Table I and App. Sec. 3; no journal version",
+   "location": "Table I (txt lines 188-199), row 'Zero-Var.Extr.'; App. Sec. 3 (txt line 528-546) and main text print -0.7540(1)",
+   "reported_as": "-0.7540(4)",
+   "conversion": "-0.754 x 64 = -48.256 (stored -48.256); sigma 0.0004 x 64 = 0.0256 (stored 0.0256)",
+   "note": "Zero-variance intercept of a linear E vs sigma^2 fit (App. Sec. 3): `extrapolated`, not a bound. The table bar (4) is kept against the text's (1) (the text states the bar includes fit-range stability; the table's is the wider). A second sweep entry (text value -0.7540(1)) was correctly skipped by the loader. Hamiltonian Eq. (1): -sum t_rr'(c+c + h.c.) + U sum n n, PBC, 56 electrons.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#63"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_169_P_169_0_30",
+    "method": "SJB-VMC (Slater-Jastrow-backflow)",
+    "energy": -5.3834612
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 169, rs = 30, row SJB-VMC, column E[Ha/el]",
+   "reported_as": "−0.0318548(2)",
+   "conversion": "-0.0318548 x 169 = -5.3834612 (stored -5.3834612); sigma 2e-7 x 169 = 0.0000338 (stored 0.0000338)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0272118, reproduced by hf.mjs 2 triangular 169 0 30 (-0.0272117908).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#64"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_169_P_169_0_30",
+    "method": "SJB-DMC (fixed-node DMC on the SJB nodes)",
+    "energy": -5.3944293
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 169, rs = 30, row SJB-DMC, column E[Ha/el]",
+   "reported_as": "−0.0319197(1)",
+   "conversion": "-0.0319197 x 169 = -5.3944293 (stored -5.3944293); sigma 1e-7 x 169 = 0.0000169 (stored 0.0000169)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0272118, reproduced by hf.mjs 2 triangular 169 0 30 (-0.0272117908).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#65"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_169_P_169_0_30",
+    "method": "NN-VMC (self-attention wave function)",
+    "energy": -5.39461013
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 169, rs = 30, row NN-VMC, column E[Ha/el]",
+   "reported_as": "−0.03192077(3)",
+   "conversion": "-0.03192077 x 169 = -5.39461013 (stored -5.39461013); sigma 3e-8 x 169 = 0.00000507 (stored 0.00000507)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0272118, reproduced by hf.mjs 2 triangular 169 0 30 (-0.0272117908).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#66"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_91_P_91_0_30",
+    "method": "SJB-VMC (Slater-Jastrow-backflow)",
+    "energy": -2.9010072
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 91, rs = 30, row SJB-VMC, column E[Ha/el]",
+   "reported_as": "−0.0318792(2)",
+   "conversion": "-0.0318792 x 91 = -2.9010072 (stored -2.9010072); sigma 2e-7 x 91 = 0.0000182 (stored 0.0000182)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0273098, reproduced by hf.mjs 2 triangular 91 0 30 (-0.0273098004).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#67"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_91_P_91_0_30",
+    "method": "SJB-DMC (fixed-node DMC on the SJB nodes)",
+    "energy": -2.906267
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 91, rs = 30, row SJB-DMC, column E[Ha/el]",
+   "reported_as": "−0.0319370(1)",
+   "conversion": "-0.031937 x 91 = -2.906267 (stored -2.906267); sigma 1e-7 x 91 = 0.0000091 (stored 0.0000091)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0273098, reproduced by hf.mjs 2 triangular 91 0 30 (-0.0273098004).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#68"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_91_P_91_0_30",
+    "method": "NN-VMC (self-attention wave function)",
+    "energy": -2.90632433
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 91, rs = 30, row NN-VMC, column E[Ha/el]",
+   "reported_as": "−0.03193763(3)",
+   "conversion": "-0.03193763 x 91 = -2.90632433 (stored -2.90632433); sigma 3e-8 x 91 = 0.00000273 (stored 0.00000273)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0273098, reproduced by hf.mjs 2 triangular 91 0 30 (-0.0273098004).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#69"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_91_P_91_0_40",
+    "method": "SJB-VMC (Slater-Jastrow-backflow)",
+    "energy": -2.2188712
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 91, rs = 40, row SJB-VMC, column E[Ha/el]",
+   "reported_as": "−0.0243832(1)",
+   "conversion": "-0.0243832 x 91 = -2.2188712 (stored -2.2188712); sigma 1e-7 x 91 = 0.0000091 (stored 0.0000091)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0206904, reproduced by hf.mjs 2 triangular 91 0 40 (-0.0206904302).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#70"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_91_P_91_0_40",
+    "method": "SJB-DMC (fixed-node DMC on the SJB nodes)",
+    "energy": -2.2238307
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 91, rs = 40, row SJB-DMC, column E[Ha/el]",
+   "reported_as": "−0.0244377(2)",
+   "conversion": "-0.0244377 x 91 = -2.2238307 (stored -2.2238307); sigma 2e-7 x 91 = 0.0000182 (stored 0.0000182)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0206904, reproduced by hf.mjs 2 triangular 91 0 40 (-0.0206904302).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#71"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_91_P_91_0_40",
+    "method": "NN-VMC (self-attention wave function)",
+    "energy": -2.22387074
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.08616 text with Supplemental Material (sources/2607.08616.txt); no journal version",
+   "location": "Table I (txt lines 62-72), N_e = 91, rs = 40, row NN-VMC, column E[Ha/el]",
+   "reported_as": "−0.02443814(2)",
+   "conversion": "-0.02443814 x 91 = -2.22387074 (stored -2.22387074); sigma 2e-8 x 91 = 0.00000182 (stored 0.00000182)",
+   "note": "Spin-polarized 2D gas, Γ point ('we did not apply twist-averaged boundary conditions', txt line 362), DMC extrapolated to zero time step. Convention check: E - E_corr printed in the same row gives E_HF = -0.0206904, reproduced by hf.mjs 2 triangular 91 0 40 (-0.0206904302).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#72"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "CCSD (initiator stochastic CC), complete-basis limit",
+    "energy": 1496.6011194
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1511.05752 text (sources/1511.05752.txt); J. Chem. Phys. 144, 084108 not read, arXiv only",
+   "location": "Table II (txt lines 601-606), row rs = 0.1, column E_CCSD",
+   "reported_as": "E_c = -0.6639(1) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 106.947501386 + (-0.6639) = 1496.6011194059 Ha total (stored 1496.6011194); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 0.1 (closed shell); sigma 0.0001 printed, stored 0.0000994 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "14-electron UEG, Ha, total correlation energy; Sec. VII: initiator CCSD/CCSDT then linear fits against 1/M for M >= 179 (both an initiator-population and a basis extrapolation: extrapolated). Neufeld & Thom (arXiv:1706.09923, Table I footnote a) reprint the same values. Cell not named beyond 'closed-shell 14-electron gas in plane wave bases'; sc follows from its FCIQMC column (Ref 39, Shepherd et al., sc).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#82"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.1",
+    "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+    "energy": 1496.5991194
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1511.05752 text (sources/1511.05752.txt); J. Chem. Phys. 144, 084108 not read, arXiv only",
+   "location": "Table II (txt lines 601-606), row rs = 0.1, column E_CCSDT",
+   "reported_as": "E_c = -0.6659(2) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 106.947501386 + (-0.6659) = 1496.5991194059 Ha total (stored 1496.5991194); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 0.1 (closed shell); sigma 0.0002 printed, stored 0.000196 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "14-electron UEG, Ha, total correlation energy; Sec. VII: initiator CCSD/CCSDT then linear fits against 1/M for M >= 179 (both an initiator-population and a basis extrapolation: extrapolated). Neufeld & Thom (arXiv:1706.09923, Table I footnote a) reprint the same values. Cell not named beyond 'closed-shell 14-electron gas in plane wave bases'; sc follows from its FCIQMC column (Ref 39, Shepherd et al., sc).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#83"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "CCSD (initiator stochastic CC), complete-basis limit",
+    "energy": 47.7788215043
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1511.05752 text (sources/1511.05752.txt); J. Chem. Phys. 144, 084108 not read, arXiv only",
+   "location": "Table II (txt lines 601-606), row rs = 0.5, column E_CCSD",
+   "reported_as": "E_c = -0.5897(1) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 3.45489439316 + (-0.5897) = 47.7788215042 Ha total (stored 47.7788215043); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 0.5 (closed shell); sigma 0.0001 printed, stored 0.0000994 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "14-electron UEG, Ha, total correlation energy; Sec. VII: initiator CCSD/CCSDT then linear fits against 1/M for M >= 179 (both an initiator-population and a basis extrapolation: extrapolated). Neufeld & Thom (arXiv:1706.09923, Table I footnote a) reprint the same values. Cell not named beyond 'closed-shell 14-electron gas in plane wave bases'; sc follows from its FCIQMC column (Ref 39, Shepherd et al., sc).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#84"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+    "energy": 47.7720215042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1511.05752 text (sources/1511.05752.txt); J. Chem. Phys. 144, 084108 not read, arXiv only",
+   "location": "Table II (txt lines 601-606), row rs = 0.5, column E_CCSDT",
+   "reported_as": "E_c = -0.5965(2) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 3.45489439316 + (-0.5965) = 47.7720215042 Ha total (stored 47.7720215042); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 0.5 (closed shell); sigma 0.0002 printed, stored 0.000196 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "14-electron UEG, Ha, total correlation energy; Sec. VII: initiator CCSD/CCSDT then linear fits against 1/M for M >= 179 (both an initiator-population and a basis extrapolation: extrapolated). Neufeld & Thom (arXiv:1706.09923, Table I footnote a) reprint the same values. Cell not named beyond 'closed-shell 14-electron gas in plane wave bases'; sc follows from its FCIQMC column (Ref 39, Shepherd et al., sc).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#85"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "CCSD (initiator stochastic CC), complete-basis limit",
+    "energy": 7.97598060354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1511.05752 text (sources/1511.05752.txt); J. Chem. Phys. 144, 084108 not read, arXiv only",
+   "location": "Table II (txt lines 601-606), row rs = 1, column E_CCSD",
+   "reported_as": "E_c = -0.5155(3) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 0.606534328824 + (-0.5155) = 7.9759806035 Ha total (stored 7.97598060354); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 1 (closed shell); sigma 0.0003 printed, stored 0.000294 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "14-electron UEG, Ha, total correlation energy; Sec. VII: initiator CCSD/CCSDT then linear fits against 1/M for M >= 179 (both an initiator-population and a basis extrapolation: extrapolated). Neufeld & Thom (arXiv:1706.09923, Table I footnote a) reprint the same values. Cell not named beyond 'closed-shell 14-electron gas in plane wave bases'; sc follows from its FCIQMC column (Ref 39, Shepherd et al., sc).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#86"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+    "energy": 7.95978060353
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1511.05752 text (sources/1511.05752.txt); J. Chem. Phys. 144, 084108 not read, arXiv only",
+   "location": "Table II (txt lines 601-606), row rs = 1, column E_CCSDT",
+   "reported_as": "E_c = -0.5317(3) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 0.606534328824 + (-0.5317) = 7.9597806035 Ha total (stored 7.95978060353); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 1 (closed shell); sigma 0.0003 printed, stored 0.000294 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "14-electron UEG, Ha, total correlation energy; Sec. VII: initiator CCSD/CCSDT then linear fits against 1/M for M >= 179 (both an initiator-population and a basis extrapolation: extrapolated). Neufeld & Thom (arXiv:1706.09923, Table I footnote a) reprint the same values. Cell not named beyond 'closed-shell 14-electron gas in plane wave bases'; sc follows from its FCIQMC column (Ref 39, Shepherd et al., sc).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#87"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "CCSD (initiator stochastic CC), complete-basis limit",
+    "energy": -0.0868547353716
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1511.05752 text (sources/1511.05752.txt); J. Chem. Phys. 144, 084108 not read, arXiv only",
+   "location": "Table II (txt lines 601-606), row rs = 2, column E_CCSD",
+   "reported_as": "E_c = -0.4094(1) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 0.0230389474735 + (-0.4094) = -0.0868547354 Ha total (stored -0.0868547353716); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 2 (closed shell); sigma 0.0001 printed, stored 0.0000994 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "14-electron UEG, Ha, total correlation energy; Sec. VII: initiator CCSD/CCSDT then linear fits against 1/M for M >= 179 (both an initiator-population and a basis extrapolation: extrapolated). Neufeld & Thom (arXiv:1706.09923, Table I footnote a) reprint the same values. Cell not named beyond 'closed-shell 14-electron gas in plane wave bases'; sc follows from its FCIQMC column (Ref 39, Shepherd et al., sc).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#88"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/square_90_P_45_45_30",
+    "method": "SJ-VMC [Jastrow optimised at Gamma from random starting point 1] (arXiv:2405.00425)",
+    "energy": -2.856357
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2405.00425 text (sources/2405.00425.txt); Phys. Rev. B 110, 245145 not read, arXiv only",
+   "location": "Table III (txt lines 364-376), ks = Γ, start 1, column SJ-VMC",
+   "reported_as": "−0.0317373(2)",
+   "conversion": "-0.0317373 x 90 = -2.856357 (stored -2.856357); sigma 2e-7 x 90 = 0.000018 (stored 0.000018)",
+   "note": "90-electron paramagnetic fluid, square cell, rs = 30, Γ point, Ha per electron. Convention fixed by Table III's printed HF energy at Γ, -0.0196518, which QMBL's hf.mjs (2 square 45 45 30) reproduces as -0.0196517776. DMC 'extrapolated linearly to zero time step and infinite population' (txt line 303-306): projected.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#98"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/square_90_P_45_45_30",
+    "method": "SJ-VMC [Jastrow optimised at Gamma from random starting point 2] (arXiv:2405.00425)",
+    "energy": -2.262582
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2405.00425 text (sources/2405.00425.txt); Phys. Rev. B 110, 245145 not read, arXiv only",
+   "location": "Table III (txt lines 364-376), ks = Γ, start 2, column SJ-VMC",
+   "reported_as": "−0.0251398(8)",
+   "conversion": "-0.0251398 x 90 = -2.262582 (stored -2.262582); sigma 8e-7 x 90 = 0.000072 (stored 0.000072)",
+   "note": "90-electron paramagnetic fluid, square cell, rs = 30, Γ point, Ha per electron. Convention fixed by Table III's printed HF energy at Γ, -0.0196518, which QMBL's hf.mjs (2 square 45 45 30) reproduces as -0.0196517776. DMC 'extrapolated linearly to zero time step and infinite population' (txt line 303-306): projected. The paper says starts 2 and 3 are trapped in non-fluid local minima; as VMC energies they remain valid upper bounds.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#99"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/square_90_P_45_45_30",
+    "method": "SJ-VMC [Jastrow optimised at Gamma from random starting point 3] (arXiv:2405.00425)",
+    "energy": -2.443554
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2405.00425 text (sources/2405.00425.txt); Phys. Rev. B 110, 245145 not read, arXiv only",
+   "location": "Table III (txt lines 364-376), ks = Γ, start 3, column SJ-VMC",
+   "reported_as": "−0.0271506(7)",
+   "conversion": "-0.0271506 x 90 = -2.443554 (stored -2.443554); sigma 7e-7 x 90 = 0.000063 (stored 0.000063)",
+   "note": "90-electron paramagnetic fluid, square cell, rs = 30, Γ point, Ha per electron. Convention fixed by Table III's printed HF energy at Γ, -0.0196518, which QMBL's hf.mjs (2 square 45 45 30) reproduces as -0.0196517776. DMC 'extrapolated linearly to zero time step and infinite population' (txt line 303-306): projected. The paper says starts 2 and 3 are trapped in non-fluid local minima; as VMC energies they remain valid upper bounds.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#100"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/square_90_P_45_45_30",
+    "method": "S-DMC (Slater-only fixed-node DMC) [HF nodes; twist Gamma] (arXiv:2405.00425)",
+    "energy": -2.8359
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2405.00425 text (sources/2405.00425.txt); Phys. Rev. B 110, 245145 not read, arXiv only",
+   "location": "Table IV (txt lines 383-390), ks = Γ, start 1 (the S-DMC column repeats -0.03151(2) for starts 1-3), column S-DMC",
+   "reported_as": "−0.03151(2)",
+   "conversion": "-0.03151 x 90 = -2.8359 (stored -2.8359); sigma 0.00002 x 90 = 0.0018 (stored 0.0018)",
+   "note": "90-electron paramagnetic fluid, square cell, rs = 30, Γ point, Ha per electron. Convention fixed by Table III's printed HF energy at Γ, -0.0196518, which QMBL's hf.mjs (2 square 45 45 30) reproduces as -0.0196517776. DMC 'extrapolated linearly to zero time step and infinite population' (txt line 303-306): projected. The loader kept one of three identical S-DMC entries (starts 1-3), correctly.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#101"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/square_90_P_45_45_30",
+    "method": "SJ-DMC [Jastrow optimised at Gamma, start 1] (arXiv:2405.00425)",
+    "energy": -2.87271
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2405.00425 text (sources/2405.00425.txt); Phys. Rev. B 110, 245145 not read, arXiv only",
+   "location": "Table IV (txt lines 383-390), ks = Γ, start 1, column SJ-DMC",
+   "reported_as": "−0.031919(1)",
+   "conversion": "-0.031919 x 90 = -2.87271 (stored -2.87271); sigma 0.000001 x 90 = 0.00009 (stored 0.00009)",
+   "note": "90-electron paramagnetic fluid, square cell, rs = 30, Γ point, Ha per electron. Convention fixed by Table III's printed HF energy at Γ, -0.0196518, which QMBL's hf.mjs (2 square 45 45 30) reproduces as -0.0196517776. DMC 'extrapolated linearly to zero time step and infinite population' (txt line 303-306): projected.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#102"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_16_P_16_0_30",
+    "method": "Fermi Sets VMC (2.5e4 parameters)",
+    "energy": -0.510321456
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.25872 text with appendices (sources/2607.25872.txt); no journal version found",
+   "location": "Table III (txt lines 357-368), N_p = 2.5 x 10^4, column E_VMC",
+   "reported_as": "−0.031895091(12)",
+   "conversion": "-0.031895091 x 16 = -0.510321456 (stored -0.510321456); sigma 1.2e-8 x 16 = 1.92e-7 (stored 1.92e-7)",
+   "note": "Fully spin-polarized 2D UEG, N = 16, rs = 30, hexagonal (triangular-lattice primitive) cell L1 = L(1,0), L2 = L(-1/2, √3/2) (App. E), Ewald sum with the Madelung constant included (Eq. E2). Twist not stated; periodic boundary conditions, Γ inferred. Errors are reblocked SEM (App. F). Fixed-phase DMC at production Δτ = 0.001, Δτ -> 0 check within error (App. H): projected. Open shell at Γ (hf.mjs reports open_shell), irrelevant for a total energy.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#105"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_16_P_16_0_30",
+    "method": "Fermi Sets fixed-phase DMC (2.5e4 parameters)",
+    "energy": -0.51058224
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.25872 text with appendices (sources/2607.25872.txt); no journal version found",
+   "location": "Table III (txt lines 357-368), N_p = 2.5 x 10^4, column E_DMC",
+   "reported_as": "−0.03191139(12)",
+   "conversion": "-0.03191139 x 16 = -0.51058224 (stored -0.51058224); sigma 1.2e-7 x 16 = 0.00000192 (stored 0.00000192)",
+   "note": "Fully spin-polarized 2D UEG, N = 16, rs = 30, hexagonal (triangular-lattice primitive) cell L1 = L(1,0), L2 = L(-1/2, √3/2) (App. E), Ewald sum with the Madelung constant included (Eq. E2). Twist not stated; periodic boundary conditions, Γ inferred. Errors are reblocked SEM (App. F). Fixed-phase DMC at production Δτ = 0.001, Δτ -> 0 check within error (App. H): projected. Open shell at Γ (hf.mjs reports open_shell), irrelevant for a total energy.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#106"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_16_P_16_0_30",
+    "method": "Fermi Sets VMC (3.7e4 parameters)",
+    "energy": -0.511450848
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.25872 text with appendices (sources/2607.25872.txt); no journal version found",
+   "location": "Table III (txt lines 357-368), N_p = 3.7 x 10^4, column E_VMC",
+   "reported_as": "−0.031965678(6)",
+   "conversion": "-0.031965678 x 16 = -0.511450848 (stored -0.511450848); sigma 6e-9 x 16 = 9.6e-8 (stored 9.6e-8)",
+   "note": "Fully spin-polarized 2D UEG, N = 16, rs = 30, hexagonal (triangular-lattice primitive) cell L1 = L(1,0), L2 = L(-1/2, √3/2) (App. E), Ewald sum with the Madelung constant included (Eq. E2). Twist not stated; periodic boundary conditions, Γ inferred. Errors are reblocked SEM (App. F). Fixed-phase DMC at production Δτ = 0.001, Δτ -> 0 check within error (App. H): projected. Open shell at Γ (hf.mjs reports open_shell), irrelevant for a total energy.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#107"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_16_P_16_0_30",
+    "method": "Fermi Sets fixed-phase DMC (3.7e4 parameters)",
+    "energy": -0.51164576
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.25872 text with appendices (sources/2607.25872.txt); no journal version found",
+   "location": "Table III (txt lines 357-368), N_p = 3.7 x 10^4, column E_DMC",
+   "reported_as": "−0.03197786(8)",
+   "conversion": "-0.03197786 x 16 = -0.51164576 (stored -0.51164576); sigma 8e-8 x 16 = 0.00000128 (stored 0.00000128)",
+   "note": "Fully spin-polarized 2D UEG, N = 16, rs = 30, hexagonal (triangular-lattice primitive) cell L1 = L(1,0), L2 = L(-1/2, √3/2) (App. E), Ewald sum with the Madelung constant included (Eq. E2). Twist not stated; periodic boundary conditions, Γ inferred. Errors are reblocked SEM (App. F). Fixed-phase DMC at production Δτ = 0.001, Δτ -> 0 check within error (App. H): projected. Open shell at Γ (hf.mjs reports open_shell), irrelevant for a total energy.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#108"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_16_P_16_0_30",
+    "method": "Fermi Sets VMC (5.0e4 parameters)",
+    "energy": -0.511850992
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.25872 text with appendices (sources/2607.25872.txt); no journal version found",
+   "location": "Table III (txt lines 357-368), N_p = 5.0 x 10^4, column E_VMC",
+   "reported_as": "−0.031990687(3)",
+   "conversion": "-0.031990687 x 16 = -0.511850992 (stored -0.511850992); sigma 3e-9 x 16 = 4.8e-8 (stored 4.8e-8)",
+   "note": "Fully spin-polarized 2D UEG, N = 16, rs = 30, hexagonal (triangular-lattice primitive) cell L1 = L(1,0), L2 = L(-1/2, √3/2) (App. E), Ewald sum with the Madelung constant included (Eq. E2). Twist not stated; periodic boundary conditions, Γ inferred. Errors are reblocked SEM (App. F). Fixed-phase DMC at production Δτ = 0.001, Δτ -> 0 check within error (App. H): projected. Open shell at Γ (hf.mjs reports open_shell), irrelevant for a total energy.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#109"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/triangular_16_P_16_0_30",
+    "method": "Fermi Sets fixed-phase DMC (5.0e4 parameters)",
+    "energy": -0.51194176
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2607.25872 text with appendices (sources/2607.25872.txt); no journal version found",
+   "location": "Table III (txt lines 357-368), N_p = 5.0 x 10^4, column E_DMC",
+   "reported_as": "−0.03199636(7)",
+   "conversion": "-0.03199636 x 16 = -0.51194176 (stored -0.51194176); sigma 7e-8 x 16 = 0.00000112 (stored 0.00000112)",
+   "note": "Fully spin-polarized 2D UEG, N = 16, rs = 30, hexagonal (triangular-lattice primitive) cell L1 = L(1,0), L2 = L(-1/2, √3/2) (App. E), Ewald sum with the Madelung constant included (Eq. E2). Twist not stated; periodic boundary conditions, Γ inferred. Errors are reblocked SEM (App. F). Fixed-phase DMC at production Δτ = 0.001, Δτ -> 0 check within error (App. H): projected. Open shell at Γ (hf.mjs reports open_shell), irrelevant for a total energy.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#110"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "MP2, complete-basis limit",
+    "energy": 47.7930795042
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1202.4990 text (sources/1202.4990.txt, read with grep -a; the file holds NUL bytes); Phys. Rev. B 86, 035111 not read, arXiv only",
+   "location": "Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 0.5",
+   "reported_as": "E_c = -0.575442(1) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 3.45489439316 + (-0.575442) = 47.7930795042 Ha total (stored 47.7930795042); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 0.5 (closed shell); sigma 0.000001 printed, stored 9.94e-7 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "MP2 is `approximate` (RULES 4); CBS extrapolation. 14-electron gas in a cubic cell (txt line 131-138, Eq. with Madelung term v_M at line 116). Neufeld & Thom (arXiv:1706.09923 Table I, footnote j) reprint these values; QMBL keeps the primary here.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#111"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "MP2, complete-basis limit",
+    "energy": 7.99214260354
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1202.4990 text (sources/1202.4990.txt, read with grep -a; the file holds NUL bytes); Phys. Rev. B 86, 035111 not read, arXiv only",
+   "location": "Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 1",
+   "reported_as": "E_c = -0.499338(2) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 0.606534328824 + (-0.499338) = 7.9921426035 Ha total (stored 7.99214260354); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 1 (closed shell); sigma 0.000002 printed, stored 0.00000196 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "MP2 is `approximate` (RULES 4); CBS extrapolation. 14-electron gas in a cubic cell (txt line 131-138, Eq. with Madelung term v_M at line 116). Neufeld & Thom (arXiv:1706.09923 Table I, footnote j) reprint these values; QMBL keeps the primary here.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#112"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_10",
+    "method": "MP2, complete-basis limit",
+    "energy": -0.727153153017
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1202.4990 text (sources/1202.4990.txt, read with grep -a; the file holds NUL bytes); Phys. Rev. B 86, 035111 not read, arXiv only",
+   "location": "Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 10",
+   "reported_as": "E_c = -0.163951(6) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x -0.0402287252155 + (-0.163951) = -0.7271531530 Ha total (stored -0.727153153017); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 10 (closed shell); sigma 0.000006 printed, stored 0.00000602 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "MP2 is `approximate` (RULES 4); CBS extrapolation. 14-electron gas in a cubic cell (txt line 131-138, Eq. with Madelung term v_M at line 116). Neufeld & Thom (arXiv:1706.09923 Table I, footnote j) reprint these values; QMBL keeps the primary here.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#113"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "MP2, complete-basis limit",
+    "energy": -0.0764027353712
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1202.4990 text (sources/1202.4990.txt, read with grep -a; the file holds NUL bytes); Phys. Rev. B 86, 035111 not read, arXiv only",
+   "location": "Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 2",
+   "reported_as": "E_c = -0.398948(2) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x 0.0230389474735 + (-0.398948) = -0.0764027354 Ha total (stored -0.0764027353712); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 2 (closed shell); sigma 0.000002 printed, stored 0.00000196 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "MP2 is `approximate` (RULES 4); CBS extrapolation. 14-electron gas in a cubic cell (txt line 131-138, Eq. with Madelung term v_M at line 116). Neufeld & Thom (arXiv:1706.09923 Table I, footnote j) reprint these values; QMBL keeps the primary here.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#114"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_20",
+    "method": "MP2, complete-basis limit",
+    "energy": -0.41832302688
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1202.4990 text (sources/1202.4990.txt, read with grep -a; the file holds NUL bytes); Phys. Rev. B 86, 035111 not read, arXiv only",
+   "location": "Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 20",
+   "reported_as": "E_c = -0.09749(1) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x -0.0229166447771 + (-0.09749) = -0.4183230269 Ha total (stored -0.41832302688); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 20 (closed shell); sigma 0.00001 printed, stored 0.00000994 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "MP2 is `approximate` (RULES 4); CBS extrapolation. 14-electron gas in a cubic cell (txt line 131-138, Eq. with Madelung term v_M at line 116). Neufeld & Thom (arXiv:1706.09923 Table I, footnote j) reprint these values; QMBL keeps the primary here.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#115"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "MP2, complete-basis limit",
+    "energy": -1.06821270306
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1202.4990 text (sources/1202.4990.txt, read with grep -a; the file holds NUL bytes); Phys. Rev. B 86, 035111 not read, arXiv only",
+   "location": "Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 5",
+   "reported_as": "E_c = -0.255664(4) (total, Ha)",
+   "conversion": "E = N E_HF + E_c = 14 x -0.0580391930759 + (-0.255664) = -1.0682127031 Ha total (stored -1.06821270306); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 5 (closed shell); sigma 0.000004 printed, stored 0.00000406 (loader rounds sigma per electron to 2 significant digits, make_rows.mjs line 24)",
+   "note": "MP2 is `approximate` (RULES 4); CBS extrapolation. 14-electron gas in a cubic cell (txt line 131-138, Eq. with Madelung term v_M at line 116). Neufeld & Thom (arXiv:1706.09923 Table I, footnote j) reprint these values; QMBL keeps the primary here.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#116"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "DeepSolid (1 determinant)",
+    "energy": 173.946204
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2203.15472 text with Supplementary Information (sources/2203.15472.txt); Nat. Commun. 13, 7895 not read, arXiv only",
+   "location": "Supplementary Table 11 (txt lines 1012-1020; 'Energy per electron of HEG ... HEG system contains 54 electrons and energies are all given in Hartree'), row rs = 0.5, column Net",
+   "reported_as": "3.221226(2)",
+   "conversion": "3.221226 x 54 = 173.946204 (stored 173.946204); sigma 0.000002 x 54 = 0.000108 (stored 0.000108)",
+   "note": "Main text Sec. 2.2.4 (txt line 248): 'a simple cubic cell containing 54 electrons in closed-shell configuration'; the BF-DMC/BF-VMC/DCD columns of the same table reproduce Lopez Rios et al. and Liao et al. rows already on these instances, which fixes units and the Madelung convention. Variational (VMC of the neural ansatz).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#129"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "DeepSolid (1 determinant)",
+    "energy": 28.621026
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2203.15472 text with Supplementary Information (sources/2203.15472.txt); Nat. Commun. 13, 7895 not read, arXiv only",
+   "location": "Supplementary Table 11 (txt lines 1012-1020; 'Energy per electron of HEG ... HEG system contains 54 electrons and energies are all given in Hartree'), row rs = 1, column Net",
+   "reported_as": "0.530019(1)",
+   "conversion": "0.530019 x 54 = 28.621026 (stored 28.621026); sigma 0.000001 x 54 = 0.000054 (stored 0.000054)",
+   "note": "Main text Sec. 2.2.4 (txt line 248): 'a simple cubic cell containing 54 electrons in closed-shell configuration'; the BF-DMC/BF-VMC/DCD columns of the same table reproduce Lopez Rios et al. and Liao et al. rows already on these instances, which fixes units and the Madelung convention. Variational (VMC of the neural ansatz).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#130"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_10",
+    "method": "DeepSolid (1 determinant)",
+    "energy": -2.931039
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2203.15472 text with Supplementary Information (sources/2203.15472.txt); Nat. Commun. 13, 7895 not read, arXiv only",
+   "location": "Supplementary Table 11 (txt lines 1012-1020; 'Energy per electron of HEG ... HEG system contains 54 electrons and energies are all given in Hartree'), row rs = 10, column Net",
+   "reported_as": "-0.0542785(1)",
+   "conversion": "-0.0542785 x 54 = -2.931039 (stored -2.931039); sigma 1e-7 x 54 = 0.0000054 (stored 0.0000054)",
+   "note": "Main text Sec. 2.2.4 (txt line 248): 'a simple cubic cell containing 54 electrons in closed-shell configuration'; the BF-DMC/BF-VMC/DCD columns of the same table reproduce Lopez Rios et al. and Liao et al. rows already on these instances, which fixes units and the Madelung convention. Variational (VMC of the neural ansatz).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#131"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_2",
+    "method": "DeepSolid (1 determinant)",
+    "energy": -0.74736
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2203.15472 text with Supplementary Information (sources/2203.15472.txt); Nat. Commun. 13, 7895 not read, arXiv only",
+   "location": "Supplementary Table 11 (txt lines 1012-1020; 'Energy per electron of HEG ... HEG system contains 54 electrons and energies are all given in Hartree'), row rs = 2, column Net",
+   "reported_as": "-0.013840(1)",
+   "conversion": "-0.01384 x 54 = -0.74736 (stored -0.74736); sigma 0.000001 x 54 = 0.000054 (stored 0.000054)",
+   "note": "Main text Sec. 2.2.4 (txt line 248): 'a simple cubic cell containing 54 electrons in closed-shell configuration'; the BF-DMC/BF-VMC/DCD columns of the same table reproduce Lopez Rios et al. and Liao et al. rows already on these instances, which fixes units and the Madelung convention. Variational (VMC of the neural ansatz).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#132"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_20",
+    "method": "DeepSolid (1 determinant)",
+    "energy": -1.7111844
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2203.15472 text with Supplementary Information (sources/2203.15472.txt); Nat. Commun. 13, 7895 not read, arXiv only",
+   "location": "Supplementary Table 11 (txt lines 1012-1020; 'Energy per electron of HEG ... HEG system contains 54 electrons and energies are all given in Hartree'), row rs = 20, column Net",
+   "reported_as": "-0.0316886(1)",
+   "conversion": "-0.0316886 x 54 = -1.7111844 (stored -1.7111844); sigma 1e-7 x 54 = 0.0000054 (stored 0.0000054)",
+   "note": "Main text Sec. 2.2.4 (txt line 248): 'a simple cubic cell containing 54 electrons in closed-shell configuration'; the BF-DMC/BF-VMC/DCD columns of the same table reproduce Lopez Rios et al. and Liao et al. rows already on these instances, which fixes units and the Madelung convention. Variational (VMC of the neural ansatz).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#133"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_5",
+    "method": "DeepSolid (1 determinant)",
+    "energy": -4.2571116
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2203.15472 text with Supplementary Information (sources/2203.15472.txt); Nat. Commun. 13, 7895 not read, arXiv only",
+   "location": "Supplementary Table 11 (txt lines 1012-1020; 'Energy per electron of HEG ... HEG system contains 54 electrons and energies are all given in Hartree'), row rs = 5, column Net",
+   "reported_as": "-0.0788354(2)",
+   "conversion": "-0.0788354 x 54 = -4.2571116 (stored -4.2571116); sigma 2e-7 x 54 = 0.0000108 (stored 0.0000108)",
+   "note": "Main text Sec. 2.2.4 (txt line 248): 'a simple cubic cell containing 54 electrons in closed-shell configuration'; the BF-DMC/BF-VMC/DCD columns of the same table reproduce Lopez Rios et al. and Liao et al. rows already on these instances, which fixes units and the Madelung convention. Variational (VMC of the neural ansatz).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#134"
+  },
+  {
+   "match": {
+    "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+    "method": "NQS CNN (Table II)",
+    "energy": -65.6384
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2101.08787 text, Appendix H Table II (sources/2101.08787.txt); Phys. Rev. X 11, 041021 not read, arXiv only",
+   "location": "Appendix H Table II (txt lines 1122-1152), geometry 4×2^3, column NQS CNN, first line of the cell (energy per site)",
+   "reported_as": "-0.5128(1)",
+   "conversion": "-0.5128 x 128 (4N, S.S to Pauli) = -65.6384 (stored -65.6384); sigma 0.0001 x 128 = 0.0128 (stored 0.0128)",
+   "note": "Spin-1/2 S.S Heisenberg, J = 1, energy per site; 4×2^3 is VarBench's pyrochlore-2x2x2_32_P (the mVMC cell of the same column equals VarBench's mVMC row on this instance). Not a duplicate: the VarBench RBM row here (-65.949) is a different state. Above QMBL's exact -0.516858 per site.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#136"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "i-FCIQMC (2M = 2838 spin orbitals)",
+    "energy": 173.92644
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1109.2635 text (sources/1109.2635.txt); Phys. Rev. B 85, 081103(R) not read, arXiv only",
+   "location": "Table I (txt lines 121-128), rs = 0.5 row, column 'FCI 2M = 2838'",
+   "reported_as": "3.22086(2)",
+   "conversion": "3.22086 x 54 = 173.92644 (stored 173.92644); sigma 0.00002 x 54 = 0.00108 (stored 0.00108)",
+   "note": "54-electron HEG, Hamiltonian Eq. (1) H = sum -1/2 nabla^2 + sum 1/2 v_ab + 1/2 N v_M (Madelung term included), plane waves in a cubic cell, total energy per electron in a.u. Convention cross-check: 54 x (3.2202 - 3.26533) = -2.437 Ha correlation, consistent with Luo & Alavi's quote -2.435(7) of the FCIQMC CBS value. Finite-basis i-FCIQMC; the paper calls it 'a variational finite-basis result' but also 'the unquantified initiator error is sub-mEh' (txt line 155-158), so `projected` (RULES 12.4: initiator not shown converged) stands.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#140"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "i-FCIQMC, 1/M extrapolation",
+    "energy": 173.8908
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1109.2635 text (sources/1109.2635.txt); Phys. Rev. B 85, 081103(R) not read, arXiv only",
+   "location": "Table I (txt lines 121-128), rs = 0.5 row, column 'FCI M = ∞'",
+   "reported_as": "3.2202(2)",
+   "conversion": "3.2202 x 54 = 173.8908 (stored 173.8908); sigma 0.0002 x 54 = 0.0108 (stored 0.0108)",
+   "note": "54-electron HEG, Hamiltonian Eq. (1) H = sum -1/2 nabla^2 + sum 1/2 v_ab + 1/2 N v_M (Madelung term included), plane waves in a cubic cell, total energy per electron in a.u. Convention cross-check: 54 x (3.2202 - 3.26533) = -2.437 Ha correlation, consistent with Luo & Alavi's quote -2.435(7) of the FCIQMC CBS value. 1/M extrapolation from Fig. 3; the error 'derives' from the fit. Later work (Neufeld & Thom, arXiv:1706.09923; Luo & Alavi, arXiv:1712.07524 Table 1 discussion, 'the new transcorrelated result at rs = 0.5 is 10 mEh above the previous FCIQMC result ... based on a M^-1 extrapolation') argues M^-1 extrapolations overshoot; not a transcription issue.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#141"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "i-FCIQMC (2M = 2838 spin orbitals)",
+    "energy": 28.65942
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1109.2635 text (sources/1109.2635.txt); Phys. Rev. B 85, 081103(R) not read, arXiv only",
+   "location": "Table I (txt lines 121-128), rs = 1 row, column 'FCI 2M = 2838'",
+   "reported_as": "0.53073(4)",
+   "conversion": "0.53073 x 54 = 28.65942 (stored 28.65942); sigma 0.00004 x 54 = 0.00216 (stored 0.00216)",
+   "note": "54-electron HEG, Hamiltonian Eq. (1) H = sum -1/2 nabla^2 + sum 1/2 v_ab + 1/2 N v_M (Madelung term included), plane waves in a cubic cell, total energy per electron in a.u. Convention cross-check: 54 x (3.2202 - 3.26533) = -2.437 Ha correlation, consistent with Luo & Alavi's quote -2.435(7) of the FCIQMC CBS value. Finite-basis i-FCIQMC; the paper calls it 'a variational finite-basis result' but also 'the unquantified initiator error is sub-mEh' (txt line 155-158), so `projected` (RULES 12.4: initiator not shown converged) stands.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#142"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "i-FCIQMC, 1/M extrapolation",
+    "energy": 28.62
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:1109.2635 text (sources/1109.2635.txt); Phys. Rev. B 85, 081103(R) not read, arXiv only",
+   "location": "Table I (txt lines 121-128), rs = 1 row, column 'FCI M = ∞'",
+   "reported_as": "0.5300(3)",
+   "conversion": "0.53 x 54 = 28.62 (stored 28.62); sigma 0.0003 x 54 = 0.0162 (stored 0.0162)",
+   "note": "54-electron HEG, Hamiltonian Eq. (1) H = sum -1/2 nabla^2 + sum 1/2 v_ab + 1/2 N v_M (Madelung term included), plane waves in a cubic cell, total energy per electron in a.u. Convention cross-check: 54 x (3.2202 - 3.26533) = -2.437 Ha correlation, consistent with Luo & Alavi's quote -2.435(7) of the FCIQMC CBS value. 1/M extrapolation from Fig. 3; the error 'derives' from the fit. Later work (Neufeld & Thom, arXiv:1706.09923; Luo & Alavi, arXiv:1712.07524 Table 1 discussion, 'the new transcorrelated result at rs = 0.5 is 10 mEh above the previous FCIQMC result ... based on a M^-1 extrapolation') argues M^-1 extrapolations overshoot; not a transcription issue.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#143"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "SCALE (1 conv layer), no symmetry projection",
+    "energy": -188.7488
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2604.25775 v1 text (sources/2604.25775.txt), Table I; PRX Intelligence 1, 023001 not read (APS 403), arXiv only",
+   "location": "Table I (txt lines 466-486; 'Comparison of ground state energy for the 16×16 Hubbard model'), row SCALE, column t′ = -0.2, PBC",
+   "reported_as": "-0.7373",
+   "conversion": "-0.7373 x 256 = -188.7488 (stored -188.7488); sigma none printed",
+   "note": "U = 8 and delta = 1/8 from Sec. III (txt line 305, 355: 'U = 8, and hole doping delta = 1/8'); Eq. (8) sign convention as QMBL t2; energies without symmetry projection (txt line 497-498). Caption: 'For results where statistical errors are not shown, they are one or several orders of magnitude smaller than the last displayed significant digit', so sigma stays null (< 1e-5 per site). GFMC is fixed-node on the VMC state (txt line 264-266): projected.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#148"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "SCALE (1 conv layer) trial state + fixed-node GFMC",
+    "energy": -189.568
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2604.25775 v1 text (sources/2604.25775.txt), Table I; PRX Intelligence 1, 023001 not read (APS 403), arXiv only",
+   "location": "Table I (txt lines 466-486; 'Comparison of ground state energy for the 16×16 Hubbard model'), row SCALE+GFMC, column t′ = -0.2, PBC",
+   "reported_as": "-0.7405",
+   "conversion": "-0.7405 x 256 = -189.568 (stored -189.568); sigma none printed",
+   "note": "U = 8 and delta = 1/8 from Sec. III (txt line 305, 355: 'U = 8, and hole doping delta = 1/8'); Eq. (8) sign convention as QMBL t2; energies without symmetry projection (txt line 497-498). Caption: 'For results where statistical errors are not shown, they are one or several orders of magnitude smaller than the last displayed significant digit', so sigma stays null (< 1e-5 per site). GFMC is fixed-node on the VMC state (txt line 264-266): projected.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#149"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "ACE (16 conv layers), no symmetry projection",
+    "energy": -190.208
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2604.25775 v1 text (sources/2604.25775.txt), Table I; PRX Intelligence 1, 023001 not read (APS 403), arXiv only",
+   "location": "Table I (txt lines 466-486; 'Comparison of ground state energy for the 16×16 Hubbard model'), row ACE, column t′ = -0.2, PBC",
+   "reported_as": "-0.7430",
+   "conversion": "-0.743 x 256 = -190.208 (stored -190.208); sigma none printed",
+   "note": "U = 8 and delta = 1/8 from Sec. III (txt line 305, 355: 'U = 8, and hole doping delta = 1/8'); Eq. (8) sign convention as QMBL t2; energies without symmetry projection (txt line 497-498). Caption: 'For results where statistical errors are not shown, they are one or several orders of magnitude smaller than the last displayed significant digit', so sigma stays null (< 1e-5 per site). GFMC is fixed-node on the VMC state (txt line 264-266): projected.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#150"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+    "method": "ACE+GFMC (GFMC projection on the ACE trial state)",
+    "energy": -190.464
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "arXiv:2604.25775 v1 text (sources/2604.25775.txt), Table I; PRX Intelligence 1, 023001 not read (APS 403), arXiv only",
+   "location": "Table I (txt lines 466-486; 'Comparison of ground state energy for the 16×16 Hubbard model'), row ACE+GFMC, column t′ = -0.2, PBC",
+   "reported_as": "-0.7440",
+   "conversion": "-0.744 x 256 = -190.464 (stored -190.464); sigma none printed",
+   "note": "U = 8 and delta = 1/8 from Sec. III (txt line 305, 355: 'U = 8, and hole doping delta = 1/8'); Eq. (8) sign convention as QMBL t2; energies without symmetry projection (txt line 497-498). Caption: 'For results where statistical errors are not shown, they are one or several orders of magnitude smaller than the last displayed significant digit', so sigma stays null (< 1e-5 per site). GFMC is fixed-node on the VMC state (txt line 264-266): projected.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#151"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_128_P_64_64_110",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.897218304
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "qmbl-verify 2026-10-19 second reading (arXiv v3 and the PRB journal version)",
+   "location": "arXiv:2305.07240 Tables II and III",
+   "reported_as": "as stored",
+   "note": "The printed error bar, (1) on -0.007009518, is 1e-9 Ha per electron, about 700 times smaller than every other FN-DMC bar in the paper; transcription correct (arXiv v3 and PRB 110, 035108 Table III agree). Kept as printed (ruled 2026-10-20).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#57 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_50",
+    "method": "FN-DMC (Slater-Jastrow trial state)",
+    "energy": -0.74898
+   },
+   "checked_on": "2026-10-19",
+   "scope": "value",
+   "method": "qmbl-verify 2026-10-19 second reading (arXiv v3 and the PRB journal version)",
+   "location": "arXiv:2305.07240 Tables II and III",
+   "reported_as": "as stored",
+   "note": "Transcription correct (arXiv v3 and PRB 110, 035108 Table II print -0.01387(2)), but the value sits 0.63 mHa per electron above the same paper's MP-NQS VMC and the quoted backflow DMC, while the FN-DMC column elsewhere sits within 0.08 mHa of MP-NQS; a misprint is possible. Kept as printed (ruled 2026-10-20).",
+   "source_entry": "SP6-heg3d-heg2d-hubbard#110 (qmbl-verify 2026-10-19)"
+  },
 ];

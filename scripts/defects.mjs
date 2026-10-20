@@ -362,6 +362,27 @@ export const DEFECTS = [
     "finding": "Quote check in the citing paper passed: Roth & MacDonald, arXiv:2104.05085v3 Table I, prints 'NN + Gutzwiller [12] -0.553 N/A' (-0.553 x 144 = -79.632, the stored energy), with [12] = F. Ferrari, F. Becca and J. Carrasquilla, Neural Gutzwiller-projected variational wave functions, Phys. Rev. B 100, 125131 (2019), arXiv:1906.00463. In the cited paper as read (arXiv:1906.00463v2, layout and plain text searched for 0.55 and 0.56) I could not locate an energy per site for the 6 x 6 triangular lattice: Sec. V.C gives only the relative error ('from Delta E ~ 2.2% to Delta E ~ 1.4%') and Fig. 9 plots Delta E against N_alpha. -0.553 is a three-digit conversion of that relative error against the exact -0.5603734: -0.5603734 x (1 - 0.014) = -0.552528, and Delta E in [1.35%, 1.45%] gives -0.552808 to -0.552248. The row carries a precision nobody printed and no error bar: the case of the Shallow CNN row on J1J2/square_100_P_0.5 and of the Jastrow-Gutzwiller row on Heisenberg/triangular_900_P, flagged rather than removed (ruling E9, 2026-10-02). Resolution: Roth & MacDonald or Ferrari et al. to say where -0.553 is printed, or removal under RULES.md 8. It holds no record.",
     "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#49 (qmbl-verify 2026-09-29, ambiguous); ruling E9, 2026-10-02"
   },
+  // qmbl-verify 2026-10-19, rulings of 2026-10-20 (passes 2026-10-16 to 10-19).
+  {
+   "match": {
+    "instance": "HEG2D/square_90_P_45_45_30",
+    "method": "SJ-DMC [Jastrow optimised at Gamma, start 2] (arXiv:2405.00425)",
+    "energy": -2.4084
+   },
+   "flag": "source-says-biased",
+   "finding": "Table IV (txt lines 383-390), ks = Γ, start 2, column SJ-DMC: −0.02676(7) transcribed correctly (-0.02676 x 90 = -2.4084 (stored -2.4084); sigma 0.00007 x 90 = 0.0063 (stored 0.0063)), but the source says this SJ-DMC energy is biased: 'The S-DMC energy obtained with the HF wave function is lower than the SJ-DMC energy obtained using the wave functions from starting points 2 and 3 ... these Jastrow factor introduce features (\"quasinodes\") that are difficult for DMC to remove (i.e., would require much smaller time steps)' and 'the SJ wave functions from starting points 2 and 3 do not correspond to a fluid phase' (txt line 318-336). Fixed-node DMC with HF nodes cannot depend on the Jastrow factor once converged, so the 4.75e-3 Ha/e gap above S-DMC is time-step error, not a fixed-node energy. Flag the row (no record impact: it sits far above the record).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#103 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "HEG2D/square_90_P_45_45_30",
+    "method": "SJ-DMC [Jastrow optimised at Gamma, start 3] (arXiv:2405.00425)",
+    "energy": -2.5632
+   },
+   "flag": "source-says-biased",
+   "finding": "Table IV (txt lines 383-390), ks = Γ, start 3, column SJ-DMC: −0.02848(2) transcribed correctly (-0.02848 x 90 = -2.5632 (stored -2.5632); sigma 0.00002 x 90 = 0.0018 (stored 0.0018)), but the source says this SJ-DMC energy is biased: 'The S-DMC energy obtained with the HF wave function is lower than the SJ-DMC energy obtained using the wave functions from starting points 2 and 3 ... these Jastrow factor introduce features (\"quasinodes\") that are difficult for DMC to remove (i.e., would require much smaller time steps)' and 'the SJ wave functions from starting points 2 and 3 do not correspond to a fluid phase' (txt line 318-336). Fixed-node DMC with HF nodes cannot depend on the Jastrow factor once converged, so the 3.03e-3 Ha/e gap above S-DMC is time-step error, not a fixed-node energy. Flag the row (no record impact: it sits far above the record).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#104 (qmbl-verify 2026-10-19)"
+  },
 ];
 
 export const SHARED = {

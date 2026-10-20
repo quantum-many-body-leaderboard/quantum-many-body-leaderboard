@@ -138,4 +138,305 @@ export const REMOVALS = [
     "ruled": "2026-10-15: withdrawn by the authors in review (Phys. Rev. X 11, 031034 (2021), arXiv:2005.14142)",
     "reason": "arXiv:2005.14142v1-v3 Table I prints -0.511117(4) per site for 8x8 at J2 = 0.45 (4x4 sublattice structure). The published Table I replaces it with -0.511331(1) (no sublattice structure), which QMBL carries as its own row; the arXiv value is printed nowhere in the journal version."
   },
+  // qmbl-verify 2026-10-19, rulings of 2026-10-20 (passes 2026-10-16 to 10-19).
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_10",
+    "method": "Exact diagonalization",
+    "energy": -16.1432081
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "second exact row: the instance already carries ED -16.143208170202413 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 7.0e-8), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
+   "source_entry": "SE-exact-recompute#3 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "method": "Exact diagonalization",
+    "energy": -16.509154
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "second exact row: the instance already carries ED -16.509154825265142 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 8.3e-7), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
+   "source_entry": "SE-exact-recompute#5 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_10",
+    "method": "Exact diagonalization",
+    "energy": -16.9035599
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "second exact row: the instance already carries ED -16.903559984243547 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 8.4e-8), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
+   "source_entry": "SE-exact-recompute#6 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_2.15443469",
+    "method": "Exact diagonalization",
+    "energy": -21.2122357
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "second exact row: the instance already carries ED -21.21223577699911 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 7.7e-8), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
+   "source_entry": "SE-exact-recompute#7 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_3.59381366",
+    "method": "Exact diagonalization",
+    "energy": -19.8916371
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "second exact row: the instance already carries ED -19.891637199948672 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 1.0e-7), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
+   "source_entry": "SE-exact-recompute#8 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_7.74263683",
+    "method": "Exact diagonalization",
+    "energy": -17.6037315
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "second exact row: the instance already carries ED -17.60373155517909 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 5.5e-8), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
+   "source_entry": "SE-exact-recompute#9 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/rectangular-4x16_64_PO_28_8",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -47.7824
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 2 (HFDS, 16 hidden fermions, 1-layer FFN with alpha = 6, stripe lambda = 8 mean-field constraint (varbench@2024-10-22, first-author upload of this paper)), energy -47.782. The paper's cell -0.7466(8) gives -47.7824; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 4 / arXiv Table IV, row L = 16, column \"Energy per site HFDS (PBC-OBC)\".",
+   "source_entry": "SP2-arxiv-2111-10420#0 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -48.192
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 0 (HFDS, 16 hidden fermions, alpha = 6, stripe lambda = 8 (varbench@2024-10-22)), energy -48.192. The paper's cell -0.753(2) gives -48.192; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 4 / arXiv Table IV, row L = 16, column \"Energy per site HFDS (PBC-PBC)\".",
+   "source_entry": "SP2-arxiv-2111-10420#1 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/rectangular-4x8_32_PO_14_8",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -23.3888
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "The published SI prints -0.7350(6) (energy per site, units of t), the value of the authors' own VarBench upload already on the instance; this row carried arXiv v2's -23.3888. The journal SI prints -0.7350(6); arXiv v2 prints -0.7309(6), which the row stores (-23.3888). The journal value wins (brief rule 5). The first-author VarBench upload on this instance (-23.52) agrees with the journal cell, not the arXiv one.",
+   "source_entry": "SP2-arxiv-2111-10420#2 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -24.4256
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 0 (HFDS, 16 hidden fermions, alpha = 14, stripe lambda = 8 (varbench@2024-10-22)), energy -24.426. The paper's cell -0.7633(7) gives -24.4256; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 4 / arXiv Table IV, row L = 8, column \"Energy per site HFDS (PBC-PBC)\".",
+   "source_entry": "SP2-arxiv-2111-10420#4 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_10",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 32)",
+    "energy": -16.1383
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 1 (HFDS, 8 hidden fermions, 1-layer FFN alpha = 32 (varbench@2024-10-22)), energy -16.1383. The paper's cell -16.1383(9) gives -16.1383; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 1 / arXiv Table I, row U = 10, column \"HFDS (α = 32)\".",
+   "source_entry": "SP2-arxiv-2111-10420#43 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 32)",
+    "energy": -17.69357
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 1 (HFDS, 8 hidden fermions, 1-layer FFN alpha = 32 (varbench@2024-10-22)), energy -17.69357. The paper's cell -17.69357(4) gives -17.69357; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 1 / arXiv Table I, row U = 3.6, column \"HFDS (α = 32)\".",
+   "source_entry": "SP2-arxiv-2111-10420#67 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "method": "HFDS (8 hidden fermions, single hidden layer, α = 32)",
+    "energy": -16.505
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 1 (HFDS, 8 hidden fermions, 1-layer FFN alpha = 32 (varbench@2024-10-22)), energy -16.505. The paper's cell -16.505(1) gives -16.505; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 1 / arXiv Table I, row U = 7.75, column \"HFDS (α = 32)\".",
+   "source_entry": "SP2-arxiv-2111-10420#82 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_10",
+    "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
+    "energy": -16.90183
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 1 (HFDS, 10 hidden fermions, alpha = 64, projected K = 0, C4 (varbench@2024-10-22)), energy -16.90183. The paper's cell -16.90183(2) gives -16.90183; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 3 / arXiv Table III, row \"HFSD (α = 64) + (C4∩K = 0)\", column U = 10 (N~ = 10 hidden fermions: main text Fig. 3 caption).",
+   "source_entry": "SP2-arxiv-2111-10420#95 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_2.15443469",
+    "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
+    "energy": -21.211896
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 1 (HFDS, 10 hidden fermions, alpha = 64, projected K = 0, C4 (varbench@2024-10-22)), energy -21.211896. The paper's cell -21.211896(2) gives -21.211896; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 3 / arXiv Table III, row \"HFSD (α = 64) + (C4∩K = 0)\", column U = 2.15 (N~ = 10 hidden fermions: main text Fig. 3 caption).",
+   "source_entry": "SP2-arxiv-2111-10420#100 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_3.59381366",
+    "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
+    "energy": -19.890443
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 1 (HFDS, 10 hidden fermions, alpha = 64, projected K = 0, C4 (varbench@2024-10-22)), energy -19.890443. The paper's cell -19.890443(6) gives -19.890443; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 3 / arXiv Table III, row \"HFSD (α = 64) + (C4∩K = 0)\", column U = 3.6 (N~ = 10 hidden fermions: main text Fig. 3 caption).",
+   "source_entry": "SP2-arxiv-2111-10420#105 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_16_P_5_7.74263683",
+    "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
+    "energy": -17.602
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 1 (HFDS, 10 hidden fermions, alpha = 64, projected K = 0, C4 (varbench@2024-10-22)), energy -17.602. The paper's cell -17.60200(1) gives -17.602; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 3 / arXiv Table III, row \"HFSD (α = 64) + (C4∩K = 0)\", column U = 7.75 (N~ = 10 hidden fermions: main text Fig. 3 caption).",
+   "source_entry": "SP2-arxiv-2111-10420#110 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_36_PA_18_4",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -31.3812
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 0 (HFDS, 8 hidden fermions, full hidden sub-matrix, alpha = 78 (varbench@2024-10-22)), energy -31.3822. The paper's cell -0.8717(2) gives -31.3812; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 5 / arXiv Table V, row L = 6, column U = 4.",
+   "source_entry": "SP2-arxiv-2111-10420#111 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_36_PA_18_6",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -23.7924
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 0 (HFDS, 8 hidden fermions, full hidden sub-matrix, alpha = 78 (varbench@2024-10-22)), energy -23.794. The paper's cell -0.6609(4) gives -23.7924; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 5 / arXiv Table V, row L = 6, column U = 6.",
+   "source_entry": "SP2-arxiv-2111-10420#112 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_36_PA_18_8",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -19.0404
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "The published SI prints -0.5270(3) (energy per site, units of t), the value of the authors' own VarBench upload already on the instance; this row carried arXiv v2's -19.0404. The journal SI prints -0.5270(3); arXiv v2 prints -0.5289(3), which the row stores (-19.0404). The journal value wins (brief rule 5). The first-author VarBench upload on this instance (-18.9738) agrees with the journal cell, not the arXiv one. The stored -19.0404 also sits 3.0 sigma below the instan",
+   "source_entry": "SP2-arxiv-2111-10420#113 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_PA_32_2",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -76.16
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 0 (HFDS, 16 hidden fermions, alpha = 1, Neel mean-field constraint (varbench@2024-10-22)), energy -76.162. The paper's cell -1.1900(2) gives -76.16; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 5 / arXiv Table V, row L = 8, column U = 2.",
+   "source_entry": "SP2-arxiv-2111-10420#115 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_PA_32_4",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -55.1744
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 0 (HFDS, 16 hidden fermions, alpha = 1, Neel mean-field constraint (varbench@2024-10-22)), energy -55.18. The paper's cell -0.8621(4) gives -55.1744; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 5 / arXiv Table V, row L = 8, column U = 4.",
+   "source_entry": "SP2-arxiv-2111-10420#116 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_64_PA_32_8",
+    "method": "HFDS (fully parametrized hidden sub-matrix)",
+    "energy": -33.5616
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper already on the instance: row 0 (HFDS, 16 hidden fermions, alpha = 1, Neel mean-field constraint (varbench@2024-10-22; energy corrected to -33.5616 by corrections.mjs VA3 #35)), energy -33.5616. The paper's cell -0.5244(6) gives -33.5616; the VarBench row is the authors' own upload of the same calculation (or the same ED reference). Keep one row: the older VarBench row carries the provenance; this 2026-10-16 row adds no new number. Located at SI Table 5 / arXiv Table V, row L = 8, column U = 8.",
+   "source_entry": "SP2-arxiv-2111-10420#117 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "CCSD [CCMC non-initiator, linear fit in 1/M, three points excluded (rejected by the paper: disagrees with quadratic fit within 2 sigma); extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+    "energy": 47.7798615042
+   },
+   "ruled": "2026-10-20: a fit the source prints only to reject it is not a claim of the ground-state energy",
+   "reason": "Keep as a row an alternative CBS extrapolation that the source prints but rejects? The linear fit is the one the paper discards because it disagrees with the quadratic fit within 2 sigma; its CBS value is the quadratic -0.58850(6), already a row. Fig. 1 caption (txt line 199-205): 'best fit linear line (blue, dashed, excluding three data points) giving b0 = -0.58866(5) ha'; transcription correct: E = N E_HF + E_c = 14 x 3.45489439316 + (-0.58866) = 47.7798615042 Ha total (stored 47.7798615042); E_HF recomputed with checks/heg-hf/hf.mjs 3 sc 7 7 0.5 (closed shell); sigma 0.00005 printed, stored",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#4 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "iFCIQMC [direct linear 1/M fit including spin orbitals up to M = 4218; shown by the paper to be too negative; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+    "energy": 47.7735515041
+   },
+   "ruled": "2026-10-20: a fit the source prints only to reject it is not a claim of the ground-state energy",
+   "reason": "Keep as a row an alternative CBS extrapolation that the source prints but rejects? The paper prints the direct linear 1/M FCIQMC extrapolation only to show it is too negative ('This shows that it is crucial to include large numbers of virtual orbitals'); its own FCIQMC value is -0.59467(9), already a row. Sec. VI (txt line 293-294): 'Had we instead extrapolated FCIQMC directly, the results would have been -0.59497(4) ha (instead of -0.59467(9) ha) with a linear fit for rs = 0.5'; transcription correct: E = N E_HF + E_c = 14 x 3.45489439316 + (-0.59497) = 47.7735515042 Ha total (stored 47.77355",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#6 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Hubbard/square_256_P_112_8",
+    "method": "HFPS (filled stripe, Table V)",
+    "energy": -192.384
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper is already on Hubbard/square_256_P_112_8: 'HFPS + symmetry projection' (source literature-2025-26, -192.384, sigma 0.0256, energy_variance 16.33024, reference 'Roth, Chen, Sengupta & Georges ... arXiv:2511.07566 (Table 5)'). Table V (txt lines 1193-1200; 'Energy per site of competing phases on a 256 site'), row t′ = 0.0, column Filled Stripe prints -0.7515(1); -0.7515 x 256 = -192.384 (stored -192.384); sigma 0.0001 x 256 = 0.0256 (stored 0.0256). Remove this sweep row (the older row already carries the Table VI variance).",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#73 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+    "method": "mVMC (Table II)",
+    "energy": -66.0736
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper is already on Heisenberg/pyrochlore-2x2x2_32_P: mVMC with SU(2) and symmetry projections (varbench@2024-10-22, -66.0736), reference https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.041021 (= arXiv:2101.08787). Appendix H Table II (txt lines 1122-1152), geometry 4×2^3, column mVMC, first line of the cell (energy per site) prints -0.5162(1); -0.5162 x 128 (4N, S.S to Pauli) = -66.0736 (stored -66.0736); sigma 0.0001 x 128 = 0.0128 (stored 0.0128). Remove this sweep row; if the method name or the Table II location is wanted, move it onto the VarBench row.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#135 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Heisenberg/pyrochlore-3x3x3_108_P",
+    "method": "mVMC (Table II)",
+    "energy": -210.4272
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper is already on Heisenberg/pyrochlore-3x3x3_108_P: mVMC with SU(2) and symmetry projections (varbench@2024-10-22, -210.4272), reference https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.041021 (= arXiv:2101.08787). Appendix H Table II (txt lines 1122-1152), geometry 4×3^3, column mVMC, first line of the cell (energy per site) prints -0.4871(1); -0.4871 x 432 (4N, S.S to Pauli) = -210.4272 (stored -210.4272); sigma 0.0001 x 432 = 0.0432 (stored 0.0432). Remove this sweep row; if the method name or the Table II location is wanted, move it onto the VarBench r",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#137 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Heisenberg/pyrochlore-3x3x3_108_P",
+    "method": "NQS CNN (Table II)",
+    "energy": -208.4832
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper is already on Heisenberg/pyrochlore-3x3x3_108_P: CNN NQS with symmetry projections (varbench@2024-10-22, -208.4832), reference https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.041021 (= arXiv:2101.08787). Appendix H Table II (txt lines 1122-1152), geometry 4×3^3, column NQS CNN, first line of the cell (energy per site) prints -0.4826(2); -0.4826 x 432 (4N, S.S to Pauli) = -208.4832 (stored -208.4832); sigma 0.0002 x 432 = 0.0864 (stored 0.0864). Remove this sweep row; if the method name or the Table II location is wanted, move it onto the VarBench row.",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#138 (qmbl-verify 2026-10-19)"
+  },
+  {
+   "match": {
+    "instance": "Heisenberg/pyrochlore-4x4x4_256_P",
+    "method": "mVMC (Table II)",
+    "energy": -494.6944
+   },
+   "ruled": "2026-10-20: duplicate, the earlier row stays",
+   "reason": "Same number from the same paper is already on Heisenberg/pyrochlore-4x4x4_256_P: mVMC with SU(2) and symmetry projections (varbench@2024-10-22, -494.6944), reference https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.041021 (= arXiv:2101.08787). Appendix H Table II (txt lines 1122-1152), geometry 4×4^3, column mVMC, first line of the cell (energy per site) prints -0.4831(1); -0.4831 x 1024 (4N, S.S to Pauli) = -494.6944 (stored -494.6944); sigma 0.0001 x 1024 = 0.1024 (stored 0.1024). Remove this sweep row; if the method name or the Table II location is wanted, move it onto the VarBench",
+   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#139 (qmbl-verify 2026-10-19)"
+  },
 ];

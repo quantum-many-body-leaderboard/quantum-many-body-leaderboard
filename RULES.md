@@ -71,7 +71,9 @@ record can be of any class (§6), so its class tells the reader what was claimed
   to that approximation and not to the exact energy, so its error has no known sign. The class
   is a fixed list of method families: the random-phase approximation and its corrections
   (SOSEX), finite-order perturbation theory (MP2, MP3), coupled cluster restricted to some of
-  its terms (ring-, ladder- or mosaic-only CCD), and density-functional energies. Full coupled
+  its terms (ring-, ladder- or mosaic-only CCD), methods on a transcorrelated Hamiltonian
+  whose three-body term is dropped or approximated (since 2026-10-20), and density-functional
+  energies. Full coupled
   cluster at any truncation (CCSD, CCSDT, ...) stays `projected`: each is a rung of a hierarchy
   that reaches the exact energy. An `approximate` row is listed with the others. It holds the
   record only on an instance where no other unflagged row exists (§6).
@@ -564,12 +566,13 @@ Section 4 applies unchanged. The recurring cases:
 - Fixed-node and fixed-phase DMC: `projected`. Release-node DMC is `projected` unless the
   source shows the release converged; a claim of exactness is read, not assumed.
 - Basis-set methods:
-  - full CI in a finite basis, and FCIQMC the source shows converged to it (no initiator bias,
-    or the initiator threshold taken to its limit): `variational`, since the basis spans a
-    subspace of the Hilbert space and full CI in it is a Ritz upper bound;
-  - initiator FCIQMC at a finite threshold, coupled cluster, distinguishable cluster and other
-    non-variational methods, and any method on a transcorrelated (non-Hermitian) Hamiltonian:
-    `projected`;
+  - full CI in a finite basis by exact diagonalization: `variational`, since the basis spans
+    a subspace of the Hilbert space and full CI in it is a Ritz upper bound;
+  - FCIQMC: `projected`, also where the source shows the initiator error converged, since a
+    stochastic projection is not a bound (since 2026-10-20). Coupled cluster, distinguishable
+    cluster and other non-variational methods, and methods on the full transcorrelated
+    Hamiltonian, are `projected` too. A transcorrelated Hamiltonian with its three-body term
+    dropped or approximated makes the method `approximate` (§4);
   - a complete-basis-limit extrapolation, or one in the initiator threshold: `extrapolated`.
 - RPA, MP2 and channel-truncated coupled cluster are `approximate` (§4).
 - No method is `exact` in track 2 for now. Records follow §6.

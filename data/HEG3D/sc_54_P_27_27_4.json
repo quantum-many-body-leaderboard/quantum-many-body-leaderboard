@@ -32,7 +32,17 @@
         "method": "source text of arXiv:1310.6806 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "E_c = -1.098",
         "note": "Table II, rs=4.0, column mCCD; sources/1310.6806.txt line 464; printed in Ha, total; printed correlation energy -1.098, E = E_HF + E_c with E_HF = -0.0570800676622 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read | Sec. II (txt line 64-81): HF eigenvalues with the zero-momentum integral given by 'vM, the Madelung constant ... defined uniquely for a cell geometry and box length, and here we calculate it to be vM L ~ 2.8372'. No Ewald-sum statement beyond that. The paper prints correlation energies only, which do not depend on the Madelung term, and no Hartree-Fock energy.",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-19",
+          "scope": "value",
+          "method": "arXiv:1310.6806v2 PDF (arxiv.org/pdf/1310.6806v2, same file as qmbl/sources/1310.6806.pdf), pypdf layout mode, re-extracted into the verify sources cache; page 9 also checked as an image; journal (AIP) 403, arXiv only",
+          "location": "Table II (N=54), row rs=4, column mCCD; sources/1310.6806v2.txt line 464",
+          "reported_as": "E_c = -1.098 (a.u., total for N=54)",
+          "conversion": "54 * E_HF(hf.mjs 3 sc 27 27 4) + E_c = 54 * -0.057080067662216655 + (-1.098) = -4.180323654; stored -4.18032365376 (diff -3.0e-13)",
+          "note": "closed shell at Gamma (hf.mjs open_shell false); cell sc fixed by vM L = 2.8372 (sc Ewald gives 2.83730); no sigma printed (stored null correct); bound_type approximate agrees with Sec. II (1/M CBS extrapolation) and RULES.md 4/12.4; own computation; no duplicate row on the instance (nearest other-paper rows are independent computations)",
+          "source_entry": "SP1-arxiv-1310-6806#264"
+        }
       }
     }
   ]
