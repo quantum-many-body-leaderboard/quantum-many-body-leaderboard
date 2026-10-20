@@ -660,7 +660,7 @@ Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and d
 
 To cite the data itself, use the Zenodo concept DOI, which resolves to the latest release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
-530 of QMBL’s 2532 rows (21 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
+530 of QMBL’s 2487 rows (21 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)

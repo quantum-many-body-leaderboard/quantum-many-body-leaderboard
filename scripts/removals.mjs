@@ -439,4 +439,410 @@ export const REMOVALS = [
    "reason": "Same number from the same paper is already on Heisenberg/pyrochlore-4x4x4_256_P: mVMC with SU(2) and symmetry projections (varbench@2024-10-22, -494.6944), reference https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.041021 (= arXiv:2101.08787). Appendix H Table II (txt lines 1122-1152), geometry 4×4^3, column mVMC, first line of the cell (energy per site) prints -0.4831(1); -0.4831 x 1024 (4N, S.S to Pauli) = -494.6944 (stored -494.6944); sigma 0.0001 x 1024 = 0.1024 (stored 0.1024). Remove this sweep row; if the method name or the Table II location is wanted, move it onto the VarBench",
    "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#139 (qmbl-verify 2026-10-19)"
   },
+  // Basis-size series (RULES.md 12.3, 2026-10-20).
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "i-FCIQMC (M = 114 spin orbitals)",
+    "energy": 47.8516215043
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "i-FCIQMC (M = 186 spin orbitals)",
+    "energy": 47.8096215043
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "i-FCIQMC (M = 358 spin orbitals)",
+    "energy": 47.7888215042
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "i-FCIQMC (M = 778 spin orbitals)",
+    "energy": 47.7792215043
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "i-FCIQMC (M = 1850 spin orbitals)",
+    "energy": 47.7749215042
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "i-FCIQMC (M = 2368 spin orbitals)",
+    "energy": 47.7746215043
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 57 plane waves (114 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+    "energy": 47.8512215042
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (114 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 93 plane waves (186 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+    "energy": 47.8093215041
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (186 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 179 plane waves (358 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+    "energy": 47.7891215042
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (358 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 389 plane waves (778 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+    "energy": 47.7804215042
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (778 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 925 plane waves (1850 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+    "energy": 47.7765215042
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (1850 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 1189 plane waves (2378 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+    "energy": 47.7764215041
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (2378 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 1213 plane waves (2426 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+    "energy": 47.7759215042
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (2426 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_0.5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 1419 plane waves (2838 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+    "energy": 47.7760215043
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (2838 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "i-FCIQMC (M = 114 spin orbitals)",
+    "energy": 8.03037060354
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "i-FCIQMC (M = 186 spin orbitals)",
+    "energy": 7.99055060353
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "i-FCIQMC (M = 358 spin orbitals)",
+    "energy": 7.97258060354
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "i-FCIQMC (M = 778 spin orbitals)",
+    "energy": 7.96498060354
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "i-FCIQMC (M = 1850 spin orbitals)",
+    "energy": 7.96208060354
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "i-FCIQMC (M = 2368 spin orbitals)",
+    "energy": 7.96098060353
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 179 plane waves (358 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": 7.97278060354
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (358 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_1",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 1189 plane waves (2378 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": 7.96128060354
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (2378 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "i-FCIQMC (M = 114 spin orbitals)",
+    "energy": -0.0616547353716
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "i-FCIQMC (M = 186 spin orbitals)",
+    "energy": -0.098154735371
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "i-FCIQMC (M = 358 spin orbitals)",
+    "energy": -0.11295473537
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "i-FCIQMC (M = 778 spin orbitals)",
+    "energy": -0.118454735371
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "i-FCIQMC (M = 1850 spin orbitals)",
+    "energy": -0.120554735371
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "i-FCIQMC (M = 2368 spin orbitals)",
+    "energy": -0.120454735372
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 81 plane waves (162 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -0.0955547353716
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (162 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_2",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 925 plane waves (1850 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -0.121254735371
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (1850 of 4218 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 81 plane waves (162 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.01579094295
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (162 of 1850 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_3",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 179 plane waves (358 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.02909094295
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (358 of 1850 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "i-FCIQMC (M = 114 spin orbitals)",
+    "energy": -1.07704870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "i-FCIQMC (M = 186 spin orbitals)",
+    "energy": -1.10534870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "i-FCIQMC (M = 358 spin orbitals)",
+    "energy": -1.11424870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "i-FCIQMC (M = 778 spin orbitals)",
+    "energy": -1.11654870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 179 plane waves (358 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.08264870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (358 of 778 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 57 plane waves (114 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.05474870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (114 of 778 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 93 plane waves (186 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.08024870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (186 of 778 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "UHF+ph-AFQMC [UHF trial with RHF initial wavefunction (spin projection), basis M = 57 plane waves (114 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.05625870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (114 of 778 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "UHF+ph-AFQMC [UHF trial with RHF initial wavefunction (spin projection), basis M = 93 plane waves (186 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.08091870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (186 of 778 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "NOMSD+ph-AFQMC [ten-determinant NOMSD trial from projected Hartree-Fock, basis M = 57 plane waves (114 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.06364870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (114 of 778 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_14_P_7_7_5",
+    "method": "NOMSD+ph-AFQMC [ten-determinant NOMSD trial from projected Hartree-Fock, basis M = 93 plane waves (186 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+    "energy": -1.09114870306
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A smaller basis (186 of 778 spin orbitals) of a basis-size series in arXiv:1905.04361 (Lee, Malone & Morales): every basis size approximates the same ground state at a lower resolution, and the paper's result is AFQMC at its largest basis for this trial state, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_0.5",
+    "method": "i-FCIQMC (2M = 2838 spin orbitals)",
+    "energy": 173.92644
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
+  {
+   "match": {
+    "instance": "HEG3D/sc_54_P_27_27_1",
+    "method": "i-FCIQMC (2M = 2838 spin orbitals)",
+    "energy": 28.65942
+   },
+   "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
+   "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
+  },
 ];

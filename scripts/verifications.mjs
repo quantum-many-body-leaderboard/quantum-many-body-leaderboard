@@ -32036,36 +32036,6 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "HEG3D/sc_14_P_7_7_2",
-    "method": "i-FCIQMC (M = 2368 spin orbitals)",
-    "energy": -0.120454735372
-   },
-   "checked_on": "2026-10-19",
-   "scope": "value",
-   "method": "arXiv:1201.4691 (qmbl sources/1201.4691.txt, pypdf layout; v2 is the latest arXiv version, the cached text was not tagged with its version); AIP journal copy not read (arXiv only)",
-   "location": "Table I, rs = 2, row M = 2368 (txt line 14841)",
-   "reported_as": "E_c = -0.4430(7) (total, Ha)",
-   "conversion": "E = N E_HF + E_c = 14 x 0.023038947473471762 + (-0.443) = -0.1204547354 Ha (E_HF from checks/heg-hf/hf.mjs 3 sc 7 7 2); sigma 0.0007 total",
-   "note": "Correlation energy relative to the plane-wave HF determinant (basis-independent for the closed-shell Gamma-point gas), total for the cell, Hartree; sc cell, PBC, closed shell. Bound type agrees.",
-   "source_entry": "SP7-heg3d-tfising#118"
-  },
-  {
-   "match": {
-    "instance": "HEG3D/sc_14_P_7_7_5",
-    "method": "i-FCIQMC (M = 358 spin orbitals)",
-    "energy": -1.11424870306
-   },
-   "checked_on": "2026-10-19",
-   "scope": "value",
-   "method": "arXiv:1201.4691 (qmbl sources/1201.4691.txt, pypdf layout; v2 is the latest arXiv version, the cached text was not tagged with its version); AIP journal copy not read (arXiv only)",
-   "location": "Table I, rs = 5, row M = 358 (txt line 14838)",
-   "reported_as": "E_c = -0.3017(7) (total, Ha)",
-   "conversion": "E = N E_HF + E_c = 14 x -0.058039193075872166 + (-0.3017) = -1.1142487031 Ha (E_HF from checks/heg-hf/hf.mjs 3 sc 7 7 5); sigma 0.0007 total",
-   "note": "Correlation energy relative to the plane-wave HF determinant (basis-independent for the closed-shell Gamma-point gas), total for the cell, Hartree; sc cell, PBC, closed shell. Bound type agrees.",
-   "source_entry": "SP7-heg3d-tfising#123"
-  },
-  {
-   "match": {
     "instance": "HEG3D/sc_114_P_57_57_0.5",
     "method": "RHF+ph-AFQMC [RHF trial, time step 0.005 a.u., 2880 walkers; basis M=2109] (arXiv:1905.04361)",
     "energy": 397.23642
@@ -33297,21 +33267,6 @@ export const VERIFICATIONS = [
   {
    "match": {
     "instance": "HEG3D/sc_54_P_27_27_0.5",
-    "method": "i-FCIQMC (2M = 2838 spin orbitals)",
-    "energy": 173.92644
-   },
-   "checked_on": "2026-10-19",
-   "scope": "value",
-   "method": "arXiv:1109.2635 text (sources/1109.2635.txt); Phys. Rev. B 85, 081103(R) not read, arXiv only",
-   "location": "Table I (txt lines 121-128), rs = 0.5 row, column 'FCI 2M = 2838'",
-   "reported_as": "3.22086(2)",
-   "conversion": "3.22086 x 54 = 173.92644 (stored 173.92644); sigma 0.00002 x 54 = 0.00108 (stored 0.00108)",
-   "note": "54-electron HEG, Hamiltonian Eq. (1) H = sum -1/2 nabla^2 + sum 1/2 v_ab + 1/2 N v_M (Madelung term included), plane waves in a cubic cell, total energy per electron in a.u. Convention cross-check: 54 x (3.2202 - 3.26533) = -2.437 Ha correlation, consistent with Luo & Alavi's quote -2.435(7) of the FCIQMC CBS value. Finite-basis i-FCIQMC; the paper calls it 'a variational finite-basis result' but also 'the unquantified initiator error is sub-mEh' (txt line 155-158), so `projected` (RULES 12.4: initiator not shown converged) stands.",
-   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#140"
-  },
-  {
-   "match": {
-    "instance": "HEG3D/sc_54_P_27_27_0.5",
     "method": "i-FCIQMC, 1/M extrapolation",
     "energy": 173.8908
    },
@@ -33323,21 +33278,6 @@ export const VERIFICATIONS = [
    "conversion": "3.2202 x 54 = 173.8908 (stored 173.8908); sigma 0.0002 x 54 = 0.0108 (stored 0.0108)",
    "note": "54-electron HEG, Hamiltonian Eq. (1) H = sum -1/2 nabla^2 + sum 1/2 v_ab + 1/2 N v_M (Madelung term included), plane waves in a cubic cell, total energy per electron in a.u. Convention cross-check: 54 x (3.2202 - 3.26533) = -2.437 Ha correlation, consistent with Luo & Alavi's quote -2.435(7) of the FCIQMC CBS value. 1/M extrapolation from Fig. 3; the error 'derives' from the fit. Later work (Neufeld & Thom, arXiv:1706.09923; Luo & Alavi, arXiv:1712.07524 Table 1 discussion, 'the new transcorrelated result at rs = 0.5 is 10 mEh above the previous FCIQMC result ... based on a M^-1 extrapolation') argues M^-1 extrapolations overshoot; not a transcription issue.",
    "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#141"
-  },
-  {
-   "match": {
-    "instance": "HEG3D/sc_54_P_27_27_1",
-    "method": "i-FCIQMC (2M = 2838 spin orbitals)",
-    "energy": 28.65942
-   },
-   "checked_on": "2026-10-19",
-   "scope": "value",
-   "method": "arXiv:1109.2635 text (sources/1109.2635.txt); Phys. Rev. B 85, 081103(R) not read, arXiv only",
-   "location": "Table I (txt lines 121-128), rs = 1 row, column 'FCI 2M = 2838'",
-   "reported_as": "0.53073(4)",
-   "conversion": "0.53073 x 54 = 28.65942 (stored 28.65942); sigma 0.00004 x 54 = 0.00216 (stored 0.00216)",
-   "note": "54-electron HEG, Hamiltonian Eq. (1) H = sum -1/2 nabla^2 + sum 1/2 v_ab + 1/2 N v_M (Madelung term included), plane waves in a cubic cell, total energy per electron in a.u. Convention cross-check: 54 x (3.2202 - 3.26533) = -2.437 Ha correlation, consistent with Luo & Alavi's quote -2.435(7) of the FCIQMC CBS value. Finite-basis i-FCIQMC; the paper calls it 'a variational finite-basis result' but also 'the unquantified initiator error is sub-mEh' (txt line 155-158), so `projected` (RULES 12.4: initiator not shown converged) stands.",
-   "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#142"
   },
   {
    "match": {

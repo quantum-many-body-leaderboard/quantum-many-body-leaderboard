@@ -548,7 +548,9 @@ A finite-N energy at the instance's density, cell and twist, including an energy
 one-particle basis. The basis spans part of the instance's Hilbert space, so the energy is a
 claim about the instance; the row states the basis (number of plane waves or orbitals, or the
 cutoff). Not rows: energies with an analytic finite-size correction added, extrapolations to
-N → ∞ and twist averages.
+N → ∞ and twist averages. Of a series over basis sizes only one value is a row: the basis-limit value, or
+where the source gives none, its largest basis per method and trial state. Every basis size
+approximates the same ground state, at a lower resolution (since 2026-10-20).
 
 A correlation energy E_c = E - E_HF is a row where the Hartree-Fock energy is unique: on a
 closed-shell instance at the Gamma point, where each spin fills whole shells of plane waves and
