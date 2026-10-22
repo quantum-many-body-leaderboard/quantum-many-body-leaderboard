@@ -1,0 +1,113 @@
+{
+  "model": "Hubbard",
+  "lattice": "square",
+  "n_sites": 144,
+  "boundary": "P",
+  "params": {
+    "Nf": 63,
+    "U": -8
+  },
+  "instance_id": "Hubbard/square_144_P_63_-8",
+  "rows": [
+    {
+      "energy": -578.0304,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 126,
+      "einf": -220.5,
+      "v_score": null,
+      "method": "SCALE",
+      "method_detail": "1 conv layer",
+      "method_as_published": "SCALE (1 conv layer), no symmetry projection",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Y. Gu, Z. Han, W. Li, Z. Xiao, T. Xiang, M. Qin, L. Wang & D. Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-22",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-22",
+        "method": "source text of arXiv:2604.25775 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-4.0141",
+        "note": "Table IV (App. D, attractive Hubbard, t'=0, delta=1/8, PBC); columns 8x8 U=-2 | 8x8 U=-8 | 12x12 U=-2 | 12x12 U=-8; row SCALE, column 12x12 U=-8; sources/2604.25775.txt line 760; version read: arXiv v1 (sources/2604.25775.txt); APS copy not reached (403, 2026-10-16) | Eq. (8): H = -t sum_<ij> - t' sum_<<ij>> + U sum n_up n_dn, t = 1, U = 8, doping 1/8 (Sec. III), periodic unless the column says OBC; energies per site. Pinning fields only in pre-training (App. C).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -578.2752,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 126,
+      "einf": -220.5,
+      "v_score": null,
+      "method": "Fixed-node GFMC",
+      "method_detail": "trial state: SCALE, 1 conv layer",
+      "method_as_published": "SCALE (1 conv layer) trial state + fixed-node GFMC",
+      "family": "AFQMC / GFMC",
+      "bound_type": "projected",
+      "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
+      "reference": "Y. Gu, Z. Han, W. Li, Z. Xiao, T. Xiang, M. Qin, L. Wang & D. Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-22",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-22",
+        "method": "source text of arXiv:2604.25775 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-4.0158",
+        "note": "Table IV (App. D, attractive Hubbard, t'=0, delta=1/8, PBC); columns 8x8 U=-2 | 8x8 U=-8 | 12x12 U=-2 | 12x12 U=-8; row SCALE+GFMC, column 12x12 U=-8; sources/2604.25775.txt line 761; version read: arXiv v1 (sources/2604.25775.txt); APS copy not reached (403, 2026-10-16) | Eq. (8): H = -t sum_<ij> - t' sum_<<ij>> + U sum n_up n_dn, t = 1, U = 8, doping 1/8 (Sec. III), periodic unless the column says OBC; energies per site. Pinning fields only in pre-training (App. C).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -578.2896,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 126,
+      "einf": -220.5,
+      "v_score": null,
+      "method": "ACE",
+      "method_detail": "16 conv layers",
+      "method_as_published": "ACE (16 conv layers), no symmetry projection",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Y. Gu, Z. Han, W. Li, Z. Xiao, T. Xiang, M. Qin, L. Wang & D. Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-22",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-22",
+        "method": "source text of arXiv:2604.25775 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-4.0159",
+        "note": "Table IV (App. D, attractive Hubbard, t'=0, delta=1/8, PBC); columns 8x8 U=-2 | 8x8 U=-8 | 12x12 U=-2 | 12x12 U=-8; row ACE, column 12x12 U=-8; sources/2604.25775.txt line 762; version read: arXiv v1 (sources/2604.25775.txt); APS copy not reached (403, 2026-10-16) | Eq. (8): H = -t sum_<ij> - t' sum_<<ij>> + U sum n_up n_dn, t = 1, U = 8, doping 1/8 (Sec. III), periodic unless the column says OBC; energies per site. Pinning fields only in pre-training (App. C).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -578.3184,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 126,
+      "einf": -220.5,
+      "v_score": null,
+      "method": "Fixed-node GFMC",
+      "method_detail": "trial state: ACE",
+      "method_as_published": "ACE+GFMC (GFMC projection on the ACE trial state)",
+      "family": "AFQMC / GFMC",
+      "bound_type": "projected",
+      "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
+      "reference": "Y. Gu, Z. Han, W. Li, Z. Xiao, T. Xiang, M. Qin, L. Wang & D. Lv, Pareto Frontier of Neural Quantum States: Scalable, Affordable, and Accurate Convolutional Backflow for Strongly Correlated Lattice Fermions, PRX Intelligence 1, 023001 (2026), arXiv:2604.25775, doi:10.1103/2kq2-5g5q",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-22",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-22",
+        "method": "source text of arXiv:2604.25775 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-4.0161",
+        "note": "Table IV (App. D, attractive Hubbard, t'=0, delta=1/8, PBC); columns 8x8 U=-2 | 8x8 U=-8 | 12x12 U=-2 | 12x12 U=-8; row ACE+GFMC, column 12x12 U=-8; sources/2604.25775.txt line 763; version read: arXiv v1 (sources/2604.25775.txt); APS copy not reached (403, 2026-10-16) | Eq. (8): H = -t sum_<ij> - t' sum_<<ij>> + U sum n_up n_dn, t = 1, U = 8, doping 1/8 (Sec. III), periodic unless the column says OBC; energies per site. Pinning fields only in pre-training (App. C).",
+        "secondary_of": null
+      }
+    }
+  ]
+}
