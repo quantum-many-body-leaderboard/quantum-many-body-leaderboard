@@ -438,13 +438,36 @@ const stripEntry = f => [f.strip, `${f.title}: the record at each ${f.axis} and 
 // Every slider on the page with its id, so that the HTML and the stylesheet agree.
 const SLIDERS = ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [] : figs.map((f, k) => ({ id: `slide-${j}-${k}`, f }))));
 
+// Slider badges (2026-10-22). The pitch between stops caps a badge's width so that none touches
+// its neighbour. Where the widest label does not fit one pitch, the badges stagger over as many
+// rows as it takes, worked out for each of the four widths the CSS knows: at the narrowest
+// window of each the strip is 920 (its maximum), 830, 570 and 328 px wide, with badges at 0.8,
+// 0.8, 0.72 and 0.7 rem. A badge keeps its side padding only where the label fits with it; class <tier>n drops
+// it, as the old dense style did. Label widths use the font's advance widths (semibold, in em).
+const BADGE_TIERS = [{ key: "w", strip: 920, font: 12.8 }, { key: "d", strip: 830, font: 12.8 }, { key: "t", strip: 570, font: 11.52 }, { key: "p", strip: 328, font: 11.2 }];
+const labelEm = s => [...String(s)].reduce((a, c) => a + (/\d/.test(c) ? 0.57 : c === "." ? 0.27 : c === "-" || c === "\u2212" ? 0.35 : 0.6), 0);
+function badgeClasses(f) {
+  const widest = Math.max(...f.stops.map(s => labelEm(s.label)));
+  return BADGE_TIERS.map(t => {
+    const room = t.strip * f.pitch / W - 4.8, text = widest * t.font + 2; // + the 1 px border each side
+    const rows = Math.min(4, Math.max(1, Math.ceil(text / room)));
+    return t.key + rows + (rows === 1 && text + 16 <= room ? "" : " " + t.key + "n");
+  }).join(" ");
+}
+function badgeRows(key) {
+  const out = [`.slider.${key}n .track label { padding-left: 0; padding-right: 0; width: calc(var(--pitch) - 0.3rem); }`];
+  for (const n of [2, 3, 4]) {
+    out.push(`.slider.${key}${n} .track { padding-bottom: ${(2.5 + 1.6 * (n - 1)).toFixed(1)}rem; }`);
+    out.push(`.slider.${key}${n} .track label { width: calc(${n} * var(--pitch) - 0.3rem); max-width: none; }`);
+    for (let j = 1; j < n; j++) out.push(`.slider.${key}${n} .track label:nth-child(${n}n+${j + 1} of label) { bottom: ${(1.6 * j).toFixed(1)}rem; }`);
+  }
+  return out.join("\n");
+}
 function slider({ id, f }) {
   if (!f.strip) return `<div class="stack">${f.facets.flatMap(x => x.stops.map(s =>
     (f.facets.length > 1 && x.label ? `<p class="facet">${esc(x.label)}</p>` : "") + figure(stopEntry(f, x, s)))).join("\n")}</div>`;
-  // The pitch between stops as a share of the strip's width caps the badges, so that none
-  // touches its neighbour at any column width; a dense row staggers over two rows on a phone.
   const pct = x => (100 * x / W).toFixed(2);
-  return `<div class="slider${f.stops.length > 10 ? " dense" : ""}" style="--pitch:${pct(f.pitch)}%">${f.stops.map((s, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k === f.start ? " checked" : ""}>`).join("")}
+  return `<div class="slider ${badgeClasses(f)}" style="--pitch:${pct(f.pitch)}%">${f.stops.map((s, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k === f.start ? " checked" : ""}>`).join("")}
 <div class="track">${figure(stripEntry(f), "strip")}
 ${f.facets.map(x => `<span class="axis" style="left:${pct(x.stops[0].x - f.pitch / 2)}%">${esc(f.axis)} =</span>`).join("")}${f.stops.map((s, k) => `<label for="${id}-${k}" style="left:${pct(s.x)}%">${esc(s.label)}</label>`).join("")}</div>
 <div class="panels">${f.facets.flatMap(x => x.stops.map(s => figure(stopEntry(f, x, s)))).join("\n")}</div>
@@ -1495,14 +1518,20 @@ figure.strip .exl { opacity: 0; transition: opacity 0.3s ease; }
 figure.strip .grp:hover .ex { transform: translateY(var(--ex)); }
 figure.strip .grp:hover .exl { opacity: var(--o); }
 figure.strip .hit { cursor: pointer; }
-.slider.dense .track label { width: calc(var(--pitch) - 0.3rem); padding-left: 0; padding-right: 0; }
-@media (max-width: 900px) { .slider.dense .track label { font-size: 0.72rem; } }
+@media (min-width: 992px) {
+${badgeRows("w")}
+}
+@media (min-width: 901px) and (max-width: 991px) {
+${badgeRows("d")}
+}
+@media (min-width: 641px) and (max-width: 900px) {
+.slider .track label { font-size: 0.72rem; }
+${badgeRows("t")}
+}
 @media (max-width: 640px) {
-  .slider .track label { font-size: 0.7rem; }
-  .slider .track .axis { display: none; }
-  .slider.dense .track { padding-bottom: 4rem; }
-  .slider.dense .track label { width: calc(2 * var(--pitch) - 0.3rem); max-width: none; }
-  .slider.dense .track label:nth-child(odd of label) { bottom: 1.6rem; }
+.slider .track label { font-size: 0.7rem; }
+.slider .track .axis { display: none; }
+${badgeRows("p")}
 }
 ${TAB_CSS}
 tr.more figure.chart { margin: 0.4rem 0 0.8rem; }
