@@ -619,6 +619,9 @@ Object.assign(NAMES, {
   "VMC, BF3": ["Slater-Jastrow-backflow", "homogeneous backflow + three-electron Jastrow"],
   "DMC, BF3 nodes": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow + three-electron Jastrow; extrapolated: Δτ → 0", { family: "DMC" }],
   "VMC SJ": ["Slater-Jastrow", ""],
+  // Tanatar & Ceperley 1989 (PRB 39, 5005): Slater-Jastrow with Gaskell's RPA pseudopotential, and fixed-node GFMC on it
+  "VMC (Slater-Jastrow, RPA pseudopotential)": ["Slater-Jastrow", "RPA (Gaskell) pseudopotential"],
+  "Fixed-node GFMC (Slater-Jastrow trial state)": ["Fixed-node GFMC", "trial state: Slater-Jastrow", { family: "DMC" }],
   "VMC SJ+3BD": ["Slater-Jastrow", "three-body correlation"],
   "VMC SJ+BF": ["Slater-Jastrow-backflow", ""],
   "VMC SJ+3BD+BF": ["Slater-Jastrow-backflow", "three-body correlation"],

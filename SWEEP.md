@@ -137,7 +137,8 @@ A `sweep-rows` file is a JSON array with one object per row:
 | `var_per_site`, `var_rel` | variance as σ²/N, or relative variance; `variance_as_reported` is the printed form |
 | `tol` | how close a stored row must be, per site, to count as the same number |
 | `origin` | `own` (the paper's result) or `quoted` |
-| `arxiv`, `reference`, `peer_reviewed` | the source |
+| `arxiv`, `reference`, `peer_reviewed` | the source; `doi` instead of `arxiv` for a source with no arXiv version |
+| `read_method` | optional: how the source was read, where it was not the arXiv text |
 | `method`, `bound_type` | as published, and its [`bound_type`](RULES.md#4-bound_type) |
 | `reported_as`, `evidence`, `convention_check` | the printed string, where it was read, and the convention check |
 | `confidence`, `verified_by` | the reader's confidence and who read it (first and second reading) |
@@ -185,6 +186,7 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-10-20-butler.json` | electron gas: the largest-basis CCD of the data release of arXiv:2403.04645, on the instances other papers also carry |
 | `sweep-rows-2026-10-21-marino.json` | Marino, Becca & Tocchio (arXiv:2111.04623) Table 2 at t′ ≠ 0: stripe and uniform VMC at U = 12 on 6 × 48 tori, and on 6 × 40 for the λ = 5 stripes; the row printed t′/t = 0.5 between 0 and 0.1 is held |
 | `sweep-rows-2026-10-22-quoted.json` | the primaries behind held t′ = −0.2 quotes: Gu et al. (Nat. Commun. 17, 7838; arXiv:2507.02644) Supplementary Table 5, PBC energies at t′ = 0 and −0.2 on 8 × 8 to 32 × 8, and the two zero-variance extrapolations of the main text, read in the journal version (the arXiv text has no raw-data table); Liang (PRB 113, 155121; arXiv:2507.01856) Tables V and VI at t′ = −0.2. Held: Gu et al.'s OBC table (doping not printed) and 16 × 8 cylinder (doping and periodic direction not printed), and four error-bar values quoted by arXiv:2609.22618 that PRB 113, 155121 does not print |
+| `sweep-rows-2026-10-22-tc.json` | electron gas: Tanatar & Ceperley, PRB 39, 5005 (1989), no arXiv version, Tables I and II: VMC energies of the normal (N = 26-114, rs = 1-50) and fully polarized (N = 21-113, rs = 5-75) fluids in square cells, and fixed-node GFMC at N = 58 and 57. Read from the text layer of the publisher's 1989 scan, every number checked against the page image; Rydberg, Madelung term included (QMBL's HF check). Held: Table III, the crystal, whose cell is not printed |
 
 The five passes of 2026-10-16 to 2026-10-19 had their second reading on 2026-10-19 (1079 rows, eight reader groups,
 each with a skeptic). No energy was misread. The fixes went into the pass generators, so the pass files above carry
