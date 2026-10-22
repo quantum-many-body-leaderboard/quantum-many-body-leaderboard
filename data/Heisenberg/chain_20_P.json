@@ -8,7 +8,7 @@
   "rows": [
     {
       "energy": -35.61754611950579,
-      "sigma": 0,
+      "sigma": null,
       "energy_variance": 0,
       "dof": 20,
       "einf": 0,
@@ -23,6 +23,20 @@
       "source": "varbench@2024-10-22",
       "provenance": "imported",
       "baseline": true,
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "0 in VarBench's sigma column (no error bar)",
+          "location": "vendor/varbench/Heisenberg/chain_20_P.md",
+          "version_read": "VarBench snapshot in vendor/varbench",
+          "conversion": "none",
+          "checked_on": "2026-10-22",
+          "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
+          "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22",
+          "from": 0
+        }
+      ],
       "verified": {
         "checked_on": "2026-09-29",
         "scope": "value",

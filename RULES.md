@@ -387,9 +387,9 @@ that implementation, and the submitted code supplies only the wavefunction ampli
    printed digits allow lies below it. Case: the HQT rows below.
 
 Five rows survive check 4: the three TFIsing RBM rows imported from VarBench, and the PEPS row of
-arXiv:1611.09467 and the LRU row of arXiv:2605.13807 that QMBL read from those papers. The
-validator reports the PEPS row twice, once against each exact row of its instance. Each row
-carries a `below-exact` defect (§11) and is not silently corrected. [UPSTREAM.md](UPSTREAM.md) lists
+arXiv:1611.09467 and the LRU row of arXiv:2605.13807 that QMBL read from those papers. Each row
+carries a `below-exact` defect (§11) and is not silently corrected; the validator counts a
+flagged row with the tolerated violations, not as an issue. [UPSTREAM.md](UPSTREAM.md) lists
 the issues in the VarBench data.
 
 Cases:
