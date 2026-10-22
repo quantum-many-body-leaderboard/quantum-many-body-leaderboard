@@ -8,7 +8,7 @@
   "rows": [
     {
       "energy": -34.22205967006502,
-      "sigma": 0,
+      "sigma": null,
       "energy_variance": 0,
       "dof": 16,
       "einf": 0,
@@ -23,6 +23,20 @@
       "source": "varbench@2024-10-22",
       "provenance": "imported",
       "baseline": true,
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "0 in VarBench's sigma column (no error bar)",
+          "location": "vendor/varbench/Heisenberg/triangular_16_P.md",
+          "version_read": "VarBench snapshot in vendor/varbench",
+          "conversion": "none",
+          "checked_on": "2026-10-22",
+          "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
+          "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22",
+          "from": 0
+        }
+      ],
       "verified": {
         "checked_on": "2026-09-29",
         "scope": "value",
@@ -37,7 +51,7 @@
     },
     {
       "energy": -34.1780764,
-      "sigma": 0,
+      "sigma": null,
       "energy_variance": 0.424225,
       "dof": 16,
       "einf": 0,
@@ -115,6 +129,18 @@
           "reason": "The linked vqe.sh passes --j2=0.0, with which HeisenbergTriangle builds the 4x4 square lattice, not the triangular one (the run needs --j2=1.0); everything else checks, and the logged energy is the exact statevector expectation (VB3#67). The number is the uploader's own, printed in no paper the reader found, so it is cited to the dataset with the uploader named. Not a record. Ruling E5 (2026-10-02): a variational row cites the VarBench dataset with the uploader named (ruling 1); the link stays and no row is flagged.",
           "source_entry": "VB3-varbench-code-heisenberg#67 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_16_P/vqe.sh)"
+        },
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "0 in VarBench's sigma column (no error bar)",
+          "location": "vendor/varbench/Heisenberg/triangular_16_P.md",
+          "version_read": "VarBench snapshot in vendor/varbench",
+          "conversion": "none",
+          "checked_on": "2026-10-22",
+          "reason": "The energy is the exact statevector expectation of the projected state (the sampled entry above), so it has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0.",
+          "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22",
+          "from": 0
         }
       ],
       "sampled": false

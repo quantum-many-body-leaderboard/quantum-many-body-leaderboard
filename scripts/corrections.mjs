@@ -22387,4 +22387,116 @@ export const CORRECTIONS = [
     "reason": "The number is printed only in the arXiv version; the refereed version does not carry it (RULES.md 8.1: peer_reviewed follows the venue that printed the number; ruling 2026-10-15).",
     "source_entry": "JP7-j1j2-heisenberg (ambiguous, Table I arXiv-only); ruling 2026-10-15"
   },
+  {
+    "match": {
+      "instance": "Heisenberg/chain_20_O",
+      "method": "Exact diagonalization",
+      "energy": -34.72989333759587
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "0 in VarBench's sigma column (no error bar)",
+    "location": "vendor/varbench/Heisenberg/chain_20_O.md",
+    "version_read": "VarBench snapshot in vendor/varbench",
+    "conversion": "none",
+    "checked_on": "2026-10-22",
+    "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
+    "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/chain_20_P",
+      "method": "Exact diagonalization",
+      "energy": -35.61754611950579
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "0 in VarBench's sigma column (no error bar)",
+    "location": "vendor/varbench/Heisenberg/chain_20_P.md",
+    "version_read": "VarBench snapshot in vendor/varbench",
+    "conversion": "none",
+    "checked_on": "2026-10-22",
+    "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
+    "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_24_P",
+      "method": "Exact diagonalization",
+      "energy": -43.039584
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "0 in VarBench's sigma column (no error bar)",
+    "location": "vendor/varbench/Heisenberg/shuriken_24_P.md",
+    "version_read": "VarBench snapshot in vendor/varbench",
+    "conversion": "none",
+    "checked_on": "2026-10-22",
+    "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
+    "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_16_P",
+      "method": "Exact diagonalization",
+      "energy": -34.22205967006502
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "0 in VarBench's sigma column (no error bar)",
+    "location": "vendor/varbench/Heisenberg/triangular_16_P.md",
+    "version_read": "VarBench snapshot in vendor/varbench",
+    "conversion": "none",
+    "checked_on": "2026-10-22",
+    "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
+    "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_16_P",
+      "method": "VQE (SR + symm. + 64 par)",
+      "energy": -34.1780764
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "0 in VarBench's sigma column (no error bar)",
+    "location": "vendor/varbench/Heisenberg/triangular_16_P.md",
+    "version_read": "VarBench snapshot in vendor/varbench",
+    "conversion": "none",
+    "checked_on": "2026-10-22",
+    "reason": "The energy is the exact statevector expectation of the projected state (the sampled entry above), so it has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0.",
+    "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/chain_32_P_0.5",
+      "method": "Exact Solution",
+      "energy": -34.03342111916819
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "0 in VarBench's sigma column (no error bar)",
+    "location": "vendor/varbench/TFIsing/chain_32_P_0.5.md",
+    "version_read": "VarBench snapshot in vendor/varbench",
+    "conversion": "none",
+    "checked_on": "2026-10-22",
+    "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
+    "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/chain_32_P_1",
+      "method": "Exact Solution",
+      "energy": -40.76003249419223
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "0 in VarBench's sigma column (no error bar)",
+    "location": "vendor/varbench/TFIsing/chain_32_P_1.md",
+    "version_read": "VarBench snapshot in vendor/varbench",
+    "conversion": "none",
+    "checked_on": "2026-10-22",
+    "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
+    "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22"
+  },
 ];
