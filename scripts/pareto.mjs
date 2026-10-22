@@ -8,10 +8,11 @@
 // different marks; FLOPs have their own figures. No cost is converted into another (DATA.md).
 //
 // The frontier is the staircase of results nothing beats for less: sorted by cost, a row is on
-// it when its energy is below every cheaper row that could hold a record (RULES.md 6).
+// it when its energy is below every cheaper row that could be the best of its class: unflagged,
+// and not passed over by the automatic flag below an exact energy (RULES.md 6, 6.2).
 import fs from "node:fs";
-import { recordEligible, exactEligible, boundLabel, perSiteDivisor, perSiteLabel } from "./units.mjs";
-import { collect, recordOf, rowId } from "./summary.mjs";
+import { classEligible, exactEligible, boundLabel, perSiteDivisor, perSiteLabel } from "./units.mjs";
+import { collect, classBest, shownBest, rowId } from "./summary.mjs";
 import { hoursOrEdOf, parametersOf, MIN_COSTED, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { estimatedFlopsOf } from "./flops.mjs";
 import { stairs, layoutLabels, meets, insetFrame } from "./labels.mjs";
@@ -35,14 +36,14 @@ function instLabel(i) {
 }
 
 // The costed rows of an instance under one cost accessor, which sees the compute block,
-// the row and the instance (an estimate needs all three). A row on the frontier can hold
-// a record; exact rows count only when they state the ground state.
+// the row and the instance (an estimate needs all three). A row on the frontier can be the
+// best of its class; exact rows count only when they state the ground state.
 function costed(inst, costOf) {
   const f = perSiteDivisor(inst);
   return inst.rows.filter(r => r.bound_type in BOUNDS && !r.defect).flatMap(r => {
     const cost = costOf(r.compute, r, inst);
     if (!cost || !(r.bound_type !== "exact" || exactEligible(r))) return [];
-    return [{ r, inst, cost, e: r.energy / f, eligible: r.bound_type === "exact" ? exactEligible(r) : recordEligible(r) }];
+    return [{ r, inst, cost, e: r.energy / f, eligible: r.bound_type === "exact" ? exactEligible(r) : classEligible(r) && !classBest(inst).below.includes(r) }];
   });
 }
 function frontierOf(pts) {
@@ -71,7 +72,7 @@ function mark(t, x, y, color, filled, unit, href) {
 
 // One instance's energies against their cost, into the box given: the energy axis is
 // linear and per site, the cost axis logarithmic, the frontier as a staircase with its
-// points named. Every result with a cost is a dot, of any bound type; a record that states no
+// points named. Every result with a cost is a dot, of any bound type; a shown value that states no
 // cost is named in a line of text under the axis. A mark is named by its method alone, with
 // the detail in the row's card on hover; QMBL's own runs keep "QMBL" in the name, so none
 // reads as published. The colour is the bound type.
@@ -260,11 +261,13 @@ function breakMarks(t, left, right, gap) {
 // has no room for one, so the caller keeps the panel without it. With `axis`, the energy axis
 // given (one scale otherwise); with `stats`, how its names came out.
 function drawPanel(t, parts, inst, pts, { px, left, right, top, bottom, xLabel, title, nameAll = false, zoom = null, keyOut = null, axis = null, stats = null }) {
-  const rec = recordOf(inst), recE = rec ? rec.energy / perSiteDivisor(inst) : null;
+  // What the panel names in a line under the axis when it has no cost: the exact energy on a
+  // solved instance, else the best of each class (RULES.md 6).
+  const undrawn = (shownBest(inst)[0]?.[0] === "exact" ? shownBest(inst).slice(0, 1) : shownBest(inst)).filter(([, r]) => !pts.some(p => p.r === r));
   const front = frontierOf(pts);
   const nameOf = p => markName(p.r) + (p.cost.measuredByQmbl ? " (cost measured by QMBL)" : "");
   // Cost axis: a decade either side of the data. Energy axis: linear, as in the
-  // record-over-time figure, so the record and an exact energy sit where they are.
+  // record-over-time figure, so the best values and an exact energy sit where they are.
   const cs = pts.map(p => p.cost.value);
   const x0 = 10 ** Math.floor(log(Math.min(...cs)) - 0.5), x1 = 10 ** Math.ceil(log(Math.max(...cs)) + 0.5);
   const X = logScale(x0, x1, left, right);
@@ -369,8 +372,16 @@ function drawPanel(t, parts, inst, pts, { px, left, right, top, bottom, xLabel, 
   }
   drawLabels(t, parts, inst, L);
   parts.push(text((left + right) / 2, bottom + 32, xLabel, { size: 10.5, fill: t.ink2, anchor: "middle" }));
-  if (rec && !pts.some(p => p.r === rec))
-    parts.push(text(left, bottom + 48, `${rec.bound_type === "exact" ? boundLabel(rec) : "record"}: ${recE.toFixed(6).replace("-", "−")} (${markName(rec)}), no cost stated, not drawn`, { size: 9.5, fill: t.muted }));
+  // One value is named as before; several are named in full where the line fits the panel,
+  // else by class, else counted, so a narrow panel of the overview keeps one short line.
+  if (undrawn.length) {
+    const tagOf = ([tag, r]) => tag === "exact" ? boundLabel(r) : tag;
+    const full = `${undrawn.map(x => `${tagOf(x)}: ${(x[1].energy / perSiteDivisor(inst)).toFixed(6).replace("-", "−")} (${markName(x[1])})`).join("; ")}, no cost stated, not drawn`;
+    const short = `no cost stated, not drawn: ${undrawn.map(tagOf).join(", ")}`;
+    const line = undrawn.length === 1 || textWidth(full, 9.5) <= right - left ? full
+      : textWidth(short, 9.5) <= right - left ? short : `${undrawn.length} best values state no cost and are not drawn`;
+    parts.push(text(left, bottom + 48, line, { size: 9.5, fill: t.muted }));
+  }
   return true;
 }
 

@@ -1,16 +1,30 @@
 import fs from "node:fs"; import path from "node:path";
 import { leaksIn } from "../checks/cost/scrub.mjs";
-import { expectedDof, expectedEinf, vScore, perSiteDivisor, groundStateExact, stochasticExact } from "./units.mjs";
+import { expectedDof, expectedEinf, vScore, perSiteDivisor, groundStateExact, stochasticExact, exactEligible, classEligible, BEST_CLASSES } from "./units.mjs";
+import { classBest } from "./summary.mjs";
 import { FAMILIES } from "./views.mjs";
 import { detailIssue } from "./method_names.mjs";
 const FAMILY_NAMES = new Set([...FAMILIES.map(([f]) => f), "other"]);
-const issues = [], rounding = [], ansatzFamily = new Map(); let rows = 0, checkedD = 0, checkedE = 0, checkedV = 0, checkedC = 0, checkedCov = 0, checkedS = 0;
+const issues = [], rounding = [], belowExact = [], ansatzFamily = new Map(); let rows = 0, checkedD = 0, checkedE = 0, checkedV = 0, checkedC = 0, checkedCov = 0, checkedS = 0;
 for (const m of fs.readdirSync("data")) {
   const dir = path.join("data", m);
   if (!fs.statSync(dir).isDirectory()) continue;
   for (const f of fs.readdirSync(dir)) {
     const inst = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
     const eD = expectedDof(inst), eE = expectedEinf(inst);
+    // The values the instance shows (RULES.md 6): the exact energy is an eligible ground-state
+    // row, and each class's best is an unflagged row of that class that the automatic flag
+    // does not pass over (6.2), with no such row of its class lower. The rows the flag catches
+    // are listed below the count, not counted as issues: they stay in the tables, marked.
+    const best = classBest(inst);
+    for (const r of best.below) belowExact.push(`${inst.instance_id}: ${r.bound_type} ${r.energy} below exact ${best.exact.energy} "${r.method.slice(0, 38)}"`);
+    if (best.exact && !exactEligible(best.exact)) issues.push(`BEST ${inst.instance_id}: exact value ${best.exact.energy} is not an eligible ground-state row`);
+    for (const c of BEST_CLASSES) {
+      const open = inst.rows.filter(r => r.bound_type === c && classEligible(r) && !best.below.includes(r));
+      if (best[c] && (!open.includes(best[c]) || open.some(r => r.energy < best[c].energy)))
+        issues.push(`BEST ${inst.instance_id}: best ${c} ${best[c].energy} is not the lowest eligible ${c} row`);
+      if (!best[c] && open.length) issues.push(`BEST ${inst.instance_id}: ${open.length} eligible ${c} rows and no best ${c}`);
+    }
     for (const [i, r] of inst.rows.entries()) {
       rows++;
       const at = `${inst.instance_id}[${i}]`;
@@ -297,5 +311,6 @@ for (const f of fs.readdirSync(path.join("data", "TFIsing"))) {
 
 console.log(`rows=${rows}  dof_checked=${checkedD}  einf_checked=${checkedE}  vscore_checked=${checkedV}  tfising_exact_checked=${checkedT}`);
 console.log(`compute_blocks=${checkedC}  coverage_entries=${checkedCov}  spectrum_entries=${checkedS}`);
+console.log(`automatic below-exact flags (RULES.md 6.2; listed, not issues): ${belowExact.length}${belowExact.length ? "\n  " + belowExact.join("\n  ") : ""}`);
 console.log(`tolerated bound violations (within 3 sigma, or rel < 1e-8 where neither states one, or ruled: flagged below-exact, or a flag was lifted; ignored): ${rounding.length}`);
 console.log(issues.length ? `\n${issues.length} ISSUES:\n` + issues.slice(0, 25).join("\n") : "\nall checks pass");
