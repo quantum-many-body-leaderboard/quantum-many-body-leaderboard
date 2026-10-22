@@ -142,6 +142,7 @@ A `sweep-rows` file is a JSON array with one object per row:
 | `reported_as`, `evidence`, `convention_check` | the printed string, where it was read, and the convention check |
 | `confidence`, `verified_by` | the reader's confidence and who read it (first and second reading) |
 | `compute`, `defect` | an optional `compute` block and defect flag |
+| `same_value_distinct_method` | optional, `true` on a second method of the same paper that printed the same value; without it that row counts as one the instance already carries |
 
 `add_allresults_rows.mjs` converts `eps` and `sigma_per_site` into the instance's stored
 convention, skips a value the instance already carries, and writes each row with
@@ -182,6 +183,7 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-10-19-heglit2.json` | electron gas: papers citing the 2026-10-17 primaries |
 | `sweep-rows-2026-10-20-azadism.json` | electron gas: the bcc Wigner crystals (N = 64, 216, 512) of the Supplemental Material of arXiv:2201.08743, read from the publisher's file; its fluid tables print single-twist energies on open shells without the twist vector and are held |
 | `sweep-rows-2026-10-20-butler.json` | electron gas: the largest-basis CCD of the data release of arXiv:2403.04645, on the instances other papers also carry |
+| `sweep-rows-2026-10-21-marino.json` | Marino, Becca & Tocchio (arXiv:2111.04623) Table 2 at t′ ≠ 0: stripe and uniform VMC at U = 12 on 6 × 48 tori, and on 6 × 40 for the λ = 5 stripes; the row printed t′/t = 0.5 between 0 and 0.1 is held |
 
 The five passes of 2026-10-16 to 2026-10-19 had their second reading on 2026-10-19 (1079 rows, eight reader groups,
 each with a skeptic). No energy was misread. The fixes went into the pass generators, so the pass files above carry

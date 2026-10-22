@@ -37,11 +37,13 @@ for (const [id, rows] of Object.entries(byInst)) {
   for (const r of rows) {
     // A quoted exact value rounded to its error bar is the exact row already carried; any other
     // quoted value repeats a stored row only to its printed digits (Kochkov et al.'s -0.5022(4)
-    // is not the 2048-state DMRG row 3e-4 away).
+    // is not the 2048-state DMRG row 3e-4 away). A row flagged same_value_distinct_method is a second
+    // method of the same paper that printed the same value (Marino et al.'s stripe and uniform states
+    // at t' = 0.25), so the same-paper test does not apply to it.
     const dup = inst.rows.find(x => Math.abs(x.energy / div - r.eps) <=
       (r.origin === "quoted" && r.bound_type === "exact" ? Math.max(r.tol, r.sigma_per_site ?? 0) : r.tol) &&
-      ((r.origin === "quoted" && x.bound_type === r.bound_type) || x.method === r.method || (x.reference || "").includes(r.arxiv) ||
-       (x.verified?.note || "").includes(r.arxiv) || (x.bound_type === "exact" && r.bound_type === "exact")));
+      ((r.origin === "quoted" && x.bound_type === r.bound_type) || x.method === r.method ||
+       (!r.same_value_distinct_method && ((x.reference || "").includes(r.arxiv) || (x.verified?.note || "").includes(r.arxiv))) || (x.bound_type === "exact" && r.bound_type === "exact")));
     if (dup) { skipped.push(`${id} ${r.reported_as} [${r.arxiv}] = "${dup.method.slice(0, 40)}"`); continue; }
     const energy = +(r.eps * div).toPrecision(12);
     // sigma^2/N_site as printed; totals scale with the site count. A relative
