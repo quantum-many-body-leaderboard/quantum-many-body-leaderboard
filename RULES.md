@@ -45,12 +45,12 @@ steps, the trial state, or what an extrapolation sends to zero. It never holds t
 number, the instance or the source. A corrected `method_as_published` quotes a label the
 source prints, word for word; what explains the label goes to `method_detail`.
 
-A missing field never excludes a row. Only §6 and §7 govern what can hold a record.
+A missing field never excludes a row. Only §6 and §7 govern what is shown as a best value and what is counted.
 
 ## 4. `bound_type`
 
-Every row declares exactly one. Energies of different classes are different claims. A
-record can be of any class (§6), so its class tells the reader what was claimed.
+Every row declares exactly one. Energies of different classes are different claims. Each
+class has its own best value (§6), so its class tells the reader what was claimed.
 
 - `variational`: a strict variational upper bound on the ground-state energy in the
   stated sector. VMC, DMRG and MPS at finite bond dimension, PEPS, NQS, VQE and other
@@ -75,12 +75,12 @@ record can be of any class (§6), so its class tells the reader what was claimed
   whose three-body term is dropped or approximated (since 2026-10-20), and density-functional
   energies. Full coupled
   cluster at any truncation (CCSD, CCSDT, ...) stays `projected`: each is a rung of a hierarchy
-  that reaches the exact energy. An `approximate` row is listed with the others. It holds the
-  record only on an instance where no other unflagged row exists (§6).
+  that reaches the exact energy. An `approximate` row is listed with the others and is compared
+  only with other `approximate` rows (§6).
   Case: on the 14-electron gas at rs = 1, ring-, crossed-ring- and mosaic-only CCD gives
   0.5465 Ha per electron. That is 22 mHa below FCIQMC, CCSDTQ5 and transcorrelated FCIQMC,
-  which agree to 0.1 mHa. The CCD row is the lowest energy on the instance and does not hold
-  the record.
+  which agree to 0.1 mHa. The CCD row is the lowest energy on the instance; it is the best
+  approximate value, and the other classes have their own best values.
 
 Cases:
 
@@ -91,14 +91,14 @@ Cases:
   a variational state.
 - Zero-variance extrapolation is its own class. Chen & Heyl report both a variational
   −0.4976921(4) and an extrapolated −0.497715(9) on 10x10 J1-J2: an energy a wave function
-  reached, and an estimate of the ground-state energy. Either can hold a record (§6), and the
-  class says which kind does.
+  reached, and an estimate of the ground-state energy. Each is the best of its own class (§6),
+  and the class says which kind it is.
 - A method name is not a guarantee, so the row is read. The string
   `QMC (continuous-time expansion)` on the six t-V instances does not say projector or
   finite temperature. VarBench's run files show ground-state projector LCT-INT runs with
   sign exactly 1; the gap to ED is 0.6-0.7 of their error bar. They are `exact (stochastic)`.
-  The one that sits 2.76 sigma above a DMRG bound (square, V = 4) is flagged and holds no
-  record. The classifier returns `null` for the string; the class is set per row in
+  The one that sits 2.76 sigma above a DMRG bound (square, V = 4) is flagged and is not shown
+  as the exact energy. The classifier returns `null` for the string; the class is set per row in
   `scripts/corrections.mjs`.
 - When in doubt, `null`. Bare `QMC` and `AFQMC` strings are unresolved: sign-problem-free
   (exact) and constrained-path (projected) are different classes and the string does not say.
@@ -121,36 +121,37 @@ Stored conventions follow VarBench and are asserted per instance, not per row:
 Any submitted number is converted by the loader, never by hand. The conventions of every
 model are listed in [DATA.md](DATA.md#units-and-conventions).
 
-## 6. Records and ties
+## 6. Best values and ties
 
-On a solved instance the record is the `exact` energy. Otherwise the record is the lowest
-energy of any other class (`variational`, `projected` or `extrapolated`), with or without an
-error bar, that is not flagged (§6.1). Every published result counts. An `approximate` row
-(§4) holds the record only where no unflagged row of another class exists. The `bound_type`
-beside the record says what kind of number holds it (§4). A record held by an extrapolation
-is an estimate of the ground-state energy; no state reached it.
+An instance has no single record. It shows its `exact` energy where it has one, then one best
+value per bound type: best variational, best projected, best extrapolated and best
+approximate (§4). The best value of a class is the lowest energy of that class, with or
+without an error bar, that is not flagged (§6.1, §6.2). Every published result counts.
+Energies of different classes are different claims (§4), so they are not ranked against each
+other, and each value is shown with its class. A best extrapolated value is an estimate of the
+ground-state energy; no state reached it. From 2026-10-08 an instance had one record, its exact
+energy or else the lowest unflagged energy of any class; since 2026-10-22 each class has its
+own best value.
 
-- On a solved instance the exact energy holds the record. The exact energy is the answer.
-  Every other row on the instance ranks behind it by its distance to it; the lowest of them
-  at or above it is the closest challenger. An extrapolation can overshoot the exact energy.
-  It then sits below the record and does not hold it.
-- Among several exact rows the most precise holds the record. Exact rows are estimates of
+- On a solved instance the exact energy is the answer and is shown first. The best value of
+  each other class is shown beside it, with its distance to it.
+- Among several exact rows the most precise is the exact energy shown. Exact rows are estimates of
   one number, so the lowest of them is not the best: exact diagonalization (no error bar)
   comes before sign-problem-free QMC, and a smaller error bar comes before a larger one. Two
   exact rows that disagree beyond their stated precision are a `defect` to raise on the row
   (§11).
-- Sector-resolved exact diagonalization holds the record only in the ground-state sector. A
+- Sector-resolved exact diagonalization is the exact energy only in the ground-state sector. A
   row such as `Exact Diagonalization 0.C1.A -1` states the lowest energy in one symmetry
   sector. That is the ground-state energy only if the sector is the ground state's. Case:
   `J1J2/triangular_48_P_0.125` carries all 48 sectors of Wietek et al. (PRX 14, 021010).
-  Their App. B names Γ.A1 (spin flip +1) as the ground state. That row holds the record. The
+  Their App. B names Γ.A1 (spin flip +1) as the ground state. That row is the exact energy. The
   other 47 are not rows: they are the instance's `spectrum`
   ([DATA.md](DATA.md#the-lowest-energy-of-each-symmetry-sector-spectrum)) and hold nothing.
   `groundStateExact` in `scripts/units.mjs` draws the line.
-- Rows whose error bars overlap at 2 sigma share the rank. A row without `sigma` is compared
-  by its energy alone.
+- Within a class, rows whose error bars overlap at 2 sigma share the rank: a row tied with its
+  class's best is marked as tied. A row without `sigma` is compared by its energy alone.
 - An error bar is asked for and is not required. A sampled row without `sigma` ranks and can
-  hold the record like any other row. Where `sigma` is given, the row must state how it was
+  be the best of its class like any other row. Where `sigma` is given, the row must state how it was
   estimated. An error bar that ignores autocorrelation can understate the error by about 10x,
   which changes ties. Report the blocking or binning analysis, or the raw chain.
 - A deterministic energy has no `sigma`. DMRG at a stated bond dimension, exact
@@ -183,14 +184,29 @@ is an estimate of the ground-state energy; no state reached it.
   `exact (stochastic)` rows are marked like other rows, and the validator requires their
   `sigma` (§9.4).
 
-### 6.1 A flagged row cannot hold a record
+### 6.1 A flagged row cannot be a best value
 
 A row carrying a `defect` is shown in rank order, in place, with its flag, and is skipped
-when the record is assigned. Suspicion is enough to withhold a record. It is never enough to
-hide or delete a row (§11). Section 10 is how a flag is lifted or upheld.
+when the best values are chosen. Suspicion is enough to withhold a best value. It is never
+enough to hide or delete a row (§11). Section 10 is how a flag is lifted or upheld.
 
-Reason: a number that is wrong downward looks like a record. Example: the three TFIsing
+Reason: a number that is wrong downward looks like a best value. Example: the three TFIsing
 `RBM (alpha = 1)` rows sit 3.8 to 10.4 sigma below an exact solution (§9).
+
+### 6.2 Below the exact energy
+
+On a solved instance, a `projected`, `extrapolated` or `approximate` row more than 2 sigma
+below the exact energy cannot be the best of its class. Sigma is the row's own, combined in
+quadrature with the exact row's where that row is stochastic. Where neither states one, the
+row is caught when its energy lies below the exact energy at all. These classes are not
+bounds, so such a row breaks no rule and carries no `defect`: the build sets the flag, and
+nothing is written on the row. The row stays listed with a marker, and the next row of its
+class that is not flagged is the best. A `variational` row below the exact energy violates the
+variational principle and is handled as before (§9.4, §11).
+Case: on `J1J2/square_36_P_0.45` the SU(2) DMRG extrapolation in the truncation error,
+−0.5156600 per site, sits 2.6 sigma below the exact −0.5156574. The zero-variance VMC
+extrapolation at the same energy states a larger error bar, lies within 2 sigma and is the
+best extrapolated.
 
 ## 7. Aggregate
 
@@ -284,16 +300,16 @@ Computed rows usually carry an energy variance, which the V-score needs and few 
 collected rows usually carry an error bar and no variance. The same ansatz recurs across many
 instances: exact diagonalization, `RBM (alpha = 1)` and `Jastrow baseline` most often.
 
-A baseline row is ranked like any other row: it can hold a record, and it is cited to the
+A baseline row is ranked like any other row: it can be the best of its class, and it is cited to the
 VarBench paper. The flag changes nothing about eligibility. It shows that no published number
 beats the reference run on that instance.
 
 QMBL's own runs carry `computed_by: "qmbl"` instead ([DATA.md](DATA.md#rows-qmbl-computed-computed_by)):
 reference calculations of the common ansätze on one machine under one protocol
 ([`checks/cost/`](checks/cost/README.md)), so the cost axes have points that are comparable
-across methods. The same reading and the same eligibility apply: the row ranks, can hold a
-record, and is cited to its run script, job and commit. A QMBL record means no published
-energy on that instance is lower.
+across methods. The same reading and the same eligibility apply: the row ranks, can be the
+best of its class, and is cited to its run script, job and commit. A QMBL best value means no
+published energy of that class on that instance is lower.
 
 ### 8.3 Unpublished results
 
@@ -431,11 +447,12 @@ Cases:
      too, so an energy below it is not evidence of error. No exact reference exists at 108
      sites. The refutation came from the sampler, so §10 admits non-ergodic sampling as its
      own ground.
-  2. The record is an extrapolation. No exact energy exists at 108 sites, the only
+  2. The only best value is an extrapolation. No exact energy exists at 108 sites, the only
      `variational` row is flagged, and the DMRG row is `extrapolated`: Depenbrock et al.
      state their energies are "extrapolated in the truncation error of single-site DMRG",
-     which lies below any energy an MPS achieved. The extrapolation holds the record (§6),
-     labelled as one. The flag keeps the refuted number from holding it.
+     which lies below any energy an MPS achieved. The extrapolation is the best extrapolated
+     value (§6), and the instance shows no best variational value. The flag keeps the refuted
+     number from being one.
   3. DMRG is not one `bound_type`. At a stated bond dimension it is a strict variational
      bound; extrapolated in the truncation error it is not. One sentence in the methods
      section decides the class.
@@ -577,7 +594,7 @@ Section 4 applies unchanged. The recurring cases:
     dropped or approximated makes the method `approximate` (§4);
   - a complete-basis-limit extrapolation, or one in the initiator threshold: `extrapolated`.
 - RPA, MP2 and channel-truncated coupled cluster are `approximate` (§4).
-- No method is `exact` in track 2 for now. Records follow §6.
+- No method is `exact` in track 2 for now. Best values follow §6.
 
 ### 12.5 Site
 

@@ -1,7 +1,7 @@
 # QMBL data
 
 What the files in `data/` contain and how to read them. The leaderboard is in
-[README.md](README.md); the rules that decide a record are in [RULES.md](RULES.md).
+[README.md](README.md); the rules that decide which values an instance shows are in [RULES.md](RULES.md).
 
 ## What is in the data
 
@@ -246,8 +246,9 @@ with more than two libraries, the first two and "+N".
 never supplied. `verified` records where the number was read and how. `defect` appears on a
 flagged row and carries the reason.
 
-A missing field does not exclude a row. [RULES.md §6](RULES.md#6-records-and-ties) and
-[§6.1](RULES.md#61-a-flagged-row-cannot-hold-a-record) decide which rows can hold a record.
+A missing field does not exclude a row. [RULES.md §6](RULES.md#6-best-values-and-ties),
+[§6.1](RULES.md#61-a-flagged-row-cannot-be-a-best-value) and [§6.2](RULES.md#62-below-the-exact-energy)
+decide which rows can be the best of their class.
 
 ## What a number cost: the `compute` block
 
@@ -664,7 +665,7 @@ off its rows at build time, so it cannot disagree with the page.
 
 Per instance, not per row. A diagonalization resolved by symmetry sector states the lowest
 energy in each sector, and only the ground state's sector is a ground-state energy: that row
-stays a row and holds the record, and the minima of the other sectors are the instance's
+stays a row and is the instance's exact energy, and the minima of the other sectors are the instance's
 `spectrum`. One instance has one:
 `J1J2/triangular_48_P_0.125`, whose 48 sectors of the S<sup>z</sup> = 0 space come from
 Wietek et al. (PRX 14, 021010), App. B naming Γ.A1 (spin flip +1) the ground state. One of
@@ -682,7 +683,7 @@ its 47 entries, the compute block cut:
 ```
 
 Spectrum entries are not results. Each entry is the full row, lowest energy first. Entries
-hold no record, are not drawn and are not counted in `rows`. `data/_summary.json` counts them
+are never a shown value, are not drawn and are not counted in `rows`. `data/_summary.json` counts them
 as `spectrum_entries`. The validator requires each entry to be exact and to name its sector,
 and no entry to lie below the ground state. An instance with no ground-state row keeps its
 sector rows as rows, and the validator reports them.
@@ -737,7 +738,7 @@ bar, the variance or the checkpoint removes the marker.
 
 Whether a row's energy is a Monte Carlo estimate decides whether a missing `sigma` is a
 missing error bar (the &dagger; marker above; the Contribute page counts these rows).
-[RULES.md §6](RULES.md#6-records-and-ties) says how such a row ranks.
+[RULES.md §6](RULES.md#6-best-values-and-ties) says how such a row ranks.
 
 - Where a reader established it from the source, the row carries `sampled: true` or `false`,
   set in [`scripts/corrections.mjs`](scripts/corrections.mjs) with the evidence. The verdict

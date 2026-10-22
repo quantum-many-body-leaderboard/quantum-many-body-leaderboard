@@ -51,7 +51,7 @@ Many sampled energies are listed without an error bar (marked &dagger;), because
 source gives none. If you know it, send it with the row's pencil (above), with the value and
 how it was estimated.
 With an error bar, results that agree within it share a rank
-([RULES.md §6](RULES.md#6-records-and-ties)).
+([RULES.md §6](RULES.md#6-best-values-and-ties)).
 
 GPU or CPU hours with the device, parameter count, samples, iterations and wall-clock time
 feed the cost figures ([format](DATA.md#what-a-number-cost-the-compute-block)). Say where

@@ -5,8 +5,8 @@ None of the issues on this page has been reported upstream.
 The issues below are in the VarBench snapshot vendored at `vendor/varbench` (commit
 `390a21ea`, 2024-10-22). Each was still present on VarBench `main` when checked. QMBL never edits an imported row: the
 issue is attached to the row as a `defect` in `scripts/defects.mjs`
-([RULES.md §11](RULES.md#11-corrections)), and a flagged row cannot hold a record
-([RULES.md §6.1](RULES.md#61-a-flagged-row-cannot-hold-a-record)).
+([RULES.md §11](RULES.md#11-corrections)), and a flagged row cannot be the best of its class
+([RULES.md §6.1](RULES.md#61-a-flagged-row-cannot-be-a-best-value)).
 
 | instance (VarBench file) | row | issue | in QMBL |
 |---|---|---|---|
