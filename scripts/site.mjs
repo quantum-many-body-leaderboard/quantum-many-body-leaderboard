@@ -1,7 +1,7 @@
 // Build the read-only site at qmbl.org into _site/.
 //
 // Generated from data/ by the same modules the README is generated from: units.mjs for
-// every conversion, summary.mjs for what a record is, readme_table.mjs for how an
+// every conversion, summary.mjs for which values an instance shows, readme_table.mjs for how an
 // instance is named and how a number is quoted, so the site and the README show the same numbers.
 //
 // The figures on the front page are the committed figures/*.svg, drawn by size_accuracy.mjs
@@ -16,8 +16,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { perSiteDivisor, perSiteLabel, recordEligible, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail } from "./units.mjs";
-import { collect, recordOf, summarize, rowId } from "./summary.mjs";
+import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES } from "./units.mjs";
+import { collect, classBest, shownBest, bestTagOf, summarize, rowId } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
@@ -174,7 +174,9 @@ const yearOf = r => paperYear(r, cache);
 // The year column: a paper's year, or for QMBL's own runs the year the run finished.
 const yearCell = r => (r.computed_by === "qmbl" || r.provenance === "unpublished" ? +(r.verified?.checked_on || "").slice(0, 4) || null : yearOf(r));
 
-const BOUND_ORDER = ["variational", "projected", "extrapolated", "approximate", "exact", null];
+// The order every list of an instance's rows follows: the exact energy first, then the classes
+// as their best values are shown (RULES.md 6), unclassified rows last.
+const BOUND_ORDER = ["exact", "variational", "projected", "extrapolated", "approximate", null];
 const BOUND_LABEL = {
   variational: "Strict variational upper bounds",
   projected: "Projected or fixed-node estimates",
@@ -187,8 +189,8 @@ const BOUND_NOTE = {
   variational: "Energies that a variational state reached (VMC, DMRG and MPS at finite bond dimension, PEPS, NQS, VQE). Each is an upper bound on the ground-state energy.",
   projected: "Variational only within a constraint: fixed-node, constrained-path, GFMC on a trial state. Each depends on its node or constraint, so two of them are not cleanly comparable to each other or to strict bounds.",
   extrapolated: "Zero-variance or bond-dimension extrapolations. These are not bounds: no ansatz reached the number.",
-  approximate: "Methods that converge to a fixed approximation and not to the exact energy: RPA, finite-order perturbation theory, coupled cluster restricted to some of its terms. Their error has no known sign, so one holds the record only where no other unflagged energy is published (rules &sect;4).",
-  exact: "Exact diagonalization, an exact solution, or sign-problem-free QMC where that is established. An exact energy is the record. QMC is exact only within its error bar, which it must state, and reads exact (stochastic); an exact diagonalization outranks it. For a diagonalization resolved by symmetry sector only the ground state's sector is listed; the lowest energies of the other sectors are the instance's spectrum, in its JSON, and hold no record.",
+  approximate: "Methods that converge to a fixed approximation and not to the exact energy: RPA, finite-order perturbation theory, coupled cluster restricted to some of its terms. Their error has no known sign, so they are compared only with each other (rules &sect;4).",
+  exact: "Exact diagonalization, an exact solution, or sign-problem-free QMC where that is established. An exact energy is shown first, before the best of each other class. QMC is exact only within its error bar, which it must state, and reads exact (stochastic); an exact diagonalization outranks it. For a diagonalization resolved by symmetry sector only the ground state's sector is listed; the lowest energies of the other sectors are the instance's spectrum, in its JSON, and are not shown as the exact energy.",
   null: "The method string does not say whether the energy is sign-problem-free or constrained, so no bound_type could be assigned without guessing.",
 };
 
@@ -202,7 +204,7 @@ function perSite(row, inst) {
 // owns that convention; this only feeds it the converted numbers.
 const quoteRow = (row, inst) => quote(perSite(row, inst).energy, perSite(row, inst).sigma);
 
-// `decimals` forces a challenger to be quoted at the record's precision, so the two are
+// `decimals` forces a row to be quoted at the precision of its class's best, so the two are
 // readable against each other.
 function energyCell(row, inst, decimals) {
   const { energy, sigma } = perSite(row, inst);
@@ -231,9 +233,23 @@ const FLAGS = {
   "sampling-nonergodic": ["non-ergodic sampling", "The Monte Carlo chains did not sample ergodically, so the low energy is a sampling artifact."],
   "trace-readout": ["read off a training trace", "The energy is read off an optimisation trace, with no separate converged measurement or variance. Its error bar covers sampling only."],
   "sigma-understated": ["error bar understated", "The printed error bar is the standard error of a resampling mean, not the uncertainty of the energy."],
-  "exact-above-variational-bound": ["above a variational bound", "This exact (stochastic) energy sits above a variational upper bound by more than its error bar explains, so the bar is understated; the bound keeps the record."],
+  "exact-above-variational-bound": ["above a variational bound", "This exact (stochastic) energy sits above a variational upper bound by more than its error bar explains, so the bar is understated and the row is not shown as the exact energy."],
 };
 const flagLabel = r => FLAGS[r.defect.flag]?.[0] ?? r.defect.flag;
+
+// What marks a row in a list of the instance's rows (RULES.md 6): the label of a value the
+// instance shows ("exact", "best projected"), a tie with its class's best at 2 sigma, or the
+// automatic flag of a non-bound more than 2 sigma below the exact energy (6.2), which is drawn
+// like a flag although it is not a defect on the row.
+const BELOW_EXACT = ["below exact by &gt; 2&sigma;", "This energy is not a bound and lies more than 2 sigma below the exact energy, so it cannot be the best of its class (rules §6.2). It is not a defect on the row."];
+const belowBadge = () => `<span class="badge flag" title="${esc(BELOW_EXACT[1])}">${BELOW_EXACT[0]}</span>`;
+const isBelow = (inst, r) => classBest(inst).below.includes(r);
+function bestTag(inst, r) {
+  const tag = bestTagOf(inst, r), tie = classBest(inst).ties.get(r);
+  return tag ? `<span class="tag">${tag === "exact" ? boundLabel(r) : tag}</span>`
+    : tie ? `<span class="tag tie">tied with best ${tie} at 2&sigma;</span>` : "";
+}
+const rowClass = (inst, r) => [bestTagOf(inst, r) && "is-best", (r.defect || isBelow(inst, r)) && "is-flagged"].filter(Boolean).join(" ");
 const flagBadge = r => {
   const why = FLAGS[r.defect.flag]?.[1];
   return `<span class="badge flag"${why ? ` title="${esc(why)}"` : ""}>${esc(flagLabel(r))}</span>`;
@@ -484,8 +500,8 @@ const ENERGY_FIGS = [...Map.groupBy(energyFigures(instances)
   .filter(f => fs.existsSync(`figures/${f.group === "other" ? f.name : f.stops[0].name}.svg`)), f => f.group)];
 const otherEntry = f => [f.name, f.title, "Energies on Hamiltonians published at one size, with the coupling or filling that differs between them along x."];
 const stopEntry = (f, facet, s) => [s.name, [f.title, facet.label, f.axis && `${f.axis} = ${s.label}`].filter(Boolean).join(", "),
-  "Energy against the number of sites. Colour shows the bound type; the line joins the record at each size."];
-const stripEntry = f => [f.strip, `${f.title}: the record at each ${f.axis} and size`,
+  "Energy against the number of sites. Colour shows the bound type; the line joins the lowest energy at each size, the exact one where there is one."];
+const stripEntry = f => [f.strip, `${f.title}: the lowest energy at each ${f.axis} and size`,
   "One line per size, darker for larger sizes. The number over each stop is its count of energies; the marked stop is shown below."];
 
 // Every slider on the page with its id, so that the HTML and the stylesheet agree.
@@ -605,7 +621,7 @@ ${svg}
 function rowCard(r, inst) {
   return `<b>${esc(modelName(inst.model))} ${esc(instanceLabel(inst))}</b>
 <span>${esc(shorten(methodLabel(r), 90))}</span>
-<span class="e">${energyCell(r, inst)} <span class="muted">${perSiteLabel(inst)} &middot; ${boundLabel(r)}</span>${r.defect ? ` ${flagBadge(r)}` : ""}${recordOf(inst) === r ? '<span class="tag">record</span>' : ""}</span>
+<span class="e">${energyCell(r, inst)} <span class="muted">${perSiteLabel(inst)} &middot; ${boundLabel(r)}</span>${r.defect ? ` ${flagBadge(r)}` : ""}${isBelow(inst, r) ? ` ${belowBadge()}` : ""}${bestTag(inst, r)}</span>
 <span class="muted">${cardSource(r)}</span>`;
 }
 const cardSource = r => { const c = citeRef(r, cache); return esc([c.text, c.also?.text, c.note].filter(Boolean).join(", ")); };
@@ -730,13 +746,13 @@ ${FIG_SCRIPT}
 </section>`;
   return page({
     url: "/", title: null, body, wide: true, jsonld: datasetLd(),
-    description: `Published ground-state energies for ${summary.instances} Hamiltonian instances, with the record on each, every row citing its primary paper.`,
+    description: `Published ground-state energies for ${summary.instances} Hamiltonian instances, with the exact energy and the best of each bound type on each, every row citing its primary paper.`,
   });
 }
 
 // ------------------------------------------------------------------------ browse page
-// A row is the instance and its record; clicking it opens every energy published for it
-// below, in rank order. The instance page keeps its stable URL for search engines, llms.txt
+// An instance is its exact energy and the best of each bound type, one line each; clicking it
+// opens every energy published for it below, by class. The instance page keeps its stable URL for search engines, llms.txt
 // and the API and is not linked from here; the JSON is.
 
 // The badge families: the lattice name without its cell spec (kagome-36a -> kagome), and
@@ -872,7 +888,7 @@ function searchIndex(inst, name) {
     }
   }
   if (inst.model === "Impurity") for (const [re, words] of IMPURITY_WORDS) if (re.test(inst.lattice)) add(words);
-  if (!recordOf(inst)) add("no record");
+  if (!shownBest(inst).length) add("no best value");
   const methods = new Set(inst.rows.map(r => {
     // The method, ansatz and detail, and the string as published, so a search for a paper's
     // own spelling ("HB K=1", "Exact Diagonalization") still finds the row.
@@ -888,32 +904,40 @@ function searchIndex(inst, name) {
 }
 
 
-// Distance to the record, per site: 0 on the record, the gap to it for an unflagged row of
-// any kind but exact, n/a elsewhere. A row below the record (an extrapolation that overshoots
-// an exact energy) shows a negative distance. The Table's opened row and the instance page use it.
+// The row this one is measured against: the best of its class, or for an exact row the exact
+// energy the instance shows. Null for a flagged or unclassified row, and where the class has
+// no best.
+const classRef = (inst, r) => r.defect || !r.bound_type ? null : classBest(inst)[r.bound_type] ?? null;
+
+// Distance to the best of the row's class, per site: 0 on the best, the gap to it for an
+// unflagged row of that class, n/a elsewhere. A row below the best (one the automatic flag
+// passes over, RULES.md 6.2) shows a negative distance. Classes are different claims and are
+// not measured against each other. The Table's opened row and the instance page use it.
 function distanceCell(r, inst) {
-  const rec = recordOf(inst);
-  if (r === rec) return "0";
-  if (!rec || !recordEligible(r)) return '<span class="muted">n/a</span>';
-  const f = perSiteDivisor(inst) ?? 1, decimals = quoteRow(rec, inst).decimals;
-  if (r.energy < rec.energy) return esc(`−${gapAbove(r, rec, f, decimals).replace(/^\+/, "")}`);
-  return esc(gapAbove(rec, r, f, decimals).replace(/^\+/, ""));
+  const ref = classRef(inst, r);
+  if (r === ref) return "0";
+  if (!ref) return '<span class="muted">n/a</span>';
+  const f = perSiteDivisor(inst) ?? 1, decimals = quoteRow(ref, inst).decimals;
+  if (r.energy < ref.energy) return esc(`−${gapAbove(r, ref, f, decimals).replace(/^\+/, "")}`);
+  return esc(gapAbove(ref, r, f, decimals).replace(/^\+/, ""));
 }
 
-// Every row of the instance, the record marked, with sigma and the distance to the record.
-// Var(E) and the V-score are on the instance page; the method detail shows on hover.
+// An instance's rows in the order the lists print them: by class (BOUND_ORDER), then energy.
+const byClass = inst => BOUND_ORDER.flatMap(b => inst.rows.filter(r => (r.bound_type ?? null) === b).sort((x, y) => x.energy - y.energy));
+
+// Every row of the instance by class, the shown values marked, with sigma and the distance to
+// the best of the row's class. Var(E) and the V-score are on the instance page; the method detail
+// shows on hover.
 function allRows(inst) {
-  const rec = recordOf(inst);
-  const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
-  const decimals = rec ? quoteRow(rec, inst).decimals : null;
-  const rows = sorted.map(r => {
-    const isRec = r === rec;
+  const shown = shownBest(inst).length > 0;
+  const rows = byClass(inst).map(r => {
+    const ref = classRef(inst, r), isBest = r === ref;
     const { sigma } = perSite(r, inst);
-    return `<tr id="${rowId(inst, r)}" class="${isRec ? "is-record" : ""}${r.defect ? " is-flagged" : ""}">
-      <td class="record">${isRec || decimals == null ? bareEnergyCell(r, inst) : energyCell(r, inst, decimals)}${isRec ? '<span class="tag">record</span>' : ""}</td>
+    return `<tr id="${rowId(inst, r)}" class="${rowClass(inst, r)}">
+      <td class="record">${isBest || !ref ? bareEnergyCell(r, inst) : energyCell(r, inst, quoteRow(ref, inst).decimals)}${bestTag(inst, r)}</td>
       <td class="num">${distanceCell(r, inst)}</td>
       <td class="num">${sigma == null ? '<span class="muted">n/a</span>' : sigma.toExponential(1)}</td>
-      <td><span class="badge">${boundLabel(r)}</span>${r.defect ? ` ${flagBadge(r)}` : ""}</td>
+      <td><span class="badge">${boundLabel(r)}</span>${r.defect ? ` ${flagBadge(r)}` : ""}${isBelow(inst, r) ? ` ${belowBadge()}` : ""}</td>
       <td>${methodCell(r)}</td>
       <td>${citeHtml(r)}</td>
       <td class="code">${codeHtml(r)}</td>
@@ -921,34 +945,37 @@ function allRows(inst) {
       ${editCell(r, inst)}
     </tr>`;
   }).join("");
-  return `${rec ? "" : `
-    <p class="muted">No record: ${esc(noRecordReason(inst))}.</p>`}
-    <table class="next"><thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>bound type</th><th>method</th><th>source</th><th>code</th><th>year</th><th><span class="sr">comment</span></th></tr></thead><tbody>${rows}</tbody></table>
+  return `${shown ? "" : `
+    <p class="muted">No best value: ${esc(noRecordReason(inst))}.</p>`}
+    <table class="next"><thead><tr><th>${perSiteLabel(inst)}</th><th>distance to class best</th><th>&sigma;</th><th>bound type</th><th>method</th><th>source</th><th>code</th><th>year</th><th><span class="sr">comment</span></th></tr></thead><tbody>${rows}</tbody></table>
     <p class="links"><a href="${jsonUrl(inst)}">JSON</a><a href="${REPO}/issues/new?template=new-result.yml&amp;instance=${encodeURIComponent(inst.instance_id)}">add a result</a></p>`;
 }
 
-// The Table's energy column: the record, or on an instance without one the lowest unflagged
-// row, else the lowest row. Whether it is a record, and why not, shows when the row opens.
-function bestRow(inst) {
-  const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
-  return sorted.find(r => !r.defect) ?? sorted[0];
+// The Table's lines for an instance: its exact energy and the best of each bound type
+// (shownBest), or on an instance with none of them its lowest row, labelled "none" so it is not
+// read as a best value. Why there is none shows when the instance opens.
+function tableLines(inst) {
+  const shown = shownBest(inst).map(([tag, r]) => [tag === "exact" ? boundLabel(r) : tag, r]);
+  return shown.length ? shown : [["none", [...inst.rows].sort((a, b) => a.energy - b.energy)[0]]];
 }
 
 function instancesPage() {
   const sections = MODELS.map(([model, name]) => {
     const group = instances.filter(i => i.model === model).sort(byGeometry);
     if (!group.length) return "";
+    // One tbody per instance: a line per value it shows, the name and the count spanning
+    // them, and the opened rows last.
     const rows = group.map(inst => {
-      const rec = recordOf(inst);
       const label = instanceLabel(inst);
       const search = searchIndex(inst, name);
-      const shown = rec ?? bestRow(inst);
-      const cells = `<td class="record">${energyCell(shown, inst)}</td><td>${methodCell(shown)}</td><td>${citeHtml(shown)}</td><td class="code">${codeHtml(shown)}</td>`;
+      const lines = tableLines(inst);
       const id = `x-${inst.instance_id.replace(/[^\w-]/g, "_")}`;
-      return `<tr class="inst" data-search="${esc(search.own)}" data-methods="${esc(search.methods)}" data-lattice="${esc(latticeOf(inst))}" data-size="${sizeBand(inst)}">
-        <th scope="row"><button type="button" aria-expanded="false" aria-controls="${id}">${esc(label)}</button></th>
-        ${cells}<td class="num">${inst.rows.length}</td></tr>
-      <tr class="more" id="${id}" hidden><td colspan="6">${allRows(inst)}</td></tr>`;
+      const span = lines.length > 1 ? ` rowspan="${lines.length}"` : "";
+      const tr = lines.map(([tag, r], k) => `<tr class="line${k === lines.length - 1 ? " last" : ""}">${k ? "" : `
+        <th scope="row" class="span"${span}><button type="button" aria-expanded="false" aria-controls="${id}">${esc(label)}</button></th>`}
+        <td class="kind">${tag}</td><td class="record">${energyCell(r, inst)}</td><td>${methodCell(r)}</td><td>${citeHtml(r)}</td><td class="code">${codeHtml(r)}</td>${k ? "" : `<td class="num span"${span}>${inst.rows.length}</td>`}</tr>`).join("");
+      return `<tbody class="inst" data-search="${esc(search.own)}" data-methods="${esc(search.methods)}" data-lattice="${esc(latticeOf(inst))}" data-size="${sizeBand(inst)}">${tr}
+      <tr class="more" id="${id}" hidden><td colspan="7">${allRows(inst)}</td></tr></tbody>`;
     });
     const lattices = [...new Set(group.map(latticeOf))].sort();
     const bands = SIZE_BANDS.filter(([key]) => group.some(i => sizeBand(i) === key));
@@ -961,8 +988,8 @@ function instancesPage() {
       <p class="muted"><span class="count">${group.length} instances</span>, energies as <code>${perSiteLabel(group[0])}</code></p>
       ${badges}
       <div class="scroll"><table class="leaderboard">
-        <thead><tr><th>instance</th><th>energy</th><th>method</th><th>source</th><th>code</th><th>energies</th></tr></thead>
-        <tbody>${rows.join("")}</tbody></table></div>
+        <thead><tr><th>instance</th><th>value</th><th>energy</th><th>method</th><th>source</th><th>code</th><th>energies</th></tr></thead>
+        ${rows.join("")}</table></div>
     </section>`;
   }).join("\n");
 
@@ -977,13 +1004,13 @@ ${sections}
 const box = document.getElementById("filter");
 const count = document.getElementById("filter-count");
 const sections = [...document.querySelectorAll("section[data-model]")];
-const total = document.querySelectorAll("tr.inst").length;
+const total = document.querySelectorAll("tbody.inst").length;
 
 // The words of the text box against each instance's index; see searchIndex in scripts/site.mjs.
 const searchWords = ${searchWords};
 const searchMatch = ${searchMatch};
 const STOP = new Set(${JSON.stringify(SEARCH_STOP)});
-const index = new Map([...document.querySelectorAll("tr.inst")].map(row => {
+const index = new Map([...document.querySelectorAll("tbody.inst")].map(row => {
   const own = row.dataset.search.split(" ");
   return [row, row.dataset.methods ? row.dataset.methods.split("|").map(m => own.concat(m.split(" "))) : [own]];
 }));
@@ -999,14 +1026,14 @@ function apply() {
     const outside = model && section.dataset.model !== model;
     const lattice = section.querySelector(".quick button[data-lattice].on")?.dataset.lattice;
     const size = section.querySelector(".quick button[data-size].on")?.dataset.size;
-    const rows = [...section.querySelectorAll("tr.inst")];
+    const rows = [...section.querySelectorAll("tbody.inst")];
     let n = 0;
     for (const row of rows) {
       const hit = !outside && (!words.length || searchMatch(index.get(row), words))
         && (!lattice || row.dataset.lattice === lattice)
         && (!size || row.dataset.size === size);
       row.hidden = !hit;
-      const more = row.nextElementSibling;
+      const more = row.querySelector("tr.more");
       if (!hit) { more.hidden = true; row.querySelector("button").setAttribute("aria-expanded", "false"); }
       if (hit) n++;
     }
@@ -1024,9 +1051,9 @@ for (const b of document.querySelectorAll(".quick button")) b.addEventListener("
   if (!on) b.classList.add("on");
   apply();
 });
-for (const row of document.querySelectorAll("tr.inst")) row.addEventListener("click", e => {
-  if (e.target.closest("a")) return;
-  const more = row.nextElementSibling;
+for (const row of document.querySelectorAll("tbody.inst")) row.addEventListener("click", e => {
+  if (e.target.closest("a") || e.target.closest("tr.more")) return;
+  const more = row.querySelector("tr.more");
   more.hidden = !more.hidden;
   row.querySelector("button").setAttribute("aria-expanded", String(!more.hidden));
   row.classList.toggle("open", !more.hidden);
@@ -1037,7 +1064,7 @@ for (const row of document.querySelectorAll("tr.inst")) row.addEventListener("cl
 function reveal() {
   const row = location.hash.startsWith("#r-") && document.getElementById(location.hash.slice(1));
   if (!row) return;
-  const more = row.closest("tr.more"), inst = more.previousElementSibling;
+  const more = row.closest("tr.more"), inst = more.closest("tbody.inst");
   if (inst.hidden) {
     box.value = "";
     for (const on of document.querySelectorAll(".quick button.on")) on.classList.remove("on");
@@ -1057,17 +1084,17 @@ addEventListener("load", reveal);
 reveal();
 </script>`;
   return page({ url: "/instances/", title: "Table", body, wide: true,
-    description: `Every Hamiltonian instance in QMBL: ${summary.instances} instances across ${MODELS.filter(([m]) => instances.some(i => i.model === m)).length} models, with the record energy and method for each.` });
+    description: `Every Hamiltonian instance in QMBL: ${summary.instances} instances across ${MODELS.filter(([m]) => instances.some(i => i.model === m)).length} models, with the exact energy and the best of each bound type for each.` });
 }
 
 // ---------------------------------------------------------------------- instance page
 function rowTable(rows, inst) {
-  const head = `<thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>Var(E)</th><th>V-score</th>
+  const head = `<thead><tr><th>${perSiteLabel(inst)}</th><th>distance to class best</th><th>&sigma;</th><th>Var(E)</th><th>V-score</th>
     <th>method</th><th>source</th><th>code</th><th>year</th><th><span class="sr">comment</span></th></tr></thead>`;
   const body = rows.map(r => {
-    const rec = recordOf(inst) === r;
     const badges = [
       r.defect ? flagBadge(r) : "",
+      isBelow(inst, r) ? belowBadge() : "",
       r.baseline ? '<span class="badge">VarBench reference run</span>' : "",
       r.computed_by === "qmbl" ? '<span class="badge">QMBL run</span>' : "",
       r.provenance === "secondary" ? '<span class="badge">quoted from another paper</span>' : "",
@@ -1077,8 +1104,8 @@ function rowTable(rows, inst) {
       r.submitted_by?.system ? `<span class="badge">submitted by ${esc(r.submitted_by.system)}${r.submitted_by.human_checked ? ", checked by a person" : ""}</span>` : "",
     ].filter(Boolean).join(" ");
     const { sigma } = perSite(r, inst);
-    return `<tr id="${rowId(inst, r)}" class="${rec ? "is-record" : ""}${r.defect ? " is-flagged" : ""}">
-      <td class="record">${bareEnergyCell(r, inst)}${rec ? '<span class="tag">record</span>' : ""}</td>
+    return `<tr id="${rowId(inst, r)}" class="${rowClass(inst, r)}">
+      <td class="record">${bareEnergyCell(r, inst)}${bestTag(inst, r)}</td>
       <td class="num">${distanceCell(r, inst)}</td>
       <td class="num">${sigma == null ? '<span class="muted">n/a</span>' : sigma.toExponential(1)}</td>
       <td class="num">${r.energy_variance == null ? '<span class="muted">n/a</span>' : r.energy_variance.toExponential(2)}</td>
@@ -1097,7 +1124,7 @@ const modelName = model => MODELS.find(([m]) => m === model)?.[1] ?? model;
 
 function instancePage(inst) {
   const label = `${modelName(inst.model)} ${instanceLabel(inst)}`;
-  const rec = recordOf(inst);
+  const shown = shownBest(inst);
   const ham = hamiltonian(inst);
   const variant = variantNote(inst), relabel = relabelNote(inst);
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
@@ -1129,23 +1156,28 @@ function instancePage(inst) {
       ${r.verified.note ? `<p>${esc(r.verified.note)}</p>` : ""}
     </details>`).join("");
 
-  const recordBox = rec
-    ? `<div class="record-box">
-        <p class="eyebrow">Record</p>
-        <p class="big"><span class="num">${quoteRow(rec, inst).text}</span>
-          <span class="unit">${perSiteLabel(inst)}</span></p>
-        <p>${methodCell(rec)}</p>
-        <p class="muted">${citeHtml(rec)} &middot; ${rec.bound_type === "exact"
-          ? stochasticExact(rec)
-            ? "exact (stochastic) energy: sign-problem-free QMC, exact within its error bar"
-            : "exact energy: the instance is solved"
-          : `lowest unflagged energy published, ${{ variational: "a strict variational bound", projected: "a projected estimate", extrapolated: "an extrapolation, not a bound", approximate: "an approximate method, the only kind published here" }[rec.bound_type]}`}
-          (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>)</p>
+  // The values the instance shows (RULES.md 6), one line each: the exact energy first, then
+  // the best of each bound type, each with what kind of number it is.
+  const WHAT = {
+    variational: "a strict variational bound", projected: "a projected estimate, which depends on its node or constraint",
+    extrapolated: "an extrapolation, not a bound", approximate: "an approximate method, whose error has no known sign",
+  };
+  const bestBox = shown.length
+    ? `<div class="best-box">
+        <p class="eyebrow">${shown[0][0] === "exact" ? "Exact energy and best values" : "Best values"}
+          (<a href="${RULES}#6-best-values-and-ties">rules &sect;6</a>)</p>
+        <table class="best"><tbody>${shown.map(([tag, r]) => `<tr>
+          <th scope="row">${tag === "exact" ? boundLabel(r) : tag}</th>
+          <td class="num big">${quoteRow(r, inst).text}</td>
+          <td>${methodCell(r)}<div class="muted">${citeHtml(r)} &middot; ${r.bound_type === "exact"
+            ? stochasticExact(r) ? "sign-problem-free QMC, exact within its error bar" : "the instance is solved"
+            : `the lowest unflagged ${r.bound_type} energy, ${WHAT[r.bound_type]}`}</div></td></tr>`).join("")}</tbody></table>
+        <p class="muted">Energies as <code>${perSiteLabel(inst)}</code>. Classes are different claims and are not ranked against each other.</p>
       </div>`
-    : `<div class="record-box none">
-        <p class="eyebrow">No record</p>
+    : `<div class="best-box none">
+        <p class="eyebrow">No best value</p>
         <p class="big">&mdash;</p>
-        <p>${esc(noRecordReason(inst))} (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>).
+        <p>${esc(noRecordReason(inst))} (<a href="${RULES}#6-best-values-and-ties">rules &sect;6</a>).
         Every row is still listed below.</p>
       </div>`;
 
@@ -1156,7 +1188,7 @@ function instancePage(inst) {
 <p class="crumbs"><a href="/instances/">All instances</a> / <a href="/instances/#${inst.model.toLowerCase()}">${esc(modelName(inst.model))}</a></p>
 <h1>${esc(label)}</h1>
 
-${recordBox}
+${bestBox}
 
 <section class="hamiltonian">
   <h2>The Hamiltonian</h2>
@@ -1181,12 +1213,12 @@ ${recordBox}
 
 <section>
   <h2>Every published energy</h2>
-  <p>Grouped by what the number is. On a solved instance the exact energy is the record; otherwise the lowest unflagged energy of any group holds it (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>).</p>
+  <p>Grouped by what the number is. The exact energy comes first where there is one; in every other group the lowest unflagged energy is its best value, and each row's distance is to that best (<a href="${RULES}#6-best-values-and-ties">rules &sect;6</a>).</p>
   ${groups}
 </section>
 
 ${flagged ? `<section><h2>Flagged rows</h2>
-  <p>A flagged row stays listed in rank order but cannot hold the record.
+  <p>A flagged row stays listed in rank order but cannot be the best of its class.
   <a href="${RULES}#10-review-and-objections">Rules &sect;10</a> says how a flag is lifted or upheld.</p>
   ${flagged}</section>` : ""}
 
@@ -1207,7 +1239,7 @@ ${verified ? `<section><h2>How these numbers were read</h2>
      <a href="${REPO}/issues/new?title=${encodeURIComponent(`[${inst.instance_id}] `)}">open an issue about this instance</a></p>
 </section>`;
 
-  const recText = rec ? `Record ${quoteRow(rec, inst).text} ${perSiteLabel(inst)} by ${shorten(methodLabel(rec), 40)}.` : "No row currently holds the record.";
+  const recText = shown.length ? `${shown.map(([tag, r]) => `${tag === "exact" ? "Exact" : tag[0].toUpperCase() + tag.slice(1)} ${quoteRow(r, inst).text} by ${shorten(methodLabel(r), 40)}`).join("; ")} (${perSiteLabel(inst)}).` : "No row is shown as a best value.";
   return page({ url: instUrl(inst), title: `Ground-state energy, ${label}`, body, wide: true,
     description: `${label}: ${inst.rows.length} published ground-state energies. ${recText}` });
 }
@@ -1235,7 +1267,7 @@ function contributePage() {
   <li>If you know an error bar we could not find, tell us. ${b.rows} sampled energies on ${b.instances}
   instances are listed without one, because the source we read gives none. They rank like
   any other row; with an error bar, results that agree within it share a rank
-  (<a href="${RULES}#6-records-and-ties">rules &sect;6</a>).</li>
+  (<a href="${RULES}#6-best-values-and-ties">rules &sect;6</a>).</li>
   <li>To object to a row, open an issue on a technical ground, for example a wrong symmetry sector,
   a misdeclared <code>bound_type</code> or an error bar with no autocorrelation correction.
   <a href="${RULES}#10-review-and-objections">Rules &sect;10</a> lists the grounds and gives the process.</li>
@@ -1247,7 +1279,7 @@ function contributePage() {
   <a href="/#energy-vs-compute">estimate a FLOP count</a> where no hours are stated.</li>
 </ul>`;
   return page({ url: "/contribute/", title: "Contribute", body,
-    description: "How to correct a row, add a published result, supply a missing error bar, or object to a record in QMBL." });
+    description: "How to correct a row, add a published result, supply a missing error bar, or object to a row in QMBL." });
 }
 
 function notFoundPage() {
@@ -1266,18 +1298,21 @@ function notFoundPage() {
 
 // ------------------------------------------------------------------------ machine api
 function apiInstance(inst) {
-  const rec = recordOf(inst);
+  const b = classBest(inst);
   const f = perSiteDivisor(inst);
+  const value = r => r ? {
+    energy: r.energy, sigma: r.sigma, method: r.method, ansatz: r.ansatz ?? null, method_detail: r.method_detail, reference: r.reference,
+    bound_type: r.bound_type, energy_per_site: f == null ? null : r.energy / f,
+  } : null;
   return {
     ...inst,
     url: `https://qmbl.org${instUrl(inst)}`,
     per_site_divisor: f,
     per_site_label: perSiteLabel(inst),
-    record: rec ? {
-      energy: rec.energy, sigma: rec.sigma, method: rec.method, ansatz: rec.ansatz ?? null, method_detail: rec.method_detail, reference: rec.reference,
-      bound_type: rec.bound_type, energy_per_site: f == null ? null : rec.energy / f,
-    } : null,
-    no_record_reason: rec ? null : noRecordReason(inst),
+    // RULES.md 6: the exact energy and the best of each bound type, each null where absent;
+    // below_exact lists the rows the automatic flag passes over (6.2).
+    best: { exact: value(b.exact), ...Object.fromEntries(BEST_CLASSES.map(c => [c, value(b[c])])), below_exact: b.below.map(value) },
+    no_best_reason: shownBest(inst).length ? null : noRecordReason(inst),
   };
 }
 
@@ -1285,15 +1320,16 @@ function llmsTxt() {
   const lines = [
     "# QMBL: the Quantum Many-Body Leaderboard",
     "",
-    `> The best published ground-state energies for ${summary.instances} Hamiltonian instances (${summary.rows} energies, ${summary.records.held} with a record, ${summary.records.held_by_exact} of them solved exactly). Read-only, generated from the repository's data/ directory, Apache-2.0.`,
+    `> The best published ground-state energies for ${summary.instances} Hamiltonian instances (${summary.rows} energies, ${summary.best.exact} of the instances solved exactly). Read-only, generated from the repository's data/ directory, Apache-2.0.`,
     "",
     "Every row is one published claim about one Hamiltonian instance and carries the energy, its",
     "error bar, the method, the primary reference, and a `bound_type`: strict variational bound,",
     "projected/fixed-node estimate, zero-variance or bond-dimension extrapolation, approximate",
     "method, or numerically exact. Sign-problem-free QMC is labelled exact (stochastic): it is exact",
-    "within its stated error bar. An exact energy is the record wherever one exists; otherwise the",
-    "lowest unflagged energy holds it, of any kind and with or without an error bar, and an",
-    "approximate energy holds it only where no other unflagged energy exists (RULES.md section 6).",
+    "within its stated error bar. Each instance shows its exact energy where one exists, then one",
+    "best value per bound type (best variational, projected, extrapolated, approximate): the lowest",
+    "unflagged energy of that class, with or without an error bar. A projected, extrapolated or",
+    "approximate energy more than 2 sigma below the exact energy is not a best (RULES.md section 6).",
     "Energies are stored as totals and quoted per site; the conversion is in DATA.md. Individual",
     "energies should be cited to the primary paper named on the row, not to this site. An energy",
     "that no paper prints is admitted only after QMBL has re-evaluated the released state behind it",
@@ -1302,15 +1338,15 @@ function llmsTxt() {
     "## Pages",
     ...(OPEN_PROBLEMS ? openProblemsLlms(OPEN_PROBLEMS) : []),
     "- [Leaderboard](https://qmbl.org/): the accuracy, energy and cost figures, and how to cite.",
-    `- [Table](https://qmbl.org/instances/): every one of the ${summary.instances} instances, with its record and every energy.`,
-    `- [Rules](${RULES}): what counts as a record, ties, provenance, objections.`,
+    `- [Table](https://qmbl.org/instances/): every one of the ${summary.instances} instances, with its exact energy, its best values and every energy.`,
+    `- [Rules](${RULES}): which values are shown, ties, provenance, objections.`,
     `- [Data](${DATA}): row format, units and conventions, error metrics, defects.`,
     "- [Contribute](https://qmbl.org/contribute/): corrections, missing results, missing error bars.",
     `- [CONTRIBUTING.md](${REPO}/blob/main/CONTRIBUTING.md): how people and AI systems submit, including through the GitHub API.`,
     "",
     "## Data",
     "- [Full dump](https://qmbl.org/api/qmbl.json): every instance and row in one JSON file.",
-    "- [Instance index](https://qmbl.org/api/instances.json): id, label, URL and record per instance.",
+    "- [Instance index](https://qmbl.org/api/instances.json): id, label, URL, exact energy and best values per instance.",
     "- [Summary](https://qmbl.org/api/summary.json): the counts behind the headline numbers.",
     `- [Repository](${REPO}): source data, build scripts, rules.`,
     `- Citation: https://arxiv.org/abs/${ARXIV} (the paper).`,
@@ -1434,12 +1470,15 @@ td.code { white-space: nowrap; }
 td.code .lib a { color: var(--muted); }
 td.record .num { font-weight: 600; color: var(--record); }
 .leaderboard th[scope="row"] { min-width: 14rem; }
-.rows tr.is-record td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.rows tr.is-best td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
 .rows tr.is-flagged td:first-child { box-shadow: inset 3px 0 0 var(--flag); }
 .tag {
   margin-left: 0.5rem; font-family: var(--sans); font-size: 0.65rem; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--accent);
 }
+.tag { white-space: nowrap; }
+.tag.tie { color: var(--muted); }
+.leaderboard td.kind { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
 .badges { margin-top: 0.3rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .badge {
   font-size: 0.7rem; color: var(--ink2); border: 1px solid var(--grid);
@@ -1462,18 +1501,24 @@ main > p.lead:first-child { margin-top: 0; }
 .quick button:hover { border-color: var(--accent); color: var(--accent); }
 .quick button.on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 
-tr.inst { cursor: pointer; }
-tr.inst th button {
+tbody.inst { cursor: pointer; }
+tbody.inst tr.line:not(.last) > :not(.span) { border-bottom-color: transparent; }
+tbody.inst tr.line > td { vertical-align: baseline; }
+tbody.inst tr.line:not(.last) > td { padding-bottom: 0.15rem; }
+tbody.inst tr.line + tr.line > td { padding-top: 0.15rem; }
+tbody tr.line:hover { background: none; }
+tbody.inst:hover tr.line > * { background: var(--surface); }
+tbody.inst th button {
   font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer;
   text-align: left; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px;
 }
-tr.inst th button::before {
+tbody.inst th button::before {
   content: ""; display: inline-block; width: 0.4em; height: 0.4em; margin-right: 0.5em;
   border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted);
   transform: rotate(-45deg) translateY(-0.1em); transition: transform 0.1s;
 }
-tr.inst.open th button::before { transform: rotate(45deg) translateY(-0.2em); }
-tr.inst.open td, tr.inst.open th { background: var(--surface); border-bottom-color: transparent; }
+tbody.inst.open th button::before { transform: rotate(45deg) translateY(-0.2em); }
+tbody.inst.open tr.line > * { background: var(--surface); border-bottom-color: transparent; }
 tr.more > td { padding: 0.6rem 0 1.2rem 1.4rem; background: var(--surface); }
 tr.more:hover { background: none; }
 tr.more p { margin: 0.4rem 0; font-size: 0.88rem; }
@@ -1487,19 +1532,23 @@ tr:hover > td.edit a, td.edit a:focus-visible { opacity: 1; }
 td.edit a:hover { color: var(--accent); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 table.next tr.is-flagged td:first-child { box-shadow: inset 3px 0 0 var(--flag); }
-table.next tr.is-record td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+table.next tr.is-best td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
 table.next tr.target > td, .rows tr:target > td {
   background: color-mix(in srgb, var(--accent) 18%, transparent); animation: row-in 1.6s ease-out;
 }
 table.next tr.target > td:first-child, .rows tr:target > td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
 @keyframes row-in { from { background: color-mix(in srgb, var(--accent) 45%, transparent); } }
 
-.record-box {
+.best-box {
   background: var(--surface); border: 1px solid var(--grid); border-left: 3px solid var(--accent);
   border-radius: 3px; padding: 1rem 1.2rem; margin: 1.6rem 0;
 }
-.record-box.none { border-left-color: var(--muted); }
-.record-box p { margin: 0.25rem 0; }
+.best-box.none { border-left-color: var(--muted); }
+.best-box p { margin: 0.25rem 0; }
+.best-box table.best { width: auto; margin: 0.4rem 0; }
+.best-box table.best th { font-size: 0.78rem; color: var(--muted); font-weight: 500; white-space: nowrap; padding-right: 1.2rem; }
+.best-box table.best td.big { font-size: 1.25rem; padding-right: 1.2rem; }
+.best-box table.best tr:hover { background: none; }
 .eyebrow { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
 .big { font-family: var(--mono); font-size: 1.8rem; font-weight: 600; }
 .big .unit { font-family: var(--sans); font-size: 0.8rem; font-weight: 400; color: var(--muted); margin-left: 0.5rem; }
@@ -1661,15 +1710,15 @@ for (const inst of instances) {
 
 write("api/summary.json", JSON.stringify(summary, null, 2) + "\n");
 write("api/instances.json", JSON.stringify(instances.map(i => {
-  const rec = recordOf(i);
+  const b = classBest(i);
   const f = perSiteDivisor(i);
+  const perSiteOf = r => r && f != null ? r.energy / f : null;
   return {
     instance_id: i.instance_id, label: instanceLabel(i), model: i.model, lattice: i.lattice,
     n_sites: i.n_sites, boundary: i.boundary ?? null, params: i.params ?? {}, rows: i.rows.length,
     url: `https://qmbl.org${instUrl(i)}`, json: `https://qmbl.org${jsonUrl(i)}`,
-    record_energy_per_site: rec && f != null ? rec.energy / f : null,
-    record_method: rec?.method ?? null, record_ansatz: rec?.ansatz ?? null, record_method_detail: rec?.method_detail ?? null,
-    record_bound_type: rec?.bound_type ?? null,
+    exact_energy_per_site: perSiteOf(b.exact), exact_method: b.exact?.method ?? null, exact_ansatz: b.exact?.ansatz ?? null,
+    ...Object.fromEntries(BEST_CLASSES.flatMap(c => [[`best_${c}_energy_per_site`, perSiteOf(b[c])], [`best_${c}_method`, b[c]?.method ?? null], [`best_${c}_ansatz`, b[c]?.ansatz ?? null]])),
   };
 }), null, 2) + "\n");
 write("api/qmbl.json", JSON.stringify({
@@ -1686,4 +1735,4 @@ ${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${BUILT}</lastmo
 </urlset>
 `);
 
-console.log(`${OUT}/: ${urls.length} pages (${instances.length} instances), ${summary.rows} energies, ${summary.records.held} records`);
+console.log(`${OUT}/: ${urls.length} pages (${instances.length} instances), ${summary.rows} energies, ${summary.best.exact} exact, ${BEST_CLASSES.map(c => summary.best[c]).join("/")} best ${BEST_CLASSES.join("/")}`);

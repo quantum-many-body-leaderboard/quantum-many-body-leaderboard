@@ -1,10 +1,10 @@
 // Recompute data/_summary.json from the final data tree. It runs after every add_* and
 // apply_* script in build.sh and is the file's only writer, so the counts describe what is
-// on disk. Also exports collect(), recordOf() and rowId() to the other scripts.
+// on disk. Also exports collect(), classBest(), lowestOf() and rowId() to the other scripts.
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { recordEligible, approximateEligible, exactEligible, isSampled, noErrorMetrics, publishedMethod, methodLabel } from "./units.mjs";
+import { recordEligible, approximateEligible, exactEligible, classEligible, belowExact, tiedAt2Sigma, BEST_CLASSES, isSampled, noErrorMetrics, publishedMethod, methodLabel } from "./units.mjs";
 
 export function collect() {
   const instances = [];
@@ -30,11 +30,53 @@ export function rowId(inst, r) {
   return `r-${inst.instance_id.replace(/[^\w-]/g, "_")}-${hash}${repeat > 0 ? `-${repeat + 1}` : ""}`;
 }
 
-// The record for an instance (RULES.md 6). Eligibility is defined once, in units.mjs.
-// Returns null where no row qualifies; summarize() counts why.
-export function recordOf(inst) {
+// What an instance shows (RULES.md 6, since 2026-10-22): its exact energy where it has one,
+// then one best value per bound type. Eligibility is defined once, in units.mjs.
+//   exact         the most precise eligible exact row (exactRecordOf), or null
+//   variational, projected, extrapolated, approximate
+//                 the lowest row of that class that is unflagged (6.1) and not caught by the
+//                 automatic flag (6.2), or null
+//   ties          row -> class, for every other eligible row that ties its class's best at 2 sigma
+//   below         the rows the automatic flag catches, lowest first
+// Memoised per instance object: every surface asks it many times per build.
+const BEST = new WeakMap();
+export function classBest(inst) {
+  if (BEST.has(inst)) return BEST.get(inst);
+  const exact = exactRecordOf(inst);
+  const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
+  const below = sorted.filter(r => belowExact(r, exact));
+  const out = { exact, ties: new Map(), below };
+  for (const c of BEST_CLASSES) {
+    const eligible = sorted.filter(r => r.bound_type === c && classEligible(r) && !below.includes(r));
+    out[c] = eligible[0] ?? null;
+    for (const r of eligible.slice(1)) if (tiedAt2Sigma(r, eligible[0])) out.ties.set(r, c);
+  }
+  BEST.set(inst, out);
+  return out;
+}
+
+// The values an instance shows, in order: [label, row], the exact energy first. Empty where
+// every row is flagged or none has a class; noBestKey says which.
+export function shownBest(inst) {
+  const b = classBest(inst);
+  return [...(b.exact ? [["exact", b.exact]] : []), ...BEST_CLASSES.filter(c => b[c]).map(c => [`best ${c}`, b[c]])];
+}
+
+// The label of a row that is one of the values its instance shows ("exact", "best
+// projected"), else null.
+export function bestTagOf(inst, r) {
+  return shownBest(inst).find(([, x]) => x === r)?.[0] ?? null;
+}
+
+// The exact energy, else the lowest unflagged non-exact energy (an approximate one only where
+// nothing else qualifies): what was the record until 2026-10-22. RULES.md 7's aggregates, the
+// estimate beside a QMBL: Open Problems target and the figure lines through the lowest energy
+// at each size read it; no surface labels it a record.
+export function lowestOf(inst) {
   return exactRecordOf(inst) ?? lowestEnergyOf(inst);
 }
+// The aggregate figures (figures.mjs) and QMBL: Open Problems import it under its old name.
+export const recordOf = lowestOf;
 
 // The most precise eligible exact row: exact rows are estimates of one number, so precision
 // orders them first. Exact diagonalization (no error bar) outranks sign-problem-free QMC, and
@@ -46,9 +88,8 @@ export function exactRecordOf(inst) {
 }
 
 // Lowest unflagged energy that is not exact (variational, projected or extrapolated; an
-// approximate row only where nothing else qualifies): the record where no exact row exists,
-// and the closest challenger where one does. The family counts use only instances where this
-// is the record (RULES.md 7).
+// approximate row only where nothing else qualifies). The family counts use only instances
+// without an exact row (RULES.md 7).
 export function lowestEnergyOf(inst) {
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
   return sorted.find(recordEligible) ?? sorted.find(approximateEligible) ?? null;
@@ -66,15 +107,20 @@ export function summarize(instances) {
     // record of an unsolved instance: no published energy there is lower. VarBench's own
     // exact diagonalizations are baseline rows too, but solved instances are not counted.
     baseline_rows: 0, baseline_records: 0,
-    // held_by_exact: the instance is solved and the exact energy is the record.
-    // held_by_variational / _projected / _extrapolated: no exact row, so the lowest
-    // unflagged energy is, and this is its kind.
+    // The aggregates of RULES.md 7, read off lowestOf (the record before 2026-10-22).
+    // held_by_exact: the instance is solved. held_by_variational / _projected / _extrapolated:
+    // no exact row, so the lowest unflagged energy, and this is its kind.
     // The none_* keys say why an instance has neither, in the order they are tested.
     records: { held: 0, held_by_exact: 0, held_by_variational: 0, held_by_projected: 0, held_by_extrapolated: 0, held_by_approximate: 0,
       none_flagged: 0, none_sector_only: 0, none_unclassified: 0, none_no_rows: 0 },
     // Unflagged sampled energies published without an error bar. They rank like any other
     // row (RULES.md 6); an error bar would let close results share a rank.
     sampled_no_sigma: { rows: 0, instances: 0 },
+    // What the instances show (RULES.md 6): how many have an exact energy and a best value of
+    // each class, how many rows tie a best at 2 sigma, how many rows the automatic flag
+    // catches (6.2), and how many instances show nothing (none_*, as for records).
+    best: { exact: 0, variational: 0, projected: 0, extrapolated: 0, approximate: 0, ties: 0, below_exact: 0,
+      none_flagged: 0, none_sector_only: 0, none_unclassified: 0, none_no_rows: 0 },
     needs_review: [],
   };
   for (const inst of instances) {
@@ -93,7 +139,13 @@ export function summarize(instances) {
       if (r.defect) s.flagged++;
       if (!r.bound_type) s.needs_review.push(`${inst.instance_id}: "${methodLabel(r)}"`);
     }
-    const rec = recordOf(inst);
+    const b = classBest(inst);
+    if (b.exact) s.best.exact++;
+    for (const c of BEST_CLASSES) if (b[c]) s.best[c]++;
+    s.best.ties += b.ties.size;
+    s.best.below_exact += b.below.length;
+    if (!shownBest(inst).length) s.best[`none_${noRecordKey(inst)}`]++;
+    const rec = lowestOf(inst);
     const noSigmaHere = inst.rows.filter(r => r.bound_type !== "exact" && !r.defect && isSampled(r) && r.sigma == null).length;
     s.sampled_no_sigma.rows += noSigmaHere;
     if (noSigmaHere) s.sampled_no_sigma.instances++;
@@ -110,9 +162,9 @@ export function summarize(instances) {
   return s;
 }
 
-// Why an instance has no record, as a key into summary.records. Every unflagged row that is
-// not a sector-resolved exact one can hold it, so only flags and missing rows leave an
-// instance without. readme_table.mjs turns the key into the cell text.
+// Why an instance shows nothing, as a key into summary.best (and summary.records). Every
+// unflagged row that is not a sector-resolved exact one is shown or ranked, so only flags and
+// missing rows leave an instance without. readme_table.mjs turns the key into the cell text.
 export function noRecordKey(inst) {
   if (inst.rows.some(r => r.defect)) return "flagged";
   if (inst.rows.some(r => r.bound_type === "exact")) return "sector_only";
@@ -120,7 +172,7 @@ export function noRecordKey(inst) {
   return "no_rows";
 }
 
-// Side effect only when run directly: readme_table.mjs imports collect/recordOf/summarize
+// Side effect only when run directly: readme_table.mjs imports collect/classBest/summarize
 // from here, and an import must not rewrite data/_summary.json.
 if (process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`) {
   const summary = summarize(collect());

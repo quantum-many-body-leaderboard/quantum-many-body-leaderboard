@@ -89,19 +89,56 @@ export const groundStateExact = r =>
   r.bound_type === "exact" && (!r.sector || r.sector === RULED_GROUND_STATE_SECTOR);
 
 // An exact row that states the instance's ground-state energy: exact diagonalization, an
-// exact solution, or sign-problem-free QMC where that is established (RULES.md 4). Such a
-// row is the record wherever one exists (RULES.md 6). A flagged exact row is skipped like
-// any other (6.1).
+// exact solution, or sign-problem-free QMC where that is established (RULES.md 4). The
+// instance shows it first wherever one exists (RULES.md 6). A flagged exact row is skipped
+// like any other (6.1).
 export const exactEligible = r => groundStateExact(r) && !r.defect;
 
-// Where no exact row exists, the record is the lowest variational, projected or extrapolated
-// energy, with or without an error bar, that carries no unresolved defect (RULES.md 6, 6.1).
-// On an instance with an eligible exact row this decides the closest challenger.
+// Since 2026-10-22 an instance has no single record (RULES.md 6): it shows its exact energy,
+// then one best value per bound type, each the lowest unflagged energy of that class. These
+// are the classes, in the order every surface prints them; the label is "best <class>".
+export const BEST_CLASSES = ["variational", "projected", "extrapolated", "approximate"];
+export const bestLabel = c => `best ${c}`;
+// Rows of these classes are not bounds, so an energy of theirs below the exact one is an
+// overshoot, not a contradiction: the automatic flag below catches it. A variational row
+// below exact violates the variational principle and keeps its `defect` (RULES.md 9.4).
+const NOT_BOUNDS = new Set(["projected", "extrapolated", "approximate"]);
+
+// The error bar of `r` measured against the exact row `exact`: its own sigma, combined in
+// quadrature with the exact row's where that one is stochastic (as RULES.md 9.4 combines
+// them). null where neither states one.
+export function sigmaAgainstExact(r, exact) {
+  const es = stochasticExact(exact) ? exact.sigma : null;
+  return r.sigma != null || es != null ? Math.hypot(r.sigma ?? 0, es ?? 0) : null;
+}
+
+// The automatic flag (RULES.md 6.2, 2026-10-22): an unflagged projected, extrapolated or
+// approximate row more than 2 sigma below the instance's exact energy, or below it at all
+// where no sigma is stated. Such a row cannot be its class's best; it stays listed with a
+// marker. It is not a `defect` and writes nothing into data/.
+export function belowExact(r, exact) {
+  if (!exact || r.defect || !NOT_BOUNDS.has(r.bound_type)) return false;
+  const gap = exact.energy - r.energy, s = sigmaAgainstExact(r, exact);
+  return s != null ? gap > 2 * s : gap > 0;
+}
+
+// Ties (RULES.md 6): two rows whose 2-sigma error bars overlap share the rank; a row without
+// sigma is compared by its energy alone.
+export const tiedAt2Sigma = (a, b) => Math.abs(a.energy - b.energy) <= 2 * ((a.sigma ?? 0) + (b.sigma ?? 0));
+
+// Rows that can be the best of their class, before the automatic flag: unflagged rows of the
+// four classes (RULES.md 6, 6.1). The flag needs the instance's exact row, so classBest in
+// summary.mjs applies it.
+export const classEligible = r => BEST_CLASSES.includes(r.bound_type) && !r.defect;
+
+// Until 2026-10-22 the record was the exact energy, else the lowest variational, projected or
+// extrapolated energy, an approximate one only where nothing else qualified. The aggregates of
+// RULES.md 7 and the estimate QMBL: Open Problems prints beside its target still read that
+// value (summary.mjs, lowestOf), and so do the figure lines through the lowest energy at each size.
 const RECORD_KINDS = new Set(["variational", "projected", "extrapolated"]);
 export const recordEligible = r => RECORD_KINDS.has(r.bound_type) && !r.defect;
 // `approximate` (RULES.md 4): a method that converges to a fixed approximation, not to the
-// exact energy (RPA, MP2, channel-truncated coupled cluster). Such a row holds the record only
-// on an instance where no other unflagged row exists.
+// exact energy (RPA, MP2, channel-truncated coupled cluster).
 export const approximateEligible = r => r.bound_type === "approximate" && !r.defect;
 
 // VarBench writes spin Hamiltonians with Pauli matrices (sigma.sigma) and stores

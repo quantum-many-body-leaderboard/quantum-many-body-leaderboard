@@ -2,7 +2,7 @@
 // energies themselves, with no reference energy. The shape is ladders.mjs's, which the site
 // reads the same way: per model and lattice, stops along an axis (J2, U, the filling) grouped
 // in facets, each stop a figure of one panel, energy against sites. A figure with two stops or
-// more also has one strip, the record at each stop and size, which the site shows above the
+// more also has one strip, the lowest energy at each stop and size, which the site shows above the
 // panel as the slider that picks the stop. Per model, one "other" figure holds the Hamiltonians
 // published at a single size that share no strip (every t-V instance is one of them), with a
 // panel per set that shares lattice, boundary and size and the varying coupling or filling
@@ -10,11 +10,13 @@
 //
 // Energy is per site (the impurity problems in total energy) on a linear axis. Every drawn row
 // (ladders.mjs, drawnRows) is a mark coloured by its bound type, slashed where the row is
-// flagged, and a line joins the record at each size or coupling (RULES.md 6). The directory is
+// flagged or the automatic flag catches it (RULES.md 6.2), hollow where it cannot be the best
+// of its class, and a line joins the lowest energy at each size or coupling: the exact energy
+// where there is one, else the lowest unflagged energy (summary.mjs, lowestOf). The directory is
 // emptied first, as figures/cost/ is, so the site never inlines a figure whose panels are gone.
 import fs from "node:fs";
-import { recordEligible, perSiteDivisor, perSiteLabel } from "./units.mjs";
-import { collect, recordOf, rowId } from "./summary.mjs";
+import { classEligible, perSiteDivisor, perSiteLabel } from "./units.mjs";
+import { collect, lowestOf, classBest, rowId } from "./summary.mjs";
 import { energyFigures, drawnRows, STRIP } from "./ladders.mjs";
 import { W, PAD, n, text, hline, dot, slashed, legend, header, doc, textWidth, wrap, niceStep, writer, logScale, rowHref } from "./chart.mjs";
 
@@ -27,8 +29,8 @@ const figures = energyFigures(collect());
 
 const KIND = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, exact: 3 };
 const perSite = inst => perSiteDivisor(inst) ?? 1;
-// The lowest record per site among instances drawn at one x; Infinity where none has one.
-const recordAt = insts => Math.min(...insts.flatMap(i => { const r = recordOf(i); return r ? [r.energy / perSite(i)] : []; }));
+// The lowest energy per site among instances drawn at one x (lowestOf); Infinity where none has one.
+const recordAt = insts => Math.min(...insts.flatMap(i => { const r = lowestOf(i); return r ? [r.energy / perSite(i)] : []; }));
 
 // Tick labels along x, dropped where one would run into the previous.
 function xTicks(t, parts, ticks, bottom) {
@@ -61,7 +63,8 @@ function yAxis(t, parts, es, { left, right, top, bottom }) {
 function panel(t, parts, { title, slots, X, xLabel }, box) {
   const { px, left, right, top, bottom } = box;
   const pts = slots.flatMap(s => s.members.flatMap(inst => drawnRows(inst).map(r => ({ r, inst, x: X(s), e: r.energy / perSite(inst),
-    flagged: !!r.defect, eligible: !r.defect && (r.bound_type === "exact" || recordEligible(r)) }))));
+    flagged: !!r.defect || classBest(inst).below.includes(r),
+    eligible: !r.defect && !classBest(inst).below.includes(r) && (r.bound_type === "exact" || classEligible(r)) }))));
   const recs = slots.map(s => [X(s), recordAt(s.members)]).filter(([, e]) => Number.isFinite(e));
   // A title too long for a narrow panel breaks onto a second line above the first.
   const lines = title ? wrap(title, 12, right - px) : [];
@@ -73,7 +76,7 @@ function panel(t, parts, { title, slots, X, xLabel }, box) {
     parts.push(`<path d="${recs.map(([x, e], k) => `${k ? "L" : "M"}${n(x)} ${n(Y(e))}`).join("")}" fill="none" stroke="${t.ink2}" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>`);
   // Hollow under filled, exact energies on top of the bounds that sit on them, and the
   // flagged outlines last, over whatever they coincide with, and set off to the right where a
-  // sound mark would sit under them (a flagged extrapolation often sits on the record).
+  // sound mark would sit under them (a flagged extrapolation often sits on the exact energy).
   for (const p of [...pts].sort((a, b) => a.flagged - b.flagged || a.eligible - b.eligible || (a.r.bound_type === "exact") - (b.r.bound_type === "exact")))
     parts.push(p.flagged ? slashed(t, p.x + (pts.some(q => !q.flagged && q.x === p.x && Math.abs(Y(q.e) - Y(p.e)) < 14) ? 11 : 0), Y(p.e), t.series[KIND[p.r.bound_type]], rowHref(p.inst, p.r))
       : dot(t, p.x, Y(p.e), t.series[KIND[p.r.bound_type]], p.eligible, rowHref(p.inst, p.r)));
@@ -99,7 +102,7 @@ const LEGEND = t => [
   { kind: "dot", color: t.series[2], label: "Extrapolated" },
   { kind: "dot", color: t.series[3], label: "Exact and exact (stochastic)" },
   { kind: "flag", color: t.ink2, label: "Flagged, see the row" },
-  { kind: "line", color: t.ink2, label: "Record" },
+  { kind: "line", color: t.ink2, label: "Lowest" },
 ];
 
 // A stop: its ladder alone, full width. The title is the model and lattice, the facet and
@@ -118,7 +121,7 @@ function stopFigure(f, facet, s) {
   });
 }
 
-// The figure's strip: the record at each stop and size, one line per size within each
+// The figure's strip: the lowest energy at each stop and size, one line per size within each
 // facet, the larger the darker, and over each stop a count mark as size_accuracy.mjs draws
 // them, the number of energies the stop stands for inside, linking to them all for the
 // site's list (largest size first, lowest energy first at a size). The cursor is a group
@@ -146,8 +149,8 @@ function stripFigure(f) {
       const e = recordAt(s.ladder.members.filter(i => i.n_sites === N));
       return Number.isFinite(e) ? [{ N, e }] : [];
     })]));
-    // Where the count mark sits: on the record of the largest size, or, for a stop with
-    // no record at any size (every row flagged), on its lowest energy there.
+    // Where the count mark sits: on the lowest energy of the largest size, or, for a stop with
+    // none at any size (every row flagged), on its lowest row there.
     const markAt = s => recs.get(s).at(-1)?.e ?? Math.min(...drawnRows(s.ladder.members.at(-1)).map(r => r.energy / perSite(s.ladder.members.at(-1))));
     const parts = [];
     const es = [...[...recs.values()].flat().map(p => p.e), ...stops.map(markAt)];
@@ -192,9 +195,9 @@ function stripFigure(f) {
       lx -= textWidth(String(N), 10) + 20;
       parts.push(`<circle cx="${n(lx + 4)}" cy="14" r="3.2" fill="${t.ink}" opacity="${shade(N)}"/>`, text(lx + 11, 18, String(N), { size: 10, fill: t.ink2, nums: true }));
     }
-    parts.push(text(lx - 6, 18, "record at each size:", { size: 10, fill: t.muted, anchor: "end" }));
+    parts.push(text(lx - 6, 18, "lowest energy at each size:", { size: 10, fill: t.muted, anchor: "end" }));
     parts.push(text(right, bottom + 16, f.axis, { size: 10.5, fill: t.ink2, anchor: "end" }));
-    const title = `${f.title}: the record at each ${f.axis} and size`;
+    const title = `${f.title}: the lowest energy at each ${f.axis} and size`;
     return doc(t, bottom + 24, title, stops.map(s => `${f.axis} = ${s.label}`).join(", "), parts);
   });
 }

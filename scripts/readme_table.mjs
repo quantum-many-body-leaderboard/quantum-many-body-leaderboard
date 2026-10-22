@@ -1,11 +1,11 @@
 // Regenerate the leaderboard block in README.md from data/. build.sh rewrites it between the
 // markers below on every build; it is never edited by hand. The instance labels, the quoting
-// convention and the no-record reasons are exported so that the site (site.mjs) names
-// instances the same way.
+// convention and the reasons an instance shows nothing are exported so that the site
+// (site.mjs) names instances the same way.
 import fs from "node:fs";
 import path from "node:path";
-import { perSiteDivisor, perSiteLabel, isSampled, noErrorMetrics, methodLabel, recordEligible, stochasticExact } from "./units.mjs";
-import { collect, recordOf, summarize, noRecordKey } from "./summary.mjs";
+import { perSiteDivisor, perSiteLabel, isSampled, noErrorMetrics, methodLabel, stochasticExact } from "./units.mjs";
+import { collect, shownBest, classBest, summarize, noRecordKey } from "./summary.mjs";
 import { citeCell, codeCell } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
 
@@ -118,10 +118,10 @@ export function byGeometry(a, b) {
   return 0;
 }
 
-// Why an instance has no record, in the words the table prints. The test order is
+// Why an instance shows no value, in the words the table prints. The test order is
 // summary.mjs's (noRecordKey), so the cells agree with the totals under the table.
 const NO_RECORD = {
-  flagged: "every row that could hold it is flagged",
+  flagged: "every row that could be shown is flagged",
   sector_only: "exact rows are sector-resolved, no ground-state energy stated",
   unclassified: "no row has a bound_type yet",
   no_rows: "no row",
@@ -130,40 +130,35 @@ export function noRecordReason(inst) {
   return NO_RECORD[noRecordKey(inst)];
 }
 
-// The closest challenger: the lowest row above the record that could hold one itself
-// (unflagged and not exact, of any other kind). On a solved instance that is the best
-// non-exact energy anyone has published at or above the exact one.
-export function challengerOf(inst, rec) {
-  const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
-  return sorted.slice(sorted.indexOf(rec) + 1).find(recordEligible) ?? null;
-}
-
-// How far above the record the challenger sits, per site, to two figures: "+1.7e-3".
-// Absolute, as the table is per site in the papers' convention. A gap under the record's
-// quoted precision (DMRG converged to the exact energy at 1e-13) prints as below that
-// precision.
-export function gapAbove(rec, next, f, decimals) {
-  const gap = (next.energy - rec.energy) / f;
+// How far `next` sits above `ref`, per site, to two figures: "+1.7e-3". Absolute, as the
+// table is per site in the papers' convention. A gap under the reference's quoted precision
+// (DMRG converged to the exact energy at 1e-13) prints as below that precision.
+export function gapAbove(ref, next, f, decimals) {
+  const gap = (next.energy - ref.energy) / f;
   return gap < 10 ** -decimals ? `+<1e-${decimals}` : `+${gap.toExponential(1)}`;
 }
 
-// The code column links the code behind the record, where its source names one (DATA.md).
-const HEADER = ["| instance | record | method | code | closest challenger |", "|---|---|---|---|---|"];
+// One line per value the instance shows (RULES.md 6): its exact energy, then the best of each
+// bound type, each with its method and source. The instance is named on the first line only.
+// On a solved instance a best stands beside the exact energy at its precision, with its gap
+// to it, as the table compares within a class and not across them; a best within 2 sigma
+// below the exact energy prints its gap with a minus. The code column links the code behind
+// each value, where its source names one (DATA.md).
+const HEADER = ["| instance | value | energy | method | code |", "|---|---|---|---|---|"];
 
-function row(inst, label, cache) {
-  const rec = recordOf(inst);
-  if (!rec) return `| ${label} | no record | ${noRecordReason(inst)} | | |`;
+function instanceLines(inst, label, cache) {
+  const shown = shownBest(inst);
+  if (!shown.length) return [`| ${label} | none | | ${noRecordReason(inst)} | |`];
   const f = perSiteDivisor(inst) ?? 1;
-  const q = quote(rec.energy / f, rec.sigma == null ? null : rec.sigma / f);
-  const next = challengerOf(inst, rec);
-  // Quoted at the record's precision so the two are readable against each other, with
-  // the same markers the record cell uses and the gap above the record spelled out.
-  // Each method carries its own source link, so the challenger is as checkable as the
-  // record.
-  const challenger = next
-    ? `${(next.energy / f).toFixed(q.decimals)}${marks(next)} (${gapAbove(rec, next, f, q.decimals)}) ${shorten(methodLabel(next), 34)} ${citeCell(next, cache)}`
-    : "none";
-  return `| ${label} | **${q.text}**${marks(rec)}${stochasticExact(rec) ? " exact (stochastic)" : ""} | ${shorten(methodLabel(rec), 46)} ${citeCell(rec, cache)} | ${codeCell(rec)} | ${challenger} |`;
+  const exact = classBest(inst).exact;
+  const qx = exact && quote(exact.energy / f, exact.sigma == null ? null : exact.sigma / f);
+  return shown.map(([tag, r], k) => {
+    const q = quote(r.energy / f, r.sigma == null ? null : r.sigma / f);
+    const gap = exact && r !== exact
+      ? ` (${r.energy < exact.energy ? `−${gapAbove(r, exact, f, qx.decimals).slice(1)}` : gapAbove(exact, r, f, qx.decimals)})` : "";
+    const kind = r === exact && stochasticExact(r) ? "exact (stochastic)" : tag;
+    return `| ${k ? "" : label} | ${kind} | ${q.text}${marks(r)}${gap} | ${shorten(methodLabel(r), 46)} ${citeCell(r, cache)} | ${codeCell(r)} |`;
+  });
 }
 
 function main() {
@@ -183,7 +178,7 @@ function main() {
     // GitHub only renders a table inside <details> when a blank line follows <summary>.
     lines.push("<details>");
     lines.push(`<summary><b>${name}</b>: ${group.length} instances, energies as <code>${perSiteLabel(group[0])}</code></summary>`);
-    lines.push("", ...HEADER, ...group.map(i => row(i, instanceLabel(i), cache)), "", "</details>", "");
+    lines.push("", ...HEADER, ...group.flatMap(i => instanceLines(i, instanceLabel(i), cache)), "", "</details>", "");
   }
 
   // The legend (bound_type, bold, circle, dagger) is in the hand-written "## Details" section
@@ -206,7 +201,7 @@ function main() {
   // interpreted as a match reference and pastes the file back into itself.
   const block = `${BEGIN}\n\n${lines.join("\n").trimEnd()}\n\n${END}`;
   fs.writeFileSync("README.md", readme.slice(0, i) + block + readme.slice(j + END.length));
-  console.log(`README.md leaderboard: ${s.instances} instances by model, ${s.records.held}/${s.instances} records held; ${imported} rows imported from VarBench`);
+  console.log(`README.md leaderboard: ${s.instances} instances by model, ${s.best.exact} exact, best variational/projected/extrapolated/approximate on ${s.best.variational}/${s.best.projected}/${s.best.extrapolated}/${s.best.approximate}; ${imported} rows imported from VarBench`);
 }
 
 // Side effect only when run directly, as in summary.mjs: site.mjs imports the labelling
