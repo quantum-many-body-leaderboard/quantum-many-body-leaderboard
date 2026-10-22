@@ -463,6 +463,8 @@ Object.assign(NAMES, {
   // arXiv:2111.04623 Tables 1 and 2 (Tocchio's VMC code)
   "VMC, stripe λ = 6 (Jastrow + backflow)": ["VMC", "stripe λ = 6 + Jastrow + backflow"],
   "VMC, stripe λ = 8 (Jastrow + backflow)": ["VMC", "stripe λ = 8 + Jastrow + backflow"],
+  "VMC, stripe λ = 5 (Jastrow + backflow)": ["VMC", "stripe λ = 5 + Jastrow + backflow"],
+  "VMC, stripe λ = 12 (Jastrow + backflow)": ["VMC", "stripe λ = 12 + Jastrow + backflow"],
   "VMC, uniform state (Jastrow + backflow)": ["VMC", "uniform + Jastrow + backflow"],
 });
 // arXiv:2406.12207 Tables I and III: the PEPS trial state's own energy and the fixed-node GFMC energy on it
