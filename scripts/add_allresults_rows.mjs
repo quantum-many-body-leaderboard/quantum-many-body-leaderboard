@@ -35,6 +35,11 @@ for (const [id, rows] of Object.entries(byInst)) {
   const dof = expectedDof(inst) ?? inst.rows[0]?.dof ?? null;
   const einf = expectedEinf(inst) ?? inst.rows[0]?.einf ?? null;
   for (const r of rows) {
+    // A source without an arXiv version is named by its DOI (doi:...), and a pass row may say how
+    // it was read (read_method) where that was not the arXiv text (Tanatar & Ceperley 1989: the
+    // publisher PDF's text layer, checked against the page image).
+    const src = r.arxiv ? `arXiv:${r.arxiv}` : `doi:${r.doi}`, srcKey = r.arxiv ?? r.doi;
+    if (!srcKey) throw new Error(`${id}: pass row without arxiv or doi`);
     // A quoted exact value rounded to its error bar is the exact row already carried; any other
     // quoted value repeats a stored row only to its printed digits (Kochkov et al.'s -0.5022(4)
     // is not the 2048-state DMRG row 3e-4 away). A row flagged same_value_distinct_method is a second
@@ -43,8 +48,8 @@ for (const [id, rows] of Object.entries(byInst)) {
     const dup = inst.rows.find(x => Math.abs(x.energy / div - r.eps) <=
       (r.origin === "quoted" && r.bound_type === "exact" ? Math.max(r.tol, r.sigma_per_site ?? 0) : r.tol) &&
       ((r.origin === "quoted" && x.bound_type === r.bound_type) || x.method === r.method ||
-       (!r.same_value_distinct_method && ((x.reference || "").includes(r.arxiv) || (x.verified?.note || "").includes(r.arxiv))) || (x.bound_type === "exact" && r.bound_type === "exact")));
-    if (dup) { skipped.push(`${id} ${r.reported_as} [${r.arxiv}] = "${dup.method.slice(0, 40)}"`); continue; }
+       (!r.same_value_distinct_method && ((x.reference || "").includes(srcKey) || (x.verified?.note || "").includes(srcKey))) || (x.bound_type === "exact" && r.bound_type === "exact")));
+    if (dup) { skipped.push(`${id} ${r.reported_as} [${srcKey}] = "${dup.method.slice(0, 40)}"`); continue; }
     const energy = +(r.eps * div).toPrecision(12);
     // sigma^2/N_site as printed; totals scale with the site count. A relative
     // variance (<E^2>-<E>^2)/<E>^2 is dimensionless, so it converts with the stored energy itself.
@@ -59,11 +64,11 @@ for (const [id, rows] of Object.entries(byInst)) {
       source: `sweep-allresults-${CHECKED}`, provenance: r.origin === "own" ? "primary" : "secondary",
       verified: {
         checked_on: CHECKED,
-        method: `source text of arXiv:${r.arxiv} read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; ${r.verified_by}`,
+        method: `${r.read_method ? `${src}: ${r.read_method}` : `source text of ${src} read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers`}; ${r.verified_by}`,
         reported_as: r.reported_as,
         note: [r.evidence, r.convention_check, r.variance_as_reported != null && r.var_per_site == null
           ? `variance reported as ${r.variance_as_reported}, not stored: convention not verified` : ""].filter(Boolean).join(" | "),
-        secondary_of: r.origin === "quoted" ? `arXiv:${r.arxiv}` : null,
+        secondary_of: r.origin === "quoted" ? src : null,
       },
     };
     if (r.compute) row.compute = r.compute;
