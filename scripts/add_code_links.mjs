@@ -1,6 +1,6 @@
 // Attach the code behind a row (DATA.md, "The code behind a row") from
-// passes/code/code-links-YYYY-MM-DD.json: one entry per row, keyed by instance, energy and the
-// reference's url or string, with a status:
+// passes/code/code-links-YYYY-MM-DD.json: one entry per row, keyed by instance, energy, the
+// reference's url or string, and the row's method, with a status:
 //   linked     the source names the code that produced the number; attached as artifacts.code
 //   not_found  no statement was found in what was read; nothing attached
 //   ambiguous  a statement exists but does not settle that this code produced this number
@@ -33,7 +33,7 @@ for (const file of PASSES) {
   const date = file.slice(11, 21);
   for (const e of JSON.parse(fs.readFileSync(path.join(DIR, file), "utf8"))) {
     if (!STATUS.has(e.status)) { problems.push(`${e.instance_id} ${e.energy}: status ${e.status}`); continue; }
-    latest.set(`${e.instance_id}|${e.energy}|${e.reference_key}`, { ...e, file: `${DIR}/${file}`, date });
+    latest.set(`${e.instance_id}|${e.energy}|${e.reference_key}|${e.method}`, { ...e, file: `${DIR}/${file}`, date });
   }
 }
 
@@ -43,19 +43,23 @@ for (const e of latest.values()) {
   counts[e.status]++;
   if (e.status !== "linked") continue;
   const entry = instances.get(e.instance_id);
-  const row = entry?.inst.rows.find(r => r.energy === e.energy && refKey(r.reference) === e.reference_key);
-  if (!row) { unmatched.push(`${e.instance_id} ${e.energy} ${String(e.reference_key).slice(0, 50)}`); continue; }
+  // The method tells apart two rows of one source at the same energy (a GFMC and an ACE row);
+  // rows that share all four (two stripe orientations of one method) take the same entry.
+  const rows = entry?.inst.rows.filter(r => r.energy === e.energy && refKey(r.reference) === e.reference_key && r.method === e.method) ?? [];
+  if (!rows.length) { unmatched.push(`${e.instance_id} ${e.energy} ${e.method} ${String(e.reference_key).slice(0, 50)}`); continue; }
   if (!e.url || !e.quote || !e.location) { problems.push(`${e.instance_id} ${e.energy}: linked without url, quote or location`); continue; }
-  // An unpublished row's artifacts came with its submission (RULES.md 8.3) and are not replaced.
-  if (row.provenance === "unpublished") continue;
-  const a = { ...(row.artifacts || {}), code: e.url };
-  if (e.commit) a.commit = e.commit;
-  if (e.script) a.script = e.script;
-  // A release that holds only the network, no training or run script (label "model code").
-  if (e.scope) a.scope = e.scope;
-  a.read_from = { quote: e.quote, location: e.location, checked_on: e.url_check?.checked_on ?? e.date, pass: e.file };
-  row.artifacts = a;
-  entry.dirty = true;
+  for (const row of rows) {
+    // An unpublished row's artifacts came with its submission (RULES.md 8.3) and are not replaced.
+    if (row.provenance === "unpublished") continue;
+    const a = { ...(row.artifacts || {}), code: e.url };
+    if (e.commit) a.commit = e.commit;
+    if (e.script) a.script = e.script;
+    // A release that holds only the network, no training or run script (label "model code").
+    if (e.scope) a.scope = e.scope;
+    a.read_from = { quote: e.quote, location: e.location, checked_on: e.url_check?.checked_on ?? e.date, pass: e.file };
+    row.artifacts = a;
+    entry.dirty = true;
+  }
 }
 for (const { path: p, inst, dirty } of instances.values())
   if (dirty) fs.writeFileSync(p, JSON.stringify(inst, null, 2) + "\n");
