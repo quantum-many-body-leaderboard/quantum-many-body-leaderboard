@@ -266,8 +266,8 @@ function drawPanel(t, parts, inst, pts, { px, left, right, top, bottom, xLabel, 
   const undrawn = (shownBest(inst)[0]?.[0] === "exact" ? shownBest(inst).slice(0, 1) : shownBest(inst)).filter(([, r]) => !pts.some(p => p.r === r));
   const front = frontierOf(pts);
   const nameOf = p => markName(p.r) + (p.cost.measuredByQmbl ? " (cost measured by QMBL)" : "");
-  // Cost axis: a decade either side of the data. Energy axis: linear, as in the
-  // record-over-time figure, so the best values and an exact energy sit where they are.
+  // Cost axis: a decade either side of the data. Energy axis: linear, so the best values and
+  // an exact energy sit where they are.
   const cs = pts.map(p => p.cost.value);
   const x0 = 10 ** Math.floor(log(Math.min(...cs)) - 0.5), x1 = 10 ** Math.ceil(log(Math.max(...cs)) + 0.5);
   const X = logScale(x0, x1, left, right);

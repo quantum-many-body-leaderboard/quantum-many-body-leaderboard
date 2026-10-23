@@ -19,7 +19,7 @@
 // records by how beatable they are.
 import fs from "node:fs";
 import { recordEligible, exactEligible } from "./units.mjs";
-import { collect, recordOf, exactRecordOf } from "./summary.mjs";
+import { collect, lowestOf, exactRecordOf } from "./summary.mjs";
 import { FAMILIES } from "./views.mjs";
 import { ladderFigures } from "./ladders.mjs";
 import { W, PAD, n, text, hline, dot, legend, header, footnote, doc, textWidth, writer, logScale, rowHref } from "./chart.mjs";
@@ -37,7 +37,7 @@ const FLOOR = 1e-8; // relative gaps below this are drawn on the exact line, and
 function referenceOf(inst) {
   const exact = exactRecordOf(inst);
   if (exact) return { row: exact, kind: "exact" };
-  const rec = recordOf(inst);
+  const rec = lowestOf(inst);
   return rec ? { row: rec, kind: "record" } : null;
 }
 

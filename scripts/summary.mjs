@@ -69,14 +69,12 @@ export function bestTagOf(inst, r) {
 }
 
 // The exact energy, else the lowest unflagged non-exact energy (an approximate one only where
-// nothing else qualifies): what was the record until 2026-10-22. RULES.md 7's aggregates, the
-// estimate beside a QMBL: Open Problems target and the figure lines through the lowest energy
-// at each size read it; no surface labels it a record.
+// nothing else qualifies): what was the record until 2026-10-22. Read by the estimate beside a
+// QMBL: Open Problems target, the deprecated `record` fields of the site's API (kept for one
+// release) and the dots of the energy figures' strips; no surface labels it a record.
 export function lowestOf(inst) {
   return exactRecordOf(inst) ?? lowestEnergyOf(inst);
 }
-// The aggregate figures (figures.mjs) and QMBL: Open Problems import it under its old name.
-export const recordOf = lowestOf;
 
 // The most precise eligible exact row: exact rows are estimates of one number, so precision
 // orders them first. Exact diagonalization (no error bar) outranks sign-problem-free QMC, and
@@ -88,8 +86,7 @@ export function exactRecordOf(inst) {
 }
 
 // Lowest unflagged energy that is not exact (variational, projected or extrapolated; an
-// approximate row only where nothing else qualifies). The family counts use only instances
-// without an exact row (RULES.md 7).
+// approximate row only where nothing else qualifies). lowestOf's fallback.
 export function lowestEnergyOf(inst) {
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
   return sorted.find(recordEligible) ?? sorted.find(approximateEligible) ?? null;
@@ -103,22 +100,14 @@ export function summarize(instances) {
     spectrum_entries: 0,
     by_bound: {}, by_source: {}, by_provenance: {},
     vscore_rows: 0, no_variance: 0, no_sigma: 0, no_error_metrics: 0, flagged: 0,
-    // Rows VarBench computed itself (RULES.md 8.2), and the subset of those that hold the
-    // record of an unsolved instance: no published energy there is lower. VarBench's own
-    // exact diagonalizations are baseline rows too, but solved instances are not counted.
-    baseline_rows: 0, baseline_records: 0,
-    // The aggregates of RULES.md 7, read off lowestOf (the record before 2026-10-22).
-    // held_by_exact: the instance is solved. held_by_variational / _projected / _extrapolated:
-    // no exact row, so the lowest unflagged energy, and this is its kind.
-    // The none_* keys say why an instance has neither, in the order they are tested.
-    records: { held: 0, held_by_exact: 0, held_by_variational: 0, held_by_projected: 0, held_by_extrapolated: 0, held_by_approximate: 0,
-      none_flagged: 0, none_sector_only: 0, none_unclassified: 0, none_no_rows: 0 },
+    // Rows VarBench computed itself (RULES.md 8.2).
+    baseline_rows: 0,
     // Unflagged sampled energies published without an error bar. They rank like any other
     // row (RULES.md 6); an error bar would let close results share a rank.
     sampled_no_sigma: { rows: 0, instances: 0 },
     // What the instances show (RULES.md 6): how many have an exact energy and a best value of
     // each class, how many rows tie a best at 2 sigma, how many rows the automatic flag
-    // catches (6.2), and how many instances show nothing (none_*, as for records).
+    // catches (6.2), and how many instances show nothing (none_*, in noRecordKey's order).
     best: { exact: 0, variational: 0, projected: 0, extrapolated: 0, approximate: 0, ties: 0, below_exact: 0,
       none_flagged: 0, none_sector_only: 0, none_unclassified: 0, none_no_rows: 0 },
     needs_review: [],
@@ -145,24 +134,14 @@ export function summarize(instances) {
     s.best.ties += b.ties.size;
     s.best.below_exact += b.below.length;
     if (!shownBest(inst).length) s.best[`none_${noRecordKey(inst)}`]++;
-    const rec = lowestOf(inst);
     const noSigmaHere = inst.rows.filter(r => r.bound_type !== "exact" && !r.defect && isSampled(r) && r.sigma == null).length;
     s.sampled_no_sigma.rows += noSigmaHere;
     if (noSigmaHere) s.sampled_no_sigma.instances++;
-
-    if (rec) {
-      s.records.held++;
-      s.records[`held_by_${rec.bound_type}`]++;
-      if (rec.baseline && rec.bound_type !== "exact") s.baseline_records++;
-      continue;
-    }
-    // Same order as noRecordReason() in readme_table.mjs.
-    s.records[`none_${noRecordKey(inst)}`]++;
   }
   return s;
 }
 
-// Why an instance shows nothing, as a key into summary.best (and summary.records). Every
+// Why an instance shows nothing, as a key into summary.best. Every
 // unflagged row that is not a sector-resolved exact one is shown or ranked, so only flags and
 // missing rows leave an instance without. readme_table.mjs turns the key into the cell text.
 export function noRecordKey(inst) {

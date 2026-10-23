@@ -87,8 +87,8 @@ does not name. The validator rejects symmetry or extrapolation wording outside a
 
 `baseline: true` marks a row that VarBench computed as a reference run for the V-score. No
 paper published it. [RULES.md §8.2](RULES.md#82-baseline-collected-versus-computed) defines
-the field and how such a row ranks. The counts are generated: `baseline_rows` and
-`baseline_records` in `data/_summary.json`.
+the field and how such a row ranks. The count is generated: `baseline_rows` in
+`data/_summary.json`.
 
 ### Rows QMBL computed: `computed_by`
 

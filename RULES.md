@@ -45,7 +45,7 @@ steps, the trial state, or what an extrapolation sends to zero. It never holds t
 number, the instance or the source. A corrected `method_as_published` quotes a label the
 source prints, word for word; what explains the label goes to `method_detail`.
 
-A missing field never excludes a row. Only §6 and §7 govern what is shown as a best value and what is counted.
+A missing field never excludes a row. Only §6 governs what is shown as a best value.
 
 ## 4. `bound_type`
 
@@ -210,16 +210,11 @@ best extrapolated.
 
 ## 7. Aggregate
 
-The headline is records held: the number of instances where a group holds the record.
-There is no cross-instance score. The V-score is shown where `energy_variance` is present
-and is never ranked on.
-
-Aggregates over methods count only records on unsolved instances. The medal table, records
-by ansatz family and records by year compare methods. An exact energy is the answer, not a
-method's claim. Counting exact energies would reward whoever ran exact diagonalization on the
-most small instances. The per-instance record is still the exact energy where one exists
-(§6); the aggregates only choose the instances they count. A record held by a projected or
-extrapolated energy counts for its method like any other.
+There is no aggregate over instances: no records held, no counts by method family or by year,
+and no cross-instance score. Since 2026-10-23 an instance has no single record (§6), so there
+is nothing to count it by. `data/_summary.json` counts rows and how many instances show an
+exact energy and a best value of each class. The V-score is shown where `energy_variance` is
+present and is never ranked on.
 
 ## 8. Provenance
 
@@ -288,8 +283,7 @@ error.
 Imported VarBench rows are either collected or computed. A row whose reference cites a paper
 is one VarBench collected from the literature. A row whose only reference is a run script in
 `varbench/methods` is one VarBench computed itself, and carries `baseline: true`.
-`baseline_rows` in `data/_summary.json` counts these rows, and `baseline_records` counts the
-records held by a baseline row that is not `exact`.
+`baseline_rows` in `data/_summary.json` counts these rows.
 
 A collected row is a published result, defended in a paper. A computed row is a reference
 calculation: the same ansatz run across the instance set, so the V-score has something to
