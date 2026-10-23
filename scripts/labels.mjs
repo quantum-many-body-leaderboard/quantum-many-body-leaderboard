@@ -1,8 +1,7 @@
 // Where each name goes on a scatter plot: beside its mark where that covers nothing, else in a
 // lane above or below with a line to it, marks drawn as one named together; and where an
-// inset goes. Used by pareto.mjs and the record-over-time figure in figures.mjs. Points are
-// placed at X(p.cost.value), Y(p.e). `lines` are boxes a name keeps clear of but a lane's
-// line may cross (the full-width record line in the record-over-time figure).
+// inset goes. Used by pareto.mjs. Points are placed at X(p.cost.value), Y(p.e). `lines` are
+// boxes a name keeps clear of but a lane's line may cross.
 import { textWidth } from "./chart.mjs";
 
 // The frontier's staircase as horizontal and vertical segments on screen.

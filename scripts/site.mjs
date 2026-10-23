@@ -17,7 +17,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES } from "./units.mjs";
-import { collect, classBest, shownBest, bestTagOf, summarize, rowId } from "./summary.mjs";
+import { collect, classBest, shownBest, bestTagOf, lowestOf, summarize, rowId } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
@@ -500,9 +500,9 @@ const ENERGY_FIGS = [...Map.groupBy(energyFigures(instances)
   .filter(f => fs.existsSync(`figures/${f.group === "other" ? f.name : f.stops[0].name}.svg`)), f => f.group)];
 const otherEntry = f => [f.name, f.title, "Energies on Hamiltonians published at one size, with the coupling or filling that differs between them along x."];
 const stopEntry = (f, facet, s) => [s.name, [f.title, facet.label, f.axis && `${f.axis} = ${s.label}`].filter(Boolean).join(", "),
-  "Energy against the number of sites. Colour shows the bound type; the line joins the lowest energy at each size, the exact one where there is one."];
+  "Energy against the number of sites. Colour shows the bound type; every result is a dot."];
 const stripEntry = f => [f.strip, `${f.title}: the lowest energy at each ${f.axis} and size`,
-  "One line per size, darker for larger sizes. The number over each stop is its count of energies; the marked stop is shown below."];
+  "One dot per size at each stop, its lowest energy, darker for larger sizes. The number over each stop is its count of energies; the marked stop is shown below."];
 
 // Every slider on the page with its id, so that the HTML and the stylesheet agree.
 const SLIDERS = ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [] : figs.map((f, k) => ({ id: `slide-${j}-${k}`, f }))));
@@ -1297,6 +1297,13 @@ function notFoundPage() {
 }
 
 // ------------------------------------------------------------------------ machine api
+// The fields the API had until 2026-10-23, kept for one release beside the new ones and filled
+// with the old value: the exact energy, else the lowest unflagged energy of any class
+// (summary.mjs, lowestOf). llms.txt and api/qmbl.json mark them deprecated.
+const DEPRECATED = "Deprecated since 2026-10-23, kept for one release: `record` and `no_record_reason` in api/i/*.json, "
+  + "and `record_energy_per_site`, `record_method`, `record_method_detail` and `record_bound_type` in api/instances.json. "
+  + "They hold the old value, the exact energy or else the lowest unflagged energy of any class. Use `best` (api/i) and "
+  + "`exact_*` / `best_<class>_*` (api/instances.json): an instance has no single record (RULES.md section 6).";
 function apiInstance(inst) {
   const b = classBest(inst);
   const f = perSiteDivisor(inst);
@@ -1313,6 +1320,9 @@ function apiInstance(inst) {
     // below_exact lists the rows the automatic flag passes over (6.2).
     best: { exact: value(b.exact), ...Object.fromEntries(BEST_CLASSES.map(c => [c, value(b[c])])), below_exact: b.below.map(value) },
     no_best_reason: shownBest(inst).length ? null : noRecordReason(inst),
+    // Deprecated (DEPRECATED above).
+    record: value(lowestOf(inst)),
+    no_record_reason: lowestOf(inst) ? null : noRecordReason(inst),
   };
 }
 
@@ -1348,6 +1358,7 @@ function llmsTxt() {
     "- [Full dump](https://qmbl.org/api/qmbl.json): every instance and row in one JSON file.",
     "- [Instance index](https://qmbl.org/api/instances.json): id, label, URL, exact energy and best values per instance.",
     "- [Summary](https://qmbl.org/api/summary.json): the counts behind the headline numbers.",
+    `- ${DEPRECATED}`,
     `- [Repository](${REPO}): source data, build scripts, rules.`,
     `- Citation: https://arxiv.org/abs/${ARXIV} (the paper).`,
     `- Data citation: https://doi.org/${DOI} (concept DOI, always the latest release).`,
@@ -1719,12 +1730,17 @@ write("api/instances.json", JSON.stringify(instances.map(i => {
     url: `https://qmbl.org${instUrl(i)}`, json: `https://qmbl.org${jsonUrl(i)}`,
     exact_energy_per_site: perSiteOf(b.exact), exact_method: b.exact?.method ?? null, exact_ansatz: b.exact?.ansatz ?? null,
     ...Object.fromEntries(BEST_CLASSES.flatMap(c => [[`best_${c}_energy_per_site`, perSiteOf(b[c])], [`best_${c}_method`, b[c]?.method ?? null], [`best_${c}_ansatz`, b[c]?.ansatz ?? null]])),
+    // Deprecated (DEPRECATED above).
+    record_energy_per_site: perSiteOf(lowestOf(i)),
+    record_method: lowestOf(i)?.method ?? null, record_ansatz: lowestOf(i)?.ansatz ?? null, record_method_detail: lowestOf(i)?.method_detail ?? null,
+    record_bound_type: lowestOf(i)?.bound_type ?? null,
   };
 }), null, 2) + "\n");
 write("api/qmbl.json", JSON.stringify({
   name: "QMBL: the Quantum Many-Body Leaderboard",
   url: "https://qmbl.org/", repository: REPO, license: "Apache-2.0", doi: DOI,
   built: BUILT, note: "Individual energies should be cited to the primary paper named on the row.",
+  deprecated: DEPRECATED,
   summary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 

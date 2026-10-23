@@ -30,7 +30,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { perSiteDivisor, perSiteLabel, boundLabel, methodLabel, methodDetail } from "./units.mjs";
-import { recordOf, exactRecordOf, rowId } from "./summary.mjs";
+import { lowestOf, exactRecordOf, rowId } from "./summary.mjs";
 import { quote, MODELS, instanceLabel, byGeometry } from "./readme_table.mjs";
 import { openProblemsFigure, FIGURE_NAME } from "./open_problems_figure.mjs";
 
@@ -95,7 +95,7 @@ export function score(op, instances) {
   const byId = new Map(instances.map(i => [i.instance_id, i]));
   const targets = op.targets.map(t => {
     const inst = byId.get(t.instance_id);
-    const f = perSiteDivisor(inst) ?? 1, row = bestVariational(inst), rec = recordOf(inst);
+    const f = perSiteDivisor(inst) ?? 1, row = bestVariational(inst), rec = lowestOf(inst);
     return { t, inst, row, estimate: rec && rec !== row ? rec : null, first: null,
       energy: row ? row.energy / f : null, sigma: row ? (row.sigma ?? 0) / f : null };
   });
@@ -221,7 +221,7 @@ ${entriesTable}` : "";
   </div>`;
     const rows = group.map(x => {
       const { t, inst, row, estimate, first } = x;
-      const linked = row ?? recordOf(inst) ?? [...inst.rows].sort((a, b) => a.energy - b.energy)[0];
+      const linked = row ?? lowestOf(inst) ?? [...inst.rows].sort((a, b) => a.energy - b.energy)[0];
       const beat = row ? `<td class="record">${energyCell(row, inst)}</td><td><span class="m" title="${esc(methodDetail(row))}">${esc(methodLabel(row))}</span></td><td>${citeHtml(row)}</td>`
         : first ? `<td class="record"><span class="num">${quote(first.energy_per_site, first.sigma_per_site).text}</span></td><td>${esc(first.system)}</td><td><a href="#${entryId(first)}">first verified state</a></td>`
         : '<td colspan="3" class="muted">no variational energy yet; the first verified state sets it</td>';

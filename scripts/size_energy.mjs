@@ -10,9 +10,9 @@
 //
 // Energy is per site (the impurity problems in total energy) on a linear axis. Every drawn row
 // (ladders.mjs, drawnRows) is a mark coloured by its bound type, slashed where the row is
-// flagged or the automatic flag catches it (RULES.md 6.2), hollow where it cannot be the best
-// of its class, and a line joins the lowest energy at each size or coupling: the exact energy
-// where there is one, else the lowest unflagged energy (summary.mjs, lowestOf). The directory is
+// flagged or the automatic flag catches it (RULES.md 6.2), and hollow where it cannot be the best
+// of its class. No line joins results: the lowest energy at a size can be of another class at
+// the next (RULES.md 6, since 2026-10-23), and every result is a dot. The directory is
 // emptied first, as figures/cost/ is, so the site never inlines a figure whose panels are gone.
 import fs from "node:fs";
 import { classEligible, perSiteDivisor, perSiteLabel } from "./units.mjs";
@@ -29,7 +29,8 @@ const figures = energyFigures(collect());
 
 const KIND = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, exact: 3 };
 const perSite = inst => perSiteDivisor(inst) ?? 1;
-// The lowest energy per site among instances drawn at one x (lowestOf); Infinity where none has one.
+// The lowest energy per site among instances drawn at one x (lowestOf), for the strip's dots;
+// Infinity where none has one.
 const recordAt = insts => Math.min(...insts.flatMap(i => { const r = lowestOf(i); return r ? [r.energy / perSite(i)] : []; }));
 
 // Tick labels along x, dropped where one would run into the previous.
@@ -65,15 +66,12 @@ function panel(t, parts, { title, slots, X, xLabel }, box) {
   const pts = slots.flatMap(s => s.members.flatMap(inst => drawnRows(inst).map(r => ({ r, inst, x: X(s), e: r.energy / perSite(inst),
     flagged: !!r.defect || classBest(inst).below.includes(r),
     eligible: !r.defect && !classBest(inst).below.includes(r) && (r.bound_type === "exact" || classEligible(r)) }))));
-  const recs = slots.map(s => [X(s), recordAt(s.members)]).filter(([, e]) => Number.isFinite(e));
   // A title too long for a narrow panel breaks onto a second line above the first.
   const lines = title ? wrap(title, 12, right - px) : [];
   lines.forEach((l, k) => parts.push(text(px, top - 14 - (lines.length - 1 - k) * 15, l, { size: 12, fill: t.ink, weight: 600 })));
   const Y = yAxis(t, parts, pts.map(p => p.e), box);
   xTicks(t, parts, slots.map(s => ({ x: X(s), label: s.label })), bottom);
   if (xLabel) parts.push(text(right, bottom + 32, xLabel, { size: 10.5, fill: t.ink2, anchor: "end" }));
-  if (recs.length > 1)
-    parts.push(`<path d="${recs.map(([x, e], k) => `${k ? "L" : "M"}${n(x)} ${n(Y(e))}`).join("")}" fill="none" stroke="${t.ink2}" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>`);
   // Hollow under filled, exact energies on top of the bounds that sit on them, and the
   // flagged outlines last, over whatever they coincide with, and set off to the right where a
   // sound mark would sit under them (a flagged extrapolation often sits on the exact energy).
@@ -102,7 +100,6 @@ const LEGEND = t => [
   { kind: "dot", color: t.series[2], label: "Extrapolated" },
   { kind: "dot", color: t.series[3], label: "Exact and exact (stochastic)" },
   { kind: "flag", color: t.ink2, label: "Flagged, see the row" },
-  { kind: "line", color: t.ink2, label: "Lowest" },
 ];
 
 // A stop: its ladder alone, full width. The title is the model and lattice, the facet and
@@ -121,8 +118,8 @@ function stopFigure(f, facet, s) {
   });
 }
 
-// The figure's strip: the lowest energy at each stop and size, one line per size within each
-// facet, the larger the darker, and over each stop a count mark as size_accuracy.mjs draws
+// The figure's strip: the lowest energy at each stop and size as a dot, the larger the size the
+// darker, with no line between stops (a line would join energies of different classes), and over each stop a count mark as size_accuracy.mjs draws
 // them, the number of energies the stop stands for inside, linking to them all for the
 // site's list (largest size first, lowest energy first at a size). The cursor is a group
 // per stop, hidden in the file and shown by the site's stylesheet for the chosen one.
@@ -130,10 +127,10 @@ function stopFigure(f, facet, s) {
 // Hover states the site's stylesheet drives. Each facet is a group
 // (`grp`) and each stop a column in it (`col`: a hit area over the column, the stop's dots,
 // its count mark), so that the pointer over a column hovers both. Over a group its size
-// lines move apart, up by EX per size rank, so that seven lines coinciding at this scale
-// read as seven (class `ex`, the shift in `--ex`; the size at each line's end `exl`), in that
-// group only. A dense group (more stops than DENSE) does not move apart, as its lines are
-// fragments that lose their dots, and has no hover state. The hit area (`hit`, with the stop's index) and
+// dots move apart, up by EX per size rank, so that seven dots coinciding at this scale read
+// as seven (class `ex`, the shift in `--ex`; the size beside the last stop's dot `exl`), in
+// that group only. A dense group (more stops than DENSE) does not move apart and has no hover
+// state. The hit area (`hit`, with the stop's index) and
 // the count mark both select the stop like its badge; the hit area sits under the marks so
 // that a count mark keeps the pointer and its list. Only theme colours, at varying opacity,
 // so that dark mode recolours the strip like any figure.
@@ -172,7 +169,6 @@ function stripFigure(f) {
       for (const N of sizes) {
         const pts = x.stops.flatMap(s => { const p = recs.get(s).find(p => p.N === N); return p ? [{ x: s.x, y: Y(p.e) }] : []; });
         if (!pts.length) continue;
-        if (pts.length > 1) inner.push(`<path${shift(N)} d="${pts.map((p, k) => `${k ? "L" : "M"}${n(p.x)} ${n(p.y)}`).join("")}" fill="none" stroke="${t.ink}" stroke-width="1.5" stroke-linejoin="round" opacity="${n(0.8 * shade(N))}"/>`);
         if (!dense) inner.push(`<text class="ex exl" style="--ex:${-rank(N) * ex}px;--o:${shade(N)};font-variant-numeric:tabular-nums" x="${n(pts.at(-1).x + 7)}" y="${n(pts.at(-1).y + 3)}" font-size="7.5" fill="${t.ink2}">${N}</text>`);
       }
       for (const s of x.stops) {
