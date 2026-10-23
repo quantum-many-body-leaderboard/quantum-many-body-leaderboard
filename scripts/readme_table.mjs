@@ -4,7 +4,7 @@
 // instances the same way.
 import fs from "node:fs";
 import path from "node:path";
-import { perSiteDivisor, perSiteLabel, isSampled, noErrorMetrics, methodLabel, methodName, recordEligible, stochasticExact } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, isSampled, noErrorMetrics, methodLabel, recordEligible, stochasticExact } from "./units.mjs";
 import { collect, recordOf, summarize, noRecordKey } from "./summary.mjs";
 import { citeCell, codeCell } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
@@ -161,9 +161,9 @@ function row(inst, label, cache) {
   // Each method carries its own source link, so the challenger is as checkable as the
   // record.
   const challenger = next
-    ? `${(next.energy / f).toFixed(q.decimals)}${marks(next)} (${gapAbove(rec, next, f, q.decimals)}) ${shorten(methodName(next) === next.method ? methodLabel(next) : methodName(next), 34)} ${citeCell(next, cache)}`
+    ? `${(next.energy / f).toFixed(q.decimals)}${marks(next)} (${gapAbove(rec, next, f, q.decimals)}) ${shorten(methodLabel(next), 34)} ${citeCell(next, cache)}`
     : "none";
-  return `| ${label} | **${q.text}**${marks(rec)}${stochasticExact(rec) ? " exact (stochastic)" : ""} | ${shorten(methodName(rec) === rec.method ? methodLabel(rec) : methodName(rec), 46)} ${citeCell(rec, cache)} | ${codeCell(rec)} | ${challenger} |`;
+  return `| ${label} | **${q.text}**${marks(rec)}${stochasticExact(rec) ? " exact (stochastic)" : ""} | ${shorten(methodLabel(rec), 46)} ${citeCell(rec, cache)} | ${codeCell(rec)} | ${challenger} |`;
 }
 
 function main() {

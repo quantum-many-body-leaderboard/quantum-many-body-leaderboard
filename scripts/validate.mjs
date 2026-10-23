@@ -4,7 +4,7 @@ import { expectedDof, expectedEinf, vScore, perSiteDivisor, groundStateExact, st
 import { FAMILIES } from "./views.mjs";
 import { detailIssue } from "./method_names.mjs";
 const FAMILY_NAMES = new Set([...FAMILIES.map(([f]) => f), "other"]);
-const issues = [], rounding = []; let rows = 0, checkedD = 0, checkedE = 0, checkedV = 0, checkedC = 0, checkedCov = 0, checkedS = 0;
+const issues = [], rounding = [], ansatzFamily = new Map(); let rows = 0, checkedD = 0, checkedE = 0, checkedV = 0, checkedC = 0, checkedCov = 0, checkedS = 0;
 for (const m of fs.readdirSync("data")) {
   const dir = path.join("data", m);
   if (!fs.statSync(dir).isDirectory()) continue;
@@ -14,11 +14,20 @@ for (const m of fs.readdirSync("data")) {
     for (const [i, r] of inst.rows.entries()) {
       rows++;
       const at = `${inst.instance_id}[${i}]`;
-      // Every row is named (scripts/method_names.mjs): a short name, a detail that may be
-      // empty, the published string, and a family the figures know.
+      // Every row is named (scripts/method_names.mjs): a method, an ansatz where it has one, a
+      // detail that may be empty, the published string, and a family the figures know.
       if (!r.method || typeof r.method_detail !== "string" || !r.method_as_published)
         issues.push(`METHOD ${at}: not named, published "${r.method_as_published ?? r.method}" (add it to scripts/method_names.mjs)`);
       else if (!FAMILY_NAMES.has(r.family)) issues.push(`FAMILY ${at}: "${r.family}" for "${r.method}"`);
+      // A VMC row names its wave function (method_names.mjs, splitName), and one ansatz is in
+      // one family on every VMC row (2026-10-23).
+      if (r.method === "VMC" && !r.ansatz) issues.push(`ANSATZ ${at}: VMC row without an ansatz, published "${r.method_as_published}"`);
+      if (r.ansatz != null && (typeof r.ansatz !== "string" || !r.ansatz)) issues.push(`ANSATZ ${at}: ${JSON.stringify(r.ansatz)}`);
+      if (r.method === "VMC" && r.ansatz) {
+        const f0 = ansatzFamily.get(r.ansatz);
+        if (f0 && f0 !== r.family) issues.push(`ANSATZ ${at}: "${r.ansatz}" in family "${r.family}", elsewhere "${f0}"`);
+        else ansatzFamily.set(r.ansatz, r.family);
+      }
       // Symmetry and extrapolation in the detail are written in slots (method_names.mjs).
       const di = typeof r.method_detail === "string" ? detailIssue(r.method_detail) : null;
       if (di) issues.push(`DETAIL ${at}: ${di} in "${r.method_detail}"`);

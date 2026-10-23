@@ -10,6 +10,11 @@
 // entry for a row replaces the earlier one. Runs after the overlays, on the final instance ids.
 import fs from "node:fs";
 import path from "node:path";
+import { nameBeforeSplit } from "./method_names.mjs";
+import { methodLabel } from "./units.mjs";
+// An entry names the row by its method as it was when the pass ran: the short name before
+// the 2026-10-23 split, or the method, or the label ("VMC (ViT)") after it.
+const sameMethod = (r, m) => m === nameBeforeSplit(r) || m === r.method || m === methodLabel(r);
 
 const DIR = "passes/code";
 const PASSES = fs.existsSync(DIR) ? fs.readdirSync(DIR).filter(f => /^code-links-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort() : [];
@@ -45,7 +50,7 @@ for (const e of latest.values()) {
   const entry = instances.get(e.instance_id);
   // The method tells apart two rows of one source at the same energy (a GFMC and an ACE row);
   // rows that share all four (two stripe orientations of one method) take the same entry.
-  const rows = entry?.inst.rows.filter(r => r.energy === e.energy && refKey(r.reference) === e.reference_key && r.method === e.method) ?? [];
+  const rows = entry?.inst.rows.filter(r => r.energy === e.energy && refKey(r.reference) === e.reference_key && sameMethod(r, e.method)) ?? [];
   if (!rows.length) { unmatched.push(`${e.instance_id} ${e.energy} ${e.method} ${String(e.reference_key).slice(0, 50)}`); continue; }
   if (!e.url || !e.quote || !e.location) { problems.push(`${e.instance_id} ${e.energy}: linked without url, quote or location`); continue; }
   for (const row of rows) {

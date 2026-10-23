@@ -55,26 +55,21 @@ export const boundLabel = r => stochasticExact(r) ? "exact (stochastic)" : (r.bo
 // row, and the rules written against it (the fallback of isSampled, the row id) keep reading it.
 export const publishedMethod = r => r.method_as_published ?? r.method;
 
-// A row's method as every surface prints it: the name, then what tells it apart from other
-// rows of that name: the bond dimension from `compute`, the detail, the symmetry sector. An
-// extrapolation's bond dimension is the largest it was fitted from, a cost and not the state,
-// so its detail says what went to the limit instead.
-// The method a table names. A variational wave function optimised by Monte Carlo sampling
-// (neural network or classic ansatz) reads "VMC" (2026-10-22); its ansatz and detail stay in
-// `method` and `method_detail` and show in methodLabel (hover text, figures).
-const VMC_FAMILIES = new Set(["classic VMC", "RBM", "RNN", "CNN / ResNet", "transformer / ViT", "backflow / Pfaffian", "other NQS"]);
-const VMC_HYBRIDS = new Set(["CNN-MPS", "T-MPS", "PEPS + CNN"]);
-export function methodName(r) {
-  if (r.method === "Hartree-Fock") return r.method;
-  return VMC_FAMILIES.has(r.family) || VMC_HYBRIDS.has(r.method) ? "VMC" : r.method;
-}
-
-export function methodLabel(r) {
+// A row's method as every surface prints it: the algorithm and the ansatz, "VMC (ViT)",
+// "FN-DMC (SJB)", or the algorithm alone where it has none ("ED", "DMRG"). Rows that differ
+// only in their detail read the same; the detail is methodDetail, shown on hover (2026-10-23).
+export const methodLabel = r => r.ansatz ? `${r.method} (${r.ansatz})` : r.method;
+// What tells a row apart from others of the same label: the bond dimension from `compute`,
+// the detail, the symmetry sector. An extrapolation's bond dimension is the largest it was
+// fitted from, a cost and not the state, so its detail says what went to the limit instead.
+export function methodDetail(r) {
   const bd = r.bound_type !== "extrapolated" && r.compute?.bond_dimension;
-  const parts = [bd != null && bd !== false && `bond dimension ${bd}`,
-    r.method_detail, r.sector && `sector ${r.sector}`].filter(Boolean);
-  return parts.length ? `${r.method} (${parts.join(", ")})` : r.method;
+  return [bd != null && bd !== false && `bond dimension ${bd}`, r.method_detail, r.sector && `sector ${r.sector}`]
+    .filter(Boolean).join(", ");
 }
+// The name a wave function or method is known by alone, for figure labels and the
+// architecture table: the ansatz, else the method.
+export const ansatzName = r => r.ansatz ?? r.method;
 
 // Sector-resolved exact diagonalization: VarBench's "Exact Diagonalization 0.C1.A -1" is the
 // lowest state in one symmetry sector, not the ground state, so an unconstrained variational

@@ -12,6 +12,7 @@
 // fixed order, an ordinal blue ramp, recessive greys).
 import fs from "node:fs";
 import { rowId } from "./summary.mjs";
+import { ansatzName } from "./units.mjs";
 
 export const THEMES = {
   light: {
@@ -192,12 +193,11 @@ export const logScale = (v0, v1, p0, p1) => v => p0 + ((log(Math.max(v, v0)) - l
 const SUP = { "-": "⁻", 0: "⁰", 1: "¹", 2: "²", 3: "³", 4: "⁴", 5: "⁵", 6: "⁶", 7: "⁷", 8: "⁸", 9: "⁹" };
 export const pow10 = k => "10" + String(k).split("").map(c => SUP[c]).join("");
 
-// A row's method, short enough to label a mark with: the method name, abbreviated where it
+// A row's method, short enough to label a mark with: the ansatz name (the method's where it has none), abbreviated where it
 // runs long, with its detail when both fit in a label ("GCNN (1 Lanczos step)"), and for a
 // projection the trial state it projects ("ACE + fixed-node"). Says when the number is not a
 // bound.
-const ABBREVIATED = { "Hierarchical backflow": "HB", "Residual hierarchical backflow": "RHB",
-  "Transformer backflow": "Transformer BF", "Tensor backflow": "Tensor BF", "Slater-backflow-Jastrow": "SBJ" };
+const ABBREVIATED = { "residual HB": "RHB", "transformer BF": "Transformer BF", "tensor BF": "Tensor BF" };
 const LABEL_MAX = 26;
 // A row QMBL computed itself (DATA.md, computed_by) is marked "QMBL" in its label, in every
 // figure, so it is never read as a published result.
@@ -211,7 +211,9 @@ const slotLabel = p => {
   return named.length ? named.join(", ") : key;
 };
 export function shortLabel(r) {
-  let s = ABBREVIATED[r.method] ?? r.method;
+  // A projection is named by its algorithm, unless it is a fixed-node one named by its trial state below.
+  const name = r.bound_type === "projected" ? r.method : ansatzName(r);
+  let s = ABBREVIATED[name] ?? name;
   const qmbl = r.computed_by === "qmbl";
   const pieces = (r.method_detail || "").split("; ").filter(Boolean);
   if (qmbl) {
@@ -230,8 +232,7 @@ export function shortLabel(r) {
     if (r.method_detail && withDetail.length <= LABEL_MAX) s = withDetail;
   }
   if (r.bound_type === "projected") {
-    const trial = (r.method_detail || "").match(/^trial state: ([^,]+)/)?.[1];
-    s = /fixed.?node/i.test(r.method) ? `${trial ?? "trial state"} + fixed-node` : `${s}, projected`;
+    s = /^FN-/.test(r.method) ? `${r.ansatz ?? "trial state"} + fixed-node` : `${s}, projected`;
   }
   if (r.bound_type === "extrapolated") s += ", extrapolated";
   if (r.bound_type === "approximate") s += ", approximate";

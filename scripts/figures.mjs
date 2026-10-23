@@ -368,7 +368,7 @@ write("records-by-family", t => {
     parts.push(text(X(f.hard) + 6, y + bh + 12.5, String(f.hard), { size: 11.5, fill: t.ink2, nums: true }));
   });
   parts.push(`<path d="M${n(left) - 0.5} ${n(top - 6)}V${n(top + fams.length * pitch - 8)}" stroke="${t.grid}" stroke-width="1"/>`);
-  const fn = footnote(t, "Each method name belongs to one family (scripts/method_names.mjs). Some names fit more than one family, so the families are approximate.",
+  const fn = footnote(t, "Each ansatz belongs to one family, and a row without one goes by its method (scripts/method_names.mjs). Some ansatze fit more than one family, so the families are approximate.",
     top + fams.length * pitch + 16);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, "Records by ansatz family",

@@ -16,7 +16,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { perSiteDivisor, perSiteLabel, recordEligible, boundLabel, stochasticExact, publishedMethod, methodLabel, methodName } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, recordEligible, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail } from "./units.mjs";
 import { collect, recordOf, summarize, rowId } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
@@ -252,13 +252,12 @@ function citeHtml(row) {
 
 // The method cell. A row QMBL computed names the hardware it ran on, since the same
 // configuration can stand twice, once per machine (checks/cost/README.md).
-// A VMC row reads "VMC"; the ansatz and its detail show on hover, and for a row QMBL
-// computed also the hardware it ran on.
+// The cell reads "method (ansatz)" (units.mjs methodLabel); the detail shows on hover, and
+// for a row QMBL computed also the hardware it ran on.
 function methodCell(r) {
-  const name = methodName(r);
   const hw = r.computed_by === "qmbl" && r.compute?.device;
-  const hover = hw ? `${methodLabel(r)}, ${hw}` : methodLabel(r);
-  return name === r.method && !hw ? esc(name) : `<span title="${esc(hover)}">${esc(name)}</span>`;
+  const hover = [methodDetail(r), hw].filter(Boolean).join(", ");
+  return hover ? `<span class="m" title="${esc(hover)}">${esc(methodLabel(r))}</span>` : esc(methodLabel(r));
 }
 
 // The code column: the code behind the row where its source names one (DATA.md), else, in
@@ -843,9 +842,9 @@ function searchIndex(inst, name) {
   if (inst.model === "Impurity") for (const [re, words] of IMPURITY_WORDS) if (re.test(inst.lattice)) add(words);
   if (!recordOf(inst)) add("no record");
   const methods = new Set(inst.rows.map(r => {
-    // The short name and detail, and the string as published, so a search for a paper's own
-    // spelling ("HB K=1", "Exact Diagonalization") still finds the row.
-    const text = `${methodLabel(r)} ${methodText(publishedMethod(r))}`;
+    // The method, ansatz and detail, and the string as published, so a search for a paper's
+    // own spelling ("HB K=1", "Exact Diagonalization") still finds the row.
+    const text = `${methodLabel(r)} ${methodDetail(r)} ${methodText(publishedMethod(r))}`;
     const aliases = METHOD_WORDS.filter(([re]) => re.test(text)).map(([, words]) => words);
     if (r.bound_type === "exact" || r.bound_type === "extrapolated") aliases.push(r.bound_type);
     const words = new Set();
@@ -870,7 +869,7 @@ function distanceCell(r, inst) {
 }
 
 // Every row of the instance, the record marked, with sigma and the distance to the record.
-// Var(E), the V-score and the method detail are on the instance page.
+// Var(E) and the V-score are on the instance page; the method detail shows on hover.
 function allRows(inst) {
   const rec = recordOf(inst);
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
@@ -1051,7 +1050,7 @@ function rowTable(rows, inst) {
       <td class="num">${sigma == null ? '<span class="muted">n/a</span>' : sigma.toExponential(1)}</td>
       <td class="num">${r.energy_variance == null ? '<span class="muted">n/a</span>' : r.energy_variance.toExponential(2)}</td>
       <td class="num">${r.v_score == null ? '<span class="muted">n/a</span>' : r.v_score.toExponential(1)}</td>
-      <td>${esc(methodLabel(r))}${badges ? `<div class="badges">${badges}</div>` : ""}</td>
+      <td>${methodCell(r)}${badges ? `<div class="badges">${badges}</div>` : ""}</td>
       <td>${citeHtml(r)}</td>
       <td class="code">${codeHtml(r)}</td>
       <td class="num">${yearCell(r) ?? '<span class="muted">n/a</span>'}</td>
@@ -1101,7 +1100,7 @@ function instancePage(inst) {
         <p class="eyebrow">Record</p>
         <p class="big"><span class="num">${quoteRow(rec, inst).text}</span>
           <span class="unit">${perSiteLabel(inst)}</span></p>
-        <p>${esc(methodLabel(rec))}</p>
+        <p>${methodCell(rec)}</p>
         <p class="muted">${citeHtml(rec)} &middot; ${rec.bound_type === "exact"
           ? stochasticExact(rec)
             ? "exact (stochastic) energy: sign-problem-free QMC, exact within its error bar"
@@ -1239,7 +1238,7 @@ function apiInstance(inst) {
     per_site_divisor: f,
     per_site_label: perSiteLabel(inst),
     record: rec ? {
-      energy: rec.energy, sigma: rec.sigma, method: rec.method, method_detail: rec.method_detail, reference: rec.reference,
+      energy: rec.energy, sigma: rec.sigma, method: rec.method, ansatz: rec.ansatz ?? null, method_detail: rec.method_detail, reference: rec.reference,
       bound_type: rec.bound_type, energy_per_site: f == null ? null : rec.energy / f,
     } : null,
     no_record_reason: rec ? null : noRecordReason(inst),
@@ -1565,6 +1564,8 @@ tr.more figure.chart { margin: 0.4rem 0 0.8rem; }
 @media (prefers-color-scheme: dark) {
 ${FIG_DARK}
 }
+/* A method label with a detail behind it (units.mjs methodDetail), shown on hover. */
+span.m[title]:not([title=""]) { text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
 ` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS : "");
 // /open-problems/'s own rules and those of its figure switches, in open-problems.css, which only
 // that page links: every page carries the menu button, but not that page's figures.
@@ -1625,7 +1626,7 @@ write("api/instances.json", JSON.stringify(instances.map(i => {
     n_sites: i.n_sites, boundary: i.boundary ?? null, params: i.params ?? {}, rows: i.rows.length,
     url: `https://qmbl.org${instUrl(i)}`, json: `https://qmbl.org${jsonUrl(i)}`,
     record_energy_per_site: rec && f != null ? rec.energy / f : null,
-    record_method: rec?.method ?? null, record_method_detail: rec?.method_detail ?? null,
+    record_method: rec?.method ?? null, record_ansatz: rec?.ansatz ?? null, record_method_detail: rec?.method_detail ?? null,
     record_bound_type: rec?.bound_type ?? null,
   };
 }), null, 2) + "\n");
