@@ -502,7 +502,7 @@ const otherEntry = f => [f.name, f.title, "Energies on Hamiltonians published at
 const stopEntry = (f, facet, s) => [s.name, [f.title, facet.label, f.axis && `${f.axis} = ${s.label}`].filter(Boolean).join(", "),
   "Energy against the number of sites. Colour shows the bound type; every result is a dot."];
 const stripEntry = f => [f.strip, `${f.title}: the lowest energy at each ${f.axis} and size`,
-  "One dot per size at each stop, its lowest energy, darker for larger sizes. The number over each stop is its count of energies; the marked stop is shown below."];
+  "One line per size, darker for larger sizes. The number over each stop is its count of energies; the marked stop is shown below."];
 
 // Every slider on the page with its id, so that the HTML and the stylesheet agree.
 const SLIDERS = ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [] : figs.map((f, k) => ({ id: `slide-${j}-${k}`, f }))));
