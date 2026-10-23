@@ -97,11 +97,11 @@ const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body
 export function citeRef(row, cache = sources()) {
   if (row.computed_by === "qmbl") {
     const commit = (row.reference || "").match(/commit ([0-9a-f]{7,40})/)?.[1];
-    return { text: "QMBL run", url: commit ? `${REPO}/tree/${commit}/checks/cost` : `${REPO}/tree/main/checks/cost` };
+    return { text: "QMBL", url: commit ? `${REPO}/tree/${commit}/checks/cost` : `${REPO}/tree/main/checks/cost` };
   }
   // QMBL's own exact diagonalisations: "QMBL, checks/<dir>/ (...)" links to that folder.
   const check = (row.reference || "").match(/^QMBL, (checks\/[\w.-]+)\/?/);
-  if (check) return { text: "QMBL check", url: `${REPO}/tree/main/${check[1]}` };
+  if (check) return { text: "QMBL", url: `${REPO}/tree/main/${check[1]}` };
   const s = sourceOf(row, cache);
   if (s) return { text: citeText(s), url: citeUrl(s) };
   const ref = row.reference || "";
