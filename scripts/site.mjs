@@ -17,7 +17,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES } from "./units.mjs";
-import { collect, classBest, shownBest, bestTagOf, lowestOf, summarize, rowId } from "./summary.mjs";
+import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
@@ -1301,7 +1301,8 @@ function notFoundPage() {
 // with the old value: the exact energy, else the lowest unflagged energy of any class
 // (summary.mjs, lowestOf). llms.txt and api/qmbl.json mark them deprecated.
 const DEPRECATED = "Deprecated since 2026-10-23, kept for one release: `record` and `no_record_reason` in api/i/*.json, "
-  + "and `record_energy_per_site`, `record_method`, `record_method_detail` and `record_bound_type` in api/instances.json. "
+  + "`record_energy_per_site`, `record_method`, `record_method_detail` and `record_bound_type` in api/instances.json, "
+  + "and the `records` block in api/summary.json. "
   + "They hold the old value, the exact energy or else the lowest unflagged energy of any class. Use `best` (api/i) and "
   + "`exact_*` / `best_<class>_*` (api/instances.json): an instance has no single record (RULES.md section 6).";
 function apiInstance(inst) {
@@ -1719,7 +1720,21 @@ for (const inst of instances) {
   write(`api/i/${inst.instance_id}.json`, JSON.stringify(apiInstance(inst), null, 2) + "\n");
 }
 
-write("api/summary.json", JSON.stringify(summary, null, 2) + "\n");
+// The API's summary keeps the `records` block for one release (DEPRECATED above), counted as
+// until 2026-10-23: per instance the exact energy or else the lowest unflagged energy of any
+// class (lowestOf), by its bound type, and why an instance has none (noRecordKey).
+// data/_summary.json no longer carries it.
+function deprecatedRecords() {
+  const r = { held: 0, held_by_exact: 0, held_by_variational: 0, held_by_projected: 0, held_by_extrapolated: 0, held_by_approximate: 0,
+    none_flagged: 0, none_sector_only: 0, none_unclassified: 0, none_no_rows: 0 };
+  for (const inst of instances) {
+    const rec = lowestOf(inst);
+    if (rec) { r.held++; r[`held_by_${rec.bound_type}`]++; } else r[`none_${noRecordKey(inst)}`]++;
+  }
+  return r;
+}
+const apiSummary = { ...summary, records: deprecatedRecords() };
+write("api/summary.json", JSON.stringify(apiSummary, null, 2) + "\n");
 write("api/instances.json", JSON.stringify(instances.map(i => {
   const b = classBest(i);
   const f = perSiteDivisor(i);
@@ -1741,7 +1756,7 @@ write("api/qmbl.json", JSON.stringify({
   url: "https://qmbl.org/", repository: REPO, license: "Apache-2.0", doi: DOI,
   built: BUILT, note: "Individual energies should be cited to the primary paper named on the row.",
   deprecated: DEPRECATED,
-  summary, instances: instances.map(apiInstance),
+  summary: apiSummary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 
 const urls = ["/", "/instances/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL] : []), ...instances.map(instUrl)];
