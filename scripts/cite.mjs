@@ -93,21 +93,20 @@ export const paperYear = (row, cache = sources()) =>
 // as HTML; building the text here keeps the citation under a number identical in both.
 // A row QMBL computed cites the code that produced it, at the commit that ran, so it can be rerun.
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
+const QMBL_PAPER = { text: "Zerweck & Carrasquilla (2026)", url: "https://arxiv.org/abs/2610.22387" };
 
 export function citeRef(row, cache = sources()) {
-  if (row.computed_by === "qmbl") {
-    const commit = (row.reference || "").match(/commit ([0-9a-f]{7,40})/)?.[1];
-    return { text: "QMBL", url: commit ? `${REPO}/tree/${commit}/checks/cost` : `${REPO}/tree/main/checks/cost` };
-  }
-  // QMBL's own exact diagonalisations: "QMBL, checks/<dir>/ (...)" links to that folder.
-  const check = (row.reference || "").match(/^QMBL, (checks\/[\w.-]+)\/?/);
-  if (check) return { text: "QMBL", url: `${REPO}/tree/main/${check[1]}` };
+  // A number QMBL computed (a cost run or an exact check) cites the QMBL paper (CITATION.cff,
+  // preferred-citation); the code column links the code and how to rerun it.
+  if (row.computed_by === "qmbl" || /^QMBL, checks\//.test(row.reference || "")) return QMBL_PAPER;
   const s = sourceOf(row, cache);
   if (s) return { text: citeText(s), url: citeUrl(s) };
   const ref = row.reference || "";
   const code = ref.match(/\[code\]\((https?:\/\/[^\s)]+)\)/);
   if (code) {
     const vb = varbenchPaper(row, cache);
+    // The code column carries the script; the source cell then names the paper only.
+    if (vb && row.artifacts?.code) return { text: citeText(vb), url: citeUrl(vb) };
     return vb ? { text: "run script", url: code[1], also: { text: citeText(vb), url: citeUrl(vb) } }
       : { text: "run script", url: code[1], note: "no paper cited" };
   }
@@ -127,6 +126,43 @@ export function citeRef(row, cache = sources()) {
   const plain = ref.replace(QUOTING, "").trim();
   const cut = plain.length <= 40 ? plain : plain.slice(0, 40).replace(/[\s,;:.]+\S*$/, "") + "…";
   return { text: cut || "n/a", url, note };
+}
+
+// The code behind a row (DATA.md, "The code behind a row") as a short label + url, or null.
+// A file or folder in a repository reads "run script" ("run scripts" for a folder); QMBL's own
+// code reads "QMBL code"; a repository reads owner/repo; a Zenodo record reads "Zenodo <id>".
+export function codeRef(row) {
+  const a = row.artifacts;
+  if (!a?.code) return null;
+  const url = a.code;
+  if (row.computed_by === "qmbl") return { text: "rerun (QMBL code)", url: `${REPO}/blob/main/checks/cost/README.md#rerun-a-row` };
+  if (url.startsWith(REPO)) return { text: "QMBL code", url };
+  if (a.scope === "model") return { text: "model code", url };
+  if (a.script) return { text: a.script.endsWith("/") ? "run scripts" : "run script", url };
+  const gh = url.match(/^https:\/\/(?:github\.com|gitlab\.com)\/([^/]+)\/([^/#?]+)/);
+  if (gh) return { text: `${gh[1]}/${gh[2].replace(/\.git$/, "")}`, url };
+  const zen = url.match(/zenodo[./](?:org\/records\/)?(\d+)$/);
+  if (zen) return { text: `Zenodo ${zen[1]}`, url };
+  return { text: new URL(url).hostname.replace(/^www\./, ""), url };
+}
+
+// The libraries a row's source says its authors used, for a row with no code of its own
+// (DATA.md, "The code behind a row"), or null. Each reads as its name and, where the source
+// states one, its version. The cell shows the first two and "+N" for the rest; `all` names
+// every one.
+export function libraryRef(row) {
+  const a = row.artifacts;
+  if (a?.code || !a?.libraries?.length) return null;
+  const libs = a.libraries.map(l => ({ text: l.version ? `${l.name} ${l.version}` : l.name, url: l.url }));
+  return { shown: libs.slice(0, 2), more: Math.max(0, libs.length - 2), all: libs.map(l => l.text).join(", ") };
+}
+
+// Markdown for the code cell: the label linked, else "uses" and the libraries, else empty.
+export function codeCell(row) {
+  const c = codeRef(row);
+  if (c) return `[${c.text}](${c.url})`;
+  const l = libraryRef(row);
+  return l ? `*uses ${l.shown.map(x => `[${x.text}](${x.url})`).join(", ")}${l.more ? ` +${l.more}` : ""}*` : "";
 }
 
 // Markdown for the source cell.

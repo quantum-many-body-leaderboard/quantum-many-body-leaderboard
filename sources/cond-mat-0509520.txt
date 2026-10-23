@@ -1,0 +1,651 @@
+                  Magnetism  and  superconductivity  of  strongly  correlated electrons
+                                                       on  the triangular  lattice
+
+                         C´edric  Weber,1  Andreas  Laeuchli,1  Fr´ed´eric  Mila,2  and  Thierry  Giamarchi3
+      1Institut  Romand  de  Recherche  Num´erique  en  Physique  des  Mat´eriaux  (IRRMA),  CH-1015  Lausanne,  Switzerland
+                               2Institute  of  Theoretical  Physics,  EPFL,  CH-1015  Lausanne,  Switzerland
+                     3DPMC,  University  of  Geneva,  Quai  Ernest  Ansermet  24,  CH-1211  Geneva,  Switzerland
+                                                             (Dated:  January 3, 2019)
+                   We  investigate  the  phase  diagram  of  the t−J  Model  on  a  triangular  lattice  using  a  Variational
+                Monte-Carlo  approach.    We  use  an  extended  set  of  Gutzwiller  projected  fermionic  trial  wave-
+                functions  allowing  for  simultaneous  magnetic  and  superconducting  order  parameters.   We  obtain
+                energies  at  zero  doping  for  the  spin-1/2  Heisenberg  model  in  very  good  agreement  with  the  best
+                estimates.   Upon  electron  doping  (with  a  hopping  integral t <  0)  this  phase  is  surprisingly  stable
+                variationally up ton ≈ 1.4, while thedx2−y2 +idxy  order parameter is rather weak and disappears
+                at n ≈ 1.1.  For hole doping however the coplanar  magnetic state  is almost  immediately  destroyed
+                and dx2−y2 +idxy  superconductivity survives down  to n ≈ 0.8.  For  lower n,  between  0.2  and  0.8,
+                we ﬁnd saturated ferromagnetism.  Moreover, there is evidence for a narrow spin density wave phase
+                around n ≈  0.8.  Commensurate  ﬂux  phases  were  also  considered,  but  these  turned  out  not  to  be
+                competitive at ﬁnite doping.
+
+                PACS numbers:  74.72.-h, 71.10.Fd, 74.25.Dw
+
+
+                     I.     INTRODUCTION                                        the geometry of the triangular lattice.  At half-ﬁlling, the
+                                                                                lattice is  a  frustrated magnet:  the  competition between
+   The  discovery  of  high-Tc  superconductivity,  and  the                    the  exchange  integrals  leads  to  unsatisﬁed  bonds.   The
+observation2  that  strong  correlations  are  important  in                    original expectation is  that quantum ﬂuctuations might
+connection  with  these  compounds  has  led  to  a  tremen-                    lead to a spin-liquid behavior.  However, at half-ﬁlling, it
+dous  interest  in  understanding  strongly  correlated  elec-                  appears by  now that  the  spin-1/2 triangular lattice  has
+tron  physics.   In  particular  the  two  simplest  models  for                a  three  sublattice  coplanar  magnetic  order7,9,18.   Quan-
+strongly  correlated  electrons,  namely  the  Hubbard  and                     tum  ﬂuctuations  are  nevertheless  strong,  and  the  sub-
+t−J  models, have been the subject of intensive studies.                        lattice  magnetization  is  strongly  reduced  due  to  these
+   For  example,  one  question  of  crucial  interest  is  the                 ﬂuctuations.  It is therefore expected that the magnetism
+interplay  between  superconductivity  and  antiferromag-                       is  fragile  and  quickly  destroyed  by  doping  and  that  a
+netism  close  to  the  insulating  phase  in  the t−J  model.                  strong  RVB  instability  is  present.   Indeed,  RVB  mean
+The  ground  state  of  this  model  on  the  square  lattice                   ﬁeld  theories4,22,32  were  used  for  the t−J  model,  and
+is  known to  be  antiferromagnetic at  half-ﬁlling  and  one                   dx2−y2 +idxy pairing was found over a signiﬁcant range of
+of  the  important  questions  is  what  happens  upon  dop-                    doping.  The  same approach and questions that arise in
+ing.   All  the  approaches  to  these  strong  coupling  prob-                 the framework of thet−J model on the square lattice are
+lems involve approximations, and it is sometimes diﬃcult                        thus very relevant in the present frustrated lattice.  The
+to  distinguish  the  artefact  due  to  approximations  from                   success  of  the  variational  approach  for  the  square  lat-
+the  true  features  of  the  model.   However,  for  the  case                 tice suggests to investigate the  same class of variational
+of  the  square  lattice,  both  the  variational  Monte-Carlo                  wavefunctions for the triangular one.
+method (VMC)14,35 and mean-ﬁeld theories21 have found                              Besides  its  own  theoretical  interest,  another  motiva-
+a  d-wave  superconducting  phase  in  the  the t−J  model.                     tion for understanding the  physics of electrons on a  tri-
+A  wavefunction  combining  antiferromagnetism  and  su-                        angular  lattice  is  provided  by  the  recent  discovery  of
+perconductivity was proposed for the Hubbard and t−J                            superconductivity  at  low  temperature  in  the  CoO2  lay-
+models12,13,  allowing to  reconcile the  variational results                   ered  compounds30  (NaδCoO2.yH2O).  In  these  systems,
+between these two models.  This wavefunction allowed for                        superconductivity is observed in a range of electron dop-
+an excellent variational energy and order parameter and                         ing δ  between 25% and 33%26.  NaδCoO2.yH2O consists
+a  range  of  coexistence  between  superconductivity  and                      of  two  dimensional  CoO2  layers  separated  by  thick  in-
+anti-ferromagnetism  was  found.   Further  investigations                      sulating  layers  of  Na+  ions  and  H2O  molecules.    It  is
+of  this  class  of  wavefunctions  has  been  very  fruitful  for              a  triangular  net  of  edge  sharing  oxygen  octahedra;  Co
+the square lattice.  This allowed to successfully compare                       ions  are  at  the  center  of  the  octahedra  forming  a  2D
+to  some  of  the  experimental  features  with  the  high-Tc                   triangular  lattice.   Takada  et  al.30  speculated  that  this
+cuprates3,23, even if of course many questions remain re-                       system might be viewed as a doped spin-1/2 Mott insu-
+garding the nature of the true ground state of the system.                      lator.   Based  on  LDA  calculations28,  a  simpliﬁed  single
+   The resonating valence bond (RVB) scenario proposed                          band t−J  picture  with  negative t  and  electron  doping
+by  Anderson2  was  argued  to  be  even  more  relevant  in                    was put forward4,22,32.  Such systems might thus  be  the
+                                                                                                                                                      2
+
+long-sought low-temperature resonating valence bond su-                       term J  between  nearest  neighbor  sites  (denoted  ⟨i,j⟩)
+perconductor, on a lattice which was at the basis of An-                      of  a  triangular  lattice.    Si  denotes  the  spin  at  site i,
+derson’s original ideas on a possible quantum spin liquid                     Si  =   12c†i,α⃗σα,βci,β  and ⃗σ  is  the  vector  of  Pauli  matri-
+state1,11.                                                                    ces. Ht−J  is  restricted  to  the  subspace  where  there  are
+  We  propose  in  this  paper  to  study  the t−J   model                    no doubly occupied sites.  In order to simplify the connec-
+within  the  framework  of  the  Variational  Monte-Carlo                     tion to the Cobaltates we sett = −1 in the following and
+(VMC)   method,   which   provides   a   variational   upper                  present the  results  as  a  function  of  the  electron density
+bounds for the ground state energy.  In contrast to mean-                     n ∈ [0, 2], half-ﬁlling corresponding to n = 1. n> 1 cor-
+ﬁeld theory, it has the advantage of exactly treating the                     responds to at−J model at ˜n = 2−n fort = 1, by virtue
+no double-occupancy constraint.  VMC using simple RVB                         of a particle-hole transformation.  In the ﬁrst part of this
+wave-functions has been used for the triangular lattice34                     section, we emphasize on the method to construct a vari-
+and it was found thatdx2−y2 +idxy  superconductivity is                       ational wave-function containing both superconductivity
+stable over a large range of doping.  However, in the previ-                  and non-collinear magnetism.  The wave-function allows
+ous study the fact that the t−J  is magnetically ordered                      to  consider  3-sublattice  magnetism,  however,  since  the
+at  half-ﬁlling  was  not  taken  into  account.    We  expect                latter wavefunction is restricted to a 3 site supercell, we
+that  the  frustration  in  the  triangular  lattice  may  lead               brieﬂy  comment  on  a  second  simpler  variational  wave-
+to  a  richer  phase  diagram  and  to  many  diﬀerent  insta-                function  type,  which  allows  to  describe  commensurate
+bilities.  We  thus  propose  here  to  study  extended  wave-                spin  order.  In  the  second part  of the  section,  we  deﬁne
+functions  containing  at  the  same  time  magnetism,  ﬂux                   the relevant instabilities and the corresponding order pa-
+phase and RVB instabilities, in a similar spirit as for the                   rameters.
+square lattice12,13,  in  order to  study  in  detail  the  inter-
+play between frustrated magnetism and superconductiv-
+ity.  Given the non-collinear nature of the magnetic order                                    A.     Variational  wave-function
+parameter  compared  to  the  case  of  the  square  lattice,
+the  task  is  however  much  more  complicated.   We  thus                      In order to study this model we use a variational wave-
+present  in  this  work  a  general  mean-ﬁeld  Hamiltonian                   function  built  out  of  the  ground  state  of  the  following
+which takes into account the interplay between magnetic,                      mean-ﬁeld like Hamiltonian:
+RVB  and  ﬂux-phase  instabilities.   The  resulting  varia-                                        (                          )
+tional wave-function is sampled with an extended VMC,                            HMF  =   ∑          −teiθσi,jc†iσcjσ +h.c.
+which  uses  Pfaﬃan  updates  rather  than  the  usual  de-                                 ⟨i,j⟩,σ      (                               )
+terminant updates.  We show that the interplay between                                      +    ∑         {∆σ,σ′}i,jc†
+the  diﬀerent  instabilities  leads  to  a  faithful  representa-                                                         iσc†jσ′ +h.c.
+tion  of  the  ground-state at  half-ﬁlling,  and  we  also  ﬁnd                               ⟨i,j⟩,σ,σ′
+good  variational  energies  upon  doping.   To  benchmark                                                        + ∑    hi · Si −µ ∑ni,σ    (2)
+our  wave-function,  we  carry  out  exact  diagonalizations                                                          i                 i,σ
+on  a  small  12  sites  cluster  and  compare  the  variational              HMF   contains  at  the  same  time  BCS  pairing  (∆i,j  =
+energies  and  the  exact  ones.   Finally,  a  commensurate                  {∆σ,σ′}i,j),  an  arbitrary  external  magnetic  ﬁeld  (hi),
+spin density wave is considered, and is shown to be rele-
+vant for the case of hole doping.                                             and arbitrary hopping phases (θσi,j), possibly spin depen-
+  The  outline  of  the  paper  is  as  follows:    in  Sec.  II              dent.   These  variational  parameters  are  unrestricted  on
+we  present  the  model  and  the  numerical  technique.   In                 the A,B,C  sites  and  the  corresponding  bonds  of  a  3-
+Sec. III we show the variational results both for the case                    site supercell, as shown in Fig. 1.  We allow both singlet
+of  hole  and  electron  doping.  Finally  Sec.  IV  is  devoted              (∆(S=0)i,j     )  and  general  triplet  (∆(S=1)i,j     )  pairing  symme-
+to the summary and conclusions.                                               tries to be present.  They correspond to choosing:(     0  ψi,j)
+
+                                                                                                  ∆(S=0)i,j       =−ψi,j     0
+               II.     MODEL  AND  METHOD                                                                       (ψ2i,j ψ1i,j   )                         (3)
+  We study the t−J  model on the triangular lattice de-                                           ∆(S=1)i,j       =ψ1i,j ψ3i,j
+ﬁned by the Hamiltonian:                                                         Since HMF   is  quadratic  in  fermion  operators  it  can
+                         (                  )                                 be  solved by  a  Bogoliubov transformation.  In the  most
+  Ht−J  = −t  ∑           c†i,σcj,σ +h.c.                                     general case considered here, this gives rise to a 12 × 12
+                 ⟨i,j⟩,σ                                                      eigenvalue problem, which we solve numerically.  We then
+                                          (                     )             ﬁnd the ground state ofHMF
+                               +J ∑         Si · Sj − 14ninj         (1)                                                                
+                                     ⟨i,j⟩                                                                   ∑
+The model describes electrons hopping with an amplitude                           |ψMF ⟩     =     exp             a(i,j,σi,σj )c†iσic†jσj |0⟩    (4)
+t,  and  interacting  with  an  antiferromagnetic  exchange                                                i,j,σi,σj
+                                                                                                                                                        3
+
+                           A              B                                       The  above  mean  ﬁeld  Hamiltonian  and  wavefunction
+                                                                               contain  the  main  physical  ingredients  and  broken  sym-
+                                                                               metries  we  want  to  implement  in  the  wavefunction.   In
+                   B                               AC                          order to further improve the energy and allow for out of
+                                                                               plane  ﬂuctuations  of  the  magnetic  order  we  also  add  a
+                                                                               nearest-neighbor  spin-dependent  Jastrow19  term  to  the
+                                                                               wave-function:                                    
+
+           C              A              B               C                                         PJ  = expα ∑           SziSzj ,                      (8)
+                 a3     a2                                                                                            ⟨i,j⟩
+                                                                               whereα is an additional variational parameter.  Our ﬁnal
+                  B     a1        C              A                             wavefunction is thus:
+                                                                                                 |ψvar⟩ = PJ PSzPN PG |ψMF ⟩                   (9)
+FIG.  1:  3-site  supercell  of  the  triangular  lattice.  The  onsite        When α< 0 the Jastrow factor favors all conﬁgurations
+magnetic  variational  parameters  can  vary  independently  on                which belong to the ground state manifold of a classical
+each of the site A,B and C of the supercell.  The BCS pairing                  Ising  antiferromagnet  on  the  triangular  lattice.   Such  a
+as well as the ﬂux vary independently on each of the diﬀerent
+dashed bonds.                                                                  manifold  is  exponentially  large33,  and  this  Jastrow  fac-
+                                                                               tor thus provides a complementary source of spin ﬂuctu-
+                                                                               ations.
+Here a(i,j,σi,σj)  are  numerical  coeﬃcients.    Note  that                      In what follows we use the wavefunction (9) directly for
+|ψMF ⟩  has  neither  a  ﬁxed  number  of  particles  due  to                  the VMC, but we also examine improved wavefunctions
+the  presence  of  pairing,  nor  a  ﬁxed  total Sz  due  to  the              with respect to (9) that can be obtained by applying one
+non-collinear  magnetic  order.   Thus  in  order  to  use  it                 or more Lanczos steps5,15,16:
+for  the  VMC study  we  apply  to  it  the following  projec-                                      |1Ls⟩ = (1 +λHt−J) |ψvar⟩                       (10)
+tors:   PN  which  projects  the  wave-function  on  a  state                  with optimized29λ.  Since the calculation of Lanczos step
+with  ﬁxed  number  of  electrons  and  PSz  which  projects                   wave functions beyond the ﬁrst step is very time consum-
+the  wave-function on  the  sector  with  total Sz  =  0.   Fi-                ing, most of the results we will present here were obtained
+nally we discard all conﬁgurations with doubly occupied                        using a single Lanczos step.
+sites by applying the complete Gutzwiller projector PG.                           In  the  following,  to  clearly  indicate  which  wavefunc-
+The  wavefunction we  use as  an input  to  our variational                    tion  we  use,  we  will  denote  them  in  the  following  way:
+study is thus:                                                                 MF / J / nLs, where MF denotes the  ﬁelds present in
+   |ψvar⟩ = PGPSzPN |ψMF ⟩                                                     the mean-ﬁeld like HamiltonianHMF , J  is present if we
+                                                                           use  the  Jastrow  factor, n Ls  denotes  the  presence  and
+                                                          N/2                  the number of Lanczos steps  applied on top of the  bare
+                          ∑                                                    wave function.
+         = PGPSz                a(i,j,σi,σj)c†iσic†jσj       |0⟩    (5)         As   usual   with   the   VMC   procedure,   these   general
+                        i,j,σi,σj                                              wave  functions  are  now  used  to  minimize  the  expecta-
+Although the wavefunction (5) looks formidable, it can be                      tion  value  of  the  total  energy  ⟨Ht−J⟩  by  changing  the
+reduced to a form suitable for VMC calculations.  Using                        variational  parameters.   We  used  a  correlated  measure-
+                                                                               ment technique12,13,31 combined with parallel processing
+                     ⟨α| = ⟨0|ck1,σ1...ckN ,σN,                       (6)      to  smoothen  the  energy  landscape  and  use  a  steepest-
+we ﬁnd that                                                                    descent  type  routine  to  locate  the  minimum  of  energy.
+                                                                               We  then  deﬁne  the  condensation  energy ec  of  the  opti-
+           ⟨α |ψvar⟩ =Pf (Q)                                                   mal wave function as
+                  Qi,j =a(ki,kj,σi,σj ) −a(kj,ki,σj,σi)           (7)                                 ec =evar. −eGutzwiller,                       (11)
+
+wherePf (Q) denotes the Pfaﬃan of the matrix Q.  Using                         where eGutzwiller  is  the  energy  of  the  Gutzwiller  wave
+this last relation, the function (5) can now be evaluated                      function, i.e.  the fully projected Fermi sea at zero mag-
+numerically using a Monte Carlo procedure with Pfaﬃan                          netization.   In  some  cases  we  had  to  keep  a  small  BCS
+updates,  as  introduced in Ref.  8.  In the particular case                   pairing ﬁeld to avoid numerical instabilities.  Let us note
+where ak,l,↑,↑ =ak,l,↓,↓ = 0 and at Sz  = 0 (this happens                      that  the  linear  size  of  the  Q  matrix  is  two  times  larger
+if  the  BCS  pairing  is  of  singlet  type  and  the  magnetic               than in the simpler case of determinantal update VMC.
+order  is  collinear),  the  Pfaﬃan  reduces  to  a  simple  de-               Therefore our largest 108 sites  cluster with  Pfaﬃan up-
+terminant,  and  the  methods  becomes  equivalent  to  the                    dates  corresponds  roughly  to  a  200  sites  cluster  using
+standard Variational Monte-Carlo10 technique.                                  standard updates.
+                                                                                                                                                    4
+
+                  B.     Commensurate  order
+  Since  the  mean-ﬁeld  Hamiltonian  (2)  is  restricted  to                                         C                     A
+a  3  site  supercell,  we  investigated also a  second class of                                                 -
+mean-ﬁeld  Hamiltonians  based  on  collinear  commensu-                                                +               +
+rate structures, which are not contained in the previous
+Hamiltonian.  For this  type  of phase,  we  used a  simpler                                   A               B                   C
+mean-ﬁeld ansatz along the lines of Ref. 13.  The mean-                                                 -        -
+ﬁeld Hamiltonian written in k-space is                                                                          +
+                    (                                             )
+  HSDW  = ∑           (ǫk −µ)c†kσckσ +f(Q,σ)c†k+Qσckσ                                                 C                   A
+               k,σ                   (                       )
+                             + ∑       ∆kc†k↑c†−k↓ +h.c.       ,    (12)     FIG. 2:   The variational parameters hi  for the coplanar 120◦
+                                  k                                          antiferromagnetic order.  The spins lie in thex −y plane.  The
+where k does run over the  Brillouin zone of the original                    z-component  of  the  vector  chirality  (±1)  on  each  triangular
+triangular lattice,ǫk is the dispersion of the free electron                 plaquette forms a staggered pattern.
+Hamiltonian,  and  ∆k  is  the  Fourier  transform  of  ∆i,j.
+Depending on f(Q,σ), the ground state of the Hamilto-
+nian is a commensurate charge density wave (f(Q,σ) =                                 instability was rather small and visible only at half-
+f(Q)) or a spin density wave (f(Q,σ) =σf(Q)).                                        ﬁlling.
+  At  half-ﬁlling,  we  considered  also  several  commensu-
+rate ﬂux phases with 2π × qp  ﬂux per plaquette, using the                        •  a  translationally  invariant  superconducting  phase
+Landau gauge36 withp ∈ {2,..., 10} andq<p.  The one                                  with dx2−y2 +idxy  singlet pairing symmetry (d+),
+with the lowest energy was found to be the q = 1,p = 4,                              as  well  as  the dx2−y2  −idxy  (d−).   We  have  also
+as predicted theoretically24, giving an energy close to the                          looked extensively for triplet pairing for both elec-
+simple dx2−y2 +idxy  wave-function.  Upon  doping  how-                              tron and hole dopings and low J/|t| ≤ 0.4 on a 48
+ever  the  energy  of  such  commensurate  ﬂux  phases  are                          site cluster, but with no success.  The minimum en-
+rapidly  much  worse  than  the  energies  of  our  best  wave                       ergy was always found for singlet pairing symmetry.
+functions.   The  main  reason  for  this  poor  performance
+upon  doping  is  the  rather  bad  kinetic  energy  of  these                    •  a ferromagnetic state with partial or full polariza-
+wave functions.                                                                      tion (F ),
+
+                                                                                  •  a   commensurate   collinear   spin   density   wave17
+C.     Characterization  of  the  encountered instabilities                          (SDW )    instability    with    wavevector    QN      =
+                                                                                     (π, −π/√3).
+  By  minimizing  all  the  variational  parameters  of  the
+mean-ﬁeld  Hamiltonians  (2)  and  (12)  on  a  12  and  a  48
+site lattice, we ﬁnd that the relevant instabilities present                                      D.     Order  parameters
+at the mean ﬁeld level consist of:
+    •  a 120◦ coplanar antiferromagnetic order (AF ), rep-                      In order to characterize the phases described by the op-
+       resented in Fig. 2.                                                   timal wave functions after projection, we have calculated
+                                                                             the following observables:
+    •  a concomitant staggered spin ﬂux phase instability                         •  the  sublattice  magnetization  of  the  120◦  coplanar
+       (SFL) with:
+                                                                                     antiferromagnetic order:
+                          θi,i+a1,σ =  θσ                                                                   ∑‖‖‖‖                   ‖‖‖‖               (13)
+                          θi,i+a2,σ = −θσ                                                    MAF  =  1             ⟨ψvar|Si|ψvar⟩
+                          θi,i+a3,σ =  θσ.                                                              N     i     ⟨ψvar |ψvar⟩
+
+       These bond phase factors correspond to a spin cur-                            We have checked that the projected magnetization
+       rent  in  the z  direction  which  is  staggered  on  ele-                    has the correct 120◦ symmetry.  To simplify the cal-
+       mentary  triangles  of  the  triangular  lattice.    This                     culations, this expectation value has been sampled
+       instability  follows  rather  naturally,  since  the  120◦                    using wavefunctions without the projector PSz.  We
+       antiferromagnetic  state  itself  already  displays  the                      have checked that this gives the same result as the
+       same staggered spin currents (Si×Sj)z on the near-                            correlation function  limr→∞ √Si · Si+r  calculated
+       est neighbor bonds (see  Fig. 2).  The  eﬀect of this                         with the projector PSz.
+                                                                                                                                                                 5
+
+     •  thez component of the vector chirality (spin twist)                                -0.48
+       on nearest neighbor bonds:
+                        ∑    ⏐⏐⏐⏐⟨ψvar| (Si×Si+aα)z |ψvar⟩       ⏐⏐⏐⏐        (14)                                    d+
+            χ =   1                                                                        -0.50                     AF+d+ / J
+                  3N                   ⟨ψvar |ψvar⟩                                                                  AF+d++SFL / J
+                        i,α                                                                                          AF+d+ / J / 1Ls
+                                                                                                                     AF+d++SFL / J / 1Ls
+       We have checked that the measured vector chirality                                  -0.52                     Sindzingre et al. & Capriotti et al.
+       has the symmetry of the staggered currents derived
+       from the 120◦ coplanar structure (c.f.  Fig. 2).                                    -0.54
+     •  the amplitude of the absolute value of the collinear
+       magnetization   in   the   spin   density   wave   wave-                            -0.56
+       function :
+                                  ∑⏐⏐⏐⏐⟨ψvar |Szi |ψvar⟩     ⏐⏐⏐⏐             (15)               0                        0.002                    0.004
+               MSDW  =  1N                 ⟨ψvar|ψvar⟩                                                                       N-3/2
+                                    i
+                                                                                    FIG.  3:      Energy  per  site e   =   3⟨Si  · Sj⟩  of  the  diﬀerent
+     •  the amplitude of the singlet superconducting order                          variational  wave  functions  for  the  Heisenberg  model  versus
+       parameter:                                                                   the  system  size N −3/2,   with N   =   36, 48, 108  sites.     Or-
+           /radicaltp/radicalvertex/radicalvertex/radicalvertex√⟨⟩                  dered  by  increasing  condensation  energy  we  ﬁnd: d+  (open
+                    ⏐⏐⏐⏐⏐⏐ lim                                    ⏐⏐⏐⏐⏐⏐,     (16)  squares), AF  +d+/J  (open  triangles), AF  +d+ +SFL/J
+                1           ∑      ψvar|∆†i,α∆i+r,β|ψvar                            (open  diamonds), AF  + d+/J/Ls  (full  triangles)  and  the
+    ∆ =       4N     r→∞                 ⟨ψvar |ψvar⟩                               AF  +d+ +SFL/J/Ls  (full  diamonds).   The  stars  are  the
+                              i                                                     best  estimates  of  the  ground  state  energy  available  in  the
+                                                                                    literature9,27.
+       where
+
+                 ∆†i,α =c†i,↑c†i+aα,↓ −c†i,↓c†i+aα,↑.               (17)            TABLE I: Comparison of the average energy 3⟨Si ·Sj⟩ and the
+       The  angular dependence  of the  real space correla-                         average  magnetization MAF  for  the  Heisenberg  model  (t−J
+       tions corresponds to those of the unprojected pair-                          model at  half-ﬁlling)  in diﬀerent recent  works for the 36 site
+       ing symmetry.  We have also checked that the value                           cluster  and  the  extrapolation  to  the  thermodynamic  limit.
+       of ∆ is independent of the choice of α andβ.                                 The  energy  and  the  sublattice  magnetization  are  measured
+                                                                                    for our best wave-function (AF +d+ +SFL/J/1Ls) at half-
+                                                                                    ﬁlling.
+           III.     RESULTS  AND  DISCUSSION                                                                          ⟨3Si ·Sj⟩       MAF
+                                                                                          36 sites lattice
+                           A.     Half-ﬁlling                                               our best wf               -0.543(1)                     0.38
+                                                                                         Capriotti et al.9             -0.5581                      0.406
+                                                                                           exact diag6,7                -0.5604                      0.400
+   We   consider  in   this   section  the   Heisenberg  model
+(which  is  the  limit  of  the t−J  model  at  half-ﬁlling,  up                               ∞ × ∞
+to  a  constant)  The  comparison  with  the  large  body  of                               our best wf               -0.532(1)                     0.36
+existing  results  for  the  Heisenberg  model  allows  us  to                          spin-wave results9            -0.540                        0.25
+benchmark the quality of our wave-function.                                              Capriotti et al.9              -0.545                        0.21
+   Let  us  ﬁrst  brieﬂy  discuss  the  symmetry  of  the  vari-
+ational  parameters  at  half-ﬁlling.   The  variational mag-
+netic  ﬁeld  minimizes  the  energy  for  the  two  degenerate                      state  of  the  Heisenberg  model.   We  compare  its  energy
+120◦  conﬁgurations.    We  found  that  the  BCS  pairing                          with  other  estimates  of  the  ground  state  energy  in  the
+symmetry  in  the  presence  of AF  order  is  of d+  type,                         literature  (see  Fig.  3  and  Table  I).  The  mixture  of AF
+whereas  the d−,  the dx2−y2  and  the dxy  pairings  have                          and d+  instabilities  is  improving  a  lot  the  energy,  and
+close  but  higher  energies.  Finally,  a  staggered spin  ﬂux                     our  wave-function  has  signiﬁcantly  lower  energies  than
+variational  order  improves  a  little  bit  the  energy.    In-                   the simpled+ wave-function, and has energies very close
+terestingly, this latter variational order is present in the                        to the best ones available.  More precisely, we ﬁnd in the
+ground state of the classical Heisenberg model.  However,                           thermodynamic  limit  an  energy  per  site  of e  =  −0.52J
+this  instability  was  only  relevant at  half-ﬁlling,  and  the                   for our variational wave-function.  Applying one Lanczos
+energy  gain  when δ >  0  is  not  signiﬁcant.   The  various                      step leads to a small further improvement of the energy
+energies for these wavefunctions are shown in Fig. 3.  The                          to e  =  −0.53J.   A  summary  of  the  energies  and  of  the
+AF +d+ +SFL/J/Ls wave-function is thus the best ap-                                 120◦  magnetization  for  the  Heisenberg  model  are  given
+proximation, within our variational space, of the ground                            in Table I and in Fig. 3.
+                                                                                                                                                      6
+
+  Inspection   of   these   results   shows   that   our   wave-              sults on a small cluster, we can then use it with conﬁdence
+function has in the thermodynamic limit an energy only                        to describe much larger systems and extract the physics
+0.013J  higher than the estimates of more sophisticated,                      of the thermodynamic limit.
+but  restricted  to  the  undoped  case,  methods9.   Indeed,                    Therefore, we start by comparing on a 12 site  cluster
+these  latter  methods  use  pure  spin  variational  wave-                   diﬀerent  wave-functions  with  the  exact-diagonalization
+function as a  starting point,  restoring quantum ﬂuctua-                     results for the case of electron doping (see Fig. 4), since
+tions  with  a  non-variational  method.   Let  us  point  out                larger lattices  are not readily available.  Interestingly, it
+however  that  these  methods  are  not  giving  an  upper                    was  found  that  even  with  only  2  Lanczos  steps  on  our
+bound  on  the  true  ground  state  energy,  so  the  ground                 best wave-function (AF  +d+/J) the  energy has  almost
+state energy could in principle lie between this result and                   converged to the exact ground state energy at half-ﬁlling.
+our  variational  one.   Since  our  variational  wavefunction                   Note that small system size is the worst possible case
+already gives an excellent energy it would be interesting                     for a VMC method since the simple variational wavefunc-
+to check how the (non variational) methods used to im-                        tion is not expected to reproduce well the short distance
+prove the energy starting with a much cruder variational                      correlations,  as  we  ﬁx  the  long-range  magnetic  correla-
+starting point would work with our variational wavefunc-                      tions  in  our  variational  ansatz  by  imposing  an  on-site
+tion and which energy it would give.  We leave this point                     magnetic ﬁeld, but we do not introduce short range cor-
+for future investigation however.                                             rections.   Variational  Monte-Carlo  instead  focus  on  the
+  Our wavefunction shows a reduced but ﬁnite magnetic                         long distance properties, which will become dominant in
+order that survives in the triangular Heisenberg antifer-                     the energy as the lattice size increases.  Nevertheless, the
+romagnet (THA).  The  120◦  magnetization of  our wave-                       short  range  correlations  contributes  signiﬁcantly  to  the
+function is reduced by the  BCS pairing down to 72% of                        energy  on  small  lattices.   One  can  thus  expect  on  gen-
+the classical value (see Fig. 7) which is somewhat larger                     eral grounds the energies to become increasingly good as
+than  the  spin-wave  result.   Thus  in  addition  to  having                the system size increases, provided that the correct long
+an  excellent  energy,  our  wavefunction  seems  to  capture                 range order has  been  implemented  in  the  wavefunction.
+the physics of the ground state of the Heisenberg system                      The  Lanczos iterations allow to correct this  local struc-
+correctly.  Let  us  note  that  the  BCS  order  of  the  wave-              ture of the wave-function.  Here we see that by changing
+function is destroyed by the full Gutzwiller projector at                     this local structure our wave-function is converging very
+half-ﬁlling.  So,  despite  the  presence of a  variational su-               fast to  the ground state.  This  is a  good indication that
+perconducting  order  parameter,  the  system  is  of  course                 even away from half ﬁlling our wavefunction is quite ef-
+not  superconducting  at  half  ﬁlling.   Somehow  the  BCS                   ﬁcient in capturing the physics of the  system.  Actually,
+variational  parameter  helps  to  form  singlets,  which  re-                the  variance  of  the  energy  per  site σ2  reaches its  maxi-
+duces the amplitude of the AF order.  This is very similar                    mum  value  for  doping x  =   1
+to what happens for thet−J model on the square lattice:                       ing  one  Lanczos  step  reduces  drastically  the  variance  :3  (σ2  =  0.006),  but  apply-
+the inclusion of a superconducting gap decreases the en-                      σ2  =  0.0004.   At  half-ﬁlling,  a  variance-energy  plot  for
+ergy and decreases also the magnetization fromM  ≈ 0.9                        the  three  functions AF  +d+/J/pLs  (p = 0, 1, 2) allows
+down  to M  ≈  0.7,  which  is  somewhat  larger  than  the                   to  extrapolate  the  energy  at  0  variance,  and  we  get  an
+best QMC estimates (M  ≈ 0.6, see Refs.13,25).  Thus the                      energy  per  site  of e  =  −0.61(1),  which  is  very  close  to
+wave-function  mixing  magnetism  and  a  RVB  gap  seem                      the exact resulte = −0.6103.
+to  be  interesting  variationally,  both  in  the  square  and                  Let us now use our wavefunction to describe large sys-
+triangular lattice,  to  restore spin  ﬂuctuations  that  were                tems away from half ﬁlling.  We now focus on a 108 site
+frozen in the pure classical magnetic wave-function.  For                     cluster,  which  is  the  largest cluster  we  can treat with  a
+the  triangular  lattice,  the  present  work  is  the  ﬁrst  at-             reasonable  eﬀort.   We  have  ﬁrst  measured  the  conden-
+tempt  to  reproduce  the  magnetic  order  in  the  THA  in                  sation  energy  per  site  (see  Fig.  5)  for  diﬀerent  types  of
+terms  of  a  fermionic  representation,  which  gives  results               instabilities.  Very interestingly, the AF/J  is even better
+in  good  agreement  with  other  methods.   The  great  ad-                  than  a  simple dx2−y2 +idxy  RVB  state.   Moreover,  the
+vantage of  this  approach is  of course that  the  fermionic                 RVB  order  is  only  weakly  increasing  the  condensation
+language allows to directly consider the case of hole and                     energy in  presence of  the  antiferromagnetic background
+electron doping in the AF background, which is the case                       (AF +d+/J).  This is suggesting that superconductivity
+we consider in the following sections.                                        is  only  weakly  present  in  the t−J  model  when n >  1
+                                                                              which  is  also  conﬁrmed  by  the  measurement  of  the  su-
+                B.     Electron  doping: n ∈ [1, 2]                           perconducting  gap  (see  Fig.  6).    The  superconducting
+                                                                              order of our best wave-function is approximately 4 times
+                                                                              smaller  in  amplitude  and  in  range  of  stability  than  the
+  Very  few results exist away from half-ﬁlling, so in  or-                   d-wave pairing in a 10 × 10 square lattice with the same
+der to have a point of comparison for our variational ap-                     boundary  conditions.   For  electron  doping δ >  0.04  we
+proach we will compare it with exact diagonalizations on                      ﬁnd that thed+ BCS pairing symmetry has the same en-
+very  small  clusters.   Having  ascertained  that  our  wave-                ergies as the d−  one, and also as the wavefunctions with
+function is indeed in good agreement with the exact re-                       dx2−y2  anddxy  pairings.
+                                                                                                                                                              7
+
+      0.00                                                                                           our best wf
+                 N=12                                                                    0.04        d+                                     N=108       0.04
+     -0.02                                                                                           square lattice dx2-y2
+
+     -0.04                                                                               0.03                                                           0.03
+
+                                                 d+                                      0.02                                                           0.02
+     -0.06                                       AF / J
+                                                 AF+d+ / J
+     -0.08                                       AF+d+ / J / 1Ls
+                                                 AF+d+ / J / 2Ls                         0.01                                                           0.01
+                                                 ED
+     -0.101                   1.1                  1.2                  1.3
+                               Electron density n                                            00.6            0.8              11           1.2         1.40
+                                                                                                                  Electron density n
+FIG. 4:  Condensation energy per site versus the electron dop-                     FIG.  6:   Superconducting  order  parameter  ∆  for  a  108  site
+ing  for  a  12  site  cluster  for  the  diﬀerent  variational  wave-
+functions.  We have done exact diagonalization  (ED) for a 12                      triangular  cluster  in  our  best  wave-function  (full  triangles),
+sites cluster with same periodic boundary conditions.                              in  the d+  wave-function  (open  squares).  For  comparison  we
+                                                                                   show  the  amplitude  of  the  d-wave  gap  in  a  10 × 10  square
+                                                                                   lattice (dashed line).
+          0
+
+                                                                                          0.5
+     -0.02                                                                                                                   0.3
+                                                                                          0.4
+     -0.04                                    d+
+                                              AF / J                                      0.3                                   0
+                                              AF+d+ / J                                                                          1       1.2      1.4
+     -0.06                                    AF+d+ / J / Ls
+                                         N=108                                            0.2
+                                                                                                          AF+d+ / J
+     -0.081            1.1          1.2          1.3          1.4          1.5            0.1              N=108
+                              Electron density n
+                                                                                            01            1.1          1.2          1.3          1.4          1.5
+FIG. 5:  Condensation energy per site ec  versus electron dop-
+ing for the 108 sites lattice.  We show diﬀerent wave-functions                                                 Electron density n
+and  also  the  best  estimate  in  the  literature9  at  half-ﬁlling
+(open diamond).                                                                    FIG. 7:  Amplitude of the 120◦ magnetic orderMAF  measured
+                                                                                   in theAF +d+/J  for a 108 site cluster.  Inset:  the amplitude
+                                                                                   of the staggered spin-current χ in the same wave-function.
+
+   Very  strikingly,  the  120◦  magnetic  order  parameter
+is  surviving  up  to  high  doping δ   =   0.4,  see  Fig.  7.
+Long-range magnetic order at ﬁnite doping is potentially                           tically modiﬁed by the presence of the non-collinear mag-
+caused  by  a  limitation  of  the  VMC  method,  in  that  it                     netic structure, so that short range magnetic correlations
+is not possible in our calculation to model wavefunction                           will  survive  up  to  high  electron  doping.   For  the t−J z
+with a ﬁnite correlation length, i.e.  short range 120◦ mag-                       model on the  square lattice,  it is  commonly  understood
+netic order.  In our calculation, we can either totally sup-                       that  the  Ising  N´eel  order  is  not  surviving  high  doping
+press the long-range 120◦ and get back to the Gutzwiller                           because  of  its  costs  in  kinetic  energy:  whenever  a  hole
+wave-function, or use the long-range 120◦ magnetic order                           wants  to  move  in  a  antiferromagnetic  spin  background,
+that is highly stabilized by the potential energy.  No inter-                      it  generates  a  ferromagnetic  cloud.   Therefore,  good  ki-
+mediate scenario, such as incommensurate structures, is                            netic  energies  and  N´eel  Ising  order  are  not  compatible.
+yet available in our calculations, but one can only expect                         In our case, the 3-sublattice order imposes no such con-
+the  optimization  of  the  magnetic  structure  to  increase                      straint on the kinetic energy of the holes, because of the
+the  region of stability  for magnetism.  We  interpret this                       120◦  structure.   We  see  this  fact  in  our  wave-function
+ﬁnding as an indication that the hole motion is not dras-                          energies:   the  potential  energy  is  improved  when  start-
+                                                                                                                                                         8
+
+ing  from  the  Gutzwiller  wavefunction  and  adding  120◦                           0.00
+correlations,  but  the  kinetic  energy  is  unchanged.   Our
+best wavefunction has a better potential energy than the                             -0.02
+Gutzwiller wavefunction (and also than the diﬀerent CFP
+wavefunction), but it also keeps the same kinetic energy.
+Therefore, this qualitatively explains why one can stabi-                            -0.04
+lize  the  3-sublattice magnetic  phase  for  a  large set  of J                                    d+
+values.  Finally, we note  that the  staggered spin-current                          -0.06          AF+d+ / J
+pattern is also present for dopingδ = [0, 0.3] (see Fig. 7).                                        Ferro
+   Interestingly, the Jastrow variational parameter α (8)                                           SDW
+is changing sign at δ = 0.4 when MAF  ≈ 0 :  for δ < 0.4                             -0.08
+(δ> 0.4) the Jastrow factor favors classical Ising (ferro-)                                     N=108
+anti-ferromagnetic  states.   The  VMC  results  show  that                          -0.100           0.2          0.4          0.6          0.8            1
+the competition between the classical Ising conﬁguration
+on the triangular lattice and the 120◦ order is improving                                                    Electron density n
+the  energy.   We  argue  that  the  classical  Jastrow  simu-
+lates  with  a  good  approximation  quantum  ﬂuctuations                       FIG.  8:  Condensation  energy  per  site ec  for  diﬀerent  wave-
+around the  120◦  order.  Note  that the  Jastrow does not                      functions in a 108 site cluster.
+play the same role as the BCS pairing:  the BCS pairing
+forms conﬁgurations of resonating singlets, and the Jas-
+trow factor forms classical Ising conﬁgurations.  It is also                          0.4
+worth noting that at higher doping the Jastrow parame-                                                                                            1
+ter is leading to a small condensation energy of 0.01t for a                                                MAF
+large range of doping (δ = [0.4, 0.8]).  It was checked that                           0.3                  MSDW
+this gain in energy does not decrease with the size of the                                                  MF/MSAT
+lattice and is also present for a square lattice geometry.
+We found also that for the small clusters (12 and 48 sites)                            0.2               N=108
+the  system  was  gaining  a  signiﬁcant  amount  of  energy
+when having a weak ferromagnetic polarization.  There-
+fore, this is suggesting that the Gutzwiller wavefunction                              0.1
+is not the best approximation of the ground state of the
+t−J  model  in  the  high  doping  limit.   Nevertheless,  the
+Jastrow factor does not introduce long-range correlation                                 0                                                        0
+and the variational wavefunction we introduce here is still                               0                              0.5                              1
+a Fermi-Liquid.                                                                                          Electron density n
+   Note that the variance of the energy per siteσ2 reaches
+its maximum value for dopingδ = 0.4 for theAF +d+/J                             FIG.  9:  Amplitude  of  the  120◦  magnetic  order  measured  in
+with σ2  =  0.0008, and  applying  one  Lanczos  step  leads                    our best  wavefunction  for the 108 site cluster (left  scale,  full
+to σ2 = 0.0004.                                                                 triangles)  and  the  ratio  of  the polarization MF  on  the satu-
+                                                                                rated polarization Msat in our best wavefunction (right scale,
+                                                                                full circles).  We show also the absolute magnetizationMSDW
+                   C.     Hole  doping: n ∈ [0, 1]                              for  the  spin  density  wave  wavefunction  (left  scale,  see  also
+                                                                                Fig. 10).
+
+   For hole doping the scenario is strikingly diﬀerent.  The
+120◦  order is weakened in a strong d+  RVB background
+and disappears at dopingδ = 0.08 (see Fig. 8 and Fig. 9).                       and  has  a  sharp  peak  at  the n  =  0.5  electronic  density
+   When  superconductivity  disappears,  there  is  a  ﬁrst                     lying at the Van Hove singularity.  Note also that the sim-
+order  transition  to  a  commensurate  spin  density  wave.                    ple t−J  model of a 3 site cluster with 2 electrons shows
+No  coexistence  between  superconductivity  and  the  spin                     that  in  the t > 0  the  ground state  is  a  singlet,  whereas
+density  wave  was  found.   Then,  a  ferromagnetic  phases                    the ground state is a triplet in thet< 0 case.  This shows
+emerges  with  a  strong  gain  of  condensation energy.  In-                   that  the  negative sign of t with  hole  doping  is  inducing
+deed the polarized states are leading to a strong gain in                       ferromagnetic  correlations  on  a  very  small  cluster.   We
+kinetic  energy.   This  can  be  understood  in  the  simple                   ﬁnd  again trace  of  these  correlations  and  ferromagnetic
+picture of the Stoner model, which gives a critical onsite                      tendencies in the range of electronic densityn ∈ [0.2, 0.8]
+repulsion related to the density of states: U Fcr = 1/ρ(ǫF ).                   in  our  108  site  lattice.  Such  a  ferromagnetic instability
+Ferromagnetism  becomes  favorable  if ǫF  is  sitting  at  a                   was  also  predicted  in  Ref.  34  by  comparing  the  energy
+sharp  peak  of ρ(ǫ).   In  the  triangular  lattice  the  tight                of the  RVB  wavefunction with  an analytical calculation
+binding  (TB)  density  of  states  is  strongly  asymmetric                    of  the  energy  of  the  fully  polarized  state.   We  see  that
+                                                                                                                                                         9
+
+
+
+                                                                                          1
+                                                                                                                                       t<0
+
+
+                                                                                        0.5               F                                      Fermi Liquid120˚
+
+
+
+
+
+
+                                                                                           0      0.2    0.4    0.6     0.8      1      1.2    1.41.6
+                                                                                                           electron density n
+
+
+                                                                                FIG. 11:  (color online) Cartoon picture of the phase diagram
+                                                                                of  the t−J  model  we  get  with t <  0.    Here  we  sketch  on
+                                                                                an arbitrary scale the order parameter amplitude of the 120◦
+                                                                                magnetic  phase,  the  ferromagnetic  phase  (F ),  the supercon-
+                                                                                ducting dx2−y2  +idxy  phase  (SC),  the  commensurate  spin
+                                                                                density wave (SDW ).  Note that for electron densityn> 1.04
+                                                                                andn< 0.96, the energy is degenerated, within the error bars
+FIG.  10:   On-site  magnetization  for  each  site  of  a  108  site           due  to  the  Monte-Carlo  sampling,  with  the  pairings dx2−y2,
+lattice  for the spin density wave wavefunction.  Open (ﬁlled)                  dxy  and dx2−y2  −idxy.   The  pitch  vector  of  the  commensu-
+circles  denotes  down  (up)  spins.   The  size  of  each  circle  is          rate  spin  density  wave  is  QN  = (π, −π/√3),  and  this  phase
+proportional  to  the respective amplitude  of  the on-site  mag-               is depicted more in details in Fig. 10.
+netization.  We ﬁnd that the spins forms a stripe-like pattern,
+alternating ferromagnetic bonds in the a2 direction, and anti-
+ferromagnetic bond in the two other directions.  The average
+on the lattice sites of the absolute value of the local magneti-                tributed among the lattice sites, as expected (see Fig. 10).
+zation is shown in Fig. 9.                                                      The  amplitude  of the  on-site magnetization is  shown in
+                                                                                Fig. 9 as a function of doping.
+
+
+minimizing the energy by changing the variational onsite                                      D.     Phase  diagram  of  the  model
+magnetic ﬁeld leads to similar results.
+   Moreover, at δ = 0.5 doping, there is a nesting of the                          Based on our wavefunction we can now give the phase
+Fermi  surface,  with  three  possible  Q  vectors.   Thus,  it                 diagram for  the  doped  system on the  triangular lattice.
+is reasonable to expect that a particle-hole instability of                     The  phase  diagram,  summarizing  the  various  instabili-
+corresponding  pitch  vector  Q  is  stabilized  close  to  this                ties discussed in the previous sections is show in Fig. 11.
+doping.  We have investigated the following instabilities :                     This phase diagram prompts for several comments.  First
+a commensurate charge density wave, and a spin density                          one  notices  immediately  that  the  competition  between
+wave.  Interestingly, the commensurate spin density wave                        magnetism and superconductivity in this model depends
+was  stabilized.  Indeed,  we  have  found  that  the  scatter-                 crucially on the sign of the hopping integral (see Fig. 11).
+ing  between  the  k  and  k + Q  vectors  introduced  in  the                     For both hole and electron doping, the triangular lat-
+HamiltonianHSDW  (particle-hole channel) allow to gain                          tice  has  a very diﬀerent phase  diagram from the  square
+kinetic energy in the range of doping δ = [0.15, 0.6].  For                     lattice one37.  In the square lattice, the  AF order disap-
+sake of simplicity, we have only considered the mean-ﬁeld                       pears atδ = 0.1 and the d-wave RVB dies atδ = 0.4 for
+Hamiltonian containing one of the three possible nesting                        the same value  of J.  In the  triangular lattice,  a  similar
+vectors  :  QN  =  (π, −π/√3).   Finally,  the  phase  is  sta-                 stability of superconductivity exists on the hole side, but
+bilized,  when  compared  to  the  RVB  and  ferromagnetic                      the electronically doped side  is  resolutely dominated by
+phases,  in  the  window δ  =  [0.16, 0.24].  Nonetheless,  no                  antiferromagnetic instabilities.  Our results, based on an
+coexistence between superconductivity and the spin den-                         improved  class  of  wavefunctions,  present  marked  diﬀer-
+sity  wave  was  found  :   the  energy  is  minimized  either                  ences  with  previous  approximate  results  for  the  doped
+for  (∆k = 0,f(Q) ⁄= 0),  or  (∆k ⁄= 0,f(Q) = 0)  depend-                       system.  On the electron side, mean-ﬁeld theories would
+ing  on  the  doping,  with  ∆k  of dx2−y2 +idxy  symmetry                      have suggested that the long-range magnetic order state
+type in the latter case.  Measuring the on-site magnetiza-                      undergoes a ﬁrst order phase transition32 into a uniform
+tion value, we found that the spin density wave is form-                        d+  superconducting state atδ ≈ 3% for values ofJ  sim-
+ing a collinear stripe-like pattern in the spins degrees of                     ilar to  those considered here.  A rationalization of these
+freedom, whereas the charge is found to be uniformly dis-                       results would be that the frustration of the lattice, which
+                                                                                                                                                    10
+
+was from the start the motivation of RVB as a compet-                         long range magnetic correlations.
+ing  state,  disfavors  magnetic  order.   Our  results,  where
+the  Gutzwiller  projection  is  treated  exactly  within  the
+residual error bars due to the statistics, are in strong dis-                                       IV.     CONCLUSION
+agreement with this mean-ﬁeld theory.  Contrarily to the
+mean-ﬁeld result, magnetism is dominant and the super-                           In  this  paper  we  have  presented a  variational Monte-
+conducting order is not favored on the electronic side.  In                   Carlo study  of the t−J  (J/t = 0.4 and t< 0) model on
+addition, thet−J model on the triangular lattice was ex-                      the triangular lattice, using extended wavefunction con-
+pected to have a strong and large RVB instability, since                      taining  both  superconductivity  and  non-collinear  mag-
+the  coordination  number  is  higher  than  on  most  of  the                netism,  as  well  as  ﬂux  phase  instabilities.   The  method
+other  lattices, and naively we  would expect this  to  pro-                  we  used  to  construct  and  sample  the  wavefunction  is
+vide an easy way to form singlets.  In this work we show                      quite  general  and  applicable  to  other  lattices  (honey-
+that  it  is  not  the  case:   for  electron  doping  the  system            comb,  kagome,  ladders...)   as  well  as  other  symmetries
+is magnetic, and for hole doping the system is supercon-                      (e.g.  triplet superconductivity).  It thus provides a gen-
+ducting,  but  the  range  of  superconductivity  is  not  ex-                eral  framework  to  tackle  the  competition  between  anti-
+traordinary  large  (δ <  0.16),  and  smaller  than  on  the                 ferromagnetism and superconductivity in frustrated sys-
+square lattice.                                                               tems.  We obtained very good variational energies at half-
+  Previous  variational  approaches34  were  restricted  to                   ﬁlling  when  comparing  with  other  more  sophisticated
+pure  superconducting  wavefunctions dx2−y2 +idxy  on  a                      methods, specialized to the half-ﬁlled case.  The fermionic
+t−t′ square lattice witht =t′.  In that work it was found                     representation of our wavefunction allows to consider hole
+that superconductivity is stabilized up to electron doping                    and  electron  doping.    The  most  stable  pairing  corre-
+δ ≈ 0.24 and hole dopingδ ≈ 0.2 for similar albeit slightly                   sponds  to  singlet  pairing.   We  ﬁnd  that dx2−y2  +idxy
+diﬀerent values of J/t (J/t = 0.3).  In our work, for the                     superconductivity  is  only  weakly  stabilized  for  electron
+case of electron doping, which corresponds to the doping                      doping in a very small window (δ = [0, 0.12]) and is much
+in  the  cobaltite  experiments,  our  phase  diagram,  using                 stronger and also appears in a wider range (δ = [0, 0.16])
+the  larger  class  of  wavefunctions,  is  clearly  completely               in the case of hole doping.  A commensurate spin density
+diﬀerent from this  previous result, and the stabilization                    wave phase  is  leading to  a  gain in kinetic  energy and is
+of the superconductivity in that case was clearly an arte-                    stabilized in the small window δ = [0.16, 0.24] hole dop-
+fact of the  too  restricted variational subspace.  As  show                  ing.    Finally,  ferromagnetism  emerges  in  a  wide  range
+in Fig. 11 superconductivity is strongly weakened by the                      for hole  doping δ  = [0.24, 0.8].  Very  surprisingly, the  3-
+presence of 3-sublattice magnetization and is present only                    sublattice  magnetism which  is  present  at half-ﬁlling  ex-
+in the range of electron dopingδ = [0, 0.12].  On the con-                    tends to a very wide range of electron dopingδ = [0, 0.4]
+trary, for the case of hole doping, superconductivity had                     and  is  suppressed  very  fast  in  the  case  of  hole  doping
+higher energy than ferromagnetic and spin density wave                        δ  =  [0, 0.08].   The  large  extent  of  120◦  order  for  elec-
+phases for δ > 0.16.  We  thus  conﬁrm that the  previous                     tron  doping  is  responsible  for  the  suppression  of  super-
+results are not an artefact of their restricted variational                   conductivity.   This  feature  was  neither  observed  in  pre-
+subspace, and ﬁnd an acceptable agreement for the phase                       vious VMC calculations, nor predicted by the mean ﬁeld
+diagram.  However we emphasize the presence of the spin                       theories, and prompts for a reexamination of the question
+density  wave  wavefunction  that  was  not  considered  in                   of the stability of magnetic order on a triangular system.
+the mentioned work and implies a small reduction of the                          Our results show that, for electron doping, the square
+superconductivity range.                                                      and triangular lattices behave in a very diﬀerent way.  For
+  Our calculation thus clearly prompts for a reexamina-                       the square lattice,  the t−J  Hamiltonian ﬁnds  a  domain
+tions of the arguments on the nature of superconductivity                     of stability of superconductivity and a pairing symmetry
+in  a  frustrated  lattice.  Clearly  the  non-collinear  nature              that is  very consistent with other  methods.  It is  thus  a
+of the order parameter helps making the AF order much                         natural candidate to investigate superconducting phases
+more stable to electron doping than initially anticipated.                    in  systems  like  the  cuprates.   For  the  case  of  the  trian-
+Understanding such issues is of course a very crucial and                     gular lattice,  the predicted phase  diagram is  dominated
+challenging  question.   Moreover,  on  the  triangular  lat-                 by  antiferromagnetic  instabilities,  and  superconductiv-
+tice,  no  signiﬁcant  enhanced  cooperative  eﬀect  between                  ity,  albeit  slightly  present,  is  strongly  suppressed.   This
+magnetism and superconductivity seems to be observed:                         clearly  indicates  that,  contrarily to  what  was  suggested
+the  electron  doped  side  has  a  magnetic  signature,  and                 by  mean-ﬁeld  and  previous  variational calculations,  the
+the hole doped side a superconducting one, but the two                        t−J model itself is not a good starting point to tackle the
+orders seem to exclude each other as much as they  can,                       superconductivity of the cobaltite compounds, where su-
+contrarily to what happens  for the  square lattice.  Even                    perconductivity is observed in the range of electron den-].  This  model  must be  completed
+in  the  parts  of  the  phase  diagram  where  coexistence  is               sity n = [1 +  14, 1 +  13
+observed, coexistence between magnetism and supercon-                         by additional ingredients to obtain a faithful description
+ductivity  in  the  electron  doped  case  shows  again  that                 of the experimental system.  Two missing ingredients in
+superconductivity is decreased in the presence of strong                      the  simple t−J  model  could  solve  this  discrepancy  and
+                                                                                                                                                              11
+
+perhaps  allow  to  obtain  a  superconducting  instability.                       interest.  Such an analysis can be done by extending the
+On  one  hand,  a  strong  Coulomb  repulsion  is  expected                        methods exposed in this paper to these more complicated
+in  this  type  of  compound.   Such  a  long-range  interac-                      models.
+tion is not taken into account in the t−J  model.  Thus a
+coulombV  term should be added to get at−J−V  model.
+On the other hand, in this paper, we have used a single-
+band model as a ﬁrst step to study the Co-based oxides.                                                      Acknowledgments
+However,  it  is  quite  possible  that  the  multi-band  eﬀect
+plays  an  essential  role  for  superconductivity20.   The  in-
+teraction between the three bands of the compound could                               We are grateful to Federico Becca and Antoine Georges
+play  a non  trivial role  in the  physics of  the t−J  model.                     for  useful  discussions.  This  work  was  supported  by  the
+Therefore, a study of the 3-band model could also be of                            Swiss National Fund and by NCCR MaNEP.
+
+
+
+
+
+
+
+ 1  P. W. Anderson.  Mater.  Res. Bull., 8:153, 1973.                                  2003.
+ 2  P. W. Anderson.  Science, 235:1196,  1987.                                     23  Arun Paramekanti, Mohit Randeria, and Nandini Trivedi.
+ 3  P W Anderson, P A Lee, M Randeria, T M Rice, N Trivedi,                            Phys.  Rev. B, 70(5):054504,  2004.
+   and F C Zhang. J. Phys.:  Condens. Matter, 16:R755, 2004.                       24  D. S. Rokhsar.  Phys.  Rev.  Lett., 65:1506, 1990.
+ 4  G. Baskaran.  Phys. Rev.  Lett., 91(9):097003,  2003.                          25  Anders  W.  Sandvik.    Physical  Review  B,  56(18):11678–
+ 5  F. Becca.  PhD thesis, SISSA, 2001.                                                11690, 1997.
+ 6  B.  Bernu,  P.  Lecheminant,  C.  Lhuillier,  and  L.  Pierre.                 26  R.  E.  Schaak,  T.  Klimczuk,  M.L.  Foo,  and  R.  J.  Cava.
+   Phys.  Rev.  B, 50(14):10048–10062,  1994.                                          Nature, 424:527, 2003.
+ 7  B.  Bernu,  C.  Lhuillier,  and  L.  Pierre.   Phys.  Rev.  Lett.,             27  P. Sindzingre, P. Lecheminant, and C. Lhuillier. Phys. Rev.
+   69(17):2590–2593,  1992.                                                            B, 50(5):3108–3113,  1994.
+ 8  J.  P.  Bouchaud,  A.  Georges,  and  C.  Lhuillier.   J.  Phys.               28  D. J. Singh.  Phys.  Rev. B, 61(20):13397–13402,  2000.
+   (Paris), 49:553,  1988.                                                         29  Sandro Sorella.  Phys.  Rev.  B, 64(2):024512,  2001.
+ 9  Luca  Capriotti,  Adolfo  E.  Trumper,  and  Sandro  Sorella.                  30  K.    Takada,     H.    Sakurai,     E.    Takayama-Muromachi,
+   Phys.  Rev.  Lett., 82(19):3899–3902,  1999.                                        F.  Izumi,  R.  A.  Dilanian,  and  T.  Sasaki.  Nature,  53:422,
+10  D. Ceperley,  G. V. Chester,  and  K. H. Kalos.  Phys.  Rev.                       2003.
+   B, 16:3081,  1977.                                                              31  C.  J.  Umrigar,  K.  G.  Wilson,  and  J.  W.  Wilkins.   Phys.
+11  P.  Fazekas  and  P.  W.  Anderson.  Phil.  Mag.,  30:423–440,                     Rev.  Lett., 60:1719,  1988.
+   1974.                                                                           32  Qiang-Hua  Wang,   Dung-Hai  Lee,   and  Patrick  A.  Lee.
+12  T.  Giamarchi  and  C.  Lhuillier.   In  V.  Aguilera-Navarro,                     Phys.  Rev. B, 69(9):092504,  2004.
+   editor, Condensed  Matter  Theories,  Vol. 5. Plenum, 1989.                     33  G. H. Wannier.  Physical  Review, 79(2):357–364,  1950.
+13  T.  Giamarchi  and  C.  Lhuillier.   Phys.  Rev.  B,  43:12943,                34  T.  Watanabe,  H.  Yokoyama,  Y.  Tanaka,  J.  Inoue,  and
+   1991.                                                                               M. Ogata.  J. Phys.  Soc. Jpn., 73:3404,  2004.
+14  C. Gros.  Phys.  Rev. B, 38:931,  1989.                                        35  H.  Yokoyama  and  H.  Shiba.  J.  Phys.  Soc.  Jpn.,  57:2482,
+15  E. Heeb.  PhD thesis, ETHZ, 1994.                                                  1988.
+16  E. Heeb and T. M. Rice.  Europhys.  Lett., 27:673, 1993.                       36 HMF  is  gauge  invariant,  however  the  gauge  plays  a  non
+17  Carsten Honerkamp.  Phys.  Rev.  B, 68(10):104510,  2003.                          trivial role in the projected wave-function. Indeed, the ki-
+18  D. Huse and V. Elser.  Phys.  Rev.  Lett., 60:2531, 1988.                          netic energy of the projected wave-function depends on the
+19  R. Jastrow.  Phys.  Rev., 98:1479, 1955.                                           chosen  gauge.  One  cannot  exclude  that  another  choice  of
+20  W.   Koshibae   and   S.   Maekawa.        Phys.   Rev.   Lett.,                   the gauge could lead to a better wave-function.
+   91(25):257003,  2003.                                                           37  In the square lattice the sign of t plays no role because of
+21  G. Kotliar.  Phys.  Rev. B, 37:3664,  1988.                                        the particle-hole symmetry of a bipartite lattice.
+22  B.  Kumar  and  B.  S.  Shastry.   Phys.  Rev.  B,  68:104508,

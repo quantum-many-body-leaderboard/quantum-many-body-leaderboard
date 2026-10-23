@@ -1,0 +1,822 @@
+     The spin-1/2 J1-J2 Heisenberg antiferromagnet on the
+     square lattice:  Exact diagonalization for N  = 40 spins
+
+                                     J. Richter1 and J. Schulenburg2
+
+          1Institut f¨ur Theoretische Physik, Universit¨at Magdeburg, 39016 Magdeburg, Germany
+
+           2Universit¨atsrechenzentrum, Universit¨at Magdeburg, D-39016 Magdeburg, Germany
+
+                                                October 30, 2018
+
+
+
+                                                       Abstract
+           We  present  numerical  exact  results  for  the  ground  state  and  the  low-lying  excitations
+       for the spin-1/2 J1-J2  Heisenberg antiferromagnet on ﬁnite square lattices  of up to N  = 40
+       sites.   Using  ﬁnite-size  extrapolation  we  determine  the  ground-state  energy,  the  magnetic
+       order parameters, the spin gap, the uniform susceptibility, as well as the spin-wave velocity
+       and the spin stiﬀness as functions of the frustration parameter J2/J1.  In agreement with the
+       generally  excepted  scenario  we  ﬁnd  semiclassical  magnetically  ordered  phases  for  J2  < J c12
+       and J2 > J c22   separated by a gapful quantum paramagnetic phase.  We estimate J c12   ≈ 0.35J1
+       and J c22   ≈ 0.66J1.
+
+    PACS codes:
+    75.10.Jm Quantized spin models
+    75.45.+j Macroscopic quantum phenomena in magnetic systems
+
+1    Introduction
+
+The spin-1/2 Heisenberg antiferromagnet (HAFM) with nearest-neighbor (NN) J1 and frustrating
+next-nearest-neighbor (NNN) J2 coupling (J1-J2 model) on the square lattice has attracted a great
+deal of interest  during the last twenty  years  (see,  e.g.,  Refs. [1–34] and references  therein).  The
+corresponding Hamiltonian reads
+                                        H = J1    ∑   si · sj + J2   ∑    si · sj,                                                  (1)
+
+
+                                                  ⟨i,j⟩             ⟨⟨i,k⟩⟩
+
+where the sums over ⟨i, j⟩ and ⟨⟨i, k⟩⟩ run over all NN and NNN pairs, respectively, counting each
+bond  once.  In  what  follows  we  set  J1  = 1.  The  synthesis  of layered  magnetic  materials  [36, 37]
+which  can  be  described  by  the  spin-1/2  J1-J2  model  has  stimulated  a  renewed  interest  in  this
+model.  Another new promising perspective is also opened by the recently discovered layered Fe-
+based superconducting materials [38] which may have a magnetic phase that can be described by
+a J1-J2 model with spin quantum number s > 1/2 [39–41].
+    The J1-J2  model is a canonical model to study quantum phase transitions between semiclas-
+sical  magnetically  ordered  ground  state  (GS)  phases  and  novel  non-magnetic  quantum  phases.
+Moreover, the J1-J2  model might be also a candidate for a deconﬁned critical point separating a
+semiclassical magnetic phase from non-magnetic quantum phase [20, 30, 31, 42, 43].
+
+                                                            1
+                                                                   23    30
+
+
+                                                3     10    16     22    29     35
+
+
+                                         36     2     9     15     21    28     34
+
+
+                                         353535351    8     14     20    27     33
+
+
+                                                0     7     13     19    26     32    38
+
+
+                                               39     6     12     18    25     31    37
+
+
+                                               383838385    11     17    24     23232323
+
+
+                                                      4      3333
+
+
+                            Figure 1:  The ﬁnite square lattice with N  = 40 sites.
+
+    Due to frustration highly eﬃcient quantum Monte-Carlo codes [44], such as the stochastic series
+expansion suﬀer from the minus sign problem.  Therefore, many other approximate methods, e.g.,
+the Green’s function method [15, 22], the series expansion [13, 16, 18, 20, 31], the Schwinger boson
+approach [10], the coupled cluster method [12, 22, 29, 30], variational techniques [17, 33], the path
+integral  quantization  [23],  the  cluster  eﬀective-ﬁeld  theory  [24, 27],  the  hierarchical  mean-ﬁeld
+approach  [28],  the  projected  entangled  pair  states  method  [34]  as  well  as  the  stochastic  state
+selection  method  [26] were  used  to ﬁnd  the  GS phases  of the  model.  One  of the  most  powerful
+methods  is the Lanczos  exact  diagonalization method which  yields  numerically  exact  results  for
+ﬁnite  lattices.   It  has  been  succesfully  applied  to  the  J1-J2  model  in  various  papers,  see,  e.g.,
+Refs. [2–4, 6–9, 11, 14, 21].  In particular, the paper of Schulz and coworkers [4] presenting for the
+ﬁrst time results for lattices up to N  = 36 sites has set a benchmark for such studies and provides
+detailed  information  on  the  model.  In  addition,  these  numerical  exact  results  are  often  used  to
+test new approximate methods, see, e.g., Refs. [26, 30, 35].
+    Due  to  the  progress  in  the  computer  hardware  and  also  to  the  increase  in  the  eﬃciency  in
+programming  the  Lanczos  algorithm,  very  recently  the  GS  and  low-lying  excitations  of  the  un-
+frustrated  (i.e.,  J2  =  0)  spin-1/2  HAFM  [45]  and  of  a  spin-1/2  Heisenberg  model  with  ring
+exchange  [46]  have  been  calculated  for  a  square  lattice  with  N  =  40  sites.   The  largest  two-
+dimensional  quantum  spin  model  for  which  the  GS  has  been  calculated  so  far  is  the  spin-1/2
+HAFM  on  the  star  lattice  with  N  =  42  sites  [47].  Note,  however,  that  for  higher  sectors  of  Sz
+which are relevant for ﬁnite magnetic ﬁelds much larger system sizes can be considered, see, e.g.,
+Ref. [48].
+    As a result of numerous investigations it seems to be clear now that the J1-J2 model exhibits
+two magnetically long-range ordered phases at small and at large J2 separated by an intermediate
+quantum paramagnetic phase without magnetic long-range order (LRO) in the parameter region
+J c12   < J2 < J c22  , where J c12   ≈ 0.4J1 and J c22   ≈ 0.6J1.  The GS at low J2 < J c12   exhibits semiclassical
+N´eel magnetic LRO with the magnetic wave vector Q0 = (π, π).  The GS at large J2 > J c22   shows
+so-called  collinear  magnetic  LRO  with  the  magnetic  wave  vectors  Q1  =  (π, 0)  or  Q2  =  (0, π).
+These two collinear states are characterized by a parallel spin orientation of nearest neighbors in
+vertical (horizontal) direction and an antiparallel spin orientation of nearest neighbors in horizontal
+(vertical) direction.
+    The nature of the transition between the N´eel and the quantum paramagnetic phase as well as
+
+                                                                2
+the properties of the quantum paramagnetic phase and the precise values of the transition points
+are still under discussion [1–9, 12–31, 33].
+    In  this  paper  we  present  new  results  for  the  GS  and  the  low-lying  excitations  of  the  J1-J2
+model for a ﬁnite lattice of N  = 40 sites shown as in Fig. 1.  These results are presented in detail,
+on the one hand, as benchmark data for approximate methods.  On the other hand, we combine
+our new results with the known results [4] (which we have recalculated) to improve the ﬁnite-size
+extrapolation.  For all the ﬁnite lattices periodic boundary conditions were imposed.
+
+2    Results of Lanczos exact diagonalization for a ﬁnite square
+       lattice of N  = 40 sites
+
+Although  Schulz  and  coworkers  performed  the  Lanczos  diagonalization  for  the  spin-1/2  J1-J2
+HAFM  on  the  ﬁnite  square  lattice  of  N  =  36  sites  more  then  10  years  ago  the  corresponding
+Lanczos diagonalization for the  ﬁnite lattice of N  = 40 sites  is still  a challenging  problem.  The
+number  of  basis  states  on  the  square  lattice  in  the  GS  symmetry  sector  is  nh  =  430909650  for
+N  = 40 compared  to nh  = 15804956 for N  = 36.  The  GS  belongs  to a translational symmetry
+with q = (0, 0).
+    The  most  important  quantities  in  order  to  analyze  semiclassical  GS  magnetic  ordering  are
+appropriate  order  parameters  corresponding  to  the  classical  N´eel  and  collinear  LRO.  Following
+Schulz et al. [4] we use here the Q-dependent susceptibilities (square of order parameters) deﬁned
+as                                                             ∑
+                                   M 2N(Q) =         1N(N + 2)     ⟨si · sj⟩eiQ(Ri−Rj).                                          (2)
+                                                                i,j
+For the magnetic wave vector Q0 = (π, π) the quantity M 2N(Q0) is the relevant order parameter
+for the N´eel ordered GS phase present at small J2, whereas M 2N(Q1(2)) with magnetic wave vectors
+Q1 = (π, 0) or Q2 = (0, π) corresponds to the collinear magnetic LRO present at large J2.
+    In table 1 we give the singlet GS energy, EGS(S = 0), the energy of the ﬁrst triplet excitation
+E0(S  =  1),  the  energy  of  the  ﬁrst  singlet  excitation  E1(S  =  0),  as  well  as  the  Q-dependent
+susceptibilities  M 2N(π, π),  M 2N(π, 0).   The  low-lying  energies  are  also  displayed  in  Fig.  2  where
+more data points are included  than shown  in table 1.  It is obvious that the ﬁrst excited  singlet
+state becomes  very  close to the singlet  GS near J2  = 0.6.  Since  both states belong to the same
+lattice symmetry, a level crossing is forbidden due to the von Neumann-Wigner theorem [49].  The
+numerical  data  shown  in  the  right  inset  of  Fig.  2  clearly  give  a  numerical  check  of  this  general
+theorem.   The  energies  of  the  low-lying  states  show  the  typical  frustration  induced  maximum
+known  from previous  ED  calculations  for smaller  lattices,  see,  e.g.,  Refs.  [2, 4, 6].  Since  we  have
+data for the  singlet GS and the  ﬁrst triplet  excitation,  we  can also  give  results  for the spin  gap
+∆T  = E0(S = 1) − EGS(S = 0), see Fig. 3.  Note that the spin gap was not presented in the paper
+of Schulz et al. [4].  Hence we compare in Fig. 3 spin gap data for N  = 32, 36, and 40.  It is obvious
+that  with  increasing  J2  the  gap  starts  to  grow  at  J2  ≈  0.4J1.   It  reaches  a  maximum  at  about
+J2 ≈ 0.58J1 and becomes again small for J2 /greaterorsimilar 0.6J1.  This behavior yields an indication of a gapful
+quantum paramagnetic GS phase around J2 = 0.5J1.  However, it is also obvious that there is no
+monotonous ﬁnite-size behavior in that parameter region, i.e., a reliable ﬁnite-size extrapolation
+of the spin gap around J2 = 0.5J1 is not possible,
+    Next we consider the spin-spin correlation functions ⟨s0 · sR⟩.  There are altogether 11 diﬀerent
+correlations  functions  given  in  table  2  for  the  same  data  points  as  in  table  1.   Graphically  the
+variation of some selected  correlation functions  are shown  inf Fig. 4.  For small  J2  the spin-spin
+correlations are quite strong and according to the N´eel order we have ⟨s0 ·sR⟩ < 0 for R connecting
+
+
+                                                              3
+Table 1:  Ground state energy EGS(S = 0), ﬁrst triplet excitation energy E0(S = 1), ﬁrst singlet
+excitation  energy  E1(S  =  0),  square  of  N´eel  order  parameter  M 2N(π, π)  and  square  of  collinear
+order parameter M 2N(π, 0).
+
+
+                 J2      EGS(S = 0)           E0(S = 1)          E1(S = 0)        M 2N(π, π)     M 2N(π, 0)
+                0.0     -27.09485025        -26.83322962        -26.3138435       0.193923       0.011956
+                0.10    -25.46460260        -25.19683764        -24.6669636       0.184079       0.011994
+                0.20    -23.90046918        -23.62413648        -23.0809149       0.171482       0.012066
+                0.30    -22.42728643        -22.13740165        -21.5763396       0.154648       0.012212
+                0.40    -21.08836670        -20.77332213        -20.1877770       0.130935       0.012547
+                0.50    -19.96304839        -19.59762345        -19.0413364       0.097703       0.013446
+                0.55    -19.51791526        -19.11727950        -18.8522256       0.079043       0.014457
+                0.60    -19.18368038        -18.90110215        -19.1762893       0.020304       0.078160
+                0.65    -20.04603255        -19.75459787        -19.3898477       0.013516       0.093232
+                0.70    -21.05530239        -20.75925837        -20.2366849       0.010120       0.101552
+                0.80    -23.34020427        -23.01691919        -22.5277370       0.005522       0.111045
+                0.90    -25.83691287        -25.46196339        -24.8738325       0.002912       0.115628
+                1.00    -28.43880892        -28.00735838        -27.2299736       0.001700       0.117879
+
+
+
+sites of sublattices A and B but ⟨s0 ·sR⟩ > 0 for R connecting sites within a sublattice.  Increasing
+the frustration leads  to a weakening  of the spin-spin  correlation.  This  weakening  is particularly
+strong  for larger  separations.  For strong frustration  around  J2  = 0.5J1  all  correlation  functions
+⟨s0 ·sR⟩ except for R = (1, 0);  (1, 1);  (2, 0) are very small which is an indication for a magnetically
+disordered  phase.  Beyond  J2  ≈ 0.6J1  the  increasing  strength  of correlation  functions  for lattice
+vectors  R connecting  sites  within  the same  sublattice  A (or B) indicates  the emerging collinear
+LRO.  The  corresponding  order  parameters  deﬁned  in  Eq.  (2)  and  listed  in  table  1  are  shown
+in  Fig.  5.   The  suppression  of  magnetic  order  around  J2  =  0.5J1  is  again  obvious.   Although
+there  is  no level  crossing  (see  the  discussion  above)  we  observe  in  Figs.  4 and  5 a  sharp  change
+of  the  magnetic  quantities  near  J2  = 0.6J1,  i.e.,  at  that  point  where  both singlet  levels  become
+very  close  to each other (see  Fig. 2,  right inset).  This  behavior  might be a hint on a ﬁrst-order
+transition between the phase with collinear LRO and the magnetically disordered phase, see also,
+e.g., Refs. [4, 13, 16, 22, 30].
+    Another interesting point is the breakdown of the Marshall-Peierls sign rule (MPSR) at J2 ≈
+0.4J1.    Writing  the  GS  as  |Ψ⟩  =  ∑n cn|n⟩,  where  |n⟩  is  an  Ising  basis  state  of  typical  form
+|  ↑↑↓↑↓↓  · · · ⟩,  the  MPSR  determines  the  sign  of  the  coeﬃcients  cn  [50].   The  MPSR  has  been
+proved  exactly  for  bipartite  lattices  and  arbitrary  site  spins  by  Lieb,  Schultz  and  Mattis  [51].
+As  pointed  out  in  several  papers  the  knowledge  of  the  sign  of  the  cn  is  of  great  importance  in
+diﬀerent numerical methods, e.g.  for the construction of variational wave functions [7, 17, 33, 52],
+in quantum Monte-Carlo methods (which suﬀer from the sign problem in frustrated systems [53])
+and also in the density matrix renormalization group method, where the application of the MPSR
+has substantially improved the method in a frustrated spin system [54].
+    For  the  J1-J2  model  on  the  square  lattice  the  violation  of  the  MPSR  was  considered  as  one
+signal of destruction  of magnetic LRO [7, 8, 11, 12, 17, 33].  It was found that the MPSR (proved
+exactly only for J2  = 0) survives  till about J2  ≈ 0.3 . . . 0.4J1.  The exact Lanczos results  for the
+ground state presented in Refs. [7,8] and [11] were, however, restricted to systems of up to N  = 24
+
+                                                             4
+Table 2:  Spin-spin correlation function ⟨s0 · sR⟩ (respectively, ⟨s0 · si⟩, see Fig. 1)
+
+
+           ⟨s0 · s1⟩      ⟨s0 · s2⟩      ⟨s0 · s3⟩      ⟨s0 · s4⟩      ⟨s0 · s5⟩      ⟨s0 · s6⟩
+  J2     R = (1, 0)     R = (2, 0)     R = (3, 0)     R = (3, 1)     R = (2, 1)     R = (1, 1)
+  0.0     -0.338685      0.185133       -0.166989      0.164100       -0.179037      0.207198
+ 0.10     -0.338313      0.175458       -0.154968      0.151833       -0.166128      0.200046
+ 0.20     -0.336852      0.163089       -0.140055      0.136281       -0.149688      0.190488
+ 0.30     -0.333423      0.146655       -0.120879      0.115776       -0.127803      0.176943
+ 0.40     -0.326073      0.123909       -0.095208      0.087441       -0.097056      0.156171
+ 0.50     -0.310788      0.093354       -0.061983      0.048666       -0.053772      0.122499
+ 0.55     -0.298596      0.077397       -0.045300      0.027102       -0.028947      0.099315
+ 0.60     -0.129468      0.145560       -0.032355      -0.127482      0.034386       -0.183879
+ 0.65     -0.096630      0.168312       -0.027747      -0.156408      0.033291       -0.236841
+ 0.70     -0.077052      0.181365       -0.024825      -0.170640      0.030228       -0.265914
+ 0.80     -0.050388      0.195918       -0.020247      -0.186357      0.025323       -0.301704
+ 0.90     -0.034740      0.202785       -0.016548      -0.193845      0.021465       -0.320247
+ 1.00     -0.026295      0.206295       -0.013959      -0.197463      0.018474       -0.329190
+                 ⟨s0 · s9⟩      ⟨s0 · s10⟩     ⟨s0 · s11⟩     ⟨s0 · s16⟩      ⟨s0 · s24⟩
+         J2     R = (1, 2)     R = (1, 3)     R = (2, 2)     R = (2, 3)     R = (4, −2)
+        0.0     -0.177165       0.157032       0.161478      -0.156222        0.150825
+       0.10     -0.164196       0.144276       0.148815      -0.142812        0.137613
+       0.20     -0.147774       0.128166       0.132678      -0.125913        0.120888
+       0.30     -0.126123       0.107007       0.111225      -0.103674        0.098736
+       0.40     -0.096186       0.077940       0.081246      -0.072885        0.067683
+       0.50     -0.055281       0.039045       0.040050      -0.031119        0.024636
+       0.55     -0.032856       0.018723       0.018048      -0.009279        0.001776
+       0.60      0.015885      -0.109425       0.107499       0.004956        0.092322
+       0.65      0.017844      -0.138945       0.137898       0.002280        0.124962
+       0.70      0.017595      -0.155349       0.155199       0.000924        0.142587
+       0.80      0.016110      -0.173610       0.174066       0.000216        0.159999
+       0.90      0.014244      -0.182238       0.182661       0.000291        0.166980
+       1.00      0.012522      -0.186480       0.186960       0.000333        0.170301
+
+
+
+
+
+
+
+
+
+                                                5
+                                -0.45   EGS(S=0)
+                                          E1(S=0)
+                                 -0.5     E0(S=1)
+
+                                -0.55
+
+                                 -0.6
+
+                                -0.65
+
+                                 -0.7
+
+                                -0.75
+                                 -0.8            0.5    0.6      0.599    0.6    0.601
+
+                                       0        0.2       0.4       0.6       0.8        1
+                                                                    J2/J1
+
+
+Figure 2:  Singlet GS energy, EGS(S = 0), the energy of the ﬁrst triplet excitation, E0(S = 1), and
+the energy of the ﬁrst singlet excitation, E1(S = 0), versus J2 for the square lattice with N  = 40
+sites.
+
+
+
+
+                                 0.7     N=32
+                                 0.6     N=36
+                                 0.5     N=40
+
+                                 0.4
+                                 0.3
+                                 0.2
+                                 0.1
+                                    0
+                                       0       0.2       0.4       0.6      0.8        1
+                                                            J2/J1
+
+
+
+       Figure 3:  Spin gap ∆T  = EGS(S = 1) − E0(S = 0) versus J2 for N  = 32, 36, and 40.
+
+
+
+                                                          6
+                            0.3
+
+                            0.2                                                         R=(1,0)
+                                                                                        R=(2,0)
+                            0.1                                                         R=(3,0)
+                                                                                        R=(1,1)
+                              0                                                         R=(2,3)
+                                                                                       R=(4,-2)
+                          -0.1
+
+                          -0.2
+
+                          -0.3
+
+                          -0.4
+                                 0        0.2        0.4       0.6       0.8         1
+                                                               J2/J1
+
+
+
+          Figure 4:   Selected spin-spin correlation functions ⟨s0 · sR⟩ for N  = 40.
+
+
+
+
+
+
+                              0.2                             Q=(π,π)
+                            0.18                              Q=(0,π)
+                            0.16
+                            0.14
+                            0.12
+                              0.1
+                            0.08
+                            0.06
+                            0.04
+                            0.02
+                                0
+                                   0        0.2       0.4       0.6       0.8        1
+                                                                J2/J1
+
+
+
+Figure 5:   Square of order parameters M 2N(Q) for Q = (π, π) and Q = (0, π), see Eq. (2).
+
+
+
+
+                                                      7
+                                      1
+
+                                  0.99                               10-6
+                                                                 10-9
+                                  0.98                       10-12
+
+                                  0.97
+
+                                  0.96     N=32
+                                           N=36
+                                  0.95     N=40
+                                         0       0.1     0.2      0.3      0.4      0.5     0.6
+                                                                        J2/J1
+
+
+
+Figure 6:  Validity  of the  MPSR:  The  curve  shows  the  weight  of the  states  fulﬁlling  the  MPSR,
+i.e., ∑′n |cn|2  (where the sum ∑′  runs over those states only,  for which the sign of cn  fulﬁlls the
+MPSR). The arrows indicate those J2 values for N  = 40, where the weight of the states which do
+not fulﬁll the MPSR is 10−12, 10−9 and 10−6, respectively.
+
+sites.   Here  we  present  data  for  N  =  32,  36,  and  40  in  Fig.  6.   From  Fig.  6  it  is  obvious  that
+the  MPSR  is  valid  in  very  good  approximation  even  till  J2  ≈  0.4J1.   The  MPSR  starts  to  be
+signiﬁcantly violated beyond J2 = 0.4J1, where the N´eel LRO breaks down.
+
+3    Finite-size extrapolation
+
+We  use  now  our  new  data  for  N   =  40  together  with  the  known  data  for  N   =  20, 32, 36  to
+perform  a  ﬁnite-size  extrapolation.   Note  that  we  do  not  include  the  data  for  the  lattice  with
+N  =  16  sites.   This  lattice  has  an  extra  symmetry  because  it  is  equivalent  to  a  hypercube  in  4
+dimensions.  It was argued that, therefore, the N  = 16 lattice exhibits an anomalous behavior [4].
+The  ﬁnite-size  extrapolation  rules  for  the  two-dimensional  HAFM  are  well  known  [55–59].  The
+extrapolation of the magnetic order parameters yields an estimate of the transition points between
+the semiclassically ordered phases (N´eel and collinear) and the magnetically disordered quantum
+phase.  In addition,  since the scaling behavior is related to the low-energy  degrees of freedom of
+the model, via the extrapolation procedure one can extract the J2 dependence of other quantities
+such as the spin-wave velocity c and the spin stiﬀness ρ.  It has been demonstrated that Lanczos
+data for ﬁnite lattices of up to N=36 sites can provide quite accurate data for these quantities in
+the case of unfrustrated lattices [4, 58, 60].
+    In the seminal paper of Schulz et al. [4] the ﬁnite-size extrapolation procedure as well as some
+particular  problems  of  the  extrapolation  appearing  for  the  J1-J2  model  were  discussed  in  great
+detail.   We  follow  here  the  lines  of  that  paper,  but  do  not  repeat  a  detailed  discussion  of  the
+extrapolation scheme.
+    We deﬁne the staggered magnetization, i.e., the N´eel order parameter, as m0 = 2 limN→∞ MN(π, π).
+
+
+
+                                                              8
+                                  0.7                                      m0
+                                  0.6                                      m1
+
+                                  0.5
+
+                                  0.4
+
+                                  0.3
+
+                                  0.2
+
+                                  0.1
+
+                                    0
+                                       0         0.2       0.4        0.6       0.8         1
+                                                                      J2/J1
+
+
+
+    Figure 7:  Order parameters m0 (see Eq. (3)) and m1 (see Eq. (4)) as a function of J2/J1.
+
+
+
+
+
+
+                               -0.45        extrapol
+
+
+                                -0.5
+
+
+                               -0.55                           20
+                                                               32
+                                                               36
+                                                               40
+                                -0.6
+
+
+                               -0.65
+
+                                -0.7                         0.5       0.7
+                                       0        0.2        0.4        0.6        0.8         1
+                                                                      J2/J1
+
+
+Figure 8:  Ground-state energy  per  site.  Main  panel:  Extrapolated  value  e0  (see  Eq.  (5).  Inset:
+Data for N  = 20, 32, 36, and N  = 40 around the maximum.
+
+
+
+                                                             9
+The ﬁnite-size behavior of MN(π, π) is given by [4, 55–57]
+                                                            (                           )
+                                     M 2N(π, π) =  14m20       1 + 0.62075cρ√N     + · · ·                                  (3)
+
+where c is the spin-wave velocity and ρ is the spin stiﬀness.  The corresponding order parameter
+for  the  collinear  LRO  at  large  J2  is  deﬁned  as  [4]  m1  =  √8 limN→∞ MN(π, 0).   The  ﬁnite-size
+behavior of MN(π, 0) is
+                                          M 2N(π, 0) = 18m21 + const.√N   + · · ·  .                                                  (4)
+
+The  results  for m0  and  m1  are  shown  in  Fig. 7.  As  expected  we  ﬁnd  a magnetically  disordered
+GS  phase  around  J2  =  0.5J1.  The  transition  points  are  determined  to  J c12   =  0.35J1  and  J c22   =
+0.66J1,  i.e.,  the  range  of  the  magnetically  disordered  GS  phase  obtained  here  is  slightly  larger
+than predicted, e.g., from series expansion [13,16,18,20] or coupled cluster approach [30].  For the
+unfrustrated square lattice HAFM (J2 = 0) we obtain m0 = 0.621 which is in good agreement with
+corresponding results obtained by other methods, e.g., 3rd order spin-wave theory (m0 = 0.6138)
+[63], quantum Monte Carlo (m0 = 0.6140) [62] or coupled cluster method (m0 = 0.6205) [61].
+    The ﬁnite-size behavior of the GS energy is given by
+                                         EGS(N)
+                                             N       = e0 − 1.4372    cN 3/2 + · · ·  .                                                (5)
+The  extrapolated  energy  e0  is  shown  in Fig. 8.  Because  of an irregular ﬁnite-size  behavior near
+the maximum in e0  (see inset in Fig. 8) the extrapolation becomes unreliable around J2 = 0.5J1
+(this parameter region is indicated by the dotted line in the main panel of Fig. 8).  Nevertheless,
+one can speculate that the kink in the extrapolated GS energy near J2 = 0.6J1 might be another
+hint for a ﬁrst-order transition at J c22   between the semiclassical collinear phase and the quantum
+paramagnetic phase.  The extrapolated GS energy, e0 = −0.6701, for J2 = 0 is again in very good
+agreement with corresponding results obtained by other methods, e.g., 3rd order spin-wave theory
+(e0  =  −0.66931)  [63],  quantum  Monte  Carlo  (e0  =  −0.66944)  [62]  or  coupled  cluster  method
+(e0 = −0.66936) [61].
+    We can also perform a ﬁnite-size extrapolation of the gap to the ﬁrst triplet excitation (spin
+gap) ∆T (N) = E0(S = 1) − EGS(S = 0).  The corresponding formula is
+
+                                               ∆T (N) = ∆T +  aN  + · · ·  .                                                        (6)
+
+The  results  for  ∆T  are  shown  in  Fig.  9.   In  the  magnetically  ordered  N´eel  and  collinear  phases
+gapless Goldstone modes exist and consequently the spin gap should vanish.  The ﬁnite values of
+the extrapolated gap for J2 < J c12   and J2 > J c22   give a hint of the limits of precision of the ﬁnite-
+size  extrapolation  of  the  spin  gap.   Nevertheless,  it  becomes  obvious  that  there  is  a  signiﬁcant
+increase  of ∆T  in the quantum  paramagnetic phase  J c12   < J2  < J c22  .  Note that for larger J2  the
+energy  scale  of the system  becomes  proportional to J2  that explains  the increase  in ∆T  with J2
+for J2 > 0.8.  A ﬁnite spin gap for J c12   < J2 < J c22   would be consistent with the ﬁndings of many
+papers which suggest that the quantum paramagnetic phase exhibits valence-bond order, see, e.g.,
+Refs. [20] and [30] and references therein.  Note, however, that our ﬁnding is in contrast to recent
+DMRG studies on frustrated odd-leg ladders [25] where arguments for a gapless spectrum of the
+J1-J2 model on the square lattice have been given.
+    Next  we  consider  the  uniform  susceptibility  χ  which  is  related  to  the  spin  gap  by  χ(N)  =
+N∆T (N).  For the ﬁnite-size extrapolation of the uniform susceptibility we use [4]
+
+                                  χ(N) = χ +    b√N  + · · ·   ;   χ(N) = N∆T (N).                                        (7)
+
+                                                              10
+                0.45
+                  0.4       extra
+                0.35        N=40
+                  0.3
+                0.25
+                  0.2
+                0.15
+                  0.1
+                0.05
+                     0
+                        0        0.2       0.4       0.6       0.8        1
+                                              J2/J1
+
+
+
+Figure 9:  Spin gap ∆T  for N  = 40 and extrapolated to N  → ∞ (see Eq. (6)).
+
+
+
+
+
+
+                      0.1                         extra
+                                                  N=40
+
+                    0.08
+
+                    0.06
+
+                    0.04
+
+                    0.02
+
+                         0
+                            0      0.2      0.4     0.6      0.8       1
+                                              J2/J1
+
+
+
+          Figure 10:  Susceptibility χ determined according to Eq. (7).
+
+
+
+
+                                           11
+                                 1.4
+
+                                 1.2
+
+                                    1
+
+                                 0.8
+
+                                 0.6
+
+                                 0.4
+                                 0.2    10ρ1c
+                                    0   10ρ2
+                                       0         0.1        0.2        0.3        0.4        0.5
+                                                               J2/J1
+
+
+
+Figure 11:  Spin wave velocity c and spin stiﬀness ρ.  For better comparison ρ is multiplied by 10.
+
+The results for χ(N  = 40) and the extrapolated value χ are shown in Fig. 10.  In a gapful quantum
+paramagnetic phase, i.e., for J c12   < J2 < J c22  , χ should vanish.  Indeed, we observe a vanishing of χ
+around J2 = 0.5J1.  However, the J2 parameter region where χ is zero is clearly smaller than that
+where the order parameters m0 and m1 vanish.  At J2 = 0 we obtain χ = 0.0674 which is in good
+agreement  with  data obtained by  other methods,  e.g.,  quantum  Monte  Carlo (χ = 0.0669) [62],
+series  expansion  (χ  =  0.0659)  [64],  third-order  spin-wave  theory  (χ  =  0.06291)  [63],  or  coupled
+cluster method (χ = 0.065) [65].
+    So far we have considered quantities which can be calculated directly for each ﬁnite lattice and
+for  which  the  corresponding  value  for N  →  ∞  is  the  leading  term  in  a  ﬁnite-size  extrapolation
+formula, see Eqs. (3), (4), (5), (6), and (7).  A test of the accuracy the ﬁnite-size extrapolation is
+given by the comparison with best available data for the unfrustrated limit (J2 = 0), see above.  In
+addition to the direct calculation of certain magnetic quantities the ﬁnite size-extrapolation allows
+also an indirect determination of the spin-wave velocity c and the spin stiﬀness ρ which enter the
+ﬁnite  size-extrapolation  formulas  (3)  and  (5)  as  prefactors  of  the  leading  ﬁnite-size  corrections.
+First  we  can  determine  the  spin-wave  velocity  c  via  Eq.  (5).   Using  this  result  and  also  m0  we
+ﬁnd  then  the  stiﬀness  ρ1  ∝  m20c  via  Eq.  (3).   Since  ρ1  is  proportional  to  m20,  it  vanishes  at  the
+same point J c22  .  Alternatively, we can use the hydrodynamic relation χ = ρ/c2, see, e.g., Refs. [66]
+and [62], to determine the stiﬀness ρ2 = χc2.  We show the spin-wave velocity and both values of
+the stiﬀness in Fig. 11.  Although, ρ1 obtained via Eq. (3) and ρ2 obtained via the hydrodynamic
+relation are quite  diﬀerent  the qualitative  behavior of both is similar  to that obtained by  direct
+calculation of ρ, e.g., using Schwinger boson [10] or coupled cluster approach [30].  The spin-wave
+velocity c also decreases with growing J2.  However, c remains ﬁnite at the magnetic-nonmagnetic
+transition at J c12   as predicted from the non-linear sigma model [66].  At J2 = 0 we get c = 1.287,
+ρ1  =  0.1246  and  ρ2  =  0.1115.   These  values  are  signiﬁcantly  lower  than  corresponding  values
+obtained by quantum Monte Carlo method [62], 3rd order spin-wave theory [63] or coupled cluster
+method [61, 67].  Hence we may argue that the indirect determination of magnetic quantities via
+the prefactors of the leading ﬁnite-size corrections is less accurate.
+
+
+                                                             12
+4    Summary
+
+In this paper we have presented detailed information on the GS and the low-lying excitations for
+the spin-1/2 J1-J2 HAFM on a ﬁnite square lattice of N  = 40 sites.  These data for the GS energy,
+the  lowest  triplet  and  singlet  excitations,  the  spin-spin  correlation  functions  and  the  magnetic
+order parameters may serve as benchmarks for approximate methods.
+    Including  data for ﬁnite lattices  of N  = 20, 32, 36 sites  we  have  performed ﬁnite-size  extrap-
+olations of several magnetic quantities.  Using the well-known extrapolation formulas for the GS
+energy,  the  order  parameters,  the  spin  gap,  and  the  uniform  susceptibility  we  have  determined
+these  quantities  for  N  →  ∞.   To  estimate  the  accuracy  of  the  extrapolated  quantities  we  have
+compared them with best available results for the unfrustrated limit J2 = 0, where the high-order
+spin-wave  theory and the quantum Monte Carlo method work well.  At J2  = 0 the extrapolated
+GS energy is in excellent agreement with spin-wave theory and quantum Monte Carlo results.  The
+deviation of the N´eel order parameter obtained by the ﬁnite-size extrapolation from the spin-wave
+and quantum Monte Carlo results is only about 1%.
+    Besides these quantities which have been determined directly for each ﬁnite lattice, in addition,
+we have used the formulas of ﬁnite-size extrapolation to determine the spin-wave velocity as well
+as the spin stiﬀness which appear in the prefactors of the leading ﬁnite-size corrections of the GS
+energy  and  the  N´eel  order  parameter.   This  ’indirect  way’  to  determine  spin-wave  velocity  and
+stiﬀness, however, yields only qualitative agreement with known results.
+    From the extrapolated magnetic order parameters we ﬁnd the transition point from the mag-
+netically  ordered  N´eel  phase  to  the  gapful  quantum  paramagnetic  phase  to  J c12    ≈  0.35J1  and
+transition point between the magnetically ordered collinear phase and the quantum paramagnetic
+phase to J c22   ≈ 0.66J1.
+
+    Acknowledgment:  This work was supported by the DFG (Ri615/16-1).
+
+References
+
+ [1]  P. Chandra and B. Doucot,   Phys. Rev. B 38, 9335 (1988).
+
+ [2]  E. Dagotto and A. Moreo,   Phys. Rev. Lett. 63, 2148 (1989).
+
+ [3]  F. Figueirido, A. Karlhede, S. Kivelson, S. Sondhi, M. Rocek, and D.S. Rokhsar, Phys. Rev.
+     B 41, 4619 (1990).
+
+ [4]  H.J. Schulz and T.A.L. Ziman,   Europhys. Lett. 18, 355 (1992); H.J. Schulz, T.A.L. Ziman,
+     and D. Poilblanc   J. Phys. I 6, 675 (1996).
+
+ [5]  N.B. Ivanov and P.Ch. Ivanov, Phys. Rev. B 46, 8206 (1992).
+
+ [6]  J. Richter, Phys. Rev. B 47, 5794 (1993).
+
+ [7]  K. Retzlaﬀ, J. Richter, and N.B. Ivanov, Z. Phys. B 93, 21 (1993).
+
+ [8]  J. Richter, N.B. Ivanov, and K. Retzlaﬀ, Europhys. Lett. 25, 545 (1994).
+
+ [9]  T. Einarsson and H.J. Schulz, Phys. Rev. B 51, 6151 (1995).
+
+[10]  A. E. Trumper,  L. O. Manuel,  C. J. Gazza, and H. A. Ceccatto,  Phys.  Rev. Lett. 78, 2216
+     (1997); L. O. Manuel, A. E. Trumper, and H. A. Ceccatto, Phys. Rev. B 57, 8348 (1998).
+
+
+                                                           13
+[11]  A. Voigt, J. Richter, and N.B. Ivanov, Physica A 245, 269 (1997).
+
+[12]  R.F. Bishop, D.J.J. Farnell, and J.B. Parkinson,   Phys. Rev. B 58, 6394 (1998).
+
+[13]  R.R.P. Singh, Zheng Weihong, C.J. Hamer, and J. Oitmaa,   Phys. Rev. B 60, 7278 (1999).
+
+[14]  L. Capriotti and S. Sorella,   Phys. Rev. Lett. 84, 3173 (2000).
+
+[15]  L. Siurakshina, D. Ihle, and R. Hayn, Phys. Rev. B 64, 104406 (2001).
+
+[16]  O.P. Sushkov, J. Oitmaa, and Zheng Weihong,   Phys. Rev. B 63, 104420 (2001).
+
+[17]  L. Capriotti, F. Becca, A. Parola, and S. Sorella,   Phys. Rev. Lett. 87, 097201 (2001).
+
+[18]  R.R.P. Singh, Weihong Zheng , J. Oitmaa, O.P. Sushkov, and C.J. Hamer,  Phys. Rev. Lett.
+     91, 017201 (2003).
+
+[19]  T. Roscilde, A. Feiguin, A.L. Chernyshev, S. Liu, and S. Haas,   Phys. Rev. Lett. 93, 017203
+     (2004).
+
+[20]  J. Sirker, Z. Weihong, O. P. Sushkov, and J. Oitmaa, Phys. Rev. B 73, 184420 (2006).
+
+[21]  M. Mambrini, A. L¨auchli, D. Poilblanc, and F. Mila, Phys. Rev. B 74, 144422 (2006).
+
+[22]  D.  Schmalfuß,  R.  Darradi,  J.  Richter,  J.  Schulenburg,  and  D.  Ihle,  Phys.  Rev.  Lett.  97,
+     157201 (2006).
+
+[23]  F. Kr¨uger and S. Scheidl, Europhys. Lett. 74, 896 (2006).
+
+[24]  H.T. Ueda and K. Totsuka, Phys. Rev. B 76, 214428 (2007).
+
+[25]  F. Becca, L. Capriotti, A. Parola, and S. Sorella Phys. Rev. B 76, 060401 (2007).
+
+[26]  T. Munehisa and Y. Munehisa J. Phys.:  Condens. Matter 19, 196202 (2007).
+
+[27]  J.R. Viana and J.R. de Sousa, Phys. Rev. B 75, 052403 (2007).
+
+[28]  L. Isaev, G. Ortiz, and J. Dukelsky, Phys. Rev. B 79, 024409 (2009).
+
+[29]  R.F. Bishop, P.H.Y. Li, R. Darradi, J. Schulenburg, and J. Richter, Phys. Rev. B 78, 054412
+     (2008).
+
+[30]  R. Darradi, O. Derzhko, R. Zinke, J. Schulenburg, S. E. Kr¨uger, and J. Richter, Phys. Rev.
+     B 78, 214415 (2008).
+
+[31]  T. Pardini and R.R.P. Singh, Phys. Rev. B 79, 094413 (2009).
+
+[32]  T. Yoshikawa amd M. Ogata, Phys. Rev. B 79, 144429 (2009).
+
+[33]  K.S.D. Beach, Phys. Rev. B 79, 224431 (2009).
+
+[34]  V. Murg, F. Verstraete, and J. I. Cirac, Phys. Rev. B 79, 195119 (2009).
+
+[35]  T. Kashima and M.Imada, J. Phys. Soc. Jpn. 70, 3052 (2001).
+
+[36]  R. Melzi, P. Carretta, A. Lascialfari, M. Mambrini, M. Troyer, P. Millet, and F. Mila,  Phys.
+     Rev. Lett. 85, 1318 (2000).
+
+                                                          14
+[37]  H. Rosner, R.R.P. Singh, Zheng Weihong, J. Oitmaa, S.-L. Drechsler, and W.E. Picket,  Phys.
+     Rev. Lett. 88, 186405 (2002).
+
+[38]  Y. Kamihara, T. Watanabe, M. Hirano, and H. Hosono, J. Am. Chem. Soc. 130, 3296 (2008).
+
+[39]  T. Yildirim, Phys. Rev. Lett. 101, 057010 (2008).
+
+[40]  Q. Si and E. Abrahams, Phys. Rev. Lett. 101, 076401 (2008).
+
+[41]  F. Ma , Z.-Y. Lu , and T. Xiang, Phys. Rev. B 78, 224517 (2008).
+
+[42]  T.  Senthil,  A.  Vishwanath,  L.  Balents,  S.  Sachdev,  and  M.P.A.  Fisher,  Science  303,  1490
+     (2004).
+
+[43]  T.  Senthil,  L.  Balents,  S.  Sachdev,  A.  Vishwanath,  and  M.P.A.  Fisher,  Phys.  Rev.  B  70,
+     144407 (2004).
+
+[44]  F.  Alet,  P.  Dayal,  A.  Grzesik,  A.  Honecker,  M.  Koerner,  A.  Laeuchli,  S.R.  Manmana,  I.P.
+     McCulloch,  F.  Michel,  R.M.  Noack,  G.  Schmid,  U.  Schollwoeck,  F.  Stoeckli,  S.  Todo,  S.
+     Trebst, M. Troyer, P. Werner, S. Wessel, J. Phys. Soc. Jpn. Suppl. 74, 30 (2005).
+
+[45]  J. Richter, J. Schulenburg, and A. Honecker, in:  Quantum Magnetism, ed by U. Schollw¨ock,
+     J. Richter, D.J.J. Farnell, R.F. Bishop, Lecture Notes in Physics 645, p. 85 (Springer, Berlin,
+     2004).
+
+[46]  A.  L¨auchli,  J.C.  Domenge,  C.  Lhuillier,  P.  Sindzingre,  and  M.  Troyer  Phys.  Rev.  Lett.  95,
+     137206 (2005).
+
+[47]  J. Richter, J. Schulenburg, A. Honecker, and D. Schmalfuß, Phys. Rev. B 70, 174454 (2004).
+
+[48]  J. Schulenburg,  A. Honecker,  J. Schnack,  J. Richter,  and H. - J. Schmidt,  Phys.  Rev. Lett.
+     88,  167207 (2002);  A. Honecker,  J. Schulenburg,  and J.Richter,  J. Phys.:  Condens.  Matter
+     16, S749 (2004).
+
+[49]  J.  von  Neumann  and  E.  Wigner,  Z.  Phys.  30,  467  (1929);  L.  D.  Landau  and  E.  Lifshitz,
+     Quantum Mechanics:  Non-Relativistic Pergamon, Oxford, (1977).
+
+[50]  W. Marshall. Proc. Roy. Soc. A 232, 48 (1955).
+
+[51]  E.H. Lieb, T.D. Schultz, and Mattis D.C. Ann. Phys.(N.Y.) 16, 407 (1961).
+
+[52]  B. Edegger, V.N. Muthukumar, and C. Gros, Advances in Physics 56, 927 (2007).
+
+[53]  H. de Readt and A. Lagendijk.   Phys. Rev. Lett. 46, 77 (1981).
+
+[54]  U. Schollw¨ock. Phys. Rev. B 58(13), 8194 (1998).
+
+[55]  H. Neuberger and T. Ziman Phys. Rev. B 39, 2608 (1989).
+
+[56]  P. Hasenfratz and F. Niedermayer, Z. Phys. B: Condens. Matter 92, 91 (1993).
+
+[57]  A. Sandvik, Phys. Rev. B 56, 11678 (1997).
+
+[58]  D.D.Betts, H.Q. Lin, and J.S.Flynn, Can. J. Phys. 77, 353 (1999).
+
+[59]  H.Q. Lin, J.S.Flynn, and D.D.Betts, Phys. Rev. B 64, 214411 (2001).
+
+                                                            15
+[60]  D.D.Betts, J.Schulenburg, G.E.Stewart, J.Richter and J.S.Flynn, J.Phys.A 31, 7685 (1998).
+
+[61]  J. Richter, R. Darradi, R. Zinke, and R.F. Bishop, Int. J. Modern Phys. B 21, 2273 (2007).
+
+[62]  M.S. Makivic and H.-Q. Ding, Phys. Rev. B 43, 3562 (1991); K.J. Runge, Phys. Rev. B 45,
+     12292 (1992), B.B. Beard and U.-J. Wiese, Phys. Rev. Lett. 77, 5130 (1996); J.-K. Kim and
+     M. Troyer, Phys. Rev. Lett. 80, 2705 (1998).
+
+[63]  C.J. Hamer, Zheng Weihong, and P. Arndt,   Phys. Rev. B 46, 6276 (1992); Zheng Weihong
+     and C. J. Hamer Phys. Rev. B 47, 7961 (1993); C. J. Hamer, Zheng Weihong and J. Oitmaa
+     Phys. Rev. B 50, 6877 (1994).
+
+[64]  Zheng Weihong, J. Oitmaa, and C. J. Hamer, Phys. Rev. B 43, 8321 (1991).
+
+[65]  D.J.J.  Farnell,  R.  Zinke,  J.  Schulenburg,  and  J.  Richter,  J.  Phys.:   Condens.  Matter  21,
+     406002 (2009).
+
+[66]  S. Chakravarty, B.I. Halperin and D. R. Nelson, Phys. Rev. B 39, 2344 (1989).
+
+[67]  S.E. Kr¨uger, R. Darradi, J. Richter, and D.J.J. Farnell, Phys. Rev. B 73, 094404 (2006).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          16

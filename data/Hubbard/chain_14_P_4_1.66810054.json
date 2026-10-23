@@ -36,6 +36,16 @@
         "note": "|reproduced - stored| = 7.11e-15 (relative 5.79e-16); within 1e-9 relative. Sector N_up = N_dn = 4, dimension 1002001, 171 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Hubbard__chain_14_P_4_1.66810054.json), gives -12.266149698168157 (2.37e-12 from the cost run). Also read by VB2-varbench-code-hubbard#0 (scope value: VarBench Hubbard/chain_14_P_4_1.66810054.md row 'Exact diagonalization'; checks/hubbard-u-labels/ed_results.jsonl job {lattice: chain, L: 14, n: 4, U: 1.66810054}).",
         "source_entry": "VB2-varbench-code-hubbard#0, VE-exact-recompute#5 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_1.66810054/ed_netket.sh",
+        "script": "scripts/Hubbard/chain_14_P_4_1.66810054/ed_netket.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_1.66810054/ed_netket.sh)",
+          "location": "VarBench table vendor/varbench/Hubbard/chain_14_P_4_1.66810054.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -112,6 +122,16 @@
         "note": "H = -t sum (Cdag C + h.c.) + U Nupdn with t = 1 on a 14-site ring with the [1,N] bond (ITensors OpSum, automatic fermion signs, so fermionic PBC), N_up = N_dn = 4: the instance. The energy is the reached variational energy after the last sweep at maxdim 1550 ('~1500' in the string), above the exact energy by 2.8e-8, consistent with its variance: Temple check (E - E0 <= Var/(E1 - E), E1 = -12.19112978387284 the next level, eigsh lowest): E - E0 = 2.8e-8 vs bound 4.6e-7, consistent. bound_type variational is right; the extrapolated value in the method string is a separate row (answers the M8/M6 flags; the tiny V-score is genuine 1D convergence). No output log exists in either repository, so the number itself is not located independently (scope config).",
         "source_entry": "VB2-varbench-code-hubbard#8 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_1.66810054.jl",
+        "script": "programs/dmrg_itensors_hubbard/chain_14_P_4_1.66810054.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_1.66810054.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/chain_14_P_4_1.66810054.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -188,6 +208,16 @@
         "note": "Transcribed correctly from the uploader's method string; bound_type extrapolated is right. Answer to the M6 flag: the sigma is the uploader's +/- on the extrapolation, not a statistical error; neither run script contains extrapolation code (they print E and var after the last sweep), and neither the extrapolation variable nor the meaning of +/- is stated anywhere (the VarBench paper, arXiv:2302.04919v2 S3.B.1, says only 'protocols for extrapolating the truncation error to zero can give greatly improved energy estimates and approximate errors on those estimates' and that VarBench itself 'forgo[es] extrapolations'). method_detail 'truncation error -> 0' is therefore an inference. Against the exact energy the value is within its +/-.",
         "source_entry": "VB2-varbench-code-hubbard#16 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_1.66810054.jl",
+        "script": "programs/dmrg_itensors_hubbard/chain_14_P_4_1.66810054.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_1.66810054.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/chain_14_P_4_1.66810054.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

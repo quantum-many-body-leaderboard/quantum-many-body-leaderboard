@@ -1,0 +1,282 @@
+    Ground-State  Properties of Quantum  Many-Body  Systems:  Entangled-Plaquette
+                                            States  and  Variational  Monte  Carlo
+
+                     Fabio  Mezzacapo1,  Norbert  Schuch1,  Massimo  Boninsegni2,  and  J.  Ignacio  Cirac1
+                 1Max-Planck-Institut  f¨ur  Quantenoptik,  Hans-Kopfermann-Str.1,  D-85748,  Garching,  Germany
+                      2Department  of  Physics,  University  of  Alberta,  Edmonton,  Alberta,  Canada  T6G  2G7
+                                                           (Dated:  October 23, 2018)
+                   We propose a new ansatz for the ground-state wave function of quantum many-body systems on a
+                lattice.  The key idea is to cover the lattice with plaquettes and obtain a state whose conﬁgurational
+                weights can be optimized by means of a Variational Monte Carlo algorithm.  Such a scheme applies
+                to any dimension, without any “sign” instability.  We show results for various two dimensional spin
+                models  (including  frustrated  ones).  A  detailed  comparison  with  available  exact  results,  as  well  as
+                with variational methods based on diﬀerent ansatzs is oﬀered.  In particular, our numerical estimates
+                are  in  quite  good  agreement  with  exact  ones  for  unfrustrated  systems,  and  compare  favorably  to
+                other methods for frustrated ones.
+
+                PACS numbers:  02.70.Ss, 05.50+q
+
+
+                    I.     INTRODUCTION                                       main advantages of DMRG and Monte Carlo in order to
+                                                                              build new algorithms.15,16 Some of them15,17 can be used
+  The study of the ground-state (GS) properties of quan-                      in  2D  and  it  seems  that  the  one  based  on  String-Bond
+tum  many-body  systems  is  one  of  the  most  challenging                  States15  may be used even for some 3D systems.18
+tasks  of  theoretical  physics.    Exact  results  can  be  ob-                 In this paper we introduce a new numerical technique
+tained  numerically  only  for  systems  of  relatively  small                that  combines  the  strengths  of  QMC  with  an  extension
+size  (i.e.,  few  particles);  this  limitation  is  particularly            of  PEPS  to  simulate  lattices  models,  overcoming  some
+severe,  e.g.,  when  studying  phase  transitions,  wherein                  of  their  limitations.    We  also  test  this  technique  with
+the  emergence  of  long-range  order  can  only  be  estab-                  non-trivial models, and compare it with other techniques,
+lished by carrying out an extrapolation of the estimates                      including  PEPS. Speciﬁcally,  we  propose  a  new  class  of
+to the thermodynamic limit.  Two main numerical tech-                         states called Entangled-Plaquette States (EPS) which al-
+niques,  namely  Density  Matrix  Renormalization  Group                      low  an  accurate  characterization of  the  GS  of  quantum
+(DMRG)1   and  Quantum  Monte  Carlo  (QMC)2   have                           spin  systems  by  means  of  a  simple  Variational  Monte
+successfully  been  employed to  investigate quantum spin                     Carlo  (VMC)  algorithm  (see  Ref.   19  for  a  general  re-
+models  on  a  lattice.   These  computational  approaches,                   view).
+however, ﬁnd their  optimal applicability under  diﬀerent                        The  basic  idea  underlying  EPS  can  be  schematically
+speciﬁc constraints.  DMRG yields extremely accurate re-                      described  as  follows:   Assume  to  cut  a  lattice  in  sev-
+sults in one dimension (1D) even for very large systems,                      eral  sub-blocks  (e.g.   small  PEPS)  and  extract  for  each
+but fails in describing the properties of the quantum GS                      sub-block  the  GS  wave  function.   The  wave  function  of
+in higher dimension due to the unfavorable scaling with                       the original system, expressed as the product of the sub-
+the system size of the computational resources needed.3                       block wave functions yields reasonable (up to corrections
+QMC,  on  the  other  hand,  is  the  method  of  choice  for                 which scale with the sub-block boundaries) estimates of
+quantum systems  obeying  Bose statistics  in  any dimen-                     GS energy and short-range (of the order of the sub-block
+sion,  but  suﬀers  from  the  notorious  “sign  problem”  for                size) correlations.  These estimates dramatically improve
+Fermi systems.                                                                if the sub-block size is increased and, more importantly,
+  Generalizations  of  the  variational  family  of  Matrix-                  if overlapping sub-blocks (i.e., entangled plaquettes) are
+Product  States  (MPS)  underlying  the  DMRG  have  re-                      employed.   The  latter  is  the  crucial  point  which  allows,
+cently  been   investigated  to  go  beyond  the   discussed                  accounting for its correlated nature, a description of the
+limitations  of  DMRG  itself  and  QMC.  Speciﬁcally  the                    quantum  GS  much  more  accurate  than  that  obtainable
+most  natural  extension  of  MPS  is  given  by  Projected-                  with  a  simple  non-overlapping-plaquette  product  state
+Entangled Pair States (PEPS)4 which eﬃciently approx-                         (i.e.,  in  a  mean-ﬁeld  fashion).20  A  GS  wave  function
+imate  ground  states  of  local  Hamiltonians5  and  have                    whose weights are the product of variational parameters
+been  used  to  simulate,  otherwise  intractable,  2D  quan-                 in  one  to  one  correspondence  to  the  spin  conﬁguration
+tum systems.6,7  Other variational families of states have                    of  each  entangled  plaquette,  appears,  consequently,  the
+also been  proposed and tested  in 2D.8,9,10,11,12,13,14  De-                 natural choice for a variational ansatz.  Therefore, our nu-
+spite the promising results obtained so far, it seems very                    merical approach is based on a family of states, namely
+hard to use those methods in 3D [or even for systems with                     EPS, which share many analogies with PEPS, and takes
+periodic boundary conditions (PBC)] due to the unfavor-                       advantage  of  Monte  Carlo  sampling  to  estimate  physi-
+able scaling of the required computer resources.                              cal observables of interest.  It can be applied to systems
+  A new possibility has recently emerged to combine the                       of  any  spatial dimensionality  and,  as  a  pure  variational
+                                                                                                                                                       2
+
+method  (i.e.,  not  involving  imaginary  time  projection),
+is sign problem free.                                                           ∂⟨E⟩                           ∂W (n)    [                             ]
+  We test our numerical protocol on a variety of quantum                       ∂CnP             P (n)    1W (n) ∂CnP      E(n)−∑                        .
+spin  models  on  a  square  lattice  comprising  as  many  as                     P   =2∑n                         P               n′ P (n′)E(n′)
+N  =L×L = 400 sites.  Our energy estimates are in excel-                                                                                             (4)
+lent agreement with those (“exact” in practice) obtained                          The multidimensional summations in Eq.  1 and 4 can
+by QMC for a system of lattice hard core bosons.  In the                       exactly  be  evaluated  only  for  small N.   For  large  sys-
+presence of nearest-neighbor repulsion at the Heisenberg                       tems  (N >∼  30)  ,  one  has  to  employ  the  Monte  Carlo
+point,  we  ﬁnd  an  extrapolated  (to  inﬁnite  lattice  size)                method.   Speciﬁcally,  the  energy,  as  well  as  its  deriva-
+value of the energy per site which diﬀers from the QMC                         tives,  can  be  estimated  from  the  same  sample.   More-
+result21 by less than 2×10−3, and is more accurate than                        over,  the  only  quantity  depending  on  the  plaquette  co-
+VMC estimates obtained with a Jastrow wave function.22                         eﬃcient with  respect to  which the  derivative is  taken is
+In the  case of a frustrated antiferromagnet (i.e.,  the so-                   DP (nP )  =        1   ∂W (n)
+                                                                                               W (n)  ∂CnPP    .   By  using  Eq.   3  it  turns  out
+calledJ1 −J2 model), for which a sign problem exists in                        that DP (nP )  is  simply  equal  to  1/CnP
+QMC, our energy estimates (whose error relative to the                         to compute).  Similarly to other works,15,16, the steps ofP     (easy  and  fast
+exact ones is less than 1.5×10−2) compare favorably with                       the basic variational algorithm adopted to calculate the
+those obtained with PEPS, or ﬁxed-node Green Function                          GS  energy  are:  i)  Start  from  a  randomly  chosen  initial
+Monte Carlo (GFMC).23                                                          conﬁguration;  ii)  generate  a  large  set  of  new  conﬁgura-
+                                                                               tions  by  ﬂipping  one  or  more  spins  via  the  Metropolis
+                                                                               algorithm;24 iii) evaluate the energy and its gradient vec-
+                    II.     METHODOLOGY                                        tor;  iv) update  all the CnPP s of a  small step against the
+                                                                               gradient  direction;  v)  iterate  from  ii)  until  convergence
+  Consider a collection ofN  spins  12  arranged on aL ×L                      of the energy is reached.  It is worth mentioning that ex-
+square  lattice  with N  = L2  (without  loss  of  generality,                 pectation  values  of  physical  observables  other  than  the
+here  and  in  the  following  we  will  refer  to  this  speciﬁc              energy can be evaluated according to Eq.  1 and 2 when
+case).   Provided  a  trial  state  |ψ⟩  =  ∑nW (n)|n⟩  where                  H  is replaced by a generic operatorO.
+|n⟩ = |n1,n2,...,nN⟩  and ni  = ±1  ∀ i = 1,...,N,  the                           For a single-spin ﬂip the acceptance probability is given
+energy expectation value on the given state is:                                by:
+                                                                                                  ∏   [                                  ]2
+                                                                                                           1,i ,nold2,i ,···,nnewj,i   ,···,noldl1×l2,i
+                   ∑                                                                                i  Cnoldi
+                      nW 2(n)E(n)                                                          A =    ∏   [   nold                          ]2             (5)
+          ⟨E⟩ =        ∑                         P (n)E(n)         (1)                                  C   1,i ,nold2,i ,···,noldj,i ,···,noldl1×l2,i
+                          nW 2(n)      = ∑n                                                          i    i
+
+where                                                                          where the ﬂip is proposed for the jth  spin and the prod-
+                                                                               ucts run over all the plaquettes which include such a spin.
+   E(n) = ∑       W (n′)                            ∑                             In a typical calculation, we start with 2 × 2 plaquettes;
+                   W (n) ⟨n′|H|n⟩, P (n) =  W 2(n)nW 2(n)     (2)              once the energy has converged, the size of the plaquettes
+              n′                                                               is  increased  to  improve  the  estimate.    The  number  of
+and W (n)  = W ∗(n)  (real  weights  are  assumed  for  sim-                   coeﬃcients  which  need  be  stored in  memory  for  a  spin-
+plicity).  According to the variational principle, ⟨E⟩ is an                   1/2  system  is N  × 2l1×l2,  and  can  be  reduced  taking
+upper  bound  of  the  GS  energy  which  can  be  evaluated                   into  account  problem-dependent  symmetries.   For  each
+by minimizing Eq.  1 with respect to the weights.  At this                     optimization step, a few thousands updates are necessary
+point we have to make an ansatz for the wave function:                         to get a rough estimate of the energy and eﬃciently move
+imagine  to  cover the  lattice with  plaquettes  (say  one of                 the coeﬃcients along the gradient.  At the later stages of
+dimension l1 ×l2  for  each  site)  and  assign  a  coeﬃcient                  the  simulation,  to  reach  the  optimal  energy  value,  an
+CnP                                                                            important role is played by the  gradient step which has
+  P    to all the possible 2l1×l2  spin conﬁgurations of any                   to  be  carefully  tuned.   An  example  of  how  the  error  of
+single  plaquette.   Given  a  global spin  conﬁguration |n⟩,                  the GS energy relative to the GFMC result decreases as
+its weight can be expressed as follows:                                        a function of the plaquettes size is illustrated in Fig.  1.
+                                                                                  The  relative  error  is  already  small  (less  than  1%)  for
+                                            N∏                                 2 × 2 plaquettes and reaches a value < 10−3 when 4 × 4
+                    W (n) = ⟨n|ψ⟩ =             CnPP                        (3)plaquettes  are  used.   Numerical  data  refer  to  a  system
+                                          P =1                                 of  lattice  bosons  (at  half  ﬁlling)  which  interact  via  an
+                                                                               inﬁnite  on-site  (hard  core)  repulsion  on  a  10 × 10  lat-
+where CnPP     depends  only  on  the  spin  state  of  the  nP                tice with PBC. Since  the  total magnetization along z  is
+sites  belonging  to  the Pth  plaquette.   With  this  choice                 a  good  quantum  number,  we  performed  the  calculation
+the  analytic  expression  of  the  derivative  of  Eq.   1  with              in  the  canonical  ensemble  (i.e.,  in  the Sz  =  0  sector).
+respect to CnPP    is:                                                         Consequently  we  chose  to  update  the  conﬁguration  by
+                                                                                                                                                                     3
+
+                                                                                      strengthV =2t.  This model has been extensively studied
+             8                                                                        numerically  in  the  past  (see  for  instance  Refs.   21  and
+                                                                                      22).  GS energies per site for various lattice sizes are pre-
+             6                                                                        sented  in  Tab  II  and  compared  to  exact  calculations25
+                                                                                      and Stocastic Series Expansion (SSE) data.21
+
+             4
+                                                                                      TABLE   II:   GS   energy   per   site   of   the   antiferromagnetic
+             2                                                                        Heisenberg  model  on  a  L × L square  lattice  with  PBC.  SSE
+                                                                                      estimates  and  exact  results  are  also  shown  for  comparison.
+                                                                                      Numerical values are given in units of J1.
+             0                                                                         L                  This work                       SSEa                        Exactb
+                2x2     3x2          3x3         4x3              4x4
+                                        l1 x l2                                        4                   -0.7016(1)                 -0.701777(7)                 -0.7018
+                                                                                       6                   -0.6785(2)                 -0.678873(4)                 -0.6789
+FIG.  1:  (color  online)  Dependence  on  the  plaquettes  size  of                   8                   -0.6724(3)                 -0.673487(4)                            -
+the error in the GS energy (computed with the method illus-                            10                 -0.6699(3)                 -0.671549(4)                            -
+trated in this work) relative to the GFMC result for a system                          aRef.  21
+of hard core bosons at half ﬁlling on a 10 × 10 square lattice.                         bRef.  25
+PBC are assumed.  The dashed line is only a guide to the eye.
+                                                                                         The energy per site is a monotonic increasing function
+ﬂipping pairs of spins j  and k for which Szj  = −Szk.  The                           of the lattice size.  The simple formula26
+expression of the acceptance probability for the pair up-                                                      E(N) =E∞ −β c
+date is a straightforward generalization of Eq.  5.                                                                                        3
+                                                                                                                                        N  2                           (7)
+                                                                                      where β  =  1.4377,27  gives  an  extrapolated  energy  per
+                            III.     RESULTS                                          site E∞ = −0.6683(3), which is in good agreement with
+                                                                                      the  most  accurate  QMC  result:21 ESSE∞      =  0.669437(5)
+   Estimates  of  the  GS  energy  per  site  of  a  system  of                       and  lower  than  other  extrapolated  values  obtained  by
+lattice hard core bosons, for three diﬀerent lattice sizes,                           purely  variational  methods.   For  example,  on  the  basis
+are  presented  and  compared  to  GFMC  results  in  Tab.                            of a Jastrow wave function, Trivedi and Ceperley found
+I.  Although the GFMC method is not purely variational                                EJST∞     ≃ −0.6590.22
+(i.e., the  GS wave function is projected out from a trial                               Calculations carried on with open boundary conditions
+state  via  imaginary  time  evolution)  our  numerical  data                         (OBC) yield GS energies lower than those obtained with
+are in excellent agreement with GFMC ones, even for the                               the general PEPS, or SBS method.  For example, we get
+largest system considered in this work (L = 20).                                      E  =  −0.6258(1)  for L  =  10  while  the  PEPS  result  is
+                                                                                      EP EP S = −0.62515 and the SBS oneESBS ∼ −0.6225.
+                                                                                         Estimates  of  the  spin-spin  correlation  function  com-
+TABLE I: GS energy per site (in units of the nearest-neighbor                         puted  at  the  maximum  distance  on  the  lattice  accord-
+hopping integral t) for a system of hard core bosons on a L×L                         ing  to  the  formula Corr(L/2,L/2)  =  ⟨Sr · Sr′⟩  where
+lattice  with  PBC.  For  L  =  20,  4 × 3  plaquettes  have  been                    r − r′ = (L/2,L/2) are shown in Tab III.  We ﬁnd an ex-
+employed, 4×4 ones in the remaining cases.  GFMC estimates                            trapolated value of the  staggered magnetization deﬁned
+have been also computed and are shown for comparison.                                 by M 2(L)  = Corr(L/2,L/2)  = M 2∞ +b/L  of  0.324(1)
+L                                   This work                                       GFMCwhich is in reasonable agreement withM SSE∞     = 0.3070(3)
+8                                    -1.1004(4)                                  -1.1008(3)
+10                                  -1.0988(4)                                  -1.0998(1)
+20                                  -1.0952(7)                                  -1.0967(4)TABLE III: Spin-spin correlation  function  (computed at the
+
+                                                                                      maximum  distance  on  the  lattice)  of  the  antiferromagnetic
+   As a second case study we investigate theJ1−J2 quan-                               Heisenberg  model  on  a  L × L square  lattice  with  PBC.  SSE
+tum spin Hamiltonian:                                                                 estimates (adjusted for diﬀerent factors in the deﬁnition) are
+                        ∑                         ∑                                   also  shown  for  comparison.    Numerical  values  are  given  in
+            H =J1             Si · Sj +J2                  Si · Sj          (6)       units of J1.
+
+                       <i,j>                   <<i,j>>                                 L                                  This work                                            SSEa
+where  the  ﬁrst  (second)  summation  runs  over  nearest-                            4                                   0.1807(4)                                   0.17962(1)
+                                                                                       6                                   0.1550(4)                                 0.152568(9)
+(next-nearest-)  neighbor  sites.    For J1  =  1  and J2  =                           8                                   0.1432(4)                                   0.13760(1)
+0  the  above  Hamiltonian  describes  the  antiferromag-                              10                                 0.1352(5)                                   0.12855(2)
+netic Heisenberg model, which is isomorphic to a system                                aRef.  21
+of  hard  core  bosons  with  nearest-neighbor  repulsion  of
+                                                                                                                                                                              4
+
+
+TABLE IV: GS energy per site (in units of J1) for the J1 − J2                              TABLE V: GS energy per site (in units of J1) for the J1 − J2
+model  on  a  square  lattice  (with  PBC)  comprising  36  sites.                         model  on  a  square  lattice  (with  OBC)  comprising  64  sites.
+Exact results are also shown for comparison.                                               PEPS results are also shown for comparison.
+J2/J1                                 This work                                  Exacta    J2/J1                                This work                                   PEPSa
+0.0                                      -0.6785(2)                                 -0.67890.0                                    -0.61567(8)                               -0.61506
+0.1                                      -0.6377(1)                                 -0.63810.1                                     -0.5865(1)                                  -0.5845
+0.2                                      -0.5985(1)                                 -0.59900.2                                     -0.5571(1)                                  -0.5555
+0.3                                      -0.5616(1)                                 -0.56250.3                                     -0.5290(2)                                  -0.5274
+0.4                                      -0.5277(1)                                 -0.52970.4                                     -0.5028(1)                                  -0.5016
+0.5                                      -0.4985(2)                                 -0.50380.5                                     -0.4781(1)                                  -0.4779
+0.6                                      -0.4860(2)                                 -0.49320.6                                     -0.4523(2)                                  -0.4508
+0.7                                      -0.5255(1)                                 -0.53000.7                                     -0.4553(1)                                  -0.4541
+0.8                                      -0.5843(1)                                 -0.58650.8                                     -0.4928(2)                                  -0.4906
+0.9                                      -0.6453(1)                                 -0.64910.9                                     -0.5371(1)                                  -0.5344
+1.0                                      -0.7091(1)                                 -0.71441.0                                     -0.5800(1)                                  -0.5792
+
+ aRef.  25                                                                                  adata provided by V. Murg
+
+
+reported in Ref 21 and with other estimates.26  It has to                                  mentioned  that  the  GS  energies  computed  by  means  of
+be  mentioned  that  the  discrepancy  between  our  result                                EPS compare favorably to those obtained by GFMC with
+and the  SSE  one  might  be  due  to  a  violation of the  so-                            the ﬁxed-node approximation23  and, except in a narrow
+called “area law”.28                                                                       region of J2/J1  ∼ 0.5,  where the  the  agreement is  how-
+   By   including   the   next-nearest-neighbor   interaction                              ever  remarkable,  to  variational  results  obtained  with  a
+(J2 > 0) in theJ1 −J2 Hamiltonian the system becomes                                       BCS-type ansatz.29,30
+frustrated and is believed to undergo a phase transition                                      Also in this case, for OBC, we test our scheme against
+for J2  ≃ 0.6.  This  model cannot be  simulated by  QMC                                   the  PEPS  one.   The  estimated  energies  are  lower  than
+due to the sign problem (arising in turn from the under-                                   those computed with PEPS even for a 8 × 8 lattices (see
+lying  Fermi  statistics).   Our  method,  instead,  is  purely                            Tab.  V), where the PEPS approach performs at its best.
+variational and can be applied without the occurrence of
+any sign instability.  With  the  aim of comparing our es-
+timates  with  exact  results  (available  only  for N  ≤  36),                                     IV.     CONCLUSIONS  AND  OUTLOOK
+we  computed  the  GS  energy,  as  a  function  of J2/J1,  of
+the J1 −J2  model on a  6 × 6 square lattice.  Numerical                                      In  this  work  we  have  presented  Entangled-Plaquette
+values are shown in Tab.  IV;  the  error of our estimates                                 States:  an ansatz for  the  GS wave function  of quantum
+relative  to  the  exact  result  is  shown  in  Fig.    2.    This                        many-body  systems  which  allows  the  accurate  estimate
+quantity never exceeds 1.5×10−2, moreover it has to be                                     of  physical  observables  by  means  of  Variational  Monte
+                                                                                           Carlo.  Our approach not only gives accurate results for
+                                                                                           unfrustrated systems (where other methods  are in prin-
+                  1.6                                                                      ciple “exact” ) but, most importantly, applied to systems
+                                                                                           for  which  QMC simulations  suﬀer  from a  sign  problem,
+                  1.2                                                                      yields estimates whose accuracy seems to be not obtain-
+                                                                                           able  with  diﬀerent  techniques.    Therefore  our  method
+                                                                                           appears  as  a  very  promising  avenue  to  investigate  the
+                  0.8                                                                      eﬀects  of Fermi statistics  (e.g.,  frustration).  The  exten-
+                                                                                           sion of our computational approach to 3D can be easily
+                  0.4                                                                      implemented  (i.e.,  taking  cubic  plaquettes)  and  several
+                                                                                           possible  improvements  (e.g.,  cover  the  lattice  with  pla-
+                  0.0                                                                      quettes of diﬀerent shapes and sizes), are being currently
+                       0.0        0.2       0.4       0.6       0.8        1.0             investigated.
+                                               J2/J1
+
+                                                                                                                       Acknowledgments
+FIG.  2:  (color  online)  Error  (relative  to  the  exact  result)  of
+the GS energy of the J1−J2 model computed with the method                                     We acknowledge discussions with F. Verstraete and M.
+illustrated in this work.  The square lattice comprises N  = 36                            Wolf, and thank V. Murg for providing us with the PEPS
+spins;  PBC  are assumed.  The  dashed  line is  only  a guide to                          data.  This work has been supported by the DFG (FOR
+the eye.                                                                                   635) and the EU project QUEVADIS, and the Canadian
+                                                                                                                                                              5
+
+NSERC through the grant G121210893.                                               lated  approach  has  been  proposed  by  J.  Hitesh  et  al.,
+   Note  added.—  After  this  paper  was  accepted  a  re-                       arxiv:0907.4646.
+
+
+
+
+
+
+
+ 1  S. R. White, Phys. Rev. Lett. 69, 2863 (1992).                                16  A. W. Sandvik and G. Vidal, Phys. Rev. Lett. 99, 220602
+ 2  D. M. Ceperley and B. J. Alder, Phys. Rev. Lett. 45, 566                          (2007).
+   (1980).                                                                        17  L. Wang, Y.-J. Kao and A. W. Sandvik, arxiv:0901.0214v1.
+ 3  S Liang and H. Pang, Phys. Rev. B 49, 9214 (1994).                            18  A. Sfondrini et  al., in preparation.
+ 4  F. Verstraete and J. I. Cirac, cond-mat/0406426.                              19  W. M. C. Foulkes, L. Mitas, R. J. Needs and G. Rajagopal,
+ 5  M. B. Hastings, Phys. Rev. B 76, 035114 (2007).                                   Rev. Mod. Phys. 73, 33 (2001).
+ 6  V. Murg,  F. Verstraete and  J.  I. Cirac,  Phys. Rev. A  75,                 20  L. Isaev, G. Ortiz and J. Dukelsky Phys. Rev. B 79, 024409
+   033605 (2007); arxiv:  0901.2019.                                                  (2009); arXiv:0903.1630.
+ 7  J. Jordan, R. Orus, G. Vidal, F. Verstraete and J. I. Cirac,                  21  A. W. Sandvik, Phys Rev B 56, 11678 (1996).
+   Phys. Rev. Lett. 101, 250602 (2008).                                           22  N.  Trivedi  and  D.  M.  Ceperley,  Phys.  Rev.  B  41,  4552
+ 8  G. Vidal, Phys. Rev. Lett. 99, 220405 (2007), ibidem 101,                         (1990).
+   110501 (2008).                                                                 23  M. Boninsegni, Phys. Lett. A 216, 313 (1996).
+ 9  M.  Levin  and  C.  P.  Nave,  Phys.  Rev.  Lett.  99,  120601                24  N.  Metropolis,  A.  Rosenbluth,  M.  N.  Rosenbluth,  A.  H.
+   (2007).                                                                            Teller and E. Teller, J. Chem. Phys 21, 1087 (1953).
+10  H.  C.  Jiang,  Z.  Y.  Weng  and  T.  Xiang,  Phys.  Rev.  Lett.             25  H. J. Schulz, T. A. L. Ziman and D. Poilblanc, J. Physique
+   101, 090603 (2008).                                                                I 6, 75 (1996).
+11  Z.-C.  Gu,  M.  Levin  and  X.-G.  Wen,  Phys.  Rev.  B  78,                  26  E. Manousakis Rev. Mod. Phys. 63, 1 (1991).
+   205116 (2008).                                                                 27  P.  Hasenfratz  and  F.  Niedermayer,  Z.  Phys.  B  92,  91
+12  L.  Cinicio,  J.  Dziarmaga  and  M.  M.  Rams,  Phys.  Rev.                      (1993).
+   Lett. 100, 240603 (2008).                                                      28  R.  W.  Chhajlany,  P.  Tomczak  and  A.  W`ojcik,  Phys.  Rev
+13  G Evenbly and G. Vidal, Phys. Rev. B 79, 144108 (2009);                           Lett 99, 167204 (2007).
+   Phys. Rev. Lett. 102, 180406 (2009).                                           29  L. Capriotti, F. Becca, A. Parola and S. Sorella, Phys. Rev
+14  G Evenbly and G. Vidal, arxiv:  0904.3383.                                        Lett 87, 097201 (2001).
+15  N. Schuch, M. M. Wolf, F. Verstraete and J. I. Cirac, Phys.                   30  F.   Becca,    L.   Capriotti,    A.   Parola   and   S.   Sorella,
+   Rev. Lett. 100, 040501 (2008).                                                     arXiv:0905.4854

@@ -33,6 +33,16 @@
         "note": "Real recomputation (code and output file). |E - stored| = 3.27e-13 (relative 4.05e-15). Second determination: the stored value is the source's own ED (VarBench), a different code. Also read by VB3-varbench-code-heisenberg#78 (scope config: vendor/varbench/Heisenberg/triangular_36_P.md (snapshot 390a21e), row 'Exact diagonalization'; linked scripts/Heisenberg/triangular_36_P/ed_lattice_symmetries.sh).",
         "source_entry": "VB3-varbench-code-heisenberg#78, VE-exact-recompute#66 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/ed_lattice_symmetries.sh",
+        "script": "scripts/Heisenberg/triangular_36_P/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_36_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -152,6 +162,16 @@
         "note": "dmrg.sh: heisenberg_2d.jl --peri --L 6 --J2 1 --zero_mag --max_B 2048: 6x6 triangular torus, Pauli, J = 1, Sz = 0, 50 sweeps at D = 2048. 0.327 above the exact energy (0.4%): a torus in a snake MPS; QMBL's own chi = 2000 DMRG cost run on this instance gives -80.35309, consistent. Entered 721e09e (2022-08-22), never changed; linked 2024-07-19.",
         "source_entry": "VB3-varbench-code-heisenberg#79 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/dmrg.sh",
+        "script": "scripts/Heisenberg/triangular_36_P/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_36_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -207,6 +227,16 @@
         "note": "scripts/Heisenberg/triangular_36_P/vmc_rbm.sh: 'python3 vmc.py --ham heis_tri --boundary peri --sign mars --ham_dim 2 --L 6 --zero_mag --net rbm --seed 123 --show_progress' -> 6x6 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), periodic; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.009: the stored sigma is the error of that final estimate. 9.9023 above the exact -80.6937689612426. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered 721e09e (2022-08-22, Dian Wu) as -70.7915 | 0.0065 | 43.4753 | RBM (alpha = 1); linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#80 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/triangular_36_P/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_36_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -262,6 +292,16 @@
         "note": "scripts/Heisenberg/triangular_36_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis_tri --boundary peri --sign mars --ham_dim 2 --L 6 --zero_mag --net jas --seed 123 --show_progress' -> 6x6 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), periodic; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.010: the stored sigma is the error of that final estimate. 10.5971 above the exact -80.6937689612426. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered af1d48f (2022-09-01, Dian Wu) as -70.0967 | 0.0060 | 37.0349 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#81 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/triangular_36_P/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_36_P/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_36_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -340,7 +380,22 @@
           "source_entry": "VP10-heisenberg-j1j2#31 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Roth, Szabo & MacDonald, High-accuracy variational Monte Carlo for frustrated magnets with deep neural networks, arXiv:2211.07749 (2023)"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Simulations were performed using the NetKet [24] library.",
+          "location": "arXiv:2211.07749 (sources/2211.07749.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -80.6544,
@@ -589,7 +644,16 @@
           "source_entry": "VP11-heisenberg-hubbard-j1j2#57 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": false
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and most of the data needed to reproduce the figures in this manuscript are openly available on GitHub github.com/mschuylermoss/HeisenbergRNN [97].",
+          "location": "arXiv:2505.20406 (sources/2505.20406.txt and .html), Sec. VI Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -79.632,
@@ -1125,7 +1189,16 @@
           "source_entry": "JP9-heisenberg-j1j2-hubbard#31",
           "from": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/rqHe1/aCNN",
+        "read_from": {
+          "quote": "The main code and data for the aCNN are available on GitHub at https://github.com/rqHe1/aCNN.",
+          "location": "arXiv:2308.09664 (sources/2308.09664.html), footnote 1 / ref [56]",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -79.2126086267484,
@@ -1140,7 +1213,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit d9ca887)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit 214be29)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-24",
       "provenance": "primary",
@@ -1206,10 +1279,21 @@
           }
         },
         "reported_as": "chi_max 500 chi_reached 500 energy -79.2126086267484 (energy_SS -19.8031521566871) sweeps 16 max_trunc_err 0.0006064990325569687 | wall_hms 00:27:35 (wall_seconds 1654.652795038186) on 8 cores, Slurm job 15056281 | cpu_core_hours 3.6770062111959687",
-        "source": "checks/cost/results/dmrg-tri-36.json, Slurm job 15056281, commit d9ca887 (QMBL run, 2026-09-24)",
+        "source": "checks/cost/results/dmrg-tri-36.json, Slurm job 15056281, commit 214be29 (QMBL run, 2026-09-24)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 3.61 h, 98 % of wall-clock x 8 cores; cores at 2.99 GHz on average (1.73-3.24, max 2.25); node load 110 on average of 128 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/214be29/checks/cost",
+        "commit": "214be29",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit 214be29)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1225,7 +1309,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit d9ca887)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit 214be29)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-24",
       "provenance": "primary",
@@ -1307,10 +1391,21 @@
           }
         },
         "reported_as": "chi_max 1000 chi_reached 1000 energy -79.92652217664256 (energy_SS -19.98163054416064) sweeps 16 max_trunc_err 0.00037311592377740595 | wall_hms 01:10:45 (wall_seconds 4244.665265383199) on 8 cores, Slurm job 15056281 | cpu_core_hours 9.43258947862933",
-        "source": "checks/cost/results/dmrg-tri-36.json, Slurm job 15056281, commit d9ca887 (QMBL run, 2026-09-24)",
+        "source": "checks/cost/results/dmrg-tri-36.json, Slurm job 15056281, commit 214be29 (QMBL run, 2026-09-24)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 9.20 h, 98 % of wall-clock x 8 cores; cores at 2.94 GHz on average (1.73-3.24, max 2.25); node load 112.2 on average of 128 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/214be29/checks/cost",
+        "commit": "214be29",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit 214be29)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1326,7 +1421,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit d9ca887)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit 214be29)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-24",
       "provenance": "primary",
@@ -1424,10 +1519,21 @@
           }
         },
         "reported_as": "chi_max 2000 chi_reached 2000 energy -80.35309162427853 (energy_SS -20.088272906069633) sweeps 16 max_trunc_err 0.00023684509156278683 | wall_hms 03:03:20 (wall_seconds 10999.921602776274) on 8 cores, Slurm job 15056281 | cpu_core_hours 24.44427022839172",
-        "source": "checks/cost/results/dmrg-tri-36.json, Slurm job 15056281, commit d9ca887 (QMBL run, 2026-09-24)",
+        "source": "checks/cost/results/dmrg-tri-36.json, Slurm job 15056281, commit 214be29 (QMBL run, 2026-09-24)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 23.26 h, 95 % of wall-clock x 8 cores; cores at 2.87 GHz on average (1.73-3.24, max 2.25); node load 110.8 on average of 128 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/214be29/checks/cost",
+        "commit": "214be29",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-tri-36, Slurm job 15056281, commit 214be29)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1443,7 +1549,7 @@
       "family": "CNN / ResNet",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run gcnn-tri-36, Slurm job 15097829, commit c0fcfee)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run gcnn-tri-36, Slurm job 15097829, commit 51fa6e2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-24",
       "provenance": "primary",
@@ -1499,10 +1605,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -80.45855704311515 sigma 0.006354516711348047 energy_variance 5.45144124948146 tau_corr 0 r_hat 1.0037788694987775 | wall_hms 00:28:22 (wall_seconds 1701.7986515802331) on 1 x NVIDIA A100 80GB PCIe, Slurm job 15097829 | parameters 7232, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/gcnn-tri-36.json, Slurm job 15097829, commit c0fcfee (QMBL run, 2026-09-24)",
+        "source": "checks/cost/results/gcnn-tri-36.json, Slurm job 15097829, commit 51fa6e2 (QMBL run, 2026-09-24)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 11 s, training 1674 s, evaluation 18 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 0.47 h, 13 % of wall-clock x 8 cores; cores at 1.64 GHz on average (1.61-1.82, max 3.80); node load 11.2 on average of 64 CPUs; GPU SM clock 1337 MHz on average (max 1410), utilisation 97.3 %, 233.6 W. The best of 2 runs of this configuration under the protocol (lowest final energy; checks/cost/best_run.mjs)."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/51fa6e2/checks/cost",
+        "commit": "51fa6e2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run gcnn-tri-36, Slurm job 15097829, commit 51fa6e2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1518,7 +1635,7 @@
       "family": "RBM",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run rbm-tri-36, Slurm job 15056266, commit d9ca887)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run rbm-tri-36, Slurm job 15056266, commit 214be29)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-24",
       "provenance": "primary",
@@ -1571,10 +1688,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -76.60531652120582 sigma 0.016821273919707346 energy_variance 35.74488444047138 tau_corr 0.018780686130572932 r_hat 1.0040647022141393 | wall_hms 00:06:08 (wall_seconds 368.4269102141261) on 1 x NVIDIA A100 80GB PCIe, Slurm job 15056266 | parameters 1368, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/rbm-tri-36.json, Slurm job 15056266, commit d9ca887 (QMBL run, 2026-09-24)",
+        "source": "checks/cost/results/rbm-tri-36.json, Slurm job 15056266, commit 214be29 (QMBL run, 2026-09-24)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 9 s, training 348 s, evaluation 11 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 0.09 h, 11 % of wall-clock x 8 cores; cores at 1.64 GHz on average (1.54-1.77, max 3.80); node load 9.9 on average of 64 CPUs; GPU SM clock 1410 MHz on average (max 1410), utilisation 82.4 %, 107.7 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/214be29/checks/cost",
+        "commit": "214be29",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run rbm-tri-36, Slurm job 15056266, commit 214be29)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1590,7 +1718,7 @@
       "family": "RBM",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run rbmsymm-tri-36, Slurm job 15056270, commit d9ca887)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run rbmsymm-tri-36, Slurm job 15056270, commit 214be29)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-24",
       "provenance": "primary",
@@ -1643,10 +1771,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -73.44638853443263 sigma 0.02482466794726441 energy_variance 80.29017754419445 tau_corr 0.0030190221099478665 r_hat 1.0041322644078527 | wall_hms 00:07:07 (wall_seconds 427.04232935328037) on 1 x NVIDIA A100 80GB PCIe, Slurm job 15056270 | parameters 149, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/rbmsymm-tri-36.json, Slurm job 15056270, commit d9ca887 (QMBL run, 2026-09-24)",
+        "source": "checks/cost/results/rbmsymm-tri-36.json, Slurm job 15056270, commit 214be29 (QMBL run, 2026-09-24)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 10 s, training 404 s, evaluation 13 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 0.10 h, 11 % of wall-clock x 8 cores; cores at 1.67 GHz on average (1.61-1.81, max 3.80); node load 9.6 on average of 64 CPUs; GPU SM clock 1410 MHz on average (max 1410), utilisation 84.5 %, 102 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/214be29/checks/cost",
+        "commit": "214be29",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run rbmsymm-tri-36, Slurm job 15056270, commit 214be29)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1662,7 +1801,7 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run vit-tri-36, Slurm job 15056279, commit d9ca887)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run vit-tri-36, Slurm job 15056279, commit 214be29)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-24",
       "provenance": "primary",
@@ -1718,10 +1857,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -79.9911596136248 sigma 0.006754502141950846 energy_variance 5.852950728342892 tau_corr 0.010848061807489207 r_hat 1.0042366987297604 | wall_hms 02:40:42 (wall_seconds 9641.68374238303) on 1 x NVIDIA A100 80GB PCIe, Slurm job 15056279 | parameters 154800, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/vit-tri-36.json, Slurm job 15056279, commit d9ca887 (QMBL run, 2026-09-24)",
+        "source": "checks/cost/results/vit-tri-36.json, Slurm job 15056279, commit 214be29 (QMBL run, 2026-09-24)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 12 s, training 9598 s, evaluation 32 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 2.68 h, 13 % of wall-clock x 8 cores; cores at 1.64 GHz on average (1.47-1.81, max 3.80); node load 8.4 on average of 64 CPUs. The best of 2 runs of this configuration under the protocol (lowest final energy; checks/cost/best_run.mjs)."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/214be29/checks/cost",
+        "commit": "214be29",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run vit-tri-36, Slurm job 15056279, commit 214be29)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

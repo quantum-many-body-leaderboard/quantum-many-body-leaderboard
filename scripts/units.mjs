@@ -59,6 +59,16 @@ export const publishedMethod = r => r.method_as_published ?? r.method;
 // rows of that name: the bond dimension from `compute`, the detail, the symmetry sector. An
 // extrapolation's bond dimension is the largest it was fitted from, a cost and not the state,
 // so its detail says what went to the limit instead.
+// The method a table names. A variational wave function optimised by Monte Carlo sampling
+// (neural network or classic ansatz) reads "VMC" (2026-10-22); its ansatz and detail stay in
+// `method` and `method_detail` and show in methodLabel (hover text, figures).
+const VMC_FAMILIES = new Set(["classic VMC", "RBM", "RNN", "CNN / ResNet", "transformer / ViT", "backflow / Pfaffian", "other NQS"]);
+const VMC_HYBRIDS = new Set(["CNN-MPS", "T-MPS", "PEPS + CNN"]);
+export function methodName(r) {
+  if (r.method === "Hartree-Fock") return r.method;
+  return VMC_FAMILIES.has(r.family) || VMC_HYBRIDS.has(r.method) ? "VMC" : r.method;
+}
+
 export function methodLabel(r) {
   const bd = r.bound_type !== "extrapolated" && r.compute?.bond_dimension;
   const parts = [bd != null && bd !== false && `bond dimension ${bd}`,

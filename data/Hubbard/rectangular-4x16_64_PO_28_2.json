@@ -90,6 +90,16 @@
         "note": "4x16 cylinder: periodic around the 4-site circumference, open along the 16-site length (PO), t = 1, U n_up n_dn with no shift, N_up = N_dn = 28, conserve_qns: the instance. Maximum bond dimension in the script equals the MaxLinkDim printed. Energy is the reached DMRG energy: variational is right. History: uploaded 2022-12-15 (c93c7f3), unchanged. No output log in either repository (scope config). Provenance note: in VarBench's copies of the ten rectangular scripts the variance line is evaluated on the initial product state ('E,psi = dmrg(H,ψ,sweeps)' then 'var = inner(H,ψ,H,ψ) - E^2'; ITensors v0.6.16 dmrg optimises psi = copy(psi0), src/lib/ITensorMPS/src/dmrg.jl line 189, so ψ stays the product state), so as committed they would print <ψ0|H^2|ψ0> - E^2 (for the half-filled 32_8 start, a Néel product state, 2 x 124 allowed hops give 248 - 32.923^2 = -836), not the stored positive variance. The author's repository fixed it on 2024-08-05 ('E,ψ = dmrg(...)' plus the var line, e.g. commits e78c997, 4d3e522); the stored variances were uploaded in 2022, before either script existed. Suggest pointing the code link at MaxSilvester/Hubbard-and-Heisenberg-codes or fixing varbench/methods.",
         "source_entry": "VB2-varbench-code-hubbard#21 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/rectangular-4x16_64_PO_28_2.jl",
+        "script": "programs/dmrg_itensors_hubbard/rectangular-4x16_64_PO_28_2.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/rectangular-4x16_64_PO_28_2.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/rectangular-4x16_64_PO_28_2.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

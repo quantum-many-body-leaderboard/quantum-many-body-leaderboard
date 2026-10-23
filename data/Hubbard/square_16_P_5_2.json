@@ -36,6 +36,16 @@
         "note": "|reproduced - stored| = 5.33e-14 (relative 2.49e-15); within 1e-9 relative. Sector N_up = N_dn = 5, dimension 19079424, 111 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Hubbard__square_16_P_5_2.json), gives -21.376950984412098 (4.63e-11 from the cost run). Also read by VB2-varbench-code-hubbard#53 (scope value: VarBench Hubbard/square_16_P_5_2.md row 'Exact diagonalization'; checks/hubbard-u-labels/ed_results.jsonl job {lattice: square, L: 4, n: 5, U: 2}).",
         "source_entry": "VB2-varbench-code-hubbard#53, VE-exact-recompute#24 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_2/ed_lattice_symmetries.sh",
+        "script": "scripts/Hubbard/square_16_P_5_2/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_2/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_5_2.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -150,6 +160,16 @@
         "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 5: the instance at U = 2. The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -19.703941332942986 the next level, lanczos ritz (no reorth)): E - E0 = 7.1e-10 vs bound 1.1e-8, consistent. History: uploaded 2022-09-16 (fc4075d), unchanged. No output log (scope config). The tiny V-score (M6 flag) is genuine: energy error and variance are both ~1e-8.",
         "source_entry": "VB2-varbench-code-hubbard#40 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_2.jl",
+        "script": "programs/dmrg_itensors_hubbard/square_16_P_5_2.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_2.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_5_2.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

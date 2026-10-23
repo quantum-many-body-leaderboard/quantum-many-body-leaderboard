@@ -94,6 +94,16 @@
         "note": "Program chain_200_O.jl: N = 200 (line 99), periodic = false (line 100), H = sum over the 199 chain edges of 2 S+S- + 2 S-S+ + 4 SzSz = sigma.sigma (lines 66-68), Neel product start with conserve_qns (Sz = 0, lines 103-104), maxdim 4 ... 1000, two sweeps each (line 108), E and var = <H^2> - E^2 printed after each stage. Independent value check: the Bethe-ansatz ground state of the open 200-site chain (Alcaraz et al. 1987 equations, solved in work/bethe.mjs, which reproduces both stored 20-site ED rows to 2e-14) is -353.7662222780039, so the stored -353.766222278 equals the exact energy at its 9 printed decimals and lies 3.9e-12 above it: a valid bound. M6 (V-score 8.6e-12 outlier): genuine, the MPS is converged to the exact energy. M11: now read (config) and checked against the exact energy; its 0.99% margin is over the RBM baseline. History: first -353.76622227495 (d5b1d3d, 2021-12-05, J. M. Silvester, 'max truncation error ~ 1.0E-12', 3.05e-9 above exact), replaced by -353.766222278 (86052ed, 2022-03-09, '~ 1.0E-14'); variance 0.0001475 -> 6.3E-10 (the chain_20_O value, pasted) -> blank -> 5.4E-9 (bead94c, 2022-03-10); nothing restored. Program linked 2024-08-08 (d944d80), copied from MaxSilvester/Hubbard-and-Heisenberg-codes.",
         "source_entry": "VB3-varbench-code-heisenberg#0 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_200_O.jl",
+        "script": "programs/dmrg_itensors_heisenberg/chain_200_O.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_200_O.jl)",
+          "location": "VarBench table vendor/varbench/Heisenberg/chain_200_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -149,6 +159,16 @@
         "note": "scripts/Heisenberg/chain_200_O/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 1 --L 200 --zero_mag --net rbm --seed 123 --show_progress' -> 200-site open chain (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.013: the stored sigma is the error of that final estimate. 3.4945 above the Bethe-ansatz ground state -353.7662222780039 (work/bethe.mjs). History: entered 10f5c12 (2022-07-11, Dian Wu) as -350.272 | 0.0040 | 16.3572 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -350.272 -> -350.2717; variance 16.3572 -> 16.35715; linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#1 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_200_O/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/chain_200_O/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_200_O/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/chain_200_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -204,6 +224,16 @@
         "note": "scripts/Heisenberg/chain_200_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 1 --L 200 --zero_mag --net jas --seed 123 --show_progress' -> 200-site open chain (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.008: the stored sigma is the error of that final estimate. 7.8447 above the Bethe-ansatz ground state -353.7662222780039 (work/bethe.mjs). History: entered af1d48f (2022-09-01, Dian Wu) as -345.9215 | 0.0044 | 19.99755 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#2 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_200_O/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/chain_200_O/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_200_O/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/chain_200_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ]

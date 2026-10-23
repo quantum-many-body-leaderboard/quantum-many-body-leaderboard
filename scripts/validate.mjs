@@ -156,6 +156,27 @@ for (const m of fs.readdirSync("data")) {
         const leak = leaksIn(JSON.stringify(r));
         if (leak.length) issues.push(`UNPUB ${at}: names the cluster (${leak.join(", ")}); public text names the hardware only`);
       }
+      // The code behind a published row (DATA.md, "The code behind a row") carries its
+      // provenance: the statement it was read from, verbatim, where, when, and the pass file.
+      // An unpublished row's artifacts came with its submission and are checked above.
+      if (r.artifacts?.code != null && r.provenance !== "unpublished") {
+        const a = r.artifacts, f = a.read_from || {};
+        if (typeof a.code !== "string" || !/^https:\/\/\S+$/.test(a.code)) issues.push(`CODE ${at}: artifacts.code ${a.code} is not an https url`);
+        if (a.commit != null && !/^[0-9a-f]{7,40}$/.test(a.commit)) issues.push(`CODE ${at}: artifacts.commit ${a.commit}`);
+        if (!f.quote || !f.location || !/^\d{4}-\d{2}-\d{2}$/.test(f.checked_on || "") || !f.pass || !fs.existsSync(f.pass))
+          issues.push(`CODE ${at}: artifacts.code without its provenance (read_from.quote, location, checked_on, pass)`);
+      }
+      // The libraries the authors used carry the same provenance, and only on a row with no
+      // code of its own: the code column shows one or the other, never both.
+      if (r.artifacts?.libraries != null) {
+        const a = r.artifacts, f = a.libraries_read_from || {};
+        if (a.code != null) issues.push(`LIBRARY ${at}: artifacts.libraries on a row with artifacts.code`);
+        if (!Array.isArray(a.libraries) || !a.libraries.length ||
+            a.libraries.some(l => !l?.name || typeof l.name !== "string" || !/^https:\/\/\S+$/.test(l.url || "") || !(l.version === null || (typeof l.version === "string" && l.version.trim()))))
+          issues.push(`LIBRARY ${at}: artifacts.libraries needs [{name, version (string or null), url (https)}]`);
+        if (!f.quote || !f.location || !/^\d{4}-\d{2}-\d{2}$/.test(f.checked_on || "") || !f.pass || !fs.existsSync(f.pass))
+          issues.push(`LIBRARY ${at}: artifacts.libraries without its provenance (libraries_read_from.quote, location, checked_on, pass)`);
+      }
       // `submitted_by` (DATA.md): the account and the issue or pull request a row came
       // through, and, for an AI system, its name and whether a person checked the submission.
       if (r.submitted_by != null) {

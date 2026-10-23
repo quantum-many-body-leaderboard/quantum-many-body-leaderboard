@@ -49,6 +49,16 @@
         "note": "Real recomputation (code and output file). |E - stored| = 0 (relative 0). Second determination: the closed form matches E1's ED at N = 16, 18, 20 (h = 0.5, 1) to < 4e-12; the stored value is VarBench's exact solution. Also read by VB4-tfising-tv#1 (scope value: exact_ising_1d.py: energy = sum_{i<L} -sqrt(1 + Gamma^2 + 2 Gamma cos(pi (2i+1)/L))).",
         "source_entry": "VB4-tfising-tv#1, VE-exact-recompute#76 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/exact_ising_1d/exact_ising_1d.py",
+        "script": "programs/exact_ising_1d/exact_ising_1d.py",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/exact_ising_1d/exact_ising_1d.py)",
+          "location": "VarBench table vendor/varbench/TFIsing/chain_10_P_1.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -105,7 +115,17 @@
           "source_entry": "VB4-tfising-tv#28 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/vmc_gcnn.sh)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/vmc_gcnn.sh",
+        "script": "scripts/TFIsing/chain_32_P_0.5/vmc_gcnn.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by Giuseppe Carleo on 2021-07-22, commit 3142322) [code](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/vmc_gcnn.sh)",
+          "location": "VarBench table vendor/varbench/TFIsing/chain_32_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -34.033633,
@@ -157,6 +177,16 @@
         "ruled_out": "Not a minimum of the optimisation trace: the program prints a separate final estimate, the per-step noise (2.2e-3, 8.9e-4, 3.1e-3 at 1024 samples) is 40x the stored bars, and the trace minima lie about 1e-2 below the exact energy, not 2-3e-4. Not an unthermalised restart of the sampler: the chains persist into the final estimate, and a fresh restart biases the estimate upward (seen on the 32-site evaluation). Not float32 local energies: the local energy is accumulated in float64 with float32 amplitude ratios. The 2026-09-11 check (checks/tfising_rbm_check.py: complex RBM, netket 3.22.4, 2000 steps) ran a different program and is withdrawn as a diagnosis.",
         "evidence": "VarBench dataset commits 77a95d7, 6e7a021, 5047bfd; varbench/methods programs/vmc_netket/vmc.py (1347303, c686621, bba4595); checks/tfising-rbm-varbench-rerun/ (run.sh, run.log, *.eval.json, trace_summary.json); the first rerun, checks/tfising_rbm_check.py, for the withdrawn diagnosis.",
         "source_entry": "FB1-varbench-code-tfising#2 (qmbl-verify 2026-09-19-flagged)"
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/vmc_rbm.sh",
+        "script": "scripts/TFIsing/chain_32_P_0.5/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/TFIsing/chain_32_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -271,6 +301,16 @@
         "note": "Script builds the instance (Pauli TFIM +sum ZZ + h sum X on the periodic 32-site chain, h = 0.5, equivalent to -sum ZZ - h sum X on this bipartite cluster; no symmetry or magnetisation constraint). The label's bond dimension is the one reached under the 1e-12 cutoff with max_B = 128. Energy is the last sweep's, variational, no extrapolation; variance <H^2> - E^2 of the final MPS (ising_*.jl lines 63-65). No output log (config scope). Value since f6237d0 (2022-08-29, 'Add DMRG for TFIsing chains'); script link attached 2024-07-19 (f88f9ba, cd362c4). Record row. 2.1e-11 above the exact solution -34.03342111916819; M6 flag (V-score 4.4e-12) settled: converged state, not an error.",
         "source_entry": "VB4-tfising-tv#7 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/dmrg.sh",
+        "script": "scripts/TFIsing/chain_32_P_0.5/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/TFIsing/chain_32_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -326,6 +366,16 @@
         "note": "Script builds the instance (periodic chain of 32 sites, h = 0.5, Pauli TFIM) with nk.models.Jastrow (vmc.py lines 118-124); +0.0159 from the exact -34.03342111916819 (above it, as a variational energy must be). sigma check: sqrt(Var/2^20) = sqrt(0.1166148/1048576) = 3.33e-4 vs stored 0.00033 (vmc.py lines 268-270: final estimate with estim_size = 2^20 samples); variance is Var(H) of the total energy. The linked script was attached on 2024-07-30 (fdb4bfb Jastrow / 5047bfd RBM) to a number already in VarBench (6e7a021 (2023-01-09; earlier -34.01021(37) af1d48f and -34.01715(33) 59e621a)); vmc.py uses nk.operator.IsingJax (vmc.py line 78), so it is a later reimplementation of the baseline that documents the ansatz and protocol, not the output of the run that produced this number (no log in the methods repo). Value unchanged since 6e7a021; no value was changed and restored.",
         "source_entry": "VB4-tfising-tv#16 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/vmc_jastrow.sh",
+        "script": "scripts/TFIsing/chain_32_P_0.5/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/TFIsing/chain_32_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ]

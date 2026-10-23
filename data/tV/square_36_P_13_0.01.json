@@ -62,6 +62,21 @@
         "note": "H = -t sum_<ij> (c+c + h.c.) + V sum n_i n_j, t = 1, V = 0.01, 13 spinless fermions on the 6x6 torus (72 bonds). ed_fsym.py (fermionic symmetric basis: translations x C4v, sign sigma(g, rep) in the table; validated on the 4x4 torus, N_f = 5, against the stored values at V = 0.01, 0.1, 1, 10 with all 16 momenta). Ground state in the sectors computed: Gamma B1, -27.9334053183641 (true residual 1.48e-10, sector dimension 8026392 of C(36,13) = 2.31e9). Sectors computed (Lanczos to 1e-9 with second pass): Gamma {C2:-1,sigma_axis(j->-j):1,sigma_axis(i->-i):-1} -25.93299470; Gamma A1 -25.93411676; Gamma A2 -25.93406112; Gamma B1 -27.93340532; Gamma B2 -25.93392118; M {C2:1,sigma_axis(j->-j):1,sigma_axis(i->-i):1} -25.93442921; M {C2:-1,sigma_axis(j->-j):1,sigma_axis(i->-i):-1} -25.93558426; M {C2:1,sigma_axis(j->-j):-1,sigma_axis(i->-i):-1} -25.93409378. |E - stored| = 1.28e-13 (relative 4.58e-15). Second determination: the stored value is VarBench's own ED (lattice-symmetries, a different code and basis). Also read by VB4-tfising-tv#40 (scope config: ed_lattice_symmetries.sh: python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 0.01 --Nf 13; arXiv:2210.05871v4 p. 32 Table 3).",
         "source_entry": "VB4-tfising-tv#40, VE-exact-recompute#162 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "QuSpin",
+            "version": null,
+            "url": "https://quspin.github.io/QuSpin/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The Lanczos exact diagonalization was carried out using the Quspin package [80, 81], restricting to the momentum sectors which contain the ground state.",
+          "location": "arXiv:2210.05871 (sources/2210.05871.txt), Sec. 3 Benchmark results and the table row 'Lancos ED (QuSpin)' for L = 6, Np = 13",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -120,6 +135,16 @@
         "note": "6 x 6 torus, 13 spinless fermions, V = 0.01. Science SM S1 Eq. (S4) (journal): H = -t sum (c+_i c_j + h.c.) + V sum n_i n_j, t = 1, Nf fixed (total, spinless) — no V(n-1/2)(n-1/2) shift, matching the stored convention. Method paper Romero, Nys & Carleo, Commun. Phys. 8, 46 (2025) read in its journal version (Europe PMC full-text XML PMC11779646, sources/journal/commphys8-46.epmc.xml, sha256 a2e037eb; Supplementary Information sources/journal/commphys8-46-supp.pdf, sha256 0489aee4): it studies closed-shell L = 4, 8, 10 spectra and L = 4..10 structure factors and prints none of the 6 x 6, Nf = 13 energies (searched both for the stored digits and per-site forms), and its data statement reads 'The data underlying this study are accessible upon reasonable request'; the dataset is the printing source, as the row's reference already says. The value lies 1.30e-6 below the instance's ED -27.933405318364226 (0.27 sigma): consistent within its stochastic error. Under RULES §6 the ED row holds this solved instance's record; the group file's is_record flag on this VMC row looks like a best-non-exact marker. Uploaded by D. Wu for I. Romero (e85c51e, 2023-01-09). No duplicate.",
         "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#37",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_0.01/tV_model_slater.sh",
+        "script": "scripts/tV/square_36_P_13_0.01/tV_model_slater.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number provided by Imelda Romero and committed by Dian Wu on 2023-01-09, commit e85c51e (\"Update t-V 6x6 VMC without backflow from Imelda\"); method: Romero, Nys & Carleo, Commun. Phys. 8, 46 (2025), arXiv:2406.09077) [code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_0.01/tV_model_slater.sh)",
+          "location": "VarBench table vendor/varbench/tV/square_36_P_13_0.01.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -167,7 +192,17 @@
           "source_entry": "VA4-hubbard-tv-heisenberg#70, VA4-hubbard-tv-heisenberg#71 (qmbl-verify 2026-09-29); ruling 1, 2026-09-30",
           "from": "[paper](https://arxiv.org/abs/2406.09077) [code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_0.01/tV_model_bf.sh)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_0.01/tV_model_bf.sh",
+        "script": "scripts/tV/square_36_P_13_0.01/tV_model_bf.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by Imelda Romero on 2022-12-20, commit b96fa83; method: Romero, Nys & Carleo, Commun. Phys. 8, 46 (2025), arXiv:2406.09077) [code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_0.01/tV_model_bf.sh)",
+          "location": "VarBench table vendor/varbench/tV/square_36_P_13_0.01.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -27.9333330012,
@@ -267,6 +302,15 @@
         "scope": "paper",
         "confidence": "medium",
         "note": "Blanket statements only. Parameter count never given as a number (scaling formula N_param ~ (N_p N_s)^2 / 2 and 'N_param ~ N^4' in the Outlook; not derived here). Samples left null because the per-batch count is stated as a range ('M ~ 200-300 samples') in Sec. 2.6 and as 'batchsize is 200 samples' only in the Fig. 14 caption (4x4 convergence runs with Adam). All timing figures (Figs. 6, 7, 11, 12) are 'CPU time in seconds', so the device is a CPU but no model, core count, wall-clock or total time is stated; the conclusion says the implementation 'is slower than other neural network VMC schemes such as e.g. Slater-Jastrow-RBM' and that memory for the network parameters 'limits the simulatable system sizes to around 10x10'. Implementation in PyTorch. Whether the Table 2-4 runs used SR or Adam is not stated per table."
+      },
+      "artifacts": {
+        "code": "https://github.com/shifushuimenu/autoregressive_Slater-Jastrow",
+        "read_from": {
+          "quote": "An implementation written in PyTorch is available in the code repository [95].",
+          "location": "arXiv:2210.05871 (sources/2210.05871.txt), end of Conclusion; [95] = https://github.com/shifushuimenu/autoregressive_Slater-Jastrow",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

@@ -60,6 +60,21 @@
           "note": "H = J1 sum s.s + J2 sum s.s (Eq. 6) with the 8 x 8 totals printed in S.S units (J1 = 1); 'with periodic boundary conditions'; MCMC with 4096 samples per step (App. B). Table I header 'Results for 8x8 lattice for various J2/J1'; the ClebschTree row is the authors' own ('Ours'). Published 14 July 2021, peer reviewed. Variance 3.0368 upload-only. No duplicate.",
           "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#58"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The software for this work was built on the NetKet library [21]. ... Automatic differentiation [34] via the Jax library backpropagates the gradients through our network, and we use the Adam optimizer with learning rate 0.001.",
+          "location": "arXiv:2104.14869 (sources/2104.14869.txt), Acknowledgments; Appendix B Optimization details",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -559,6 +574,21 @@
         "scope": "ansatz",
         "confidence": "high",
         "note": "One blanket statement for every ViT run (6x6, 8x8, 10x10, all J2). parameters is the paper's approximate figure '∼1.5×10^5'; iterations = 1500 training epochs; samples = 4096 per SR step. No hardware, GPU count or wall-clock stated anywhere (main text, Appendix A, Appendix B, captions)."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In turn, for larger systems one needs to employ an approximate scheme, such as variational neural quantum state (NQS) approach. We use the NetKet package realization [27, 28] of an attention-based vision transformer wave function [25, 26]",
+          "location": "arXiv:2606.04558 (sources/2606.04558.txt), Appendix A (Calculation details); also main text: \"wave function representation [25, 26] as realized in the NetKet package [27, 28]\"",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -662,7 +692,22 @@
           "source_entry": "VP5-arxiv-2606-04558#58 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "previous work [23] (Nomura & Imada neural-network solver)"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "mVMC",
+            "version": null,
+            "url": "https://github.com/issp-center-dev/mVMC"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The implementation of the RBM+PP scheme is done based on the mVMC package [65].",
+          "location": "arXiv:2005.14142 (sources/2005.14142.txt), Acknowledgments; same sentence in the PRX 11, 031034 journal text",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -125.13792,
@@ -696,6 +741,21 @@
           "conversion": "-0.48882 x 4 x 64 = -125.137920; sigma 2e-6 x 256 = 0.000512",
           "note": "Journal Table I identical to arXiv v4-v6 (VP13 reading stands in the published version). Journal App. B1: \"the RBM + PP energy is obtained by optimizing the RBM + PP wave function with the momentum, spin-parity, and simplified-point-group projections. We do not employ the sublattice structure in the f parameters ..., and the number of hidden units is 16\" (p. 031034-13) = the stored method string. Periodic L x L, S = 0, K = (0,0); variational; own number; peer reviewed (PRX). Also read by VP13-hubbard-j1j2-heisenberg#7 (scope value: Table I (p. 13), row 8x8, column J2 = 0.55).",
           "source_entry": "VJ2-journal-other#33, VP13-hubbard-j1j2-heisenberg#7 (qmbl-verify 2026-09-29)"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "mVMC",
+            "version": null,
+            "url": "https://github.com/issp-center-dev/mVMC"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The implementation of the RBM+PP scheme is done based on the mVMC package [65].",
+          "location": "arXiv:2005.14142 (sources/2005.14142.txt), Acknowledgments; same sentence in the PRX 11, 031034 journal text",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
         }
       }
     },

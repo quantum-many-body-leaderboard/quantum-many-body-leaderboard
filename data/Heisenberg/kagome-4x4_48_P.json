@@ -119,6 +119,16 @@
         "note": "vmc_gutzwiller inputs: geometry.d 6-site supercell (two kagome cells, lattice constant 2, 60 degrees) x '2 0 0 4' = 4x4 kagome cells = 48 sites on a periodic spin torus (the '1 0' flags only set antiperiodic auxiliary fermions); nelup = neldo = 24 (Sz = 0); jperp = 1, uvv = 0.25 (H = sum S.S); Dirac spin liquid fluxes (wf.in 180-degree phases) + spin Jastrow (iesspin=8); binned error (sigma/sqrt(Var/2^20) = 1.57). Stored = 4N x <H>/N. 1.588 above the instance's ED -84.2311482540 (1.9%). Entered 7b68237 (2022-02-14, F. Ferrari), never changed; linked by Ferrari d186176 (2024-07-30).",
         "source_entry": "VB3-varbench-code-heisenberg#24 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-4x4_48_P/vmc_gutzwiller.sh",
+        "script": "scripts/Heisenberg/kagome-4x4_48_P/vmc_gutzwiller.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-4x4_48_P/vmc_gutzwiller.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/kagome-4x4_48_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -180,6 +190,21 @@
         "scope": "row",
         "confidence": "high",
         "note": "samples = N_s = 2^12 = 4096 Monte Carlo samples per training step, stated for the 48-site cluster (chosen as the maximum allowed by GPU memory). Architecture: GCNN, 6 layers x 6 complex feature maps, symmetrized over space group (translations x D6) and Z2 spin parity; no parameter count given. GPUs used (Google Cloud credits, NTU HPC Centre) but no GPU model, count, run time or GPU-hours stated. Number of SR training steps only visible as the x-axis of Fig. 4, no number in text. Delta tau = 0.05, QGT regularisation eps1 = eps2 = 0.001."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Our numerical calculations were performed using computational speedup on GPUs and NetKet,65,66 JAX,120 FLAX,121 and OPTAX122 libraries.",
+          "location": "arXiv:2401.02866 (sources/2401.02866.txt), Introduction, paragraph stating the work done in this paper",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {

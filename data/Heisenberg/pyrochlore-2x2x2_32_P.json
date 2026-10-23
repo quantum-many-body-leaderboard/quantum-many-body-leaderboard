@@ -35,7 +35,22 @@
           "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#1 (qmbl-verify 2026-09-29, open entry), as RH2#3 (handoff reader, triage of 2026-10-02); ruling R1, 2026-10-02",
           "from": "[paper](https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.041021)"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In this work, we employ the comprehensive NetKet NQS implementation [63]. ... Numerical simulations were performed using the open-source codes mVMC [39] for mVMC, Netket [49, 63] for NQS and lattice symmetries [74] for ED.",
+          "location": "arXiv:2101.08787 (sources/2101.08787.txt), Sec. II (NQS method) and Acknowledgments; this is the method paper the row cites",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -66.0736,
@@ -89,6 +104,21 @@
         "note": "H = j1 sum h_lambda(i,j) + j2 sum ..., h_lambda = lambda/2 (S+S- + S-S+) + SzSz (Eqs. 1-2), Heisenberg point lambda = 1, j2 = 0; Table II: 'The ground-state energy per site is listed in the first line of every cell'; 'We consider pyrochlore clusters with periodic boundary conditions'. Geometry 4 x L^3 = 4L^3 sites. Stored Pauli total = 4 x N x E/N. Own computation (mVMC / NQS CNN columns). The paper prints no energy variance: the stored energy_variance is the VarBench upload's only. Published 29 October 2021, peer reviewed. 0.0843 above the exact -66.15792523719963 (Table II ED column prints -0.5168). No duplicate.",
         "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#52",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "mVMC",
+            "version": null,
+            "url": "https://github.com/issp-center-dev/mVMC"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Numerical simulations were performed using the open-source codes mVMC [39] for mVMC, Netket [49, 63] for NQS and lattice symmetries [74] for ED.",
+          "location": "arXiv:2101.08787 (sources/2101.08787.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -114,6 +144,17 @@
         "reported_as": "-66.15792523719963 (ed_full.py) | -66.15792523721132 (ed_perm.py)",
         "note": "Pauli total; E/N = -0.51685879 in S.S units. The ground state is the unique fully symmetric singlet; the lowest S^z = 1 level -63.40912320391 gives the triplet gap (E1 - E0)/4 = 0.68720, the 0.6872 printed for this cluster in arXiv:2010.03563 Table I and arXiv:2101.08787 Table II, whose E/N = -0.5168 is this energy truncated. Replaces VarBench's exact row -66.1514 (-0.5168078 per site), 6.5e-3 above it (RULES.md 11, removals.mjs).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/93fea80/checks/pyrochlore-32-ed",
+        "commit": "93fea80",
+        "script": "checks/pyrochlore-32-ed/",
+        "read_from": {
+          "quote": "QMBL, checks/pyrochlore-32-ed/ (exact diagonalization of VarBench's 32-site cluster, two codes)",
+          "location": "the row's reference (QMBL check directory)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -209,6 +250,21 @@
           "conversion": "-0.5128 x 128 (4N, S.S to Pauli) = -65.6384 (stored -65.6384); sigma 0.0001 x 128 = 0.0128 (stored 0.0128)",
           "note": "Spin-1/2 S.S Heisenberg, J = 1, energy per site; 4×2^3 is VarBench's pyrochlore-2x2x2_32_P (the mVMC cell of the same column equals VarBench's mVMC row on this instance). Not a duplicate: the VarBench RBM row here (-65.949) is a different state. Above QMBL's exact -0.516858 per site.",
           "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#136"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In this work, we employ the comprehensive NetKet NQS implementation [63]. ... Numerical simulations were performed using the open-source codes mVMC [39] for mVMC, Netket [49, 63] for NQS and lattice symmetries [74] for ED.",
+          "location": "arXiv:2101.08787 (sources/2101.08787.txt), Sec. on the NQS method; Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
         }
       }
     }

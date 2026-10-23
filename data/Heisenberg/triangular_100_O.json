@@ -58,6 +58,16 @@
         "note": "vmc_rnn.sh: heis_tri, open 10x10 (ColoredJ1J2 back_diag=False), Pauli, J = 1 on all three directions, Marshall rotation on the square bonds only (a unitary), full Hilbert space, FastLSTMNet 2 x 16, Adam 10^5 steps. The stored (sigma, Var) imply 3.1e5 independent samples (ratio 1.83): from the 2022 run (5af37ba, 2022-03-04, Dian Wu), not the 2024 script. 5.63 above the DMRG record: a valid bound limited by the sign structure a real network can carry.",
         "source_entry": "VB3-varbench-code-heisenberg#54 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_100_O/vmc_rnn.sh",
+        "script": "scripts/Heisenberg/triangular_100_O/vmc_rnn.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_100_O/vmc_rnn.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -177,6 +187,16 @@
         "note": "Record (no exact row). dmrg.sh first line: heisenberg_2d.jl --L 10 --J2 1 --zero_mag --max_B 4096: open 10x10 grid plus the (i,j)-(i+1,j+1) diagonal = the VarBench triangular rhombus, Pauli (J *= 4), J = J2 = 1, Sz = 0, 50 sweeps at D = 4096, cutoff 1e-12, noise to 1e-12: final DMRG energy, variational. It lies below every other row on the instance (Tensor-RNN -205.5452(35), 2D MPS-RNN, RNN, RBM, Jastrow). The script's second half (build the C++ 10x10 program after cd programs/dmrg_itensors_c++) cannot run and produced no row; arXiv:2207.14314's D = 4000 DMRG at 10x10 is only plotted. M11: now read (config). Entered 3c108e3 (2022-07-11, Dian Wu), never changed; linked f88f9ba/cd362c4 (2024-07-19).",
         "source_entry": "VB3-varbench-code-heisenberg#55 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_100_O/dmrg.sh",
+        "script": "scripts/Heisenberg/triangular_100_O/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_100_O/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -236,6 +256,15 @@
         "note": "The published figure carries the same point as arXiv v2 and the HAL deposit (VA5 decode v2 b|1D MPS-RNN|40 -> the same total to 1.5e-4; positions agree to 3e-5 decades), so the earlier arXiv-based verification stands in the journal. Panel (b) reference is the authors' DMRG with chi = 4096, which the paper does not print; with the instance's DMRG (bond dimension = 4096) row as E_ref every chi = 40 marker reproduces its stored value to 1e-4 in the total. Journal text: \"We perform numerical experiments on a 10 x 10 square lattice with open boundary conditions (OBCs)\" / \"the AFHM on a 10 x 10 triangular lattice with OBC\"; VMC-optimised variational energies (bound_type variational). sigma and energy_variance are printed nowhere in the journal PDF (SM Sec. S7, not local, is where the 10^6-sample evaluation is described in the arXiv versions); they remain the author's VarBench upload values. peer reviewed: PRR. Also read by VA5-hubbard-heisenberg-tfising-j1j2#25 (scope value: Fig. 4(b) (10 x 10 triangular, OBC), orange marker at chi = 40 (x = 398.333 pt); identical in v1 and v2).",
         "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#25, VJ2-journal-other#3 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/cqsl/mps-rnn",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.5.L032001) [code](https://github.com/cqsl/mps-rnn)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -295,6 +324,15 @@
         "note": "The published figure carries the same point as arXiv v2 and the HAL deposit (VA5 decode v2 b|2D MPS-RNN|40 -> the same total to 1.5e-4; positions agree to 3e-5 decades), so the earlier arXiv-based verification stands in the journal. Panel (b) reference as for the 1D row. Journal text: \"We perform numerical experiments on a 10 x 10 square lattice with open boundary conditions (OBCs)\" / \"the AFHM on a 10 x 10 triangular lattice with OBC\"; VMC-optimised variational energies (bound_type variational). sigma and energy_variance are printed nowhere in the journal PDF (SM Sec. S7, not local, is where the 10^6-sample evaluation is described in the arXiv versions); they remain the author's VarBench upload values. peer reviewed: PRR. Also read by VA5-hubbard-heisenberg-tfising-j1j2#26 (scope value: Fig. 4(b), green marker at chi = 40; identical in v1 and v2).",
         "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#26, VJ2-journal-other#4 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/cqsl/mps-rnn",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.5.L032001) [code](https://github.com/cqsl/mps-rnn)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -354,6 +392,15 @@
         "note": "The published figure carries the same point as arXiv v2 and the HAL deposit (VA5 decode v2 b|Tensor-RNN|40 -> the same total to 1.5e-4; positions agree to 3e-5 decades), so the earlier arXiv-based verification stands in the journal. Panel (b) reference as for the 1D row. Journal text: \"We perform numerical experiments on a 10 x 10 square lattice with open boundary conditions (OBCs)\" / \"the AFHM on a 10 x 10 triangular lattice with OBC\"; VMC-optimised variational energies (bound_type variational). sigma and energy_variance are printed nowhere in the journal PDF (SM Sec. S7, not local, is where the 10^6-sample evaluation is described in the arXiv versions); they remain the author's VarBench upload values. peer reviewed: PRR. Also read by VA5-hubbard-heisenberg-tfising-j1j2#27 (scope value: Fig. 4(b), red 'Tensor-RNN' marker at chi = 40; identical in v1 and v2).",
         "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#27, VJ2-journal-other#5 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/cqsl/mps-rnn",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.5.L032001) [code](https://github.com/cqsl/mps-rnn)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -409,6 +456,16 @@
         "note": "scripts/Heisenberg/triangular_100_O/vmc_rbm.sh: 'python3 vmc.py --ham heis_tri --boundary open --sign mars --ham_dim 2 --L 10 --zero_mag --net rbm --seed 123 --show_progress' -> 10x10 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), open; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.009: the stored sigma is the error of that final estimate. 12.0874 above the DMRG record -205.90673107. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered 10f5c12 (2022-07-11, Dian Wu) as -193.617 | 0.0072 | 52.8388 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -193.617 -> -193.6172; variance 52.8388 -> 52.83883; 59e621a (2022-09-13, 'Update Jastrow and RBM baselines'): energy -193.6172 -> -193.8193; sigma 0.0072 -> 0.0082; variance 52.83883 -> 69.24535; linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#56 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_100_O/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/triangular_100_O/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_100_O/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -464,6 +521,16 @@
         "note": "scripts/Heisenberg/triangular_100_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis_tri --boundary open --sign mars --ham_dim 2 --L 10 --zero_mag --net jas --seed 123 --show_progress' -> 10x10 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), open; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.017: the stored sigma is the error of that final estimate. 15.2084 above the DMRG record -205.90673107. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered af1d48f (2022-09-01, Dian Wu) as -189.0484 | 0.0091 | 84.02770 | Jastrow baseline; 59e621a (2022-09-13, 'Update Jastrow and RBM baselines'): energy -189.0484 -> -190.6983; sigma 0.0091 -> 0.0093; variance 84.02770 -> 87.62059; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#57 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_100_O/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/triangular_100_O/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_100_O/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

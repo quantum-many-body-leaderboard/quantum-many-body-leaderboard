@@ -221,6 +221,25 @@ arithmetic.
   gradients, whose iterations the runs do not log) and `flops.mjs` uses it. Published rows get
   their SR matrix sized by the Jacobian mode read from their code (DATA.md, `evaluation.jacobian`).
 
+## Rerun a row
+
+Every row QMBL computed can be rerun from this directory. Its results file,
+`results/<run>.json` (the run name is in the row's reference), records the command, the commit and the package
+versions it ran with, under `software`. For example, the GCNN row on the triangular
+36-site torus:
+
+```
+git checkout 51fa6e2                    # software.commit c0fcfee, see below
+pip install netket==3.22.4 jax==0.8.3 flax==0.12.6
+python checks/cost/run_nqs.py --instance Heisenberg/triangular_36_P --model gcnn --out gcnn-tri-36.json
+```
+
+DMRG rows run `run_dmrg.py` the same way with TeNPy 1.1.1. A rerun follows the protocol
+above, so its energy and hours compare with the row's. The trained parameters are not in
+the repository; a rerun trains from the start. A `software.commit` from before 2026-10-20 is on
+no branch since the history was rewritten that day; `commit-map.json` gives the commit on
+`main` with the same `checks/cost`, which the row cites.
+
 ## Files
 
 - `run_nqs.py`, `vit.py` — the neural-state runs. `run_dmrg.py` — DMRG.

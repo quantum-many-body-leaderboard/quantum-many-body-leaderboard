@@ -110,6 +110,21 @@
           "note": "4 x 4, 4 + 4, U = grid 7.74263683, N~ = 8, alpha = 32; variational, 0.00415 above ED. Printed bar 0.001 vs stored 0.0001: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
           "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#8"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -145,6 +160,21 @@
           "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
           "source_entry": "SP2-arxiv-2111-10420#76"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -170,6 +200,21 @@
         "reported_as": "-16.4823(6)",
         "note": "Appendix H Table I, U=7.75, column HFDS alpha=1; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#77: sigma 0.000608 -> 0.0006 (The table prints totals, so the bar is 0.0006 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -195,6 +240,21 @@
         "reported_as": "-16.4893(3)",
         "note": "Appendix H Table I, U=7.75, column HFDS alpha=2; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#78: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -230,6 +290,21 @@
           "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
           "source_entry": "SP2-arxiv-2111-10420#79"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -255,6 +330,21 @@
         "reported_as": "-16.4960(3)",
         "note": "Appendix H Table I, U=7.75, column HFDS alpha=8; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#80: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -280,6 +370,21 @@
         "reported_as": "-16.502(3)",
         "note": "Appendix H Table I, U=7.75, column HFDS alpha=16; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#81: sigma 0.00304 -> 0.003 (The table prints totals, so the bar is 0.003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_si) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -415,6 +520,21 @@
         "reported_as": "-16.2395(1)",
         "note": "Appendix H Table II, U=7.75, row Gutzwiller inspired CF; sources/2111.10420.txt line 1198; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#88: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -450,6 +570,21 @@
           "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
           "source_entry": "SP2-arxiv-2111-10420#89"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -475,6 +610,21 @@
         "reported_as": "-16.3997(2)",
         "note": "Appendix H Table II, U=7.75, row Unrestricted hid. spin(RBM); sources/2111.10420.txt line 1202; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#90: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     }
   ],

@@ -1,0 +1,803 @@
+       Benchmark  study  of the  two-dimensional  Hubbard  model  with auxiliary-ﬁeld
+                                                quantum  Monte  Carlo  method
+
+                                             Mingpu  Qin,1  Hao  Shi,1  and  Shiwei  Zhang1
+                   1Department  of  Physics,  College  of  William  and  Mary,  Williamsburg,  Virginia  23187,  USA
+
+                   Ground state properties of the Hubbard model on a two-dimensional square lattice are studied by
+                the auxiliary-ﬁeld quantum Monte Carlo method.  Accurate results for energy, double occupancy, ef-
+                fective hopping, magnetization, and momentum distribution are calculated for interaction strengths
+                of  U/t  from  2  to  8,  for  a  range  of  densities  including  half-ﬁlling  and  n  =  0.3, 0.5, 0.6,  0.75,  and
+                0.875.  At half-ﬁlling, the results are numerically exact.  Away from half-ﬁlling, the constrained path
+                Monte Carlo method is employed to control the sign problem.  Our results are obtained with several
+                advances in the computational algorithm, which are described in detail.  We discuss the advantages
+                of generalized Hartree-Fock trial wave functions and its connection to pairing wave functions, as well
+                as the interplay with diﬀerent forms of Hubbard-Stratonovich decompositions.  We study the use of
+                diﬀerent  twist  angle  sets  when  applying  the  twist  averaged  boundary  conditions.  We  propose  the
+                use  of  quasi-random  sequences,  which  improves  the  convergence  to  the  thermodynamic  limit  over
+                pseudo-random and other sequences.  With  it and  a careful ﬁnite size scaling  analysis,  we are able
+                to obtain  accurate  values of  ground  state  properties  in  the thermodynamic  limit.  Detailed  results
+                for ﬁnite-sized systems up to 16 × 16 are also provided for benchmark purposes.
+
+                PACS numbers:  71.10.Fd, 02.70.Ss, 05.30.Fk
+
+
+                     I.     INTRODUCTION                                      convergence of diﬀerent boundary conditions.  The quasi-
+                                                                              random twist is applicable to all many-body calculations
+  The  two-dimensional  (2D)  Hubbard  model  [1]  is  one                    of extended systems, including realistic electronic struc-
+of  the  simplest  models  which  are  relevant  to  many  cor-               ture calculations in correlated materials.
+related electron phenomena including interaction-driven                          We  also  describe  the  use  of  generalized  Hartree-Fock
+metal-insulator  transitions  [2],  spin  and  charge  density                (GHF)  trial wave functions  over the  more standard un-
+waves [3],  magnetism  [4]  and  superconductivity[5].  The                   restricted  Hartree-Fock  (UHF)  form,  and  discuss  how
+ability to predict the properties of 2D Hubbard model is                      and when improvement in accuracy and eﬃciency results,
+crucial to our understanding of the related exotic quan-                      both  at  half-ﬁlling  and  in  the  doped  regime.   The  con-
+tum states and the transition between them.  Though the                       nection between the GHF form for magnetic correlations
+one  dimensional  Hubbard  model  is  exactly  solvable  [6],                 (repulsive  model,  half-ﬁlling)  and  the  BCS  form  for  su-
+no  exact  solution  for  the  Hubbard  model  exists  in  two                perconducting order (attractive, spin-balanced model) is
+or higher dimensions except for a few special parameter                       discussed,  as  well  as  their  relation  to  the  form  of  the
+values.                                                                       many-body propagators and their  symmetry properties.
+  The  ground state property of the  2D Hubbard model                         Such wave functions can be  readily generalized to other
+has  been  investigated  by  a  variety  of  methods  which                   quantum Monte Carlo calculations in many-electron sys-
+have both  strengths  and  weaknesses in  diﬀerent  regions                   tems.
+of  the  parameter  space.   In  a  recent  work  [7],  the  2D                  At half-ﬁlling in the repulsive Hubbard model, the re-
+Hubbard  model  was  studied  by  state-of-the-art  numer-                    sult from AFQMC is numerically exact and the method
+ical  methods  [8–15].   In  the  present  paper,  we  provide                is computationally very eﬃcient.  Away from half-ﬁlling,
+a detailed account of the auxiliary-ﬁeld quantum Monte                        AFQMC  methods  suﬀer  from  the  minus  sign  problem
+Carlo (AFQMC) study in Ref. [7], introduce two method-                        [16,  17]  associated  with  Fermi  statistics  which  leads  to
+ological  advances  which  improve  the  accuracy  and  eﬃ-                   exponentially growing statistical errors with system size
+ciency  of  AFQMC  calculations,  and  present  systematic                    and  inverse  temperature.    We  employ  the  constrained
+results  for  ﬁnite-size  supercells  and  detailed  analysis  of             path  formalism  under  AFQMC,  commonly  referred  to
+the  scaling to  the  thermodynamic limit.  Because of the                    as  constrained  path  Monte  Carlo  (CPMC),  to  control
+high accuracy of AFQMC, the  results in this  paper will                      the sign problem by introducing a trial wave-function to
+be  able  to  serve  as  benchmarks  for  future  calculations                guide the walk in the Slater determinant space.  This re-
+and method development.  Such benchmarks will be very                         stores the algebraic computational scaling as in the half-
+valuable  given  the  fundamental  nature  of  the  Hubbard                   ﬁlled  case,  but  introduces  a  possible  systematic  error.
+model.                                                                        The goal of considering diﬀerent forms of the trial wave
+  In   addition   to   the   detailed   and   systematic   data,              function  is  to  minimize  this  error,  and  to  improve  the
+we  propose  here  the  use  of  a  quasi-random  sequence                    prefactor in the algebraic scaling.
+which  reduces  the  ﬂuctuations  and  accelerate  conver-                       The rest of the paper is organized as follows.  In Sec. II,
+gence when implementing twist averaged boundary con-                          we ﬁrst deﬁne the Hubbard model and give a brief sum-
+ditions  (TABC).  We  test  this  approach  and  study  the                   mary of the method used in this work.  We also introduce
+                                                                                                                                                      2
+
+the use of twist boundary conditions in computations of                       This is equivalent to placing the lattice on a torus topol-
+ﬁnite  supercells.   In  Sec.  III  we  describe  the  computa-               ogy  and  applying  a  magnetic  ﬁeld  which  induces  a  ﬂux
+tional algorithmic advances.  The use of a quasi-random                       of θx  along  the x-direction  (and  a  ﬂux  of θy  along  the
+sequence  in  the  twist  averaged  boundary  conditions  is                  y-direction).   In  Eq.  (2),  the  translational  symmetry  is
+discussed, with test results presented.  We also study the                    explicitly broken, but we can also choose another gauge
+use  of  GHF  trial  wave  functions  and  analyze  their  con-               with which the translational symmetry is preserved, i.e.,
+nection  to  BCS  wave  functions.   The  interplay  between                  adjust t to t ×eiθx/L  along x andt ×eiθy/L  along y.  By
+the form of the trial wave function and symmetry prop-                        imposing a random TBC, the possible degeneracy of the
+erties of the Hubbard-Stratonovich transformation is ex-                      non-interacting energy levels is lifted by breaking the ro-
+amined.   In  Sec.  IV  we  present  detailed,  exact  numeri-                tational symmetry of the lattice.  This eliminates the so
+cal  ﬁnite-size  results  at  half-ﬁlling  for  a  range of  super-           called open-shell eﬀects.
+cell sizes and boundary conditions, from weak to strong-                         To  implement  TABC,  we  choose  a  set  of Nθ  twist
+coupling regimes.  A careful ﬁnite-size scaling analysis is                   angles   and   carry  out   the   calculation   for   each   sepa-
+carried out to extrapolate the computed quantities to the                     rately.    The  constrained  path  condition  can  be  gener-
+thermodynamic  limit.   In  Sec.  V,  the  results  for  system               alized  straightforwardly  to  the  case  of  TBC  [19].   The
+away  from  half-ﬁlling  are  presented.   A  short  summary                  computational cost is thus nominally Nθ  times that of a
+in Sec. VI will conclude this  paper.  The Appendix  con-                     single calculation for, say, the PBC. However, by averag-
+tain the ﬁnite size numerical data including ground state                     ing the same physical quantities from all the calculations,
+energy, double occupancy and kinetic energy.                                  the statistical error bar of the  TABC value  of the  given
+                                                                              quantity is reduced.  As will be discussed later, the asso-
+                                                                              ciated statistical uncertainty can be  estimated from the
+               II.     MODEL  AND  METHOD                                     distribution among the twist angles.  For non-interacting
+                                                                              systems, the TABC energy at half-ﬁlling approaches the
+                      A.     Hubbard  Model                                   exact  TDL  value  as Nθ  is  increased.    However,  if  the
+                                                                              canonical ensemble is used with ﬁxed particle numberN,
+  The Hubbard model is deﬁned as                                              the  TABC  result  with Nθ  →  ∞  is  in  general  not  equal
+                               (                  )                           to  the  TDL  value  [18,  20].   This  is  the  case  away  from
+H =K +V  = − ∑tij                c†i,scj,s +H.c.     +U ∑      ni↑ni↓,        half-ﬁlling in the 2D Hubbard model.  (Of course the dis-
+                      i,j,s                                 i                 crepancy goes to zero as the system sizeN  is increased.)
+                                                                     (1)         The  use  of  TABC  and  the  treatment  of  ﬁnite-size  ef-
+where K  and V   are  the  kinetic  and  interaction  terms,                  fects, including the eﬀect from electron correlations, have
+respectively.      The  creation  (annihilation)  operator  on                been discussed earlier [19, 21, 22].  The quasi-random se-
+site i  is c†                                                                 quence  we  discuss  below  can  be  directly  applied  in  this
+            i,s  (ci,s),  with s =↑, ↓ the  spin  of the  electron,           framework.  Recently another method has been proposed
+and ni,s  is  the  corresponding number  operator.  We  de-                   to reduce the one-body ﬁnite-size  eﬀect in the  Hubbard
+note  the  total  number  of  electrons  with  up  and  down                  model by modifying the energy levels of the free electron
+spin  by N↑  and N↓.  In  this  work,  we  only  consider  the                part of the Hamiltonian in a way consistent with the cor-
+spin-balanced  (N↑  = N↓)  systems.   The  ﬁlling  factor  is                 responding one-particle density of states in the TDL [23].
+deﬁned asn = (N↑ +N↓)/N  whereN  is the total number                          In  this  work, we  have chosen to  treat the  original Hub-
+of lattice sites in the supercell.  Half-ﬁlling is n = 1, and                 bard  Hamiltonian,  since  part  of  our  goal  is  to  produce
+away from it the hole density is given by h = 1 −n.  We                       benchmark data for ﬁnite-size supercells.
+deal with only nearest neighboring and uniform hopping,
+tij  =t for each near-neighbor pair ⟨ij⟩, and set t as the
+energy unit.  The strength of the repulsive interaction is                             B.     Auxiliary-ﬁeld Monte  Carlo  method
+given  by U/t.   With  the  exception  of  the h  =  1/8  dop-
+ing case where rectangular lattice are studied to accom-                         In this  section,  we  will  brieﬂy  introduce the  AFQMC
+modate  the  underlying  spin  density  wave  structure,  we                  [24]  method.    (For  a  comprehensive  discussion  of  this
+consider supercells of square lattice with sizeN  =L ×L.                      method, see Ref. [25].)  By repeatedly applying the pro-
+  In  order  to  better  extrapolate  to  the  thermodynamic                  jection  operator  to  a  state  |ψ0⟩  whose  overlap with  the
+limit  (TDL),  we  use  TABC  [18].   As  shown  in  Sec.  IV,                ground  state  |ψg⟩  of  the  Hamiltonian H  in  Eq.  (1)  is
+the standard periodic boundary conditions (PBC) turns                         nonzero, we can obtain |ψg⟩:
+out  to  give  non-monotonic  convergence  with  supercell
+size.   Under  twist  boundary  conditions  (TBC),  an  elec-                                        |ψg⟩ ∝  lim
+tron gains a phase when hopping across the boundaries:                                                        β→∞e−βH|ψ0⟩                         (3)
+          Ψ(..., rj + L,...) =eiˆL·ΘΨ(..., rj,...),         (2)               and  the  expectation  value  of an  operator O  can  be  cal-
+                                                                              culated as
+where  ˆL  is  the  unit  vector  along  L,  and  the  twist  an-                               ⟨O⟩ =  ⟨ψ0|e−βHOe−βH|ψ0⟩
+gle  Θ  =  (θx,θy)  is  a  parameter,  with θx  (θy)  ∈  [0, 2π).                                            ⟨ψ0|e−2βH|ψ0⟩   .                   (4)
+                                                                                                                                                    3
+
+  Through the Trotter Suzuki decomposition, we can de-                       overlap with  |ψT ⟩,  computed  at  each  time  slice,  remain
+couple the kinetic and interaction part in the projection                    non-negative.   A  description  of  the  CPMC  method  for
+operator:                                                                    Hubbard-like models can be found in Ref. [32].
+                                                                                In CPMC, the wave function is represented as a linear
+  e−βH = (e−τ H)n = (e− 12 τ Ke−τ Ve− 12 τ K)n +O(τ 2)   (5)                 combination  of  a  set  of  slater  determinants  which  are
+                                                                             called  walkers.   The  evolution  of  wave  function  in  the
+where β  = τn.  The  Trotter  error can  be  eliminated  by                  imaginary  time  is  represented  as  random  walks  in  the
+an extrapolation ofτ  to 0.  We typically chooseτ  = 0.01                    Slater determinant space by sampling the auxiliary ﬁeld.
+in this work, with which we have veriﬁed that the Trotter                    Physical  quantities  can  be  calculated  using  the  mixed
+error is below the targeted statistical errors.                              estimator as
+  We  usually  choose  |ψ0⟩  as  a  Slater  determinant  in                                                  ∑
+AFQMC. The one-body terme− 12 τ K  can be directly ap-                                        ⟨O⟩mixed =       ∑kwk⟨ψT |O|ψk⟩
+plied to it  and the  result is  another Slater  determinant.                                                     kwk⟨ψT |ψk⟩ ,                  (9)
+This  does  not  hold  for  the  two-body  term e−τ V .   How-
+ever, we can decompose the two-body term into an inte-                       where  |ψk⟩  is  the kth  walker, wk  is  the  corresponding
+gral  of  one-body  terms  through  the  so-called  Hubbard-                 weight and |ψT ⟩ is the trial wave-function we introduced.
+Stratonovich (HS) transformation.  There exist diﬀerent                      The mixed estimator is used to compute the energy (and
+types  of  HS  transformations  for e−τ V .   The  two  com-                 other observables which commute with the Hamiltonian).
+monly used types in the literature are the so called spin                    For  observables  which  do  not  commute  with  Hamiltio-
+decomposition                                                                nian, the mixed estimate is biased, and back propagation
+                                              1                              is applied to correct for this [30, 31].
+     e−τ Un↑n↓  =e−τ U(n↑+n↓)/2  ∑                                              In  order to  remove the  sign problem,  the  constrained
+                                       x=±1   2eγsx(n↑−n↓),       (6)        path approximation in CPMC introduces a systematic er-
+                                                                             ror which depends on the trail wave-function |ψT ⟩.  With
+with   the   constant γs   is   determined   by   cosh(γs)   ≡               the  TBC,  a  simple  generalization  of  constraint  can  be
+exp(τU/2), and the charge decomposition                                      made  [19].   Previous studies  have  shown  the  systematic
+                                              1                              error  is  small  even  with  a  free-electron  or  Hartree-Fork
+  e−τ Un↑n↓  =e−τ U(n↑+n↓−1)/2  ∑                                            trial wave-function [19].  We  will  further  discuss  the  ac-
+                                       x=±1   2eγcx(n↑+n↓−1),   (7)          curacy of CPMC and the role of the trial wave function
+                                                                             below in Secs. III B and V.
+with  cosh(γc)  ≡  exp(−τU/2)  [26].   Here x  is  an  Ising-
+spin-like auxiliary ﬁeld.  Diﬀerent choices of the HS  can
+lead to diﬀerent accuracies or eﬃciencies, because of sym-                      III.     METHODOLOGICAL  DEVELOPMENTS
+metry  considerations  [27,  28]  or  other  factors  [29].   We
+will further comment on the decompositions later.                                           A.     Quasi  random  twist  angles
+  After the HS transformation, Eq. (4) turns into
+           ∑                                                                    To implement TABC, a set of twist angles need to be
+  ⟨O⟩ =     ∑{Xi,Xj}⟨ψ0| ∏ni=1Pi(Xi)O ∏nj=1Pj(Xj)|ψ0⟩                        chosen.   If  we  only  consider  how  to  minimize  the  one-
+
+               {Xi,Xj}⟨ψ0| ∏ni=1Pi(Xi) ∏nj=1Pj(Xj)|ψ0⟩                       body  ﬁnite-size  eﬀect [21, 22],  the  problem is  related to
+                                                                    (8)      the calculation of a two-dimensional quadrature.  In this
+whereXi is the collection of the N  auxiliary ﬁelds intro-                   section, we compare three choices of random twist angles,
+duced by the HS transformation, andPi is the product of                      i.e.   the  pseudo  random  (PR)  sequence,  quasi  random
+the kinetic terme− 12 τ K and the one-body terms from the                    (QR) sequence and uniform grid.
+HS transformation at time slicei.  The multi-dimensional                        A   quasi   random   sequence   is   also   known   as   low-
+integrals can then be computed by Monte Carlo methods,                       discrepancy sequence, which is a sequence with the prop-
+e.g., with the Metropolis algorithm.                                         erty that for all values ofN, its subsequence x1, · · · ,xN
+  At  half-ﬁlling,  the  denominator  of  Eq.  (8)  is  always               has a low discrepancy.  Low discrepancy means the pro-
+non-negative because of particle-hole symmetry[4].  Away                     portion of points in the sequence falling into an arbitrary
+from half-ﬁlling, the denominator of Eq. (8) will in gen-                    set B  is close to proportional to the measure of B.  Dif-
+eral  become  negative  for  some  auxiliary  ﬁelds.   In  this              ferent  from  a  pseudo  random  sequence,  it  ﬁlls  the  sam-
+situation the direct evaluation of Eq. (8) by Monte Carlo                    pling  space  more  uniformly  at  the  price  of  losing  some
+will suﬀer from the sign problem [16, 17].  The sign prob-                   randomness.   In  this  sense,  a  quasi  random  sequence  is
+lem can be eliminated by the constrained path approxi-                       correlated.  We  choose  the  Halton  sequences[33]  to  gen-
+mation.  The framework within which this  has been im-                       erate our twist angles in this  work.  In the  uniform grid
+plemented  in  Hubbard-like  model  has  been  referred  to                  method, the Nθx ×Nθy  twist angles are set as
+as  the  constrained  path  Monte  Carlo  (CPMC)  method
+[30].   To  ensure  the  denominator  in  Eq.  (9)  is  positive,                                    θij  = (  2π
+we  constrain  the  paths  of  auxiliary-ﬁelds  so  that  the                                                 Nθxi,  2πNθyj)                         (10)
+                                                                                                                                                        4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  1.   (Color  online)  The  convergence  rate  of  the  ground
+state energy of the non-interacting Hubbard model computed
+using  TABC  with  twist  angles  from  QR  sequence,  PR  se-
+quence and uniform  grid.  The system  is 4 × 4 at  half-ﬁlling.
+The vertical axis shows the absolute value of the relative error
+with respect to the exact value, which is −16/π2.
+
+
+where the integersi = 0, · · ·,Nx − 1 andj = 0, · · ·,Ny −
+1.   For  pseudo  random  twists,  we  generate  the  twist  Θ
+by pseudo random number sequence.                                              FIG. 2.  (Color online)  (a) The error bar of the ground state
+   The PR and QR twists both have residual errors which                        energy computed from TABC vs. the number of twist angles
+are statistical, while the grid will have a systematic resid-                  used  with  twists  generated  by  QR  sequence,  PR  sequence,
+ual error.  The errors vanish in the limit of a large num-                     and  the  uniform  grid.  The  system  is  4 × 4  with  2  up  and  2
+ber  of  twists, Nθ.    From  two-dimensional  quadrature                      down  electrons,  and  U  =  8.   The  ground  state  energies  are
+considerations,  one  would  expect  the  convergence  rate,                   obtained  by  the  ED  method.  Note  log-log  scale  of  the  plot.
+i.e.,  the  residual  error  as  a  function  of Nθ,  should  be               (b) Similar results for an 8 × 8 lattice at n = 0.5, with U  = 4,
+√1                                                                             for  QR  and  PR  twist  angles.  The  energies  are  computed  by
+  Nθ,  ln NθNθ ,   1Nθ   for  PR,  QR,  and  the  uniform  grid,  re-          the CPMC method.
+spectively.   In  Fig.  1  we  show  the  convergence  rates  of
+the ground state energy of the non-interacting Hubbard
+model  (U  =  0)  for  the  4 × 4  lattice  at  half-ﬁlling.   The             “error bar” vs. the logarithm of Nθ  are performed , and
+results  are  consistent  with  the  expectation  above.   The                 are shown in the ﬁgure.  The slopes of the ﬁt are 0.94(3),
+convergence rate with  QR TABC  is  almost the  same as                        0.508(7) and  0.96(2),  respectively  for  QR  sequence,  PR
+that of the uniform grid, both much faster than with the                       sequence,  and  the  uniform  grid.    These  are  consistent
+PR sequence.                                                                   with the expected rate mentioned above.
+   In Fig. 2 (a), we study an interacting case, withU  = 8                        In  Fig.  2  (b),  we  plot  the  result  of  an  8 × 8  system
+and a ﬁlling factor ofn = 0.25 (N↑ =N↓ = 2), again in a                        at n = 0.5.  We  use the  CPMC method  to  compute  the
+4×4 lattice.  We use exact diagonalization (ED) to calcu-                      ground state energy for each twist in this system, which
+late the ground state energy for each twist angle.  A total                    is  well  beyond  the  reach  of  ED.  In  the  CPMC  calcula-
+of   ¯Nθ  = 3600 twist angles are used in each method.  To                     tion,  the  corresponding  non-interacting  (i.e.,  free  elec-
+estimate the statistical error bar of the TABC energy for                      tron) wave function is used as a trial wave-function.  For
+Nθ  (< 3600) twist angles for QR and PR sequences, we                          many  high  symmetry  points  on  a  uniform  grid  of  twist
+partition all the data into blocks with sizeNθ.  The stan-                     angles, the ground state of non-interacting system is de-
+dard derivation of the average energies from the [ ¯Nθ/Nθ]                     generate.  In such situations, the trial wave function (of a
+blocks then provides an estimate of the desired statistical                    single Slater determinant) is not unique, and an arbitrary
+error.  For the uniform grid, we calculate the relative er-                    choice without consideration of symmetry properties can
+ror for each grid size as the diﬀerence between its average                    aﬀect  the  accuracy  of  CPMC  result.   (This  issue  is  fur-
+and that of the entire 3600 twist angles.  As in the non-                      ther discussed below.)  To keep the analysis simple here,
+interacting case shown in Fig. 1, the TABC energy using                        we  only  test  the  PR  and  QR  sequences.  A  total  of  360
+QR  sequence  converges  at  a  similar  rate  to  that  using                 twist  angles  are  used  for  both  methods.   The  same  er-
+uniform grid, with both showing faster convergence rate                        ror analysis procedure is employed as in Fig. 2 (a).  The
+than the PR sequence.  Linear ﬁts of the logarithm of the                      ﬁtted  convergence rate  for  PR and  QR  twist angles  are
+                                                                                                                                                        5
+
+0.54(3) and 1.0(1), respectively, again consistent with the                    function will reduce the  bias  as shown in the  discussion
+theoretical values.                                                            below.   This  is  implemented  as  an  UHF  with  spin  or-
+   These examples show that, with QR twist angles, the                         der  in  the x-y  plane.   As  we  illustrate  next,  this  form
+computed total energy from TABC converges essentially                          combines  the  advantages  of  the  UHF  and  free-electron
+as quickly as with a uniform grid, and is much faster than                     TWFs and performs better than both, even though it is
+with PR twists.  The use of QR twists allows the advan-                        related to the z-direction UHF by a spin rotation and is
+tage  of  the  uniform  grid,  while  overcoming  two  of  the                 variationally the same.
+drawbacks of  the  latter  in  QMC  calculations.  The  ﬁrst
+drawback of a uniform grid is the degeneracy which often                       TABLE  I.  The  eﬀect  of  the  trial  wave  function  on  the  (ar-
+exists  with  a  high  symmetry  grid  point.   As  mentioned                  tiﬁcial)  constraint  and  its  interplay  with  the form  of  the HS
+above, the degeneracy can aﬀect the non-interacting wave                       transformation.   Ground  state  energies  are  shown  for  4 × 4
+function,  and correspondingly the  quality of the CPMC                        with PBC (U  = 4) at half-ﬁlling.  The exact ground state en-
+calculation.  (Multi-determinant trial wave functions can                      ergy  is  −13.62192.   The  UHF  and  GHF  trial  wave-functions
+improve the quality but they require extra handling com-                       are also with U  = 4.
+putationally.)   The  second  disadvantage  of  the  uniform                    Trial WF                    HS-spin                      HS-charge
+grid  is  that  one  needs  to  determine  the  size  of  the  grid
+prior to the calculations.  We often cannot re-use the re-                        UHF                     −13.478(2)                 −13.6222(2)
+sults  from  a  small grid size  if a  larger grid turns  out  to                 GHF                     −13.623(1)                 −13.6223(2)
+be  necessary  for  convergence.   On  the  other  hand,  QR
+sequences  are  cumulative.   Given  that  in  QMC  one  has                      In  Table  I  we  compare  the  eﬀects  of  diﬀerent  TWFs
+both statistical and convergence errors present, it is de-                     and diﬀerent HS decompositions.  The system is a 4 × 4
+sirable to be able to add additional twist angles “on the                      with PBC and U  = 4.  The spin and charge decomposi-
+ﬂy”  as  we  accumulate  better  indications  of  the  magni-                  tions  are  deﬁned  in  Eqs.  (6)  and  (7),  respectively.   The
+tude of the associated errors.  The QR TABC makes this                         AFQMC  results  have  been  extrapolated  to  the τ  =  0
+possible:  one can add QR twist one by one until a desired                     limit.  The system is at half-ﬁlling, where there is no sign
+accuracy is reached.                                                           problem.  The CP calculations can be easily made exact
+                                                                               by redeﬁning the importance sampling to have a nonzero
+                                                                               minimum [27].  However, we deliberately apply the  con-
+B.     GHF  trial  wave functions  in  AFQMC,  and  their                      straint as usual, which can prevent the walkers from tun-
+            connections  to  BCS  wave functions                               neling  from  one  region  of  the  determinant  space  to  an-
+                                                                               other  with  an  artiﬁcial  boundary  where  ⟨ψT |ψk⟩  =  0,
+   When the sign problem is present, we use a trial wave                       even  though  both  sides  are  positive.    As  can  be  seen,
+function (TWF)  to constrain the  random walk paths  in                        with  the  spin  decomposition,  the  calculations  using  the
+AFQMC. The sign or phase of the overlap of the sampled                         UHF as a TWF leads to a bias.
+Slater  determinants  with  the  TWF  is  evaluated in  each                      When  the  GHF  trial wave-function is  used instead of
+step, and this  is used as a gauge condition which deter-                      the UHF, the bias of the spin-decomposition calculation
+mines  or  modiﬁes  the  acceptance  of  the  move  [25,  30].                 is removed.  Below we further discuss the symmetry prop-
+The  constraint  eliminates  the  sign  or  phase  instability                 erties  of  the  GHF  to  explain  why  it  is  a  better  TWF.
+and  restores  the  low-power  (third  power  of  system  size                 With  the  charge decomposition,  the  energies  agree well
+here)  computational  scaling,  at  the  cost  of  introducing,                with  the  exact  energy  regardless  of  which  trial  wave-
+in most cases, a systematic bias.  The quality of the TWF                      function is used.  This is because the auxiliary ﬁelds are
+can  aﬀect  the  accuracy  of  the  results.   In  this  work  we              complex  in  this  case.   The  sign  problem  would  become
+employ only single Slater determinant TWFs, which have                         a  phase  problem  [35].    However,  since  we  are  at  half-
+been shown to provide accurate results in many systems.                        ﬁlling, the overlap ⟨ψT |ψk⟩ turns out to be real and non-
+In Hubbard-like models, the most common choices have                           negative  for  all  conﬁgurations  of  auxiliary-ﬁelds.   This
+been the  free-electron wave function  or the unrestricted                     “two-dimensional”  nature  of  the  random  walks  [29,  35]
+Hartree-Fock (UHF) solution.  The two choices each have                        allows ergodicity, and there is no constraint error.
+advantages and disadvantages.  The UHF is the best sin-                           The  statistical  error  bars  are  also  much  smaller  with
+gle  Slater  determinant  variationally,  however,  it  breaks                 the charge than with the spin decomposition for the same
+spin  and  translational  symmetry  of  the  system.    Both                   amount of computing, as seen in Table I. This is because
+symmetries, on the other hand are preserved in the free-                       the  former  preserves  SU(2)  symmetry  of  spin  degree  of
+electron TWF.                                                                  freedom  [27]:   when  we  choose  as  initial  state  for  the
+   In this  work, we use a special form of the generalized                     projection the non-interacting wave-function [36], all the
+Hartree-Fock  (GHF)  [34]  wave  function  as  TWF  in  the                    random  walkers  will  stay  in  the  singlet  space  through-
+AFQMC  calculations.   This  will  increase  the  computa-                     out  the  random  walks,  reducing  ﬂuctuations.    (When
+tion  time  by  a  factor  of  2  to  4  in  diﬀerent  portions  of            |ψT ⟩  is  used  as  the  initial  state  as  opposed  to  the  non-
+algorithm, because now the Slater determinant of up and                        interacting wave function, the equilibration time becomes
+down spin are coupled.  But the usage of GHF trial wave-                       much  longer  [37],  and  the  ﬂuctuations  are  larger.   The
+                                                                                                                                                       6
+
+ﬁnal converged results are consistent with each other be-                      withMi = (−1)i∆i.  The ground state of  ˆHGHF  is a GHF
+tween the two diﬀerent initial states, as we would expect.)                    wave function, with antiferromagnetic order along thex-
+                                                                               y  plane.  In other words, the GHF wave function for the
+TABLE II. Eﬀect of the GHF trial wave function on the con-                     repulsive model corresponds to the BCS for the attractive
+straint.  Mean absolute relative errors of the CP ground-state                 Hubbard  model.   (The  UHF  wave  function  corresponds
+energy are shown from TABC with free, UHF, and GHF trial                       to  a  charge-density  wave  restricted  Hartree-Fock  single
+wave  functions.   All  UHF  and  GHF  trial  wave-functions  are              Slater determinant for the attractive model.)
+generated with eﬀective U  of 4.  The system is a 4 × 4 lattice                   Symmetry  properties  of  an  AFQMC  calculation  di-
+with N↑ = 7 and N↓ = 7.  A total of 60 twist angles are used.                  rectly  aﬀects  its  accuracy  and  eﬃciency  [27,  28].   The
+The  TABC  results  from  ED  are  −16.3964  and  −12.1510  for                BCS wave function conserves translational symmetry as
+U  = 4 and U  = 8 respectively.                                                shown  in  Eq.  (13),  while  breaking  the  conservation  of
+TWF                         U  = 4                            U  = 8           particle numbers.  In AFQMC calculations of an attrac-
+                                                                               tive Hubbard model (with N↑ =N↓  at any density), the
+ free                        0.51(2)%                        1.8(1)%           walkers will break translational symmetry because of the
+UHF                       0.16(2)%                        1.1(1)%              ﬂuctuating  auxiliary-ﬁelds,  which  are  site-dependent  if
+GHF                       0.21(1)%                       0.51(4)%              the charge decomposition is used.  However, the walkers
+                                                                               remain  single  determinant  with  ﬁxed  particle  numbers.
+   In  Table  II,  we  illustrate  the  eﬀects  away  from  half-              Thus  the  AFQMC  calculation  using  a  BCS  trial  wave
+ﬁlling.  We compare the TABC energy of 4 × 4, U  = 4, 8                        function [38, 40] will have all symmetries conserved.
+systems at n = 0.875 using non-interacting (free), UHF,                           With  particle-hole  transformation,  similar  arguments
+and  GHF  trial  wave-functions.   Spin  decomposition  are                    apply  to  the  GHF  wave  function  in  the  repulsive  case.
+used  in  this  case.   For  simplicity,  we  use  a  uniform  pa-             Particle-number  symmetry  translates  to  spin  symmetry
+rameter  in z  (x)  direction  for  the  UHF  (GHF)  calcula-                  along  the x-y  plane.   The  GHF  preserves  all  the  other
+tion.  In principle, we can implement a full UHF (GHF)                         symmetries  except  magnetic  order  in  the  plane.   When
+calculation which will improve the quality of trial wave-                      combined with UHF-type walkers which always preserve
+functions.  For U  = 4, the result from GHF is similar to                      magnetic order in the plane, all symmetries are conserved
+that from UHF. Improvement with the GHF can be seen                            during the AFQMC calculation.
+for  the U  =  8  case,  with  a  CPMC  energy  closer  to  the                   We  can  also  think  of  BCS  or  GHF  wave functions  as
+exact value.                                                                   linear combinations of single Slater determinants.  A BCS
+   Next  we  further  discuss  the  nature  of  the  GHF  wave                 wave  function  can  be  written  as  the  UHF  wave  func-
+function,   its   connection   to   Bardeen-Cooper-Schrieﬀer                   tion  plus  all  possible  double  excitations  (c†i↑c†j↓),  which
+(BCS) wave functions [38], and correspondingly, the con-                       is  a  large  multi-determinant  wave  function.    Similarly,
+nection  between  the  repulsive  Hubbard  model  we  have                     the  GHF  wave function  is  the  UHF  wave function  with
+studied, and the attractive model.  Let us consider a par-                     all possible spin-orbit excitations (c†i↑cj↓), again a multi-
+tial  particle-hole  transformation  ˆP ,  which  only  involves               determinant wave function.  It  is  thus  reasonable to  ex-
+spin-↑ electrons:                                                              pect the GHF wave function to perform better than the
+                                                                               UHF.
+                         ˆP †c†                                                   Incidentally,  since  the  charge  decomposition  is  trans-
+                             i↑ ˆP  = (−1)ici↑                          (11)   formed to the spin decomposition under the particle-hole
+and                                                                            transformation,  results  in  Table  I  would  indicate  that
+                         ˆP †ci↑ ˆP  = (−1)ic†                                 spin decomposition would always give correct results for
+                                              i↑.                         (12) the  attractive  Hubbard  model.   Further,  the  BCS  trial
+                                                                               wave functions  would  have  no  constraint bias.  The  lat-
+This operator  ˆP  transforms the interaction term in Hub-                     ter  is  consistent  with  observations  from  calculations  in
+bard model from repulsive to attractive (fromU  to −U)                         Fermi gas systems  in the  three  dimensions [38] and two
+but leaves the hopping term unchanged.                                         dimensions [40].
+   For the attractive Hubbard model, the best mean-ﬁeld
+description is given by the BCS theory,
+ˆHBCS = −t  ∑         (                  )        (                     )                 IV.     RESULTS  AT  HALF  FILLING
+                        c†i,scj,s +H.c.    +∑       ∆ic†i↑c†i↓ +H.c.      ,
+               ⟨ij⟩,s                          i                                  In  this  section,  we  present  results  at  half-ﬁlling.   As
+                                                                    (13)       mentioned,  the  AFQMC  results  are  numerically  exact,
+where ∆i  is the order parameter.  This Hamiltonian can                        as the sign problem is absent because of the particle-hole
+be transformed back to the repulsive case [4, 39].                             symmetry.  We use a combination of the path-integral ap-
+ˆHGHF  = −t  ∑        (                   )        (                     )     proach [40] and the random walk approach [25].  With the
+                        c†i,scj,s +H.c.    +∑       Mic†i↑ci↓ +H.c.            former,  an  inﬁnite  variance  problem  exists  which  make
+                ⟨ij⟩,s                          i                              the  Monte  Carlo  error  bars  unreliable  and  thus  could
+                                                                    (14)       render results from standard AFQMC calculations incor-
+                                                                                                                                                       7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  3.  (Color  online)  Ground  state  energy  at  half-ﬁlling  calculated  using  diﬀerent  boundary  conditions.  PBC,  PBC-APBC
+and TABC data are represented by black triangular, blue star and red dot, respectively.  A ﬁt of the TABC data is also shown,
+with  solid  red line.  Panels (a), (b), (c), (d) correspond  to results for  U  = 2, 4, 6, 8.  In the insets of each  panel, a zoom  of the
+TABC results and the ﬁt are shown for large supercell sizes.  The cyan dot in each inset represents the TDL value and combined
+statistical and twist error bars and the uncertainty from the ﬁt.
+
+
+rect  [29].    The  inﬁnite  variance  problem  was  removed                   with the TABC, from which the TDL values are obtained.
+[29] in our calculations, to obtain reliable results and er-                      Our  ﬁt  for  the  ground-state  energy  has  the  following
+ror  estimates  on  the  observables.  Results  are  presented                 form:
+for the  ground state energy, double  occupancy, eﬀective                                         E0/L2 =e0 +a/L3 +b/L4                   (15)
+hopping,  and  staggered  magnetization  for U   =  2, 4, 6,
+and 8.  Detailed ﬁnite-size data are given, up to 16 × 16,                     where e0  is the energy per site at the TDL. In the large
+to provide benchmarks for future theoretical and compu-                        U  limit  at  half-ﬁlling,  the  Hubbard  model  reduces  to
+tational studies.  Careful extrapolation and  analysis are                     the  spin-1/2  Heisenberg  model  with  coupling  constant
+then performed to obtain results at the thermodynamic                          J = 4t2/U  [41].  From spin density wave theory, the lead-
+limit from the ﬁnite-size data.                                                ing order of ﬁnite size correction of ground state energy
+                                                                               per  site  for  the  latter  is  1/L3  on  a  square  lattice  [42].
+    1.    Energy,  Double Occupancy,  and eﬀective  hopping                    This  scaling  relationship  was  also  conﬁrmed  by  quan-
+                                                                               tum  Monte  Carlo  calculations  [43].   Our  scaling  choice
+                                                                               in Eq. (15), based on these  considerations, is seen to  ﬁt
+  We  consider three types  of boundary conditions here,                       the data in the Hubbard model with excellent accuracy.
+i.e.    PBC,  PBC-APBC,  and  TABC.  Here  PBC-APBC                               From Fig. 3 we see that the TABC energies tend to lie
+means  periodic  along  the x  direction  and  anti-periodic                   between  the  PBC  and  PBC-APBC  results.   With  PBC
+along the y  direction, which gives a closed-shell at half-                    and PBC-APBC, the curves are less smooth.  In fact the
+ﬁlling.  In Fig. 3, we plot the ground state energies versus                   PBC energies are non-monotonic for U  = 4  and U  = 6.
+supercell size for all three boundary conditions.  Detailed                    To enter the scaling region of Eq. (15), large system size
+data are given in Appendix .  As seen in the table there,                      is  needed,  which  makes  extrapolation to  the  TDL  chal-
+our PBC and PBC-APBC data typically range from 4×4                             lenging.    The  ﬁnite  size  eﬀect  is  reduced  with  TABC,
+to  16 × 16.   Our  TABC  data  contain  about  200  twists                    as expected from our discussion in the  previous section.
+for  the  smaller  supercells  to  about 6  twists  for  20 × 20.              Even  at  small  system  sizes,  the  scaling  relationship  in
+The  statistical  error  bars  contain  joint  QMC  and  twist                 Eq. (15) holds well, making the ﬁt more robust compar-
+uncertainties.  The ﬁts to reach the TDL are also shown in                     ing  to  that  using  PBC  and  PBC-APBC  data.   With  a
+Fig. 3, with the insets displaying the asymptotic regime                       least  squares  ﬁt  of  the  TABC  data,  a  reliable  estimate
+                                                                                                                                                       8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.  (Color online) Double occupancy at half-ﬁlling calculated using diﬀerent boundary conditions.  Symbols and setup are
+similar to Fig. 3.
+
+
+of  the  ground  state  energy  in  TDL  is  obtained.    For
+U  = 2, 4, 6, and 8, the ﬁnal ground state energies per site
+are −1.1760(2), −0.8603(2), −0.6567(3), and −0.5243(2),
+respectively.  (The ground state energy for U  = 4 is con-
+sistent with a previous QMC result −0.85996(5) obtained
+with a 45 degree tilted supercell [44])
+   The  magnitude  of  the  ﬁnite  size  eﬀect  is  seen  to  de-
+crease with U.  (Note  the  vertical scales  are diﬀerent  in
+the  diﬀerent  panels.)   This  is  the  result  of  a  balance  of
+one-body and two-body ﬁnite-size eﬀects.  The one-body
+eﬀects are especially pronounced at lowU because of shell
+eﬀects.  The two-body ﬁnite-size eﬀects are weakened in
+the  Hubbard model because of the  very short-range na-
+ture  of  the  interaction.   That  the  TABC  results  ﬁt  the                FIG.  5.  (Color  online)  The  dependence of  the eﬀective  hop-
+ansatz in Eq. (15) so well across the entire range of lattice                  ping, teﬀ/t, on the interaction strength U  at half-ﬁlling.  The
+sizes for all interactions is an indication of the separation                  inset shows the corresponding potential energy in units of the
+(or additive nature) of the one- and two-body ﬁnite-size                       non-interacting kinetic energy.
+eﬀects.   The  relative  improvement  of  TABC  over  other
+boundary conditions is the largest at lowU.  At largeU,
+the  eﬀect  of  boundary  condition  is  suppressed,  and  the                 of  the  TABC  data  using  the  scaling  relationship  given
+ﬁnite-size eﬀect is dominated by the interaction and the                       in  Eq.  (15),  although  the  variation  with L  is  not  large
+antiferromagnetic correlation.  All three boundary condi-                      compared to  the statistical error bars, and the extrapo-
+tions give results that fall on the same ﬁnite-size curve of                   lation  is  insensitive  to  the  precise  form  used  here.   The
+Eq. (15) for lattice sizes beyondL ∼ 8                                         TDL value obtained by the ﬁts are 0.1923(3), 0.1262(2),
+   In   Fig.   4,   we   plot   the   double   occupancy, D    =               0.0810(1), and 0.0540(1) for U  = 2, 4, 6, and 8, respec-
+⟨∑ini↑ni↓⟩/N.  Similar to the situation with the ground                        tively.  The  double  occupancy  decreases  rapidly  with U
+state energy, the  data with TABC lie between the PBC                          as expected.
+and  PBC-APBC  data  and  the  ﬁnite  size  eﬀect  is  re-                        To help quantify the eﬀect ofU  on the bandwidth, we
+duced  by  using  TABC.  We  carry out  a  least  squares ﬁt                   calculate the eﬀective hopping teﬀ/t [45] , deﬁned as the
+                                                                                                                                                           9
+
+ratio  of  kinetic  energy  in  the  presence  of U  to  its  non-
+interacting (U  = 0) value,
+
+                            teﬀ
+                             t   =    ⟨K⟩U⟨K⟩U=0                              (16)
+
+The kinetic energy can be obtained straightforwardly by
+subtracting  the  potential  energy,  given  by U  times  the
+double occupancy discussed above, from the total energy.
+The eﬀective hopping at the TDL is shown in Fig. 5 as a
+function of interaction.  The decrease of eﬀective hopping
+with  the  increase  of U  is  consistent  with  the  increasing
+of locality, as the system develops stronger antiferromag-
+netic order, which we characterize next.
+   We list the data of total energy, double occupancy, and
+kinetic energy with ﬁnite system size from 4×4 to 16×16
+for PBC and PBC-APBC in Appendix .
+
+
+            2.    Spin correlations  and magnetization
+
+   To  quantify  the  magnetic  properties  in  the  ground
+state, we compute the spin correlation function,
+
+              C(x,y) = ⟨ψ0|S(0, 0) · S(x,y)|ψ0⟩.            (17)
+
+
+                                                                                 FIG. 7.  (Color  online)  Magnetization  computed with  TABC
+                                                                                 at  half-ﬁlling  for  (a)  U  = 4  and  (b)  U  =  8.  For  each  choice
+                                                                                 of  d,  the  result  of  a  ﬁt  using  the  form  in  Eq.  (21)  is  also
+                                                                                 plotted.  The cyan dot represents the ﬁnal TDL value and the
+                                                                                 estimated error bar.
+
+
+                                                                                 S(x,y) is the spin operator at site i with coordinate (x,
+                                                                                 y), which is given by
+                                                                                                      S(x,y) =  1     ∑
+                                                                                                                   2        is−→σcis′,                    (18)
+                                                                                                                      ss′ c†
+
+                                                                                 where −→σ  denotes the Pauli matrices.  In our calculation,
+                                                                                 translational  symmetry  is  preserved  statistically,  so  the
+                                                                                 reference point (0, 0) can be averaged over the whole lat-
+                                                                                 tice to reduce the statistical error.  In Fig. 6, we plot the
+                                                                                 ground-state  spin  correlation  function  for  system  sizes
+                                                                                 ranging  from  4 × 4  to  16 × 16  under  PBC  for U  =  4.
+                                                                                 Long-range order is clearly seen.  However, the  strength
+                                                                                 of the correlation decreases substantially from its short-
+                                                                                 distance values and also as system size is increased, satu-
+                                                                                 rating to the asymptotic value very slowly with distance
+                                                                                 and with system size.
+                                                                                    We  also  compute  the  staggered  magnetization.   Two
+                                                                                 deﬁnitions  are  usually  used  in  the  literature  [43].   One
+FIG. 6.  (Color online) Spin correlation function in the ground                  uses the spin-spin correlation function at the greatest dis-
+state at half ﬁlling.  System sizes ranging from 4×4 to 16×16                    tance  which, for  a square lattice,  is M 21  = C(L/2,L/2).
+are  shown,  under  PBC,  with  U  =  4.   The  horizontal  axis  is             The other relies on the spin structure factor,
+the  relative  distance,  √x2 + y2.    The  top  panel  shows  the
+spin  correlation  function,  while  the  bottom  panel  shows  the                                                N∑
+staggered correlation.  The dashed horizontal line in (b) shows                        M 22  =S(π,π) =  1             (−1)xi+yiC(xi,yi).         (19)
+the ﬁnal TDL value obtained from the ﬁt.                                                                      N   i=1
+                                                                                                                                                    10
+
+Both deﬁnitions have signiﬁcant ﬁnite-size eﬀects, as can                     a self-consistent iteration [48].  We have used multideter-
+be deduced from the results in Fig. 6.  We use a modiﬁed                      minant trial wave functions and constraint release to ver-
+deﬁnition [47]                                                                ify the accuracy in a few systems of largerL.  The results
+                                                                              are consistent with the benchmark discussed above.
+                               N∑
+     M(d)2 =      1N −n              (−1)xi+yiC(xi,yi),       (20)
+                          x2i +y2i >d2                                                            3.    Low  to medium density
+
+where n  is  the  number  of sites  that fall within  a sphere
+(circle)  of  radius d  centered  at  the  reference  point.   All
+three deﬁnitions of the magnetization will converge to the
+same TDL  value  as L → ∞.  However, Eq. (20) gives  a
+compromise which removes the large local eﬀects near the
+reference point while averaging over multiple distances of
+the long-range correlation to reduce ﬂuctuations.
+  The computed magnetizations are plotted in Fig. 7 for
+U  = 4 and 8.  In each case, we show results for a sequence
+of choices ford.  We ﬁt the computed magnetization as a
+function  of  supercell  size,  for  each choice of d,  with  the
+following scaling form
+
+                    M 2 =M 20  + aL +O(  1L2 ),                    (21)
+
+where M0  is  the  staggered  magnetization  at  the  TDL.
+Similar to scaling forms used above, the form in Eq. (21)
+is motivated by spin-wave theory [46].  The  evolution of
+the  ﬁtting  with d  is  illustrated  in  the  ﬁgure.  The  TDL
+results of magnetizations are 0.119(4), 0.236(1), 0.280(5),
+and  0.26(3)  for U  =  2, 4, 6,  and  8,  respectively.   Note
+that  the  U  =  2  result  is  diﬀerent  from  that  listed  in              FIG.  8.   (Color  online)  Ground-state  energy  and  double  oc-
+Ref. [7] which contained an error in the extrapolation to                     cupancy  vs.  supercell  size  at  n =  0.5  for  U  =  4  and  U  = 8.
+the TDL. An upper bound for the magnetization is given                        TABC is used.  Panels (a) and (b) correspond to U  = 4.  Pan-
+by the  value  of 0.3070(3), from the  spin-1/2 Heisenberg                    els (c) and (d) correspond to U  = 8.  The solid lines are from
+model on a square lattice [43].  Our results are consistent                   a ﬁt using E0/L2(D) ∼ e0(D0) + a/L3.
+with the scenario that the long-range AFM order persists
+to smallU  values, with no Mott transition at ﬁnite U  in                        In this section, we present numerical results for densi-
+the two-dimensional Hubbard model at half-ﬁlling.                             ties  of n  =  0.3,  0.5,  0.6,  and  0.75  in  the  TDL.  We  ﬁrst
+                                                                              illustrate  the  ﬁnite-size  eﬀects  and  the  extrapolation to
+                                                                              the  TDL  with n  =  0.5,  which  can  be  precisely  realized
+   V.     RESULTS  AWAY  FROM  HALF-FILLING                                   for any evenL.  In Fig. 8 (a) and (c), we plot the ground-
+                                                                              state energy forU  = 4 andU  = 8, using TABC. The cor-
+  We  next  study  the  ground  state  when  the  system  is                  responding  double  occupancy  is  presented  in  Fig.  8  (b)
+doped.  The constrained-path approximation is applied to                      and (d).  We have also relaxed the targeted statistical ac-
+control the sign problem, as mentioned.  Previous studies                     curacy somewhat compared to half-ﬁlling, because of CP
+have shown that the systematic error from the constraint                      systematic errors.  Given this and given the large system
+in the CPMC calculation is small in the Hubbard model                         sizes we compute, the residual ﬁnite-size eﬀects are mod-
+[19].   We  carried  out  additional  benchmarks  to  further                 est.  For example,  the  results from 16 × 16 lattices  with
+quantify the systematic errors [7].  At low and intermedi-                    TABC are indistinguishable from the extrapolated TDL
+ate densities, the CP errors are small, using free electron                   value  within  statistical errors.  Both quantities  are  seen
+TWFs.  At higher densities where magnetic correlation is                      to continue to ﬁt well the general form in Eq. (15), being
+enhanced, the GHF trial wave function improves the CP                         linear  in 1/L3  for  large L.  With  double  occupancy,  the
+result and brings them to a level roughly comparable to                       TABC  reduces  the  ﬁnite-size  eﬀects  substantially.   The
+that at intermediate densities, as discussed in Sec. III B.                   residual two-body ﬁnite-size eﬀects are seen to have op-
+  All results reported in this work have thus used single-                    posite  slopes  for U  = 4  and U  = 8.  Similar  behavior is
+determinant TWFs.  Recent progress has resulted in fur-                       seen in the results at half-ﬁlling presented in Fig. 4.
+ther  improvement  in  the  accuracy  of  CPMC,  by  use  of                     Similar  calculations  and  analysis  were  carried out  for
+symmetry properties [27, 28],  by  constraint release [27],                   the other densities.  For n = 0.3 and 0.6, integer ﬁllings
+or by improving the trial wave function within CPMC via                       are not possible in certain ﬁnite systems.  In these cases,
+                                                                                                                                                      11
+
+                                                                               twist.  For U  = 4, we can ﬁnd a a obvious discontinuity,
+                                                                               which is a indicator of the  Fermi liquid behavior in this
+                                                                               system and agree with an early QMC calculation[49].  For
+                                                                               U  = 8, there is no obvious jump.
+
+
+
+                                                                                                            4.    n = 0.875
+
+                                                                                  The  nature  of  the  ground  state  at n  =  0.875  is  still
+                                                                               not completely  known.  Many  competing  tendencies  are
+                                                                               present including spin density wave, charge density wave,
+                                                                               and  possibly  superconducting  order  [50].    We  did  not
+                                                                               measure the superconducting correlation function in this
+                                                                               work.  (Prior calculations with CPMC using free-electron
+                                                                               trial wave functions  did not ﬁnd long-range pairing cor-
+                                                                               relation in the ground state with the resolution possible
+                                                                               then [51].)  In a previous study [52], a spin density wave
+                                                                               (SDW) ground state with wave lengthλ = 16 (2/h) was
+                                                                               found at n = 0.875 and U  = 4.  The  computed energies
+                                                                               with  supercells which  are commensurate with  the  SDW
+                                                                               wavelength are seen to be slightly lower than those which
+                                                                               are not.  Our new GHF trial wave functions gave results
+                                                                               consistent with this.
+                                                                                  To  accommodate  the  SDW  structure,  we  studied  a
+                                                                               range of systems with sizes 4 × 16, 8 × 16, 16 × 16, 8 × 32,
+                                                                               and 8 × 48.  The  energy  per  site  under  TABC  for  these
+FIG.  9.   (Color  online)  Momentum  distribution  at  n  =  0.5              were  −0.7674(7),  −0.7658(3),  −0.7657(2),  −0.7657(4),
+for (a) U  = 4 and (b) U  = 8.  The horizontal axis is the non-                and  −0.7660(3),  respectively,  at U  =  8.   The  energies
+interacting energy for the given momentum normalized by the                    are  consistent  with  each  other  except  for  the  one  with
+non-interacting Fermi energy of the corresponding twist.                       the  smallest  width  of  4.    A  conservative  estimate  the
+                                                                               ground state energy in the TDL is −0.766(1).  Similarly,
+                                                                               the  TDL  value  for U  = 4  is  estimated  to  be  −1.026(1).
+TABLE III.  Ground state energy and kinetic energy per site,                   [The   corresponding  energy  results   using   free-electron
+and  double  occupancy  for  low  to  intermediate  densities  at              trial wave-functions are −0.773(1) and −1.032(1), respec-
+U  = 4 and U  = 8.                                                             tively.   Based  on  the  analysis  and  benchmark  discussed
+           n          0.3                0.5                0.6               0.75earlier,  these  are  expected  to  be  less  accurate  than  the
+          e0  −0.8793(2)  −1.141(2)  −1.1845(5)  −1.1491(2)                    GHF results.]  The corresponding double occupancy val-
+  U  = 4  D   0.00932(1)   0.02740(4)    0.0404(1)    0.06606(6)               ues are 0.0403(2) for U  = 8 and 0.0940(3) for U  = 4.
+
+           k   −0.9166(2)  −1.251(2)  −1.3461(6)  −1.4133(3)
+          e0  −0.8534(1)  −1.066(2)  −1.0729(1)  −0.9666(4)                                          VI.     CONCLUSION
+  U  = 8  D   0.00442(1)   0.01232(2)   0.01776(3)   0.02847(4)
+           k   −0.8888(1)  −1.165(2)  −1.2150(3)  −1.1944(5)                      The  Hubbard  model  is  one  of  the  most  fundamental
+                                                                               models in many-body physics.  It is often used as a test
+                                                                               ground as new approaches are developed in the quest to
+we interpolate from the results for the nearest two integer                    reliably  treat  interacting  fermion  systems  or  correlated
+ﬁllings.   A  prior  study  [19]  had  computed  the  equation                 materials.  In this work we have presented detailed bench-
+of state for U  = 4.  Our results in this density range are                    mark results for the ground state of the two-dimensional
+consistent  with  theirs.   In  Table  III  we  list  the  ground-             Hubbard  model.    The  total  energy,  double  occupancy,
+state  energies,  double  occupancies,  and  kinetic  energies                 eﬀective hopping, spin correlation function, and magne-
+for  all  densities  studied  in  this  regime  for  both U  =  4              tization are computed with the AFQMC method.
+andU  = 8.                                                                        At half-ﬁlling, the results are numerically exact.  By a
+   We also computed the momentum distribution atn =                            ﬁnite  size scaling  of  the  TABC  data,  the  most accurate
+0.5  which  is  shown  in  Fig.  9.   For  each U  we  plot  the               values to date of these quantities are obtained.  We also
+results  for  several  twist  angles.   The x  axis  is  the  non-             provide the ﬁnite size data for system sizes ranging from
+interacting  energy  for  the  given  momentum  normalized                     4 × 4  to  16 × 16  so  as to  facilitate  benchmark of  future
+by the non-interacting Fermi energy of the corresponding                       analytical and computational studies.
+                                                                                                                                                        12
+
+   Away from half-ﬁlling, we employ the constrained path                        interplay with  the  form of Hubbard-Stratonovich trans-
+CPMC method, which removes the sign problem and al-                             formations  will  have  broader  impacts  beyond  Hubbard
+lows  us  to  systematically  reach large  system  size  in  the                models.
+same manner as at half-ﬁlling.  Prior results and a new set
+of benchmark calculations here show that the systematic
+error from the constraint is small.  Results are presented                                         ACKNOWLEDGMENTS
+from  low  to  intermediate  densities  for U/t  =  4  and  8.
+We also study the case of n = 0.875 with a new form of                             We   acknowledge  the   Simons   Foundation   for   fund-
+single  Slater  determinant  trial  wave  function,  obtaining                  ing.  SZ and HS acknowledge support from NSF (DMR-
+energetics and determining the spin correlations for both                       1409510)  for  AFQMC  method  development.    MQ  was
+values of U/t.                                                                  also supported by DOE (DE-SC0008627).  We thank G.
+   In addition to the generalized Hartree-Fock trial wave                       Chan and B.X. Zheng for valuable exchanges and C.-C.
+functions,  which  we  have  shown  to  improve  the  accu-                     Chang  for  a  careful  reading  of  the  manuscript.   Earlier
+racy of the constraint, we have also introduced the use of                      calculations  were  carried  out  at  the  Oak  Ridge  Leader-
+quasi random twist  sequences  when  implementing  twist                        ship Computing Facility at the Oak Ridge National Lab-
+boundary conditions.  The quasi random twists allow con-                        oratory.    Most  of  the  calculations  were  carried  out  at
+vergence with the number of twists which is as fast as a                        the Extreme Science and Engineering Discovery Environ-
+uniform grid, while eliminating any shell eﬀects from de-                       ment (XSEDE), which is supported by National Science
+generacies  in  the  single-particle  levels.   The  connection                 Foundation Grant No.  ACI-1053575, and the  computa-
+between  GHF  and  BCS  trial  wave  functions,  and  their                     tional facilities at the College of William and Mary.
+
+
+
+
+
+ [1]  J.  Hubbard,  Proceedings  of  the  Royal  Society  of  Lon-              [15]  N.  Prokofev  and  B.  Svistunov,  Phys.  Rev.  Lett.  99,
+     don A: Mathematical, Physical and Engineering Sciences                           250201 (2007).
+     276, 238 (1963).                                                           [16]  E.   Y.   Loh   Jr.,   J.   E.   Gubernatis,   R.   T.   Scalettar,
+ [2]  Masatoshi    Imada,     Atsushi    Fujimori,     and    Yoshi-                  S.  R.  White,  D.  J.  Scalapino,  and  R.  L.  Sugar,  Phys.
+     nori Tokura, Rev. Mod. Phys. 70, 1039(1998).                                     Rev. B 41, 9301 (1990).
+ [3]  Jie Xu, Chia-Chen Chang, Eric J. Walter, Shiwei Zhang,                    [17]  Matthias  Troyer  and  Uwe-Jens  Wiese,  Phys.  Rev.  Lett.
+     J. Phys.:  Condens. Matter 23, 505601 (2011), Robert Pe-                         94, 170201 (2005).
+     ters and Norio Kawakami, Phys. Rev. B 89, 155134(2014)                     [18]  C. Lin, F. H. Zong and D. M. Ceperley, Phys. Rev. E 64,
+ [4]  J. E. Hirsch, Phys. Rev. B 31, 4403 (1985).                                     016702 (2001).
+ [5]  P.    W.    Anderson,    Science    235,    1196    (1987),    El-        [19]  Chia-Chen  Chang  and  Shiwei  Zhang,  Phys.  Rev.  B  78,
+     bio Dagotto, Rev. Mod. Phys. 66, 763 (1994).                                     165101 (2008).
+ [6]  E.  H.  Lieb  and  F.  Y.  Wu,  Phys.  Rev.  Lett.  20,  1445             [20]  Siew Ann Cheong, Ph.D. Dissertation, Cornell University
+     (1968).                                                                          (2006).
+ [7]  J.P.F.  LeBlanc,   Andrey  E.  Antipov,   Federico  Becca,                [21]  Simone  Chiesa,  David  M.  Ceperley,  Richard  M.  Mar-
+     Ireneusz   W.   Bulik,   Garnet   Kin-Lic   Chan,   Chia-Min                     tin,  and  Markus Holzmann,  Phys. Rev. Lett.97,  076404
+     Chung,  Youjin  Deng,  Michel  Ferrero,  Thomas  M.  Hen-                        (2006).
+     derson,  Carlos  A.  Jimenez-Hoyos,  E.  Kozik,  Xuan-Wen                  [22]  Hendra Kwee, Shiwei Zhang, and Henry Krakauer, Phys.
+     Liu, Andrew J. Millis, N.V. Prokofev, Mingpu Qin, Gus-                           Rev. Lett. 100, 126404 (2008).
+     tavo E. Scuseria, Hao Shi, B.V. Svistunov, Luca F. Toc-                    [23]  Sandro Sorella, Phys. Rev. B 91, 241116 (2015) .
+     chio, I.S. Tupitsyn, Steven R. White, Shiwei Zhang, Bo-                    [24]  R. Blankenbecler, D. J. Scalapino and R. L. Sugar, Phys.
+     Xiao Zheng, Zhenyue Zhu, and Emanuel Gull, Phys. Rev.                            Rev. D 24, 2278 (1981); G. Sugiyama and S. E. Koonin,
+     X 5, 041041(2015).                                                               Ann. Phys. (N.Y.) 168, 1 1986.
+ [8]  L. F. Tocchio, F. Becca, A. Parola, and S. Sorella, Phys.                 [25]  S. Zhang, Auxiliary-Field Quantum Monte Carlo for Cor-
+     Rev.  B  78,  041101(R)  (2008);  L.  F.  Tocchio,  F.  Becca,                   related  Electron  Systems,  Vol.  3  of  Emergent  Phenom-
+     and C. Gros, Phys. Rev. B 83, 195138 (2011). N. Trivedi                          ena in Correlated Matter:  Modeling and Simulation, Ed.
+     and D. M. Ceperley, Phys. Rev. B 41, 4552 (1990).                                E.  Pavarini,  E.  Koch,  and  U.  Schollwock  (Verlag  des
+ [9]  R.  Rodriguez-Guzman,  C.  A.  Jimenez-Hoyos,  R.  Schut-                       Forschungszentrum Julich, 2013).
+     ski, and G. E. Scuseria, Phys. Rev. B 87, 235129 (2013)                    [26]  J. E. Hirsch, Phys. Rev. B 28, 4059 (1983).
+[10]  R. J.  Bartlett  and  M.  Musial,  Rev. Mod.  Phys. 79,  291              [27]  Hao  Shi  and  Shiwei  Zhang,  Phys.  Rev.  B  88,  125132
+     (2007).                                                                          (2013).
+[11]  S. R. White, Phys. Rev. Lett. 69, 2863 (1992).                            [28]  Hao   Shi,    Carlos   A.   Jimenez-Hoyos,    R.   Rodriguez-
+[12]  Gerald  Knizia  and  Garnet  Kin-Lic  Chan,  Phys.  Rev.                        Guzman, Gustavo E. Scuseria, and Shiwei Zhang, Phys.
+     Lett. 109, 186404 (2012).                                                        Rev. B 89, 125129 (2014).
+[13]  T.  Maier,  M.  Jarrell,  T.  Pruschke,  and  M.  H.  Hettler,            [29]  Hao  Shi  and  Shiwei  Zhang,  Phys.  Rev.  E  93,  033303
+     Rev. Mod. Phys. 77, 1027 (2005).                                                 (2016).
+[14]  A. N. Rubtsov, M. I. Katsnelson, and A. I. Lichtenstein,                  [30]  S.  Zhang,  J.  Carlson,  and  J.  E.  Gubernatis,  Phys.  Rev.
+     Phys. Rev. B 77, 033101 (2008).                                                  B 55, 7464 (1997).
+                                                                                                                                                         13
+
+[31]  Wirawan Purwanto and Shiwei Zhang, Phys. Rev. E 70,                             (1989).
+     056702 (2004).                                                              [43]  Anders W. Sandvik, Phys. Rev. B 56, 11678 (1997).
+[32]  Huy  Nguyen,  Hao  Shi,  Jie  Xu,  Shiwei  Zhang,  Comput.                 [44]  Sandro Sorella, Phys. Rev. B 84, 241110 (2011).
+     Phys. Commun 185, 3344 (2014).                                              [45]  S.  R.  White,  D.  J.  Scalapino,  R.  L.  Sugar,  E.  Y.  Loh,
+[33]  J. H. Halton, Commun. ACM 7, 701 (1964).                                        J. E. Gubernatis, and R. T. Scalettar, Phys. Rev. B 40,
+[34]  Sharon   Hammes   Schiﬀer   and   Hans   C.   Andersen,   J.                    506 (1989).
+     Chem. Phys. 99, 1901 (1993).                                                [46]  D. A. Huse, Phys. Rev. B 37, 2380 (1988).
+[35]  S. Zhang and H. Krakauer, Phys. Rev. Lett. 90, 136401                      [47]  C. N. Varney, C. R Lee, Z. J. Bai, S. Chiesa, M. Jarrell,
+     (2003).                                                                          and R. T. Scalettar, Phys. Rev. B 80, 075116 (2009)
+[36]  For open shell system, we can use TBC with a small twist                   [48]  Mingpu Qin, Hao Shi, and Shiwei Zhang, in preparation.
+     to break the degeneracy.                                                    [49]  A. Moreo, D. J. Scalapino, R. L. Sugar, S. R. White, and
+[37]  Wirawan  Purwanto,  W.  A.  Al-Saidi,  Henry  Krakauer,                         N. E. Bickers, Phys. Rev. B 41, 2313 (1990).
+     Shiwei Zhang, J. Chem. Phys. 128, 114309 (2008).                            [50]  Eduardo Fradkin, Steven A. Kivelson, and John M. Tran-
+[38]  J. Carlson, Stefano Gandolﬁ, Kevin E. Schmidt, and Shi-                         quada, Rev. Mod. Phys. 87, 457 (2015).
+     wei Zhang, Phys. Rev. A 84, 061602 (2011).                                  [51]  Shiwei  Zhang,  J.  Carlson,  and  J.  E.  Gubernatis,  Phys.
+[39]  R. T. Scalettar, E. Y. Loh, J. E. Gubernatis, A. Moreo, S.                      Rev. Lett. 78, 4486 (1997).
+     R. White, D. J. Scalapino, R. L. Sugar, and E. Dagotto,                     [52]  C.-C. Chang and S. Zhang, Phys. Rev. Lett. 104, 116402
+     Phys. Rev. Lett. 62, 1407 (1989).                                                (2010).
+[40]  Hao Shi, Simone Chiesa, Shiwei Zhang, Phys. Rev. A 92,
+     033603 (2015).
+[41]  A. H. MacDonald,  S. M. Girvin and D. Yoshioka, Phys.                               Appendix:  Finite-size  data  at  half-ﬁlling
+     Rev. B 37, 9753 (1988).
+[42]  Herbert  Neuberger  and  Timothy  Ziman,  Phys.  Rev.  B                      In Table IV, we list the total ground-state energy, po-
+     39, 2608 (1989), Daniel S. Fisher, Phys. Rev. B 39, 11783                   tential  energy,  and  kinetic  energy  with  PBC  and  PBC-
+                                                                                 APBC.
+                                                                                                                                                                       14
+
+
+TABLE IV. Total ground state energy (E), potential energy (P), and kinetic energy (K) in the Hubbard model at half-ﬁlling,
+for U  = 2, 4, 6, 8.  Supercell cell sizes ranging from 4×4 to 16×16 are studied.  Results are listed for both PBC and PBC-APBC.
+Statistical errors are on the last digit and are indicated in parenthesis.
+                                       U  = 2                           U  = 4                           U  = 6                           U  = 8
+                               PBC        PBC-APBC              PBC       PBC-APBC               PBC      PBC-APBC                PBC      PBC-APBC
+                       E   -18.024(6)     -20.114(2)         -13.616(6)    -14.594(3)         -10.541(4)    -10.902(7)         -8.476(9)      -8.646(8)
+             4 × 4     P     5.135(9)        6.389(1)         7.370(8)       9.227(7)          7.559(4)        8.56(1)          6.864(8)        7.26(1)
+                      K   -23.164(3)     -26.503(3)          -20.989(4)    -23.823(8)         -18.097(7)     -19.46(1)         -15.34(2)      -15.90(2)
+                       E   -41.457(5)     -43.499(2)         -30.865(9)     -31.43(2)         -23.74(1)      -23.84(1)         -19.00(2)      -19.01(1)
+             6 × 6     P    12.522(7)      14.357(1)          17.43(1)       19.21(2)         17.276(7)      17.78(1)           15.51(2)       15.67(1)
+                      K   -53.982(4)     -57.857(4)          -48.230(8)     -50.63(1)         -41.012(9)     -41.62(1)         -34.51(2)      -34.69(2)
+                       E   -74.470(5)     -76.308(3)          -55.05(1)      -55.31(1)        -42.16(2)      -42.17(2)         -33.68(3)      -33.66(2)
+             8 × 8     P    23.098(5)      25.407(6)         31.747(8)     33.006(9)           31.08(2)       31.21(1)          27.67(2)       27.70(2)
+                      K   -97.565(5)    -101.710(8)          -86.793(8)    -88.314(8)         -73.24(2)      -73.37(1)         -61.30(3)      -61.33(3)
+                       E  -116.908(4)   -118.505(4)           -86.12(4)      -86.20(2)        -65.80(2)      -65.76(2)         -52.54(3)      -52.49(2)
+           10 × 10     P    36.793(5)      39.521(7)          50.14(2)       50.89(3)          48.56(3)       48.64(3)          43.18(4)       43.22(2)
+                      K  -153.699(5)   -158.024(9)           -136.23(1)    -137.10(2)         -114.37(2)    -114.41(2)         -95.73(3)      -95.69(3)
+                       E  -168.749(7)   -170.112(3)          -123.95(2)    -123.99(3)         -94.66(2)      -94.67(2)         -75.54(2)      -75.58(3)
+           12 × 12     P    53.616(7)      56.629(9)          72.52(3)       72.96(2)          69.96(2)       69.96(3)          62.23(2)       62.20(2)
+                      K  -222.364(8)   -226.741(9)           -196.48(1)    -196.95(2)         -164.64(2)    -164.64(2)        -137.77(4)    -137.74(4)
+                       E  -229.981(6)   -231.134(4)          -168.67(2)    -168.69(3)         -128.76(2)    -128.78(3)        -102.85(3)    -102.83(4)
+           14 × 14     P    73.545(8)      76.661(8)          98.93(3)       99.12(3)          95.24(2)       95.24(2)          84.65(3)       84.60(4)
+                      K  -303.530(6)   -307.795(8)           -267.59(2)    -267.82(2)         -224.01(2)    -224.02(3)        -187.49(4)    -187.47(4)
+                       E  -300.596(6)   -301.562(5)          -220.29(4)    -220.30(4)         -168.19(3)    -168.21(5)        -134.23(3)    -134.25(3)
+           16 × 16     P    96.585(8)      99.694(7)         129.16(4)     129.36(5)          124.36(3)     124.33(6)          110.53(3)     110.57(3)
+                      K  -397.184(8)   -401.259(8)           -349.52(2)    -349.68(2)         -292.54(3)    -292.57(3)        -244.72(5)    -244.82(5)

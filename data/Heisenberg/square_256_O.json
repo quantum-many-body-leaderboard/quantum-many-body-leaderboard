@@ -196,7 +196,16 @@
           "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#44 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "2D minGRU (3 layers, c4v symmetry, parallel scan)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/ParallelScan-RNNs/PSR-NQS",
+        "read_from": {
+          "quote": "Our implementation of the presented methods and all scripts needed to reproduce our results in this manuscript are openly available on GitHub https://github.com/ParallelScan-RNNs/PSR-NQS .",
+          "location": "arXiv:2605.13807 (sources/2605.13807.html), Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -658.832384,
@@ -358,6 +367,15 @@
         "scope": "row",
         "confidence": "high",
         "note": "Row-level from Table VI: 41163 training steps at 16x16 at 3.3 s per step on a single A100 80GB GPU; the 142:38:40 (hh:mm:ss) is the CUMULATIVE training time from the 6x6 cold start up to and including this size (iterative retraining), not the time for this size alone. parameters ~800,000 is stated for the 3-layer d_h=256 PSR-NQS model (Table VI caption, scope ansatz). samples = 200 training samples per step (Table V); final energies evaluated with 100000 samples. The 1400 GPU-hour figure is the paper-wide total over all simulations and is not attributed to this row. || pass 2026-09-27: evaluation: every step at L > 6 is a single c4v stage; logprobs_c4vsym puts the 8 transformed configurations through the network for the gradient log-probabilities and inside every local-energy evaluation (evaluations_per_amplitude 8); the sample is drawn unsymmetrised in one autoregressive pass (model.apply(..., method=\"sample\"), proposals_per_sample 1). local_energy all: the fori_loop evaluates the symmetrised log-psi on every bond, parallel pairs are masked after evaluation. Adam: sr none. float32: complex false. The 2x2 patches (reuse N/4, not N) go into method_detail (method-detail-fixes.json). With both corrections the rate on the L40S is 40-42 TFLOP/s (verify/agent-B.md). The stored wall-clock is cumulative over sizes while iterations is this size's increment (agent-B.md B7, DOUBTFUL; not expressible)."
+      },
+      "artifacts": {
+        "code": "https://github.com/ParallelScan-RNNs/PSR-NQS",
+        "read_from": {
+          "quote": "Our implementation of the presented methods and all scripts needed to reproduce our results in this manuscript are openly available on GitHub https://github.com/ParallelScan-RNNs/PSR-NQS .",
+          "location": "arXiv:2605.13807 (sources/2605.13807.html), Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -423,7 +441,22 @@
           "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#30 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Deep autoregressive models for the efficient variational simulation of many-body quantum systems, Phys. Rev. Lett. 124, 020503 (2020), arXiv:1902.04057"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "FlowKet",
+            "version": null,
+            "url": "https://github.com/HUJI-Deep/FlowKet"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Using our open-source library, FlowKet [23], we employ a NAQS model following the PixelCNN architecture, using the ADAM [24] SGD variant with the gradient estimator of eq. 4. ... [23] FlowKet: an open-source library based on Tensorflow for running Variational Monte-Carlo simulations on GPUs, https://github.com/HUJI-Deep/FlowKet.",
+          "location": "arXiv:1902.04057 (sources/1902.04057.txt), Sec. 4 (first benchmark paragraph) and reference [23]",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -658.966369629,
@@ -498,7 +531,16 @@
           "source_entry": "JP5-arxiv-2502-17144#12",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ],
   "coverage": [

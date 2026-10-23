@@ -60,7 +60,17 @@
           "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#17 (qmbl-verify 2026-09-29, open entry), as RH2#4 (handoff reader, triage of 2026-10-02); ruling R1, 2026-10-02",
           "from": "[paper](https://arxiv.org/abs/2207.14314) [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/vmc_2DgatedtensorizedRNN.sh)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/vmc_2DgatedtensorizedRNN.sh",
+        "script": "scripts/Heisenberg/triangular_144_O/vmc_2DgatedtensorizedRNN.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by Mohamed Hibat-Allah on 2022-02-15 as the S.S total -73.724, commit ff3ad5b, x4 to the Pauli total by Dian Wu in 878bf7a (2022-07-11); method: M. Hibat-Allah, R. G. Melko and J. Carrasquilla, arXiv:2207.14314 (NeurIPS 2021 workshop ML4PS), which plots only (E_RNN - E_DMRG)/N, Fig. 3(b)) [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/vmc_2DgatedtensorizedRNN.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_144_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -296.677327164,
@@ -134,6 +144,16 @@
         "note": "Record (no exact row). Program dmrg_triangular_heisenberg_12x12.cc (M. Hibat-Allah, ITensor C++): Nx = Ny = 12, triangularLattice with YPeriodic=false (bonds (x,y)-(x+1,y), (x,y)-(x,y+1), (x,y)-(x+1,y+1), open, 385 bonds: the VarBench triangular_144_O rhombus), H = sum S.S (lines 25-27, S.S units), Neel start with QN conservation (Sz = 0), maxdim 10 ... 2000, 3000 (last sweep at 3000), cutoff 1e-10: final DMRG energy, variational. Units: the program prints E in S.S units; stored -296.677327164 = 4 x -74.169331791, consistent with upstream's 'Fix missing factor of 4' (878bf7a). The DMRG is the reference computation of arXiv:2207.14314 ('For 12× 12, we used D = 3000', sources/2207.14314.txt line 366-367), which only plots it, so the row cites the primary numbers. Caveats for the provenance, not the value: the committed program does not compile (lines 82-83, 'H2 = inner(H,psi,H,psi); var = H2-energy^2;' with undeclared H2/var and ^ on a double), so the stored variance 37.53968 has no runnable source; it is consistent with Pauli units (lower energy and lower variance than the Julia D = 1024 row, 56.34). History: -74.07647 (S.S, ff3ad5b, 2022-02-15) -> x4 -296.30588 (878bf7a, 2022-07-11) -> -296.677327164 with variance 37.53968 (da6643b, 2023-02-01, Hibat-Allah, same label): a new, lower run, not a restoration. M11: 0.60% below the gated RNN; now read (config). Linked 9369b7d (2024-08-13).",
         "source_entry": "VB3-varbench-code-heisenberg#58 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensor_cpp/dmrg_triangular_heisenberg_12x12.cc",
+        "script": "programs/dmrg_itensor_cpp/dmrg_triangular_heisenberg_12x12.cc",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensor_cpp/dmrg_triangular_heisenberg_12x12.cc)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_144_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -253,6 +273,16 @@
         "note": "dmrg.sh first line: heisenberg_2d.jl --L 12 --J2 1 --zero_mag --max_B 1024: open 12x12 triangular rhombus, Pauli, J = 1, Sz = 0, 50 sweeps at D = 1024 (the script's C++ half cannot run: cd programs/dmrg_itensors_c++). 2.055 above the C++ D = 3000 record, with higher variance (56.34 vs 37.54): consistent. Entered 3c108e3 (2022-07-11, Dian Wu), never changed; linked 2024-07-19.",
         "source_entry": "VB3-varbench-code-heisenberg#59 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/dmrg.sh",
+        "script": "scripts/Heisenberg/triangular_144_O/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_144_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -308,6 +338,16 @@
         "note": "scripts/Heisenberg/triangular_144_O/vmc_rbm.sh: 'python3 vmc.py --ham heis_tri --boundary open --sign mars --ham_dim 2 --L 12 --zero_mag --net rbm --seed 123 --show_progress' -> 12x12 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), open; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.016: the stored sigma is the error of that final estimate. 18.1698 above the DMRG record -296.677327164. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered 10f5c12 (2022-07-11, Dian Wu) as -278.457 | 0.0096 | 94.0425 | RBM (alpha = 1); 59e621a (2022-09-13, 'Update Jastrow and RBM baselines'): energy -278.457 -> -277.8726; variance 94.0425 -> 94.39827; 14d39eb (2022-10-19, 'Update estimation of some VMC results'): energy -277.8726 -> -278.4569; variance 94.39827 -> 94.04247; e4e2504 (2022-10-19, 'Fix slope = 1 in plot_v_score_rel_err.py'): energy -278.4569 -> -278.5075; sigma 0.0096 -> 0.0094; variance 94.04247 -> 89.67089; linked 5047bfd (2024-07-30). Changed and restored upstream: July -278.457 (10f5c12) -> September -277.8726 (59e621a) -> -278.4569 on 2022-10-19 morning (14d39eb, the July value with more digits, variance 94.04247 again) -> -278.5075 with new sigma and variance that evening inside e4e2504, a commit titled 'Fix slope = 1 in plot_v_score_rel_err.py'. The stored value is that last, fourth estimate, not the restored one; each is a valid bound of a different run (spread 0.63, far above sigma), so nothing to correct, but the row entered through a commit that does not mention it. The same pair of commits changed the J1-J2 square_36_P_0.9 RBM row and restored it exactly (-92.3972 -> -93.0317 -> -92.3972; group VB1). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#60 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/triangular_144_O/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_144_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -363,6 +403,16 @@
         "note": "scripts/Heisenberg/triangular_144_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis_tri --boundary open --sign mars --ham_dim 2 --L 12 --zero_mag --net jas --seed 123 --show_progress' -> 12x12 triangular lattice (ColoredJ1J2 back_diag=False: square grid + (i,j)-(i+1,j+1) diagonals), open; NetKet Heisenberg J = 1 in Pauli form with Marshall rotation on the square bonds only (sign_rule=[True, False], a unitary: the diagonals join same-sublattice sites); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 0.998: the stored sigma is the error of that final estimate. 22.5203 above the DMRG record -296.677327164. M2/M6 flags (if any): real float32 parameters make the amplitudes positive, so on this frustrated lattice the ansatz cannot carry the ground-state signs; no constant shift is involved and the energy is a valid bound. History: entered af1d48f (2022-09-01, Dian Wu) as -271.754 | 0.011 | 127.947 | Jastrow baseline; 59e621a (2022-09-13, 'Update Jastrow and RBM baselines'): energy -271.754 -> -274.157; variance 127.947 -> 127.347; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#61 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/triangular_144_O/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/triangular_144_O/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/triangular_144_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

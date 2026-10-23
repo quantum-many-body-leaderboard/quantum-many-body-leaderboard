@@ -35,6 +35,16 @@
         "note": "|reproduced - stored| = 4.72e-8 (relative 1.34e-9); relative 1.34e-9 exceeds 1e-9 only because the stored value has 7 decimals: the difference is within half a unit of its last digit (5.00e-8). Sector total Sz = 0, dimension 12870, 91 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/J1J2__square_16_P_0.4.json), gives -35.27345745284281 (6.89e-13 from the cost run). Also read by VB1-varbench-code-j1j2#55 (scope config: scripts/J1J2/square_16_P_0.4/ed_netket.sh line 4; ed.py L7-10; vmc.py L65-66, L70, L92-98; ham.py L5-25).",
         "source_entry": "VB1-varbench-code-j1j2#55, VE-exact-recompute#44 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.4/ed_netket.sh",
+        "script": "scripts/J1J2/square_16_P_0.4/ed_netket.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.4/ed_netket.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_16_P_0.4.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -103,6 +113,16 @@
         "note": "Script runs main.py --j2=0.4 --lattice=square4x4 twice (--symmetry=0, then --symmetry=1 continuing from the logged parameters) with the default 2^36 shots (exact to ~4e-6 relative): HeisenbergSquare = sum (sigma.sigma + 1) over 2N NN + J2 x 2N NNN bonds, energy_renorm removed, i.e. Pauli J1-J2 without shift on the square4x4 (4x4 torus), PBC, S^z = 0 singlet; 64 gates = SU2_symmetrized (4 shifts x 16 pairs). The number the program prints is the exact state-vector energy <psi|H P|psi>/<psi|P|psi> of the circuit state (observables.py L196-200, '{:.7f}'), deterministic. Variance 0.0945 within the Bhatia-Davis bound (E-E0)(Emax-E) = 2.278e-1 (ratio 0.415; E0 = the ED row, Emax = 44.8 the ferromagnet). Caveat for reproduction: as committed, the first main.py call ends in AttributeError (optimizers.py L644 'return res.x' on the circuit returned at L300), so '&&' skips the symmetric stage; the value (5d1ebf9 2022-11-11) predates the program. Record note: the 2^14-shot row on this instance (-35.2712652) is lower and is a deterministic energy too (correction proposed on it); if accepted, the best variational bound passes to it. History: entered 5d1ebf9 (2022-11-11, Nikita, 'Add files via upload'); unchanged since; code link added 5285adc (2024-08-12). Holds the instance's best variational bound (is_record).",
         "source_entry": "VB1-varbench-code-j1j2#56 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.4/vqe.sh",
+        "script": "scripts/J1J2/square_16_P_0.4/vqe.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.4/vqe.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_16_P_0.4.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -175,7 +195,17 @@
           "from": true
         }
       ],
-      "sampled": false
+      "sampled": false,
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.4/vqe_noisy.sh",
+        "script": "scripts/J1J2/square_16_P_0.4/vqe_noisy.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.4/vqe_noisy.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_16_P_0.4.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ],
   "coverage": [

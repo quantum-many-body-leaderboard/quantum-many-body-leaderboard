@@ -60,6 +60,21 @@
           "note": "4 x 8 P, 14 + 14, U = 8, N~ = 16, alpha = 14. Journal = arXiv v2. Printed bar 0.0224 total vs stored 0.002: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Not a duplicate: the BW2 (p=1) row -24.4256 on this instance is PRB 109, 245107 Table III's own BW2 column (-0.7633), which coincides with the HFDS value printed in that table's Ref. [2] column; different method, same digits. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
           "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#3"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -133,7 +148,22 @@
           "source_entry": "VP13-hubbard-j1j2-heisenberg#17 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Chen, Wan, Sengupta & Georges, Neural network-augmented Pfaffian wave-functions for scalable simulations of interacting fermions, Proc. Natl. Acad. Sci. U.S.A. 123, e2535288123 (2026), arXiv:2507.10705"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "Quantax",
+            "version": null,
+            "url": "https://github.com/ChenAo-Phys/quantax"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The NQS simulations are performed by Quantax [90], in which the scalable ANNs are implemented by JAX [91] and Equinox [92], and the LRU is implemented by lrux [93].",
+          "location": "arXiv:2507.10705 (sources/2507.10705.txt and .html), Acknowledgements",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -24.4512,

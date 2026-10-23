@@ -33,6 +33,16 @@
         "note": "Real recomputation (code and output file). |E - stored| = 5.97e-13 (relative 6.11e-15). Second determination: the stored value is the source's own ED (VarBench), a different code. Also read by VB3-varbench-code-heisenberg#50 (scope config: vendor/varbench/Heisenberg/square_36_P.md (snapshot 390a21e), row 'Exact diagonalization'; linked scripts/Heisenberg/square_36_P/ed_lattice_symmetries.sh).",
         "source_entry": "VB3-varbench-code-heisenberg#50, VE-exact-recompute#65 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/ed_lattice_symmetries.sh",
+        "script": "scripts/Heisenberg/square_36_P/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_36_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -150,6 +160,16 @@
         "note": "dmrg.sh: heisenberg_2d.jl --peri --L 6 --zero_mag --max_B 2048: 6x6 torus, Pauli, J = 1, Sz = 0, 50 sweeps at D = 2048. 0.0360 above the exact energy (a torus in a snake MPS); var/(E - E0) = 38.5. Entered 721e09e (2022-08-22), never changed; linked 2024-07-19.",
         "source_entry": "VB3-varbench-code-heisenberg#51 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/dmrg.sh",
+        "script": "scripts/Heisenberg/square_36_P/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_36_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -205,6 +225,16 @@
         "note": "scripts/Heisenberg/square_36_P/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 2 --L 6 --zero_mag --net rbm --seed 123 --show_progress' -> 6x6 square lattice, periodic (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.016: the stored sigma is the error of that final estimate. 1.4874 above the exact -97.7575895972357. History: entered 721e09e (2022-08-22, Dian Wu) as -96.2702 | 0.0037 | 13.9167 | RBM (alpha = 1); linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#52 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/square_36_P/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_36_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -260,6 +290,16 @@
         "note": "scripts/Heisenberg/square_36_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 2 --L 6 --zero_mag --net jas --seed 123 --show_progress' -> 6x6 square lattice, periodic (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.013: the stored sigma is the error of that final estimate. 1.3149 above the exact -97.7575895972357. History: entered af1d48f (2022-09-01, Dian Wu) as -96.4427 | 0.0038 | 14.7488 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#53 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/square_36_P/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_36_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -441,7 +481,16 @@
           "source_entry": "JP5-arxiv-2502-17144#20",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -97.75008,
@@ -519,7 +568,22 @@
           "source_entry": "VP10-heisenberg-j1j2#4 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": null
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The ANN computations were based on NetKet [53].",
+          "location": "arXiv:1903.06713 (sources/1903.06713.txt), Acknowledgments; the CNN energies are in the Appendix table 'Variational energies'",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -97.75753488,
@@ -580,7 +644,16 @@
           "source_entry": "JP5-arxiv-2502-17144#21",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -97.7575896,
@@ -727,7 +800,22 @@
           "source_entry": "VP15-hubbard-j1j2-heisenberg#5 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Grassmann Variational Monte Carlo with neural wave functions, arXiv:2507.10287"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "All the simulations have been carried out using the software package NetKet [50, 51].",
+          "location": "arXiv:2507.10287 (sources/2507.10287.txt), Sec. VII Software",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -97.7472,
@@ -940,6 +1028,21 @@
         "scope": "ansatz",
         "confidence": "high",
         "note": "One blanket statement for every ViT run (6x6, 8x8, 10x10, all J2). parameters is the paper's approximate figure '∼1.5×10^5'; iterations = 1500 training epochs; samples = 4096 per SR step. No hardware, GPU count or wall-clock stated anywhere (main text, Appendix A, Appendix B, captions)."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In turn, for larger systems one needs to employ an approximate scheme, such as variational neural quantum state (NQS) approach. We use the NetKet package realization [27, 28] of an attention-based vision transformer wave function [25, 26]",
+          "location": "arXiv:2606.04558 (sources/2606.04558.txt), Appendix A (Calculation details); also main text: \"wave function representation [25, 26] as realized in the NetKet package [27, 28]\"",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     }
   ],

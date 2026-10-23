@@ -1,0 +1,823 @@
+                           Neural Gutzwiller-projected variational wave functions
+
+                                 Francesco  Ferrari,1,∗  Federico  Becca,2  and  Juan  Carrasquilla3, 4
+                   1SISSA-International  School  for  Advanced  Studies,  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                     2Dipartimento  di  Fisica,  Universit`a  di  Trieste,  Strada  Costiera  11,  I-34151  Trieste,  Italy
+                               3Vector  Institute,  MaRS  Centre,  Toronto,  Ontario,  M5G  1M1,  Canada
+                  4Department  of  Physics  and  Astronomy,  University  of  Waterloo,  Ontario,  N2L  3G1,  Canada
+                                                          (Dated:  September 16, 2019)
+                   Variational wave functions have enabled exceptional scientiﬁc breakthroughs related to the un-
+                derstanding of novel phases of matter.  Examples include the Bardeen-Cooper-Schrieﬀer theory of
+                superconductivity, the description of the fractional quantum Hall eﬀect through the Laughlin state,
+                and Feynman’s variational understanding of large-scale quantum eﬀects in liquid Helium.  More re-
+                cently, Gutzwiller-projected wave functions, typically constructed from fermionic degrees of freedom,
+                have been employed to examine quantum spin models in the presence of competing interactions,
+                where exotic phases with no spontaneous symmetry breaking and fractional excitations may exist.
+                In this work, we investigate the aforementioned fermionic wave functions supplemented with neural
+                networks, speciﬁcally with the so-called restricted Boltzmann machine (RBM), to boost their accu-
+                racy and obtain reliable approximations to the ground state of generic spin models.  In particular, we
+                apply our neural augmented fermionic construction to the description of both magnetically ordered
+                and  disordered  phases  of  increasing  complexity,  including  cases  where  the  ground  state  displays
+                a non-trivial sign structure.  Even though the RBM state is by far more eﬀective for N´eel states
+                endowed with a particularly simple sign structure, it provides a signiﬁcant improvement over the
+                original fermionic state in highly frustrated regimes where a complex sign structure is anticipated,
+                thus  marking  the  path  to  an  understanding  of  strongly-correlated  spin  models  on  the  lattice  via
+                neural Gutzwiller-projected variational wave functions.
+
+
+                     I.    INTRODUCTION                                          Since a gauge theoretical reformulation of a quantum
+                                                                              spin system is formally exact, an explanation of all phys-
+  Fractionalization refers to a set of phenomena in quan-                     ically conceivable phases in the original models is always
+tum  many-body  physics  where  a  collection  of  strongly                   possible.   Whereas  conventional  phases  of  matter,  such
+interacting microscopic degrees of freedom, such as elec-                     as N´eel antiferromagnets and valence bond solids, are as-
+trons  or  spins  on  a  lattice,  break  down  into  multiple                sociated with the conﬁning phases of the gauge theory,
+quasiparticles.  One of the most prominent examples is                        fractionalization is associated with the deconﬁned phases
+the  fractional  quantum  Hall  eﬀect  [1],  where  the  con-                 where  the  spinons  materialize  as  legitimate  excitations
+stituent electrons decay into quasiparticles carrying frac-                   of the system.  Thus, the hope is that this reformulation
+tions of the electron charge.  Another prime example of                       may  help  us  understand  exotic  phases  which  naturally
+fractionalization arises in the study of spin liquids [2, 3],                 realize the quasiparticles and the emerging gauge ﬁelds
+which are highly-entangled states of matter that host a                       of the theory.  Originally suggested by Baskaran and An-
+wide array of exotic phenomena such as emergent gauge                         derson in the context of high temperature superconduc-
+structures, non-local excitations, and fractional quasipar-                   tivity  [5],  fractionalization  and  emergent  gauge  struc-
+ticles.  These quasiparticles, often termed “spinons”, be-                    tures  have  been  demonstrated  in  several  exactly  solv-
+have as fractions of ordinary magnons and spin waves.                         able  systems  such  as  Kitaev’s  toric  code  [6]  and  hon-
+  Traditionally, gauge theories have played a central role                    eycomb  model  [7],  string-net  condensates  [8],  as  well
+in the study of quantum spin liquids since their partic-                      conﬁrmed in microscopic models [9–11], variational wave
+ular structure can capture the highly peculiar non-local                      functions [12], and also experiments [1].
+excitations and entanglement properties present in these                         In practice, however, gauge theories of quantum spin
+exotic  phases  [2–4].   To  construct  such  gauge  theories,                systems  are  typically  intractable.    In  such  cases,  the
+physicists rely on representations of the original degrees                    generic procedure, also known as the “parton” construc-
+of freedom in terms of pairs of bosons or fermions, whose                     tion, is to rewrite the original model in terms of canoni-
+local  Hilbert  space  is  constrained  to  a  subspace  corre-               cal bosons or fermions, perform a mean-ﬁeld decoupling
+sponding to the original Hilbert space of the spin system.                    of  the  gauge  theory,  and  then  study  the  implications
+This reformulation results in a rich theory of quasipar-                      of  the  mean-ﬁeld  theory  and  its  stability  against  ﬂuc-
+ticles coupled to gauge ﬁelds with the potential to shed                      tuations  [4].    Alternatively,  a  numerical  approach  can
+light onto the properties of the original system.                             be  introduced,  where  wave  functions  from  a  mean-ﬁeld
+                                                                              treatment of the gauge theory are numerically projected
+                                                                              back to the original Hilbert space through the variational
+                                                                              Monte Carlo method (VMC) [13].
+∗ frferra@sissa.it
+                                                                                 The  accuracy  and  degree  of  applicability  of  these
+                                                                                                                                                   2
+
+states, here referred to as Gutzwiller projected wave func-                  angular lattice compounds [38], fractional excitations in
+tions,  have  been  demonstrated  in  several  prototypical                  the quantum antiferromagnets [39], among many others.
+models of frustrated magnetism [14–19].  The main ad-                        We begin by introducing the J1−J2 Heisenberg model,
+vantage of this strategy is that the states it produces can                  an archetypical model of frustration in quantum antifer-
+lead to very accurate estimates of the ground-state en-                      romagnets.  Its Hamiltonian is given by
+ergy  but  their  most  important  characteristic  is  the  in-                                     ∑                    ∑
+terpretability,  as  these  states  often  provide  us  with  a                           H =J1          Si· Sj +J2            Si· Sj,            (1)
+physically  transparent  description  of  the  phases  of  the                                      ⟨i,j⟩               ⟨⟨i,j⟩⟩
+model under consideration.  On the other hand, the main                      where Si = (Sxi,Sy
+disadvantage  of  this  approach  is  the  lack  of  systematic              sitting  on  the  sites  of  a  square  lattice  and J1,J2 ≥  0i,Szi ) are spin-1/2 degrees of freedom
+ways of improving the quality of the approximations the                      characterize the antiferromagnetic couplings between the
+construction introduces.  While the parton construction                      magnetic  degrees  of  freedom.   Here, ⟨···⟩  and ⟨⟨···⟩⟩
+remains a powerful approach to quantum spin liquids, it                      restrict  the  summations  over  ﬁrst-  and  second-nearest
+is clear that the Gutzwiller projector only partially rein-                  neighboring  sites,  respectively.   Throughout  this  paper,
+troduces the missing gauge ﬂuctuations of the mean-ﬁeld                      we focus on two diﬀerent values of the frustrating ratio,
+treatment,  which  may  not  be  suﬃcient  to  capture  im-                  namely J2/J1  =  0  and J2/J1  =  0.5,  to  assess  the  ac-
+portant long wavelength properties of the system.  This                      curacy of the aforementioned variational wave functions
+eﬀect is particularly important in special cases,  e.g.,  in                 in two diﬀerent regimes.  For J2  = 0 the model reduces
+U(1) spin liquids, since Gutzwiller projected states do not                  to  the  (unfrustrated)  Heisenberg  model,  whose  ground
+account for crucial spatial gauge ﬂuctuations [20, 21].                      state  displays  long-range  N´eel  magnetic  order  [40,  41],
+  Here,  we explore the possibility of improving the ac-                     At ﬁniteJ2, the energetic competition between the anti-
+curacy  of  the  parton  construction  through  neural  net-                 ferromagnetic couplings at ﬁrst- and second-nearest dis-
+works.   In  particular,  because  of  their  extensive  use  in             tances introduces frustration, resulting in a reduction of
+condensed matter physics and quantum information [22–                        the magnetic order.  In particular, the system exhibits a
+30], we consider restricted Boltzmann machines (RBM),                        high degree of frustration aroundJ2/J1≈ 0.5, where the
+which, due to the nature of their non-local structure, have                  nature of the ground state of the model is a long stand-
+been  shown  to  represent  some  highly-entangled  many-                    ing problem [42, 43].  Diﬀerent scenarios have been sug-
+body  states  using  a  relatively  small  number  of  param-                gested, such as the onset of a valence-bond solid phase,
+eters [23, 26, 27, 31].  The family of states we consider                    with columnar [44, 45] or plaquette [46, 47] order, and/or
+can be thought of as quantum mechanical version of the                       the existence of a spin-liquid phase [48–50].
+so-called  product  of  experts  idea  used  in  probabilistic                  Due to its relevance to physical situations ranging from
+models  in  machine  learning  [32],  where  the  core  strat-               low-temperature experiments with superﬂuid helium [36],
+egy  is  to  combine  several  simpler  wave  functions  (the                magnetic  insulators  [51],  and  ultracold  gases  in  optical
+“experts”) by multiplying their amplitudes in a certain                      lattices [52, 53], we also consider the XY  model on the
+computational basis [13, 29, 31, 33, 34].  Concretely, the                   square lattice, whose Hamiltonian is given by
+family  of  states  we  consider  is  written  as  a  product  of
+a  Gutzwiller-projected  fermionic  state  and  a  complex-                                     H =J∑(SxiSxj  +SyiSyj ).                   (2)
+valued RBM. By virtue of the high representation power                                                   ⟨i,j⟩
+of  the  RBM  [27,  35],  the  expectation  is  that  the  RBM               In this case, the ground state exhibits N´eel order with the
+may help us improve the accuracy of the Gutzwiller pro-                      spins aligned in the xy plane.  A fundamental diﬀerence
+jected  states  and  in  part  alleviate  the  problem  of  the              between the XY and the unfrustrated Heinseberg mod-
+missing gauge ﬂuctuations in these family of states.                         els  comes  from  their  symmetries:  while  the  Heisenberg
+  The paper is organized as follow:  In Sec. II, we intro-                   exchange interaction is invariant under global spin rota-
+duce the spin models that are considered in this study;                      tions around any axis (i.e., it exhibitsSU(2) symmetry),
+in Sec. III, we deﬁne the variational wave functions;  in                    theXY  coupling is invariant only under global rotations
+Sec.  IV,  we  brieﬂy  describe  the  numerical  optimization                around Sz (leading to a U(1) symmetry).
+of the wave functions; in Sec. V, we discuss the results;                       Finally, we consider the Heisenberg model on the tri-
+ﬁnally, in Sec. VI, we draw our conclusions.                                 angular lattice, a model of geometric frustration relevant
+                                                                             to the understanding of organic Mott insulators display-
+                                                                             ing  spin  liquid  behavior  [54].   Its  Hamiltonian  is  given
+                     II.    SPIN MODELS                                      by Eq. (1) with J2 = 0.  Due to frustration, this system
+                                                                             exhibits strong quantum ﬂuctuations.  Even though this
+  We  consider  two-dimensional  (2D)  quantum  lattice                      model was initially proposed as a candidate host for the
+models that are traditionally studied in condensed matter                    resonating valence-bond spin liquid [55], which motivated
+physics.  These models host a wide array of eﬀects that                      the entire ﬁeld of spin liquids, numerical evidence [56, 57]
+are relevant to the understanding of physical phenomena                      suggested that the ground state of the system is magnet-
+such as low-temperature experiments with superﬂuid he-                       ically ordered with a 120◦ pattern, which is the accepted
+lium  [36],  Fe-based  superconducting  materials  [37],  tri-               consensus.
+                                                                                                                                                   3
+
+       III.    CONSTRUCTION OF THE WAVE                                      The above Hamiltonian is invariant under global spin ro-
+                          FUNCTIONS                                          tations and, therefore, the spin wave functions obtained
+                                                                             by  the  Gutzwiller  projection  of  its  ground  states  are
+  In  general,  the  variational  Ans¨atze  employed  in  this               SU(2)  symmetric.   Ans¨atze  of  these  form  are  particu-
+work  can  be  written  as  a  product  of  a  Gutzwiller-                   larly suited to describe magnetically disordered phases of
+projected  fermionic  wave  function, |Ψf⟩,  and  a  many-                   matter, such as quantum spin liquids and valence-bond
+body correlator,  ˆC:                                                        solids [3].  The Gutzwiller-projected BCS wave functions
+                                                                             fall back into the class of resonating valence-bond states,
+             |ΨC⟩ =  ˆC|Ψf⟩ =∑         C(σ)⟨σ|Ψf⟩|σ⟩.            (3)         ﬁrst introduced by Anderson in the context of high-Tc su-
+                                    σ                                        perconductivity [58].  The second term of Eq. (6),HAF,
+                                                                             contains a magnetic ﬁeld in the xy-plane which induces
+In the above formula we have inserted a resolution of the                    magnetic order in the variational Ansatz:
+identity (ˆ1 =∑σ|σ⟩⟨σ|) and exploited the fact that  ˆC is                                     ∑    (                                      )
+diagonal in the many-body computational basis{|σ⟩}.                            HAF = ∆AF              eiQ·Rif†i,↑fi,↓ +e−iQ·Rif†i,↓fi,↑       .   (8)
+  In order to construct the fermionic part of the Ansatz                                         i
+we turn to a parton construction, representing the spin                      The vectorQ determines the periodicity of the magnetic
+degrees of freedom in terms of Abrikosov fermions [4]:                       order:  the N´eel phase on the square lattice is obtained
+                              ∑                                              by settingQ = (π,π), while the 120◦ phase on the trian-
+                     Si = 12       f†i,ασα,βfi,β.                     (4)    gular lattice corresponds toQ = ( 4π3 , 0) [or, equivalently,
+                              α,β                                            Q = ( 2π3 ,  2π√3)].  Typically, the wave function obtained by
+Here σ = (σx,σy,σz) is the vector of Pauli matrices and                      Gutzwiller-projecting the ground state ofHAF  overesti-
+the  operator f†                                                             mates  the  magnetic  order  parameter  [59].   To  improve
+                   i,α  (fi,α)  creates  (annihilates)  a  fermion           this  construction,  further  quantum  ﬂuctuations  can  be
+with spin α at site i.  Within the Abrikosov picture, the                    added by including hopping terms in the BCS Hamilto-
+commutation  relations  among  spins  are  a  consequence                    nian and by applying a two-body Jastrow factor correla-
+of  the  fermionic  anticommutation  relations.   However,                   tor to the fermionic wave function [as in Eq. (3)]:
+the fermionic representation of spins enlarges the Hilbert                                                                         
+space  of  the  system,  allowing  each  lattice  site  to  be  in                                                   ∑
+four  diﬀerent  states,  namely|0⟩, | ↑⟩, | ↓⟩,  and| ↑↓⟩.                               CJastrow(σ) = exp      12       vi,jσziσzj.           (9)
+Therefore, the mapping of Eq. (4) is a faithful represen-                                                             i,j
+tation  of  spin  degrees  of  freedom  only  if  the  fermions              The  Jastrow  factor  has  the  eﬀect  of  adding  correla-
+are restricted to the subspace of conﬁgurations with one                     tions  which  are  perpendicular  to  the  in-plane  mag-
+fermion per site.  This constraint can be enforced by the                    netic  ﬁeld  ∆AF.    In  this  work,  we  consider  Jastrow
+Gutzwiller  projection  operator PG  = ∏i(ni,↑− ni,↓)2                       factors  with  translationally  invariant  long-range  pseu-
+(where ni,σ  = f†i,σfi,σ).  The  wave function|Ψf⟩  is ob-                   dopotentials vi,j =v(|Ri−Rj|)∈ R.  We emphasize the
+tained by Gutzwiller-projecting a certain fermionic state                    fact  that  all  the  coupling  constants  deﬁning H0  (i.e.
+|Φ0⟩ (see below):                                                            ti,j, ∆i,j, ∆AF) and the Jastrow pseudopotentials play the
+                     |Ψf⟩ =PSztot=0PG|Φ0⟩.                      (5)          role  of  variational  parameters,  which  are  optimized  in
+                                                                             order  to  ﬁnd  the  best  variational  energy.   The  optimal
+In  addition  to  the  Gutzwiller  projector,  here  we  con-                parametrization of the auxiliary HamiltonianH0 depends
+sider  a  second  projector, PSztot=0,  which  restricts  the                on the model under investigation.
+wave  function  to  the  subspace  of  conﬁgurations  with                      The  central  aim  of  this  work  is  to  explore  the  possi-
+Sztot =∑iSzi  = 0.    We  emphasize  the  fact  that  both                   bility of improving Gutzwiller-projected fermionic wave
+projections  are  treated  exactly  by  sampling  only  the                  functions  by  applying  a  stronger  many-body  correlator
+fermionic  conﬁgurations  which  satisfy  the  desired  con-                 than  the  two-body  Jastrow  factor.   For  this  purpose,  a
+straints.    Finally, |Φ0⟩  is  obtained  by  computing  the                 neural  network  is  employed  in  the  form  of  a  restricted
+ground  state  of  a  quadratic  (i.e.,  a  mean-ﬁeld)  Hamil-               Boltzmann  machine.   This  network  is  deﬁned  by  intro-
+tonian (H0) of Abrikosov fermions,                                           ducing a set of auxiliary Ising variables,{hα}α=1,...,Nα,
+                                                                             which form the so-called hidden layer. These variables are
+                       H0 =HBCS +HAF,                        (6)             coupled  to  the  z-components  of  the  spins  of  the  lattice
+                                                                             (dubbed as visible layer,{σzi}i=1,...,N) through a classical
+which we have split into two parts for clarity.  The ﬁrst                    energy functional of the form:
+part is a Bardeen-Cooper-Schrieﬀer (BCS) Hamiltonian                                        N∑  Nα∑                 Nα∑            N∑
+containing a (complex) hopping term (ti,j) and a singlet                       ERBM =               hαWαi σzi  +        bαhα +         aiσzi.   (10)
+pairing term (∆i,j = ∆j,i):
+                                                                                           i=1 α=1                 α=1            i=1
+   HBCS =∑          ti,jf†i,σfj,σ +∑     ∆i,jf†i,↑f†j,↓ +h.c..     (7)       The RBM correlator is then obtained by computing the
+               i,j,σ                 i,j                                     Boltzmann  factor eERBM  and  taking  its  trace  over  the
+                                                                                                                                                4
+
+hidden variables degrees of freedom.  This operation can                   where Σ(j) indicates the position of the site obtained by
+be performed exactly due to the particular form of the                     applying  the  symmetry  Σ  to  the  site j.   The  quantum
+classical energy functional of Eq. (10),  which only con-                  numbers  of  the  above  correlators,  which  are  associated
+tains interactions between variables belonging to the two                  to the diﬀerent point group symmetries, are all zero by
+diﬀerent layers (i.e., no intralayer couplings are allowed).               construction. A more general strategy to implement sym-
+Since  we  consider  translationally  invariant  states  with              metries with the desired quantum numbers is outlined in
+conserved magnetization Sztot = 0, we can set ai = 0 and                   Ref. 60.
+obtain the ﬁnal form of the RBM correlator [22]:                              The  main  advantage  of  the  RBM  correlator  with  re-
+                     [∑              (                    )]               spect to the Jastrow factor comes from the fact that its
+ CRBM(σ) = exp             log cosh    bα +∑Wαi σzi           .  (11)      accuracy  can  be,  in  principle,  systematically  improved
+                                                                           by increasing the number of hidden variables Nα.  This
+                        α                      i                           is  due  to  the  fact  that  a  RBM  is  a  universal  function
+The  parameters  of   ˆCRBM  are  called  biases  (bα)  and                approximator [35], which means that it can approximate
+weights (Wαi  ), and are (in general) assumed to be com-                   any  function  with  arbitrary  accuracy  if  the  number  of
+plex numbers in this work.  The complex parametrization                    variables in the hidden layer is allowed to grow arbitarily
+of the RBM allows the correlator to change both the am-                    large.  In addition, the non-local structure of this neural
+plitudes  and  the  phases  of  the  fermionic  wave  function             network makes it capable of capturing highly-entangled
+to  which  it  is  applied.   The  expression  of  Eq.  (11)  can          phases of matter.  On the other hand, the disadvantage
+be regarded as a sort of many-body Jastrow factor, since                   of employing the RBM correlator in relation to the sim-
+a series expansion of the log cosh(... ) function contains                 pler two-body Jastrow factor mainly resides in its higher
+the n-body terms of theσz variables.  Unlike the Jastrow                   computational  cost.   Crucial  for  an  eﬃcient  variational
+factor,  the  RBM  correlator  not  only  breaks  the SU(2)                Monte Carlo, computing ratios of translationally invari-
+symmetry of spin, but also the Z2 symmetry σz↦→−σz.                        ant RBMs has a cost which scales linearly with the num-
+This happens if the biasesbα are nonzero, since the afore-                 ber of sites and the number of hidden units (O(N×Nα)),
+mentioned expansion can contain products of odd num-                       while computing ratios of two-body Jastrow factors sim-
+bers of spins.                                                             ply  scales  as O(1)  [13].   Finally,  another  disadvantage
+  An important question to address is the implementa-                      of the RBM is the lack of straightforward physical inter-
+tion of lattice symmetries in the correlator  ˆC.  As already              pretability of its variational parameters, which are associ-
+pointed out, a symmetric two-body Jastrow factor can be                    ated to many-body spin-spin correlations at all distances.
+obtained by simply taking a symmetric pseudopotential,                     Instead,  the  pseudopotential vi,j  of  the  Jastrow  factor
+e.g.,vi,j =v(|Ri−Rj|).  This procedure, however, cannot                    clearly accounts for the two-body correlation of spins i
+be applied to the RBM correlator,  since its parameters                    andj, and typically shows a clear physical behavior [61],
+depend  upon  the  index α  (labelling  the  hidden  units),               decaying with the distance|Ri−Rj|.
+which  does  not  have  any  physical  meaning.   Therefore,
+the most straightforward way of including symmetries is                      IV.    OPTIMIZATION OF THE VARIATIONAL
+to implement them a posteriori. Concretely, if we want to                                        WAVE FUNCTION
+enforce translational symmetry, we symmetrize the RBM
+correlator  through  a  product  over  all  possibile  Bravais                In order to minimize the variational energy of the wave
+lattice translations{TR}:                                                  function (3), namely
+
+   CtRBM(σ) =∏         CRBM[TR(σ)]                                                            EC =⟨H⟩C =⟨ΨC|H|ΨC⟩
+           [∑      R            (                       )]                                                       ⟨ΨC|ΨC⟩ ,                 (14)
+    = exp         ∑   log cosh     bα +∑      Wαi σzi+R      .    (12)
+                                                                           we  employ  the  stochastic  reconﬁguration  (SR)  tech-
+              R    α                       i                               nique [13, 62], which is brieﬂy summarized below.
+The  above  expression  is  translationally  invariant  with                  Let us denote byω ={ωk} the set of all the variational
+momentumK = (0, 0). In addition, the point group sym-                      parameters of the RBM-fermionic state, which is formed
+metries{Σ} of the lattice can be implemented on top of                     by  the  couplings  included  in  the  auxiliary  Hamiltonian
+the translationally invariant correlator.  The procedure is                H0 and by the weights and biases of the RBM correlator.
+the same as the one employed in Eq. (12):                                  For  each  parameter ωk,  we  can  deﬁne  a  corresponding
+                     ∏                                                     operator   ˆOk  that  is  diagonal  in  the  basis  of  spin  con-
+ CsRBM(σ) =∏             CRBM[ΣTR(σ)]                                      ﬁgurations,  i.e.,⟨σ| ˆOk|σ′⟩ =Ok(σ)δσ,σ′,  and  yields  the
+                  Σ   R                                                    logarithmic derivative of the amplitudes of|ΨC⟩:
+          [∑    ∑    ∑              (                          )]                                                          ∂⟨σ|ΨC⟩
+  = exp                  log cosh     bα +∑      Wαi σzΣ(i+R)      ,             Ok(σ) = ∂ log [⟨σ|ΨC⟩]∂ωk         =      1⟨σ|ΨC⟩∂ωk  .        (15)
+             Σ   R    α                       i
+                                                                 (13)      Let us also introduce another diagonal operator, the so-
+                                                                                                                                                       5
+
+called local energy  ˆEloc, whose matrix elements read
+
+     ⟨σ| ˆEloc|σ′⟩ =Eloc(σ)δσ,σ′ =⟨σ|H|ΨC⟩⟨σ|ΨC⟩ δσ,σ′.       (16)
+
+   At  each  step of  the  SR algorithm,  the  parameters of
+the variational wave functions are updated according to
+
+                    ω′k =ωk +η∑           S−1k,k′fk′.                   (17)
+                                      k′
+Here η  is  an  arbitrary  hyperparameter  dubbed  as  the
+learning rate,S−1 is the inverse of the covariance matrix
+                         [                                ]
+            Sk,k′ =ℜ      ⟨ ˆO†k ˆOk′⟩C−⟨ ˆO†k⟩C⟨ ˆOk′⟩C    ,        (18)
+
+and fk are the forces  [13]
+                               [                            ]
+     fk =−∂EC∂ωk  =−2ℜ          ⟨H ˆOk⟩C−⟨H⟩C⟨ ˆOk⟩C          .      (19)      FIG. 1.   Relative error of the VMC energies ∆E [see Eq. (20)]
+                                                                               with respect to the exact ones for the J1− J2  model on the
+Both  the  elements  of  the  covariance  matrix  and  the                     6× 6  square  lattice.   The  results  for  the  unfrustrated  case
+forces are computed stochastically by Monte Carlo sam-                         (J2  =  0)  and  the  frustrated  one  (J2/J1  =  0.5)  are  shown
+pling (through the Metropolis algorithm [63]), and then                        on  the  left  and  on  the  right  panel,  respectively.   The  rela-
+employed  to  update  the  variational  parameters  as  in                     tive error of the RBM-fermionic wave function is plotted as a
+Eq. (17).  We note that a redundant parametrization of                         function of the number of hidden units:  blue squares refer to
+the variational wave function causes the covariance ma-                        the case of translationally invariant RBM correlator  ˆCtRBM,
+trix to be non-invertible.  This situation is commonly en-                     while orange circles correspond to the fully symmetric RBM
+countered when neural network correlators with a large                         correlator  ˆCsRBM.  The error-bars are smaller than the size of
+number  of  variational  parameters  are  considered.    To                    the dots.  The dashed line represents the relative error of the
+                                                                               fermionic wave function of reference, which includes a Jastrow
+avoid numerical instabilities connected to the singularity                     factor in unfrustrated case (J2 = 0).  The dotted line refers to
+of the covariance matrix, we apply an explicit regulariza-                     the relative error of the CNN quantum state of Ref. 64.
+tion of the formSk,k′↦→ (1 +ϵδk,k′)Sk,k′, where ϵ is an
+arbitary small parameter [13].
+   For  most  of  the  variational  results  presented  in  this
+work,  we  performed  few  distinct  optimizations  starting
+from diﬀerent set of initial parameters, and we selected
+as optimal wave function the one which provided the low-
+est variational energy.  In general, we used≈ 2× 104 up
+to≈ 2× 105 Monte Carlo samples to evaluate the forces
+and the covariance matrix of the SR method.  We typi-
+cally chose a learning rate η in the range [0.02, 0.05] and
+a regularization parameter ϵ = 10−3.  For what concerns
+the latter, in the case of variational wave functions with
+a large number of variational parameters (e.g. Nα = 8 on
+a 10×10 lattice), we observed that starting the optimiza-
+tion with a larger value of ϵ,  e.g.  10−2,  helps reducing
+some  numerical  instabilities  and  yields  a  smoother  de-
+crease of the variational energy; then, after few hundreds
+SR steps,  the value of ϵ can be safely changed to 10−3
+for the rest of the optimization.                                              FIG.  2.      Spin-spin  correlations  for  the  Heisenberg  model
+                                                                               (J2 = 0) on the 6× 6 square lattice, as a function of distance
+                          V.    RESULTS                                        R.  Here, x = (1, 0) and y = (0, 1) are the lattice unit vectors.
+                                                                               The set of data represented with yellow squares (red circles)
+                                                                               corresponds to the expectation value ofSxyR  (SzR) on the RBM-
+      A.    The J1− J2 model on the square lattice                             fermionic wave function with the fully symmetric correlatorˆCsRBM  (Nα  =  1).   The  error-bars  are  smaller  than  the  size
+
+   We  ﬁrst  discuss  the  variational  Monte  Carlo  results                  of the dots.  The black stars represent the exact value of the
+for  the J1−J2  model  on  a  6× 6  square  lattice.   For                     spin-spin correlation, i.e.,⟨SR⟩0 = 1/3⟨S0· SR⟩0.
+                                                                                                                                                         6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.   Relative error of the spin-spin correlations [see Eq. (23)] for the Heinseberg model (J2 = 0) on the 6×6 square lattice,
+as a function of the number of hidden units. The correlations are evaluated at diﬀerent distances R, which are expressed in terms
+of the lattice unit vectors x = (1, 0) and y = (0, 1).  The set of data represented with yellow squares (red circles) corresponds
+to the relative error of the expectation value ofSxyR   (SzR), computed by employing the RBM-fermionic wave function with the
+fully symmetric correlator  ˆCsRBM.  The yellow dashed (red dotted) line, instead, refers to the relative error of the expectation
+value ofSxyR   (SzR) computed by employing the Jastrow correlator instead of the RBM. Finally, the black line indicates the zero
+of the vertical axis, i.e.  the position of the exact value in the relative error scale.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.     The same as in Fig. 3 for J2/J1  = 0.5.  The only diﬀerence is given by the fact that the fermionic state (without
+Jastrow factor) is SU(2) invariant and, therefore, in-plane and out-of-plane correlations are equal (and denoted by the bicolor
+dashed line).
+
+
+J2  =  0,  the  auxiliary  fermionic  HamiltonianH0  which                      cient to use an RBM correlator with real parameters, so
+deﬁnes the variational Ansatz contains a N´eel magnetic                         that CRBM(σ)≥  0.   On  the  contrary,  in  the  frustrated
+ﬁeld  (with Q  =  (π,π))  in  Eq.  (8)  and  a  complex  hop-                   regime,  the  sign  structure  of  the  exact  ground  state  is
+ping  term  in  Eq.  (7),  which  induces  a  staggered  ﬂux                    unknown.  ForJ2/J1 = 0.5 we combine a complex-valued
+through the square plaquettes [65].  This fermionic wave                        RBM correlator and a spin liquid fermionic wave func-
+function possesses the sign structure of the exact ground                       tion.  The latter is obtained by considering an auxiliary
+state of the Heisenberg model, i.e., it follows the so-called                   Hamiltonian with a uniform real hopping and a dx2−y2
+Marshall-Peierls sign rule [59, 66].  Therefore, it is suﬃ-                     pairing at ﬁrst neighbors, and adxy pairing at ﬁfth neigh-
+                                                                                                                                                         7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                FIG. 6.    Relative error of the VMC energies for the Heisen-
+                                                                                berg model on the 10× 10 square lattice, computed with re-
+                                                                                spect  to  the  exact  result  of  quantum  Monte  Carlo  [40,  41].
+                                                                                The relative error of the RBM-fermionic wave function is plot-
+                                                                                ted as a function of the number of hidden units:  blue squares
+                                                                                refer to the case of translationally invariant RBM correlator
+                                                                                ˆCtRBM, while orange circles correspond to the fully symmetric
+                                                                                RBM correlator  ˆCsRBM.  The error bars are smaller than the
+                                                                                size of the dots.  The dotted line refers to the relative error of
+                                                                                the CNN quantum state of Ref. 64.
+
+
+                                                                                bors [48].  This wave function corresponds to a Z2  spin
+                                                                                liquid  state,  which  satisﬁes  all  the  symmetries  of  the
+                                                                                model after the Gutzwiller projection [67].  Once more,
+                                                                                we  point  out  that  all  the  parameters  in  the  variational
+                                                                                state,  i.e.,  the  weights  and  biases  of  the  RBM  and  the
+                                                                                couplings  included  inH0,  are  fully  optimized  through
+                                                                                the stochastic reconﬁguration technique [13, 62].
+                                                                                   One of the purposes of this work is evaluating the ac-
+                                                                                curacy  gain  provided  by  the  use  of  the  RBM  correla-
+                                                                                tor.  For magnetically ordered phases (e.g., J2 = 0), the
+                                                                                best  fermionic  state  breaks  the SU(2)  symmetry  [since
+                                                                                ∆AF is ﬁnite in Eq. (8)]; in this case, the reference state
+                                                                                also  contains  the  Jastrow  factor,  since  it  plays  an  im-
+FIG.  5.       Relative  error  of  the  spin-spin  correlations  [see          portant  role  to  include  quantum  ﬂuctuations.   Instead,
+Eq. (23)] as a function of the relative error of the variational                within the non-magnetic phase (e.g., J2/J1  = 0.5),  the
+energy for the J1− J2  model on the 6× 6 square lattice in                      best fermionic state does not break theSU(2) symmetry
+the frustrated regime, J2/J1 = 0.5.  The correlations are com-                  (i.e., ∆AF = 0) and the Jastrow factor typically gives a
+puted at diﬀerent distances R, which are expressed in terms                     negligible contribution.  In this case, we choose to com-
+of the lattice unit vectors x = (1, 0) and y = (0, 1).  The wave                pare the accuracy of the combined RBM-fermionic wave
+function  employed  in  the  calculations  is  a  RBM-fermionic                 function to the pure Gutzwiller-projected BCS state.  In
+Ansatz  with  a  translational  invariant  correlator  (Nα  =  4).              both cases, the RBM correlator is expected to yield an
+Diﬀerent  points  correspond  to  the  results  of  diﬀerent  opti-             improvement of the accuracy when all the parameters are
+mizations of the variational parameters.  The set of data rep-                  properly optimized, since it can be shown that the Jas-
+resented with yellow squares (red circles) corresponds to the
+relative error of the expectation value of the in-plane (out-of-                trow factor can be represented exactly as a RBM [29, 31].
+plane) correlations.                                                            The underlying question we address is understanding to
+                                                                                which extent the application of the RBM correlator im-
+                                                                                proves the accuracy and the physical content of the vari-
+                                                                                ational wave function.  For theJ1−J2 model, we consider
+                                                                                both the translationally invariant [ ˆCtRBM, Eq. (12)] and
+                                                                                                                                                      8
+
+                                                                              frustrated one.  In particular, at J2 = 0 the inclusion of
+                                                                              the  RBM  provides  a  large  energy  gain  with  respect  to
+                                                                              the fermionic reference state (∆E≈ 0.4%):  the relative
+                                                                              error of the energy improves by a factor≈ 8 when ap-
+                                                                              plying the translationally invariant RBM (∆E≈ 0.05%
+                                                                              for Nα  =  12)  and  a  factor  of≈  20  when  applying  the
+                                                                              fully symmetric RBM (∆E≈ 0.02% for Nα  = 12).  In
+                                                                              general, for each value of Nα we observe that the inclu-
+                                                                              sion  of  the  point  group  symmetries  in  the  RBM  corre-
+                                                                              lator halves the relative error of the variational energy.
+                                                                              By contrast, at J2/J1 = 0.5 the accuracy gain is consid-
+                                                                              erably smaller:  the relative error of the energy changes
+                                                                              from  ∆E≈  0.6%  to  ∆E≈  0.3%  by  applying  a  trans-
+                                                                              lationally invariant RBM correlator, and the addition of
+                                                                              point group symmetries is far less eﬀective than what we
+                                                                              observe  for  the  unfrustrated  case.   In  Fig.  1  the  varia-
+                                                                              tional  energies  obtained  with  the  RBM-fermionic  wave
+                                                                              functions are compared to the ones of Ref. 64, in which
+                                                                              a convolutional neural network (CNN) quantum state is
+                                                                              employed:  the  CNN  wave  function  is  more  accurate  in
+                                                                              the unfrustrated phase, while the RBM-fermionic Ansatz
+FIG. 7.   VMC energies for the J1− J2 model on the 10× 10                     gives better energies in the frustrated regime.
+square  lattice  in  the  frustrated  regime  (J2/J1  =  0.5).   The             To further elucidate the ability of the RBM-fermionic
+variational energies of the RBM-fermionic wave function are                   wave functions in capturing the ground state properties
+plotted  as  a  function  of  the  number  of  hidden  units:   blue          of  the  model,  we  compute  the  spin-spin  correlations  at
+squares  refer  to  the  case  of  translationally  invariant  RBM            diﬀerent  distances  on  the  lattice.    Whereas  the  exact
+correlator  ˆCtRBM, while orange circles correspond to the fully              ground state wave function of theJ1−J2 model on ﬁnite
+symmetric RBM correlator  ˆCsRBM.  The error-bars are smaller                 cluster possesses all the symmetries of its Hamiltonian,
+than the size of the dots.  As a comparison we report several                 most of the variational Ans¨atze used in our calculations
+diﬀerent results.  The dashed line indicates the energy of the                break the spin SU(2) symmetry of the model due to the
+fermionic wave function of reference.  Density-matrix renor-
+malization group (DMRG) energies from Ref. 47 are plotted                     presence  of  the  RBM  correlator,  the  Jastrow  factor,  or
+with a dotted-dashed line:  the highest energy corresponds to                 the  magnetic  ﬁeld  ∆AF.   Therefore,  to  investigate  the
+the  most  accurate  result  obtained  by  a  DMRG  calculation               spin symmetry properties of the resulting states, we sep-
+(using 8192 SU(2) states), while the lowest energy line cor-                  arate  the  computation  of  the  spin-spin  correlations  at
+responds  to  the  value  which  was  obtained  by  extrapolating             distance R into the in-plane part,
+DMRG data with respect to the truncation error.  Full lines
+represent the results of Ref. 48, in which Lanczos steps were                                              N∑  (SxiSxi+R +Sy            ),          (21)
+applied to a fermionic wave function in order to improve its                                SxyR ≡   1                         iSyi+R
+accuracy.  Three values are reported here:  the highest energy                                       2N   i=1
+is  obtained  with  the  pure  fermionic  wave  function  (p  =  0,
+i.e., no Lanczos steps), the middle one by the application of                 and the out-of-plane part,
+two Lanczos steps (p = 2), while the lowest one is the result
+of the variance extrapolation.  Finally, the variational energy                                                   N∑
+obtained with the CNN quantum state of Ref. 64 is depicted                                           SzR≡  1N         SziSzi+R.                      (22)
+with a dotted line.                                                                                              i=1
+
+                                                                              We   then   compare   the   variational   estimates   of   the
+the fully symmetric [ ˆCsRBM, Eq. (13)] RBM correlators.                      two   contributions   separately   with   the   exact   value
+  In Fig. 1 we report the relative error of the variational                   ⟨SR⟩0≡ 1/3⟨S0· SR⟩0 =⟨Sa0SaR⟩0, a   = x,y,z.     Here
+energy  of  the J1−J2  model  on  the  6× 6  lattice  with                    ⟨...⟩0  indicates  the  expectation  value  over  the  exact
+respect  to  the  exact  value,  obtained  by  Lanczos  diago-                ground state|Ψ0⟩, obtained by Lanczos diagonalization.
+nalization.  This quantity is deﬁned as                                       Thus,  the relative error of the spin-spin correlations at
+                                 ⏐⏐⏐⏐EC−E0    ⏐⏐⏐⏐,                        (20)distance R is computed as
+                        ∆E =          E0
+                                                                                                    ∆SαR =⟨SαR⟩C−⟨SR⟩0⟨SR⟩0   ,                    (23)
+whereEC is the energy of a given variational Ansatz and
+E0 is the exact ground-state energy.  The results clearly                     where⟨...⟩C indicates the expectation value over a given
+show that the variational wave function is overall more                       variational wave function, and α =xy,z refer to the in-
+accurate in the unfrustrated regime with respect to the                       plane, Eq. (21), and out-of plane, Eq. (22), estimators.
+                                                                                                                                                  9
+
+  In Fig. 2, we show the in-plane and out-of-plane vari-                    is larger than the one obtained from the use of the sim-
+ational  correlations  as  a  function  of  distance,  in  com-             ple  Jastrow  factor.   A  regular  improvement  is  observed
+parison  to  the  exact  value.    The  results  are  obtained              only  at  ﬁrst  and  second  neighbors,  which  are  the  cor-
+with  the  aforementioned  RBM-fermionic  wave  functionˆCsRBM|Ψf⟩  (Nα  =  1)  for J2  =  0.   Due  to  the  presencerelations contributing to the value of the energy.  Most
+                                                                            importantly,  the  role  of  the  RBM  correlator  regarding
+of the antiferromagnetic parameter ∆AF, which induces                       the expected SU(2) symmetry is not clear; we ﬁnd that
+magnetic ordering in the xy plane, the in-plane correla-                    the  out-of-plane  correlations  display  a  better  improve-
+tions overestimate the exact ones in absolute value, while                  ment than the in-plane ones when Nα  is increased.  We
+the  out-of-plane  correlations  are  underestimated.   This                argue that this irregular behaviour of the accuracy of the
+tendency is observed for the spin-spin correlations at any                  spin-spin  correlations  is  a  consequence  of  the  presence
+distance and for any value ofNα. The results obtained by                    of several local minima in the optimization of the varia-
+increasing the number of hidden units are shown in Fig. 3,                  tional parameters of the RBM correlator, which lead to
+where the relative error of the variational estimates of the                states  with  markedly  diﬀerent  energies  and  correlation
+correlations with respect to the exact value is reported                    functions.  While the eﬀect is already present in the un-
+for some selected distances R.  We observe a systematic                     frustrated Heinseberg model, it is enhanced in the highly-
+improvement of the accuracy when the number of hidden                       frustrated regime of the J1−J2 model.
+units is increased, with both the in-plane and the out-of-                     To investigate this issue, we performed 40 distinct op-
+plane correlations approaching the exact value.  The fact                   timizations  of  the  ˆCtRBM|Ψf⟩  Ansatz  with Nα  =  4  at
+that these two terms tend to get closer to each other when                  J2/J1  =  0.5,  choosing  diﬀerent  values  of  the  RBM  pa-
+Nα is increased indicates that the RBM correlator tries to                  rameters as starting point.  The relative error of the spin-
+restore the anticipated spinSU(2) symmetry in the wave                      spin correlations obtained by the 40 resulting wave func-
+function.  As expected, since the optimal wave function                     tions is plotted as a function of the relative error of the
+is computed by minimizing the ground state energy, the                      variational energy in Fig. 5.  We observe that the accu-
+most accurate values for the correlations are obtained at                   racy of the results show considerably large ﬂuctuations.
+ﬁrst-neighbors.  We note also that, at any distance, the                    In particular, while the out-of-plane correlations seem to
+RBM correlator systematically provides a more accurate                      be  more  accurate  when  the  variational  energy  is  lower,
+estimation of the spin-spin correlations than the simple                    an opposite eﬀect is observed for the in-plane terms at
+Jastrow factor.                                                             some  distances.   The  RBM  correlator,  which  is  a  func-
+  Before moving to the frustrated case,  we explain the                     tion  of  the σz  degrees  of  freedom,  tends  to  “sacriﬁce”
+motivation of our choice to consider the accuracy ofSxyR                    the accuracy of the in-plane correlations for the sake of
+andSzR separately, instead of using the isotropic spin-spin                 improving the variational energy.  This numerical exper-
+correlation, (SzR + 2SxyR )/3.  When performing the opti-                   iment suggests that the complexity of the optimization
+mization of the variational parameters of the wave func-                    landscape of RBM in the presence of frustration is sig-
+tion, we observed that the ﬁnal set of weights and biases                   niﬁcantly diﬀerent from the unfrustrated case:  while in
+of the RBM can depend on their initial values.  Indeed,                     the unfrustrated case all the local minima display similar
+the parametrization of the RBM displays a considerable                      energies and correlation functions, the highly frustrated
+degree of redundancy, as indicated by the presence of zero                  regime exhibits a wide array of local minima with simi-
+eigenvalues of the covariance matrix of Eq. (18) [13, 62].                  lar variational energy but strinkingly diﬀerent correlation
+Therefore, the optimization procedure can end into dif-                     functions.  We speculate that these minima are due to the
+ferent  local  minima  which  can  have  equivalent  energies               presence of a possible glassy phase in the optimization in-
+and slightly diﬀerent in-plane and out-of-plane spin-spin                   duced by frustration [68].
+correlations.  However, this small diﬀerence, which is typ-                    We conclude our analysis of theJ1−J2 model by pre-
+ically  negligible  in  the  unfrustrated  regime,  can  be  en-            senting  the  variational  energies  for  the  10× 10  lattice.
+hanced or reduced in a random fashion by cancellation of                    The wave functions we employ have the same form of the
+error when the isotropic correlation is computed.  There-                   ones used for the 6× 6 lattice.  However, while the num-
+fore, we argue that a study of the separate components of                   ber of parameters enteringH0  is the same, the number
+the correlation function, rather than the isotropic coun-                   of weights of  the RBM  increases linearly with  the size.
+terpart, provides a better characterization of the symme-                   For the Heinseberg model (J2 = 0), in Fig. 6 we show the
+try properties of our Ansatz.                                               relative error of the variational energy with respect to the
+  At J2/J1 = 0.5, the situation is considerably diﬀerent                    exact one, computed by quantum Monte Carlo [40, 41].
+from the unfrustrated case, as demostrated in Fig. 4. The                   The relative error of the RBM-fermionic wave function is
+accuracy  of  the  variational  correlations  does  not  show               of the same order of magnitude of the one obtained on
+a  systematic  improvement  with  the  number  of  hidden                   the 6×6 lattice and shows a remarkable energy gain with
+units.  Indeed, even if in general the results are more ac-                 respect to the Jastrow-fermionic state.  However, the ac-
+curate  for Nα  =  12  than Nα  =  1,  the  behavior  of  the               curacy gain provided by the inclusion of the point group
+relative error is not as smooth as the respective one ob-                   symmetries is slightly smaller than the one observed for
+served in Fig. 3 for J2 = 0.  Moreover, in some cases the                   the  6× 6  lattice.   We  note  that  the  variational  energy
+relative error obtained by applying the RBM correlator                      of the CNN quantum state of Ref. 64 is lower than the
+                                                                                                                                                  10
+
+best RBM-fermionic energy found in this work.  Here, we
+emphasize the fact that the CNN state employs a larger
+number  of  variational  parameters  (3838  complex  num-
+bers  [64])  than  the  RBM-fermionic  wave  function  with
+Nα = 8 (810 real numbers).  However, the local structure
+of the CNN is advantageous in the process of optimiza-
+tion, since the optimal parameters obtained for a smaller
+lattice  can  be  employed  as  a  starting  point  for  the  op-
+timization of the wave function on a larger lattice [64].
+The  same  procedure  cannot  be  applied  in  the  case  of
+the RBM correlator, due to its highly nonlocal structure,
+which implies that the optimization of the parameters of
+this network necessarily becomes harder when the size of
+the system increases.
+
+  In  Fig.  7  we  compare  our  variational  energies  in  the              FIG. 8.   Relative error of the VMC energies ∆E [see Eq. (20)]
+frustrated phase, J2/J1 = 0.5, with several diﬀerent re-                     with respect to the exact ones for the XY  model on the 6× 6
+sults from literature.  Here, at variance with the unfrus-                   square  lattice.   The  blue  squares  correspond  to  the  relative
+trated  case,  the  variational  energies  obtained  by  using               error  of  the  RBM-fermionic  wave  function  as  a  function  of
+the  RBM-fermionic  wave  function  are  better  than  the                   the number of hidden units (Nα).  The error-bars are smaller
+ones  of  the  CNN  of  Ref.  64,  and  are  very  close  to  the            than the size of the dots.  The dashed line represents the rel-
+best density matrix renormalization group (DMRG) es-                         ative error of the fermionic wave function of reference, which
+timates of Ref. 47.  However, a considerably lower vari-                     includes a Jastrow factor.
+ational energy is obtained in Ref. 48, where a fermionic
+wave function, deﬁned by a BCS HamiltonianH0 which
+contains two additional dx2−y2  pairings (at fourth- and                             B.    The XY  model on the square lattice
+sixth-neighbors) with respect to the one employed in this
+work, is improved by the application of few Lanczos steps.                      As  already  pointed  out,  one  of  the  main  drawbacks
+The relative energy gain provided by two Lanczos steps,                      of the introduction of the RBM correlator is the break-
+which require the addition of only two variational param-                    ing  of  the  spin SU(2)  symmetry  of  the  wave  function.
+eter,  is  remarkably  larger  than  the  improvement  which                 For this reason,  we evaluate the accuracy of the RBM-
+is  obtained  by  the  application  of  the  RBM  correlator,                fermionic  construction  for  a  model  whose  Hamiltonian
+which contains more than 2000 parameters for Nα = 12.                        has lower symmetry, i.e.,XY  model of Eq. (2). The exact
+In general,  as already observed for the 6× 6 lattice,  in                   ground state of the XY  model has the same sign struc-
+the frustrated regime the RBM correlator yields a much                       ture of the one of the Heinseberg model, i.e.  it follows the
+smaller energy gain with respect to the unfrustrated case.                   Marshall-Peierls rule [66].  Thus, we employ an analogous
+                                                                             RBM-fermionic wave function like the one used for the
+  In summary, these results suggest that the RBM corre-                      Heinseberg  model  (with  real  weights  and  biases).   The
+lator provides a systematic way of improving the descrip-                    variational  results  are  reported  in  Fig.  8  for  the  trans-
+tion of magnetically ordered phases beyond the Jastrow                       lationally invariant correlator  ˆCtRBM.  The relative error
+factor,  where  the  RBM  eﬀectivetively  induces  out-of-                   of the variational energy with respect to the exact one is
+plane ﬂuctuations that counterbalance the in-plane mag-                      at least a factor of 10 smaller than the one obtained for
+netic  order  induced  by  ∆AF.   In  the  frustrated  regime,               the Heisenberg model and the accuracy gain provided by
+even  though  the  application  of  the  RBM  leads  to  bet-                the  RBM  correlator  is  remarkable  (∆E ≈  0.0004%  for
+ter  variational  energies,  it  generally  does  not  improve               Nα = 12).  The higher accuracy of the wave function is
+the description of the correlation functions beyond near-                    related to the fact that here the symmetry of the varia-
+est  neighbors.   Apart  from  their  numerically  expensive                 tional Ansatz is consistent with the spin symmetry of the
+training  procedure,  the  RBM’s  energetic  enhancement                     model.
+comes  at  the  price  of  breaking  of  the SU(2)  symmetry
+of the fermionic wave function.  The symmetry breaking
+we observe is especially evident in the correlation func-                    C.    The Heisenberg model on the triangular lattice
+tions  beyond  nearest  neighbors,  which  do  not  directly
+aﬀect the variational energy during the optimization pro-                       Our previous results suggest the idea that the applica-
+cedure.  Fortunately, all these aspects can be addressed                     tion of the RBM correlator is more eﬀective for magnet-
+in  the  future  using  a  recently  introduced  parametriza-                ically  ordered  phases,  as  exempliﬁed  in  the  Heisenberg
+tion of the RBM correlator, which by construction satis-                     andXY  model, rather than for non-magnetic ones, as in
+ﬁes theSU(2) symmetry of the models considered in our                        the frustrated region of the J1−J2 model.  However, in
+study [69].                                                                  the N´eel phases considered above, the exact sign struc-
+                                                                                                                                                    11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              FIG.  10.     VMC  energies  for  the  Heisenberg  model  on  the
+                                                                              12× 12  triangular  lattice.   The  variational  energies  of  the
+FIG. 9.   Relative error of the VMC energies ∆E [see Eq. (20)]                RBM-fermionic wave function are plotted as a function of the
+with respect to the exact ones for the Heisenberg model on                    number  of  hidden  units  (blue  squares).   The  error  bars  are
+the 6×6 square (left) and triangular (right) lattices.  The blue              smaller than the size of the dots. The dashed line indicates the
+squares (pink triangles) correspond to the relative error of the              energy  of  the  Jastrow-fermionic  wave  function  of  reference.
+wave function obtained by applying a translationally invariant                The  dotted  line  corresponds  to  the  Green’s  function  Monte
+RBM correlator to|Ψf⟩ (|ΨQ⟩), as a function of the number                     Carlo result of Ref. 56, whose error bar is represented by the
+of hidden units Nα.  The error-bars are smaller than the size                 grey shaded area.
+of the dots.  The dashed lines represent the relative error of
+the  Jastrow-fermionic  wave  function  ˆCJastrow|Ψf⟩,  while  the
+dotted ones correspond to  ˆCJastrow|ΨQ⟩.                                     where the relative error of the energy decreases of a fac-
+                                                                              tor≈ 8, with respect to the case of the triangular lattice,
+                                                                              where it decreases of a factor≈ 1.5 (from ∆E≈ 2.2% to
+ture of the wave function is particularly simple and ex-                      ∆E≈ 1.4%).  Overall, the variational energy is more ac-
+actly  captured  by  the  fermionic  part  of  the  variational               curate on the square lattice than on the triangular lattice,
+Ansatz.  To try to disentangle whether the successes ob-                      and the relative errors diﬀer by an order of magnitude.
+served in our simulations are related to the special struc-                      In  Fig.  9,  we  also  compare  the  results  of  the  afore-
+ture  of  the  sign  or  to  the  presence  of  magnetic  order,              mentioned  RBM-fermionic  wave  functions  to  the  ones
+we  consider  a  model  whose  ground  state  is  magneti-                    obtained by simpler  Ans¨atze,  which  are constructed  by
+cally  ordered  but  displays  a  non-trivial  sign  structure:               setting  the  hopping  terms  to  zero  and  considering  an
+the Heisenberg model on the triangular lattice.  In this                      auxiliary fermionic Hamiltonian with only magnetic ﬁeld
+case, the fermionic part of the Ansatz is constructed via                     (H0 =HAF).  In this way, the fermionic degrees of free-
+an auxiliary HamiltonianH0  which features a magnetic                         dom are localized and|Ψf⟩ reduces to a (projected) prod-
+ﬁeld ∆AF with pitch vectorQ = ( 4π3 , 0) [or, equivalently,                   uct state|ΨQ⟩ =PSztot=0∏Ni=1(|↑⟩i +eiQRi|↓⟩i), which
+Q  =  ( 2π3 ,  2π√3)]  and  a  real  nearest-neighbor  hopping t.             displays  “classical”  order  in  the xy-plane.    This  wave
+The sign structure of the hopping generates an alterna-                       function can be employed as a reference state for the ap-
+tion  of  0  and π  ﬂuxes  threading  the  triangular  plaque-                plication of a Jastrow factor [34] or the RBM correlator.
+ttes [19].  While in square lattice a real parametrization                    Here, we apply a translationally invariant RBM correla-
+on top of the fermionic state already gives an accurate                       tor to|ΨQ⟩.  We observe that the energy gain provided by
+representation for both signs and amplitudes of the ex-                       the presence of the hopping term in the fermionic Ansatz
+act ground state,  we anticipate that the triangular lat-                     is remarkably large when the simple Jastrow factor is ap-
+tice Heisenberg  model  requires a complex-valued corre-                      plied to the reference state. However, when the RBM cor-
+lator to approximate the unknown sign structure of the                        relator is employed, the contribution of the hopping term
+wave function induced by the geometric frustration of the                     becomes less important, decreasing considerably with the
+problem.  Thus, on top of the fermionic state, we apply                       number  of  hidden  units,  which  suggests  that  the  RBM
+a translationally invariant RBM correlator with complex                       replaces the eﬀect of the fermionic hopping term in the
+parameters ( ˆCtRBM).                                                         state.
+  In  Fig.  9,  we  compare  the  accuracy  of  the  RBM-                        Finally, in Fig. 10 we present the variational energies
+fermionic  wave  function  for  the  Heisenberg  model  on                    obtained  for  the  Heisenberg  model  on  the  12× 12  tri-
+the  6× 6  square  and  triangular  lattices.   The  energy                   angular lattice.  For a large enough Nα, the variational
+gain provided by the application of the RBM correlator                        energy of the RBM-fermionic wave function is more ac-
+is  considerably  larger  in  the  case  of  the  square  lattice,            curate than the Green’s function Monte Carlo (GFMC)
+                                                                                                                                                 12
+
+result  of  Ref.  56.   To  summarize  our  numerical  experi-              the  same  accuray  as  in  the  square  lattice,  even  for  a
+ments, we surmise that the high accuracy of the results                     relatively  large  number  of  hidden  units.   A  similar  ef-
+for  the  unfrustrated  square  lattice  Heisenberg  model  is              fect is also observed in the highly-frustated regime of the
+due to having an exact representation of the sign struc-                    J1−J2  Heisenberg  model,  where  for J2/J1  =  0.5  our
+ture  built  in  the  Ansatz,  which  in  turn,  alleviates  the            neural Gutzwiller-projected wave functions exhibit accu-
+energy  optimization  problem.   On  the  other  hand,  the                 racies  beyond  recent  neural  network  calculations  based
+lower accuracy in the triangular lattice model is presum-                   on  CNNs  [64],  though  with  a  lower  accuracy  than  in
+ably due to a combination of the approximate nature of                      the J2  =  0  case.   Based  on  the  numerical  experiments
+the sign structure imposed by our Ansatz and the energy                     presented  in  Fig.  5,  we  surmise  that  the  application  of
+optimization  problem  in  the  presence  of  complex  num-                 neural network variational states to frustrated quantum
+bers.  Since magnetically ordered states are pervasive in                   spin systems requires an extensive investigation of the in-
+frustrated magnetism,  it remains an important issue to                     tricate relation between the representation power of neu-
+unequivocally  establish  whether  the  origin  of  the  high               ral networks to capture highly-entangled states of matter
+accuracy of the results for the Heisenberg model on the                     with a complicated sign structure and the complexity of
+square lattice is only due to the absence of frustration or                 the  optimization  landscape  of  the  problem  induced  by
+to the fact that the sign structure is exactly known in the                 frustration.  Motivated by Ref. 71,  the disentangling of
+unfrustrated case.                                                          these  factors  could  be  approached  through  a  clustering
+                                                                            analysis of the trained RBM parameters and their asso-
+                                                                            ciated  spin-spin  correlation  functions,  which  may  shed
+                     VI.    CONCLUSION                                      light onto the interplay between frustration, sign struc-
+                                                                            ture and entanglement [72], and the rough optimization
+  Inspired by Hinton’s product of experts idea [32], we                     landscape of the problem [68].
+have  studied  a  neural  augmentation  of  the  parton  con-                  At  variance  with  the  unfrustrated  limit,  the SU(2)
+struction that combines a family of physically motivated                    symmetry is broken and hardly recovered when increas-
+Gutzwiller-projected  variational  states  with  a  complex-                ing Nα  in the frustrated case:  the out-of-plane correla-
+valued RBM correlator. We focused our attention on var-                     tions are clearly more accurate than in-plane ones, high-
+ious prototypical spin models traditionally used in con-                    ligthing  the  “asymmetry”  of  the  RBM  form,  which  is
+densed matter physics which exhibit a wide array of con-                    deﬁned in terms of thez-component of the local spin.  In
+ventional ground states with magnetic order, as well as                     this regard, our calculations provide a ﬁrst investigation
+more exotic ones where a spin-liquid behavior has been                      into  the  inductive  bias  of  the  RBM  applied  to  ground
+anticipated.                                                                states of frustrated systems, where we observe a strong
+  In  agreement  with  previous  results  based  upon  neu-                 tendency to breakSU(2) symmetry in our setting.  Thus,
+ral networks alone [22, 64], our calculations showed that                   the recent proposal to generalize the RBM to fulﬁll the
+RBMs are very eﬀective in the unfrustrated Heisenberg                       SU(2) symmetry [69] may pave the way for studying fully
+and XY  models on the square lattice, where the knowl-                      symmetric  neural  Gutzwiller-projected  wave  functions,
+edge of the exact sign structure of the ground state allows                 which will be especially relevant in the understanding of
+us to use a real parametrization of the RBM. Here, a few                    models for spin liquid phases and other states exhibiting
+hidden units in the neural network are suﬃcient to reach                    fractionalized excitations and gauge structures.
+a striking accuracy, which for the Heisenberg case is com-
+parable with the best variational wave functions deﬁned
+within the bosonic resonating valence-bond picture [70].                                       ACKNOWLEDGMENTS
+Moreover,  we  emphasize  the  remarkable  ability  of  the
+RBM to systematically recover the spin SU(2) symme-
+try upon increasing the number of hidden units.  This is                       We would like to thank K. Choo, G. Carleo, G. Torlai,
+clear  not  only  by  looking  at  ﬁrst-neighbor  correlations,             and R. Melko for useful discussions.  F.F. acknowledges
+but  also  at  further  distances:   both  out-of-plane  corre-             the kind hospitality and ﬁnancial support of the Vector
+lations  (i.e.,  along z)  and  in-plane  ones  (i.e.,  in  the xy          Institute for Artiﬁcial Intelligence in Toronto, where this
+plane) exhibit a clear tendendcy to converge toward the                     project  started.   We  also  thank  the  Kavli  Institute  for
+exact (isotropic) result upon increasing Nα.                                Theoretical  Physics  (KITP)  in  Santa  Barbara  and  the
+  In the highly frustrated regime, the exact ground-state                   program  “Machine  Learning  for  Quantum  Many-Body
+sign  is  not  known  a  priori,  even  when  the  system  dis-             Physics”.  This research was supported in part by the Na-
+plays  magnetic  order,  like  in  the  Heisenberg  model  on               tional Science Foundation under Grant No.  NSF PHY-
+the  triangular  lattice.   Here,  we  ﬁnd  a  substantial  en-             1748958.   J.C.  acknowledges  support  from  the  Natural
+ergy gain with respect to the original parton wave func-                    Sciences  and  Engineering  Research  Council  of  Canada
+tion,  although  the  variational  procedure  does  not  yield              (NSERC) and the Canada CIFAR AI chair program.
+                                                                                                                                                               13
+
+
+
+
+
+ [1]D.  C.  Tsui,  H.  L.  Stormer,   and  A.  C.  Gossard,  Phys.                  [33]J. Toulouse and C. Umrigar, J. Chem. Phys.      128, 174101
+     Rev. Lett. 48, 1559 (1982).                                                          (2008).
+ [2]L. Balents, Nature    464, 199 (2010).                                          [34]J. Carrasquilla, A. di Ciolo, F. Becca, V. Galitski,   and
+ [3]L. Savary and L. Balents, Rep. Prog. Phys.     80, 016502                             M. Rigol, Phys. Rev. B 88, 241109 (2013).
+     (2016).                                                                        [35]N.  Le  Roux  and  Y.  Bengio,  Neural  Comput.      20,  1631
+ [4]X. Wen,     Quantum Field Theory of Many-Body Systems:                                (2008).
+     From the Origin of Sound to an Origin of Light and Elec-                       [36]J. Daunt and R. Smith, Rev. Mod. Phys.      26, 172 (1954).
+     trons, Oxford Graduate Texts (Oxford University Press,                         [37]Y. Kamihara, T. Watanabe, M. Hirano,  and H. Hosono,
+     2004).                                                                               J. Am. Chem. Soc. 130, 3296 (2008).
+ [5]G. Baskaran and P. W. Anderson, Phys. Rev. B    37, 580                         [38]J.  Paddison,  M.  Daum,  Z.  Dun,  G.  Ehlers,  Y.  Liu,
+     (1988).                                                                              M.  Stone,  H.  Zhou,   and  M.  Mourigal,  Nat.  Phys. 13,
+ [6]A. Y. Kitaev, Ann. Phys.    303, 2 (2003).                                            117 (2017).
+ [7]M. Hermanns, I. Kimchi,  and J. Knolle, Ann. Rev. Con-                          [39]B. Dalla Piazza, M. Mourigal, N. Christensen, G. Nilsen,
+     dens. Mat. Phys. 9, 17 (2018).                                                       P. Tregenna-Piggott, T. Perring, M. Enderle, D. McMor-
+ [8]M.  A.  Levin  and  X.-G.  Wen,  Phys.  Rev.  B     71,  045110                       row, D. Ivanov,   and H. M. Ronnow, Nat. Phys. 11, 62
+     (2005).                                                                              (2015).
+ [9]L.  Cincio  and  G.  Vidal,  Phys.  Rev.  Lett.     110,  067208                [40]A. Sandvik, Phys. Rev. B      56, 11678 (1997).
+     (2013).                                                                        [41]M. Calandra Buonaura and S. Sorella, Phys. Rev. B      57,
+[10]S. Isakov, M. Hastings,  and R. Melko, Nat. Phys.      7, 772                         11446 (1998).
+     (2011).                                                                        [42]N.  Read  and  S.  Sachdev,  Phys.  Rev.  Lett.       62,  1694
+[11]C. Hickey and S. Trebst, Nat. Comm.      10, 530 (2019).                              (1989).
+[12]Y.  Zhang,  T.  Grover,  A.  Turner,  M.  Oshikawa,    and                      [43]H. Schulz, T. Ziman,  and D. Poilblanc, J. Phys. I France
+     A. Vishwanath, Phys. Rev. B 85, 235151 (2012).                                       6, 675 (1996).
+[13]F.  Becca  and  S.  Sorella,        Quantum  Monte  Carlo  Ap-                  [44]D. Poilblanc and M. Mambrini, Phys. Rev. B      96, 014414
+     proaches  for  Correlated  Systems  (Cambridge University                            (2017).
+     Press, 2017).                                                                  [45]R. Haghshenas and D. Sheng, Phys. Rev. B      97, 174408
+[14]D. Sheng, O. Motrunich,   and M. Fisher, Phys. Rev. B                                 (2018).
+     79, 205112 (2009).                                                             [46]M.  Mambrini,  A.  L¨auchli,  D.  Poilblanc,   and  F.  Mila,
+[15]Y. Iqbal, F. Becca,   and D. Poilblanc, Phys. Rev. B      84,                         Phys. Rev. B 74, 144422 (2006).
+     020407 (2011).                                                                 [47]S.-S.  Gong,  W.  Zhu,  D.  Sheng,  O.  Motrunich,    and
+[16]Y. Iqbal, F. Becca, S. Sorella,   and D. Poilblanc, Phys.                             M. Fisher, Phys. Rev. Lett. 113, 027201 (2014).
+     Rev. B 87, 060405 (2013).                                                      [48]W.-J.  Hu,  F.  Becca,  A.  Parola,   and  S.  Sorella,  Phys.
+[17]S.-S.  Gong,  D.  Sheng,  O.  Motrunich,    and  M.  Fisher,                          Rev. B 88, 060402 (2013).
+     Phys. Rev. B 88, 165138 (2013).                                                [49]S. Morita, R. Kaneko,  and M. Imada, J. Phys. Soc. Jpn.
+[18]W.-J. Hu, S.-S. Gong, W. Zhu,  and D. Sheng, Phys. Rev.                               84, 024720 (2015).
+     B 92, 140403 (2015).                                                           [50]L. Wang and A. Sandvik, Phys. Rev. Lett.      121, 107202
+[19]Y.  Iqbal,  W.-J.  Hu,  R.  Thomale,  D.  Poilblanc,    and                           (2018).
+     F. Becca, Phys. Rev. B 93, 144411 (2016).                                      [51]T.  Giamarchi,  C.  R¨uegg,    and  O.  Tchernyshyov,  Nat.
+[20]T.  Tay  and  O.  Motrunich,  Phys.  Rev.  B       83,  235122                        Phys. 4, 198 (2008).
+     (2011).                                                                        [52]I. Bloch, J. Dalibard,  and W. Zwerger, Rev. Mod. Phys.
+[21]Z.-X. Liu, J.-W. Mei, P. Ye,  and X.-G. Wen, Phys. Rev.                               80, 885 (2008).
+     B 90, 235146 (2014).                                                           [53]J. Carrasquilla and M. Rigol, Phys. Rev. A      86, 043629
+[22]G. Carleo and M. Troyer, Science      355, 602 (2017).                                (2012).
+[23]J. Chen, S. Cheng, H. Xie, L. Wang,  and T. Xiang, Phys.                        [54]Y. Shimizu, K. Miyagawa, K. Kanoda, M. Maesato,  and
+     Rev. B 97, 085104 (2018).                                                            G. Saito, Phys. Rev. Lett. 91, 107001 (2003).
+[24]G.  Torlai,   G.  Mazzola,   J.  Carrasquilla,   M.  Troyer,                    [55]P. Anderson, Mat. Res. Bull.      8, 153 (1973).
+     R. Melko,  and G. Carleo, Nat. Phys. 14, 447 (2018).                           [56]L.  Capriotti,  A.  Trumper,   and  S.  Sorella,  Phys.  Rev.
+[25]G.     Torlai     and     R.     Melko,     ArXiv     e-prints     ,                  Lett. 82, 3899 (1999).
+     arXiv:1801.09684 (2018).                                                       [57]S. White and A. Chernyshev, Phys. Rev. Lett.      99, 127004
+[26]D.-L. Deng, X. Li,   and S. Das Sarma, Phys. Rev. X      7,                           (2007).
+     021021 (2017).                                                                 [58]P. Anderson, Science      235, 1196 (1987).
+[27]X. Gao and L.-M. Duan, Nat. Comm.      8, 662 (2017).                           [59]F.  Becca,  L.  Capriotti,  A.  Parola,    and  S.  Sorella,  in
+[28]D.-L. Deng, X. Li,  and S. Das Sarma, Phys. Rev. B      96,                           Introduction to Frustrated Magnetism:  Materials, Exper-
+     195145 (2017).                                                                       iments,  Theory, Springer Series in Solid-State Sciences,
+[29]Y. Nomura, A. Darmawan, Y. Yamaji,   and M. Imada,                                    edited by C. Lacroix, P. Mendels,  and F. Mila (Springer
+     Phys. Rev. B 96, 205152 (2017).                                                      (Berlin), 2011) p. 379.
+[30]S. Clark, J. Phys. A: Math. and Theor.      51, 135301 (2018).                  [60]K. Choo, G. Carleo, N. Regnault,  and T. Neupert, Phys.
+[31]I.  Glasser,  N.  Pancotti,  M.  August,  I.  Rodriguez,   and                        Rev. Lett. 121, 167204 (2018).
+     J. Cirac, Phys. Rev. X 8, 011006 (2018).                                       [61]M.  Capello,  F.  Becca,  M.  Fabrizio,  S.  Sorella,    and
+[32]G. Hinton, Neural Comput.      14, 1771 (2002).                                       E. Tosatti, Phys. Rev. Lett. 94, 026406 (2005).
+                                                                                    [62]S. Sorella, Phys. Rev. B      71, 241103 (2005).
+                                                                                                                                                                14
+
+[63]N.   Metropolis,   A.   W.   Rosenbluth,   M.   N.   Rosen-                           ference  on  Machine  Learning,  Proceedings  of  Machine
+     bluth,    A.   H.   Teller,       and   E.   Teller,   The   Jour-                   Learning   Research,   Vol.   80,   edited   by   J.   Dy   and
+     nal     of     Chemical     Physics     21,     1087     (1953),                     A.  Krause  (PMLR,  Stockholmsmssan,  Stockholm  Swe-
+     https://doi.org/10.1063/1.1699114.                                                   den, 2018) pp. 314–323.
+[64]K. Choo,  T. Neupert,   and G. Carleo, ArXiv e-prints ,                         [69]T.  Vieijra,  C.  Casert,  J.  Nys,  W.  De  Neve,  J.  Haege-
+     arXiv:1903.06713 (2019).                                                             man, J. Ryckebusch,   and F. Verstraete, ArXiv e-prints
+[65]I. Aﬄeck and J. Marston, Phys. Rev. B      37, 3774 (1988).                           , arXiv:1905.06034 (2019).
+[66]W. Marshall and R. Peierls, Proc. Royal Soc. Lon. Series                        [70]S. Liang, B. Doucot,  and P. Anderson, Phys. Rev. Lett.
+     A. Math. and Phys. Sciences 232, 48 (1955).                                          61, 365 (1988).
+[67]X.-G. Wen, Phys. Rev. B      65, 165113 (2002).                                 [71]A. G. R. Day,  M. Bukov,  P. Weinberg,  P. Mehta,   and
+[68]M.  Baity-Jesi,  L.  Sagun,  M.  Geiger,  S.  Spigler,  G.  B.                        D. Sels, Physical Review Letters 122, 020601 (2019).
+     Arous,  C.  Cammarota,  Y.  LeCun,  M.  Wyart,     and                         [72]T. Grover and M. P. A. Fisher, Physical Review A      92,
+     G. Biroli, in  Proceedings  of  the  35th  International  Con-                       042308 (2015).
