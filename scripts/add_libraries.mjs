@@ -1,6 +1,6 @@
 // Attach the libraries a row's source says its authors used (DATA.md, "The code behind a row")
 // from passes/code/libraries-YYYY-MM-DD.json: one entry per row that has no code link, keyed
-// by instance, energy and the reference's url or string, with a status:
+// by instance, energy, the reference's url or string, and the row's method, with a status:
 //   library  the source says these libraries were used for this result; attached as
 //            artifacts.libraries
 //   none     the source names no library used for this result; nothing attached
@@ -75,7 +75,7 @@ function main() {
     const date = file.slice(10, 20);
     for (const e of JSON.parse(fs.readFileSync(path.join(DIR, file), "utf8"))) {
       if (!STATUS.has(e.status)) { problems.push(`${e.instance_id} ${e.energy}: status ${e.status}`); continue; }
-      latest.set(`${e.instance_id}|${e.energy}|${e.reference_key}`, { ...e, file: `${DIR}/${file}`, date });
+      latest.set(`${e.instance_id}|${e.energy}|${e.reference_key}|${e.method}`, { ...e, file: `${DIR}/${file}`, date });
     }
   }
 
@@ -86,23 +86,27 @@ function main() {
     counts[e.status]++;
     if (e.status !== "library") continue;
     const entry = instances.get(e.instance_id);
-    const row = entry?.inst.rows.find(r => r.energy === e.energy && refKey(r.reference) === e.reference_key);
-    if (!row) { unmatched.push(`${e.instance_id} ${e.energy} ${String(e.reference_key).slice(0, 50)}`); continue; }
+    // The method tells apart two rows of one source at the same energy (a GFMC and an ACE row);
+    // rows that share all four (two stripe orientations of one method) take the same entry.
+    const rows = entry?.inst.rows.filter(r => r.energy === e.energy && refKey(r.reference) === e.reference_key && r.method === e.method) ?? [];
+    if (!rows.length) { unmatched.push(`${e.instance_id} ${e.energy} ${e.method} ${String(e.reference_key).slice(0, 50)}`); continue; }
     if (!e.libraries?.length || !e.quote || !e.location) { problems.push(`${e.instance_id} ${e.energy}: library without libraries, quote or location`); continue; }
     const bad = e.libraries.filter(l => !(l.name in LIBRARIES) || l.url !== LIBRARIES[l.name] || !l.url);
     if (bad.length) { problems.push(`${e.instance_id} ${e.energy}: ${bad.map(l => l.name).join(", ")} not in the url table or url differs`); continue; }
-    // An unpublished row's artifacts came with its submission (RULES.md 8.3) and are not replaced.
-    if (row.provenance === "unpublished") continue;
-    // The row's own code wins: the code column shows a run script or repository, never both.
-    if (row.artifacts?.code) { withCode++; continue; }
     const shown = e.libraries.filter(l => !NOT_SHOWN.has(l.name));
     if (!shown.length) { generalOnly++; continue; }
-    row.artifacts = {
-      ...(row.artifacts || {}),
-      libraries: shown.map(l => ({ name: l.name, version: l.version ?? null, url: l.url })),
-      libraries_read_from: { quote: e.quote, location: e.location, checked_on: e.checked_on ?? e.date, pass: e.file },
-    };
-    entry.dirty = true;
+    for (const row of rows) {
+      // An unpublished row's artifacts came with its submission (RULES.md 8.3) and are not replaced.
+      if (row.provenance === "unpublished") continue;
+      // The row's own code wins: the code column shows a run script or repository, never both.
+      if (row.artifacts?.code) { withCode++; continue; }
+      row.artifacts = {
+        ...(row.artifacts || {}),
+        libraries: shown.map(l => ({ name: l.name, version: l.version ?? null, url: l.url })),
+        libraries_read_from: { quote: e.quote, location: e.location, checked_on: e.checked_on ?? e.date, pass: e.file },
+      };
+      entry.dirty = true;
+    }
   }
   for (const { path: p, inst, dirty } of instances.values())
     if (dirty) fs.writeFileSync(p, JSON.stringify(inst, null, 2) + "\n");
