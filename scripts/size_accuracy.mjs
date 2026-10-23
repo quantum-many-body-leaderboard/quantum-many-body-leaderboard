@@ -150,7 +150,7 @@ write("size-vs-accuracy-by-family", t => {
     parts.push(...marks(t, mine, X, Y, () => t.series[0]));
   });
   const y = top0 + (rows - 1) * pitch + plotH + EXACT_RISE + 62;
-  const fn = footnote(t, "Each method name belongs to one family (scripts/method_names.mjs); 'other' holds exact methods and names no family covers. " +
+  const fn = footnote(t, "Each ansatz belongs to one family, and a row without one goes by its method (scripts/method_names.mjs); 'other' holds exact methods and names no family covers. " +
     "A slashed mark is a flagged row, and a number counts the rows a mark holds. Axes and the exact line as in the figure above: " +
     `a better energy is lower. No dot sits closer to exact than its own error bar. ${UNDER}`, y);
   parts.push(fn.svg);

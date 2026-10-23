@@ -18,7 +18,8 @@ An example row (J1-J2, square 10×10, J2 = 0.5), long text fields cut:
     {
       "energy": -199.07756, "sigma": 0.00008, "energy_variance": null,
       "dof": 100, "einf": 0, "v_score": null,
-      "method": "CNN-MPS",
+      "method": "VMC",
+      "ansatz": "CNN-MPS",
       "method_detail": "h = 32, l = 20, Marshall sign",
       "method_as_published": "CNN-MPS (h,D,l)=(32,20,20), Marshall sign transformation",
       "family": "tensor network",
@@ -45,18 +46,32 @@ An example row (J1-J2, square 10×10, J2 = 0.5), long text fields cut:
 }
 ```
 
-A method is stored three ways:
-- `method` is its name alone.
-- `method_detail` holds what tells the row apart from other rows of that name: architecture
-  size, projection, Lanczos steps, trial state, what an extrapolation sends to zero. It never
-  repeats the kind, the instance or the source.
+A method is stored four ways (since 2026-10-23):
+- `method` is the algorithm: `VMC`, `FN-DMC`, `FN-GFMC`, `FP-DMC`, `CP-AFQMC`, `ph-AFQMC`,
+  `DMRG`, `ED`, `SSE QMC`, `CCSD`, `HF` and so on.
+- `ansatz` is the wave function the algorithm evaluates or projects from, by a short name:
+  `ViT`, `RBM + PP`, `SJ` (Slater-Jastrow), `SJB` (Slater-Jastrow-backflow), `Gutzwiller`.
+  A projector's trial state is its ansatz (`FN-GFMC` with `PEPS`). It is `null` where the
+  method has none: exact methods, coupled cluster, perturbation theory, RPA, FCIQMC, a
+  projector whose source names no trial state, and the tensor networks, whose name is their
+  ansatz (`DMRG`, `PEPS`, `TPS`). Every `VMC` row has one.
+- `method_detail` holds what tells the row apart from other rows of that method and ansatz:
+  architecture size, projection, Lanczos steps, what an extrapolation sends to zero, what a
+  trial state is beyond its name. It never repeats the kind, the instance or the source.
 - `method_as_published` is the string exactly as the source printed it.
 
 A bond dimension, parameter count or sample count lives in `compute`, not in the detail. The
-site prints the three as one label: "CNN-MPS (bond dimension 20, h = 32, l = 20, Marshall
-sign)". `family` groups methods for the figures. `sector` marks an exact diagonalization
-restricted to one symmetry sector. On a row, `sector` is the ground state's sector. Other
-sectors are in `spectrum` (below).
+site prints "method (ansatz)", "VMC (CNN-MPS)", or the method alone, "ED", and shows the detail
+(with a bond dimension and a sector) on hover; rows that differ only in their detail read the
+same. `family` groups methods for the figures: on a `VMC` row it follows the ansatz, and one
+ansatz is in one family (the validator checks this); on any other row it follows the method.
+`sector` marks an exact diagonalization restricted to one symmetry sector. On a row, `sector`
+is the ground state's sector. Other sectors are in `spectrum` (below).
+
+Before 2026-10-23, `method` held one short name that was the ansatz on a VMC row
+("CNN-MPS", "ViT") and the algorithm elsewhere ("DMRG", "Fixed-node DMC"), with the trial
+state in the detail. A script that reads `method` now reads the algorithm; the old name is
+`ansatz ?? method` for VMC rows, and the full published string is unchanged.
 
 Symmetry and extrapolation are written in fixed slots after the free text, separated by
 "; ". The order is `symmetric:`, `projected:`, `extrapolated:`.
@@ -658,7 +673,7 @@ its 47 entries, the compute block cut:
 ```json
 "spectrum": [
   { "energy": -98.7034711151, "sigma": 0.00000556, "energy_variance": null, "dof": 48, "einf": 0, "v_score": null,
-    "method": "ED", "method_detail": "", "method_as_published": "Exact Diagonalization Gamma.D6.E2 1",
+    "method": "ED", "ansatz": null, "method_detail": "", "method_as_published": "Exact Diagonalization Gamma.D6.E2 1",
     "family": "other", "sector": "Gamma.D6.E2, spin flip +1", "bound_type": "exact",
     "bound_type_reason": "exact diagonalization|ex",
     "reference": "[paper](https://journals.aps.org/prx/abstract/10.1103/PhysRevX.14.021010)",

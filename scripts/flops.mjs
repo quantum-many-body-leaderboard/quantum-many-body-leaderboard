@@ -5,8 +5,9 @@
 // calibration and the rules (no input is guessed; estimates never share an axis with hours).
 
 import fs from "node:fs";
+import { ansatzName } from "./units.mjs";
 
-// Architecture, by short method name (scripts/method_names.mjs; `archOf` below routes the
+// Architecture, by ansatz name (scripts/method_names.mjs, units.mjs ansatzName; `archOf` below routes the
 // dense RBMs). `reuse` is "sites", "patches" (sites / b^2, b read from the method detail, else
 // the entry's `patch`), "group" (sites x the lattice's point group, a group convolution's
 // kernel applied at every element of the space group; sites alone where the method detail
@@ -25,13 +26,13 @@ export const ARCH = {
   "minGRU": { reuse: "patches", patch: 2, sampling: "ar", note: "2 x 2 patches (PSR-NQS model.py)" },
   "LRU": { reuse: "sites", sampling: "ar" },
   "HFPS": { reuse: "sites", sampling: "mcmc", det: true, note: "the hidden-fermion network; the Pfaffian is counted as (2/3) N_e^3 and is negligible at these sizes" },
-  "Tensor backflow": { reuse: 1, sampling: "mcmc", det: true, note: "the backflow tensor is read once per configuration; the determinant is counted as (2/3) N_e^3" },
+  "tensor BF": { reuse: 1, sampling: "mcmc", det: true, note: "the backflow tensor is read once per configuration; the determinant is counted as (2/3) N_e^3" },
   "Jastrow": { reuse: 2, sampling: "mcmc", note: "the N(N-1)/2 pair couplings are contracted as the full N x N matrix, each applied twice" },
   "GCNN": { reuse: "group", sampling: "mcmc", note: "group convolution over the space group; a spin-parity doubling is not counted" },
   "LCN": { reuse: "sites", sampling: "mcmc" },
   "ConvNeXt": { reuse: "patches", patch: 2, sampling: "mcmc", note: "2 x 2 patch stem" },
   "MLP": { reuse: 1, sampling: "mcmc" },
-  "GVMC": { reuse: "sites", sampling: "mcmc", note: "one backflow network evaluation per configuration; the Grassmannian states' extra evaluations are not counted" },
+  "CNN BF + RBM": { reuse: "sites", sampling: "mcmc", note: "one backflow network evaluation per configuration; the Grassmannian states' extra evaluations are not counted" },
   "pRNN": { reuse: "sites", sampling: "ar" },
   "Adaptive RNN": { reuse: "sites", sampling: "ar", note: "the final hidden dimension's parameters over all stages; earlier, narrower stages cost less" },
   "ACE": { reuse: "sites", sampling: "mcmc", det: true },
@@ -50,7 +51,7 @@ export const ARCH = {
 // parameters are costed as CNNs. There is no ResNet entry, so other ResNet rows get no estimate
 // until their architecture is checked.
 const ESTIMATED_AS = { "ResNet1 (MinSR)": "CNN", "ResNet2": "CNN" };
-export const archOf = r => ARCH[ESTIMATED_AS[r.method_as_published ?? r.method] ?? (r.method === "RBM" && (/^α = \d+(, QMBL run(, H100 size ladder)?)?$/.test(r.method_detail || "") || /\bprojected: (?!unspecified)/.test(r.method_detail || "")) ? "RBM (dense)" : r.method)];
+export const archOf = r => ARCH[ESTIMATED_AS[r.method_as_published ?? r.method] ?? (ansatzName(r) === "RBM" && (/^α = \d+(, QMBL run(, H100 size ladder)?)?$/.test(r.method_detail || "") || /\bprojected: (?!unspecified)/.test(r.method_detail || "")) ? "RBM (dense)" : ansatzName(r))];
 
 // Point-group order of a lattice, for a group convolution over its full space group.
 const POINT_GROUP = { square: 8, triangular: 12 };
@@ -444,7 +445,7 @@ export function calibration(instances, hoursOf) {
   for (const inst of instances) for (const r of inst.rows) {
     const f = flopsOf(r, inst), h = hoursOf(r.compute);
     if (!f || !h || (h.unit !== "gpu" && !["dmrg-v1", "mvmc-v2", "vqe-v1"].includes(f.model))) continue;
-    out.push({ instance_id: inst.instance_id, method: r.method, detail: r.method_detail, arxiv: r.arxiv, device: r.compute.device,
+    out.push({ instance_id: inst.instance_id, method: ansatzName(r), detail: r.method_detail, arxiv: r.arxiv, device: r.compute.device,
       hours: h.value, unit: h.unit, model: f.model, derived: h.derived, flops: f.value, flops_per_s: f.value / (h.value * 3600), confidence: f.confidence, scope: r.compute.scope });
   }
   return out;
@@ -460,7 +461,7 @@ if (process.argv[1] && process.argv[1].endsWith("flops.mjs")) {
     const f = flopsOf(r, inst);
     if (!f) continue;
     n++; if (f.confidence === "low") low++;
-    byMethod[r.method] = (byMethod[r.method] || 0) + 1;
+    byMethod[ansatzName(r)] = (byMethod[ansatzName(r)] || 0) + 1;
   }
   console.log(`estimated FLOPs: ${n} rows (${low} low confidence): ${Object.entries(byMethod).map(([k, v]) => `${k} ${v}`).join(", ")}`);
   console.log("\ncalibration (rows that also state GPU-hours):");

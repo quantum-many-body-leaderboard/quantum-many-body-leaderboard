@@ -29,7 +29,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { perSiteDivisor, perSiteLabel, boundLabel } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, boundLabel, methodLabel, methodDetail } from "./units.mjs";
 import { recordOf, exactRecordOf, rowId } from "./summary.mjs";
 import { quote, MODELS, instanceLabel, byGeometry } from "./readme_table.mjs";
 import { openProblemsFigure, FIGURE_NAME } from "./open_problems_figure.mjs";
@@ -222,7 +222,7 @@ ${entriesTable}` : "";
     const rows = group.map(x => {
       const { t, inst, row, estimate, first } = x;
       const linked = row ?? recordOf(inst) ?? [...inst.rows].sort((a, b) => a.energy - b.energy)[0];
-      const beat = row ? `<td class="record">${energyCell(row, inst)}</td><td>${esc(row.method)}</td><td>${citeHtml(row)}</td>`
+      const beat = row ? `<td class="record">${energyCell(row, inst)}</td><td><span class="m" title="${esc(methodDetail(row))}">${esc(methodLabel(row))}</span></td><td>${citeHtml(row)}</td>`
         : first ? `<td class="record"><span class="num">${quote(first.energy_per_site, first.sigma_per_site).text}</span></td><td>${esc(first.system)}</td><td><a href="#${entryId(first)}">first verified state</a></td>`
         : '<td colspan="3" class="muted">no variational energy yet; the first verified state sets it</td>';
       const search = searchIndex(inst, name);

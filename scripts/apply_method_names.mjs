@@ -1,11 +1,11 @@
-// Give every row its short method name, detail and family from scripts/method_names.mjs,
+// Give every row its method (the algorithm), ansatz, detail and family from scripts/method_names.mjs,
 // keeping the published string as `method_as_published`. Runs after every script that
 // matches rows by their published method string (defects, removals), so those keep working.
 //
 //   node scripts/apply_method_names.mjs             rewrite data/
 //   node scripts/apply_method_names.mjs --dry FILE  write the review table to FILE, touch nothing
 import fs from "node:fs"; import path from "node:path";
-import { lookup, FIXED_NODE_ABOVE, FAMILY } from "./method_names.mjs";
+import { lookup, FIXED_NODE_ABOVE, FAMILY, splitName, ANSATZ_FAMILY } from "./method_names.mjs";
 import { family } from "./views.mjs";
 
 const dry = process.argv[2] === "--dry" ? process.argv[3] : null;
@@ -31,15 +31,20 @@ for (const p of files.sort()) {
     const published = r.method_as_published ?? r.method;
     const entry = named(inst.rows, i);
     if (!entry) { unmapped.set(published, (unmapped.get(published) || 0) + 1); return r; }
-    const [method, detail0, extra = {}] = entry;
+    const [name, detail0, extra = {}] = entry;
     const split = extra.extrapolated && r.bound_type === "extrapolated";
-    const detail = split ? extra.extrapolated : extra.instance_detail?.[inst.instance_id] ?? detail0;
+    const named_detail = split ? extra.extrapolated : extra.instance_detail?.[inst.instance_id] ?? detail0;
+    // The name splits into the algorithm and the ansatz (method_names.mjs, splitName); the family
+    // follows the ansatz on a VMC row and the algorithm on any other.
+    const [method, ansatz, detail] = splitName(name, named_detail, { bound_type: r.bound_type, reference: r.reference });
+    const nameFamily = extra.family ?? FAMILY[name] ?? family(published);
+    const rowFamily = method === "HF" ? "mean field" : method === "VMC" ? ANSATZ_FAMILY[ansatz] ?? nameFamily : nameFamily;
     const numbers = split ? {} : Object.fromEntries(COMPUTE_KEYS.filter(k => extra[k] != null).map(k => [k, extra[k]]));
     const row = {};
     for (const [k, v] of Object.entries(r)) {
-      if (k === "method") Object.assign(row, { method, method_detail: detail, method_as_published: published,
-        family: extra.family ?? FAMILY[method] ?? family(published), ...(extra.sector ? { sector: extra.sector } : {}) });
-      else if (!["method_detail", "method_as_published", "family", "sector"].includes(k)) row[k] = v;
+      if (k === "method") Object.assign(row, { method, ansatz, method_detail: detail, method_as_published: published,
+        family: rowFamily, ...(extra.sector ? { sector: extra.sector } : {}) });
+      else if (!["ansatz", "method_detail", "method_as_published", "family", "sector"].includes(k)) row[k] = v;
     }
     if (Object.keys(numbers).length) {
       const said = `method string: "${published}"`;
@@ -52,7 +57,7 @@ for (const p of files.sort()) {
         else if (row.compute[k] !== v) conflicts.push(`${inst.instance_id}: ${k} compute ${row.compute[k]} vs method string ${v} "${published}"`);
       }
     }
-    const key = `${published}\t${method}\t${detail}\t${row.family}\t${extra.sector ?? ""}\t${numbers.bond_dimension ?? ""}\t${numbers.parameters ?? ""}\t${numbers.samples ?? ""}`;
+    const key = `${published}\t${method}\t${ansatz ?? ""}\t${detail}\t${row.family}\t${extra.sector ?? ""}\t${numbers.bond_dimension ?? ""}\t${numbers.parameters ?? ""}\t${numbers.samples ?? ""}`;
     review.set(key, (review.get(key) || 0) + 1);
     renamed++;
     return row;
@@ -60,7 +65,7 @@ for (const p of files.sort()) {
   // Rows that now read the same in the table: same name, detail, sector, bond dimension and kind.
   const seen = new Map();
   for (const r of out) {
-    const k = [r.method, r.method_detail, r.sector, r.compute?.bond_dimension, r.bound_type].join("|");
+    const k = [r.method, r.ansatz, r.method_detail, r.sector, r.compute?.bond_dimension, r.bound_type].join("|");
     if (seen.has(k) && seen.get(k).energy !== r.energy)
       collisions.push(`${inst.instance_id}: "${r.method}" "${r.method_detail}" ${seen.get(k).energy} [${seen.get(k).method_as_published}] vs ${r.energy} [${r.method_as_published}]`);
     else seen.set(k, r);
@@ -74,6 +79,6 @@ if (dry) for (const c of collisions) console.log(`SAME-LOOKING ${c}`);
 if (dry) {
   const lines = [...review].map(([k, n]) => `${n}\t${k}`)
     .sort((a, b) => a.split("\t")[2].localeCompare(b.split("\t")[2]) || a.split("\t")[3].localeCompare(b.split("\t")[3]));
-  fs.writeFileSync(dry, "rows\tpublished\tmethod\tdetail\tfamily\tsector\tbond_dimension\tparameters\tsamples\n" + lines.join("\n") + "\n");
+  fs.writeFileSync(dry, "rows\tpublished\tmethod\tansatz\tdetail\tfamily\tsector\tbond_dimension\tparameters\tsamples\n" + lines.join("\n") + "\n");
 }
 console.log(`method names: ${renamed} rows named, ${[...unmapped.values()].reduce((a, b) => a + b, 0)} unmapped, ${conflicts.length} compute conflicts, ${collisions.length} same-looking pairs${dry ? `; review table ${dry}` : ""}`);

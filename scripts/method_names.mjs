@@ -833,3 +833,71 @@ export function lookup(published) {
   for (const [re, f] of PATTERNS) { const m = published.match(re); if (m) return f(m); }
   return null;
 }
+
+// ------------------------------------------------------------------ algorithm and ansatz
+// A row's name is split in two (2026-10-23): `method` is the algorithm (VMC, FN-DMC, DMRG, ED,
+// CCSD, ...) and `ansatz` the wave function it evaluates or projects from, by a short name
+// ("ViT", "SJB", "PEPS"), or null where the method has none. Surfaces print "method (ansatz)"
+// and show the detail on hover. On a projector row the trial state is the ansatz: its name
+// leaves the detail, and what the detail said beside the name stays there.
+
+// Names that are an algorithm of their own and carry no ansatz. A tensor network's name is its
+// ansatz (DMRG optimises an MPS), so it stays the method; a network on top of one (CNN-MPS, T-MPS,
+// PEPS + CNN) is optimised by VMC and is a VMC ansatz.
+const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "Exact solution", "AFQMC", "VAFQMC", "TPS", "PEPS",
+  "VQE", "CCD", "CCSD", "CCSDT", "CCSDTQ", "CCSDTQ5", "DCD", "TC-CCD", "TC-DCD", "lmCCD", "lmrCCD", "mCCD", "rmCCD",
+  "rxmCCD", "MP2", "dRPA", "dRPA + SOSEX", "FCIQMC", "Transcorrelated FCIQMC", "CP-AFQMC", "ph-AFQMC"]);
+// Projector algorithms by their short names.
+const PROJECTOR = { "Fixed-node DMC": "FN-DMC", "Fixed-node GFMC": "FN-GFMC", "Fixed-phase DMC": "FP-DMC" };
+// Short ansatz names; a name not listed is its own short name.
+const SHORT = { "Slater-Jastrow": "SJ", "Slater-Jastrow-backflow": "SJB", "Slater-backflow-Jastrow": "SJB",
+  "Iterative backflow": "iterative BF", "iterative backflow": "iterative BF", "Tensor backflow": "tensor BF",
+  "Transformer backflow": "transformer BF", "Hierarchical backflow": "HB", "Residual hierarchical backflow": "residual HB",
+  "Self-attention NQS": "self-attention", "Neural canonical transformation": "NCT", "mVMC": "PP", "mVMC + RBM": "PP + RBM",
+  "GVMC": "CNN BF + RBM" };
+// A bare "VMC" row, or a "VMC, ..." trial state, is named from what its detail says it is:
+// Jastrow with backflow (Becca and Tocchio's Hubbard states), RVB, the pair-product state of
+// mVMC (Kaneko, Morita & Imada), else a Gutzwiller-projected fermionic state.
+const fromDetail = (detail, reference) => /backflow/.test(detail) ? "Jastrow + BF" : /\bRVB\b/.test(detail) ? "RVB"
+  : /Kaneko/.test(reference) ? "PP" : "Gutzwiller";
+// Families follow the ansatz, so one ansatz is in one family. Ansatze not listed keep the
+// family their name gave them (FAMILY above, else views.mjs).
+export const ANSATZ_FAMILY = { "SJ": "classic VMC", "SJ + RBM": "RBM", "SJB + RBM": "RBM", "SJB": "backflow / Pfaffian", "HFDS": "backflow / Pfaffian",
+  "HFDS-ViT": "transformer / ViT", "JBf-ViT": "transformer / ViT", "Gutzwiller": "classic VMC", "RVB": "classic VMC",
+  "PP": "classic VMC", "Jastrow + BF": "backflow / Pfaffian" };
+
+// [method, ansatz, detail] for a named row.
+export function splitName(name, detail, { bound_type, reference = "" } = {}) {
+  const parts = (detail || "").split("; ").filter(Boolean);
+  if (name === "Hartree-Fock") return ["HF", null, detail];
+  if (PROJECTOR[name] || (/AFQMC/.test(name) && bound_type === "projected")) {
+    const i = parts.findIndex(p => p.startsWith("trial state: "));
+    if (i < 0) {
+      // A trial state named outside the slot (ph-AFQMC's "single-determinant RHF trial").
+      const t = /NOMSD/.test(detail) ? "NOMSD" : /UHF trial/.test(detail) ? "UHF" : /RHF trial/.test(detail) ? "RHF" : null;
+      return [PROJECTOR[name] ?? name, t, detail];
+    }
+    const [head, ...rest] = parts[i].slice("trial state: ".length).split(", ");
+    const base = head.replace(/ \+ .*/, "");
+    const ansatz = head === "VMC" ? fromDetail(rest.join(", "), "") : /stripe/.test(base) ? "stripe" : SHORT[base] ?? base;
+    // What the slot said beside the name stays: "D = 4", "+ three-body", the VMC state's pieces.
+    const kept = head === "VMC" ? rest : [...(head !== base || /stripe/.test(base) ? [head] : []), ...rest];
+    parts.splice(i, 1, ...(kept.length ? [kept.join(", ")] : []));
+    return [PROJECTOR[name] ?? name, ansatz, parts.join("; ")];
+  }
+  if (NO_ANSATZ.has(name)) return [name, null, detail];
+  if (name === "VMC") return ["VMC", fromDetail(detail || "", reference), detail];
+  // The tV Slater-Jastrow rows whose Jastrow factor is an RBM stay in family RBM (2026-10-23), with
+  // or without backflow.
+  if (/^Slater-(Jastrow|backflow-Jastrow)$/.test(name) && /RBM Jastrow/.test(detail || ""))
+    return ["VMC", name === "Slater-Jastrow" ? "SJ + RBM" : "SJB + RBM", detail];
+  return ["VMC", SHORT[name] ?? name, detail];
+}
+
+// The short name a row had before the split (2026-09-17 table, the first element of its
+// entry): "Slater-Jastrow", "Fixed-node GFMC", "DeepSolid". Pass files keyed by a row's method
+// before 2026-10-23 (passes/code/) match rows on it; a newer entry may use the label instead.
+export function nameBeforeSplit(r) {
+  const published = r.method_as_published ?? r.method;
+  return lookup(published)?.[0] ?? (published === FIXED_NODE_ABOVE ? "Fixed-node GFMC" : r.method);
+}
