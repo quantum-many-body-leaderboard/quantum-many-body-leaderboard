@@ -11,8 +11,9 @@
 // Energy is per site (the impurity problems in total energy) on a linear axis. Every drawn row
 // (ladders.mjs, drawnRows) is a mark coloured by its bound type, slashed where the row is
 // flagged or the automatic flag catches it (RULES.md 6.2), and hollow where it cannot be the best
-// of its class. No line joins results: the lowest energy at a size can be of another class at
-// the next (RULES.md 6, since 2026-10-23), and every result is a dot. The directory is
+// of its class. No line joins results in a panel: the lowest energy at a size can be of another
+// class at the next (RULES.md 6, since 2026-10-23), and every result is a dot. The strip keeps
+// its lines, as a slider and not a figure of results (ruled 2026-10-23). The directory is
 // emptied first, as figures/cost/ is, so the site never inlines a figure whose panels are gone.
 import fs from "node:fs";
 import { classEligible, perSiteDivisor, perSiteLabel } from "./units.mjs";
@@ -118,8 +119,8 @@ function stopFigure(f, facet, s) {
   });
 }
 
-// The figure's strip: the lowest energy at each stop and size as a dot, the larger the size the
-// darker, with no line between stops (a line would join energies of different classes), and over each stop a count mark as size_accuracy.mjs draws
+// The figure's strip: the lowest energy at each stop and size, one line per size within each
+// facet, the larger the darker, and over each stop a count mark as size_accuracy.mjs draws
 // them, the number of energies the stop stands for inside, linking to them all for the
 // site's list (largest size first, lowest energy first at a size). The cursor is a group
 // per stop, hidden in the file and shown by the site's stylesheet for the chosen one.
@@ -127,10 +128,10 @@ function stopFigure(f, facet, s) {
 // Hover states the site's stylesheet drives. Each facet is a group
 // (`grp`) and each stop a column in it (`col`: a hit area over the column, the stop's dots,
 // its count mark), so that the pointer over a column hovers both. Over a group its size
-// dots move apart, up by EX per size rank, so that seven dots coinciding at this scale read
-// as seven (class `ex`, the shift in `--ex`; the size beside the last stop's dot `exl`), in
-// that group only. A dense group (more stops than DENSE) does not move apart and has no hover
-// state. The hit area (`hit`, with the stop's index) and
+// lines move apart, up by EX per size rank, so that seven lines coinciding at this scale
+// read as seven (class `ex`, the shift in `--ex`; the size at each line's end `exl`), in that
+// group only. A dense group (more stops than DENSE) does not move apart, as its lines are
+// fragments that lose their dots, and has no hover state. The hit area (`hit`, with the stop's index) and
 // the count mark both select the stop like its badge; the hit area sits under the marks so
 // that a count mark keeps the pointer and its list. Only theme colours, at varying opacity,
 // so that dark mode recolours the strip like any figure.
@@ -169,6 +170,7 @@ function stripFigure(f) {
       for (const N of sizes) {
         const pts = x.stops.flatMap(s => { const p = recs.get(s).find(p => p.N === N); return p ? [{ x: s.x, y: Y(p.e) }] : []; });
         if (!pts.length) continue;
+        if (pts.length > 1) inner.push(`<path${shift(N)} d="${pts.map((p, k) => `${k ? "L" : "M"}${n(p.x)} ${n(p.y)}`).join("")}" fill="none" stroke="${t.ink}" stroke-width="1.5" stroke-linejoin="round" opacity="${n(0.8 * shade(N))}"/>`);
         if (!dense) inner.push(`<text class="ex exl" style="--ex:${-rank(N) * ex}px;--o:${shade(N)};font-variant-numeric:tabular-nums" x="${n(pts.at(-1).x + 7)}" y="${n(pts.at(-1).y + 3)}" font-size="7.5" fill="${t.ink2}">${N}</text>`);
       }
       for (const s of x.stops) {
