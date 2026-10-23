@@ -6,6 +6,7 @@
 // from an earlier pass or build step, is skipped and counted.
 import fs from "node:fs";
 import { perSiteDivisor, expectedDof, expectedEinf, vScore } from "./units.mjs";
+import { family } from "./views.mjs";
 
 const DIR = "passes/rows";
 const PASSES = fs.readdirSync(DIR).filter(f => /^sweep-rows-\d{4}-\d{2}-\d{2}(-[a-z0-9]+)?\.json$/.test(f)).sort()
@@ -15,6 +16,20 @@ const REASON = {
   extrapolated: "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
   projected: "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
   exact: "numerically exact reference as stated by the source (assigned during source reading)",
+  approximate: "built on a fixed approximation (RPA, MP2, channel-truncated CC, or a transcorrelated Hamiltonian with its three-body term dropped); error of unknown sign (RULES.md 4; assigned during source reading)",
+};
+// Track 2 (the electron gas, RULES.md 12.4): every extrapolation there is one to the complete
+// basis, and a projected basis-set method is coupled cluster, not a projection on a trial state.
+const TRACK2_REASON = {
+  extrapolated: "complete-basis-set extrapolation (1/M → 0); not an upper bound (RULES.md 12.4; assigned during source reading)",
+  projectedCC: "coupled cluster in a finite basis: not variational, projected (RULES.md 12.4; assigned during source reading)",
+};
+const reasonFor = (r, inst) => {
+  if (!/^HEG/.test(inst.model)) return REASON[r.bound_type];
+  if (r.bound_type === "extrapolated") return TRACK2_REASON.extrapolated;
+  // The name before any bracket: a caption quoted there can mention coupled cluster.
+  if (r.bound_type === "projected" && family(r.method.split(/ [[(]/)[0]) === "FCIQMC / CC") return TRACK2_REASON.projectedCC;
+  return REASON[r.bound_type];
 };
 
 let added = 0, created = 0;
@@ -59,7 +74,7 @@ for (const [id, rows] of Object.entries(byInst)) {
       energy, sigma: r.sigma_per_site == null ? null : +(r.sigma_per_site * Math.abs(div)).toPrecision(6),
       energy_variance: varTot, dof, einf,
       v_score: varTot == null ? null : vScore(varTot, dof, energy, einf),
-      method: r.method, bound_type: r.bound_type, bound_type_reason: REASON[r.bound_type],
+      method: r.method, bound_type: r.bound_type, bound_type_reason: reasonFor(r, inst),
       reference: r.reference, peer_reviewed: r.peer_reviewed,
       source: `sweep-allresults-${CHECKED}`, provenance: r.origin === "own" ? "primary" : "secondary",
       verified: {
