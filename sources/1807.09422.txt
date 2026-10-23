@@ -1,0 +1,377 @@
+Solving  frustrated quantum  many-particle  models  with convolutional  neural  networks
+
+ Xiao Liang,1, 2  Wen-Yuan Liu,1, 2, 3  Pei-Ze Lin,1, 2  Guang-Can Guo,1, 2  Yong-Sheng Zhang,1, 2, ∗  and Lixin He1, 2, †
+          1Laboratory  of  Quantum  Information,  University  of  Science  and  Technology  of  China,  Hefei,  230026,  China
+                           2Synergetic  Innovation  Center  of  Quantum  Information  and  Quantum  Physics,
+                                University  of  Science  and  Technology  of  China,  Hefei,  230026,  China
+             3Department  of  Physics,  The  Chinese  University  of  Hong-Kong,  Shatin,  New  Territories,  Hong  Kong
+                                                          (Dated:  September 27, 2018)
+                   Recently, there has been signiﬁcant  progress  in solving quantum many-particle problem  via ma-
+                chine learning based on the restricted Boltzmann machine.  However, it is still highly challenging to
+                solve frustrated models via machine learning, which has not been demonstrated so far.  In this work,
+                we design  a  brand new  convolutional  neural network  (CNN)  to solve  such  quantum many-particle
+                problems.  We demonstrate, for the ﬁrst time, of solving the highly frustrated spin-1/2 J1-J2 antifer-
+                romagnetic Heisenberg model on square lattices via CNN. The energy per site achieved by the CNN
+                is  even  better  than  previous  string-bond-state  calculations.   Our  work  therefore  opens  up  a  new
+                routine to solve challenging frustrated quantum many-particle problems using machine learning.
+
+                PACS numbers:
+
+
+                     I.     INTRODUCTION                                      dense  connections.26   Recent  works  try  to  bridge  the
+                                                                              state-of-the-art convolutional neural network to the ten-
+  The    successes    of    machine    learning    in    image                sor  network  states.27  It  has  been  proposed  that  the  in-
+recognition,1   playing   Go,2,3   etc.,   stimulate   interests              formation  reuse  introduced  by  overlapping  convolution
+in  using  machine  learning  techniques  to  solve  physics                  ﬁlters can enhance the state representation ability.  The
+problems,    such    as    designing    optical   experiments,4               convolutional neural network has  shown eﬀectiveness  in
+processing   signals   in   ﬁnding   gravity   waves,5,6   quan-              ﬁnding  the  critical  points  in  phase  transitions  of  Ising
+tum   teleportation   photon   spot   recognition,7    quan-                  models,28  which  infers  the  network’s  valid  state  repre-
+tum   phase   distinguishing,8–13    inferring   Hamiltonian                  sentation ability.
+solutions,14,15    classifying   quantum   states   based   on
+topological  invariants,16  classifying  spin  conﬁgurations                     However,   so  far  solving  frustrated  quantum  many-
+into  phases,17  solving  ground  states  of  Bose-Hubbard                    particle  models  on large two-dimensional lattices  is  still
+model,18  and so on.                                                          challenging for neural networks.  The ability to solve the
+  Recently  machine  learning  has  been  applied  to  study                  frustrated model is a milestone for neural networks, be-
+quantum  many-particle  problems.19,20  This  posed  seri-                    cause the non-frustrated models can be eﬃciently solved
+ous  challenges,  because  it  requires  much  higher  preci-                 to  extremely  high  accuracy  by  quantum  Monte  Carlo
+sion  than  traditional  machine  learning  problems.     It                  (QMC) methods.  In this work, we built a CNN to solve
+has  been  demonstrated  that  by  unsupervised  learning,                    the  ground  states  of  two-dimensional  frustrated  quan-
+the   restricted   Boltzmann   machine   (RBM)   can   solve                  tum spin models, more speciﬁcally the antiferromagnetic
+the  ground  states  of  transverse-ﬁeld  Ising  models  and                  spin-1/2 J1-J2 Heisenberg model on square lattices.  This
+anti-ferromagnetic   Heisenberg   models   in   rather   high                 model is highly frustrated, and considered as one of the
+precision.19   The  ground  states  of  those  models  obey                   most  interesting  and  challenging  spin  models.29,30  The
+the Marshall-Peierls sign rule (MPSR)21 where the wave                        network  is  built  using  the  elements  from  state-of-the-
+functions  can  be  represented by  positive  numbers,  suit-                 art  neural  networks.   By  design,  the  network  associates
+able for RBM with real parameters.                                            the many-body wave functions with high-order spin cor-
+  The representation ability of RBM for some advanced                         relation  functions.   We  name  such  CNN  as  the  convo-
+states  has  been  investigated,  and  often  connects  to  an-               lutional  quantum  neural  state  (CQNS).  We  solve  the
+other  state-of-the-art  method  for  many-particle  prob-                    ground states at J2 = 0 and J2/J1 = 0.5 and it is shown
+lems, namely the tensor network state (TNS) method.22                         that  CQNS  can  achieve  the  ground  energies  lower  than
+The equivalence between RBM and TNS has been inves-                           those obtained by  the  previous string  bond state (SBS)
+tigated in Refs..20,23,24  It has been suggested that RBM                     calculations.30,31 We further compare the spin correlation
+can represent the quantum states beyond area law.20 Fur-                      functions, focusing on the convolution ﬁlters’ size eﬀects.
+thermore,  the  extension  of  RBM,  namely  deep  Boltz-                     We show that if the size of the ﬁlter is too small, CQNS
+mann  machine  (DBM),  can  be  transformed  into  tensor                     can not capture the correct long-range spin correlations,
+networks,  and  DBM  can  be  a  general  representation  of                  which leads to poor energy precisions.  However, for sys-
+quantum many-particle states.25                                               tems with the correlation length shorter than the system
+  In  the  community  of  machine  learning,  it  is  believed                size, it is eﬃcient to use relative smaller convolution ﬁl-
+that  convolutional  neural  networks  (CNN)  have  shown                     ters.  The CQNS is a general method which can be easily
+more eﬃciency compared to the  neural networks within                         applied to study other quantum many-particle problems.
+                                                                                                                                                          2
+
+                                                                                 outputs the wave function coeﬃcient w(S), which is the
+                                                                                 products of all the ﬁnal output neurons.  Figure 1(a) de-
+                                                                                 picts the network structure of using one convolution ﬁl-
+                                                                                 ter, which generates one chain of output neurons.  When
+                                                                                 M  convolution  ﬁlters  are  used,  there  will  be  M  chains
+                                                                                 of output neurons.  To correlate diﬀerent ﬁlters, we sum
+                                                                                 all the  output  neurons  on the  same site  generated from
+                                                                                 all ﬁlters, as Fig. 1(b) denotes.  The wave function coef-
+                                                                                 ﬁcient w(S) is obtained by taking the products of all the
+                                                                                 neurons in the ﬁnal chain.
+                                                                                    One can easily extend the above one-dimensional neu-
+                                                                                 ral network to  higher dimensions.  Figure  1(c)  depicts  a
+                                                                                 two-dimensional CQNS with a K × K  convolution ﬁlter,
+                                                                                 with  K  =  3.   After  convolution  layer,  a  max-pooling  is
+FIG.  1:     (Color  online)  (a)  The  structure  of  a  CQNS  for  a           performed on adjacent four neurons followed by a trans-
+periodic  spin  chain  with  length  L  =  4,  and  the  convolution             posed  convolution  restores  the  dimensions.    The  wave
+ﬁlter  length  K  =  3.    Because  of  padding,  the  convolution               function  coeﬃcient  w(S)  is  the  product  of  all  the  neu-
+ﬁlter  scans  on  the  chain  length  of  six.   The  green  neurons             rons on the ﬁnal output plane.
+are the input states whereas the red neurons are the outputs                        To reveal how the CQNS works, we use the L=4 spin
+after convolution.  Max-pooling  is performed  by two neurons                    chain  as  an  example.   Considering  a  convolution  ﬁlter
+with the stride number of two, where the outputs are the blue
+neurons.  The orange neurons are the outputs after transposed                    with  length  K  =  3  and  one  additional  spin  padding  in
+convolution.  (b)The ﬁnal chain of neurons is the element-wise                   both the head and the tail of the spin chain, the convo-
+summation  of  the  output  chains  from  all  convolution  ﬁlters.              lution operation can be written in the matrix form:
+(c) An example of a two-dimensional CQNS on a 4×4 square                                                                              s4s1...
+lattice  with  periodic  boundary  condition  and  the  size  of  the                   p1p2             w1   w2   w3    0     0     0      ,       (1)
+convolution ﬁlter is K = 3.  The max-pooling and transposed                               = b +     0    w1   w2   w3    0     0  
+convolution are also performed on the two-dimensional lattice.                          p3p4              0     0    w1   w2   w3    0
+                                                                                                          0     0     0    w1   w2   w3      s1
+
+              II.     NETWORK  STRUCTURE                                         where S=[s4, s1, s2, s3, s4, s1]T  is the  input spin conﬁgu-
+                                                                                 ration and b is  the bias vector of the  convolution ﬁlter.
+   To  illustrate  the  structure  of  CQNS,  we  begin  with                    In our cases, the input number of each site is si=±1.  The
+an  example  of  a  one-dimensional  spin  chain.   The  spin                    output  neurons  after  convolution are  the  input  neurons
+chain  has  ﬁnite  length  L  =  4  with  periodic  boundary                     of the max-pooling, i.e.,
+conditions  (PBC).  The  size  of  the  convolution  ﬁlter  is                                         [g1]      [max(p1, p2)]
+taken  to  be  K  =  3.  The  network  structure  is  shown in                                           g2   =    max(p3, p4)       .                        (2)
+Fig. 1(a).  The input spins are labeled as the green neu-
+rons,  which  are  presented  in  the  Pauli  matrix  σz  base.                  We then perform transposed convolution,
+To keep the output dimension unchanged after convolu-                                                  h1h2     d1    0  
+tion,  we  pad  additional  spin  sites  on  the  head  and  the                                           =  d2    0 [g1]
+tail of the spin chain according to PBC. The number of                                                   h3h4        0   d1     g2   .                       (3)
+sites padded on each side of the spin chain is (K − 1)/2.                                                            0   d2
+For  K  =  3,  one  additional  spin  site  is  padded  on  both
+the  head  and  the  tail  of  the  spin  chain.   The  reason  to               to restore the original size of the lattice.
+keep the  output  dimension unchanged after  convolution                            Equations (1- 3) describe the transformations between
+is to use the advantage of max-pooling.  In image recog-                         the input spins and the  output neurons when using one
+nition tasks, max-pooling reduces the output dimensions                          convolution ﬁlter.  Using M  convolution ﬁlters lead to M
+and  introduces  position  invariance,32  thus  it  is  possible                 output  chains,  as  shown  in  Fig.  1(b).   The  ﬁnal  output
+to use a small number of convolution ﬁlters to grasp all                         chain is the direct summation of the output chains from
+possible  spin  conﬁgurations  in  the  receptive  ﬁeld,  espe-                  all convolution ﬁlters, i.e.,
+cially  when  the  ﬁlter  size  is  large.   The  output  neurons                                                                
+after max-pooling are denoted by the blue neurons.  After                                              h1h2              d(m)1    g(m)1
+max-pooling, the dimension is restored to the dimension                                                   =   M∑   d(m)      .                     (4)
+                                                                                                                          2    g(m)1
+of the spin lattice by a transposed convolution.                                                       h3h4              d(m)
+                                                                                                                 m=1      1    g(m)2
+   A   quantum   state   of   a   spin   lattice   can   be   repre-                                                     d(m)
+sented  in  the  form  of  |Ψ⟩  =  ∑                                                                                      2    g(m)2
+                                           S w(S)|S⟩,  where  |S⟩  =
+|s1, s2, · · · , sN⟩  is  a  spin  conﬁguration,  and  w(S)  is  its             The  ﬁnal  wave  function  coeﬃcient  is  the  product  of  all
+coeﬃcient.    For  a  given  spin  conﬁguration  |S⟩,  CQNS                      neurons in the ﬁnal output chain, i.e., w(S) = h1h2h3h4.
+                                                                                                                                                         3
+
+From  the  above  equations,  it  is  easy  to  see  that  for  a
+given spin conﬁguration S of a N sites system, hi is linear
+combination  of  sk  plus  a  constant,  i.e.,  hi  =  Ai,1s1 +
+Ai,2s2 + · · · + Ai,N sN  + ci,  where  Ai,k  is  the  coeﬃcient
+of spin sk in hi, and ci is a number.  However, due to the
+max-pooling, the  coeﬃcients Ai,k  are spin conﬁguration
+dependent.  Therefore we have,
+
+  w(S) =     ∑         g(n1, · · · , nN ; s1, · · · , sN )sn11   · · · snNN  ,
+             n1,··· ,nN
+                                                                      (5)
+where     n1    +   n2    +   · · ·   +   nN        ≤       N,      and         FIG. 2:    Diagram  of CQNS with only one convolution ﬁlter.
+g(n1, · · · , nN ; s1, · · · , sN)    are   given    by   CQNS.    We           The kernels of the ﬁlter are [0.5, 0, 0.5].  When the input spin
+note that g  functions are also spin conﬁguration depen-                        conﬁguration is a N´eel state, the output neurons after convo-
+dent, because of the max-pooling.  Equation 5 associates                        lution are also positive and negative distributed alternatively.
+the  many-body wave functions with the high order spin                          After  the  max-pooling,  all  the  output  neurons  are  positive,
+correlation  functions.   This  is  crucial  for  the  success  of              which  leads  to  a  non-zero  wave  function  coeﬃcient.   For  all
+CQNS  that  are  very  diﬀerent  from  traditional  CNN,  in                    other input spin conﬁgurations, the coeﬃcients are zero.
+which the  nonlinearity of the neural networks is usually
+introduced by the activation functions.                                         work, we only focus  on the  ground state energies of the
+   It  is  easy  to  show  that  CQNS  can  exactly  represent                  model.
+the  classical  N´eel  state,  which  has  alternating  spin  up                   The total energy of the system can be calculated as:
+and spin down in the lattice, and is  the ground state of                                                             ∑         ∑
+a  classical  antiferromagnetic  Heisenberg  model,  using  a                        E =  ⟨Ψ|H|Ψ⟩           ∑              w2S       wS′
+single  convolution  ﬁlter.   The  ﬁlter  kernel  has  the  form                              ⟨Ψ|Ψ⟩    =       1S w2S   S        S′  wS HS′S,       (7)
+[0.5, 0, 0.5],  and  biases  are  taken  to  be  zero.   Figure  2
+depicts  the  intermediate  neurons  after  convolution  and                    where HS′S = ⟨S|H|S′⟩.  Our goal is to minimize the total
+max-pooling  when  the  input  state  is  a  N´eel  state.   The                energy, which can be achieved by the stochastic gradient
+output  neurons  after  max-pooling  are  all  positive,  thus                  method,37  where  the  energy  E  and the  gradients G  are
+the wave function coeﬃcient w(S) >0.  It is easy to ver-                        calculated  via  Monte  Carlo  sampling  over  spin  conﬁgu-
+ify  that  at  least  one  of  the  output  neurons  after  max-                rations,
+pooling  is  zero  if  the  input  state  is  not  the  N´eel  state,
+and therefore w(S)=0.  For a quantum antiferromagnetic                                              E = ⟨ES⟩,
+Heisenberg  model  more  ﬁlters  are  needed  to  represent                                         G = ⟨OSES⟩ − ⟨ES⟩⟨OS⟩,                      (8)
+the  ground  state.   As  an  example,  for  the  spin  chain  of
+L  =  4,  it  is  easy  to  verify  that  the  ground  state  can               where ES  = ∑                                              ∂w(S)
+be  exactly  represented  by  the  CQNS  with  four  ﬁlters,                                        S′  w(S′)w(S) HS′S  and OS  =       1w(S)∂ai   .  Here
+which  are  [−0.5, 0.5, 0.5],  [0.5, 0.5, −0.5],  [0.5, −0.5, 0.5]              ai  are all the parameters in the CQNS.
+and  [0.5, 0, 0.5]  and  biases  for  the  ﬁlters  are  -1.5,  -1.5,               However,  the  neural  networks  are  highly  nonlinear,
+-0.5 and 0 respectively.                                                        therefore the system may be easily trapped in some local
+                                                                                minima  via  the  stochastic  gradient  descending  method.
+                                                                                To  overcome  this  diﬃculty,  we  optimize  CQNS  via  a
+ III.     NUMERICAL  INVESTIGATIONS  ON  J1-J2                                  recently developed replica-exchange molecular dynamics
+                               MODEL                                            method, which has been successfully applied to optimize
+                                                                                the SBS,31 one type of TNS. We map the quantum many-
+                                                                                particle  problem  to  a  classical  mechanical  problem,  in
+   We benchmark the CQNS on the two-dimensional spin-                           which we treat the parameters of CQNS as the general-
+1/2 J1-J2 Heisenberg model,                                                     ized coordinates of the system.  We  optimize the energy
+                                             ∑                                  of the virtual system using a replica exchange molecular
+              H = ∑       J1si · sj + J2           si · sj,               (6)   dynamics  method.   By  exchanging  the  system  conﬁgu-
+                     ⟨i,j⟩                  ⟨⟨i,j⟩⟩                             rations among higher and lower temperatures, it can ex-
+                                                                                plore large phase space and therefore eﬀectively avoid be-
+where  ⟨i, j⟩  denotes  the   nearest  neighbour  sites   and                   ing stuck in the local minima.38–40 Details of the method
+⟨⟨i, j⟩⟩ denotes the next nearest neighbour sites.  We as-                      are presented in Ref..31
+sume  both  J1,  J2>0,  and  take  J1=1  in  all  calculations                     In  our  simulations,  we  use  56  temperatures.  Initially
+in this  work.  The  J1-J2  model is  one of the most inter-                    the  temperatures  distribute  exponentially  between  the
+esting  and challenging quantum  spin models  due  to  the                      highest  (1/β0  =  10−3)  and  lowest  (1/β55  =  10−5)  tem-
+strong frustrated interactions, and the ground state near                       peratures.    The  MD  step  length  is  set  to  ∆t  =  0.01.
+J2/J1  =  0.5  is  still  under  intensive  debate.33–36  In  this              For each temperature we start with random weights and
+                                                                                                                                                      4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3:    (Color  online)  (a) The ground state energies  calculated  by CQNS at  J2  = 0 as functions of the number of ﬁlters M
+and size of ﬁlters K.  The reference ground energies obtained by the string-bond-state (SBS), entangled-plaquette-state (EPS)
+and QMC are also shown in the dotted line (-0.6581), the dash-dotted line (-0.6699) and the dashed line (-0.6715), respectively.
+(b) The ground state energies calculated by CQNS at J2 = 0.5J1  as functions of M  and K.  The ground state energy obtained
+by  SBS  is  shown  as  the dotted  line  (-0.4705).  The  ﬁtted  spin  correlation  function  Gr  are  shown  in  (c)  for  J2=0,  and  (d)  for
+J2=0.5J1  for diﬀerent number of ﬁlters M  and size of ﬁlters K.
+
+
+biases.  During  the  simulations,  we  adjust  the  tempera-                 when  K  =  9,  the  energy  per  site  converges  faster  than
+tures after conﬁguration exchange for 10 times, whereas                       using  smaller  ﬁlters,  the  energies  for  M=128,  192  and
+there  are  210  MD  steps  between  the  exchanges  of  two                  256 ﬁlters are -0.6649, -0.6659 and -0.6665, respectively.
+conﬁgurations.  For each MD step,  we sample 5000 spin                        Based on the numerical results, CQNS with ﬁlter size of
+conﬁgurations.   The  energies  used  for  replica  exchange                  K=7, 9  can exceed SBS.  From the  numerical results,  it
+are averaged over 200 MD steps.                                               is revealed that larger ﬁlter number and larger ﬁlter size
+  We  study  J1-J2  model  on  a  10 × 10  two-dimensional                    lead to more accurate ground states, however increasing
+square  lattice,  with  periodic  boundary  conditions.   Fig-                ﬁlter size is more eﬃcient than increasing ﬁlter number.
+ure 3 depicts the numerical results for J2=0, and J2=0.5,                        At  J2  =  0.5,  the  model  is  highly  frustrated,  where
+with diﬀerent number of ﬁlters and ﬁlter sizes.  The ﬁlter                    QMC  suﬀers  from  sign  problem,  and  therefore  is  much
+sizes are taken to be K×K.  The obtained ground state                         more diﬃcult to calculate.  In Fig. 3(b), we show the cal-
+energies are summarized in Table I.                                           culated energies with diﬀerent ﬁlter size  K  and number
+  The  energies  per  site  for  J2=0  calculated  with  dif-                 of ﬁlters M.  The ground state energy per site calculated
+ferent  number  of  ﬁlters  and  ﬁlter  sizes  are  shown  in                 by  SBS  is  -0.4705,  which  is  shown  in  dotted  line  as  a
+Fig. 3(a).  We also show the total energies calculated from                   comparison.  According to the ﬁgure, the energy has lim-
+other methods  as comparisons.  The dotted line denotes                       ited  improvement  from  M=128  to  256  ﬁlters.   However
+the  ground  state  energy  per  site  obtained  by  the  SBS,                increasing ﬁlter size can signiﬁcantly improve the energy.
+E = −0.6581,30 and the dash-dotted line denotes the re-                       For  M=128, the  energy  is  -0.4455 for  K=3,  -0.4627 for
+sult  of  the  entangled  plaquette  states  E  =  −0.6699,41                 K=5 and -0.4736 for K=9.  For M=256, the energy per
+whereas the dashed line is the result of quantum Monte                        site is -0.4475 for K  = 3, -0.4649 for K  = 5 and -0.4715
+Carlo E = −0.6715.41 The solid dots are the results ob-                       for K = 7.  CQNS can exceeds SBS with ﬁlter size K ≥7.
+tained by CQNS. The energy for K = 3 and M=128 ﬁl-                               We further calculate the spin correlation functions, and
+ters is -0.6461.  The energy can be improved by increasing                    the results are shown in Fig. 3(c) and (d) for J2=0, and
+the number of ﬁlters.  When using 512 ﬁlters, the energy                      J2=0.5 respectively.  The error bars are smaller than the
+decreases  to  -0.6522.  However  for  the  small  ﬁlters,  fur-              width  of  the  solid  lines  and  therefore  not  shown.   The
+ther increasing the number of ﬁlters does not improve the                     spin correlation functions C(r) are calculated as,
+energy much.  On the other hand, increasing ﬁlter size can
+dramatically improve the energy.  For example, for ﬁlter                                               ∑
+number M=128, the energy is -0.6536 for K = 5, -0.6596                                 C(r) =    12L2       (⟨si+r,jsi,j⟩ + ⟨si,j+rsi,j⟩) .       (9)
+for K = 7 and -0.6649 for K = 9.  As shown in the ﬁgure,                                                i,j
+                                                                                                                                                          5
+
+
+TABLE  I:  Comparison  of  the  ground  state  energies  of  the  two-dimensional  J1-J2  Heisenberg  model  calculated  by  CQNS.  M
+denotes the convolution ﬁlter number and K  denotes the side length of the convolution ﬁlters.
+                                                                 J2=0                                             J2=0.5
+                                     M          128             192             256             512             128             256
+                                   K=3  -0.646095  -0.650056  -0.651070  -0.652247  -0.445505  -0.447450
+                                   K=5  -0.653637  -0.657002  -0.657887  -0.658851  -0.462716  -0.464885
+                                   K=7  -0.659552  -0.662539  -0.663316  -0.664313  -0.469446  -0.471200
+                                   K=9  -0.664892  -0.665917  -0.666511                     -0.473591
+
+
+TABLE II: Comparison of the decay power γ  of the spin cor-                     lems.      By   design,   CQNS   associates   the   many-body
+relation  functions  calculated  by  CQNS.  K  denotes  the  side               wave functions with high-order spin correlation functions,
+length of the convolution ﬁlters.                                               which is  crucial for  its  success.  We  use CQNS  to  study
+                    K             3       5       7       9                     the  spin-1/2  J1-J2  Heisenberg  model  which  is  strongly
+                    J2=0     3.15  2.61  2.39  2.24                             frustrated  and  challenging  to  solve.   We  have  obtained
+                    J2=0.5  3.00  2.53  2.37  2.26                              fairly  accurate ground  state  energies  that  are  even  bet-
+                                                                                ter than previous SBS calculations.30,31  The  CQNS is  a
+                                                                                general  and  ﬂexible  method  that  can  be  easily  applied
+The calculated results show that the correlation functions                      to  diﬀerent  Hamiltonian,  with  various  boundary  condi-
+obey power-law decay.  We ﬁt C(r) as C(r) = C0 + αr−γ.                          tions  (open,  periodic  and  cylindrical,  etc.)   and  in  dif-
+We plot the correlation functions G(r) = αr−γ, i.e., the                        ferent dimensions.  It therefore  provides a new  powerful
+constants have been subtracted.  Because of the periodic                        tool  to  study  the  long-standing  quantum  many-particle
+boundary  condition,  the  maximal  distance  is  r  =  L/2.                    problems.
+The  calculated exponents γ  for diﬀerent K  are listed in                         The  CQNS  used  in  this  paper  is  as  simple  as  three
+Table II. From these results, one may see that using small                      layers.  Using deep neural networks may further enhance
+ﬁlters greatly underestimate the decay length of the spin                       the state representation ability, as it is possible to capture
+correlation functions, and therefore can not represent the                      the long-range correlation by multiple convolution layers
+ground state very well.  Increase ﬁlter size may describe                       with  smaller  ﬁlters  in  each  layer.   It  recently  has  been
+the  correlation  functions  more  accurately  and  therefore                   proposed  that  deep  CNN  may  eﬃciently  represent  the
+the better ground state wave functions and energies.  To                        many-particle  states  that  are  even  beyond  area  law.27
+faithfully represent a quantum state, the size of the con-                      Designing  a  practical  deep  CQNS  is  an  interesting  and
+volution ﬁlters should cover the correlation length.  Oth-                      promising route to follow.
+erwise the neural network can not capture the long quan-
+tum correlations.
+   The CQNS is expected to work well for quantum sys-
+tems  with  short  correlation  lengths,  e.g.,  gapped  sys-
+tems.  On the other hand, to simulate very large systems,                                                Acknowledgments
+which  are  much  larger  than  their  correlation  lengths  ξ,
+the CQNS is also advantageous.  One may use a suitable
+ﬁlter  size  K,  which  is  larger  than  ξ,  but  still  much  less               The   authors   appreciate   insightful   discussions   with
+than  the  system  sizes,  therefore  the  number  of  tunable                  Shao-Jun Dong and Chao Wang.  The  construction and
+parameters in CQNS can be greatly reduced.                                      computation  of  neural  networks  in  this  paper  is  per-
+                                                                                formed by the mainstream deep learning framework Py-
+                                                                                Torch.  The numerical calculations have been done on the
+       IV.     CONCLUSIONS  AND  OUTLOOKS                                       USTC  HPC  facilities.  This  work  was  supported  by  the
+                                                                                National  Natural  Science  Foundation  of  China  (Grant
+   We  design  a  convolutional  quantum  neural  network,                      No.   11674306,  61590932),  National  key  R&D  program
+namely  CQNS,  to  study  quantum  many-particle  prob-                         (No.  2016YFA0301300, 2016YFA0317300).
+
+
+
+
+
+
+
+ ∗  Electronic address:  yshzhang@ustc.edu.cn                                    2  D. Silver,  et. al. Mastering the game of Go with deep neural
+ †  Electronic address:  helx@ustc.edu.cn                                           networks  and tree  search, Nature 529, 484-489 (2016).
+ 1  A.  Krizhevsky,  L.  Sutskever and  G.  E.  Hinton,  ImageNet                3  D. Silver,  et. al. Mastering the game of Go without human
+   Classiﬁcation  with  Deep  Convolutional  Neural  Networks,                      knowledge, Nature 550, 354-359 (2017).
+   Advances  in  Neural  Information  Processing  Systems  25,                   4  A.  A.  Melnikov,  H.  O.  Nautrup,  M.  Krenn,  V.  Dunjko,
+   1097-1105  (2012).                                                               M. Tiersch, A. Zeilinger and H. J. Briegel, Active learning
+                                                                                                                                                                 6
+
+   machine  learns  to  create  new  quantum  experiments,  Proc.                       states, Phys. Rev. B 97, 085104 (2018).
+   Natl. Acad. Sci. 115, 1221 (2018).                                               25  X. Gao and L. M. Duan, Eﬃcient representation  of quan-
+ 5  R.  Biswas,    et.  al.  Application  of  machine  learning  algo-                  tum  many-body   states  with  deep   neural  networks,   Nat.
+   rithms to the study of noise artifacts in gravitational-wave                         Commum. 8, 662 (2017).
+   data, Phys. Rev. D 88, 062003 (2013).                                            26  Y. LeCun, L. Botton, Y. Bengio and P. Haﬀner, Gradient-
+ 6  H.   Gabbard,    M.   Williams,    F.   Hayes   and   C.   Mes-                     Based  Learning  Applied  to  Document  Recognition,  Pro-
+   senger,   Matching   matched   ﬁltering   with   deep   networks                     ceedings of the IEEE, 86, 2278-2324 (1998).
+   in  gravitational-wave  astronomy,  Phys.  Rev.  Lett.  120,                     27  Y.  Levine,  O.  Sharir,  N.  Cohen  and  A.  Shashua,  Bridg-
+   141103 (2018).                                                                       ing  Many-Body  Quantum  Physics  and  Deep  Learning  via
+ 7  M.  Krenn,  J.  Handsteiner,  M.  Fink,  R. Fickler,  R. Ursin,                     Tensor  Networks, arXiv:  1803.09780v1.
+   M. Malik and A. Zeilinger, Twisted light transmission over                       28  J. Carrasquilla and R. G. Melko, Machine learning phases
+   143 km, Proc. Natl. Acad. Sci. 113, 13648 (2016).                                    of matter, Nat. Phys. 13, 431-434 (2017).
+ 8  L.  Wang,  Discovering  phase  transitions  with  unsupervised                  29  L.  Wang,  Z-C Gu,  F.  Verstraete and  X.-G.  Wen, Tensor-
+   learning, Phys. Rev. B 94, 195105 (2016).                                            product  state  approach  to spin-  12  square  J1-J2  antiferro-
+ 9  C. Wang and H. Zhai, Unsupervised Learning of Frustrated                            magnetic  Heisenberg  model:Evidence  for  deconﬁned  quan-
+   Classical  Spin  Models  1:   Principle  Component  Analysis,                        tum  criticality, Phys. Rev. B 94, 075143 (2016).
+   Phys. Rev. B 96, 144432 (2017).                                                  30  A. Sfondrini, J. Cerrillo, N. Schuch and J. I. Cirac, Simulat-
+10  K.  Ch´ng,  J.  Carrasquilla,  R.  G.  Melko  and  E.  Khatami,                     ing two- and three-dimensional frustrated quantum systems
+   Machine Learning Phases of Strongly Correlated Fermions,                             with string-bond  states, Phys. Rev. B 81, 214426 (2010).
+   Phys. Rev. X 7, 031038 (2017).                                                   31  W.  Liu,  C.  Wang,  Y.  Li,  Y.  Lao,  Y.  Han,  G.  C.  Guo,  Y.
+11  Tomoki  Ohtsuki  and  Tomi  Ohtsuki,  Deep  Learning  the                           H. Zhao and L. He, Replica  exchange  molecular  dynamics
+   Quantum Phase Transitions in Random Two-Dimensional                                  optimization  of  tensor  network  states  for  quantum  many-
+   Electron  Systems, J. Phys. Soc. Jpn. 85, 123706 (2016).                             body systems, J. Phys. Condens. Matter 27, 085601 (2015).
+12  Tomoki  Ohtsuki  and  Tomi  Ohtsuki,  Deep  Learning  the                       32  D. Scherer, A. M¨uller  and S. Behnke, Evaluation  of  Pool-
+   Quantum Phase Transitions in Random Electron Systems:                                ing  Operations  in  Convolutional  Architectures  for  Object
+   Applications  to  Three  Dimensions, J. Phys. Soc. Jpn. 86,                          Recognition,  20th  International  Conference  on  Artiﬁcial
+   044708 (2017).                                                                       Neural Networks (ICANN), Thessaloniki, Greece, Septem-
+13  P.  Broecker,  J.  Carrasquilla,  R.  G.  Melko  and  S.  Trebst,                   ber 2010.
+   Machine  learning  quantum  phases  of  matter  beyond  the                      33  L. Wang, D. Poilblanc, Z.-C. Gu, X.-G. Wen, and F. Ver-
+   fermion sign problem, Sci. Rep. 7, 8823 (2017).                                      straete,  Constructing  a  Gapless  Spin-Liquid  State  for  the
+14  K.  Mills,  M.  Spanner and  I.  Tamblyn,  Deep  learning  and                      Spin-1/2 J1J2 Heisenberg Model on a Square Lattice, Phys.
+   the Schr¨odinger equation, Phys. Rev. A 96, 042113 (2017).                           Rev. Lett. 111, 037202 (2013).
+15  K.  Mills  and  I.  Tamblyn,  Deep  neural  networks  for  di-                  34  W. Liu, S. Dong, C. Wang, Y. Han, H. A.n, G. C. Can and
+   rect,  featureless  learning  through  observation:   the  case  of                  L.  He,  Gapless  spin  liquid  ground  state  of  spin-1/2  J1-J2
+   2d spin models, Phys. Rev. E 97, 032119 (2018).                                      Heisenberg  model  on  square  lattices,  arXiv:  1806.07031v1
+16  P.  Zhang,  H. Shen  and  H.  Zhai,  Machine  Learning  Topo-                       (2018).
+   logical  Invariants  with  Neural  Networks,  Phys.  Rev. Lett.                  35  W.  J.  Hu,  F.  Becca,  A.  Parola  and  S. Sorella,  Direct  evi-
+   120, 066401 (2018).                                                                  dence  for  a  gapless  Z2  spin  liquid  by  frustrating  Nel  anti-
+17  A.  Tanaka  and  A.  Tomiya,  Detection  of  phase  transition                      ferromagnetism, Phys. Rev. B 88, 060402 (2013).
+   via  convolutional  neural  network,  J.  Phys.  Soc.  Jap.  86,                 36  S.  S.  Gong,  W.  Zhu,  D.  N.  Sheng,  O.  I.  Motrunich  and
+   063001 (2017).                                                                       Matthew P. A. Fisher, Plaquette Ordered Phase and Quan-
+18  H.  Saito,    Solving  the  Bose-Hubbard  model  with  machine                      tum Phase Diagram in the Spin-1/2 J1-J2  Square Heisen-
+   learning, J. Phys. Soc. Jap. 86, 093001 (2017).                                      berg  Model, Phys. Rev. Lett. 113, 027201 (2014).
+19  G. Carleo and M. Troyer, Solving the quantum  many-body                         37  H.  Robbins  and  S.  Monro,  A  Stochastic  Approximation
+   problem  with  artiﬁcial  neural  networks,  Science  355,  602                      Method,  The  Annals  of  Mathematical  Statistics,  22  400-
+   (2017).                                                                              407 (1951).
+20  D.  L.  Deng,  X.  Li  and  S.  DasSarma,  Quantum  Entangle-                   38  K.  Cao,  Z.-W.  Zhou,  G.-C.  Guo  and  L.  He,  Eﬃcient  nu-
+   ment  in  Neural  Network  States,  Phys.  Rev.  X  7,  021021                       merical method to calculate the three-tangle of mixed states,
+   (2017).                                                                              Phys. Rev. A 81, 034302 (2010).
+21  A.  Voigt,  J.  Richter  and  N.  B.  Ivanov,  Marshall-Peierls                 39  K.   Cao,   G-C   Guo,   D.   Vanderbilt   and   L.   He,   First-
+   sign  rule for  excited  states  of  the  frustrated  J1-J2  Heisen-                 Principles  Modeling  of  Multiferroic  RMn2 O5 ,  Phys.  Rev.
+   berg  antiferromagnet, Physica A 245, 269-275(1997).                                 Lett. 103, 257201 (2009).
+22  J. Biamonte and V. Bergholm, Tensor Networks in a Nut-                          40  E. Marinari, G. Parisi and J. J. Ruiz-Lorenzo, Phase struc-
+   shell, arXiv:  1708.00006v1.                                                         ture of the three-dimensional Edwards-Anderson spin glass,
+23  I.  Glasser,  N.  Pancotti,  M.  August,  I.  D.  Rodriguez  and                    Phys. Rev. B 58, 14852 (1998).
+   J. I. Cirac,  Neural-Network  Quantum  States,  String-Bond                      41  F.  Mezzacapo,  N. Schuch,  M.  Boninsegni  and  J.  I. Cirac,
+   States,   and  Chiral  Topological  States,   Phys.  Rev.  X  8,                     Ground-state  properties  of  quantum  many-body  systems:
+   011006 (2018).                                                                       entangled-plaquette   states  and  variational  Monte  Carlo,
+24  J. Chen, S. Cheng, H. Xie, L. Wang and T. Xiang, Equiva-                            New. J. Phys. 11, 083026 (2009).
+   lence of restricted Boltzmann machines and tensor network

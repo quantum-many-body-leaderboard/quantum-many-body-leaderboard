@@ -1,0 +1,978 @@
+Accelerating the Convergence of Coupled Cluster Calculations of
+the Homogeneous Electron Gas Using Bayesian Ridge Regression
+
+                Julie Butler,1, 2  Morten Hjorth-Jensen,2, 3  and Justin G. Lietz4
+
+                    1Department  of  Biochemistry,  Chemistry,  and  Physics,
+
+                   University  of  Mount  Union,  Alliance,  Ohio  46601,  USA
+
+                2Department  of  Physics  and  Astronomy  and  Facility  for  Rare
+
+             Isotope  Beams  and  National  Superconducting  Cyclotron  Laboratory,
+                 Michigan  State  University,  East  Lansing,  MI  48824,  USA∗
+
+         3Department of Physics and Center for Computing in Science Education,
+
+                            University  of  Oslo,  N-0316  Oslo,  Norway
+
+                         4National  Center  for  Computational  Sciences,
+
+                Oak  Ridge  National  Laboratory,  Oak  Ridge,  TN  37831,  USA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+∗ Corresponding Author:  butlerju@mountunion.edu
+
+
+                                                   1
+   ABSTRACT
+
+
+   The homogeneous electron gas is a system that has many applications in chemistry and
+physics.  However, its infinite nature makes studies at the many-body level complicated due
+to  long  computational  run  times.   Because  it  is  size  extensive,  coupled  cluster  theory  is
+capable of studying the homogeneous electron gas, but it still poses a large computational
+challenge as the time needed for precise calculations increases in a polynomial manner with
+the number of particles and single-particle states.  Consequently, achieving convergence in
+energy calculations becomes challenging, if not prohibited, due to long computational run
+times and  high computational resource  requirements.   This paper  develops  the sequential
+regression extrapolation (SRE) to predict the coupled cluster energies of the homogeneous
+electron  gas  in  the  complete  basis  limit  using  Bayesian  ridge  regression  and  many-body
+perturbation theory correlation energies to the second order to make predictions from calcu-
+lations at truncated basis sizes.  Using the SRE method we were able to predict the coupled
+cluster doubles energies for the electron gas across a variety of values of N and rs, for a total
+of 70 predictions,  with an average error of 5.20x10−4  Hartrees while saving 88.9 hours of
+computational time.  The SRE method can accurately extrapolate electron gas energies to
+the complete basis limit, saving both computational time and resources.  Additionally, the
+SRE is a general method that can be applied to a variety of systems, many-body methods,
+and extrapolations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      2
+   INTRODUCTION
+
+
+   A proper understanding of the role of correlations beyond a mean-field description is of
+great importance for quantum many-particle theories.  For all possible quantum-mechanical
+systems, either finite ones or infinite systems like the homogeneous electron gas in two or
+three dimensions or nuclear or neutron star matter, the concept of an independent particle
+motion continues to play a fundamental role in studies of many-particle systems.  Deviations
+from such an independent particle,  or mean-field,  picture have normally been interpreted
+as a possible measure of correlations.  The latter are expected to reveal important features
+of  both  the  structure  and  the  dynamics  of  a  many-particle  system  beyond  a  mean-field
+approximation.
+
+   The homogeneous electron gas (HEG) is an infinite matter system composed of electrons
+with a uniform positive background charge [1–7].  The ions are stationary and the system as
+a whole is neutral.  It is widely studied in chemistry and physics because it is a reasonable
+model for many systems of interest. For instance, the three-dimensional HEG is fundamental
+in  density  functional  theory’s  local-density  approximation  and  can  represent  electrons  in
+alkali metals and doped semiconductors.  Two-dimensional electron fluids are observed on
+metal and liquid-helium surfaces, as well as at metal-oxide-semiconductor interfaces.  The
+HEG serves also as a foundation for developing many-body frameworks applicable to more
+complex systems such as infinite nuclear matter.
+
+   The HEG in two and three dimensions represent also some of the few examples of systems
+of many interacting particles that allow for analytical solutions of the mean-field Hartree-
+Fock equations.  Irrespective of this simplicity, the HEG in both two and three-dimensions,
+has eluded a proper description of correlations in terms of various first principle methods,
+except perhaps for quantum Monte Carlo methods.  In particular, the diffusion Monte Carlo
+calculations of Ceperley et al.  [8, 9], are presently still considered the best possible bench-
+marks for two- and three-dimensional electron gas.  In Ref. [8],  the fermion sign problem
+is  handled  using  a  released-node  approximation.   Similar  accuracy  has  been  obtained  in
+more recent calculations using the backflow-correlation technique [10], which is used to relax
+the simpler fixed-node approximation.  Recently, variational Monte Carlo approaches using
+deep neural networks [11, 12] result in ground state energies for a variety of densities which
+
+                                                      3
+show minima below the best diffusion Monte Carlo results.  In addition to various Monte
+Carlo approaches, the electron gas has been studied using a large number of different ap-
+proaches and many-body methods.  Amongst such many-body methods,  we have coupled
+cluster (CC) theory.  Coupled cluster theory is a powerful method used in nuclear physics,
+condensed matter physics, quantum chemistry, and other fields to predict ground state en-
+ergy accurately [13–21].  It organizes and includes interactions beyond the mean-field in a
+systematic manner, making it a popular choice for many-body calculations.  Although CC
+truncates interactions, making it less accurate than full configuration interaction theory, it
+offers faster computational run times.  Compared to other many-body methods like many-
+body perturbation theory, CC achieves significantly higher accuracy, making it an attractive
+compromise between speed and accuracy.
+
+   Singal and Das [22] were the first to study the electron gas using a CC approach.  The
+approximation they used is similar to the Brueckner Hartree-Fock method [23], and did not
+properly  include  particle-hole  ring  diagrams.   Later,  Freeman  performed  CC  calculations
+[24] in which only ring diagrams and their exchange parts were retained in a CC doubles
+approximation.  The results of both Singal and Das [22] and Freeman [24] compared well
+with  dielectric-function  approaches.   These  calculations  of  the  three-dimensional  electron
+gas were improved by Bishop and L¨uhrmann [6, 26].  Bishop and L¨uhrmann derived a CC
+SUB2  approximation  (also  called  CC  doubles  (CCD)  [13])  for  the  electron  gas,  extended
+with some ladder contributions from higher-order amplitudes.  As the authors described in
+Ref. [6],  the CCD  approximation  contains  many  more diagrammatic classes  than partial-
+summation  techniques  derived  from  perturbation  theory.   The  CCD  approximation  takes
+account of particle-particle and hole-hole ladders, particle-hole ring diagrams including ex-
+change terms, and many other diagrams to infinite order in perturbation theory.  Recently,
+Shepherd et al.  [1, 5, 29, 30] have taken up again the CC effort for the three-dimensional
+electron gas.  The CC calculations for the electron gas from the 1970s and 1980s were all
+done at the thermodynamic limit [6, 22, 24, 26].  Unfortunately, singularities related to the
+Coulomb two-body interaction may complicate numerical calculations at the thermodynamic
+limit.  Shepherd et al.  approximate the electron gas using finite cubic boxes [1, 5, 29, 30].
+However, to make CC calculations feasible in the HEG using finite lattices, truncations are
+necessary, thereby introducing errors that diminish accuracy.  The truncation in the basis of
+
+                                                      4
+single-particle states (M) leads to basis incompleteness errors while truncating the number
+of electrons (N) and the HEG volume (Ω) introduces finite-size errors.  One way to reduce
+these  errors  is  by  performing  CC  calculations  at  high  values  of  M  and  N,  such  that  the
+calculations have converged.  However, this approach demands extensive computational re-
+sources and time.  Since basis incompleteness errors and finite size errors arise from different
+truncations, they can be addressed independently [1, 2].  This work focuses on removing the
+basis truncation errors from CC doubles calculations of the HEG using machine learning.
+
+
+   Machine learning (ML), a field at the intersection of data science and artificial intelligence,
+has become increasingly prominent as a tool in physics and chemistry, which can be applied
+to a wide variety of problems [32–44]. This paper aims to develop an ML-based extrapolation
+method, called sequential regression extrapolation (SRE) that uses Bayesian ridge regression.
+This method extrapolates CC correlation energies calculated at smaller M to eliminate basis
+incompleteness errors.  Despite the challenges of applying ML for extrapolation and limited
+data sets due to computational constraints, the proposed approach is expected to significantly
+reduce the run time of fully converged CC calculations without sacrificing accuracy.
+
+
+   Previous studies have explored ML techniques in CC calculations, including predicting
+CC correlation energies from many-body perturbation theory amplitudes and using neural
+networks to eliminate finite-size errors in nuclear CC calculations [36, 45, 46].  Traditional
+extrapolation  methods  have  also  been  employed  to  extrapolate  converged  CC  correlation
+energies for the HEG and other many-body systems, to eliminate basis incompleteness and
+finite-sized errors [1, 2, 47–52].  However, this paper distinguishes itself by applying an ML-
+based extrapolation technique, SRE, to predict CC correlation energies using Bayesian ridge
+regression, specifically targeting the HEG.
+
+
+   The paper’s structure begins with a theoretical explanation of the homogeneous electron
+gas,  many-body  perturbation  theory,  and  coupled  cluster  theory.   It  then  introduces  the
+development of the SRE algorithm and its application to accelerate the convergence of CC
+correlation energies concerning the number of single-particle states and electrons.  Finally,
+the results and discussion section presents the time savings achieved with the SRE algorithm,
+and the accuracy of extrapolation in terms of single-particle states.
+
+                                                       5
+   BACKGROUND
+
+
+   Coupled cluster theory (CC) is a highly effective many-body method that approximates
+the solution to the Schr¨odinger equation to a high degree of accuracy [19–21, 53, 54]. Coupled
+cluster theory is widely used in quantum chemistry to accurately predict the ground state
+energy  of  complex  systems  [18].   By  systematically  incorporating  interactions  beyond  the
+mean field, CC offers a robust framework for many-body calculations. CC outperforms other
+many-body methods like many-body perturbation theory in terms of accuracy, making it an
+appealing choice that strikes a balance between speed and precision.  However, even though
+CC is size extensive (an important quality for its application to infinite matter systems) the
+polynomial  time  scaling,  with  respect  to  the  size  of  the  system,  can  make  CC  run  times
+prohibitively long for large systems [55].
+   Coupled cluster theory starts with the exponential ansatz that states a many-body wave-
+function can be created by applying an exponential cluster operator to the Fermi vacuum
+state, shown in Eq. (1).  The cluster operator consists of N excitation operators, where N
+is the number of electrons or particles in the system.  However, for practical calculations,
+the number of terms in the cluster operator is often truncated to a set level [55–60].  In this
+work, the focus is on the doubles level (CCD), which approximates the cluster operator with
+just the two-particle two-hole excitation operator (Eq. (2)).  Since the homogeneous electron
+gas is an infinite matter system, the terms which result from coupled cluster singles are zero
+due to momentum conservation.  Thus performing CCD calculations here are equivalent to
+performing coupled cluster singles and doubles (CCSD) calculations.
+
+
+                                                 |Ψ⟩ = e ˆT|Φ0⟩,                                                       (1)
+
+and
+                                                NX
+                                         ˆT =       ˆTi −→  ˆTCCD =  ˆT2.                                             (2)
+
+                                               i=1
+   A CCD calculation has an expected run time of O(M 6), where M is the number of single-
+particle  states  in  the  calculation  [55].   Furthermore,  it  is  important  to  note  that  a  CCD
+calculation contains all correlations needed to compute the many-body perturbation theory
+to the second-order (MBPT2) results,  so MBPT2 energies can be computed from a CCD
+calculation with little additional computational costs.  The MBPT2 energy is less accurate
+
+                                                       6
+than the CCD energy but it has a significantly smaller run time while still incorporating
+some aspects of the interactions beyond the mean field.
+   The energy calculated through CC, denoted as ECC, is typically presented as the correla-
+tion energy, which is the CC energy minus the reference energy obtained from Hartree-Fock
+theory
+                               ECC = ⟨Φ0|e− ˆT ˆHe ˆT|Φ0⟩ = EREF + ∆ECC.                                 (3)
+
+   MBPT2 energies can be found, as shown in Eq. (4), are are often presented as correlation
+energies as well.
+
+                              EMBPT = EREF + 1          X     ⟨ij|ˆv2|ab⟩⟨ab|ˆv2|ij⟩
+                                                      4 ijab (ϵi + ϵj) − (ϵa + ϵb)                                (4)
+
+   In the above equation, EREF  is the reference energy obtained from Hartree-Fock theory,
+ϵp is the energy of state p, and ⟨ij|ˆv2|ab⟩ is the two-body operator between the filled states
+i and j, and the empty states a and b.
+   As mentioned above, the HEG is an infinite matter system consisting of electrons with
+a uniform positive background charge, and studies are important in diverse areas of chem-
+istry and physics [1, 2, 5, 6, 61].  In the context of the three-dimensional HEG, it plays a
+fundamental role in the local-density approximation of density functional theory.  Addition-
+ally, the HEG can effectively model electrons in alkali metals and doped semiconductors and
+provides  a  foundation  for  developing  many-body  frameworks  applicable  to  more  intricate
+infinite matter systems, including infinite nuclear matter [1–3, 5, 6].
+   The HEG Hamiltonian for N  electrons includes kinetic energy, electron-electron interac-
+tions, and the Madelung term.  The last two terms make up the Ewald interaction, which
+separates  short-range  and  long-range  components  of  the  Coulomb  interaction  [1,  2].   The
+Hamiltonian is defined as:
+
+                                  ˆH = −1    X    ∇2α + 1   X    ˆvαβ + 1
+                                           2  α           2 α̸=β         2NvM,                                     (5)
+
+where α and β are electron indices.  The two-electron operator, ˆvαβ, accounts for the contri-
+butions from the electron-electron interactions.
+   The one-electron basis set consists of plane waves, which are given by the wave function:
+
+                                                       7
+                                                      r  1
+                                        ψj(⃗r, σ) =      Ω  ei⃗kj·⃗r δσj,σ,                                             (6)
+
+where Ω is the volume of the HEG, ⃗kj is the wave vector, and δσj, σ is the Kronecker delta
+[3, 62].  The density of the HEG is often described by the Wigner-Seitz radius, rs, which is
+related to the size of the sphere that contains the electron gas. In this work, we are interested
+in high-density HEG systems and will restrict rs < 1.0 [63, 64].
+   When applying CC  to  the HEG, certain truncations  become necessary to make calcu-
+lations computationally feasible,  albeit at the cost of introducing errors that compromise
+accuracy [1, 2, 5, 6].  The truncation of single-particle states (M) gives rise to basis incom-
+pleteness errors while truncating electrons (N) and the corresponding volume of the HEG
+(Ω) introduces finite-size errors while also necessitating the inclusion of boundary conditions
+(periodic boundary conditions are used in this work).  Finally, the CC cluster operator must
+also be truncated, as discussed previously.
+   This paper focuses on the truncation of M, which introduces basis truncation errors into
+the calculations compared to calculates performed at the complete basis limit (M −→ ∞).
+One approach to mitigate this error involves performing CC calculations at high values of M.
+However, this strategy imposes significant computational demands and time requirements,
+since CCD computational costs scale as O(M 6) [55].  For the calculations performed in this
+work,  the  energies  converted  with  respect  to  basis  size  at  M=6,142  single-particle  states,
+making the computational costs of O(M 6) a very unattractive prospect.  This paper aims
+to address the truncation errors in coupled cluster calculations by proposing a method that
+retains accuracy without relying on computationally burdensome calculations at larger M
+values.  The focus is on removing the basis incompleteness error by performing calculations
+at smaller values of M and extrapolating the coupled cluster (CC) energy results to achieve
+convergence in the complete basis limit.
+   Specifically, the method involves conducting calculations at a fixed number of electrons,
+N, and a fixed Wigner-Seitz radius (rs) using 15 increasing, yet relatively small, values of M
+(M ≤ 2,090). Note that the exact values of M used in the calculations depend on the number
+of particles in the system.  A machine learning-based algorithm is employed to extrapolate
+the CC energy to convergence.  The resulting converged CC energy should approximate the
+CC energy obtained at a high M  value (M = 6, 142 in this work), effectively mitigating the
+
+                                                       8
+(a) ∆ECCD  per electron plotted against N  with
+calculations performed at four different values of(b) The run times (measured in node hours) for  (c) The RAM required for CCD calculations of
+M.  As M  increases, the error in the calculation CCD calculations of the HEG as a function of       the HEG as a function of M and at three
+decreases, but the run time drastically increases.    M and at three different values of N.                    different values of N.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                       (f) A plot of the ratio of ∆ECCD  to
+                                                                                                   ∆EMBPT 2  as a function of M  for N = 114,
+(d) A plot of ∆ECCD  and ∆EMBPT 2  versus        (e) Figure 1d is transformed such that ∆ECCD     342, and 502 and rs=0.5.  As M  increases, the
+   M  for a HEG system with N = 342 and           are plotted as a function of ∆EMBPT 2  (such       ratio (or the slope of the line in Figure 1c
+  rs=0.5.  The converged correlation energies    that each point has the same M).  The resulting   becomes increasingly constant.  However, it is
+calculated at M = 6, 142 are shown with dashed      plot has a linear relationship that becomes    important to note that the run time increases
+            lines for each method.                    stronger to the left (as M  increases).               drastically as M  increases.
+
+ Figure 1:  An analysis of the relationship between ∆ECCD  and ∆EMBPT2 for calculations on the
+
+                                                 HEG at various M, N, and rs.
+
+
+basis incompleteness error, while saving significant computational time and resources.
+
+
+
+    METHODOLOGY
+
+    In this work, the CCD and MBPT2 correlation energies will be denoted as ∆ECCD,M and
+∆EMBPT2,M, respectively, to show the number of single-particle states in the calculations.
+Figure  1a  shows  a  plot  of  ∆ECCD  per  particle  for  all  magic  numbers  between  two  and
+502(inclusive), with the CC calculations performed at four different values of M  and at rs
+=  0.5.   The  calculations  performed  at  M  =  514  (the  red  line  in  the  plot)  are  the  least
+accurate since the data was generated with the lowest value of M.  When M  = 6, 142, the
+correlation energies are converged (to 10−7 Hartrees), making this data set (plotted in purple)
+
+                                                                      9
+the most accurate.  However, as M  increased, the run time and computational resources of
+the calculation drastically increased as well.
+
+   The  computational  run  times  for  CCD  calculations  for  the  HEG  are  shown  in  Figure
+1b, plotted as a function of the number of single-particle states in the calculation for three
+values of N  and rs = 0.5.  Note that the run times are reported in node hours, calculated
+by multiplying the number of nodes used in the program by the total run time (in hours).
+This is done to more accurately reflect the computational resources needed by a parallelized
+program.  All calculations were performed on Michigan State University’s High Performance
+Computing Center (HPCC) using Intel Xeon processors with a clock speed of 2.4 GHz and
+240 GB of RAM. All calculations were parallelized using four MPI nodes and 28 OpenMP
+threads.  Run time increases drastically as both N  and M  increase,  with the calculations
+at higher values of M  and N  having run times of over twelve node hours.  Studies of the
+homogeneous electron gas frequently require calculations at many values of  N  and rs,  so
+having one calculation take hours can make large-scale studies prohibitive.
+
+   Figure  1c  shows  the  RAM  needed  for  CCD  calculations  for  the  HEG  as  a  function  of
+M  and for three values of N  at rs = 0.5.  Note that these RAM measurements have been
+taken from a naive CCD code which has no memory optimizations, to show the worst-case
+scenario in these calculations.  This increase in RAM as M increases is due to an increase in
+the number of matrix elements as both N  and M  increase.  Naively, there are  M matrix
+                                                                                                   N
+elements,  but computational advancements,  such as the block-diagonal memory structure
+described in [65], do reduce the total number of matrix elements that need to be calculated
+and stored at one time and since CCD is already truncated, its memory requirements are
+only O(M 4), which is still quite high for when performing calculations in the complete basis
+limit
+   Therefore, this paper aims to predict the converged ∆ECCD for the HEG using only data
+calculated at smaller values of M, where the computational time and resource requirements
+are less significant.  This paper will use ∆ECCD,6142 as the actual, or most accurate result,
+and ∆ECDC has been confirmed to have converged at this point, meaning that the correlation
+energies have converged to within 10−7 Hartrees when adding additional single-particle states
+to the calculations.
+
+   Figure 1d shows the convergence of ∆ECCD as a function of M for a HEG with N = 342
+
+                                                     10
+and  rs=0.5.   Though  the  apparent  route  would  be  to  attempt  to  predict  the  converged
+correlation energy (plotted with a red dashed line) using the converging correlation energies
+from  smaller  M  calculations,  in  practice,  predictions  using  this  method  do  not  have  an
+acceptable  accuracy.   However,  if  we  plot  ∆EMBPT2  for  the  same  system  in  addition  to
+∆ECCD, we see that they follow a very similar pattern.  Since ∆EMBPT2 can be generated
+quickly, the goal of this work is to create a model through which the converged ∆ECCD can
+be  predicted  from  ∆EMBPT2.   Figure  1e  is  a  transformation  of  Figure  1d,  where  ∆ECCD
+are plotted as a function of ∆EMBPT2.  Each point represents a calculation performed with
+the same value of M.  When the data is formatted in this way, M  increases from right to
+left.  As the graph moves from right to left,  it becomes increasingly linear (i.e.,  the ratio
+∆ECCD/∆EMBPT2 becomes constant as M  increases).
+
+   We can see this trend more clearly if we plot ∆ECCD/∆EMBPT2  for various M  values
+and  N  =  114,  342,  and  502  with  rs  =  0.5  in  Figure  1f.   For  each  of  these  data  sets  at
+larger values of M, the ratio leveled off to a constant, or near constant, value.  Therefore the
+goal of the research is to be able to predict the constant value of ∆ECCD/∆EMBPT2, which
+occurs at larger values of M  by extrapolating from data points collected at lower values of
+M.  We will use this pattern to create the input to a method created by the authors known
+as sequential regression extrapolation (SRE), a regression-based machine learning algorithm
+used to accurately extrapolate small data sets generated from many-body codes.
+
+   Both ∆ECCD  and ∆EMBPT2 converge as M increases.  Therefore, there must be a large
+value of M where their ratio becomes a constant:
+
+
+
+                                      ∆ECCD,Large  M
+                                     ∆EMBPT2,Large  M −→ constant.                                         (7)
+
+
+   Ridge regression, a supervised machine learning algorithm, will be used to find this con-
+stant value using only data collected at low values of M [32, 33].  where the ratio is not yet
+constant.  ∆ECCD and ∆EMBPT2 were calculated for a range of N and rs values, and for 15
+values of M for each data set (2 ≤ M≤ 2090,  exact values depend on N), resulting in 15
+points per data set.  For each data set, the training data for the regression algorithm was
+created by dividing ∆ECCD by ∆EMBPT2 at the same value of M.
+
+                                                      11
+     y =   ∆ECCD,M∆EMBPT2,M  =   ∆ECCD,M1∆EMBPT2,M1 ,   ∆ECCD,M2∆EMBPT2,M2 ,   ∆ECCD,M3∆EMBPT2,M3 , ...,   ∆ECCD,M15∆EMBPT2,M15       (8)
+
+   Next,  a  ridge  regression  algorithm  with  Bayesian  hyperparameter  tuning  is  trained  on
+this data set [32, 66, 67].  The form of the Bayesian ridge regression,  fRidge  in Eq.  9, are
+defined in Refs.  [66] and [67].  However, the way this algorithm is trained is unique because
+there is no x component of the data set. Instead, the input to the algorithm is two sequential
+ratios, taking at neighboring values of M, and the output is the ratio at the next value of M.
+This method of data formatting combined with a regression algorithm gives rise to the SRE
+algorithm.  There are, however, a few important points to note in regards to how the SRE
+algorithm is trained and used.  First, the algorithm is only trained for a given system with
+set parameters; thus each data point in 2 represents a separate training and prediction of
+the SRE algorithm.  The values of M chosen for the training data are taken to correspond to
+closed energy shells, with the exact values of M ranging between one and 15 open shells with
+the exact values of M depending on the number of electrons (over the full energy shells which
+hold the electrons in the ground state).  Thus, the values of M  used in the calculations will
+vary between calculations with different numbers of electrons, though changing the density
+does of affect the values of M  used in the calculation.
+
+
+                         fRidge(  ∆ECCD,k−2∆EMBPT2,k−2 ,   ∆ECCD,k−1∆EMBPT2,k−1 ) =   ∆ECCD,k∆EMBPT2,k                           (9)
+
+   When Eq.  9 is trained using 15 training points at different values of M, the time-series
+like formatting results in eleven training points:  ((M1, M2),  M3),  ((M2, M3),  M4),  ((M3,
+M4), M5), ...  .  Once trained, the SRE algorithm is then used to extrapolate this data set
+to many points until the ratio of correlation energies has converged (for 50 points in total).
+This value can then be taken as the slope of the graph created with ∆ECCD  plotted as a
+function of ∆EMBPT2 at high M (Figure 1e).
+
+                                       lim    ∆ECCD,k
+
+                                      k→∞   ∆EMBPT2,k  = slope = m                                         (10)
+   Finally, ∆EMBPT2,6142 is generated, a process that takes less than one second (not includ-
+ing the time to generate the matrix elements).  ∆EMBPT2,6142 is multiplied by the slope, m,
+to approximate ∆ECCD,6142.
+
+                                                      12
+                                      m∆EMBPT2,6142 ≈ ∆ECCD,6142                                         (11)
+
+   This  process  is  performed  for  many  combinations  of  N  and  rs,  but  each  training  and
+prediction takes an average of 30 ms and thus does not contribute significantly to the run
+time.  It is important to note that the data sets used to train a machine learning algorithm
+in  this  work  consist  of  15  points  each,  making  these  data  sets  some  of  the  smallest  used
+in physics applications of machine learning.  Many machine learning algorithms need more
+points  to  be  accurately  trained,  even  up  to  1-2  orders  of  magnitude  more,  as  with  some
+neural networks [32, 33, 36, 68].  It is also of note that machine learning is typically only
+used to make extrapolations in exceptional cases such as recurrent neural networks.  When
+asked to make predictions outside their training range, many machine learning algorithms
+perform poorly without significant modifications.  However, it will be shown that SRE can
+make accurate extrapolations using only a small training set, making it a unique machine
+learning-based algorithm.
+   In the analysis of the results and their stability and also range of applicability, one should
+keep in mind that many-body perturbation theory and coupled cluster theories are theories
+which  explicitly  include  energy  denominators  defined  in  terms  of  the  differences  between
+states below and above the Fermi level. When the system (and this applies to both finite and
+infinite systems like the electron gas studied here) becomes more dilute, which corresponds
+to larger values of rs, these energy gaps become smaller and smaller and result eventually in
+a worsened convergence and/or unstable results as function of the number of single-particle
+states.  For larger values of rs one needs more complicated correlations than those included
+here in order to obtain stable results.  For values of rs larger than those used in this work,
+many-body  perturbation  theory  to  second  order  results  normally  in  less  table  results  as
+function  of  intermediate  single-particle  states,  and  limits  thus  the  applicability  (with  its
+simplicity defined by second-order MBPT) of the present method.
+
+
+
+   RESULTS AND DISCUSSION
+
+
+   The SRE method must meet two metrics to be a useful extrapolator.   First,  the total
+time  to  generate  the  training  data,  train  the  SRE  algorithm,  and  predict  the  converged
+
+                                                       13
+correlation energy must be less than the time to do the total calculation for the correlation
+energy at M  = 6, 142 (significantly less so to be an attractive alternative).  Secondly, the
+accuracy between the predicted converged correlation energies and the calculated converged
+correlation energies must be high.
+
+   The time needed to train the SRE algorithm and predict the converged correlation energy
+is on the order of milliseconds, so the primary time savings will come from calculating the
+training data versus the time needed to perform the calculation at M  = 6, 142.  When the
+number of electrons N  is small,  the time savings is also small,  only 0.024 node hours for
+N = 66 and rs = 0.5.  However, the time savings grows quickly as N increases.  For example,
+at N = 246 and rs = 0.5, using the SRE method saves 2.05 node hours, and by N=502 and rs
+= 0.5, the SRE time savings is 5.88 node hours.  Therefore, the SRE method can drastically
+reduce the run times of predicting the converged correlation energies for the HEG system,
+especially for studies requiring many values of rs and N.  Additionally, the total time saved
+from just generating the training data compared to performing all calculations at M = 6, 142
+for all data points shown in Figure 2 is 88.9 node hours.
+
+   The amount of RAM needed to generate the training points with the highest M  value
+(M  = 2, 090) is only 33.15 GB at 502 electrons (represented the largest combination of N
+and M across all of the training data sets) while it takes 106.48 GB of RAM just to generate
+the  fully  converged  coupled  cluster  correlation  energy  at  66  electrons  (one  of  the  smaller
+numbers of electrons studied).  At its worst, calculating the fully converged CCD correlation
+energy at 502 electrons (the highest number of electrons in this study) took 444.48 GB of
+RAM. Thus, using the SRE method and only needing to generate a small amount of training
+data at low values of M saves significant computational time and resources when compared
+to performing the fully converged calculations at a high value of M.
+
+   While a reduced run time and lessened computational resources are important, an even
+more important factor is the accuracy of the predictions. In Figure 2, the predicted converged
+∆ECCD per electron is plotted with ∆ECCD,6142/N  for a variety of values of N  and rs.  We
+limit ourselves to values of rs < 1.0 as we are interested in studying a high-density electron
+gas [63, 64].  The solid lines graph the fully converged calculations performed at M = 6, 142,
+the triangular markers plot the SRE prediction for the converged CCD correlation energy
+per electron at each combination of N  and rs, and the shaded regions show the uncertainty
+
+                                                     14
+of the ML prediction, computed by the Bayesian ridge regression algorithm.  Each color in
+the plot represents a different value of rs, as shown in the legend of Figure 2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 2:  The results from performing an SRE extrapolation for various numbers of electrons and
+values of rs.  Results are plotted against ∆ECCD,6142  and the uncertainties on the predictions are
+
+also shown with shaded regions.
+
+
+   The  machine  learning  predictions  lead  to  an  average  error  for  each  rs  shown  in  Table
+1,  and an overall percent error of 0.39%.  If instead of considering the correlation energy,
+we instead consider transforming the predictions to the full coupled cluster energy (ECCD =
+E0+∆ECCD), the average percent error drops to 0.011%. Regardless of whether the energies
+or correlation energies are the desired result, the SRE method is able to make all predictions
+shown in Figure 2 (70 predictions) with an average error of 5.20x10−4 Hartrees, meaning this
+error would not be significant in most coupled cluster calculations.
+
+
+
+
+
+
+   CONCLUSION
+
+
+   Truncating  the  number  of  single-particle  states  in  coupled  cluster  calculations  of  the
+homogeneous electron gas is required due to restrictions on computational time and resources.
+However, this truncation introduces basis incompleteness errors into the calculations, which
+
+                                                       15
+      rs   Average Error on Prediction (Hartrees)                 Average Uncertainty (Hartrees)
+
+     0.05                       1.59x10−4                                         5.59x10−3
+
+      0.1                       2.49x10−4                                         5.10x10−3
+
+     0.25                       3.57x10−4                                         3.48x10−3
+
+      0.5                       3.99x10−4                                         2.23x10−3
+
+     0.75                       9.93x10−3                                         2.21x10−3
+
+     Table I: A quantitative summary of the SRE prediction accuracy.  The first column is the
+
+Wigner-Seitz radius, the second the average error (in Hartrees) for each value of rs, and the third
+
+  column is the average uncertainty on the predictions, taken from the Bayesian ridge regression
+                                                   algorithm.
+
+
+reduces  their  accuracy.   The  SRE  method  allows  the  coupled  cluster  double  correlation
+energies  at  the  limit  of  high  M  to  be  recovered  using  CCD  correlation  energies  at  small
+values of M.  This saves significant computational time and resources while still achieving
+an  acceptable  level  of  accuracy.   To  frame  the  SRE  method  in  another  method,  it  is  a
+dimensionality reduction algorithm for CCD calculations since it allows the number of single-
+particle states in a calculation to be drastically reduced while still achieving the accuracy of
+a calculation with a much higher dimension (i.e.  the complete basis limit).
+
+   Though this work presents the SRE method in the light of performing basis completeness
+extrapolations for coupled cluster calculations of the homogeneous electron gas, SRE is an
+extremely general method that can be applied to many problems.  With no modifications,
+this method can perform basis completeness extrapolations for coupled cluster calculations
+of many systems, both finite and infinite.  Of particular interest to the authors is the poten-
+tial ability of the SRE method to predict the CC correlation energy in the complete basis
+limit for infinite nuclear matter and atomic nuclei [69–74].  Additionally, basis truncations
+are not unique to coupled cluster calculations, making SRE applicable to other many-body
+methods as well.  Other many-body methods, such as full configuration interaction and in-
+medium similarity renormalization group theory, may also benefit from an SRE approach
+[75, 76].  Finally, with minor modifications to the set-up of the problem, the SRE method
+can be used to perform other extrapolations such as extrapolating to the thermodynamic
+
+                                                      16
+limit to remove finite size effects and extrapolating with respect to the order of a calculation
+to include higher-order terms without increasing run times, relevant for many-body pertur-
+bation theory and coupled cluster theory among others.  Thus, the SRE method, capable of
+accurately performing extrapolations with small data sets, has the possibility of decreasing
+computational run times and resource requirements of calculations throughout the field of
+many-body physics, making large-scale studies and studies of complex systems much more
+feasible.
+   All code and data needed to recreate the plots and calculations in this paper are available
+at www.github.com/butler-julie/HEG-SRE.
+
+
+
+   ACKNOWLEDGEMENTS
+
+
+   This research is supported by the U.S. National Science Foundation Grants No.  PHY-
+2310020 and PHY-2013047.  This material is based upon work supported by the U.S. De-
+partment of Energy,  Office of Science,  Office of Workforce Development for Teachers and
+Scientists,  Office of Science Graduate Student Research (SCGSR) program.   The SCGSR
+program is administered by the Oak Ridge Institute for Science and Education (ORISE) for
+the DOE. ORISE is managed by ORAU under contract number DE-SC0014664. All opinions
+expressed in this paper are the author’s and do not necessarily reflect the policies and views
+of DOE, ORAU, or ORISE.
+
+
+
+
+
+ [1]J. J. Shepherd, A. Gr¨uneis, G. H. Booth, G. Kresse,  and A. Alavi, Phys. Rev. B     86, 035111
+
+     (2012).
+ [2]J.     J.     Shepherd,     The     Journal     of     Chemical     Physics        145,     031104     (2016),
+
+     https://doi.org/10.1063/1.4958461.
+
+ [3]J.  G.  Lietz,  S.  Novario,  G.  R.  Jansen,  G.  Hagen,   and  M.  Hjorth-Jensen,  “Computational
+     nuclear  physics  and  post  hartree-fock  methods,”  in  An  Advanced  Course  in  Computational
+
+     Nuclear  Physics:  Bridging  the  Scales  from  Quarks  to  Neutron  Stars,  edited  by  M.  Hjorth-
+
+     Jensen, M. P. Lombardo,  and U. van Kolck (Springer International Publishing, Cham, 2017)
+
+     pp. 293–399.
+
+                                                      17
+ [4]R. Bishop, Theoretica Chimica Acta    80, 95 (1991).
+
+ [5]R. F. Bishop and K. H. L¨uhrmann, Phys. Rev. B    26, 5523 (1982).
+
+ [6]R. Bishop and K. L¨uhrmann, Physica B+C    108, 873 (1981).
+ [7]V.    A.    Neufeld    and    A.    J.    W.    Thom,    The    Journal    of    Chemical    Physics
+
+      147       (2017),       10.1063/1.5003794,       194105,       https://pubs.aip.org/aip/jcp/article-
+
+      pdf/doi/10.1063/1.5003794/15534755/194105                  1 online.pdf.
+ [8]D. M. Ceperley and B. J. Alder, Phys. Rev. Lett.    45, 566 (1980).
+
+ [9]B. Tanatar and D. M. Ceperley, Phys. Rev. B    39, 5005 (1989).
+
+[10]Y. Kwon, D. M. Ceperley,  and R. M. Martin, Phys. Rev. B      58, 6800 (1998).
+[11]G. Pescia, J. Nys, J. Kim, A. Lovato,  and G. Carleo, “Message-passing neural quantum states
+
+      for the homogeneous electron gas,”  (2023), arXiv:2305.07240 [quant-ph].
+
+[12]G. Cassella, H. Sutterud, S. Azadi, N. D. Drummond, D. Pfau, J. S. Spencer,  and W. M. C.
+      Foulkes, Phys. Rev. Lett. 130, 036401 (2023).
+
+[13]I.  Shavitt  and  R.  J.  Bartlett,       Many-Body  Methods  in  Chemistry  and  Physics:  MBPT  and
+
+      Coupled-Cluster Theory, Cambridge Molecular Science (Cambridge University Press, 2009).
+[14]S. Binder, P. Piecuch, A. Calci, J. Langhammer, P. Navr´atil,  and R. Roth, Phys. Rev. C      88,
+
+      054319 (2013).
+
+[15]R.     F.     Bishop     and     H.     G.     K¨ummel,     Physics     Today          40,     52     (1987),
+      https://pubs.aip.org/physicstoday/article-pdf/40/3/52/8298562/52                       1  online.pdf.
+
+[16]R. A. Vargas-Hern´andez, J. Sous, M. Berciu,  and R. V. Krems, Phys. Rev. Lett.      121, 255702
+
+      (2018).
+
+[17]L. Neufcourt, Y. Cao, W. Nazarewicz,  and F. Viens, Phys. Rev. C      98, 034318 (2018).
+[18]H. K¨ummel, K. L¨uhrmann,  and J. Zabolitzky, Physics Reports      36, 1 (1978).
+
+[19]R. J. Bartlett and M. Musia l, Rev. Mod. Phys.      79, 291 (2007).
+
+[20]J.        ˇCiˇzek  and  J.  Paldus,  International  Journal  of  Quantum  Chemistry  5,  359  (1971),
+      https://onlinelibrary.wiley.com/doi/pdf/10.1002/qua.560050402.
+
+[21]J.             ˇC´ıˇzek,       The       Journal       of       Chemical       Physics      45,       4256       (2004),
+
+      https://pubs.aip.org/aip/jcp/article-pdf/45/11/4256/11266618/4256                        1 online.pdf.
+[22]C. M. Singal and T. P. Das, Phys. Rev. B      8, 3675 (1973).
+
+[23]M. I. Haftel and F. Tabakin, Nucl. Phys. A      158, 1 (1970).
+
+
+                                                           18
+[24]D. L. Freeman, Phys. Rev. B      15, 5512 (1977).
+
+[25]R. F. Bishop and K. H. L”uhrmann, Phys. Rev. B      17, 3757 (1978).
+
+[26]R. F. Bishop and K. H. L”uhrmann, Phys. Rev. B      26, 5523 (1982).
+[27]I. Shavitt and R. J. Bartlett,       Many-body Methods in Chemistry and Physics (Cambridge Uni-
+
+      versity Press, 2009).
+
+[28]J. J. Shepherd, A. Gr¨uneis, G. H. Booth, G. Kresse,  and A. Alavi, Phys. Rev. B      86, 035111
+      (2012).
+
+[29]J. J. Shepherd and A. Gr¨uneis, Phys. Rev. Lett.      110, 226401 (2013).
+
+[30]J. J. Shepherd, T. M. Henderson,  and G. E. Scuseria, Phys. Rev. Lett.      112, 209901 (2014).
+[31]J. J. Shepherd, T. M. Henderson,  and G. E. Scuseria, The Journal of Chemical Physics      140,
+
+      124102 (2014), http://dx.doi.org/10.1063/1.4867783.
+
+[32]K. P. Murphy,       Machine learning :  a probabilistic perspective  (MIT Press, Cambridge, Mass.
+      [u.a.], 2013).
+
+[33]A. G´eron,       Hands-on machine learning with Scikit-Learn and TensorFlow :  concepts, tools, and
+
+      techniques to build intelligent systems (O’Reilly Media, Sebastopol, CA, 2017).
+[34]P. Mehta, M. Bukov, C.-H. Wang, A. G. Day, C. Richardson, C. K. Fisher,  and D. J. Schwab,
+
+      Physics Reports 810, 1 (2019), a high-bias, low-variance introduction to Machine Learning for
+
+      physicists.
+[35]G. A. Negoita, J. P. Vary, G. R. Luecke, P. Maris, A. M. Shirokov, I. J. Shin, Y. Kim, E. G.
+
+      Ng, C. Yang, M. Lockner,  and G. M. Prabhu, Phys. Rev. C 99, 054308 (2019).
+
+[36]W. G. Jiang, G. Hagen,  and T. Papenbrock, Phys. Rev. C      100, 054326 (2019).
+
+[37]S. Akkoyun, T. Bayram, S. O. Kara,  and A. Sinan, Journal of Physics G: Nuclear and Particle
+      Physics 40, 055106 (2013).
+
+[38]R. Utama, J. Piekarewicz,  and H. B. Prosper, Phys. Rev. C      93, 014311 (2016).
+
+[39]G.         Carleo         and         M.         Troyer,         Science             355,         602         (2017),
+      https://www.science.org/doi/pdf/10.1126/science.aag2302.
+
+[40]A. Boehnlein, M. Diefenthaler, N. Sato, M. Schram, V. Ziegler, C. Fanelli, M. Hjorth-Jensen,
+
+      T. Horn, M. P. Kuchera, D. Lee, W. Nazarewicz, P. Ostroumov, K. Orginos, A. Poon, X.-N.
+      Wang, A. Scheinker, M. S. Smith,  and L.-G. Pang, Rev. Mod. Phys. 94, 031003 (2022).
+
+[41]N. Ismail and A. Gezerlis, Phys. Rev. C      104, 055802 (2021).
+
+
+                                                           19
+[42]B. Meredig, E. Antono, C. Church, M. Hutchinson, J. Ling, S. Paradiso, B. Blaiszik, I. Foster,
+
+      B. Gibbons, J. Hattrick-Simpers, A. Mehta,  and L. Ward, Mol. Syst. Des. Eng. 3, 819 (2018).
+
+[43]R.  Jinnouchi,  H.  Hirata,   and  R.  Asahi,  The  Journal  of  Physical  Chemistry  C      121,  26397
+      (2017), https://doi.org/10.1021/acs.jpcc.7b08686.
+
+[44]M. Kn¨oll, T. Wolfgruber, M. L. Agel, C. Wenz,  and R. Roth, Physics Letters B      839, 137781
+
+      (2023).
+[45]J. T. Margraf and K. Reuter, The Journal of Physical Chemistry A      122, 6343 (2018), pMID:
+
+      29985611, https://doi.org/10.1021/acs.jpca.8b04455.
+
+[46]J. Smith, B. Nebgen, R. Zubatyuk, N. Lubbers, C. Devereux, K. Barros, S. Tretiak, O. Isayev,
+      and A. Roitberg, Nature Communications 10 (2019), 10.1038/s41467-019-10827-4.
+
+[47]T. N. Mihm, B. Yang,  and J. J. Shepherd, Journal of Chemical Theory and Computation      17,
+
+      2752 (2021), pMID: 33830754, https://doi.org/10.1021/acs.jctc.0c01171.
+[48]T. N. Mihm, L. Weiler,   and J. J. Shepherd, Journal of Chemical Theory and Computation
+
+      19, 1686 (2023), pMID: 36918372, https://doi.org/10.1021/acs.jctc.2c00737.
+
+[49]T.  N.  Mihm,   W.  Z.  Van  Benschoten,     and  J.  J.  Shepherd,  The  Journal  of  Chem-
+      ical  Physics  154  (2021),  10.1063/5.0033408,  024113,  https://pubs.aip.org/aip/jcp/article-
+
+      pdf/doi/10.1063/5.0033408/15583886/024113                   1 online.pdf.
+
+[50]K.      Liao      and      A.      Gr¨uneis,      The      Journal      of      Chemical      Physics          145
+      (2016),            10.1063/1.4964307,            141102,            https://pubs.aip.org/aip/jcp/article-
+
+      pdf/doi/10.1063/1.4964307/15518055/141102                   1 online.pdf.
+
+[51]T. Mihm, T. Sch¨afer,  and S. e. a. Ramadugu, Nat Comput Sci      1, 801 (2021).
+
+[52]A.     K¨ohn     and     D.     P.     Tew,     The     Journal     of     Chemical     Physics          132
+      (2010),            10.1063/1.3291040,            024101,            https://pubs.aip.org/aip/jcp/article-
+
+      pdf/doi/10.1063/1.3291040/14745329/024101                   1 online.pdf.
+
+[53]F. Coester and H. K¨ummel, Nuclear Physics      17, 477 (1960).
+[54]F. Coester, Nuclear Physics      7, 421 (1958).
+
+[55]M.  Urban,  J.  Noga,  S.  J.  Cole,   and  R.  J.  Bartlett,  The  Journal  of  Chemical  Physics      83,
+
+      4041–4046 (1985).
+[56]A.     G.     Taube     and     R.     J.     Bartlett,     The     Journal     of     Chemical     Physics
+
+      128       (2008),       10.1063/1.2830236,       044110,       https://pubs.aip.org/aip/jcp/article-
+
+
+                                                            20
+      pdf/doi/10.1063/1.2830236/13473501/044110                1  online.pdf.
+
+[57]S.  A.  Kucharski  and  R.  J.  Bartlett,  The  Journal  of  Chemical  Physics       108,  5243  (1998),
+
+      https://pubs.aip.org/aip/jcp/article-pdf/108/13/5243/10789764/5243                      1 online.pdf.
+[58]R. J. Bartlett, J. Watts, S. Kucharski,  and J. Noga, Chemical Physics Letters      165, 513 (1990).
+
+[59]K. Raghavachari, G. W. Trucks, J. A. Pople,  and M. Head-Gordon, Chemical Physics Letters
+
+      157, 479 (1989).
+[60]Y. He, Z. He,   and D. Cremer, Theoretical Chemistry Accounts:  Theory, Computation, and
+
+      Modeling (Theoretica Chimica Acta) 105, 182 (2001).
+
+[61]R. F. Bishop and K. H. L¨uhrmann, Phys. Rev. B      17, 3757 (1978).
+[62]N.  March,  W.  Young,   and  S.  Sampanthar,       The  Many-Body  Problem  in  Quantum  Physics
+
+      (Dover Publications, 1995).
+
+[63]W. J. Carr and A. A. Maradudin, Phys. Rev.      133, A371 (1964).
+[64]K. Sawada, Phys. Rev.      106, 372 (1957).
+
+[65]J. G. Lietz, “Computational developments for ab initio many-body theory,”  (2019).
+
+[66]D.  J.  C.  MacKay,  Neural  Computation       4,  415  (1992),  https://direct.mit.edu/neco/article-
+      pdf/4/3/415/812340/neco.1992.4.3.415.pdf.
+
+[67]M. E. Tipping, J. Mach. Learn. Res.      1, 211–244 (2001).
+
+[68]Y. Zhang and C. Ling, npj Computational Materials      4 (2018), 10.1038/s41524-018-0081-z.
+[69]G. Baardsen, A. Ekstr¨om, G. Hagen,  and M. Hjorth-Jensen, Phys. Rev. C      88, 054312 (2013).
+
+[70]G. Hagen, T. Papenbrock, A. Ekstr¨om, K. A. Wendt, G. Baardsen, S. Gandolfi, M. Hjorth-
+
+      Jensen,  and C. J. Horowitz, Phys. Rev. C 89, 014319 (2014).
+
+[71]G. Baardsen, “Coupled-cluster theory for infinite matter,”  (2014).
+[72]G. Hagen, T. Papenbrock, M. Hjorth-Jensen,  and D. J. Dean, Reports on Progress in Physics
+
+      77, 096302 (2014).
+
+[73]B. Hu, W. Jiang, T. Miyagi, Z. Sun, A. Ekstr¨om, C. Forss´en, G. Hagen, J. D. Holt, T. Papen-
+      brock, S. R. Stroberg,  and I. Vernon, Nature Physics 18 (2022), 10.1038/s41567-022-01715-8.
+
+[74]G. Hagen, M. Hjorth-Jensen, G. R. Jansen,  and T. Papenbrock, Physica Scripta      91, 063006
+
+      (2016).
+[75]H. Hergert, S. Bogner, T. Morris, A. Schwenk,  and K. Tsukiyama, Physics Reports      621, 165
+
+      (2016), memorial Volume in Honor of Gerald E. Brown.
+
+
+                                                          21
+[76]T. D. Morris, N. M. Parzuchowski,  and S. K. Bogner, Phys. Rev. C      92, 034331 (2015).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          22

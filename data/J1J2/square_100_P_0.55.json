@@ -495,6 +495,21 @@
         "scope": "ansatz",
         "confidence": "medium",
         "note": "GCNN with L = 10 layers of six group-indexed feature maps; parameter count not stated. iterations = 1000 SR steps (1024 samples) + 500 steps (4096 samples) \"for most simulations\"; samples left null because two sample sizes are used in sequence. GPU-hours are stated only for the 16 x 16 lattice (approx. 300), not for this size."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Simulations were performed using the NetKet [24] library.",
+          "location": "arXiv:2211.07749 (sources/2211.07749.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -572,7 +587,16 @@
           "source_entry": "JP9-heisenberg-j1j2-hubbard#36",
           "from": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/rqHe1/aCNN",
+        "read_from": {
+          "quote": "The main code and data for the aCNN are available on GitHub at https://github.com/rqHe1/aCNN.",
+          "location": "arXiv:2308.09664 (sources/2308.09664.html), footnote 1 / ref [56]",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -193.2692,
@@ -637,7 +661,16 @@
           "source_entry": "JP9-heisenberg-j1j2-hubbard#37",
           "from": "Wang, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/rqHe1/aCNN",
+        "read_from": {
+          "quote": "The main code and data for the aCNN are available on GitHub at https://github.com/rqHe1/aCNN.",
+          "location": "arXiv:2308.09664 (sources/2308.09664.html), footnote 1 / ref [56]",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -194.3036,
@@ -694,6 +727,21 @@
         "reported_as": "0.55 -0.485753 11 4.9",
         "conversion": "var_over_n_SS",
         "note": "Best of ten checkpoints (one every 150 epochs of 1500), each measured on 4096 samples: the state and sample set behind the energy Table I prints. Var(H)/N in S.S units, stored as a Pauli total (x 16 N). The source also gives an error epsilon = 11e-5 per site; it equals sqrt(sigma^2/(N x 4096)), the standard error without autocorrelation, so it is used only for the agreement check and not attached as sigma (RULES.md 6; 2026-09-28). The source prints this energy as -0.485753; Table I of the paper prints -0.485759, which the row keeps (0.05 epsilon apart)."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In turn, for larger systems one needs to employ an approximate scheme, such as variational neural quantum state (NQS) approach. We use the NetKet package realization [27, 28] of an attention-based vision transformer wave function [25, 26]",
+          "location": "arXiv:2606.04558 (sources/2606.04558.txt), Appendix A (Calculation details); also main text: \"wave function representation [25, 26] as realized in the NetKet package [27, 28]\"",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -743,7 +791,22 @@
           "source_entry": "VP10-heisenberg-j1j2#8 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "secondary"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The ANN computations were based on NetKet [53].",
+          "location": "arXiv:1903.06713 (sources/1903.06713.txt), Acknowledgments; the CNN energies are in the Appendix table 'Variational energies'",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -193.64,
@@ -1022,6 +1085,15 @@
           "note": "Journal and arXiv v2 cells identical (journal prints the label 'ANet1 and ANet2' where arXiv prints 'ANet1 & ANet2'). Hamiltonian Eq. (17) H = J1 sum S_i.S_j + J2 sum S_i.S_j; boundary not stated in the journal text either: periodic inferred from the released code (earlier reading) and from the ED row matching QMBL's periodic 6x6 exact energies (-0.503810/-0.495178/-0.493239). Sector not stated (S^z_tot = 0 per the code). Own computation, variational (p-step Lanczos-type improvement of an NQS); peer_reviewed true, reference correct (Crossref). No duplicate on the instance.",
           "source_entry": "JP8-j1j2-hubbard-heisenberg#2"
         }
+      },
+      "artifacts": {
+        "code": "https://github.com/QTMEC-RUC/nqs-lanczos",
+        "read_from": {
+          "quote": "The code supporting the findings of this study is openly available in a GitHub repository at https://github.com/QTMEC-RUC/nqs-lanczos (will be publicly accessible upon publication of the paper).",
+          "location": "arXiv:2502.01264 (sources/2502.01264.txt), reference [53] (cited from the Code availability section)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1066,6 +1138,15 @@
           "conversion": "-0.484811 x 4 x 100 = -193.9244; sigma 8e-6 x 4 x 100 = 0.0032",
           "note": "Journal and arXiv v2 cells identical (journal prints the label 'ANet1 and ANet2' where arXiv prints 'ANet1 & ANet2'). Hamiltonian Eq. (17) H = J1 sum S_i.S_j + J2 sum S_i.S_j; boundary not stated in the journal text either: periodic inferred from the released code (earlier reading) and from the ED row matching QMBL's periodic 6x6 exact energies (-0.503810/-0.495178/-0.493239). Sector not stated (S^z_tot = 0 per the code). Own computation, variational (p-step Lanczos-type improvement of an NQS); peer_reviewed true, reference correct (Crossref). No duplicate on the instance.",
           "source_entry": "JP8-j1j2-hubbard-heisenberg#3"
+        }
+      },
+      "artifacts": {
+        "code": "https://github.com/QTMEC-RUC/nqs-lanczos",
+        "read_from": {
+          "quote": "The code supporting the findings of this study is openly available in a GitHub repository at https://github.com/QTMEC-RUC/nqs-lanczos (will be publicly accessible upon publication of the paper).",
+          "location": "arXiv:2502.01264 (sources/2502.01264.txt), reference [53] (cited from the Code availability section)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
         }
       }
     },

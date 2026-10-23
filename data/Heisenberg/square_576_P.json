@@ -131,6 +131,15 @@
         "flag": "sigma-understated",
         "finding": "The printed bar 5e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6696126658 and SE 4.99e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.58e-5 per site (32x the bar); propagating each run's Monte-Carlo error through the fit gives 2.06e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6696043400 the row sits below by 8.36e-6 per site: 17 printed sigma, 0.5 bootstrap SD, 0.4 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 24) prints −0.6696127(5), x 4 x 576 = -1542.7876608.",
         "source_entry": "VP7-arxiv-2502-17144#43 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
+      },
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -204,6 +213,15 @@
         "scope": "paper",
         "confidence": "high",
         "note": "One blanket architecture for all lattices (30-layer aCNN, 14 residual blocks, 3 channels, 5x5 kernels, 6538 real parameters), so parameters applies to every row including L = 24 (576 sites); the triangular-lattice run used a different 100-layer network (not in this slice). Sample counts, batch sizes, optimization steps, GPU-hours and wall-clock are not stated; Adam optimizer, trained \"until the loss function no longer drops\". n_devices not stated explicitly (\"an Nvidia 3090 GPU\" suggests one but is not a count)."
+      },
+      "artifacts": {
+        "code": "https://github.com/rqHe1/aCNN",
+        "read_from": {
+          "quote": "The main code and data for the aCNN are available on GitHub at https://github.com/rqHe1/aCNN.",
+          "location": "arXiv:2308.09664 (sources/2308.09664.html), footnote 1 / ref [56]",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -279,7 +297,16 @@
           "source_entry": "JP5-arxiv-2502-17144#27",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ]
 }

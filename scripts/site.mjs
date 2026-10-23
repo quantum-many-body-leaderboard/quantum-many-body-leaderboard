@@ -16,10 +16,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { perSiteDivisor, perSiteLabel, recordEligible, boundLabel, stochasticExact, publishedMethod, methodLabel } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, recordEligible, boundLabel, stochasticExact, publishedMethod, methodLabel, methodName } from "./units.mjs";
 import { collect, recordOf, summarize, rowId } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
-import { citeRef, paperYear } from "./cite.mjs";
+import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
 import { quote, shorten, MODELS, BOUNDARY, instanceLabel, byGeometry, noRecordReason, gapAbove } from "./readme_table.mjs";
 import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
@@ -248,6 +248,28 @@ function citeHtml(row) {
   const r = citeRef(row, cache);
   const link = (r.url ? `<a href="${esc(r.url)}">${esc(r.text)}</a>` : esc(r.text)) + (r.also ? `, <a href="${esc(r.also.url)}">${esc(r.also.text)}</a>` : "");
   return r.note ? `${link}<span class="muted">, ${esc(r.note)}</span>` : link;
+}
+
+// The method cell. A row QMBL computed names the hardware it ran on, since the same
+// configuration can stand twice, once per machine (checks/cost/README.md).
+// A VMC row reads "VMC"; the ansatz and its detail show on hover, and for a row QMBL
+// computed also the hardware it ran on.
+function methodCell(r) {
+  const name = methodName(r);
+  const hw = r.computed_by === "qmbl" && r.compute?.device;
+  const hover = hw ? `${methodLabel(r)}, ${hw}` : methodLabel(r);
+  return name === r.method && !hw ? esc(name) : `<span title="${esc(hover)}">${esc(name)}</span>`;
+}
+
+// The code column: the code behind the row where its source names one (DATA.md), else, in
+// muted text, the libraries its source says the authors used, else empty.
+function codeHtml(row) {
+  const c = codeRef(row);
+  if (c) return `<a href="${esc(c.url)}">${esc(c.text)}</a>`;
+  const l = libraryRef(row);
+  if (!l) return "";
+  const links = l.shown.map(x => `<a href="${esc(x.url)}">${esc(x.text)}</a>`).join(", ");
+  return `<span class="muted lib" title="${esc(`${l.more || l.shown.length > 1 ? "Libraries" : "Library"} the authors used: ${l.all}. They published no code of their own for this result.`)}">uses ${links}${l.more ? ` +${l.more}` : ""}</span>`;
 }
 
 // What the instance page says about its own currency: when the newest number here was
@@ -861,14 +883,15 @@ function allRows(inst) {
       <td class="num">${distanceCell(r, inst)}</td>
       <td class="num">${sigma == null ? '<span class="muted">n/a</span>' : sigma.toExponential(1)}</td>
       <td><span class="badge">${boundLabel(r)}</span>${r.defect ? ` ${flagBadge(r)}` : ""}</td>
-      <td>${esc(r.method)}</td>
+      <td>${methodCell(r)}</td>
       <td>${citeHtml(r)}</td>
+      <td class="code">${codeHtml(r)}</td>
       <td class="num">${yearCell(r) ?? '<span class="muted">n/a</span>'}</td>
     </tr>`;
   }).join("");
   return `${rec ? "" : `
     <p class="muted">No record: ${esc(noRecordReason(inst))}.</p>`}
-    <table class="next"><thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>bound type</th><th>method</th><th>source</th><th>year</th></tr></thead><tbody>${rows}</tbody></table>
+    <table class="next"><thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>bound type</th><th>method</th><th>source</th><th>code</th><th>year</th></tr></thead><tbody>${rows}</tbody></table>
     <p class="links"><a href="${jsonUrl(inst)}">JSON</a></p>`;
 }
 
@@ -888,12 +911,12 @@ function instancesPage() {
       const label = instanceLabel(inst);
       const search = searchIndex(inst, name);
       const shown = rec ?? bestRow(inst);
-      const cells = `<td class="record">${energyCell(shown, inst)}</td><td>${esc(shown.method)}</td><td>${citeHtml(shown)}</td>`;
+      const cells = `<td class="record">${energyCell(shown, inst)}</td><td>${methodCell(shown)}</td><td>${citeHtml(shown)}</td><td class="code">${codeHtml(shown)}</td>`;
       const id = `x-${inst.instance_id.replace(/[^\w-]/g, "_")}`;
       return `<tr class="inst" data-search="${esc(search.own)}" data-methods="${esc(search.methods)}" data-lattice="${esc(latticeOf(inst))}" data-size="${sizeBand(inst)}">
         <th scope="row"><button type="button" aria-expanded="false" aria-controls="${id}">${esc(label)}</button></th>
         ${cells}<td class="num">${inst.rows.length}</td></tr>
-      <tr class="more" id="${id}" hidden><td colspan="5">${allRows(inst)}</td></tr>`;
+      <tr class="more" id="${id}" hidden><td colspan="6">${allRows(inst)}</td></tr>`;
     });
     const lattices = [...new Set(group.map(latticeOf))].sort();
     const bands = SIZE_BANDS.filter(([key]) => group.some(i => sizeBand(i) === key));
@@ -906,7 +929,7 @@ function instancesPage() {
       <p class="muted"><span class="count">${group.length} instances</span>, energies as <code>${perSiteLabel(group[0])}</code></p>
       ${badges}
       <div class="scroll"><table class="leaderboard">
-        <thead><tr><th>instance</th><th>energy</th><th>method</th><th>source</th><th>energies</th></tr></thead>
+        <thead><tr><th>instance</th><th>energy</th><th>method</th><th>source</th><th>code</th><th>energies</th></tr></thead>
         <tbody>${rows.join("")}</tbody></table></div>
     </section>`;
   }).join("\n");
@@ -1008,7 +1031,7 @@ reveal();
 // ---------------------------------------------------------------------- instance page
 function rowTable(rows, inst) {
   const head = `<thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>Var(E)</th><th>V-score</th>
-    <th>method</th><th>source</th><th>year</th></tr></thead>`;
+    <th>method</th><th>source</th><th>code</th><th>year</th></tr></thead>`;
   const body = rows.map(r => {
     const rec = recordOf(inst) === r;
     const badges = [
@@ -1030,6 +1053,7 @@ function rowTable(rows, inst) {
       <td class="num">${r.v_score == null ? '<span class="muted">n/a</span>' : r.v_score.toExponential(1)}</td>
       <td>${esc(methodLabel(r))}${badges ? `<div class="badges">${badges}</div>` : ""}</td>
       <td>${citeHtml(r)}</td>
+      <td class="code">${codeHtml(r)}</td>
       <td class="num">${yearCell(r) ?? '<span class="muted">n/a</span>'}</td>
     </tr>`;
   }).join("");
@@ -1370,6 +1394,9 @@ thead th {
 tbody tr:hover { background: var(--surface); }
 tbody th { font-weight: 500; }
 td.num, td .num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* The code label is short (owner/repo or "run script") and reads as one link. */
+td.code { white-space: nowrap; }
+td.code .lib a { color: var(--muted); }
 td.record .num { font-weight: 600; color: var(--record); }
 .leaderboard th[scope="row"] { min-width: 14rem; }
 .rows tr.is-record td { background: color-mix(in srgb, var(--accent) 7%, transparent); }

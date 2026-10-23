@@ -90,7 +90,17 @@
           "source_entry": "RA1-tv-heisenberg (qmbl-verify 2026-09-18-null-kind), confirming A5 (2026-09-16); rulings 1a-3a, 2026-09-19"
         }
       ],
-      "baseline": true
+      "baseline": true,
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_4/lct_int.sh",
+        "script": "scripts/tV/square_64_P_32_4/lct_int.sh",
+        "read_from": {
+          "quote": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_4/lct_int.sh)",
+          "location": "the row's reference, as corrected (see the row's corrections)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -10.248601642408376,
@@ -207,6 +217,16 @@
         "note": "Script builds the instance (8x8 torus, fermionic PBC through ITensors' Jordan-Wigner handling of 'Fermion' OpSums, Nf = 32 fixed by the QN-conserving MPS, V = 4, V n_i n_j without shift; einf and dof correct). Variational energy of the last sweep at the stated bond dimension, no extrapolation; no output log (config). Provenance: 96a2b26 (2023-02-02); printed as '-10.248601' in arXiv:2210.05871v4 Table 4 (a quote). 0.458 below the flagged LCT-INT row -9.7906(166) and 0.0275 below the HF row -10.2211008 (arXiv:2210.05871, other group); variance 0.0286. Record row. M11 flag (record 0.27% below the runner-up) settled: the runner-up is that HF determinant, a genuine margin for a correlated MPS; the only row that could compete, the LCT-INT, is flagged.",
         "source_entry": "VB4-tfising-tv#59 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_4/dmrg.sh",
+        "script": "scripts/tV/square_64_P_32_4/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_4/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/tV/square_64_P_32_4.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -293,6 +313,15 @@
         "scope": "paper",
         "confidence": "medium",
         "note": "Blanket statements only. Parameter count never given as a number (scaling formula N_param ~ (N_p N_s)^2 / 2 and 'N_param ~ N^4' in the Outlook; not derived here). Samples left null because the per-batch count is stated as a range ('M ~ 200-300 samples') in Sec. 2.6 and as 'batchsize is 200 samples' only in the Fig. 14 caption (4x4 convergence runs with Adam). All timing figures (Figs. 6, 7, 11, 12) are 'CPU time in seconds', so the device is a CPU but no model, core count, wall-clock or total time is stated; the conclusion says the implementation 'is slower than other neural network VMC schemes such as e.g. Slater-Jastrow-RBM' and that memory for the network parameters 'limits the simulatable system sizes to around 10x10'. Implementation in PyTorch. Whether the Table 2-4 runs used SR or Adam is not stated per table."
+      },
+      "artifacts": {
+        "code": "https://github.com/shifushuimenu/autoregressive_Slater-Jastrow",
+        "read_from": {
+          "quote": "An implementation written in PyTorch is available in the code repository [95].",
+          "location": "arXiv:2210.05871 (sources/2210.05871.txt), end of Conclusion; [95] = https://github.com/shifushuimenu/autoregressive_Slater-Jastrow",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ]

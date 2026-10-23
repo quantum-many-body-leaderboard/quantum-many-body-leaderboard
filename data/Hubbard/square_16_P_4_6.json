@@ -36,6 +36,16 @@
         "note": "|reproduced - stored| = 6.75e-14 (relative 3.99e-15); within 1e-9 relative. Sector N_up = N_dn = 4, dimension 3312400, 161 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Hubbard__square_16_P_4_6.json), gives -16.899926630979156 (4.23e-12 from the cost run). Also read by VB2-varbench-code-hubbard#50 (scope value: VarBench Hubbard/square_16_P_4_6.md row 'Exact diagonalization'; checks/hubbard-u-labels/ed_results.jsonl job {lattice: square, L: 4, n: 4, U: 6}).",
         "source_entry": "VB2-varbench-code-hubbard#50, VE-exact-recompute#18 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_4_6/ed_lattice_symmetries.sh",
+        "script": "scripts/Hubbard/square_16_P_4_6/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_4_6/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_4_6.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -141,6 +151,16 @@
         "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 4: the instance at U = 6. The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -16.796685151109997 the next level, eigsh lowest): E - E0 = 1.8e-7 vs bound 1.8e-6, consistent. History: uploaded 2022-09-12 (9fd65b5), unchanged. No output log (scope config).",
         "source_entry": "VB2-varbench-code-hubbard#36 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_6.jl",
+        "script": "programs/dmrg_itensors_hubbard/square_16_P_4_6.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_6.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_4_6.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

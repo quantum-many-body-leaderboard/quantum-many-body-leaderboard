@@ -7,6 +7,12 @@ import fs from "node:fs";
 import path from "node:path";
 import { expectedDof, expectedEinf, vScore } from "./units.mjs";
 
+// A results file records the commit it ran at. Commits from before the history rewrite of
+// 2026-10-20 are on no branch; checks/cost/commit-map.json gives the commit on main whose
+// checks/cost tree is identical, and the row cites that one.
+const COMMIT_MAP = JSON.parse(fs.readFileSync("checks/cost/commit-map.json", "utf8"));
+const onMain = c => COMMIT_MAP[c] ?? c;
+
 const DIR = "checks/cost/results";
 const files = fs.existsSync(DIR) ? fs.readdirSync(DIR).filter(f => f.endsWith(".json")).sort() : [];
 let added = 0;
@@ -86,7 +92,7 @@ for (const f of files) {
       method: label(res, f),
       bound_type: "variational",
       bound_type_reason: "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      reference: `QMBL, checks/cost/ (cost-to-reproduce run ${f.replace(/\.json$/, "")}, ${jobOf(h)}, commit ${sw.commit})`,
+      reference: `QMBL, checks/cost/ (cost-to-reproduce run ${f.replace(/\.json$/, "")}, ${jobOf(h)}, commit ${onMain(sw.commit)})`,
       peer_reviewed: false, source: `qmbl-cost-${day}`, provenance: "primary", computed_by: "qmbl",
       verified: { checked_on: day, method: `${sw.script} (NetKet ${sw.netket}, jax ${sw.jax}) on ${h.n_devices} x ${h.device_kind}, protocol checks/cost/README.md`,
         reported_as: said,
@@ -110,7 +116,7 @@ for (const f of files) {
           code: `NetKet ${sw.netket} (checks/cost/run_nqs.py)`,
         },
         reported_as: said,
-        source: `${rel}, ${jobOf(h)}, commit ${sw.commit} (QMBL run, ${day})`,
+        source: `${rel}, ${jobOf(h)}, commit ${onMain(sw.commit)} (QMBL run, ${day})`,
         scope: "row", confidence: "high",
         note: `Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included ` +
           `(setup ${t.setup_seconds.toFixed(0)} s, training ${t.train_seconds.toFixed(0)} s, evaluation ${t.eval_seconds.toFixed(0)} s); gpu_hours = wall-clock x ${h.n_devices} GPU.` + resourcesSaid(res.resources) +
@@ -135,7 +141,7 @@ for (const f of files) {
         method: `DMRG (chi = ${rung.chi_max}), QMBL cost-to-reproduce run`,
         bound_type: "variational",
         bound_type_reason: "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-        reference: `QMBL, checks/cost/ (cost-to-reproduce run ${f.replace(/\.json$/, "")}, ${jobOf(h)}, commit ${sw.commit})`,
+        reference: `QMBL, checks/cost/ (cost-to-reproduce run ${f.replace(/\.json$/, "")}, ${jobOf(h)}, commit ${onMain(sw.commit)})`,
         peer_reviewed: false, source: `qmbl-cost-${day}`, provenance: "primary", computed_by: "qmbl",
         verified: { checked_on: day, method: `${sw.script} (TeNPy ${sw.tenpy}) on ${res.cores} cores, protocol checks/cost/README.md`,
           reported_as: said,
@@ -147,7 +153,7 @@ for (const f of files) {
           wall_clock: rung.wall_hms, cpu_core_hours: +rung.cpu_core_hours.toFixed(3), bond_dimension: rung.chi_max, iterations: rung.sweeps,
           sweep_schedule: schedule,
           reported_as: said,
-          source: `${rel}, ${jobOf(h)}, commit ${sw.commit} (QMBL run, ${day})`,
+          source: `${rel}, ${jobOf(h)}, commit ${onMain(sw.commit)} (QMBL run, ${day})`,
           scope: "row", confidence: "high",
           note: `Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x ${res.cores} allocated cores. ` +
             `iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover.` + resourcesSaid(rung.resources),

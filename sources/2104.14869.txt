@@ -1,0 +1,554 @@
+   Many-Body Quantum States with Exact Conservation of Non-Abelian and Lattice
+                                  Symmetries through Variational Monte Carlo
+
+                                                 Tom  Vieijra1,∗  and  Jannes  Nys2, 1,∗
+                         1Department  of  Physics  and  Astronomy,  Ghent  University,  9000  Ghent,  Belgium
+      2University of Antwerp - imec, IDLab - Faculty of Applied Engineering Sint-Pietersvliet 7, 2000 Antwerp, Belgium
+
+                  Optimization of quantum states using the variational principle has recently seen an upsurge due
+               to  developments  of  increasingly  expressive  wave  functions.   In  order  to  improve  on  the  accuracy
+               of  the  ans¨atze,  it  is  a  time-honored  strategy  to  impose  the  systems’  symmetries.   We  present  an
+               ansatz where global non-abelian symmetries are inherently embedded in its structure.  We extend
+               the model to incorporate lattice symmetries as well.  We consider the prototypical example of the
+               frustrated two-dimensional J1-J2  model on a square lattice, for which eigenstates have been hard
+               to  model  variationally.   Our  novel  approach  guarantees  that  the  obtained  ground  state  will  have
+               total spin zero.  Benchmarks on the 2DJ1-J2 model demonstrate its state-of-the-art performance in
+               representing the ground state.  Furthermore, our methodology permits to ﬁnd the wave functions of
+               excited states with deﬁnite quantum numbers associated to the considered symmetries (including
+               the non-abelian ones), without modifying the architecture of the network.
+
+
+                    I.    INTRODUCTION                                      the case of neural network wave functions, advances have
+                                                                            been made to include abelian symmetries [13] and more
+  Variational optimization of quantum many-body states                      recently non-abelian continuous spin symmetries in one
+to  capture  the  low-lying  eigenstates  of  quantum  many-                dimension [14].  More generally,  the question of how to
+body systems is increasingly being studied as a way to                      include symmetries in deep neural networks is an active
+uncover properties and mechanisms of physical systems.                      ﬁeld of research, which has led to neural network archi-
+Many  algorithms  and  variational  wave  functions  have                   tectures which transform equivariantly under symmetry
+been put forward as viable candidates to describe many-                     operations of the input [15].
+body  systems  eﬃciently.   Well-known  examples  include                     In this paper, we combine insight from equivariant neu-
+the use of Slater determinants for fermionic systems [1],                   ral  networks  and  tensor  networks  to  construct  a  vari-
+the density matrix renormalization group (DMRG) and                         ational  wave  function  that  transforms  well  under  both
+its extensions to multiple dimensions [2, 3], the resonat-                  global  continuous  non-abelian  symmetries  and  discrete
+ing valence bond wave functions for frustration and su-                     lattice symmetries.  We benchmark our construction nu-
+perconductivity [4] and many more. Recently, a new class                    merically on the two-dimensionalJ1-J2 model, which has
+of wave functions has emerged, which are based on the                       proven diﬃcult to model using conventional neural net-
+success of neural networks in machine learning and are                      works due to breaking of the non-abelian SU(2) symme-
+optimized by sampling basis states of the quantum me-                       try [13, 16].
+chanical problem [5].
+  Many physical systems have underlying symmetries en-                                             II.    APPROACH
+coded in their Hamiltonian.  Respecting the symmetries
+of  the  system  is  important  for  various  applications,  in-
+cluding quantum chemistry [6, 7] and the description of                       To  ﬁnd  eigenstates  of  quantum  many-body  systems,
+spin liquids [8, 9].  Both lattice symmetries and on-site                   we introduce a variational wave function built entirely of
+symmetries yield important constraints on the wave func-                    equivariant operations with respect to non-abelian SU(2)
+tion,  and  can  be  harnessed  to  gain  insight  in  the  wave            symmetry, as well as a set of lattice symmetries.  Equiv-
+function and to gain eﬃciency in its optimization.  Hav-                    ariance of an operation f(x) under a symmetry group G
+ing control over how the variational wave function trans-                   is deﬁned as f(x) having the property
+forms under symmetry operations gives access to associ-                                       g·f(x) =f(g·x) ∀g∈G.                  (1)
+ated quantum numbers, which are useful to characterize
+the spectrum of many-body Hamiltonians.  Constructing                       The construction of our SU(2) equivariant network is in-
+wave functions that transform in a well-deﬁned way un-                      spired by recent progress in deep learning [15, 17], where
+der symmetry operations is a non-trivial task, but has led                  group  equivariant  neural  networks  were  introduced.   In
+to very eﬃcient and accurate results in the past.  In the                   the  same  vein  as  Ref.  [15],  the  equivariance  under  lat-
+class of tensor networks, symmetries have been encoded                      tice symmetries can be trivially fulﬁlled, as we will show
+in their tensorial structure, leading to more eﬃcient algo-                 below.  For the SU(2) symmetry, however, an additional
+rithms and insight into the physical system [3, 10–12].  In                 diﬃculty compared to Ref. [17] is that we need to obtain
+                                                                            representations of the whole many-body state with def-
+                                                                            inite  total  angular-momentum, which we accomplish by
+∗  These two authors contributed equally
+                                                                            deﬁning a tree-like coupling scheme to perform Clebsch-
+                                                                                                                                                  2
+
+Gordan transformations.  This bears resemblance to tree                     systems that transform as an irreducible representation
+tensor  networks,  where  one  uses  a  network  of  tensors                with respect to SU(2), meaning that they can be labeled
+where  iteratively  two  (composite)  systems  are  coupled                 by  an  angular  momentum  quantum  number.    In  this
+into a single composite system with deﬁnite angular mo-                     way,  we  gradually  build  a  state  that  encompasses  the
+mentum in a tree-like fashion [7].  However, our network                    whole system of N  degrees of freedom, while keeping a
+is trained via Variational Monte Carlo, where the param-                    structure of deﬁnite angular momentum.
+eter gradients are computed through automatic diﬀeren-                         In the following,  we  describe  the  action of a layer in
+tiation.  The Monte Carlo approach to variational wave                      our  variational  wave  function.   To  make  the  following
+functions  also  allows  us  to  make  the  ansatz  have  well-             description  clearer,  we  assume  a  square  lattice  in  two
+deﬁned  quantum  numbers  with  respect  to  lattice  sym-                  dimensions,  but  the  construction  can  be  generalized  to
+metries by deﬁning symmetrized probability amplitudes                       other  dimensions  and  other  topologies.   We  ﬁrst  deﬁne
+[18].                                                                       an operation which performs pairwise coupling of angular
+  To  outline  our  network  construction,  we  consider N                  momenta (see Fig. 1A). The pattern in which pairs are
+spins on a lattice, where every spin can be labeled with an                 taken can be chosen freely, for example, one could pair
+angular momentum quantum number si.  The individual                         horizontally or vertically neighboring angular momenta,
+spin states are vectors in the single particle Hilbert space                alternating the direction at every layer (see Fig. 1C).
+Hi, which can be described in a basis of size 2si + 1.  For                    The input variables of a layer are deﬁned on a lattice,
+example, one can choose the basis of spin projectionsmsi                    where we deﬁne vectors Ftj∈ Rτtj  at every point, associ-
+along  a  quantization  axis.   The  direct  product  of  these             ated to each possible angular momentumj, andt denotes
+one-particle Hilbert spacesH =H1⊗....⊗HN  forms the                         the considered layer (where t = 1 is the initial spin con-
+Hilbert space of the composite system.  A state|Ψ⟩ inH                      ﬁguration).  For a given conﬁgurationS, Ftj  represents a
+can thus be expanded in a basis consisting of all possible                  (variational) weight vector of a composite subsystem of
+combinations of single-particle basis states                                2t−1 spins that are coupled to a deﬁnite total angular mo-
+                                                                            mentumj, as shown in Fig. 1 C. The correspondingmj is
+   |Ψ⟩ = ∑      Ψ(ms1,...,msN )|s1,ms1;...;sN,msN⟩,    (2)                  the sum of the individual spin projection quantum num-
+             S                                                              bers in the composite subsystem.  The dimension τtj  is a
+where Ψ(ms1,...,msN ) is the expansion coeﬃcient of|Ψ⟩                      measure that determines the variational freedom that is
+in  the  basis|s1,ms1;...;sN,msN⟩.   For  brevity,  we  will                used to describe a composite subsystem (at layer t) with
+use  the  notationS  =  (ms1,...,msN )  to  denote  a  basis                angular momentum j.  In the most general case, τtj  may
+state.  The eigenstates|Ψ⟩ inherit the symmetries from                      depend on the angular momentumj, the lattice position
+the  related  Hamiltonian  ˆH  of  the  system.    Generally,               and the layer indext.  We will useτj andτtj  interchange-
+the Hamiltonian commutes with operators of symmetry                         ably below.  We do not include a spatial dependence in
+groups acting on the degrees of freedom ˆU(g), withg∈G,                     our numerical calculations due to lattice symmetry con-
+                                                                            siderations.   The  physical  lattice  of N  spin-degrees  of
+where G is a symmetry group.  In those cases, the states                    freedom s  is  represented  in  our  notation  as Ft=1j=s  =  [1]
+|Ψ⟩ should also be eigenstates of the symmetry operators.                   (where τt=1j=s  =  1)  for  each  of  the N  sites.   For  a  given
+                                                                            conﬁgurationS,  we  can  assign  a  spin-projection  quan-
+                     A.    SU(2) symmetry                                   tum number to each site.
+                                                                               Having  deﬁned  the  structure  of  the  input,  the  next
+                                                                            step is to apply Clebsch-Gordan transformations to the
+  For SU(2), the action of symmetry operations can be                       angular  momenta  of  neighboring  sites  according  to  the
+written  as ˆU(θ)  = ei(θxˆsx+θyˆsy+θzˆsz)  = eiθ·ˆs,  where θ              scheme detailed in Fig. 1.  The coupling of angular mo-
+is  a  vector  in  three  dimensional  space  denoting  a  ro-              menta into composite subsystems is visualized in Fig.1A.
+tation  of  magnitude θ  around  the  axis  deﬁned  as  the                 We take the tensor product of two F vectors correspond-
+direction  of θ  and  ˆs  is  a  vector  of  the  generators  of            ing to a pair of angular momentaj1 andj2 at neighboring
+SU(2).  For spin- 12 degrees of freedom, these are the Pauli                positions,  and obtain a vector Htj1,j2  = Ftj1⊗ Ftj2  with
+matrices.   For  a  composite  system,  the  symmetry  ac-                  dimensionτtj1τtj2.  Since H does not have well-deﬁned an-
+tion  is  the  direct  product  of  the  single-particle  actions           gular momentum (e.g.  12⊗ 12→ 1⊕0 results in a mixture
+ˆU(θ)  = eiθ·(ˆs1+...+ˆsN)  = eiθ·ˆS,  with  ˆS  the  total  angu-          of angular momentaj = 0 andj = 1), it is projected onto
+lar  momentum  operator.   To  make  sure  that  the  wave                  quantum numberj via the Clebsch-Gordan coeﬃcientsC
+function  of  a  system  of N  particles  is  an  eigenstate  of            to obtain a new vector G as follows
+the symmetry action, it should have well-deﬁned angular
+momentum.                                                                               Gtj1,j2,j =Cj1,mj1,j2,mj2,j,mj× Htj1,j2,          (3)
+  We      will      form      the      expansion      coeﬃcients
+Ψ(ms1,...,msN )   through   a   sequence   of   operations                  where mj1  and mj2  are the angular momentum projec-
+(from  hereon  called  layers),  in  order  to  obtain  a  varia-           tions of the original composite subsystems.  These com-
+tional  wave  function  with  a  well-deﬁned  total  angular                posite subsystems (or regions of the original spin lattice)
+momentum.     In  every  layer  we  construct  composite                    should be non-overlapping and mj  is uniquely obtained
+                                                                                                                                                     3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  Illustration of the architecture.  The bottom panel (C) illustrates the ﬂow of the computation.  The network receives
+a spin conﬁgurationS,  with components (si,Si  = msi),  from which one can infer (Ft=1j=si,msi) at each site i.  As indicated
+by the rectangle, the ClebschLayer takes as an input two vectors Ft=1si    and Ft=1sj    from diﬀerent sites (here, along the vertical
+direction), and outputs two new deﬁnite angular-momentum vectors Ft=2j     (with j = 0, 1) to the next layer.  Similarly, in the
+subsequent layerst, the vectors Ftj1 and Ftj2 (from diﬀerent composite systems) are coupled to obtain the new deﬁnite angular-
+momentum vector Ft+1j    .  At layer D = log2(N), we only compute F DS   with the desired total angular momentum S.  After a
+last dimensionality reduction indicated byW , we obtain Ψ(S).  (top left, (A)) The ClebschReduction (CR) module takes as an
+input vectors from neighboring sites.  Sequentially, we compute tensor H from their tensor product (⊗), which is then projected
+onto deﬁnitej via the Clebsch-Gordan coeﬃcientCj1,mj1,j2,mj2,j,mj  to obtain a vector G with a hidden dimensionτtj1τtj2.  The
+latter dimension is reduced to τtj  via a parameter matrix W tj1,j2,j.  (top right, (B)) The ClebschLayer combines multiple CR
+modules to compute the Ft+1j    , for all input angular momenta that can be coupled to obtain j  (i.e. setJ  in the main text).
+The vectors G, stemming from the diﬀerent input angular momenta, are added elementwise (⊕) to obtain the ﬁnal Ft+1j    .
+
+
+as mj  = mj1 +mj2.  In this way, we constructed a new                        vectors can also be seen as ﬁnding τt+1j     linear combina-
+lattice with half the sites of the lattice of input variables                tions of the ¯τtj  = ∑(j1,j2)∈J τtj1τtj2  features with angular
+(see Fig. 1C).                                                               momentumj, resulting from all possible combinations of
+  To control the dimension τtj1τtj2  of the vector Gtj1,j2,j,                (j1,j2).  This results in the vector Ft+1j    , ready to be used
+we apply a linear transformation mapping the τtj1τtj2  di-                   as input for the next layer of our network.  This proce-
+mensions to τt+1j     linear combinations of them.  This lin-                dure (called ‘ClebschLayer’ in Fig. 1B) provides us with
+ear transformation is performed by a parameter matrix                        a building block to construct variational wave functions
+Wtj1,j2,j  and introduces a dimensionality reduction.  We                    with  well-deﬁned  total  angular  momentum,  with  varia-
+point out that Wtj1,j2,j  does not depend on the angular-                    tional  parameters  given  by  all  weight  matrices W .   We
+momentum projections mj1, mj2  and mj, in accordance                         takeτt+1j     (which determines dimensions ofWtj1,j2,j) to be
+with the Wigner-Eckart theorem.  We obtain the vector                        the minimum of ¯τtj and a predeﬁnedτt+1,maxj          .  By repeat-
+                  ˜Gtj1,j2,j =Wtj1,j2,j× Gtj1,j2,j,                 (4)      ing the layer described above log2(N) times (see Fig. 1),
+                                                                             we essentially couple the individual angular momenta to
+                                                                             a well-deﬁned total angular momentum S.  After carry-
+where Wtj1,j2,j   has τt+1j       rows,   while  the  number  of             ing  out  a  ﬁnal  dimensionality  reduction,  we  obtain  an
+columns is τtj1τtj2.  This procedure of obtaining a vector                   estimate for Ψ(S).
+˜G consisting of states with well-deﬁned angular momen-
+tum j  is repeated at layer t for all (j1,j2) from the set
+J  ={(j1,j2)||j1−j2|≤ j≤ j1 +j2}.  We now com-                                                   B.    Lattice symmetries
+bine  all  vectors  ˜G  with  angular  momentum j  by  sum-
+ming  them  element  wise  in  the  hidden  dimension  into                     Having deﬁned a wave function which, given a sample
+a single vector depending only on the ﬁnal angular mo-                       of conﬁgurations of spin projections, yields a probability
+mentumj (see Fig. 1B). This procedure of summing the                         amplitude ΨS,MS(S) with well-deﬁned angular momen-
+                                                                                                                                                  4
+
+tum S  and  angular  momentum  projection MS,  we  can                      done in the variational wavefunction itself.  Adopting this
+now improve the ansatz by including discrete lattice sym-                   viewpoint, our network considers spin conﬁgurationsS,
+metries such as rotations, reﬂections or translations.  Re-                 and  maps  this  to  its  probability  amplitude  by  building
+stricting the considered Hilbert space (for non-SU(2) con-                  composite  conﬁgurations {j1,...,jN}  with  well-deﬁned
+serving ans¨atze) to eigenstates of the lattice symmetries                  angular momenta in the ansatz, and deciding on their im-
+has  been  shown  to  improve  the  obtained  ground  state                 portance using variational parameters. This construction
+energies  by  multiple  orders  of  magnitude  [18].   Instead              allows to eﬃciently calculate local observables, since we
+of  deﬁning  the  probability  amplitude  as  ΨS,MS(S),  we                 still have access to the spin conﬁgurations, in contrast to
+deﬁne it as a linear combination of amplitudes with con-                    the approach from Ref. [14], where one has to deﬁne local
+ﬁgurations transformed according to the (discrete) sym-                     observables in the space of angular momenta.  Doing this
+metry group G [13, 19]:                                                     can become problematic in dimensions larger than one,
+                                 ∑                                          where  operators  in  the  space  of  angular  momenta  be-
+            ΨκS,MS(S) =   1|G|        κgΨS,MS(g(S)),           (5)          come increasingly non-local.  Another advantage is that
+                                 g∈G                                        access to the spin conﬁgurations allows to eﬃciently in-
+where κg  is the character associated to group element g                    clude lattice symmetries as shown in Eq. (5), as opposed
+                                                                            to the previous work.  Indeed, in the previous approach,
+and  irreducible  representation κ.   In  practice,  we  com-               the action of an element of the lattice symmetries does
+pute every elementary internal operation in our method                      not map the{j1,...,jN} basis states to another one, but
+together  with  its  operation  on  all  input  conﬁgurations               rather to a non-trivial linear combination of them.  As we
+transformed  by g ∈ G  (weighted  by κg).   In  this  way,                  will discuss in the next sections, including lattice symme-
+every  operation  is  made  trivially  equivariant  under  the              tries can increase the accuracy of our wave functions by
+lattice symmetries.  Unless speciﬁed otherwise,  we con-                    orders of magnitude.
+sider the trivial irreps of the symmetry groups, i.e.  the
+irrep with momentum k = (0, 0) of the group of transla-
+tions and the irrep A1 of the C4v group of rotations and                                          III.  J1-J2 MODEL
+reﬂections.
+  Through this approach, we can optimize our network                           The J1-J2  model  is  a  prototypical  model  with  frus-
+using Variational Monte Carlo (VMC) and Stochastic Re-                      trated interactions.  The Hamiltonian
+conﬁguration [20].  Hereby, we use Markov Chain Monte                                        ˆH =J1   ∑                 ∑
+Carlo to generateNsamples conﬁgurationsS according to                                                      ˆsi.ˆsj +J2       ˆsi.ˆsj                (6)
+the probability distribution|Ψ(S)|2. With these samples,                                              ⟨ij⟩              ⟨⟨ij⟩⟩
+estimates of the energy and gradients with respect to the                   contains   a   nearest   neighbor   (J1)   and   next-nearest-
+variational parameters can be obtained.  The variational                    neighbor (J2) Heisenberg interaction term.  Here,  ˆsi  de-
+parameters are then updated by ﬁrst solving the linear                      notes the spin operator at sitei, and⟨ij⟩ (⟨⟨ij⟩⟩) denotes
+equations Sx = g for x, where S is the correlation ma-                      the  set  of  all  nearest  (next-nearest)  pairs.    Note  that
+trix of the gradient of log Ψ(S) and g is the vector of the                 both terms conserve SU(2) symmetry, and therefore, the
+gradients  of  the  energy  with  respect  to  the  variational             eigenstates are SU(2) symmetric as well.  In the limit of
+parameters [5, 21].  When x is found, we use the Adam                       J2→ 0, the model exhibits a N´eel-type antiferromagnetic
+optimizer  with  learning  rate η  to  determine  an  update                order,  while  in  the  limit  of J1→  0,  a  stripe-type  anti-
+of the variational parameters [22].  We iterate this pro-                   ferromagnetic order is found.  In the intermediate regime
+cedure  until  convergence  is  reached.   For  details  of  the            whereJ2/J1≈ 0.5, the system is highly frustrated, which
+optimization procedure, see Appendix B.                                     makes this system a hard problem to solve by contempo-
+                                                                            rary methods, and is thus widely used as a benchmark for
+                 C.    Relation to other work                               novel algorithms [23, 24].  There are numerous conﬂict-
+                                                                            ing proposals with regard to the structure of the ground
+  In   previous   work   on   conserving   SU(2)-symmetry                   state, including the plaquette valence-bond state [25, 26],
+through variational ans¨atze in the context of VMC [14],                    the columnar valence-bond state [27, 28] or a gapless spin
+one works with conﬁgurations in the space of irreducible                    liquid  [29,  30],  but  a  conclusive  characterization  of  the
+representations of subsystems.  In particular, considering                  phase diagram is still missing.
+a 1D chain for clarity, one chooses the basis set deﬁned
+by the set of all possible combinations{j1,...,jN}, where                                            IV.    RESULTS
+ji is the total angular momentum of the ﬁrsti spins.  One
+could view this ansatz as applying a mapping from the
+space of angular momenta to its probability amplitudes                                    A.    Eﬀect of lattice symmetries
+via a variational wave function.  The approach we out-
+lined here adopts a completely diﬀerent viewpoint, where                       The  ansatz  proposed  in  this  work  conserves  SU(2)
+the  mapping  to  sets  of  angular  momenta{j1,...,jN}  is                 through its architecture, while lattice symmetries are im-
+                                                                                                                                                  5
+
+                                                                            SU(2) complemented with translation, reﬂection and ro-
+                                                                            tation  symmetries)  and  a  Markov  Chain  Monte  Carlo
+                                                                            algorithm with nearest neighbour exchange from which
+                                                                            we  take Nsamples  =  1024.   We  use  a  learning  rate  of
+                                                                            η  = 0.005.  For every run,  we let the algorithm update
+                                                                            the variational parameters 1000 times.  Here, we consider
+                                                                            the hidden dimensionτtj  to be homogeneous for all layers
+                                                                            and all angular momenta, and denote it with τ.
+                                                                               The  number  of  variational  parameters  is  determined
+                                                                            by the values of the maximum hidden dimension τ  and
+                                                                            the  cut-oﬀ jmax  of  the  intermediate  angular  momenta.
+                                                                            Typically,jmax≤ 4 is suﬃcient to obtain a good approx-
+                                                                            imation of the systems considered in this work.  We study
+                                                                            the eﬀect of these parameters in Fig. 3, and observe that
+                                                                            the  value  of τ  is  most  important  in  achieving  low  en-
+FIG. 2.  Relative error on the ground state energy ∆E/E0 =                  ergies.   At  high τ,  the  accuracy  of  the  energy  depends
+(E0,exact−E)/E0,exact of the J1-J2 model on a 4× 4 lattice.                 on the propagation of large momenta between composite
+We  illustrate  the  results  for  a  model  with  rotation,  trans-        systems that are spatially separated.
+lation,  or  reﬂection  symmetry  imposed  through  Eq.  (5)  for
+jmax = 4.  We also show the eﬀect of jmax = 2 for the trans-
+lation  symmetric  model.   Also  shown  are  the  results  for  a
+model  with  all  symmetries  and  only  SU(2)  symmetry.   The
+exact ground state energy E0,exact is obtained through exact
+diagonalization.
+
+
+posed through Eq. (5).  Therefore, we start by investigat-
+ing the eﬀect of the latter on the obtained ground state
+energy.  We use our model with a homogeneous hidden
+dimensionτ = 8 for all layers and angular momenta.  We
+optimize  our  models  through  VMC  with  learning  rate
+η = 0.001 andNsamples = 4096.  Figure 2 shows the com-
+puted ground-state energy of theJ1-J2 model at diﬀerent
+ratiosJ2/J1 on a 4×4 lattice with periodic boundary con-
+ditions  (PBC).  We  observe  that  lattice  symmetries  im-                FIG. 3.  Variation of the obtained ground state energyE of an
+prove the relative error by over two orders of magnitude.                   8× 8 J1-J2 model with J1 = 1 and J2 = 0.5 as a function of
+Especially the incorporation of translation and rotation                    the  hyperparameters jmax  (angular-momentum  cutoﬀ),  and
+symmetry tend to result in the lowest ground-state ener-                    the hidden dimension τ.
+gies.  NearJ2/J1 = 1, where next-to-nearest-neighbor in-
+teractions dominate, however, the impact of translation
+symmetry  is  most  prominent.   We  also  point  out  that
+the eﬀect of the intermediary angular-momentum cutoﬀ                                 C.    Comparison with other approaches
+jmax is most prominent near this point, which can be ob-
+served by comparing thejmax = 2 andjmax = 4 results in                         Knowing that the variational energy saturates at τ  =
+Fig. 2.  The latter is expected, since the singlets become                  16 andjmax = 4, we reﬁned the variational content of the
+more long ranged, and therefore require the propagation                     wave function by introducing a dependence in τtj  on the
+of  more  angular  momentum  information  higher  up  the                   layer  and  the  angular  momentum.   The  optimal  values
+tree structure.                                                             were obtained through a gridsearch with a low number
+                                                                            of samples.  For our benchmark simulations on the 8×
+      B.    Systematic eﬀects of hyper-parameters                           8  lattice,  we  found  that τt,maxj≤2     =  16  and τt,maxj>2     =  8,
+                                                                            and jmax = 4 yield good accuracies wile minimizing the
+                                                                            number of variational parameters.
+  To show how our method is systematically improvable,                         We benchmark our method on the 8× 8 lattice with
+we investigate how the energy improves with increasing                      PBC, and compare to other available methods in Fig. 4.
+number  of  variational  parameters.   Speciﬁcally,  we  op-                The numerical values for the energies, details on the op-
+timize  our  network  for  the  ground  state  of  the J1-J2                timization procedure and hyperparameters can be found
+model  on  an  8× 8  lattice,  where  we  take J1  =  1  and                in  Appendices  A  and  B.  To  determine  the  eﬀect  of  an
+J2 = 0.5.  We optimize networks with all symmetries (i.e.                   architecture  which  respects  SU(2)  by  construction,  we
+                                                                                                                                                    6
+
+                                                                             able  to  reach  a  signiﬁcantly  lower  ground  state  energy.
+                                                                             Ref. [32] addresses this issue by adding additional vari-
+                                                                             ational  Lanczos  steps.   Ref.  [16]  aims  to  overcome  the
+                                                                             same  issue  by  modeling  the  correlation  terms  through
+                                                                             a systematically improvable (but SU(2)-breaking) varia-
+                                                                             tional neural RBM ansatz.  A similar approach is taken
+                                                                             in Ref. [24] (RBM+PP). Although this method appears
+                                                                             to be very eﬀective in capturing the ground state, it fails
+                                                                             at capturing the challenging dynamics at J2/J1 = 0.55.
+
+
+                                                                                                D.    Correlation functions
+
+
+
+
+
+FIG.  4.   Ground  state  energy  diﬀerence  for  8× 8  lattices
+with  various J2/J1,  determined  using  various  ans¨atze.   For
+all  methods,  we  subtract  the  ground  state  energy  obtained
+with our model.
+
+
+compare our results to the CNN ansatz from Ref. [23],
+which  does  not  conserve  SU(2).   In  the  latter,  a  spike
+in  relative  error  is  observed  near J2/J1  =  0.55,  which
+coincides with a spike in total spin⟨ˆS2⟩.  This was also
+highlighted in the Hamiltonian reconstruction metric ap-                     FIG. 5.  (left) Longitudinal and (right) transversal correlation
+plied to CNN and RBM NQS in Ref. [31],  which high-                          functions as a function of the relative distance between spins
+lights  the  importance  of  respecting  SU(2)  symmetry  in                 for an 8×8 ground state of theJ1-J2 model atJ2 = 0.5.  Both
+this  region.   Contrary  to  the  latter  type  of  models,  we             components are equal, as is required by SU(2) invariance.
+restrict our variational space to the manifold in Hilbert
+space  of  total  SU(2)  singlets  and  lattice-symmetry  re-                   To highlight the symmetry in our variational ansatz,
+specting  wave  functions,  which  clearly  shows  its  bene-                we now turn to correlation functions.  Our method con-
+ﬁt  near J2/J1  =  0.55.   This  restriction  is  also  imposed              serves  total  angular  momentum  by  construction.    For
+via the method of symmetry restoration from Ref. [13],                       ground states of the models we investigate in this paper,
+and  the  analysis  on  RBMs  in  Ref.  [18]  (RBM+symm).                    this means that correlations between spin projections in
+The method described in Ref. [18] is able to separate the                    the z-direction  (longitudinal)  and  correlations  between
+ground and lowest S  = 1 excited state by separating a                       spin projections in the xy-plane (transversal) should be
+symmetric and anti-symmetric part in the wave function                       equal, as dictated by the total angular momentum.  The
+with respect to spin ﬂips.  In our methodology, however,                     longitudinal and transversal correlation functions are re-
+due to the inherent SU(2) conserving architecture, we are                    spectively deﬁned as
+able to go beyond these two types of angular-momentum                                            ∑
+states, and can optimize for any total-angular momentum                         Cz(i,j) =  1         ⟨ˆsz(k,l).ˆsz(k+i,l+j)⟩,                            (7)
+S.  Compared to DMRG with built-in SU(2) symmetry,                                           N    k,l
+ClebschTree  tends  to  obtain  consistently  lower  ground-                                     ∑    1
+state energies.                                                               Cxy(i,j) =  1N          2⟨ˆsx(k,l).ˆsx(k+i,l+j) + ˆsy(k,l).ˆsy(k+i,l+j)⟩,
+  One  of  the  most  interesting  features  of  our  model  is                                   k,l
+that, compared to most other methods employing VMC                                                                                                (8)
+(for example, Refs. [18, 23]), we do not need to impose
+the Marshall sign rules, and are still able to obtain state-                 where the sums overk andl run over all lattice positions
+of-the-art approximations of the ground state.  For exam-                    and the correlations only depend on the relative position
+ple, our architecture obtains a far better approximation                     between the two spins due to periodic boundary condi-
+compared to Ref. [23], where two types of sign rules are                     tions.
+imposed.  Hence, our method is able to eﬃciently capture                        To show that they are equal, we numerically compute
+these sign structures.                                                       both components of the spin-spin correlation function for
+  Furthermore, we point out that contrary to the Slater                      our  optimized  ground  state  of  the  8× 8 J1-J2  model,
+determinants for fermionic systems method (see Ref. [32]                     at J2  =  0.5.   This  is  shown  in  Fig.  5,  where  we  show
+with p  =  0),  our  method  is  systematically  improvable                  both components of the correlation function for all pos-
+via  the  hyperparameters jmax  and τ,  and  therefore  is                   sible  relative  positions  of  spins.   From  this  ﬁgure,  it  is
+                                                                                                                                                  7
+
+indeed clear that the correlations behave as dictated by
+the angular momentumS = 0.  In Fig. 6 we compare the
+transversal and longitudinal correlation functions of our
+ansatz  versus  those  of  a  convolutional  neural  network.
+Speciﬁcally,  we  look  at  the  correlation  between  a  ﬁxed
+spin and other spins in two diﬀerent directions, namely
+the horizontal direction and the diagonal direction.  The
+CNN  breaks  SU(2)  as  was  shown  in  Ref.  [23].   This  is
+also reﬂected in the diﬀerence between longitudinal and
+transversal  correlation  functions.   For  our  ansatz,  both
+correlation  functions  are  equal,  up  to  small  diﬀerences
+due to ﬁnite sample size in the estimation of the expec-
+tation values in Eqs. (7) and (8).
+
+
+
+                                                                            FIG. 7.  Energy of lowest states as a function of total angular-
+                                                                            momentum S, for J2/J1 = 0.5.
+
+
+
+                                                                                     V.    CONCLUSIONS AND OUTLOOK
+
+                                                                               In  this  paper,  we  presented  a  variational  wave  func-
+                                                                            tion  and  optimization  scheme  which  is  able  to  capture
+                                                                            simultaneously  continuous  non-abelian  symmetries  and
+                                                                            discrete lattice symmetries.  By combining both types of
+                                                                            symmetries we showed that excellent results can be ob-
+                                                                            tained on the prototypicalJ1-J2 model in two dimensions
+                                                                            with periodic boundary conditions. The approach also al-
+                                                                            lows to target diﬀerent symmetry sectors than the ground
+                                                                            state, and thus obtain excited states with deﬁnite quan-
+                                                                            tum  numbers  with  high  accuracy.   In  our  simulations,
+FIG. 6. Correlation functions of our ansatz compared to those               we did not observe the so-called sign-structure problem
+of a convolutional neural network (CNN) as in Ref. [23].  We                which is usually found in variational Monte Carlo studies,
+plot the correlation functions between a ﬁxed spin and those                and therefore our work may provide an interesting exam-
+positioned horizontally (a) and diagonally (b) from it.  The                ple to study how this sign problem can be mitigated in
+CNN  breaks  SU(2)  invariance,  while  ClebschTree  respects               future work.
+SU(2) symmetry by construction.                                                Future  directions  using  our  approach  include  resolv-
+                                                                            ing  the  excitation  spectrum  of  the J1-J2  model  at  dif-
+                                                                            ferent values of the momentum and angular momentum
+                       E.    Excited states                                 quantum numbers in detail.  This would allow one to ob-
+                                                                            serve  sudden  changes  in  the  structure  of  the  spectrum
+                                                                            and thus make claims on the nature of the J1-J2  phase
+  As   mentioned   earlier,    the   symmetry   restoration                 diagram.  Other interesting avenues for further research
+method from Refs. [18, 23] can impose limited restrictions                  are exploring the eﬀect of coupling structures other than
+on the spin quantum number of the optimized state, be-                      alternating nearest neighbour coupling.  This can be es-
+cause the singlet (triplet) state is the lowest-energy state                pecially  useful  for  models  where  the  ground  state  ex-
+for each even (odd) total angular momentum S.  In our                       hibits  a  valence  bond  structure  with  singlets  spanning
+method, the ansatz can be used to extract a wave func-                      larger distances than neighbouring sites.  On the archi-
+tion with any well-deﬁned total angular momentum (in-                       tectural  side,  an  interesting  extension  would  be  to  ﬁnd
+cluding S > 1).  The results for S = 0, 1, 2 are shown in                   other eﬃcient non-linear functions which allow the varia-
+Fig. 7 and compared to Ref. [32].  For the S  = 1 state,                    tional wave function to remain equivariant under SU(2),
+we isolate the k = (π,π) state in the B2 irrep of the C4v                   while providing us with more eﬃcient parametrizations
+lattice symmetry group, by choosing the correct charac-                     of quantum states.  Although we considered square lat-
+ters in Eq. 5 (see detailed discussion in Ref. [18]).  Notice               tices and two dimensions in the current work, our model
+that the latter approach, where we are able to select ir-                   can also naturally be extended to diﬀerent topologies and
+reps of the lattice symmetry, results in far better energies                higher dimensions.  For example, our method can form a
+at S = 1.                                                                   powerful tool to study theJ1-J2 and Heisenberg model on
+                                                                                                                                                            8
+
+e.g. triangular and face-centered qubic lattices to study                        viding  results  from  their  models  on  the  8× 8  lattice.
+geometrical frustration.  Another application is fermionic                       The  software  for  this  work  was  built  on  the  NetKet
+models,  where  SU(2)  symmetry  is  especially  useful  for                     library [21].  The computational resources (Stevin Super-
+e.g.  Hubbard models or quantum chemistry problems.                              computer Infrastructure) and services used in this work
+                                                                                 were provided by the VSC (Flemish Supercomputer Cen-
+                                                                                 ter),  and  the  Flemish  Government  –  department  EWI.
+                   ACKNOWLEDGMENTS                                               This  work  was  supported  by  Ghent  University,  Special
+                                                                                 Research Fund Ghent University (J. Nys), and Research
+   We  especially  thank  G.  Carleo  for  useful  discussions                   Foundation Flanders (FWO-Flanders).  The main body
+and  introducing  Ref.  [17]  to  us.   We  thank  C.  Casert                    of this work was carried out while J. Nys was at Ghent
+and J. Ryckebusch for their useful comments on the ﬁ-                            University.  T. Vieijra is supported as an ‘FWO-aspirant’
+nal  draft.   We  thank  Y.  Nomura  and  K.  Choo  for  pro-                    under contract number FWO18/ASP/279.
+
+
+
+
+
+ [1]J.  C.  Slater,  The  theory  of  complex  spectra,  Physical                [16]F.   Ferrari,   F.   Becca,   and   J.   Carrasquilla,   Neural
+     Review 34, 1293 (1929).                                                           gutzwiller-projected variational wave functions, Physical
+ [2]U. Schollw¨ock, The density-matrix renormalization group                           Review B 100, 125131 (2019).
+     in  the  age  of  matrix  product  states,  Annals  of  Physics             [17]R.  Kondor,   Z.  Lin,  and  S.  Trivedi,  Clebsch–gordan
+     326, 96 (2011), january 2011 Special Issue.                                       nets:  a  fully  fourier  space  spherical  convolutional  neu-
+ [3]R. Or´us, Tensor networks for complex quantum systems,                             ral  network,  in  Advances  in  Neural  Information  Pro-
+     Nature Reviews Physics 1, 538 (2019).                                             cessing  Systems,  Vol.  31,  edited  by  S.  Bengio,  H.  Wal-
+ [4]P.  W.  Anderson,  The  resonating  valence  bond  state  in                       lach, H. Larochelle, K. Grauman, N. Cesa-Bianchi, and
+     la2cuo4 and superconductivity, Science 235, 1196 (1987).                          R.  Garnett  (Curran  Associates,  Inc.,  2018)  pp.  10117–
+ [5]G.  Carleo  and  M.  Troyer,  Solving  the  quantum  many-                         10126.
+     body  problem  with  artiﬁcial  neural  networks,  Science                  [18]Y. Nomura, Helping restricted boltzmann machines with
+     355, 602 (2017).                                                                  quantum-state  representation  by  restoring  symmetry,
+ [6]A.  Szabo  and  N.  S.  Ostlund,      Modern  quantum  chem-                       Journal of Physics: Condensed Matter 33, 174003 (2021).
+     istry:  introduction to advanced electronic structure theory                [19]K. Seki, T. Shirakawa, and S. Yunoki, Symmetry-adapted
+     (Courier Corporation, 2012).                                                      variational quantum eigensolver, Physical Review A 101,
+ [7]K. Gunst, F. Verstraete, and D. Van Neck, Three-legged                             052340 (2020).
+     tree  tensor  networks  with  SU(2)  and  molecular  point                  [20]S.  Sorella,  Green  function  monte  carlo  with  stochastic
+     group  symmetry,  Journal  of  chemical  theory  and  com-                        reconﬁguration, Phys. Rev. Lett. 80, 4558 (1998).
+     putation 15, 2996 (2019).                                                   [21]G. Carleo, K. Choo, D. Hofmann, J. E. Smith, T. Wester-
+ [8]L.  Balents,  Spin  liquids  in  frustrated  magnets,  Nature                      hout, F. Alet, E. J. Davis, S. Efthymiou, I. Glasser, S.-H.
+     464, 199 (2010).                                                                  Lin, et al., Netket:  a machine learning toolkit for many-
+ [9]L.  Savary  and  L.  Balents,  Quantum  spin  liquids:  a  re-                     body quantum systems, SoftwareX 10, 100311 (2019).
+     view, Reports on Progress in Physics 80, 016502 (2016).                     [22]D. P. Kingma and J. Ba, Adam:  A method for stochastic
+[10]S.  Singh,  R.  N.  C.  Pfeifer,  and  G.  Vidal,  Tensor  net-                    optimization, arXiv preprint arXiv:1412.6980  (2014).
+     work decompositions in the presence of a global symme-                      [23]K. Choo,  T. Neupert, and G. Carleo, Two-dimensional
+     try, Physical Review A 82, 050301 (2010).                                         frustrated J1-J2   model  studied  with  neural  network
+[11]S.  Singh  and  G.  Vidal,  Tensor  network  states  and  al-                      quantum states, Physical Review B 100, 125124 (2019).
+     gorithms  in  the  presence  of  a  global  SU(2)  symmetry,                [24]Y.   Nomura   and   M.   Imada,   Dirac-type   nodal   spin
+     Physical Review B 86, 195114 (2012).                                              liquid   revealed   by   machine   learning,   arXiv   preprint
+[12]P. Schmoll, S. Singh, M. Rizzi, and R. Or´us, A program-                           arXiv:2005.14142  (2020).
+     ming guide for tensor networks with global SU(2) sym-                       [25]M. Zhitomirsky and K. Ueda, Valence-bond crystal phase
+     metry, Annals of Physics 419, 168232 (2020).                                      of  a  frustrated  spin-1/2  square-lattice  antiferromagnet,
+[13]K. Choo, G. Carleo, N. Regnault, and T. Neupert, Sym-                              Physical Review B 54, 9007 (1996).
+     metries and many-body excitations with neural-network                       [26]J.-F. Yu and Y.-J. Kao, Spin-1 2 j 1-j 2 heisenberg anti-
+     quantum  states,  Physical  Review  Letters  121,  167204                         ferromagnet on a square lattice:  A plaquette renormal-
+     (2018).                                                                           ized tensor network study, Physical Review B 85, 094407
+[14]T. Vieijra, C. Casert, J. Nys, W. De Neve, J. Haegeman,                            (2012).
+     J. Ryckebusch, and F. Verstraete, Restricted boltzmann                      [27]S. Sachdev and R. Bhatt, Bond-operator representation
+     machines for quantum states with non-abelian or anyonic                           of quantum spins:  Mean-ﬁeld theory of frustrated quan-
+     symmetries, Physical Review Letters 124, 097201 (2020).                           tum heisenberg antiferromagnets, Physical Review B 41,
+[15]T.  Cohen  and  M.  Welling,  Group  equivariant  convolu-                         9323 (1990).
+     tional networks, in Proceedings of The 33rd International                   [28]R.  R.  Singh,  Z.  Weihong,  C.  Hamer,  and  J.  Oitmaa,
+     Conference  on  Machine  Learning,  Proceedings  of  Ma-                          Dimer  order  with  striped  correlations  in  the  j  1-  j  2
+     chine Learning Research, Vol. 48, edited by M. F. Balcan                          heisenberg model, Physical Review B 60, 7278 (1999).
+     and  K.  Q.  Weinberger  (PMLR,  New  York,  New  York,                     [29]L.  Capriotti,  F.  Becca,  A.  Parola,  and  S.  Sorella,  Res-
+     USA, 2016) pp. 2990–2999.                                                         onating  valence  bond  wave  functions  for  strongly  frus-
+                                                                                                                                                    9
+
+     trated spin systems, Physical Review Letters 87, 097201                 brary backpropagates the gradients through our network,
+     (2001).                                                                 and we use the Adam optimizer with learning rate 0.001.
+[30]W.-Y.  Liu,  S.  Dong,  C.  Wang,  Y.  Han,  H.  An,  G.-C.              Furthermore, we use gradient clipping with a maximum
+     Guo, and L. He, Gapless spin liquid ground state of the                 gradient norm of 0.001.  To ﬁnd the global optimum for
+     spin- 12 J1-J2 heisenberg model on square lattices, Physi-              the parameters, we initially use a diﬀerent procedure to
+     cal Review B 98, 241109 (2018).                                         quickly  determine  the  region  of  parameter  space  where
+[31]K.  Zhang,  S.  Lederer,  K.  Choo,  T.  Neupert,  G.  Car-              the  ground  state  is  located.   Therefore,  we  ﬁrst  carry
+     leo, and E.-A. Kim, Hamiltonian reconstruction as metric                out a Stochastic Reconﬁguration (SR) step with a uni-
+     for variational studies, arXiv preprint arXiv:2102.00019                form diagonal shift of magnitude 0.01, followed by a step
+     (2021).
+[32]W.-J. Hu, F. Becca, A. Parola, and S. Sorella, Direct ev-                using the resulting update direction with an Adam opti-
+     idence for a gapless z 2 spin liquid by frustrating n´eel an-           mizer. To save computational resources, in this optimiza-
+     tiferromagnetism, Physical Review B 88, 060402 (2013).                  tion regime we use 256 samples and learning rate 0.005.
+[33]S.-S. Gong, W. Zhu, D. Sheng, O. I. Motrunich, and M. P.                 Afterwards, we switch to the standard optimization strat-
+     Fisher, Plaquette ordered phase and quantum phase dia-                  egy (and drop the SR step).  For the Adam optimizer, we
+     gram in the spin- 12 J1-J2 square heisenberg model, Phys-               use  hyperparameters β1  =  0.9  and β2  =  0.999.   Espe-
+     ical Review Letters 113, 027201 (2014).                                 cially for the excitation energies, the energy obtained in
+[34]J.  Bradbury,  R.  Frostig,  P.  Hawkins,  M.  J.  Johnson,              this  ﬁrst  step  is  close  to  the  ﬁnal  result.   The  number
+     C. Leary,  D. Maclaurin,  G. Necula,  A. Paszke,  J. Van-               of  connected conﬁgurationsS′  in  Eq.  (B1)  can become
+     derPlas, S. Wanderman-Milne, and Q. Zhang, JAX: com-                    quite large in the case of many samplesS, and therefore,
+     posable  transformations  of  Python+NumPy  programs                    to restrict the memory usage, the forward and backward
+     (2018).
+                                                                             passes are batched.
+
+              Appendix A: Numerical results
+
+  In Table I, we provide the numerical results related to                       We  pay  speciﬁc  attention  to  the  initialization  of  the
+Fig. 2 in the main text.                                                     variational parameters in our model. As the nature of our
+                                                                             operations is a sum of multiplications, our model is prone
+                                                                             to  numerical  under-  and  overﬂow,  especially  for  larger
+            Appendix B: Optimization details                                 systems.  Furthermore, the issue of vanishing/exploding
+                                                                             gradients arises when the covariances of intermediate fea-
+  Observables are estimated by evaluating the expecta-                       tures grow or diminish with increasing depth.  First, we
+tion  values  through  Markov  Chain  Monte  Carlo  sam-                     initialize the weight matrices W  via a uniform distribu-
+pling.  For example,  using a set of Monte Carlo conﬁg-                      tion.  Next, we compute the activations in a forward pass
+urationsS  =  (ms1,...,msN )  in  a  spin-projection  basis,                 through a layer for a set of 1000 random conﬁgurations
+generated via the distribution|Ψ(S)|2, the energy can be                     S.  We then rescale the original random weight matrices
+estimated via [21]                                                           W  by  the  computed  standard  deviations  of  the  activa-
+                     ⟨∑                          ⟩                           tions of that layer to obtain a new matrixW′.  Next, the
+                                                                             activations are recomputed using W′, and passed to the
+            ⟨ ˆH⟩ =                       Ψ(S)                    (B1)       next layer to perform a similar rescaling of the weights
+                        S′ ⟨S|  ˆH|S′⟩ Ψ(S′)       |Ψ(S)|2                   in  that  layer.   In  such  a  way,  we  obtain  an  activation
+                                                                             variance close to 1 in each layer during the ﬁrst step of
+We use 4096 samples to estimate the expectation values                       the optimization problem,  thereby greatly reducing the
+in each step. Automatic diﬀerentiation [34] via the Jax li-                  chance of under- or overﬂow.
+                                                                                                                                       10
+
+
+                                        TABLE I. Results for 8x8 lattice for various J2/J1.
+
+                                                                                    J2/J1
+        Reference                      0                     0.45                    0.5                     0.55                     1
+        CNN [23]            −43.09275± 0.00050      −32.64850± 0.00100      −31.76950± 0.00125     −30.98850± 0.00150                 -
+   DMRG-SU(2) [33]                     -            −32.68736± 0.00000      −31.88320± 0.00000     −31.24224± 0.00000                 -
+   Fermion-VMC [32]                    -            −32.59520± 0.00064      −31.77984± 0.00064     −31.03168± 0.00064                 -
+Fermion-VMC(p=2) [32]                  -            −32.72000± 0.00064      −31.92704± 0.00064     −31.25824± 0.00128                 -
+     RBM+PP [24]                       -            −32.71149± 0.00026      −31.90144± 0.00038     −31.21984± 0.00064                 -
+    RBM+symm [18]           −43.10268± 0.00003                 -            −31.91460± 0.00015                -                       -
+  ClebschTree (Ours)        −43.09640± 0.00320      −32.70150± 0.00590      −31.90850± 0.00420     −31.25440± 0.00510      −44.75400± 0.01800

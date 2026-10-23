@@ -142,6 +142,91 @@ A row that came through an issue or a pull request names it:
 the row. Rows QMBL read from the literature itself do not carry the field: `verified.method`
 says how they were read.
 
+### The code behind a row: `artifacts`
+
+A published row carries `artifacts.code` when its source names the code that produced the
+number. An unpublished row keeps its code in the same block (above).
+
+```json
+"artifacts": {
+  "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+  "read_from": {
+    "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, ... are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+    "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+    "checked_on": "2026-10-22",
+    "pass": "passes/code/code-links-2026-10-22.json"
+  }
+}
+```
+
+- The source names the code in one of these ways: a code-availability statement or footnote
+  in the paper, the README of a results repository the paper points to, VarBench's Reference
+  column (its README: "the code repository to reproduce the result"), or, for a row QMBL
+  computed, the row's own reference.
+- A library the authors used (NetKet, jax, flax, ITensor, TeNPy, QuSpin, mVMC as a package)
+  is not the row's code; it goes in `libraries` (below). A data-only release is not code.
+  "Available upon request" names no code.
+- `commit` is set where the source names one. `script` is the file or folder the link points
+  to inside a repository, as for VarBench's run scripts.
+- `read_from` quotes the statement verbatim and says where it was read. The validator
+  requires all four fields.
+- The url resolved on `checked_on`. A url that did not resolve is not attached.
+- A QMBL run links `checks/cost/` at the commit on `main` whose tree is the one its reference
+  names. The commits named in those references were replaced in the history of `main` on
+  2026-10-20.
+
+[`scripts/add_code_links.mjs`](scripts/add_code_links.mjs) attaches the blocks from
+`passes/code/code-links-YYYY-MM-DD.json`. The pass has one entry per row with a status:
+- `linked`: the source names the code. Only these entries are attached.
+- `not_found`: nothing in what was read names the code. `location` says what was read.
+- `ambiguous`: a statement exists, but it does not settle that this code produced this
+  number. Examples are a package of the authors named as the software they used, or a run
+  script written for another method. `reason` says why.
+- `dead_link`: the stated url did not resolve.
+
+The site and the README show the link in a `code` column next to `source`. The label is "run
+script" for a file in a repository, owner/repo for a repository, "Zenodo" and the record
+number for a Zenodo record, "model code" for a release that holds only the network and no
+training or run script (`scope: "model"`), "QMBL code" for QMBL's checks, and "rerun (QMBL code)" for a
+row QMBL computed, linking how to rerun it ([checks/cost/README.md](checks/cost/README.md#rerun-a-row)).
+Where the code column carries a VarBench run script, the source cell names the paper only.
+
+A row with no code of its own can carry `artifacts.libraries`: the libraries its source says
+the authors used for this result.
+
+```json
+"artifacts": {
+  "libraries": [{ "name": "QuSpin", "version": null, "url": "https://quspin.github.io/QuSpin/" }],
+  "libraries_read_from": {
+    "quote": "The Lanczos exact diagonalization was carried out using the Quspin package [80, 81], restricting to the momentum sectors which contain the ground state.",
+    "location": "arXiv:2210.05871 (sources/2210.05871.txt), Sec. 3 Benchmark results and the table row 'Lancos ED (QuSpin)' for L = 6, Np = 13",
+    "checked_on": "2026-10-22",
+    "pass": "passes/code/libraries-2026-10-22.json"
+  }
+}
+```
+
+- A library counts only where the source says it was used for this result: in the methods,
+  an appendix, a code or software statement, or the acknowledgements of the software used
+  for these calculations. A citation in the introduction or in related work does not count.
+  Only computational-science codes are shown (NetKet, mVMC, CASINO, NECI, QuSpin and the like).
+  General machine-learning and array frameworks (JAX, PyTorch, TensorFlow, Flax and the like),
+  low-level tools (tensor-contraction engines, optimiser and linear-algebra packages, MPI, BLAS),
+  and programming languages are not; the pass keeps them as read.
+- `version` is set only where the source states it, else `null`. `url` is the library's
+  repository or homepage, one per library, from the table in
+  [`scripts/add_libraries.mjs`](scripts/add_libraries.mjs).
+- `libraries_read_from` quotes the statement verbatim and says where it was read. The
+  validator requires all four fields.
+- A row with `code` gets no `libraries`. The validator rejects a row that has both.
+
+[`scripts/add_libraries.mjs`](scripts/add_libraries.mjs) attaches them from
+`passes/code/libraries-YYYY-MM-DD.json`, one entry per row without code, with a status:
+`library` (attached), `none` (the source names no library used for this result) or `unclear`
+(a library is named, but the source does not settle that it was used for this row; `reason`
+says why). The code column then shows, in muted text, "uses NetKet 3.13", each name linked;
+with more than two libraries, the first two and "+N".
+
 `energy` and `sigma` are stored in the instance's own convention. `v_score` is derived,
 never supplied. `verified` records where the number was read and how. `defect` appears on a
 flagged row and carries the reason.

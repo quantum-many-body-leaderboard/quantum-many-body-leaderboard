@@ -112,6 +112,16 @@
         "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 4: the instance at U = 3.5981. The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -17.63202271908986 the next level, eigsh lowest): E - E0 = 5.1e-6 vs bound 3.3e-5, consistent. History: uploaded 2022-09-09 (e2b8b33), unchanged; sits on the split instance at the named U (relabels.mjs keep). No output log (scope config).",
         "source_entry": "VB2-varbench-code-hubbard#34 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_3.5981.jl",
+        "script": "programs/dmrg_itensors_hubbard/square_16_P_4_3.5981.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_3.5981.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_4_3.5981.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -146,6 +156,17 @@
           "conversion": "none: the cost run works in the stored convention (Pauli totals for spin models, totals for fermions and impurity)",
           "note": "|reproduced - stored| = 1.78e-14 (relative 1.00e-15); within 1e-9 relative. Sector N_up = N_dn = 4, dimension 3312400, 141 Lanczos steps (the file states no residual). The stored value is the source's own ED (qmbl-verify-2026-09-16), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Hubbard__square_16_P_4_3.5981.json), gives -17.696235050104434 (2.12e-12 from the cost run). Also read by VP14-hubbard-j1j2-heisenberg-tfising#76 (scope value: checks/hubbard-u-labels/ed_results.jsonl line 11 (job square L = 4, n = 4, U = 3.5981, eigsh k = 6); logs_fermions_small.log entry Hubbard/square_16_P_4_3.5981; checks/cost/ed/results/Hubbard--square_16_P_4_3.5981.json).",
           "source_entry": "VE-exact-recompute#16, VP14-hubbard-j1j2-heisenberg-tfising#76 (qmbl-verify 2026-09-29)"
+        }
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels",
+        "commit": "3b4cf67",
+        "script": "checks/hubbard-u-labels/",
+        "read_from": {
+          "quote": "QMBL, checks/hubbard-u-labels/ (exact diagonalization at the coupling the rows here were run at)",
+          "location": "the row's reference (QMBL check directory)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
         }
       }
     }

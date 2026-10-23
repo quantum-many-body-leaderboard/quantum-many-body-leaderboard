@@ -34,6 +34,21 @@
         "reported_as": "E_c = -0.3725(5)",
         "note": "Table III, rs=3.0, M=925, column ph-AFQMC; sources/1905.04361.txt line 502; printed in Ha, total; printed correlation energy -0.3725(5), E = E_HF + E_c with E_HF = -0.0469136387818 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP7-heg3d-tfising#169: sigma 0.000504 -> 0.0005 (The printed error bar is 0.0005 (total). The loader stored sigma_per_site rounded to two significant digits (\"sigma_per_site\": 0.000036,), so sigma = round(0.0005/14, 2 s.f.) x 14 = 0.000504. One load); qmbl-verify 2026-10-19 SP7-heg3d-tfising#170: method \"RHF+ph-AFQMC [phaseless AFQMC with a single-determinant RHF trial, time step 0.005 a.u., 2880 walkers (txt line 325-327)] (arXiv:1905.04361)\" -> \"RHF+ph-AFQMC [single-determinant RHF trial, basis M = 925 plane waves (1850 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)\" (The method string omits the basis size M although the energy is a finite-basis value and the instance carries several rows of this paper that differ only in M (they are indistinguishable by method). I) | Eq. (19) (txt line 210): H = T + Vee + E_M; txt lines 232-237: 'the Madelung energy E_M is included to account for the self-interaction of the Ewald sum under periodic boundary conditions. For simplicity we use the formula proposed by Schoof and co-workers' E_M ~ -2.837297 (3/4pi)^(1/3) N^(2/3)/rs (Eq. 22, txt line 238-239). So the Madelung term is included, but through the approximate closed form (Ref 76: T. Schoof, S. Groth, J. Vorberger, M. Bonitz, PRL 115, 130402 (2015)), not through a stated Ewald sum. No Hartree-Fock energy is printed. Reader's own check (python, scratch-R8/hf.py, NOT QM",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "QMCPACK",
+            "version": null,
+            "url": "https://qmcpack.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Unless otherwise noted, the AFQMC calculations in this work were performed by a development version of QMCPACK87. PAUXY88 was also used in the initial testing stages. Unless noted otherwise, AFQMC results below are obtained using QMCPACK. ... ph-AFQMC calculations were performed using the development version of QMCPACK.",
+          "location": "arXiv:1905.04361 (sources/1905.04361.txt), Sec. III Computational Details ... caption of Table IV",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -59,6 +74,21 @@
         "reported_as": "E_c = -0.3395(1)",
         "note": "Table I, row CCSD, rs=3.0 a0 (own value); sources/1706.09923.txt line 306; printed in Ha, total; printed correlation energy -0.3395(1), E = E_HF + E_c with E_HF = -0.0469136387818 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP8-heg3d-hubbard-heg2d-heisenberg#15: method_as_published \"CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; ion: CCSD fitted in 1/M with chosen polynomial order, higher levels by ing l; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" -> \"CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" (The value is correct (E_c = -0.3395(1) at Table I (txt lines 303-311), row CCSD, column rs = 3 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E = N E_HF + E_c = 14 x -) | Eq. (7) (txt line 154-159): 'H = sum_k 1/2 (k^2 + V_M) c+c + ...', with 'V_M the Madelung constant that does not affect the correlation energy'; cubic box of length L; no Ewald-sum statement; no Hartree-Fock energy printed. Only correlation energies are printed, so the convention cannot be checked against a printed HF value.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "HANDE-QMC",
+            "version": null,
+            "url": "https://github.com/hande-qmc/hande"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "we calculate ground state correlation energies with stochastic coupled cluster ranging from coupled cluster singles and doubles (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5). ... For our stochastic calculations, we have made use of development versions of the HANDE code56. ... We have also run some FCIQMC calculations to compare our CCMC results to and we used the conventional and initiator versions for FCIQMC",
+          "location": "arXiv:1706.09923 (sources/1706.09923.txt), abstract; Sec. II (Coupled Cluster Monte Carlo); footnote 56 (\"See Ref. 69 and http://www.hande.org.uk/ for information and code.\")",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -84,6 +114,21 @@
         "reported_as": "E_c = -0.3780(3)",
         "note": "Table I, row CCSDT, rs=3.0 a0 (own value); sources/1706.09923.txt line 307; printed in Ha, total; printed correlation energy -0.3780(3), E = E_HF + E_c with E_HF = -0.0469136387818 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP8-heg3d-hubbard-heg2d-heisenberg#16: method_as_published \"CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; ion: CCSD fitted in 1/M with chosen polynomial order, higher levels by ing ; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" -> \"CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" (The value is correct (E_c = -0.3780(3) at Table I (txt lines 303-311), row CCSDT, column rs = 3 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E = N E_HF + E_c = 14 x ) | Eq. (7) (txt line 154-159): 'H = sum_k 1/2 (k^2 + V_M) c+c + ...', with 'V_M the Madelung constant that does not affect the correlation energy'; cubic box of length L; no Ewald-sum statement; no Hartree-Fock energy printed. Only correlation energies are printed, so the convention cannot be checked against a printed HF value.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "HANDE-QMC",
+            "version": null,
+            "url": "https://github.com/hande-qmc/hande"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "we calculate ground state correlation energies with stochastic coupled cluster ranging from coupled cluster singles and doubles (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5). ... For our stochastic calculations, we have made use of development versions of the HANDE code56. ... We have also run some FCIQMC calculations to compare our CCMC results to and we used the conventional and initiator versions for FCIQMC",
+          "location": "arXiv:1706.09923 (sources/1706.09923.txt), abstract; Sec. II (Coupled Cluster Monte Carlo); footnote 56 (\"See Ref. 69 and http://www.hande.org.uk/ for information and code.\")",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -109,6 +154,21 @@
         "reported_as": "E_c = -0.3833(3)",
         "note": "Table I, row CCSDTQ, rs=3.0 a0 (own value); sources/1706.09923.txt line 308; printed in Ha, total; printed correlation energy -0.3833(3), E = E_HF + E_c with E_HF = -0.0469136387818 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP8-heg3d-hubbard-heg2d-heisenberg#17: method_as_published \"CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; ion: CCSD fitted in 1/M with chosen polynomial order, higher levels by ing; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" -> \"CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" (The value is correct (E_c = -0.3833(3) at Table I (txt lines 303-311), row CCSDTQ, column rs = 3 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E = N E_HF + E_c = 14 x) | Eq. (7) (txt line 154-159): 'H = sum_k 1/2 (k^2 + V_M) c+c + ...', with 'V_M the Madelung constant that does not affect the correlation energy'; cubic box of length L; no Ewald-sum statement; no Hartree-Fock energy printed. Only correlation energies are printed, so the convention cannot be checked against a printed HF value.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "HANDE-QMC",
+            "version": null,
+            "url": "https://github.com/hande-qmc/hande"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "we calculate ground state correlation energies with stochastic coupled cluster ranging from coupled cluster singles and doubles (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5). ... For our stochastic calculations, we have made use of development versions of the HANDE code56. ... We have also run some FCIQMC calculations to compare our CCMC results to and we used the conventional and initiator versions for FCIQMC",
+          "location": "arXiv:1706.09923 (sources/1706.09923.txt), abstract; Sec. II (Coupled Cluster Monte Carlo); footnote 56 (\"See Ref. 69 and http://www.hande.org.uk/ for information and code.\")",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -134,6 +194,21 @@
         "reported_as": "E_c = -0.3837(3)",
         "note": "Table I, row CCSDTQ5, rs=3.0 a0 (own value); sources/1706.09923.txt line 309; printed in Ha, total; printed correlation energy -0.3837(3), E = E_HF + E_c with E_HF = -0.0469136387818 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read | Eq. (7) (txt line 154-159): 'H = sum_k 1/2 (k^2 + V_M) c+c + ...', with 'V_M the Madelung constant that does not affect the correlation energy'; cubic box of length L; no Ewald-sum statement; no Hartree-Fock energy printed. Only correlation energies are printed, so the convention cannot be checked against a printed HF value.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "HANDE-QMC",
+            "version": null,
+            "url": "https://github.com/hande-qmc/hande"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "we calculate ground state correlation energies with stochastic coupled cluster ranging from coupled cluster singles and doubles (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5). ... For our stochastic calculations, we have made use of development versions of the HANDE code56. ... We have also run some FCIQMC calculations to compare our CCMC results to and we used the conventional and initiator versions for FCIQMC",
+          "location": "arXiv:1706.09923 (sources/1706.09923.txt), abstract; Sec. II (Coupled Cluster Monte Carlo); footnote 56 (\"See Ref. 69 and http://www.hande.org.uk/ for information and code.\")",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {

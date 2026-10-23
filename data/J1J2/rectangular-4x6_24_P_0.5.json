@@ -35,6 +35,16 @@
         "note": "|reproduced - stored| = 7.82e-14 (relative 1.56e-15); within 1e-9 relative. Sector total Sz = 0, dimension 2704156, 141 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/J1J2__rectangular-4x6_24_P_0.5.json), gives -50.16239379525193 (2.34e-11 from the cost run). Also read by VB1-varbench-code-j1j2#0 (scope config: scripts/J1J2/rectangular-4x6_24_P_0.5/ed_lattice_symmetries.sh line 4; ed_ls.py L12-31; nk2ls.py L108-126, L214-257).",
         "source_entry": "VB1-varbench-code-j1j2#0, VE-exact-recompute#36 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/ed_lattice_symmetries.sh",
+        "script": "scripts/J1J2/rectangular-4x6_24_P_0.5/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/rectangular-4x6_24_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -103,6 +113,16 @@
         "note": "Script runs main.py --j2=0.5 --lattice=square6x4 twice (--symmetry=0, then --symmetry=1 continuing from the logged parameters) with --log2samples=14: HeisenbergSquare = sum (sigma.sigma + 1) over 2N NN + J2 x 2N NNN bonds, energy_renorm removed, i.e. Pauli J1-J2 without shift on the square6x4 (the 4x6 torus), PBC, S^z = 0 singlet; 96 gates = SU2_symmetrized_square_6x4 (8 patterns x 12 pairs). The number the program prints is the exact state-vector energy <psi|H P|psi>/<psi|P|psi> of the circuit state (observables.py L196-200, '{:.7f}'), deterministic. Variance 0.99 within the Bhatia-Davis bound (E-E0)(Emax-E) = 8.467e+0 (ratio 0.117; E0 = the ED row, Emax = 72 the ferromagnet). Caveat for reproduction: as committed, the first main.py call ends in AttributeError (optimizers.py L644 'return res.x' on the circuit returned at L300), so '&&' skips the symmetric stage; the value (54425ed 2022-10-12) predates the program. M8 flag ('sampled ansatz that units.mjs counts as deterministic'): settled, the energy is the exact state-vector expectation value, so counting it deterministic is right; the Ns = 2^14 shots enter only gradients and metric. Label history: first entered d634c4c (2022-10-02) as '64 pars.' at the same energy, relabelled '96 pars.' in 54425ed by the uploader; the circuit code has 96 gates. History: entered 54425ed (2022-10-12, Nikita, 'Update square_sqrt24_PP_0.5.md'); unchanged since; code link added 5285adc (2024-08-12).",
         "source_entry": "VB1-varbench-code-j1j2#1 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vqe_noisy.sh",
+        "script": "scripts/J1J2/rectangular-4x6_24_P_0.5/vqe_noisy.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vqe_noisy.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/rectangular-4x6_24_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -171,6 +191,16 @@
         "note": "Script runs main.py --j2=0.5 --lattice=square6x4 twice (--symmetry=0, then --symmetry=1 continuing from the logged parameters) with the default 2^36 shots (exact to ~4e-6 relative): HeisenbergSquare = sum (sigma.sigma + 1) over 2N NN + J2 x 2N NNN bonds, energy_renorm removed, i.e. Pauli J1-J2 without shift on the square6x4 (the 4x6 torus), PBC, S^z = 0 singlet; 96 gates = SU2_symmetrized_square_6x4 (8 patterns x 12 pairs). The number the program prints is the exact state-vector energy <psi|H P|psi>/<psi|P|psi> of the circuit state (observables.py L196-200, '{:.7f}'), deterministic. Variance 0.95 within the Bhatia-Davis bound (E-E0)(Emax-E) = 7.386e+0 (ratio 0.129; E0 = the ED row, Emax = 72 the ferromagnet). Caveat for reproduction: as committed, the first main.py call ends in AttributeError (optimizers.py L644 'return res.x' on the circuit returned at L300), so '&&' skips the symmetric stage; the value (54425ed 2022-10-12) predates the program. History: entered 54425ed (2022-10-12, Nikita, 'Update square_sqrt24_PP_0.5.md'); unchanged since; code link added 5285adc (2024-08-12).",
         "source_entry": "VB1-varbench-code-j1j2#2 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vqe.sh",
+        "script": "scripts/J1J2/rectangular-4x6_24_P_0.5/vqe.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vqe.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/rectangular-4x6_24_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -291,6 +321,16 @@
         "note": "Script builds the 4x6 PBC J1-J2 at J2 = J22 = 0.5 (Pauli, no Marshall rotation, no shift), S^z = 0, max bond dimension 4096 = method string, 50 sweeps, cutoff 1e-12, seed 123; final dmrg() energy: variational at stated bond dimension (no extrapolation), sigma not applicable. D = 4096 = 2^12 is exact for 24 sites; 2.44e-10 above the ED row. The stored variance 3.916126117129898e-8 exceeds the Bhatia-Davis bound (E-E0)(Emax-E) = 2.98e-8 by x1.31; dmrg() returns the pre-truncation two-site eigenvalue while the variance uses the truncated MPS, and a gap of ~4e-10 between that eigenvalue and <psi|H|psi> accounts for it; not a finding. M6 flag (V-score 3.7e-10) is the converged state, not an outlier. History: entered bbcfdc1 (2023-01-15, Dian, 'Add Heisenberg kagome 18 and J1-J2 4x6 baselines'); unchanged since; code link added f88f9ba (2024-07-19). Holds the instance's best variational bound (is_record).",
         "source_entry": "VB1-varbench-code-j1j2#3 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/dmrg.sh",
+        "script": "scripts/J1J2/rectangular-4x6_24_P_0.5/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/rectangular-4x6_24_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -348,7 +388,17 @@
           "source_entry": "VB1-varbench-code-j1j2#4 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vmc_rbm.sh)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vmc_jastrow.sh",
+        "script": "scripts/J1J2/rectangular-4x6_24_P_0.5/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/rectangular-4x6_24_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -49.273,
@@ -405,7 +455,17 @@
           "source_entry": "VB1-varbench-code-j1j2#5 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vmc_jastrow.sh)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vmc_rbm.sh",
+        "script": "scripts/J1J2/rectangular-4x6_24_P_0.5/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/rectangular-4x6_24_P_0.5/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/rectangular-4x6_24_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ],
   "qmbl_ed_cost": {

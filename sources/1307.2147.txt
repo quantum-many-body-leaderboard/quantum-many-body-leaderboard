@@ -1,0 +1,884 @@
+                  Symmetry  in Auxiliary-Field  Quantum  Monte Carlo  Calculations
+
+                                                         Hao  Shi  and  Shiwei  Zhang
+                     Department  of  Physics,  The  College  of  William  and  Mary,  Williamsburg,  Virginia  23187
+
+                   We show how symmetry properties can be used to greatly increase the accuracy and eﬃciency in
+                auxiliary-ﬁeld quantum Monte Carlo  (AFQMC) calculations  of electronic systems.  With the Hub-
+                bard model as an example, we study symmetry preservation in two aspects of ground-state AFQMC
+                calculations,  the Hubbard-Stratonovich transformation  and the form  of the trial  wave function.  It
+                is shown that signiﬁcant improvement over state-of-the-art calculations can be achieved.  In uncon-
+                strained calculations, the implementation of symmetry often leads to shorter convergence time and
+                much smaller statistical errors, thereby a substantial reduction of the sign problem.  Moreover, cer-
+                tain excited states  become possible to calculate which  are otherwise  beyond reach.  In calculations
+                with constraints, the use of symmetry can reduce the systematic error from  the constraint.  It also
+                allows  release-constraint  calculations,  leading  to  essentially  exact  results  in  many  cases.   Detailed
+                comparisons  are made with  exact diagonalization  results.  Accurate ground-state energies are then
+                presented for larger system sizes in the two-dimensional repulsive Hubbard model.
+
+                PACS numbers:  71.10.Fd, 02.70.Ss, 05.30.Fk
+
+
+                    I.     INTRODUCTION                                       example, open-shell situations often result in larger sys-
+                                                                              tematic  errors.   It  is  thus  important  to  understand  and
+  The  study  of  interacting  quantum  many-body  sys-                       develop ways to improve the quality of the constraint.
+tems  remains  an  outstanding  challenge,  especially  sys-                     Symmetry   properties   and   projection   have   a   long
+tems  with  strong  particle  interactions,  where  perturba-                 history   in   quantum   many   body   problems   (see,   e.g.
+tive  approaches  are  ineﬀective.    Numerical  simulations                  Refs12–18)  In  this  paper,  we  discuss  the  imposition  of
+provide a promising approach for studying such systems.                       symmetry properties and their eﬀects in AFQMC calcula-
+One  of  the  most  general numerical  approaches  is  quan-                  tions.  It is shown that symmetry can often be rigorously
+tum  Monte  Carlo  (QMC)  methods  based  on  auxiliary-                      preserved in the AFQMC framework despite the stochas-
+ﬁelds,  which  are  applied  in  condensed  matter  physics,                  tic  nature  of  the  calculations,  and  taking  advantage  of
+nuclear physics, high-energy physics, and quantum chem-                       this can lead to dramatic improvements.  We address the
+istry.  These  methods1–3  allow essentially  exact  calcula-                 issue  from  two  aspects:  symmetry  preserved  projection
+tions of ground-state and ﬁnite-temperature equilibrium                       and the symmetry of the trial wave function.
+properties  of  interacting  many  fermion  systems.   As  is                    In  the  symmetry  preserved  projection,  we  study  the
+well known, however, they  suﬀer  from the sign problem                       form  of  the  Hubbard-Stratonovich  (HS)  transformation
+which  severely  limits  their  applicability4,5.   A  key  issue             and  its  eﬀect  on  the  computational  eﬃciency  and  ac-
+in algorithm development in this context is to reduce the                     curacy.    We  focus  on  the  comparison  between  charge-
+convergence time or variance reduction for ﬁxed comput-                       decompositions which preserve SU(2) symmetry and the
+ing cost.                                                                     standard form of Hirsch spin-decomposition.  We discuss
+  Considerable  progress  has  been  achieved  in  circum-                    the optimal form of the  charge decomposition which in-
+venting  this  problem by  constraining  the  random  walks                   volves  subtracting  the  proper  “mean-ﬁeld”  background
+in sampling the space of auxiliary-ﬁelds.  These methods                      prior to  making the HS transformation.
+have  come  under  the  name  of  Constrained  Path  Monte                       With a  trial wave function which imposes exact sym-
+Carlo (CPMC)5,6 for systems where there is a sign prob-                       metry  properties,  one  is  able  to  reduce  the  projection
+lem  (for  example,  Hubbard-like  models  where  the  local                  time as well as the statistical error bar.  Symmetry alle-
+interactions  lead  to  auxiliary-ﬁelds  that  are  real).   For              viates the sign problem, since the convergence time to the
+electronic  systems  where  there  is  a  phase  problem  (as                 ground state is reduced by ensuring the right symmetry
+the  Coulomb  interaction  leads  to  complex  ﬁelds),  the                   in the trial wave function used to initiate the projection.
+methods7–9  have been referred to as phaseless or phase-                      Furthermore, the correct symmetry can help sustain pro-
+free  auxiliary-ﬁeld  QMC.  In  both  cases,  the  idea  is  to               jections of excited states which have diﬀerent symmetry
+constrain  the  sign  or  phase  of  the  overlap  of  the  sam-              from that of the ground state.  The most important fea-
+pled  Slater  determinants  with  a  trial  wave  function.   It              ture of preserving symmetry in the trial wave function is
+eliminates the sign or phase instability and restores low-                    in constrained AFQMC calculations, where we will show
+power (typically to the third power of system size) com-                      that  the  quality  of  the  approximation  improves  signiﬁ-
+putational scaling.  Applications  to  a  variety  of systems                 cantly.
+have  shown  that  the  methods  are  very  accurate,  even                      We  consider  the  eﬀect  of  symmetry  in  three  diﬀer-
+with simple trial wave wave functions taken directly from                     ent  forms  of  ground-state  AFQMC  calculations,  uncon-
+mean-ﬁeld calculations (see, e.g.  Refs10,11 and references                   strained Free Projection (FP), constrained path (CP) cal-
+therein).  However, these methods are approximate.  For                       culations, and released-constraint (RC) calculations.  The
+                                                                                                                                                     2
+
+ﬁrst, FP, corresponds to the standard algorithm which is                     will apply to other Hamiltonians, including more realistic
+formally exact but has the sign problem.  The third, RC,                     materials Hamiltonians.
+can  be  thought  of  in  the  present  context  as  a  more  so-               The  Hubbard  model  is  written  in  second-quantized
+phisticated version of FP, in which we start from a much                     form as  19:
+better initial state, namely a converged CP run, and re-                                                    L∑                  L∑
+lease (i.e., remove) the  constraint and continue the pro-                          ˆH =  ˆK +  ˆV  = −t         c†                ni↑ni↓.        (1)
+jection.  In FP and RC, the focus is on the use of symme-                                                         iσcjσ +U
+try to reduce the statistical ﬂuctuations and prolong the                                                 ⟨i,j⟩σ                i
+imaginary-time projections.  We show that improvements                       Here L  is  the  number  of  lattice  sites, c†
+are  seen  in  both  methods.   Especially  in  RC  the  use  of             creation and annihilation operators of an electron of spiniσ  and ciσ  are
+symmetry can lead to a dramatic eﬀects and signiﬁcantly                      σ on thei-th lattice site,t is the nearest-neighbor hopping
+ameliorate the sign problem.                                                 energy  and U  is  the  interaction  strength.   Throughout
+  We  are  interested  in  studying  the  eﬀect  of  symmetry                this paper, we will uset as units of energy and sett = 1.
+in CP calculations, in order to further improve the con-                     We  assume  that  there  are N↑  spin-up  electrons  and N↓
+straints.   We  ﬁnd  that  the  use  of  trial  wave  functions              spin-down electrons on the lattice.
+which preserve symmetry can greatly reduce the system-                          The Hamiltonian in Eq. (1), whose Hilbert space grows
+atic bias from the constraint.  In open-shell systems, the                   exponentially in size with L, presents an enormous chal-
+use of simple trial wave functions which restore symme-                      lenge.     Questions   remain  open   about   its   properties.
+try properties eliminates most of the bias from the con-                     Ground  state  projection  with  Monte  Carlo  (MC)  sam-
+straint.  Another  key  ﬁnding  is  that  one  can  switch  be-              pling is one of the candidates to solve the problem.  The
+tween diﬀerent forms of the HS transformation in CP and                      projection method is:
+the following RC calculations.  This is motivated by con-
+sidering  the  diﬀerent  behaviors  of  statistical  errors  and                               |ψ0⟩ ∝  lim
+sensitivity to the constraint.                                                                          β→∞e−β( ˆH−ET )|ψT ⟩,                   (2)
+  We  will  use  the  two-dimensional  repulsive  Hubbard                    whereET  and |ψT ⟩ are guesses of the ground state energy
+model as an example in our discussions.  The model pro-                      and wave function, and ⟨ψ0|ψT ⟩ ⁄= 0 in order for the pro-
+vides an ideal test ground for the present study.  On the                    jection to yield the ground state asymptotically.  To tar-
+one-hand,  it  is  computationally  simple  where  exact  di-                get a lowest energy excited state of a diﬀerent symmetry
+agonalization  results  are  available  in  non-trivial  system              from |ψ0⟩ is similar to doing a ground-state calculation,
+sizes.  On the other hand, it is a fundamental model which                   except one would choose a |ψT ⟩ which is not orthogonal
+captures many of the key aspects of simulating correlated                    to the targeted excited state but satisﬁes ⟨ψ0|ψT ⟩ = 0.
+materials and which, in fact, contains many unanswered                          The  propagator  can  be  evaluated  using  a  Trotter-
+questions.   Through  the  approach  presented  in  this  pa-                Suzuki breakup  20,21:
+per, signiﬁcantly more accurate calculations can be done
+on larger systems.  For example, essentially exact results
+can now be obtained for > 100 sites, as shown below.                          (e−∆τ ( ˆK+ ˆV ))n = (e− 12 ∆τ  ˆKe−∆τ ˆVe− 12 ∆τ  ˆK)n +O(∆τ 2).
+  The  remainder  of  the  paper  is  organized  as  follows.                                                                                     (3)
+In section II,  we summarize  the  relevant features  of the                 Here we have ∆τn = β,  and a Trotter error arises from
+AFQMC  method  in  three  diﬀerent  forms:   the  uncon-                     the  omission  of  the  higher  order  terms.  We  will  not  be
+strained  FP,  CP,  and  RC,  in  order  to  facilitate  the  en-            concerned with the Trotter error here, other than to note
+suing  discussions.  In  section III,  we  describe  separately              that  it  can  be  controlled  by  extrapolating  to ∆τ  →  0
+the two aspects of symmetry improved AFQMC, namely                           with separate calculations using  diﬀerent ∆τ  values.  In
+symmetry-preserving  HS  transformation  and  symmetry                       the  results  shown in  this  paper,  we  either  perform  such
+in  the  trial  wave  function.   Results  are  ﬁrst  shown  for             an extrapolation explicitly, or have checked via separate
+demonstration  and  benchmark,  then  followed  by  new,                     calculations that the Trotter error is within the statistical
+near-exact ground-state energies for larger system sizes.                    error.  We also mention that, for the Hubbard interaction,
+Finally we conclude in Sec. IV.                                              decompositions without Trotter errors are possible  22.
+                                                                                The two-body propagator is then decoupled into one-
+                                                                             body propagator by auxiliary ﬁelds, using the HS trans-
+   II.     AUXILIARY  FIELD  QUANTUM  MONTE                                  formation  23,24.  The general form is:
+                      CARLO  METHODS                                                               e−∆τ ˆV  = ∑     p(x)eˆo(x),                        (4)
+
+                                                                                                                 x
+  We  ﬁrst  summarize  the  key  features  of  ground  state
+AFQMC  methods  that  are  relevant  to  the  symmetry                       where  ˆo(x)  is  a  one-body  operator  that  depends  on  the
+study to follow.  The three diﬀerent forms of AFQMC are                      auxiliary  ﬁeld x, p(x)  is  a  probability  density  function
+summarized  in  three  subsections  below.   As  mentioned,                  with the normalization ∑xp(x) = 1.  In general the sum
+we will use the two-dimensional repulsive Hubbard model                      in  Eq.  (4)  is  an  integral,  and x  is  a  many-dimensional
+as  a  concrete example;  however most of  our  discussions                  vector whose dimension is of the order of the size of the
+                                                                                                                                                        3
+
+one-particle basis.  In the Hubbard model,x typically has                         During the projection we multiply the constant (non-
+L components, one for each lattice site.  By setting:                          operator) values of the formula, e.g., the overall normal-
+                                                                               ization e∆τ ET ,  to  the  weight of  the  walker.  The  weight
+                  ˆB(x) =e− 12 ∆τ  ˆKeˆo(x)e− 12 ∆τ  ˆK,                  (5)  of  each  walker  will  ﬂuctuate  in  the  random  walk  and
+                                                                               after  a  few  steps,  some  walkers  can  have  large  weights
+we rewrite the projection as                                                   and  some  walkers  will  have  small  weights.   We  apply  a
+                                        n∏                                     population control procedure, splitting the walkers with
+                |ψ0⟩ = ∑P (−→X)            ˆB(xi)|ψT ⟩.                 (6)    large weights and eliminating walkers with small weights
+                          −→X                                                  with the  appropriate probability  28,  such that  the  over-
+                                      i=1                                      all  probability  distribution  is  preserved but  the  weights
+                                                                               are  made  more  uniform.   It  will  introduce  a  population
+The   vector−→X   means   (x1,x2, · · · ,xn),   and P (−→X )    =              control  bias5.   In  our  calculations,  the  population  con-
+∏                                                                              trol bias is much smaller than the statistical error.  This
+  ip(xi).
+   Then the ground state properties can be evaluated by:                       is easy to accomplish in CP calculations.  In FP and RC
+                                                                               calculations, large populations are necessary as discussed
+                        ⟨ ˆA⟩0 =  ⟨ψ0| ˆA|ψ0⟩                                  below.  Modiﬁed Gram-Schmidt orthogonalization is ap-
+                                    ⟨ψ0|ψ0⟩ ,                            (7)   plied to each walker periodically as well  29.
+                                                                                  As mentioned, the FP calculations are done in the same
+which    are    many-dimensional    integrals    (e.g.,    2nL-                framework as the CP calculations.  This is diﬀerent from
+dimensions  in  the  Hubbard  model).    MC  methods  are                      standard Metropolis sampling  1,30,31, which keeps an en-
+used  to  calculate  the  high  dimension  integrals,  by  sam-                tire path of a ﬁxed length n as the object to sample.  This
+pling the probability density function using the Metropo-                      framework does not have any ergodicity issues  32, and it
+lis  algorithm25  or  a  related  method.    The  sign  prob-                  is straightforward to project to longer imaginary-time in
+lem  emerges  because  the  integrand  in  the  denomina-                      order to approach the ground state.  We typically turn oﬀ
+tor,P (−→X)⟨ψT | ∏  ˆB(xi)|ψT ⟩ is not always positive, which                  importance  sampling  in  FP,  sampling  the  ﬁelds  accord-
+causes  the  MC  signal  to  be  eventually  lost  in  the  sam-               ing to P (−→X) instead of using either the force bias  7,10 or
+pling noise.                                                                   direct importance-sampling of discrete ﬁelds  5 as is done
+                                                                               in CP calculations.  Empirically we ﬁnd that this tends to
+                                                                               give  smaller  statistical  errors  than  invoking  importance
+        A.     Unconstrained  Free  Projection  (FP)                           sampling and then lifting the constraint.  The use of pop-
+                                                                               ulation control helps  to  reduce the  noise but  ultimately
+   We  carry  out  the  FP  calculation7,10,26  with  an  open-                the shortcoming of this approach is that the lack of im-
+ended random walk similar to the CP approach 5,7.  How-                        portance sampling will cause large noises as system size
+ever,  the  discussion  on  symmetry  in  FP  calculations  in                 orn increases.  Since in these situations the sign problem,
+this  paper  will  apply  directly  to  standard  ground-state                 when  uncontrolled,  tends  to  overwhelm  the  calculation
+AFQMC calculations using Metropolis sampling of paths.                         anyway,  the  shortcoming  is  not  of  major  practical  rele-
+In our approach, a population of Nw  random walkers is                         vance, and we ﬁnd this mode of sampling to often be the
+carried, which are typically  initialized  by  the trial wave                  more eﬃcient in practice.
+function.  Each walker will have a weight w  whose value                          At  the nth  step  in  the  propagation,  we  measure  the
+is set as one at the beginning of the projection:                              energy by:
+                                  ∑Nw                                                                     ∑Nw
+                      |ψ(0)⟩ =         w(0)i   |φ(0)i   ⟩                         (8)                          w(n)i    ⟨ψT |H|φ(n)i    ⟩
+                                   i                                                               E =     i                         .                   (10)
+                                                                                                            ∑Nw
+   We  apply  the  projection  in  Eq.  (6)  by  random  walks                                                  w(n)i    ⟨ψT |φ(n)i    ⟩
+in  Slater  determinant  space,  instead  of  using  the  usual                                              i
+approach of Metropolis sampling of auxiliary-ﬁeld paths.                       If  the  projection  has  equilibrated,  we  can  combine  the
+In each step, we sample the auxiliary ﬁeldx according to                       populations at multiple n  values in the  estimator above
+p(x)  by  MC,  and apply   ˆB(x)  to  the  Slater  determinant                 to  improve  statistics  on  the  ground-state  energy.   The
+wave function.  Since the operators only contain one-body                      energy measure in Eq. (10) is variational if we set |ψ(0)⟩ =
+terms, they will generate another Slater determinant  27:                      |ψT ⟩, since
+                         ∑Nw  ∑
+            |ψ(1)⟩  =              p(xi) ˆB(xi)w(0)i   |φ(0)i   ⟩                 E =  ⟨ψT |He−βH|ψT ⟩
+                           i   xi                                                          ⟨ψT |e−βH|ψT ⟩   =  ⟨ψT |e−βH/2He−βH/2|ψT ⟩⟨ψT |e−βH/2e−βH/2|ψT ⟩ .
+                         ∑Nw                                                                                                                        (11)
+                     =        w(1)i   |φ(1)i   ⟩                                    (9)To calculate the expectation value of an observable which
+                           i                                                   does  not  commute  with  the  Hamiltonian,  we  can  use
+                                                                                                                                                       4
+
+back-propogation  5,8 using part of the path and project-                      Instead of p(x), one samples the auxiliary-ﬁelds from
+ing  the  trial wave function  ⟨ψT |.  Because of the  lack of
+importance  sampling,  back-propagation will  tend  to  be                                        ~p(x) =p(x)⟨ψT | ˆB(x)|φ(l)i   ⟩
+very noisy in FP, and large population size will typically                                                           ⟨ψT |φ(l)i   ⟩  ,                  (15)
+be needed.                                                                     which  can  be  accomplished  either  directly  for  discrete
+   The  application  of  symmetry  in  either  the  trial  wave                ﬁelds using a heat bath-like approach 5 or more generally
+function or the propagator  ˆB(x) is straightforward in FP.                    via a force bias  7,8.  This  will automatically prevent the
+In  Sec.  III  we  show  how  the  use  of  symmetry  can  im-                 random walks from sampling any determinants with zero
+prove  FP  calculations  and  allow  longer  projection  time                  (or negative) overlap with the trial wave function.  Those
+with smaller statistical ﬂuctuations.  Furthermore, some                       with  larger  overlap will  be  sampled  more,  although  the
+excited states can be accessed.                                                weight  from  importance  sampling  will  ensure  that  the
+
+                                                                               exact  distribution  deﬁned  by  Eq.  (14)  is  sampled.   The
+                  B.     Constraint  Path  (CP)                                energy  can  be  calculated  by  the  mixed  estimate  similar
+                                                                               to  Eq.  (10),  although  now  with  importance  sampling  it
+   The  constrained path (CP) approximation allows one                         has the form:
+to eliminate the sign problem present in FP. During the                                                  ∑Nw
+FP steps, the overlap between the ground state and the                                                        w(n)             i    ⟩
+                                                                                                                i    ⟨ψT |H|φ(n)⟨ψT |φ(n)
+projected  wave  function,  ⟨ψ0|ψ(l)⟩,  will  in  general  ap-                                    E =      i                 i    ⟩  .                  (16)
+proach zero, because intrinsically the projection is sym-                                                        ∑Nw
+metric about |ψ(l)⟩ and −|ψ(l)⟩.  In  other words, at any                                                             w(n)i
+given  imaginary  time l,  the  projection  would  proceed                                                         i
+identically  if  each  random  walker  |φ(l)⟩  were  switched                  Following diﬀusion Monte Carlo (DMC), we refer to the
+to  −|φ(l)⟩,  for  example  by  a  permutation  of  two  of  its               quantity in the numerator,EL(φ) ≡ ⟨ψT |H|φ⟩/⟨ψT |φ⟩ as
+orbitals.  This  means that,  unless  the random walks are                     the local energy.  An important characteristic of the con-
+somehow strictly  conﬁned to only  one kind of “sign”, it                      strained path approximation is that the  mixed estimate
+will  invariably  become  a  random  and  equal  mixture  of                   in Eq. (16) is not variational33.
+both, given suﬃciently largel.  Thus measurements from                            The  CP  approximation  has  proved  very  accurate  in
+the  MC  sampling  will  eventually  have  inﬁnite  variance.                  the Hubbard model, especially for closed shell systems  5.
+This is how the  sign problem appears in an FP calcula-                        For instance,  the  energy at U  = 4  is  typically  within <
+tion.                                                                          0.5% of the exact diagonalization result6.  It is, however,
+   The  CP  approach is  based on the  observation that  5,                    approximate.  The  systematic  error  in  the  energy  tends
+if  any  particular  walker  has  the  zero  overlap  with  the                to  be  larger  in  open-shell  systems.   Here  we  show  that
+ground state  at imaginary time τl  ≡ l∆τ  in  the  projec-                    this  error  can  be  signiﬁcantly  reduced  with  trial  wave
+tion:                                                                          functions which observe the correct symmetry.
+                            ⟨ψ0|φ(l)⟩ = 0                               (12)
+this walker will contribute zero at any future timeβ >τl,                                      C.     Release  Constraint  (RC)
+because:
+                     ⟨ψ0|e−(β−τl) ˆH|φ(l)⟩ = 0.                     (13)          From a converged CP calculation, one can release the
+                                                                               constraint and continue with the projection.  Calculations
+Then  we  are  able  to  discard  the  walker  once  its  path                 of similar character have been done in the framework of
+reaches  a  point  where  the  overlap  becomes  zero.   With                  DMC,  under  the  name  of  released  node   34.   Since  the
+this  constraint  the  sign  problem  is  eliminated,  and  the                CP  result is  already  very  close  to  the  ground state  and
+projection will still lead to the exact ground state.  How-                    FP in AFQMC tends to have a reduced sign problem in
+ever,  we  obviously  do  not  know  the  exact  ground  state                 general,  one  can  expect  that  releasing  the  constraint  in
+wave function.  In CP calculations, a trial wave function,                     AFQMC  will  be  eﬀective  and  will  allow  the  removal  or
+|ψT ⟩,  is  chosen  for  determining  the  sign  of  the  overlap.             reduction of systematic bias in more systems.
+A walker which develops a zero overlap with |ψT ⟩ during                          In  principle  the  idea  of  releasing  the  constraint  is
+the projection is discarded.                                                   straightforward.  As  mentioned,  the  RC  calculation  can
+   Importance sampling can be introduced in CP calcula-                        theoretically be viewed as an FP calculation, with a much
+tions both as a natural way to impose the constraint and                       better  starting  point.   Technically,  however,  the  imple-
+for variance reduction  5,7,8.  With importance sampling,                      mentation of RC can be challenging.  The initial popula-
+the  wave  function  during  the  projection can  be  written                  tion, namely that from CP, is obtained with importance
+as:                                                                            sampling,  which  automatically  imposes  the  constraint.
+                              ∑Nw                                              On the one hand, the importance function must be mod-
+                   |ψ(l)⟩ =        w(l)       i   ⟩                            iﬁed  in  RC  to  allow the  random walks  to  have  a  signif-
+                                     i       |φ(l)                             icant  chance  to  sample  the  region  with  ⟨ψT |φ(l)⟩  being
+                                i       ⟨ψT |φ(l)i   ⟩.                   (14)
+                                                                                                                                                      5
+
+negative  (or  develop  diﬀerent  phases  in  the  more  gen-                     -4
+eral case).  Indeed, the more eﬃcient approach in FP in
+AFQMC  seems  to  be  with  no  importance  function,  as
+discussed  earlier.   On  the  other  hand,  since  the  initial                  -6
+population from CP has the form of Eq. (14), “undoing”
+the importance sampling will cause large statistical ﬂuc-
+tuations  and  accelerate  the  onset  of  the  sign  problem.
+                                                                                  -8
+Thus  we  need  to  ﬁnd  the  best  way  to  interface  the  RC
+part with CP so as to minimize the growth of statistical
+noise.
+                                                                                  -10
+  RC  calculations  within  AFQMC  have  been  published                                                                                 −n=0.125
+by Sorella  22  recently.  Our approach is somewhat diﬀer-                                                                               −n=0.250
+ent  and  we  will  publish  the  method  and  further  results                                                                          −n=0.375
+                                                                                                                                         −n=0.500
+elsewhere.  The algorithmic details do not aﬀect the issues                       -12                                                    −n=0.625
+that are the focus of the present paper, namely the use of                                                                               −n=0.750
+                                                                                                                                         −n=0.875
+symmetry properties to improve the calculations.  A key                                                                                  −n=1.000
+aspect is our use of diﬀerent forms of the HS transforma-                                                                          Hirsch Charge
+                                                                                  -14
+                                                                                     0       0.2      0.4      0.6      0.8      1        1.2      1.4
+tion in the CP and the RC portions of the calculations.                                                       projection time β
+That is, we switch to a diﬀerent HS decomposition in the
+RC in order to impose exact symmetry properties which                         FIG. 1:  (Color online) Statistical error bar (log-scale)  versus
+drastically  change  the  behavior  of  the  RC  calculations,                projection time for diﬀerent HS transformations.  FP calcula-
+as described below.                                                           tions  are  shown.  The  error  bars  increase  exponentially  with
+  In RC calculations, we will use a mixed estimator sim-                      projection  time, but the optimal  choice of  the background  ¯n
+ilar to Eq. (10) to measure the energy:                                       in Eq. (23) greatly reduces the ﬂuctuation and improves eﬃ-
+                                                                              ciency.  The system shown is a 4 × 4 lattice with N↑ = 3 and
+                                                                              N↓ = 3, and U  = 4.
+                          ∑Nw
+                               wCPi    ⟨ψT |He−β ˆH|φCPi   ⟩
+                            i                                                        A.     Hubbard-Stratonovich  Transformation
+            ERC(β) =       ∑Nw                              .         (17)
+                                wCPi    ⟨ψT |e−β ˆH|φCPi    ⟩                    For  each  form  of  the  two-body  interaction,  there  are
+                             i                                                diﬀerent  ways  to  decompose  the  propagator,  leading  to
+                                                                              diﬀerent  forms  of  Eq.  (4).    Decompositions  based  on
+Thus ERC(β  =  0)  = ECP.   As  mentioned,  the  mixed                        Hartree,  Fock,  and  pairing  mean-ﬁelds  are  all  possible.
+estimate  in  CP  is  not  variational.   The  RC  energy  will               Even within  each mean-ﬁeld framework, the  details  can
+asymptotically  converge  to  the  exact  ground-state  en-                   aﬀect the ﬁnal form of the one-body propagator and the
+ergy.    However,  it  can  converge  from  below  or  above.                 computational eﬃciency.  When a constraint is imposed,
+Indeed, as we further discuss below, the convergence can                      the form of the HS transformation chosen can aﬀect the
+be non-monotonic for poorer trial wave functions.                             systematic accuracy given a form of the trial wave func-
+                                                                              tion.    For  the  Hubbard  interaction,  for  example,  the
+                                                                              most commonly used HS transformation involves discrete
+                                                                              auxiliary-ﬁelds, due  to  Hirsch  24.  The  spin  form of this
+      III.     SYMMETRY  IMPROVED  AFQMC:                                     decomposition is:
+               RESULTS  AND  DISCUSSION                                                                                           1
+                                                                                 e−∆τ Uni↑ni↓  =e−∆τ U(ni↑+ni↓)/2   ∑             2eγxi(ni↑−ni↓),
+                                                                                                                          xi=±1
+  In this section we describe approaches to impose sym-                                                                                            (18)
+metry in AFQMC calculations, and study their eﬀects on                        which results in an Ising-like auxiliary-ﬁeld for each lat-
+computational  eﬃciency  and,  more  importantly,  on  the                    tice site.  The constantγ  is determined by
+sign  problem.   We  divide  the  discussion  into  two  parts:
+the  choice  of  the  Hubbard-Stratonovich  transformation                                             cosh(γ) =e∆τ U/2.                          (19)
+and  its  eﬀect  on  symmetry,  and  symmetry  in  the  trial                 It can also be mapped to a charge density form:
+wave function.  While we will consider all three ﬂavors of
+AFQMC  introduced in  Sec.  II,  our  focus  will  be  on  CP                 e−∆τ Uni↑ni↓  =e−∆τ U(ni↑+ni↓−1)/2   ∑               1
+and RC, since these are the most general methods which                                                                     xi=±1   2eγxi(ni↑+ni↓−1),
+will allow calculations to scale to large system sizes.  It is                                                                                     (20)
+shown that the use of symmetry can lead to large reduc-                       with
+tions  in  statistical  and  systematic  errors,  and  alleviate
+the sign problem.                                                                                     cosh(γ) =e−∆τ U/2.                        (21)
+                                                                                                                                                               6
+
+   A more general HS transformation  23,                                           versus  projection  time  for  diﬀerent  values  of  the  back-
+                                ∫   ∞                                              ground ¯n.  The calculations are all FP so the sign problem
+                e ˆA2 =    1√                       2x ˆAdx,              (22)     is present, as indicated by the growing error bars, which
+                            2π    −∞e−x2/2+√                                       are essentially linear in the log-plot with projection time.
+                                                                                   It is seen that the minimum statistical error is achieved
+applies to any two-body operators written in the form of                           when  ¯n = ⟨ni↑ +ni↓⟩MF = (N↑ +N↓)/L.  The eﬃciency
+a  square.  To apply  this  to  the  Hubbard interaction, we                       of the HS decomposition decreases as ¯n deviates from the
+write:                                                                             optimal  value.   It  is  a  symmetric  function  of  the  devia-
+                                                                                   tion:  a background value which is larger or smaller than
+                ni↑ni↓ =  12[(ni↑ +ni↓ − ¯n)2 − ¯n2                     (23)       the optimal value by the same amount gives comparable
+                              −(1 − 2¯n)(ni↑ +ni↓)],                               results.  We point out that, although we have illustrated
+                                                                                   this  with  the  repulsive  model,  the  same  applies  to  the
+where ¯n can take any value (including acquiring a depen-                          attractive case.  For example, in dilute Fermi gas simula-
+                                                                                   tions, Eqs. (23) with a small ¯n will be much more eﬃcient
+dence oni).  We then let  ˆA = √−∆τU/2 (ni↑ +ni↓ − ¯n)                             than Eqs. (20) which corresponds to  ¯n = 1 .
+and  use  Eq.  (22)  to  obtain  an  HS  transformation  with                         It is often thought that the use of a discrete HS ﬁeld,
+continuous  ﬁelds.    The  constant  ¯n  can  be  thought  of,                     compared  to  continuous  ﬁelds,  leads  to  signiﬁcant  per-
+physically, as a background term that one subtracts from                           formance advantages37.  This is not the case, as shown in
+the one-body operator prior to applying the HS transfor-                           Fig. 1.  The discrete charge decomposition of Eq. (20) is
+mation.   This  has  been  pointed  out  before  for  Hubbard                      shown  in  the  ﬁgure.   We  see  that  it  is  almost  the  same
+interactions35  and for Coulomb interactions9,36.  As  dis-                        as  the  continuous  decomposition  with  ¯n  =  1.   This  is
+cussed  below,  the  optimal  choice  for  ¯n  is  to  remove  all                 because  the  interaction  term  in  the  discrete  charge  de-
+background  interactions  from  the  mean-ﬁeld,  by  mini-                         composition  is  mapped  to  (ni↑ +ni↓ − 1),  identical  to
+mizing the quadratic ﬁrst term on the right-hand side in                           the  continuous  transformation  when  ¯n  is  set  to  1.   The
+Eq.  (23).   Over  typically  densities,  this  choice  leads  to                  discrete decomposition is  ideal near  half-ﬁlling, but  will
+signiﬁcant improvement over other choices including the                            be ineﬃcient in dilute systems, for example, in Fermi gas
+standard Hirsch discrete decomposition  24.                                        simulations  38.
+
+
+
+ (a)(a)(a)-10                                                                           0
+    -10.5      -13.5                                              ED
+              -13.55                                       Hirsch-Spin                 -1
+     -11       -13.6                                  Gaussian-Charge                          Hirsch-Spin
+    -11.5     -13.65                                                                       Gaussian-Charge
+     -12       -13.7                                                                   -2
+
+    -12.5     -13.75                                                                   -3
+     -13       -13.8
+                    3     3.1   3.2    3.3    3.4   3.5
+    -13.5                                                                              -4
+     -14
+        0         0.5       1        1.5        2        2.5       3        3.5        -5
+                                  projection time β
+ (b)-1                                                                                 -6
+
+    -2
+    -3                                                                                 -7
+    -4
+    -5                                                                                 -8
+
+    -6                                                                                 -9
+    -7
+    -8                                                                                -10
+    -9                                                     Hirsch-Spin
+                                                      Gaussian-Charge
+   -10                                                                                -11
+       0             1             2             3             4             5            0     0.2    0.4    0.6    0.8     1     1.2    1.4    1.6    1.8     2
+                                 projection time β                                                                  projection time β
+
+FIG. 2:  (Color  online) Illustration  of the eﬀect of preserving                  FIG. 3:  (Color online) Comparison of discrete spin and Gaus-
+symmetry  in  the  HS  transformation:  Hirsch  spin  (Eq.  (18))                  sian  charge  decomposition  in  the  presence  of  a  sign/phase
+vs.  Gaussian  charge  (Eqs.  (22)  and  (23)).    Panel  (a)  plots               problem.    The  logarithm  of  the  statistical  error  bars  from
+the  energy  from  FP  versus  projection  time,  with  the  inset                 FP  is  plotted  vs.  projection  time  for  a  4 × 4  lattice  with
+showing  a  magniﬁed  view  of  β  ∈  (3, 3.5).   Panel  (b)  shows                N↑  =  N↓  =  7  and  U   =  8.    Symmetry  multi-determinant
+the statistical  error bar as a function  of projection  time in a                 trial wave function is used.  The number of walkers is 5 × 105,
+semi-log plot.  The system is the 8 × 8 Hubbard model, with                        with total 100 separate runs to estimate the error bars.
+N↑ = N↓ = 32 and U  = 8.  A Hartree-Fock trial wave function
+is  chosen.   The  number  of  walkers  was  105,  with  a  total  20
+separate  runs  to  obtain  the  ﬁnal  averages  and  estimate  the                   Because the decomposition in Eq. (22) preserves SU(2)
+error bars.                                                                        symmetry, it can be more eﬃcient than the discrete spin
+                                                                                   decomposition of Eq. (18), which is the most commonly
+   In Fig. 1, we illustrate the eﬀect of the background  ¯n                        used  form  in  simulations  of  systems  with  repulsive  in-
+in the continuous charge decomposition of Eqs. (22) and                            teractions.   This  point  is  more  subtle,  however,  as  it  is
+(23).  The logarithm of the statistical error bar is plotted                       intertwined with the sign/phase problem.  In Fig.   2, the
+                                                                                                                                                              7
+
+two  decompositions  are  compared  in  a  situation  free  of                    parison,  the  CP  calculation  using  a  free-electron  trial
+the  sign  problem,  namely  the  half-ﬁlled  repulsive  Hub-                     wave function gives −66.857(2), as indicated by the line
+bard  model.   It  can  be  seen  that  the  Gaussian  charge                     in Fig. 4, running for minutes on a single core.  )
+decomposition leads to  much  smaller statistical ﬂuctua-                            The  charge  decomposition  can  oﬀer  a  signiﬁcant  ad-
+tions.  This has also been pointed out by Meng et. al.39,                         vantage in short projection time, however.  A main appli-
+using  the  discrete  charge  decomposition  of  Eq.  (20)  at                    cation of this is in RC calculations.  Since we start from a
+half ﬁlling.                                                                      population of a converged CP run, the initial state is close
+   In  Fig.  3  we  study  the  case  when  a  phase  problem  is                 to the true ground state.  One can expect a short projec-
+present (U>0, so  ˆA is imaginary):  4×4, withN↑ =N↓ =                            tion in the RC calculation to recover a signiﬁcant fraction
+7 and U  = 8.  This system has a severe sign problem for                          of  the  correction to  CP.  In  Fig.  5,  we  show an  example
+the  discrete  spin  decomposition.  The  continuous  Gaus-                       RC calculation, for the same system as in Fig. 3.  In this
+sian decomposition leads to a phase problem.  The latter                          calculation, the CPMC portion always uses the standard
+decomposition initially has smaller error bars, beneﬁting                         spin decomposition, which has a severe sign problem.  As
+from the preservation of symmetry, but after some time,                           can be seen from the inset, the CP energy obtained from
+its error bars exceed that of the spin decomposition.  So                         the  mixed-estimate  is  not  variational   33.   (Typical  CP
+in systems with a sign/phase problem, the eﬃciency is a                           calculations will run to much largerβ than shown in the
+balance of two competing aspects.  On the one hand, the                           main  ﬁgure,  in  order  to  collect  statistics.)   In  the  RC
+charge  decomposition  has  an  advantage  for  preserving                        portion,  two  diﬀerent  calculations  are  shown,  one  con-
+symmetry.  On the other hand, the phase problem tends                             tinuing to use the discrete spin decomposition while the
+to result in fast deterioration of the statistical signal and                     other  switching  to  the  symmetry  charge-decomposition.
+is a disadvantage.  Below we discuss how to exploit these                         It  is  seen  that  the  latter  leads  to  much smaller  statisti-
+characteristics in diﬀerent calculations.                                         cal  ﬂuctuations  and  allows  the  RC  calculation  to  reach
+
+
+    -63.5                                                                         convergence.  The  RC  with  discrete  spin  decomposition
+                                                       Hirsch-Spin-FPCP
+                                                   Gaussian-Charge-FP             has  much  larger  errors,  and  also  displays  a  population
+     -64              -66.65                                                      control bias5.  (The  statistical error and  the  bias  could,
+
+
+                       -66.7                                                      of  course,  be  reduced  by  increasing  the  population  size
+    -64.5                                                                         further.)
+
+                      -66.75
+
+     -65
+                       -66.8
+
+    -65.5                                                                              -2
+                      -66.85                                                                                                                         ED
+                                                                                                                                                  CPMC
+
+     -66               -66.9                                                                  -11.1
+                                                                                       -4     -11.2             Hirsch-Spin
+                                                                                                            Gaussian-Charge
+                      -66.95                                                                  -11.3
+    -66.5                   1     1.2    1.4     1.6    1.8     2                             -11.4
+                                                                                       -6          cpmc     release
+                                                                                              -11.5
+     -67                                                                                      -11.6
+        0                0.5              1                1.5              2
+                                  projection time β                                    -8     -11.7
+
+                                                                                              -11.8
+FIG.  4:   (Color  online)  Total  energy  versus  projection  time                           -11.9
+in FP calculations  using discrete spin and continuous charge                         -10       -12
+                                                                                                 -0.1     0    0.1    0.2   0.3    0.4   0.5   0.6    0.7   0.8
+decompositions.  The system is a 8 × 8 lattice under periodic
+boundary conditions,  with  N↑  = N↓  = 13  and U  = 4.  A FE
+                                                                                      -12
+trial wave function is used.  The number of walkers is 5 × 105,
+with  total  60  runs  to  obtain  the  average  and  estimate  the                      0       0.5       1       1.5      2       2.5       3       3.5      4
+statistical  error  bars.  The  red  horizontal  line  gives  the  ﬁnal                                              projection time β
+CPMC  result.  The  inset  shows  a  magniﬁed  view  of  the  last
+part  of  the  projection.   The  spin  decomposition  calculation                FIG.  5:  (Color  online)  Eﬀect  of  symmetry  decomposition  in
+provides a reliable upper bound to the ground-state energy.                       release  constraint  calculations.    The  main  ﬁgure  shows  the
+                                                                                  convergence of CPMC energy with projection time, compared
+   We can use the advantage of the spin decomposition in                          with  the  exact  ground-state  energy.  The  CPMC  calculation
+longer time projections, as shown in Fig. 4 in a FP calcu-                        uses  the  discrete  spin  decomposition.   The  inset  shows  RC
+lation of the periodic 8 × 8 supercell withN↑ =N↓ = 13                            calculations,  starting  from  a  converged  CP  state,  using  two
+and U  =  4.   The  continuous  charge  decomposition  has                        diﬀerent  forms  of  the  HS  decomposition.   The  system  is  the
+much larger noise and is not accurate enough.  The  dis-                          same  as  in  Fig.  3:  4 × 4,  N↑  =  N↓  =  7  and  U  =  8,  using  a
+                                                                                  symmetry  multi-determinant  trial  wave  function.  The  num-
+crete  spin  decomposition  has  rather  small  ﬂuctuations                       ber of walkers is 1×105, with total 100 runs in the RC portion
+and provides a useful estimate of an upper bound of the                           to collect statistics.
+ground-state  energy:   −66.855(2).   The  run  took  ∼  17
+hours  on  100  AMD  Opteron  2.4GHz  cores.   (For  com-
+                                                                                                                                                           8
+
+       B.     Symmetry  of  the  Trial  Wave  Function                           eﬀects  of  three  trial  wave  functions  are  compared:   the
+                                                                                 unrestricted Hartree-Fock (UHF) wave function, a single-
+   In this section we discuss the other aspect of symmetry                       determinant trial wave function formed by occupying k-
+in  AFQMC calculations,  the  use of  trial wave functions                       states, and a multi-determinant trial wave function which
+which  preserve  symmetry.   We  generate  the  trial  wave                      preserves  additional  symmetry.    The  UHF  trial  wave
+function  with  particular  symmetries:  total  spin S2,  to-                    function  builds  in  correlation  eﬀect  via  its  static  anti-
+tal  momentum  −→K,  rotational  symmetry  in  momentum                          ferromagnetic order, and is an excellent starting point, as
+space R,  mirror reﬂection σ  along  the  line Ky  = Kx  in                      can be seen from the variational energy values at the be-
+momentum  space.   When  the  total  momentum  −→K  =  0,                        ginning of the projection.  However, it is contaminated by
+we  use  the C4v  point  group  irreducible  representation                      higher spin eigenstates, and the FP with UHF exhibits a
+to label diﬀerent symmetry state.  In the present paper,                         long convergence time, as seen in the inset.  (The eﬀect of
+these  properties  are  imposed  in  the  trial  wave  function                  spin-contamination in AFQMC calculations has been dis-
+by a brute-force approach, making a linear combination                           cussed in continuum systems by Purwanto et. al.40.)  The
+of Slater determinants, as discussed in further details be-                      single-determinant FE trial wave function has a very high
+low.                                                                             variational  energy.   Its  statistical  error  bars  are  larger
+                                                                                 since the |ψT ⟩ in Eq. (10) to evaluate the energy is much
+                                                                                 poorer, and preserves fewer symmetry properties.  How-
+         1.    Trial Wave Function  in FP Calculations                           ever, it eventually leads to a faster convergence than the
+                                                                                 UHF  trial  wave  function  because  symmetry  has  prop-
+   Imposing the proper symmetry in the trial wave func-                          erly removed certain excitations.  The multi-determinant
+tion  can  accelerate  convergence  and  reduce  the  equili-                    trial wave function  with  symmetry,  which we  obtain by
+bration  time  in  the  FP  calculations.   As  mentioned  in                    diagonalizing  in  the  subspace  of  the  open-shell  [in  the
+Sec.  II A,  the  trial  wave  function  is  often  also  used  to               spirit of a small complete active-space self-consistent ﬁeld
+generate the  initial population in FP. In all the FP cal-                       (CASSCF)  calculation],  leads  to  rapid  convergence  and
+culations  in  this  section,  we  use  the  HS  transformation                  small statistical errors.  In the bottom panel, Fig. 6b, we
+given  in  Eqs.  (22)  and  (23),  using  optimal  background                    show an example when there is a severe sign/phase prob-
+values from simple mean-ﬁeld calculations.                                       lem.  The  same trends  are  seen,  with the  full  symmetry
+                                                                                 trial  wave  function  leading  to  rapid  convergence  of  the
+                                                                                 projection.
+ (a)(a)(a)(a)-8
+                          -13.4                                  ED                 With  the  mixed  estimate,  the  symmetry  trial  wave
+      -9                 -13.45                                UHF
+                          -13.5                         0s0kx0ky1D               function on the left will have zero overlap with any wave
+     -10                 -13.55                         0s0kx0kyMD
+                          -13.6                                                  function component in a diﬀerent symmetry space.  This
+     -11                 -13.65
+                          -13.7                                                  allows  one  to  project  out  explicitly  lower  energy  states
+     -12                 -13.75
+                              2.5  3   3.5 4   4.5  5                            of diﬀerent symmetry, and thus an opportunity to study
+     -13
+     -14                                                                         excited states.  This has been used in QMC calculations
+        0             1            2            3             4            5     before.   In  the  AFQMC  formalism,  the  walkers  are  full
+                                 projection time β
+ (b)(b)-11                                                                       Slater determinants, so that the symmetry projection can
+   -11.5                 -15.58-15.6                             ED
+                         -15.62                                UHF               be done rigorously and explicitly for each walker.  We il-
+     -12                 -15.64
+                         -15.66                         0s0kx0ky1D
+   -12.5                 -15.68-15.7                   0s0kx0ky0MD               lustrate  excited  state  calculations  in  Fig.  7,  where  the
+     -13                 -15.72
+   -13.5                 -15.74                                                  converged FP  results show excellent agreement with re-
+                         -15.76
+     -14                 -15.78-15.8
+   -14.5                      1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9                    sults from exact diagonalization.
+
+     -15
+   -15.5
+     -16
+        0               0.5               1               1.5              2
+                                 projection time β                                         2.    Trial Wave Function in CP Calculations
+
+FIG.  6:   (Color  online)  The  eﬀect  of  symmetry  trial  wave                   In CPMC, the sign or phase problem is controlled by
+functions  in  FP  calculations,  compared  to  exact  results  in               the sign or gauge condition of the overlap with the trial
+4 × 4  lattices  with  U   =   4:    (a)  N↑   =   N↓   =   8,  no  sign         wave function.  The condition is approximate, and the re-
+problem;  (b)  N↑   =  N↓   =  7,  severe  phase  problem.    The                sulting systematic error depends on the trial wave func-
+UHF  trial  wave  function  is  generated  by  a  UHF  calcula-
+tion with  U  = 0.5,  0s0kx0ky1D  is a single-determinant non-                   tion.  Thus the trial wave function has an especially im-
+interacting trial wave function with S2 = 0 and kx = ky = 0,                     portant role in CP calculations.  In this section, we study
+and 0s0kx0kyMD is a multi-determinant trial wave function                        how trial wave functions which preserve symmetries im-
+which has rotational symmetry in momentum space in (a) and                       pact the accuracy in CP calculations.  As shown in prior
+B1 symmetry in (b), in addition to S2 = 0, kx = 0, ky = 0.                       studies   5,6,  the  systematic  error  from  the  constraint  is
+                                                                                 in  general  small  for  Hubbard-like  systems,  even  when
+   We  illustrate  the  eﬀect  of  the  symmetry  in  the  trial                 an  FE  or  UHF  trial  wave  function  is  used.   In  closed-
+wave  function  in  Fig.  6.   In  the  top  panel,  we  consider                shell  systems  in  particular,  the  error is  often  negligible,
+a half-ﬁlled system which is thus sign-problem-free.  The                        as seen in the example of 8 × 8 system with 26 electrons
+                                                                                                                                                           9
+
+
+
+   -14.2                                                                         the results from a variety of systems where exact diago-
+                                                       6S0kx0kyMD
+   -14.3                                               0S2kx2kyMD                nalization can be done to provide a quantitative measure.
+                                                       0S0kx0kyMD
+                                                       2S2kx0kyMD                The  CP  results  are  compared  for  FE  (or  UHF  solution
+   -14.4
+                                                                                 obtained from a weak U) trial wave functions  and sym-
+
+   -14.5                                                                         metry  trial  wave  functions.   Signiﬁcant  improvement  is
+
+   -14.6                                                                         seen in  open-shell systems,  and accurate results  are  ob-
+                                                                                 tained from CP calculations.
+   -14.7
+
+   -14.8                                                                             -8
+                                                                                           EDFE
+   -14.9                                                                            -10  SYM
+
+
+     -15
+                                                                                    -12
+
+   -15.1
+                                                                                    -14
+   -15.2
+        0       0.2      0.4      0.6      0.8       1       1.2      1.4
+                                 projection time β                                  -16
+
+FIG.  7:  (Color  online)  FP  calculations  for  the  ground  state                -18
+and three excited states.  The energy is plotted versus projec-
+tion  time  for  a  4 × 4  lattice  with  N↑  =  N↓  =  3  and  U  =  4.            -20
+The exact  results  for  the ground  state and  the three excited
+                                                                                    -22
+state  energies  are  shown  for  comparison.   The  symmetry  of
+each energy level is labeled.  The trial wave functions are cho-                    -24
+sen with the correct symmetry using multi-determinant.  The                            0           2          4           6          8          10          12
+error bars are shown but are smaller than symbol size at most                                                            U
+points.                                                                          FIG.  8:   (Color  online)  Accuracy  of  CPMC  in  the  Hubbard
+                                                                                 model as a function of interaction strength.  Results are shown
+                                                                                 for  the  4 × 4  lattice  with  N↑  =  N↓  =  7  as  a  function  of  U,
+in Sec. III A. The systematic errors tend to be larger for                       and  compared  with  exact  diagonalization.    When  the  trial
+open-shell systems.  As  we  show below,  the leading  rea-                      wave function preserves symmetry, the systematic bias in the
+son  for  the  problem  in  open-shell  systems  seems  to  be                   calculated energy from the CP approximation is reduced.
+symmetry  in  the  trial  wave  function.   The  use  of  trial
+wave  functions  with  proper  symmetry  often  leads  to  a                        In Table I, we have included a set of results for 4×4 and
+dramatic reduction in the CP error.                                              N↑  = N↓  =  8.   There  is  no  sign  problem  at  half-ﬁlling,
+   We use the discrete spin decomposition in Eq. (18) in                         As has been discussed before  5,6, the CP calculations can
+the CP calculations, which causes “only” a sign problem,                         be easily made exact at half-ﬁlling (or for negativeU  38)
+even when a twist angle is applied in the boundary con-                          by  re-deﬁning  the  importance  sampling  to  have  a  non-
+dition of the supercell  6.  We ﬁrst focus on small system                       zero  minimum.   However,  if  this  were  ignored  and  the
+sizes  where  exact  results  are  available  to  make  detailed                 CP algorithm applied to half-ﬁlling literally, an artiﬁcial
+and systematic  comparison.  Larger systems  are  treated                        constraint would result because the random walk cannot
+later,  and compared with  our best  results  from RC cal-                       tunnel  from  one  side  of  ⟨ΨT |φ⟩  =  0  to  the  other,  even
+culations.  In Fig. 8, we study the systematic error in the                      though  both  sides  are  positive.   The  calculated  energy
+case  of  4 × 4  with N↑  = N↓  =  7,  which  has  the  most                     would  then  show  a  bias,  which  is  visible  in  the  results
+severe sign problem in systems that can be diagonalized                          shown in the table.  With symmetry trial wave functions,
+presently.  We study the systematic error asU  goes from                         this bias is removed even when running CP unmodiﬁed,
+0  to  12,  spanning  weak  to  moderate  to  strong  interac-                   and the CP results at half-ﬁlling are accurate.
+tions.  The CP results with an FE trial wave function is                            The improvement of CP calculations with the symme-
+shown.  (We use a small twist of opposite sign for ↑ and                         try trial wave function is not just to the ground-state en-
+↓  spins  to  generate  the  FE  trial  wave  function,  which                   ergy.  The CP bias in the observable is also signiﬁcantly
+breaks  the  SU(2)  symmetry,  but  has  translational sym-                      reduced.   An  example  is  shown  in  Fig.  9,  in  which  we
+metry  and  −→K  =  0.)   The  CP  systematic  error  tends  to                  calculate the structure factor of the spin-spin correlation
+grow with U,  reaching about 2% of  the total energy, or                         function in the ground state:
+about  1%  of  the  correlation  energy  at U  =  12.   As  we                          S(K) = 1/N ∑           SziSzj exp[ıK(Ri −Rj)].          (24)
+see,  the  use  of  symmetry  wave  functions  (obtained  by                                               ij
+diagonalizing the open-shell, leading to a total of 10 de-
+terminants)  makes  the  CP  systematic  error  very  small                      As mentioned earlier, we use the back-propagation tech-
+across  the  range  of U.   Figure  5  contains  a  zoomed-in                    nique  5,8  to  calculate  correlation  functions.   The  result
+view, atU  = 8, of the CP/SYM run and the subsequent                             is  plotted  for  the  same  4 × 4  systems  for  three  diﬀer-
+RC which leads to an exact result.  In Table I, we compile                       ent  values  of U.    The  peak  at  (π,π)  indicates  strong
+                                                                                                                                                           10
+
+anti-ferromagnetic correlations.  We  see that the CP re-                         using two diﬀerent trial wave functions, the UHF versus
+sult  using  UHF  trial wave function  shows  a  larger anti-                     a symmetry  trial wave function.  A small system size of
+ferromagnetic  order,  because  the  UHF  state  itself  over-                    3 × 3 with 2 ↑ and 2 ↓ electrons is chosen such that the
+estimates  the  order.  The  symmetry  trial  wave  function                      RC  calculation  can  also  be  carried  out  explicitly  to  al-
+removes the bias and leads to results in agreement with                           low  direct  comparison.   (In  the  explicit  calculation,  we
+exact diagonalization.                                                            propagate the CP population of {|φCPi    ⟩} directly by ap-
+                                                                                  plying e−∆τ  ˆH.    The  propagation  is  carried  out  by  ex-
+      1                                                                           panding each walker in terms of exact eigenstates of  ˆH.)
+     0.8                                                         ED
+                                            U=4U=4U=4          SYMUHF             We  see  that  CPMC/UHF  gives  an  energy  closer  to  the
+     0.6
+     0.4                                                                          exact  value  (∼  0.1%  error)  compared  to  CPMC/SYM
+
+     0.2                                                                          (∼  −0.3%  error).   The  corresponding  RC/UHF  moves
+
+      0                                                                           further  away  from  the  exact  answer  and  shows  no  in-
+     (0,0)    (1,1)   (2,2)    (3,3)   (2,3)    (1,3)   (0,3)    (0,2)   (0,1)
+                                        K                                         dication  of  convergence  in  the  imaginary-time  span  in
+
+      1                                                                           which RC/SYM is well-converged.  The explicit RC cal-
+     0.8                                                         ED
+                                            U=8U=8U=8          SYMUHF             culation,  as  shown  in  the  inset,  reveals  a  highly  non-
+     0.6
+     0.4                                                                          monotonic behavior.  The projection does converge to the
+
+     0.2                                                                          correct ground-state energy, but requiring an imaginary
+
+      0                                                                           time  of >  100.   This  would  be  impossible  to  reach  in  a
+     (0,0)    (1,1)   (2,2)    (3,3)   (2,3)    (1,3)   (0,3)    (0,2)   (0,1)
+                                        K                                         QMC RC calculation because of the sign problem.  Thus
+
+      1                                                                           non-monotonic behaviors could be diﬃcult to detect and
+     0.8                                                         ED
+                                            U=12U=12U=12       SYMUHF             would  yield  misleading  results.   The  improvement  with
+     0.6                                                                          the  symmetry  trial  wave  function,  which  leads  to  rapid
+
+     0.4
+                                                                                  and monotonic convergence, is then especially valuable.
+     0.2
+
+      0(0,0)  (1,1)   (2,2)    (3,3)   (2,3)    (1,3)   (0,3)    (0,2)   (0,1)
+                                                                                      -9.06
+                                        K
+
+                                                                                      -9.07
+FIG. 9:  (Color online) The structure factor S(k) of the spin-
+spin correlation function for three interaction strengths.  The                                                      -9.06
+                                                                                      -9.08                         -9.065-9.07
+system  is  4 × 4  with  N↑  =  N↓  =  7,  and  the  horizontal  axis                                               -9.075
+                                                                                                                    -9.085-9.08
+labels  of  K  are  in  units  of  π/2.   The  symmetry  trial  wave                                                 -9.09
+                                                                                      -9.09                         -9.095
+function  has  S2  =  0  and  Kx  =  Ky  =  0  and  B1  symmetry.                                                    -9.1
+CPMC has 10, 000 walkers, with back-propagation β = 1.                                                                    0   50  100  150  200 250  300
+
+                                                                                       -9.1
+
+
+
+                                                                                      -9.11
+         3.    Trial Wave Function in RC Calculations                                                                                       RC/SYMED
+                                                                                      -9.12
+                                                                                                                                            EP/SYM
+                                                                                                                                            RC/UHFEP/UHF
+   Formally the role of symmetry in the trial wave func-                              -9.13 0          0.2           0.4          0.6           0.8           1
+tion in RC calculations is similar to that in FP. However                                                           projection time β
+it  is  intimately  connected  to  the  discussion  in  the  pre-
+vious  section on CP, since  the  initial state  in RC  is  the                   FIG. 10:  (Color online) RC calculations with symmetry trial
+converged  solution  from  CP.  The  symmetry  trial  wave                        wave  functions  and  without.     The  system  is  3  ×  3  with
+functions improves the CP approximation and the qual-                             N↑  =  N↓  =  2  and  U  =  4.   The  symmetry  trial  wave  func-
+ity  of  the  wave function  sampled  from  CP, as  indicated                     tion  has  S2  = 2, Kx  = 0, Ky  = 0  while  the  UHF wave  func-
+by the improvement in the energy and in the calculated                            tion breaks these symmetries.  CP/UHF is very accurate, but
+observables.  This  means symmetry  trial wave functions                          RC/UHF has non-monotonic behavior and slow convergence,
+also allow better RC calculations, by providing a better                          as  shown  by  the  explicit  propagation.   RC/SYM  converges
+initial state and  by giving a better trial wave function in                      rapidly  and  monotonically.    The  explicit  propagation  (EP)
+                                                                                  result  of  RC/UHF  is  shown  to  large  projection  time  in  the
+the mixed estimate in Eq. (17).  As discussed in Sec. III A,                      inset.
+we also impose symmetry with the HS transformation in
+RC, by switching from the Ising spin form in the CP cal-                             The use of proper symmetry can allow RC calculations
+culation to  the  Gaussian form in  the  RC part.  We  ﬁnd                        of excited states, similar to the discussion in Fig. 7.  Since
+this  combination  to  improve  the  quality  of  the  RC  cal-                   CP  allows one to  start from an initial  population much
+culations  greatly  in  most  cases.   An  example  is  shown                     closer to the exact exact state, RC can be more accurate.
+in  Fig.  5.   Results  from  RC/SYM  calculations  are  also                     An example is shown in Fig. 11, in which the many-body
+shown  in  Table  I  for  systematic  comparisons  with  CP                       ground  state  and  ﬁrst  excited  state  energies  are  calcu-
+and with exact diagonalization results.                                           lated as a function of crystal momentum.  Both CP and
+   Figure  10  illustrates  the  behavior  of  RC  calculations                   RC are done with the same trial wave function, in which
+                                                                                                                                                                                                     11
+
+
+TABLE  I:  Computed  ground-state  energy  per  site  (E/L)  from  CP,  with  FE  or  UHF  trial  wave  function  (CP/FE)  and  with
+multi-determinant  symmetry  trial  wave  function  (CP/SYM)  respectively,  compared  with  release-constraint  (RC/SYM)  and
+exact  diagonalization  results.   RC/SYM  uses  the  same  symmetry  trial  wave  function  as  in  CP/SYM.  The  symmetry  of  the
+ground state is given in the last  column.  The statistical  error bars in the QMC results are on the last  digit  and are shown in
+parentheses.
+
+    L                    (N↑, N↓, U)                   CP/FE                      CP/SYM                    RC/SYM                      ED                    (S2, Kx, Ky)
+ 2 × 2                     (2,1,4)                    -1.60564(5)                 -1.60615(3)                 -1.60465(5)                -1.60463                   (0.75,0,1)
+ 2 × 3                     (2,2,4)                    -1.38328(6)                 -1.40129(4)                 -1.40085(4)                -1.40087                     (2,0,0)
+ 2 × 3                     (2,2,8)                     -1.2239(2)                   -1.2463(1)                   -1.2443(3)                  -1.2442                      (2,0,0)
+ 2 × 4                     (2,2,4)                    -1.36839(2)                 -1.37387(2)                 -1.37379(3)                -1.37383                     (0,0,2)
+ 2 × 4                     (3,3,4)                    -1.56939(4)                 -1.56942(4)                 -1.56944(5)                -1.56941                     (0,0,0)
+ 3 × 3                     (4,4,8)                     -0.7783(2)                   -0.8127(1)                   -0.8091(1)                  -0.8094                      (0,0,0)
+ 4 × 4                     (2,2,4)                    -0.72026(5)                 -0.72094(1)                 -0.72063(1)                -0.72064                     (0,0,0)
+ 4 × 4                     (2,2,8)                     -0.7070(1)                   -0.7082(1)                   -0.7075(2)                  -0.7076                      (0,0,0)
+ 4 × 4                    (2,2,12)                    -0.6997(1)                   -0.7010(1)                   -0.7002(3)                  -0.7003                      (0,0,0)
+ 4 × 4                     (3,3,4)                    -0.93394(2)                 -0.94622(1)                 -0.94598(1)                -0.94600                     (6,0,0)
+ 4 × 4                     (3,3,8)                     -0.9034(1)                   -0.9208(1)                   -0.9203(1)                  -0.9202                      (6,0,0)
+ 4 × 4                    (3,3,12)                    -0.8867(1)                   -0.9067(1)                   -0.9062(3)                  -0.9061                      (6,0,0)
+ 4 × 4                     (4,4,4)                    -1.09442(2)                 -1.09693(2)                 -1.09597(6)                -1.09593                     (0,0,0)
+ 4 × 4                     (4,4,8)                     -1.0265(1)                   -1.0307(1)                   -1.0282(5)                  -1.0288                      (0,0,0)
+ 4 × 4                    (4,4,12)                    -0.9914(1)                   -0.9962(1)                   -0.9940(3)                  -0.9941                      (0,0,0)
+ 4 × 4                     (5,5,4)                    -1.22368(2)                 -1.22368(2)                 -1.22380(4)                -1.22381                     (0,0,0)
+ 4 × 4                     (5,5,8)                     -1.0948(1)                   -1.0948(1)                   -1.0942(2)                  -1.0944                      (0,0,0)
+ 4 × 4                    (5,5,12)                    -1.0292(1)                   -1.0292(1)                   -1.0278(4)                  -1.0284                      (0,0,0)
+ 4 × 4                    (6,6,4)                     -1.1012(1)                  -1.1104(1)a                  -1.1084(2)                  -1.1080                      (0,0,0)
+ 4 × 4                    (6,6,8)                     -0.9293(1)                  -0.9376(1)b                  -0.9329(5)                  -0.9328                      (0,0,0)
+ 4 × 4                   (6,6,12)                    -0.8439(1)                  -0.8557(1)b                  -0.8507(6)                  -0.8512                      (0,0,0)
+ 4 × 4                    (7,7,2)                    -1.19584(2)                -1.19992(1)c                -1.19822(2)                -1.19821                     (0,2,2)
+ 4 × 4                    (7,7,4)                     -0.9793(1)                  -0.9863(1)a                  -0.9840(1)                  -0.9840                      (0,0,0)
+ 4 × 4                    (7,7,6)                     -0.8334(1)                  -0.8428(1)a                  -0.8386(3)                  -0.8388                      (0,0,0)
+ 4 × 4                    (7,7,8)                     -0.7361(1)                  -0.7461(1)a                  -0.7417(8)                  -0.7418                      (0,0,0)
+ 4 × 4                   (7,7,10)                    -0.6687(2)                  -0.6782(1)a                   -0.673(2)                   -0.6754                      (0,0,0)
+ 4 × 4                   (7,7,12)                    -0.6202(2)                  -0.6296(2)a                   -0.627(4)                   -0.6282                      (0,0,0)
+ 4 × 4                     (8,8,4)                    -0.84225(6)                 -0.85140(6)                 -0.85133(6)                -0.85137                     (0,0,0)
+ 4 × 4                     (8,8,8)                     -0.5164(2)                   -0.5293(2)                   -0.5291(2)                   0.5293                       (0,0,0)
+ 4 × 4                    (8,8,12)                     -0.364(3)                    -0.3741(2)                   -0.3739(4)                  -0.3745                      (0,0,0)
+
+ aB1  symmetry is also used in |ψT ⟩.
+ bA1  symmetry is also used in |ψT ⟩.
+ c ˆRπ/2|ψT >= exp(i3π/2)|ψT > symmetry is also used.
+
+
+the correct symmetry is imposed.  Consistent with prior                                                 of  symmetry  from  two  key  aspects  of  an  AFQMC  cal-
+experience, CP is very accurate for the ground state, al-                                               culation,  namely  the  HS  transformation  and  the  trial
+though systematic error is visible at larger twist angles.                                              wave function.  It is  shown that  major improvements in
+The CP result is less accurate for the excited state.  With                                             eﬃciency  and  accuracy  can  be  achieved.   To  allow  de-
+RC, the CP error is removed and the results are seen to                                                 tailed  and  systematic  benchmark  and  analysis,  we  have
+be essentially exact.                                                                                   used  smaller  lattice  sizes  extensively,  where  exact  re-
+                                                                                                        sults are available.  The method applies straightforwardly
+                                                                                                        to  larger  systems.   CP  calculations  will  scale  as  a  low
+         IV.     DISCUSSION  AND  CONCLUSION                                                            power with  system size;  FP  and RC will  of course have
+                                                                                                        a  sign/phase  problem,  albeit  at  a  much  reduced  level
+                                                                                                        with the proposed symmetry improvements.  In Table II,
+   In  this  paper,  we  have  studied  the  role  of  symmetry                                         we present CPMC energies in several open-shell systems
+in  AFQMC  calculations,  and  discussed  the  imposition
+                                                                                                                                                       12
+
+
+
+   -18.2                                                                       lead to large reduction of the statistical ﬂuctuation.  One
+                                                                CP
+                                                                RC             advantage of the spin decomposition is that, for repulsive
+   -18.4                                                        ED
+                                                                               interactions, it results in a sign problem in contrast with
+                                                                               a  phase problem for the  charge decomposition.  CP  cal-
+   -18.6                                                                       culations  with  the  spin  decomposition  tend  to  perform
+                                                                               much better.  We have emphasized the idea that the dif-
+   -18.8
+                                                                               ferent forms can have advantages in diﬀerent situations.
+                                                                               Generally,  the  merits  of  the  discrete  spin  and  continu-
+     -19
+                                                                               ous  charge,  or  indeed  other  forms  of  the  HS  transfor-
+                                                                               mation, will depend on the actual problem and physics.
+   -19.2
+                                                                               However,  preserving  the  right  symmetry  is  highly  valu-
+
+   -19.4                                                                       able, as we have demonstrated.  Especially worth noting
+                                                                               is  that the switch to charge-decomposition within a  CP
+
+   -19.6                                                                       calculation of spin-decomposition makes much better RC
+      -0.5   -0.4   -0.3  -0.2   -0.1    0     0.1   0.2    0.3    0.4   0.5   performance over many parameter ranges.
+                                       |k|
+                                                                                  We  have  shown  the  importance  of  having  trial  wave
+FIG.  11:  (Color  online)  RC  and  CP  results  for  ground  and             functions  which  preserve  symmetry.    These  trial  wave
+the ﬁrst excited state energies versus crystal momentum.  RC                   functions  accelerate  convergence,  allow  better  calcula-
+greatly  improves  the  calculation  of  excited  states  and  band            tions  of  excited  states,  can  signiﬁcantly  reduce  the  CP
+structures.  The system is 4×4 with N↑ = N↓ = 5 and U  = 4.                    systematic  error,  and  make  possible  systematically  im-
+QMC statistical error bars are smaller than symbol size.  The                  provable RC  calculations.  The  approach we  have  taken
+horizontal  axis  gives  |k|  along  a  line  cut  ky  =  2kx.   Exact         to generate trial wave functions that preserve symmetry,
+diagonalization  (ED) results  are  shown  for  comparison.  The               the equivalent of a small CASSCF calculation in quantum
+line is to aid the eye.                                                        chemistry, has provided a proof-of-concept.  In addition,
+                                                                               they have already allowed calculations in signiﬁcant sys-
+TABLE II: Energy per site in some open-shell Hubbard square                    tem sizes  at physically important regimes (low doping),
+lattices  at  U  = 4.  The  symmetry  of  the  ground  state,  S2  =           as shown in Table II. However, for general open-shell sit-
+0, Kx  = Ky  = 0, is  preserved in the trial wave function  used               uations, the CASSCF approach does not scale well.  The
+in  CP/SYM  and  RC/SYM.  The  UHF  trial  wave  function  is                  resulting number of Slater determinants in the trial wave
+generated with U  = 0.5 as has been done before5.                              function will grow rapidly with system size.  Several alter-
+                                                                               natives are possible, including projected BCS wave func-
+   L        (N↑  ,N↓)     CP/UHF         CP/SYM        RC/SYM                  tions  38  and projected Hartree-Fock wave functions  18.
+  6×6       (12 ,12)     -1.18444(3)     -1.18625(3)     -1.18525(4)              The   development   presented   in   this   paper   will   al-
+  6×6       (24 ,24)      0.14889(2)       0.14709(3)       0.14809(4)         low  many  applications  even  in  its  current  form.    Al-
+  8×8       (14 ,14)     -1.07173(1)    -1.07239(1)  a    -1.07180(2)          though  we  have  focused  on  zero-temperature  methods,
+  8×8       (22 ,22)     -1.18580(2)     -1.18673(2)      -1.1858(2)           many  of  the  ideas  will  also  apply  to  ﬁnite-temperature
+10×10     (40,40)      -1.11378(3)     -1.11468(2)      -1.1135(2)             calculations1,41.    The  formula  can  be  directly  mapped
+12×12     (58,58)      -1.10912(3)     -1.11015(3)      -1.1089(2)             from the U>0 case we discussed to U<0 with a particle-
+                                                                               hole transformation.  Indeed the principle works for any
+
+ aB2  symmetry is also used in |ψT ⟩.                                          other two-body interactions.  The CP/SYM calculations
+                                                                               and the RC/SYM from it represent a major step forward,
+                                                                               as we can now have internal checks and a systematically
+up  to  12 × 12.    (For  closed  shell  systems,  the  single-                improvable  computational  method  capable  of  reaching
+determinant FE trial wave function already satisﬁes the                        two- and three-dimensions and large system sizes.
+symmetries.    They  are  expected  to  be  very  accurate.
+We  have  veriﬁed  this  in  several  cases  with  RC  runs).
+CP/SYM  and  the  corresponding  RC  results  are  shown.                                               Acknowledgments
+The RC results in Table II are essentially exact ground-
+state  energies.   CP/UHF  results  are  also  shown,  which                      We  thank  S.  Chiesa,  H.  Krakauer,  F.  Ma,  W.  Pur-
+are comparable and even closer to the exact answer than                        wanto,  G.  Scuseria,  and  C.  Umrigar  for  helpful  discus-
+the CP/SYM using simple symmetry trial wave functions                          sions.    This  research  was  supported  by  DOE  (Grant
+in  these  systems.   (As  discussed,  the  CP/SYM  leads  to                  No. de-sc0008627) and NSF (Grant No. DMR-1006217).
+much better convergence in RC calculations.)  This con-                        We  also  acknowledge  a  DOE  CMCSN  award  for  facili-
+ﬁrms  the  accuracy  of  CP/UHF  as  has  been  previously                     tating  stimulating  interactions,  and  an  INCITE  award
+asserted.                                                                      for computing using resources of the Oak Ridge Leader-
+   We  have  discussed  the  general  continuous  Gaussian                     ship Computing Facility at the Oak Ridge National Lab-
+charge decomposition, which preserves spin symmetry.  It                       oratory,  which  is  supported  by  the  Oﬃce  of  Science  of
+is shown that the proper choice of the background ¯n can                       the U.S. Department of Energy under Contract No. DE-
+                                                                                                                                                             13
+
+AC05-00OR22725.
+
+
+
+
+
+
+
+ 1  R. Blankenbecler, D. J. Scalapino, and R. L. Sugar, Phys.                         183 (1976).
+   Rev. D 24, 2278 (1981).                                                         22  S. Sorella, Phys. Rev. B 84, 241110 (2011).
+ 2  D.  J.  Scalapino  and  R.  L.  Sugar,  Phys.  Rev.  B  24,  4295              23  J. Hubbard, Phys. Rev. Lett. 3, 77 (1959).
+   (1981).                                                                         24  J. E. Hirsch, Phys. Rev. B 28, 4059 (1983).
+ 3  G.  Sugiyama  and  S.  Koonin,  Annals  of  Physics  168,  1                   25  N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H.
+   (1986).                                                                            Teller, and E. Teller, The Journal of Chemical Physics 21,
+ 4  E. Y. Loh, J. E. Gubernatis, R. T. Scalettar, S. R. White,                        1087 (1953).
+   D.  J.  Scalapino,  and  R.  L.  Sugar,  Phys.  Rev.  B  41,  9301              26  S.  Jacobi  and  R.  Baer,  The  Journal  of  Chemical  Physics
+   (1990).                                                                            120, 43 (2004).
+ 5  S. Zhang, J. Carlson,  and J. E. Gubernatis, Phys. Rev. B                      27  D.  R.  Hamann  and  S.  B.  Fahy,  Phys.  Rev.  B  41,  11352
+   55, 7464 (1997).                                                                   (1990).
+ 6  C.-C.  Chang  and  S.  Zhang,   Phys.  Rev.  B  78,   165101                   28  M.  Calandra  Buonaura  and  S.  Sorella,  Phys.  Rev.  B  57,
+   (2008).                                                                            11446 (1998).
+ 7  S.  Zhang  and  H.  Krakauer,  Phys.  Rev.  Lett.  90,  136401                 29  S. R. White, D. J. Scalapino, R. L. Sugar, E. Y. Loh, J. E.
+   (2003).                                                                            Gubernatis,  and  R.  T.  Scalettar,  Phys.  Rev.  B  40,  506
+ 8  W.  Purwanto  and  S.  Zhang,  Phys.  Rev.  E  70,  056702                        (1989).
+   (2004).                                                                         30  S. Sorella and E. Tosatti, Europhys. Lett. 19, 699 (1992).
+ 9  W.  A.  Al-Saidi,  S.  Zhang,  and  H. Krakauer,  The Journal                  31  F. F. Assaad and M. Imada, Journal of the Physical Society
+   of Chemical Physics 124, 224101 (2006).                                            of Japan 65, 189 (1996).
+10  W.  Purwanto,  H.  Krakauer,  and  S.  Zhang,  Phys.  Rev.  B                  32  R.  T.  Scalettar,  R.  M.  Noack,  and  R.  R.  P.  Singh,  Phys.
+   80, 214116 (2009).                                                                 Rev. B 44, 10502 (1991).
+11  C.-C. Chang and S. Zhang, Phys. Rev. Lett. 104, 116402                         33  J. Carlson, J. E. Gubernatis, G. Ortiz, and S. Zhang, Phys.
+   (2010).                                                                            Rev. B 59, 12788 (1999).
+12  P. Ring and P. Schuck, The Nuclear Many-Body Problem,                          34  D. M. Ceperley and B. J. Alder, The Journal of Chemical
+   Springer-Verlag, New York (1980).                                                  Physics 81, 5833 (1984).
+13  T.  Mizusaki  and  M.  Imada,  Phys.  Rev.  B  69,  125110                     35  W.  Purwanto  and  S.  Zhang,  Phys.  Rev.  A  72,  053610
+   (2004).                                                                            (2005).
+14  F.   F.   Assaad,   P.   Werner,   P.   Corboz,   E.   Gull,   and             36  R. Baer, M. Head-Gordon, and D. Neuhauser, The Journal
+   M. Troyer, Phys. Rev. B 72, 224518 (2005).                                         of Chemical Physics 109, 6219 (1998).
+15  K.  W.  Schmid,  T.  Dahm,  J.  Margueron,  and  H.  M¨uther,                  37  G. M. Buendia, Phys. Rev. B 33, 3519 (1986).
+   Phys. Rev. B 72, 085116 (2005).                                                 38  J. Carlson, S. Gandolﬁ, K. E. Schmidt, and S. Zhang, Phys.
+16  Q. Jie, Phys. Rev. E 77, 026705 (2008).                                           Rev. A 84, 061602 (2011).
+17  D. Tahara and M. Imada, Journal of the Physical Society                        39  Z.  Y.  Meng,  T.  C.  Lang,  S.  Wessel,  F.  F.  Assaad,  and
+   of Japan 77, 114701 (2008).                                                        A. Muramatsu, Nature 464, 847 (2010).
+18  R.  Rodr´ıguez-Guzm´an,  K.  W.  Schmid,  C.  A.  Jim´enez-                    40  W. Purwanto, W. A. Al-Saidi, H. Krakauer, and S. Zhang,
+   Hoyos, and G. E. Scuseria, Phys. Rev. B 85, 245130 (2012).                         The  Journal  of  Chemical  Physics  128,  114309  (pages  7)
+19  J. Hubbard, Proc. R. Soc. London Ser. A 276, 238 (1963).                          (2008).
+20  H. F. Trotter, Proc. Amer. Math. Soc. 10, 545 (1959).                          41  S. Zhang, Phys. Rev. Lett. 83, 2777 (1999).
+21  M. Suzuki, Communications in Mathematical  Physics 51,

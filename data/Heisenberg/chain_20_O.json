@@ -47,6 +47,16 @@
         "note": "|reproduced - stored| = 3.55e-14 (relative 1.02e-15); within 1e-9 relative. Sector total Sz = 0, dimension 184756, 111 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Heisenberg__chain_20_O.json), gives -34.72989333759506 (8.46e-13 from the cost run). Also read by VB3-varbench-code-heisenberg#7 (scope config: vendor/varbench/Heisenberg/chain_20_O.md (snapshot 390a21e), row 'Exact diagonalization'; linked scripts/Heisenberg/chain_20_O/ed_netket.sh).",
         "source_entry": "VB3-varbench-code-heisenberg#7, VE-exact-recompute#0 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/ed_netket.sh",
+        "script": "scripts/Heisenberg/chain_20_O/ed_netket.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/ed_netket.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/chain_20_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -101,6 +111,16 @@
         "note": "vmc_rnn.sh: open 20-site chain, NetKet Heisenberg J = 1 Pauli with Marshall sign rule (a sublattice rotation on the bipartite chain), full Hilbert space (no --zero_mag; exact autoregressive sampling, ARDirectSampler), FastLSTMNet 2 layers x 16 features, Adam, 10^5 steps. RNN is the method named. The stored (sigma, Var) imply 2.6e6 independent samples (sigma/sqrt(Var/2^20) = 0.637), not the script's 2^20: the numbers come from the 2021 run (c12e2c8, 2021-10-14, Dian Wu), the script (d54f7c0, 2024-07-30) documents the settings afterwards. 6.4e-5 above the exact energy (4.6 sigma): a valid bound.",
         "source_entry": "VB3-varbench-code-heisenberg#8 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_rnn.sh",
+        "script": "scripts/Heisenberg/chain_20_O/vmc_rnn.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_rnn.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/chain_20_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -191,6 +211,16 @@
         "note": "Program chain_20_O.jl: N = 20, periodic = false, Pauli form, Sz = 0, maxdim up to 1000 (exact MPS for 20 sites needs 1024). Best variational bound on the solved instance: 9.6e-11 above the exact -34.72989333759587 (Bethe ansatz and ED agree), i.e. equal at its 10 printed decimals. M6 (V-score 1.0e-11 outlier): genuine. History: entered d3f0688 (2021-12-05, J. M. Silvester) as -34.7298933375 with sigma 0 and variance 0, labels '~1.0E-13' -> '~1.0E-12' (febb6a9, 7764424); variance blank (c9a3134), sigma 0 -> 0.0000126 (3a788a0) -> blank with variance 0.0000251 (e8dd21b) -> 0.0000252 -> 6.3E-10 (e78283b, 2022-03-10); the energy never changed; nothing restored. Program linked 2024-08-08 (d944d80).",
         "source_entry": "VB3-varbench-code-heisenberg#9 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_20_O.jl",
+        "script": "programs/dmrg_itensors_heisenberg/chain_20_O.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_20_O.jl)",
+          "location": "VarBench table vendor/varbench/Heisenberg/chain_20_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -246,6 +276,16 @@
         "note": "scripts/Heisenberg/chain_20_O/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 1 --L 20 --zero_mag --net rbm --seed 123 --show_progress' -> 20-site open chain (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.007: the stored sigma is the error of that final estimate. 0.0028 above the exact -34.72989333759587. History: entered 10f5c12 (2022-07-11, Dian Wu) as -34.7271 | 0.00021 | 0.0455955 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -34.7271 -> -34.72711; variance 0.0455955 -> 0.04559541; linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#10 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/chain_20_O/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/chain_20_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -301,6 +341,16 @@
         "note": "scripts/Heisenberg/chain_20_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 1 --L 20 --zero_mag --net jas --seed 123 --show_progress' -> 20-site open chain (nk.graph.Grid, vmc.py line 51); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.000: the stored sigma is the error of that final estimate. 0.0389 above the exact -34.72989333759587. History: entered af1d48f (2022-09-01, Dian Wu) as -34.69100 | 0.00031 | 0.1008130 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#11 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/chain_20_O/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_O/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/chain_20_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

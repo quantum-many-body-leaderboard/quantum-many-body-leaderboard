@@ -96,6 +96,16 @@
         "conversion": "64 * (-0.9606551057511292) + 2 * 1 * 64 / 4 = -29.48192676807227",
         "note": "chain periodic (BCmodifier empty), N_f = N/2, V as the instance; Sign = 1 exactly",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_1/lct_int.sh",
+        "script": "scripts/tV/square_64_P_32_1/lct_int.sh",
+        "read_from": {
+          "quote": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_1/lct_int.sh)",
+          "location": "the row's reference, as corrected (see the row's corrections)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -213,6 +223,16 @@
         "note": "Script builds the instance (8x8 torus, fermionic PBC through ITensors' Jordan-Wigner handling of 'Fermion' OpSums, Nf = 32 fixed by the QN-conserving MPS, V = 1, V n_i n_j without shift; einf and dof correct). Variational energy of the last sweep at the stated bond dimension, no extrapolation; no output log (config). Provenance: 96a2b26 (2023-02-02); printed as 'DMRG (chi_max = 4096) -29.380064' in arXiv:2210.05871v4 Table 4 (new in v4, 2023-03-14, a quote). 0.102 above the exact (stochastic) LCT-INT row -29.4819(230) (4.4 of its sigma), as an unconverged 8x8 MPS should be; variance 0.693. Record row when read (the best bound then).",
         "source_entry": "VB4-tfising-tv#57 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_1/dmrg.sh",
+        "script": "scripts/tV/square_64_P_32_1/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/tV/square_64_P_32_1/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/tV/square_64_P_32_1.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -299,6 +319,15 @@
         "scope": "paper",
         "confidence": "medium",
         "note": "Blanket statements only. Parameter count never given as a number (scaling formula N_param ~ (N_p N_s)^2 / 2 and 'N_param ~ N^4' in the Outlook; not derived here). Samples left null because the per-batch count is stated as a range ('M ~ 200-300 samples') in Sec. 2.6 and as 'batchsize is 200 samples' only in the Fig. 14 caption (4x4 convergence runs with Adam). All timing figures (Figs. 6, 7, 11, 12) are 'CPU time in seconds', so the device is a CPU but no model, core count, wall-clock or total time is stated; the conclusion says the implementation 'is slower than other neural network VMC schemes such as e.g. Slater-Jastrow-RBM' and that memory for the network parameters 'limits the simulatable system sizes to around 10x10'. Implementation in PyTorch. Whether the Table 2-4 runs used SR or Adam is not stated per table."
+      },
+      "artifacts": {
+        "code": "https://github.com/shifushuimenu/autoregressive_Slater-Jastrow",
+        "read_from": {
+          "quote": "An implementation written in PyTorch is available in the code repository [95].",
+          "location": "arXiv:2210.05871 (sources/2210.05871.txt), end of Conclusion; [95] = https://github.com/shifushuimenu/autoregressive_Slater-Jastrow",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ]

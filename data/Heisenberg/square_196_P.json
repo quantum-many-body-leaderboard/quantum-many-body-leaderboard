@@ -49,6 +49,16 @@
         "note": "vmc_gutzwiller inputs: 2x2 supercell x '7 0 0 7' = 14x14 periodic spin torus, nelup = neldo = 98 (Sz = 0), jperp = 1, uvv = 0.25 (H = sum S.S), pi-flux + Neel field + spin Jastrow (iesspin=32); binned error (ratio 1.31). Stored = 4N x <H>/N. 1.479 above Sandvik's SSE. Entered 32046ef (2022-02-15, F. Ferrari), never changed; linked d186176 (2024-07-30).",
         "source_entry": "VB3-varbench-code-heisenberg#42 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_196_P/vmc_gutzwiller.sh",
+        "script": "scripts/Heisenberg/square_196_P/vmc_gutzwiller.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_196_P/vmc_gutzwiller.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_196_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -196,6 +206,16 @@
         "note": "dmrg.sh: heisenberg_2d.jl --peri --L 14 --zero_mag --max_B 512: 14x14 torus, Pauli, J = 1, Sz = 0, 50 sweeps at D = 512. 9.071 above Sandvik's SSE (1.7%). The DOF cell (VarBench 100, typed by hand in c85080f) is already corrected to 196 on the row (ruling 2026-09-21), v_score recomputed; the VarBench snapshot still prints 100. Entered c85080f (2022-09-03, Dian Wu), never changed; linked 2024-07-19.",
         "source_entry": "VB3-varbench-code-heisenberg#43 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_196_P/dmrg.sh",
+        "script": "scripts/Heisenberg/square_196_P/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_196_P/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_196_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -251,6 +271,16 @@
         "note": "scripts/Heisenberg/square_196_P/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 2 --L 14 --zero_mag --net rbm --seed 123 --show_progress' -> 14x14 square lattice, periodic (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.014: the stored sigma is the error of that final estimate. 5.0387 above Sandvik's SSE -525.462084(16). History: entered 10f5c12 (2022-07-11, Dian Wu) as -517.807 | 0.0096 | 94.5612 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -517.807 -> -520.4234; sigma 0.0096 -> 0.0079; variance 94.5612 -> 63.70537; linked 5047bfd (2024-07-30). The value change sits in af1d48f, titled 'Add Jastrow baseline' (a re-run: lower energy and variance). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#44 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_196_P/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/square_196_P/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_196_P/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_196_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -306,6 +336,16 @@
         "note": "scripts/Heisenberg/square_196_P/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary peri --sign mars --ham_dim 2 --L 14 --zero_mag --net jas --seed 123 --show_progress' -> 14x14 square lattice, periodic (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.015: the stored sigma is the error of that final estimate. 6.0146 above Sandvik's SSE -525.462084(16). History: entered af1d48f (2022-09-01, Dian Wu) as -519.4475 | 0.0081 | 66.74661 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#45 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_196_P/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/square_196_P/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_196_P/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_196_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -433,6 +473,15 @@
         "flag": "sigma-understated",
         "finding": "The printed bar 5e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6703091913 and SE 4.88e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.54e-5 per site (31x the bar); propagating each run's Monte-Carlo error through the fit gives 2.95e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6702322500 the row sits below by 7.69e-5 per site: 154 printed sigma, 5.0 bootstrap SD, 2.6 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 14) prints −0.6703092(5), x 4 x 196 = -525.5224128.",
         "source_entry": "VP7-arxiv-2502-17144#17 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
+      },
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -508,7 +557,16 @@
           "source_entry": "JP5-arxiv-2502-17144#11",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ],
   "coverage": [

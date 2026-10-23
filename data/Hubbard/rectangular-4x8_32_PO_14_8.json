@@ -101,6 +101,16 @@
         "note": "The stored number is J. M. Silvester's upload of 2022-04-01, transcribed correctly, and the script's configuration matches the instance (U = 8, 8 x 4, periodic along the 4-site direction, 14 + 14). It may have lost a digit: the uploader's factor-4 entry of the day before was -94.257, and -94.257 / 4 = -23.56425, while the same day's division turned the variance (0.24766 -> 0.0155) and the extrapolated energy (-94.263 +/- 0.001 -> -23.5658 +/- 0.0003) exactly, as did his conversions of the same week on other instances (-192.213 -> -48.0533, -127.599 -> -31.8998). -23.5645 lies 2.5e-4 below -23.56425, outside the +/-1.25e-4 that the three decimals of -94.257 allow. Kept as uploaded (ruling E13, 2026-10-02); only the uploader can say which is right. The row holds the instance's variational record either way.",
         "source_entry": "VB2-varbench-code-hubbard#28 (qmbl-verify 2026-09-29, ambiguous; skeptic upheld); ruling E13, 2026-10-02 (keep, note the discrepancy); the uploader is not asked (2026-10-03)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/rectangular-4x8_32_PO_14_8.jl",
+        "script": "programs/dmrg_itensors_hubbard/rectangular-4x8_32_PO_14_8.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/rectangular-4x8_32_PO_14_8.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/rectangular-4x8_32_PO_14_8.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -195,6 +205,16 @@
         "note": "Transcribed as printed and consistent with the division by 4 of the factor-4 upload (unlike the variational energy of the same line, see that row). bound_type extrapolated right; M6: the +/- is the uploader's extrapolation uncertainty, not defined anywhere. 14 up + 14 down on the 4x8 cylinder (PO), U = 8.",
         "source_entry": "VB2-varbench-code-hubbard#29 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/rectangular-4x8_32_PO_14_8.jl",
+        "script": "programs/dmrg_itensors_hubbard/rectangular-4x8_32_PO_14_8.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/rectangular-4x8_32_PO_14_8.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/rectangular-4x8_32_PO_14_8.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -248,6 +268,21 @@
           "note": "Journal SI prints -0.7350(6); arXiv v2 Table IV prints -0.7309(6) in this cell (version difference recorded in the 2026-09-29 pass; the stored value already follows the journal). 4 x 8 PO, 14 + 14, U = 8, N~ = 16, alpha = 14. Printed bar 0.0192 total vs stored 0.001: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'). No duplicate.",
           "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#2"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -299,6 +334,21 @@
         "scope": "row",
         "confidence": "medium",
         "note": "~5000 optimization steps is stated for all 8x4-cylinder wavefunctions (both ansaetze, all symmetrizations). Training sample count for the reported 8x4 energy is not pinned down: the paper re-optimized the best hyperparameters with 2048, 4096, 8192 and 16384 samples (Fig. 3) and Table I does not say which; 131072 samples were used only to evaluate the final energies. Architecture: ViT with d = 64, h = 8 heads, n_l = 2 encoder blocks, d' = 128; HFDS with N~ = 18 hidden fermions, JBf with one determinant; symmetrized over space group x spin parity, |G| = 32. Parameter counts appear only as the x-axis of Fig. 2, no number in text. Hardware only at acknowledgement level (Jean Zay A100 partition, Leonardo at CINECA); no GPU count, GPU-hours or wall-clock stated."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Simulations were performed with NetKet [89, 90], and at times parallelized with mpi4JAX [91]. This software is built on top of JAX [92] and Flax [93].",
+          "location": "arXiv:2510.11710 (sources/2510.11710.txt, .html), Sec. VI Acknowledgements",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -350,6 +400,21 @@
         "scope": "row",
         "confidence": "medium",
         "note": "~5000 optimization steps is stated for all 8x4-cylinder wavefunctions (both ansaetze, all symmetrizations). Training sample count for the reported 8x4 energy is not pinned down: the paper re-optimized the best hyperparameters with 2048, 4096, 8192 and 16384 samples (Fig. 3) and Table I does not say which; 131072 samples were used only to evaluate the final energies. Architecture: ViT with d = 64, h = 8 heads, n_l = 2 encoder blocks, d' = 128; HFDS with N~ = 18 hidden fermions, JBf with one determinant; symmetrized over space group x spin parity, |G| = 32. Parameter counts appear only as the x-axis of Fig. 2, no number in text. Hardware only at acknowledgement level (Jean Zay A100 partition, Leonardo at CINECA); no GPU count, GPU-hours or wall-clock stated."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Simulations were performed with NetKet [89, 90], and at times parallelized with mpi4JAX [91]. This software is built on top of JAX [92] and Flax [93].",
+          "location": "arXiv:2510.11710 (sources/2510.11710.txt, .html), Sec. VI Acknowledgements",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {

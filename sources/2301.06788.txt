@@ -1,0 +1,627 @@
+                           Optimizing Design Choices for Neural Quantum States
+
+                                   Moritz  Reh,1,∗  Markus  Schmitt,2  and  Martin  G¨arttner1, 3, 4
+                                          1Kirchhoﬀ-Institut  f¨ur  Physik,  Universit¨at  Heidelberg,
+                                         Im  Neuenheimer  Feld  227,  69120  Heidelberg,  Germany
+                                      2Forschungszentrum  J¨ulich  GmbH,  Peter  Gr¨unberg  Institute,
+                                           Quantum  Control  (PGI-8),  52425  J¨ulich,  Germany
+             3Physikalisches  Institut,  Universit¨at  Heidelberg,  Im  Neuenheimer  Feld  226,  69120  Heidelberg,  Germany
+  4Institut f¨ur Theoretische Physik, Ruprecht-Karls-Universit¨at Heidelberg, Philosophenweg 16, 69120 Heidelberg, Germany
+                                                           (Dated:  February 2, 2023)
+                   Neural  quantum  states  are  a  new  family  of  variational  ans¨atze  for  quantum-many  body  wave
+                functions with advantageous properties in the notoriously challenging case of two spatial dimensions.
+                Since  their  introduction  a  wide  variety  of  diﬀerent  network  architectures  has  been  employed  to
+                study paradigmatic models in quantum many-body physics with a particular focus on quantum spin
+                models.  Nonetheless,  many questions remain about the eﬀect that the choice of architecture has
+                on the performance on a given task.  In this work, we present a uniﬁed comparison of a selection
+                of popular network architectures and symmetrization schemes employed for ground state searches
+                of prototypical spin Hamiltonians, namely the two-dimensional transverse-ﬁeld Ising model and the
+                J1-J2  model.  In the presence of a non-trivial sign structure of the ground states, we ﬁnd that the
+                details of symmetrization crucially inﬂuence the performance.  We describe this eﬀect in detail and
+                discuss its consequences, especially for autoregressive models, as their direct sampling procedure is
+                not compatible with the symmetrization procedure that we found to be optimal.
+
+
+                    I.    INTRODUCTION                                        group  (DMRG)  algorithm  [16,  17].   MPS  constitute  an
+                                                                              ideal  tool  to  eﬃciently  represent  ground  states  of  one-
+  Many   intriguing   phenomena   in   condensed   matter                     dimensional gapped Hamiltonians, which feature an area
+physics  emerge  in  strongly  interacting  many-body  sys-                   law  of  entanglement  [6].   Their  limitation  is  set  by  the
+tems,  which  rarely  allow  for  analytical  solutions.   The-               exponential growth of the required bond dimension with
+oretical  attempts  to  understand  a  problem  of  interest                  entanglement entropy and more involved TNS were de-
+therefore  usually  rely  on  numerical  techniques.    How-                  vised to mitigate this issue [18].  While instances of TNS
+ever,  the exponential scaling of required computational                      exist which deal with 2D settings [3, 13, 18], this regime
+resources  with  the  number  of  system  constituents  im-                   remains particularly challenging.
+plies  that  true  many-body  settings  involving  hundreds                      Neural quantum states therefore received a lot of at-
+of  qubits  or  more  are  not  amenable  to  naive  classical                tention upon their introduction as they presented a po-
+computational approaches [1].                                                 tential remedy to some of the aforementioned shortcom-
+  Therefore,  variational  approaches  have  become  pop-                     ings of TNS, due to several factors.  For one, opposed to
+ular  [2–4]  aiming  to  eﬃciently  parameterize  the  physi-                 the DMRG algorithm, the design of NQS and its associ-
+cally relevant “corner” of Hilbert space [5–7].  Such ap-                     ated optimization algorithms do not rely on any spatial
+proaches  reduce  the  number  of  required  parameters  to                   structure,  rendering  them  ideal  candidates  for  2D  set-
+be  sub-exponential,  circumventing  the  curse  of  dimen-                   tings [4, 19]. Secondly, NQS allow for unprecedented ﬂex-
+sionality, at the expense of generality.  Various methods                     ibility; in principle any network that maps a spin conﬁg-
+have been developed that fall into this category.  Tensor                     uration, i.e.  a computational basis state, to an associated
+network states (TNS) [2, 3] and neural quantum states                         complex wave function coeﬃcient presents a valid ansatz
+(NQS) [4] are particularly popular and important in the                       [19–25].  Finally, it has been demonstrated that NQS can
+case of many-body spin systems, because both are versa-                       indeed  encode  volume-law  entangled  states  without  in-
+tile and numerically exact in the sense that the accuracy                     troducing  exponential  cost  [26–29]  in  stark  contrast  to
+can be systematically controlled with self-consistent con-                    TNS  approaches.   This  observation  serves  as  a  strong
+vergence  checks.   Tensor  network  approaches  comprise                     motivation  for  the  further  exploration  of  NQS  and  its
+many diﬀerent ans¨atze [8–15], which are generally com-                       yet undetermined limitations.
+posed  of  a  number  of  tensors  with  a  speciﬁc  bond  di-                   In this work we aim to shed light on the latter question,
+mension, that regulates their expressivity.  Matrix prod-                     focusing mainly on the diﬀerences introduced by diﬀerent
+uct  states  (MPS)  [2]  form  the  best  studied  example  of                network architectures and symmetrization schemes.  To
+TNS,  and  allow  to  encode  weakly  entangled  states  in                   this  end,  we  optimize  various  networks  that  have  been
+one dimension with great success, especially in conjunc-                      proposed for the use as NQS ansatz functions to represent
+tion with the celebrated density matrix renormalization                       the ground state of prototypical 2D spin Hamiltonians.
+                                                                              In order to connect to the existing literature, we choose
+                                                                              the 12× 12 transverse-ﬁeld Ising model (TFIM) [20, 21]
+∗ moritz.reh@kip.uni-heidelberg.de
+                                                                              and J1-J2 model [30–32] at lattice size 6× 6 and 10× 10.
+                                                                                                                                                           2
+
+   The manuscript is organized as follows: At ﬁrst we give                       with adaptive (imaginary) time stepτ is employed to ob-
+an introduction to variational Monte Carlo (VMC) and                             tain the integrated evolution of the network parameters.
+NQS,  by  introducing  the  employed  optimization  strat-                       Further details are given in Appendix A.
+egy (Sec. II), the diﬀerent architectures we benchmarked
+(III),  as  well  as  the  diﬀerent  symmetrization  options
+(Sec. IV). We then present the results on the 2D TFIM                                      III.    NEURAL QUANTUM STATES
+as well as the 2DJ1-J2 model, where we put an emphasis
+on the interplay of the symmetrization strategy and the                             Neural quantum states form a particular class of func-
+learned sign-structure (Sec. V) and discuss implications                         tions  that  can  be  used  as  an  ansatz, ψθ,  in  the  VMC
+for autoregressive networks (Sec. VI).                                           framework described in Sec. II. In this case, the ansatz
+                                                                                 function is given by an artiﬁcial neural network (ANN),
+         II.    VARIATIONAL MONTE CARLO                                          which deﬁnes a non-linear diﬀerentiable map from spin
+                                                                                 conﬁgurations  s  to  the  associated  (generally  complex)
+   In variational Monte Carlo one paramaterizes a wave-                          wave  function  coeﬃcient ψθ(s).In  fact,  it  is  common
+function as                                                                      practice to have the ANN produce the logarithmic wave
+                                                                                 function coeﬃcient χθ(s) such that ψθ(s) ≡ exp(χθ(s))
+                        /divides.alt0ψθ/uni27E9= /summation.disp                 can  accurately  capture  coeﬃcients  over  multiple  orders
+                                  s ψθ(s)/divides.alt0s/uni27E9 ,                        (1)of magnitude.  Typically, neural networks are built up in
+where s = (s1,...,sN)  labels  the  computational  basis                         layers which iteratively transform the input to a desired
+states of the system composed of N  degrees of freedom                           output, constituting a very general class of function ap-
+andθ denotes the vector of variational parameters.  Us-                          proximators that are particularly attractive due to their
+ing this ansatz function, one can estimate the expectation                       ﬂexibility  in  construction  and  the  existence  of  univer-
+values of operators  ˆO according to                                             sal approximation theorems, stating that neural networks
+                                                                                 can approximate any function given suﬃciently many pa-
+     /uni27E8 ˆO/uni27E9= /uni27E8ψθ/divides.alt0 ˆO/divides.alt0ψθ/uni27E9= /summation.disprameters [35–38].
+                              ss′ψθ(s)∗Oss′ψθ(s′)                                   Various architectures have been proposed for the use in
+                                                                       (2)       NQS applications, but a broad comparative benchmark
+          = /summation.disp      ψθ(s) = /uni27E8.alt4/summation.dispψθ(s) /uni27E9.alt4within a uniﬁed study is so far missing.  We attribute this
+             ss′ /divides.alt0ψθ(s)/divides.alt02Oss′ψθ(s′)s′ Oss′ψθ(s′)         to both the technical diﬃculties of implementation and
+where /uni27E8⋅/uni27E9  denotes  the  Monte-Carlo  (MC)  average  with          the many details concerning the structure and optimiza-
+respect to the probability distribution /divides.alt0ψθ(s)/divides.alt02 from heretion of the networks, which can have a strong eﬀect on
+on.  The local estimator Oloc(s) = ∑s′Oss′ψθ(s′)/slash.leftψθ(s)                 performance.   Especially  the  choice  of  hyperparameters
+can be evaluated eﬃciently for local operators  ˆO, mean-                        as  well  as  architecture  details,  e.g.   whether  amplitude
+ing that the sample size required to reach a certain pre-                        and phase are treated by separate networks or in a uni-
+cision  does  not  scale  with  the  total  system  size.   This                 ﬁed scheme, can be challenging.
+renders  the  estimation  of /uni27E8 ˆO/uni27E9  eﬃcient  [33].   For  vari-       We design the networks to encode both phase and am-
+ationally  approximating  ground  states,  we  can  take   ˆO                    plitude simultaneously, except for the case of the TFIM
+to  be  the  system’s  Hamiltonian   ˆH,  compute  its  expec-                   where  no  phase  is  modelled  since  the  ground  state  is
+tation value and, since we assumed diﬀerentiability with                         known  to  be  positive  [39].   When  the  network  models
+respect toθ, optimize by gradient descent. A more elabo-                         both  phase  and  amplitude,  we  design  the  feed-forward
+rate approach uses information about the local curvature                         based  architectures  as  holomorphic  maps,  using  com-
+of the variational manifold, as measured by the Fubini-                          plex parameters and outputting a single complex number
+Study  metric,  in  form  of  the  quantum  geometric  ten-                      χθ(s).  The recurrent architectures,  in contrast,  do not
+sor S = /uni27EAΓ∗k(s)Γk′(s)/uni27EB, where Γk(s) =∂θk logψθ(s) and              deﬁne  holomorphic  maps  and  therefore  utilize  real  pa-
+/uni27EAAB/uni27EB = /uni27E8AB/uni27E9− /uni27E8A/uni27E9/uni27E8B/uni27E9.  This  results in the  commonlyrameters.  For detailed explanations on the utilized net-
+used  stochastic  reconﬁguration  (SR)  algorithm  [34],  in                     works see Appendix B.
+which the parameter update rule is given by                                         Within  this  work  we  consider  the  following  network
+                                                                                 architectures:
+          θ(n+1)                                                                    Restricted  Boltzmann  Machines  –  The  earliest
+            k    =θ(n)k  −τ /summation.dispk′ Re(S−1)kk′Fk′/divides.alt0θ=θ(n).        (3)NQS  architectures  relied  on  a  dense  single-layer  feed-
+                                                                                 forward network, usually referred to as restricted Boltz-
+Here, Fk =∂θk/uni27E8Eloc(s)/uni27E9 = 2 Re(/uni27EAΓ∗k(s)Eloc(s)/uni27EB) and τ  ismann machine (RBM) in the NQS context [4, 27, 30, 40–
+the update step size.  As S  can be rank-deﬁcient, regu-                         43].  Due to the dense connectivity, the spatial structure
+larization techniques need to be applied upon computing                          of the input is not natively represented by the network
+the inverse [4, 19].  In this work, we achieve regularization                    architecture.   To  add  a  notion  of  locality  to  the  RBM
+by scaling all diagonal entries of S  by a factor of 1+δ1                        ansatz one can include the product of physically coupled
+and adding an identity matrix scaled with δ2 to S.  Dur-                         spins as input features to obtain a correlator RBM (Cor-
+ing optimization a second order Runge-Kutta integrator                           rRBM), as proposed in [22].
+                                                                                                                                                                    3
+
+   Convolutional Neural Networks – A further gen-                                    read ψSθ(s) = Avg{ψθ(σ(s))/divides.alt0σ ∈ S} with S  the set of all
+eralization  of  RBMs  are  convolutional  neural  networks                          symmetry operations and Avg denoting one of the three
+(CNN) [19, 32, 44, 45].  The layers in deep CNNs are de-                             symmetrization  methods  listed  below.   In  fact,  we  will
+ﬁned by a number of ﬁlters of a certain width, thereby                               show that the details of this symmetrization procedure
+allowing great ﬂexibility in the design of the network.  By                          are crucial for the performance of the algorithm and that
+choosing the depth, i.e.  the number of layers to one, and                           not all architectures are amenable to the symmetrization
+the  ﬁlter  size  such  that  it  spans  the  entire  system  one                    procedure we found to be optimal.  We diﬀerentiate be-
+obtains  a  translationally  invariant  RBM,  meaning  that                          tween three diﬀerent procedures for deﬁning symmetrized
+symmetrized  RBMs  are  a  strict  subclass  of  CNNs.   By                          wave function coeﬃcients ψSθ(s) from the network out-
+using smaller ﬁlters and multiple layers, an intrinsic rep-                          puts χθ(s),
+resentation of locality in the network is restored based on                                • Bare-Symmetry:
+a hierarchical representation of features, loosely reminis-
+cent of tree tensor networks (TTN) [11] or the multiscale                                               ψSθ(s)= exp/uni239B 1           χθ/parenleft.alt1s′/parenright.alt1/uni239E
+entanglement  renormalization  ansatz  (MERA)  [12].   In                                                                /uni239D/divides.alt0S/divides.alt0  /summation.disp/uni23A0               (4)
+analogy to the CorrRBM, adding correlations of the spin                                                                         s′∈S(s)
+conﬁgurations to the input extends the CNN to a corre-                                     • Exp-Symmetry:
+lator CNN (‘CorrCNN’).
+   Recurrent  Networks.     A  very  diﬀerent  form  of                                                 ψSθ(s)=  1/divides.alt0S/divides.alt0  /summation.dispexp/parenleft.alt2χθ/parenleft.alt1s′/parenright.alt1/parenright.alt2                (5)
+ansatz is obtained by substituting the feed-forward based                                                                s′∈S(s)
+network with a recurrent architecture, which assigns the                                   • Sep-Symmetry:
+coeﬃcientψθ(s) as a productψθ(s)=ψθ(s1)⋅ψθ(s2/divides.alt0s1)⋅                                      /roottop/rootmod/rootmod/rootbot
+...⋅ψθ(sN/divides.alt0sN−1...s1) [20, 21, 46–49].  A central motivation                                  1
+for this construction is the fact that such architectures al-                            ψSθ(s)=        /divides.alt0S/divides.alt0  /summation.dispexp/parenleft.alt22Re/bracketleft.alt2χθ/parenleft.alt1s′/parenright.alt1/bracketright.alt2/parenright.alt2
+low for autoregressive sampling.  This means that a new                                                      s′∈S(s)                                             (6)
+independent sample can be generated with a single net-                                                                                                      /uni239E
+work evaluation, such that no Markov chain Monte Carlo                                              × exp/uni239B/uni239Di arg/uni239B/uni239D  /summation.dispexp/parenleft.alt2i Im/bracketleft.alt2χθ/parenleft.alt1s′/parenright.alt1/bracketright.alt2/parenright.alt2/uni239E/uni23A0/uni23A0
+(MCMC) with potentially long autocorrelation or ther-                                                                  s′∈S(s)
+malization times is required.  A recurrent architecture is                               Eq.  (5)  is  a  natural  choice  when  the  ANN  output  is
+deﬁned by a cell containing the variational parameters.                              considered  to  be  the  logarithmic  wave  function  coeﬃ-
+It is then iteratively scanned over the input, i.e.  the spin                        cient.  Another option to proceed is to exponentiate the
+conﬁguration s= (s1,...,sN).  Since it is always the same                            logarithmic  coeﬃcients  prior  to  averaging,  as  done  in
+cell that is scanned over the input sequence, the number                             Eq.  (5),  resulting  in  a  symmetrization  procedure  with
+of variational parameters does not grow with the system                              the  potential  that  phases  may  positively  or  negatively
+size; this can enhance eﬃciency, but, on the other hand,                             interfere, as opposed to Eq. (4) and Eq. (6).  Finally, the
+the inherently sequential design does not allow for paral-                           symmetrization  procedure  in  Eq.  (6)  is  designed  to  be
+lelization.  The architecture of the recurrent cell is highly                        compatible with an autoregressive property, which is lost
+customizable;  we  refer  to  the  vanilla  recurrent  neural-                       when choosing one of the other options.  The reason for
+network  with  a  single  layer  as  ‘RNN’,  and  use  the  ab-                      this is that the relation
+breviations  ‘LSTM’  and  ‘GRU’  for  the  long  short-term
+memory [50] and gated recurrent unit [51], respectively.                                                 /summation.disp/divides.alt0ψSθ(s′)/divides.alt02 =  /summation.disp/divides.alt0ψθ(s′)/divides.alt02.              (7)
+                                                                                                       s′∈S(s)                 s′∈S(s)
+                       IV.    SYMMETRIES                                             has  to  be  fulﬁlled  for  direct  sampling.   The  only  way
+                                                                                     to  generate  a  new  conﬁguration  from  the  distribution
+                                                                                     encoded in an autoregressive network is to sequentially
+   When  the  Hamiltonian  describing  the  spin  system                             sample  the  local  conﬁgurations si  from  the  conditional
+exhibits  certain  symmetries,  such  as  invariance  under                          probabilities /divides.alt0ψθ(si/divides.alt0si−1...s1)/divides.alt02.  Following this procedure,
+translations,  rotations,  reﬂections  or  parity  symmetry,                         symmetry-equivalent conﬁgurations will in general not be
+its  ground  state  exhibits  the  same  symmetries.    This                         generated with identical probability.  However, if Eq. (7)
+a-priori  knowledge  of  properties  that  the  ground  state                        holds,  the  frequency  of  samples  from  one  equivalence
+wave-function  must  fulﬁll,  can  be  used  to  restrict  the                       class  matches  its  probability  given  by  the  symmetrized
+variational optimization to the correct symmetry sector                              ansatz ψSθ(s), which is suﬃcient for a representative set
+and thereby to enhance the performance of the algorithm.                             of samples.
+Since not all of the considered network architectures can                                All  presented  symmetrization  options  have  been  ap-
+be composed of equivariant layers to incorporate symme-                              plied in previous works: The bare option was for example
+try [52], we instead follow the common approach to sym-                              used in [19], the exponential option in [30] and the sepa-
+metrize the wave-function by averaging procedures of all                             rate option in [20].  Our contribution is a direct compar-
+symmetry equivalent conﬁgurations as is commonly done                                ison between these options, applied to the same physical
+[19, 20, 30].  The symmetrized coeﬃcientψSθ(s) will then                             problem with otherwise identical network architectures.
+                                                                                                                                                    4
+
+                         V.    RESULTS
+
+  In the following we will examine the performance of dif-
+ferent networks on the TFIM andJ1-J2 model on a two-
+dimensional square lattice.  Since we want to learn about
+the distinct representational power of the networks, they
+are designed to have approximately the same number of
+parameters, see Table II in Appendix C. Note that this
+can imply diﬀerent computational cost for the diﬀerent
+networks, as for example the evaluation of autoregressive
+architectures is more demanding than for a feed-forward
+architecture.  We trained the networks until convergence
+was reached, irrespective of computational cost.  Details
+of the network architectures can be found in Appendix B.
+
+
+             A.    Transverse ﬁeld Ising model
+
+  The transverse ﬁeld Ising model
+                     ˆH =−J /summation.dispˆσizˆσjz−h/summation.disp         FIG. 1.  Performance of the tested network architectures for
+                                                                             ﬁnding  the  ground  state  of  the  2D  12 × 12  TFIM  at  diﬀer-
+                              /uni27E8ij/uni27E9i  ˆσix                    (8)ent magnetic ﬁeld strengths.  Here all networks use the bare-
+on  a  2D  square  lattice  features  an  Ising  interaction                 symmetrization as no phase is modelled.  In (a) the deviation
+between  nearest  neighbors  and  an  external  ﬁeld  in x-                  from the lowest observed energy density is shown for the mag-
+                                                                             netic ﬁelds h∈ [2, 3, 4].  The data points are artiﬁcially shifted
+direction, giving rise to a quantum phase transition from                    horizontally such that diﬀerences are more easily visible.  In
+a  ferromagnetic  to  a  paramagnetic  phase  at h = hc ≈                    (b) the energy variance per spin is plotted, which serves as an
+3.044J  [53].   The  stoquastic  nature  of  the  Hamiltonian                additional performance indicator.  The QMC and MPS data
+[39] make it an ideal benchmark case for various approx-                     was taken from [20] and [21].
+imative methods, such as quantum Monte Carlo (QMC)
+and  MPS.  We  compare  to  both  techniques  with  data
+taken from [20] and [21].                                                    and correlator CNN perform better, which indicates that
+  The stoquasticity implies a positive ground-state wave                     increasing  the  depth  of  the  network  at  the  expense  of
+function,  meaning  that  the  NQS  networks  do  not  need                  smaller  ﬁlter  sizes  is  beneﬁcial,  especially  in  the  ferro-
+to encode a complex phase.  Here, we limit ourselves to                      magnetic phase.  Autoregressive nets perform reasonably
+the bare symmetry option.  We employ open boundary                           well  for  all  values  of h,  especially  in  the  paramagnetic
+conditions, to allow for comparisons with [20, 21].                          regime  where  they  outperform  the  other  architectures.
+  We present our results in Fig. 1.  Panel (a) shows the                     Interestingly, the details of the recurrent cell do not seem
+deviation  of  the  predicted  ground  state  energy  density                to have an inﬂuence in this scenario as RNN, LSTM and
+from the lowest value attained by the various networks                       GRU show almost identical performance.
+and QMC and MPS at each ﬁeld strengthh∈ [2, 3, 4].  In                          We  conclude  that  the  ground  state  of  the  stoquastic
+order to ease the legibility we shifted the ﬁeld-strenghts                   TFIM can be approximated well,  without major diﬀer-
+slightly.   In  addition,  since  no  exact  numerical  bench-               ences among network architectures.  In the following, we
+mark value for the energy itself can be given, we consider                   therefore shift our attention to the 2DJ1-J2 model, i.e.  a
+the variance of the energy estimate as a performance in-                     non-stoquastic Hamiltonian with a non-trivial sign struc-
+dicator,  that  vanishes  when  the  network  represents  an                 ture.  At the point J2 = 0.5J1  the ground state is max-
+eigenstate of the system, such as the ground-state.  Fig-                    imally frustrated, giving rise to exotic phases such as a
+ure 1(b) shows the energy variance as a function of ﬁeld                     spin-liquid and valence bond solid state [30],  which are
+strength for the various network architectures.  The ﬁrst                    characterized  by  high  entanglement  and  the  absence  of
+observation is that for all architectures, performance de-                   an energy gap.
+pends signiﬁcantly on the strength of the magnetic ﬁeld.
+In the region of the critical value performance diminishes
+as one might expect, as correlations grow longer ranged.
+The  worst  performance  is  however  found  at h = 0.91hc                                           B.    J1 − J2 model
+slightly away from the critical point, which might be an
+indicator of ﬁnite-size eﬀects being present.  For the dif-
+ferences between the networks it is more diﬃcult to make                        TheJ1-J2 model features competing antiferromagnetic
+out clear trends.  While the RBM and correlator RBM                          Heisenberg couplings between nearest- and next-nearest
+architecture  seem  to  give  the  worst  performance,  CNN                  neighbours,  with  respective  strengths J1  and J2,  such
+                                                                                                                                                         5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Results on the 2D 6 × 6 J1-J2  model.  In (a) and (b) the performance of the diﬀerent architectures is depicted as a
+function of observables of interest.  The errorbars which are smaller than the ﬁlled in circles are omitted.  In (c),  the eﬀect
+of the diﬀerent symmetrization procedures is shown for the case of the RBM architecture, leaving all other speciﬁcations of
+the network unchanged.  In (d), sampled wave function coeﬃcients of the network are depicted in the complex plane for the
+symmetrizations shown in (c), with a logarithmic scale for the absolute value.  Only in the exponential case were we able to
+observe a non-trivial sign structure with deviations from the Marshall sign rule, in which there were samples on the opposite
+site of the bulk.
+
+
+that                                                                            with the same number of up and down spins.  We exploit
+                ˆH =J1 /summation.dispˆσi⋅ ˆσj+J2 /summation.dispˆσi⋅ ˆσj .              (9)this by only constructing sample conﬁgurations that ful-
+                                                                                ﬁll this condition.
+                        /uni27E8ij/uni27E9  /uni27EAij/uni27EB                     As  was  demonstrated  in  [30],  supplying  the  network
+It has been the focus of numerous works, especially in the                      with physical information in form of symmetries improves
+context of neural quantum states [30, 32, 54–56] due to its                     performance dramatically.  We therefore symmetrize our
+challenging nature that is characteristic for 2D frustrated                     ansatz  function  with  all  four  present  symmetries,  i.e.
+ground states.  Depending on the relative strength of in-                       translations,  the C4  point  group  and  the  Z2  spin-ﬂip
+teractions, one ﬁnds the system in the N´eel (J2/uni2272 0.49J1)                symmetry.  As described previously, diﬀerent options re-
+or striped (J2/uni2273 0.61J1) phase, while a spin-liquid and va-               garding the details of symmetrization exist, and the data
+lence bond solid phase exists between the two [54].  All of                     presented below reveals that these details have signiﬁcant
+our experiments are carried out at the point J2/slash.leftJ1 = 0.5,             eﬀect on the performance of the algorithm.
+where  frustration  is  maximal  and  we  employ  periodic                         Let us, however, ﬁrst examine the performance diﬀer-
+boundaries.   The  abundance  of  symmetries  reduces  the                      ences between the diﬀerent network architectures, shown
+size of the relevant Hilbert space sector, allowing to ex-                      in Fig. 2(a) and (b).  We show the deviation of the energy
+actly compute the ground-state energy for a lattice of size                     density from the exact ground state value as a function
+6× 6, which serves as a reference value.                                        of the total magnetization
+   Due to the non-stoquastic nature of the Hamiltonian,                                                     ˆS2 = /summation.disp
+the  ground  state  is  not  positive  and  therefore  a  major                                                    ij  ˆσi⋅ ˆσj                           (10)
+challenge consists in ﬁnding the ground state sign struc-
+ture [31, 57, 58].  At J1 = 0 or J2 = 0, the phase follows                      and as a function of the structure factor
+the Marshall-Peierls sign rule, which states that the sign
+of each coeﬃcient ψ(s) is (−1)N↑∈A(s), where A denotes                                                 ˆχ= /summation.disp
+one of the two sublattices and N↑∈A(s) is the number of                                                     ij  ˆσi⋅ ˆσjeiq⋅(ri−rj)                     (11)
+up  spins  in  conﬁguration s  on  sublattice A.   When  go-
+ing to ﬁnite ratios J2/slash.leftJ1, the Marshall-sign rule does no             for q= (π,π), where the sum runs over all pairs of lattice
+longer hold exactly, but presents a good approximation.                         sites.  The choice of these observables is physically moti-
+Hence,  we choose to hard-code the sign rule in form of                         vated:  The Hamiltonian’s SU(2) symmetry implies that
+a  transformed  Hamiltonian,  which  is  also  explained  in                    the ground-state fulﬁlls /uni27E8ˆS2/uni27E9= 0, and thus the deviation
+Appendix D, and let the network learn deviations from                           from  zero  serves  as  another  ﬁgure  of  merit  for  the  ap-
+it.   We  therefore  change  the  design  of  the  feed-forward                 proximation quality.  The structure factor is a crucial ob-
+based architectures to holomorphic maps with complex                            vservable providing insight into the magnetization struc-
+network  parameters,  while  the  autoregressive  architec-                     ture, i.e.  whether the striped or N´eel phase is observed.
+tures stay non-holomorphic maps using real parameters                           The  observables  are  estimated  using  104  samples.   The
+but are allowed to model a phase.                                               error bars shown in the ﬁgure are obtained by estimating
+   Additionally,  the  ground  state  is  known  to  lie  in  the               the observables based on 10 independently drawn sam-
+zero magnetization sector, implying that the wave func-                         ple sets and determining the ﬂuctuations between them.
+tion  coeﬃcients  are  only  non-zero  for  conﬁgurations  s                    The feed forward architectures, employing the exponen-
+                                                                                                                                                   6
+
+                                                                             the bare symmetrization.  To verify the inﬂuence of the
+                                                                             chosen symmetrization on the performance also for recur-
+                                                                             rent architectures, we compare the performance of a sep-
+                                                                             symmetrized  RNN optimized  using autoregressive sam-
+                                                                             pling  to  its  exp-symmetrized  counterpart  with  MCMC
+                                                                             sampling in Fig. 3.  The performance diﬀerence again re-
+                                                                             veals that the exponential symmetrization procedure sig-
+                                                                             niﬁcantly improves the quality of the results, although it
+                                                                             prohibits autoregressive samples.  Therefore, the limited
+                                                                             ﬂexibility in choosing the symmetrization scheme consti-
+                                                                             tutes a signiﬁcant drawback for autoregressive architec-
+                                                                             tures when trying to learn the non-trivial sign-structures
+                                                                             of the frustrated ground state.
+FIG.  3.   Learning  curve  of  an  RNN  with  the  sep-symmetry                Having found clear indication that the details of sym-
+and  exact  samples  (green)  compared  to  the  same  network               metrization  inﬂuence  the  results,  we  now  give  an  intu-
+using the exponential symmetrization strategy with MCMC                      itive understanding as to why this may be the case.  One
+samples  (orange).   As  is  clearly  visible,  the  network  proﬁts         immediate observation is the fact that only in the expo-
+greatly from the exponential symmetrization strategy which                   nential case the phase can inﬂuence the ﬁnal amplitude,
+is however incompatible with exact sampling, thereby taking                  since the coeﬃcients may positively or negatively inter-
+away the major beneﬁt of autoregressive architectures.                       fere, yielding a potential gain in expressivity.  Similarly,
+                                                                             if  the  prediction  of  the  phase  were  random  (or  noisy)
+tial  symmetrization  strategy,  perform  signiﬁcantly  bet-                 for  a  given  spin  conﬁguration,  the  sum  of  these  noisy
+ter  compared  to  the  autoregressive  networks  using  the                 coeﬃcients  would  be  small  in  absolute  value.   Thereby,
+separate (sep-)symmetrization strategy.  In Fig. 2(c) we                     it seems plausible that in the case of bad generalization
+compare the eﬀect of the three diﬀerent strategies for the                   of the ANN, the resulting coeﬃcients are automatically
+RBM. The exponential option, utilized in [30], performs                      suppressed.  The interplay between complex phases and
+best by far.  Other strategies, that were for example used                   amplitudes  can  also  aﬀect  the  optimization:  The  loga-
+in [19] or [20] perform considerably worse for the given                     rithmic  derivatives  Γk(s) = ∂θk log/divides.alt0ψSθ/divides.alt0+∂θk arg[ψSθ]  of
+task.                                                                        the symmetrized coeﬃcients consist of the sum of the gra-
+  In a next step, we provide an analysis revealing the ori-                  dients of the (log-)amplitude and the complex phase.  If
+gin of the observed performance diﬀerences.  Concretely,                     only the amplitudes of the non-symmetrized coeﬃcients
+we examine the capability of the diﬀerent symmetrization                     ψθ(s) contribute to the symmetrized amplitude, as is the
+methods  to  capture  deviations  from  the  Marshall  sign                  case for the bare- and sep-symmetrization, its gradients
+rule.  In Fig. 2(d) we show argument and amplitude of                        with respect to the complex phases ofψθ(s) vanish.  This
+the complex wave function coeﬃcients that are obtained                       is in contrast to the exp-symmetry case, where the gra-
+by  sampling  the  NQS;  notice  that  all  coeﬃcients  from                 dients  of  the  symmetric  amplitude  with  respect  to  the
+one wave function can be rotated by an arbitrary angle                       non-symmetric phases generally take ﬁnite values, since
+in  the  polar  plot,  corresponding  to  an  irrelevant  global             they inﬂuence the symmetrized amplitude.
+phase.   Importantly,  deviations  from  the  Marshall  sign
+rule are only observed in the case of exp-symmetrization,                                        C.    Large system sizes
+while the other methods only optimize the wave function
+amplitudes, thus not being able to reveal the non-trivial
+physics in this problem.  This explains the inferior per-                       Having gained insight into network speciﬁc advantages
+formance of the alternative symmetrization schemes ob-                       and disadvantages,  we ﬁnally want to answer the ques-
+served in Fig. 2(c).  This, of course, does not mean that                    tion which network architectures can be deemed suitable
+we cannot model such behaviour with the other strate-                        to  scale  up  to  larger  system  sizes.   To  consider  an  ar-
+gies – it can, however, hint at the fact, that ﬁnding such                   chitecture scalable we demand that both the number of
+sets of variational parameters using the stochastic recon-                   its parameters and the network evaluation cost should at
+ﬁguration algorithm is challenging.                                          most grow mildly with system size N.  The RBMs and
+  We now discuss the implications of this ﬁnding.  In au-                    its variants violate the ﬁrst requirement as the number
+toregressive  architectures,  samples  are  drawn  from  the                 of  parameters  grows  quadratically  given  a  constant  ra-
+unsymmetrized  distribution,  since  we  cannot  average                     tioα between the number of hidden and visible neurons.
+over  all  symmetry  invariant  conﬁgurations  while  sam-                   For recurrent networks, one ﬁnds a quadratic scaling of
+pling.    One  therefore  needs  to  ensure  that  the  sym-                 the  evaluation  cost,  as  the  cost  of  evaluating  a  single
+metrized probability measure of a conﬁguration is equal                      (unsymmetrized) conﬁguration grows linear with system
+to the non-symmetrized one, ruling out the exponential                       size, since the cell needs to be scanned over longer inputs,
+symmetrization strategy in conjunction with autoregres-                      while symmetrization gives another factor N.
+sive  samples,  since  it  violates  Eq.  (7)  and  similarly  for              This leaves CNNs as the only viable option, as they al-
+                                                                                                                                                7
+
+            Architecture       Energy        Reference                     exact samples if the symmetrization strategy is such that
+                CNN          -0.473591          [55]                       interference among the coeﬃcients is possible.  Therefore,
+                CNN         -0.49516(1)         [32]                       learning quantum states which feature a non-trivial sign
+            RBM + GP        -0.49575(2)         [56]                       structure appears at least challenging with autoregressive
+                CNN        -0.49586(4)     This Work                       models, if symmetrization is required at the same time.
+            RBM + PP        -0.497629(1)        [54]                          We conjecture, that further progress will rely on sym-
+                                                                           metrical  wavefunction  ans¨atze  that  support  good  scal-
+TABLE  I.  Ground  state  energies  achieved  with  neural  net-           ing characteristics to larger system sizes.  The symmetry
+work quantum states on the 10 × 10 J1-J2  model with peri-                 invariant  map  should  add  up  the  generated  coeﬃcients
+odic boundary conditions at the point J2/slash.leftJ1 = 0.5.  References   using  the  exp-symmetry  operation  allowing  for  readily
+[56] and [54] incorporate projection procedures, thereby pro-              learning  a  non-trivial  sign  structure  as  opposed  to  the
+viding physical information beyond symmetries which are not                other  cases.   We  have  found  the  CNN-architecture  to
+present in the other approaches.                                           be suitable for this purpose and demonstrated compara-
+                                                                           ble performance to previous works, which amended NQS
+                                                                           wave functions with additional physical bias.
+low for sub-quadratic growth of parameters using small                        Note added:  During the preparation of this manuscript
+ﬁlter sizes in deep architectures, still allowing for system               Ref. [59] appeared, which also studies theJ1-J2 model on
+wide  correlations,  and  evaluations  that  approximately                 the square lattice using group convolutional neural net-
+scale  linear  in  system  size  since  the  ﬁlters  need  to  be          works (GCNNs).  The ﬁndings of that work support our
+scanned over larger inputs.  Since we saw in Fig. 2 that                   claim that the exponential operation prior to summation
+adding  correlation  input  features  does  not  add  to  per-             is crucial for optimizing performance.
+formance,  we  test  the  CNN  on  a  10 × 10  lattice  and                   Code & Data availability.  The code developed for this
+compare  to  previous  works  in  Table  I.  All  listed  ener-            project relies on the jVMC library [60], that can be found
+gies stem from NQS approaches, where those that used                       on  GitHub:  markusschmitt/vmc            jax.   Data  is  available
+physically  informed  input  in  addition  to  the  NQS  are               upon request.
+marked with a ‘+’.  The additional input is using varia-
+tional parameters that deﬁne the weight of the projection
+of the basis state onto a physically motivated state, such                                   ACKNOWLEDGMENTS
+as a pair state in the pair-projection (PP) algorithm or
+a Gutzwiller-projected (GP) state.  The performance of                        The authors would like to thank Or Sharir, Mohamed
+the CNN presented here is comparable to [56],  without                     Hibat-Allah  and  Francesco  Ferrari  for  providing  data
+using any physically informed input.                                       from their respective works.
+                                                                              This work is supported by the Deutsche Forschungsge-
+                                                                           meinschaft (DFG, German Research Foundation) under
+        VI.    CONCLUSION AND OUTLOOK                                      Germany’s  Excellence  Strategy  EXC2181/1-390900948
+                                                                           (the Heidelberg STRUCTURES Excellence Cluster) and
+  In this work, we systematically compared the perfor-                     within the Collaborative Research Center SFB1225 (ISO-
+mance of diﬀerent network architectures and symmetriza-                    QUANT).  This  work  was  partially  ﬁnanced  by  the
+tion strategies when trying to ﬁnd ground states of many-                  Baden-W¨urttemberg  Stiftung  gGmbH.  The  authors  ac-
+body spin Hamiltonians.  While there are no clear trends                   knowledge support by the state of Baden-W¨urttemberg
+visible in the case of the 2D TFIM model,  the dispari-                    through bwHPC and the German Research Foundation
+ties in the J1-J2 model are pronounced, where the feed-                    (DFG) through Grant No INST 40/575-1 FUGG (JUS-
+forward architectures clearly outperform the autoregres-                   TUS  2  cluster).    The  authors  gratefully  acknowledge
+sive architectures.  We identiﬁed the details of the sym-                  the Gauss Centre for Supercomputing e.V. (www.gauss-
+metrization  strategy  as  a  key  to  higher  performance,                centre.eu) for funding this project by providing comput-
+which hinders learning the correct sign structure if not                   ing  time  through  the  John  von  Neumann  Institute  for
+done correctly.  Speciﬁcally,  it is imperative to add the                 Computing (NIC) on the GCS Supercomputer JUWELS
+wave function coeﬃcients of all symmetry-invariant con-                    [61] at J¨ulich Supercomputing Centre (JSC).
+ﬁgurations such that they may interfere positively or neg-
+atively as layed out in Eq. (5).  Surprisingly, it is there-                     Appendix A: Regularization, Inversion and
+fore insuﬃcient to ‘only’ search in the correct symmetry                                    Imaginary Time Evolution
+sector.
+  This  ﬁnding  has  direct  implications  for  autoregres-                   As laid out in the main text, the stochastic reconﬁg-
+sive  architectures,  since  their  sampling  strategy  is  not            uration algorithm culminates in the parameter evolution
+amenable to the exponential symmetrization strategy de-                    equation
+scribed in Eq. (5), as it violates Eq. (7). We make this ex-
+plicit in Fig. 3, by showing that an autoregressive model                                       /summation.disp
+using MCMC samples outperforms the same model with                                               k′ Re(S−1)kk′ ˙θk′ =Fk.                   (A1)
+                                                                                                                                                      8
+
+Since S can be singular, rendering its inverse ill deﬁned,                    of  the  interacting  spins  in  the {+1,−1}  representation,
+one  needs  to  regularize S  in  order  to  solve  for   ˙θ.   We            such that features from aligned (anti-aligned) spins enter
+achieve  this  in  two  steps,  ﬁrst  multiplying  all  diagonal              as +1  (−1).   As  this  procedure  simply  alters  the  input
+elements with a factor 1+δ1 and then addingδ2 to all di-                      conﬁguration,  it  is  in  principle  applicable  to  any  (non-
+agonal entries.  We chooseδ1 on the order of 10 and let it                    autoregressive) architecture.  This is because the autore-
+decay exponentially during optimization, whileδ2 is ﬁxed                      gressive sampling procedure cannot use correlations be-
+around  10−4.   We  then  ﬁnd  ˙θ  using  a  linear  solver  (we              tween spins that were not sampled yet.  The number of
+used the jax implementation of the  scipy linear solver                       parameters the correlation networks use is given by the
+jax.scipy.linalg.solve) before integrating θ using a                          same formulas as previously, but with N  substituted by
+second-order  Runge-Kutta  scheme  with  adaptive  step-                      N  +Nc, where Nc are the number of couplings between
+size [19].                                                                    spins in the Hamiltonian.
+                                                                                 Recurrent  Neural  Networks  (RNNs).   Recurrent  net-
+                                                                              works scan a cell f  over the input conﬁguration s, while
+      Appendix B: Neural Network Architectures                                maintaining  a  memory  in  a  hidden  state  vector h  with
+                                                                              lengthnh.  This allows to compute and sample the wave-
+  Restricted  Boltzmann  Machines  (RBMs).    A  dense,                       function based on conditionals,ψθ(s)=ψθ(s1)⋅ψθ(s2/divides.alt0s1)⋅
+single-layer  feedforward  network  with N  input  and M                      ...⋅ψθ(sN/divides.alt0sN−1...s1)  [20,  21,  46–49].   The  conditionals
+hidden neurons is, somewhat imprecisely [62], referred to                     are  obtained  using ht+1 = f(ht,st),  before  computing
+as  RBM  in  the  NQS  literature.   Its  output  is  the  sum                ψθ(st+1/divides.alt0st...s1) = g(ht+1), where g  is a dense layer with
+of the hidden layer with an activation function applied.                      two  outputs  that  we  interpret  as  log(/divides.alt0ψ/divides.alt0)  and  arg(ψ)
+Usually,  this  function  is  chosen  to  be  the  logarithm  of              and  from  which  we  compute  both ψθ(↑ /divides.alt0st...s1)  and
+the hyperbolic cosine.  In the complex plane, this func-                      ψθ(↓ /divides.alt0st...s1).  Since the conditional wave functions are
+tion has poles at z =iπ(1/slash.left2+n) for integer n, which is              normalized to allow for autoregressive sampling, they do
+why  we  choose  to  approximate  the  activation  function                   not correspond to holomorphic functions,  which is why
+with its ﬁrst two non-vanishing Taylor series terms, mit-                     we  employ  real  parameters  for  all  recurrent  models  to
+igating  this  problem.   The  number  of  parameters  for  a                 predict amplitude and phase as two distinct outputs of
+network with weights and biases are given by                                  the network.  In two dimensions, the hidden statesht and
+                                                                              st are formed by concatenating the hidden states and spin
+                         nP = 2NM + 2M,                        (B1)           conﬁgurations of the top and right (left) neighbour of the
+where the factor of 2 arises since all parameters are com-                    currently considered site, depending on whether the site
+plex.  In varying the number of hidden neurons M, one                         is located on an even (odd) row [20].
+can control the complexity and expressivity of the net-                          Diﬀerent architectures have been proposed for the cell
+work.  The dense layer bears no physical motivation, as it                    f.  In the easiest case,  a ’vanilla’ RNN-cell is used (re-
+is irrespective of locality, begging the question for more                    ferred  to  as  RNN  in  the  main  text),  which  is  deﬁned
+physically motivated architectures.                                           as  a  single  aﬃne  map  between  inputs  and  the  output
+  Convolutional  Neural  Networks  (CNNs).   In  contrast                     with an additional activation function. More complicated
+to  RBMs,  CNNs  allow  to  keep  a  notion  of  locality,  by                cells, such as the LSTM (long short-term memory, [50])
+using  ﬁlter  sizes  that  are  smaller  than  the  system  size.             or  GRU  (gated  recurrent  unit,  [51])  cell  use  additional
+These are scanned over the input, automatically respect-                      ‘gates’  that  allow  to  keep  or  discard  information  from
+ing translational equivariance.  CNNs allow to be made                        previous sites.  As the number of parameters in these ar-
+more expressive by tuning the depth (D), ﬁlter size (SF )                     chitectures is not easily given, we omit a formula for its
+and  the  number  of  ﬁlters/channels  (NF ).   Without  bi-                  calculation at this point and refer the reader to [50, 51]
+ases, the resulting number of parameters is                                   for further details.
+
+
+                                D
+                      nP = 2   /summation.disp                                            Appendix C: Network speciﬁcations
+                               d=1SdFNiFNi−1F ,                    (B2)
+withN 0F = 1 for the input spin conﬁguration.  In the end,                       We summarize the details of the networks, in particular
+the output is summed over the channel dimension before                        network sizes and symmetries, for all networks that were
+exponentiating  and  summation  over  the  remaining  di-                     used in the paper in Table II.
+mensions, in order to implement the exp-symmetrization
+option.                                                                                      Appendix D: Marshall sign-rule
+  Correlation  Networks.  In order to guide the network
+towards  the  important  features  of  the  input  conﬁgura-
+tion,  [22]  proposes  to  add  correlations  of  coupled  spins                 The Marshall sign-rule gives the exact sign for each co-
+explicitly to the input of the network.  In order to test                     eﬃcient ψ(s) in the J1-J2 model for J1 = 0 or J2 = 0.  As
+the proposal, we add a new input for every link between                       deﬁned in the main text, it assigns the sign (−1)N↑∈A(s),
+interacting spins and deﬁne its value to be the product                       where A denotes one of the two sublattices and N↑∈A(s)
+                                                                                                                                                         9
+
+                   Figure / Table        Name       No.  of Parameters     Symmetry                     Speciﬁcations
+                           1             RBM                2592               Bare                         M = 18
+                           1             CNN                2594               Bare      D = 2, NF = [24, 2], SF = [6 × 6, 6 × 6]
+                           1          CorrRBM               2645               Bare                          M = 5
+                           1          CorrCNN               2483               Bare      D = 2, NF = [20, 3], SF = [7 × 7, 5 × 5]
+                           1             RNN                2411                Sep                         nh = 33
+                           1            LSTM                2463                Sep                         nh = 19
+                           1             GRU                2490                Sep                         nh = 21
+                     2 (a) + (b)         RBM                3996               Exp                          M = 54
+                     2 (a) + (b)         CNN                3962               Exp       D = 2, NF = [60, 1], SF = [4 × 4, 4 × 4]
+                     2 (a) + (b)      CorrRBM               4060               Exp                          M = 14
+                     2 (a) + (b)      CorrCNN               3872               Exp       D = 2, NF = [15, 1], SF = [8 × 8, 8 × 8]
+                     2 (a) + (b)         RNN                4138                Sep                         nh = 44
+                     2 (a) + (b)        LSTM                4010                Sep                         nh = 24
+                     2 (a) + (b)         GRU                4160                Sep                         nh = 27
+                     2 (c) + (d)         RBM                3996               Bare                         M = 54
+                     2 (c) + (d)         RBM                3996               Exp                          M = 54
+                     2 (c) + (d)         RBM                3996                Sep                         M = 54
+                           3             RNN                3442               Exp                          nh = 40
+                           3             RNN                3442                Sep                         nh = 40
+                           I             CNN               10952               Exp       D = 2, NF = [75, 1], SF = [6 × 6, 6 × 6]
+
+                         TABLE II. Characteristics of the networks that were utilized throughout the paper.
+
+
+is the number of up spins in conﬁguration s on sublat-                          Away from the pointsJ1 = 0 andJ2 = 0 the sign-rule does
+tice A.   It  can  equivalently  be  understood  as  a  gauge-                  no longer hold exactly but presents a good approxima-
+transformation of the Hamiltonian, which then reads                             tion, which we use as a starting point from which we aim
+                                                                                to learn the correct deviations.  Recovering the physics of
+                                                                                the original Hamiltonian from H′ is achieved by ﬂipping
+ H′ =J1 /summation.disp(−ˆσixˆσjx− ˆσiyˆσjy+ ˆσizˆσjz)+J2 /summation.dispˆσi⋅ ˆσj.  (D1)allx- andy-correlators with support on both sublattices.
+            /uni27E8ij/uni27E9                      /uni27EAij/uni27EB
+
+
+
+ [1]R. P. Feynman, Simulating physics with computers, Int.                           Lett. 93, 207205 (2004).
+     J. Theor. Phys. 21, 467 (1982).                                             [9]G. Evenbly and G. Vidal, Class of highly entangled many-
+ [2]U. Schollw¨ock, The density-matrix renormalization group                         body states that can be eﬃciently simulated, Phys. Rev.
+     in the age of matrix product states, Ann. Phys. (Amster-                        Lett. 112, 240502 (2014).
+     dam) 326, 96 (2011).                                                       [10]G.  Vidal,  Entanglement  renormalization,  Phys.  Rev.
+ [3]R.  Or´us,  A  practical  introduction  to  tensor  networks:                    Lett. 99, 220405 (2007).
+     Matrix  product  states  and  projected  entangled  pair                   [11]Y.-Y. Shi,  L.-M. Duan, and G. Vidal, Classical simula-
+     states, Ann. Phys. 349, 117 (2014).                                             tion of quantum many-body systems with a tree tensor
+ [4]G.  Carleo  and  M.  Troyer,  Solving  the  quantum  many-                       network, Phys. Rev. A 74, 022320 (2006).
+     body  problem  with  artiﬁcial  neural  networks,  Science                 [12]L.  Cincio,  J.  Dziarmaga,  and  M.  M.  Rams,  Multiscale
+     355, 602 (2017).                                                                entanglement renormalization ansatz in two dimensions:
+ [5]M. B. Hastings and T. Koma, Spectral gap and exponen-                            Quantum  ising  model,  Phys.  Rev.  Lett.  100,  240603
+     tial  decay  of  correlations,  Commun.  Math.  Phys.  265,                     (2008).
+     781 (2006).                                                                [13]F.   Verstraete   and   J.   I.   Cirac,   Renormalization   al-
+ [6]M. B. Hastings, An area law for one-dimensional quan-                            gorithms   for   quantum-many   body   systems   in   two
+     tum systems, J. Stat. Mech. Theory Exp. 2007, P08024                            and higher dimensions (2004), arXiv:cond-mat/0407066
+     (2007).                                                                         [cond-mat.str-el].
+ [7]J.  Eisert,  M.  Cramer,  and  M.  B.  Plenio,  Colloquium:                 [14]A. Kl¨umper, A. Schadschneider, and J. Zittartz, Matrix
+     Area laws for the entanglement entropy, Rev. Mod. Phys.                         product ground states for one-dimensional spin-1 quan-
+     82, 277 (2010).                                                                 tum antiferromagnets, EPL 24, 293–297 (1993).
+ [8]M. Zwolak and G. Vidal, Mixed-state dynamics in one-                        [15]M. Fannes, B. Nachtergaele, and R. F. Werner, Finitely
+     dimensional quantum lattice systems:  A time-dependent                          correlated  states  on  quantum  spin  chains,  Commun.
+     superoperator   renormalization   algorithm,   Phys.   Rev.                     Math. Phys. 144, 443 (1992).
+                                                                                                                                                            10
+
+[16]S.  R.  White,  Density  matrix  formulation  for  quantum                    [36]K. Hornik, Approximation capabilities of multilayer feed-
+     renormalization groups, Phys. Rev. Lett. 69, 2863 (1992).                          forward networks, Neural Netw 4, 251 (1991).
+[17]U.   Schollw¨ock,   The   density-matrix   renormalization                    [37]T. Kim and T. Adalı, Approximation by fully complex
+     group, Rev. Mod. Phys. 77, 259 (2005).                                             multilayer perceptrons, Neural Comput. 15, 1641 (2003).
+[18]R. Or´us, Tensor networks for complex quantum systems,                        [38]N.  L.  Roux  and  Y.  Bengio,  Representational  power  of
+     Nat. Rev. Phys 1, 538 (2019).                                                      restricted boltzmann machines and deep belief networks,
+[19]M. Schmitt and M. Heyl, Quantum many-body dynamics                                  Neural Comput. 20, 1631 (2008).
+     in two dimensions with artiﬁcial neural networks, Phys.                      [39]S. Bravyi, D. P. Divincenzo, R. Oliveira, and B. M. Ter-
+     Rev. Lett. 125, 100503 (2020).                                                     hal, The complexity of stoquastic local hamiltonian prob-
+[20]M. Hibat-Allah, M. Ganahl, L. E. Hayward, R. G. Melko,                              lems, Quantum Inf Comput 8, 361 (2008).
+     and J. Carrasquilla, Recurrent neural network wave func-                     [40]S.  Czischek,  M.  G¨arttner,  and  T.  Gasenzer,  Quenches
+     tions, Phys. Rev. Research 2, 023358 (2020).                                       near ising quantum criticality as a challenge for artiﬁcial
+[21]O. Sharir, Y. Levine, N. Wies, G. Carleo, and A. Shashua,                           neural networks, Phys. Rev. B 98, 024311 (2018).
+     Deep  autoregressive  models  for  the  eﬃcient  variational                 [41]X.-Q.  Sun,  T.  Nebabu,  X.  Han,  M.  O.  Flynn,  and  X.-
+     simulation of many-body quantum systems, Phys. Rev.                                L. Qi, Entanglement features of random neural network
+     Lett. 124, 020503 (2020).                                                          quantum states, Phys. Rev. B 106, 115138 (2022).
+[22]A.  Valenti,   E.  Greplova,   N.  H.  Lindner,  and  S.  D.                  [42]L.  L.  Viteritti,  F.  Ferrari,  and  F.  Becca,  Accuracy  of
+     Huber,  Correlation-enhanced  neural  networks  as  inter-                         restricted  Boltzmann  machines  for  the  one-dimensional
+     pretable variational quantum states, Phys. Rev. Research                           J1 − J2 Heisenberg model, SciPost Phys. 12, 166 (2022).
+     4, L012010 (2022).                                                           [43]D. Hofmann, G. Fabiani, J. H. Mentink, G. Carleo, and
+[23]G.  Pescia,  J.  Han,  A.  Lovato,  J.  Lu,  and  G.  Carleo,                       M. A. Sentef, Role of stochastic noise and generalization
+     Neural-network  quantum  states  for  periodic  systems  in                        error in the time propagation of neural-network quantum
+     continuous space, Phys. Rev. Research 4, 023138 (2022).                            states, SciPost Phys. 12, 165 (2022).
+[24]J.  Carrasquilla,  D.  Luo,  F.  P´erez,  A.  Milsted,  B.  K.                [44]T. Schmale, M. Reh, and M. G¨arttner, Eﬃcient quantum
+     Clark,  M.  Volkovs,  and  L.  Aolita,  Probabilistic  simula-                     state  tomography  with  convolutional  neural  networks,
+     tion of quantum circuits using a deep-learning architec-                           NPJ Quantum Inf. 8, 115 (2022).
+     ture, Phys. Rev. A 104, 032610 (2021).                                       [45]I. L. Guti´errez and C. B. Mendl, Real time evolution with
+[25]J.  Carrasquilla,  G.  Torlai,  R.  G.  Melko,  and  L.  Aolita,                    neural-network quantum states, Quantum 6, 627 (2022).
+     Reconstructing quantum states with generative models,                        [46]M. Reh, M. Schmitt, and M. G¨arttner, Time-dependent
+     Nat. Mach. Intell. 1, 155 (2019).                                                  variational principle for open quantum systems with ar-
+[26]O. Sharir, A. Shashua, and G. Carleo, Neural tensor con-                            tiﬁcial  neural  networks,  Phys.  Rev.  Lett.  127,  230501
+     tractions and the expressive power of deep neural quan-                            (2021).
+     tum states, Phys. Rev. B 106, 205136 (2022).                                 [47]D. Luo, Z. Chen, J. Carrasquilla, and B. K. Clark, Au-
+[27]D.-L. Deng, X. Li, and S. Das Sarma, Quantum entan-                                 toregressive neural network for simulating open quantum
+     glement in neural network states, Phys. Rev. X 7, 021021                           systems via a probabilistic formulation, Phys. Rev. Lett.
+     (2017).                                                                            128, 090501 (2022).
+[28]X. Gao and L.-M. Duan, Eﬃcient representation of quan-                        [48]K.  Donatella,  Z. Denis,  A.  L. Boit´e, and C. Ciuti,  Dy-
+     tum many-body states with deep neural networks, Nat.                               namics   with   autoregressive   neural   quantum   states:
+     Commun. 8, 662 (2017).                                                             application    to    critical    quench    dynamics    (2022),
+[29]G.  Passetti,  D.  Hofmann,  P.  Neitemeier,  L.  Grunwald,                         arXiv:2209.03241 [quant-ph].
+     M.  A.  Sentef,  and  D.  M.  Kennes,  Can  neural  quan-                    [49]F.  Vicentini,  R.  Rossi,  and  G.  Carleo,  Positive-deﬁnite
+     tum  states  learn  volume-law  ground  states?    (2022),                         parametrization of mixed quantum states with deep neu-
+     arXiv:2212.02204 [quant-ph].                                                       ral networks (2022), arXiv:2206.13488 [quant-ph].
+[30]Y. Nomura, Helping restricted boltzmann machines with                         [50]S.  Hochreiter  and  J.  Schmidhuber,  Long  Short-Term
+     quantum-state representation by restoring symmetry, J.                             Memory, Neural Comput. 9, 1735 (1997).
+     Phys. Condens. Matter 33, 174003 (2021).                                     [51]J. Chung, C. Gulcehre, K. Cho, and Y. Bengio, Empiri-
+[31]M.  Bukov,  M.  Schmitt,  and  M.  Dupont,  Learning  the                           cal evaluation of gated recurrent neural networks on se-
+     ground state of a non-stoquastic quantum Hamiltonian                               quence modeling (2014), arXiv:1412.3555 [cs.NE].
+     in a rugged neural network landscape, SciPost Phys. 10,                      [52]M. M. Bronstein, J. Bruna, T. Cohen, and P. Veliˇckovi´c,
+     147 (2021).                                                                        Geometric   deep   learning:     Grids,    groups,    graphs,
+[32]K. Choo,  T. Neupert, and G. Carleo, Two-dimensional                                geodesics, and gauges, arXiv:2104.13478  (2021).
+     frustrated  J1−J2  model  studied  with  neural  network                     [53]H.  W. J.  Bl¨ote and  Y. Deng,  Cluster monte carlo  sim-
+     quantum states, Phys. Rev. B 100, 125124 (2019).                                   ulation of the transverse ising model, Phys. Rev. E 66,
+[33]M.   Van   Den   Nest,   Simulating   quantum   computers                           066110 (2002).
+     with probabilistic methods, Quantum Info. Comput. 11,                        [54]Y.  Nomura  and  M.  Imada,  Dirac-type  nodal  spin  liq-
+     784–812 (2011).                                                                    uid revealed by reﬁned quantum many-body solver using
+[34]S. Sorella, M. Casula, and D. Rocca, Weak binding be-                               neural-network wave function, correlation ratio, and level
+     tween  two  aromatic  rings:   Feeling  the  van  der  waals                       spectroscopy, Phys. Rev. X 11, 031034 (2021).
+     attraction  by  quantum  monte  carlo  methods,  J.  Chem.                   [55]X. Liang, W.-Y. Liu, P.-Z. Lin, G.-C. Guo, Y.-S. Zhang,
+     Phys. 127, 014105 (2007).                                                          and  L.  He,  Solving  frustrated  quantum  many-particle
+[35]G. Cybenko, Approximation by superpositions of a sig-                               models  with  convolutional  neural  networks,  Phys.  Rev.
+     moidal  function,  Math.  Control.  Signals,  Syst.  2,  303                       B 98, 104426 (2018).
+     (1989).                                                                      [56]F.   Ferrari,   F.   Becca,   and   J.   Carrasquilla,   Neural
+                                                                                        gutzwiller-projected  variational  wave  functions,  Phys.
+                                                                                                                                                           11
+
+     Rev. B 100, 125131 (2019).                                                   [60]M. Schmitt and M. Reh, jvmc:  Versatile and performant
+[57]T. Westerhout, N. Astrakhantsev, K. S. Tikhonov, M. I.                             variational monte carlo leveraging automated diﬀerenti-
+     Katsnelson, and A. A. Bagrov, Generalization properties                           ation and gpu acceleration, SciPost Phys. Codebases , 2
+     of neural network approximations to frustrated magnet                             (2022).
+     ground states, Nat. Commun. 11, 1593 (2020).                                 [61]J¨ulich Supercomputing Centre, JUWELS: Modular Tier-
+[58]A. Szab´o and C. Castelnovo, Neural network wave func-                             0/1 Supercomputer at the J¨ulich Supercomputing Cen-
+     tions  and  the  sign  problem,  Phys.  Rev.  Res. 2,  033075                     tre, J. Large-Scale Res. Facilities 5 (2019).
+     (2020).                                                                      [62]G.  E.  Hinton,  A  practical  guide  to  training  restricted
+[59]C.  Roth,  A.  Szab´o,  and  A.  MacDonald,  High-accuracy                         boltzmann  machines,  in   Neural  Networks:    Tricks  of
+     variational monte carlo for frustrated magnets with deep                          the  Trade:    Second  Edition,  edited  by  G.  Montavon,
+     neural networks (2022), arXiv:2211.07749 [cond-mat.str-                           G. B. Orr, and K.-R. M¨uller (Springer Berlin Heidelberg,
+     el].                                                                              Berlin, Heidelberg, 2012) pp. 599–619.

@@ -1,0 +1,1033 @@
+                                         High-precision ground state parameters
+            of the two-dimensional spin-1/2 Heisenberg model on the square lattice
+
+                                                              Anders  W.  Sandvik
+           Department of Physics, Boston University, 590 Commonwealth Avenue, Boston, Massachusetts 02215 and
+                   School  of  Physical  and  Mathematical  Sciences,  Nanyang  Technological  University,  Singapore
+                                                              (Dated:  April 16, 2026)
+                   Motivated by the need for high-precision benchmark results for basic quantum many-body models,
+                several ground state properties of the square-latticeS= 1/2 Heisenberg antiferromagnet are com-
+                puted (the energy, order parameter, spin stiffness, spinwave velocity, long-wavelength susceptibility,
+                and staggered susceptibility) using extensive quantum Monte Carlo simulations with the stochastic
+                series expansion method.  Moderately sized lattices are studied at temperaturesTsufficiently low
+                to realize theT→0 limit, with significantly reduced statistical errors relative to previous works.
+                Results for periodicL×Llattices withL∈[6,96] are tabulated versusLand extrapolations to
+                infinite system size are carried out. The relative statistical errors of the finite-size energies are below
+                10−7  .  The extrapolated ground state energy density ise   0 =−0.669441857(7), where the number
+                within  parentheses  is  the  statistical  error  (one  standard  deviation)  of  the  preceding  digit.   This
+                value represents an improvement in precision of three orders of magnitude over the previously best
+                result.  The leading and subleading finite-size corrections toe    0  are in full quantitative agreement
+                with  predictions  from  chiral  perturbation  theory,  thus  further  supporting  the  soundness  of  both
+                the extrapolations and the theory.  The extrapolated sublattice magnetization ism   s = 0.307447(2),
+                which agrees well with previous estimates but with a much smaller statistical error.  The coefficient
+                of the linear inL   −1   correction tom    2s agrees with the value from chiral perturbation theory and the
+                presence of a factor lnγ(L) in the second-order correction is also confirmed, with the previously not
+                known value of the exponent beingγ= 0.82(4).  The finite-size corrections to the staggered suscep-
+                tibility point to logarithmic corrections also in this quantity.  To facilitate benchmarking of methods
+                for which periodic boundary conditions are challenging, results for systems with open and cylindrical
+                boundaries are also listed and their spatially inhomogeneous order parameters are analyzed.
+
+
+                     I.    INTRODUCTION                                        ory  and  time)  with  all  these  methods.   The  ability  to
+                                                                               obtain correct results can then be fairly judged only by
+                                                                               comparing with exact solutions or QMC simulations of
+   In light of ongoing efforts to develop better computa-                      sign-free  models,  often  with  the  2D  Heisenberg  model
+tional methods for strongly interacting quantum many-                          as a first non-trivial test beyond DMRG accessible one-
+body systems, accurate benchmark results for key models                        dimensional systems [21–27].
+are called for.  While quantum Monte Carlo (QMC) sim-                             The primary motivation for the present work is to pro-
+ulations are limited to models for which the sign problem                      vide  improved  QMC  benchmark  results  for  the  ground
+[1–3] can be avoided, these are the only numerically (sta-                     state of the standard 2DS= 1/2 Heisenberg antiferro-
+tistically) exact methods that can reach arbitrarily low                       magnet, described by the Hamiltonian
+temperaturesTfor  large  systems  in  spatial  dimension-
+ality higher than one.  In particular, with the stochastic                                               H=   X      Si ·S j,                          (1)
+series expansion (SSE) QMC method [4–6] with loop up-                                                           ⟨ij⟩
+dates [7] and related ground-state projection techniques
+[8], two-dimensional (2D)S= 1/2 quantum spin models                            where  the coupling  has been  set  to unity  and⟨ij⟩rep-
+have  been  studied  in  theT→0  limit  on  lattices  with                     resents nearest-neighbor spins on the square lattice with
+linear sizeLup to hundreds of lattice constants [9, 10]                        L×Lsites and evenL.  Most of the results will be for pe-
+or even larger in some cases [11].  These system sizes far                     riodic boundary conditions but some quantities obtained
+exceed the current limitations of more versatile ground                        with open and cylindrical boundaries will also be listed,
+state  techniques,  such  as  the  density  matrix  renormal-                  to facilitate benchmarking of methods for which calcula-
+ization  (DMRG)  method  [12–14],  a  variety  of  methods                     tions with periodic boundaries are challenging.  In addi-
+based on tensor products (TPs) [15–17] (which also can                         tion to lists of observables versus the lattice size,L→ ∞
+be  formulated  for  infinite  lattices,  where  there  are  still             extrapolated values will also be presented.  Detailed com-
+other convergence issues [18]), and, more recently, neural                     parisons will be made with finite-size corrections previ-
+networks (NNs) [19, 20].  These emerging approaches es-                        ously predicted using chiral perturbation theory [28, 29]
+sentially produce sophisticated variational states, where                      in  the  case  of  periodicL×Llattices.   For  the  other
+the number of optimized parameters in principle can be                         boundary conditions, the spatially inhomogeneous order
+taken  sufficiently  large  to  converge  to  the  true  ground                parameter will be analyzed.
+state.   In  practice,  there  are  still  formidable  challenges                 The Heisenberg model has been studied in many past
+with the scaling of the computational effort (both mem-                        works with a variety of methods and the nature of the
+                                                                                                                                                      2
+
+N´eel  ordered  ground  state  is  now  well  established  [30–               QMC  results  to  forms  predicted  by  chiral  perturbation
+46].    Over  time,  the  statistical  precision  achieved  in                theory [45]. Here the new results forL≤96 are combined
+QMC simulations has increased to a level necessary for                        with the previousm                 2s(L) results forL= 128,192 and 256
+detailed  tests  [8,  42–46]  of  field-theoretical  descriptions             [8] and extrapolated using a fit including the predicted
+[28,  29,  36,  47,  48]  of  the  N´eel  state.    However,  TN              log correction to theL     −2   term (the leading correction be-
+and NN methods are now in some cases reaching lower                           ing linear inL   −1  ).  This form without any higher-order
+estimated  variational  energy  errors  for  periodic  lattices               corrections fits the data forL≥12 extremely well, per-
+(which  are  difficult  to  handle  with  traditional  DMRG                   haps suggesting that there is noL    −3   correction.  All data
+methods) than the statistical errors of the best published                    forL≥6 can be fitted with  an addedL                  −5    correction,
+QMC benchmark results [22].  While these methods ulti-                        which leads to the best extrapolated sublattice magneti-
+mately target models with interactions beyond the sign-                       zation,m             s  = 0.307447(2);  by far the most precise esti-
+free bipartite Heisenberg exchange, in particular geomet-                     mate to date.
+rically frustrated systems,  it will still be useful to have                     The  rest  of  the  paper  is  organized  as  follows:   In
+improved QMC data for the plain 2D Heisenberg model.                          Sec. II, after defining the relevant physical observables,
+  A second motivation for improving on previous results                       the ground-state convergence versus the inverse temper-
+is the continued interest in testing universal scaling be-                    ature is discussed and tested.  Converged results for dif-
+haviors related to the breaking of the SO(3) spin-rotation                    ferent  system  sizes  are  tabulated.   The  observables  are
+symmetry, e.g., as predicted in great detail by chiral per-                   extrapolated to the thermodynamic limit in Sec. III and
+turbation  theory.   The  finite-size  values  of  the  ground                the validity of the forms of the finite-size corrections pre-
+state parameters studied here should be polynomials in                        dicted  by  chiral  perturbation  theory  is  tested.   Results
+the inverse system size [28, 29, 47, 48] with coefficients                    for  lattices  with  open  and  cylindrical  boundary  condi-
+that themselves depend on the infinite-size parameters.                       tions are listed in Sec. IV and the edge distortion of the
+In the case of the sublattice magnetization, a logarithmic                    order parameter is also analyzed.  Sec. V concludes with
+(log) correction has also been pointed out [47].  The pre-                    a brief summary and discussion.
+dicted coefficients of both leading and subleading correc-
+tions are successfully tested here to significantly higher                                     II.    FINITE-SIZE RESULTS
+precision than previously,  including the aforementioned
+log correction for which a previously not known exponent
+is determined.                                                                   The ground state properties considered here were com-
+  The  QMC  results  reported  here  were  obtained  with                     puted  within  the  efficient  SSE  operator-loop  approach
+the SSE method at sufficiently low temperatures to real-                      [4, 6], where the partition function is expressed as
+ize theT→0 limit.  The goal is not to reach the largest                                                            ∞X   (−β)       n
+possible system sizes but to consider small to moderate                                    Z= Tr{e     −βH  }=            n!      Tr{H    n},          (2)
+lattices and reduce the statistical errors significantly with                                                     n=0
+respect to those in Refs. [44] and [8], which have become                     at inverse temperatureβ.  Details of the method and es-
+standard references for the ground state energy and spin                      timators of various observables are described in detail in
+correlations of the 2D Heisenberg model.  Other quanti-                       the existing literature [6, 44], and neither algorithms nor
+ties  computed  here  include  the  spin  stiffness,  the  long-              technical implementations will be significantly discussed
+wavelength susceptibility, the spinwave velocity, and the                     here.  The SSE method itself is formally exact and the
+staggered susceptibility.  These quantities are known to                      results are only affected by standard statistical sampling
+converge slower than the energy in TP and NN methods                          errors, characterized in the results to be presented here
+and are in some cases difficult to calculate.  They should                    as  one  standard  deviation  of  the  mean.   To  obtain  the
+nevertheless also be subjected to rigorous benchmarking                       ground  state  parameters  of  interest,  the  limitT→0
+alongside variational energy estimates.                                       also must be carefully taken.  Definitions of the physical
+  The  largest  system  size  included  in  the  SSE  calcula-                observables  will  be  given  first  in  Sec.  II A,  followed  by
+tions in Ref. [44] wasL= 16, which is here extended up                        T→0 convergence checks in Sec. II B and finite-lattice
+toL= 96.  The error reduction in some observables, in                         results in Sec. II C.
+particular the energy, is by orders of magnitude for both
+the finite-size data andL→ ∞extrapolated values.  The
+extrapolated energy when constraining fits by chiral per-                                               A.    Definitions
+turbation theory input (after testing the consistency of
+those predictions) ise   0 =−0.669441857(7) while the pre-                       The  internal  energy  density  [with  a  constant  sub-
+viously best estimate wase    0 =−0.669437(5).  In the case                   tracted fromHin Eq. (2) to make the expansion positive
+of the order parameter, lattice sizes up toL= 256 had                         definite] is obtained in SSE simulations as the mean of
+been  previously  studied  using  a  ground  state  projector                 the expansion powernin Eq. (2),
+method in the valence-bond basis [8], with the extrapo-
+lated resultm          s = 0.30743(1).  An identical result was ob-                                      e=  ⟨H⟩
+tained by fitting both finite-size and finite-temperature                                                      N   = ⟨n⟩βN ,                          (3)
+                                                                                                                                                             3
+
+whereN=L                   2  is  the  system  volume.   Not  being  ex-             The corresponding staggered susceptibility is given by
+plicitly  dependent  on  the  evolved  spin  configurations,                      the Kubo integral
+this  is  manifestly  a  spin-rotationally  averaged  estima-                                                  Z  β
+tor  [44].   The  width  of  the  distribution  ofnscales  as                                      χs =  1
+⟨n⟩     1/2     forT→0,  which  together  with  the  above  SSE                                            N     0   dτ⟨M      zs (τ)M      zs (0)⟩,               (6)
+form ofeimplies that even a single instance ofngives                              whereM           zs (τ) is the imaginary-time evolved total sublat-
+an  energy  estimate  that  is  good  to  within  an  error  of                   tice magnetization. This space-time integrated correlator
+order only (βN)    −1/2     .  ForMindependent sampled SSE                        can also in principle can be computed with a loop estima-
+configurations,  the statistical error is therefore of order                      tor [43] but here a different approach was taken, where
+(βNM)     −1/2     ,  i.e.,  for  increasingβandNless  sampling                   an exact expression for the integral is evaluated exactly
+is required to achieve a specific statistical precision.  For                     for  each  SSE  configuration  [6,  49]  but  is  not  expressed
+desired precision (standard deviation of the mean)ϵ, the                          using  loop  sizes.   Though  the  loop  estimator  should  in
+number of independent measurements must be of order                               principle be more efficient, the results obtained here are
+(ϵ  2βN)   −1  .   Assuming  noNandβdependence  of  the                           still of high statistical quality.
+autocorrelation  time  ofn,  the  computational  effort  for                         The staggered magnetization corresponds to wavenum-
+generating an independent sample ofnscales asβN(in                                berq= (π, π) and Eq. (6) generalizes to arbitraryq;
+terms of the number of operations performed, disregard-                                                     Z  β
+ing computer technical aspects such as worse cache mem-
+ory  performance  for  increasing  system  size),  thus,  the                                χ(q) =        1N
+effort to achieve a desired precision ofewould be inde-                                                       0   dτ⟨M      z(−q, τ)M            z(q,0)⟩,        (7)
+pendent ofβandN.  The SSE autocorrelation time ofn                                whereM           z(q, τ) is the Fourier transform of the spins at
+is indeed short and shows almost no dependence onβand                             fixed imaginary time (here not normalized byN), i.e.,
+N, and the above scaling behavior ofeseems to be sat-                                                             NX
+isfied  in  practice.   The  other  size-normalized  quantities                                  Mz(q, τ) =           e−r   i·q eτHSzi e−τH   ,            (8)
+listed below typically exhibit increasing autocorrelation
+times  withN,  and  in  some  cases  withβ,  which  is  re-                                                      i=1
+flected in increasing relative statistical errors withLin                         withr        i = (x  i, yi).  Forq= 0,M          z(q, τ) is the conserved
+the results to be presented below.  The total lengths of                          uniform  magnetization  and  the  Kubo  integral  then  re-
+the SSE simulation runs were adapted to achieve a rel-                            duces to the classical form of the uniform susceptibility
+ative error ine(L) of roughly 10        −7    for each system size                                                        NX      !2
+considered.
+   The following is just a concise list of the other quan-                                               χu =   1NT           Szi     ,                     (9)
+tities  considered,  with  only  minimal  comments  on  how                                                              i=1
+they are estimated within the SSE method.  For further                            which  vanishes  identically  in  the  singlet  ground  state.
+technical details, see Refs. [44] and [6].                                        The long-wavelength susceptibility is considered here by
+   The order parameter density is the staggered magneti-                          usingq           1  =  (2π/L,0)  orq               1  =  (0,2π/L)  in  Eq.  (7).   In
+zation, which can be taken as a diagonal operator in the                          the gapless symmetry broken state, the transverse com-
+SSE simulations,                                                                  ponentχ ⊥ of this susceptibility is a key ground state pa-
+
+                                  NX                                              rameter, which can be obtained in the large-Llimit from
+                     mzs =  1        (−1)     xi+y   iSzi ,                   (4) χ(q     1) by including a rotational factor 3/2 (reflecting the
+                             N   i=1                                              fact  that  the  longitudinal  component  should  vanish  as
+                                                                                  T→0 on account of the conserved magnetization and
+where  (x  i, yi)  are  the  integer  lattice  coordinates.   The                 gapped longitudinal fluctuations):
+corresponding extensive quantity lacking theN     −1    factor                                                 χ⊥ = 3
+will also be referred to below;M     zs  =Nm   zs.  The defini-                                                        2χ(q     1).                          (10)
+tion,                                                                                The spin stiffness for systems defined on periodic lat-
+
+                           m2s ≡3⟨(m         zs)2⟩,                          (5)  tices is computed using the total spin current (winding
+                                                                                  number) fluctuations [44, 50] as
+includes a factor 3 to account for spin-rotational averag-
+ing, so that the full symmetry-broken value is obtained                                                 ρs =    34βN  ⟨W  2x +W    2y ⟩,                   (11)
+in the thermodynamic limit.  The expectation value was
+computed  with  an  efficient  loop  estimator  [6,  7,  42],                     whereW           a,a∈ {x, y}, is the current along thealattice
+which,  however,  was  not  fully  averaged  over  imaginary                      direction integrated over imaginary time (which is done
+time in order to reduce the computational effort of these                         exactly with the SSE estimator),
+measurements—given that one of the main aims here is                                                                Z  β
+the obtain high-precision results for the energy, the esti-                                                Wa =
+mator of which demands no computational effort.                                                                      0   dτJa(τ),                      (12)
+                                                                                                                                                           4
+
+                                                                                 pedagogical derivation of the numerator in Eq. (14) can
+                                                                                 be found in Ref. [6].
+                                                                                    TheL      −2    scaling of the rotor excitations immediately
+                                                                                 implies that full convergence to the ground state requires
+                                                                                 the  inverse  temperature  to  grow  withLasβ∝L                       2.
+                                                                                 In  practice,  convergence  can  be  tested  by  monitoring
+                                                                                 computed  expectation  values  versusβ.   It  is  then  use-
+                                                                                 ful to pay particular attention to quantities that are ex-
+                                                                                 pected to converge slowly, e.g., the staggered susceptibil-
+                                                                                 ity Eq. (6), where the integral overτis of a very slowly
+                                                                                 decaying  correlator  andβhas  to  be  large  not  only  to
+                                                                                 converge equal-time properties but also to accommodate
+                                                                                 sufficiently  largeτfor  the  correlations  to  vanish  expo-
+                                                                                 nentially, ultimately as e−E(S)τ          withS= 1 in Eq. (14).
+FIG. 1. Uniform susceptibility versus the system size for three                     Another  useful  quantity  is  the  uniform  susceptibility
+values of the aspect ratioβ/L.  The dashed lines show predic-                    Eq. (9), which vanishes identically in the singlet ground
+tions based on a quantum rotor tower with the infinite-size                      state but is non-zero at anyT >0, ultimately on account
+value of theT= 0 susceptibility,χ          u(∞) = 0.04379, while the             of theS >0 rotor states at very lowT.  Fig. 1 shows the
+solid  lines  show  results  withχ        u(L)  given  by  a  fourth-order       susceptibility versus the system size whenβis scaled only
+polynomial fitted to the finite-size data in Table I.                            linearly withLasβ=aL, but with rather large factors
+                                                                                 a= 8,  32,  and 64.  The results are compared with the
+                                                                                 prediction from the rotor spectrum Eq. (14);
+which is an integer multiple (the winding number) of the
+system lengthLin a periodic system.  Eq. (11) also con-                                                         LX                  SX
+tains a factor 3/2 to account for the difference between                                       χu(T) =     1Z       e−E(S)/T             m2,          (15)
+rotationally invariant finite systems and the symmetry-                                                        S=1               m=−S
+broken state in the thermodynamic limit.                                         where the partition function is
+   The spinwave velocity can be obtained from the stiff-
+ness  and  the  transverse  susceptibility  using  a  formula                                     Z= 1 +  X(2S+ 1)e     −E(S)/T         .             (16)
+originating from the hydrodynamic description [31] of the
+long-wavelength fluctuations of the N´eel state,                                                               S
+                                    r   ρs                                       Here the upper bound forSshould be of orderL              1/2   , re-
+                              c=       χ⊥ ,                             (13)     flecting the scale at which the rotor energy is comparable
+                                                                                 to the lowest spinwave energy.  However, at the low tem-
+which should be exact when theL→ ∞limit is taken of                              peratures of interest here the expectation value is com-
+ρs andχ(q            1).  Finite-size resultsc(L) based on the same              pletely dominated byS≪L          1/2    and the exact value of the
+formula will also be presented here.                                             cutoff is not important (it is taken all the way toS=L
+                                                                                 in the calculations here).  The value of the perpendicular
+                                                                                 susceptibility in Eq. (14) is here taken from the infinite-
+        B.    Finite-temperature effects andT→0                                  size  polynomial  extrapolation  (discussed  in  Sec.  III)  of
+                             convergence                                         the data in Table I,  which results in the dashed curves
+                                                                                 in Fig. 1.  Though there are clearly deviations, the pre-
+   In  order  to  judge  remaining  effects  of  finite  temper-                 dictions approach the SSE results asLincreases.  To ac-
+ature  in  the  SSE  simulations,  the  tower  of  Anderson                      count for some of the finite-size corrections,χ                 ⊥ can alter-
+quantum rotor excitations [30] can be analyzed.  For the                         natively be treated as a size dependent quantityχ  ⊥(L),
+2D system, these excitations with total spinS >0 (the                            which can be evaluated for arbitraryLusing the same fit-
+ground state havingS= 0) should have the exact asymp-                            ted polynomial as used for theL→ ∞extrapolation.  As
+totic form                                                                       shown with the solid curves in Fig. 1, the deviations when
+                                                                                 usingχ        ⊥(L) are even smaller and leave little doubt that
+                          E(S) =       S(S+ 1)                                   the  rotor  tower  provides  a  good  (asymptotically  exact)
+                                      2χ  ⊥L2                          (14)      description for temperatures below the lowest spinwave
+                                                                                 excitations.  The deviations in Fig. 1 from the predicted
+forSup to orderL                   1/2    and largeL(and withL                      2 →L    dcurves can be explained by finite-size corrections to the
+for ad-dimensional system). These rotor states fall below                        rotor spectrum.  These corrections have been studied in
+the lowest spinwave excitation (the energy of which is of                        previous works [5, 6, 51, 52].
+orderL        −1  ) and become degenerate with the ground state                     From the partition function Eq. (16) we can also com-
+asL→ ∞,  thus allowing for the spontaneous breaking                              pute the probabilityP  0 of the system being in the ground
+of the SO(3) symmetry of the N´eel order parameter.  A                           state.   Given  that  the  weight  of  the  ground  state  is  1
+                                                                                                                                                           5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  2.   Probability  vs  the  lattice  size  of  the  system  being           FIG.  3.   Temperature  dependentq→0  susceptibility  com-
+thermally excited (P  0 being the ground-state probability) un-                  puted in two different ways in simulations withβ= 2L              1/2   ;
+der the valid assumption that only the rotor states contribute.                  withq= 0 inχ              u andq= 2π/Linχ                     1.  The dashed line is the
+The results forβ= 32 (black), 64 (blue) and 128 (red) were                       T= 0 value obtained by extrapolating theχ      ⊥ data in Table
+computed using the interpolatedχ         ⊥(L) function in the rotor              I to the thermodynamic limit and adjusted for the factor 3/2
+spectrum Eq. (14), the same as used for the solid curves in                      in Eq. (7).  The black solid line is a linear fit to theχ      u data.
+Fig. 1.  The range ofL∈[6,96] corresponds to that for which                      The other dashed lines are guides to the eye.
+SSE results are presented here.
+
+                                                                                 inL   −1  —the predicted form of the finite-size corrections
+in  Eq.  (16),  we  simply  haveP  0  =Z   −1  .    The  corre-                  (in one case with a log correction) [28, 29, 47] that will
+sponding probability 1−P      0 of the system being excited                      be tested as one of the aims of this work.
+into the rotor tower is graphed versus the system size at                           It  is  worth  pointing  out  that  the  limitsL→ ∞and
+β/L= 32,64,  and 128 in Fig. 2.   Convergence of com-                            T→0 can be taken in either order for most quantities
+puted observables were confirmed explicitly by compar-                           that do not diverge whenT→0.  A prominent exception
+ing results at differentβvalues, but the results in Fig. 2                       is the uniform susceptibility, Eq. (9), on account of the
+are also useful for judging whether results of the two dif-                      vanishing conserved magnetization asT→0 for anyL.
+ferent  calculations  can  be  averaged  and  still  effectively                 However,  the  uniform  magnetization  can  also  be  taken
+maintain  theT=  0  limit.   Most  physical  observables                         as the limitq→0                +, in practice withq         1 = 2π/L, of the
+change very little, in a relative sense, between the ground                      general susceptibility in Eq. (7),  which does not vanish
+state and a low-lying excited state, e.g., the energy den-                       whenT→0  for  anyL.   The  limit  can  then  safely  be
+sity of a rotor state is only of orderN        −2   above the ground             taken withT→0 data versusL.
+state.  Therefore, the relative finite-temperature correc-                          Though  we  will  here  not  use  alternative  approaches
+tions  in  such  observables  will  be  orders  of  magnitude                    to taking the limitL→ ∞first and thenT→0,  it is
+smaller than the excitation probabilities in Fig. 2.                             interesting to note that the two limits can also in prin-
+   It should be noted here that simulations withβlarger                          ciple  be  taken  simultaneously  as  a  function  of  a  single
+than what is strictly needed to obtainT→0 results is                             parameter, by considering a size dependent temperature
+not a waste of computer resources, because the amount                            T(L), adapted such that a sufficient fraction of the quan-
+of  statistical  data  contained  in  the  SSE  configurations                   tum rotor states fall below this temperature.  A natural
+scales linearly withβ, i.e., in the same way as the nomi-                        choice in terms of the inverse temperature isβ=aL         1/2   ,
+nal computational effort of the simulations—the example                          withaan essentially arbitrary constant (with value only
+of the energy was already discussed explicitly at the be-                        relevant as far as it determines the rate of convergence
+ginning  of  Sec.  II.   An  excessively  largeβcan  still  be                   to  theT→0  limit).   Fig.  3  shows  results  versus  the
+detrimental  in  practice  because  of  memory  limitations                      temperature for bothχ      u  andχ       1 =χ(q        1) obtained with
+and poor cache performance.  The calculations reported                           β= 2L     1/2   .  Here the equality of the two susceptibilities
+here were mostly limited toβ/L≤64 and system sizes                               in the limitT→0 can be observed clearly.
+L≤96, with some limited test results generated also at
+β/L= 128 forL= 80,88, and 96.
+   In this work theT→0 limit is effectively taken first                                          C.    Tabulated numerical data
+for each system sizeL,  with results presented below in
+Sec.  II C.    Such  ground  state  data  will  be  useful  for                     All the computed finite-size data for the quantities de-
+benchmarking other methods, as discussed in Sec. I.  The                         fined  in  Sec.  II A  are  listed  in  Table  I.   The  length  of
+L→ ∞limit of the various observables will be considered                          the  SSE  runs  generating  these  results  were  adapted  to
+in Sec. III by fitting the finite-Ldata sets to polynomials                      achieve a statistical error less than 3×10    −8    in the en-
+                                                                                                                                                       6
+
+
+TABLE I. Results for different system sizes computed at inverse temperatureβ/L= 64 forL >30 and averaged overβ/L= 32
+andβ/L= 64 simulations forL≤30.  The digits within parentheses indicate the statistical error (one standard deviation
+rounded to a single digit) of the preceding digit of the mean.
+                  L         e0                  ρs                 χ⊥                c                m2s                χs/L2
+                   6    -0.67887215(2)       0.2375897(1)      0.0936076(1)       1.593155(1)      0.2098368(2)      0.01324669(3)
+                   8    -0.67349005(2)       0.2205407(1)      0.0854012(1)       1.606987(1)      0.1778419(2)      0.01038140(3)
+                  10    -0.67155266(2)       0.2112378(1)      0.0806085(2)       1.618809(2)      0.1593710(2)      0.00883242(4)
+                  12    -0.67068192(2)       0.2054239(1)      0.0775450(2)       1.627604(2)      0.1474495(3)      0.00788157(4)
+                  14    -0.67023225(2)       0.2014610(2)      0.0754479(3)       1.634075(3)      0.1391544(4)      0.00724419(5)
+                  16    -0.66997660(2)       0.1985904(2)      0.0739352(3)       1.638904(4)      0.1330657(4)      0.00678935(6)
+                  18    -0.66982043(2)       0.1964164(3)      0.0728004(4)       1.642562(5)      0.1284152(5)      0.00644930(7)
+                  20    -0.66971967(2)       0.1947161(3)      0.0719222(5)       1.645393(5)      0.1247499(6)      0.00618556(7)
+                  22    -0.66965176(2)       0.1933480(4)      0.0712254(5)       1.647603(7)      0.1217905(7)      0.00597567(9)
+                  24    -0.66960434(2)       0.1922247(4)      0.0706606(6)       1.649361(7)      0.1193517(7)      0.00580444(9)
+                  26    -0.66957017(3)       0.1912848(6)      0.0701934(8)       1.65079(1)       0.1173082(9)      0.0056624(1)
+                  28    -0.66954496(3)       0.1904871(7)      0.0698049(9)       1.65192(2)       0.115573(1)       0.0055424(1)
+                  30    -0.66952595(3)       0.1898036(8)      0.069472(1)        1.65290(2)       0.114080(1)       0.0054402(2)
+                  32    -0.66951133(3)       0.1892071(9)      0.069188(1)        1.65369(2)       0.112781(1)       0.0053517(2)
+                  36    -0.66949091(3)       0.188225(1)       0.068725(2)        1.65494(2)       0.110638(2)       0.0052065(2)
+                  40    -0.66947776(3)       0.187448(2)       0.068368(2)        1.65583(2)       0.108941(2)       0.0050922(2)
+                  44    -0.66946889(3)       0.186819(2)       0.068083(2)        1.65650(2)       0.107570(2)       0.0050002(3)
+                  48    -0.66946274(3)       0.186297(2)       0.067855(2)        1.65696(3)       0.106426(3)       0.0049242(3)
+                  52    -0.66945833(3)       0.185860(2)       0.067661(2)        1.65738(3)       0.105474(3)       0.0048611(3)
+                  56    -0.66945502(3)       0.185483(2)       0.067501(3)        1.65767(4)       0.104660(3)       0.0048066(3)
+                  60    -0.66945260(3)       0.185158(3)       0.067367(3)        1.65786(4)       0.103955(3)       0.0047602(4)
+                  64    -0.66945072(3)       0.184876(3)       0.067245(3)        1.65810(4)       0.103342(4)       0.0047199(4)
+                  72    -0.66944815(3)       0.184410(4)       0.067052(4)        1.65839(5)       0.102330(4)       0.0046532(5)
+                  80    -0.66944645(3)       0.184040(5)       0.066905(4)        1.65854(6)       0.101527(5)       0.0046004(5)
+                  88    -0.66944530(3)       0.183736(6)       0.066774(5)        1.65880(7)       0.100864(5)       0.0045559(6)
+                  96    -0.66944454(3)       0.183480(7)       0.066674(6)        1.65888(8)       0.100334(6)       0.0045202(7)
+
+
+ergy (rounded to one digit in the table).  The other quan-                     dation of theβ/L= 64 data being fully converged within
+tities have larger errors. In some cases similar errors were                   the error bars.
+achieved in previous studies, e.g., in Ref. [8] the staggered                     In  the  case  ofχ   s,  results  atβ/L=  32  and  64  agree
+magnetization was computed using a valence-bond pro-                           within statistical errors only forL≤60.  For larger sys-
+jector QMC method for sizes up toL= 256, with errors                           tems the differences are still minor, e.g., for the largest
+only somewhat exceeding those in Table I for the larger                        system  (and  deviation)L=  96  theβ/L=  64  value  is
+common  system  sizes.   The  results  of  the  two  calcula-                  about 2% larger.  Given this small difference, the asymp-
+tions  agree  perfectly  within  statistical  errors.   None  of               totically expected exponential convergence withβ,  and
+the quantities in Table I have previously been available                       the size dependence of the ground state probabilities in
+at the level of statistical precision achieved here.  They                     Fig.  2,  theβ/L=  64  values  should  be  fully  converged
+will hopefully be useful for benchmarking beyond just the                      within statistical errors for allL <80.  Limited results
+energy.                                                                        (with somewhat lower statistical precision) atβ/L= 128
+  The results forL≤30 represent averages over simula-                          forL=  80,88,  and  96  also  confirm  close  convergence.
+tions atβ/L= 32 and 64.  The averaging is validated by                         ForL= 96,χ            s = 0.0045216(13), which agrees within the
+the fact that the results agree to within statistical errors                   statistical errors with the value in Table I.  The remain-
+as  well  as  the  behaviors  of  the  excitation  probabilities               ing finite-Tdeviations in Table I should therefore be at
+graphed  in  Fig.  2.   There  is  good  statistical  agreement                most a few error bars forL= 96 and insignificant for the
+between most of the data at the twoβvalues also for the                        smaller sizes.
+larger systems,  with the exception of staggered suscep-                          ForL=  6,  the  ground  state  energy  to  nine  signifi-
+tibilityχ  s,  which  will  be  further  discussed  below.   The               cant digits ise   0 = 0.678872150 from Lanczos exact diag-
+good agreement for all other quantities serves as a vali-                      onalization and the staggered magnetization squared is
+                                                                                                                                                        7
+
+m2s  = 0.209837151.  The corresponding results in Table                        susceptibility [28, 29, 47]:
+I are statistically fully consistent with these values, thus                                                             1
+demonstrating the unbiased nature of the SSE method.                                  e0(L)  =e         0 − Ac
+ForL= 10,  a very precise SSE result was recently ob-                                                     L3  +    14χ  ⊥L4 +. . . ,                (17a)
+tained,e              0 =−0.67155267(5) [22], where the relative error              m2s(L)  =m         2s +   Bm2s   1            )
+as small as 10−7   was needed in order to test an even more                                                √ρsχ⊥     L + µln   γ(L/ξL2        +. . . ,(17b)
+precise  variational  NN  results;e               0  =−0.67155260(3).                χs(L)              2χ  ⊥          1          1
+These results also agree perfectly with theL= 10 energy                                                                                 +. . . ,   (17c)
+in Table I, where the statistical error is even smaller.                               L2     =m    2s      3    + Cc  L + Cρ2   L2
+   Recently an approach based on recurrent NNs was used                         where the symbols without (L) refer to the infinite-size
+to compute energies forLup to 32, with claimed errors in                       values and the constantsA,B, andCare
+the seventh decimal place [27].  In principle this method
+should be variational, but the reported energies extrapo-                         A= 1.437745,   B= 0.6207465,   C= 0.1918021.  (18)
+lated to zero variance are in some cases below the values
+in Table I, including theL= 10 system for which the ear-                       Note that the second-order term in Eq. (17b) includes a
+lier  high-precision  NN  result  quoted  above  agrees  with                  multiplicative  log  correction  with  unknown  prefactorµ
+the  present  SSE  result.   The  discrepancy  demonstrates                    and exponentγ[47].  No logs have been claimed in the
+the  difficulties  associated  with  variance  extrapolations,                 other  quantities.   Note  also  that  the  leading  correction
+though it is still impressive that the results are good to                     to the energy is of orderL        −3    and the factor of theL     −4
+five decimal places.                                                           correction also has a definite predicted value in terms of
+                                                                               only the transverse susceptibility [28].  The second-order
+                                                                               correction toχ    s was obtained in Ref. [29].  In the original
+                                                                               literature on the finite-size corrections, many of the co-
+      III.    FINITE-SIZE CORRECTIONS AND                                      efficients in Eqs. (17) were expressed using the spinwave
+         INFINITE-SIZE EXTRAPOLATIONS                                          velocityc.  Here, by using Eq. (13)chas been eliminated
+                                                                               in some of the terms for simplified expressions.
+   The  form  of  the  finite-size  scaling  corrections  in  or-                 Though  in  principle  combined  fits  to  several  quanti-
+dered  antiferromagnets  have  been  derived  within  spin-                    ties can be employed [42, 44, 45], here independent fits
+wave theory [34] as well as more sophisticated symmetry                        of  all  the  quantities  will  be  carried  out  first.   A  small
+based  approached  [47,  48],  in  the  most  refined  form  to                number of terms (typically two) beyond those included
+high orders in chiral perturbation theory [28, 29].  The                       in  Eqs.  (17)  will  be  added  in  order  to  capture  remain-
+general  form  of  all  the  quantities  that  will  be  consid-               ing finite-size corrections for the still relatively small sys-
+ered here is a polynomial in the inverse system size, with                     tem sizes available here.  The consistency of those coeffi-
+some of the low-order coefficients given explicitly in terms                   cients that are predicted in Eqs. (17) can then be tested
+of infinite-size ground-state parameters.  Because of the                      with the extrapolatedL→ ∞quantities (i.e., the zeroth-
+high statistical precison of the data, higher-order terms                      order coefficients).  Satisfactory agreement between the
+also have to be included in order to obtain good fits when                     fitted and predicted coefficients then not only supports
+the smaller system sizes are included.                                         the theoretical underpinnings of Eqs. (17) but can also
+                                                                               be taken as confirmation the soundness of the extrapo-
+   Some of the predicted low-order coefficients were tested                    lations; specifically the lack of impact of neglected terms
+in Ref. [44] with data for system sizes only up toL= 16.                       of  higher  order  than  the  corrections  included.   Having
+Despite  the  now  modest  lattices,  agreement  was  found                    established  the  applicability  of  Eqs.  (17),  the  precision
+to  within  a  few  percent  for  the  leading  corrections  in                of the extrapolatede            0  andm       s  will be further improved
+independent  polynomial  fits.   A  collective  fit  to  several               by  statistical  imposition  of  the  values  ofχ   ⊥  andρ       s  in
+quantities, constrained by the predicted forms, gave sta-                      their leading corrections.  In all fits below, the raw data
+tistically more precise values of the coefficients.  In some                   without truncating at the level of the one-digit statistical
+cases,  in  particular  the  spin  stiffness  and  velocity,  the              error (in Table I) were used for full statistical soundness
+extrapolated values deviate somewhat (by several error                         of the procedures.
+bars) from later determined values, e.g., in Refs. [45, 46].
+In hindsight,  the system sizesL≤16 in Ref. [44] were
+too small to completely avoid distorting effects of correc-                         A.    Uniform susceptibility, spin stiffness, and
+tions of higher order than those included.  No such bias                                                spinwave velocity
+has been claimed in the case of the energy, however.
+   With  the  much  reduced  statistical  errors  and  larger                     In order to eventually test and use Eqs. (17), we be-
+range  of  system  sizes,  the  predictedT=  0  finite-size                    gin by extrapolatingρ             s(L) andχ         ⊥(L) in Table I, using
+corrections can now be tested more precisely.  The three                       unconstrained  polynomials  of  fourth  order.   Marginally
+predicted forms that will be considered here are for the                       good fits are then obtained when including system sizes
+energy, the sublattice magnetization, and the staggered                        L≥10  forρ           s  andL≥8  forχ               ⊥.    Increasing  the
+                                                                                                                                                              8
+
+minimum  sizeL       min  included  in  the  fits  toL    min  =  12
+andL       min  =  10,  respectively,  leads  to  fully  satisfactory
+goodness-of-fit per degree of freedom;χ                 2/Ndof ≈1.1 (for
+ρs)  and  and  0.89  (forχ        ⊥).   TheL→ ∞extrapolated
+values (constants in the fits) are thenρ  s  = 0.180752(6)
+andχ      ⊥ = 0.065690(5).  The result from constrained fits
+toL≤16  data  in  Ref.  [44]  wereρ                s  =  0.175(2)  and
+χ⊥ = 0.0625(9), both smaller than the present estimates
+by  about  three  of  their  error  bars,  reflecting  some  ef-
+fects of corrections beyond the only quadratic fits used
+there.   A  later  SSE  result  obtained  from  the  quantum
+rotor states of large systems by analyzing the effects of
+an external magnetic field on the uniform magnetization
+gaveχ  ⊥  =  0.0659(2)  [5],  which  is  consistent  with  the
+present  result  but  with  much  larger  error.   In  Ref.  [45]
+ρs = 0.18081(11) was obtained, likewise consistent with
+the present result within its ten times larger error.
+   The  spinwave  velocitycis  also  an  important  ground                        FIG. 4.  Scatter plot of the coefficients of the cubic and quar-
+state  parameter  and  appears  in  both  Eq.  (17a)  and                         tic corrections of the energy based on 2000 fits with Gaussian
+Eq.  (17c).   Extrapolating  the  finite-size  results  forcin                    noise  added  to  the  energy  data  in  Table.  I,  with  the  mini-
+Table I withL         min = 12 givesc= 1.65881(7) (χ           2/Ndof ≈           mum size beingL        min = 6 (green dots), 8 (red dots), and 10
+1.1).  Its value according to Eq. (13) with the aboveρ     s                      (blue dots).  The horizontal and vertical pairs of dashed lines
+andχ      ⊥ values consistent with the above result but with                      indicate the expected values based on Eq. (17) withρ        s  and
+a marginally smaller error bar;c= 1.65880(6), which will                          χ⊥  taking the previously extrapolated values,  plus and mi-
+be used below.  This value is statistically less precise than                     nus two standard deviations in each case.  The two horizontal
+and inconsistent with (deviating by about five error bars                         lines almost coincide on the scale used here.
+from) an indirectly computed valuec= 1.65847(4) [46]
+obtained with SSE simulations at different aspect ratios
+L/βand locating the special ratio (L/β)             ∗  at which the               minimum  sizeL       min  =  6  producese  3  =  2.3785(6)  and
+spatial  and  temporal  winding  number  fluctuations  are                        e4 = 3.54(2).  Increasing the minimum size toL        min = 8
+equal.  At that point the system is effectively space-time                        givese    3  =  2.383(2),  which  is  consistent  with  the  pre-
+symmetric andc= (L/β)              ∗.  This method had previously                 dicted value, whilee           4 = 3.64(5) is only marginally con-
+been  used  with  less  precise  data  in  Ref.  [45],  with  the                 sistent, deviating by about three error bars.  Increasing
+resultc= 1.6586(3).  Given the overall trends ofc(L) in                           the minimum size toL    min = 10, both parameters are fully
+Table I, it is unlikely that the value could be as low as                         consistent with the predicted values but the error bars of
+c=  1.65847(4)  obtained  in  Ref.  [46].   Determining  the                      course are larger as well;e      3 = 2.382(3) ande           4 = 3.7(1)
+cubic  ratio  (β/L)     ∗  is  also  more  involved  [46]  than  the                 The fitted coefficients are not statistically independent,
+simple fitting of simple SSE estimators used here,  thus                          and for a view of their correlated statistical fluctuations it
+implying higher risks of underestimating the errors prop-                         is useful to examine the full distributionP(e                   3, e4).  Here
+agating from all steps.  The value and error bar obtained                         this distribution is generated by adding Gaussian noise to
+by  the  simple  extrapolations  above  are  therefore  likely                    the energy data in Table I, with mean zero and standard
+more reliable                                                                     deviation equal to the one-standard deviation statistical
+                                                                                  errors.   Results  based  on  2000  fits  with  different  noise
+                    B.    Ground state energy                                     realizations are shown in Fig. 4 forL      min = 6, 8, and 10.
+                                                                                  The predicted values of the coefficients are indicated by
+                                                                                  the vertical and horizontal lines.  It is obvious that the
+   We  now  proceed  to  test  the  form  Eq.  (17a)  of  the                     fitted coefficients (e  3, e4) indeed are highly correlated and
+ground state energy.  The approach taken here is again to                         that theL      min = 6 fits do not produce valid coefficients.
+use a polynomial of high enough order to obtain a statisti-                       The agreement is better withL         min = 8, though still not
+cally sound fit even when small system sizes are included.                        acceptable,  with  the  part  of  the  distribution  with  sig-
+Adding  terms  of  orderL        −5    andL      −6    in  Eq.  (17a),  i.e.,     nificant probability density still slightly outside the box
+with five adjustable parameters in total, a fit to all the                        corresponding to the jointly allowed values.  Only with
+data forL≥6 from Table I has excellent goodness-of-fit,                           Lmin = 10 do the fits produce a distribution with statis-
+χ2/Ndof  =  0.94.   However,  the  predictedL                 −3    andL      −4  tically plausible overlap with the box, and forL      min = 12
+coefficients  in  Eq.  (17a)  are  not  perfectly  reproduced.                    (not shown) the box is well inside the (still larger) high-
+Denoting  these  coefficients  bye   3  ande       4,  respectively,              probability  region.    The  individually  computed  values
+theρ      s  andχ      ⊥  values  determined  above  correspond  to               with  statistical  errors  quoted  above  correspond  to  pro-
+e3  = 2.38493(8) ande           4  = 3.8058(3),  while the fit with               jecting the two-dimensional distribution onto thee       3 and
+                                                                                                                                                             9
+
+e4 axes.  These distributions are much broader than the                                            C.    Staggered magnetization
+thickness of the very elongated full distributions.  Fig. 4
+shows that the agreement with both of the the predicted                              When fitting data for the staggered magnetization, the
+values forL      min = 10 is actually much better than indi-                      results for larger system sizes from Ref. [8] will also be
+cated  by  just  the  independent  error  bars,  in  the  sense                   included.  These are
+that fixing one of the coefficients to within its predicted
+window gives a very small error bar of the second coeffi-                                          mss(L= 128)  =  0.098843(16),
+cient, and that coefficient is then also consistent with the                                       mss(L= 192)  =  0.097371(11),             (19)
+prediction.                                                                                        mss(L= 256)  =  0.096669(17).
+
+   The  extrapolatedL→  ∞energy  forL                          min  =  10  is     In addition to marginally improving the final estimate of
+e0  =−0.669441865(11)  and  the  results  forL                min  =  8           ms, these values from a different calculation also serves
+andL       min  =  6  are  also  fully  consistent  with  tis  value,             as an independent consistency test.  The two best previ-
+e0  =−0.669441866(10)  ande                  0  =−0.669441878(9),  re-            ous estimates of theL→ ∞order parameter are both
+spectively.  These results are also statistically fully con-                      ms  = 0.30743(1) [8, 45].  The result in Ref. [8] was ob-
+sistent with the often quoted previously best infinite-size                       tained by extrapolating the long-distance (r=L/2) spin
+value [44],e         0 =−0.669437(5), where the error is about                    correlation function, which has less size dependence than
+500 times larger.  Given the almost identical results for                         the space-integrated correlatorm                    2s.  In Ref. [45], a collec-
+Lmin = 8 andL       min = 10, the final result of this analysis                   tive fit to temperature and size dependent data was used
+is taken ase    0 =−0.669441866(10).                                              with constraints from chiral perturbation theory.
+   Given  that  there  should  now  be  no  doubt  about  the                        Before considering the predicted log correction of the
+applicability of Eq. (17a) in combination with the higher-                        quadratic term in Eq. (17b), it is interesting to explore
+order corrections, an even more precise extrapolated en-                          purely polynomial fits tom    2s(L).  The log correction was
+ergy can be obtained by constraining the fit by imposing                          included previously in Ref. [40] (though with data from
+the values of the coefficientse    3  ande       4  within their sta-             a biased QMC method) but not in Refs. [44] and [8].  A
+tistical errors.  As an alternative to carrying out such a                        fourth-order polynomial fits theL≤12 data well, with
+constrained fit, an equivalent method is to use the distri-                       χ2/Ndof ≈1.1 (while forL           min = 10 the value is slightly
+butionP(e                  3, e4) and compute the mean energy from only           too high atχ    2/Ndof ≈1.9), and givesm          s = 0.30739(1).
+those  fits  that  producee         3  ande       4  values  falling  within      This result is only marginally consistent with the previ-
+the box marking the allowed statistically acceptable win-                         ous estimates and has a similar error bar; with two signif-
+dow  (of  size  one  standard  deviation  in  each  direction).                   icant digits in the error the result ism   s = 0.307387(10).
+Sampling  millions  of  points,  forL      min  =  10  only  about                Reducing the order of the polynomial to third order,  a
+8×10    −3  % of them satisfy the constraints (reflecting the                     good fit can only be obtained when the minimum size is
+small size of the allowed box inside the much larger re-                          increased  toL    min  =  20  (χ  2/Ndof  ≈1.0),  reflecting  the
+gion  of  significant  weight  in  the  sampled  distribution)                    sensitivity  of  the  fit  to  the  high-order  corrections  that
+and the mean goodness-of-fit of the points satisfying the                         are manifested in the small-size data with very small er-
+constraint  is  good,  with⟨χ           2⟩/N  dof  <1  (after  correct-           ror  bars.   The  result  is  thenm        s  =  0.307394(12),  fully
+ing for the fact that there are two sources of fluctuations                       consistent  with  the  fourth-order  result  and  marginally
+when  Gaussian  noise  is  added  to  data  already  affected                     consistent with the previous best results.
+by  the  statistical  errors  in  the  SSE  simulations).   The                      Returning  to  the  fourth-order  fit  withL         min  =  12,
+mean energy withL         min  = 10 ise   0  =−0.669441861(6),                    even  thoughχ              2/Ndof  is  good  the  first-order  coefficient
+while  increasing  toL    min  =  12  changes  the  result  only                  m1  =  0.5463(6),  is  rather  far  from  the  predicted  value
+very little, toe    0 =−0.669441857(7), with 6×10            −3  % of             m1  =Bm    2s(ρ  sχ⊥)−1/2       = 0.53826(4) when the constant
+the points satisfying the constraints.                                            m2s  from  the  fit  is  used  along  with  the  previously  de-
+                                                                                  terminedρ                 s  andχ      ⊥  values.  The agreement is also not
+   Since,  it  may  be  argued,  theL      min  =  10  distribution               improved if the minimum sizeL       min = 14 is used, which
+in Fig. 4 is not fully satisfactory in relation to the pre-                       still gives an excessively large coefficientm  1 = 0.5447(9)
+dicted  allowed  window  of  (e  3, e4),  while  forL      min  =  12             while the sublattice magnetizationm                          s = 0.30741(13) re-
+(where the not shown distribution covers a larger area)                           mains consistent with theL      min  = 12 value.  Increasing
+the allowed window is in a region of high probability den-                        toL    min  =  16  givesm  1  =  0.5439(12),  still  too  large,
+sity, theL      min  = 12 valuee        0  =−0.669441857(7) is here               while  the  sublattice  magnetization  increases  slightly  to
+presented as the final result for the ground state energy;                        ms  =  0.30742(16),  which  is  fully  compatible  with  the
+the relative statistical error is unprecedented at 10−8   and                     results of Refs. [8, 45] but with a larger error.  The per-
+no systematic errors should be expected.  Note that the                           sistence of a discrepancy betweenm       1 from the fits and its
+value is only about one error bar smaller than in the plain                       predicted value can be taken as a indication of the pure
+extrapolatedL            min = 10 andL       min = 12 results; thus there         polynomial not being the correct function to describe the
+is full statistical consistency but the error bar with the                        m2s(L) data.
+constraint imposed is about 30% smaller.                                             Fitting with the predicted log correction included, the
+                                                                                                                                                                10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                    FIG. 6.   Residual ∆(L) of the squared magnetization when
+                                                                                    all contributions from Eq. (17b) have been subtracted (in the
+                                                                                    corresponding expression on they-axis, the fitting parameters
+                                                                                    are denoteda,b,ξ, andγ).  This procedure leaves only the
+                                                                                    corrections, which in this fit is anL   −5   term, shown as the red
+                                                                                    curve, added to Eq. (17b).  The goodness-of-fit isχ   2/Ndof ≈
+                                                                                    0.85.  The inset shows the same residuals (with a minus sign)
+                                                                                    in a log-log plot for the points that are clearly different from
+                                                                                    zero within error bars.
+
+
+                                                                                    mial fit was poor forL    min = 10, the fact that a good fit
+                                                                                    is  now  obtained  without  theL     −3    andL      −4    terms  lends
+                                                                                    strong support to the presence of the multiplicative log
+                                                                                    correction, and, moreover, suggests that higher-order cor-
+                                                                                    rections must be very small.  Excellent fits are obtained
+                                                                                    forL      min  =  12  and  higher,  withχ         2/Ndof  in  the  range
+                                                                                    0.7∼0.8  forL                   min  ∈[12,20].   The  order  parameters
+FIG. 5.  The squared sublattice magnetization with the fit-                         obtained from the acceptable fits are remarkably stable
+ted terms of Eq. (17b) gradually removed from the data set                          forL      min  ≥12,  withm            s  =  0.307451(2)  (L     min  =  10),
+and the corresponding remaining functions.  No higher-order                         0.307444(3)  (L     min   =   12),  0.307443(3)  (L     min   =   14),
+terms were included.  In (a),  only the constanta=m        2s(∞)                    0.307443(3) (L     min  = 16), 0.307443(4) (L     min  = 18), and
+has been removed.  The solid red curve shows the remaining                          0.307446(7) (L     min = 20).  The only slowly increasing er-
+part of the fitted function and the blue dashed line represents                     ror bar here reflects the fact that the log correctedL              −2
+the termb/L,  where the coefficientbis given by Eq. (17b)                           term decays rather slowly and remains important also for
+with the previously infinite-size extrapolated values ofρ   s and                   the largestL             min sizes considered here. Given the fast con-
+χ⊥.  In (b) also the linear term has been removed from both                         vergence, theL      min = 12 resultm          s = 0.307444(3) is taken
+the  data  set  and  the  fitted  function.   In  (c)  the  remaining               as the final result of this analysis.  This result agrees per-
+µln   γ(L/ξ)L        −2    term has been removed.  There are no sign of             fectly with those of Refs. [8, 45], but with an error only
+higher-order corrections within the statistical errors.                             a third of the previous size.
+
+                                                                                       The  value  of  the  exponenγon  the  log  correction  in
+values ofρ   s andχ      ⊥ in the linear coefficient in Eq. (17b)                   Eq. (17b) was not predicted in Ref. [47]. In theL       min = 10
+are also fixed at their previously determined values, with                          fit,γ= 0.73(1).  ForL                min  = 12 the exponent increases
+their error bars taken into account by repeated fits with                           slightly but then remains very stable within its statistical
+Gaussian noise.  The constantm  2s  and the linear coeffi-                          error:γ=  0.82(3)  forL                       min  =  12,  0.83(4)  forL         min  =
+cient are then constrained.  In the log correction of the                           14,  0.81(5)  forL         min  =  16,  0.83(8)  forL         min  =  28,  and
+L−2    coefficient,  the  factorµ,  the  exponentγ,  and  the                       0.70(14) forL         min = 20.  Considering the stability of the
+scale factorξare all unknown and used as free fitting pa-                           γvalues forL        min ≥12, an error weighted average of the
+rameters.  Thus, there are four independent parameters                              values  can  be taken as  the  final estimate;γ=  0.82(4).
+and at this stage no higher-order polynomial terms (that                            The scale factorξin the log is also stable with respect to
+might be expected) are included.  ForL    min = 8, this fit                         Lmin, withξ= 0.60(4) an overall representative result.
+is  not  statistically  acceptable,  the  goodness-of-fit  being                       The  good  fit  tom    2s(L)  without  higher-order  correc-
+χ2/Ndof  ≈3.   ForL        min  =  10,  the  quality  of  the  fit  is              tions  in  Eq.  (17b)  is  further  illustrated  in  Fig.  5.   The
+already reasonably good withχ         2/Ndof ≈1.3.                                  rawL≥12 data with the fitted constantm            2s subtracted
+   Recalling that the quality of the fourth-order polyno-                           off is shown in Fig. 5(a) along with the corresponding fit-
+                                                                                                                                                            11
+
+ted  function  (red  curve).   The  contributions  from  only
+the  linear  term  is  also  shown  separately  (dashed  blue
+line).   In  Fig.  5(b)  the  linear  term  has  also  been  sub-
+tracted,  i.e.,  the function shown along with the data is
+only the quadratic term with its multiplicative log cor-
+rection.  Fig. 5(c) shows the SSE data with the full fitted
+function subtracted.  The remaining values now fluctuate
+around zero in a way statistically consistent with Gaus-
+sian noise, as would also be expected because of the small
+χ2/Ndof  value  quoted  above.   While  some  higher-order
+corrections to Eq. (17b) should of course exist, these re-
+sults suggest that at least theL     −3    correction should be
+extremely small or even completely absent.
+   Assuming  that  the  higher-order  corrections  are  pure
+integer  powers  of  the  inverse  system  size,a        n/Ln  with
+n≥3, the smallestnfor which the prefactora                                        n is signif-
+icant can be estimated by including the system sizes that
+were too small in the above fits using only the terms in
+Eq. (17b).  When including all system sizesL≥6, a good
+fit cannot be obtained forn= 3.  Forn= 4 the fit is bet-
+ter,  but still not statistically sound,  withχ         2/Ndof ≈4.
+However, a very good fit withχ         2/Ndof ≈0.85 is produced
+whenn=  5.   The  extrapolated  sublattice  magnetiza-
+tion in this case ism   s = 0.307447(2), which is consistent
+with the results without the added correction but with a
+slightly smaller error. The exponent on the multiplicative
+log,γ= 0.84(2), is likewise consistent with the previous
+result from the fit withoutL     −5    correction, again with a
+reduced error.  Thus,  it appears that theL  −5    term ac-                       FIG. 7.  (a) Scatter plot of the coefficients of the linear (x  1)
+counts well for the leading corrections to Eq. (17b).  The                        and quadratic (x  2) corrections of the staggered susceptibility,
+other two parameters of the log term in the fit with this                         based on 2000 fits with Gaussian noise added to theχ      s data in
+correction areξ= 0.56(1) andµ= 0.46(1).                                           Table. I, with the minimum sizeL       min = 8 (green dots), 10 (red
+   The  SSE  data  points  after  subtracting  off  the  terms                    dots), and 12 (blue dots).  The horizontal and vertical pairs
+included in Eq. (17b) are shown in Fig. 6 along with the                          of dashed lines (the horizontal lines almost coincide) indicate
+corresponding remaining part of the fitted function, i.e.,                        the expected values based on Eq. (17c) plus and minus two
+the  pureL       −5    term.   The  correction  has  clearly  visible             standard deviations, withρ        s,c, andm           2s set to their previously
+impact  forL≲20,  though  small  changes  in  the  other                          determined values.  (b) Similar plot of the constant term (x  0)
+                                                                                  and the coefficient of the linear correction (x  1) obtained with
+fitting parameter can account for the very small effects                          Lmin = 10 (red),L           min = 12 (blue), andL       min = 14 (black).
+forL≥12, as demonstrated by the fact that the resid-
+uals  are  statistically  zero  in  the  fit  without  correction,
+Fig. 5(c).  While the above analysis of theL     −5   correction                  ues ofm    2s,χ ⊥, andcdetermined above.  With three co-
+does not necessarily mean thatL      −3    andL      −4    corrections            efficients (x  0, x1, x2), the distributionP(x             0, x1, x2) from
+are completely absent, they at least have to be very small                        repeated fits is of interest.  For easier visualization, the
+relative to theL     −5    term—possibly because of some can-                     distribution  will  here  be  projected  down  to  the  two-
+celation effects.  It is of course also possible that at least                    dimensional distributionsP(x                              0, x1) andP(x            1, x2), based
+some of the higher-order terms also have log corrections.                         on sampling 2000 fits with Gaussian noise added to the
+                                                                                  χs(L) SSE data in Table I.
+                                                                                     The  linear  and  quadratic  coefficients,x     1  andx       2,  are
+                 D.    Staggered susceptibility                                   tested first in Fig. 7(a) with data points generated using
+                                                                                  fourth-order polynomial fits withL         min = 8, 10, and 12,
+   The  predicted  form  of  the  size-normalized  staggered                      all  of  which  haveχ  2/Ndof  <1.   Only  marginally  good
+susceptibilityχ  s(L) in Eq. (17c) is qualitatively different                     consistency with the predicted window of coefficients is
+from the energy and the staggered magnetization in that                           obtained withL         min = 8 and 10, but forL      min = 12 (and
+also the constant term has a predicted form, depending                            larger) the window is in a region of high probability den-
+on the above determined staggered magnetization in ad-                            sityP(x       1, x2).  However, the distributionP(x                             0, x1) is far
+dition to the uniform susceptibility. Thus, the aim here is                       less convincing, as shown Fig. 7(b) forL      min = 10, 12, and
+not to determine the constant but to test its value against                       14. While the individualx                    0 andx       1 windows do have large
+the predicted coefficient computed from theL→ ∞val-                               overlaps with the distribution, the joint (x  0, x1) window
+                                                                                                                                                       12
+
+is far away from the high-probability region, to the extent                     regarded with some suspicion.  even though theχ       2/Ndof
+that  an  agreement  is  statistically  very  unlikely  (noting                 values  are  good.    The  effects  of  the  unknown  correc-
+also that the indicated window corresponds to two stan-                         tions should diminish with increasingL                    min.  Given that
+dard deviations of the mean coefficients).  The trend with                      theL      min  =  14  distribution  ofx    0  from  Fig.  7(b)  over-
+increasingL                    min  is also not indicative of eventual agree-   laps well with the predicted window, the corresponding
+ment for forL      min >14 (until the size of the distribution                  mean  value  here  is  taken  as  a  reliable  result;χ            s/L2  =
+grows too large for meaningful comparisons).                                    0.04140(1).   The  value  based  onm         1  =  (2/3)m           2sχ⊥  (as-
+   As discussed in Sec. II C, there may still be someT >0                       suming that this indeed equalsχ            s) is still of higher sta-
+contributions left inχ    s(L= 96) atβ/L= 64, potentially                       tistical precision, however, at 0.041384(4).
+leading to underestimation of the value by up to a few
+of  its  error  bars  in  Table  I.   To  excludeT  >0  effects
+as the cause of the mismatch in Fig. 7(b), fits with one                          IV.    OPEN AND CYLINDRICAL BOUNDARY
+or several large systems excluded were also carried out.                                                  CONDITIONS
+In all cases the changes in the distributions are very mi-
+nor and the allowed window falls within the distribution                           Some  of  the  often  used  lattice  many-body  methods
+only when the fluctuations become too large to produce                          are  not  efficient  for  2D  systems  with  periodic  bound-
+meaningful results (when many small and large sizes have                        ary conditions, e.g., cylindrical boundaries are typically
+been removed).                                                                  used in DMRG and related matrix-product state meth-
+   The  behavior  here  is  similar  to  the  case  ofm    2s  fit-             ods  [13,  14,  53]  while  some  of  the  TN-based  methods
+ted  to  a  polynomial  inL  −1    without  the  log  correction                are  only  practically  applicable  with  fully  open  bound-
+in  Sec.  III C,  where  the  linear  coefficientm  1  was  not                 aries [15, 16].  With cylindrical boundaries, it is further
+consistent  with  the  predicted  form  in  Eq.  (17b).   The                   advantageous to use non-square lattices of sizeL       x ×L   y
+discrepancy was only resolved by including the log cor-                         withL        y  larger  than  the  sizeL       x  in  the  periodic  direc-
+rection to the quadratic term.  Given thatm         2s andχ       s are         tion In some cases the limitL  y/Lx → ∞can be taken,
+strongly related to each other in terms of their definitions                    in which case the system strictly is one-dimensional, but
+(being space and space-time integrals, respectively, of the                     the 2D limit can in principle (though often not in prac-
+spin correlation function), one might suspect that alsoχ       s                tice) be studied for increasingL          x to realize the 2D limit.
+should have a log correction, perhaps in the cubic term.                        In other cases it is better to keep the aspect ratio fixed,
+The fitted polynomial may then skew the coefficients of                         e.g., withL        y/Lx = 2.  Here some results for openL×L
+the lower-order term in a similar way as in the case of                         systems and cylindricalL×2Lsystems atβ/L= 32 will
+m1 in them      2s fits.                                                        be presented, but for a more limited set of quantities and
+   In principle, another potential reason for the discrep-                      at  lower  statistical  precision  than  achieved  above  with
+ancies could be that some of the extrapolated coefficients                      periodic boundary conditions in the preceding sections.
+in Eq. (17b) have errors beyond the quoted statistical er-                      The ground state energy will now be given per interact-
+rors.   The  most  likely  candidate  for  such  errors  would                  ing bondN       b, while the squared sublattice magnetization
+be inx    0 = (2/3)m           2sχ⊥, which would fix the problem in             and  the  staggered  susceptibility  will  be  normalized  by
+Fig. 7(b) if the window is shifted byx   0 →ax     0 with the                   the system volumeNas before.  Results are listed in Ta-
+factora≈1.0005.  Such a shift would imply the presence                          bles  II  and  III.   For  the  largest  systems,  the  staggered
+of substantial extrapolation errors in eitherχ     ⊥ orm    2s, or              susceptibility was not computed as much largerβ/Lval-
+both.  In particular, a shift of onlym         2s, which is a factor            ues  would  be  needed  for  convergence.   The  energy  and
+in all the coefficientsx  0, x1, x2 in Eq. (17b) would solve                    sublattice magnetization areT→0 converged.
+the problem in Fig. 7(b) and still maintain consistency                            The lack ofL   −1    andL      −2    terms in the dependence on
+with Fig. 7(a).  Such a large extrapolation error inm    s is                   the energy on the system size in Eq. (17b) should only
+unlikely, however, as the value would have to increase to                       be expected with periodic conditions.  With one or both
+ms ≈0.30752, which is very far out of the range deter-                          boundaries open, anL    −1    term should be expected, and
+mined in Sec. III C and is also about 10 error bars away                        there  is  also  no  reason  for  theL     −2    term  to  be  absent.
+from  the  best  previous  estimates  [8,  45].   The  remain-                  Indeed, theE      0/Nb data can only be fitted if both these
+ing possibility of a shift inχ   ⊥ is also unlikely, based on                   terms are included. Fits are shown in Fig. 8 for all bound-
+many different extrapolations performed that deliver re-                        ary conditions.  For the periodic case, the fit is the one
+sults consistent with that reported in Sec. III A.  Thus,                       discussed  in  Sec.  III B  and  its  extrapolated  energy  was
+the  presence  of  a  logarithmic  correction  in  Eq.  (17c),                  used  to  constrain  the  fits  for  the  other  two  boundary
+whether in one of the terms displayed or in some higher-                        conditions.   There  are  no  predictions  for  the  finite-size
+order correction, remains the most likely explanation for                       corrections for non-periodic systems and the purpose of
+the discrepancy in Fig. 7(b).                                                   the fits here is only to demonstrate theL     −1   andL      −2   cor-
+   Given that the pure polynomial fitting functions may                         rections and the expected consistency of the infinite-size
+not be strictly correct, an independent (of the previously                      energies computed with different boundary conditions.
+determined coefficients) value ofχ   s/L2 fromL→ ∞ex-                              With  fully  open  boundaries,  the  convergence  of  the
+trapolations including the smallest system sizes should be                      sublattice  magnetization  to  the  previously  determined
+                                                                                                                                                        13
+
+TABLE II. SSE data forL×Lsystems with open boundary                             than those available.  The results for cylindrical systems
+conditions.   The  ground  state  energy  is  normalized  by  the               in Table III do not indicate any nonmonotonicity and the
+number of interaction bondsN         b = 2(L    2 −L).                          results can be extrapolated to values consistent with the
+                                                                                periodic lattices.
+          L       E0/Nb               m2s             χs/L2                        Suppression  of  the  staggered  magnetization  close  to
+          6   0.3621133(1)       0.164510(1)     0.0098278(2)                   open boundaries should be expected and the results for
+          8   0.3537355(1)       0.135629(2)     0.0070608(2)                   m2s in Tables II and III suggest that the effects are much
+         10   0.3492534(1)       0.120522(2)     0.0058259(2)                   more dramatic in the case of fully open boundaries. Large
+         12   0.3464731(1)       0.111577(2)     0.0051646(2)                   fluctuations close to the corners can likely explain the dif-
+         14   0.3445836(1)       0.105834(2)     0.0047687(3)                   ferences.  To more quantitatively investigate the bound-
+                                                                                ary effects on the order parameter,  the squared sublat-
+         16   0.3432169(1)       0.101926(3)     0.0045128(3)                   tice magnetization can be broken up into site dependent
+         18   0.3421827(2)       0.099160(4)     0.0043392(5)                   contributions.  Using the normalized sublattice magneti-
+         20   0.3413732(2)       0.097131(4)     0.0042171(5)                   zationm           zs in Eq. (4), a location dependent squared order
+         22   0.3407218(2)       0.095619(5)     0.0041250(6)                   parameter can be defined;
+         24   0.3401870(2)       0.094454(5)     0.0040592(6)                                    m2s(r) = 3⟨S        z(r)m     zs⟩(−1)       rx+r   y,            (20)
+         26   0.3397397(2)       0.093538(6)     0.0040081(6)
+         28   0.3393603(2)       0.092827(4)     0.0039687(8)                   so that the full (averaged) value ism   2s  = Pr m2s(r)/N.
+         32   0.3387504(2)       0.091825(7)      —                             A relative distortion field can further be defined as
+
+         48   0.3373629(2)       0.09022(2)       —                                                D(d     x, dy) = 1−      m2s(r  d)
+         64   0.3366865(2)       0.08998(2)       —                                                                      m2s(r  center),              (21)
+         96   0.33602096(8)      0.09031(3)       —                             whered= (d               x, dy) is the distance to the site atr    d rela-
+       128    0.33569204(9)      0.09076(5)       —                             tive to a reference point on an edge.  The normalization
+                                                                                is by the squared order parameter at a siter       center  clos-
+                                                                                est to the center of the system (in practice averaged over
+TABLE  III.  SSE  data  forL×2Llattices  with  cylindrical                      all such equivalent sites), where the suppression (distor-
+boundary  conditions  (periodic  in  the  shorter  direction  and               tion) of the order parameter is the smallest.  By defini-
+open  in  the  longer  direction).   The  ground  state  energy  is             tiond(r            center) = 0 at the central sites.D(d               x, dy) should
+normalized by the number of interaction bondsN         b = 2L  2−L.             strictly  correspond  to  the  true  distortion  field  only  as
+          L        E0/Nb             m2s             χs/L2                      L→ ∞, where the order parameter atr            center  will truly
+           4  0.3532363(2)      0.170293(2)     0.0083710(2)                    take its bulk value without finite-size effects.  The van-
+           6  0.3427879(2)      0.140311(3)     0.0066647(3)                    ishing ofD(r         center) for anyLis just a finite-size aspect
+                                                                                of the system along with the overall size dependence of
+           8  0.3397983(2)      0.125772(3)     0.0058507(3)                    the sublattice magnetization, which is partially compen-
+         10   0.3384370(2)      0.117465(3)     0.0053900(4)                    sated for here by using ratios of local order parameters in
+         12   0.3376621(2)      0.112218(4)     0.0051033(6)                    Eq. (21).  For the openL×Llattices with evenLthere
+         14   0.3371612(2)      0.108676(5)     0.0049103(6)                    are four equivalent central locationsr              center  while in the
+         16   0.3368096(2)      0.106134(7)     0.0047720(9)                    cylindricalL×2Lsystems there are 2Lsuch sites (two
+         18   0.3365491(2)      0.104248(6)     0.0046701(8)                    central “rings” of lengthL).
+         20   0.3363476(2)      0.102801(8)     0.0045925(9)                       In principle it is possible to compute the distortion us-
+                                                                                ing linear spinwave theory (which has been applied to a
+         24   0.3360555(3)      0.10073(2)       —                              related  open-boundary  problem  [54])  or  some  more  so-
+         32   0.3357061(3)      0.09843(3)       —                              phisticated  approach,  but  this  is  beyond  the  scope  of
+         48   0.3353698(3)      0.09638(5)       —                              the present work.  By testing different functional forms,
+         64   0.3352053(2)      0.09558(6)       —                              it was found that a stretched exponential describes the
+                                                                                data  very  well.   Withddenoting  the  distance  from  an
+                                                                                open edge or corner along a line on the lattice (to be de-
+                                                                                fined more precisely below), the distortion as defined in
+value is not obvious from the results in Table II.  With                        Eq. (21) can be well described by the form
+increasingL, m                         2s(L) drops below the expectedL→ ∞                        h
+value  and  the  results  for  the  two  largest  system  sizes                       D(d)∝       exp −pd/ξ          + exp     −p(L−1−d)/ξ
+showing  the  onset  of  a  nonmonotonic  behavior  before                                                                         p           i
+the  necessary  ultimate  convergence  to  the  same  value                              −exp      −p(L/2−1)/ξ            −exp         L/2ξ      ,   (22)
+m2s  ≈0.09445  as  for  the  periodic  systems.   The  stag-
+gered susceptibility as well drops significantly below the                      whereL=L                 y  for the fully open lattices andL=L             y/2
+results for the periodic systems and nonmonotonic behav-                        for the cylindrical systems.  The first term is the distor-
+ior will likely set in here as well, for system sizes larger                    tion from the edge (or corner) with respect to which the
+                                                                                                                                                          14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.  Twice the ground state energy per bond for systems
+with different boundary conditions; periodicL×L(black cir-
+cles), cylindricalL×2L(blue squares), and openL×L(red
+circles).   The  curves  are  polynomial  fits,  withoutL           −1    and
+L−2    terms  for  the  periodic  systems  but  including  those  for
+the other cases.
+
+
+distancedis measured and the second term reflects the
+opposite edge (or corner) at distanceL−1−r(with the
+distance between the two edges beingL−1 and the          √2
+factor in a corner-corner diagonal direction is absorbed
+intoξ).  The last two terms ensure the imposed condi-
+tiond(r) = 0 in Eq. (21) for the center sites located at
+d=L/2−1  andd=L/2.   For  largeLand  distances
+d≪L, only the first term contributes significantly but
+the other terms are important for the rather small system
+sizes and distances considered here.
+   Results are shown in Fig. 9 for all three boundary con-                       FIG. 9.  Distortion field of the order parameter, Eq. (21), vs
+ditions.  In the case of the fully openL×Llattices (with                         the square-root of the distance from an edge.  In (a),dis the
+Lan even number), the distance in Fig. 9(a) is defined                           distance  along  a  line  (d,0)  extending  from  a  site  closest  to
+from one of the two sites closest to the mid-point of an                         the  mid  point  of  the  edge  of  an  openL×Llattice  toward
+edge, extending toward the center of the system along the                        the center of the system, while in (b) the line extends from a
+line perpendicular to the edge in question.  In Fig. 9(b),                       corner in the diagonal direction (d, d).  In (c), the distance is
+the distance is measured from one of the corners of the                          from a site on the open edge of lengthLof anL×2Lcylinder
+open lattice along the corresponding diagonal direction,                         along  the  line  (0, d)  perpendicular  to  the  open  edge.   The
+not  taking  into  account  the  factor √2  from  the  length                    curves show fits to the stretched exponential decay, Eq. (22).
+of the diagonal of a plaquette of unit length.  Fig. 9(c)
+is for the cylindrical system of sizeL×2L,  withdbe-
+ing the distance from a site on the edge along a line in                         be the same for all three boundary conditions, the distor-
+the longer direction.  In all cases Eq. (22) describes the                       tion is still relatively large for the moderate lattice sizes
+behavior well for sufficiently larged.  The short-distance                       considered here, especially because of the corners in the
+deviations from the form are, perhaps surprisingly, much                         case of the fully open boundaries.  The nonmonotonic be-
+larger for the cylindrical lattices.  In all cases there are                     havior seen for the largest system sizes in Table II is then
+still  finite  size  effects  in  the  decay  constantξ,  but  the               explained as arising from the large boundary reduction
+trend  for  increasing  system  size  indicates  convergence,                    of the order parameter, which affects the spatially aver-
+with  the  value  for  the  largest  system  already  close  to                  aged value up to large system sizes.  The boundary effect
+converged.  For the largest systems,ξ≈1.2 in Fig. 9(a),                          also asymptotically implies a finite-size correction of the
+ξ≈1.3 in Fig. 9(b), andξ≈2.5 in Fig. 9(c).  The largest                          formL       −1    in the average,  which can be larger than the
+distortion,  exactly on the edge,  isD(0)≈0.22 in both                           linear  coefficients  in  the  periodic  systems  in  Eq.  (17b).
+Fig. 9(a) and Fig. 9(c), while in the case of the corner in                      This appears to be the case for the open boundaries and
+Fig. 9(b) it is about twice as large;D(0)≈0.45.                                  the asymptotic approach to the infinite-size value is then
+   Even though the (stretched) exponential decay guar-                           from  below,  in  contrast  to  the  approach  from  above  in
+antees that the spatially averagedm             2s whenL→ ∞will                  the case of the periodic systems.
+                                                                                                                                                    15
+
+                                                                              of increasingly good variational states based on TNs and
+                                                                              NNs will only continue and better benchmarks are called
+                                                                              for.  The raw data listed here in Tables I (for periodic lat-
+                                                                              tices), II (open lattices), and III (cylindrical lattices) are
+                                                                              of much higher precision than previously and also cover
+                                                                              a broader range of physical observables—including quan-
+                                                                              tities, such as the staggered susceptibility, that are more
+                                                                              challenging to compute with TN and NN approaches than
+                                                                              the energy and the order parameter.
+                                                                                 The results for theL→ ∞extrapolated ground state
+                                                                              parameters are also likely the most precise to date.  For
+                                                                              ease of reference, the best estimates of all the quantities
+                                                                              considered are repeated here:
+                                                                                                      e=−0.669441857(7),                (23a)
+FIG. 10.  Inverse-size dependence of the sublattice magneti-                                          ρs = 0.180752(6),                      (23b)
+zation at the sites closest to the center of systems with open                                        χ⊥ = 0.065690(5),                      (23c)
+(red circles) and cylindrical (blue squares) boundary condi-
+tions.  The horizontal line shows theL→ ∞value obtained                                               c= 1.65880(6),                          (23d)
+in Sec. III C for systems with periodic boundaries.                                                   ms = 0.307447(2),                      (23e)
+                                                                                                      χs/L2 = 0.004140(1).                 (23f)
+  It is also useful to examine the local staggered magneti-                   The largest improvement with respect to previous works
+zationm           s(r) withrat the center of the system (averaged             is in the energy, where the error bar is almost three or-
+over all the symmetrically equivalent sites closest to the                    ders  of  magnitude  smaller  than  in  Ref.  [44].   This  im-
+center).  Results are shown for both open and cylindrical                     provement in precision is not surprising, considering the
+systems  in  Fig.  10.   Here  the  results  for  the  cylindri-              growth of computing power over almost 30 years in com-
+cal  systems  are  fully  consistent  with  an  approach  from                bination with the improvements in the SSE algorithm, in
+above to the expected infinite-size value.  Extrapolations                    particular the introduction of loop updates [4, 7].  The
+are not shown here as the exactL→ ∞value is sensitive                         algorithmic improvements are more important for some
+to the functional form used and it is not clear whether                       of  the  other  quantities,  however,  since  the  SSE  energy
+the logarithmic contribution in Eq. (17b) survives for the                    estimator  is  rotationally  invariant  and  not  sensitive  to
+cylindrical  systems.   For  the  open  systems,  the  results                the slowest mode of the stochastic evolution of the SSE
+in Fig. 10 flatten out for the largest system sizes and a                     configurations (even with inefficient local updates [44]),
+naive extrapolation with a polynomial gives an extrap-                        which physically correspond to long-wavelength fluctua-
+olated order parameter below the expected value.  Most                        tions of the order parameter and its overall rotation in
+likely, the behavior here is again nonmonotonic, arising                      spin space [44].
+from the open boundaries significantly affecting also the                        In recent work with recurrent NNs, ground state ener-
+spins in the center of the system.                                            gies forL≤32 were extrapolated toe                0 =−0.6694886(5)
+                                                                              in the thermodynamic limit [27].  This value differs from
+                       V.    DISCUSSION                                       the present result above by almost 100 of its error bars,
+                                                                              likely primarily because of the non-variational errors in-
+                                                                              troduced by extrapolating the finite-size results to zero
+  The N´eel ordered ground state of 2D HeisenbergS=                           sampling variance.  Though the result is only good to the
+1/2 antiferromagnet represents a corner stone in the field                    fourth  decimal  place,  the  current  activities  in  pushing
+of  quantum  magnetism.    Beyond  specific  applications                     NNs  to  unprecedented  precision  neverthelss  illustrates
+to  quantum  magnetism,  the  mechanism  of  SO(3)  spin-                     the increasing needs for reliable benchmarks, such as the
+rotational  symmetry  breaking  is  universal  and  deserv-                   extrapolated  results  above  and  the  raw  finite-size  data
+ing  of  detailed  quantitative  understanding.   A  primary                  listed in tables in the preceding sections.
+motivation  for  this  work  was  to  obtain  unbiased  high-                    A second purpose of this work, beyond determining the
+precision results for the key ground state parameters of                      ground state parameters to unprecedented precision, was
+the model, which beyond very small system sizes is pos-                       to test finite-size corrections predicted by chiral perturba-
+sible only with statistically exact QMC algorithms, such                      tion theory [28, 29, 47], which with the improved data was
+as the SSE method used here.  A previously often cited                        accomplished at a level far exceeding previous works.  A
+list of ground state parameters up to system sizeL= 16                        multifaceted statistical analysis showed complete agree-
+[44] is outdated, considering that some of the emergent                       ment with leading and subleading corrections to both the
+many-body  methods  are  now  capable  of  exceeding  the                     energy  and  the  sublattice  magnetization.   In  the  latter
+statistical.  precision reported there, at least in the case                  case, the first subleading (L −2  ) correction is modified by
+of the ground state energy forLup to 10 [22].  The trend                      a  multiplicative  log  [29],  lnγ(L),  the  presence  of  which
+                                                                                                                                                        16
+
+was confirmed.  The previously unknown value of the ex-                         also if only a central region of the system is used, if the
+ponentγ= 0.82(4) was determined.  The corrections to                            size of that region grows withL.  Even if only the most
+the  related  staggered  susceptibility  also  show  evidence                   central  spins  are  used,  the  edge  effects  can  still  be  im-
+of  a  log  correction  in  higher-order  terms,  as  evidenced                 portant; likely even more so in systems with weaker N´eel
+from minor discrepancies between coefficients from poly-                        order than the standard Heisenberg model studied here.
+nomial  fits  and  their  predicted  forms  in  terms  of  other                   As  an  example  of  the  computational  effort  involved
+ground state parameters.  This result should serve as a                         to  generate  the  data  presented  here,  in  the  case  of  the
+motivation  to  extend  the  chiral  perturbation  theory  to                   L=  96  system  at  inverse  temperatureβ=  64L,  one
+higher  order—clearly  not  an  easy  task,  considering  the                   full SSE updating sweep with measurements of observ-
+already very sophisticaled calculations underlying the ex-                      ables  required  about  10s  using  Intel  Xeon  Gold  6000-
+isting predictions in Eqs. (17).                                                series CPUs.   Approximately 1.5×10          8  such steps were
+                                                                                performed,  for  a  total  of  about  4×10      5  hours  of  CPU
+   With  open  and  cylindrical  boundary  conditions,  the                     core time, distributed over a large number of CPU cores.
+reduction of the order parameter at the open edges was                          In the case ofL= 8 atβ= 32L, an updating sweep takes
+found to follow a stretched exponential form asymptot-                          about 10−3    s and about 2×10      11 steps were carried out
+ically.  For large sufficiently systems, the order parame-                      for a total of about 5×10      4 core hours (and this accounted
+ter at distancerfrom an edge takes the formm                          s(r) =    for about half of the statistics for this system size,  the
+ms(∞)−Aexp(−             pr/ξ), with the parametersAandξde-                     remainder coming fromβ= 64Lruns).
+pending on the reference point on the boundary (specifi-
+cally, its distance from corners).  In the Heisenberg model                                        ACKNOWLEDGMENTS
+the maximum distortionAis rather large, up to almost
+half  ofm   s(∞),  andξof  order  one.   The  overall  edge
+effects  therefore  significantly  reduce  the  order  parame-                     The author would like to thank Uwe-Jens Wiese for dis-
+ter integrated over the entire system, in some cases even                       cussions.  This work was supported by the Simons Foun-
+leading to nonmonotonic finite-size behavior.  These ef-                        dation  under  Grant  No.  511064.   The  numerical  calcu-
+fects  should  be  kept  in  mind  when  working  with  non-                    lations were carried out on the Shared Computing Clus-
+periodic boundaries, as data for a range of small system                        ter managed by Boston University’s Research Computing
+sizes  can  give  misleading  results—this  will  be  the  case                 Services.
+
+
+
+
+
+ [1]  E. Y. Loh, Jr., J. E. Gubernatis, R. T. Scalettar, S. R.                        Phys. Lett.37, 057502 (2020).
+     White, D. J. Scalapino, and R. L. Sugar, Sign problem in                   [11]  J. Takahashi, H. Shao, B. Zhao, W. Guo, A. W. Sand-
+     the numerical simulation of many-electron systems, Phys.                         vik,  SO(5) multicriticality in two-dimensional quantum
+     Rev. B41, 9301 (1990).                                                           magnets, arXiv:2405.06607.
+ [2]  P. Henelius and A. W. Sandvik, Sign problem in Monte                      [12]  S.  R.  White,  Density-matrix  algorithms  for  quantum
+     Carlo  simulations  of  frustrated  quantum  spin  systems,                      renormalization groups, Phys. Rev. B48, 10345 (1993).
+     Phys. Rev. B62, 1102 (2000).                                               [13]  U.   Schollwoeck,   The   density-matrix   renormalization
+ [3]  M.  Troyer  and  U.-J.  Wiese,  Computational  Complex-                         group  in  the  age  of  matrix  product  states,  Ann.  Phys.
+     ity and Fundamental Limitations to Fermionic Quantum                             326, 96 (2011).
+     Monte  Carlo  Simulations,  Phys.  Rev.  Lett.94,  170201                  [14]  E. M. Stoudenmire and S. R. White, Real-space parallel
+     (2005).                                                                          density matrix renormalization group, Phys. Rev. B87,
+ [4]  A. W. Sandvik, Stochastic series expansion method with                          155137 (2013).
+     operator-loop update, Phys. Rev. B59, R14157 (1999).                       [15]  V. Murg, F. Verstraete, and J. I. Cirac, Exploring frus-
+ [5]  O.  F.  Sylju˚asen  and  A.  W.  Sandvik,  Quantum  Monte                       trated spin systems using projected entangled pair states,
+     Carlo  with  directed  loops,  Phys.  Rev.  E66,  046701                         Phys. Rev. B79, 195119 (2009).
+     (2002).                                                                    [16]  W.-Y.  Liu,  S.  Dong,  C.  Wang,  Y.  Han,  H.  An,  G.-C.
+ [6]  A. W. Sandvik, Computational Studies of Quantum Spin                            Guo, and L. He, Gapless spin liquid ground state of the
+     Systems, AIP Conf. Proc.1297, 135 (2010).                                        spin-1/2J                 1-J  2 Heisenberg model on square lattices, Phys.
+ [7]  H. G. Evertz, G. Lana, and M. Marcu, Cluster algorithm                          Rev. B98, 241109 (2018).
+     for vertex models, Phys. Rev. Lett.70, 875 (1993).                         [17]  R. Or´us, Tensor networks for complex quantum systems,
+ [8]  A. W. Sandvik and H. G. Evertz, Loop updates for varia-                         Nat. Rev. Phys.1, 538 (2019).
+     tional and projector quantum Monte Carlo simulations in                    [18]  P. Corboz, Y. Zhang, B. Ponsioen, and F. Mila, Quan-
+     the valence-bond basis, Phys. Rev. B98, 024407 (2010).                           tum spin liquid phase in the Shastry-Sutherland model
+ [9]  N.  Ma,  P.  Weinberg,  H.  Shao,  W.  Guo,  D.-X.  Yao,                        revealed  by  high-precision  infinite  projected  entangled-
+     and A. W. Sandvik, Anomalous Quantum-Critical Scal-                              pair states, arXiv:2502.14091.
+     ing  Corrections  in  Two-Dimensional  Antiferromagnets,                   [19]  G.  Carleo  and  M.  Troyer,  Solving  the  quantum  many-
+     Phys. Rev. Lett.121, 117202 (2018).                                              body  problem  with  artificial  neural  networks,  Science
+[10]  A. W. Sandvik and B. Zhao,  Consistent Scaling Expo-                            355, 602 (2017).
+     nents at the Deconfined Quantum-Critical Point, Chin.                      [20]  H. Lange, A. Van de Walle, A. Abedinnia, and A. Bohrdt,
+                                                                                                                                                             17
+
+     From Architectures to Applications:  A Review of Neu-                              antiferromagnetic Heisenberg model on a square lattice,
+     ral  Quantum  States,  Quantum  Sci.  Technol.9,  040501                           Phys. Rev. B42, 6555 (1990).
+     (2024).                                                                       [38]  M. S. Makivic and H.-Q. Ding, Two-dimensional spin-1/2
+[21]  D.  Wu,  R.  Rossi,  F.  Vicentini,  and  G.  Carleo,  From                       Heisenberg  antiferromagnet:   A  quantum  Monte  Carlo
+     tensor-network  quantum  states  to  tensorial  recurrent                          study, Phys. Rev. B43, 3562 (1991).
+     neural networks, Phys. Rev. Res.5, L032001 (2023).                            [39]  E. Manousakis, The spin-1/2 Heisenberg antiferromagnet
+[22]  A. Chen and M. Heyl, Empowering deep neural quantum                               on  a  square  lattice  and  its  application  to  the  cuprous
+     states through efficient optimization, Nat. Phys.20, 1476                          oxides, Rev. Mod. Phys.63, 1 (1991).
+     (2024).                                                                       [40]  K.  J.  Runge,   Quantum  Monte  Carlo  calculation  of
+[23]  R. Rende, S. Goldt, F. Becca, and L. L. Viteritti, Fine-                          the long-range order in the Heisenberg antiferromagnet,
+     tuning neural network quantum states, Phys. Rev. Res.                              Phys. Rev. B45, 7229 (1992)
+     6043280 (2024).                                                               [41]  K. J. Runge, Finite-size study of the ground-state energy,
+[24]  M. Bortone, Y. Rath, and G. H. Booth, Impact of condi-                            susceptibility, and spin-wave velocity for the Heisenberg
+     tional modelling for a universal autoregressive quantum                            antiferromagnet, Phys. Rev. B45, 12292 (1992).
+     state, Quantum8, 1245 (2024).                                                 [42]  U.-J. Wiese and H.-P. Ying, A determination of the low
+[25]  J. Wang, J. Surace, I. Fr´erot, B. Legat, M.-O. Renou, V.                         energy  parameters  of  the  2-d  Heisenberg  antiferromag-
+     Magron,  and  Ac´ın,  Certifying  Ground-State  Properties                         net, Z. Phys. B93, 147 (1994).
+     of Many-Body Systems, Phys. Rev. X14031006 (2024).                            [43]  B.  B.  Beard  and  U.-J.  Wiese,  Simulations  of  Discrete
+[26]  I.  Kull,  N.  Schuch,  B.  Dive,  and  M.  Navascu´es,  Lower                    Quantum Systems in Continuous Euclidean Time Phys.
+     Bounds on Ground-State Energies of Local Hamiltonians                              Rev. Lett.77, 5130 (1996).
+     through  the  Renormalization  Group,  Phys.  Rev.  X  14,                    [44]  A. W. Sandvik, Finite-size scaling of the ground-state pa-
+     021008 (2024).                                                                     rameters of the two-dimensional Heisenberg model, Phys.
+[27]  M.  S.  Moss,  R.  Wiersema,  M.  Hibat-Allah,  J.  Car-                          Rev. B56, 11678 (1997).
+     rasquilla,  and  R.  G.  Melko,  Leveraging  recurrence  in                   [45]  F.-J.  Jiang  and  U.-J.  Wiese,  High-precision  determi-
+     neural  network  wavefunctions  for  large-scale  simula-                          nation  of  low-energy  effective  parameters  for  a  two-
+     tions of Heisenberg antiferromagnets:  the square lattice,                         dimensional Heisenberg quantum antiferromagnet Phys.
+     arXiv:2502.17144.                                                                  Rev. B83, 155120 (2011).
+[28]  P. Hasenfratz and F. Niedermayer, Finite size and tem-                       [46]  A. Sen, H. Suwa, and A. W. Sandvik, Velocity of exci-
+     perature effects in the AF Heisenberg model, Z. Phys. B                            tations in ordered, disordered, and critical antiferromag-
+     92, 91 (1993).                                                                     nets, Phys. Rev. B92, 195145 (2015).
+[29]  F.  Niedermayer  and  C.  Weiermann,  The  rotator  spec-                    [47]  H. Neuberger and T. Ziman, Finite-size effects in Heisen-
+     trum in the delta-regime of the O(n) effective field theory                        berg antiferromagnets, Phys. Rev. B39, 2608 (1989).
+     in 3 and 4 dimensions, Nucl. Phys. B842, 248 (2011).                          [48]  D.  S.  Fisher,  Universality,  low-temperature  properties,
+[30]  P.  W.  Anderson,  New  Approach  to  the  Theory  of  Su-                        and   finite-size   scaling   in   quantum   antiferromagnets,
+     perexchange Interactions, Phys. Rev.115, 2 (1959).                                 Phys. Rev. B39, 11783 (1989).
+[31]  B. I. Halperin and P. C. Hohenberg, Hydrodynamic The-                        [49]  A. W. Sandvik and J. Kurkij¨arvi, Quantum Monte Carlo
+     ory of Spin Waves, Phys. Rev.188, 898 (1969).                                      simulation  method  for  spin  systems,  Phys.  Rev.  B43,
+[32]  J. Oitmaa and D. D. Betts, Ground state properties of                             5950 (1991).
+     the Heisenberg antiferromagnet and XY magnet in three                         [50]  E.  L.  Pollock  and  D.  M.  Ceperley,  Path-integral  com-
+     dimensions, Phys. Lett. A68, 450 (1978).                                           putation of superfluid densities, Phys. Rev. B36, 8343
+[33]  J.  Oitmaa  and  D.  D.  Betts,  The  ground  state  of  two                      (1987).
+     quantum  models  of  magnetism,  Can.  J.  Phys.56,  897                      [51]  C. Lavalle, S. Sorella, and A. Parola, Anomalous Finite
+     (1978).                                                                            Size Spectrum in the S=1/2 Two Dimensional Heisenberg
+[34]  D.  A.  Huse,  Ground-state  staggered  magnetization  of                         Model, Phys. Rev. Lett.80, 1746 (1998).
+     two-dimensional quantum Heisenberg antiferromagnets,                          [52]  F. Niedermayera and P. Weisz, Casimir squared correc-
+     Phys. Rev. B37, 2380 (1988).                                                       tion  to  the  standard  rotator  Hamiltonian  for  the  O(n)
+[35]  J. D. Reger and A. P. Young, Monte Carlo simulations                              sigma-model in the delta-regime, J. High Energy Phys.
+     of the spin-1/2 Heisenberg antiferromagnet on a square                             2018, 70 (2018).
+     lattice, Phys. Rev. B37, 5978 (1988).                                         [53]  J.  Yang,  A.  W.  Sandvik,  and  L.  Wang,  Quantum  crit-
+[36]  S. Chakravarty, B. I. Halperin, and D. R. Nelson, Two-                            icality and spin liquid phase in the Shastry-Sutherland
+     dimensional quantum Heisenberg antiferromagnet at low                              model, Phys. Rev., L060409 (2022).105
+     temperatures, Phys. Rev. B39, 2344 (1989).                                    [54]  S. Sanyal, A. Banerjee, K. Damle, and A. W. Sandvik,
+[37]  S. Liang, Existence of N´eel order at T=0 in the spin-1/2                         Antiferromagnetic order in systems with doubletS               tot =
+                                                                                        1/2 ground states, Phys. Rev.86, 064418 (2012).

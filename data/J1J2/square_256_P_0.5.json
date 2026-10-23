@@ -131,7 +131,16 @@
           "from": "Nat. Phys. 20, 1476 (2024) = arXiv:2302.01941v3: Results (J1-J2 paragraphs); Extended Data Fig. 1 caption; Extended Data Fig. 3 caption; Methods (ResNet1/ResNet2), arXiv:2302.01941 (compute pass 2026-09-16)",
           "to": "Nat. Phys. 20, 1476 (2024) = arXiv:2302.01941v3: Results (J1-J2 paragraphs); Extended Data Fig. 1 caption; Extended Data Fig. 3 caption; Methods (ResNet1/ResNet2), arXiv:2302.01941 (compute pass 2026-09-16); data/Fig2c.csv and examples/measure.py of the authors' code, github.com/ChenAo-Phys/MinSR @ 6b6493f (qmbl-verify 2026-09-29)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/ChenAo-Phys/MinSR",
+        "read_from": {
+          "quote": "We provide the code needed to reproduce our main results via Zenodo at https://zenodo.org/doi/10.5281/zenodo.7657551 (ref.68) and via GitHub at https://github.com/ChenAo-Phys/MinSR.",
+          "location": "Nature Physics published text (sources/chen_heyl.txt), Code availability; same in arXiv:2302.01941",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -508.839936,
@@ -449,6 +458,21 @@
         "scope": "row",
         "confidence": "medium",
         "note": "gpu_hours = 'approx. 300 GPU hours' stated specifically for the 16×16 lattice (single A100); we read it as the J2 = 0.5 ground-state run of Table I. Blanket protocol: 1000 SR steps with 1024 samples then 500 steps with 4096 samples (iterations = 1500 is the sum of the two stated stages; samples = first-stage value, second stage 4096), single NVIDIA A100 GPU for all simulations. Architecture: GCNN with L = 16 layers of six group-indexed feature maps; parameter count not stated. || parameters = 112494 evaluated (16-layer plain GCNN (L = 16 layers for L x L), 16x16 square, point group C4v order 8): NetKet GCNN with spin parity and input/hidden masks = embedding F*n_in + F bias + (L-1) equivariant layers (F^2*n_h + F bias) + (L-1) parity-flip layers (F^2*n_h, no bias, extra_bias=False default) with F = 6 feature maps, L = 16 layers, n_in = 13 kernel sites (Fig. 1, origin included), n_h = 13 x |point group| 8 = 104: 84 + 56250 + 56160 = 112494. Real parameters (\"real-valued kernels\"), counted the way NetKet's n_parameters counts them (unmasked entries only, NetKet >= 3.7). Independent of N and of |G|: the masked kernels depend only on the cluster size and the point-group order, so the count changes across rows only through the depth L. Assumptions and their size: (i) spin parity doubles the hidden kernels (the paper's symmetry group is space group x Z2 parity and it labels irreps with ±; without the parity-flip layers the count would be 56334); (ii) biases are the NetKet default use_bias=True (96 parameters; not stated in the paper); (iii) \"in most cases\" the embedding is local; a full-range embedding (n_in = 256) would give 113952; (iv) with NetKet < 3.7 (e.g. at v1, Nov 2022) masked kernels were stored full-size (F x F x |G|) and multiplied by the mask, so n_parameters would print a larger number of which only the above are free. Consistency check: LayerSR (App. C) requires fewer samples than parameters per layer; with parity one triangular layer pair has 2 x 6 x 6 x 228 + 6 = 16422 parameters, just above the 16384 samples used there, without parity 8214 would not be. Depth: v2 says L layers for an L x L cluster (16 for this row; v1 said 12 layers for 12x12 and 16x16, but the row energy -0.496509(6) x 1024 is the v2 value, so v2's 16 layers apply). DOUBT on iterations = 1500: v2 gives 1000 + 500 steps only 'for most simulations', and v1 said explicitly that the 16 x 16 simulations were given more training steps than this protocol (sentence dropped in v2, number never stated); 1500 is a lower bound for this row. Kept. gpu_hours = 300: v1 ties the approx. 300 GPU hours to J2/J1 = 0.5 and 16 x 16, supporting the row attribution. || pass 2026-09-27: stages: 1000 steps at the row's 1024 samples, then 500 steps at 4096 samples (sum 1500 = the row's iterations); I x S as stored understates the sampling 2.0x (stage-weighted mean 2048; verify/VERIFY.md Part 2 #12, agent-D.md). \"For most simulations\" is the paper's hedge; for 16x16 the step count is a lower bound (v1: 'we allowed more training steps'). Not changed here: the model's group reuse overcounts NetKet's FFT-mode arithmetic by about 1.35x on the square lattice, and the spin-parity doubling (inferred) is inside the stored count (agent-D.md)."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Simulations were performed using the NetKet [24] library.",
+          "location": "arXiv:2211.07749 (sources/2211.07749.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -539,7 +563,22 @@
           "from": false
         }
       ],
-      "sampled": true
+      "sampled": true,
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "mVMC",
+            "version": null,
+            "url": "https://github.com/issp-center-dev/mVMC"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The implementation of the RBM+PP scheme is done based on the mVMC package [65].",
+          "location": "arXiv:2211.07749 (sources/2211.07749.txt), Acknowledgments: the numbers are detailed numerical results from its Ref. [7], arXiv:2005.14142; arXiv:2005.14142 (sources/2005.14142.txt), Acknowledgments, for the mVMC sentence",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -508.50816,
@@ -652,7 +691,7 @@
       "family": "RBM",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-256, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-256, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-27",
       "provenance": "primary",
@@ -700,10 +739,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -477.0758633270932 sigma 0.04956884608003359 energy_variance 306.2172570064878 tau_corr 0.025857275236440325 r_hat 1.0042497683157696 | wall_hms 01:03:00 (wall_seconds 3780.4662067368627) on 1 x NVIDIA H100 NVL, no scheduler | parameters 66048, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-rbm-j1j2-256.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-27)",
+        "source": "checks/cost/results/h100-rbm-j1j2-256.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-27)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 7 s, training 3746 s, evaluation 27 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 1.06 h, 0 % of wall-clock x 384 cores; cores at 1.77 GHz on average (1.66-1.99, max 3.71); node load 41.1 on average of 384 CPUs; GPU SM clock 1729 MHz on average (max 1785), utilisation 99.1 %, 204.2 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-256, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -719,7 +769,7 @@
       "family": "RBM",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-256, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-256, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-27",
       "provenance": "primary",
@@ -766,10 +816,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -501.4906916024827 sigma 0.024835980692178412 energy_variance 74.18461478932475 tau_corr 0.04491493577540262 r_hat 1.004424507000415 | wall_hms 01:40:39 (wall_seconds 6038.939990479499) on 1 x NVIDIA H100 NVL, no scheduler | parameters 1029, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-rbmsymm-j1j2-256.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-27)",
+        "source": "checks/cost/results/h100-rbmsymm-j1j2-256.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-27)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 8 s, training 5976 s, evaluation 55 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 1.32 h, 0 % of wall-clock x 384 cores; cores at 1.77 GHz on average (1.61-1.92, max 3.71); node load 40.8 on average of 384 CPUs; GPU SM clock 1785 MHz on average (max 1785), utilisation 99.4 %, 232.3 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-256, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -785,7 +846,7 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-256, no scheduler, commit bd00769)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-256, no scheduler, commit 95974f6)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-30",
       "provenance": "primary",
@@ -833,10 +894,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -506.71452650734454 sigma 0.01088366226386808 energy_variance 12.329318110037093 tau_corr 0.12963807960941442 r_hat 1.0059738116358925 | wall_hms 13:56:49 (wall_seconds 50208.64607877191) on 1 x NVIDIA H100 NVL, no scheduler | parameters 160300, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-vit-j1j2-256.json, no scheduler, commit bd00769 (QMBL run, 2026-09-30)",
+        "source": "checks/cost/results/h100-vit-j1j2-256.json, no scheduler, commit 95974f6 (QMBL run, 2026-09-30)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 10 s, training 49771 s, evaluation 428 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 13.98 h, 0 % of wall-clock x 384 cores; cores at 2.06 GHz on average (1.59-3.13, max 3.71); node load 145.3 on average of 384 CPUs; GPU SM clock 1249 MHz on average (max 1785), utilisation 99.9 %, 397.3 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/95974f6/checks/cost",
+        "commit": "95974f6",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-256, no scheduler, commit 95974f6)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

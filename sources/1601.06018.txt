@@ -1,0 +1,975 @@
+             Spin liquid nature in the Heisenberg J1− J2 triangular antiferromagnet
+
+             Yasir Iqbal,1,∗  Wen-Jun Hu,2,†  Ronny Thomale,1,‡  Didier Poilblanc,3,§  and Federico Becca4,¶
+                                            1Institute  for  Theoretical  Physics  and  Astrophysics,
+                      Julius-Maximilian’s  University  of  W¨urzburg,  Am  Hubland,  D-97074  W¨urzburg,  Germany
+                   2Department  of  Physics  and  Astronomy,  Rice  University,  Houston,  Texas  77005-1827,  USA
+        3Laboratoire  de  Physique  Th´eorique  UMR-5152,  CNRS  and  Universit´e  de  Toulouse,  F-31062  Toulouse,  France
+                       4Democritos  National  Simulation  Center,  Istituto  Oﬃcina  dei  Materiali  del  CNR  and
+                    SISSA-International  School  for  Advanced  Studies,  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                                                              (Dated:  April 12, 2016)
+                   We investigate the spin- 12  Heisenberg model on the triangular lattice in the presence of nearest-
+                neighborJ1 and next-nearest-neighborJ2 antiferromagnetic couplings.  Motivated by recent ﬁndings
+                from density-matrix renormalization group (DMRG) claiming the existence of a gapped spin liquid
+                with signatures of spontaneously broken lattice point group symmetry [Zhu and White,Phys.  Rev.
+                B 92, 041105 (2015); Hu, Gong, Zhu, and Sheng,Phys.  Rev.  B              92, 140403 (2015)], we employ the
+                variational Monte Carlo (VMC) approach to analyze the model from an alternative perspective that
+                considers both magnetically ordered and paramagnetic trial states.  We ﬁnd a quantum paramagnet
+                in  the  regime  0.08 ≲ J2/J1 ≲  0.16,  framed  by  120°  coplanar  (stripe  collinear)  antiferromagnetic
+                order for smaller (larger) J2/J1.  By considering the optimization of spin-liquid wave functions of a
+                diﬀerent gauge group and lattice point group content as derived from Abrikosov mean-ﬁeld theory,
+                we obtain the gaplessU(1) Dirac spin liquid as the energetically most preferable state in comparison
+                to all symmetric or nematic gapped Z2 spin liquids so far advocated by DMRG. Moreover, by the
+                application  of  few  Lanczos  iterations,  we  ﬁnd  the  energy  to  be  the  same  as  the  DMRG  result
+                within  error-bars.   To  further  resolve  the  intriguing  disagreement  between  VMC  and  DMRG,  we
+                complement our methodological approach by the pseudofermion functional renormalization group
+                (PFFRG) to compare the spin structure factors for the paramagnetic regime calculated by VMC,
+                DMRG, and PFFRG. This model promises to be an ideal test-bed for future numerical reﬁnements
+                in tracking the long-range correlations in frustrated magnets.
+
+                PACS numbers:  05.10.Cc, 75.10.Jm, 75.10.Kt, 75.40.Mg
+
+
+                     I.    INTRODUCTION                                            Another  prominent  candidate  model  conjectured  to
+                                                                                host a quantum paramagnetic ground state is the spin-
+   Quantum     antiferromagnetic     models     on     two-                     1
+                                                                                2  triangular lattice with both antiferromagnetic nearest-
+dimensional    frustrated    lattices    provide    a    natural                (J1)  and  next-nearest-neighbor  (J2)  couplings  [34, 35].
+habitat   for   the   birth   of   novel   quantum   spin-liquid                Although there are several compounds in which magnetic
+states  [1–3],  whose  search  has  been  a  keynote  of  con-                  moments lie on stacked layers with a triangular geometry,
+temporary  condensed  matter  physics  [4].   For  example,                     most of them have sizable distortions, leading to spatial
+spin- 12  Heisenberg models deﬁned on the kagome lattice                        anisotropies along diﬀerent directions [36,37].  Very re-
+have been shown to potentially host exotic spin liquids,                        cently,  it  has  been  claimed  that  Ba3CoSb2O9  gives  an
+sometimes   with   controversial   ﬁndings   from   diﬀerent                    almost  perfect  realization  of  a  spin- 12  equilateral  trian-
+numerical methods.  This includes potential microscopic                         gular lattice antiferromagnet, with both J1  and J2  cou-
+models for the chiral spin liquid as originally described                       plings [38].  From a theoretical point of view, the classical
+by  Kalmeyer  and  Laughlin  and  similar  states  [5–20],                      limit of the J1−J2 model has three diﬀerent phases:  for
+the  gapped  (topological)  Z2  spin  liquid  proposed  to                      J2/J1 < 1/8, the system has three-sublattice 120° copla-
+describe the properties of the nearest-neighbor model of                        nar order,  for 1/8 < J2/J1 < 1 it is inﬁnitely degener-
+this  highly  frustrated  lattice  [21–24],  the  foundation  of                ate  (with  four-sublattice  periodicity,  in  which  the  only
+paradigmatic gapless spin liquids such as the U(1) Dirac                        constraint  is  to  have  the  four  spins  sum  to  zero),  and
+spin  liquid  and  algebraic  spin  liquids  [25–28],  and  at-                 for J2/J1 > 1 it features generic incommensurate spiral
+tempts to resolve magnetic phase diagrams assisting the                         structures.  By including spin-wave ﬂuctuations, both at
+experimental  investigation  of  Herbertsmithite  crystals                      the lowest (ﬁrst) and second orders, the coplanar phase
+and polymorphs thereof [29–33].                                                 remains  stable,  while  the  accidental  degeneracy  of  the
+                                                                                intermediate phase is lifted in favor of a stripe collinear
+                                                                                order with two-sublattice periodicity [35,39].  Naturally,
+                                                                                quantum  paramagnetic  domains  tend  to  emerge  in  the
+∗ yiqbal@physik.uni-wuerzburg.de                                                vicinity  of  classical  transition  points,  i.e., J2/J1  =  1/8
+† wenjun.hu@rice.edu
+‡ rthomale@physik.uni-wuerzburg.de                                              and J2/J1 = 1; however, their actual stabilization is not
+
+§ didier.poilblanc@irsamc.ups-tlse.fr                                           clear within spin-wave approaches [35,39].  Subsequent
+¶ becca@sissa.it                                                                works have shown conﬂicting results on the possible ex-
+                                                                                                                                                      2
+
+                                                                              the  fermionic  mean-ﬁeld  level.   This  approach  was  ex-
+                                                                              tended by Bieri, Lhuillier, and Messio [54] to include chi-
+                                                                              ral spin liquids as well.  A bosonic mean-ﬁeld classiﬁca-
+                                                                              tion has likewise been accomplished [55,56], with some
+                                                                              of the states addressed already in earlier works [57,58].
+
+                                                                                 In  this  paper,  we  address  the J1− J2  Heisenberg
+                                                                              model  on  the  triangular  lattice  from  the  viewpoint  of
+                                                                              versatile  Gutzwiller  projected  Abrikosov-fermion  wave
+FIG. 1.   (Color online) Schematic illustrations of the coplanar              functions (optionally supplemented by Lanczos optimiza-
+three-sublattice (black, blue, and red) magnetic order on the                 tion),  which  we  implemented  by  using  eﬃcient  VMC
+triangular  lattice  (a),  the  resonating-valence  bond  spin  liq-          techniques.   To  enable  a  comparison  of  the  variational
+uid (b) and the collinear two-sublattice (blue and red) stripe                energies, we also perform DMRG and Lanczos diagonal-
+magnetic order (c).  The phase diagram, as obtained by us-                    izations  for  speciﬁc  regions  in  parameter  space.   In  or-
+ing  variational  Monte  Carlo  method  is  also  reported.   Note            der  to  resolve  the  magnetic  susceptibility  proﬁle  in  the
+that the DSL found here can be represented as a resonating-                   paramagnetic  regime,  we  employ  pseudofermion  func-
+valence bond spin liquid with a power-law distribution of bond                tional renormalization group (PFFRG) calculations, the
+amplitudes.                                                                   results  of  which  are  then  compared  with  analogous  re-
+                                                                              sults from DMRG and VMC. Our main VMC results are
+istence,  extent,  and nature of nonmagnetic phases [39–                      summarized as follows:  a spin-liquid phase is stabilized
+46].    Some  more  recent  studies  have  vouched  for  the                  for 0.08 ≲J2/J1 ≲ 0.16 (Fig.1), in excellent agreement
+existence  of  a  quantum  paramagnet  in  the  vicinity  of                  with  DMRG  [50, 51]  and  CCM  [46].   Within  the  spin-
+J2/J1  =  1/8,  while  the  problem  of  the  precise  identiﬁ-               liquid regime, however, we ﬁnd no signal of stabilization
+cation  of  its  nature  and  extent  in  parameter  space  re-               for any of the gapped symmetric or nematic Z2 states pro-
+mains an open issue:  a Schwinger-boson approach found                        posed in Refs.52and53.  In particular, the gapped                   Z2
+the  corresponding  window  to  be  0.12 ≲ J2/J1 ≲  0.19                      spin liquids are found to have higher energies compared
+with  no  further  clariﬁcation  of  the  nature  of  the  para-              to the gapless U(1) Dirac spin liquid (DSL); the gapless
+magnetic  state  [45],  while  a  high-order  coupled-cluster                 Z2 spin liquids suﬀer the same fate.  We ﬁnd that nematic
+method (CCM) study predicted a quantum paramagnet                             order only onsets simultaneously with collinear antiferro-
+for  0.060(10)  ⩽ J2/J1  ⩽  0.165(5)  [46],  with  a  spin-                   magnetic order, which is also supported by the analysis
+triplet  gap  which  vanishes  in  the  entire  paramagnetic                  of  nematic  response  functions  in  PFFRG.  On  perform-
+regime [47].  In addition, two diﬀerent variational Monte                     ing a couple of Lanczos optimization steps on the VMC
+Carlo  (VMC)  studies  claimed  for  a  gapless  spin  liquid                 variational result, followed by a zero-variance extrapola-
+close toJ2/J1 = 1/8:  Kaneko and co-workers [48] used a                       tion, we obtain estimates of the exact ground-state and
+full optimization of the pairing of a Gutzwiller-projected                    S  =  2  excited-state  energies  on  diﬀerent  cluster  sizes.
+BCS  wave  function  [obtaining  a  critical  spin  liquid  for               Our estimate of the ground-state energy on ﬁnite-systems
+0.10(1) ⩽J2/J1 ⩽ 0.135(5)] and Mishmash and collabo-                          is in excellent agreement with exact diagonalization and
+rators [49] considered few variational      Ans¨atze to describe              other numerical methods.  In the thermodynamic limit,
+both magnetic and nonmagnetic phases (here, they ob-                          our estimate of the ground-state energy is equal to the
+tained  evidence  for  a  gapless  nodal d-wave  spin  liquid                 one obtained by DMRG, within error-bars.  However, in
+for  0.06 ≲ J2/J1 ≲  0.17).   In  the  former  case,  the  full               contrast to DMRG results, which found a ﬁnite spin exci-
+optimization of the pairing function faces technical diﬃ-                     tation gap, theS = 2 gap computed in VMC is found to
+culties, which make it diﬃcult to reach true energy min-                      extrapolate to zero (within error-bars) in the thermody-
+ima; in the latter one, the variational states are relatively                 namic limit.  These ﬁndings strongly point to a gapless
+simple and do not exhaust the rich variety of states that                     spin  liquid  ground  state,  yielding  a  clear  disagreement
+can  be  obtained  within  the  fermionic  representation  of                 with the ﬁndings by DMRG.
+Gutzwiller-projected states.  Indeed,  the variational en-                       The article is organized as follows.  In Sec.II, we de-
+ergies  that  we  get  are  much  better  than  those  of  these              scribe the model Hamiltonian and discuss its ﬁnite-size
+two papers, indicating the high accuracy of the present                       spectra obtained from exact diagonalization, followed by
+approach.                                                                     a  description  of  the  pseudofermion  spin  representation
+  By  contrast,   density-matrix  renormalization  group                      framework.    In  Sec.III,  the  variational  Monte  Carlo
+(DMRG) studies ﬁnd a gapped Z2  topological spin liq-                         method,  the  associated  wave  functions,  and  the  pseud-
+uid  for  0.06 ≲ J2/J1 ≲  0.17  [50]  and  0  .08 ≲ J2/J1 ≲                   ofermion  functional  renormalization  group  method  are
+0.16 [51], with signatures of possible spontaneously bro-                     explained.  In Sec.IV, we present the results on, the en-
+ken rotational symmetry. Following this proposal, Zheng,                      ergy  optimization  of  competing  variational  states,  spin
+Mei, and Qi, [52], and, in an independent work, Lu [53]                       excitation gap, spin structure factors, followed by a dis-
+have performed a classiﬁcation of symmetric and nematic                       cussion of the ﬁndings from diﬀerent methods.  Conclu-
+Z2 spin liquids, and pointed out promising candidates at                      sions are given in Sec.V.
+                                                                                                                                                      3
+
+                                                                              In particular, we show (i) a singlet with q = (0, 0) and
+                                                                              R2π/6 =ei2π/6, which is degenerate with the one having
+                                                                              R2π/6 =e−i2π/6, (ii) a triplet with q = (4π/3, 0), which
+                                                                              is  degenerate  with  the  one  having q  =  (2π/3, 2π/√3),
+                                                                              and (iii) a triplet with q = (0, 2π/√3), degenerate with
+                                                                              q = (π,±π/√3).  The ground state is a total-symmetric
+                                                                              singlet  for J2/J1 ⩽  0.15;  for J2/J1 >  0.2  singlets  with
+                                                                              R2π/6  = e±i2π/6  collapse  on  it,  even  having  a  slightly
+                                                                              lower  energy  on  this  cluster.    This  fact  is  compatible
+                                                                              with  the  rise  of  a  phase  with  stripe  collinear  order  in
+                                                                              the  thermodynamic  limit  (or  a  spontaneous  breaking
+                                                                              of  rotational  symmetry).   In  addition,  a  level  crossing
+                                                                              appears  also  in  the  triplet  sector:   for  small  values  of
+                                                                              J2/J1,  the  lowest-energy  triplet  has q  =  (4π/3, 0)  (or
+                                                                              q = (2π/3, 2π/√3)), which is compatible with the pres-
+                                                                              ence of 120° order in the thermodynamic limit; by con-
+FIG. 2.    (Color online) Exact low-energy spectra (measured                  trast for larger values of J2/J1, the lowest-energy triplet
+from the total-symmetric state energy E0) on the 6× 6 clus-                   has  q  =  (0, 2π/√3)  (or  symmetry  related  momenta),
+ter  for  diﬀerent  values  of J2/J1.   The  states  are  classiﬁed           compatible with the collinear magnetic order.  Unfortu-
+according to their spin, momentum q, and eigenvalue R2π/6                     nately,  on  such  a  small  cluster,  it  is  impossible  to  es-
+of 2π/6 rotations.  The total-symmetric state is a singlet with               tablish with precision the locations of phase transitions,
+q = (0, 0) and R2π/6 = 1.  The other states are, (i) a singlet                as  well  as  the  possible  existence  of  a  magnetically  dis-
+with q = (0, 0) and R2π/6 =ei2π/6 (green squares), degener-                   ordered  phase.   Therefore,  we  address  these  important
+ate withR2π/6 =e−i2π/6, (ii) a triplet with q = (4π/3, 0) (red                questions using variational wave function and functional
+circles), which is degenerate with q = (2π/3, 2π/√3), and (iii)               renormalization  group  approaches,  which  are  described
+a triplet with q = (0, 2π/√3) (blue diamonds), which is de-                   in the ensuing section.
+generate with other two states at symmetry-related q points.
+
+                                                                                         B.    Pseudofermion mean-ﬁeld theory
+                           II.    MODEL
+                                                                                 A traditional recipe for the construction of a spin liquid
+  The Hamiltonian for the spin- 12  HeisenbergJ1−J2 an-                       at the mean-ﬁeld level [21,59,60] rests on the introduc-
+tiferromagnetic model is                                                      tion of ﬁctitious fermionic ﬁelds represented by Abrikosov
+                       ∑                    ∑                                 “pseudofermion”  operators, ci,α  with  (α   =↑,↓),  cor-
+             H =J1          Si· Sj +J2            Si· Sj,            (1)      responding  to  spin-1/2,  charge  neutral  quasi-particles,
+                       ⟨i,j⟩               ⟨⟨i,j⟩⟩                            called  spinons.  The physical spin operator Si  can then
+where both J1 and J2 are positive;⟨i,j⟩ and⟨⟨i,j⟩⟩ de-                        be expressed as a bilinear in the spinon operators [61]:
+note sums over nearest-neighbor (NN) and next-nearest-                                                 Si = 1
+neighbor  (NNN)  pairs  of  sites,   respectively.    Si   =                                                  2c†i,ασαβci,β,                         (2)
+(Sxi,Syi,Szi ) denotes the spin operator acting on a spin- 12                 where the summation over the repeated greek indices is
+at site i.  All energies will be given in units of J1.                        implied and σ = (σx,σy,σz) denotes the Pauli matrices.
+                                                                              This representation is endowed with a localSU(2) gauge
+                    A.    Finite-size spectra                                 symmetry in which [62–64]
+                                                                                                    (c†      )        (c†     )
+                                                                                                         i,↑ci,↓→U        i,↑ci,↓,                      (3)
+  Before discussing our main results based on VMC and
+PFFRG approaches (see Sec.IV), we would like to show                          whereU is anSU(2) matrix. In terms of spinon operators
+the results of exact diagonalizations on a small 6×6 clus-                    the Hamiltonian (1) acquires the form
+ter.  All eigenstates can be classiﬁed according to their                                     ∑    (                                            )
+quantum  numbers  relative  to  translations  (denoted  by                         H = J1            c†
+the  momentum q);  for  particular  values  of q,  also π/3                                2           i,αci,βc†j,βcj,α− 12c†i,αci,αc†j,βcj,β
+rotations and reﬂections with respect to the x-axis can                                       ⟨i,j⟩(                                         )
+be  speciﬁed,  their  quantum  numbers  being R2π/6  and                           +J2     ∑       c†                                           .   (4)
+Rx,  respectively.   The  results  for  0 ⩽ J2/J1 ⩽  1/2  are                          2            i,αci,βc†j,βcj,α− 12c†i,αci,αc†j,βcj,β
+given  in  Fig.2,  where  the  energies  per  site  of  few  rel-                         ⟨⟨i,j⟩⟩
+evant states are reported in comparison with the total-                       Once the spin operator is written in terms of fermionic
+symmetric singlet with q = (0, 0),R2π/6 = 1 andRx = 1.                        operators, the Hilbert space is enlarged.  Indeed, within
+                                                                                                                                                     4
+
+the original spin model, there are two states per site (i.e.,
+up and down spin), in the fermionic representation, there
+are four states per site (i.e, empty, doubly occupied, and
+singly  occupied  with  up  or  down  spin).   Therefore,  in
+order to describe a legitimate spin state in the fermionic
+representation, one needs to restrict to the sub-space of
+exactly one-fermion per site with the local constraint:
+
+                            c†i,αci,α = 1.                              (5)
+
+  Here,  we  would  like  to  mention  that  both  VMC  and                   FIG. 3.    (Color online) (a) DSL Ansatz:  all NN amplitudes
+PFFRG  approaches  enforce  this  constraint  exactly,  as                    are  real  hoppings  of  equal  magnitude.   The  solid  (dashed)
+described  in  Sec.III.  The  PFFRG  approach  does  not                      bonds denote positive (negative) signs.  The unit cell is dou-
+assume any particular starting point to treat the Hamil-                      bled to accommodate the π ﬂux.  (b) Z2{π}A nematic spin-
+tonian of Eq. (4), thus avoiding to introduce any possible                    liquid  Ansatz  (reproduction  of  Ansatz  No.  20  of  Ref.  [53]):
+bias in the calculations; by contrast, within VMC, a non-                     there are two classes of NN hoppings,  labeled by black and
+interacting state is considered (and then projected into                      red colors. Non-zero NNN hoppings are denoted by blue color.
+the  correct  Hilbert  space).   In  this  respect,  it  is  useful           (c) Z2C  nematic spin-liquid Ansatz (reproduction of Ansatz
+to brieﬂy discuss the simplest possible approximation of                      No. 6 of Ref. [53]): nonzero NN hoppings are denoted by black
+Eq. (4), which consists in a mean-ﬁeld treatment:                             color.  The grey bonds have zero hopping amplitude.  There
+                                                                              are  two  classes  of  NNN  hoppings,  denoted  by  blue  and  red
+    HMF = ∑           χijc†                 ∆ij(c†                            colors.  Both these nematic Ans¨atze require a doubling of the
+                           i,αcj,α +∑              i,↑c†j,↓ + H.c.)           unit cell, and allow chemical potential and on-site real pairing.
+               (i,j),α                 (i,j)
+            {                                          }
+    +∑        µ∑     c†i,αci,α +ζ(c†i,↑c†i,↓ + H.c.)     ,             (6)    function includes strong correlations among the fermionic
+         i        α                                                           objects.
+                                                                                 Our variational wave functions are deﬁned as:
+where  the  operators c†i,αcj,α  and ci,↑cj,↓  have  been  re-
+placed by their corresponding ground-state expectation                                                |Ψvar⟩ =JzPG|Φ0⟩.                        (7)
+values, χij =⟨c†i,αcj,α⟩ and ∆ij =⟨ci,↑cj,↓⟩, respectively.                   Here,|Φ0⟩ is an uncorrelated wave function that is ob-
+The  local  constraint  (5)  has  been  replaced  by  a  global               tained  as  the  ground  state  of  a  generic  noninteracting
+one,  through  the  inclusion  of  a  Lagrangian  multiplier.                 Hamiltonian,  like  the  one  of  Eq.  (6); PG  = ∏
+Within this approximation, the mean-ﬁeld ground state                         ni,↓)2 is the Gutzwiller projector.  Notice that|Φ0⟩ is ob-i(ni,↑−
+|ΨMF⟩  is  obtained  by  diagonalizing  Eq.  (6).   However,                  tained without any self-consistent requirement, as in the
+|ΨMF⟩ lives in the enlarged (i.e., fermionic) Hilbert space                   mean-ﬁeld approach,  but it is found by minimizing the
+and,  in  order  to  obtain  a  legitimate  wave  function  for               energy in presence of the Gutzwiller projector.  In addi-
+spins,  one  must  include  ﬂuctuations  around  the  mean-                   tion to the Gutzwiller term, a spin-spin Jastrow factor is
+ﬁeld state.  In this respect, an accurate treatment of all                    also included to describe magnetically ordered phases:
+(spatial and temporal) ﬂuctuations becomes crucial.  On
+a lattice system, it proves impossible to analytically treat                                                                    
+all these ﬂuctuations in an accurate manner and one has                                         Jz = exp    1    ∑   uijSziSzj  ,                 (8)
+to resort to approximate methods. Temporal ﬂuctuations                                                         2
+of the Lagrange multiplier µ are particularly important,                                                           ij
+since they enforce the one-fermion per-site constraint.  In                   where, uij  is a translationally invariant pseudopotential
+the following, we will describe two possible numerical ap-                    that depends upon the distance|Ri−Rj| of two sites. All
+proaches for describing the ground-state properties of the                    the  independent  parameters  in  the  pseudopotential  are
+spin model.                                                                   optimized via Monte Carlo simulations.  By construction,
+                                                                              the Jastrow factor breaks the spinSU(2) symmetry of the
+                        III.    METHODS                                       Heisenberg model. In the following, we consider two cases
+                                                                              for the noninteracting Hamiltonian that are suitable for
+         A.    Variational Quantum Monte Carlo                                generating magnetic and spin-liquid wave functions.
+                                                                                 The magnetic states are deﬁned from:
+
+  One possibility to enforce exactly the one-fermion per                                HMAG = ∑           χijc†i,αcj,α +h∑        Mi· Si,       (9)
+site constraint is to apply the Gutzwiller projector to the                                         (i,j),α                    i,α
+uncorrelated wave function.  In this case, a Monte Carlo
+sampling is needed in order to compute any expectation                        whereχij andh are parameters that can be optimized to
+values  over  variational  states,  since  the  resulting  wave               minimize the variational energy.  The periodicity of the
+                                                                                                                                                     5
+
+magnetic order is deﬁned by the vector Mi. Here, we take                     Here,  the αk’s are variational parameters.  The conver-
+Mi in theXY  plane, i.e., Mi = (cos(q·Ri), sin(q·Ri), 0),                    gence of|Ψp-LS⟩ to the exact ground state|Ψex⟩ is guar-
+where  q  is  the  pitch  vector.    In  this  way,  the  Jas-               anteed for large p provided the starting state is not or-
+trow factor (8) correctly describes the relevant quantum                     thogonal  to|Ψex⟩,  i.e.,  for⟨Ψex|Ψvar⟩ ⁄=  0.   On  large
+ﬂuctuations  around  the  classical  spin  state  [65].   It  is             cluster  sizes,  only  a  few  steps  can  be  eﬃciently  per-
+worth  mentioning  that  the  existence  of  magnetic  long-                 formed and here we implement the case with p = 1 and
+range  order  is  directly  related  to  the  presence  of  a  ﬁ-            p = 2 (p = 0 corresponds to the original trial wave func-
+nite  parameter h.    Here,  we  study  two  magnetic  or-                   tion).   Subsequently,  an  estimate  of  the  exact  ground-
+ders:  (i)  the  three-sublattice  120°  order,  corresponding               state energy may be achieved by the method of variance
+to q = (4π/3, 0), with the Ansatz forχij in Eq. (9) given                    extrapolation.  For suﬃciently accurate states,  we have
+by Fig.3(a) and (ii) a stripe collinear order, correspond-                   that E≈ Eex + constant×σ2,  where E  =⟨ ˆH⟩/N  and
+ing to q = (0, 2π/√3), with the Ansatz forχij in Eq. (9)                     σ2 = (⟨ ˆH2⟩−⟨ ˆH⟩2)/N  are the energy and variance per
+given  by  Fig.3(b).   These  choices  of    χij  give  the  most            site, respectively, whence, the exact ground-state energy
+competitive magnetic wave functions.                                         Eex can be extracted by ﬁttingE vsσ2 forp = 0, 1, and
+  On the other hand, the spin-liquid wave functions are                      2. The energy and its variance forp = 0, 1, and 2 Lanczos
+deﬁned from the noninteracting Hamiltonian of Eq. (6),                       steps are obtained using the standard variational Monte
+where,  in addition to the hopping terms there is also a                     Carlo method.
+singlet pairing (∆ij = ∆ji), chemical potentialµ and on-
+site  pairing ζ.   Diﬀerent  patterns  of  distribution  of χij
+and ∆ij, along with a speciﬁcation of the on-site terms                      B.    Pseudofermion functional renormalization group
+µ  and ζ  lead  to  distinct  spin  liquids,  see  Ref.  [60]  for
+a systematic classiﬁcation scheme.  Moreover,  the spin-
+spin Jastrow factor can be also included to improve the                         The  PFFRG  approach  [69, 70]  has  been  successfully
+variational energy.                                                          employed to diﬀerent types of hexagonal magnets [29,70–
+  When a particle-hole transformation is performed on                        73], and is also based on the decomposition of the spin op-
+down electrons:                                                              erator of Eq. (2), thus requiring to enforce the constraint
+                                                                             of  one  fermion  per  site.   In  our  formalism,  the  pseud-
+                             c†i,↓→ci,↓,                                     ofermion number ﬂuctuations are explicitly not present,
+                             c†                                              since  we  never  allow  the  system  to  have  any  diagram-
+                              i,↑→c†i,↑,                             (10)    matic  contributions  that  deviate  from  the  one-pseudo-
+the mean-ﬁeld Hamiltonian (6) commutes with the total                        fermion  per  site  constraint.   The  fermionic  representa-
+number of particles.  Therefore the uncorrelated state is                    tion  empowers  one  to  exploit  Feynman  diagrammatic
+deﬁned by ﬁlling suitable single-particle orbitals.  Bound-                  many-body  techniques  on  the  Hamiltonian  (4).   Start-
+ary conditions should be taken in order to have a unique                     ing from a bare level above all spin exchange couplings
+state  (i.e.,  ﬁlling  all  orbitals  in  a  shell  with  the  same          at half-ﬁlling, the bare local free propagator in Matsub-
+mean-ﬁeld  energy).   Periodic  (P)  and  anti-periodic  (A)                 ara space is given by G0(iω) =   1iω , wherein the absence
+boundary conditions along the a1 and a2 lattice vectors                      of a self-energy term is just a manifestation of the fact
+[see Fig.3(a)] can be considered, leading to four choices:                   that the fermionic Hamiltonian (4) does not contain any
+[P,P], [P,A], [A,P], and [A,A] of boundary conditions.                       quadratic term.  The global Langrange parameter µ re-
+  The  variational  parameters  in  the  spin  wave  func-                   lated to the single occupancy constraint falls out of the
+tion  of  Eq.  (7)  are  optimized  using  an  implementa-                   equation because of particle-hole symmetry at half ﬁlling.
+tion of the stochastic reconﬁguration (SR) optimization                      Together, the initial formulation of the propagator along
+method [66,67].  This allows us to obtain an extremely                       with  the  ﬂow  equations  throughout  preserve  the  strict
+accurate  determination  of  variational  parameters.   In-                  locality  of  the  propagator  in  real  space.   The  PFFRG
+deed,  small  energy  diﬀerences  are  eﬀectively  computed                  framework proceeds by introducing an infrared frequency
+by using a correlated sampling, which makes it possible                      cutoﬀ  Λ  in  the  fermion  propagator,  and  by  triggering
+to  strongly  reduce  statistical  ﬂuctuations.   The  current               a purely imaginary self-energy term induced by the im-
+problem  of  the  study  of  the  instability  of  gapless  spin             plicit diagrammatic summation, i.e.,GΛ0 (iω) =  Θ(|ω|−Λ)iω+ΣΛ(ω),
+liquids  towards  Z2  states  will  clearly  demonstrate  the                limΛ→∞ ΣΛ(ω) = 0, resulting in a Λ-dependence of allm-
+power of this method in navigating complicated energy                        particle  vertex  functions.   (Note  that  recently,  PFFRG
+landscapes.                                                                  formulations with an initial guess of the self energy term
+  In order to have a systematic improvement of the trial                     Σ∞ ⁄=  0  have  also  been  developed  [74].)   The  PFFRG
+variational wave function and approach the true ground                       Ansatz (for recent reviews on FRG, see Refs.75and76)
+state, we can apply a few Lanczos steps to|Ψvar⟩ [68]:                       formulates an inﬁnite hierarchy of coupled integrodiﬀer-
+                                                                             ential equations for the evolution of allm-particle vertex
+                           (        p∑                                       functions under the ﬂow of Λ.  Within PFFRG, the trun-
+              |Ψp-LS⟩ =       1 +      αkHk)|Ψvar⟩.            (11)          cation of this system of equations to a closed set is ac-
+                                   k=1                                       complished by the inclusion of only two-particle reducible
+                                                                                                                                                    6
+
+two-loop  contributions,  which  are  found  to  ensure  suf-
+ﬁcient back-feeding of the self-energy corrections to the
+two-particle vertex evolution [77].  A crucial advantage of
+the PFFRG as compared to Abrikosov-type spin random
+phase approximation methods is that the diagrammatic
+summation installed by the ﬂow incorporates vertex cor-
+rections  between  all  interaction  channels,  i.e.,  the  two-
+particle vertex includes graphs that favor magnetic order
+and those that favor disorder in such a way that it treats
+both tendencies on equal footing. A numerical solution of
+the PFFRG equations is made possible by (i) discretizing
+the frequency dependencies of the vertex functions and
+(ii) limiting the spatial dependencies to a ﬁnite cluster.
+In  our  calculations,  the  number  of  discretized  frequen-
+cies  is  64,  and  the  spatial  extent  is  restricted  to∼  10
+lattice spacings.  When some correlations extend beyond
+this limiting distance, we observe a change in the nature
+of the renormalization ﬂow from smooth to an unstable                        FIG. 4.    (Color online) Finite-size scalings of the antiferro-
+one accompanied by enhanced oscillations.  We interpret                      magnetic variational parameter h for (a) 120° coplanar mag-
+this  behavior  as  the  existence  of  a  nearby  spontaneous               netic order and (b) collinear stripe order are shown as a func-
+symmetry breaking phase.  Reversely, the existence of a                      tion of 1/L, for diﬀerent values of J2.  A quadratic ﬁt is used
+stable solution indicates the absence of long-range order.                   in all cases and the cluster sizes correspond to L = 6, 12, 18,
+From the eﬀective low-energy two-particle vertex, we ob-                     24, 30, and 36.  In (c), the thermodynamic estimate ofh (blue
+tain the real-space zero-frequency spin susceptibilityαij:                   asterisks) and the nematic order parameterχNN(1,1)−χNN(1,0) (red
+                          ∫ ∞                                                circles) are shown as functions of J2.  It is worth noting that
+                                                                             nematic order onsets simultaneously with the stripe magnetic
+                  αij =                                                      order.  In panel (a) [A,P] boundary conditions are used for all
+                            0  dτ⟨Szi (τ)Szj (0)⟩.                 (12)      clusters.  In panel (b) [P,P] boundary conditions are used for
+From it, we get the momentum resolved spin susceptibil-                      L = 6, 18, and 30 and [A,A] for L = 12, 24, and 36.
+ity α(q) by a Fourier transform:
+                               ∑                                             spin  susceptibilities αij.   We  then  deﬁne  the p-pattern
+                 α(q) =  1N        eıq·(Ri−Rj)αij,               (13)        nematic  response  function  for  a  given  pair  of  adjacent
+                               i,j                                           sites (i,j) by
+
+where N  is the size of the cluster used in real space.                                            κPnem = J    αSP−αWP
+  In the case of a magnetically disordered regime, we can                                                    δ  αSP +αWP,                    (15)
+track  possible  valence-bond  crystal  and  nematic  orders
+by computing their respective response functions.  Here,                     where the normalization factor J/δ ensures that the RG
+we are particularly interested in studying the tendency of                   ﬂow starts with an initialized value of κPnem = 1.  If the
+the spin liquid towards spontaneous breaking of rotation                     absolute valueκPnem remains small under the RG ﬂow, the
+symmetry,  i.e.,  a  nematic  spin  liquid.   Within  our  PF-               system tends to equalize, i.e., to reject the perturbation
+FRG framework, a conceptually simple way to calculate                        on that link, while, if κPnem develops a large value under
+the nematic response function κnem, which measures the                       the  RG  ﬂow  it  indicates  that  the  system  supports  the
+tendency of the system to support nematic order,  is to                      p-pattern nematic order.
+add a small perturbation to the bare Hamiltonian which
+enters the ﬂow equations as the initial condition for the
+two-particle vertex:                                                                                  IV.    RESULTS
+
+       Hnem =δ ∑            Si· Sj−δ ∑            Si· Sj,         (14)                          A.    Variational energies
+                    (i,j)∈S              (i,j)∈W
+
+which  strengthens  the  couplings Jij  on  all  bonds  in S                    Our  variational  calculations  have  been  performed  on
+[Jij→ Jij +δ for (i,j)∈ S] and weakens the couplings                         L×L clusters possessing all symmetries of the triangu-
+in W  [Jij → Jij−δ  for  (i,j) ∈ W ].   The  bond  pat-                      lar lattice,  with periodic boundaries in the spin Hamil-
+tern P ≡{Sp,Wp} employed here speciﬁes the channel                           tonian  of  Eq.  (1).   Within  the  class  of  fully  symmetric
+of lattice point group symmetry breaking one intends to                      (preserving space group, time-reversal, and spin rotation
+investigate. Such a modiﬁcation amounts to changing the                      symmetries) mean-ﬁeld Ans¨atze with nonzero NN ampli-
+initial conditions of the RG ﬂow at large cutoﬀ scales Λ.                    tudes, there exist only two U(1) states.  (i) The uniform
+As Λ is lowered, we keep track of the evolution of all NN                    resonating-valence bond (uRVB) state (for which all NN
+                                                                                                                                                            7
+
+                                                                                 TABLE  I.  At J2  =  0,  estimations  of  the  ground-state  en-
+                                                                                 ergy per site (in units of J1) obtained by diﬀerent methods
+                                                                                 on the 6× 6 torus and the thermodynamic limit.  The ener-
+                                                                                 gies computed by the ﬁrst two methods (denoted by an as-
+                                                                                 terisk) are from the present study.  The DMRG estimate on
+                                                                                 the  6× 6  torus  is  obtained  by  extrapolating  in  the  trunca-
+                                                                                 tion error, where at most 8000 SU(2) states are kept, while
+                                                                                 the thermodynamic estimate is obtained from extrapolating
+                                                                                 cylindrical  clusters.   After  ED  results,  the  next  three  rows
+                                                                                 show  results  from  VMC  studies.   The  ﬁrst  two  employed  a
+                                                                                 full  pairing  function  optimization,  the  third  one  considered
+                                                                                 a wave function mixing dx2−y2 +idxy  pairing and antiferro-
+                                                                                 magnetic order.  The results for ﬁxed-node (FN), FN with an
+                                                                                 eﬀective Hamiltonian (FNE), coupled cluster method (CCM),
+                                                                                 spin wave (SW), and Green’s function Monte Carlo (GFMC)
+                                                                                 method with stochastic reconﬁguration are also provided for
+                                                                                 comparison.  Notice that the energies computed by the last
+                                                                                 three methods (denoted by a dagger) are not rigorous upper
+                                                                                 bounds of the ground-state energy.
+FIG.  5.       (Color  online)  (a)  At J2  =  0,  the  energies  for
+L = 18, 24, 30, and 36 clusters are plotted.  Assuming spin                                       Method                           6 × 6 torus        2D limit
+wave  size  scaling  [78, 79],  we  use  the  three  largest  clusters            VMC [see Eqs. (7) and (9)]  ∗             −0.548025(3)  −0.545321(7)
+to  get  an  estimate  in  the  thermodynamic  limit.   Similarly,                DMRG∗                                          −0.560375(6)  −0.551(2)
+for other values of J2/J1, using the three largest clusters we                    Exact Diagonalization (Ref. [80])         −0.5603734    −0.5445
+perform size-scalings which are assumed to be linear in 1/L3                      VMC (Heidarian et al.)  (Ref. [81])        −0.55148(5)   −0.5470(1)
+for the antiferromagnetic regimes and 1/L for the spin-liquid
+regime, in order to obtain the corresponding thermodynamic                        VMC (Kaneko et al.)  (Ref. [48])            −0.55519(4)   −0.5449(2)
+estimates of the energy.  They are plotted in (b) as a function                   VMC (Weber et al.)  (Ref. [82])             −0.543(1)      −0.532(1)
+of J2/J1.   Note  that  here  we  use  Jastrow  wave  function  of                FN (Yunoki et al.)  (Ref. [67])                                    −0.53989(3)
+Eq. (7) also for the spin-liquid regime.                                          FNE (Yunoki et al.)                                              −0.54187(6)
+                                                                                  CCM (Li et al.)† (Ref. [46])                                       −0.5521(2)
+                                                                                  SW (Chernyshev et al.)† (Ref. [83])                            −0.54684
+hoppings are real, equal in magnitude, and positive, lead-                        GFMC (Capriotti et al.)† (Ref. [84])      −0.5581(1)     −0.5458(1)
+ing to no magnetic ﬂuxes piercing the lattice).  This is a
+gapless state with a spinon Fermi surface.  (ii) The DSL
+(for which all NN hoppings are real, of equal magnitude,                         the  uncorrelated  Hamiltonian  (9)  with    q  =  (4π/3, 0)
+and with the sign structure of Fig.3(a), giving rise to    π                     and  the  hopping  Ansatz  of  Fig.3(a).   The  variational
+ﬂux in half of the triangles).  This is a gapless state with                     parameters  are  the  antiferromagnetic  parameter h  and
+low-energy Dirac conical excitations [53].  The  L×L clus-                       all  the  independent uij’s  of  the  spin-spin  Jastrow  fac-
+ters may be divided in two diﬀerent classes, those with                          tor (8).  After optimizing on cluster sizes up to  L = 36,
+L = 4n, or those with L = 4n + 2, where n is a positive                          we ﬁnd that for J2/J1 ⩽ 0.06, the h parameter extrap-
+integer.  For the uRVB state, on both these cluster types,                       olates to a ﬁnite value in the thermodynamic limit,  in-
+only  [P,A]  BC  gives  a  closed  shell  conﬁguration  and  is                  dicating  the  existence  of  magnetic  order,  see  Fig.4(a).
+used for the present study.  The other three BCs give an                         By contrast, for J2/J1 > 0.08, the strong frustration is
+open shell.  For the DSL, on L = 4n type clusters, [P,P]                         able to melt the antiferromagnetic order; here, the h pa-
+gives an open shell, the rest three give a closed shell and                      rameter  extrapolates  to  zero  (within  error-bars)  in  the
+we use [A,P] BC in the present study.  On L = 4n + 2                             thermodynamic limit, see Fig.4(a).  The high-accuracy
+type clusters, all four boundary conditions give a closed                        of our magnetic wave functions is demonstrated by the
+shell, and we use [A,P] BC in the present study.                                 fact that for J2  = 0,  i.e.,  the NN Heisenberg antiferro-
+   The variational energies of these two states provide a                        magnet, we get an energy per site in the thermodynamic
+reference for all the rest of the paper and are given (on                        limit of E/J1 =−0.545321(7), which ranks amongst the
+the 32× 32 cluster) by (here the spin-spin Jastrow factor                        most  competitive  variational  estimates  reported  so  far,
+is not included)                                                                 see Fig.5(a) and TableIfor comparison of energies from
+      EuRVB/J1 =−0.35446(1) + 0.01741(1) J2/J1,  (16)                            diﬀerent methods.
+        EDSL/J1 =−0.52905(1) + 0.21657(1) J2/J1.  (17)                              Then,   we   move   towards   investigating   the   second
+                                                                                 regime of interest, i.e., 1/8 ⩽J2/J1 ⩽ 1.  Here, the order-
+Hence  the  DSL  energetically  outshines  the  uRVB  state                      ing wave vector is expected to be that of stripe collinear
+for the parameter regime 0 ⩽J2/J1 ⩽ 0.8766(2).                                   order,  i.e., q = (0, 2π/√3),  which breaks rotation sym-
+   Let us now discuss our VMC results.  First of all, we in-                     metry; hence, a consistent choice of the Ansatz forχij in
+vestigate the region with 0 ⩽J2/J1 ⩽ 1/8.  Here, we con-                         Eq. (9) is the one of Fig.3(b).  It is found upon optimiza-
+sider the variational wave function that is generated from                       tion on cluster sizes up toL = 36, that forJ2/J1 ⩽ 0.16,
+                                                                                                                                                      8
+
+the h parameter extrapolates to zero (within error-bars)                          2.The   Z2{π}A state:  the symmetric version has NN
+in the thermodynamic limit.  Instead, for J2/J1 > 0.16,                              hoppings  equal  to  the  ones  of  the  DSL,  with  the
+the frustration starts getting relieved, and the collinear                           NNN hoppings being identically zero by symmetry,
+order onsets for J2/J1 > 0.18, see Fig.4(b).                                         and an on-site pairing term that opens a gap at the
+  Therefore, our results strongly suggest that close to the                          Dirac nodes.  The nematic version of the spin-liquid
+classical transition J2/J1 = 1/8 a quantum paramagnet                                Ansatz  is  shown  in  Fig.3(b).   It  is  continuously
+settles down for 0.06 ≲J2/J1 ≲ 0.16.  This estimation of                             connected to the DSL and happens to be the only
+the phase boundaries is in excellent agreement with pre-                             gapped spin liquid in its neighborhood.  This state
+vious DMRG [50,51] and CCM [46] studies.  Moreover,                                  corresponds to the Ansatz No. 20 in Ref. [53].
+by a close inspection of the thermodynamic energy per                             3.The   Z2C state:  the symmetric version has all iden-
+site versus J2/J1, we obtain a quite clear evidence that                             tically vanishing NN amplitudes and is neither con-
+the  ﬁrst  transition  is  continuous  (no  visible  discontinu-                     tinuously connected to the uRVB nor to the DSL.
+ities on the energy), while the second one is ﬁrst-order,                            The Ansatz for the nematic version of this spin liq-
+see Fig.5(b).                                                                        uid  is  shown  in  Fig.3(c).   This  spin  liquid  corre-
+  We  now  address  the  important  question  of  identify-                          sponds to the Ansatz No. 6 of Ref. [53].
+ing  the  nature  of  the  quantum  paramagnet  and  study
+competing candidate states (see TableII). In the follow-                          4.The    Z2{π}B  state:   this  is  a  gapless Z2  spin  liq-
+ing,  we  consider  spin-liquid  states  generated  from  the                        uid  which  is  continuously  connected  to  the  DSL.
+uncorrelated Hamiltonian (6)     without the spin-spin Jas-                          Its symmetric version is derived by adding a NNN
+trow factor.  Indeed, although the inclusion of the latter                           pairing term on top of NN hopping π-ﬂux Ansatz,
+one gives a slight improvement of the variational energy,                            which breaks theU(1) gauge structure down to Z2
+it spoils the spinSU(2) invariance of the correlated wave                            but keeps the spinon spectrum gapless.  This state
+function.  Instead,  here we want to deal with  bona  ﬁde                            corresponds to the Ansatz No. 18 of Ref. [53].
+spin-liquid wave functions.  Following the previous work
+done by Zheng et al. [52] and Lu [53], we have analyzed all                      Let us focus our attention to the case withJ2/J1 = 1/8
+the symmetric (gapped and gapless) Z2 spin liquids and                        (well inside the magnetically disordered region); the en-
+their  nematic  counterparts  which  can  be  realized  with                  ergies per site of the two parent gapless U(1) states are
+ﬁnite NN and NNN mean-ﬁeld amplitudes.  Among the                             (on the 32× 32 cluster) EuRVB/J1 =−0.352287(3) and
+ones that have been classiﬁed in Ref. [53], we list those                     EDSL/J1  =−0.501980(1),  see Eqs. (16) and (17).  The
+that show some relevance after numerical optimization.                        results of optimizations of the above four competing Z2
+                                                                              spin liquids wave functions on a 32× 32 cluster are now
+   1.The    Z2{0}A  state:   it  has  uniform  hoppings  and                  discussed.  For a generic unbiased starting point in the
+       pairings at NN and NNN amplitudes, in addition,                        variational  space  of  the Z2{0}A  spin  liquid,  the  varia-
+       chemical potential and on-site pairing are also al-                    tion of parameters and energy in the SR optimization is
+       lowed.  The uniform pairing terms can potentially                      shown  in  Fig.6(a).   It  is  found  that  the  parent  uRVB
+       open up a gap on the spinon Fermi surface formed                       spin  liquid  undergoes  a  pairing  instability  towards  this
+       by  NN  hoppings,  leading  to  a  symmetric  gapped                   gapped nematic Z2 state, which is stabilized with an op-
+       Z2  spin  liquid,  whose  nematic  version  just  diﬀers               timal energy of E/J1  =−0.47729(2).  The energy gain
+       in  having  two  diﬀerent  classes  of  NN  [(1, 0)  and               is signiﬁcant, but not enough to overcome the DSL. This
+       (1, 1)] and NNN [(2, 1) and (1,−1)] hoppings and                       situation should be contrasted with the spin-1/2 kagome
+       pairings, see Fig.3(a).  Hence, this          Ansatz is con-           Heisenberg antiferromagnet, where the spinon Fermi sur-
+       tinuously connected to the uRVB state, and is the                      face state remains stable towards all gapped Z2 spin liq-
+       only  gapped  one  in  its  neighborhood.   This  state                uids in its neighborhood [31,85].
+       corresponds to the Ansatz No. 1 of Ref. [53].                             We  now  discuss  the  fate  of  the Z2{π}A  spin  liquid,
+                                                                              whose proximity to the DSL makes it the most promis-
+                                                                              ing  candidate  state  on  energetic  grounds.   The  param-
+   State      Gapped?  Unit cell  Parent state  # in Ref. [53]                eter  and  energy  optimization  in  Fig.6(b)  clearly  show
+   uRVB         No         1× 1                                               that the energy converges neatly to the reference value
+   DSL            No         1× 2                                             of the DSL corresponding to χNN(1,1)→ 1 and (χNNN(2,1) , µ,
+   Z2{0}A      Yes         1× 1         uRVB                1                 ζR)→ 0.  Here,  we would like to bring attention to the
+   Z2{π}A      Yes         1× 2          DSL                 20               important fact that despite the energy having essentially
+                                                                              converged after≈ 400 iterations, the parameters did not
+   Z2C           Yes         1× 2          None                 6             converge and were still varying, converging to their ﬁnal
+   Z2{π}B       No         1× 2          DSL                 18               values much later than the energy.  This fact is possible
+   VBC2         Yes         1× 2          DSL                                 because,  in  the  energy  minimization,  forces  are  calcu-
+   VBC4         Yes         2× 2          DSL                                 lated through the correlated sampling and not by energy
+                                                                              diﬀerences [66].  The energy landscape along the mani-
+TABLE II. A list of states whose wave functions are studied.                  fold connecting the DSL to the Z2{π}A one is thus very
+                                                                                                                                                        9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6.   (Color online) A typical variational Monte Carlo optimization run for the promising candidate gapped nematic (a)−(c),
+and gapless symmetric (d) Z2  spin-liquid wave functions,  is shown for J2/J1  = 1/8 on the L = 32 cluster.  The variational
+parameters and energy per site (insets) are shown as a function of the Monte Carlo iterations.  For (a) Z2{0}A spin liquid and
+(c) Z2C  spin liquid, a gapped nematic Z2  state is stabilized albeit with a much higher energy compared to the DSL. For (b)
+Z2{π}A and (d) Z2{π}B states, the optimization yields the DSL. The optimized parameter and energy values are obtained by
+averaging over a much larger number of converged Monte Carlo iterations than shown above.
+
+
+ﬂat.   Consequently,  assessing  the  stability  of  the  DSL
+by  solely  computing  the  energy  of  the  perturbed  wave
+function with ﬁxed parameters (i.e., point by point inde-
+pendently, as was done in Ref. [52]) is very hard.  Only
+by performing an accurate SR optimization method can
+one  successfully  optimize  the  parameters  and  transpar-
+ently show that χNN(1,1) = 1 and (χNNN(2,1) , µ, ζR)= 0 corre-
+sponds to the actual minimum of the variational energy.
+This  fact  implies  that  the  nematic  order  parameter  is
+absent, the system is gapless, with theU(1) gauge struc-
+ture kept intact, and hence, the DSL is locally and glob-
+ally stable with respect to destabilizing into the Z2{π}A
+state.   We  veriﬁed  this  result  by  doing  many  optimiza-
+tion runs starting from diﬀerent random initial values of
+the parameters in the four-dimensional variational space.
+This situation is in consonance with what happens for the
+kagome Heisenberg antiferromagnet [85].
+   The Z2C state suﬀers the same fate as the Z2{0}A spin                       FIG.  7.     (Color  online)  A  typical  variational  Monte  Carlo
+liquid, namely that upon optimization [see Fig.6(c)], it                       optimization  is  shown,  at J2/J1  =  1/8  on  a  32× 32  clus-
+is stabilized but with a much higher energy of E/J1  =                         ter,  for  (a)  two-site  unit  cell  VBC  (six  independent  bonds)
+−0.33877(3) compared to the DSL. Lastly, we study the                          and (b) four-site unit cell VBC (12 independent bonds) wave
+gapless  symmetric Z2{π}B  state.  Also in  this  case,  we                    functions.  The variational parameters and energy per site (in-
+ﬁnd that the optimization smoothly goes back to the DSL                        sets) are shown as a function of the Monte Carlo iterations.
+                                                                               On  starting  from  diﬀerent  sets  of  initialized  parameter  val-
+with ∆NNN→ 0, see Fig.6(d). For all the above four spin                        ues, for both cases the optimization gives back the DSL, with
+liquid  wave  functions,  we  reach  similar  conclusions  for                 all  hoppings  being  equal  and ζR  =  0  (χ1  =  1  is  set  as  the
+various values of J2/J1  (within the spin liquid regime),                      reference).  Note that we include the on-site pairing ζR so as
+other cluster sizes, and diﬀerent choices of allowed bound-                    to capture potential instabilities of the Z2{π}A state towards
+ary conditions.                                                                VBC ordering.
+   Valence-bond  crystal  (VBC)  states  also  represent  an
+important  class  of  instabilities  of  spin  liquids  [86, 87].
+Here, we study VBC orders [88], with two- and four-site                        ble towards undergoing a phase transition to these VBC
+unit  cells,  respectively  called  VBC2  and  VBC4  states,                   orders under perturbations.  The result of optimizations
+and  investigate  if  the  DSL  and Z2{π}A  states  are  sta-                  of  VBC  wave  functions  are  shown  in  Fig.7.   We  ﬁnd
+                                                                                                                                                          10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  8.     (Color  online)  At J2/J1  =  1/8  for  the  DSL,  (a)  Variational  energies  as  a  function  of  the  variance  of  energy,  for
+zero,  one,  and two Lanczos steps.  The S  = 0 ground-state energy on the L = 6,  8,  10,  12,  and 14 clusters is estimated by
+extrapolating the three variational results to the zero-variance limit by a quadratic ﬁt, while only two points have been used for
+theL = 20 cluster (see the main text for a description of the extrapolation method).  (b) The same for the S = 2 excited state.
+(c)  The  thermodynamic  estimate  of  the  ground-state  energy  obtained  by  a  ﬁnite-size  scaling  of  the  estimated  ground-state
+energies.  (d) Finite-size scaling of the S = 2 spin gap as a function of 1/L.  Both the p = 0 and p = 2 extrapolated values give
+an estimate which is zero (within error-bars) in the thermodynamic limit.  A linear ﬁt is used for p = 0 and a quadratic ﬁt for
+p = 2.  The largest cluster considered for p = 0 has L = 40.
+
+
+Size         0-LS                1-LS                2-LS                0-LS                1-LS                2-LS          Ground state     S = 2 state     S = 2 gap
+6      −0.501788(1)  −0.510344(2)  −0.512503(3)  −0.469360(2)  −0.479580(1)  −0.481870(3) −0.51548(8)  −0.48378(6)    1.141(5)
+8      −0.502410(1)  −0.510070(1)  −0.511950(4)  −0.487890(1)  −0.496720(1)  −0.499120(5) −0.51314(4)  −0.50076(7)    0.792(5)
+10    −0.501655(1)  −0.508724(2)  −0.510721(5)  −0.494589(1)  −0.502285(2)  −0.50459(1)  −0.51195(8)  −0.50619(6)    0.576(10)
+12    −0.501828(1)  −0.508438(3)  −0.510558(5)  −0.497619(1)  −0.504574(2)  −0.506895(4) −0.51213(10) −0.50841(11)  0.53(2)
+14    −0.501866(1)  −0.508049(3)  −0.510245(7)  −0.499183(1)  −0.505574(3)  −0.507928(3) −0.51203(14) −0.51034(30)  0.33(6)
+20    −0.501915(1)  −0.507056(3)                      −0.500984(1)  −0.506190(3)               −0.51214(15) −0.5116(4)      0.22(12)
+
+TABLE III. AtJ2/J1 = 1/8, the energies of the DSL (columns 2−4) and itsS = 2 excited state (columns 5−7), withp = 0, 1,
+and 2 Lanczos steps on diﬀerent cluster sizes obtained by VMC are given.  The ground-state andS = 2 excited-state energies of
+the spin-1/2 Heisenberg model estimated by using zero-variance extrapolation of variational energies on diﬀerent cluster sizes
+are marked in bold.  The S = 2 gap obtained from the estimates of S = 0 and S = 2 energies on diﬀerent cluster sizes is given
+in the last column.
+
+
+that both these spin-liquid Ans¨atze are locally and glob-                       ones from previous VMC studies [see TableIV].
+ally stable towards dimerizing into VBC orders, similar                             The  very  computationally  demanding p  =  2  calcula-
+to the situation on the kagome lattice [89,90].                                  tions  have  been  performed  for L  =  6,  8,  10,  12,  and
+   Having established that the DSL is stable and repre-                          14  clusters,  while  for  the L  =  20  cluster  only  the  ﬁrst
+sents the lowest energy variational wave function (within                        Lanczos step has been considered.  In the former cases,
+the  class  of  Gutzwiller-projected  fermionic  states),  we                    the  zero-variance  extrapolation  can  be  exploited  by  a
+consider it as the starting (p = 0) state and improve it                         quadratic ﬁt of the three points,E =Eex +A×σ2 +B×
+by applying Lanczos steps [27,91,92].  At      J2/J1 = 1/8,                      (σ2)2. For the largest cluster, i.e.,L = 20, we also consid-
+the eﬀect of two Lanczos steps for diﬀerent cluster sizes is                     ered a quadratic ﬁt:  we ﬁrst obtained an estimate of the
+shown in Fig.8(a) [see also TableIIIfor the actual values                        A andB coeﬃcients by a size scaling of the smaller clus-
+of the energies of the DSL]. Our estimate of the ground-                         ters and then veriﬁed that indeed,  these values give an
+state  energy  on  6× 6  cluster  is  in  excellent  agreement                   excellent ﬁt (i.e., least mean-square error) of the points
+with  the  exact  result,  and  equal  (within  error-bars)  to                  for L  =  20  cluster.   It  is  worth  mentioning,  that  the
+the corresponding estimate from DMRG [see TableIV,                               zero-variance  extrapolation  gives  size  consistent  results
+and  Figs.9(a)  and9(c)].   Similarly,  on  the  8     × 8  clus-                for the energy per site.  Indeed, even though the Lanczos
+ter, the estimate of the ground-state energy from VMC                            step procedure (with a ﬁxedp) becomes less and less eﬃ-
+is equal (within error-bars) to the DMRG estimate [see                           cient when increasing the system size, the extrapolation
+TableIVand  Fig.9(b)  and  Fig.9(d)].   Moreover,  our                           procedure remains accurate:  this can be seen by notic-
+VMC  energies  are  considerably  lower  compared  to  the                       ing that the gain in the energy and variance with respect
+                                                                                                                                                    11
+
+TABLE  IV.  At J2/J1  =  1/8,  the  estimates  of  the  ground-
+state  energy  per  site  (in  units  of J1)  obtained  by  diﬀerent
+methods on 6×6 and 8×8 tori, as well as its estimation in the
+thermodynamic limit. The VMC estimates are obtained using
+zero-variance extrapolation and the DMRG estimates by an
+extrapolation in truncation error (keeping at most 8000SU(2)
+states), see Fig.9.  The thermodynamic estimate from DMRG
+is  obtained  by  using  cylindrical  clusters  [51].   The  asterisk
+denotes  results  from  present  study.   For  comparison,  in  the
+last  row  we  show  VMC  results  of  Kaneko  et  al.   (Ref.  [48])
+employing a full pairing function optimization.
+
+  Method                6× 6 torus    8× 8 torus ∞ 2D limit
+  VMC∗     −0.51548(8)−0.51314(4)−0.51235(20)
+  DMRG∗    −0.51557(5)−0.5133(5) −0.5126(5)
+  ED∗      −0.515564
+  VMC (Ref. [48])  −0.5089(1)       −0.5028(2)
+
+                                                                              FIG. 9.    (Color online) At J2/J1 = 1/8, the estimate of the
+to p = 0 decreases with L, but the extrapolation is not                       ground-state energy per site obtained by [(a) and (b)] DMRG
+aﬀected, since the slope is essentially unchanged [93].                       and [(c) and (d)] VMC, on 6× 6 and 8× 8 tori [see TableIV].
+  By using the ground-state energy estimates on diﬀerent                      The values next to the DMRG data points correspond to the
+                                                                              number of SU(2) states kept.
+cluster sizes, we performed a ﬁnite-size extrapolation, see
+Fig.8(c).   At    J2/J1  =  1/8,  our  ﬁnal  estimate  for  the
+energy of the inﬁnite two-dimensional system is:                              the mean-ﬁeld Ansatz [94].  Here, we show that the  S = 2
+                                                                              gap is vanishing in the thermodymanic limit, even after
+                    E2D∞ /J1 =−0.51235(20).                  (18)             including the Gutzwiller projection [see Fig.8(d)], akin
+This  estimate  is  equal  (within  error-bars)  with  the                    to the situation in the kagome Heisenberg model [91,92].
+DMRG estimate and much lower compared to VMC es-                              The  computation  of  the S  =  0  and S  =  2  energies  al-
+timates  in  previous  studies  [see  TableIV].  It  is  worth                lows us to obtain the extrapolated gap for each size inde-
+mentioning  that  our  energies  are  obtained  with  a  state                pendently, which is reported in TableIIIand Fig.8(d).
+that has all the symmetries of the lattice, while DMRG                        Here, despite having an error-bar that increases with the
+states are obtained on cylinders with open boundaries.                        system  size,  we  can  reach  an  extremely  accurate  ther-
+                                                                              modynamic  extrapolation,  namely,  the S  =  2  gap  is
+                                                                              ∆  = −0.173± 0.213.   Therefore,  our  main  conclusion
+                   B.    Spin excitation gap                                  is that our competitive spin-liquid state has gapless ex-
+                                                                              citations.  Our best estimate for the upper bound on the
+                                                                              S = 2 gap is ∆≃ 0.04, leading to aS = 1 gap that would
+  We now address the important issue of the spin gap.                         be approximately half of this value, i.e., ∆T≃ 0.02.  This
+An estimation of the spin gap can be performed by con-                        latter result is considerably smaller than the DMRG esti-
+structing excited states of the DSL. Here, we consider a                      mate of ∆T = 0.30(1) [50], which was obtained by consid-
+state  with S  =  2,  which  is  particularly  simple  to  han-               ering cylindrical geometriesLx×Ly, i.e., ﬁrst performing
+dle,  since  it  corresponds  to  a  single  determinant  con-                the limitLx→∞ and then increasing the circumference
+structed by changing boundary conditions with respect                         Ly.
+to the S  = 0 state, in order to have four spinons in an
+eightfold degenerate single-particle shell at the chemical
+potential; then, a unique mean-ﬁeld state is obtained by                                         C.    Spin structure factor
+taking all these spinons with the same spin (so that the
+total wave function has S  = 2).  The eﬀect of applying                          We ﬁnally consider the equal-time spin structure fac-
+two Lanczos steps on theS = 2 excited state for diﬀerent                      tor:
+cluster sizes is shown in Fig.8(b) [see TableIIIfor the                                                   ∑
+actual values of the energies].                                                             S(q) =  1N        e−ıq·(Ri−Rj)⟨Si· Sj⟩          (19)
+  Before  Gutzwiller  projection,  the  mean-ﬁeld  state  is                                              i,j
+gapless  by  construction  (there  are  Dirac  cones  in  the
+mean-ﬁeld  spectrum);   however,   given  the U(1)  low-                      where N  is  the  total  number  of  sites.   In  Fig.10,  we
+energy  gauge  structure  of  the  mean-ﬁeld  Ansatz,  it  is                 present  the  results  for S(q)  obtained  within  VMC  for
+not obvious that this property is preserved after projec-                     diﬀerent competing variational wave functions.  The gap-
+tion  [60].   In  fact,  the   U(1)  gauge  ﬂuctuations  are  ex-             less DSL shows well deﬁned peaks at the corners of the
+pected to be wild, possibly leading to some instability of                    Brillouin  zone,  which  are,  however,  not  related  to  the
+                                                                                                                                                      12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               FIG.  11.      (Color  online)  RG  ﬂows  of  the  momentum  re-
+                                                                               solved spin susceptibility evaluated at the coplanar (blue) and
+                                                                               collinear (red) ordering wave vectors for the three regimes of
+                                                                               the phase diagram (Fig.1).  The arrows mark the beginning
+                                                                               of  the  unphysical  part  of  the  ﬂow  induced  by  the  onset  of
+                                                                               strong  (ﬁnite-range)  coplanar  or  collinear  antiferromagnetic
+                                                                               correlations.  In the spin liquid regime the ﬂow remains phys-
+                                                                               ical  down  to  Λ  =  0.   The  small  oscillations  below  Λ≈  0.1
+                                                                               in this ﬂow are due to frequency discretization.  (Inset) For
+                                                                               Λ = 0.2,  the susceptibility evaluated at the coplanar (blue)
+                                                                               and  collinear  (red)  ordering  wave-vectors,  as  a  function  of
+                                                                               J2/J1.
+
+
+                                                                               proﬁles of their gapped symmetric descendants, which is
+                                                                               a  manifestation  of  the  similar  nature  of  short-distance
+                                                                               correlations  in  these  two  distinct  states.   Nevertheless,
+                                                                               while for gapped states S(q) remains ﬁnite in the ther-
+                                                                               modynamic limit, for gapless spin liquids S(q) diverges
+                                                                               for q = (4π/3, 0) and symmetry-related points.
+                                                                                  A wide magnetically disordered phase is also obtained
+FIG. 10.   (Color online) Spin structure factors [Eq. (19)] ob-                within PFFRG approach.  As discussed in Sec.III, the
+tained in VMC at J2/J1 = 1/8, for (a) DSL, (b) symmetric                       presence  or  absence  of  magnetic  order  can  be  assessed
+Z2{π}A state with imposed on-site pairingζR = 2 and (c) ne-                    from  the  behavior  of  the  RG  ﬂow:  in  two-dimensional
+matic Z2{π}A state with imposed nematicity χ(1,1)/χ(1,0) =                     systems,  the existence of long-range order at zero tem-
+2.25, which is approximately the value found in DMRG [51].                     perature is signaled by a breakdown of the RG ﬂow, from
+Similarly, (d) uRVB spin liquid, (e) symmetric Z2{0}A state,                   a smooth to a rather unstable behavior;  by contrast,  a
+and (f) nematic Z2{0}A state.  For (e) and (f), the optimal                    magnetically disordered phase at zero temperature is as-
+parameters are determined by energy minimization.                              sociated  with  a  smooth  RG  ﬂow  down  to  Λ  =  0  (the
+                                                                               presence of small oscillations at small values of Λ are only
+                                                                               due to the discretization of the frequencies).  In Fig.11,
+presence of a ﬁnite magnetic moment [i.e., S(q)/N→ 0                           we report few relevant cases for the RG ﬂow for the spin
+withN→∞].  The gapped symmetric Z2{π}A state dis-                              susceptibility of Eq. (13).  For small values of   J2/J1 the
+plays a similar structure factor,  even though the peaks                       largest susceptibility is the one with q = (4π/3, 0), cor-
+are slightly broader and do not diverge in the thermody-                       responding  to  a  coplanar  order;  by  contrast,  for  larger
+namic limit.  Finally, imposing nematic terms in the vari-                     values  of  the  frustrating  ratio,  the  largest  signal  comes
+ational wave function, e.g., diﬀerent hoppings along (1, 1)                    from q  =  (0, 2π/√3)  that  corresponds  to  stripe  order.
+and (1, 0), easily introduces strong anisotropic features.                     Most importantly,  we ﬁnd that for 0.04 ≲ J2/J1 ≲ 0.5
+A  similar  behavior  is  also  observed  in  the  uRVB  state                 the  RG  ﬂow  does  not  show  any  tendency  to  instabili-
+and its gapped and nematic descendants (see Fig.10) al-                        ties down to Λ = 0,  indicating the presence of a quan-
+beit it is seen that the peaks are much more broader and                       tum paramagnetic state at zero temperature, see Fig.11.
+diﬀused.  From a qualitative point of view, it is seen that                    This result is also corroborated by the calculation of the
+the  spin  structure  proﬁles  at  large q  for  both  the  DSL                full spin susceptibility in the whole Brillouin zone (this
+and  uRVB  states  bear  a  great  deal  of  similarity  to  the               quantity  is  computed  at  Λ  =  0  when  possible  or  just
+                                                                                                                                                    13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 12.     (Color online) (Top row) Momentum-resolved spin susceptibility [see Eq. (13)] proﬁles obtained in PFFRG. For
+J2/J1 = 0, evaluated at Λ = 0.20 (marked by arrow in Fig.11), and for other values of     J2/J1, at Λ = 0.  (Bottom row) Spin
+structure factors [see Eq. (19)], as obtained by DMRG on cylindrical clusters with  Ly = 6 for J2 = 0 and Ly = 8 for the other
+values of J2/J1 [51].
+
+
+before  the  possible  breakdown  when  some  momentum                        agnetic regime, a smearing of the weight is observed, with
+shows  an  instability).    The  ﬁnal  results  are  shown  in                progressively diﬀused peaks as one goes deeper into the
+Fig.12for     J2/J1 ⩽ 0.15 and Fig.13for larger values of                     disordered regime.  One important diﬀerence is that PF-
+J2/J1.  For the former case, we also report, for compari-                     FRG gives a relatively broad paramagnetic regime, which
+son, the DMRG results for the equal-time structure factor                     extends fromJ2/J1≃ 0.04 toJ2/J1≃ 0.5.  The fact that
+of Eq. (19).  Here, the computation is performed in long                      PFFRG, due to frequency discretization and the current
+cylinders (i.e., Lx≫ Ly, with Ly = 6 and 8) where the                         way  of  distinguishing  paramagnetism  from  weak  mag-
+spin-spin correlations are taken only inside the bulk (i.e.,                  netic order, estimates a larger paramagnetic regime than
+6× 6 and 8× 8).  For small values of J2/J1, the spectral                      VMC  is  consistent  with  previous  results  on  the J1−J2
+weight of both PFFRG and DMRG is concentrated at the                          Heisenberg model on the kagome lattice [29].  By further
+corners of the Brillouin zone corresponding to coplanar                       increasing  the  frustrating  ratio,  the  collinear  antiferro-
+120° order.  By increasingJ2/J1 and entering the param-                       magnetic phase is reached and the weight shifts along the
+                                                                              boundary of the Brillouin zone, see Fig.13.  In DMRG,
+                                                                              one observes that this shift of weight is very sudden upon
+                                                                              going fromJ2/J1 = 0.14 toJ2/J1 = 0.15.  In contrast, in
+                                                                              PFFRG the transfer of weight occurs much more gradu-
+                                                                              ally and starts for larger values of J2/J1∼ 0.2.  Despite
+                                                                              these quantitative deviations, the PFFRG is accurate in
+                                                                              tracking the central correlation proﬁles, enabling a com-
+                                                                              parison  across  methods.   In  particular,  PFFRG  is  seen
+                                                                              to provide a reliable short-range correlation proﬁle of a
+                                                                              phase,  whereas  the  estimation  of  long-distance  correla-
+                                                                              tions shows more quantitative deviations.
+
+FIG.  13.     (Color  online)  Momentum-resolved  spin  suscep-                  To  address  the  issue  of  the  possible  nematic  nature
+tibility  [see  Eq.  (13)]  proﬁles  obtained  in  PFFRG  at  larger          of  the  quantum  paramagnetic  phase,   we  have  com-
+values of J2/J1  for which strong collinear antiferromagnetic                 puted within PFFRG the nematic response functionκPnem
+correlations set in (at ﬁnite distances).  ForJ2/J1 = 0.5, eval-              Eq. (15).  We observe that for any given ratio   J2/J1 there
+uated  at  Λ  =  0.20  (marked  by  arrow  in  Fig.11),  and  for             is  an  enhancement  of κPnem  under  the  RG  ﬂow,  and  as
+J2/J1 = 0.2 and 0.25, at Λ = 0.                                               one increases the ratio ofJ2/J1, the nematic response in-
+                                                                                                                                              14
+
+creases in a continuous manner up tillJ2/J1 = 0.5 where                    in DMRG, there is threat of a bias toward lower entangled
+the system goes into collinear stripe antiferromagnetic or-                state, which likewise adds to the picture.  In any case, be-
+der.  However, throughout the paramagnetic regime, we                      cause of the energy per site being even equal within error-
+do  not  observe  any  sudden  pronounced  increase  of  ne-               bars for very diﬀerent states, the paramagnetic regime of
+matic responses that would indicate an onset of nematic                    Eq. (1) is likely to become the paradigmatic test-bed for
+order, and it is likely that the ground state found within                 future investigations along these lines.
+PFFRG is symmetric.
+
+                                                                                                V.    CONCLUSIONS
+   D.    Comparison of VMC, DMRG, and PFFRG
+                                                                              In this work, we have shown that Gutzwiller-projected
+  To summarize, the energy per site obtained by VMC                        fermionic wave functions predicts a spin-liquid phase in
+and DMRG for the Hamiltonian (1) around  J2/J1≈ 1/8                        the  frustrated  Heisenberg  model  on  the  triangular  lat-
+are  equal  within  error-bars.    Nevertheless,  while  both              tice,  for  0.08 ≲ J2/J1 ≲  0.16.   This  results  is  in  excel-
+VMC and DMRG agree on the fact that a magnetically                         lent agreement with previous DMRG calculations [50,51]
+disordered phase is present close to the classical transi-                 (and also coupled-cluster results of Ref. [46]), providing
+tion point, there are still discrepancies about the nature                 an extremely competitive candidate to describe the para-
+of this spin-liquid phase.  VMC ﬁnds an isotropic gapless                  magnetic ground state, namely the algebraic U(1) Dirac
+U(1) Dirac spin liquid as opposed to the DMRG results                      spin liquid.  This fact contrasts the DMRG ﬁnding of a
+of a (potentially nematic) gapped Z2 spin liquid.  As we                   gapped (possibly nematic) Z2 spin liquid.  The existence
+add PFFRG to the picture in computing the spin suscep-                     of a magnetically disordered phase is also conﬁrmed by
+tibility proﬁle, we ﬁnd that the predominant short-range                   PFFRG, which, however, cannot give deﬁnitive claims in
+features such as peak enhancements at the corners of the                   the existence/absence of a spin gap.  Although the issue
+Brillouin  zone  seem  to  be  a  common  feature  of  nearly              of the gap is very important and must be deﬁnitively set-
+the whole paramagnetic domain aroundJ2/J1≈ 1/8 (see                        tled down in the future, we would like to conclude by em-
+Fig.12); however, from the equal-time spin structure fac-                  phasizing the fact that, huge improvements of numerical
+tor  computed  by  VMC,  this  fact  is  shared  by  both  the             techniques (including variational wave functions, DMRG
+DSL  and  the  symmetric Z2{π}A  state  [see  Figs.10(a)                   approaches  in  two  spatial  dimensions,  and  PFFRG  for
+and10(b)].  This short-range spin susceptibility picture                   spin models) have been done in the recent past, allowing
+is mainly conﬁrmed by DMRG, whereas the nematic ten-                       the community to reach considerably important results
+dencies  have  not  been  found  by  VMC  or  PFFRG,  and                  in various contexts.  The agreement on the ground-state
+could possibly be rooted in the breaking of lattice point                  energies in a wide parameter regime, but also on the ex-
+group symmetries from the outset, as found in the cylin-                   tent of the spin-liquid phase, represents a milestone from
+drical geometries employed by DMRG. The latter cannot                      which other calculations will proceed.  We are conﬁdent
+be  the  reason  for  the  diﬀerent  ﬁndings  from  VMC  and               that,  in  the  near  future,  further  developments  of  these
+DMRG, as again, even allowing for nematic trial states                     approaches  will  give  deﬁnitive  answers  to  the  unsolved
+in VMC still gives preference to the symmetric state.                      problems.
+  How  can  diﬀerent  numerical  methods  ﬁnd  diﬀerent                       Acknowledgments.  We thank J. Reuther, S.-S. Gong,
+ground states with equal energy per site and nearly iden-                  and S. Bieri for useful discussions, and R. Kaneko for pro-
+tical short-range spin susceptibility proﬁles?  The contro-                viding us with the VMC data corresponding to Ref. [48].
+versy is likely to be rooted in the subtle interplay between               R.T.  thanks  L.  Balents  and  S.  L.  Sondhi  for  insightful
+short-range  and  long-range  correlations,  and  how  these               discussions.  The work was supported by the European
+are  accounted  for  numerically.   It  is  a  well  established           Research Council through ERC-StG-TOPOLECTRICS-
+feature that the long-wavelength behavior is diﬃcult to                    Thomale-336012.       Y.I.   and   R.T.   thank   the   DFG
+pin down just by energetics, as, e.g., recently pointed out                (Deutsche Forschungsgemeinschaft) for ﬁnancial support
+in Ref. [95].  This, in turn, is the only aspect by which the              through SFB 1170.  F.B. acknowledges support from Ital-
+competing candidate states diﬀerentiate themselves:  as                    ian  MIUR  through  PRIN  2010  2010LLKJBX.  D.P.  ac-
+bulk gaps become small the distinction between a gapless                   knowledges support from NQPTP Grant No.  ANR-0406-
+and a gapped state does become a matter of long-range                      01 from the French Research Council (ANR). W.-J.H. ac-
+correlations  which  might  not  be  accurately  taken  into               knowledges support from the U.S. National Science Foun-
+account from the viewpoint of energy densities.  For the                   dation through Grant No. DMR-1408560 (CSUN), Grant
+DSL predominantly found in VMC, not only for Eq. (1)                       No.  DMR-1350237 (Rice) and Grant No.  DMR-1309531.
+but also for the Heisenberg model on the kagome lattice,                   D.P.  and  Y.I.  acknowledge  the  CALMIP  EOS  cluster
+one line of criticism comes from the fact that there are                   (Toulouse) for CPU time.  Y.I. gratefully acknowledges
+no rigorous proofs that Dirac nodes in the fermion spec-                   the  Gauss  Centre  for  Supercomputing  e.V.  for  funding
+trum are stable in presence of U(1) gauge ﬁelds (e.g., a                   this  project  by  providing  computing  time  on  the  GCS
+monopole proliferation is expected to generate a gapped                    Supercomputer  SuperMUC  at  Leibniz  Supercomputing
+phase).  For the gapped spin liquids predominantly found                   Centre (LRZ).
+                                                                                                                                                                  15
+
+
+
+
+
+ [1]I. Pomeranchuk, Zh. Eksp. Teor. Fiz.    11, 226 (1941).                          [32]S.  Bieri,  L.  Messio,  B.  Bernu,   and  C.  Lhuillier,Phys.
+ [2]P. Anderson,Mater. Res. Bull.                  8, 153  (1973).                         Rev. B 92, 060407 (2015).
+ [3]P.  Fazekas  and  P.  W.  Anderson,Phil.  Mag.                   30,  423        [33]Y.  Iqbal,  H.  O.  Jeschke,  J.  Reuther,  R.  Valent´ı,  I.  I.
+     (1974).                                                                               Mazin, M. Greiter,   and R. Thomale,Phys. Rev. B   92,
+ [4]L. Balents,Nature (London)        464, 199 (2010).                                     220404 (2015).
+ [5]V. Kalmeyer and R. B. Laughlin,Phys. Rev. Lett.                  59,             [34]G. Baskaran,Phys. Rev. Lett.             63, 2524 (1989).
+     2095 (1987).                                                                    [35]T.  Jolicoeur,  E.  Dagotto,  E.  Gagliano,    and  S.  Bacci,
+ [6]D. F. Schroeter, E. Kapit, R. Thomale,  and M. Greiter,                                Phys. Rev. B 42, 4800 (1990).
+     Phys. Rev. Lett. 99, 097202 (2007).                                             [36]R.  Coldea,  D.  A.  Tennant,  K.  Habicht,  P.  Smeibidl,
+ [7]R. Thomale, E. Kapit, D. F. Schroeter,  and M. Greiter,                                C.  Wolters,    and  Z.  Tylczynski,Phys.  Rev.  Lett.               88,
+     Phys. Rev. B 80, 104406 (2009).                                                       137203 (2002).
+ [8]M. Greiter, D. F. Schroeter,  and R. Thomale,Phys. Rev.                          [37]S. A. Zvyagin, D. Kamenskyi, M. Ozerov, J. Wosnitza,
+     B 89, 165125 (2014).                                                                  M. Ikeda, T. Fujita, M. Hagiwara, A. I. Smirnov, T. A.
+ [9]A. E. B. Nielsen, J. I. Cirac,   and G. Sierra,Phys. Rev.                              Soldatov,  A.  Y.  Shapiro,  J.  Krzystek,  R.  Hu,  H.  Ryu,
+     Lett. 108, 257206 (2012).                                                             C.  Petrovic,   and  M.  E.  Zhitomirsky, Phys.  Rev.  Lett.
+[10]Y.-C. He, D. N. Sheng,   and Y. Chen,Phys. Rev. Lett.                                  112, 077206 (2014).
+     112, 137202 (2014).                                                             [38]J.  Ma,  Y.  Kamiya,  T.  Hong,  H.  B.  Cao,  G.  Ehlers,
+[11]S.-S. Gong, W. Zhu,  and D. N. Sheng,Sci. Rep.               4, 6317                   W.  Tian,  C.  D.  Batista,  Z.  L.  Dun,  H.  D.  Zhou,   and
+     (2014).                                                                               M. Matsuda,Phys. Rev. Lett.         116, 087201 (2016).
+[12]B.  Bauer,  L.  Cincio,  B.  P.  Keller,  M.  Dolﬁ,  G.  Vidal,                  [39]A. V. Chubukov and T. Jolicoeur,Phys. Rev. B           46, 11137
+     S.  Trebst,    and  A.  W.  W.  Ludwig,Nat.  Commun.             5,                   (1992).
+     5137 (2014).                                                                    [40]S. E. Korshunov,Phys. Rev. B        47, 6165 (1993).
+[13]S.-S. Gong, W. Zhu, L. Balents,  and D. N. Sheng,Phys.                           [41]N. B. Ivanov,Phys. Rev. B        47, 9105 (1993).
+     Rev. B 91, 075112 (2015).                                                       [42]R. Deutscher and H. Everts,Z. Phys. B: Condens. Matter
+[14]Y.-C.  He  and  Y.  Chen,Phys.  Rev.  Lett.              114,  037201                  93, 77 (1993).
+     (2015).                                                                         [43]P. Lecheminant, B. Bernu, C. Lhuillier,   and L. Pierre,
+[15]W. Zhu, S. S. Gong,  and D. N. Sheng,Phys. Rev. B               92,                    Phys. Rev. B 52, 6647 (1995).
+     014424 (2015).                                                                  [44]P. Sindzingre, B. Bernu,   and P. Lecheminant,J. Phys.:
+[16]W.-J. Hu, W. Zhu, Y. Zhang, S. Gong,  F. Becca,   and                                  Condens. Matter 7, 8805 (1995).
+     D. N. Sheng,Phys. Rev. B          91, 041124 (2015).                            [45]L. O. Manuel and H. A. Ceccatto,Phys. Rev. B                   60, 9489
+[17]K. Kumar,  K. Sun,   and E. Fradkin,Phys. Rev. B                92,                    (1999).
+     094433 (2015).                                                                  [46]P. H. Y. Li,  R. F. Bishop,   and C. E. Campbell,Phys.
+[18]A. Wietek, A. Sterdyniak,  and A. M. L¨auchli,Phys. Rev.                               Rev. B 91, 014426 (2015).
+     B 92, 125122 (2015).                                                            [47]R. F. Bishop and P. H. Y. Li,Europhys. Lett.         112, 67002
+[19]Y.-C. He, S. Bhattacharjee, F. Pollmann,  and R. Moess-                                (2015).
+     ner,Phys. Rev. Lett.      115, 267209 (2015).                                   [48]R. Kaneko, S. Morita,  and M. Imada,J. Physi. Soc. Jpn
+[20]Y.-C. He, Y. Fuji,  and S. Bhattacharjee, ArXiv e-prints                               83, 093707 (2014).
+     (2015),arXiv:1512.05381 [cond-mat.str-el].                                      [49]R. V. Mishmash,  J. R. Garrison,  S. Bieri,   and C. Xu,
+[21]X. G. Wen,Phys. Rev. B          44, 2664 (1991).                                       Phys. Rev. Lett. 111, 157203 (2013).
+[22]S. Yan, D. A. Huse,  and S. R. White,Science               332, 1173             [50]Z. Zhu and S. R. White,Phys. Rev. B        92, 041105 (2015).
+     (2011).                                                                         [51]W.-J. Hu, S.-S. Gong, W. Zhu,  and D. N. Sheng,Phys.
+[23]S.  Depenbrock,  I.  P.  McCulloch,    and  U.  Schollw¨ock,                           Rev. B 92, 140403 (2015).
+     Phys. Rev. Lett. 109, 067201 (2012).                                            [52]W. Zheng, J.-W. Mei,  and Y. Qi, ArXiv e-prints  (2015),
+[24]H.-C. Jiang, Z. Wang,  and L. Balents,Nat. Phys.         8, 902                        arXiv:1505.05351 [cond-mat.str-el].
+     (2012).                                                                         [53]Y.-M.  Lu,  ArXiv  e-prints     (2015),arXiv:1505.06495
+[25]Y. Ran, M. Hermele, P. A. Lee,   and X.-G. Wen,Phys.                                   [cond-mat.str-el].
+     Rev. Lett. 98, 117205 (2007).                                                   [54]S. Bieri, C. Lhuillier,   and L. Messio,Phys. Rev. B                93,
+[26]M. Hermele, Y. Ran, P. A. Lee,   and X.-G. Wen,Phys.                                   094437 (2016).
+     Rev. B 77, 224413 (2008).                                                       [55]F. Wang and A. Vishwanath,Phys. Rev. B               74, 174423
+[27]Y. Iqbal, F. Becca, S. Sorella,   and D. Poilblanc,Phys.                               (2006).
+     Rev. B 87, 060405 (2013).                                                       [56]L. Messio, C. Lhuillier,   and G. Misguich,Phys. Rev. B
+[28]W.-J. Hu, S.-S. Gong, F. Becca,  and D. N. Sheng,Phys.                                 87, 125127 (2013).
+     Rev. B 92, 201105 (2015).                                                       [57]S. Sachdev,Phys. Rev. B             45, 12377 (1992).
+[29]R. Suttner, C. Platt, J. Reuther,  and R. Thomale,Phys.                          [58]G. Misguich,Phys. Rev. B         86, 245132 (2012).
+     Rev. B 89, 020408 (2014).                                                       [59]G. Baskaran, Z. Zou,  and P. Anderson,Solid State Com-
+[30]F.    Kolley,     S.    Depenbrock,     I.    P.    McCulloch,                         mun. 63, 973  (1987).
+     U.   Schollw¨ock,      and   V.   Alba,Phys.   Rev.   B          91,            [60]X.-G. Wen,Phys. Rev. B          65, 165113 (2002).
+     104418 (2015).                                                                  [61]A. A. Abrikosov, Physics      2, 5 (1965).
+[31]Y. Iqbal, D. Poilblanc,   and F. Becca,Phys. Rev. B               91,            [62]G. Baskaran and P. W. Anderson,Phys. Rev. B                    37, 580
+     020402 (2015).                                                                        (1988).
+                                                                                                                                                                   16
+
+[63]I. Aﬄeck, Z. Zou, T. Hsu,   and P. W. Anderson,Phys.                              [80]B. Bernu, P. Lecheminant, C. Lhuillier,   and L. Pierre,
+      Rev. B 38, 745 (1988).                                                                Phys. Rev. B 50, 10048 (1994).
+[64]E. Dagotto, E. Fradkin,  and A. Moreo,Phys. Rev. B        38,                     [81]D. Heidarian, S. Sorella,  and F. Becca,Phys. Rev. B               80,
+      2926 (1988).                                                                          012404 (2009).
+[65]E. Manousakis,Rev. Mod. Phys.                       63, 1 (1991).                 [82]C. Weber, A. Laeuchli, F. Mila,  and T. Giamarchi,Phys.
+[66]S. Sorella,Phys. Rev. B                71, 241103 (2005).                               Rev. B 73, 014519 (2006).
+[67]S. Yunoki and S. Sorella,Phys. Rev. B                74, 014408 (2006).           [83]A. L. Chernyshev and M. E. Zhitomirsky,Phys. Rev. B
+[68]S. Sorella,Phys. Rev. B                64, 024512 (2001).                               79, 144416 (2009).
+[69]J.  Reuther  and  P.  W¨olﬂe,Phys.  Rev.  B             81,  144410               [84]L. Capriotti, A. E. Trumper,  and S. Sorella,Phys. Rev.
+      (2010).                                                                               Lett. 82, 3899 (1999).
+[70]J.  Reuther  and  R.  Thomale,Phys.  Rev.  B                   83,  024402        [85]Y. Iqbal, F. Becca,   and D. Poilblanc,Phys. Rev. B                 84,
+      (2011).                                                                               020407 (2011).
+[71]J. Reuther, D. A. Abanin,  and R. Thomale,Phys. Rev.                              [86]N.  Read  and  S.  Sachdev,Phys.  Rev.  Lett.              62,  1694
+      B 84, 014417 (2011).                                                                  (1989).
+[72]J.  Reuther,  R.  Thomale,   and  S.  Trebst,Phys.  Rev.  B                       [87]N. Read and S. Sachdev,Phys. Rev. B             42, 4568 (1990).
+      84, 100406 (2011).                                                              [88]K. Slagle and C. Xu,Phys. Rev. B           89, 104418 (2014).
+[73]Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale,                           [89]Y. Iqbal, F. Becca,   and D. Poilblanc,Phys. Rev. B                 83,
+      W. Ku, S. Trebst,   and P. Gegenwart,Phys. Rev. Lett.                                 100404 (2011).
+      108, 127203 (2012).                                                             [90]Y. Iqbal, F. Becca,   and D. Poilblanc,New J. Phys.                 14,
+[74]J.  Reuther  and  R.  Thomale,Phys.  Rev.  B                   89,  024412              115031 (2012).
+      (2014).                                                                         [91]Y. Iqbal, D. Poilblanc,   and F. Becca,Phys. Rev. B               89,
+[75]W.  Metzner,  M.  Salmhofer,  C.  Honerkamp,  V.  Meden,                                020407 (2014).
+      and K. Sch¨onhammer,Rev. Mod. Phys.                84, 299 (2012).              [92]F.  Becca,  W.-J. Hu,  Y.  Iqbal,  A. Parola,  D. Poilblanc,
+[76]C. Platt,  W. Hanke,   and R. Thomale,Adv. Phys.                   62,                  and S. Sorella,J. Phys.:  Conf. Ser.           640, 012039 (2015).
+      453 (2013).                                                                     [93]W.-J.  Hu,  F.  Becca,  A.  Parola,   and  S.  Sorella,Phys.
+[77]A. A. Katanin,Phys. Rev. B             70, 115109 (2004).                               Rev. B 88, 060402 (2013).
+[78]H.  Neuberger  and  T.  Ziman,Phys.  Rev.  B                39,  2608             [94]M. Hermele, T. Senthil, M. P. A. Fisher, P. A. Lee, N. Na-
+      (1989).                                                                               gaosa,  and X.-G. Wen,Phys. Rev. B     70, 214437 (2004).
+[79]P. Azaria, B. Delamotte,  and D. Mouhanna,Phys. Rev.                              [95]L. Balents,Phys. Rev. B         90, 245116 (2014).
+      Lett. 70, 2483 (1993).

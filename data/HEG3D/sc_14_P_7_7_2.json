@@ -184,6 +184,21 @@
           "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (0.023039 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
           "source_entry": "SP6-heg3d-heg2d-hubbard#64"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": "3",
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The numerical tools used in this work are based on the open-source software NetKet [56-58] version 3.",
+          "location": "arXiv:2305.07240 (sources/2305.07240.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -449,6 +464,21 @@
         "reported_as": "E_c = −0.437(3) (total, Ha)",
         "note": "Table I, row 'SJB VMC', column rs=2.0; sources/2202.05183.txt line 132; printed correlation energy −0.437(3) Ha for 14 electrons; E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text, Table I and Supplementary Table III; APS copy not read; qmbl-verify 2026-10-19 SP5-arxiv-2202-05183#66: sigma 0.00294 -> 0.003 (Loader slip, not the source: the 2026-10-19-hegcorr generator (qmbl-worklist/2026-10-19-hegcorr/make_rows.mjs line 24, num(): sigma ... .toPrecision(2)) rounds the per-electron bar to two significant ) | Correlation energy E_c = E - E_HF, total for the cell, Hartree; 14, 38 or 54 electrons in a simple cubic cell at the Gamma point, a closed shell, so E_HF is the unique plane-wave determinant's. Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The Slater-Jastrow-backflow (SJB) VMC and DMC results were calculated using the casino program [43, 44] ... All SJB VMC and DMC calculations were performed using the casino program [43, 44]",
+          "location": "arXiv:2202.05183 (sources/2202.05183.txt), Table I caption; Supplementary Material, Slater-Jastrow-backflow section",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -474,6 +504,21 @@
         "reported_as": "E_c = −0.4385(3) (total, Ha)",
         "note": "Table I, row 'SJB DMC', column rs=2.0; sources/2202.05183.txt line 133; printed correlation energy −0.4385(3) Ha for 14 electrons; E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text, Table I and Supplementary Table III; APS copy not read; qmbl-verify 2026-10-19 SP5-arxiv-2202-05183#67: sigma 0.000294 -> 0.0003 (Loader slip, not the source: the 2026-10-19-hegcorr generator (qmbl-worklist/2026-10-19-hegcorr/make_rows.mjs line 24, num(): sigma ... .toPrecision(2)) rounds the per-electron bar to two significant ) | Correlation energy E_c = E - E_HF, total for the cell, Hartree; 14, 38 or 54 electrons in a simple cubic cell at the Gamma point, a closed shell, so E_HF is the unique plane-wave determinant's. Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The Slater-Jastrow-backflow (SJB) VMC and DMC results were calculated using the casino program [43, 44] ... All SJB VMC and DMC calculations were performed using the casino program [43, 44]",
+          "location": "arXiv:2202.05183 (sources/2202.05183.txt), Table I caption; Supplementary Material, Slater-Jastrow-backflow section",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -499,6 +544,21 @@
         "reported_as": "E_c = −0.43881(1) (total, Ha)",
         "note": "Table I, row 'ndet = 1', column rs=2.0; sources/2202.05183.txt line 135; printed correlation energy −0.43881(1) Ha for 14 electrons; E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text, Table I and Supplementary Table III; APS copy not read; qmbl-verify 2026-10-19 SP5-arxiv-2202-05183#68: sigma 0.00000994 -> 0.00001 (Loader slip, not the source: the 2026-10-19-hegcorr generator (qmbl-worklist/2026-10-19-hegcorr/make_rows.mjs line 24, num(): sigma ... .toPrecision(2)) rounds the per-electron bar to two significant ) | Correlation energy E_c = E - E_HF, total for the cell, Hartree; 14, 38 or 54 electrons in a simple cubic cell at the Gamma point, a closed shell, so E_HF is the unique plane-wave determinant's. Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "FermiNet",
+            "version": null,
+            "url": "https://github.com/google-deepmind/ferminet"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The modifications to FermiNet were implemented using the JAX Python library [61], extending a development version of the FermiNet [62]. Optimization used a JAX implementation of the Kronecker-factored approximate curvature (KFAC) gradient descent algorithm [23, 46, 63].",
+          "location": "arXiv:2202.05183 (sources/2202.05183.txt), Supplementary Material, FermiNet calculations; refs [61] JAX, [62] FermiNet JAX implementation, [63] KFAC JAX implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -524,6 +584,21 @@
         "reported_as": "E_c = −0.44053(1) (total, Ha)",
         "note": "Table I, row 'ndet = 16', column rs=2.0; sources/2202.05183.txt line 136; printed correlation energy −0.44053(1) Ha for 14 electrons; E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text, Table I and Supplementary Table III; APS copy not read; qmbl-verify 2026-10-19 SP5-arxiv-2202-05183#69: sigma 0.00000994 -> 0.00001 (Loader slip, not the source: the 2026-10-19-hegcorr generator (qmbl-worklist/2026-10-19-hegcorr/make_rows.mjs line 24, num(): sigma ... .toPrecision(2)) rounds the per-electron bar to two significant ) | Correlation energy E_c = E - E_HF, total for the cell, Hartree; 14, 38 or 54 electrons in a simple cubic cell at the Gamma point, a closed shell, so E_HF is the unique plane-wave determinant's. Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "FermiNet",
+            "version": null,
+            "url": "https://github.com/google-deepmind/ferminet"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The modifications to FermiNet were implemented using the JAX Python library [61], extending a development version of the FermiNet [62]. Optimization used a JAX implementation of the Kronecker-factored approximate curvature (KFAC) gradient descent algorithm [23, 46, 63].",
+          "location": "arXiv:2202.05183 (sources/2202.05183.txt), Supplementary Material, FermiNet calculations; refs [61] JAX, [62] FermiNet JAX implementation, [63] KFAC JAX implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -549,6 +624,21 @@
         "reported_as": "E_c = −0.43842(1) (total, Ha)",
         "note": "Table III (SI), Block determinants, ndet=1, rs=2.0; sources/2202.05183.txt line 672; printed correlation energy −0.43842(1) Ha for 14 electrons; E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text, Table I and Supplementary Table III; APS copy not read; qmbl-verify 2026-10-19 SP5-arxiv-2202-05183#70: sigma 0.00000994 -> 0.00001 (Loader slip, not the source: the 2026-10-19-hegcorr generator (qmbl-worklist/2026-10-19-hegcorr/make_rows.mjs line 24, num(): sigma ... .toPrecision(2)) rounds the per-electron bar to two significant ) | Correlation energy E_c = E - E_HF, total for the cell, Hartree; 14, 38 or 54 electrons in a simple cubic cell at the Gamma point, a closed shell, so E_HF is the unique plane-wave determinant's. Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "FermiNet",
+            "version": null,
+            "url": "https://github.com/google-deepmind/ferminet"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The modifications to FermiNet were implemented using the JAX Python library [61], extending a development version of the FermiNet [62]. Optimization used a JAX implementation of the Kronecker-factored approximate curvature (KFAC) gradient descent algorithm [23, 46, 63].",
+          "location": "arXiv:2202.05183 (sources/2202.05183.txt), Supplementary Material, FermiNet calculations; refs [61] JAX, [62] FermiNet JAX implementation, [63] KFAC JAX implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -574,6 +664,21 @@
         "reported_as": "E_c = −0.43876(1) (total, Ha)",
         "note": "Table III (SI), Block determinants, ndet=16, rs=2.0; sources/2202.05183.txt line 673; printed correlation energy −0.43876(1) Ha for 14 electrons; E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text, Table I and Supplementary Table III; APS copy not read; qmbl-verify 2026-10-19 SP5-arxiv-2202-05183#71: sigma 0.00000994 -> 0.00001 (Loader slip, not the source: the 2026-10-19-hegcorr generator (qmbl-worklist/2026-10-19-hegcorr/make_rows.mjs line 24, num(): sigma ... .toPrecision(2)) rounds the per-electron bar to two significant ) | Correlation energy E_c = E - E_HF, total for the cell, Hartree; 14, 38 or 54 electrons in a simple cubic cell at the Gamma point, a closed shell, so E_HF is the unique plane-wave determinant's. Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "FermiNet",
+            "version": null,
+            "url": "https://github.com/google-deepmind/ferminet"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The modifications to FermiNet were implemented using the JAX Python library [61], extending a development version of the FermiNet [62]. Optimization used a JAX implementation of the Kronecker-factored approximate curvature (KFAC) gradient descent algorithm [23, 46, 63].",
+          "location": "arXiv:2202.05183 (sources/2202.05183.txt), Supplementary Material, FermiNet calculations; refs [61] JAX, [62] FermiNet JAX implementation, [63] KFAC JAX implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -744,6 +849,21 @@
         "reported_as": "E_c = -0.4420(9)",
         "note": "Table III, rs=2.0, M=2109, column ph-AFQMC; sources/1905.04361.txt line 498; printed in Ha, total; printed correlation energy -0.4420(9), E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP7-heg3d-tfising#163: sigma 0.000896 -> 0.0009 (The printed error bar is 0.0009000000000000001 (total). The loader stored sigma_per_site rounded to two significant digits (\"sigma_per_site\": 0.000064,), so sigma = round(0.0009000000000000001/14, 2 s); qmbl-verify 2026-10-19 SP7-heg3d-tfising#164: method \"RHF+ph-AFQMC [phaseless AFQMC with a single-determinant RHF trial, time step 0.005 a.u., 2880 walkers (txt line 325-327)] (arXiv:1905.04361)\" -> \"RHF+ph-AFQMC [single-determinant RHF trial, basis M = 2109 plane waves (4218 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)\" (The method string omits the basis size M although the energy is a finite-basis value and the instance carries several rows of this paper that differ only in M (they are indistinguishable by method). I) | Eq. (19) (txt line 210): H = T + Vee + E_M; txt lines 232-237: 'the Madelung energy E_M is included to account for the self-interaction of the Ewald sum under periodic boundary conditions. For simplicity we use the formula proposed by Schoof and co-workers' E_M ~ -2.837297 (3/4pi)^(1/3) N^(2/3)/rs (Eq. 22, txt line 238-239). So the Madelung term is included, but through the approximate closed form (Ref 76: T. Schoof, S. Groth, J. Vorberger, M. Bonitz, PRL 115, 130402 (2015)), not through a stated Ewald sum. No Hartree-Fock energy is printed. Reader's own check (python, scratch-R8/hf.py, NOT QM",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "QMCPACK",
+            "version": null,
+            "url": "https://qmcpack.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Unless otherwise noted, the AFQMC calculations in this work were performed by a development version of QMCPACK87. PAUXY88 was also used in the initial testing stages. Unless noted otherwise, AFQMC results below are obtained using QMCPACK. ... ph-AFQMC calculations were performed using the development version of QMCPACK.",
+          "location": "arXiv:1905.04361 (sources/1905.04361.txt), Sec. III Computational Details ... caption of Table IV",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -769,6 +889,21 @@
         "reported_as": "E_c = -0.4096(10)",
         "note": "Table I, row CCSD, rs=2.0 a0 (own value); sources/1706.09923.txt line 306; printed in Ha, total; printed correlation energy -0.4096(10), E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP8-heg3d-hubbard-heg2d-heisenberg#11: method_as_published \"CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; ion: CCSD fitted in 1/M with chosen polynomial order, higher levels by ing l; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" -> \"CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" (The value is correct (E_c = -0.4096(10) at Table I (txt lines 303-311), row CCSD, column rs = 2 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E = N E_HF + E_c = 14 x ) | Eq. (7) (txt line 154-159): 'H = sum_k 1/2 (k^2 + V_M) c+c + ...', with 'V_M the Madelung constant that does not affect the correlation energy'; cubic box of length L; no Ewald-sum statement; no Hartree-Fock energy printed. Only correlation energies are printed, so the convention cannot be checked against a printed HF value.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "HANDE-QMC",
+            "version": null,
+            "url": "https://github.com/hande-qmc/hande"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "we calculate ground state correlation energies with stochastic coupled cluster ranging from coupled cluster singles and doubles (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5). ... For our stochastic calculations, we have made use of development versions of the HANDE code56. ... We have also run some FCIQMC calculations to compare our CCMC results to and we used the conventional and initiator versions for FCIQMC",
+          "location": "arXiv:1706.09923 (sources/1706.09923.txt), abstract; Sec. II (Coupled Cluster Monte Carlo); footnote 56 (\"See Ref. 69 and http://www.hande.org.uk/ for information and code.\")",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -794,6 +929,21 @@
         "reported_as": "E_c = -0.4407(10)",
         "note": "Table I, row CCSDT, rs=2.0 a0 (own value); sources/1706.09923.txt line 307; printed in Ha, total; printed correlation energy -0.4407(10), E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP8-heg3d-hubbard-heg2d-heisenberg#12: method_as_published \"CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; ion: CCSD fitted in 1/M with chosen polynomial order, higher levels by ing ; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" -> \"CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" (The value is correct (E_c = -0.4407(10) at Table I (txt lines 303-311), row CCSDT, column rs = 2 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E = N E_HF + E_c = 14 x) | Eq. (7) (txt line 154-159): 'H = sum_k 1/2 (k^2 + V_M) c+c + ...', with 'V_M the Madelung constant that does not affect the correlation energy'; cubic box of length L; no Ewald-sum statement; no Hartree-Fock energy printed. Only correlation energies are printed, so the convention cannot be checked against a printed HF value.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "HANDE-QMC",
+            "version": null,
+            "url": "https://github.com/hande-qmc/hande"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "we calculate ground state correlation energies with stochastic coupled cluster ranging from coupled cluster singles and doubles (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5). ... For our stochastic calculations, we have made use of development versions of the HANDE code56. ... We have also run some FCIQMC calculations to compare our CCMC results to and we used the conventional and initiator versions for FCIQMC",
+          "location": "arXiv:1706.09923 (sources/1706.09923.txt), abstract; Sec. II (Coupled Cluster Monte Carlo); footnote 56 (\"See Ref. 69 and http://www.hande.org.uk/ for information and code.\")",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -819,6 +969,21 @@
         "reported_as": "E_c = -0.4432(10)",
         "note": "Table I, row CCSDTQ, rs=2.0 a0 (own value); sources/1706.09923.txt line 308; printed in Ha, total; printed correlation energy -0.4432(10), E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP8-heg3d-hubbard-heg2d-heisenberg#13: method_as_published \"CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; ion: CCSD fitted in 1/M with chosen polynomial order, higher levels by ing; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" -> \"CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)\" (The value is correct (E_c = -0.4432(10) at Table I (txt lines 303-311), row CCSDTQ, column rs = 2 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E = N E_HF + E_c = 14 ) | Eq. (7) (txt line 154-159): 'H = sum_k 1/2 (k^2 + V_M) c+c + ...', with 'V_M the Madelung constant that does not affect the correlation energy'; cubic box of length L; no Ewald-sum statement; no Hartree-Fock energy printed. Only correlation energies are printed, so the convention cannot be checked against a printed HF value.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "HANDE-QMC",
+            "version": null,
+            "url": "https://github.com/hande-qmc/hande"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "we calculate ground state correlation energies with stochastic coupled cluster ranging from coupled cluster singles and doubles (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5). ... For our stochastic calculations, we have made use of development versions of the HANDE code56. ... We have also run some FCIQMC calculations to compare our CCMC results to and we used the conventional and initiator versions for FCIQMC",
+          "location": "arXiv:1706.09923 (sources/1706.09923.txt), abstract; Sec. II (Coupled Cluster Monte Carlo); footnote 56 (\"See Ref. 69 and http://www.hande.org.uk/ for information and code.\")",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -844,6 +1009,21 @@
         "reported_as": "E_c = -0.4434(10)",
         "note": "Table I, row CCSDTQ5, rs=2.0 a0 (own value); sources/1706.09923.txt line 309; printed in Ha, total; printed correlation energy -0.4434(10), E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read | Eq. (7) (txt line 154-159): 'H = sum_k 1/2 (k^2 + V_M) c+c + ...', with 'V_M the Madelung constant that does not affect the correlation energy'; cubic box of length L; no Ewald-sum statement; no Hartree-Fock energy printed. Only correlation energies are printed, so the convention cannot be checked against a printed HF value.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "HANDE-QMC",
+            "version": null,
+            "url": "https://github.com/hande-qmc/hande"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "we calculate ground state correlation energies with stochastic coupled cluster ranging from coupled cluster singles and doubles (CCSD) to coupled cluster including all excitations up to quintuples (CCSDTQ5). ... For our stochastic calculations, we have made use of development versions of the HANDE code56. ... We have also run some FCIQMC calculations to compare our CCMC results to and we used the conventional and initiator versions for FCIQMC",
+          "location": "arXiv:1706.09923 (sources/1706.09923.txt), abstract; Sec. II (Coupled Cluster Monte Carlo); footnote 56 (\"See Ref. 69 and http://www.hande.org.uk/ for information and code.\")",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -1149,6 +1329,21 @@
         "reported_as": "E_c = -0.4440(3)",
         "note": "Table 1, N=14, rs=2.0, column FCIQMC-TC; sources/1712.07524.txt line 795; printed in Ha, total; printed correlation energy -0.4440(3), E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text in sources/; journal copy not read; qmbl-verify 2026-10-19 SP8-heg3d-hubbard-heg2d-heisenberg#121: method_as_published \"FCIQMC-TC [FCIQMC on the transcorrelated Hamiltonian H_TC = exp(-tau) H exp(tau) with the basis-adapted correlation factor of Eq. (22), three-body term] (arXiv:1712.07524)\" -> \"FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); value of the largest basis of Fig. 3 (M not printed in the text), no extrapolation ('simply taken from those of the used largest basis sets', txt line 805-806)] (arXiv:1712.07524)\" (The stored string ends '... correlation factor of Eq. (22), three-body term', cut at 140 characters from the reader's 'three-body term approximated by the RPA-type two-body contraction (Eq. 25)'; as s) | Not stated: grep for Madelung and Ewald finds nothing. Only correlation energies are printed (Table 1), so the convention is moot for the numbers, but the HF energy of the same systems is not printed either. Interaction Fourier transform w(k) = 4 pi / k^2 for k != 0, 0 for k = 0 (Eq. 28, txt line 595-598).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NECI",
+            "version": null,
+            "url": "https://github.com/fkfest/NECI_STABLE"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the initiator-FCIQMC (i-FCIQMC) method with the initiator parameter set to be 3.0. In addition we used the semi-stochastic method63 using the |D| = 10000 leading determinants in the deterministic space64 as implemented in the NECI code.65",
+          "location": "arXiv:1712.07524 (sources/1712.07524.txt), Results section on the HEG (14- and 54-electron cells); ref. 65 is the NECI code paper",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     }
   ]

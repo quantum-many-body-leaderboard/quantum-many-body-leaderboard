@@ -36,6 +36,16 @@
         "note": "|reproduced - stored| = 2.49e-14 (relative 2.43e-15); within 1e-9 relative. Sector N_up = N_dn = 4, dimension 1002001, 281 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Hubbard__chain_14_P_4_7.74263683.json), gives -10.226603905235113 (2.36e-13 from the cost run). Also read by VB2-varbench-code-hubbard#7 (scope value: VarBench Hubbard/chain_14_P_4_7.74263683.md row 'Exact diagonalization'; checks/hubbard-u-labels/ed_results.jsonl job {lattice: chain, L: 14, n: 4, U: 7.74263683}).",
         "source_entry": "VB2-varbench-code-hubbard#7, VE-exact-recompute#12 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_7.74263683/ed_netket.sh",
+        "script": "scripts/Hubbard/chain_14_P_4_7.74263683/ed_netket.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_7.74263683/ed_netket.sh)",
+          "location": "VarBench table vendor/varbench/Hubbard/chain_14_P_4_7.74263683.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -112,6 +122,16 @@
         "note": "H = -t sum (Cdag C + h.c.) + U Nupdn with t = 1 on a 14-site ring with the [1,N] bond (ITensors OpSum, automatic fermion signs, so fermionic PBC), N_up = N_dn = 4: the instance. The energy is the reached variational energy after the last sweep at maxdim 1550 ('~1500' in the string), above the exact energy by 5.7e-8, consistent with its variance: Temple check (E - E0 <= Var/(E1 - E), E1 = -10.121934633793822 the next level, eigsh lowest): E - E0 = 5.7e-8 vs bound 7.3e-7, consistent. bound_type variational is right; the extrapolated value in the method string is a separate row (answers the M8/M6 flags; the tiny V-score is genuine 1D convergence). No output log exists in either repository, so the number itself is not located independently (scope config).",
         "source_entry": "VB2-varbench-code-hubbard#14 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_7.74263683.jl",
+        "script": "programs/dmrg_itensors_hubbard/chain_14_P_4_7.74263683.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_7.74263683.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/chain_14_P_4_7.74263683.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

@@ -1,0 +1,1074 @@
+                              Algorithms  for ﬁnite  projected  entangled  pair  states
+
+                                 Michael  Lubasch,1  J.  Ignacio  Cirac,1  and  Mari-Carmen  Ba˜nuls1
+                 1Max-Planck-Institut  f¨ur  Quantenoptik,  Hans-Kopfermann-Straße  1,  85748  Garching,  Germany.
+                                                           (Dated:  September 5, 2014)
+                   Projected entangled pair states (PEPS) are a promising ansatz for the study of strongly correlated
+                quantum many-body systems in two dimensions.  But due to their high computational cost, develop-
+                ing and improving PEPS algorithms is necessary to make the ansatz widely usable in practice.  Here
+                we analyze several algorithmic aspects of the method.  On the one hand, we quantify the connection
+                between  the correlation  length  of  the PEPS  and  the accuracy  of  its  approximate contraction,  and
+                discuss how puriﬁcations can be used in the latter.  On the other, we present algorithmic  improve-
+                ments for  the  update of  the tensor  that  introduce  drastic  gains  in  the numerical  conditioning  and
+                the  eﬃciency  of  the  algorithms.   Finally,  the  state-of-the-art  general  PEPS  code  is  benchmarked
+                with the Heisenberg and quantum Ising models on lattices of up to 21 × 21 sites.
+
+                PACS numbers:  02.70.-c, 75.10.Jm, 64.70.Tg, 03.67.-a
+
+
+                     I.     INTRODUCTION                                       lattice experiments that are being carried out in inhomo-
+                                                                               geneous  traps.   In  exchange,  the  price  to  pay  is  a  more
+   As an ansatz for the wave function of a quantum many-                       involved implementation  and  longer  running  times  that
+body  system,  projected  entangled  pair  states  (PEPS)1                     scale with the system size.
+represent  the  natural  generalization  of  matrix  product                      The   original   PEPS   algorithms1,16   can   cope   with
+states  (MPS)  to  higher  dimensions.   MPS  are  by  now                     the  non  translationally  invariant  situations17–20,  but  a
+well established as a numerical tool:  they constitute the                     straightforward  implementation  attains  only  small  ten-
+variational class  on which  the  density  matrix  renormal-                   sor dimensions,  and is  not enough to  explore the  power
+ization group (DMRG) is based upon2,3  and, nowadays,                          of  the  ansatz.   In  order  to  reach  larger  dimensions  (i.e.
+DMRG is considered numerically exact for systems com-                          comparable to those used in present iPEPS calculations)
+prising hundreds of quantum particles in one dimension.                        and  to  approach  the  optimal  ground  state  approxima-
+   PEPS have the  potential to  reproduce this  success in                     tions  for  them,  it  is  necessary  to  take  into  account and
+higher  dimensions.    This  is  particularly  interesting  for                to  optimize  the  cost  and  stability  of  every  stage  of  the
+problems  that  cannot  be  tackled  otherwise,  e.g.  two-                    algorithms, which is only feasible through a thorough un-
+dimensional fermionic or frustrated systems where quan-                        derstanding of the various possibilities.  Only then it will
+tum Monte Carlo methods are hampered by the notorious                          be  possible  to  adopt  the  optimal  strategies  for  the  par-
+sign  problem.   First  PEPS  results  for  such  problems  in                 ticular problem at hand.
+condensed matter as the t −J  model or the Kagome an-                             In this paper we aim at a global understanding of the
+tiferromagnet compare well to the best currently known                         algorithmic aspects of ﬁnite PEPS, both at the physical
+results  achieved  by  other  means4–6.   However,  the  sig-                  and technical level.  We address the two fundamental in-
+niﬁcantly higher computational cost of PEPS algorithms                         gredients  of  PEPS  algorithms,  namely  the  environment
+compared  to  MPS  restricts  the  feasible  simulations  to                   approximation,  i.e.  the  approximate  contraction  of  the
+PEPS tensors with much smaller dimensions, and the re-                         tensor  network  (TN),  and  the  tensor  update.   In  a  pre-
+sults  are  still  far  from  the  level of  convergence attained              vious article21, we focussed on the environment approx-
+in the one-dimensional case.                                                   imation.  We  studied  the  physical signiﬁcance  and  limi-
+   In  the  last  years,  signiﬁcant  conceptual  and  algorith-               tations of various contraction strategies, and introduced
+mic progress has been made, e.g. Refs.7–15.  Many of the                       the  cluster  scheme,  which uniﬁes  previous  methods  and
+numerical studies  have focussed on systems  in the ther-                      gives  rise  to  a  new  contraction  algorithm  with  a  trade-
+modynamic  limit,  for  which  the  iPEPS9  ansatz  can  be                    oﬀ between precision and computational cost.  Here,  we
+used.   In  such  case,  the  translational  invariance  of  the               extend the analysis of the environment approximation to
+system  is  exploited  to  reduce  the  number  of  variational                provide  new  insight  into  the  convergence  of  the  cluster
+parameters  to  the  few  tensors  in  a  small  unit  cell.   But             strategy  by  relating  it  to  the  correlation  length  of  the
+the  non  translationally  invariant  ﬁnite  PEPS  ansatz  is                  system.  Additionally, we show how the environment ap-
+also of great importance.  On the one hand, by avoiding                        proximation  can  be  kept  exactly  positive  with  the  help
+a predeﬁned unit cell it allows a more unbiased approach                       of puriﬁcations.  Regarding the tensor update, we investi-
+to the  thermodynamic limit,  when combined with ﬁnite                         gate the eﬀect of restricting the variational parameters to
+size  scaling  (although,  also,  a  systematically  increased                 a reduced tensor12, a technique used often in the case of
+unit cell in iPEPS can be expected to produce more and                         iPEPS and characterized by a lower computational cost.
+more unbiased results5,6).  On the other, it is the proper                     Via  the  reduced  tensor  we  derive  new  numerical  meth-
+ansatz for problems that are intrinsically non translation-                    ods,  namely  suitable  gauge  choices,  which  signiﬁcantly
+ally  invariant,  such  as  the  simulation  of  current  optical              enhance  the  stability  of  the  update  algorithm.    These
+                                                                                                                                                      2
+
+                                                                                 PEPS algorithms for ﬁnding ground states can be clas-
+                                                                              siﬁed  in  two  types,  namely  variational  minimization  of
+                                                                              energy  and  imaginary  time  evolution.    With  only  mi-
+                                                                              nor  changes,  the  second  one  allows  also  the  simulation
+                                                                              of  real  time  evolution.   Both  kinds  of  algorithm  can  be
+                                                                              formulated in terms of the minimization of a certain cost
+                                                                              function by varying the tensor parameters50.  This mini-
+                                                                              mization is realized in practice by means of an alternating
+FIG.  1:  A  PEPS  on  a  5 × 5  square  lattice.  Physical  indices          least squares (ALS) scheme, in which one sweeps over the
+are depicted pointing down, and virtual ones connect tensors                  tensors  and  updates  them  one  after  another,  each  time
+in the plane.                                                                 choosing the components that minimize the cost function
+                                                                              under the constraint that all the other tensors are ﬁxed.
+gauge choices admit also a generalization to cases where                         Throughout this  article  we  focus  (almost  exclusively)
+the full tensor needs to be updated.                                          on  the  imaginary  time  evolution.    In  this  case,  it  is
+                                                                              customary  to   use  a   Suzuki-Trotter  approximation  of
+  Furthermore, we benchmark the state-of-the-art ﬁnite                        the  evolution  operator  where  the  Hamiltonian  is  split
+PEPS algorithms using the Heisenberg Hamiltonian and                          into  parts  containing  only  mutually  commuting  terms.
+the  quantum Ising model with  transverse ﬁeld.  By pre-                      The  cost  function  to  be  minimized  is  then  the  distance
+senting converged ﬁnite PEPS results for lattice sizes typ-                   d(|ψ⟩) = |||ψ⟩ −  ˆO|φ⟩||2, where |φ⟩ is the initial PEPS,  ˆO
+ically considered in the  context of ﬁnite  size scaling, we                  is  an operator representing one  (or more) Trotter  gates,
+not  only  assess  the  validity  of  the  ansatz,  but  enable  a            i.e. the exponential of one (or several) such Hamiltonian
+systematic comparison to other methods and implemen-                          terms16, and |ψ⟩ is the resulting PEPS. During the ALS
+tations.                                                                      sweeping, the tensor for site l is the one that minimizes
+  The rest of the article is structured as follows.  In Sec. II
+we brieﬂy present the basic notation and concepts com-                                  d(Al)  =: ⃗A†lNl⃗Al − ⃗A†l⃗bl −⃗b†l ⃗Al + const.        (1)
+mon  to  PEPS  algorithms.   The  algorithmic  details  re-
+garding  the  convergence  of  the  cluster  scheme,  the  use                It  is  given by  the  solution of  the  linear  system of  equa-
+of  positive  environments  and  the  strategies  to  improve                 tionsNl⃗Al =⃗bl, i.e. ⃗Al =N −1l ⃗bl, where the norm matrix
+the  tensor  update  are  discussed  in  Sec.  III.  Section  IV              Nl  results  from  the  norm  TN  ⟨ψ|ψ⟩  by  leaving  out  the
+collects  the  numerical results  corresponding to  our  best                 tensorA∗l  in the bra andAl in the ket, and⃗bl results from
+PEPS  ground  state  approximations  for  the  benchmark                      the TN ⟨ψ| ˆO|φ⟩ by leaving out A∗l  in the bra.  This pro-
+models.  Finally in Sec. V we summarize our conclusions.                      cedure can be iterated for the necessary number of steps
+                                                                              to reach the desired total (real or imaginary) time51.
+        II.     NOTATION AND  PRELIMINARY                                        Two main parts, namely the environment  approxima-
+                           CONCEPTS                                           tion and the tensor update, constitute the building blocks
+                                                                              of this algorithm and will be often referred to in the rest
+                                                                              of this article.  The ﬁrst notion corresponds to the exact
+  For completeness we introduce here the main concepts                        or  approximate  evaluation  of  the  eﬀective  matrix  (Nl)
+that  will  be  used  throughout  this  paper.    Reviews  on                 and  vector  (⃗bl)  that  determine  the  local  equation  to  be
+PEPS  and  more  general  TN  methods  can  be  found  in                     solved  for  the  tensor  at  a  given  site.   The  second  term
+the literature16,22.                                                          denotes the solution of the vector equation and the cor-
+  Given a  quantum  system of N  particles, with  dimen-                      responding change of the PEPS with the updated tensor.
+sions dl   and  local  Hilbert  space  bases  {|sl⟩}dlsl=1  (for                 Some strategies developed in the context of iPEPS can
+l = 1,...N), a PEPS1 is a state of the form                                   also  be  applied  to  the  ﬁnite  case,  and  we  will  do  that
+                                                                              in the following.  The  most widely used iPEPS method,
+|ψP EP S⟩ :=      ∑         F(As11 As22 ...AsNN  )|s1s2...sN ⟩,               due  to  its  eﬃciency  and  stability,  is  the  Simple  Update
+                s1,s2,...,sN                                                  (SU)8, in which the environment is assumed to be sepa-
+                                                                              rable and then the tensors are updated via simple SVD.
+where F  denotes the contraction of a TN formed by the                        As  we  showed  in  Ref.21,  the  SU  works  equally  with  ﬁ-
+tensors Asll  .  Figure 1 shows the two-dimensional square                    nite  PEPS  but  produces  results  with  limited  accuracy.
+lattice geometry with open boundary conditions and size                       The  Full  Update  (FU)9,12  is  based  on  a  more  accurate
+N  = L ×L  considered  throughout  this  work.   In  this                     approximation of  the  environment,  in  closer  analogy  to
+geometry, to each lattice site l  corresponds a tensor Asll                   the original ﬁnite PEPS algorithm1,16, but diﬀering from
+with one physical index sl for its physical degree of free-                   it in the fact that Trotter gates are not applied simulta-
+dom and up to four virtual indices connecting neighbor-                       neously,  so  that  the  environment  for  the  update  of  one
+ing tensors.  The dimension of the virtual indices, called                    gate does only require the norm contraction around that
+bond dimension D, restricts the maximum possible block                        gate.   We  will  in  the  following  use  the  term  FU  in  the
+entropy of the state according to an area law.                                context of ﬁnite PEPS to denote the sequential applica-
+                                                                                                                                                     3
+
+tion of Trotter gates together with the full contraction of
+the norm TN, as in Ref.21.
+
+
+            III.     ALGORITHMIC  ASPECTS                                    FIG. 2:  Original contraction1,16  of the norm TN for a PEPS
+                                                                             with  bond  dimension D.    The  product  of  a  bulk  row  with
+  In  this  section  we  analyze  several  distinct  aspects  of             a  boundary  MPO  of  bond  dimension D′   is  approximated
+ﬁnite PEPS algorithms, regarding both the environment                        by  a  new  boundary  MPO  of  the  same  dimension,  at  a  cost
+approximation and the tensor update.                                         O(dD6D′2) + O(D4D′3).
+  In  particular,  for  the  environment  approximation  we
+show  how  the  success  of  the  cluster  scheme  introduced                approximation accuracy of this method, used also in the
+in Ref.21 is deeply connected to the correlation length of                   FU and the cluster scheme, is ultimately determined by
+the state.  We also discuss the feasibility and the cost of                  the boundary bond dimension D′ of the boundary MPO,
+explicitly keeping a positive environment by making use                      and its eﬃciency is dictated by the leading computational
+of puriﬁcation MPO.                                                          cost O(dD6D′2)+O(D4D′3).  In typical calculations, the
+  For  the  tensor  update  we  propose  gauge  choices  for                 boundary  bond  dimension  for  a  certain  approximation
+each possible update scheme, and show how they improve                       precision  scales  as D′  ∝ D2  independent  of  the  system
+the  numerical stability  of  the  algorithms.  We  addition-                size, such that the original contraction1,16 has the overall
+ally discuss how the reduced tensor, originally introduced                   cost O(D10).
+in  the  context  of  iPEPS12,  can  similarly  be  used  in  the
+ﬁnite  case  to  speed  up  the  computations.   The  normal-
+ization of the tensors is another factor that can improve
+the stability of the method.                                                              1.    Accuracy  of the  cluster  contraction
+  While part of this section is signiﬁcantly technical, the
+considerations  exposed  here  are  relevant  for  the  imple-                  The Cluster Update (CU) introduced in Ref.21  allows
+mentation of any (ﬁnite) PEPS algorithm.  Furthermore                        a  trade-oﬀ between  precision and  eﬃciency  in  the  envi-
+they  have  also  clear  physical  implications,  especially  in             ronment  approximation.   The  SU  and  the  FU  are  spe-
+the case of the environment contraction.                                     cial cases of this procedure, which naturally interpolates
+                                                                             between them in both accuracy and computational cost.
+                                                                             Because clusters are not only useful for the tensor update
+             A.     Environment approximation                                but  equally  for  the  computation  of  expectation  values,
+                                                                             they realize a unifying framework for PEPS contractions.
+  In the imaginary time algorithm, the update of one ten-                       A cluster is deﬁned as a set of tensors comprising the
+sor at lattice site l  involves the  contraction around that                 considered ones and their neighborhood up to a distance
+tensor of the norm TN ⟨ψ|ψ⟩ and of the TN ⟨ψ|e−τ  ˆHx|φ⟩                     called  cluster  size δ.    The  idea  is  to  approximate  the
+for  a  certain  subset  of  (mutually  commuting)  Hamil-                   environment outside the cluster very roughly and inside
+tonian  parts   ˆHx.     The  ﬁrst  contraction  leads  to  the              with  more  precision.   In  the  context  of  ﬁnite  PEPS  al-
+norm  matrix Nl  and  the  second  to  the  vector ⃗bl  from                 gorithms, in  which  the  TN  is  contracted row by  row,  it
+which  the  new  tensor  for  that  lattice  site  follows  as               is  reasonable  to  deﬁne  a  cluster  as  the  considered  row
+⃗Al   = N −1                                                                 and  its  neighboring  rows  up  to  the  distance δ.   Figure
+           l ⃗bl.    The  original  algorithm1,16  includes  the             3  shows  an example  cluster  of  size δ  = 1  around a  cen-
+complete e−τ  ˆHx,  i.e.  all  (mutually  commuting)  Trotter                tral row in the bulk  of a PEPS. We  employ a  separable
+gates, in the TN ⟨ψ|e−τ  ˆHx|φ⟩ and thus requires two inde-                  positive  boundary  MPO  for  the  contraction outside  the
+pendent environment approximations, one for ⟨ψ|ψ⟩ and                        cluster, which has a cost O(dD5), while the cluster itself
+one for ⟨ψ|e−τ  ˆHx|φ⟩.  However, in the following we adopt                  is contracted using a general boundary MPO of bond di-
+the strategy from Ref.21:  If Trotter gates are applied one                  mension D′ > 1, which in this case requires O(dD5D′2)
+by one, and only the tensors on which a given gate acts                      operations21.  The precision and eﬃciency of the approx-
+are modiﬁed, then it suﬃces to consider the environment                      imation are determined by the cluster size and D′.  The
+approximation of the norm TN alone, and, starting from                       separable  positive  boundary  MPO  produces  for  cluster
+this  environment,  the  vector⃗bl  is  constructed  from  the               size δ  =  0  an  environment  approximation  equivalent  to
+exact contraction of a single Trotter gate52.                                the SU one21.
+  As  in  the  original  algorithm1,16,  we  can  approximate                   We  previously  observed21  that  the  contraction  error
+the environment of a PEPS row (column) with the help                         decreases  exponentially  with  the  cluster  size  for  PEPS
+of  boundary  MPO.  By  identifying  two  opposite  sides  of                ground  state  approximations  of  the  Heisenberg  model.
+the PEPS TN with boundary MPO, the action of inter-                          This property, which justiﬁes the usability of clusters, is
+mediate rows (columns) on those is successively approx-                      ultimately related to a ﬁnite correlation length of the sys-
+imated  by  new  boundary  MPO,  as  shown  in  Fig.  2  for                 tem, as we appreciate here with the help of the quantum
+the  norm, until the  tensors of interest are reached.  The                  Ising model.  This model becomes critical in the thermo-
+                                                                                                                                                         4
+
+                                                                                     102
+
+                                                                                     100                           10-3
+
+                                                                                                                   10-6    2      4      6      8
+                                                                                    10-2
+
+
+FIG.  3:   Cluster  environment  of  a  bulk  row  for  cluster  size               10-4
+δ = 1.    The  contraction  outside  the  cluster  is  achieved  by
+means of a separable positive boundary MPO in the way ex-                           10-6
+plained in Ref.21  with computational cost O(dD5).  Then the
+cluster is contracted with the help of a general boundary MPO                            0        1        2        3        4        5        6
+of bond dimension D′, which, in this case, can be found with
+O(dD5D′2) operations.                                                                2.5
+
+
+dynamic limit at transverse ﬁeldB ≈ 3.044, and, thus, by                             2.0
+varyingB we can create states with diﬀerent correlation
+lengths.                                                                             1.5
+   We  have  analyzed  the  cluster  contraction  error  of
+a  local  observable  acting  on  the  center  of  the  lattice,                     1.0
+ǫα(δ) := |⟨σα⟩δ − ⟨σα⟩|/|⟨σα⟩|,   for α   = X, Z,   where
+⟨σα⟩δ  is the approximated contraction using cluster size
+δ,  and  ⟨σα⟩  the  result  of  contracting  the  full  TN.  The                     0.5
+behavior  of  this  quantity  can  be  compared  to  the  cor-
+relation  function, Gα(x)  :=  ⟨σαl σαl+x⟩ − ⟨σαl ⟩⟨σαl+x⟩,  for
+two sites separated by a distancex along the central col-                               0.0        0.5        1.0        1.5        2.0        2.5
+umn of the lattice.  All contractions were performed with
+large  enough D′  =  100  such  that  the  contraction  error
+was  independent  of D′.53  We  observe in  Fig.  4  (a)  that                  FIG. 4:  Relation  between  cluster error and  correlation  func-
+the  decrease  of  the  contraction  error  is  always  steeper                 tion in the Ising model on a 21 × 21 lattice.  (a) Cluster error
+for  a  faster  decaying  correlation  function.   In  order  to                (main plot) and correlation function (inset) for observableσZ,
+make  this  statement  more  precise,  we  can  ﬁt  the  decay                  for D  =  2  (open  symbols),  3  (ﬁlled  symbols),  and B  =  2.0
+of the error to an exponential function of the cluster size,                    (triangles), 2.5 (squares), 2.8 (circles).  (b) Characteristic clus-
+ǫα(δ)  ∝  exp(−δ/δ0),  and  obtain  a  characteristic  cluster                  ter size, δ0,  versus correlation  length, ζ,  for several  values of
+size δ0.   Correspondingly,  we  can  extract  a  correlation                   B ∈ [2, 4], for observableσZ withD = 2 (plusses), 3 (crosses),
+length ζ  from  a  similar  ﬁt  of  the  correlation  function                  and for σX  with D = 2 (triangles), 3 (circles).
+Gα(x)  ∝  exp(−x/ζ).   After  having  calculated δ0  and ζ
+for several PEPS54, we plotδ0 as a function ofζ in Fig. 4                       and  numerical  stability.   The  SL  method  performs  the
+(b) and conclude thatδ0 ≈ζ.55 This demonstrates an ex-                          norm contraction by means of transformations in the ket
+tremely clear quantitative connection between the cluster                       alone14.  Then the boundary is described by a puriﬁcation
+contraction error for a given cluster size and the correla-                     MPO26, deﬁned via a MPS of virtual bond dimensionD′′
+tions in the state.                                                             and  physical  dimension D ×d′  in  such  a  way  that  the
+                                                                                MPO results from tracing over the puriﬁcation  bonds  of
+                                                                                dimensiond′.  Approximating the environment in the SL
+                     2.    Positive environment                                 way and then updating the tensors as explained in Ref.14
+                                                                                ensures a stable algorithm, but as seen in Ref.21 the error
+   The exact norm environment, resulting from an exact                          in the environment approximation can be several orders
+contraction  of  ⟨ψ|ψ⟩  around  one  (or  several)  site(s),  is                of  magnitude  above that  of  the  original contraction1,16,
+positive  by  construction,  as  can  be  seen  in  Fig.  5.   Al-              and it can depend strongly on the system size.
+though this  positive characteristic is  considered a desir-                       Several  factors  can  cause  these  accuracy  limitations.
+able property for the environment approximation, in gen-                        Even if there exists a good positive MPO approximation
+eral it is not respected by the approximated contractions.                      for the boundary with moderate bond dimension D′  (as
+Nevertheless, it is possible to use schemes that maintain                       observed  for  gapped  systems27),  it  does  not  necessarily
+it.  In particular, the Single-Layer (SL) algorithm was in-                     follow  that D′′  is  small28,29  and  hence  it  is  not  clear  a
+troduced in Ref.14  as a way to improve the environment                         priori that ﬁxing the maximumD′′ produces an accurate
+approximation  of  the  SU  while  preserving  its  eﬃciency                    approximation for the environment.  Moreover, as argued
+                                                                                                                                                       5
+
+
+
+
+
+
+
+                                                                               FIG. 6:  Positive contraction of the norm TN for a PEPS with
+                                                                               bond dimensionD.  The product of a bulk row with a bound-
+                                                                               ary puriﬁcation of virtual bond dimensionD′′ and puriﬁcation
+                                                                               bond dimensiond′ is approximated by a new boundary puriﬁ-
+                                                                               cation of the same dimensions.  Each update of a tensorA con-
+FIG. 5:  Norm environment for a single site of a 5 × 5 PEPS.                   stitutes a nonlinear problem, and solving the linearized equa-
+Because  each  PEPS  tensor A  from  Fig.  1  is  contracted  with             tions  costs  O(dD6D′′4) + O(D4D′′6) + O(d′3D3D′′6)  where
+its  complex  conjugate A∗  over  the  physical  index,  an  exact             d′ ≤DD′′2.
+contraction of this norm TN would give a positive hermitian
+norm  matrix N.  For large  PEPS, an  exact  contraction  of N
+is not feasible, and the original contraction approximation1,16                can be observed already with small puriﬁcation bonds for
+based  on  general  boundary  MPO,  shown  in  Fig.  2,  does  not             B = 1.0 (Fig. 7 (b)).  These results suggest that the error
+keep the positivity.                                                           in the SL method is mainly due to the restricted class of
+                                                                               puriﬁcations it can attain, and not to the description of
+                                                                               the boundary as a puriﬁcation with small bond D′′.56
+in Ref.21, by operating on a single layer, the scheme does                        From the discussion above we conclude that it is pos-
+not  ﬁnd  the  most  general  puriﬁcation  with  given  bond                   sible  to  eﬃciently  ﬁnd  a  (close  to)  optimal  general  pu-
+D′′.   Here  we  want  to  address  the  question  wether  the                 riﬁcation  by  means  of  the  solution  of  nonlinear  equa-
+accuracy limitations  of the  SL algorithm are due  to  the                    tions.   In  the  context  of  PEPS  contractions,  this  tech-
+description of the boundary as puriﬁcation or wether they                      nique  improves  the  SL  scheme  signiﬁcantly,  but  given
+are  due  to  the  speciﬁc  operations  proposed in  Ref.14  to                its  higher  computational  cost  compared  to  the  original
+determine that boundary puriﬁcation.                                           contraction1,16, resulting from the iterative routines (see
+  One way to allow for a more general puriﬁcation is to                        Appendix  A),  it  is  not  a  practical  option.    Hence,  in
+formulate an algorithm in the double-layer picture in the                      the  following,  all  our  cluster  and  full  contractions  will
+following way.  Given the MPS bond dimension,D′′, and                          be based upon the original contraction algorithm1,16 and
+the puriﬁcation bond,d′, we write a puriﬁcation MPO26                          thus  make  use  of  general  boundary  MPO  as  shown  in
+by using in the lower layer the complex conjugated ten-                        Fig. 2.  Nevertheless, the  procedures analyzed here  may
+sors from the upper layer.  The problem of approximating                       be  useful  for  other  problems  where  the  question  of  nu-
+the boundary after the contraction of one further row of                       merically  optimizing  a  puriﬁcation  MPO  appears,  such
+the PEPS norm TN is then formulated for this structure                         as for  the description of one-dimensional thermal states
+instead of the  general MPO, as sketched in Fig. 6.  The                       or open systems.
+local equations result from replacing the single tensor of
+the  general  MPO  by  the  structure  consisting  of Al  and
+A∗l .   Following  the  standard  ALS  procedure,  we  sweep                                          B.     Tensor update
+over the sitesl, and for each site solve the corresponding
+optimization  problem  for Al.   However,  in  this  case  the                    Once the environment is computed, the actual update
+cost function to be minimized is no longer quadratic, but                      of the tensors takes place by solving the appropriate local
+quartic in the variables of a tensor at sitel, and its mini-                   equations.  It is also possible to use simpliﬁcations of this
+mum corresponds to the solution of nonlinear equations,                        step which render a more eﬃcient and stable algorithm.
+in  contrast  to  the  linear  equations  encountered  in  the                    For  the  update  of  a  pair  of  neighboring  tensors,  the
+original  contraction1,16  of  Fig.  2.   The  nonlinear  equa-                environment can be approximated in general by a MPO
+tions  for Al  have  to  be  solved  iteratively.   We  describe               with   periodic   boundary   conditions,   as   illustrated   in
+and benchmark several options in Appendix A.                                   Fig.  8.   A  ﬁrst  simpliﬁcation  of  the  tensor  update  pro-
+  We  compare  this  scheme  to  the  original1,16  and  the                   cedure  comes  from  sequentially  processing  the  Trotter
+SL algorithm based on the norm contraction of the same                         gates, as described above, and changing only the tensors
+PEPS  used  in  the  previous  analysis  of  Ref.21.   The  re-                on which each gate acts.  Then all the update operations
+sults  are  shown in  Fig. 7.  For  a  ﬁxed puriﬁcation bond                   on the pair are performed with a ﬁxed environment.
+d′,  we  observe  that  the  relative  error  of  the  norm  de-                  The  computational  cost  of  the  tensor  update  can  be
+creases fast as a function of D′′.  The comparison of the                      greatly decreased by restricting the update to the reduced
+11 × 11  to  the  21 × 21  lattice  (Fig.  7  (a))  shows  that,               tensor 12.  This reduced tensor update minimizes the cost
+similar  to  the  original algorithm1,16,  the  error  does  not               function (1) for the full tensors exactly only in the  case
+have  a  strong  dependence  on  the  system  size.   On  the                  of a separable environment21, as e.g. in the SU, but it is
+other hand, with growingd′, the curves tend to converge                        worth studying its performance in a more general situa-
+to  the  error  of  the  original  contraction1,16.   This  eﬀect              tion.  In any case, it allows to work with larger bond di-
+                                                                                                                                                          6
+
+
+     100
+
+
+     10-3                                                                       FIG.  9:  A  QR  decomposition  of  the  left  full  tensor AL  gen-
+                                                                                erates  the  left  reduced  tensor aL  as  the R.   Similarly,  a  LQ
+     10-6                                                                       decomposition  of  the  right  full  tensor AR  gives  the  right  re-
+                                                                                duced tensoraR as theL.  The initialdD4 variational param-
+                                                                                eters of  the full tensor are decreased  to the d2D2  variational
+     10-9                                                                       parameters of the reduced tensor.
+
+
+   10-121        2      3      4      5      6      7      8      9
+
+
+     100                                                                        FIG.  10:    Environment  tensor Nred   of  a  reduced  nearest-
+                                                                                neighbor  tensor  pair and  its  closest  positive  semideﬁnite ap-
+     10-3                                                                       proximant   ˜X ˜X†  constructed  as  explained  in  the  text.   The
+                                                                                contractions  are  characterized  by  the  leading  computational
+                                                                                cost O(d4D4D′2) + O(d2D6D′2) + O(d2D4D′3) and the com-
+     10-6                                                                       putation  of  the  positive  approximant  requires  additionally
+                                                                                O(d6D6) operations.
+
+     10-9                                                                       choice and  tensor normalization drastically improve the
+                                                                                stability of the algorithm.
+   10-121      2      3      4      5      6      7      8      9
+
+                                                                                                          1.    Reduced  tensor
+FIG. 7:  Relative error of the norm contraction using boundary
+puriﬁcation MPO, for SU Ising ground state approximations.                         Before performing the update under a nearest-neighbor
+(a) B = 3.0 andD = 2 on lattices of size 21 × 21 (main plot)                    Trotter gate, the  tensor for  a lattice site can be  decom-
+and  11 × 11  (inset).   (b) B  =  1.0  and D  =  4  on  a  11 × 11             posed into the contraction of two tensors, in such a way
+lattice.   For  reference,  we  show  the  error  of  the  SL  method           that one of them carries the physical index and the vir-
+with  maximum d′  = DD′′2  (open  circles)  and  of  the  origi-                tual bond corresponding to the link on which the two-site
+nal algorithm1,16  (ﬁlled circles).  Our puriﬁcation contraction                gate acts, i.e. all the indices directly aﬀected by the gate.
+was  performed  with d′  =  1  (triangles),  2  (squares),  and  3              This  tensor  is  called  the  reduced  tensor 12,  and  can  be
+(diamonds), and D′′ = √D′.                                                      obtained from the full tensor by means of a QR decom-
+                                                                                position, as sketched in Fig. 9.
+                                                                                   In the reduced tensor update, only the components of
+                                                                                such reduced tensor are modiﬁed during the update pro-
+                                                                                cedure, while the remaining part of the full tensor is left
+FIG. 8:  The 6 environment tensors of a nearest-neighbor ten-                   unchanged.  These remaining parts of both tensors in the
+sor  pair.  They  form  a  periodic  boundary  MPO  with  virtual               pair  are  contracted with  the  periodic MPO  of  Fig.  8  to
+bond  dimension D′  and  physical  dimension D.    It  is  con-                 get  the  environment  for  the  reduced  tensor  pair, Nred,
+structed  with  O(dD6D′2) + O(D4D′3)  operations,  resulting                    shown in Fig. 10.  Due to the approximate contractions,
+from  the  optimal  search  for  a  boundary  MPO  and  the  con-               this reduced environment is in general not positive, nei-
+traction of the environment up to the tensor pair.                              ther is it hermitian, but its positive approximant can be
+                                                                                constructed  in  two  steps30.   First,  we  compute  the  op-
+                                                                                timal  hermitian  approximant   ˜Nred  :=  (Nred +N †red)/2.
+mensions, which might compensate for the smaller num-                           Second,  from  its  eigendecomposition   ˜Nred  = UΣU †  we
+ber of variational parameters.                                                  obtain  the  positive  approximant  as UΣ+U †  where  Σ+
+   Another major diﬀerence between MPS and PEPS con-                            results from Σ by setting all negative eigenvalues to zero.
+cerns  the  conditioning  of  the  eﬀective  norm  matrix Nl.                   Finally,  the  environment is  written  as   ˜X ˜X†  in  terms  of
+For MPS with open boundary conditions, a gauge trans-                           its square root  ˜X :=U√Σ+.
+formation57 can be chosen such thatNl = 1, which guar-                             The computational cost of the contractions for the pe-
+antees the  stability of the tensor update.  Although this                      riodic  boundary  MPO  (Fig.  8),  needed  in  both  the  re-
+is impossible for PEPS, we will show how a proper gauge                         duced  and  the  full  tensor  update,  reads  O(dD6D′2) +
+                                                                                                                                                       7
+
+O(D4D′3).    The  construction  of Nred  (Fig.  9  and  10)
+is   only   slightly   more   expensive   with   O(d4D4D′2)  +
+O(d2D6D′2) + O(d2D4D′3) operations.  Its eigendecom-
+position requires O(d6D6).  In the complete update of the
+reduced tensors via the sweeping of the ALS scheme, all
+further  operations  have  lower  computational  cost.   No-
+tice  that  in  the  case  of  the  full  tensors  the  contrac-
+tion  of  the  norm  environment  for  a  single  tensor  needs
+O(D8D′2) + O(D4D′3) operations while the eigendecom-
+position of the norm matrix has the cost O(d3D12).
+   In order to study wether the reduced tensor limits the
+accuracy  of  the  method,  we  considered  imaginary  time
+evolution of the Heisenberg model on 4 × 4 and 10 × 10
+lattices, and compared the ﬁnal energies from the reduced                      FIG.  11:  Gauge  ﬁxing  on  the  environment  tensor  of  the  re-
+tensor update to the ones from the full tensor update.  We                     duced tensor pair, when the environment is non-separable.  (a)
+found  that,  while  for  the  small bond dimensions D  = 2                    We perform a QR and LQ decomposition on   ˜X  from Fig. 10
+and  3  the  full  tensor  update  produced  better  energies,                 independently  of  each  other  (notice  that  we  have  shortened
+for D = 4 the  energies of both approaches were already                        here  the horizontal  open  indices  of   ˜X  compared  to  Fig.  10).
+very similar.  This  can be  appreciated by comparison of                      (b) Contraction of  ˜X withL−1 andR−1 gives the ﬁnal square
+the  results  in  Appendix  C  (obtained  with  the  reduced                   root  of  the environment  tensor, X.  (c)  In order  to leave the
+tensor) to the full tensor results published in Refs.1,18.                     state  unchanged,  the  left  and  right  reduced  tensors aL  and
+   Because  the  reduced  tensor  update  is  less  costly,  we                aR  from  Fig.  9  have  to  be  contracted  with  the  gauge  trans-
+could  reach  larger  bond  dimensions  than  with  the  full                  formations L  and R  as  shown  here,  which  gives  the starting
+tensor  update,  and,  in  the  end,  obtained  the  lowest en-                tensors ˜aL  and ˜aR  for the update explained in Fig. 12.
+ergies  with  the  reduced  tensors.   Therefore  the  reduced
+tensor update  was used for the  results presented in this
+paper.                                                                         with  any  of  the  environment  approximations  described
+                                                                               previously, we propose a precise scheme for each case.
+                                                                                  When  the  environment  of  the  tensor  pair  is  separa-
+                          2.    Gauge ﬁxing                                    ble, i.e. D′ = 1 in Fig. 8, it decomposes into six positive
+                                                                               semideﬁnite matrices, which can be determined by the al-
+   In the case of MPS, it is possible to keep up a canoni-                     gorithm in Ref.21.  We compute the square roots of these
+cal form of the tensors during their updates with the help                     matrices and absorb them in the tensor pair.  After con-
+of a  local gauge ﬁxing, and that ensures the stability of                     traction of the tensor pair with the Trotter gate, a SVD
+the  algorithm  and  optimizes  its  performance16.   In  the                  is performed to ﬁnd the new tensors, and ﬁnally these are
+case of PEPS, there exists neither such a canonical form                       multiplied  by  the  inverses  of  the  previous  square  roots.
+nor  any  means  to  locally  gauge  away  the  norm  matrix.                  This procedure coincides with the SU8 in which theλ ma-
+Nevertheless,  using  the  gauge  freedom,  it  is  possible  to               trices  surrounding  the  tensor  pair  are  substituted  here
+improve  the  conditioning  of  the  norm  matrix  and  posi-                  by  the  square  roots  of  the  environment  matrices  corre-
+tively aﬀect the precision and stability of the method, as                     sponding  to  each  link.   Since  the  positive  separable  en-
+we describe in the following.58                                                vironment  of  the  tensor  pair  is  obtained  with  O(dD5)
+   We propose a gauge ﬁxing that is inspired by the one-                       operations,  the  leading  cost  of  the  complete  update  is
+dimensional case with open boundary conditions.  In that                       O(d6D3) + O(d2D5), under the assumptiond ≤D2.
+case,  the  norm  tensor  can  be  reduced  to  the  identity                     When   the   environment  of  the   tensor  pair  is   non-
+by  (partially) imposing  the  canonical form of  the  MPS,                    separable, and we restrict the update to the reduced ten-
+achieved by QR (or LQ) decomposition of each tensor af-                        sor, we propose the gauge ﬁxing from Fig. 11.  By taking
+ter its update16.  Alternatively, for an arbitrary MPS it is                   R andL from independent QR and LQ decompositions of
+always possible to reduce the norm matrix to the identity                      the same  ˜X  from Fig. 10, we treat both virtual bonds of
+by  taking  the  square  roots  of  the  unconnected  left  and                the environment equally, such that both reduced tensors
+right environment halves and absorbing part of their QR                        will  experience  similar  condition  numbers  in  the  linear
+(LQ) decompositions in the tensor to be updated.                               equations of the following sweeping59.  After we have ob-
+   In  the  case  of  PEPS,  it  is  not  possible  to  ensure  an             tained the desired better-conditioned square root of the
+identity norm matrix by means of QR or LQ decomposi-                           environment  tensor, X,  in  order  to  leave  the  state  un-
+tions after the tensor update.  Hence, we adapt the second                     changed,  the  left  (right)  reduced  tensor  has  to  be  con-
+possibility and obtain the gauge transformations from the                      tracted with L (R) over its left (right) virtual index.
+environment before  the tensor update,  namely from the                           After  our  gauge  ﬁxing  has  been  applied,  the  actual
+norm tensor itself, such that the norm matrix is better-                       update takes place in three steps.  First, the tensors are
+conditioned.  Because this gauge ﬁxing can be combined                         initialized using a SVD as shown in Fig. 12 (a).  This step
+                                                                                                                                                            8
+
+
+                                                                                      (a)        Model        Positive approximant  Gauge ﬁxing
+                                                                                           B = 1.0 Ising          (2 ± 3) · 107              1.1 ± 0.1
+                                                                                           B = 3.0 Ising          (2 ± 3) · 103              1.6 ± 0.1
+                                                                                            Heisenberg             (8 ± 5) · 10             1.08 ± 0.02
+
+                                                                                      (b)        Model        Positive approximant  Gauge ﬁxing
+                                                                                           B = 1.0 Ising       (9 ± 205) · 1013        (1 ± 3) · 104
+                                                                                           B = 3.0 Ising       (4 ± 158) · 1013        (5 ± 6) · 102
+FIG. 12:  Initial and  ﬁnal step  of  the reduced tensor update.                            Heisenberg             (3 ± 2) · 104                 5 ± 3
+(a)  Initialization:   Before  we  update  the  reduced  tensors  by             TABLE I: We show the mean condition number of the norm
+sweeping,  we  apply  a  SVD  to  their  joint  contraction  with                matrix with its standard deviation in the reduced tensor up-
+the Trotter gate, and keep only theD largest singular values                     date without our gauge ﬁxing, using only the positive approx-
+in  Σ.   Splitting  Σ  gives  the  initial  tensors aL  := U√Σ  and              imant,  and  with  our  gauge  ﬁxing  during  the  FU  imaginary
+aR  :=  √ΣV   for  the  ALS  procedure.   (b)  Final  form:   After              time  evolution  of D  =  2  (a)  and D  =  4  (b)  PEPS  of  size
+convergence of the ALS sweeping, we put the two tensors on                       N  = 11 × 11 for the Ising model and of size N  = 10 × 10 for
+an equal footing.                                                                the  Heisenberg  model.   The  values  were  obtained  averaging
+
+                                                                                 over 10 time steps and all tensors in the lattice.
+coincides  with  the  SU.  If  the  environment  is  separable,
+the cost function is already minimal.  In any other case,                              100
+we  can  anticipate  good  starting  tensors  that  are  closer                                                   10-3
+to  the  minimum  of  the  cost  function.   Second,  we  opti-                       10-3                        10-6
+mize the tensors by means of the standard ALS sweeping,                                                           10-9
+in which each tensor update is followed by the standard                                                          10-12
+gauge ﬁxing16, i.e. the left (right) tensor is QR (LQ) de-                            10-6                       10-15
+composed  along  its  right  (left)  virtual  bond.   Third,  a
+gauge choice is made on the internal link of the converged                            10-9
+pair as shown in Fig. 12 (b).
+   We have observed that our gauge choices improve the                               10-12
+condition number of the norm matrix by several orders of
+magnitude in all studied cases.  This statement is quan-
+tiﬁed  by  the  results  in  Tab.  I,  which  compares  typical                      10-15
+condition  numbers  found  in  the  simulation  of  the  Ising                             0    1    2    3    4    5    6    7    8    9    10
+and Heisenberg models with and without our gauge ﬁx-
+ing.  Strictly speaking, the condition number of the norm                        FIG.     13:          Mean     value     of     the     relative     change
+matrixNl provides only an upper bound for the ﬁnal er-                           ǫd(u) := |d(u) −d(u − 1)|/|dinit|    of    the    cost    function d,
+ror of the solution ⃗Al to the linear system of equations32:                     Eq. (1), after consecutive update sweeps u over a tensor pair
+Therefore, a large condition number does not imply low                           computed with respect to the initial value of the cost function
+accuracy, but a small condition number implies high ac-                          dinit,  for  the D = 4 reduced  tensor  update setting  of  Tab.  I.
+curacy of the solution.  In practical computations with ﬁ-                       We compare the FU evolution without our gauge ﬁxing using
+nite PEPS, when our gauge transformations are not used                           only  the  positive  approximant  (open  symbols)  to  the  same
+instabilities can occur (e.g. as reported in Ref.14) that we                     propagation  with  our  gauge  ﬁxing  (ﬁlled  symbols),   for  a
+have never encountered after our gauge ﬁxing.                                    11 × 11  Ising  model  at B  =  1.0  (circles)  and  3.0  (squares),
+   We can also investigate the eﬀect of our gauge ﬁxing on                       and for a 10 × 10 Heisenberg model (triangles).
+the convergence of the ALS sweeping, which can be gath-
+ered  from Fig.  13  for  the  update  of  the  reduced  tensor.                 without  the  ALS  sweeps,  might  be  successful.   Indeed,
+Most remarkably, in the  presence of the gauge transfor-
+mations, already the initial SVD drastically reduces the                         for  the  Ising  model,  the  cost  function  after  our  gauge
+cost  function  Eq.  (1),  by  a  value  that  in  all  considered               ﬁxing  and  SVD  is  already  smaller  than  after  10  sweeps
+cases is larger than the one attained after one sweep with-                      without our gauge ﬁxing.  However, the sweeping can fur-
+out the gauge transformations.  Furthermore, the ﬁnal to-                        ther decrease the cost function, and this is revealed most
+tal reduction of the cost function is also larger with our                       evidently for the Heisenberg model.
+gauge ﬁxing than without.  Because the relative change of                           So far, we assumed that the update is performed on two
+the cost function in Fig. 13 always decreases faster in the                      directly neighboring tensors, after applying on them one
+presence of our gauge transformations, we conclude that                          of  the  Trotter  gates  of  a  nearest-neighbor Hamiltonian.
+the latter accelerate the convergence of the ALS scheme.                         The  discussion  can  be  extended  to  the  update  of  more
+Our results indicate that a simpliﬁed tensor update con-                         distant tensors, as would appear in the case of Hamilto-
+sisting  of  the  combination  gauge  ﬁxing  and  SVD  only,                     nians with long-range interactions.  However, for n non-
+                                                                                                                                                      9
+
+adjacent reduced tensors the dimension of the norm ma-                             •  Finally, the correct tensor normalization has a de-
+trix  is  typically  (d2D2)n  × (d2D2)n,  and  its  diagonal-                        cisive  impact.   Imaginary  time  evolution  steadily
+ization, even for two tensors, is not desirable.  A further                          modiﬁes  the  norm  of  the  state.   Thus  we  impose
+simpliﬁcation is to choose the gauge transformations from                            the  normalization  of  the  PEPS,  ⟨ψ|ψ⟩  =  1,  after
+the local environment of a single tensor, since the norm                             each set of Trotter gates, and, in order to avoid the
+matrix in  this  case has  size d2D2 ×d2D2.  By  means of                            existence of very small or very large tensors, we ad-
+a  numerical  simulation  we  conﬁrmed  that  such  a  local                         ditionally scale all PEPS tensors to have the same
+gauge choice can produce condition numbers comparable                                largest element absolute.
+to  the  ones  obtained  from  the  gauging  of  the  environ-
+ment  of  the  pair60.  Moreover, we  found  that  the  gauge
+matricesL andR computed from the local norm tensors
+of each separate tensor in the pair can also be applied to
+the pair environment, and then we can follow the update
+procedure of  Fig. 12.  Thus,  we  expect  that  local gauge
+choices  similarly  improve  the  tensor  update  in  the  case
+of  general long-range interactions, where  the  tensor ini-
+tialization and ﬁnal form in Fig. 12 will be given by their
+analogues from TEBD23.
+  While  the  discussion  here  is  focussed  on  the  reduced
+tensors, in Appendix B we derive an eﬃcient gauge ﬁxing
+for  the  full  tensors.  This  gauge  ﬁxing  equally  improves
+the  condition  number  of  the  norm  matrix  and  the  con-
+vergence of the ALS sweeping in the tensor update of the
+full  tensors.   Because  all  our  gauge  transformations  are
+derived  from  and  applied  to  the  norm  TN  alone,  they
+do  not  explicitly  depend  on  the  operator  whose  action
+on  the  PEPS  is  approximated.   We  would  therefore  ex-
+pect  that  our  gauge  choices  similarly  improve  the  orig-
+inal  time  evolution  algorithm1,16  in  which  the  action of
+projected entangled pair operators (PEPO) on PEPS is
+approximated61.
+
+
+
+                         3.    Stability issues
+
+  The  previously  described  gauge  choices  guarantee  a
+better  conditioned  norm  matrix.   But  for  the  stability,
+precision and eﬃciency of the algorithms, especially when
+the environment approximation is very rough (e.g. by us-
+ing small clusters or boundary bond dimensions), also the
+following factors need to be taken into account.
+
+    •  For PEPS, the matrices Nl  are not exactly hermi-
+       tian and positive semideﬁnite.  The advisable strat-
+       egy  is  to  replace  them  by  their  closest  hermitian
+       approximants (Nl +N †l )/2, and additionally set to
+       zero  any  negative  eigenvalues  in  order  to  get  the
+       closest positive semideﬁnite approximant of Nl, as
+       described above for the environment of the reduced
+       tensor pair,62.
+
+    •  In general, some eigenvalues of Nl  are zero and its
+       positive  subspace  is  ill-conditioned.   That  is  why
+       N −1l     must be a pseudoinverse.  A cutoﬀ is set such
+       that only the subspace ofNl with eigenvalues larger
+       than a certain value is considered in the construc-
+       tion of the pseudoinverse.
+                                                                                                                                                     10
+
+      IV.     PERFORMANCE  OF  FINITE  PEPS
+
+  With  the  aim  of  analyzing  its  performance  in  terms
+of system size and bond dimension, we have applied the                              10-2
+generic ﬁnite  PEPS code  to  the  ground state search for
+the Heisenberg and quantum Ising model, and compared
+the  results  to  those  obtained  by  other  numerical  meth-
+ods,  when  available.   Our  best  PEPS  results  were  ob-
+tained  with  the  FU,  i.e.  updating  the  reduced  tensors,
+applying the Trotter gates sequentially, and approximat-
+ing the  full contraction of the  environment by means of                           10-3
+general boundary MPO. This combination of techniques                                          2          3          4          5          6
+allowed us to  push the  simulations to lattices  of size up
+to 21 × 21.  On the same systems, we ran also the SU for
+ﬁnite PEPS.                                                                   FIG. 14:  Relative energy errorǫE  := |E(D)−E0|/|E0|, where
+                                                                              E0  denotes  the  exact  ground  state  energy  from  the  ALPS
+                                                                              library34–36,  of  the  SU  (open  symbols)  and  the  FU  (ﬁlled
+                 A.     Convergence  procedure                                symbols) for diﬀerent lattice sizes.  In the case of the SU, we
+                                                                              consider N  = 10 × 10  (triangles),  14 × 14  (squares),  16 × 16
+  In  each  case,  the  PEPS  ground  state  approximation                    (diamonds), and 20 × 20 (circles).  In the case of the FU, we
+was  found  by  means  of  imaginary  time  evolution.   The                  consider N  = 10 × 10 (diamonds) and 14 × 14 (circles).
+initial  state  was  always a D  =  2  PEPS which  was  con-
+structed  by  embedding  in  it  a  separable  PEPS  and  re-                 because  quantum  Monte  Carlo  methods  provide  quasi
+placing  the  zero  entries  by  small random numbers.  Be-                   exact  results  for  very  large  system  sizes33,  and  thus  we
+ginning  with  the  time  step τ  =  0.01,  the  propagation                  can  directly  compare  our  results  to  quantum  Monte
+was  performed  long  enough  for  the  energy  to  converge,                 Carlo63.  In the context of PEPS, the ground state order
+and  then  the  procedure  was  repeated  for  smaller  time                  parameter   of   this   model,   i.e.   the   squared   staggered
+step(s).  After convergence was attained for the minimum                      magnetization M 2stag   :=       1
+time step, the scheme was iterated for a larger bond di-                                                          N 2 ∑Nl,m=1(−1)l+m⟨⃗Sl  · ⃗Sm⟩,
+mension, starting from a previously converged PEPS as                         is   particularly   challenging37   (also   on   a   honeycomb
+initial state.                                                                lattice11)  and  a  precise  determination  has  so  far  only
+  We observed that the converged SU PEPS of a certain                         been  possible  with  very  large  bond  dimension D  =  16
+bond dimension was always a good initial state for further                    in Ref.13.  Here  we  want to  ﬁnd  out what our improved
+propagation  with  the  FU  for  this  bond  dimension.   On                  algorithmic procedures can do.
+the  one  hand,  in  general,  the  SU  PEPS  can  already  be                   To our Heisenberg Hamiltonian we added a small stag-
+a  good  ground  state  approximation  and  then  only  few                   gered  magnetic  ﬁeld BZ ∑l(−1)lSZl    which  we  slowly
+further  steps  with  the  FU  are  required.   On  the  other                switched  oﬀ  during  the  evolution,  starting  from BZ  =
+hand,  we  have  found,  that  such  state  required  smaller                 10−3.   In  the  presence  of  this  staggered  ﬁeld  the  SU(2)
+values of D′  when the evolution was continued with the                       symmetry  of  the  Heisenberg  model  is  explicitly  broken
+FU.                                                                           and smaller values ofD′ suﬃce.  This procedure improved
+  Energies  and  correlators  reported  here  for  a  certain                 the convergence of all our algorithms signiﬁcantly.  In the
+value ofD correspond to the ﬁnal PEPS for the smallest                        case of the SU, it helped to avoid local minima and reach
+time step.  The error in the corresponding observable was                     lower ﬁnal energies, in particular on the  largest 20 × 20
+estimated via the diﬀerence to the expectation value cal-                     lattice.   And,  in  the  case  of  the  FU,  already  when  the
+culated with  the  converged PEPS for  the  previous time                     staggered  ﬁeld  was  still  switched  on,  low  values  of  the
+step.    All  contractions  were  performed  with  boundary                   energy were attained while smaller values of D′  were re-
+bond  dimension D′  =  100,  big  enough  to  neglect  con-                   quired.  All  propagations were performed  for  time  steps
+traction  errors,  as  we  explicitly  checked  by  comparison                τ  = 10−2 and 10−3.
+to results fromD′ = 200.                                                         Figure  14  shows  the  convergence  of  the  energy  with
+                                                                              increasing  bond  dimension.  We  observe  that,  while  the
+                                                                              FU  energy  error  decreases  rapidly  with D,  the  SU  en-
+                     B.     Heisenberg  model                                 ergies  saturate,  and  for  bond  dimensions  up  to D  =  6,
+                                                                              the lowest SU energies lie between the  values for D = 3
+  We    considered    imaginary    time    evolution    with                  and 4 obtained with the FU. This is consistent with our
+                                                                              earlier  observations  in  Ref.21  based  on  smaller  lattices.
+an        antiferromagnetic        Heisenberg        Hamiltonian              Both  the  SU  and  the  FU  produce better  energies  when
+ˆH = ∑⟨l,m⟩⃗Sl ·⃗Sm.   This  model  on  a  two-dimensional                    the lattice size increases.
+square lattice is a paradigmatic benchmark Hamiltonian                           We can now compare our energy accuracies to the ex-
+                                                                                                                                                      11
+
+isting literature.  The original ﬁnite  PEPS algorithm1,16                           0.8
+obtained a lowest energy per site −0.62515 on a 10 × 10                                                100
+lattice,  using  time  step τ  =  0.001  and  bond  dimension
+D  =  4  (this  PEPS  result  is  given  in  Refs.38,39).    For                     0.6               10-1
+this system size and the same values ofτ  andD we now                                                  10-2
+achieve  the  slightly  lower  energy  per  site  −0.62637(2),
+and  we  can  also  provide  the  converged D  =  6  result                          0.4               10-3
+−0.62774(1).   All  our  energies  as  well  as  our  quantum                                              0             5            10
+Monte  Carlo  reference  values  corresponding  to  Fig.  14
+are collected in Appendix C. OurD = 4 energy per site is                             0.2
+already lower than the best values reported for the wave
+function  ansatzes  (block)  sequentially  generated  states
+(−0.61713)38, entangled-plaquette states (−0.6258(1))39,                                0        2       4       6       8       10      12
+and string bond states (−0.6225)40, to which we can di-
+rectly  compare  because  they  also  considered  ﬁnite  sys-                        0.8
+tems  with  open  boundary  conditions.   For  inﬁnite  sys-
+tems,  the  iPEPS  ansatz  attains  slightly  better  energy                                           100
+precisions  between  10−3  and  10−4  for D  =  4  to  6,  as                        0.6               10-1
+reported  in  Ref.41.    And  for  large  ﬁnite  cylinders,  the
+best DMRG results are also more accurate:  Reference42                                                 10-2
+analyzes the Heisenberg model on a cylinder with a con-                              0.4               10-3
+stant staggered magnetic ﬁeld on the boundaries and, by                                                    0            5            10
+making use ofSZ  symmetry in the algorithm, reaches an
+energy accuracy of 10−4 on a 20 × 10 lattice.                                        0.2
+   In order to check the accuracy of the ground state ap-
+proximation, we evaluated also non-local observables.  In
+particular, we computed the correlator ⟨⃗Sl ·⃗Sl+x⟩, in the                             0       2       4       6       8       10      12
+center of the lattice for two sites separated by a distance
+x,  either  along  the  diagonal  or  along  the  same  column.
+We  checked  explicitly  that  the  correlators  of  the  con-                 FIG.  15:  Spin  correlations C(x)  :=  |⟨⃗Sl · ⃗Sl+x⟩|  (main)  and
+verged  PEPS  along  the  diagonal  and  vertical  direction                   relative errorǫC(x) := |C(x)−C0(x)|/|C0(x)| (inset), with the
+are quantitatively very similar.  This feature is obviously                    exact  values C0(x)  (thick  line)  from  the  ALPS  library34–36,
+due  to  the  PEPS ansatz  and would be  harder  to  repro-                    for  two  sites  separated  by  distance x  along  the  diagonal  in
+duce  e.g.  with  MPS  in  two  dimensions.   The  precision                   the center of 10 × 10 PEPS  (a) and along the vertical in the
+of our considered spin-spin correlator ⟨⃗Sl ·⃗Sl+x⟩ also in-                   center  of  14 × 14  PEPS  (b).  We  consider  PEPS  Heisenberg
+dicates the  precision that can be expected for the order                      ground state approximations from the FU withD = 2 (dash-
+parameter M 2stag  :=     1                                                    double-dotted), 4 (dash-dotted), 5 (dashed), 6 (ﬁlled circles),
+                           N 2 ∑Nl,m=1(−1)l+m⟨⃗Sl · ⃗Sm⟩.  Since               and  7  (crosses),  and  from  the  SU  with D  =  4  (squares),  6
+the former quantity, being dependent on the distance x,                        (diamonds), and 8 (open circles).
+provides  more information than  the  latter  quantity,  be-
+ing just a single number, we focus here on the spin-spin
+correlator.                                                                    correlator  error  ≈  0.1  reported  in  Ref.37  for D  =  5  is
+   The results for the diagonal correlators in 10×10 PEPS                      still  rather  high  (although  larger values  of D  are  acces-
+are  shown  in  Fig.  15  (a),  and  Fig.  15  (b)  displays  the              sible  within  iPEPS  algorithms  nowadays5,43  by  making
+vertical  correlators  for  14 × 14  PEPS.  We  observe  that                  use  of  symmetries44,45).   In  Ref.13  the  SU  was  used  to-
+the FU converges quickly to the true correlator with in-                       gether with Monte Carlo sampling to reach much larger
+creasing bond dimension.  Although for ﬁxedD the error                         bond dimensions, and their best accuracies obtained with
+grows  with  the  distance x,  for  ﬁxed x  it  decreases  fast                D = 16 were 0.003(2) on a 8 × 8 lattice and 0.013(2) on a
+with D.   In  particular,  if  we  consider  the  correlator  at               16 × 16  lattice,  assuming  periodic boundary  conditions.
+distance x  = L/2,  as  commonly  done  for  the  construc-                    We now attain the same precisions here on 10 × 10 and
+tion  of  the  thermodynamic  value  via  ﬁnite  size  scaling,                14 × 14 lattices already with much smaller bond dimen-
+we read oﬀǫD=6C      ≈ 0.01 andǫD=7C      ≈ 0.003 on the 10 × 10               sions D  =  6  and  7.   Again,  the  best  DMRG  results  are
+lattice, and we ﬁndǫD=5C      ≈ 0.07 andǫD=6C      ≈ 0.01 on the               still more accurate:  Reference42 reports an uncertainty of
+14×14 lattice.  As for the energy, the SU results saturate,                    0.0007 for the observable |⟨SZ⟩| in the center of a 20 × 10
+and they get better when the system size is larger.                            cylinder  with  constant  staggered magnetic  ﬁelds  on  the
+   We want to compare our results for the spin-spin cor-                       boundaries.
+relator  to  previous  works.   The  widely  used  iPEPS  al-                     We  can  try  to  understand  the  characteristics  of  the
+gorithms  achieve  a  remarkably  low  relative  energy  er-                   SU and the FU results with the help of the environment
+ror  in  the  thermodynamic  limit41  while  their  relative                   approximation used in their tensor updates.  As we have
+                                                                                                                                                       12
+
+      100                                                                            1.0                                    1.0
+                                     100
+     10-1                           10-2                                             0.8                                    0.9
+                                    10-4
+     10-2                           10-6                                             0.6                                    0.8
+                                              5     10    15                                                                0.7
+     10-3                                                                            0.4                                    0.6
+
+     10-4                                                                            0.2                                    0.52.0      3.0      4.0
+
+     10-5                                                                            0.02.0           2.5             3.0            3.5            4.0
+             2        4        6         8        10       12
+
+FIG. 16:  Correlation functionG(x) := ⟨⃗Sl·⃗Sl+x⟩−⟨⃗Sl⟩·⟨⃗Sl+x⟩                FIG. 17:  Observables ⟨σZ⟩ (main) and ⟨σX⟩ (inset) evaluated
+for two sites separated by distancex along the diagonal in the                 in the center of 21 × 21 PEPS Ising ground state approxima-
+center of 10 × 10 (main) and 14 × 14 (inset) PEPS Heisenberg                   tions  from  the  FU  with D  =  2  (plusses),  3  (crosses),  and
+ground  state  approximations  of  bond  dimension D  = 4.  We                 4  (ﬁlled  circles),  where  the D  =  4  are  basically  on  top  of
+compare SU (dotted), CU1 (dash-double-dotted), CU2 (dash-                      the D  =  3  results.   Open  symbols  show  the  SU  at B  =  3.0,
+dotted), CU3  (dashed), and FU (solid).                                        for D  =  2  (down-triangles),  4  (up-triangles),  5  (squares),  6
+                                                                               (diamonds),  and  7  (open  circles).    We  interpolate  the  FU
+                                                                               D  =  4  ⟨σZ⟩  results  between B  =  2.85  and B0  :=  3.000035
+                                                                               with |B −B0|0.34.
+
+argued in Ref.21, SU and FU represent special cases of a
+unifying CUδ:  the SU is equivalent to clusters of sizeδ =                                        C.     Quantum  Ising  model
+0 in the tensor update, while the FU corresponds to the
+largest possible cluster sizeδ =L − 1.  Here we showed in                         We   have   also   applied   our   ﬁnite   PEPS   algorithms
+Sec. III, that the cluster contraction error as a function of                  to   the   quantum   Ising   model   with   transverse   ﬁeld,
+the cluster size behaves like the correlation function of the                   ˆH = − ∑
+considered PEPS, such that states with short correlation                       tures a quantum phase transition in the thermodynamic⟨l,m⟩σZl σZm −B ∑lσXl  .  This  Hamiltonian  fea-
+lengths  can be  accurately contracted by  means  of small                     limit,  and  its  critical  point Bc  ≈  3.044  and  exponent
+clusters.  It is then reasonable to expect that the cluster                    β ≈ 0.327 are known very accurately thanks to ﬁnite size
+sizeδ used in CUδ limits the ﬁnally achievable correlation                     scaling with quantum Monte Carlo46.  Since iPEPS have
+length.  We address this question on a 10×10 lattice with                      already very  successfully  demonstrated the  adequacy  of
+D = 4 in the main part of Fig. 16.  Indeed, the correlation                    the  PEPS  ansatz  for  the  quantum  Ising  model  even  at
+function  decays  slower  when  larger  clusters  are  used  in                criticality9,10  (Ref.10  reports Bc  ≈ 3.04 and β  ≈ 0.328),
+the CU.                                                                        we  present  our  results  here  and  in  Appendix  C  just
+   Moreover, we can gather from Fig. 16 that the correla-                      for  benchmark  purposes,  e.g.  to  enable  a  comparison
+tion functions for system size 14 × 14 from SU as well as                      with another PEPS implementation or with another wave
+FU decay faster than the corresponding ones for system                         function ansatz.  We thus consider here only few diﬀerent
+size  10 × 10,  while  Fig.  14  shows  that  a  higher  energy                values  of  the  magnetic  ﬁeld  around B  = 3  and  run  our
+accuracy is attained on the larger lattice.  This indicates                    computations only for the two system sizes 11 × 11 and
+that,  for  the  ﬁnite  systems  with  open  boundary  condi-                  21 × 21.  For each value ofB, we converge the imaginary
+tions  considered here,  the  true  correlation length  of the                 time evolution independently, using time stepsτ  = 10−2,
+Heisenberg model slightly decreases with growing lattice                       10−3, and 10−4.
+size.   In  the  context  of  the  SU,  this  would  explain  why                 Figure 17 shows the order parameter evaluated in the
+the  SU  results  of  Figs.  14  and  15  are  better  on  larger              center  of  21 × 21  PEPS from  the  FU  for  several points
+lattices.   And  in  the  context  of  the  FU,  this  would  ex-              in  the  phase  diagram.  Without  performing  a  ﬁnite  size
+plain our numerical observation that the convergence of                        scaling,  we  can  already  extract  estimates  of  the  critical
+energies and spin-spin correlators required smaller values                     point Bc  ≈  3.0  and  exponent β  ≈  0.34  from  this  ﬁnite
+of D′  for  larger systems64:  A  smaller correlation length                   system, which are close to the iPEPS results9,10.  We con-
+can be captured with a smaller cluster size δ in the CUδ                       clude that this lattice is already large enough to display
+and  the  contraction  precision  achieved  with  such δ  can                  features similar to iPEPS.
+equally  be  obtained by  the  full  contraction, used  in  the                   For comparison, we also present SU results at B = 3.
+FU,  with correspondingly smaller value  of D′  (see  Figs.                    As expected from our previous analysis, the SU does not
+12 and 13 in Ref.21).                                                          work well  there,  where  the  correlation length  should  be
+                                                                                                                                                   13
+
+                                                                             expectation values.  We have shown how the accuracy of
+     10-1                                                                    the cluster  strategy21,  which allows for a  natural trade-
+                                                                             oﬀ between precision and computational cost of the  en-
+     10-2                                                                    vironment, is fundamentally connected to the correlation
+                                                                             length of the state.  Additionally, we have demonstrated
+     10-3                                                                    that it is possible to make use of puriﬁcation MPO in or-
+                                                                             der to ensure a positive environment approximation, and
+     10-4                                                                    that  this  overcomes  the  limitations  of  the  Single-Layer
+                                                                             algorithm14.  The  numerical techniques  analyzed in  this
+     10-5                                                                    problem can straightforwardly be applied to the Cluster
+                                                                             Update21  and to the Full Update, but also to other sce-
+     10-6                                                                    narios where a positive MPO is required, e.g. to describe
+                                               10                            the mixed state of a one-dimensional system.
+                                                                                Not only the environment approximation, but also the
+FIG. 18:  Correlation functionG(x) := ⟨σZl σZl+x⟩−⟨σZl  ⟩⟨σZl+x⟩             method chosen for the tensor update aﬀects the cost and
+for  two  sites  separated  by  distance x  along  the  diagonal  in         stability  of  the  routines.   We  have  proposed  an  update
+the center of PEPS ground state approximations of the Ising                  scheme that is more eﬃcient and better conditioned than
+model on a 21×21 lattice with transverse ﬁeldB = 3.0 (main)                  the  one  from  the  original  algorithm1,16.   By  restricting
+and on a 11×11 lattice withB = 2.8 (inset).  The results were                the variational parameters to the reduced tensor, the up-
+obtained with the FU using bond dimensionD = 2 (plusses),                    date is drastically accelerated.  For both the reduced and
+3 (crosses), and 4 (ﬁlled circles), and with the SU usingD = 4               the  full  tensor,  we  have  formulated  gauge  ﬁxings  that
+(squares), 6 (diamonds), and 7 (open circles).                               signiﬁcantly improve the  conditioning.  These gauge ﬁx-
+                                                                             ings,  additionally,  when  combined  with  a  cheap  SVD,
+large.   Figure  18  shows  that  the  FU  can  indeed  gener-               constitute a promising simpliﬁed but fast tensor update
+ate PEPS with larger correlation lengths.  While a least                     procedure.
+squares  ﬁt  gives  a  correlation length  for  the  FU D  =  4                 Finally,  we  have  combined  the  ingredients  discussed
+PEPS ζD=4                                                                    above in an eﬃcient implementation of ﬁnite PEPS imag-
+          F U    ≈  2.6,  it  reveals  for  the  SU D  =  7  PEPS            inary  time  evolution,  capable  of  dealing  with  large  sys-
+only ζD=7SU    ≈ 1.2.  The inset of Fig. 18 demonstrates the                 tems and bond dimensions.  In particular we have opted
+largest correlation lengthζD=4F U    ≈ 4.3 for the 11 × 11 lat-              for  the  sequential  application  of  Trotter  gates,   using
+tice.  Notice  that,  here,  we  have  not  performed  such  an              general  boundary  MPO  in  the  contraction  of  the  full
+extensive convergence analysis with D′  as we have done                      environment66, and restricting the update to the reduced
+before  for  the  Heisenberg  Hamiltonian65.   Nevertheless,                 tensors.  To  benchmark  the  performance of  ﬁnite  PEPS
+we want to emphasize that our correlation functions for                      and  to  quantitatively  assess  the  algorithmic  properties,
+the 21 × 21 lattice are in perfect agreement with the best                   we have applied the code to the ground state search for
+iPEPS results10.                                                             the Heisenberg and the quantum Ising model.
+  Remarkably, long correlation lengths can be analyzed,                         We have presented ground state calculations for system
+i.e.  large  clusters  can  be  contracted,  with  very  high  ac-           sizes  up  to  21 × 21  and  bond  dimensions  up  to D  ≈  7,
+curacy in the framework of PEPS. This constitutes clear                      8.   Our  results  demonstrate  the  adequacy  of  the  PEPS
+evidence for the power of general boundary MPO. They                         ansatz  for  the  description  of  strongly  correlated  quan-
+can capture the correlations of a large cluster sizeδ with                   tum many-body systems, with energy and order parame-
+a  boundary bond dimension much smaller than the  one                        ter converging fast with increasing bond dimension, when
+needed for the exact contraction,D′ =D2δ.                                    they  were  obtained with  the  Full  Update.  In that  case,
+                                                                             thanks to the algorithmic improvements developed in this
+                                                                             article,  we  have  been  able  to  achieve  precisions  of  the
+                     V.     CONCLUSIONS                                      spin-spin correlator in the Heisenberg model using bond
+                                                                             dimensions D  = 6  and 7  that  previously had only  been
+  In  this  paper  we  have  reviewed  various  aspects  that                attained  using  a  much  larger D  =  16  in  Ref.13.    Our
+need to  be  taken into  account in the  implementation of                   analysis of a 21 × 21 quantum Ising model gave, already
+eﬃcient state-of-the-art ﬁnite PEPS algorithms.  Within                      without  ﬁnite  size  scaling,  critical  point,  critical  expo-
+the  two  main  parts  of  PEPS  algorithms,  namely  the                    nent  and  correlation  functions  in  good  agreement  with
+environment  approximation  and  the  tensor  update,  we                    the iPEPS results9,10.
+have analyzed algorithmic strategies that improve the ef-                       The  Simple  Update8  and  the  Cluster  Update21  using
+ﬁciency and stability of the procedures, and the physical                    small  cluster  sizes,  while  ensuring  a  less  costly  environ-
+properties of the solution.                                                  ment  and  thus  being  able  to  deal  with  larger  bond  di-
+  The environment approximation has decisive inﬂuence                        mensions, do not produce the best ground state approx-
+on the precision of the ﬁnal PEPS of an imaginary time                       imation for a certain value of D, and, in particular, give
+evolution,  and  is  equally  crucial  for  the  computation  of             rise  to  PEPS  with  limited  correlation  length,  which  is
+                                                                                                                                                     14
+
+especially relevant for strongly correlated systems as e.g.                           function,  and  large  enough  to  avoid  unnecessar-
+the Ising model close to criticality.  This makes clear that                          ily  long  convergence times67.   The  construction  of
+the largest bond dimension attained is not the signiﬁcant                             the individual parts of the linear equations has the
+measure of the power of a PEPS algorithm.                                             leading  cost  O(dD6D′′4) + O(D4D′′6).    Because
+  By reaching system sizes typically considered for ﬁnite                             we  cannot  impose  a  kind  of  canonical  form  that
+size  scaling,  we  have  given  evidence  that  ﬁnite  PEPS,                         gives  a  trivial  norm  matrix Nl  =  1,  we  have  to
+when all algorithmic details are taken into account, oﬀer                             explicitly  contract  its  tensor  network,  which  con-
+a  feasible  unbiased  alternative  to  their  inﬁnite  counter-                      tributes  a  cost  O(d′2D2D′′6).     Finally,  comput-
+part iPEPS9.  On the other hand, the algorithmic meth-                                ing the pseudoinverse to solve the linear equations
+ods proposed here can also be applied to iPEPS, and the                               requires  O(d′3D3D′′6)  operations,  which  typically
+feasibility  of  large  ﬁnite  PEPS  demonstrated  here  sug-                         represent the dominant cost when d′ ≥D.
+gests  that  large  unit  cells  are  possible  in  iPEPS,  such                   •  Conjugate gradient:  We employ a canned routine68
+that  their  potential bias  due  to  a  ﬁnite  unit  cell can be
+well  analyzed  by  systematically  increasing  the  unit  cell                       that  comprises  a  conjugate  gradient  method  with
+from small to very large size.                                                        line minimization.  It has the lowest computational
+  Our  analysis  has  been  carried  out  with  a  generic  im-                       cost, as it only requires the computation of the cost
+plementation  of  PEPS  algorithms,  so  that  one  can  ex-                          function  and  its  gradient  with  respect  to  a  single
+pect  that  adapting  the  methods  to  the  speciﬁc  proper-                         tensor, which can be obtained with O(dD6D′′4) +
+ties of a certain problem will further enhance the perfor-                            O(D4D′′6) operations.
+mance.   A  particularly  promising  next  step  is  to  incor-                    •  Newton method:  It approaches a root of the gradi-
+porate the symmetries of the considered Hamiltonian in                                ent  by  iterating  H(i−1)
+the  tensors44,45,  a  key  element  of  ground-breaking  two-                                                 l       (⃗A(i)l    − ⃗A(i−1)l       )  =  −⃗G(i−1)l       ,
+dimensional  DMRG  studies,  such  as  Refs.47,48,  and  of                           where   H(i−1)l          denotes   the   Hessian   matrix   and
+seminal iPEPS calculations, such as Refs.5,43.                                        ⃗G(i−1)
+                                                                                        l         the  gradient  of  the  cost  function  with  re-
+                                                                                      spect  to  the  tensor  components  at  site l,   eval-
+                        Acknowledgments                                               uated  with   the  solution A(i−1)l         of  the  previous
+                                                                                      iteration69.   The  Newton  method  has  the  advan-
+  M. L. thanks B. Bauer, P. Corboz, G. De las Cuevas, I.                              tage that the step width is naturally given, in con-
+Piˇzorn, and L. Wang for discussions.  He wants to partic-                            trast  to  the  linearized  equations  where α  needs
+ularly thank S. Iblisdir, V. Murg, R. Or´us, and M. Rizzi                             to  be  chosen  heuristically,  and  in  contrast  to  the
+for providing key insights into algorithmic aspects.  This                            conjugate  gradient  routine  where  it  is  determined
+project was partly funded by the EU through SIQS grant                                via  line  search.    In  addition  to  the  parts  of  the
+(FP7 600645) and the DFG (NIM cluster of excellence).                                 conjugate gradient algorithm, the Newton method
+All  authors  thank  the  Pedro  Pascual  Benasque  Center                            needs  the  Hessian  matrix  of  the  cost  function,
+for  Science  (CCBPP),  where  part  of  this  work  was  car-                        which  contributes  O(d′2D2D′′6)  to  the  cost,  and
+ried out.                                                                             its pseudoinverse, determined by O(d′3D3D′′6) op-
+                                                                                      erations, such that the  leading cost O(dD6D′′4) +
+                                                                                      O(D4D′′6) + O(d′3D3D′′6)  is  the  same  as  for  the
+       Appendix  A:  Puriﬁcation  approximations                                      linearized problem.
+
+                                                                                  To compare the diﬀerent alternatives, we benchmarked
+  Approximating the  boundary by  a  puriﬁcation MPO,                          their  performance in  the  search for  an optimal puriﬁca-
+as described in Sec. III A 2, requires the solution of non-                    tion with ﬁxed D′′ = 2 and varying d′, given a reference
+linear equations for each tensor Al.  Diﬀerent algorithms                      puriﬁcation  with D′′  =  4  and d′  =  4.   The  latter  was
+can be used for this purpose, and we have tried and com-                       constructed by taking two rows from one edge of a PEPS
+pared three methods.                                                           norm  TN,  for  several  11 × 11 D  =  2  SU  ground  state
+                                                                               approximations  of  the  Ising  model  at  various  magnetic
+    •  Linearization:  Instead of solving the equations for                    ﬁelds.  As a general rule, the initial tensors for the search
+       the  product AlA∗l ,  we  solve  them  for AlBl,  treat-                with incremented puriﬁcation bondd′ + 1 were chosen as
+       ing Al  and A∗l   as  independent  tensors.   In  order                 the previous solution ford′ where the extra elements were
+       to  achieve  convergence,  the  change  of  the  tensor                 ﬁlled with uniformly distributed random numbers.  From
+       in  each  iteration  needs  to  be  small,  and  hence  we              the three considered algorithms, the Newton method per-
+       construct  the  solution  of  the ith  iteration  accord-               formed  best.   It  converged reliably  for  all d′  within  few
+       ing to A(i)l    = (1 −α)A(i−1)l        +αAl, where Al  solves           local updates per tensor.
+       the  linearized  equations  of  the  previous  iteration                   All the methods beneﬁt from initial variables that are
+       and  is  added  to  the  previous  solution A(i−1)l         with        already  close  to  the  ﬁnal  solution.   A  sensible  numeri-
+       a  weight α.    The  latter  parameter  must  be  cho-                  cal approach to puriﬁcation approximations can then be
+       sen  small  enough  to  guarantee  a  decreasing  cost                  implemented  in  two  steps:   ﬁrstly,  the  computation  of
+                                                                                                                                                         15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 19:  Gauge ﬁxing on the environment tensors of the full
+tensor pair, when the environment is non-separable.  (a) The
+environment  tensor NL  of  the left  full  tensor.  (b)  We deter-
+mine the positive approximant for the environment of the left
+full tensor via a diagonalization of the hermitian approximant˜NL  :=  (NL +N †
+
+                    L)/2  = UΣU †,  in  which,  then,  the  negative
+eigenvalues are discarded in Σ+, and, ﬁnally, the environment                    FIG. 20:  Like in the reduced case of Fig. 12, the update of the
+is written as   ˜XL ˜X†L  in terms of its square root  ˜XL :=U√Σ+.               full tensor pair also consists of the three stages initialization,
+(c) We perform three independent QR decompositions on  ˜XL.                      optimization,  and  ﬁnal  form.   The  optimization  is  the  stan-
+(d) After equally having carried out the previous steps (a) to                   dard ALS sweeping, in which each full tensor is gauged after
+(c) with the right full tensor, we have six diﬀerent matricesR.                  its update in  the standard way, i.e. the left  tensor is QR de-
+Their inverses are contracted with the corresponding tensors                     composed along its right virtual bond and the right tensor is
+of the boundary MPO.                                                             LQ decomposed along its left virtual bond.  (a) Initialization
+                                                                                 I: Firstly, we contract the gauge transformations from Fig. 19
+the optimal puriﬁcation via the SL algorithm14, and sec-                         with  the  full  tensors,  and  split  oﬀ  their  reduced  parts.   (b)
+ondly,  the  further  optimization  of  that  puriﬁcation  via                   Initialization  II: Secondly, we construct  new reduced tensors
+the Newton method.                                                               from a SVD on the tensor pair and the Trotter gate, equally
+                                                                                 sharing  the D  largest  singular  values  between  the  left  and
+                                                                                 right tensor.  (c) Initialization III: We recover the full tensors
+                                                                                 AL andAR, which are now the initial tensors for the optimiza-
+     Appendix  B:  Gauge  ﬁxing  for  the  full  tensors                         tion via ALS sweeping.  (d) Final form:  After convergence of
+                                                                                 the sweeping, we put the two tensors on the same footing.
+   When  the  environment  is  non-separable,  and  the  up-
+date of the  full tensors is considered, gauge transforma-                       ment is close to separable, we can expect a signiﬁcant de-
+tions can be  eﬃciently computed in such a way that an                           crease of the cost function.  In general, we can anticipate
+eigendecomposition  of  the D6  ×D6  dimensional  norm                           good starting tensors for the following ALS sweeping.
+environment  of  the  pair  is  not  necessary.   Instead,  the                     Table  II  contains  typical  condition  numbers  of  the
+D4 ×D4  dimensional environments of the left (NL) and                            norm matrix in the full tensor update without our gauge
+right  (NR)  tensor  are  independently  computed  (Fig.  19                     ﬁxing, using only the positive approximant, and with our
+(a)) and replaced by their positive approximants (Fig. 19                        gauge  ﬁxing.   Our  gauge  ﬁxing  improves  the  condition
+(b)) like in previous cases.  Their square roots are used to                     number drastically.
+obtain the desired gauge transformations for each of the
+virtual bonds  of the  pair  (Fig.  19 (c)).  On each virtual
+bond  we  then  insert  the  corresponding  product R−1R
+and  absorb the R  matrices  in  the  full  tensors  and  their
+inverses in the environment (Fig. 19 (d)).
+   The update of the full tensor pair proceeds in the way
+explained  in  Fig.  20,  analogously to  the  reduced  tensor
+update.   As  in  the  latter  context,  if  the  environment  is
+separable,  the  tensor  initialization  Fig.  20  (a)  to  (c)  al-
+ready minimizes the cost function, while, if the environ-
+                                                                                                                                                                   16
+
+
+            Model        Positive approximant  Gauge ﬁxing                                          D         2.0                 2.5                 2.8
+       B = 1.0 Ising          (2 ± 3) · 109              1.3 ± 0.2                                   2  -2.40075(1)  -2.74230(2)  -2.98947(5)
+       B = 3.0 Ising          (2 ± 2) · 104              2.9 ± 0.7                                   3  -2.40076(1)  -2.74243(1)  -2.99094(2)
+         Heisenberg         (1.3 ± 0.8) · 103         1.15 ± 0.05                                    4  -2.40076(1)  -2.74243(1)  -2.99099(1)
+
+TABLE II: We show the mean condition number of the norm                                             D         2.9                 3.0                 3.1
+matrix with  its standard  deviation in the full tensor update,                                      2  -3.07945(5)  -3.17128(4)  -3.26400(4)
+for D = 2 and the setting of Tab. I.                                                                 3  -3.08071(1)  -3.17210(1)  -3.26457(1)
+                                                                                                     4  -3.08073(1)  -3.17210(1)  -3.26457(1)
+
+             Appendix  C:  Finite  PEPS  energies                                                   D         3.2                 3.5                 4.0
+                                                                                                     2  -3.35744(4)  -3.64097(3)  -4.12064(2)
+   Here  we  collect  some  precise  energy  values  obtained                                        3  -3.35785(1)  -3.64116(1)  -4.12071(1)
+with the  PEPS ground state approximations considered                                                4  -3.35785(1)  -3.64116(1)  -4.12071(1)
+in this paper.
+   In  the  case  of  the  Heisenberg  model,   we  compare                           TABLE VI: Energy per site of 11×11 PEPS Ising ground state
+our  results  to  energies  from  the  quantum  Monte  Carlo                          approximations from the FU for diﬀerent transverse ﬁeldsB.
+loop algorithm of the ALPS library34–36, summarized in
+Tab. III. The presented values and errors correspond to                                             D         2.0                 2.5                 2.8
+temperature T   =  10−4,  and  they  agree  with  the  ones
+corresponding to T  = 10−3 within the error bars.                                                    2  -2.45219(1)  -2.77340(2)  -3.00705(4)
+                                                                                                     3  -2.45219(1)  -2.77346(1)  -3.00737(1)
+        10 × 10           14 × 14           16 × 16           20 × 20                                4  -2.45219(1)  -2.77346(1)  -3.00737(1)
+     -0.628656(2)  -0.639939(2)  -0.643531(2)  -0.648607(1)                                         D         2.9                 3.0                 3.1
+TABLE III: Energy per site of the Heisenberg model on square                                         2  -3.09228(5)  -3.18128(6)  -3.27326(4)
+lattices of various sizes from quantum Monte Carlo, computed                                         3  -3.09287(1)  -3.18242(1)  -3.27406(1)
+with the ALPS library34–36.                                                                          4  -3.09287(1)  -3.18243(1)  -3.27406(1)
+
+                                                                                                    D         3.2                 3.5                 4.0
+                                                                                                     2  -3.36617(4)  -3.64849(3)  -4.12685(2)
+                      D     10 × 10         14 × 14                                                  3  -3.36672(1)  -3.64873(1)  -4.12694(1)
+                       2  -0.61310(2)  -0.62631(1)                                                   4  -3.36672(1)  -3.64873(1)  -4.12694(1)
+                       3  -0.61999(1)  -0.63246(1)
+                       4  -0.62637(2)  -0.63832(3)                                    TABLE  VII:  Energy  per  site  of  21 × 21  PEPS  Ising  ground
+                       5  -0.62739(1)  -0.63901(1)                                    state  approximations  from  the  FU  for  diﬀerent  transverse
+                       6  -0.62774(1)  -0.63930(1)                                    ﬁeldsB.
+
+
+TABLE IV: Energy per site of PEPS Heisenberg ground state                                                            D        3.0
+approximations from the FU.                                                                                           2  -3.1792(4)
+                                                                                                                      3  -3.1806(4)
+                                                                                                                      4  -3.1807(4)
+      D     10 × 10         14 × 14         16 × 16         20 × 20                                                   5  -3.1812(5)
+       2  -0.61281(1)  -0.62115(1)  -0.62719(2)  -0.63519(2)                                                          6  -3.1812(4)
+       3  -0.61846(2)  -0.62977(1)  -0.63433(1)  -0.64056(2)                                                          7  -3.1814(5)
+       4  -0.62382(1)  -0.63587(1)  -0.63985(1)  -0.64549(2)
+       5  -0.62520(2)  -0.63713(2)  -0.64106(1)  -0.64659(2)                          TABLE VIII: Energy per site of 21 × 21 PEPS  Ising ground
+       6  -0.62541(2)  -0.63738(2)  -0.64129(2)  -0.64676(2)                          state approximations from the SU for transverse ﬁeldB = 3.0.
+
+TABLE V: Energy per site of PEPS Heisenberg ground state
+approximations from the SU.
+
+
+
+
+
+
+
+ 1  F.  Verstraete  and  J.  I.  Cirac,   arXiv:cond-mat/0407066                       2  S. R. White, Phys. Rev. Lett. 69, 2863 (1992).
+   (2004).                                                                             3  U. Schollw¨ock, Ann. Phys. 326, 96 (2011).
+                                                                                                                                                                17
+
+
+ 4  P.  Corboz,  S.  R.  White,  G.  Vidal,  and  M.  Troyer,  Phys.                40  A. Sfondrini, J. Cerrillo, N. Schuch, and J. I. Cirac, Phys.
+   Rev. B 84, 041108(R) (2011).                                                         Rev. B 81, 214426 (2010).
+ 5  P.  Corboz,  T.  M.  Rice,  and  M.  Troyer,  arXiv:1402.2859                   41  E. M. Stoudenmire and S. R. White, Annu. Rev. Condens.
+   (2014).                                                                              Matter Phys. 3, 111 (2012).
+ 6  Z.  Y. Xie,  J.  Chen,  J.  F.  Yu, X.  Kong,  B.  Normand,  and                42  S.  R.  White  and  A.  L.  Chernyshev,  Phys.  Rev.  Lett.  99,
+   T. Xiang, Phys. Rev. X 4, 011025 (2014).                                             127004 (2007).
+ 7  M.  Levin  and  C.  P.  Nave,  Phys.  Rev.  Lett.  99,  120601                  43  P.  Corboz  and  F.  Mila,   Phys.  Rev.  Lett.  112,  147203
+   (2007).                                                                              (2014).
+ 8  H. C.  Jiang,  Z. Y. Weng,  and  T. Xiang,  Phys. Rev. Lett.                    44  S. Singh, R. N. C. Pfeifer, and G. Vidal, Phys. Rev. B 83,
+   101, 090603 (2008).                                                                  115125 (2011).
+ 9  J. Jordan, R. Or´us, G. Vidal, F. Verstraete, and J. I. Cirac,                  45  B. Bauer, P. Corboz, R. Or´us, and M. Troyer, Phys. Rev.
+   Phys. Rev. Lett. 101, 250602 (2008).                                                 B 83, 125106 (2011).
+10  R. Or´us and G. Vidal, Phys. Rev. B 80, 094403 (2009).                          46  H.  W.  J.  Bl¨ote  and  Y.  Deng,  Phys.  Rev.  E  66,  066110
+11  Z.  Y.  Xie,  H.  C.  Jiang,  Q.  N.  Chen,  Z.  Y.  Weng,  and  T.                 (2002).
+   Xiang, Phys. Rev. Lett. 103, 160601 (2009).                                      47  S.  Yan,  D.  A.  Huse,  and  S.  R.  White,  Science  332,  1173
+12  P. Corboz, R. Or´us, B. Bauer, and G. Vidal, Phys. Rev. B                           (2011).
+   81, 165104 (2010).                                                               48  S. Depenbrock, I. P. McCulloch, and U. Schollw¨ock, Phys.
+13  L.  Wang,  I.  Piˇzorn,  and  F.  Verstraete,  Phys.  Rev.  B  83,                  Rev. Lett. 109, 067201 (2012).
+   134421 (2011).                                                                   49  The   NAG   Library   (2013),   The   Numerical   Algorithms
+14  I.  Piˇzorn,  L.  Wang,  and  F.  Verstraete,  Phys.  Rev.  A  83,                  Group (NAG), Oxford, United Kingdom, www.nag.com.
+   052321 (2011).                                                                   50  We  remark  that  the  initial  time  evolution  method23–25
+15  Z. Y. Xie, J. Chen, M. P. Qin, J. W. Zhu, L. P. Yang, and                           works slightly diﬀerent, and the basis of this work is rather
+   T. Xiang, Phys. Rev. B 86, 045139 (2012).                                            given by Ref.26.
+16  F.  Verstraete,  V.  Murg,  and  J.  I.  Cirac,  Adv.  Phys.  57,               51  In  the  direct  minimization  of  the  energy,  the  cost  func-
+   143 (2008).                                                                          tion  to  be  minimized  is E(|ψ⟩)   =   ⟨ψ| ˆH|ψ⟩/⟨ψ|ψ⟩  over
+17  V. Murg, F. Verstraete, and J. I. Cirac, Phys. Rev. A 75,                           the  PEPS  |ψ⟩.  For  an  update  during  the  ALS  sweeping,
+   033605 (2007).                                                                       the  tensor  at  position l  is  set  to Al  minimizing E(⃗Al)  =
+18  V. Murg, F. Verstraete, and J. I. Cirac, Phys. Rev. B 79,                            ⃗A†
+   195119 (2009).                                                                         lHl⃗Al/⃗A†lNl⃗Al, which can be found as the lowest  eigen-
+19  M. Lubasch, V. Murg, U. Schneider, J. I. Cirac, and M.-C.                           state of the generalized eigenproblemHl⃗Al =λNl⃗Al. Here,
+   Ba˜nuls, Phys. Rev. Lett. 107, 165301 (2011).                                        the  matrix Hl  is  deﬁned  from  the  TN  ⟨ψ| ˆH|ψ⟩,  in  which
+20  A.  Hosseinkhani,  B.  G.  Dezfouli,  F.  Ghasemipour,  A.  T.                      one leaves out the tensor Al  in the ket and A∗l  in the bra,
+   Rezakhani, and H. Saberi, Phys. Rev. A 89, 062324 (2014).                            and Nl  is the norm matrix.
+                                                                                    52  In  an  eﬃcient  implementation  of  this  algorithm  we  only
+21  M.  Lubasch,  J. I. Cirac,  and  M.-C.  Ba˜nuls,  New  J. Phys.
+   16, 033014 (2014).                                                                   store  and  update  the  boundary  MPO  for  the  rows  and
+22  R. Or´us, Ann. Phys. 349, 117 (2014).                                               columns of the norm TN, and the contraction for the vector
+23  G. Vidal, Phys. Rev. Lett. 91, 147902 (2003).                                       ⃗bl  is performed on the ﬂy.
+24  A.  J.  Daley,  C.  Kollath,  U.  Schollw¨ock,  and  G.  Vidal,  J.             53  The  dependence  of  the  cluster  contraction  on D′  was  al-
+   Stat. Mech. (2004) P04005.                                                           ready investigated previously21.
+25  G. Vidal, Phys. Rev. Lett. 93, 040502 (2004).                                   54  We determine δ0  via the two values of ǫα(δ) at δ = 2 and
+
+26  F.  Verstraete,  J.  J.  Garc´ıa-Ripoll,  and  J.  I.  Cirac,  Phys.                4, and ζ  via the two values of Gα(x) at x = 4 and 8.
+                                                                                    55  The  slight  deviation  of  Fig.  4  (b)  from  the  exact  diago-
+   Rev. Lett. 93, 207204 (2004).                                                        nal for larger ζ  is due to the fact  that they correspond  to
+27  J.  I.  Cirac,  D.  Poilblanc,  N.  Schuch,  and  F.  Verstraete,
+   Phys. Rev. B 83, 245134 (2011).                                                      B ≈ 3.0 where bothǫα(δ) andGα(x) decrease rather poly-
+28  G.  De  las  Cuevas,  N.  Schuch,  D.  P´erez-Garc´ıa,  and  J.  I.                 nomially and thusδ0 as well asζ  depend more strongly on
+   Cirac, New J. Phys. 15, 123021 (2013).                                               the two values from which they were determined.
+29  M.   Kliesch,   D.   Gross,   and   J.   Eisert,   arXiv:1404.4466              56  Although  our  conclusions  are  based  on  PEPS  from  the
+   (2014).                                                                              SU, because we had thoroughly analyzed exactly the same
+30  J. B. Keller, Math. Mag. 48, No. 4, 192 (1975).                                     PEPS  with  the  SL  algorithm  in  Ref.21,  we  clearly  expect
+31  H.  Kalis,  D.  Klagges,  R.  Or´us,  and  K.  P.  Schmidt,  Phys.                  similar improvements for PEPS from the FU (in particular
+   Rev. A 86, 022317 (2012).                                                            the ground state  of the quantum Ising model  at B  = 1.0,
+32  G.  H.  Golub  and  C.  F.  Van  Loan,  Matrix  Computations,                       away from criticality, should be well approximated by the
+   The Johns Hopkins University Press, 3rd edition (1996).                              SU and thus Fig. 7 (b) should only change slightly for the
+33  A. W. Sandvik, Phys. Rev. B 56, 11678 (1997).                                       corresponding FU PEPS).
+34  S. Todo and K. Kato, Phys. Rev. Lett. 87, 047203 (2001).                        57  In  a  PEPS,  for  any  pair  of  neighboring  tensors  that  are
+
+35  A.  F.  Albuquerque  et  al.,  J.  Mag.  Mag.  Mat.  310,  1187                     connected via a virtual index, an arbitrary matrix M  can
+   (2007).                                                                              be  contracted  with  one  tensor  and  the  matrix M −1  with
+36  B. Bauer et al., J. Stat. Mech. (2011) P05001.                                      the  other  in  such  a  way  that  the  state  does  not  change.
+37  B. Bauer, G. Vidal, and M. Troyer, J. Stat. Mech. (2009)                            This  establishes  the  analogue  of  a  (local)  gauge  freedom.
+   P09006.                                                                              Throughout this article, the matrixM  is called gauge ma-
+38  M.-C. Ba˜nuls, D. P´erez-Garc´ıa, M. M. Wolf, F. Verstraete,                        trix  or  gauge  transformation  in  accordance  with  Ref.16,
+   and J. I. Cirac, Phys. Rev. A 77, 052306 (2008).                                     and  the  term  gauge  ﬁxing  or  gauge  choice  refers  to  the
+39  F. Mezzacapo,  N. Schuch, M. Boninsegni, and J. I. Cirac,                           process of choosing a speciﬁc matrix M.
+                                                                                    58  A  recent  alternative  approach  for  an  improved  imaginary
+   New J. Phys. 11, 083026 (2009).
+                                                                                                                                                                18
+
+   time evolution is presented in Ref.31, in which the authors                          lowest  eigenvector, ⃗Bl,  yields  the  desired  new  variational
+   propose  a  “quasicanonical  form”  that  arises  as  ﬁx  point                      parameters via ⃗Al = √Nl−1⃗Bl.
+   of the SU performed with nearest-neighbor identity gates,                        63  We obtain our quantum Monte Carlo reference values from
+   and in which they demonstrate how that form allows an ef-                            the ALPS library34–36.
+   ﬁcient and stable imaginary time evolution with projected                        64  To  be  precise,  our  FU  energies  and  spin-spin  correlators
+   entangled pair operators (PEPO) in the context of iPEPS.                             for  the  Heisenberg  model  were  converged  with D′  = 2D2
+59  We also explicitly checked the resulting condition numbers
+                                                                                        for  all D  =  2  to  6  on  the  14 × 14  lattice,  i.e.  our  results
+   when ﬁrst a QR and then a LQ, or the other way round, or                             did not change anymore when we further ran the FU with
+   only a single decomposition  is applied. In these cases, one                         larger D′.  However,  this  convergence  occurred  only  with
+   tensor  always  encounters  better  condition  numbers  than                         D′ = 75 forD = 5 andD′ = 126 forD = 6 on the 10 × 10
+   the other in the linear equations of the following sweeping.                         lattice.
+60  We propagated, using the FU, several 11×11D = 2 PEPS,                           65  For the quantum Ising model and all considered transverse
+   obtained  from  the  SU  for  the  Ising  model  with  diﬀerent                      ﬁeldsB, on the 11 × 11 lattice, we ran the FU withD′ = 8
+   ﬁelds, and we monitored eigenvalues and singular values of                           for D  = 2, D′  = 54  for D  = 3,  and D′  = 128  for D  = 4,
+   norm and gauge matrices throughout the evolution.                                    while  on  the  21 × 21  lattice,  we  ran  the  FU  with D′  =  8
+61  We  can  also  expect  that  the  direct  variational  minimiza-                    for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4.
+   tion  of  the  energy  beneﬁts  from  our  gauge  transforma-                    66  Notice that clusters could be beneﬁcial in a parallel imple-
+   tions  because  they  improve  the  condition  number  of  the                       mentation as discussed in Ref.21.
+   norm  matrix Nl  that  enters the generalized  eigenproblem                      67  We  found  that  the  optimization  worked  well  if  the  initial
+   Hl⃗Al =λNl⃗Al which has to be solved for the tensor update                           value  was α  =  0.01  and  was  multiplied  by  0.8  whenever
+   at lattice site l.                                                                   the cost function increased.
+62  In  the  direct  variational  minimization  of  the  energy,  also              68  For      conjugate      gradient      minimization      we      use
+   the   matrices Hl   are   not   exactly   hermitian   and   hence                    nag  opt   conj  grad from the NAG library49.
+   should  be  replaced  by  their  closest  hermitian  approxi-                    69  We  observed  that,  occasionally,  the  Hessian  matrix  had
+   mants (Hl +H †l )/2. Furthermore, the eigendecomposition                             many  negative  eigenvalues  and  then  it  was  crucial  to  in-
+   of (Nl +N †l )/2 enables us to replace the generalized eigen-                        clude only the positive ones (above a certain cutoﬀ) in the
+   problem by a standard one, √Nl−1Hl√Nl−1⃗Bl =λ⃗Bl. Its                                construction of its pseudoinverse.

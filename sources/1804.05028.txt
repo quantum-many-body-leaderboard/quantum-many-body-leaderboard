@@ -1,0 +1,629 @@
+      Sublattice Coding Algorithm and Distributed Memory Parallelization for Large-Scale Exact
+                                       Diagonalizations of Quantum Many-Body Systems
+
+                                                  Alexander  Wietek∗  and  Andreas  M.  L¨auchli
+                                Institut f¨ur Theoretische Physik,  Universit¨at Innsbruck,  A-6020 Innsbruck,  Austria
+
+                    We present algorithmic improvements for fast and memory-efﬁcient use of discrete spatial symmetries in
+                 Exact Diagonalization computations of quantum many-body systems.  These techniques allow us to work ﬂex-
+                 ibly  in  the  reduced  basis  of  symmetry-adapted  wave  functions.   Moreover,  a  parallelization  scheme  for  the
+                 Hamiltonian-vector multiplication in the Lanczos procedure for distributed memory machines avoiding load
+                 balancing problems is proposed. We demonstrate that using these methods low-energy properties of systems of
+                 up to 50 spin-1/2 particles can be successfully determined.
+
+
+                         I.    INTRODUCTION                                            •  Efﬁcient use of symmetries.  We present an algorithm
+                                                                                          to work with symmetry-adapted wave functions in a fast
+   Exact Diagonalization,  short ED, studies have in the past                             and  memory  efﬁcient  way.   This  so-called  sublattice
+been a reliable source of numerical insight into various prob-                            coding algorithm allows us to diagonalize the Hamil-
+lems  in  quantum  many-body  physics,  ranging  from  quan-                              tonian in every irreducible representation of a discrete
+tum chemistry [1], nuclear structure[2–4], quantum ﬁeld the-                              symmetry group.  The basic idea behind this algorithm
+ory [5] to strongly correlated lattice models in condensed mat-                           goes back to H.Q. Lin [25]. An extension of this method
+ter physics.  The method is versatile, unbiased and capable of                            was  proposed  in  Ref.  [26].   We  generalize  these  ap-
+simulating systems with a sign problem.  The main limitation                              proaches to arbitrary discrete symmetries, varying num-
+of  ED is  the  typically  exponential  scaling of  computational                         ber of sublattices and arbitrary geometries.
+effort and memory requirements in the system size. Neverthe-                           •  Parallelization of the matrix-vector multiplications
+less, the number of particles or lattice sites feasible for sim-                          in  the  Lanczos  algorithm  [33]  for  distributed  mem-
+ulation has steadily increased since the early beginnings [6]                             ory  machines.   We  propose  a  method  avoiding  load-
+and have provided valuable insight to many problems in mod-                               balancing problems in message-passing and present a
+ern condensed matter physics,  for example,  frustrated mag-                              computationally fast way of storing the Hilbert space
+netism [7–14],  high temperature superconductivity [15–18],                               basis.
+quantum hall effect and fractional Chern insulators [19–22]
+and quantum critical points in 2+1 dimensions [23,24].  Dif-                      These ideas have been implemented and tested on various su-
+ferent approaches for increasing the system size in these sim-                    percomputers. We present results and benchmarks to demon-
+ulations have been proposed over time [25,26]. Not only does                      strate the efﬁciency and ﬂexibility of the proposed methods.
+increasing the number of particles yield better approximations
+to the thermodynamic limit, but also several interesting sim-
+ulation  clusters  with  many  symmetries  become  available  if                             II.    SYMMETRY ADAPTED BASIS STATES
+more particles can be simulated.  Having access to such clus-
+ters becomes important if several competing phases ought to                          Employing  symmetries  in  ED  computations  amounts  to
+be realized on the same ﬁnite size sample.                                        block diagonalizing the Hamiltonian.  The blocks correspond
+   The  ED  method  is  essentially  equivalent  to  simulating                   to the irreducible representations of the symmetry group and
+quantum circuits.   With the advent of scalable experimental                      the  procedure  of  block  diagonalization  amounts  to  chang-
+quantum computation [27–29],  exact classical simulation of                       ing  the  basis  of  the  Hilbert  space  to  symmetry-adapted  ba-
+quantum circuits has become important for benchmarking and                        sis states.  Here, we brieﬂy review this basis and recall some
+validating results from actual quantum computers [30–32]. At                      basic notions commonly used in this context.  For a more de-
+present, we are on the verge of quantum computers surpass-                        tailed  introduction  to  this  topic  see  e.g.   Refs.  [34, 35].   In
+ing the capabilities of classical supercomputers in terms of the                  this manuscript, we only consider one-dimensional represen-
+number of simulated Qubits, colloquially referred to as quan-                     tations of the symmetry group.  Consider a generic spin con-
+tum advantage. Speciﬁcally, the barrier of classically simulat-                   ﬁguration onN lattice sites with local dimensiond,
+ing 50 Qubits has not been breached to date.
+   In this work, we present algorithms and strategies for the                                   |σ⟩ =|σ1,...,σN⟩,  σi∈{1,...,d}.            (1)
+implementation of a state-of-the-art large-scale ED code and
+prove that applying these methods systems of up to 50 spin-                       The symmetry-adapted basis states|σρ⟩ are given by
+1/2 particles can be simulated on present day supercomput-                                                             ∑
+ers. There are two key ingredients making these computations                                         |σρ⟩≡    1             χρ(g)∗g|σ⟩,                   (2)
+possible:                                                                                                      Nρ,σ    g∈G
+
+                                                                                  where G   denotes  a  discrete  symmetry  group, ρ  a  one-
+∗ alexander.wietek@gmail.com
+                                                                                  dimensional representation of this group,χρ(g) the character
+                                                                                                                                                              2
+
+
+
+
+
+
+
+
+
+
+
+
+ FIG. 1: Two sublattice coding of the spin state|σ⟩ on a six-site chain lattice and action of translational symmetries. The sites
+ are enumerated such that site 1-3 are on the blue (solid) sublatticeA, 4-6 on the red (dashed) sublatticeB. The representative
+state with this enumeration of sites is given by|˜σ⟩ =T1|σ⟩ =|↓↓↑↑↑↓⟩. Notice, that the symmetries act on real space and thus
+                               the transformation of the basis states also depends on the numbering of sites.
+
+
+of this representation evaluated at group elementg, andNρ,σ                       The problem of ﬁnding the representative|˜σ⟩ of a given state
+denotes the normalization constant of the state|σρ⟩.  The set                     |σ⟩  and  its  corresponding  symmetry gσ  turns  out  to  be  the
+of basis state spin conﬁgurations|σ⟩ is divided into orbits,                      computational bottleneck of ED in a symmetrized basis.   It
+                    Orbit(|σ⟩) ={g|σ⟩|g∈G}.                     (3)               is thus desirable to solve this problem fast and memory ef-
+                                                                                  ﬁcient.  There are two straightforward approaches to solving
+We deﬁne,                                                                         this problem:
+
+               |σ⟩<|σ′⟩ :⇔ int(|σ⟩)< int(|σ′⟩),               (4)                      •  Apply all symmetries directly to|σ′⟩ to ﬁnd the mini-
+                                                                                          mizing group elementgσ′,
+where int(|σ⟩) denotes an integer value coding on the com-                                              gσ′ = argmin
+puter for the spin conﬁguration|σ⟩.  The representative|˜σ⟩                                                        g∈G     int(g|σ′⟩).                       (7)
+within each orbit is given by the element with smallest integer
+value,                                                                                    This method does not have any memory overhead but
+                                                                                          is computationally slow since all symmetries have to be
+           |˜σ⟩ =gσ|σ⟩,  gσ = argmin                                                      applied to the given state|σ′⟩.
+                                           g∈G     int(g|σ⟩).           (5)
+The matrix element⟨ ˜σ′ρ|Hk|˜σρ⟩ for non-branching termsHk                             •  For every state|σ⟩ we store|˜σ⟩ andgσ in a lookup ta-
+for two symmetry-adapted basis states with representationρ is                             ble. While this is very fast computationally, the lookup
+given by                                                                                  table for storing all representatives grows exponentially
+                                                                                          in the system size.
+           ⟨ ˜σ′ρ|Hk|˜σρ⟩ =χρ(gσ′)Nρ,σ′                                           The  key  to  solving  the  representative  search  problem  ade-
+                                          Nρ,σ⟨σ′|Hk|˜σ⟩.          (6)            quately  is  to  have  an  algorithm  that  is  almost  as  fast  as  a
+                                                                                  lookup table, where memory requirements are within reason-
+          III.    SUBLATTICE CODING ALGORITHM                                     able bounds. This problem has already been addressed by sev-
+                                                                                  eral authors [25,26].  The central idea in these so-called           sub-
+                                                                                  lattice coding techniques is to have a lookup table for the rep-
+   Evaluating the matrix elements⟨ ˜σ′ρ|Hk|˜σρ⟩ in Eq. (6) for                    resentatives on a sublattice of the original lattice and combine
+all  basis  states|˜σρ⟩  and| ˜σ′ρ⟩  efﬁciently  is  the  gist  of  em-           the information of the sublattice representatives to compute
+ploying symmetries in ED computations.  In an actual imple-                       the total representative.  These ideas were ﬁrst introduced in
+mentation on the computer we need to perform the following                        [11,25,26]. In the following paragraphs, we explain the basic
+steps:                                                                            idea behind these algorithms and propose a ﬂexible extension
+     •  Apply the non-branching termHk on the representative                      to arbitrary geometries and number of sublattices.
+       state|˜σ⟩. This yields a possibly non-representative state
+       |σ′⟩. From this, we can compute the factor⟨σ′|Hk|˜σ⟩.                                     A.    Sublattice coding on two sublattices
+
+     •  Find the representative| ˜σ′⟩ of|σ′⟩ and determine the                        For demonstration purposes, we consider a simple transla-
+       group  element gσ′  such  that| ˜σ′⟩  = gσ′|σ′⟩.   This                    tionally invariant spin-1/2 system on a six-site chain lattice
+       yields the factorχρ(gσ′).                                                  with periodic boundary conditions. The lattice is divided into
+     •  Know  the  normalization  constants Nρ,σ′  and Nρ,σ.                      two sublattices as in Fig.1. The even sites form the sublattice
+       These are usually computed when creating a list of all                     A and the odd sites form the sublatticeB.  We enumerate the
+       representatives and stored in a separate list.                             sites such that the sites 1 to 3 are in sublatticeA and the sites 4
+                                                                                                                                                         3
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2: Sublattice orderings for several common lattices. The sublattices are distinguished by different colors (shadings). Left:
+Two sublattice ordering in a honeycomb lattice. The sublattices are stable with respect to all spatial symmetries. Middle: Three
+sublattice ordering on a kagome lattice. The sublattices are stable with respect to all spatial symmetries. Right: Three sublattice
+   ordering on a square lattice. The sublattices are stable with respect to all translational symmetries, horizontal and vertical
+                         reﬂections, 180◦ rotations but not with respect to 90◦ rotations or diagonal reﬂections.
+
+
+to 6 are in sublatticeB. We choose the integer representation                   idea  behind  the  sublattice  coding  technique.      We  store
+of a state|σ⟩ such that the most signiﬁcant bits are formed by                  RepA,B(|σ⟩A,B)  for  every  substate|σ⟩A,B  in  a  lookup  ta-
+the spins in sublattice A.  The symmetry group we consider                      ble together with SymA,B(|σ⟩A,B).  In a ﬁrst step, we deter-
+consists of the six translations on the chain                                   mine the sublattice representative with smallest most signiﬁ-
+                    G ={Id,T,T2,T3,T4,T5},                      (8)             cant bits. Then we apply the representative symmetries to|σ⟩
+                                                                                in order to determine the true representative|˜σ⟩. The number
+whereTn denotes the translation byn lattice sites.  The split-                  of representative symmetries|SymA,B(|σ⟩A,B)| is typically
+ting of the lattice into two sublattices is stable in the sense that            much smaller than the total number of symmetries|G|.  The
+every symmetry elementg∈G either maps theA sublattice to                        following example illustrates the idea and shows how to com-
+A and theB sublattice toB or theA sublattice toB and the                        pute the representative given the information about sublattice
+B  sublattice to A.  We call this property sublattice stability.                representatives and representative symmetries.
+It is both a property of the partition of our lattice into sublat-                 Example    We consider the state|σ⟩ =|↑↑↓↓↑↓⟩ on a six-
+tices and the symmetry group. Hence, the symmetry group is                      site  chain  lattice  as  in  Fig.1.   Notice  that  the  sites  are  not
+composed of two kinds of symmetries                                             enumerated from left to right but such that sites 1 to 3 belong
+                                                                                to  the  sublattice A  and  sites 4  to 6  belong  to  sublattice B.
+        GA≡{g∈G ;  g maps sublatticeA ontoA},                                   The states restricted on the sublattices are|σ⟩A =|↑↑↓⟩ and
+        GB≡{g∈G ;  g maps sublatticeB ontoA}.       (9)                         |σ⟩B =|↓↑↓⟩. The action of the sublattice symmetries
+
+We denote by|σ⟩A (resp.|σ⟩B) the state restricted to sublat-                                              GA≡{Id,T2,T4},
+ticeA (resp.B) and deﬁne the sublattice representatives,                                                 GB≡{T1,T3,T5},                           (13)
+
+   RepA(|σ⟩A)≡hA|σ⟩A,  hA = argmin                                              on|σ⟩ is shown in Fig.1.  From this, we compute the sublat-
+                                                g∈GA    int(g|σ⟩A),             tice representatives as in Eq. (10),
+  RepB(|σ⟩B)≡hB|σ⟩B,  hB = argmin
+                                                g∈GB    int(g|σ⟩B),                                    RepA(|σ⟩A) =|↓↑↑⟩,
+                                                                     (10)                              RepB(|σ⟩B) =|↓↓↑⟩,                        (14)
+
+and the representative symmetries,                                              whose integer values are given by
+
+    SymA(|σ⟩A)≡{g∈GA ;  g|σ⟩A = RepA(|σ⟩A)},                                                     int(RepA(|σ⟩A)) = (011)2 = 3,
+   SymB(|σ⟩B)≡{g∈GB ;  g|σ⟩B = RepB(|σ⟩B)}.                                                      int(RepB(|σ⟩B)) = (001)2 = 1.                (15)
+                                                                     (11)
+Let again|˜σ⟩  = gσ|σ⟩,  where|˜σ⟩ is the representative of                     Since RepB(|σ⟩B) < RepA(|σ⟩A) the symmetrygσ  yield-
+|σ⟩. The minimizing symmetrygσ can only be an element of                        ing the total representative|˜σ⟩ must be contained in
+
+SymA(|σ⟩A) if RepA(|σ⟩A)≤ RepB(|σ⟩B), or vice versa.                                                    SymB(|σ⟩B) ={T1},                         (16)
+Put differently,                                                                which in this case just contains a single element, namelyT1.
+
+ RepB(|σ⟩B)< RepA(|σ⟩A) ⇒  gσ /∈ SymA(|σ⟩A).                                    Consequently, the representative|˜σ⟩ is given by
+                                                                     (12)                            |˜σ⟩ =T1|σ⟩ =|↓↓↑↑↑↓⟩.                     (17)
+Otherwise,  any  symmetry  element  in  RepB(|σ⟩B)  would
+yield  a  smaller  integer  value  than gσ.     This  is  the  core
+                                                                                                                                                              4
+
+
+
+
+
+
+
+
+
+
+
+
+ FIG. 3: Three sublattice coding of the spin state|σ⟩ on a six-site chain lattice and action of translation symmetries. The sites
+  are enumerated such that site 1 and 2 are on sublatticeA (blue, solid), 3,4 onB (red, dashed) and 5,6 onC (yellow, dotted).
+                      The representative state with this enumeration of sites is given by|˜σ⟩ =T2|σ⟩ =|↓↓↓↑↑↑⟩
+
+
+   Lookup  tables    If  the  quantities  RepA,B(|σ⟩A,B)  and                     of a lattice Λ with symmetry groupG intoNsublat disjoint sub-
+SymA,B(|σ⟩A,B) are now stored in a lookup table, this com-                        lattices ΛX  is called sublattice stable if every g ∈G  maps
+putation can be done very efﬁciently.  Notice that instead of                     each ΛX onto exactly one (possibly different) ΛY , i.e. for all
+having to store 2N entries in the lookup table for the represen-                  g∈G and all ΛX there exists a ΛY  such that
+tative we only need four lookup tables of orderO(2N/2), two
+for the quantities RepA(|σ⟩A) and RepB(|σ⟩B), and two for                                                       g(ΛX) = ΛY.
+SymA(|σ⟩A) and SymB(|σ⟩B).   On larger system sizes the
+difference between memory requirements of orderO(2N) and                          The set ΛX is called theX-sublattice of Λ.
+O(2N/2) is substantial.
+   To further speed up computations we also create lookup ta-
+bles to store the action of each symmetryg∈G on a substate                           The notion of sublattice stability is illustrated in Fig.2. The
+|σ⟩A,                                                                             sublattices ΛX  are  drawn  in  different  colors  (shadings).   A
+           SymmetryActionA(g,|σ⟩A) =g|σ⟩A,                                        translation by one unit cell keeps the sublattices of the hon-
+           SymmetryActionB(g,|σ⟩B) =g|σ⟩B.        (18)                            eycomb lattice invariant whereas a 60◦ rotation exchanges the
+                                                                                  sublattices.   For the kagome lattice in Fig.2a         60◦  rotation
+With this information, we can efﬁciently apply symmetries to                      around a hexagon center for example cyclically permutes the
+a given spin conﬁguration by looking up the action ofg on the                     three  sublattices.   One  checks  that  for  both  the  honeycomb
+respective substate and combining the results.  The memory                        and the  kagome lattice  in Fig.2all  translational as  well as
+requirement for these lookup tables isO(Nsym2N/2), where                          all point group symmetries are sublattice stable, so different
+Nsym  =|G|.   This can be reduced by generalizing the sub-                        color (shading) sublattices are mapped onto each other.  This
+lattice coding algorithm to multiple sublattices, as explained                    is different for the square lattice in Fig.2. Still here all trans-
+in  the  following  section.    In  that  case,  2Nsublat  lookup  ta-            lational symmetries just permute the sublattices, but a 90◦ ro-
+bles of sizeO(2N/Nsublat) are required for storing the sublat-                    tation  splits  up  a  sublattice  into  different  sublattices.   Nev-
+tice representatives RepX(|σ⟩X) and representative symme-                         ertheless,  a 180◦  rotation keeps the sublattices stable,  simi-
+tries SymX(|σ⟩X), as deﬁned in Eqs. (21) and (22), respec-                        larly a vertical or horizontal reﬂection.   Therefore,  only the
+tively. Nsublat denotes the number of sublattices.  For storing                   reduced point group D2 instead of the full D4 point group for
+the action of each symmetry SymmetryActionX(g,|σ⟩X)                               the square lattice fulﬁlls the sublattice stability condition in
+as  in  Eq.  (23)  we  further  need   Nsublat  lookup  tables  of  size          this case.  D2 and D4 denote the dihedral groups of order 4
+O(Nsym2N/Nsublat).                                                                and 8 with two- and four-fold rotations and reﬂections. Note,
+                                                                                  that for a square lattice a two or four sublattice decomposi-
+                                                                                  tion for which the full D4 point group is sublattice stable can
+              B.    Generic sublattice coding algorithm                           be chosen instead. The choice of this particular sublattice de-
+                                                                                  composition just serves illustrational purposes.
+   We start by discussing how we subdivide a lattice Λ into                          From  the  deﬁnition  of  sublattice  stability,  it  is  clear  that
+Nsublat  sublattices.  The basic requirement is that every sym-                   the total number of sitesN  has to be divisible by the number
+metry group element either only operates within the sublat-                       of  sublattices Nsublat.   The  numbering  of  the  lattice  sites  is
+tices or exchanges sublattices. We do not allow for symmetry                      chosen such that the lattice sites from (X− 1)N/Nsublat + 1
+elements that split up a sublattice onto different sublattices.                   to XN/Nsublat  belong to sublattice X.  We choose the most
+Therefore we make the following deﬁnition:                                        signiﬁcant bits in the integer representation to be the bits on
+   Deﬁnition (Sublattice stability)    A decomposition,                           sublattice 1.  Similar as in the previous section we deﬁne the
+                                   Nsublat⋃·                                      following quantities
+                             Λ =          ΛX,                               (19)     Deﬁnition    For every sublattice ΛX  we deﬁne the follow-
+                                    X=1                                           ing notions:
+                                                                                                                                                       5
+
+
+   Algorithm 1 Preparation of lookup tables for sublattice                        Algorithm 2 Sublattice coding algorithm for ﬁnding the
+                          coding algorithm                                                                 representative.
+  for each  substate|σX⟩ :                                                     Input:  state|σ⟩
+      for each  sublatticeX :                                                  Output:  representative|˜σ⟩ andgσ{RepX(|σ⟩X)}
+          compute RepX(|σ⟩X) Eq. (21), store it                                   Determine MinRep = minX
+          compute SymX(|σ⟩X) Eq. (22), store them                                 Set|˜σ⟩ = +∞
+          for each   symmetryg∈G :                                                for each   sublatticeY  with RepY (|σ⟩Y ) = MinRep :
+              compute SymmetryActionX(g,|σ⟩X), store it                               for each   symmetryg∈ SymY (|σ⟩Y ) :
+                                                                                          computeg|σ⟩ from SymmetryActionX(g,|σ⟩X)
+                                                                                          ifg|σ⟩<|˜σ⟩ :
+                                                                                              |˜σ⟩←g|σ⟩
+    •  sublattice symmetries:                                                                 gσ←g
+                                                                                  return|˜σ⟩,gσ
+   GX≡{g∈G|g maps sublatticeX onto sublattice 1}.
+                                                                    (20)
+
+    •  sublattice representative:                                              the real space sites is different from the two sublattice case. In
+  RepX(|σ⟩X)≡hX|σ⟩X,  hX = argmin                                              the three sublattice case, we are now given the state
+
+                                                g∈GX    int(g|σ⟩X),                                       |σ⟩ =|↑↑↓↓↑↓⟩.                             (25)
+                                                                    (21)
+       where|σ⟩X  denotes  the  substate  of|σ⟩  restricted  on                Its substates are
+       sublattice ΛX.
+                                                                                                            |σ⟩A =|↑↑⟩,
+    •  representative symmetries:                                                                           |σ⟩B =|↓↓⟩,                             (26)
+  SymX(|σ⟩X)≡{g∈GX|g|σ⟩X = RepX(|σ⟩X)}.   (22)                                                              |σ⟩C =|↑↓⟩,
+
+    •  sublattice symmetry action:                                             with corresponding sublattice representatives
+
+                                                                                                       RepA(|σ⟩A) =|↑↑⟩,
+          SymmetryActionX(g,|σ⟩X) =g|σ⟩X.       (23)                                                   RepB(|σ⟩B) =|↓↓⟩,                            (27)
+The symmetries inGX  map the sublattice X  onto the most                                               RepC(|σ⟩C) =|↓↑⟩,
+
+signiﬁcant bits.  Therefore, the symmetry that minimizes the                   and representative symmetries
+integer value in the orbit must be contained in the representa-                                       SymA(|σ⟩A) ={I,T3},
+tive symmetries of a minimal sublattice representative, i.e.
+                                                                                                    SymB(|σ⟩B) ={T2,T5},                            (28)
+   gσ = argmin                                        SymY (|σ⟩Y ).                                      SymC(|σ⟩C) ={T1}.
+            g∈G  g|σ⟩⇒gσ∈     ⋃Y , RepY (|σ⟩Y )
+                                          minimal                              The  minimal  sublattice  representative MinRep  as  in  algo-
+                                                                    (24)       rithm2is given by
+To ﬁnd the minimizing symmetrygσ, we only have to check
+the symmetries yielding the minimal sublattice representative.                                 MinRep = RepB(|σ⟩B) =|↓↓⟩.               (29)
+The quantities RepX(|σ⟩X) and SymX(|σ⟩X) are stored in
+lookup  tables,  whose  size  scales  asO(2N/Nsublat).   In  order             The minimizing symmetry must now be in SymB(|σ⟩B)  =
+to  quickly  apply  the  symmetries,  we  can  additionally  store             {T2,T5}. We see that
+SymmetryActionX(g,|σ⟩X) in another lookup table. The                                      T2|σ⟩ =|↓↓↓↑↑↑⟩<T5|σ⟩ =|↓↓↑↓↑↑⟩.         (30)
+memory cost of doing so scales asO(Nsym2N/Nsublat) and thus
+requires the most memory.  The generic sublattice coding al-                   Therefore, the representative|˜σ⟩ is given by
+gorithm consists of two parts.  The preparation of the lookup
+tables  is  shown  as  pseudocode  in  algorithm1.   The  pseu-                                           |˜σ⟩ =|↓↓↓↑↑↑⟩,                             (31)
+docode of the actual algorithm for ﬁnding the representative
+using the lookup tables is shown in algorithm2.                                with the minimizing symmetry gσ  = T2.   Notice,  that this
+   Example    We consider the same state on a six-site chain                   state differs from the one found in the two sublattice example
+lattice as in Fig.1, but now using a three sublattice decom-                   since the labeling of the sites changes the integer represen-
+position in Fig.3.  We call the blue (solid) sublattice the    A               tation of a state and thus the deﬁnition of the representative.
+sublattice, the red (dashed)B and the yellow (dotted)C. No-                    Once a given labeling of sites is ﬁxed the representative is of
+tice, that due to different sublattice structure the labeling of               course unique.
+                                                                                                                                                            6
+
+         IV.    DISTRIBUTED AND HYBRID MEMORY
+                        PARALLELIZATION
+
+   For  reaching  larger  system  sizes  in  ED  computations  a
+proper balance between memory requirements and computa-
+tional costs has to be found. There are two major approaches
+when applying the Lanczos algorithm.  The Hamiltonian ma-
+trix can either be stored in memory in some sparse-matrix for-
+mat or generated on-the-ﬂy every time a matrix-vector multi-
+plication is performed.   Storing the matrix is usually faster,
+yet  memory  requirements  are  higher.   This  approach  is  for
+example pursued by the software package SPINPACK [36].
+A matrix-free implementation of the Lanczos algorithm usu-
+ally needs more computational time since the matrix genera-                        FIG. 4: Storage layout of the distributed Hilbert space. The
+tion, especially in a symmetrized basis can be expensive.  Of                     preﬁxes are randomly distributed amongst the MPI processes
+course,  the memory cost is drastically reduced since only a                      using a hash function. States with same preﬁxes are mapped
+few vectors of the size of the Hilbert space have to be stored.                   to the same process. Within a process, the states are ordered
+It turns out that on current supercomputing infrastructures the                      lexicographically. The Hamiltonian matrix is not stored.
+main limitation in going to larger system sizes is indeed the
+memory requirements of the computation.  It is thus often fa-
+vorable to use a slower matrix-free implementation, as done                      its coefﬁcients⟨σi|ψ⟩. Given an input vector,
+by the software packageHΦ [37], for example.  Due to this
+reasons, we also choose the matrix-free approach.                                                                  D∑
+   The  most  computational  time  in  the  Lanczos  algorithm                                          |ψin⟩ =        ⟨σi|ψin⟩|σi⟩,                     (35)
+is  used  in  the  matrix-vector  multiplication.   The  remaining                                                i=1
+types  of  operations  are  scalar  multiplications,  dot  products              we want to compute the coefﬁcients⟨σi|ψout⟩ in
+of  Lanczos  vectors  or  the  diagonalization  of  the T -matrix
+which are usually of negligible computational cost.  Today’s                                                Hk|ψin⟩ =|ψout⟩.                            (36)
+largest supercomputers are typically distributed memory ma-
+chines, where every process only has direct access to a small                    The resulting output vector|ψout⟩ is given by
+part of the total memory.   It is thus a nontrivial task to dis-
+tribute data onto several processes and implement communi-                                        D∑                        D∑
+cation amongst them once remote memory has to be accessed.                           |ψout⟩ =        ⟨σi|ψout⟩|σi⟩ =            ⟨σi|Hk|ψin⟩|σi⟩
+Also,  when scaling the software to a larger amount of pro-                                      i=1                       i=1                          (37)
+cesses load balancing becomes important. The computational                                        D∑
+work should be evenly distributed amongst the individual pro-                                =         ck(σj)⟨σj|ψin⟩⟨σi|σ′j⟩|σi⟩,
+cesses in order to avoid waiting times in communication.  In                                    i,j=1
+the following, we explain how we achieve this goal in our im-                    whereck(σj) and|σ′j⟩ are given by
+plementation using the Message Passing Protocol (MPI).
+   Matrix-vector   multiplication    The   Hamiltonian   can   be                                       Hk|σj⟩ =ck(σj)|σ′j⟩.                       (38)
+written a sum of non-branching terms,
+                                                                                 Notice, that in a symmetry-adapted basis, evaluating ck(σj)
+                             H = ∑Hk.                                (32)        requires the evaluation of Eq. (6), where the sublattice coding
+                                      k                                          technique can be applied. Clearly, we have
+To perform the full matrix-vector multiplication we compute                                                      {
+the matrix-vector multiplication for the non-branching terms                                       ⟨σi|σ′j⟩ =      1 if|σi⟩ =|σ′j⟩,
+Hk and add up the results,                                                                                         0 else.                                      (39)
+
+                        H|ψ⟩ = ∑Hk|ψ⟩.                         (33)              For parallelizing the multiplication Eq. (37), we distribute the
+                                                                                 coefﬁcients  in  the  basis{|σi⟩}  onto  the  different  MPI  pro-
+                                     k                                           cesses. This means we have a mapping,
+
+We denote by                                                                                        proc :|σi⟩→{1,...,nprocs},                 (40)
+
+                     {|σi⟩},  i = 1,...,D  ,                     (34)            that assigns to every basis state of the Hilbert space its MPI
+                                                                                 process number. Here,nprocs denotes the number of MPI pro-
+a (possibly symmetry-adapted) basis of the Hilbert space.  A                     cesses.  In general,|σj⟩ and|σ′j⟩ are not stored in the same
+wave function|ψ⟩ is represented on the computer by storing                       process. Hence, the coefﬁcientck(σj)⟨σj|ψin⟩ has to be sent
+                                                                                                                                                                7
+
+from the process no. proc(|σj⟩) to process no. proc(|σ′j⟩).
+This makes communication between the processes necessary.                           Algorithm 3 Preparation of the distributed and symmetrized
+This  communication  is  buffered  in  our  implementation,  i.e.                                                 Hilbert space
+for every basis state|σj⟩ we ﬁrst store the target basis state                        Perform the following steps on every process in parallel (no com-
+|σ′j⟩ and the coefﬁcientck(σj)⟨σj|ψin⟩ locally.  Once every                           munication necessary)
+local basis state has been evaluated, we perform the commu-                           myid denotes the number of the current MPI process
+nication and exchange the information amongst all processes.                          prepares data structures Basis, Limits on each process
+This  corresponds  to  an MPI         Alltoallv  call  in  the  MPI
+standard.                                                                             for each  preﬁx spin conﬁguration|σpreﬁx⟩ =|σ1···σnpreﬁx⟩ :
+   After this communication step, every process has to add the                             if proc(|σpreﬁx⟩)⁄= myid :
+received coefﬁcient to the locally stored coefﬁcient⟨σ′j|ψout⟩.                                continue
+For this, we have to search, where the now locally stored coef-                            else:
+ﬁcient of the basis state|σ′j⟩ is located in memory. Typically,                                begin = length(Basis)
+we  keep  a  list  of  all  locally  stored  basis  states  deﬁning  the                       for each  spin conﬁguration|σ⟩ with preﬁx|σpreﬁx⟩ :
+position of the coefﬁcients.  This list is then searched for the                                   compute representative|˜σ⟩ of|σ⟩
+entry|σ′j⟩, which can also be time-consuming and needs to be                                       if|σ⟩ =|˜σ⟩ :
+                                                                                               end = length(Basis)append|σ⟩ to Basis
+done efﬁciently.  We are thus facing the following challenges
+when distributing the basis states of the Hilbert space amongst                                if end⁄= begin :
+the MPI processes:                                                                                 insert (|σpreﬁx⟩, begin, end) to Limits
+
+     •  Every process has to know which process any basis state
+       |σi⟩ belongs to.
+     •  The  storage  of  the  information  about  the  distribution                       Algorithm 4 Parallel matrix-vector multiply for a
+       should be memory efﬁcient.                                                                          non-branching termHk
+
+     •  The  distribution  of  basis  states  has  to  be  fair,  in  the          Input:  input wave function|ψin⟩
+       sense that every process has a comparable workload in                       Output:  matrix-vector product|ψout⟩ =Hk|ψin⟩
+       every matrix-vector multiplication.                                            ⊿ Preparation and sending step (communication may be buffered)
+                                                                                      for each  basis state|σj⟩ stored locally in Basis :
+     •  The search for a basis state within a process should be                            · apply non-branchingHk and use sublattice coding
+       done efﬁciently.                                                                     technique to computeck(σj) and|σ′j⟩,
+We now propose a method to address these issues in a satis-                                                 Hk|σj⟩ =ck(σj)|σ′j⟩.
+factory way.                                                                               · computec =ck(σj)⟨σj|ψin⟩
+   Distribution of basis states    The central point of our par-                           · send the pair (|σ′j⟩,c) to process no. proc(|σ′j⟩)
+allelization  strategy  is  the  proper  choice  of  the  distribution
+function proc(σ) for the basis states in Eq. (40).  We split                          ⊿ Receiving and search step
+up every basis state into preﬁx and postﬁx sites,                                     for each  pair (|σ′j⟩,c) received :
+     |σ⟩ =|σ1···σnpreﬁx           σnpreﬁx+1···σnpreﬁx+npostﬁx⟩,      (41)                  · determine indices (begin, end) from Limits(|σ′j⟩)
+               |     {z      }    |             {z             }                           · determine indexi of|σ′⟩ by binary search in array
+                  preﬁx sites               postﬁx sites                                    Basis between (begin, end)
+                                                                                           · Set⟨σ′j|ψout⟩ [i]←c
+wherenpreﬁx andnpostﬁx denote the number of preﬁx and post-
+ﬁx sites. We decide that states with the same preﬁx are stored
+in  the  same  MPI  process.   The  preﬁxes  are  randomly  dis-
+tributed  amongst  all  the  processes.   We  do  this  by  using  a
+hash function that maps the preﬁx bits onto a random but de-                       locally in an array. Finding the index of a given basis state also
+terministic MPI process.   This hash function can be chosen                        requires some computational effort.  Here, we use the separa-
+such  that  every  process  has  a  comparable  amount  of  states                 tion between preﬁx and postﬁx sites. We store the basis states
+stored locally.  Moreover, a random distribution of states re-                     in an ordered way. This way, states belonging to the same pre-
+duces load balance problems signiﬁcantly since the commu-                          ﬁx are aligned in memory as shown in Fig.4.  We can store
+nication structure is randomized.  This is in stark contrast to                    the index of the ﬁrst and the last states that belong to a given
+distributing the basis states in a linear fashion.  Thereby, sin-                  preﬁx.  To ﬁnd the index of a given state we can now lookup
+gle processes can often have a multiple of the workload than                       the ﬁrst and last index of the preﬁx of this state and perform
+other processes, thus causing idle time in other processes.                        a binary search for the state between these two indices.  This
+   By choosing this kind of random distribution of basis states,                   reduces the length of the array we have to perform the binary
+we also don’t have to store any information about their distri-                    search on and, hence, reduces the computational effort in ﬁnd-
+bution.  This information is all encoded in the hash function.                     ing the index.  For implementing this procedure we need two
+Nevertheless, we store the basis states belonging to a process                     data structures locally stored on each process.
+                                                                                                                                                           8
+
+
+
+
+
+
+
+
+
+
+
+ FIG. 5: Geometries of Heisenberg spin-1/2 model benchmarks. Different colors (symbols) show the sublattice structure used
+ for the sublattice coding technique. Grey background shows the Wigner-Seitz cell deﬁning the periodicity of the lattice. Left:
+Triangular lattice, 48 sites, four sublattice structure. Middle left: Square lattice, 48 sites, four sublattice structure. Middle right:
+             Kagome lattice, 48 sites, three sublattice structure. Right: Square lattice, 50 sites, ﬁve sublattice structure.
+
+
+    1.An array   Basis(i) storing all the basis states,                          GHz, 8 core processors, the supercomputer Hydra at the Max
+                                                                                 Planck Supercomputing & Data Facility in Garching with over
+               Basis(i) =|σi⟩,  i = 1,...,D.              (42)                   3500  nodes  with  20  core  Intel  Ivy  Bridge  2.8  GHz  proces-
+                                                                                 sors and the System B Sekirei at the Institute for Solid State
+    2.An associative array   Limits(|σpreﬁx⟩) storing the map                    Physics  of  the  University  of  Tokyo  with  over  1584  nodes
+                                                                                 with two Intel Xeon E5-2680v3 12 core 2.5GHz processors.
+   Limits(|σpreﬁx⟩) = [begin(|σpreﬁx⟩), end(|σpreﬁx⟩)]                           Both the Hydra and Sekirei use InﬁniBand FDR interconnect,
+                                                                      (43)       whereas the VSC3 uses Intel TrueScale Inﬁniband for network
+       where begin(|σpreﬁx⟩)  denotes  the  index  of  the  ﬁrst                 communication.
+       state  with  preﬁx |σpreﬁx⟩  and  end(|σpreﬁx⟩)  denotes
+       the index of the last state with this preﬁx in the array                     The benchmarks are summarized in tableI. We make use of
+       Basis(i),|σpreﬁx⟩ =|σ1···σnpreﬁx⟩.                                        all translational, certain point group symmetries and spin-ﬂip
+In algorithm3we summarize how to prepare these data struc-                       symmetry. We show the memory occupied by a single lookup
+tures. The parallel matrix-vector multiplication in pseudocode                   table for the symmetries.  Since we use a single buffered and
+is  shown  in  algorithm4.   When  working  in  the  symmetry-                   blocking all-to-all communication in the implementation it is
+adapted  basis,  the  lookup  tables  of  the  sublattice  coding                straightforward to measure the percentage of time spent for
+method need to be accessible to every MPI process. One way                       MPI communication by taking the time before the commu-
+to achieve this is of course,  that every process generates its                  nication  call  and  afterward.   In  order  to  validate  the  results
+own lookup tables. However, in present-day supercomputers,                       of our computation,  we compared the results of the unfrus-
+several processes will be assigned to the same physical ma-                      trated square case to Quantum Monte Carlo computations of
+chine sharing the same physical memory. To save memory, the                      the ground state energy. We used a continuous time world-line
+lookup tables are stored only once on a computing node.  Its                     Monte Carlo Code [39] with      105 thermalization and 106 mea-
+processes can then access the lookup tables via shared mem-                      surements at temperatureT  = 0.01.  The computed energies
+ory access. In our code, we use POSIX shared memory func-                        per site areE/N =−0.676013±2·10−5 for the 48 site square
+tions [38] to implement this hybrid parallelization.                             cluster andE/N =−0.67512± 2· 10−5 for the 50 site clus-
+                                                                                 ter.  The actual values computed with ED are within the error
+                                                                                 bars.  The ground state energy of the kagome Heisenberg an-
+                         V.    BENCHMARKS                                        tiferromagnet on 48 sites has been previously computed [14]
+                                                                                 with a specialized code and agrees with our results.  We see
+                                                                                 that the amount of time spent for communication is different
+   In order to assess the power of the methods proposed in the                   for the three supercomputers. On Sekirei, a parallel efﬁciency
+previous sections, we performed test runs to compute ground                      of 61% on 3456 cores has been achieved.
+state energies.  We considered the Heisenberg antiferromag-
+netic spin-1/2 nearest neighbor model,                                              Results for running the same problem on various numbers
+                                                                                 of  processors  are  shown  in  Fig.6.   We  chose  two  different
+                   H =J ∑         Si·Sj,  J = 1,                   (44)          problems for two sets of number of cores, the Heisenberg anti-
+                             ⟨i,j⟩                                               ferromagnet with additional next-nearest neighbour and third
+                                                                                 nearest neighbour interactions on a 40 site square lattice and
+on four different lattice geometries: square (48 sites), triangu-                the Heisenberg antiferromagnet on a 48 site triangular lattice.
+lar (48 sites), kagome (48 sites) and square (50 sites).  Fig.5                  We observe almost ideal scaling behaviour up to 4096 MPI
+shows the simulation clusters and the sublattice structure we                    processes. Hence, the parallelization strategy described above
+used.  The benchmarks were performed on three different su-                      successfully solves load balancing problems in the MPI com-
+percomputers. The Vienna Scientiﬁc Cluster VSC3 is built up                      munication. This benchmark has been performed on the Curie
+from over 2020 nodes with two Intel Xeon E5-2650v2,  2.6                         supercomputer at GENCI-TGCC-CEA, France.
+                                                                                                                                                              9
+
+                                  Geometry           Triangular 48         Square 48          Kagome 48            Square 50
+                                  computer               Sekirei             VSC3                Hydra              Sekirei
+                                 point group               D6                  D2                  D6                  D2
+                             No. of symmetries            1152                 384                384                 400
+                                  dimension            2.8· 1010           8.3· 1010           8.4· 1010           3.2· 1011
+                                 No. of cores             3456                8192               10240               3456
+                                total memory             2.5 TB               n.A.                n.A.              15.5 TB
+                               memory lookup            151 MB               50 MB              604 MB              17 MB
+                                Time / MVM                399 s              1241 s              258 s               3304 s
+                               % comm. time               39%                 77%                 48%                 39%
+                                  g.s. sector          Γ.A1.even           Γ.A1.even           Γ.A1.even          M.A1.odd
+                                  g.s. energy       -26.8129452715     -32.4473598728      -21.0577870635      -33.7551019315
+
+ TABLE I: Benchmark results for various problems on three different supercomputer systems described in the main text. The
+  employed symmetries include translational, point group and spinﬂip symmetry. We show the total memory used by all MPI
+   processes and the memory used by the lookup tables for the sublattice coding technique. We also show the amount of time
+   spent for communication. For labeling the ground state representations Γ denotes the (0, 0) andM the (π,π) point in the
+ Brillouin zone. A1 denotes the trivial point group representation and even/odd denotes the spinﬂip symmetry representation.
+
+
+                                                                                  struction of the sublattices imposes restrictions on the geom-
+                                                                                  etry of the simulation cluster.  A sublattice construction with
+                                                                                  Nsublat  sublattices at least requires the number of sites to be
+                                                                                  divisible byNsublat. The sublattice coding technique yields no
+                                                                                  advantages for lattice samples that have a prime number of
+                                                                                  sites. For lattices with several basis sites per unit cell a natural
+                                                                                  sublattice decomposition exists.  The sublattices are given by
+                                                                                  the lattices deﬁned by the corresponding basis sites.  This is
+                                                                                  the case for the honeycomb and kagome lattice, where a natu-
+                                                                                  ral two (resp. three) sublattice decomposition exists, cf. Fig.2.
+                                                                                     The  sublattice  decomposition  for  a  given  lattice  is  not
+                                                                                  unique. This can be seen in the case of the 50 site square lat-
+                                                                                  tice, whose ﬁve sublattice decomposition is shown in Fig.5.
+                                                                                  As a bipartite square lattice, it also allows for a two-sublattice
+                                                                                  decomposition.    Three-  and  four-sublattice  decompositions
+                                                                                  exist for other square lattice clusters as well (see e.g.  Fig.5).
+                                                                                  Hence,  for  a  given  simulation  cluster  there  may  exist  more
+FIG. 6: Scaling behaviour of the parallelization. The time for                    than  one  sublattice  decomposition.   Most  of  the  high  sym-
+ one matrix-vector multiplication in seconds is compared for                      metry  square  and  triangular  lattice  samples  possess  at  least
+      the total number of processes. Both axes are scaled                         one sublattice decomposition in two or more sublattices. Still,
+     logarithmically. The matrix is the Hamiltonian of the                        a given sublattice decomposition may restrict the symmetry
+Heisenberg spin 1/2 antiferromagnet on a 40 site cluster with                     group if certain symmetry elements split up sublattices.  This
+      additional next-nearest neighbour and third-nearest                         is, for example, the case for the 50 site square lattice in Fig.5.
+neighbour interactions for the benchmark on 16, 64, 128 and                       While the cluster itself has a full four-fold rotational and re-
+ 256 cores. For 1024, 2048 and 4096 cores the matrix is the                       ﬂectional symmetry, the 90◦ rotation is not sublattice stable.
+Hamiltonian of the Heisenberg spin 1/2 antiferromagnet on a                       Therefore, only the 180◦ rotation and reﬂection symmetry has
+ 48 site triangular cluster. The Hamiltonian is considered in                     been used as point group symmteries in the computation.
+   its ground state sector. We observe almost ideal scaling                          Increasing  the  number  of  sublattices  decreases  the  mem-
+                 behaviour up to 4096 processors.                                 ory required for storing the lookup tables. The computational
+                                                                                  effort for computing the representative as in algorithm2in-
+                                                                                  creases linearly in the number of sublattices.   Also,  smaller
+                          VI.    DISCUSSION                                       sublattices  yield  more  potential  representative  symmetries
+                                                                                  Eq. (22) that have to be applied to the spin conﬁguration.  In
+                                                                                  principle, there is no restriction on the number of sublattices
+   The sublattice coding technique presented in sectionIIal-                      and the proper choice depends on the geometry of the sim-
+lows for fast and memory-efﬁcient evaluation of the matrix                        ulation cluster, the available memory, and the desired speed.
+elements in a symmetry-adapted basis Eq. (6).  Still, the con-                    Fewer  sublattices  allow  algorithm2to  evaluate  matrix  ele-
+                                                                                                                                                                    10
+
+ments faster.                                                                         efﬁciently.
+   The method of distributing the basis states of the Hilbert
+space  is  independent  of  the  sublattice  coding  algorithm.
+Hence, this kind of parallelization can also be applied to prob-                                                VII.    CONCLUSION
+lems without symmetries, like disordered systems.  All infor-
+mation about the distribution of basis states is encoded by the                          We  proposed  the  generic  sublattice  coding  algorithm  for
+hash function, that can be of rather simple type to achieve a                         making efﬁcient use of discrete symmetries in large-scale ED
+balanced distribution.                                                                computations. The method can be used ﬂexibly on most lattice
+   One main motivation for performing large-scale ED com-                             geometries and only requires a reasonable amount of memory
+putations is reaching system sizes for which high symmetry                            for storing the lookup tables.  The parallelization strategy for
+clusters are available. The possibility to simulate 48 spin-1/2                       distributed memory architectures we discussed includes a ran-
+particles gives access to the interesting triangular and kagome                       dom distribution of the Hilbert space amongst the parallel pro-
+lattices shown in Fig.5.   These samples both have full six-                          cesses.  Lookup tables of the sublattice coding technique are
+fold rotational and reﬂectional symmetry. In reciprocal space,                        stored only once per node and are accessed via shared mem-
+these  clusters  both  accommodate  the K  point  and  even  the                      ory. Using these techniques, we showed that computations of
+M  point  for  the  triangular  case.   This  feature  is  important                  spin-1/2 models of up to 50 spins have now become feasible.
+to distinguish different phases with different ordering vectors.
+For the square lattice case, an interesting 52 site cluster with
+four-fold rotational symmetry exists featuring the (π,π) and                                                 ACKNOWLEDGEMENTS
+(π, 0) point in reciprocal space.   A study of the Heisenberg
+model with next-nearest neighbor interactions on this cluster                            The ED calculations of the 50 site cluster have been per-
+can, therefore, yield valuable insights into nature of the inter-                     formed using the facilities of the Supercomputer Center, the
+mediate phase, whose nature is not fully understood as of to-                         Institute for Solid State Physics, the University of Tokyo. The
+day. The methods proposed in this manuscript allow for these                          scaling benchmarks in Fig.6have been performed on the su-
+calculations  on  large  present-day  supercomputers,  since  the                     percomputer  Curie  (GENCI-TGCC-CEA,  France).   We  es-
+Hilbert space dimension of this problem is roughly four times                         pecially thank Synge Todo, Roderich Moessner and Sylvain
+larger than the investigated 50 site case and a four sublattice                       Capponi for making some of these simulations possible. A.W.
+decomposition is available.                                                           acknowledges  support  through  the  Austrian  Science  Fund
+   Apart from spin systems,  the sublattice coding algorithm                          project I-1310-N27 (DFG FOR1807) and the Marietta Blau-
+also applies to fermionic systems,  when the Hamiltonian is                           Stipendium of OeAD-GmbH, ﬁnanced by the Austrian Bun-
+expressed  in  the  occupation  number  basis.   The  occupation                      desministeriums fur Wissenschaft, Forschung und Wirtschaft
+numbers  of  the  orbitals  on  the  respective  sublattices  deﬁne                   (BMWFW).  Further  computations  for  this  manuscript  have
+the sublattice conﬁgurations.  In addition to computing a rep-                        been  carried  out  on  VSC3  of  the  Vienna  Scientiﬁc  Cluster,
+resentative and representative symmetry, a Fermi sign has to                          the supercomputer Hydra at the Max Planck Supercomputing
+be computed to evaluate matrix elements, which can be done                            & Data Facility in Garching.
+
+
+
+
+
+ [1]Z. Gan and R. J. Harrison, in      Supercomputing, 2005. Proceed-                 [12]J. Richter and J. Schulenburg,Eur. Phys. J. B           73, 117 (2010).
+      ings of the ACM/IEEE SC 2005 Conference (2005) pp. 22–22.                       [13]A.  M.  L       ¨auchli,  R.  Johanni,   and  R. Moessner, “An  exact  di-
+ [2]P. Sternberg, E. G. Ng, C. Yang, P. Maris, J. P. Vary, M. Sosonk-                       agonalization perspective on thes  = 1/2 kagome heisenberg
+      ina,  and H. V. Le, in Proceedings of the 2008 ACM/IEEE Con-                          antiferromagnet,”Talk, KITP Fragnets Program (2012).
+      ference on Supercomputing, SC ’08 (IEEE Press, Piscataway,                      [14]A. M. L       ¨auchli, J. Sudan,   and R. Moessner,arXiv E-prints , 1
+      NJ, USA, 2008) pp. 15:1–15:12.                                                        (2016),arXiv:1611.06990.
+ [3]J. P. Vary, P. Maris, E. Ng, C. Yang,  and M. Sosonkina,Journal                   [15]H. Q. Lin and J. E. Hirsch,Phys. Rev. B                   35, 3359 (1987).
+      of Physics: Conference Series 180, 012083 (2009).                               [16]Y. Hasegawa and D. Poilblanc,Phys. Rev. B                        40, 9035 (1989).
+ [4]P. Maris, M. Sosonkina, J. P. Vary, E. Ng,  and C. Yang,Proce-                    [17]J.  Bon       ˇca,  P.  Prelovˇsek,   and  I.  Sega,Phys.  Rev.  B    39,  7074
+      dia Computer Science 1, 97  (2010), iCCS 2010.                                        (1989).
+ [5]S. Rychkov and L. G. Vitale,Phys. Rev. D              91, 085011 (2015).          [18]D. Poilblanc,Phys. Rev. B                        52, 9201 (1995).
+ [6]J. Oitmaa and D. D. Betts,Can. J. Phys.               56, 897 (1978).             [19]S. He, S. H. Simon,  and B. I. Halperin,Phys. Rev. B                       50, 1823
+ [7]A.  Wietek  and  A.  M.  L     ¨auchli,    95  (2017),  10.1103/Phys-                   (1994).
+      RevB.95.035141,arXiv:1604.07829 [cond-mat.str-el].                              [20]R. H. Morf, N. d’Ambrumenil,  and S. Das Sarma,Phys. Rev.
+ [8]A.  Wietek,  A.  Sterdyniak,    and  A.  M.  L     ¨auchli,   92  (2015),               B 66, 075408 (2002).
+      10.1103/PhysRevB.92.125122,     arXiv:1503.03389      [cond-                    [21]T. Neupert, L. Santos, C. Chamon,  and C. Mudry,Phys. Rev.
+      mat.str-el].                                                                          Lett. 106, 236804 (2011).
+ [9]E. Dagotto and A. Moreo,Phys. Rev. B                 39, 4744 (1989).             [22]A. M. L       ¨auchli, Z. Liu, E. J. Bergholtz,  and R. Moessner,Phys.
+[10]P. W. Leung and V. Elser,Phys. Rev. B         47, 5459 (1993).                          Rev. Lett. 111, 126802 (2013).
+[11]Schulz,  H.J.  ,  Ziman,  T.A.L.  ,    and  Poilblanc,  D.,J.  Phys.              [23]M. Schuler,  S. Whitsitt,  L.-P. Henry,  S. Sachdev,   and A. M.
+      (France) 6, 675 (1996).                                                               L¨auchli,Phys. Rev. Lett.            117, 210401 (2016).
+                                                                                                                                                                                   11
+
+[24]S.  Whitsitt,  M.  Schuler,  L.-P.  Henry,  A.  M.  L       ¨auchli,    and                      arXiv:1710.05867 [quant-ph].
+      S. Sachdev,Phys. Rev. B  96, 035142 (2017).                                             [32]A. Gheorghiu, T. Kapourniotis,  and E. Kasheﬁ, ArXiv e-prints
+[25]H. Q. Lin,Phys. Rev. B              42, 6561 (1990).                                             (2017),arXiv:1709.06984 [quant-ph].
+[26]A. Weiße,Phys. Rev. E               87, 043305 (2013).                                    [33]C. Lanczos,J. Res. Natl. Bur. Stand.                      45, 255 (1950).
+[27]R. P. Feynman, Int. J. Theor. Phys.        21, 467 (1982).                                [34]E.  L.  L.  Landau,        L.D.  Landau,  E.M.  Lifshitz,  Lehrbuch  der
+[28]H. H       ¨affner, W. H¨ansel, C. F. Roos, J. Benhelm, D. Chek-al kar,                          Theoretischen  Physik,   vol.  III,  Quantenmechanik,   8th  edn
+      M. Chwalla, T. K¨orber, U. D. Rapol, M. Riebe, P. O. Schmidt,                                  (Akademie-Verlag, Berlin, 1988).
+      C. Becher, O. G¨uhne, W. D¨ur,   and R. Blatt,Nature          438, 643                  [35]A.  M.  L       ¨auchli,  “Introduction  to  Frustrated  Magnetism:   Ma-
+      EP  (2005).                                                                                    terials,  Experiments,  Theory,”   (Springer,  Berlin,  Heidelberg,
+[29]D. Castelvecchi,Nature                 541, 910 (2017).                                          2011) Chap. Numerical Simulations of Frustrated Systems, pp.
+[30]T.  H       ¨aner  and  D.  S.  Steiger,  in  Proceedings  of  the  Interna-                     481–511.
+      tional Conference for High Performance Computing, Network-                              [36]J. Schulenburg,“SPINPACK,”(2017).
+      ing, Storage and Analysis, SC ’17 (ACM, New York, NY, USA,                              [37]M. Kawamura, K. Yoshimi, T. Misawa, Y. Yamaji, S. Todo,  and
+      2017) pp. 33:1–33:10.                                                                          N. Kawashima,Comput. Phys. Commun.             217, 180 (2017).
+[31]E. Pednault, J. A. Gunnels, G. Nannicini, L. Horesh, T. Mager-                            [38]  SHM      OVERVIEW(7)  Linux  Programmer’s  Manual,  4th  ed.
+      lein, E. Solomonik,   and R. Wisnieff, ArXiv e-prints   (2017),                                (2017).
+                                                                                              [39]S. Todo and K. Kato,Phys. Rev. Lett.                87, 047203 (2001).

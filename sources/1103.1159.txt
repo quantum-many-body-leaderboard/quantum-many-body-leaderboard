@@ -1,0 +1,221 @@
+ Ground-State Energy and Spin Gap of Spin-1/2 Kagom´e Heisenberg Antiferromagnetic Clusters:
+                                              Large Scale Exact Diagonalization Results
+
+                                      Andreas M. L¨auchli,1, 2,∗  Julien Sudan,3  and Erik S. Sørensen4,†
+                      1Max-Planck-Institut f¨ur Physik komplexer Systeme, N¨othnitzer Str. 38, D-01187 Dresden, Germany
+                                2Institut f¨ur Theoretische Physik, Universit¨at Innsbruck, A-6020 Innsbruck, Austria
+              3Institut Romand de Recherche Num´erique en Physique des Mat´eriaux (IRRMA), CH-1015 Lausanne, Switzerland
+                           4Department of Physics and Astronomy, McMaster University, Hamilton, Canada L8S 4M1
+
+                    We present a comprehensive list of ground state energies and spin gaps of ﬁnite kagom´e clusters with up to 42
+                 spins obtained using large-scale exact diagonalization techniques. This represents the current limit of this exact
+                 approach. For a ﬁxed number of spins N we study several cluster shapes under periodic boundary conditions in
+                 both directions resulting in a toroidal geometry. The clusters are characterized by their side length and diagonal
+                 as well as the shortest ”Manhattan” diameter of the torii.   A ﬁnite-size scaling analysis of the ground state
+                 energy as well as the spin gap is then performed in terms of the shortest toroidal diameter as well as the shortest
+                 ”Manhattan” diameter. The structure of the spin-spin correlations further supports the importance of short loops
+                 wrapping around the torii.
+
+                 PACS numbers:  75.10.Jm, 75.10.Kt, 75.40.Mg
+
+
+   The  quest  for  magnetic  materials  and  model  systems  ex-
+hibiting quantum spin liquid behavior is of considerable cur-
+rent experimental and theoretical interest.  Among such sys-
+tems, the kagom´e S  =  1/2 antiferromagnet stands out as a
+prototypical highly frustrated quantum magnet in two spatial
+dimensions1 that potentially could exhibit spin liquid behav-
+ior.   However,  a complete understanding of this deceptively
+simple model given by,
+
+                          H  = J∑         Si· Sj,                             (1)
+                                    ⟨i,j⟩
+
+has  proven  surprisingly  difﬁcult  and  exact  diagonalization
+(ED)  results  on  this  model,  despite  their  limitation  to  very
+modest system sizes, have become crucial for both theoreti-                         FIG. 1.  (Color online) The two 42-site kagom´e clusters used in this
+cal developments and non-exact numerical techniques.                                study.   The shortest Manhattan diameters, dM ,  are shown as thick
+   Several Exact Diagonalization (ED) simulations were car-                         dashed lines.
+ried out to explore puzzling facets of the kagom´e antiferro-
+magnet2–14   .   ED established some of its remarkable proper-
+ties,  such  as  the  absence  of  magnetic  order  and  the  enor-                                           I.    THE CLUSTERS
+mously  high  number  of  singlet  excitations  below  the  low-
+est  spinful  excitation.   Complementary  computational  tech-
+niques  have  also  been  applied  to  the  kagom´e  Heisenberg                        The list of the clusters used in this study along with their
+antiferromagnet  including  series  expansions15–17    ,  Quantum                   properties is given in TableI. For a given number of spins,       N,
+Monte Carlo18, Diagonalizations in the nearest-neighbor va-                         we list in most cases several clusters. For a given N there are
+lence bond basis and variants thereof19–21    , Contractor Renor-                   many such clusters and the ones we list are chosen to be close
+malization (CORE)22,23    , Multi-scale entanglement renormal-                      to optimal, where optimal refers to a cluster that would have
+ization ansatz (MERA)24, and the Density Matrix Renormal-                           the length of both sides as well as the shortest diagonal all
+ization group (DMRG)25,26    .                                                      equal.  This is considered optimal since such a cluster would
+   In  this  work  we  report  on  large  scale  ED  results  for  the              be more likely to have the full point group symmetry of the in-
+ground state energy and the spin gap of the Heisenberg S  =                         ﬁnite kagom´e lattice. Of the clusters we consider only 12, 27b
+1/2  antiferromagnet  on  various  kagom´e  samples  consisting                     and 36d have the full symmetry of the kagom´e plane and they
+of up to N   =  42 spins.   This considerable increase in sys-                      are therefore shown in bold. The basis vectors a, b of all clus-
+tem sizes (and Hilbert space size) was made possible by a dis-                      ters are given in terms of the vectors a1, a2 shown in Fig.1
+tributed memory parallelization of our ED codes. We provide                         where the two largest clusters 42a and 42b are shown.   We
+a ﬁnite size scaling of the ground state energy and the spin gap                    also list the shortest Manhattan diameter, dM , of each cluster.
+as a function of the shortest diameter of the torii, which seems                    This measure can be visualized by tiling the plane with the
+to capture the ﬁnite size dependence in a more systematic way                       cluster and ﬁnding the shortest path between two equivalent
+than a simple 1/N scaling used previously7,8,14    .                                sites walking along the bonds of the lattice.  dM  is then sim-
+                                                                                                                                                             2
+
+                            N         a,b          |a|    |b|     d   dM    |G|        Total E (J)          E/N                  ∆
+                            12     (2,0), (0,2)   √2     √2     √2      4   48     –5.444 875 216    –0.453 740    0.382 668 366
+                            15    (2,-1), (-1,3)  √3        7   √  7    4   20     –6.589 143 829    –0.439 276    0.418 800 403
+                           18 a   (2,-1), (0,3)      3   √3       12    4   24     –8.064 482 605    –0.448 027    0.270 115 263
+                           18 b  (2,-2), (-2,-1)  √2     √7     √3      4   48     –8.048 270 773    –0.447 126    0.284 567 177
+                            21    (2,1), (-1,3)   √7     √7     √  7    6   336    –9.172 279 619    –0.436 775    0.278 637 026
+                            24    (1,2), (-3,2)   √7        7   √12     6   96   –10.589 965 547     –0.441 249    0.207 828 742
+                           27 a   (2,1), (-3,3)      7     3      13    6   18   –11.793 996 213     –0.436 815    0.275 413 255
+                           27 b    (3,0), (0,3)   √3     √3     √3      6   216  –11.779 504 985     –0.436 278    0.268 776 803
+                            30    (2,1), (-2,4)   √7     √12    √13     6   20   –13.154 318 948     –0.438 477    0.152 855 536
+                            33    (1,2), (4,-3)   √7       13   √19     6   22   –14.410 195 048     –0.436 673    0.229 455 039
+                           36 a   (-2,3), (4,0)      7   √4     √19     6   24   –15.787 874 847     –0.438 552    0.144 945 554
+                           36 b   (3,0), (-3,4)     3    √12      21    6   48   –15.806 927 756     –0.439 081    0.170 275 671
+                           36 c   (3,0), (-1,4)  √3     √13    √4       6   24   –15.814 334 002     –0.439 287    0.184 874 846
+                           36 d   (4,-2), (-2,4)  √12    √12    √12     8   144  –15.781 555 118     –0.438 377    0.164 189 901
+                           39 a   (-1,3), (5,-2)  √  7   √19    √21     6   26   –17.038 187 797     –0.436 877    0.199 163 545
+                           39 b   (1,3), (-3,4)   √13    √13    √13     8   78   –17.020 192 866     –0.436 415    0.222 433 924
+                           42 a   (-1,3), (5,-1)  √  7   √21    √28     6   28   –18.395 959 984     –0.437 999    0.120 425
+                           42 b   (-2,4), (4,-1)    12     13     19    8   28   –18.401 988 921     –0.438 143    0.149 092 139
+
+
+TABLE I. Cluster studied in this work. Listed are: The number of spins N. The basis vectors a,b in terms of a1 and a2 (each of length 2a).
+The length of the basis vectors, (|a|,|b|), in units of 2a along with the length of the diagonal d = min(|a−b|,|a+b|). The Manhattan length,
+dM , the length of the shortest loop wrapping around the torus.  The number of elements of the symmetry group|G|.  The total ground-state
+energy, E.  The energy per site, E/N.  The value of the spin gap, ∆, between the S  = 0 ground-state and the lowest S  = 1 state for even
+samples or the gap from the S = 1/2 ground-state to the lowest S = 3/2 state for odd samples.  Results shown in bold are for clusters with
+the full symmetry of the Kagom´e plane.
+
+
+ply equal to the number of bonds traversed.  We also deﬁne                        and cheaper to scale a distributed system to a large combined
+the shortest geometrical diameter, this is simply Min(|a|,|b|).                   memory space than a shared memory system and future large
+We also list the number of elements of the symmetry group,                        ED studies will likely have to be performed on distributed sys-
+|G|, for nearest-neighbor interactions on the cluster. Note that                  tems. Due to the physical constraints of a distributed memory
+clusters 18b, 21, 24, 27b have larger symmetry groups than                        system some peculiarities remain: A Lanczos diagonalization
+expected based on the applicable symmetries of the inﬁnite                        proceeds by iteratively performing, Nit, matrix vector multi-
+kagom´e lattice.                                                                  plications on vectors of length, M. If treating one element of
+                                                                                  the vector requires a time t, the full cpu-time for the calcula-
+                                                                                  tion is roughly, NitMt. Due to the memory constraints of dis-
+              II.    ED ON DISTRIBUTED SYSTEMS                                    tributed systems the application of a non-trivial symmetry that
+                                                                                  would reduce M by a factor of K almost always will increase
+   Typically an ED study of a cluster would involve a complete                    t by a factor larger than K, even when the number of cpu’s
+symmetry analysis of the cluster and resulting spectra.  One                      used is the same. The result is that it is slower to diagonalize
+could then write the Hamiltonian matrix restricted to a given                     the smaller symmetry reduced Hamiltonian than the full one.
+symmetry  sector  to  a  ﬁle  that  would  be  read  into  memory                 For the largest clusters we therefore only use very few simple
+for diagonalization.   Using shared memory systems this has                       symmetries.  For the 42 site clusters when no lattice symme-
+been achieved in the past for a speciﬁc quantum number sec-                       tries were used the resulting maximal Hilbert space dimension)/2 = 269′128′937′220.
+tor for 42 spins on the star lattice27.  However, this approach                   is then(4221
+becomes impossible for the larger system sizes and symmetry
+sectors included in this study, because writing or storing the                                                 III.    RESULTS
+Hamiltonian becomes prohibitively slow and matrix elements
+have to be calculated on-the-ﬂy. Furthermore, the largest sec-
+tors do not ﬁt into accessible shared memory machines any-                           Our main result is the tableIlisting the ground state energy
+more, such that these large system sizes are only treatable on                    and the spin gap of the samples considered in this work. Some
+distributed memory systems where each computational node                          of the smaller samples have already been studied in the past
+only has a relatively small addressable memory space, typi-                       and energies were quoted for 12,15,18b, and 21 in Ref.3          28,
+cally a few giga-bytes (or less).  In general, it is much easier                  for 27b in Refs.5and7and for 36d in Refs.5and8.   An
+                                                                                                                                                                  3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  2.   (Color  online)  Ground  state  energy  per  site  plotted  as  a
+function of the inverse shortest geometrical diameter.  Remarkably
+good agreement with recent DMRG results26 on long cylinders with                    FIG. 4. (Color online) Magniﬁed spin-spin correlations in the ground
+the same diameter is observed.  For comparison we also display the                  state of the 30 and 36d kagom´e samples. The 30 site cluster with its
+MERA upper bound24, series expansion results for the Marston-Zeng                   low  symmetry  requires  three  distinct  reference  sites  to  be  consid-
+valence bond crystal16,17    , as well as the DMRG upper bound26.                   ered.  The diameter of the circle is proportional to the magnitude of
+                                                                                    the spin-spin correlation with the reference site (black ﬁlled square).
+                                                                                    Blue (red) color denotes positive (negative) correlations. The nearest
+                                                                                    neighbor correlations (all antiferromagnetic) have been dropped for
+                                                                                    clarity.   One observes pronounced staggered spin-spin correlations
+                                                                                    along selected loops wrapping around the torus in the left two panels
+                                                                                    and the lower right panel.
+
+
+
+                                                                                    for constant diameter due to a lack of system sizes for large
+                                                                                    diameters,  the qualitative agreement with DMRG results on
+                                                                                    long cylinders suggests that it is indeed the diameter which
+                                                                                    controls the ﬁnite size effects upon moving towards the two-
+                                                                                    dimensional bulk limit.
+                                                                                       Complementary evidence for the important role played by
+                                                                                    short loops wrapping around the torus is provided by a mag-
+                                                                                    niﬁed view on the spin-spin correlations in the ground state of
+FIG. 3.  (Color online) Spin gap of even and odd kagom´e samples                    several even samples displayed in Fig.4(see Ref.5for tabu-
+obtained by ED and plotted as a function of the inverse shortest geo-               lated values of sample 36d). In a spin liquid with a very short
+metrical diameter. For comparison recent DMRG data26 obtained on                    correlation length one would expect spin correlations between
+long cylinders with the same diameter are shown.                                    distant sites to be very weak and also not to depend signiﬁ-
+                                                                                    cantly on the sample geometry.  Indeed in Fig.4, most spin-
+                                                                                    spin  correlations  are  quite  weak,  but  pronounced  staggered
+approximate ground state energy and spin gap of the sample                          spin spin correlations along selected loops wrapping around
+36c have been obtained by DMRG in Ref.25.                                           the sample are revealed. We expect these resonances to disap-
+   We plot the ground state energies as a function of the in-                       pear once the samples are sufﬁciently wide.
+verse  geometrical  diameter,  which  in  our  convention  corre-
+sponds to 1/|a| and display the result in Fig.2.  This presen-
+tation seems to capture the ﬁnite size effects in a more sys-
+tematic way than the previously used 1/N scaling, as the data                                                 IV.    CONCLUSIONS
+seems to behave consistently upon increasing the system size,
+while keeping the diameter constant. Furthermore we observe
+good agreement with recent DMRG data26 on long cylinders                               We have presented a systematic study of the ground-state
+with the same diameter, thus corroborating the accuracy of the                      energies and spin gaps of many Kagom´e clusters.  In particu-
+DMRG simulations.                                                                   lar we have presented results for N  = 39, 42 obtained on dis-
+   Next we plot the spin gap data in Fig.3in the same way. For                      tributed memory parallel clusters.  Future quantum numbered
+each diameter we observe that the spin gap is monotonously                          resolved  ED studies  on  the  largest  samples should  allow  to
+decreasing with system size (for even and odd samples sep-                          check the appearance of the topological degeneracy required
+arately).  While it is difﬁcult to extrapolate the ED spin gap                      for the Z2 spin liquid advocated in Ref26.
+                                                                                                                                                                        4
+
+                        ACKNOWLEDGMENTS                                                tion of computing time on the PKS-AIMS and the BlueGene/P
+                                                                                       machines  at  the  MPG  RZG.  ESS  acknowledges  allocation
+   We thank D. A. Huse for useful correspondence on sample                             of computing time at the Shared Hierarchical Academic Re-
+geometries and are we grateful to D. A. Huse, R. Moessner                              search Computing Network (SHARCNET:www.sharcnet.ca)
+and S. R. White for discussions.                                                       and support by NSERC.
+   AML acknowledges support by the MPG RZG and alloca-
+
+
+
+
+
+
+
+∗  aml@pks.mpg.de                                                                          27009 (2009).
+†  sorensen@mcmaster.ca                                                                15  R. R. P. Singh and D. A. Huse, Phys. Rev. Lett. 68, 1766 (1992).
+1  L.Balents, Nature 464,199 (2010).                                                   16  R.  R.  P.  Singh  and  D.  A.  Huse,  Phys.  Rev.  B  76,  180407(R)
+2  V. Elser, Phys. Rev. Lett. 62, 2405 (1989).                                             (2007).
+3  C. Zeng and V. Elser, Phys. Rev. B 42, 8436 (1990).                                 17  R. R. P. Singh and D. A. Huse, Phys. Rev. B 77, 144415 (2008).
+4  J. T. Chalker and J. F. Eastmond, Phys. Rev. B 46, 14201 (1992).                    18  M. Nyfeler, F.-J. Jiang, F. K¨ampfer, and U.-J. Wiese, Phys. Rev.
+5  P. W. Leung and V. Elser, Phys. Rev. B 47, 5459 (1993).                                 Lett. 100, 247206 (2008).
+6  N. Elstner and A. P. Young, Phys. Rev. B 50, 6871 (1994).                           19  C. Zeng and V. Elser, Phys. Rev. B 51, 8318 (1995).
+7  P. Lecheminant, B. Bernu, C. Lhuillier, L. Pierre, and P. Sindzin-                  20  M. Mambrini and F. Mila, Eur. Phys. J. B 17, 651 (2000).
+   gre, Phys. Rev. B 56, 2521 (1997).                                                  21  D. Poilblanc, M. Mambrini, and D. Schwandt, Phys. Rev. B 81,
+8  C. Waldtmann, H.-U. Everts, B. Bernu, C. Lhuillier, P. Sindzingre,                      180402 (2010).
+   P. Lecheminant, and L. Pierre, Eur. Phys. J. B 2, 501 (1998).                       22  R. Budnik and A. Auerbach, Phys. Rev. Lett. 93, 187205 (2004).
+9  P. Sindzingre, G. Misguich, C. Lhuillier, B. Bernu, L. Pierre, Ch.                  23  S.  Capponi,  A.  L¨auchli  and  M.  Mambrini,  Phys.  Rev.  B  70,
+   Waldtmann, and H.-U. Everts, Phys. Rev. Lett. 84, 2953 (2000).                          104424 (2004).
+10  Ch. Waldtmann,  H. Kreutzmann,  U. Schollw¨ock,  K. Maisinger,                     24  G. Evenbly and G. Vidal, Phys. Rev. Lett. 104, 187203 (2010).
+   and H.-U. Everts, Phys. Rev. B 62, 9472 (2000).                                     25  H. C. Jiang, Z. Y. Weng, and D. N. Sheng, Phys. Rev. Lett. 101,
+11  J. Richter,  J. Schulenburg,  and A. Honecker,  Lect. Notes Phys.                      117203 (2008).
+   645, 85 (2004).                                                                     26  S. Yan, D. A. Huse, and S. R. White, arXiv:1011.6114
+12  A. M. L¨auchli and C. Lhuillier, arxiv:0901.1065                                   27  J. Richter, J. Schulenburg, A. Honecker, and D. Schmalfuß, Phys.
+13  E. S. Sørensen,  M. J. Lawler,  and Y. B. Kim,  Phys. Rev. B 79,                       Rev. B 70, 174454 (2004).
+   174403 (2009).                                                                      28  The spin gap for 15, the energy and spin gap for 18b and the spin
+14  P.  Sindzingre  and  C.  Lhuillier,  EPL  (Europhysics  Letters)  88,                  gap for 21 seem to be incorrect in Ref.3, see Ref.5and our results.

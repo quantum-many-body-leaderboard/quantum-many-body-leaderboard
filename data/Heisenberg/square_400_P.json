@@ -131,6 +131,15 @@
         "flag": "sigma-understated",
         "finding": "The printed bar 6e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6697419856 and SE 4.83e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 1.53e-5 per site (25x the bar); propagating each run's Monte-Carlo error through the fit gives 2.00e-5. The printed bar (6) is one unit above the notebook's own 4.83e-7; the energy digits reproduce. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6697196700 the row sits below by 2.23e-5 per site: 37 printed sigma, 1.5 bootstrap SD, 1.1 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 20) prints −0.6697420(6), x 4 x 400 = -1071.5872.",
         "source_entry": "VP7-arxiv-2502-17144#40 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
+      },
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -206,7 +215,16 @@
           "source_entry": "JP5-arxiv-2502-17144#24",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ]
 }

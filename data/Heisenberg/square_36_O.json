@@ -33,6 +33,16 @@
         "note": "Pauli H = sum_NN sigma.sigma on the open 6x6 square (60 bonds). Marshall's sign rule with N/2 = 18 even puts the unique singlet ground state in C4v A1 with z = +1. |E - stored| = 1.56e-12 (relative 1.80e-14). Second determination: the stored value is VarBench's own ED (lattice-symmetries, a different code and basis), which agrees to this precision. Also read by VB3-varbench-code-heisenberg#46 (scope config: vendor/varbench/Heisenberg/square_36_O.md (snapshot 390a21e), row 'Exact diagonalization'; linked scripts/Heisenberg/square_36_O/ed_lattice_symmetries.sh).",
         "source_entry": "VB3-varbench-code-heisenberg#46, VE-exact-recompute#160 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/ed_lattice_symmetries.sh",
+        "script": "scripts/Heisenberg/square_36_O/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_36_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -150,6 +160,16 @@
         "note": "dmrg.sh: heisenberg_2d.jl --L 6 --zero_mag --max_B 2048 (open), Pauli, J = 1, Sz = 0, 50 sweeps at D = 2048. 1.15e-5 above the exact energy; var/(E - E0) = 39.8. M13 (same number as Huang et al.'s 'DMRG keeping 4096 states' -86.9071436064): not the same number, -0.6035217544 vs -0.6035218306 per site (1.1e-5 apart in total); they coincide only at 6 printed decimals; different runs (D = 2048 here, D = 4096 there); not a duplicate. Entered 9401341 (2022-08-23), never changed; linked 2024-07-19.",
         "source_entry": "VB3-varbench-code-heisenberg#47 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/dmrg.sh",
+        "script": "scripts/Heisenberg/square_36_O/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_36_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -205,6 +225,16 @@
         "note": "scripts/Heisenberg/square_36_O/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 2 --L 6 --zero_mag --net rbm --seed 123 --show_progress' -> 6x6 square lattice, open (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.023: the stored sigma is the error of that final estimate. 1.4214 above the exact -86.9071441699763. History: entered 9401341 (2022-08-23, Dian Wu) as -85.4857 | 0.0035 | 12.2737 | RBM (alpha = 1); linked 5047bfd (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#48 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/square_36_O/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_36_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -260,6 +290,16 @@
         "note": "scripts/Heisenberg/square_36_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 2 --L 6 --zero_mag --net jas --seed 123 --show_progress' -> 6x6 square lattice, open (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.005: the stored sigma is the error of that final estimate. 1.2504 above the exact -86.9071441699763. History: entered af1d48f (2022-09-01, Dian Wu) as -85.6567 | 0.0036 | 13.4570 | Jastrow baseline; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#49 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/square_36_O/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_36_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -621,7 +661,16 @@
           "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#33 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "C. Roth, Iterative Retraining of Quantum Spin Models Using Recurrent Neural Networks (2020), arXiv:2003.06228. (cited as ref [35] in arXiv:2502.17144)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/chrisrothUT/Iterative-Retraining.git",
+        "read_from": {
+          "quote": "Code for this project can be found at https://github.com/chrisrothUT/Iterative-Retraining.git",
+          "location": "arXiv:2003.06228 (sources/2003.06228.txt), Section VI. Code",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -86.90615424,
@@ -703,7 +752,16 @@
           "source_entry": "VP7-arxiv-2502-17144#32 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -86.906304,
@@ -788,7 +846,16 @@
           "source_entry": "JP12-heisenberg-j1j2-hubbard-tv-tfising#20",
           "from": "M. Hibat-Allah, R. G. Melko, and J. Carrasquilla, Supplementing Recurrent Neural Network Wave Functions with Symmetry and Annealing to Improve Accuracy (2024a), arXiv:2207.14314. (cited as ref [38] in arXiv:2502.17144)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mhibatallah/RNNWavefunctions",
+        "read_from": {
+          "quote": "Furthermore, our reproducibility code can be found in Ref. [32].",
+          "location": "arXiv:2207.14314 HTML (sources/2207.14314.html), end of Results; ref. [32] = 'Recurrent Neural Network Wave Functions (GitHub repository). https://github.com/mhibatallah/RNNWavefunctions.'",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -86.906448,
@@ -900,7 +967,16 @@
           "source_entry": "VP7-arxiv-2502-17144#36 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": null
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -86.9015999952,
@@ -998,7 +1074,16 @@
           "source_entry": "VP15-hubbard-j1j2-heisenberg#23 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Adaptive Neural Quantum States: A Recurrent Neural Network Perspective, arXiv:2507.18700"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/jakemcnaughton/AdaptiveRNNWaveFunctions",
+        "read_from": {
+          "quote": "The code that support the reproducibility of this study is openly available at the following URL/DOI: https://github.com/jakemcnaughton/AdaptiveRNNWaveFunctions [89].",
+          "location": "MLST 7, 055012 journal HTML (IOPscience), Data availability statement; arXiv: 'Our implementation of the presented methods and all scripts needed to reproduce our results in this manuscript are openly available on GitHub'",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -86.9035599936,
@@ -1122,7 +1207,16 @@
           "source_entry": "VP15-hubbard-j1j2-heisenberg#26 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Adaptive Neural Quantum States: A Recurrent Neural Network Perspective, arXiv:2507.18700"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/jakemcnaughton/AdaptiveRNNWaveFunctions",
+        "read_from": {
+          "quote": "The code that support the reproducibility of this study is openly available at the following URL/DOI: https://github.com/jakemcnaughton/AdaptiveRNNWaveFunctions [89].",
+          "location": "MLST 7, 055012 journal HTML (IOPscience), Data availability statement; arXiv: 'Our implementation of the presented methods and all scripts needed to reproduce our results in this manuscript are openly available on GitHub'",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -86.9020400016,
@@ -1220,7 +1314,16 @@
           "source_entry": "VP15-hubbard-j1j2-heisenberg#29 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Adaptive Neural Quantum States: A Recurrent Neural Network Perspective, arXiv:2507.18700"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/jakemcnaughton/AdaptiveRNNWaveFunctions",
+        "read_from": {
+          "quote": "The code that support the reproducibility of this study is openly available at the following URL/DOI: https://github.com/jakemcnaughton/AdaptiveRNNWaveFunctions [89].",
+          "location": "MLST 7, 055012 journal HTML (IOPscience), Data availability statement; arXiv: 'Our implementation of the presented methods and all scripts needed to reproduce our results in this manuscript are openly available on GitHub'",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ],
   "coverage": [

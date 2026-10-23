@@ -67,6 +67,21 @@
         "scope": "ansatz",
         "confidence": "medium",
         "note": "GCNN with L = 12 layers of six group-indexed feature maps; parameter count not stated. iterations = 1000 SR steps (1024 samples) + 500 steps (4096 samples) \"for most simulations\"; samples left null because two sample sizes are used in sequence. GPU-hours are stated only for the 16 x 16 lattice (approx. 300), not for this size."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Simulations were performed using the NetKet [24] library.",
+          "location": "arXiv:2211.07749 (sources/2211.07749.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -144,7 +159,22 @@
           "source_entry": "VJ2-journal-other#22 (qmbl-verify 2026-09-29; group without a skeptic); rulings 3 and 4, 2026-09-30",
           "from": null
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "mVMC",
+            "version": null,
+            "url": "https://github.com/issp-center-dev/mVMC"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The implementation of the RBM+PP scheme is done based on the mVMC package [65].",
+          "location": "arXiv:2211.07749 (sources/2211.07749.txt), Acknowledgments: the numbers are detailed numerical results from its Ref. [7], arXiv:2005.14142; arXiv:2005.14142 (sources/2005.14142.txt), Acknowledgments, for the mVMC sentence",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -286.0704,
@@ -348,7 +378,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit ca0ac36)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit fce5487)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-30",
       "provenance": "primary",
@@ -414,10 +444,21 @@
           }
         },
         "reported_as": "chi_max 500 chi_reached 500 energy -278.9842670041298 (energy_SS -69.74606675103244) sweeps 16 max_trunc_err 0.0010009344605655846 | wall_hms 02:52:23 (wall_seconds 10342.666267767083) on 8 cores, Slurm job 15621717 | cpu_core_hours 22.983702817260184",
-        "source": "checks/cost/results/dmrg-j1j2-144.json, Slurm job 15621717, commit ca0ac36 (QMBL run, 2026-09-30)",
+        "source": "checks/cost/results/dmrg-j1j2-144.json, Slurm job 15621717, commit fce5487 (QMBL run, 2026-09-30)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 22.34 h, 97 % of wall-clock x 8 cores; cores at 3.64 GHz on average (2.99-3.70, max 3.71); node load 134.6 on average of 192 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/fce5487/checks/cost",
+        "commit": "fce5487",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit fce5487)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -433,7 +474,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit ca0ac36)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit fce5487)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-30",
       "provenance": "primary",
@@ -515,10 +556,21 @@
           }
         },
         "reported_as": "chi_max 1000 chi_reached 1000 energy -281.0711401859869 (energy_SS -70.26778504649673) sweeps 16 max_trunc_err 0.0008653397257510939 | wall_hms 08:30:16 (wall_seconds 30615.610239929054) on 8 cores, Slurm job 15621717 | cpu_core_hours 68.03468942206456",
-        "source": "checks/cost/results/dmrg-j1j2-144.json, Slurm job 15621717, commit ca0ac36 (QMBL run, 2026-09-30)",
+        "source": "checks/cost/results/dmrg-j1j2-144.json, Slurm job 15621717, commit fce5487 (QMBL run, 2026-09-30)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 63.85 h, 94 % of wall-clock x 8 cores; cores at 3.61 GHz on average (2.64-3.70, max 3.71); node load 133.1 on average of 192 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/fce5487/checks/cost",
+        "commit": "fce5487",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit fce5487)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -534,7 +586,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit ca0ac36)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit fce5487)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-30",
       "provenance": "primary",
@@ -632,10 +684,21 @@
           }
         },
         "reported_as": "chi_max 2000 chi_reached 2000 energy -282.4653707434926 (energy_SS -70.61634268587315) sweeps 16 max_trunc_err 0.00032461854097062945 | wall_hms 24:26:52 (wall_seconds 88011.97158917203) on 8 cores, Slurm job 15621717 | cpu_core_hours 195.58215908704895",
-        "source": "checks/cost/results/dmrg-j1j2-144.json, Slurm job 15621717, commit ca0ac36 (QMBL run, 2026-09-30)",
+        "source": "checks/cost/results/dmrg-j1j2-144.json, Slurm job 15621717, commit fce5487 (QMBL run, 2026-09-30)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 179.28 h, 92 % of wall-clock x 8 cores; cores at 3.61 GHz on average (2.03-3.70, max 3.71); node load 124.5 on average of 192 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/fce5487/checks/cost",
+        "commit": "fce5487",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-144, Slurm job 15621717, commit fce5487)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -651,7 +714,7 @@
       "family": "CNN / ResNet",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-gcnn-j1j2-144, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-gcnn-j1j2-144, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-26",
       "provenance": "primary",
@@ -699,10 +762,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -285.085637352786 sigma 0.011408413204144824 energy_variance 17.402582157102835 tau_corr 0 r_hat 1.0036834808057709 | wall_hms 03:45:45 (wall_seconds 13545.097808924504) on 1 x NVIDIA H100 NVL, no scheduler | parameters 28832, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-gcnn-j1j2-144.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-26)",
+        "source": "checks/cost/results/h100-gcnn-j1j2-144.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-26)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 9 s, training 13391 s, evaluation 145 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 3.82 h, 0 % of wall-clock x 384 cores; cores at 1.79 GHz on average (1.66-2.14, max 3.71); node load 43.9 on average of 384 CPUs; GPU SM clock 1683 MHz on average (max 1785), utilisation 99.6 %, 301.4 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-gcnn-j1j2-144, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -718,7 +792,7 @@
       "family": "RBM",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-144, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-144, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-25",
       "provenance": "primary",
@@ -766,10 +840,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -268.6982960840396 sigma 0.038768205671618566 energy_variance 176.20957550262426 tau_corr 0.05898715364981444 r_hat 1.0043420578516682 | wall_hms 00:25:30 (wall_seconds 1529.5905962940305) on 1 x NVIDIA H100 NVL, no scheduler | parameters 21024, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-rbm-j1j2-144.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-25)",
+        "source": "checks/cost/results/h100-rbm-j1j2-144.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-25)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 8 s, training 1506 s, evaluation 16 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 0.43 h, 0 % of wall-clock x 384 cores; cores at 1.83 GHz on average (1.71-2.26, max 3.71); node load 46 on average of 384 CPUs; GPU SM clock 1668 MHz on average (max 1785), utilisation 97.3 %, 203.9 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-144, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -785,7 +870,7 @@
       "family": "RBM",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-144, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-144, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-26",
       "provenance": "primary",
@@ -832,10 +917,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -282.23930082493666 sigma 0.017896092956927855 energy_variance 39.03789897049382 tau_corr 0.037662749616045876 r_hat 1.0045212085184965 | wall_hms 00:33:29 (wall_seconds 2008.5245659053326) on 1 x NVIDIA H100 NVL, no scheduler | parameters 581, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-rbmsymm-j1j2-144.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-26)",
+        "source": "checks/cost/results/h100-rbmsymm-j1j2-144.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-26)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 8 s, training 1978 s, evaluation 22 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 0.43 h, 0 % of wall-clock x 384 cores; cores at 1.81 GHz on average (1.68-2.00, max 3.71); node load 46.7 on average of 384 CPUs; GPU SM clock 1785 MHz on average (max 1785), utilisation 98.2 %, 205.4 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-144, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -851,7 +947,7 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-144, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-144, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-26",
       "provenance": "primary",
@@ -899,10 +995,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -285.4939218347615 sigma 0.008874007657534511 energy_variance 10.77639245733788 tau_corr 0 r_hat 1.0037009914465789 | wall_hms 06:37:17 (wall_seconds 23836.580244593322) on 1 x NVIDIA H100 NVL, no scheduler | parameters 157500, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-vit-j1j2-144.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-26)",
+        "source": "checks/cost/results/h100-vit-j1j2-144.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-26)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 10 s, training 23614 s, evaluation 212 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 6.64 h, 0 % of wall-clock x 384 cores; cores at 1.78 GHz on average (1.66-2.10, max 3.71); node load 42.7 on average of 384 CPUs; GPU SM clock 1504 MHz on average (max 1785), utilisation 99.6 %, 352.9 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-144, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ]

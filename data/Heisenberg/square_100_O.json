@@ -67,6 +67,21 @@
           "note": "Journal = arXiv v2: same Table III value and the same sentence \"The presented values and errors correspond to temperature T = 10^-4, and they agree with the ones corresponding to T = 10^-3 within the error bars.\" H = sum S_l.S_m (Sec. V B, antiferromagnetic, S units), \"square lattice geometry with open boundary conditions and size N = L x L considered throughout this work\" (p. 2). Own computation with the ALPS loop algorithm (Table III caption \"computed with the ALPS library\"), so primary. Exact (stochastic) with sigma 0.0008 stands. Not a duplicate: Sandvik SSE -251.462448(72) is another computation; Moss et al.'s tensorized-GRU -251.4624(36) is a variational row with its own sigma.",
           "source_entry": "JA2-j1j2-heisenberg-tfising#2"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "ALPS",
+            "version": null,
+            "url": "https://alps.comp-phys.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In the case of the Heisenberg model, we compare our results to energies from the quantum Monte Carlo loop algorithm of the ALPS library34-36, summarized in Tab. III. ... TABLE III: Energy per site of the Heisenberg model on square lattices of various sizes from quantum Monte Carlo, computed with the ALPS library34-36. ... 63 We obtain our quantum Monte Carlo reference values from the ALPS library34-36.",
+          "location": "arXiv:1405.3259 (sources/1405.3259.txt), appendix with precise energy values and Table III caption; footnote 63",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -121,6 +136,16 @@
         "note": "vmc_rnn.sh: open 10x10 square lattice, Pauli, J = 1, Marshall sign rule (bipartite), full Hilbert space, exact autoregressive sampling, FastLSTMNet 2 x 16, Adam 10^5 steps. The stored (sigma, Var) imply 1.1e5 independent samples (sigma/sqrt(Var/2^20) = 3.09): from the 2021 run (c12e2c8, 2021-10-14, Dian Wu, data-repository cell 'To be published'), not the linked 2024 script (d54f7c0). 0.0195 above the QMC reference: a valid bound.",
         "source_entry": "VB3-varbench-code-heisenberg#26 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rnn.sh",
+        "script": "scripts/Heisenberg/square_100_O/vmc_rnn.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rnn.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -153,7 +178,17 @@
           "source_entry": "VB3-varbench-code-heisenberg#27 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rnn.sh)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rnn.sh",
+        "script": "scripts/Heisenberg/square_100_O/vmc_rnn.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by Dian Wu on 2022-03-04 as 'RNN', commit 5af37ba, labelled 'RNN + translational symmetry' since 0ef1497 (2024-07-11)) [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rnn.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -251.4534,
@@ -276,6 +311,16 @@
         "note": "Program square_100_O.jl: 10x10, xperiodic = yperiodic = false (lines 99-103), nearest-neighbour edges once, lattice_heisenberg_MPO in Pauli form (lines 80-82), Neel start with conserve_qns (Sz = 0), maxdim 4 ... 10000, two sweeps each (line 113). M8 (method text reads extrapolated): answered, -251.4534 is the energy the MPS reached at MaxBondDim = 10000 (the program has no extrapolation); variational is right, and the extrapolated number is carried on its own row. VarBench SM: 'we only report full-variance calculations and forgo extrapolations to allow comparisons with other methods' (arXiv:2302.04919 SM S3, sources/2302.04919.txt lines 765-767). 0.0091 above the exact (stochastic) QMC -251.46248(80). Variance: entered 0.02002 (21a4642, 2022-03-26) and multiplied by 16 the next day (0.32032, 626f8ca; 0.3203 in d871a56): the run printed S.S units (the file's unused chain MPO is S.S). 0.3203 (Pauli) gives var/(E - E0) = 35, in line with VarBench's 6x6 square DMRG rows (38-40); 0.02002 would give 2.2. History of the energy: -251.4437712 (a0766e7, 2021-12-05, 'max trunc error ~4E-6', MaxBondDim 9442) replaced by -251.4534 (dd105fb, 2022-02-22); nothing restored. Program linked 2024-08-08 (d944d80).",
         "source_entry": "VB3-varbench-code-heisenberg#28 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/square_100_O.jl",
+        "script": "programs/dmrg_itensors_heisenberg/square_100_O.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/square_100_O.jl)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -399,6 +444,16 @@
         "note": "QMBL split row: the number is printed inside VarBench's method string, 'Extrapolated Energy = - 251.4628 +/- 0.0019' (c342a72, 2022-03-27, J. M. Silvester; earlier '- 251.46(3) +/- 0.002' (dd105fb) and '- 251.463 +/- 0.002' (2892ab4); a first 'extrapolated energy: -251.32413735' of 2021-12-05 was removed the same day, 7567499). M6 (deterministic but sigma 0.0019): the +/- is the uploader's uncertainty of a truncation-error extrapolation, not a statistical error; square_100_O.jl contains no extrapolation and the fit is not documented. bound_type extrapolated is right. Agrees with the exact (stochastic) QMC -251.46248(80) (0.2 combined sigma).",
         "source_entry": "VB3-varbench-code-heisenberg#29 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/square_100_O.jl",
+        "script": "programs/dmrg_itensors_heisenberg/square_100_O.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/square_100_O.jl)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -452,6 +507,16 @@
         "note": "Instance, convention (H = 1/4 sum sigma.sigma = S.S), OBC, U(1) + C4v sector and variational class agree; the number is the paper's own (first-author VarBench upload 1ab3fe8, 2021-12-13, identical to the plotted band). Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko (arXiv:2502.17144v3 = PRB 112, 134450, Table V, 'open 10 x 10') quote it as 'RNN [38] -0.628638(4)': same digits, a bar 3.6x the plotted 1.1e-6; the stored bar follows the primary figure and the upload (sqrt(Var/N_s) with Var = 0.19397/16 in S.S units implies N_s = 1.0e6). energy_variance 0.19397 is printed in no version (upload only). Venue: NeurIPS 2021 ML4PS workshop, non-archival (peer_reviewed question already raised by VP16 on square_36_O). Not a duplicate: no other row on square_100_O carries -0.62863845 (Moss's own best RNN is -251.4624, the minGRU -251.4548).",
         "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#16 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_2DgatedtensorizedRNN.sh",
+        "script": "scripts/Heisenberg/square_100_O/vmc_2DgatedtensorizedRNN.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://arxiv.org/abs/2207.14314) [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_2DgatedtensorizedRNN.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -511,6 +576,15 @@
         "note": "The published figure carries the same point as arXiv v2 and the HAL deposit (VA5 decode v2 a|1D MPS-RNN|40 -> the same total to 1.5e-4; positions agree to 3e-5 decades), so the earlier arXiv-based verification stands in the journal.  Journal text: \"We perform numerical experiments on a 10 x 10 square lattice with open boundary conditions (OBCs)\" / \"the AFHM on a 10 x 10 triangular lattice with OBC\"; VMC-optimised variational energies (bound_type variational). sigma and energy_variance are printed nowhere in the journal PDF (SM Sec. S7, not local, is where the 10^6-sample evaluation is described in the arXiv versions); they remain the author's VarBench upload values. peer reviewed: PRR. Also read by VA5-hubbard-heisenberg-tfising-j1j2#23 (scope value: Fig. 4(a) (10 x 10 square, OBC), orange '1D MPS-RNN' marker at chi = 40 (x = 142.320 pt); identical in v1 and v2).",
         "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#23, VJ2-journal-other#0 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/cqsl/mps-rnn",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.5.L032001) [code](https://github.com/cqsl/mps-rnn)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -570,6 +644,15 @@
         "note": "The published figure carries the same point as arXiv v2 and the HAL deposit (VA5 decode v2 a|2D MPS-RNN|40 -> the same total to 1.5e-4; positions agree to 3e-5 decades), so the earlier arXiv-based verification stands in the journal.  Journal text: \"We perform numerical experiments on a 10 x 10 square lattice with open boundary conditions (OBCs)\" / \"the AFHM on a 10 x 10 triangular lattice with OBC\"; VMC-optimised variational energies (bound_type variational). sigma and energy_variance are printed nowhere in the journal PDF (SM Sec. S7, not local, is where the 10^6-sample evaluation is described in the arXiv versions); they remain the author's VarBench upload values. peer reviewed: PRR. Also read by VA5-hubbard-heisenberg-tfising-j1j2#24 (scope value: Fig. 4(a), green '2D MPS-RNN' marker at chi = 40; identical in v1 and v2).",
         "source_entry": "VA5-hubbard-heisenberg-tfising-j1j2#24, VJ2-journal-other#1 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/cqsl/mps-rnn",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.5.L032001) [code](https://github.com/cqsl/mps-rnn)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -630,7 +713,16 @@
           "from": false
         }
       ],
-      "sampled": true
+      "sampled": true,
+      "artifacts": {
+        "code": "https://github.com/cqsl/mps-rnn",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by Dian Wu on 2022-07-11, commit 0524667; method: Wu, Rossi, Vicentini & Carleo, Phys. Rev. Research 5, L032001 (2023), arXiv:2206.12363, which shows this energy only as a plotted point (Fig. 4(a))) [code](https://github.com/cqsl/mps-rnn)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -249.1033,
@@ -685,6 +777,16 @@
         "note": "scripts/Heisenberg/square_100_O/vmc_rbm.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 2 --L 10 --zero_mag --net rbm --seed 123 --show_progress' -> 10x10 square lattice, open (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 RBM, alpha = 1 (nk.models.RBM, log_cosh); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.022: the stored sigma is the error of that final estimate. 2.3592 above the exact (stochastic) QMC -251.46248(80). History: entered 10f5c12 (2022-07-11, Dian Wu) as -248.367 | 0.0059 | 35.6700 | RBM (alpha = 1); af1d48f (2022-09-01, 'Add Jastrow baseline'): energy -248.367 -> -249.1033; sigma 0.0059 -> 0.0051; variance 35.6700 -> 26.13060; linked 5047bfd (2024-07-30). The value change sits in af1d48f, titled 'Add Jastrow baseline' (a re-run: lower energy and variance). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#30 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/square_100_O/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -740,6 +842,16 @@
         "note": "scripts/Heisenberg/square_100_O/vmc_jastrow.sh: 'python3 vmc.py --ham heis --boundary open --sign mars --ham_dim 2 --L 10 --zero_mag --net jas --seed 123 --show_progress' -> 10x10 square lattice, open (nk.graph.Grid); NetKet Heisenberg J = 1 in Pauli form with Marshall sign rule (a sublattice rotation on a bipartite lattice, spectrum unchanged); Sz = 0 (total_sz=0, MetropolisExchange); real float32 Jastrow (nk.models.Jastrow); 10^4 SR steps; final estimate over 2^20 samples (vmc.py lines 268-269). sigma/sqrt(Var/2^20) = 1.018: the stored sigma is the error of that final estimate. 3.3552 above the exact (stochastic) QMC -251.46248(80). History: entered af1d48f (2022-09-01, Dian Wu) as -247.9477 | 0.0057 | 31.69845 | Jastrow baseline; 59e621a (2022-09-13, 'Update Jastrow and RBM baselines'): energy -247.9477 -> -248.1073; sigma 0.0057 -> 0.0056; variance 31.69845 -> 31.73600; linked fdb4bfb (2024-07-30). Program files postdate the value (scripts added to varbench/methods 2024-07-30); they document the settings after the run.",
         "source_entry": "VB3-varbench-code-heisenberg#31 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/square_100_O/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/square_100_O.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -956,7 +1068,16 @@
           "source_entry": "JP5-arxiv-2502-17144#0",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -251.4548,
@@ -1034,7 +1155,16 @@
           "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#40 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "2D minGRU (3 layers, c4v symmetry, parallel scan)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/ParallelScan-RNNs/PSR-NQS",
+        "read_from": {
+          "quote": "Our implementation of the presented methods and all scripts needed to reproduce our results in this manuscript are openly available on GitHub https://github.com/ParallelScan-RNNs/PSR-NQS .",
+          "location": "arXiv:2605.13807 (sources/2605.13807.html), Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -251.4508,
@@ -1136,7 +1266,22 @@
           "source_entry": "VP16-heisenberg-hubbard-j1j2-tfising#27 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "PixelCNN (deep autoregressive)"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "FlowKet",
+            "version": null,
+            "url": "https://github.com/HUJI-Deep/FlowKet"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Using our open-source library, FlowKet [23], we employ a NAQS model following the PixelCNN architecture, using the ADAM [24] SGD variant with the gradient estimator of eq. 4. ... [23] FlowKet: an open-source library based on Tensorflow for running Variational Monte-Carlo simulations on GPUs, https://github.com/HUJI-Deep/FlowKet.",
+          "location": "arXiv:1902.04057 (sources/1902.04057.txt), Sec. 4 (first benchmark paragraph) and reference [23]",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -251.4404,
@@ -1471,7 +1616,16 @@
           "source_entry": "VP7-arxiv-2502-17144#4 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -251.442,
@@ -1532,6 +1686,15 @@
         "scope": "row",
         "confidence": "high",
         "note": "Row-level from Table VI: 156624 training steps at 10x10 at 0.5 s per step on a single A100 80GB GPU; the 46:18:40 (hh:mm:ss) is the CUMULATIVE training time from the 6x6 cold start up to and including this size (iterative retraining), not the time for this size alone. parameters ~800,000 is stated for the 3-layer d_h=256 PSR-NQS model (Table VI caption, scope ansatz). samples = 200 training samples per step (Table V); final energies evaluated with 100000 samples. The 1400 GPU-hour figure is the paper-wide total over all simulations and is not attributed to this row. || pass 2026-09-27: evaluation: every step at L > 6 is a single c4v stage; logprobs_c4vsym puts the 8 transformed configurations through the network for the gradient log-probabilities and inside every local-energy evaluation (evaluations_per_amplitude 8); the sample is drawn unsymmetrised in one autoregressive pass (model.apply(..., method=\"sample\"), proposals_per_sample 1). local_energy all: the fori_loop evaluates the symmetrised log-psi on every bond, parallel pairs are masked after evaluation. Adam: sr none. float32: complex false. The 2x2 patches (reuse N/4, not N) go into method_detail (method-detail-fixes.json). With both corrections the rate on the L40S is 40-42 TFLOP/s (verify/agent-B.md). The stored wall-clock is cumulative over sizes while iterations is this size's increment (agent-B.md B7, DOUBTFUL; not expressible)."
+      },
+      "artifacts": {
+        "code": "https://github.com/ParallelScan-RNNs/PSR-NQS",
+        "read_from": {
+          "quote": "Our implementation of the presented methods and all scripts needed to reproduce our results in this manuscript are openly available on GitHub https://github.com/ParallelScan-RNNs/PSR-NQS .",
+          "location": "arXiv:2605.13807 (sources/2605.13807.html), Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1589,6 +1752,15 @@
         "scope": "row",
         "confidence": "medium",
         "note": "Table I gives the per-experiment GPU (A100), hidden dimension d_h = 200, N_s = 200 samples per iteration and 2×10^5 Adam iterations for the 10×10 OBC Heisenberg run; 'a single GPU' is the paper-wide statement. No parameter count stated (2D GRU cell with d_h = 200). No wall-clock stated in text for this run: Fig. 3(a) plots V-score versus time in seconds but no total is printed; the 24-hour equal-training-time control in Fig. 5(a) is a separate scaling study with d_h = 100. Hyperparameters tuned with Optuna/TPE (tuning cost not stated). || route2b-pass 2026-09-24: parameters = 5 d_h^2 + 18 d_h + 2 = 203602 for d_h = 200: W_u, W_r (d_h x (d_h + 4) each), W_h (d_h x d_h), W_in (d_h x 4), U_1, U_2 (d_h x d_h each), biases b_u, b_r, b_h, b_in (d_h each), softmax head U (2 x d_h) and c (2); positive RNN (Marshall sign applied), no phase head. Size-independent (one cell for all sites). The code repo (github.com/werro40/RNN-Natural-Gradients @ 63f64a2, README 'Under construction!') implements a different cell (flax GRUCell on concatenated neighbour states, a (2d_h x d_h) U, a GLU output layer) and its Heisenberg-2D.py calls a StackedRNNModel it never defines, so it is not the run code; its config_h2d.yaml has numsamples_per_batch 50 vs N_s = 200 in Table I. Count follows the paper's equations. ARCH needs a 'pRNN' entry (same as '2D RNN'). || pass 2026-09-27: sr none: Adam; autoregressive, one pass per sample. local energy and precision are not stated in the paper and the public repository does not match it (verify/agent-B.md §5): absent."
+      },
+      "artifacts": {
+        "code": "https://github.com/werro40/RNN-Natural-Gradients",
+        "read_from": {
+          "quote": "Our code is available at https://github.com/werro40/RNN-Natural-Gradients.",
+          "location": "arXiv:2608.18065 (sources/2608.18065.txt and .html), Code availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1646,6 +1818,15 @@
         "scope": "row",
         "confidence": "medium",
         "note": "Table I gives the per-experiment GPU (A100), hidden dimension d_h = 200, N_s = 200 samples per iteration and 10^5 minSR iterations for the 10×10 OBC Heisenberg run; 'a single GPU' is the paper-wide statement. No parameter count stated (2D GRU cell with d_h = 200). No wall-clock stated in text for this run: Fig. 3(a) plots V-score versus time in seconds but no total is printed; the 24-hour equal-training-time control in Fig. 5(a) is a separate scaling study with d_h = 100. Hyperparameters tuned with Optuna/TPE (tuning cost not stated). || route2b-pass 2026-09-24: parameters = 5 d_h^2 + 18 d_h + 2 = 203602 for d_h = 200: W_u, W_r (d_h x (d_h + 4) each), W_h (d_h x d_h), W_in (d_h x 4), U_1, U_2 (d_h x d_h each), biases b_u, b_r, b_h, b_in (d_h each), softmax head U (2 x d_h) and c (2); positive RNN (Marshall sign applied), no phase head. Size-independent (one cell for all sites). The code repo (github.com/werro40/RNN-Natural-Gradients @ 63f64a2, README 'Under construction!') implements a different cell (flax GRUCell on concatenated neighbour states, a (2d_h x d_h) U, a GLU output layer) and its Heisenberg-2D.py calls a StackedRNNModel it never defines, so it is not the run code; its config_h2d.yaml has numsamples_per_batch 50 vs N_s = 200 in Table I. Count follows the paper's equations. ARCH needs a 'pRNN' entry (same as '2D RNN'). || pass 2026-09-27: sr minsr: the 2N_s x 2N_s sample-space matrix per step (the per-sample Jacobian dominates memory); autoregressive, one pass per sample. local energy and precision are not stated in the paper and the public repository does not match it (verify/agent-B.md §5): absent."
+      },
+      "artifacts": {
+        "code": "https://github.com/werro40/RNN-Natural-Gradients",
+        "read_from": {
+          "quote": "Our code is available at https://github.com/werro40/RNN-Natural-Gradients.",
+          "location": "arXiv:2608.18065 (sources/2608.18065.txt and .html), Code availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

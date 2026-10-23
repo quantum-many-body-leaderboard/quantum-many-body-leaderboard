@@ -33,6 +33,16 @@
         "note": "|reproduced - stored| = 5.68e-14 (relative 1.77e-15); within 1e-9 relative. Sector total Sz = 0, dimension 48620, 221 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Heisenberg__kagome-2x3_18_P.json), gives -32.19308309416476 (1.63e-13 from the cost run). Also read by VB3-varbench-code-heisenberg#19 (scope config: vendor/varbench/Heisenberg/kagome-2x3_18_P.md (snapshot 390a21e), row 'Exact Diagonalization'; linked scripts/Heisenberg/kagome-2x3_18_P/ed_netket.sh).",
         "source_entry": "VB3-varbench-code-heisenberg#19, VE-exact-recompute#2 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/ed_netket.sh",
+        "script": "scripts/Heisenberg/kagome-2x3_18_P/ed_netket.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/ed_netket.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/kagome-2x3_18_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -116,6 +126,16 @@
         "note": "Program VQE: H = sum 2 P_ij - N_bonds = sigma.sigma over the 36 Kagome18 bonds (hamiltonians.py lines 26-27, 548-568), isomorphic to the instance's cluster; Sz = 0; symmetry projection; the logged energy is the exact statevector expectation of the projected state (observables.py lines 196-199, 237), deterministic. Script defect, value unaffected: vqe.sh passes --lattice=kagome3x2, which main.py's argparse rejects (choices square4x4, triangle4x4, kagome2x3, square6x4; line 12), so the script as committed exits before building anything; with the parser's own spelling the only kagome branch (config.py line 108) builds this Hamiltonian. 0.0285 above the exact energy. Entered 2015a4d (2022-10-18, N. Astrakhantsev), never changed; linked by him 5285adc (2024-08-12).",
         "source_entry": "VB3-varbench-code-heisenberg#20 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/vqe.sh",
+        "script": "scripts/Heisenberg/kagome-2x3_18_P/vqe.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/vqe.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/kagome-2x3_18_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -375,6 +395,16 @@
         "note": "dmrg.sh: heisenberg_kagome.jl --L 0 --zero_mag --max_B 512: explicit 36-edge list (lines 17-55, isomorphic to the ED cluster, work/kagome18.mjs), Pauli (J *= 4, line 63), Sz = 0, 50 sweeps, cutoff 1e-12: 368 is the reached bond dimension under the cutoff (cap 512). Best variational bound on the solved instance: 4e-14 above the ED row and 1e-13 above QMBL's ED, i.e. exact to machine precision. M6 (V-score 1.7e-16 outlier): genuine. Entered bbcfdc1 (2023-01-15, Dian Wu), never changed; linked f88f9ba/cd362c4 (2024-07-19).",
         "source_entry": "VB3-varbench-code-heisenberg#21 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/dmrg.sh",
+        "script": "scripts/Heisenberg/kagome-2x3_18_P/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/kagome-2x3_18_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -432,7 +462,17 @@
           "source_entry": "VB3-varbench-code-heisenberg#22 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/vmc_rbm.sh)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/vmc_jastrow.sh",
+        "script": "scripts/Heisenberg/kagome-2x3_18_P/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/kagome-2x3_18_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -31.5125,
@@ -489,7 +529,17 @@
           "source_entry": "VB3-varbench-code-heisenberg#23 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/vmc_jastrow.sh)"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/vmc_rbm.sh",
+        "script": "scripts/Heisenberg/kagome-2x3_18_P/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/Heisenberg/kagome-2x3_18_P.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ],
   "coverage": [

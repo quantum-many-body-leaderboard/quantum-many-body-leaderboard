@@ -59,6 +59,16 @@
           "note": "Journal and arXiv v2 print the same digits in this row (36(A1) -0.585428, 36(B1) -0.586487); no difference between versions. C1-C4 from the journal: Eq. (1) H = J1 sum Si.Sj + J2 sum Si.Sj', Si.Si = 3/4, each bond counted once, no constant: stored Pauli total = 4 N E/N; N = 36 is the 6 x 6 cluster of Fig. 1 \"with periodic boundary conditions\"; Q = 0, Sz = 0, B1 is the ground-state irrep from J2 = 0.70 on (bold 0.530001 marks the change). bound_type exact right (Lanczos ED, Harwell EA15AD). Baseline code (varbench/methods ed31bb0, scripts/J1J2/square_36_P_0.8/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham j1j2 --boundary peri --ham_dim 2 --L 6 --J2 0.8 --zero_mag\"; vmc.py builds ColoredJ1J2((6,6), pbc=True) (36 + 36 NN, 72 NNN bonds, each once) with nk.operator.Heisenberg(J=[1, J2]) (Pauli, no shift) at total_sz = 0: lattice, size, boundary, couplings, operators match the instance. The script fixes every lattice-symmetries sector to 0 (k = 0, A1), so it does not produce this B1 number; this is the known VB1 point settled by ruling E5 (2026-10-02, the row cites the printing paper beside the link), not re-flagged. No output log in varbench/methods. Upload history (varbench-history, git log -S): the stored digits enter once, in 1c99d74 (2022-10-18, Dian Wu, \"Add J1-J2 L=6 J2=0.8,0.9\"), and are never changed or restored afterwards. No duplicate: the instance has one exact row; no other row carries this number. peer_reviewed is absent on this imported row (loader-level, as on every imported row); the printing venue J. Phys. I is refereed.",
           "source_entry": "JB1-j1j2-tv#1"
         }
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/ed_lattice_symmetries.sh",
+        "script": "scripts/J1J2/square_36_P_0.8/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [paper](https://doi.org/10.1051/jp1:1996236) (Schulz, Ziman & Poilblanc, Magnetic order and disorder in the frustrated quantum Heisenberg antiferromagnet in two dimensions, J. Phys. I France 6, 675 (1996), arXiv:cond-mat/9402061, Table II, column 36(B1): -0.586487 per site; the stored digits are VarBench's own exact diagonalization, Dian Wu, 1c99d74 (2022-10-18)) [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.8.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -179,6 +189,16 @@
         "note": "Script builds the 6x6 PBC J1-J2 at J2 = J22 = 0.8 (Pauli, no Marshall rotation, no shift), S^z = 0, max bond dimension 2048 = method string, 50 sweeps, cutoff 1e-12, seed 123; final dmrg() energy: variational at stated bond dimension (no extrapolation), sigma not applicable. 1.012e-1 above the ED row; variance within the Bhatia-Davis bound (ratio 0.042). Upstream change without a matching message: 14d39eb (2022-10-19, 'Update estimation of some VMC results') replaced -84.35283345340173 / var 1.3319311958725848 by the stored -84.35283374817100 / 0.9038783749210779; not restored; both are variational energies at D = 2048 (the message names VMC). History: entered 1c99d74 (2022-10-18, Dian, 'Add J1-J2 L=6 J2=0.8,0.9'); value history: 1c99d74 2022-10-18 'Add J1-J2 L=6 J2=0.8,0.9': E=-84.35283345340173 S=- V=1.3319311958725848 -> 14d39eb 2022-10-19 'Update estimation of some VMC results': E=-84.35283374817100 S=- V=0.9038783749210779; code link added f88f9ba (2024-07-19).",
         "source_entry": "VB1-varbench-code-j1j2#119 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/dmrg.sh",
+        "script": "scripts/J1J2/square_36_P_0.8/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.8.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -234,6 +254,16 @@
         "note": "Script builds the 6x6 PBC J1-J2 at J2 = 0.8 (NetKet Heisenberg, Pauli, J = [1, 0.8], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.RBM(alpha = 1, log_cosh) with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.00, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. Variance within the Bhatia-Davis bound (ratio 0.101 of (E-E0)(Emax-E)). No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. History: entered 1c99d74 (2022-10-18, Dian, 'Add J1-J2 L=6 J2=0.8,0.9'); unchanged since; code link added 5047bfd (2024-07-30).",
         "source_entry": "VB1-varbench-code-j1j2#120 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/vmc_rbm.sh",
+        "script": "scripts/J1J2/square_36_P_0.8/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.8.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -289,6 +319,16 @@
         "note": "Script builds the 6x6 PBC J1-J2 at J2 = 0.8 (NetKet Heisenberg, Pauli, J = [1, 0.8], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.Jastrow with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.01, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. Variance within the Bhatia-Davis bound (ratio 0.060 of (E-E0)(Emax-E)). No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. History: entered 1c99d74 (2022-10-18, Dian, 'Add J1-J2 L=6 J2=0.8,0.9'); unchanged since; code link added fdb4bfb (2024-07-30).",
         "source_entry": "VB1-varbench-code-j1j2#121 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/vmc_jastrow.sh",
+        "script": "scripts/J1J2/square_36_P_0.8/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.8.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -431,7 +471,22 @@
           "source_entry": "VP10-heisenberg-j1j2#18 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "secondary"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The ANN computations were based on NetKet [53].",
+          "location": "arXiv:1903.06713 (sources/1903.06713.txt), Acknowledgments; the CNN energies are in the Appendix table 'Variational energies'",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -84.35232,
@@ -482,6 +537,21 @@
         "scope": "ansatz",
         "confidence": "high",
         "note": "One blanket statement for every ViT run (6x6, 8x8, 10x10, all J2). parameters is the paper's approximate figure '∼1.5×10^5'; iterations = 1500 training epochs; samples = 4096 per SR step. No hardware, GPU count or wall-clock stated anywhere (main text, Appendix A, Appendix B, captions)."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In turn, for larger systems one needs to employ an approximate scheme, such as variational neural quantum state (NQS) approach. We use the NetKet package realization [27, 28] of an attention-based vision transformer wave function [25, 26]",
+          "location": "arXiv:2606.04558 (sources/2606.04558.txt), Appendix A (Calculation details); also main text: \"wave function representation [25, 26] as realized in the NetKet package [27, 28]\"",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     }
   ],

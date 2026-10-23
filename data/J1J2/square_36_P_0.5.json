@@ -35,6 +35,16 @@
         "note": "Real recomputation (code and output file). |E - stored| = 5.12e-13 (relative 7.05e-15). Second determination: the stored value is the source's own ED (VarBench), a different code; qmbl-ed-2026-09-28 repeat -72.5485901602865 (residual 9.15e-10). Also read by VB1-varbench-code-j1j2#105 (scope config: scripts/J1J2/square_36_P_0.5/ed_lattice_symmetries.sh line 4; nk2ls.py L214-257; Schulz et al. Table II).",
         "source_entry": "VB1-varbench-code-j1j2#105, VE-exact-recompute#69 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/ed_lattice_symmetries.sh",
+        "script": "scripts/J1J2/square_36_P_0.5/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -82,7 +92,22 @@
           "source_entry": "VA6-j1j2-heisenberg-hubbard-tfising#2, VJ2-journal-other#19 (qmbl-verify 2026-09-29, open entries), as RH2#2 (handoff reader, triage of 2026-10-02); ruling R1, 2026-10-02",
           "from": "[paper](https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.031034)"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "mVMC",
+            "version": null,
+            "url": "https://github.com/issp-center-dev/mVMC"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The implementation of the RBM+PP scheme is done based on the mVMC package [65].",
+          "location": "arXiv:2005.14142 (sources/2005.14142.txt), Acknowledgments; this is the method paper the rows cite",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -72.5414,
@@ -234,6 +259,16 @@
         "note": "Hamiltonian: t = 0, exchange jham = (4, 2) on shells d = 1, sqrt 2 with uvv = 0.25 cancelling the t-J -n n/4 term: Pauli J1-J2 with J2 = 0.5, no shift. 6x6 torus; the geometry flags '0 0' affect only the auxiliary fermion boundary (jhop carries no boundary sign), so the spin model is periodic. S^z = 0 at half filling (nelup = neldo = 18). Projected BCS (iesBCS = 6, ieskin = 1, no Jastrow) = 'projected BCS (Z2 spin liquid)'. VMC measurement of stored optimised parameters (itestr = 2, 800000 generations), sigma = binned SE (10^4-generation bins, first 4 dropped). Variational bound; M2/M11 flags: none raised. History: entered 8a9d6ca (2022-02-15, Francesco, 'add square 6x6 j2=0.5'); unchanged since; code link added d186176 (2024-07-30).",
         "source_entry": "VB1-varbench-code-j1j2#106 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/vmc_gutzwiller.sh",
+        "script": "scripts/J1J2/square_36_P_0.5/vmc_gutzwiller.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/vmc_gutzwiller.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -354,6 +389,16 @@
         "note": "Script builds the 6x6 PBC J1-J2 at J2 = J22 = 0.5 (Pauli, no Marshall rotation, no shift), S^z = 0, max bond dimension 2048 = method string, 50 sweeps, cutoff 1e-12, seed 123; final dmrg() energy: variational at stated bond dimension (no extrapolation), sigma not applicable. 1.746e-1 above the ED row; variance within the Bhatia-Davis bound (ratio 0.072). History: entered 721e09e (2022-08-22, Dian, 'Add exact diagonalization for 6x6 TFIsing, Heisenberg, and H'); unchanged since; code link added f88f9ba (2024-07-19).",
         "source_entry": "VB1-varbench-code-j1j2#107 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/dmrg.sh",
+        "script": "scripts/J1J2/square_36_P_0.5/dmrg.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/dmrg.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -409,6 +454,16 @@
         "note": "Script builds the 6x6 PBC J1-J2 at J2 = 0.5 (NetKet Heisenberg, Pauli, J = [1, 0.5], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.RBM(alpha = 1, log_cosh) with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.02, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. Variance within the Bhatia-Davis bound (ratio 0.028 of (E-E0)(Emax-E)). No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. Upstream value changes are listed in the history below; the stored value is the latest. Note: 721e09e (2022-08-22, a message about 6x6 ED for other models) changed -69.9507(38) to -69.9694(31) before 8fb6da0 set the stored value. History: entered 10f5c12 (2022-07-11, Dian, 'Add RBM baseline'); value history: 10f5c12 2022-07-11 'Add RBM baseline': E=-69.9507 S=0.0038 V=14.7332 -> 721e09e 2022-08-22 'Add exact diagonalization for 6x6 TFIsing, Heise': E=-69.9694 S=0.0031 V=9.83512 -> 8fb6da0 2022-09-17 'Update RBM baselines for J1-J2': E=-70.1176 S=0.0035 V=12.3053; code link added 5047bfd (2024-07-30).",
         "source_entry": "VB1-varbench-code-j1j2#108 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/vmc_rbm.sh",
+        "script": "scripts/J1J2/square_36_P_0.5/vmc_rbm.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/vmc_rbm.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -464,6 +519,16 @@
         "note": "Script builds the 6x6 PBC J1-J2 at J2 = 0.5 (NetKet Heisenberg, Pauli, J = [1, 0.5], Marshall rotation on J1 bonds only: isospectral), S^z = 0, MetropolisExchange; nk.models.Jastrow with real float32 parameters; 10^4 SR steps, then a 2^20-sample estimate: stored sigma / sqrt(Var/2^20) = 1.02, i.e. the NetKet error_of_mean of that estimate; variance = Var(H) total. Variance within the Bhatia-Davis bound (ratio 0.042 of (E-E0)(Emax-E)). No constant shift in the Hamiltonian (NetKet bond op sz_sz +- exchange), so the M2 gap to the record is the ansatz's: real parameters give positive amplitudes in the Marshall basis. Upstream value changes are listed in the history below; the stored value is the latest. Note: 8fb6da0 ('Update RBM baselines for J1-J2') also changed this Jastrow row (-68.6839 -> -68.8603). History: entered af1d48f (2022-09-01, Dian, 'Add Jastrow baseline'); value history: af1d48f 2022-09-01 'Add Jastrow baseline': E=-68.6839 S=0.0052 V=27.3847 -> 8fb6da0 2022-09-17 'Update RBM baselines for J1-J2': E=-68.8603 S=0.0052 V=27.4161; code link added fdb4bfb (2024-07-30).",
         "source_entry": "VB1-varbench-code-j1j2#109 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/vmc_jastrow.sh",
+        "script": "scripts/J1J2/square_36_P_0.5/vmc_jastrow.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/vmc_jastrow.sh)",
+          "location": "VarBench table vendor/varbench/J1J2/square_36_P_0.5.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -760,7 +825,22 @@
           "source_entry": "VP10-heisenberg-j1j2#15 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "secondary"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The ANN computations were based on NetKet [53].",
+          "location": "arXiv:1903.06713 (sources/1903.06713.txt), Acknowledgments; the CNN energies are in the Appendix table 'Variational energies'",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -72.16848,
@@ -1611,6 +1691,15 @@
         "scope": "paper",
         "confidence": "high",
         "note": "One blanket architecture for all lattices (30-layer aCNN, 14 residual blocks, 3 channels, 5x5 kernels, 6538 real parameters), so parameters applies to every row including L = 24 (576 sites); the triangular-lattice run used a different 100-layer network (not in this slice). Sample counts, batch sizes, optimization steps, GPU-hours and wall-clock are not stated; Adam optimizer, trained \"until the loss function no longer drops\". n_devices not stated explicitly (\"an Nvidia 3090 GPU\" suggests one but is not a count)."
+      },
+      "artifacts": {
+        "code": "https://github.com/rqHe1/aCNN",
+        "read_from": {
+          "quote": "The main code and data for the aCNN are available on GitHub at https://github.com/rqHe1/aCNN.",
+          "location": "arXiv:2308.09664 (sources/2308.09664.html), footnote 1 / ref [56]",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -1698,7 +1787,17 @@
           "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#35 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "arXiv:2405.18874"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://zenodo.org/records/14060431",
+        "scope": "model",
+        "read_from": {
+          "quote": "The ViT architecture used in this paper is available at https://zenodo.org/records/14060431.",
+          "location": "arXiv:2405.18874 (sources/2405.18874.txt), Reproducibility; same in MLST journal HTML; Zenodo file list read 2026-10-22: vit.zip holds vit/attentions.py and vit/transformer.py only (the network, no training script)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -72.466992,
@@ -1785,7 +1884,17 @@
           "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#37 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "arXiv:2405.18874"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://zenodo.org/records/14060431",
+        "scope": "model",
+        "read_from": {
+          "quote": "The ViT architecture used in this paper is available at https://zenodo.org/records/14060431.",
+          "location": "arXiv:2405.18874 (sources/2405.18874.txt), Reproducibility; same in MLST journal HTML; Zenodo file list read 2026-10-22: vit.zip holds vit/attentions.py and vit/transformer.py only (the network, no training script)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -72.463104,
@@ -1872,7 +1981,17 @@
           "source_entry": "VP14-hubbard-j1j2-heisenberg-tfising#39 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "arXiv:2405.18874"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://zenodo.org/records/14060431",
+        "scope": "model",
+        "read_from": {
+          "quote": "The ViT architecture used in this paper is available at https://zenodo.org/records/14060431.",
+          "location": "arXiv:2405.18874 (sources/2405.18874.txt), Reproducibility; same in MLST journal HTML; Zenodo file list read 2026-10-22: vit.zip holds vit/attentions.py and vit/transformer.py only (the network, no training script)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -72.42768,
@@ -1923,6 +2042,21 @@
         "scope": "ansatz",
         "confidence": "high",
         "note": "One blanket statement for every ViT run (6x6, 8x8, 10x10, all J2). parameters is the paper's approximate figure '∼1.5×10^5'; iterations = 1500 training epochs; samples = 4096 per SR step. No hardware, GPU count or wall-clock stated anywhere (main text, Appendix A, Appendix B, captions)."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In turn, for larger systems one needs to employ an approximate scheme, such as variational neural quantum state (NQS) approach. We use the NetKet package realization [27, 28] of an attention-based vision transformer wave function [25, 26]",
+          "location": "arXiv:2606.04558 (sources/2606.04558.txt), Appendix A (Calculation details); also main text: \"wave function representation [25, 26] as realized in the NetKet package [27, 28]\"",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -1958,6 +2092,21 @@
           "note": "Journal Table I identical to arXiv v4-v6 (VP13 reading stands in the published version). Journal App. B1: \"the RBM + PP energy is obtained by optimizing the RBM + PP wave function with the momentum, spin-parity, and simplified-point-group projections. We do not employ the sublattice structure in the f parameters ..., and the number of hidden units is 16\" (p. 031034-13) = the stored method string. Periodic L x L, S = 0, K = (0,0); variational; own number; peer reviewed (PRX). Also read by VP13-hubbard-j1j2-heisenberg#2 (scope value: Table I (p. 13), row 6x6, column J2 = 0.50).",
           "source_entry": "VJ2-journal-other#28, VP13-hubbard-j1j2-heisenberg#2 (qmbl-verify 2026-09-29)"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "mVMC",
+            "version": null,
+            "url": "https://github.com/issp-center-dev/mVMC"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The implementation of the RBM+PP scheme is done based on the mVMC package [65].",
+          "location": "arXiv:2005.14142 (sources/2005.14142.txt), Acknowledgments; same sentence in the PRX 11, 031034 journal text",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -1992,6 +2141,15 @@
           "conversion": "-0.502184 x 4 x 36 = -72.314496; sigma 2e-6 x 4 x 36 = 0.000288",
           "note": "Journal and arXiv v2 cells identical (journal prints the label 'ANet1 and ANet2' where arXiv prints 'ANet1 & ANet2'). Hamiltonian Eq. (17) H = J1 sum S_i.S_j + J2 sum S_i.S_j; boundary not stated in the journal text either: periodic inferred from the released code (earlier reading) and from the ED row matching QMBL's periodic 6x6 exact energies (-0.503810/-0.495178/-0.493239). Sector not stated (S^z_tot = 0 per the code). Own computation, variational (p-step Lanczos-type improvement of an NQS); peer_reviewed true, reference correct (Crossref). No duplicate on the instance.",
           "source_entry": "JP8-j1j2-hubbard-heisenberg#4"
+        }
+      },
+      "artifacts": {
+        "code": "https://github.com/QTMEC-RUC/nqs-lanczos",
+        "read_from": {
+          "quote": "The code supporting the findings of this study is openly available in a GitHub repository at https://github.com/QTMEC-RUC/nqs-lanczos (will be publicly accessible upon publication of the paper).",
+          "location": "arXiv:2502.01264 (sources/2502.01264.txt), reference [53] (cited from the Code availability section)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
         }
       }
     },
@@ -2038,6 +2196,15 @@
           "note": "Journal and arXiv v2 cells identical (journal prints the label 'ANet1 and ANet2' where arXiv prints 'ANet1 & ANet2'). Hamiltonian Eq. (17) H = J1 sum S_i.S_j + J2 sum S_i.S_j; boundary not stated in the journal text either: periodic inferred from the released code (earlier reading) and from the ED row matching QMBL's periodic 6x6 exact energies (-0.503810/-0.495178/-0.493239). Sector not stated (S^z_tot = 0 per the code). Own computation, variational (p-step Lanczos-type improvement of an NQS); peer_reviewed true, reference correct (Crossref). No duplicate on the instance.",
           "source_entry": "JP8-j1j2-hubbard-heisenberg#5"
         }
+      },
+      "artifacts": {
+        "code": "https://github.com/QTMEC-RUC/nqs-lanczos",
+        "read_from": {
+          "quote": "The code supporting the findings of this study is openly available in a GitHub repository at https://github.com/QTMEC-RUC/nqs-lanczos (will be publicly accessible upon publication of the paper).",
+          "location": "arXiv:2502.01264 (sources/2502.01264.txt), reference [53] (cited from the Code availability section)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -2082,6 +2249,15 @@
           "conversion": "-0.503049 x 4 x 36 = -72.439056; no error bar printed for SLL p >= 1, sigma stays null",
           "note": "Journal and arXiv v2 cells identical (journal prints the label 'ANet1 and ANet2' where arXiv prints 'ANet1 & ANet2'). Hamiltonian Eq. (17) H = J1 sum S_i.S_j + J2 sum S_i.S_j; boundary not stated in the journal text either: periodic inferred from the released code (earlier reading) and from the ED row matching QMBL's periodic 6x6 exact energies (-0.503810/-0.495178/-0.493239). Sector not stated (S^z_tot = 0 per the code). Own computation, variational (p-step Lanczos-type improvement of an NQS); peer_reviewed true, reference correct (Crossref). No duplicate on the instance.",
           "source_entry": "JP8-j1j2-hubbard-heisenberg#6"
+        }
+      },
+      "artifacts": {
+        "code": "https://github.com/QTMEC-RUC/nqs-lanczos",
+        "read_from": {
+          "quote": "The code supporting the findings of this study is openly available in a GitHub repository at https://github.com/QTMEC-RUC/nqs-lanczos (will be publicly accessible upon publication of the paper).",
+          "location": "arXiv:2502.01264 (sources/2502.01264.txt), reference [53] (cited from the Code availability section)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
         }
       }
     },
@@ -2128,6 +2304,15 @@
           "note": "Journal and arXiv v2 cells identical (journal prints the label 'ANet1 and ANet2' where arXiv prints 'ANet1 & ANet2'). Hamiltonian Eq. (17) H = J1 sum S_i.S_j + J2 sum S_i.S_j; boundary not stated in the journal text either: periodic inferred from the released code (earlier reading) and from the ED row matching QMBL's periodic 6x6 exact energies (-0.503810/-0.495178/-0.493239). Sector not stated (S^z_tot = 0 per the code). Own computation, variational (p-step Lanczos-type improvement of an NQS); peer_reviewed true, reference correct (Crossref). No duplicate on the instance.",
           "source_entry": "JP8-j1j2-hubbard-heisenberg#7"
         }
+      },
+      "artifacts": {
+        "code": "https://github.com/QTMEC-RUC/nqs-lanczos",
+        "read_from": {
+          "quote": "The code supporting the findings of this study is openly available in a GitHub repository at https://github.com/QTMEC-RUC/nqs-lanczos (will be publicly accessible upon publication of the paper).",
+          "location": "arXiv:2502.01264 (sources/2502.01264.txt), reference [53] (cited from the Code availability section)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -2173,6 +2358,15 @@
           "note": "Journal and arXiv v2 cells identical (journal prints the label 'ANet1 and ANet2' where arXiv prints 'ANet1 & ANet2'). Hamiltonian Eq. (17) H = J1 sum S_i.S_j + J2 sum S_i.S_j; boundary not stated in the journal text either: periodic inferred from the released code (earlier reading) and from the ED row matching QMBL's periodic 6x6 exact energies (-0.503810/-0.495178/-0.493239). Sector not stated (S^z_tot = 0 per the code). Own computation, variational (p-step Lanczos-type improvement of an NQS); peer_reviewed true, reference correct (Crossref). No duplicate on the instance.",
           "source_entry": "JP8-j1j2-hubbard-heisenberg#8"
         }
+      },
+      "artifacts": {
+        "code": "https://github.com/QTMEC-RUC/nqs-lanczos",
+        "read_from": {
+          "quote": "The code supporting the findings of this study is openly available in a GitHub repository at https://github.com/QTMEC-RUC/nqs-lanczos (will be publicly accessible upon publication of the paper).",
+          "location": "arXiv:2502.01264 (sources/2502.01264.txt), reference [53] (cited from the Code availability section)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -2217,6 +2411,15 @@
           "conversion": "-0.503178 x 4 x 36 = -72.457632; sigma 4e-6 x 4 x 36 = 0.000576",
           "note": "Journal and arXiv v2 cells identical (journal prints the label 'ANet1 and ANet2' where arXiv prints 'ANet1 & ANet2'). Hamiltonian Eq. (17) H = J1 sum S_i.S_j + J2 sum S_i.S_j; boundary not stated in the journal text either: periodic inferred from the released code (earlier reading) and from the ED row matching QMBL's periodic 6x6 exact energies (-0.503810/-0.495178/-0.493239). Sector not stated (S^z_tot = 0 per the code). Own computation, variational (p-step Lanczos-type improvement of an NQS); peer_reviewed true, reference correct (Crossref). No duplicate on the instance.",
           "source_entry": "JP8-j1j2-hubbard-heisenberg#9"
+        }
+      },
+      "artifacts": {
+        "code": "https://github.com/QTMEC-RUC/nqs-lanczos",
+        "read_from": {
+          "quote": "The code supporting the findings of this study is openly available in a GitHub repository at https://github.com/QTMEC-RUC/nqs-lanczos (will be publicly accessible upon publication of the paper).",
+          "location": "arXiv:2502.01264 (sources/2502.01264.txt), reference [53] (cited from the Code availability section)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
         }
       }
     },
@@ -2996,7 +3199,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit 7a9c3c0)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit b061365)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-25",
       "provenance": "primary",
@@ -3062,10 +3265,21 @@
           }
         },
         "reported_as": "chi_max 500 chi_reached 500 energy -71.99452962217384 (energy_SS -17.99863240554346) sweeps 16 max_trunc_err 0.00023406871791057613 | wall_hms 00:27:34 (wall_seconds 1654.092769606039) on 8 cores, Slurm job 15119530 | cpu_core_hours 3.675761710235642",
-        "source": "checks/cost/results/dmrg-j1j2-36.json, Slurm job 15119530, commit 7a9c3c0 (QMBL run, 2026-09-25)",
+        "source": "checks/cost/results/dmrg-j1j2-36.json, Slurm job 15119530, commit b061365 (QMBL run, 2026-09-25)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 3.52 h, 96 % of wall-clock x 8 cores; cores at 3.21 GHz on average (2.45-3.24, max 2.45); node load 20 on average of 128 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/b061365/checks/cost",
+        "commit": "b061365",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit b061365)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -3081,7 +3295,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit 7a9c3c0)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit b061365)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-25",
       "provenance": "primary",
@@ -3163,10 +3377,21 @@
           }
         },
         "reported_as": "chi_max 1000 chi_reached 1000 energy -72.19273141536294 (energy_SS -18.048182853840736) sweeps 16 max_trunc_err 0.0002795248075090648 | wall_hms 01:10:02 (wall_seconds 4201.762805479113) on 8 cores, Slurm job 15119530 | cpu_core_hours 9.337250678842473",
-        "source": "checks/cost/results/dmrg-j1j2-36.json, Slurm job 15119530, commit 7a9c3c0 (QMBL run, 2026-09-25)",
+        "source": "checks/cost/results/dmrg-j1j2-36.json, Slurm job 15119530, commit b061365 (QMBL run, 2026-09-25)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 8.86 h, 95 % of wall-clock x 8 cores; cores at 3.20 GHz on average (2.45-3.24, max 2.45); node load 19.7 on average of 128 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/b061365/checks/cost",
+        "commit": "b061365",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit b061365)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -3182,7 +3407,7 @@
       "family": "tensor network",
       "bound_type": "variational",
       "bound_type_reason": "finite-bond-dimension DMRG energy computed by QMBL; a variational upper bound",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit 7a9c3c0)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit b061365)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-25",
       "provenance": "primary",
@@ -3280,10 +3505,21 @@
           }
         },
         "reported_as": "chi_max 2000 chi_reached 2000 energy -72.35913781478669 (energy_SS -18.089784453696673) sweeps 16 max_trunc_err 0.00011776831792733298 | wall_hms 03:02:19 (wall_seconds 10938.634248683928) on 8 cores, Slurm job 15119530 | cpu_core_hours 24.308076108186505",
-        "source": "checks/cost/results/dmrg-j1j2-36.json, Slurm job 15119530, commit 7a9c3c0 (QMBL run, 2026-09-25)",
+        "source": "checks/cost/results/dmrg-j1j2-36.json, Slurm job 15119530, commit b061365 (QMBL run, 2026-09-25)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of this rung, the rungs below it included; cpu_core_hours = wall-clock x 8 allocated cores. iterations is the sweep count of this rung alone; sweep_schedule lists every sweep of the process up to the end of this rung, which is what the hours cover. Hardware during the run (sampled every 30 s): process CPU time 22.46 h, 92 % of wall-clock x 8 cores; cores at 3.10 GHz on average (2.44-3.24, max 2.45); node load 24.1 on average of 128 CPUs."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/b061365/checks/cost",
+        "commit": "b061365",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run dmrg-j1j2-36, Slurm job 15119530, commit b061365)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -3299,7 +3535,7 @@
       "family": "CNN / ResNet",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-gcnn-j1j2-36, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-gcnn-j1j2-36, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-25",
       "provenance": "primary",
@@ -3347,10 +3583,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -72.42359655704766 sigma 0.003786036336397701 energy_variance 1.8719756798943825 tau_corr 0.001821522765917516 r_hat 1.0041094060083573 | wall_hms 00:19:28 (wall_seconds 1167.9560663970187) on 1 x NVIDIA H100 NVL, no scheduler | parameters 7232, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-gcnn-j1j2-36.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-25)",
+        "source": "checks/cost/results/h100-gcnn-j1j2-36.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-25)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 10 s, training 1140 s, evaluation 17 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 0.33 h, 0 % of wall-clock x 384 cores; cores at 2.41 GHz on average (2.18-2.80, max 3.71); node load 113.1 on average of 384 CPUs; GPU SM clock 1434 MHz on average (max 1785), utilisation 96.6 %, 269.2 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-gcnn-j1j2-36, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -3366,7 +3613,7 @@
       "family": "RBM",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-36, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-36, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-25",
       "provenance": "primary",
@@ -3413,10 +3660,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -69.80830767637767 sigma 0.03641943411208719 energy_variance 26.70295664538569 tau_corr 2.7552696324720904 r_hat 1.0411460659924887 | wall_hms 00:04:43 (wall_seconds 282.56271364260465) on 1 x NVIDIA H100 NVL, no scheduler | parameters 1368, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-rbm-j1j2-36.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-25)",
+        "source": "checks/cost/results/h100-rbm-j1j2-36.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-25)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 7 s, training 266 s, evaluation 10 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 0.08 h, 0 % of wall-clock x 384 cores; cores at 2.42 GHz on average (2.20-2.79, max 3.71); node load 115.7 on average of 384 CPUs; GPU SM clock 1785 MHz on average (max 1785), utilisation 78.5 %, 125.5 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbm-j1j2-36, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -3432,7 +3690,7 @@
       "family": "RBM",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-36, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-36, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-25",
       "provenance": "primary",
@@ -3479,10 +3737,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -71.43874355998551 sigma 0.010009774334174158 energy_variance 12.332727158073208 tau_corr 0.03243841303526929 r_hat 1.0042052123308194 | wall_hms 00:05:19 (wall_seconds 319.4651904841885) on 1 x NVIDIA H100 NVL, no scheduler | parameters 149, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-rbmsymm-j1j2-36.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-25)",
+        "source": "checks/cost/results/h100-rbmsymm-j1j2-36.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-25)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 8 s, training 301 s, evaluation 11 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 0.08 h, 0 % of wall-clock x 384 cores; cores at 2.44 GHz on average (2.34-2.58, max 3.71); node load 124 on average of 384 CPUs; GPU SM clock 1785 MHz on average (max 1785), utilisation 89.6 %, 127.9 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-rbmsymm-j1j2-36, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -3498,7 +3767,7 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational Monte Carlo energy of a normalised ansatz, evaluated by QMBL on the trained state with its error bar; a strict upper bound within that bar",
-      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-36, no scheduler, commit 55af6b8)",
+      "reference": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-36, no scheduler, commit 30ee7f2)",
       "peer_reviewed": false,
       "source": "qmbl-cost-2026-09-25",
       "provenance": "primary",
@@ -3546,10 +3815,21 @@
           "code": "NetKet 3.22.4 (checks/cost/run_nqs.py)"
         },
         "reported_as": "energy -72.29294819299093 sigma 0.005747626857620488 energy_variance 4.481838356888772 tau_corr 0 r_hat 1.0038228050265108 | wall_hms 01:49:44 (wall_seconds 6583.95160154067) on 1 x NVIDIA H100 NVL, no scheduler | parameters 154800, steps 2000 x n_samples 4096, eval samples 131072",
-        "source": "checks/cost/results/h100-vit-j1j2-36.json, no scheduler, commit 55af6b8 (QMBL run, 2026-09-25)",
+        "source": "checks/cost/results/h100-vit-j1j2-36.json, no scheduler, commit 30ee7f2 (QMBL run, 2026-09-25)",
         "scope": "row",
         "confidence": "high",
         "note": "Measured, not reported: wall-clock from process start to the end of the final evaluation, JIT compilation and sampling included (setup 11 s, training 6547 s, evaluation 26 s); gpu_hours = wall-clock x 1 GPU. Hardware during the run (sampled every 30 s): process CPU time 1.84 h, 0 % of wall-clock x 384 cores; cores at 2.17 GHz on average (1.67-2.57, max 3.71); node load 93.7 on average of 384 CPUs; GPU SM clock 929 MHz on average (max 1785), utilisation 98.5 %, 378.8 W."
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/30ee7f2/checks/cost",
+        "commit": "30ee7f2",
+        "script": "checks/cost/",
+        "read_from": {
+          "quote": "QMBL, checks/cost/ (cost-to-reproduce run h100-vit-j1j2-36, no scheduler, commit 30ee7f2)",
+          "location": "the row's reference (QMBL run record)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

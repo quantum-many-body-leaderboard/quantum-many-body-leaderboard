@@ -36,6 +36,16 @@
         "note": "|reproduced - stored| = 4.26e-14 (relative 2.43e-15); within 1e-9 relative. Sector N_up = N_dn = 5, dimension 19079424, 151 Lanczos steps (the file states no residual). The stored value is the source's own ED (varbench@2024-10-22), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Hubbard__square_16_P_5_8.json), gives -17.510366694860373 (1.83e-11 from the cost run). Also read by VB2-varbench-code-hubbard#56 (scope value: VarBench Hubbard/square_16_P_5_8.md row 'Exact diagonalization'; checks/hubbard-u-labels/ed_results.jsonl job {lattice: square, L: 4, n: 5, U: 8}).",
         "source_entry": "VB2-varbench-code-hubbard#56, VE-exact-recompute#31 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_8/ed_lattice_symmetries.sh",
+        "script": "scripts/Hubbard/square_16_P_5_8/ed_lattice_symmetries.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_8/ed_lattice_symmetries.sh)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_5_8.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -150,6 +160,16 @@
         "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 5: the instance at U = 8. The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -16.404249911440623 the next level, lanczos ritz (no reorth)): E - E0 = 1.3e-7 vs bound 3.5e-6, consistent. History: uploaded 2022-09-16 (4889a01), unchanged. No output log (scope config).",
         "source_entry": "VB2-varbench-code-hubbard#45 (qmbl-verify 2026-09-29)",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_8.jl",
+        "script": "programs/dmrg_itensors_hubbard/square_16_P_5_8.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_8.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_5_8.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -234,7 +254,22 @@
           "source_entry": "VP13-hubbard-j1j2-heisenberg#27 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": false
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "Quantax",
+            "version": null,
+            "url": "https://github.com/ChenAo-Phys/quantax"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The NQS simulations are performed by Quantax [90], in which the scalable ANNs are implemented by JAX [91] and Equinox [92], and the LRU is implemented by lrux [93].",
+          "location": "arXiv:2507.10705 (sources/2507.10705.txt and .html), Acknowledgements",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     }
   ],
   "coverage": [

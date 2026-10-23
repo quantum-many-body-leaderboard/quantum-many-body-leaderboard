@@ -112,6 +112,16 @@
         "note": "The linked script is a copy of the U = 10 file, so it did not produce this number. The energy sits 1.1e-7 above the ground state at U = 7.74264 and 7.3e-7 above the one at 7.74263683: a valid bound at either. The pass of 2026-09-16 kept it with the instance at 7.74263683; the pass of 2026-09-29 (VB2#46) placed it at 7.74264, where the sibling 5 + 5 script runs and where its variance-to-error ratio, 1.16, fits the 4 + 4 DMRG series (0.18 at 7.74263683), so it stays on the instance named for U = 7.74264 (ruling E6, 2026-10-02).",
         "source_entry": "B2-baseline-hubbard (qmbl-verify 2026-09-16); VB2-varbench-code-hubbard#46 (qmbl-verify 2026-09-29); ruling E6, 2026-10-02",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl",
+        "script": "programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_4_7.74264.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -137,6 +147,17 @@
         "reported_as": "-16.509154214876222 (ed_check.py) | -16.50915421487304 (ed_lib.mjs)",
         "note": "Two independent codes agree to 3.2e-12. The DMRG (MaxBondDim ~3200) row: its run script is a copy of the U = 10 file, but the sibling 5 + 5 script sets U = 7.74264, and the variance-to-error ratio of the 4 + 4 DMRG series (0.35, 0.92, 1.08, 1.4, 1.8 at U = 2, 4, 6, 8, 10) predicts about 1.3 here, which the row meets at U = 7.74264 (1.16) and misses at 7.74263683 (0.18). It sits 1.1e-7 above the ground state at 7.74264 and 7.3e-7 above the one at 7.74263683.",
         "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels",
+        "commit": "3b4cf67",
+        "script": "checks/hubbard-u-labels/",
+        "read_from": {
+          "quote": "QMBL, checks/hubbard-u-labels/ (exact diagonalization at the coupling the rows here were run at)",
+          "location": "the row's reference (QMBL check directory)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     }
   ],

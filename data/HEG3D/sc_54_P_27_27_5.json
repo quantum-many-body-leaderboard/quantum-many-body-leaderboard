@@ -44,6 +44,21 @@
           "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.056298 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7).",
           "source_entry": "SP6-heg3d-heg2d-hubbard#105"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": "3",
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The numerical tools used in this work are based on the open-source software NetKet [56-58] version 3.",
+          "location": "arXiv:2305.07240 (sources/2305.07240.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -78,6 +93,21 @@
           "conversion": "-0.079064(4) × 54 = -4.269456; sigma 0.0000040 × 54 = 0.000216",
           "note": "Journal = arXiv v3 to every digit. Eq. (13)/(15): H in Hartree with Ewald sum and a background constant; simple cubic simulation cell with PBC, plane waves k = 2πn/L (Gamma). Convention: the paper's quoted BF-DMC column equals arXiv:0801.0518's Ha values with Madelung (e.g. 0.52989(4) at rs = 1), and the MP-NQS energies sit below QMBL's HF (-0.056298 Ha/e) by plausible correlation energies. VMC with the paper's own MP-NQS -> variational; how the final energy and its bar were estimated (final-state evaluation vs averaged training iterations) is not stated (C6/C7). Gaussian orbitals centred on bcc lattice sites inside the cubic cell (N = 2 m³).",
           "source_entry": "SP6-heg3d-heg2d-hubbard#106"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": "3",
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The numerical tools used in this work are based on the open-source software NetKet [56-58] version 3.",
+          "location": "arXiv:2305.07240 (sources/2305.07240.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
         }
       }
     },
@@ -149,6 +179,15 @@
           "note": "Main text Sec. 2.2.4 (txt line 248): 'a simple cubic cell containing 54 electrons in closed-shell configuration'; the BF-DMC/BF-VMC/DCD columns of the same table reproduce Lopez Rios et al. and Liao et al. rows already on these instances, which fixes units and the Madelung convention. Variational (VMC of the neural ansatz).",
           "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#134"
         }
+      },
+      "artifacts": {
+        "code": "https://github.com/bytedance/DeepSolid",
+        "read_from": {
+          "quote": "The concrete code of this work is developed on Github ( https://github.com/bytedance/DeepSolid ).",
+          "location": "Nature Communications (Europe PMC full text), Code availability; same URL at end of Methods in arXiv:2203.15472; journal version also read",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -174,6 +213,21 @@
         "reported_as": "−0.05625(7)",
         "note": "Table I, rs=5.0, row HF; sources/0801.0518.txt line 258; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#141: energy_variance null -> 0.76 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.05625(7) -> -3.0375, sigm) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The casino code25 has been used for all of our QMC calculations.",
+          "location": "arXiv:0801.0518 (sources/0801.0518.txt), Sec. IV Results, first paragraph; ref. 25 is the casino User's guide",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -199,6 +253,21 @@
         "reported_as": "−0.07815(1)",
         "note": "Table I, rs=5.0, row SJ; sources/0801.0518.txt line 259; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#142: energy_variance null -> 0.0149 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.07815(1) -> -4.2201, sigm) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The casino code25 has been used for all of our QMC calculations.",
+          "location": "arXiv:0801.0518 (sources/0801.0518.txt), Sec. IV Results, first paragraph; ref. 25 is the casino User's guide",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -224,6 +293,21 @@
         "reported_as": "−0.078284(9)",
         "note": "Table I, rs=5.0, row SJ3; sources/0801.0518.txt line 260; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#143: energy_variance null -> 0.0129 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.078284(9) -> -4.227336, s) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The casino code25 has been used for all of our QMC calculations.",
+          "location": "arXiv:0801.0518 (sources/0801.0518.txt), Sec. IV Results, first paragraph; ref. 25 is the casino User's guide",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -259,6 +343,21 @@
           "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF -0.056298 Ha/e. No variance is printed for DMC.",
           "source_entry": "SP6-heg3d-heg2d-hubbard#144"
         }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The casino code25 has been used for all of our QMC calculations.",
+          "location": "arXiv:0801.0518 (sources/0801.0518.txt), Sec. IV Results, first paragraph; ref. 25 is the casino User's guide",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -284,6 +383,21 @@
         "reported_as": "−0.078961(5)",
         "note": "Table I, rs=5.0, row BF3; sources/0801.0518.txt line 261; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#145: energy_variance null -> 0.00317 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.078961(5) -> -4.263894, s) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The casino code25 has been used for all of our QMC calculations.",
+          "location": "arXiv:0801.0518 (sources/0801.0518.txt), Sec. IV Results, first paragraph; ref. 25 is the casino User's guide",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -318,6 +432,21 @@
           "conversion": "-0.079036(3) × 54 = -4.267944; sigma 0.0000030 × 54 = 0.000162",
           "note": "Hartree atomic units (Sec. I: \"Hartree atomic units ... are used throughout\"); unpolarized 54-electron HEG, simple cubic cell, PBC, plane-wave orbitals (Gamma, closed shell 27+27); the paper's HF-determinant VMC energies agree with QMBL's HF energy within their bars at all six rs (Madelung included). DMC 'extrapolated to zero time step' (Sec. IV), fixed-node -> projected. Journal (PRE 74, 066701, 2006) and arXiv v1 identical. Own computation (CASINO). No duplicate on the instance (the BF-DMC values are quoted by arXiv:2103.03176 and arXiv:2305.07240 but not stored from them). QMBL HF -0.056298 Ha/e. No variance is printed for DMC.",
           "source_entry": "SP6-heg3d-heg2d-hubbard#146"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The casino code25 has been used for all of our QMC calculations.",
+          "location": "arXiv:0801.0518 (sources/0801.0518.txt), Sec. IV Results, first paragraph; ref. 25 is the casino User's guide",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
         }
       }
     },
@@ -703,6 +832,21 @@
           "conversion": "-0.07589 x 54 = -4.09806 Ha; sigma 0.00005 x 54 = 0.0027",
           "note": "Eq. (19) H = T + Vee + E_M; plane-wave basis of 2M spin orbitals, M = 1419; PBC, 'no twist averaging was performed' (Gamma), sc cell, closed shell; QMCPACK, time step 0.005 a.u., 2880 walkers; RHF trial: phaseless constraint, projected. Finite-basis value (no CBS extrapolation). The totals agree with independent methods on the same instance (N = 54, rs = 0.5: 3.22087(2) vs i-FCIQMC 3.22086(2), FN-DMC-BF 3.22112(4)), so the Madelung term is the standard one even though Eq. (22) as printed lacks a factor 1/2 if read in hartree. ",
           "source_entry": "SP7-heg3d-tfising#194"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "QMCPACK",
+            "version": null,
+            "url": "https://qmcpack.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Unless otherwise noted, the AFQMC calculations in this work were performed by a development version of QMCPACK87. PAUXY88 was also used in the initial testing stages. Unless noted otherwise, AFQMC results below are obtained using QMCPACK. ... ph-AFQMC calculations were performed using the development version of QMCPACK.",
+          "location": "arXiv:1905.04361 (sources/1905.04361.txt), Sec. III Computational Details ... caption of Table IV",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
         }
       }
     },

@@ -131,6 +131,15 @@
         "flag": "sigma-understated",
         "finding": "The printed bar 2e-7 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6735047380 and SE 2.08e-7 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 6.58e-6 per site (33x the bar); propagating each run's Monte-Carlo error through the fit gives 2.97e-5. Against the SSE (Sandvik, arXiv:2601.20189) value -0.6734900500 the row sits below by 1.47e-5 per site: 73 printed sigma, 2.2 bootstrap SD, 0.5 propagated sigma. Value and bound_type (extrapolated) are right: Table III (L = 8) prints −0.6735047(2), x 4 x 64 = -172.4172032.",
         "source_entry": "VP7-arxiv-2502-17144#46 (qmbl-verify 2026-09-29; skeptic upheld; ruling 6, 2026-09-30)"
+      },
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
       }
     },
     {
@@ -213,7 +222,22 @@
           "source_entry": "JP11-j1j2-heisenberg-hubbard#22",
           "from": "Holographic Quantum Transformer: A Generalist Neuro-Symbolic Architecture for Solving Frustrated Systems via Generative Attention, In Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2 (KDD '26), August 09-13, 2026, Jeju Island, Republic of Korea, arXiv:2607.00398"
         }
-      ]
+      ],
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "All experiments were conducted on a workstation equipped with a single NVIDIA RTX 5070 Ti GPU. The framework is implemented using JAX and NetKet.",
+          "location": "arXiv:2607.00398 (sources/2607.00398.txt), Sec. 3.1 Experimental Setup",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     },
     {
       "energy": -172.411392,
@@ -353,6 +377,21 @@
         "scope": "ansatz",
         "confidence": "high",
         "note": "One blanket statement for every ViT run (6x6, 8x8, 10x10, all J2). parameters is the paper's approximate figure '∼1.5×10^5'; iterations = 1500 training epochs; samples = 4096 per SR step. No hardware, GPU count or wall-clock stated anywhere (main text, Appendix A, Appendix B, captions)."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "In turn, for larger systems one needs to employ an approximate scheme, such as variational neural quantum state (NQS) approach. We use the NetKet package realization [27, 28] of an attention-based vision transformer wave function [25, 26]",
+          "location": "arXiv:2606.04558 (sources/2606.04558.txt), Appendix A (Calculation details); also main text: \"wave function representation [25, 26] as realized in the NetKet package [27, 28]\"",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
@@ -428,7 +467,16 @@
           "source_entry": "JP5-arxiv-2502-17144#30",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B (2025), arXiv:2502.17144"
         }
-      ]
+      ],
+      "artifacts": {
+        "code": "https://github.com/mschuylermoss/HeisenbergRNN",
+        "read_from": {
+          "quote": "Our implementation of the presented methods, all scripts needed to reproduce our results, and the data needed to reproduce the figures in this manuscript are openly available on GitHub https://github.com/mschuylermoss/HeisenbergRNN [101].",
+          "location": "arXiv:2502.17144 (sources/2502.17144.txt and .html), V. Code Availability",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
     }
   ]
 }

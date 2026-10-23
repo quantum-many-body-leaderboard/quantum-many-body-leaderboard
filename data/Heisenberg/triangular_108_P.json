@@ -65,6 +65,21 @@
         "scope": "row",
         "confidence": "medium",
         "note": "Plain GCNN with 8 layers of 6 feature maps for the 108-site J2 = 0 cluster; parameter count not stated. Steps are \"approx. 2000\". GPU-hours not stated for this run (only the wall-clock on one A100). || parameters = 115074 evaluated (8-layer plain GCNN, 108-site triangular, point group C6v order 12): NetKet GCNN with spin parity and input/hidden masks = embedding F*n_in + F bias + (L-1) equivariant layers (F^2*n_h + F bias) + (L-1) parity-flip layers (F^2*n_h, no bias, extra_bias=False default) with F = 6 feature maps, L = 8 layers, n_in = 19 kernel sites (Fig. 1, origin included), n_h = 19 x |point group| 12 = 228: 120 + 57498 + 57456 = 115074. Real parameters (\"real-valued kernels\"), counted the way NetKet's n_parameters counts them (unmasked entries only, NetKet >= 3.7). Independent of N and of |G|: the masked kernels depend only on the cluster size and the point-group order, so the count changes across rows only through the depth L. Assumptions and their size: (i) spin parity doubles the hidden kernels (the paper's symmetry group is space group x Z2 parity and it labels irreps with ±; without the parity-flip layers the count would be 57618); (ii) biases are the NetKet default use_bias=True (48 parameters; not stated in the paper); (iii) \"in most cases\" the embedding is local; a full-range embedding (n_in = 108) would give 115608; (iv) with NetKet < 3.7 (e.g. at v1, Nov 2022) masked kernels were stored full-size (F x F x |G|) and multiplied by the mask, so n_parameters would print a larger number of which only the above are free. Consistency check: LayerSR (App. C) requires fewer samples than parameters per layer; with parity one triangular layer pair has 2 x 6 x 6 x 228 + 6 = 16422 parameters, just above the 16384 samples used there, without parity 8214 would not be. Existing samples = 4096 and iterations = 2000 checked against v2 Sec. IV: both are the 108-site J2 = 0 ground-state run (energy -0.55315(3) x 432 = row energy); v1 also states 4096 samples for 108 sites (v1 energy -0.5531(4), an earlier run). Kept."
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "Simulations were performed using the NetKet [24] library.",
+          "location": "arXiv:2211.07749 (sources/2211.07749.txt), Acknowledgments",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
       }
     },
     {
