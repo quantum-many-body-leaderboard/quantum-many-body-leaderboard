@@ -634,11 +634,7 @@
         "confidence": "medium",
         "note": "Zero-variance extrapolated energy: a linear fit (with wild bootstrap, 10^3 bootstraps) through the final variational energies and variances of the RNN runs with s >= 1.0 for this L (Appendix F, Fig. 11). No separate cost; the underlying runs all use the same PBC RNN (791,554 parameters, d_h = 256) trained on four A100 GPUs with run times shown only graphically (Fig. 8). samples = 10,000 is the evaluation sample count of each underlying final energy; training batch size not stated. Iteration counts are schedule-dependent (Eq. 6, Table II)."
       },
-      "defect": {
-        "flag": "sigma-understated",
-        "finding": "The printed bar 7e-8 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6788717699 and SE 6.80e-8 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 2.15e-6 per site (31x the bar). The fit has 6 points but 4 distinct runs (at L = 6 the s = 1 and s = 2 runs are identical for both rates). Against the ED (VarBench) value -0.6788721500 the row sits above by 3.80e-7 per site: 5 printed sigma, 0.2 bootstrap SD. Value and bound_type (extrapolated) are right: Table III (L = 6) and Table V (periodic 6 x 6) print −0.67887177(7), x 4 x 36 = -97.75753488. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-        "source_entry": "VP7-arxiv-2502-17144#38 (qmbl-verify 2026-09-29; skeptic refuted; only the propagated error was refuted and is dropped from the finding; ruling 6, 2026-09-30)"
-      },
+      "defect": null,
       "corrections": [
         {
           "field": "reference",
@@ -651,6 +647,22 @@
           "reason": "Reference lacks volume and article number; the arXiv abs page has no journal-ref field (checked 2026-10-15), so it is found via Crossref only. Note: PRB 112, 134449 (DOI 10.1103/nh89-6jmf) is the companion triangular-lattice paper (arXiv:2505.20406), not this one. All values on the row were re-derived and agree: Table III row L=6 ('RNN Zero-variance E/N') and Table V 'periodic 6×6' row 'This work (zero-variance)'; −0.67887177(7) (E/N, S·S units, Eq. (1) H = Σ⟨ij⟩ S_i·S_j, no constant); -0.67887177 × 4 × 36 = -97.75753488; sigma 7e-8 × 4 × 36 = 0.00001008. Zero-variance extrapolation (linear fit of E vs variance over the s = 1, 2, 4 runs, wild bootstrap 10^3; Table V caption, Sec. III): not a bound, bound_type extrapolated is right. Journal and arXiv v3 print the same digits. Printed bar is the bootstrap SE (Table III caption); prior pass flagged it as understated vs the bootstrap spread for periodic L=12/14 (prior-findings), not re-raised here. L×L periodic, N=36, J=1, no couplings beyond NN; peer_reviewed true is right.",
           "source_entry": "JP5-arxiv-2502-17144#21",
           "from": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Phys. Rev. B (2025), arXiv:2502.17144"
+        },
+        {
+          "field": "defect",
+          "to": null,
+          "reported_as": "n/a (flag lift)",
+          "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+          "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+          "conversion": "none",
+          "checked_on": "2026-10-24",
+          "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+          "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted",
+          "from": {
+            "flag": "sigma-understated",
+            "finding": "The printed bar 7e-8 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 1, 2, 4 runs, OLS, np.random.seed(100)): intercept mean -0.6788717699 and SE 6.80e-8 equal the authors' zero_var_energies.pkl to 1e-11 relative, and the printed value to its digits. The spread of the refits is 2.15e-6 per site (31x the bar). The fit has 6 points but 4 distinct runs (at L = 6 the s = 1 and s = 2 runs are identical for both rates). Against the ED (VarBench) value -0.6788721500 the row sits above by 3.80e-7 per site: 5 printed sigma, 0.2 bootstrap SD. Value and bound_type (extrapolated) are right: Table III (L = 6) and Table V (periodic 6 x 6) print −0.67887177(7), x 4 x 36 = -97.75753488. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
+            "source_entry": "VP7-arxiv-2502-17144#38 (qmbl-verify 2026-09-29; skeptic refuted; only the propagated error was refuted and is dropped from the finding; ruling 6, 2026-09-30)"
+          }
         }
       ],
       "artifacts": {
