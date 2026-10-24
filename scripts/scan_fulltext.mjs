@@ -4,7 +4,9 @@ const strip = s => s.replace(/<[^>]+>/g, " ").replace(/&nbsp;|&#[0-9]+;|&[a-z]+;
 const MODELS = [["kagome",/kagome/i],["triangular",/triangular/i],["pyrochlore",/pyrochlore/i],
   ["J1J2",/J\s*_?1\s*[-–]\s*J\s*_?2|J_\{?1\}?-J_\{?2\}?/i],["Hubbard",/Hubbard/i],
   ["shuriken",/shuriken/i],["Shastry",/Shastry[- ]Sutherland/i],["tV",/spinless fermion|t-V model/i],
-  ["TFIsing",/transverse[- ]field Ising/i],["square-Heis",/square[- ]lattice Heisenberg/i]];
+  ["TFIsing",/transverse[- ]field Ising/i],["square-Heis",/square[- ]lattice Heisenberg/i],
+  ["Kitaev",/Kitaev/i],["honeycomb",/honeycomb/i],
+  ["tJ",/\bt\s*-\s*J model|\bt-t['′]-J\b/]];
 const rows = fs.readFileSync("sweep-candidates.tsv","utf8").split("\n").slice(1).filter(Boolean)
   .map(l => { const c = l.split("\t"); return { id:c[2], pr:c[3], jr:c[4], ti:c[6] }; });
 const out = [];

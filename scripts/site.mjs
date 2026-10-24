@@ -346,8 +346,20 @@ function hamiltonian(inst) {
       return { formula: `H = ${sum(nn)} ${dot}`,
         note: "Nearest-neighbour Heisenberg antiferromagnet, J = 1, written with Pauli matrices." };
     case "J1J2":
+      if (p.J3 != null) return { formula: `H = ${sum(nn)} ${dot} + J<sub>2</sub> ${sum(nnn)} ${dot} + J<sub>3</sub> ${sum("&#10216;&#10216;&#10216;ij&#10217;&#10217;&#10217;")} ${dot}`,
+        note: `J<sub>1</sub> = 1, J<sub>2</sub> = ${p.J2}, J<sub>3</sub> = ${p.J3}, first, second and third neighbours of the ${esc(inst.lattice.replace(/-.*$/, ""))} lattice, written with Pauli matrices.` };
       return { formula: `H = ${sum(nn)} ${dot} + J<sub>2</sub> ${sum(nnn)} ${dot}`,
         note: `J<sub>1</sub> = 1, J<sub>2</sub> = ${p.J2}, nearest and next-nearest neighbours, written with Pauli matrices.` };
+    case "Kitaev": {
+      // RULES.md 5 (2026-10-20): couplings as the source prints them for S = sigma/2, stored in the Pauli form.
+      const s = (a, b) => `&sigma;<sup>${a}</sup><sub>i</sub>&sigma;<sup>${b}</sup><sub>j</sub>`;
+      const terms = [`K ${s("&gamma;", "&gamma;")}`, p.J ? `J ${dot}` : null, p.Gamma ? `&Gamma; (${s("&alpha;", "&beta;")} + ${s("&beta;", "&alpha;")})` : null].filter(Boolean);
+      return { formula: `H = ${sum("&#10216;ij&#10217;<sub>&gamma;</sub>")} [${terms.join(" + ")}]`,
+        note: `Honeycomb lattice; &gamma; = x, y, z labels the three bond directions and (&alpha;, &beta;) the other two components. K = ${p.K}, J = ${p.J ?? 0}, &Gamma; = ${p.Gamma ?? 0}, the couplings of the spin-1/2 form with S = &sigma;/2, normalised to |K| = 1 (RULES.md 2.1); written here with Pauli matrices, so the stored energy is 4 times the S-operator energy and E/N in S units is E/(4N).` };
+    }
+    case "ShastrySutherland":
+      return { formula: `H = J ${sum(nn)} ${dot} + J<sub>d</sub> ${sum("dimers")} ${dot}`,
+        note: `Shastry-Sutherland lattice: a square lattice of bonds J with one diagonal bond J<sub>d</sub> in every second plaquette, the orthogonal dimers. J = ${p.J}, J<sub>d</sub> = ${p.Jd}, the couplings of the spin-1/2 form with S = &sigma;/2, normalised to J<sub>d</sub> = 1 (RULES.md 2.1); written here with Pauli matrices, so E/N in S units is E/(4N).` };
     case "TFIsing":
       return { formula: `H = &minus;${sum(nn)} &sigma;<sup>z</sup><sub>i</sub>&sigma;<sup>z</sup><sub>j</sub> &minus; h ${sum("i")} &sigma;<sup>x</sup><sub>i</sub>`,
         note: `Transverse field h = ${p.h}. Already in Pauli operators, with no S&middot;S term to rescale, so the per-site energy is E/N.` };
@@ -367,6 +379,16 @@ function hamiltonian(inst) {
     case "tV":
       return { formula: `H = &minus;t ${sum(nn)} (c<sup>&dagger;</sup><sub>i</sub>c<sub>j</sub> + h.c.) + V ${sum(nn)} n<sub>i</sub>n<sub>j</sub>`,
         note: `Spinless fermions, t = 1, V = ${p.V}, ${p.Nf} particles on ${inst.n_sites} sites.` };
+    case "tJ": {
+      // RULES.md 2.1 and 5 (2026-10-22): t = 1, projected hopping (no double occupancy), the exchange
+      // with or without -n_i n_j / 4 as the instance states, t' and t'' where the instance has them.
+      const hop = (t, bonds) => `&minus;${t} ${sum(`${bonds},&sigma;`)} P(c<sup>&dagger;</sup><sub>i&sigma;</sub>c<sub>j&sigma;</sub> + h.c.)P`;
+      const third = "&#10216;&#10216;&#10216;ij&#10217;&#10217;&#10217;";
+      const ex = `J ${sum(nn)} (S<sub>i</sub>&middot;S<sub>j</sub>${p.nn_term === false ? "" : " &minus; n<sub>i</sub>n<sub>j</sub>/4"})`;
+      const holes = inst.n_sites - p.N_up - p.N_dn;
+      return { formula: `H = ${hop("t", nn)}${p.t2 != null ? ` ${hop("t&prime;", nnn)}` : ""}${p.t3 != null ? ` ${hop("t&Prime;", third)}` : ""} + ${ex}`,
+        note: `t-J model: P projects out doubly occupied sites, S = &sigma;/2. t = 1, J = ${+Number(p.J).toPrecision(6)}${p.t2 != null ? `, t&prime; = ${p.t2}` : ""}${p.t3 != null ? `, t&Prime; = ${p.t3}` : ""}; ${p.nn_term === false ? "the exchange term has no &minus;n<sub>i</sub>n<sub>j</sub>/4" : "the exchange term includes &minus;n<sub>i</sub>n<sub>j</sub>/4"}. N<sub>&uarr;</sub> = ${p.N_up}, N<sub>&darr;</sub> = ${p.N_dn} on ${inst.n_sites} sites (${holes} hole${holes === 1 ? "" : "s"}).${inst.cluster ? ` Cluster: ${esc(inst.cluster)}.` : ""}` };
+    }
     default:
       return { formula: null,
         note: `An impurity model from VarBench (<code>${esc(inst.lattice)}</code>). VarBench defines its Hamiltonian, so it is not restated here. It has no meaningful per-site energy.` };
@@ -813,17 +835,20 @@ const SEARCH_STOP = ["a", "an", "and", "at", "by", "for", "in", "of", "on", "the
 const MODEL_WORDS = {
   Heisenberg: "heisenberg",
   J1J2: "j1j2 heisenberg",
+  Kitaev: "kitaev kitaev-heisenberg k-j-gamma kjg honeycomb",
+  ShastrySutherland: "shastry-sutherland srcu2(bo3)2 dimer",
   Hubbard: "fermi-hubbard",
   tV: "spinless-fermions tv",
+  tJ: "t-j tj t-t'-j doped-mott holes",
   TFIsing: "tfim tfi",
   Impurity: "anderson dmft bath",
   HEG3D: "jellium electron-gas heg continuum 3d",
   HEG2D: "jellium electron-gas heg continuum 2d",
 };
 const SHAPE_WORDS = { chain: "1d one-dimensional", square: "2d", rectangular: "2d rectangle", triangular: "2d triangle",
-  kagome: "2d", shuriken: "2d", pyrochlore: "3d" };
+  kagome: "2d", shuriken: "2d", pyrochlore: "3d", honeycomb: "2d hexagonal", ladder: "ladder quasi-1d" };
 const BOUNDARY_WORDS = { O: "open obc", P: "periodic pbc", PO: "periodic/open cylinder",
-  PA: "periodic/antiperiodic antiperiodic apbc" };
+  PA: "periodic/antiperiodic antiperiodic apbc", A: "antiperiodic apbc ladder legs" };
 // vendor/varbench/Impurity/README.md: SB single-band, TB the three-band Kanamori model of
 // Sr2RuO4, SOC with spin-orbit coupling, MT a metal and MI a Mott insulator on the Bethe
 // lattice, HF at half filling and AHF doped.
@@ -877,6 +902,11 @@ function searchIndex(inst, name) {
   if (p.h != null) add(`h=${p.h} h/j=${p.h} γ=${p.h} gamma=${p.h}`);
   if (p.U != null) add(`u=${p.U} u/t=${p.U} ${p.U < 0 ? "attractive" : p.U > 0 ? "repulsive" : ""}`);
   if (p.V != null) add(`v=${p.V} v/t=${p.V}`);
+  if (inst.model === "tJ") {
+    const holes = n - p.N_up - p.N_dn;
+    add(`j=${+Number(p.J).toPrecision(6)} j/t=${+Number(p.J).toPrecision(6)} holes=${holes} ${holes}-hole doping=${Number((holes / n).toFixed(4))}`);
+    if (p.t2 != null) add(`t'=${p.t2} t2=${p.t2}`);
+  }
   if (p.Nf != null) {
     const fill = Number(((inst.model === "Hubbard" ? 2 * p.Nf : p.Nf) / n).toFixed(4));
     add(`n=${fill}`);

@@ -49,7 +49,14 @@ for (const [id, rows] of Object.entries(byInst)) {
   const div = perSiteDivisor(inst);
   const dof = expectedDof(inst) ?? inst.rows[0]?.dof ?? null;
   const einf = expectedEinf(inst) ?? inst.rows[0]?.einf ?? null;
-  for (const r of rows) {
+  for (const r0 of rows) {
+    // A source whose Hamiltonian is the instance's times a factor (couplings normalised to |K| = 1,
+    // Jd = 1 or t = 1, RULES.md 2.1, 2026-10-21) prints energies times that factor: `scale` is the
+    // factor, and the row keeps it with the source's own couplings in `normalised`.
+    const k = r0.scale ?? 1;
+    const r = k === 1 ? r0 : { ...r0, eps: r0.eps / k, tol: r0.tol / Math.abs(k), sigma_per_site: r0.sigma_per_site == null ? null : r0.sigma_per_site / Math.abs(k),
+      var_per_site: r0.var_per_site == null ? null : r0.var_per_site / (k * k),
+      precision_per_site: r0.precision_per_site == null ? null : r0.precision_per_site / Math.abs(k) };
     // A source without an arXiv version is named by its DOI (doi:...), and a pass row may say how
     // it was read (read_method) where that was not the arXiv text (Tanatar & Ceperley 1989: the
     // publisher PDF's text layer, checked against the page image).
@@ -78,7 +85,9 @@ for (const [id, rows] of Object.entries(byInst)) {
       energy, sigma: r.sigma_per_site == null ? null : +(r.sigma_per_site * Math.abs(div)).toPrecision(6),
       energy_variance: varTot, dof, einf,
       v_score: varTot == null ? null : vScore(varTot, dof, energy, einf),
-      method: r.method, bound_type: r.bound_type, bound_type_reason: reasonFor(r, inst),
+      // A reading may state why its class holds where the generic reason does not fit (the isoTNS
+      // rows of arXiv:2112.08394; the Eq. 15 estimate of arXiv:cond-mat/0606659, ruled 2026-10-24).
+      method: r.method, bound_type: r.bound_type, bound_type_reason: r.bound_type_reason ?? reasonFor(r, inst),
       reference: r.reference, peer_reviewed: r.peer_reviewed,
       source: `sweep-allresults-${CHECKED}`, provenance: r.origin === "own" ? "primary" : "secondary",
       verified: {
@@ -90,7 +99,12 @@ for (const [id, rows] of Object.entries(byInst)) {
         secondary_of: r.origin === "quoted" ? src : null,
       },
     };
+    if (k !== 1) row.normalised = { factor: k, source_couplings: r.source_couplings,
+      note: `the source's Hamiltonian is ${k} times the instance's; its printed energy (reported_as) is divided by ${k}` };
     if (r.compute) row.compute = r.compute;
+    // The row's own code, as its source prints it, with where it was read (DATA.md, "The code
+    // behind a row"); add_code_links.mjs adds to it.
+    if (r.artifacts) row.artifacts = r.artifacts;
     // One unit in the last printed digit, read per site and stored in the instance's units
     // (DATA.md): it orders exact rows that print no error bar (RULES.md 6).
     if (r.precision_per_site != null) row.precision = +(r.precision_per_site * Math.abs(div)).toPrecision(6);

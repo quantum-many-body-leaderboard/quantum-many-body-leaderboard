@@ -42,6 +42,17 @@ const Q = [
  // and QMC papers on these lattices match too.
  ["pyrochlore-heis", `abs:"pyrochlore" AND (abs:"Heisenberg" OR abs:"spin liquid" OR abs:"spin ice") AND (abs:"energy" OR abs:"DMRG" OR abs:"tensor network" OR abs:"Monte Carlo")`],
  ["shuriken-lat",   `abs:"shuriken" OR abs:"square-kagome" OR abs:"squagome" OR abs:"square kagome"`],
+ // Honeycomb and Shastry-Sutherland families (2026-10-20). No "variational" narrowing:
+ // most finite-cluster energies on these lattices come from exact diagonalization and DMRG.
+ ["kitaev-honeycomb", `abs:"Kitaev" AND abs:"honeycomb" AND (abs:"exact diagonalization" OR abs:"DMRG" OR abs:"ground-state energy" OR abs:"ground state energy" OR abs:"variational" OR abs:"neural" OR abs:"tensor network")`],
+ ["kitaev-heisenberg", `abs:"Kitaev-Heisenberg" OR abs:"Heisenberg-Kitaev" OR abs:"Kitaev-Gamma" OR abs:"K-Gamma model" OR abs:"K-J-Gamma" OR (abs:"Kitaev" AND abs:"off-diagonal" AND abs:"honeycomb")`],
+ ["shastry-sutherland", `abs:"Shastry-Sutherland" AND (abs:"exact diagonalization" OR abs:"DMRG" OR abs:"ground-state energy" OR abs:"ground state energy" OR abs:"tensor network" OR abs:"neural" OR abs:"variational" OR abs:"Monte Carlo")`],
+ ["honeycomb-j1j2", `abs:"honeycomb" AND (abs:"J1-J2" OR abs:"J_1-J_2" OR abs:"J1-J2-J3" OR abs:"frustrated Heisenberg" OR abs:"next-nearest-neighbor" OR abs:"next-nearest neighbor") AND (abs:"Heisenberg" OR abs:"antiferromagnet")`],
+ // t-J family (2026-10-22): the t-J and t-t'-J models on chains, ladders, square, triangular and
+ // honeycomb clusters. No "variational" narrowing: most finite-cluster energies come from exact
+ // diagonalization and DMRG, and the pre-2019 literature is where most of them are.
+ ["tj-energy",  `(abs:"t-J model" OR abs:"t-J ladder" OR abs:"t-J chain" OR abs:"t-t'-J") AND (abs:"ground-state energy" OR abs:"ground state energy" OR abs:"variational energy" OR abs:"energy per site" OR abs:"energy per hole" OR abs:"benchmark")`],
+ ["tj-methods", `abs:"t-J" AND (abs:"exact diagonalization" OR abs:"Lanczos" OR abs:"DMRG" OR abs:"density matrix renormalization" OR abs:"variational" OR abs:"neural" OR abs:"tensor network" OR abs:"PEPS" OR abs:"Monte Carlo" OR abs:"finite cluster" OR abs:"numerical")`],
  // A broad net for the ansatz literature, which names its lattice only in the body.
  ["nqs-any",        `abs:"neural network quantum state" OR abs:"neural quantum states" OR abs:"neural-network wave function" OR abs:"neural network wavefunction"`],
 ];
@@ -215,10 +226,11 @@ if (!FRESH && fs.existsSync(OUT)) {
 // step 3 can be driven by family instead of by score alone.
 const FAM = [
   ["kagome", /kagome/i], ["pyrochlore", /pyrochlore/i], ["triangular", /triangular/i],
-  ["shuriken", /shuriken|square[- ]kagome|squagome/i], ["Shastry", /shastry[- ]sutherland/i],
+  ["shuriken", /shuriken|square[- ]kagome|squagome/i], ["Shastry", /shastry[- ]sutherland/i], ["Kitaev", /kitaev/i], ["honeycomb", /honeycomb/i],
   ["J1J2", /J\s*_?1\s*[-–]\s*J\s*_?2|J_\{?1\}?-J_\{?2\}?/i],
   ["Hubbard", /hubbard/i], ["TFIsing", /transverse[- ]field ising|\bTFIM\b/i],
   ["tV", /spinless fermion|\bt-V\b|extended hubbard/i],
+  ["tJ", /\bt-J\b|\bt-t'-J\b|\bt-t′-J\b/i],
   ["Impurity", /anderson impurity|impurity solver|quantum impurity|dynamical mean[- ]field|\bDMFT\b/i],
   ["Heisenberg", /heisenberg/i],
 ];
@@ -233,11 +245,11 @@ function record({ id, d, ti, ab, jr, doi }, tag) {
   let sc = 0;
   if (/ground[- ]state energ|variational energ|lowest energ/i.test(ab)) sc += 3;
   if (/state[- ]of[- ]the[- ]art|benchmark|outperform|improve.{0,20}energ/i.test(ab)) sc += 2;
-  if (/\b(kagome|pyrochlore|triangular|J_?1.?J_?2|Hubbard|shuriken|Shastry)/i.test(ab)) sc += 2;
+  if (/\b(kagome|pyrochlore|triangular|J_?1.?J_?2|Hubbard|shuriken|Shastry|Kitaev|honeycomb)/i.test(ab)) sc += 2;
   if (jr) sc += 2;                       // peer reviewed
   if (/\b(neural|RNN|transformer|PEPS|DMRG|AFQMC|VMC|backflow)/i.test(ab)) sc += 1;
   // a family with no post-2024 row at all is worth more attention per hit
-  if (fam.some(f => f === "tV" || f === "Impurity" || f === "TFIsing" ||
+  if (fam.some(f => f === "tV" || f === "tJ" || f === "Impurity" || f === "TFIsing" ||
                     f === "pyrochlore" || f === "shuriken")) sc += 2;
 
   const prev = seen.get(id);
