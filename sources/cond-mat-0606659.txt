@@ -1,0 +1,620 @@
+    Finite  compressibility  in  the low-doping  region  of the  two-dimensional  t−J  model
+
+                             Massimo  Lugas,  Leonardo  Spanu,  Federico  Becca,  and  Sandro  Sorella
+INFM-Democritos,  National Simulation Center and International  School for Advanced Studies (SISSA), I-34014 Trieste,  Italy
+                                                               (Dated:  May 11, 2018)
+                   We revisit the important issue of charge ﬂuctuations in the two-dimensional t−J  model by using
+                an improved variational method based on a wave function that contains both the antiferromagnetic
+                and  the  d-wave superconducting  order  parameters.  In  particular,  we  generalize  the wave  function
+                introduced some time ago  by J.P. Bouchaud, A. Georges,  and C. Lhuillier [J. de Physique 49, 553
+                (1988)]  by  considering  also  a  long-range  spin-spin  Jastrow  factor,  in  order  to  correctly  reproduce
+                the  small-q  behavior  of  the  spin  ﬂuctuations.   We  mainly  focus  our  attention  on  the  physically
+                relevant region J/t ∼ 0.4 and ﬁnd that, contrary to previous variational ansatz, this state is stable
+                against  phase  separation  for  small  hole  doping.   Moreover,  by  performing  projection  Monte  Carlo
+                methods based on the so-called ﬁxed-node approach, we obtain a clear evidence that the t−J  model
+                does  not  phase  separate  for  J/t  ≲  0.7  and  that  the  compressibility  remains  ﬁnite  close  to  the
+                antiferromagnetic insulating state.
+
+                PACS numbers:
+
+
+                     I.     INTRODUCTION                                       cult to study its ground-state and low-energy properties.
+                                                                               For  instance,  by  considering mean-ﬁeld  approaches it  is
+   The  possible  existence  of  charge  and  spin  inhomo-                    very easy  to  overestimate the  tendency  of  charge segre-
+geneities  and  their  relevance  for  the  low-temperature                    gation.7,8  In this respect,  a great advantage of the  vari-
+physics  of  cuprates  superconductors  is  a  long-standing                   ational  Monte  Carlo  technique  is  that  it  allows  one  to
+problem, not yet completely clariﬁed.1 In particular, the                      consider highly correlated wave functions, which are well
+issue  is  twofold:  On  one  hand,  one  is  interested  to  un-              beyond  simple  mean-ﬁeld  ansatz.9,10  Then,  it  would  be
+derstand the low-energy behavior of microscopic models                         very important to compare the validity of the ansatz con-
+and the possibility to have or not inhomogeneous phases                        sidered with exact ground-state properties on fairly large
+in  physically  relevant  regions;  On  the  other  hand,  it  is              system sizes, since the variational approach may fail, es-
+also  important  to  clarify  the  possible  relation  between                 pecially  for  low-energy properties.  This  is  possible  only
+charge  or  spin  inhomogeneities  and  the  electronic  pair-                 for bosonic non-frustrated models by means of quantum
+ing,  which  may  lead to  an high  critical temperature  for                  Monte  Carlo  projection techniques  and for  fermion sys-
+superconductivity.                                                             tems the so-called sign problem prevents one to reach the
+   The  original  interest  in  the  role  of  these  inhomo-                  exact zero-temperature properties in a stable way.  Nev-
+geneities  dates  back  to  the  works  by  Emery  and  Kivel-                 ertheless, very well established and eﬃcient approximate
+son2,3 and raised when neutron scattering experiments4,5                       approaches are known for fermionic systems, that consid-
+suggested the possible formation of conducting hole-rich                       erably  improve  the  quality  of  a  given  variational  guess.
+regions separated from hole-poor ones  with strong anti-                       For instance, the so-called ﬁxed node (FN) method (see
+ferromagnetic  moments.  Indeed,  in  most  materials,  the                    below  for  a  detailed  description  of  the  method  on  lat-
+presence  of  a  true  phase  separation  (PS)  instability  is                tice models) allows one to obtain the lowest-energy state
+ruled  out  by  the  existence  of  the  long-range  Coulomb                   constrained to have the same signs of a given variational
+force  that  prevents  the  charge  to  accumulate  in  macro-                 wave function.  Therefore, the FN scheme provides a sim-
+scopic  regions,6  only  allowing  the  possibility  to  have  a               ple procedure to assess the stability of a particular vari-
+mesoscopic charge segregation, i.e., charge density waves                      ational wave  function,  its  accuracy being  related  to  the
+(CDW)  or  the  celebrated  stripes.    In  the  last  decade,                 diﬀerences between its properties and the ones obtained
+a   great  number  of  direct  and   indirect  evidences   for                 with the improved FN state.
+such  charge  segregation  has  been  presented  in  diﬀerent                     In  this  paper,  we  will  revisit  the  problem  of  the  PS
+cuprate  and  nickelate  materials,  stimulating  theoretical                  instability in the t−J  model on the square lattice.  This
+investigations in simple microscopic models.1 Several au-                      issue  has  been  largely  considered  by  several  authors  in
+thors  addressed  the  possibility  of  the  emergence  of  PS                 the recent past.11,12,13,14,15,16,17  Although, a great eﬀort
+or  CDW  generating  from  the  competition  between  the                      has  been  done,  a  general  consensus  for  J/t  ≲  0.6  and
+kinetic energy, that tends to delocalize the charge carri-                     small  hole  doping  δ  is  still  laking.   The  t−J  model  is
+ers,  and  various  local  interactions  (like  for  instance  the             deﬁned by:
+on-site Coulomb repulsion, the antiferromagnetic super-                                                                        (                     )
+exchange or the coupling with some local phonon), that                           H = −t  ∑        c†i,σcj,σ + h.c. + J ∑         Si · Sj − 14ninj       ,
+instead tend to freeze the electrons.                                                      ⟨i,j⟩σ                        ⟨i,j⟩
+   Given the complexity of the strongly correlated prob-                                                                                              (1)
+lem, that contains diﬀerent energy scales, it is very diﬃ-                     where  ⟨. . . ⟩  indicates  the   nearest-neighbor  sites,   c†i,σ
+                                                                                                                                                      2
+
+(ci,σ)  creates  (destroys)  an  electron  with  spin  σ  on  the             for  the  Heisenberg  model,  it  has  been  shown22  that  an
+site  i,  Si   =  (Sxi , Syi , Szi )  is  the  spin  operator,  Sαi    =      exceptionally accurate description of the ground state is
+∑                                                                             obtained by applying a long-range spin Jastrow factor to
+   σ,σ′ c†i,στ ασ,σ′ci,σ′,   being  τ α   the  Pauli  matrices,   and
+ni  =  ∑                                                                      the classically ordered state.  In the  corresponding vari-
+           σ c†i,σci,σ  is  the  density  operator.   We  consider            ational wave function  it is  important that the  Gaussian
+a square lattice with L sites and periodic boundary con-                      ﬂuctuations induced by the Jastrow term are orthogonal
+ditions rotated by 45 degrees such that L = 2l2, l being                      to  the  direction  of  the  order  parameter,  in  order  to  re-
+an odd integer, so that the non-interacting ground state                      produce  correctly  the  low-energy  excitations.   A  simple
+is non-degenerate at half ﬁlling, thus reducing the ﬁnite-                    generalization of this wave function was used to study the
+size eﬀects.  Finally, J  is the antiferromagnetic exchange                   Hubbard model  at  half  ﬁlling  and  for  low doping.23  On
+constant  and  t  the  amplitude  for  nearest-neighbor  hop-                 the other hand, it is well known24,25,26  that a projected
+ping.  In the following we will take t = 1.                                   BCS  state  with  dx2−y2  symmetry  and  no  antiferromag-
+  For  very  large  J/t,  at  small  hole  doping,  the  ground               netic  order  provides  an  accurate  wave  function  for  the
+state is  phase separated between undoped  regions, with                      low-doping region of the t−J  model and remains rather
+long-range antiferromagnetic  correlations,  and  conduct-                    accurate  in  energy  even  at  zero  doping,  where  a  mag-
+ing  hole-rich  regions.   The  simple  explanation  is  based                netically ordered ground state is well established in two
+on  the  fact  that  the  magnetic  gain in  accumulating  the                dimensions.  Therefore, in order to have an accurate vari-
+holes in a  given region of space  is much larger than the                    ational ansatz to describe lightly doped correlated insu-
+loss  of the  kinetic  energy.  Therefore,  a  phase  separated               lators, it seems natural to include both antiferromagnetic
+state will have a lower energy than an homogeneous one.                       correlations and electronic pairing.27
+By decreasing J/t, the situation is much less clear, since                       Following these suggestions, we construct a very accu-
+the magnetic gain becomes comparable with the kinetic                         rate variational wave function that describes an energet-
+one.  Emery,  Kivelson, and  Lin,3  by  using  simple  varia-                 ically stable homogeneous phase.  Moreover, by consider-
+tional  arguments,  claimed  that  the  ground  state  of  the                ing th FN approach, we have a strong evidence in favor
+t−J  model  should  phase  separate  for  all  values  of  the                of an homogeneous ground state for J/t ≲ 0.7 for all the
+antiferromagnetic coupling and close to half ﬁlling.  This                    accessible hole doping.
+claim was ﬁrstly conﬁrmed by using a more sophisticated                          The paper is organized as follow:  in Sec. II we present
+Monte  Carlo  technique12,  but  then  disclaimed  by  other                  the   improved  variational  wave  function   and   the   FN
+authors, using slightly diﬀerent Monte Carlo approaches                       method,  in  Sec.  III  we  show  our  numerical  results,  and
+and  series  expansions.13,14,15,16  In  particular,  two  of  us             ﬁnally in Sec. IV we draw our conclusions.
+showed that, by ﬁltering out the high-energy components
+of a projected BCS wave function, it was possible to ob-
+tain an homogeneous ground state for J/t ∼ 0.4.15 Later,
+this  approach  was  questioned  in  Ref.  18,  since  it  was                    II.     THE  VARIATIONAL  WAVE  FUNCTION
+noted  that  the  ground state  is  still  unstable  against PS                                  AND  THE  FN  METHOD
+for very small hole doping, where our numerical approach
+had technical problems.  In particular, it has been shown                        In  this  section  we  describe  the  variational  state  and
+that Monte Carlo results could indicate an instability for                    the generalized FN  method that  is  used to  ﬁlter  out its
+δ  ≲  0.05.   Moreover,  it  was  disappointing  that  it  was                high-energy components.  Our variational ansatz is  con-
+not possible to deﬁne a stable variational wave function                      structed  by  applying  diﬀerent  projector  operators  to  a
+and that an homogeneous state was obtained only after                         mean-ﬁeld state:
+the  ﬁltering  procedure.   From  all  the  calculations  done
+by diﬀerent numerical techniques, it is now clear that, in                                     |ΨV MC⟩ = JsJdPN PG|ΨMF ⟩,                  (2)
+any case, the t−J  model for J/t ∼ 0.5 is on the verge of
+charge instabilities, and both PS or CDW can be  stabi-                       where PG is the Gutzwiller projector that forbids double
+lized with small perturbations.19,20,21                                       occupied  sites,  PN  is  the  projector  onto  the  subspace
+  A  key  issue  that  was  absent  in  previous  calculations                with  ﬁxed  number  of  N  particles,  Js  is  a  spin  Jastrow
+and  must  be  included  in  a  correct  description  is  the                 factor
+presence of antiferromagnetic correlations at low doping.                                                                       
+Recently,  by  using  a  variational approach that  contains                                                 1   ∑               ,                    (3)
+both  antiferromagnetism  and  d-wave  pairing,  Ivanov17                                       Js = exp        2      vijSzi Szj
+suggested that the  antiferromagnetic ordering could en-                                                           i,j
+hance  the  instability  towards  PS.  However,  in  his  ap-
+proach,  the  presence  of  an  antiferromagnetic  order  pa-                 being vij  variational parameters, and ﬁnally Jd is a den-
+rameter  in  the  fermionic  determinant  without  the  pres-                 sity Jastrow factor
+ence of a Jastrow term to take into account spin ﬂuctu-                                                                         
+ations implies a wrong behavior of the spin properties at                                                         ∑               ,                    (4)
+small momenta, that in turn could also induce incorrect                                          Jd = exp12           uijninj
+charge properties.  In fact, by using a spin-wave approach                                                         i,j
+                                                                                                                                                         3
+
+being uij  other variational parameters.  The above wave
+function  can  be  eﬃciently  sampled  by  standard  varia-                          20
+tional  Monte  Carlo,  by  employing  a  random  walk  of  a
+conﬁguration  |x⟩,  deﬁned  by  the  electron  positions  and                                       RVB+AF
+their spin components along the z quantization axis.  In-                            15             Pfaff
+deed,  in  this  case,  both  Jastrow  terms  are  very  simple                                     FN Pfaff
+to  compute  since  they  only  represent  classical  weights
+acting on the conﬁguration.                                                          10
+   The  main  diﬀerence  from  previous  approaches  is  the
+presence  of  the  spin  Jastrow  factor  and  the  choice  of
+the mean-ﬁeld state |ΨMF ⟩, that includes both supercon-                              5
+ducting  and  antiferromagnetic  order parameters.  Actu-
+ally, |ΨMF ⟩ is taken as the ground state of the mean-ﬁeld                            0
+Hamiltonian                                                                            0          50        100       150       200       250       300
+                                                                                                                  L
+          HMF  = ∑         ti,jc†i,σcj,σ + h.c. − µ ∑ni,σ
+                      i,j,σ                            i,σ                      FIG.  1:    Results  for  the  total  spin  ⟨S2⟩  at  half  ﬁlling  as  a
+          + ∑     ∆i,j(c†i,↑c†j,↓ + c†j,↑c†i,↓ + h.c.) + HAF ,     (5)          function of the cluster size L for the wave function of Eq. (2)
+             ⟨i,j⟩                                                              deﬁned by the mean-ﬁeld Hamiltonian (5) and the two possi-
+                                                                                ble orientations of the magnetic ﬁeld, i.e., Eqs. (6), indicated
+where, in addition to the BCS pairing ∆i,j  (with d-wave                        by “Pfaﬀ”, and (7), indicated by “RVB+AF”. The FN results
+symmetry),  we  also  consider  a  staggered magnetic  ﬁeld                     for the former case are also shown.
+∆AF  in the x−y plane:
+                           ∑
+         HAF  = ∆AF            (−1)Ri(c†i,↑ci,↓ + c†i,↓ci,↑),        (6)           0.25
+                            i                                                                  <SzSz> RVB+AF
+                                                                                               <SS>   RVB+AF
+where ∆AF  is a variational parameter that, together with                            0.2       <SzSz> Pfaff WF
+                                                                                               <SS>   Pfaff WF
+the  chemical  potential  µ  and  the  next-nearest-neighbor                                   3 <SzSz> Pfaff FN
+hopping of Eq. (5), can be determined by minimizing the                            0.15
+variational  energy  of  H.   This  kind  of  mean-ﬁeld  wave
+function was ﬁrst introduced by Bouchaud, Georges, and                               0.1           Exact
+Lhuillier28 and then used to study He3 systems and small
+atoms and molecules.29,30 Recently, it has been also used                          0.05
+to study the t−J model on the triangular lattice.31 How-
+ever, in these approaches the role of the long-range spin                              0
+Jastrow  factor  was  missed.   We  emphasize  that,  in  the                           0            0.04          0.08          0.12          0.16
+mean-ﬁeld Hamiltonian (5), the magnetic order parame-                                                            L-1/2
+ter is in the x−y plane and not along the z direction like:
+                                                                                FIG.  2:    Spin-spin  correlations  at  the  maximum  distance  at
+                           ∑                                                    half  ﬁlling  for  the wave  functions of  Fig.  1.  The  exact  value
+         HAF  = ∆AF            (−1)Ri(c†i,↑ci,↑ − c†i,↓ci,↓).        (7)        in the thermodynamic limit is marked by the arrow.
+                            i
+
+Indeed,  as  already  mentioned  in  the  introduction,  only                   space.  Its ground state has the general form:
+in  the  case  of  Eq.  (6)  the  presence  of  the  spin  Jastrow                                                                      
+factor  (3)  can  introduce  relevant  ﬂuctuations  over  the                                                  ∑
+mean-ﬁeld order parameter ∆AF , leading to an accurate                               |ΨMF ⟩ = exp      12            f σi,σji,j     c†i,σic†j,σj |0⟩,        (8)
+description  of  the  spin  properties.   By  contrast,  if  the                                             i,j,σi,σj
+Jastrow potential is applied to the mean-ﬁeld ansatz (7),
+it  cannot  induce  correct  spin  ﬂuctuations  and  it  is  not                the pairing function f σiσjij      being an antisymmetric 4L ×
+eﬃcient in lowering the energy.                                                 4L matrix.  Notice that in the case of the standard BCS
+   Finally,  as  already  shown  in  Ref.  24,  the  presence  of               Hamiltonian, with ∆AF  = 0 or even with ∆AF  along z,
+the density Jastrow factor helps to reproduce the charge                        we have that f ↑,↑i,j   = f ↓,↓i,j   = 0, while in presence of mag-
+correlations of the superconducting regime, giving rise to                      netic ﬁeld in the x−y plane the pairing function acquires
+the correct Goldstone modes.                                                    non-zero  contributions  also  in  this  triplet  channel.  The
+   The  mean-ﬁled  Hamiltonian  (5)  is  quadratic  in  the                     technical diﬃculty when dealing with such a state is that,
+fermionic operators and can be easily diagonalized in real                      given a  generic conﬁguration with  deﬁnite  z-component
+                                                                                                                                                                   4
+
+
+
+      3
+    2.5                                                                                                                                 L=98
+                0.1                                                                                                                     L=162
+                                                                                                                                        L=242
+      2        0.05                                                                          0.1
+
+    1.5           0        π/4       π/2
+      1                        |q|                                                         0.05
+               Long-range Jastrow
+    0.5        Short-range Jastrow
+
+      00                π/2                  π                   3π/2                          00                     0.05                   0.1
+                                    |q|                                                                                     δ
+
+
+FIG. 3:   Spin structure factor S(q) at half ﬁlling for the vari-                    FIG. 4:    FN  results  for  the spin-spin  correlations  (along  the
+ational  wave  function  of  Eq.  (2)  deﬁned  by  the  mean-ﬁeld                    z  direction)  at  the  maximum  distance  as  a  function  of  the
+Hamiltonian  of  Eqs.  (5)  and  (6)  with  long-range  and  short-                  doping for diﬀerent sizes of the cluster.
+range  (i.e.,  nearest-neighbor)  Jastrow  factors.   Inset:  Detail
+for small momenta.
+
+of the spin |x⟩ = c†i1,σ1 . . . c†iN ,σN |0⟩, we have that:                              -1.35                            -0.8
+                                                                                          -1.4  J/t=0.4                                   J/t=0.6-0.85
+                          ⟨x|ΨMF ⟩ = P f[F ],                            (9)             -1.45                            -0.9
+                                                                                           -1.5
+where P f[F ] is the Pfaﬃan of the pairing function.32  It                               -1.55                           -0.95
+should  be  noticed  that,  whenever  f ↑,↑i,j   =  f ↓,↓i,j   =  0,  the                 -1.60       0.04    0.08    0.12    0.16-10       0.04     0.08     0.12     0.16
+usual form of ⟨x|ΨMF ⟩ written in terms of a determinant                                 -0.25
+is  recovered.   The  fact  of  dealing  with  Pfaﬃans  makes                              -0.3                           0.25
+the algorithm slower than the case of determinants, but                                  -0.35  J/t=0.8                                   J/t=10.2
+                                                                                                                          0.15
+the  important point is that the algebra of Pfaﬃans still                                 -0.4                             0.1
+allows us to  have a very eﬃcient updating  procedure in                                 -0.45                            0.05
+the  Monte  Carlo  calculation.   Then,  by  using  the  mini-                             -0.50       0.04    0.08    0.12    0.1600       0.04     0.08     0.12     0.16
+mization  technique  described  in  Ref.  33,  we  are  able  to                                          δ                               δ
+deal with  a  large number  of  variational parameters and
+in particular we can optimize all the independent coeﬃ-
+cient vij  and uij, beside the parameters contained in the                           FIG.  5:    Energy  per  hole  eh(δ)  as  a  function  of  the  doping
+mean-ﬁeld Hamiltonian (5).                                                           δ  for  the  26-site  cluster  calculated  by  diﬀerent  approaches:
+   The variational accuracy of a given wave function can                             The  variational  calculations  for  the  Pfaﬃan  wave  function
+be  assessed  by  the  FN  method  that  allows  one  to  ﬁlter                      (circles), the FN approach of Eq. (11) (squares), and the ex-
+out the  high-energy components of a given state and to                              pectation value of the Hamiltonian over the FN ground state
+ﬁnd  the  best  variational  state  with  the  same  nodes  of                       given by Eq. (15) (triangles); the exact results are also shown
+the  starting  one.34  On  the  lattice,  the  FN  method  can                       (diamonds).
+be  simply  deﬁned  as  follows:   Starting  from  the  origi-
+nal Hamiltonian H we deﬁne an eﬀective Hamiltonian by
+adding a perturbation O:                                                             where  Ψx  = ⟨x|Ψ⟩.  Notice  that  the  above operator  an-
+                       Hγ                                                            nihilates the guiding function, namely O|Ψ⟩ = 0.  There-
+                          eff  = H + (1 + γ)O,                       (10)            fore, whenever the guiding function is close to the exact
+here we follow Ref. 35 and introduce the external param-                             ground state of H the perturbation (1 + γ)O is expected
+eter  γ,  the  original  FN  approximation  of  Ref.  34  being                      to be  small and the eﬀective  Hamiltonian becomes very
+recovered for γ  = 0.  The operator O  is deﬁned through                             close to the original one.
+its  matrix  elements  and  depends  upon  a  given  guiding                            Let  us  review  the  properties  of  the  FN  Hamiltonian.
+function  |Ψ⟩,  that  is  for  instance  the  variational  state                     Trivially, for γ = −1, Hγeff  coincides with H, as the per-
+itself, i.e., |ΨV MC⟩:                                                               turbation vanishes.  The most important property of this
+           { −Hx′,x                     if sx′,x = Ψx′Hx′,xΨx > 0                    eﬀective  Hamiltonian  is  that  for  γ  ≥  0  its  ground state
+Ox′,x =        ∑                                                                     |Ψγ0⟩  can  be  eﬃciently  computed  by  using  the  Green’s
+                  y,sy,x>0 Hy,x ΨyΨx   for x′ = x,                                   function  Monte  Carlo technique,36,37  that  allows one  to
+                                                                                                                                                               5
+
+                                                                                   this  case  all  the  matrix  elements  of  G  are  non-negative
+                                                                                   and,  therefore,  it  can  represent  a  transition  probability
+     -1.3         L=98 Pfaff                                                       in  conﬁguration  space,  apart  for  a  normalization  factor
+                  L=162 Pfaff                                                      bx = ∑x′ Gx′,x.  In this case, it follows immediately that
+    -1.35         L=242 Pfaff                                                      the asymptotic distribution Π is also positive and, there-
+                  L=98 RVB
+                  L=162 RVB                                                        fore, we arrive at the important conclusion that for γ ≥ 0
+                  L=162 extrapolated
+     -1.4                                                                          the ground state of Hγeff  has the same signs of the cho-
+
+                                       -1.35                                       sen guiding function.  Within the FN approximation, we
+    -1.45                              -1.36                                       have a  direct  access to  the  ground-state energy EγF N  of
+                                       -1.37                                       the eﬀective Hamiltonian by sampling the so-called local
+                                       -1.38
+     -1.5                              -1.39         VMC                           energy eL(x) = ⟨x|H|Ψ⟩/⟨x|Ψ⟩ over the distribution Πx.
+
+                                          0          0.02        0.04        0.06  In the following, we will denote the standard FN energy
+    -1.55                                                                          for γ = 0 simply by EF N .  It should be noted that, since
+         0                  0.1                0.2                0.3                0.4O|Ψ⟩ = 0,  we  have that EγF N  is  also  the  mixed average
+                                    δ                                              of the original Hamiltonian
+
+                                                                                                Eγ             0|Hγeff |Ψγ0⟩                   0⟩
+FIG. 6:   Energy per hole eh(δ) as a function of the doping δ                                      F N  =  ⟨Ψγ⟨Ψγ0|Ψγ0⟩       =  ⟨Ψ|H|Ψγ⟨Ψ|Ψγ0⟩   .          (11)
+for J/t = 0.4 and diﬀerent sizes.  The results are obtained by
+using  the  FN  approach  described  in  the  text.  Two  diﬀerent                    EγF N gives a rigorous upper bound of the exact ground-
+states are used as guiding function:  The simple non-magnetic                      state energy E0  = Eγ=−1F N     since it is  an increasing func-
+state, denoted by “RVB” and the state with pairing, antifer-                       tion of γ  as the operator O  is positive deﬁnite39  and by
+romagnetism  in  the x−y  plane,  and  the spin  Jastrow  factor,                  the Hellman-Feynman theorem:
+denoted  by  “Pfaﬀ”.   The  expectation  value  of  the  Hamilto-
+nian  over  the  FN  ground  state  are  also  shown  for  L  =  162                       dEγF N            eff ⟩           eff
+for the latter case.  Inset:  Variational energy per hole for the                            dγ     =  d⟨Hγdγ       = ⟨dHγdγ    ⟩ = ⟨O⟩ ≥ 0,          (12)
+Pfaﬃan wave function.
+                                                                                   here  ⟨. . . ⟩  indicates  the  expectation  value  over  |Ψγ0⟩.
+                                                                                   This  upper  bound  is  also  certainly  below  or  equal  to
+                                                                                   the   variational  energy  of  the   guiding  function   E   =
+    0.6                                                                            ⟨Ψ|H|Ψ⟩/⟨Ψ|Ψ⟩,  since  from  O|Ψ⟩  =  0  it  follows  that  E
+                                                                                   is also the expectation value of the FN Hamiltonian over
+                                                                                   |Ψ⟩, namely E = ⟨Ψ|Hγeff |Ψ⟩/⟨Ψ|Ψ⟩.
+                                                                                      One  of  the  advantages  of  having  introduced  the  pa-
+    0.4       -1.3                                                                 rameter γ is that it is possible to extract the expectation
+                          L=98                                                     value  of  the  original  Hamiltonian  H  over  the  FN  state
+              -1.4        L=162                                                    |Ψγ
+                          L=242                                                       0⟩.  Indeed, by applying Eq. (12), we have that:
+    0.2       -1.5                                                                            Eγ                                                eff ⟩
+                                                                                                Ψ0  = ⟨H⟩  =  ⟨Hγeff ⟩ − (1 + γ)d⟨Hγdγ
+              -1.60           0.05         0.1         0.15
+                                δ                                                                             =  Eγ                        F N
+      00                             0.005                          0.01                                             F N − (1 + γ)dEγdγ    ,            (13)
+                                   1/L                                             and therefore, by doing simulations for diﬀerent values of
+                                                                                   γ to calculate numerically the derivative, it is possible to
+FIG.  7:    The  inverse  compressibility  of  the  half-ﬁlled  Mott               evaluate the expectation value of H over the ground state
+insulator  for  J/t  =  0.4  calculated  by  extracting  the  second               of  the  FN  Hamiltonian.   Moreover,  by  using  the  deﬁni-
+derivative of the polynomial ﬁt of the FN energy.  Inset:  The                     tion (13) and the fact that EγF N  is a convex function,35
+chemical potential, deﬁned through the diﬀerence of ground-                        it turns out that:
+state  energies,  as  a  function  of  the  doping  for  diﬀerent  sizes                             dEγ
+of the cluster.                                                                                          Ψ0                        F N
+                                                                                                       dγ    = −(1 + γ)d2Eγdγ2     > 0,                (14)
+sample  the  distribution  Πx   ∝   ⟨x|Ψ⟩⟨x|Ψγ                                     namely EγΨ0  is monotonically increasing with γ.  A prac-
+                                                           0⟩  by  means           tical  estimate  of  Eγ=0
+of  a  statistical  implementation  of  the  power  method:                        can  be  obtained  within  a  stable  statistical method,  canΨ0   ,  the  best  variational energy  that
+Π  ∝ limn→∞ GnΠ0,  where  Π0  is  a  starting  distribution                        be worked out by performing two calculations for γ = 0
+and Gx′,x  = Ψx′(Λδx′,x − Hγeff,x′,x)/Ψx, is the so-called                         and γ = ˜γ > 0 via:
+Green’s  function,  deﬁned with  a  large or even inﬁnite38
+positive  constant  Λ,  δx′,x  being  the  Kronecker  symbol.                                       ˜Eγ=0
+The statistical method is very eﬃcient for γ ≥ 0, since in                                           Ψ0    = EF N −  1˜γ (E˜γF N − EF N ),              (15)
+                                                                                                                                                         6
+
+                                                                                In  particular,  at  half  ﬁlling  the  FN  is  exact  (within  the
+                                                                                error-bars),  i.e.,   EF N /L   =   −1.184450(2)  (in  unit  of
+                                                                                J  =  1),  whereas  the  variational  energy  is  already  very
+    -0.88                L=98 Pfaff                                             good  EV MC/L  =  −1.18213(1).  On  the  other  hand,  al-
+                         L=162 Pfaff                                            though the signs of the  non-magnetic wave function are
+                         L=162 RVB
+                         L=162 extrapolated                                     correct  (with  the  choice  of  ti,j  and  ∆i,j  connecting  op-
+     -0.9                                                                       posite  sublattices  and  µ  =  0),  the  non-magnetic  wave
+                                                                                function vanishes on many relevant conﬁgurations.  This
+    -0.92                                                                       implies that, due to the importance sampling procedure
+                                                                                described  before,  such  conﬁgurations  are  never  visited
+                                              J/t=0.6                           by the Markov process, leading to EF N /L = −1.1833(3),
+    -0.94                                                                       despite the fact that the variational energy is not so poor
+                                                                                EV MC/L = −1.15334(1). We also notice that in this case
+         0         0.05        0.1        0.15        0.2        0.25        0.3the FN is highly unstable and many walkers are needed
+                                   δ                                            to stabilize its convergence.
+                                                                                   It is important to stress that the concomitant presence
+         FIG. 8:   The same as in Fig. 6 for J/t = 0.6.                         of  the  magnetic  order  parameter  ∆AF ,  that  breaks  the
+                                                                                SU(2) spin symmetry of the electronic part, and the spin
+                                                                                Jastrow factor of Eq. (3), that also breaks the spin sym-
+                                                                                metry, gives rise to an almost symmetric state, even for
+                                                                                large sizes.  This can be veriﬁed by calculating the total
+     -0.32                                                                      spin S2:  In Fig. 1 we report the results for the two wave
+                    L=98 Pfaff                                                  functions with magnetic order in the x−y plane and along
+     -0.34          L=162 Pfaff                                                 the z direction, usually considered to describe the lightly
+                    L=242                                                       doped region.17,40  In the same ﬁgure, we also report the
+     -0.36          L=162 extrapolated                                          FN value of S2 (by using the former state as the guiding
+
+      -0.38                                                                     function) in order to show that a totally symmetric state
+                                                                                is eventually recovered.
+       -0.4                                                                        By a direct calculation of the spin-spin correlations at
+                                                                                the maximum distance, we obtain that also the value of
+     -0.42                                       J/t=0.8                        the magnetization at half ﬁlling is in a very good agree-
+                                                                                ment with the exact result,37,41  see Fig. 2.  It should be
+     -0.440              0.1            0.2             0.3            0.4             0.5noted that the variational wave function with the magne-
+                                    δ                                           tization in the x−y plane and the spin Jastrow factor has
+                                                                                very accurate isotropic spin-spin correlations, though in
+                                                                                the z direction they decay to zero in the thermodynamic
+         FIG. 9:   The same as in Fig. 6 for J/t = 0.8.                         limit.   By  performing  the  FN  approach (with  γ  =  0),  a
+                                                                                ﬁnite value for the correlations along z  is recovered.  By
+                                                                                contrast,  when  the  magnetization is  directed  along  z  in
+˜Eγ=0Ψ0    certainly  improves the  standard FN  upper  bound                   the  variational  ansatz,  the  spin  correlations  are  almost
+of the energy and still  ˜Eγ=0                                                  Ising-like in the same direction and lead to overestimate
+                               Ψ0    ≥ Eγ=0Ψ0  .  This latter inequal-          the  thermodynamic  value  of  the  magnetization,  namely
+ity follows from the convexity of EγF N , implying that its                     m ∼ 0.37, see Fig. 2.
+ﬁrst derivative at γ = 0 is certainly larger or equal than                         Finally,  we  want  to  stress  that  the  long-range  tail  of
+the corresponding ﬁnite diﬀerence estimate.  In order to                        the spin Jastrow factor, obtained by minimizing the en-
+obtain a compromise between having small enough statis-                         ergy  and  leading  to  vq  ∼  1/|q|  for  small  |q|  (vq  being
+tical errors and a reasonable energy gain with respect to                       the Fourier transform of vij), is necessary to correctly re-
+the mixed average of Eq. (11), we have computed  ˜Eγ=0Ψ0                        produce the small-q behavior of the spin-structure factor
+using ˜γ = 1.
+   In order to show the accuracy of the wave function (2)                                                     ∑
+and  the  FN  method,  we  report  in  Table  I  and  II  the                                    S(q) =  1         eiq(Rl−Rm)Szl Szm.               (16)
+energies  for  2  and  4  holes  in  26  sites  compared  with                                             L  l,m
+the  exact  diagonalization  data;   in  the  same  table  we
+also  show  the  results  obtained  from  the  wave  function                   Indeed, as it is clear from Fig. 3, only with a long-range
+without the antiferromagnetic order parameter.  Finally,                        spin Jastrow factor, it is possible to obtain S(q) ∼ |q| for
+we  report  the  values  of  the  extrapolated  energies   ˜Eγ=0Ψ0              small momenta and, therefore, a gapless spin spectrum.
+given  by  Eq.  (15).   The  inclusion  of  the  magnetic  ﬁeld                 By  contrast,  with  a  short-range  spin  Jastrow  term  (for
+and  the  spin  Jastrow  factor  strongly  improve  the  en-                    instance with a nearest-neighbor term), S(q) ∼ const, for
+ergies  with  respect  to  the  non-magnetic  wave  function.                   small q, that is clearly not correct.
+                                                                                                                                                           7
+
+
+TABLE I:   Ground state energy for 2 holes on 26 sites and diﬀerent values of J/t.  Two wave function with and without ∆AF
+are indicated with “Pfaﬀ” and “RVB”, respectively.  The variational results are indicated by VMC and the ﬁxed-node ones by
+FN. In the last two columns we report the extrapolated value of Eq. (15) with the Pfaﬃan wave function and exact results by
+Lanczos method, respectively.
+                                J/t   ERV BV MC/L      ERV BF N   /L     EP faffV MC  /L    EP faffF N     /L      ˜Eγ=0Ψ0  /L      Eex/L
+                                0.3  -0.48334(1)  -0.49256(1)  -0.48476(1)  -0.49325(1)  -0.49445(2)  -0.50097
+                                0.4  -0.57664(1)  -0.58625(1)  -0.57978(1)  -0.58770(1)  -0.58881(2)  -0.59452
+                                0.5  -0.67045(1)  -0.68091(1)  -0.67568(1)  -0.68327(1)  -0.68434(3)  -0.68945
+                                0.6  -0.76463(1)  -0.77645(1)  -0.77228(1)  -0.77960(1)  -0.78062(3)  -0.78537
+                                0.8  -0.95410(1)  -0.96920(1)  -0.96706(1)  -0.97414(1)  -0.97505(3)  -0.97935
+                                1.0  -1.14483(1)  -1.16385(1)  -1.16352(1)  -1.17052(1)  -1.17136(2)  -1.17538
+
+
+                                       TABLE II:   The same as in Table I but for 4 holes on 26 sites.
+                                J/t   ERV BV MC/L      ERV BF N   /L     EP faffV MC  /L    EP faffF N     /L      ˜Eγ=0Ψ0  /L      Eex/L
+                                0.3  -0.61372(1)  -0.62752(1)  -0.61478(1)  -0.62754(1)  -0.62958(3)  -0.64262
+                                0.4  -0.68894(1)  -0.70101(1)  -0.68946(1)  -0.70106(1)  -0.70292(2)  -0.71437
+                                0.5  -0.76461(1)  -0.77571(1)  -0.76512(1)  -0.77595(1)  -0.77770(4)  -0.78812
+                                0.6  -0.84065(1)  -0.85132(1)  -0.84170(1)  -0.85189(1)  -0.85348(3)  -0.86337
+                                0.8  -0.99361(1)  -1.00476(1)  -0.99709(1)  -1.00659(1)  -1.00806(2)  -1.01733
+                                1.0  -1.14760(1)  -1.16072(1)  -1.15479(1)  -1.16422(1)  -1.16566(3)  -1.17493
+
+
+
+                          III.     RESULTS                                       the wave function (2) are very accurate, there is a strong
+                                                                                 improvement  by  considering  the  FN  approach,  both  in
+   Before considering the PS instability, we show in Fig. 4                      the  mixed  average of  Eq.  (11)  and  in  the  extrapolation
+the results for the spin-spin correlations at the maximum                        of Eq. (15), for which a perfect estimation of the slope is
+distance  as  a  function  of the  doping.  We  have  that  the                  obtained.
+magnetic order survives up to δ ∼ 0.1, in agreement with                            Then we can move to large cluster to extract the ther-
+previous calculations17,42 and showing the importance to                         modynamic properties.  We report in Fig. 6 the results of
+include the magnetic parameter into the variational wave                         the  energy  per  hole  for  J/t = 0.4.  For  comparison,  the
+function.  Unfortunately, a precise size scaling analysis is                     FN  calculations  for  γ  =  0  are  performed  by  using  two
+not  possible  at ﬁnite  hole  concentration, since  only  dis-                  diﬀerent guiding functions,  including  or not the  antifer-
+crete values of the doping are achievable and very rarely                        romagnetic order parameter and the spin Jastrow factor.
+they are compatible from cluster to cluster.                                     At large doping the results are independent on the choice
+   Let us move to the central issue of this work.  In order                      of the guiding state, clearly indicating that the antiferro-
+to detect a possible PS instability, it is convenient to fol-                    magnetism is  not essential.  However, by  decreasing the
+low the criterion given in Ref. 3 and consider the energy                        hole concentration, the inclusion of the antiferromagnetic
+per hole:                                                                        order becomes crucial for the  stabilization of the  homo-
+                                                                                 geneous phase,  whereas the  simple projected BCS state
+                        eh(δ) =  e(δ) − e(0)δ         ,                         (17)is  eventually  unstable  at  small  doping.  This  latter  out-
+                                                                                 come actually is in agreement with our previous calcula-
+where  e(δ)  is  the  energy  per  site  at  hole  doping  δ  and                tions15  and conﬁrms what has been noticed by Hellberg
+e(0) is its value at half ﬁlling.  For a stable system, eh(δ)                    and Manousakis18 and interpreted as an evidence for PS
+must  be  a  monotonically  increasing  function  of  δ,  since                  close  to  the  insulating  limit.   By  contrast,  our  present
+in this case the energy is a convex function of the doping                       FN  results,  based  on  the  wave  function  with  antiferro-
+and eh(δ) represents the chord joining half ﬁlling and the                       magnetic ﬂuctuations,  strongly improve the  accuracy of
+doping δ.  On the other hand, the PS instability is marked                       previous calculations for small doping and point towards
+by a minimum at a given δc  on ﬁnite clusters, and a ﬂat                         the stability  of the homogeneous phase for  all hole  con-
+behavior up to δc  in the thermodynamic limit where the                          centrations.  Quite impressively, the energies are very ac-
+Maxwell construction is implied.                                                 curate  on  the  whole  doping  regime  analyzed  and  there
+   Firstly,  Fig.  5  shows  the  results  of  eh(δ)  for  diﬀerent              is not a qualitative diﬀerence if one considers the expec-
+ratios J/t on the 26-site cluster, where the exact data are                      tation  value  of  the  Hamiltonian  (15),  see  Fig  6.   These
+available  by  the  Lanczos  method.   Although  these  data                     results  indicate  that  the  ground  state  is  stable  for  all
+are already contained in tables  I  and II,  their  graphical                    the  hole  concentrations,  namely  down  to  δ  ∼  0.01  (i.e.,
+representation better shows our accuracy to estimate the                         two  holes  on  242  sites),  strongly  improving  our  previ-
+slope of the energy per hole.  In particular, we stress the                      ous  estimate  of  the  phase  diagram.    Remarkably,  also
+fact that,  even though already the  variational results of                      the  variational wave  function  is  stable  for  such value  of
+                                                                                                                                                           8
+
+                                                                                 dimensional case, where the charge properties can be sim-
+       0.1                                                                       ply understood by considering spinless fermions.  Instead,
+                                                                                 within our FN approach, we ﬁnd that the compressibility
+      0.09                J/t=0.3                                                stays ﬁnite  up  to  half ﬁlling.  Indeed,  for  J/t = 0.4 and
+                          J/t=0.4                                                in general for the stable magnetic phase, the variational
+      0.08                J/t=0.5
+                          J/t=0.6                                                calculation  provides  a  ﬁnite  compressibility  that  is  fur-
+                          J/t=0.7
+      0.07                J/t=0.8                                                ther decreased by the more accurate FN approximation.
+      0.06                                                                       It should be noticed that a much larger compressibility,
+                                                                                 or  even an  inﬁnite  one,  could  be  worked out  when  con-
+      0.05                                                                       sidering  only  small  size  calculations,  like  the  ones  used
+      0.04                                                                       in Ref. 43 to obtain χ ∼ |µ − µc|−1/2 ∼ δ−1  (where µ is
+                                                                                 the chemical potential and µc  is nothing but the charge
+      0.03                                                                       gap at half  ﬁlling):  In  this  case,  it is  possible  to  under-
+           Γ                              X                    M                 Γestimate  the  slope  of  the  energy  at  small  doping  and,
+                                    q                                            therefore,  also  to  overestimate  the  value  of  χ.   Instead,
+                                                                                 from our  large  cluster  calculations,  we  have  a  clear  evi-
+FIG.  10:    FN  results  for  the density  correlation  function  for           dence that the chemical potential is linear with the dop-
+8  holes  on  162  sites  and  diﬀerent  values  of  J/t.   The  high-           ing  close  to  half  ﬁlling  or,  equivalently,  that  e(δ)  ∼  δ2,
+symmetry  points  are  marked  as  Γ  =  (0, 0),  X  =  (π, π),  and             implying a ﬁnite compressibility when δ → 0, see Fig. 7.
+M  = (π, 0).                                                                     Our  calculations  are  rather  robust  and  do  not  depend
+                                                                                 upon the number of holes considered and a very accurate
+                                                                                 polynomial ﬁt of the energy turns out to be very stable.
+                                                                                 We  argue that  the  inﬁnite  compressibility  scenario pro-
+      0.16                                                                       posed by Imada and coworkers could be correct when the
+                          J/t=0.4                                                antiferromagnetism does not play an important role and
+      0.14                J/t=0.5                                                the  undoped  system  is  a  spin  liquid  with  no  magnetic
+                          J/t=0.6                                                order.   This  is  also  supported  by  dynamical  mean-ﬁeld
+                          J/t=0.7
+      0.12                J/t=0.8                                                theory  calculations  by  Kotliar  and  coworkers45  on  the
+                                                                                 Hubbard  model,  where  the  mean-ﬁeld  solution  without
+        0.1                                                                      an antiferromagnetic order parameter leads to  a diverg-
+                                                                                 ing compressibility close to the Mott regime.
+      0.08                                                                          By  increasing  the  antiferromagnetic  super-exchange,
+                                                                                 we  come  closer to  the  PS  region.  Indeed,  for  J/t = 0.6
+      0.06                                                                       we obtain that the energy per hole eh(δ) shows a slightly
+           Γ                           X                       M                 Γnon-monotonic behavior with a minimum for δc  ∼ 0.17,
+                                    q                                            when  considering  the  FN  energies.   This  minimum  dis-
+                                                                                 appears  by  performing  the  extrapolation  of  Eq.  (15)  to
+                                                                                 estimate  the  expectation  value  of  the  t−J  Hamiltonian
+FIG. 11:   The same as in Fig. 10 but for 16 holes on 162 sites.                 over  the  FN  ground  state,  see  Fig.  8.   This  fact  would
+                                                                                 indicate  that,  for  this  value  of  J/t,  the  FN  Hamilto-
+the super-exchange interaction and small hole concentra-                         nian  (10)  has  an  higher  tendency  towards  PS  than  the
+tions,  see  the  inset  of  Fig  6.   To  our  knowledge,  this  is             original  t−J  model.   In  this  case,  the  mixed  average of
+the ﬁrst successful attempt to obtain a variational state                        Eq.  (11)  is  slightly  biased,  and  this  bias  can  be  elimi-
+which  is  clearly  stable  towards the  formation of  regions                   nated by considering the actual expectation value of the
+with segregated holes, when approaching the Mott insu-                           t−J  Hamiltonian  over  the  FN  ground  state.   In  doing
+lating regime.                                                                   this, we approach the exact result (by improving the en-
+   From  the  energy  calculation  it  is  straightforward  to                   ergy) and an homogeneous phase, with a monotonically
+estimate the compressibility χ for δ → 0:                                        increasing energy per hole, is obtained.  Within this more
+                                                                                 accurate scheme,  we  substantially  improve our previous
+                                                                                 results that were based on the mixed average of the FN
+                            χ−1 =  ∂2e(δ)∂δ2   .                             (18)approximation and  that  indicated  a  rather  high  critical
+                                                                                 doping.15 Unfortunately, within our numerical approach,
+Recently,   Imada  and  coworkers,43,44   by  using  hyper-                      it is very diﬃcult to study the possible formation of hole
+scaling arguments and numerical simulations on the Hub-                          droplets close to the PS instability, as suggested by Poil-
+bard model,  proposed that  the  compressibility must  di-                       blanc.46  Indeed,  this  would  require  a  very  delicate  size
+verge  when  the  insulating  phase  is  approached  by  de-                     scaling  of  the  binding  energy  of  few  holes,  which  is  be-
+creasing the doping concentration.  Their arguments im-                          yond our present possibilities.
+ply  that  e(δ)   ∼   δ3  for  small  doping,  as  in  the  one-                    By further increasing the super-exchange coupling, we
+                                                                                                                                                        9
+
+                                                                                                      IV.     CONCLUSION
+       1
+                                                                                  We have revisited the problem of the PS instability in
+                                            PS                                 the t−J  model.  By generalizing the Pfaﬃan wave func-
+    0.8                                                                        tion introduced some time ago,28 we have deﬁned a very
+                                                                               accurate  variational  state  that,  for  the  ﬁrst  one  to  our
+                                                                               knowledge,  is  stable  against  PS  at  low  doping.   In  par-
+    0.6                                                                        ticular,  we  have  shown  the  necessity  to  consider  both
+              Manousakis et al. Ref. 18                                        an  antiferromagnetic  order  parameter  (in  the  fermionic
+              Calandra et al. Ref. 15
+              This Work                                                        determinant)  and  a  spin  Jastrow  factor,  to  mimic  the
+    0.4                                                                        spin ﬂuctuations.  In this way all the low-energy proper-
+        0                   0.5                   1                   1.5      ties  of  the  exact  ground  state  are  correctly  reproduced.
+                                 J/t                                           Then,  by  using  a  more sophisticated Monte  Carlo  tech-
+                                                                               nique that can ﬁlter  out the  high-energy components of
+FIG. 12:   Boundary for the phase separation (PS) instability.                 a  given  trial  wave  function,  we  can  obtain  the  ground
+The results of previous works are also shown for comparison.                   state of an eﬀective Hamiltonian and, at the same time,
+The line is a guide to the eye.                                                assess the stability our initial guess.  So, we have shown
+                                                                               that for J/t = 0.4, the ground state does not phase sep-
+                                                                               arate  at  any  hole  doping  down  to  δ  ∼  0.01,  giving  a
+eventually  enter  into  the  PS  region:  For  J/t = 0.8,  the                serious  improvement  on  the  possible  PS  boundaries  at
+energy per hole has a rather deep minimum at ﬁnite dop-                        small  J/t.   Remarkably,  the  analysis  based  on  the  en-
+ing and also the expectation value (15) clearly indicates                      ergy  per  hole  is  also  corroborated by  the  calculation  of
+a non-monotonic behavior, see Fig. 9.                                          the  static  density-density  correlations.   The  phase  sep-
+                                                                               aration,  in  the  low  doping  region,  appears  at  a  critical
+   Finally,  it  is  important  to  stress  that  very  similar  re-           antiferromagnetic coupling slightly larger than the value
+sults  can  be  also  obtained  by  considering  the  density-                 given  in  Ref.  15,  namely  here  we  ﬁnd  Jc/t  ∼  0.7.   Al-
+density correlation function                                                   though  future  improvements  in  the  Monte  Carlo  tech-
+                                                                               nique or in the accuracy of the variational wave function
+                              ∑                                                may lead to an higher coupling, it looks unlikely to reach
+                 N(q) =  1         eiq(Rl−Rm)nlnm.               (19)          the critical point recently obtained by high-temperature
+                            L  l,m                                             expansion,11,16  i.e.,  Jc/t  ∼  1.2.    In  fact,  as  shown  in
+                                                                               Fig.  5,  our  present  accuracy  in  the  energy  per  hole  is
+                                                                               about   0.05t and its  slope  is  almost correct.  This  holds
+In this case, since N(q) is a diagonal operator in the con-                    rather  independently  of  J/t  and  system  sizes,  at  least
+ﬁguration space, it is  easy to  compute  its  average value                   for  the  clusters  where  exact  results  are  available.   For
+over the FN ground state by using the so-called forward-                       J/t  =  0.8  (see  Fig.  9),  the  minimum  of  the  energy  per
+walking technique.37 This quantity is therefore free from                      hole implies an energy gain for the inhomogeneous phase
+possible bias coming from mixed averages.  The PS insta-                       of  about  0.05t per  hole,  i.e.,  comparable with  our  max-
+bility is signaled by the divergence at small momenta of                       imum  possible  error  estimated  before.   Thus  we  expect
+N(q).  In our previous paper,15  we reported the calcula-                      that Jc/t cannot be much larger than 0.8 even for a nu-
+tions of this quantity, showing the  presence of a ﬁnite-q                     merically exact method.
+peak, linearly depending upon the doping, close to the PS                         Moreover,  we  have  obtained  that,  in  contrast  with
+instability.  Here,  thanks  to  the  accuracy of  the  guiding                what was found in the Hubbard model, the compressibil-
+function and the progress in stabilizing the statistical im-                   ity stays ﬁnite by approaching the Mott insulator.  A sim-
+plementation of the FN technique, we are able to present                       ple explanation of a ﬁnite compressibility in two dimen-
+much  more  accurate  results  that  conﬁrm  the  previous                     sions is obtained by by assuming that the holes form hole
+ones.   Indeed,  the  existence  of  this  peak  is  due  to  the              pockets around the nodal points [i.e., q = (±π/2, ±π/2)]
+closeness of  the  PS:  Figs. 10 and 11  show the  evolution                   and  behave  as  spinless  fermions,  implying  that  e(δ)  ≃
+of  N(q)  by  increasing  J/t  for  two  values  of  the  doping,              δ1+2/D,  where  D  is  the  spatial  dimension.   In  this  sim-
+near the  insulating regime.  In particular, we obtain the                     ple scenario the compressibility is  divergent only  in  one
+evidence  for  a  stable  homogeneous phase  for  J/t ∼ 0.4,                   dimension,  whereas  it  is  ﬁnite  in  two  dimensions,  and
+conﬁrming  the  indications  given  by  the  analysis  based                   should  approach  zero  in  three  dimensions,  leading  to  a
+upon the energy per hole.  Then also the progressive de-                       more conventional metal-insulator transition.
+velopment of a huge peak around q = (0, 0) for J/t ∼ 0.7                          The stability against phase separation of a wave func-
+is  in  good  agreement  with  the  energy  calculations.   All                tion with explicit antiferromagnetism and d-wave super-
+together,  these  results  allow  us  to  draw  our  ﬁnal  phase               conducting order parameter provides new insights for un-
+diagram of Fig. 12, where we report, for comparison, also                      derstanding  the  phase  diagram of  the  high-temperature
+some of the previous estimations for the PS boundaries.                        superconductors.  Remarkably, in the clean system, pos-
+                                                                                                                                                             10
+
+sibly idealized by the t−J model, the antiferromagnetism                           mogeneous phase.
+and the d-wave order parameter should not exclude each
+other,  at  least  at  the  variational level,  and  actually  co-                    This  research  has  been  supported  by  PRIN-COFIN
+operate to  decrease the  energy  and lead  to  a  stable  ho-                     2005 and CNR-INFM.
+
+
+
+
+
+
+
+ 1  For  a  recent  review,  see  for  instance,  S.A.  Kivelson,  I.P.            23  F.  Becca,  M.  Capone,  and  S.  Sorella,  Phys.  Rev.  B  62,
+   Bindloss,  E.  Fradkin,  V.  Oganesyan,  J.M.  Tranquada,  A.                      12700 (2000).
+   Kapitulnik,  and  C.  Howald,  Rev.  Mod.  Phys.  75,  1201                     24  S. Sorella, G.B. Martins, F. Becca, C. Gazza, L. Capriotti,
+   (2003). See also, E.W. Carlson, V.J. Emery, S.A. Kivelson,                         A.  Parola,  and  E.  Dagotto,  Phys.  Rev.  Lett.  88,  117002
+   and D. Orgad, cond-mat 0206217.                                                    (2002).
+ 2  V.J.Emery and S.A. Kivelson, Physica C 209, 597 (1993).                        25  A. Paramekanti, M. Randeria, and N. Trivedi, Phys. Rev.
+ 3  V.J. Emery, S.A. Kivelson, and H.Q. Lin, Phys. Rev. Lett.                         Lett. 87, 217002 (2001).
+   64, 475 (1990).                                                                 26  D.A.  Ivanov,  P.A.  Lee,  and  X.-G.  Wen,  Phys.  Rev.  Lett.
+ 4  J.M.  Tranquada,  B.J.  Sternlieb,  J.D.  Axe,  Y.  Nakamura,                     84, 3958 (2000).
+   and S. Uchida, Nature (London) 375, 561 (1995).                                 27  E. Plekhanov, F. Becca,  and S. Sorella,  Phys. Rev. B 71,
+ 5  J.M.  Tranquada,  J.D.  Axe,  N.  Ichikawa,  A.R.  Mooden-                        064511 (2005).
+   baugh, Y. Nakamura, and S. Uchida, Phys. Rev. Lett. 78,                         28  J.P.  Bouchaud,  A.  Georges,   and  C.  Lhuillier,  J.  Phys.
+   338 (1997).                                                                        (Paris) 49, 553 (1988).
+ 6  To our knowledge, the only cuprate superconductor show-                        29  J.  Carlson,  S.-Y.  Chang,  V.R.  Pandharipande,  and  K.E.
+   ing PS is La2CuO4+δ, due to the presence of mobile apical                          Schmidt, Phys. Rev. Lett. 91, 050401 (2003) .
+   Oxygens that can screen the Coulomb potential of the mo-                        30  M. Bajdich, L. Mitas, G. Drobny, L.K. Wagner, and K.E.
+   bile charges in the CuO2  plane. See for instance, J.D. Jor-                       Schmidt, Phys. Rev. Lett. 96, 130201 (2006).
+   gensen,  B.  Dabrowski,  S.  Pei,  D.G.  Hinks,  L.  Soderholm,                 31  C.  Weber,  A.  Lauchli,  F.  Mila,  and  T.  Giamarchi,  Phys.
+   B. Morosin, J.E. Schirber, E.L. Venturini, and D.S. Ginley,                        Rev. B 73, 014519 (2006).
+   Phys. Rev. B 38, 11337 (1988).                                                  32  In  general,  the  Pfaﬃan  of  a  2n × 2n  antisymmetric  ma-
+ 7  D. Poilblanc and T.M. Rice, Phys. Rev. B 39, 9749 (1989).                         trix χ is equal to the antisymmetric product of its matrix
+ 8  H.J. Schultz, Phys. Rev. Lett. 64, 1445 (1990).                                   elements,  i.e.,  P f[χ]  = A{χ1,2χ3,4 . . . χ2n−1,2n},  with  the
+ 9  C. Gros, Phys. Rev. B 38, 931 (1988).                                             constraint that each term χi1,j1χi2,j2 . . . χin,jn  has ik < jk
+10  H.  Yokoyama  and  H.  Shiba,  J.  Phys.  Soc.  Jpn.  56  1490                    and i1 < i2 < . . . in.
+   (1987); 56, 3582 (1987); 56, 1490 (1987).                                       33  S. Sorella, Phys. Rev. B 71, 241103 (2005).
+11  W.O.  Putikka,  M.U.  Luchini,  and  T.M.  Rice,  Phys.  Rev.                  34  D.F.B. ten Haaf, H.J.M. van Bemmel, J.M.J. van Leeuwen,
+   Lett. 68, 538 (1992).                                                              W.  van  Saarloos,  and  D.M.  Ceperley,  Phys.  Rev.  B  51,
+12  C.S.  Hellberg  and  E.  Manousakis,  Phys.  Rev.  Lett.  78,                     13039 (1995).
+   4609 (1997).                                                                    35  S. Sorella, cond-mat/0201388.
+13  M. Kohno, Phys. Rev. B 55, 1435 (1997).                                        36  N. Trivedi and D. Ceperley, Phys. Rev. B 41, 4552 (1990).
+14  C.T. Shih, Y.C. Chen, and T.K. Lee, Phys. Rev. B 57, 627                       37  M. Calandra and S. Sorella, Phys. Rev. B 57, 11446 (1998).
+   (1998).                                                                         38  S. Sorella and L. Capriotti, Phys. Rev. B 61, 2599 (2000).
+15  M.  Calandra,  F.  Becca,  and  S.  Sorella,  Phys.  Rev.  Lett.               39  This has been shown in Ref. 34, by proving that ⟨Φ|O|Φ⟩ ≥
+   81, 5185 (1998).                                                                   0 for any wave function |Φ⟩.
+16  W.O.  Putikka  and  M.U.  Luchini,  Phys.  Rev.  B  62,  1684                  40  G.J. Chen, R. Joynt, F.C. Zhang, and C. Gros, Phys. Rev.
+   (2000).                                                                            B 42, 2662 (1990).
+17  D.A. Ivanov, Phys. Rev. B 70, 104503 (2004).                                   41  A.W. Sandvik, Phys. Rev. B 56, 11678 (1997).
+18  C.S. Hellberg and E. Manousakis, Phys. Rev. B 61, 11787                        42  M. Calandra and S. Sorella, Phys. Rev. B 61, 11894 (2000).
+   (2000).                                                                         43  N.  Furukawa  and  M.  Imada,  J.  Phys.  Soc.  Jpn.  62,  2557
+19  S.R. White and D.J. Scalapino, Phys. Rev. Lett. 80, 1272                          (1993).
+   (1998).                                                                         44  F.F.  Assaad  and  M.  Imada,  Phys.  Rev.  Lett.  76,  3176
+20  S.R.  White  and  D.J.  Scalapino,  Phys.  Rev.  B  61,  6320                     (1996).
+   (2000).                                                                         45  G. Kotliar, S. Murty, and M. Rozenberg, Phys. Rev. Lett.
+21  F. Becca, L. Capriotti, and S. Sorella, Phys. Rev. Lett. 87,                      89, 046401 (2002).
+   167005 (2001).                                                                  46  D. Poilblanc, Phys. Rev. B 52, 9201 (1995).
+22  F.  Franjic  and  S.  Sorella,   Prog.  Theor.  Phys.  97,  399
+   (1997).

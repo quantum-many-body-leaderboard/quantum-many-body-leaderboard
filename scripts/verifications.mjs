@@ -34711,4 +34711,1659 @@ export const VERIFICATIONS = [
     "note": "Own VMC of |psi_KL> with the Wilson-loop projection (Eq. 43), variational; factor 2 (Eq. 28 at alpha = 1). It sits 0.00022 (0.11 sigma) below the Exact row -19.09178, within its bar. The loader had dropped it as a repeat of the same paper's Exact row (within the printed digits, a different method); restored 2026-10-24.",
     "source_entry": "famP4-arxiv-1411-5198#3 and #2 (qmbl-verify 2026-10-23; skeptic upheld); ruled 2026-10-24"
   },
+  // qmbl-verify 2026-10-23 (t-J branch), applied 2026-10-24: readings that found nothing wrong and the
+  // recomputation of the exact rows (checks/tj-exact-recompute-2026-10/); a row both verified is one entry.
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h1_J0.333333",
+      "method": "ED",
+      "energy": -8.26066666667
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2406.16865v1 (only version; sources/2406.16865.pdf + .txt, pypdf layout and plain modes) and the accepted manuscript of Phys. Rev. B 110, 155111 (CHORUS, dated 2024-09-23; sources/PhysRevB.110.155111-am.pdf, pypdf layout and plain modes). The publisher's version of record is closed access (APS page shows locked content); the accepted manuscript is the post-review text.; and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I, row ED, column Etot (arXiv v1 p. 3; AM p. 4)",
+    "reported_as": "ED -24.782 -7.553 -17.224 ±2",
+    "conversion": "-24.782 / 3 = -8.26066666667 (source H = 3 x instance H: J = 1, t/J = 3; instance t = 1, J = 1/3); stored -8.26066666667",
+    "note": "Et + EJ = -7.553 - 17.224 = -24.777 (printed Etot -24.782; the components are not used). QMBL's coronene diagonalization (checks/tj-ed-2026-10/results.jsonl line 6, N_up = 12, N_dn = 11, 30 bonds, dim 32449872) gives -8.2605976752 in units of t = -24.7817930 in units of J, which rounds to the printed -24.782. Hamiltonian Eqs. (1)-(2) H = P(Ht + HJ)P, Ht = -t sum (c+c + H.c.), HJ = J sum (Si.Sj - ninj/4): the instance's nn_term = true. Cluster: 24-site honeycomb with OBC and C6 rotation symmetry (Sec. II A, Fig. 2), the coronene flake, pinned by the ED reproduction. Sector: one hole; the ED ground state is fourfold degenerate (Lz = ±2 for each Sz = ±1/2); the VMC Ansatz removes an up electron (Sz = -1/2), the instance stores N_up = 12, N_dn = 11 (Sz = +1/2): equal energy by spin-flip symmetry. Arxiv v1 and accepted manuscript print the same digits for this row. No error bar printed (sampled VMC energies; sigma stays null). Own computation (not quoted). No duplicate: the instance file holds only this paper's rows. Bound type: ED of the 24-site cluster, exact. | Recomputation: E = -8.2605976752 (t = 1); printed form E_tot in units of J (t/J = 3): -24.782 vs printed -24.782; 24-site seven-hexagon flake (coronene: central hexagon and its six neighbours, 30 bonds), open; sectors of the C6 rotation; lowest of 4 sector(s) covering the whole electron-number space (ground state), best sector cor_h1_J1o3_l2, dim 5408312; 110 s wall on 16 threads over all sectors; QMBL's earlier ED (checks/tj-ed-2026-10/) gave -8.2605976752, difference 7.0e-12; the stored energy is the printed 3-decimal value / 3, so it differs from the exact total by up to 1.7e-4 by rounding alone",
+    "source_entry": "tjP5-arxiv-2406-16865#3 (qmbl-verify 2026-10-23), tjE-exact-recompute#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h2_J0.333333",
+      "method": "ED",
+      "energy": -9.94466666667
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2406.16865v1 (only version; sources/2406.16865.pdf + .txt, pypdf layout and plain modes) and the accepted manuscript of Phys. Rev. B 110, 155111 (CHORUS, dated 2024-09-23; sources/PhysRevB.110.155111-am.pdf, pypdf layout and plain modes). The publisher's version of record is closed access (APS page shows locked content); the accepted manuscript is the post-review text.; and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table III, row ED, column Etot (arXiv v1 p. 6; AM p. 7)",
+    "reported_as": "ED -29.834 -14.433 -15.401 ±2",
+    "conversion": "-29.834 / 3 = -9.94466666667 (source H = 3 x instance H: J = 1, t/J = 3; instance t = 1, J = 1/3); stored -9.94466666667",
+    "note": "Et + EJ = -14.433 - 15.401 = -29.834. Hamiltonian Eqs. (1)-(2) H = P(Ht + HJ)P, Ht = -t sum (c+c + H.c.), HJ = J sum (Si.Sj - ninj/4): the instance's nn_term = true. Cluster: 24-site honeycomb with OBC and C6 rotation symmetry (Sec. II A, Fig. 2), the coronene flake, pinned by the ED reproduction. Sector: two holes, total spin S = 0 (Table III caption), N_up = N_dn = 11. Arxiv v1 and accepted manuscript print the same digits for this row. No error bar printed (sampled VMC energies; sigma stays null). Own computation (not quoted). No duplicate: the instance file holds only this paper's rows. Bound type: ED of the 24-site cluster, exact. Request: QMBL has recomputed only the one-hole ED; the two-hole ED (dim C(24,11)*C(13,11) = 2496144 x 78 = 1.95e8) should be recomputed on a remote host. | Recomputation: E = -9.9445995894 (t = 1); printed form E_tot in units of J (t/J = 3): -29.834 vs printed -29.834; 24-site seven-hexagon flake (coronene: central hexagon and its six neighbours, 30 bonds), open; sectors of the C6 rotation; lowest of 4 sector(s) covering the whole electron-number space (ground state), best sector cor_h2_J1o3_l2, dim 32449872; 1312 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the stored energy is the printed 3-decimal value / 3, so it differs from the exact total by up to 1.7e-4 by rounding alone",
+    "source_entry": "tjP5-arxiv-2406-16865#6 (qmbl-verify 2026-10-23), tjE-exact-recompute#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-2x11_22_P_h2_J0.5",
+      "method": "ED (sector S = 0, K = (0,0))",
+      "energy": -12.99978
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0010072v3 PDF, pypdf layout (sources/tjP7-dl/cond-mat-0010072v3.layout.txt); journal PDF not reachable (APS 401); and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "footnote 7",
+    "reported_as": "E2×11GS = − 12.99978",
+    "conversion": "total, no conversion",
+    "note": "Own ED (p. 3: 'we used the ED Lanczos method on 2 × L ladders of maximum size L = 13'). Hopping t = -1 in '+t sum(c+c + h.c.)' = QMBL -t with t = 1; on this odd-L periodic ladder the sign matters and agrees. QMBL ED (checks/tj-ed-2026-10, unrestricted) -12.9997844296 agrees to the printed digits. Footnote 7 prints the two Hilbert-space dimensions in swapped order (969,969 belongs to 2x11), energies unaffected. No duplicate. | Recomputation: E = -12.9997844296 (t = 1); printed form E_GS total, units of t: -12.99978 vs printed -12.99978; 2 x 11 ladder, periodic along the legs, open across; sectors of leg translations (K_x) and the leg exchange (K_y = 0, pi); lowest of 12 sector(s) covering the whole electron-number space (ground state), best sector lad2x11P_h2_J0.5_n0_p+, dim 1940064; 417 s wall on 16 threads over all sectors; QMBL's earlier ED (checks/tj-ed-2026-10/) gave -12.9997844296, difference -4.8e-11",
+    "source_entry": "tjP7-tj#3 (qmbl-verify 2026-10-23), tjE-exact-recompute#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-2x13_26_P_h2_J0.5",
+      "method": "ED (sector S = 0, K = (0,0))",
+      "energy": -14.90765
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0010072v3 PDF, pypdf layout (sources/tjP7-dl/cond-mat-0010072v3.layout.txt); journal PDF not reachable (APS 401); and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "footnote 7",
+    "reported_as": "E2×13GS = − 14.90765",
+    "conversion": "total, no conversion",
+    "note": "Own ED, sector (S = 0, K = (0,0)) named the ground state by the source. Not reproduced by QMBL: checks/tj-ed-2026-10 has no 2x13 run (the row's verified.note cites the 2x11 diagonalization, copied from the shared convention text). Remote ED request: 2x13 PBC ladder, 2 holes, J = 0.5 (Sz = 0 dimension 878,850,700; needs momentum symmetry). Hole energy consistent with 2x11 (e_h ~ -1.26 in both). No duplicate. | Recomputation: E = -14.9076542761 (t = 1); printed form E_GS total, units of t: -14.90765 vs printed -14.90765; 2 x 13 ladder, periodic along the legs, open across; sectors of leg translations (K_x) and the leg exchange (K_y = 0, pi); lowest of 14 sector(s) covering the whole electron-number space (ground state), best sector lad2x13P_h2_J0.5_n0_p+, dim 33802412; 14700 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/",
+    "source_entry": "tjP7-tj#4 (qmbl-verify 2026-10-23), tjE-exact-recompute#3 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-3x6_18_A_h1_J0.5",
+      "method": "Lanczos",
+      "energy": -10.40757
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9706147v2 PDF, pypdf layout (sources/tjP7-dl/cond-mat-9706147v2.layout.txt); journal PDF not reachable (APS 401); and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I, 1-hole column, row k = π/2, R = -1",
+    "reported_as": "-10.40757",
+    "conversion": "total, no conversion",
+    "note": "Lowest of the six 1-hole sector entries (others -10.24582, -10.25131, -10.25673, -9.987594, -10.18534); k = ±π/6, ±π/2, ±5π/6 exhaust the APBC momenta. APBC legs, open rungs, isotropic J/t = 0.5, Eq. (1) has -n n/4. QMBL ED -10.4075745288 agrees. No duplicate. | Recomputation: E = -10.4075745288 (t = 1); printed form total, units of t: -10.40757 vs printed -10.40757; 3 x 6 ladder (three legs of 6 sites), hopping across the leg boundary with the opposite sign (antiperiodic legs), open across, isotropic; full space, no symmetry; full space at this electron number (ground state), best sector lad3x6A_h1_J0.5_full, dim 437580; 2 s wall on 16 threads over all sectors; QMBL's earlier ED (checks/tj-ed-2026-10/) gave -10.4075745288, difference -1.2e-11",
+    "source_entry": "tjP7-tj#5 (qmbl-verify 2026-10-23), tjE-exact-recompute#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-3x6_18_A_h2_J0.5",
+      "method": "Lanczos",
+      "energy": -11.8068
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9706147v2 PDF, pypdf layout (sources/tjP7-dl/cond-mat-9706147v2.layout.txt); journal PDF not reachable (APS 401); and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I, 2-hole column, row k = 0, R = +1",
+    "reported_as": "-11.80680",
+    "conversion": "total, no conversion",
+    "note": "Lowest 2-hole entry; text: 'The groundstate has even parity and a total wavevector of k=0'. QMBL ED -11.8068024851 agrees. No duplicate. | Recomputation: E = -11.8068024851 (t = 1); printed form total, units of t: -11.80680 vs printed -11.80680; 3 x 6 ladder (three legs of 6 sites), hopping across the leg boundary with the opposite sign (antiperiodic legs), open across, isotropic; full space, no symmetry; full space at this electron number (ground state), best sector lad3x6A_h2_J0.5_full, dim 1969110; 8 s wall on 16 threads over all sectors; QMBL's earlier ED (checks/tj-ed-2026-10/) gave -11.8068024851, difference -4.5e-11",
+    "source_entry": "tjP7-tj#6 (qmbl-verify 2026-10-23), tjE-exact-recompute#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "exact (p = ∞)",
+      "energy": -11.86272
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table 1.2, L = 18, N = 16, J = 0.4, p = ∞ (the exact ground state) (line 305)",
+    "reported_as": "-0.65904",
+    "conversion": "E = -11.8627759930 (t = 1); printed form E0/L, p = infinity: -0.65904 vs printed -0.65904",
+    "note": "18-site square-shaped periodic cluster, edge vectors (3, 3) and (-3, 3); full space and all momentum x C4 sectors; full space at this electron number (ground state), best sector sq18P_h2_J0.4_full, dim 1969110; 27 s wall on 16 threads over all sectors; QMBL's earlier ED (checks/tj-ed-2026-10/) gave -11.8627759930, difference -3.1e-11",
+    "source_entry": "tjE-exact-recompute#7 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.3",
+      "method": "E_ex (Lanczos)",
+      "energy": -13.02522
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I, J/t = 0.3, column E_ex (Lanczos) (line 383)",
+    "reported_as": "-0.50097",
+    "conversion": "E = -13.0252672030 (t = 1); printed form E/L: -0.50097 vs printed -0.50097",
+    "note": "26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 14 sector(s) covering the whole electron-number space (ground state), best sector sq26P_h2_J0.3_k0-0_l2_star1, dim 8450824; 10148 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue -1 (d-wave-like, l = 2)",
+    "source_entry": "tjE-exact-recompute#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.4",
+      "method": "E_ex (Lanczos)",
+      "energy": -15.45752
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I, J/t = 0.4, column E_ex (Lanczos) (line 384)",
+    "reported_as": "-0.59452",
+    "conversion": "E = -15.4574346628 (t = 1); printed form E/L: -0.59452 vs printed -0.59452",
+    "note": "26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 14 sector(s) covering the whole electron-number space (ground state), best sector sq26P_h2_J0.4_k0-0_l2_star1, dim 8450824; 8955 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue -1 (d-wave-like, l = 2)",
+    "source_entry": "tjE-exact-recompute#9 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.5",
+      "method": "E_ex (Lanczos)",
+      "energy": -17.9257
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I, J/t = 0.5, column E_ex (Lanczos) (line 385)",
+    "reported_as": "-0.68945",
+    "conversion": "E = -17.9256697943 (t = 1); printed form E/L: -0.68945 vs printed -0.68945",
+    "note": "26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 14 sector(s) covering the whole electron-number space (ground state), best sector sq26P_h2_J0.5_k0-0_l2_star1, dim 8450824; 11395 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue -1 (d-wave-like, l = 2)",
+    "source_entry": "tjE-exact-recompute#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.6",
+      "method": "E_ex (Lanczos)",
+      "energy": -20.41962
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content; and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.6, column E_ex/L (layout text line 386, PDF p. 7)",
+    "reported_as": "-0.78537 per site (E/L, t = 1)",
+    "conversion": "-0.78537 x 26 = -20.41962; no error bar printed (deterministic Lanczos)",
+    "note": "Caption: 'exact results by Lanczos method'; the paper does not say who ran the Lanczos (no citation, no acknowledgement); its Table II Lanczos column at J/t = 0.3, 0.5, 1.0 equals the unpublished D. Poilblanc data printed in Sorella, PRB 64, 024512 Table I, so the column may be quoted in part; no other printed source of the 2-hole values was found (Sorella 2001 has only N = 22). QMBL's ED (tjE group, (5,1) cluster) gives -20.4197362578, i.e. -0.78537447 per site, which rounds to the printed value; the stored total is the 5-decimal print x 26 and lies +1.16e-04 from it (within print rounding 26 x 5e-6 = 1.3e-4). Ground state in Gamma, C4 eigenvalue -1 (tjE). Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate. | Recomputation: E = -20.4197362578 (t = 1); printed form E/L: -0.78537 vs printed -0.78537; 26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 14 sector(s) covering the whole electron-number space (ground state), best sector sq26P_h2_J0.6_k0-0_l2_star1, dim 8450824; 7652 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue -1 (d-wave-like, l = 2)",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#6 (qmbl-verify 2026-10-23), tjE-exact-recompute#11 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.8",
+      "method": "E_ex (Lanczos)",
+      "energy": -25.4631
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content; and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.8, column E_ex/L (layout text line 387, PDF p. 7)",
+    "reported_as": "-0.97935 per site (E/L, t = 1)",
+    "conversion": "-0.97935 x 26 = -25.46310; no error bar printed (deterministic Lanczos)",
+    "note": "Caption: 'exact results by Lanczos method'; the paper does not say who ran the Lanczos (no citation, no acknowledgement); its Table II Lanczos column at J/t = 0.3, 0.5, 1.0 equals the unpublished D. Poilblanc data printed in Sorella, PRB 64, 024512 Table I, so the column may be quoted in part; no other printed source of the 2-hole values was found (Sorella 2001 has only N = 22). QMBL's ED (tjE group, (5,1) cluster) gives -25.4632009570, i.e. -0.97935388 per site, which rounds to the printed value; the stored total is the 5-decimal print x 26 and lies +1.01e-04 from it (within print rounding 26 x 5e-6 = 1.3e-4). Ground state in Gamma, C4 eigenvalue -1 (tjE). Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate. | Recomputation: E = -25.4632009570 (t = 1); printed form E/L: -0.97935 vs printed -0.97935; 26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 14 sector(s) covering the whole electron-number space (ground state), best sector sq26P_h2_J0.8_k0-0_l2_star1, dim 8450824; 8848 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue -1 (d-wave-like, l = 2)",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#13 (qmbl-verify 2026-10-23), tjE-exact-recompute#12 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J1",
+      "method": "E_ex (Lanczos)",
+      "energy": -30.55988
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content; and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I (2 holes on 26 sites), row J/t = 1.0, column E_ex/L (layout text line 388, PDF p. 7)",
+    "reported_as": "-1.17538 per site (E/L, t = 1)",
+    "conversion": "-1.17538 x 26 = -30.55988; no error bar printed (deterministic Lanczos)",
+    "note": "Caption: 'exact results by Lanczos method'; the paper does not say who ran the Lanczos (no citation, no acknowledgement); its Table II Lanczos column at J/t = 0.3, 0.5, 1.0 equals the unpublished D. Poilblanc data printed in Sorella, PRB 64, 024512 Table I, so the column may be quoted in part; no other printed source of the 2-hole values was found (Sorella 2001 has only N = 22). QMBL's ED (tjE group, (5,1) cluster) gives -30.5598523744, i.e. -1.17537894 per site, which rounds to the printed value; the stored total is the 5-decimal print x 26 and lies -2.76e-05 from it (within print rounding 26 x 5e-6 = 1.3e-4). Ground state in Gamma, C4 eigenvalue -1 (tjE). Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate. | Recomputation: E = -30.5598523744 (t = 1); printed form E/L: -1.17538 vs printed -1.17538; 26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 14 sector(s) covering the whole electron-number space (ground state), best sector sq26P_h2_J1_k0-0_l2_star1, dim 8450824; 7779 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue -1 (d-wave-like, l = 2)",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#20 (qmbl-verify 2026-10-23), tjE-exact-recompute#13 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -16.70812
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py); and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.3, column Exact (layout text line 1050; header line 1049)",
+    "reported_as": "-0.64262 per site, t = 1",
+    "conversion": "-0.64262 x 26 = -16.70812; no error bar printed (exact column)",
+    "note": "Exact column of Table I. Provenance: the paper's text says 'the largest size cases where the exact solution is known 4 holes in 26 sites 23' (ref. 23 = D. Poilblanc, Phys. Rev. B 52, 9201 (1995)) and the acknowledgements say 'D. Poilblanc and P. W. Leung who kindly sent me unpublished data on the 26 and 32 site t-J model, respectively'. Poilblanc 1995 (arXiv v1 read) shows 26-site 4-hole energies only in Fig. 3 (no table, no printed digits found by grep), so the stored 'unpublished, printed in Sorella' secondary attribution with peer_reviewed true follows RULES.md 8 (private communication printed in a paper). Suggestion, not a correction: the method reference could add Poilblanc PRB 52, 9201 (1995), which states the Hamiltonian and cluster that tj_2026_10_22.mjs line 71 currently infers from Lugas et al. Stored total is the printed 5-decimal per-site value x 26; the full-precision ED of this run (tjE-exact-recompute) gives a total that rounds to the same per-site digits. No duplicate on the instance: Lugas et al. Table II prints the same Eex/L but carries no row on this instance. bound_type exact agrees (Lanczos ED). N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001). | Recomputation: E = -16.7080260768 (t = 1); printed form E/L: -0.64262 vs printed -0.64262; 26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 6 sector(s) computed; the remaining sectors were not computed, so the number is confirmed but not that it is the global ground state, best sector sq26P_h4_J0.3_k0-0_l0_star1, dim 101410008; 21929 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue +1 (l = 0)",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#0 (qmbl-verify 2026-10-23), tjE-exact-recompute#14 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.4",
+      "method": "E_ex (Lanczos)",
+      "energy": -18.57362
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference; and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.4, column Eex/L",
+    "reported_as": "-0.71437 per site, units of t",
+    "conversion": "-0.71437 x 26 = -18.57362",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -18.5735393955; row lies above it. Not a duplicate: the only other rows on the instance are this paper's own other columns. bound_type exact, no sigma, agree. QMBL's ED (group tjE-exact-recompute, Gamma C4 +1 sector only) gives -18.5735393955, which the printed 5 decimals round to; the stored -18.57362 is the printed rounding (8.1e-5 above), a digits question for the recompute group, not a transcription error. | Recomputation: E = -18.5735393955 (t = 1); printed form E/L: -0.71437 vs printed -0.71437; 26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 1 sector(s) computed; the remaining sectors were not computed, so the number is confirmed but not that it is the global ground state, best sector sq26P_h4_J0.4_k0-0_l0_star1, dim 101410008; 2482 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue +1 (l = 0)",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#12 (qmbl-verify 2026-10-23), tjE-exact-recompute#15 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -20.49112
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py); and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.5, column Exact (layout text line 1051; header line 1049)",
+    "reported_as": "-0.78812 per site, t = 1",
+    "conversion": "-0.78812 x 26 = -20.49112; no error bar printed (exact column)",
+    "note": "Exact column of Table I. Provenance: the paper's text says 'the largest size cases where the exact solution is known 4 holes in 26 sites 23' (ref. 23 = D. Poilblanc, Phys. Rev. B 52, 9201 (1995)) and the acknowledgements say 'D. Poilblanc and P. W. Leung who kindly sent me unpublished data on the 26 and 32 site t-J model, respectively'. Poilblanc 1995 (arXiv v1 read) shows 26-site 4-hole energies only in Fig. 3 (no table, no printed digits found by grep), so the stored 'unpublished, printed in Sorella' secondary attribution with peer_reviewed true follows RULES.md 8 (private communication printed in a paper). Suggestion, not a correction: the method reference could add Poilblanc PRB 52, 9201 (1995), which states the Hamiltonian and cluster that tj_2026_10_22.mjs line 71 currently infers from Lugas et al. Stored total is the printed 5-decimal per-site value x 26; the full-precision ED of this run (tjE-exact-recompute) gives a total that rounds to the same per-site digits. No duplicate on the instance: Lugas et al. Table II prints the same Eex/L but carries no row on this instance. bound_type exact agrees (Lanczos ED). N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001). | Recomputation: E = -20.4912285460 (t = 1); printed form E/L: -0.78812 vs printed -0.78812; 26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 1 sector(s) computed; the remaining sectors were not computed, so the number is confirmed but not that it is the global ground state, best sector sq26P_h4_J0.5_k0-0_l0_star1, dim 101410008; 11995 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue +1 (l = 0)",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#7 (qmbl-verify 2026-10-23), tjE-exact-recompute#16 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.6",
+      "method": "E_ex (Lanczos)",
+      "energy": -22.44762
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table II, J/t = 0.6, column E_ex (Lanczos) (line 396)",
+    "reported_as": "-0.86337",
+    "conversion": "E = -22.4476525747 (t = 1); printed form E/L: -0.86337 vs printed -0.86337",
+    "note": "26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 1 sector(s) computed; the remaining sectors were not computed, so the number is confirmed but not that it is the global ground state, best sector sq26P_h4_J0.6_k0-0_l0_star1, dim 101410008; 2162 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue +1 (l = 0)",
+    "source_entry": "tjE-exact-recompute#17 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.8",
+      "method": "E_ex (Lanczos)",
+      "energy": -26.45058
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table II, J/t = 0.8, column E_ex (Lanczos) (line 397)",
+    "reported_as": "-1.01733",
+    "conversion": "E = -26.4505857464 (t = 1); printed form E/L: -1.01733 vs printed -1.01733",
+    "note": "26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 1 sector(s) computed; the remaining sectors were not computed, so the number is confirmed but not that it is the global ground state, best sector sq26P_h4_J0.8_k0-0_l0_star1, dim 101410008; 9884 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue +1 (l = 0)",
+    "source_entry": "tjE-exact-recompute#18 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -30.54818
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py); and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 1.0, column Exact (layout text line 1052; header line 1049)",
+    "reported_as": "-1.17493 per site, t = 1",
+    "conversion": "-1.17493 x 26 = -30.54818; no error bar printed (exact column)",
+    "note": "Exact column of Table I. Provenance: the paper's text says 'the largest size cases where the exact solution is known 4 holes in 26 sites 23' (ref. 23 = D. Poilblanc, Phys. Rev. B 52, 9201 (1995)) and the acknowledgements say 'D. Poilblanc and P. W. Leung who kindly sent me unpublished data on the 26 and 32 site t-J model, respectively'. Poilblanc 1995 (arXiv v1 read) shows 26-site 4-hole energies only in Fig. 3 (no table, no printed digits found by grep), so the stored 'unpublished, printed in Sorella' secondary attribution with peer_reviewed true follows RULES.md 8 (private communication printed in a paper). Suggestion, not a correction: the method reference could add Poilblanc PRB 52, 9201 (1995), which states the Hamiltonian and cluster that tj_2026_10_22.mjs line 71 currently infers from Lugas et al. Stored total is the printed 5-decimal per-site value x 26; the full-precision ED of this run (tjE-exact-recompute) gives a total that rounds to the same per-site digits. No duplicate on the instance: Lugas et al. Table II prints the same Eex/L but carries no row on this instance. bound_type exact agrees (Lanczos ED). N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001). | Recomputation: E = -30.5480737065 (t = 1); printed form E/L: -1.17493 vs printed -1.17493; 26-site square-shaped periodic cluster, edge vectors (5, 1) and (-1, 5) (52 bonds); 14 sectors in all: Gamma and M with the four C4 characters, six C4 stars of 4 momenta with translations only; lowest of 1 sector(s) computed; the remaining sectors were not computed, so the number is confirmed but not that it is the global ground state, best sector sq26P_h4_J1_k0-0_l0_star1, dim 101410008; 10442 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; the computed energy on the (5, 1) cluster reproduces the printed value, which confirms the inferred cluster shape; the lowest sector is Gamma with C4 eigenvalue +1 (l = 0)",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#14 (qmbl-verify 2026-10-23), tjE-exact-recompute#19 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_32_P_h1_J0.3_tp0.3_tpp-0.2",
+      "method": "exact diagonalization",
+      "energy": -13.913616
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0508035v1 and v2 PDFs (sources/cond-mat-0508035v{1,2}.pdf; v2 byte-identical to the repo copy), pypdf layout mode, read 2026-10-24; and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I, row Nc = 1 (k = (π, 0),(0, π), NB = 150,297,603); identical in v1 and v2",
+    "reported_as": "−13.913616 (E_Nc total, units of |t|)",
+    "conversion": "none: total energy, |t| = 1; stored -13.913616",
+    "note": "Eq. (1) H = -sum_<ij> t_ij (c+c + c+c) + J sum_nn (S_i.S_j - 1/4 n_i n_j), J = 0.3; 'by electron-doped model we mean (1) with hopping parameters t = -1, t' = 0.3, and t'' = -0.2'; t_ij = t, t', t'' at distances 1, sqrt2, 2; 32-site square lattice with periodic boundary conditions. RULES 2.1: on the bipartite 32-site cluster the gauge takes t = -1 to t = 1 and leaves t', t'' (same sublattice): instance t2 = 0.3, t3 = -0.2; Nc carriers = instance holes (32 - Nc spin objects). Internal checks: E00 = -11.329720 = 0.3 (E_S.S - 16) gives -0.680179 per site (the 32-site Heisenberg value), so the -n n/4 term and one count per bond hold; Table II E(pi,0) = -2.583895 gives E1 = E00 + E = -13.913615 (printed -13.913616); Eq. (5) binding energies E2I = -0.1042 and E4I = 1.2037 are reproduced from Table I (-0.104177, 1.203657). Independent exact recompute of this run (out/tjE-exact-recompute) reproduces h1 (-13.9136156041) and h2 (-16.6016890531) in the printed ground-state sectors; h4 was out of reach there. Table I caption: 'Ground state energies, momenta and point group symmetries of the electron-doped model with Nc charge carriers': the global ground state at Nc = 1; bound_type exact (Lanczos ED) is right; journal version (Phys. Rev. B 73, 075104) not reached: journals.aps.org PDF returned 401 on 2026-10-24; arXiv v1 and v2 both read, Table I identical in both; no duplicate on the instance (the data file holds only this row) | Recomputation: E = -13.9136156041 (t = 1); printed form E_Nc total: -13.913616 vs printed -13.913616; 32-site periodic cluster, edge vectors (4, 4) and (-4, 4); t on 64 nn bonds, t' on 64 (1,1) bonds, t'' on 64 (2,0) bonds; momentum x C4v little-group sectors; lowest of 4 sector(s) computed; the remaining sectors were not computed, so the number is confirmed but not that it is the global ground state, best sector sq32P_h1_J0.3_tp0.3_tpp-0.2_k0-16_pg4++++_star2, dim 75165879; 11412 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; sectors computed: the ground-state sector printed in the source's Table I (k = (pi, 0), all four C2v characters; the run at k = (pi/2, pi/2) was stopped at -12.9953 after 60 Lanczos steps, far above); the other momenta and the 2D irreps at k = 0 and (pi, pi) were not computed, so the ground-state claim rests on the source",
+    "source_entry": "tjP6-tj#8 (qmbl-verify 2026-10-23), tjE-exact-recompute#20 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_32_P_h2_J0.3_tp0.3_tpp-0.2",
+      "method": "exact diagonalization",
+      "energy": -16.601689
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0508035v1 and v2 PDFs (sources/cond-mat-0508035v{1,2}.pdf; v2 byte-identical to the repo copy), pypdf layout mode, read 2026-10-24; and an independent recomputation: independent exact diagonalization written for this check (checks/tj-exact-recompute-2026-10/tjk.c: C/OpenMP, basis adapted to lattice translations and point-group operations with 1D characters, Lanczos to |dE| < 1e-13 per step; clusters and sectors from gen.py), run 2026-10-23; validated against a brute-force full-space ED (bf.py) on 12 small clusters (agreement to 1e-10)",
+    "location": "Table I, row Nc = 2 (k = (0, 0), d_x2−y2, NB = 150,295,402); identical in v1 and v2",
+    "reported_as": "−16.601689 (E_Nc total, units of |t|)",
+    "conversion": "none: total energy, |t| = 1; stored -16.601689",
+    "note": "Eq. (1) H = -sum_<ij> t_ij (c+c + c+c) + J sum_nn (S_i.S_j - 1/4 n_i n_j), J = 0.3; 'by electron-doped model we mean (1) with hopping parameters t = -1, t' = 0.3, and t'' = -0.2'; t_ij = t, t', t'' at distances 1, sqrt2, 2; 32-site square lattice with periodic boundary conditions. RULES 2.1: on the bipartite 32-site cluster the gauge takes t = -1 to t = 1 and leaves t', t'' (same sublattice): instance t2 = 0.3, t3 = -0.2; Nc carriers = instance holes (32 - Nc spin objects). Internal checks: E00 = -11.329720 = 0.3 (E_S.S - 16) gives -0.680179 per site (the 32-site Heisenberg value), so the -n n/4 term and one count per bond hold; Table II E(pi,0) = -2.583895 gives E1 = E00 + E = -13.913615 (printed -13.913616); Eq. (5) binding energies E2I = -0.1042 and E4I = 1.2037 are reproduced from Table I (-0.104177, 1.203657). Independent exact recompute of this run (out/tjE-exact-recompute) reproduces h1 (-13.9136156041) and h2 (-16.6016890531) in the printed ground-state sectors; h4 was out of reach there. Table I caption: 'Ground state energies, momenta and point group symmetries of the electron-doped model with Nc charge carriers': the global ground state at Nc = 2; bound_type exact (Lanczos ED) is right; journal version (Phys. Rev. B 73, 075104) not reached: journals.aps.org PDF returned 401 on 2026-10-24; arXiv v1 and v2 both read, Table I identical in both; no duplicate on the instance (the data file holds only this row) | Recomputation: E = -16.6016890531 (t = 1); printed form E_Nc total: -16.601689 vs printed -16.601689; 32-site periodic cluster, edge vectors (4, 4) and (-4, 4); t on 64 nn bonds, t' on 64 (1,1) bonds, t'' on 64 (2,0) bonds; momentum x C4v little-group sectors; lowest of 1 sector(s) computed; the remaining sectors were not computed, so the number is confirmed but not that it is the global ground state, best sector sq32P_h2_J0.3_tp0.3_tpp-0.2_k0-0_pg8+-+--+-+_star1, dim 300535476; 9429 s wall on 16 threads over all sectors; not among the six reproduced by checks/tj-ed-2026-10/; sectors computed: the ground-state sector printed in the source's Table I (k = 0, d_x2-y2 = C4v character + - + - - + - +); the other momenta and the 2D irreps at k = 0 and (pi, pi) were not computed, so the ground-state claim rests on the source",
+    "source_entry": "tjP6-tj#9 (qmbl-verify 2026-10-23), tjE-exact-recompute#21 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.6",
+      "method": "E_VMC^RVB",
+      "energy": -19.88038
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.6, column E^RVB_VMC/L (layout text line 386, PDF p. 7)",
+    "reported_as": "-0.76463(1) per site (E/L, t = 1)",
+    "conversion": "-0.76463 x 26 = -19.88038; sigma 0.00001 x 26 = 0.00026",
+    "note": "VMC energy of the optimised RVB (projected BCS, no Delta_AF) state: variational, sampled; sigma = 26 x printed last-digit bar. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.6",
+      "method": "E_FN^RVB",
+      "energy": -20.1877
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.6, column E^RVB_FN/L (layout text line 386, PDF p. 7)",
+    "reported_as": "-0.77645(1) per site (E/L, t = 1)",
+    "conversion": "-0.77645 x 26 = -20.18770; sigma 0.00001 x 26 = 0.00026",
+    "note": "Lattice fixed node of ten Haaf et al. at gamma = 0 (Eq. 10: 'the original FN approximation of Ref. 34 being recovered for gamma = 0'), mixed estimate Eq. (11), 'a rigorous upper bound of the exact ground-state energy' for the guiding function's signs: projected. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.6",
+      "method": "E_VMC^Pfaff",
+      "energy": -20.07928
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.6, column E^Pfaff_VMC/L (layout text line 386, PDF p. 7)",
+    "reported_as": "-0.77228(1) per site (E/L, t = 1)",
+    "conversion": "-0.77228 x 26 = -20.07928; sigma 0.00001 x 26 = 0.00026",
+    "note": "VMC energy of the optimised Pfaffian (BCS + Delta_AF + long-range spin Jastrow) state: variational, sampled; sigma = 26 x printed last-digit bar. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.6",
+      "method": "E_FN^Pfaff",
+      "energy": -20.2696
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.6, column E^Pfaff_FN/L (layout text line 386, PDF p. 7)",
+    "reported_as": "-0.77960(1) per site (E/L, t = 1)",
+    "conversion": "-0.77960 x 26 = -20.26960; sigma 0.00001 x 26 = 0.00026",
+    "note": "Lattice fixed node of ten Haaf et al. at gamma = 0 (Eq. 10: 'the original FN approximation of Ref. 34 being recovered for gamma = 0'), mixed estimate Eq. (11), 'a rigorous upper bound of the exact ground-state energy' for the guiding function's signs: projected. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#3 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.8",
+      "method": "E_VMC^RVB",
+      "energy": -24.8066
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.8, column E^RVB_VMC/L (layout text line 387, PDF p. 7)",
+    "reported_as": "-0.95410(1) per site (E/L, t = 1)",
+    "conversion": "-0.95410 x 26 = -24.80660; sigma 0.00001 x 26 = 0.00026",
+    "note": "VMC energy of the optimised RVB (projected BCS, no Delta_AF) state: variational, sampled; sigma = 26 x printed last-digit bar. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#7 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.8",
+      "method": "E_FN^RVB",
+      "energy": -25.1992
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.8, column E^RVB_FN/L (layout text line 387, PDF p. 7)",
+    "reported_as": "-0.96920(1) per site (E/L, t = 1)",
+    "conversion": "-0.96920 x 26 = -25.19920; sigma 0.00001 x 26 = 0.00026",
+    "note": "Lattice fixed node of ten Haaf et al. at gamma = 0 (Eq. 10: 'the original FN approximation of Ref. 34 being recovered for gamma = 0'), mixed estimate Eq. (11), 'a rigorous upper bound of the exact ground-state energy' for the guiding function's signs: projected. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.8",
+      "method": "E_VMC^Pfaff",
+      "energy": -25.14356
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.8, column E^Pfaff_VMC/L (layout text line 387, PDF p. 7)",
+    "reported_as": "-0.96706(1) per site (E/L, t = 1)",
+    "conversion": "-0.96706 x 26 = -25.14356; sigma 0.00001 x 26 = 0.00026",
+    "note": "VMC energy of the optimised Pfaffian (BCS + Delta_AF + long-range spin Jastrow) state: variational, sampled; sigma = 26 x printed last-digit bar. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#9 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.8",
+      "method": "E_FN^Pfaff",
+      "energy": -25.32764
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 0.8, column E^Pfaff_FN/L (layout text line 387, PDF p. 7)",
+    "reported_as": "-0.97414(1) per site (E/L, t = 1)",
+    "conversion": "-0.97414 x 26 = -25.32764; sigma 0.00001 x 26 = 0.00026",
+    "note": "Lattice fixed node of ten Haaf et al. at gamma = 0 (Eq. 10: 'the original FN approximation of Ref. 34 being recovered for gamma = 0'), mixed estimate Eq. (11), 'a rigorous upper bound of the exact ground-state energy' for the guiding function's signs: projected. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J1",
+      "method": "E_VMC^RVB",
+      "energy": -29.76558
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 1.0, column E^RVB_VMC/L (layout text line 388, PDF p. 7)",
+    "reported_as": "-1.14483(1) per site (E/L, t = 1)",
+    "conversion": "-1.14483 x 26 = -29.76558; sigma 0.00001 x 26 = 0.00026",
+    "note": "VMC energy of the optimised RVB (projected BCS, no Delta_AF) state: variational, sampled; sigma = 26 x printed last-digit bar. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#14 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J1",
+      "method": "E_FN^RVB",
+      "energy": -30.2601
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 1.0, column E^RVB_FN/L (layout text line 388, PDF p. 7)",
+    "reported_as": "-1.16385(1) per site (E/L, t = 1)",
+    "conversion": "-1.16385 x 26 = -30.26010; sigma 0.00001 x 26 = 0.00026",
+    "note": "Lattice fixed node of ten Haaf et al. at gamma = 0 (Eq. 10: 'the original FN approximation of Ref. 34 being recovered for gamma = 0'), mixed estimate Eq. (11), 'a rigorous upper bound of the exact ground-state energy' for the guiding function's signs: projected. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#15 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J1",
+      "method": "E_VMC^Pfaff",
+      "energy": -30.25152
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 1.0, column E^Pfaff_VMC/L (layout text line 388, PDF p. 7)",
+    "reported_as": "-1.16352(1) per site (E/L, t = 1)",
+    "conversion": "-1.16352 x 26 = -30.25152; sigma 0.00001 x 26 = 0.00026",
+    "note": "VMC energy of the optimised Pfaffian (BCS + Delta_AF + long-range spin Jastrow) state: variational, sampled; sigma = 26 x printed last-digit bar. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#16 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J1",
+      "method": "E_FN^Pfaff",
+      "energy": -30.43352
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF sources/tjP1c2-dl/cond-mat-0606659v1.pdf, identical to the repo's sources/cond-mat-0606659.pdf, pypdf layout and plain modes). Journal version Phys. Rev. B 74, 165122 (2006) not reached: journals.aps.org PDF returned 401 to node fetch on 2026-10-24; the APS abstract page (read) is copy-edited ('We reexamine' for 'We revisit') with the same content",
+    "location": "Table I (2 holes on 26 sites), row J/t = 1.0, column E^Pfaff_FN/L (layout text line 388, PDF p. 7)",
+    "reported_as": "-1.17052(1) per site (E/L, t = 1)",
+    "conversion": "-1.17052 x 26 = -30.43352; sigma 0.00001 x 26 = 0.00026",
+    "note": "Lattice fixed node of ten Haaf et al. at gamma = 0 (Eq. 10: 'the original FN approximation of Ref. 34 being recovered for gamma = 0'), mixed estimate Eq. (11), 'a rigorous upper bound of the exact ground-state energy' for the guiding function's signs: projected. Cluster: periodic 26-site (5,1) cluster inferred (the paper's L = 2l^2, l odd, excludes 26); the exact-recompute group of this pass (out/tjE-exact-recompute, independent ED on the (5,1) cluster, all 14 sectors) reproduces the printed E_ex/L of this row of Table I, which fixes cluster, boundary (periodic, no twist) and the J(S.S - n n/4) convention with S = sigma/2 for the whole table. 24 electrons, N_up = N_dn = 12; no other row on the instance from another batch (data/tJ file read): no duplicate.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c2#17 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "E_VMC^RVB",
+      "energy": -15.95672
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.3, column E^RVB_VMC/L",
+    "reported_as": "-0.61372(1) per site, units of t",
+    "conversion": "-0.61372 x 26 = -15.95672; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -16.7080260768; row lies above it. Not a duplicate: the other rows on the instance are Sorella, PRB 64, 024512 Table I (VMC, LS, FN, SR at 4 decimals, a 2001 computation with different printed numbers) and the quoted Poilblanc exact value. bound_type variational and sampled agree (VMC of Eq. 2). method_detail 'projected BCS + Jastrow': the text does not settle which Jastrow the RVB state carries (Table I caption: differs from Pfaff by Delta_AF only; Fig. 6 caption: Pfaff adds the spin Jastrow); left as is.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "E_FN^RVB",
+      "energy": -16.31552
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.3, column E^RVB_FN/L",
+    "reported_as": "-0.62752(1) per site, units of t",
+    "conversion": "-0.62752 x 26 = -16.31552; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -16.7080260768; row lies above it. Not a duplicate: the other rows on the instance are Sorella, PRB 64, 024512 Table I (VMC, LS, FN, SR at 4 decimals, a 2001 computation with different printed numbers) and the quoted Poilblanc exact value. Lattice fixed node at gamma = 0 ('we will denote the standard FN energy for γ = 0 simply by E_FN', p. 5); the paper calls E^γ_FN 'a rigorous upper bound of the exact ground-state energy'; QMBL class projected per RULES 4 agrees.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "E_VMC^Pfaff",
+      "energy": -15.98428
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.3, column E^Pfaff_VMC/L",
+    "reported_as": "-0.61478(1) per site, units of t",
+    "conversion": "-0.61478 x 26 = -15.98428; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -16.7080260768; row lies above it. Not a duplicate: the other rows on the instance are Sorella, PRB 64, 024512 Table I (VMC, LS, FN, SR at 4 decimals, a 2001 computation with different printed numbers) and the quoted Poilblanc exact value. bound_type variational and sampled agree (VMC of Eq. 2). The Pfaff state does not conserve S_z (AF field in the x-y plane, Eq. 6, projection onto fixed N only); still a bound on the N = 22 ground state.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "E_FN^Pfaff",
+      "energy": -16.31604
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.3, column E^Pfaff_FN/L",
+    "reported_as": "-0.62754(1) per site, units of t",
+    "conversion": "-0.62754 x 26 = -16.31604; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -16.7080260768; row lies above it. Not a duplicate: the other rows on the instance are Sorella, PRB 64, 024512 Table I (VMC, LS, FN, SR at 4 decimals, a 2001 computation with different printed numbers) and the quoted Poilblanc exact value. Lattice fixed node at gamma = 0 ('we will denote the standard FN energy for γ = 0 simply by E_FN', p. 5); the paper calls E^γ_FN 'a rigorous upper bound of the exact ground-state energy'; QMBL class projected per RULES 4 agrees.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#3 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.4",
+      "method": "E_VMC^RVB",
+      "energy": -17.91244
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.4, column E^RVB_VMC/L",
+    "reported_as": "-0.68894(1) per site, units of t",
+    "conversion": "-0.68894 x 26 = -17.91244; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -18.5735393955; row lies above it. Not a duplicate: the only other rows on the instance are this paper's own other columns. bound_type variational and sampled agree (VMC of Eq. 2). method_detail 'projected BCS + Jastrow': the text does not settle which Jastrow the RVB state carries (Table I caption: differs from Pfaff by Delta_AF only; Fig. 6 caption: Pfaff adds the spin Jastrow); left as is.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.4",
+      "method": "E_FN^RVB",
+      "energy": -18.22626
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.4, column E^RVB_FN/L",
+    "reported_as": "-0.70101(1) per site, units of t",
+    "conversion": "-0.70101 x 26 = -18.22626; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -18.5735393955; row lies above it. Not a duplicate: the only other rows on the instance are this paper's own other columns. Lattice fixed node at gamma = 0 ('we will denote the standard FN energy for γ = 0 simply by E_FN', p. 5); the paper calls E^γ_FN 'a rigorous upper bound of the exact ground-state energy'; QMBL class projected per RULES 4 agrees.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#7 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.4",
+      "method": "E_VMC^Pfaff",
+      "energy": -17.92596
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.4, column E^Pfaff_VMC/L",
+    "reported_as": "-0.68946(1) per site, units of t",
+    "conversion": "-0.68946 x 26 = -17.92596; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -18.5735393955; row lies above it. Not a duplicate: the only other rows on the instance are this paper's own other columns. bound_type variational and sampled agree (VMC of Eq. 2). The Pfaff state does not conserve S_z (AF field in the x-y plane, Eq. 6, projection onto fixed N only); still a bound on the N = 22 ground state.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.4",
+      "method": "E_FN^Pfaff",
+      "energy": -18.22756
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.4, column E^Pfaff_FN/L",
+    "reported_as": "-0.70106(1) per site, units of t",
+    "conversion": "-0.70106 x 26 = -18.22756; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -18.5735393955; row lies above it. Not a duplicate: the only other rows on the instance are this paper's own other columns. Lattice fixed node at gamma = 0 ('we will denote the standard FN energy for γ = 0 simply by E_FN', p. 5); the paper calls E^γ_FN 'a rigorous upper bound of the exact ground-state energy'; QMBL class projected per RULES 4 agrees.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#9 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "E_VMC^RVB",
+      "energy": -19.87986
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.5, column E^RVB_VMC/L",
+    "reported_as": "-0.76461(1) per site, units of t",
+    "conversion": "-0.76461 x 26 = -19.87986; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -20.4912285460; row lies above it. Not a duplicate: the other rows on the instance are Sorella, PRB 64, 024512 Table I (VMC, LS, FN, SR at 4 decimals, a 2001 computation with different printed numbers) and the quoted Poilblanc exact value. bound_type variational and sampled agree (VMC of Eq. 2). method_detail 'projected BCS + Jastrow': the text does not settle which Jastrow the RVB state carries (Table I caption: differs from Pfaff by Delta_AF only; Fig. 6 caption: Pfaff adds the spin Jastrow); left as is.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#14 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "E_FN^RVB",
+      "energy": -20.16846
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.5, column E^RVB_FN/L",
+    "reported_as": "-0.77571(1) per site, units of t",
+    "conversion": "-0.77571 x 26 = -20.16846; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -20.4912285460; row lies above it. Not a duplicate: the other rows on the instance are Sorella, PRB 64, 024512 Table I (VMC, LS, FN, SR at 4 decimals, a 2001 computation with different printed numbers) and the quoted Poilblanc exact value. Lattice fixed node at gamma = 0 ('we will denote the standard FN energy for γ = 0 simply by E_FN', p. 5); the paper calls E^γ_FN 'a rigorous upper bound of the exact ground-state energy'; QMBL class projected per RULES 4 agrees.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#15 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "E_VMC^Pfaff",
+      "energy": -19.89312
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.5, column E^Pfaff_VMC/L",
+    "reported_as": "-0.76512(1) per site, units of t",
+    "conversion": "-0.76512 x 26 = -19.89312; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -20.4912285460; row lies above it. Not a duplicate: the other rows on the instance are Sorella, PRB 64, 024512 Table I (VMC, LS, FN, SR at 4 decimals, a 2001 computation with different printed numbers) and the quoted Poilblanc exact value. bound_type variational and sampled agree (VMC of Eq. 2). The Pfaff state does not conserve S_z (AF field in the x-y plane, Eq. 6, projection onto fixed N only); still a bound on the N = 22 ground state.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#16 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "E_FN^Pfaff",
+      "energy": -20.1747
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.5, column E^Pfaff_FN/L",
+    "reported_as": "-0.77595(1) per site, units of t",
+    "conversion": "-0.77595 x 26 = -20.1747; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -20.4912285460; row lies above it. Not a duplicate: the other rows on the instance are Sorella, PRB 64, 024512 Table I (VMC, LS, FN, SR at 4 decimals, a 2001 computation with different printed numbers) and the quoted Poilblanc exact value. Lattice fixed node at gamma = 0 ('we will denote the standard FN energy for γ = 0 simply by E_FN', p. 5); the paper calls E^γ_FN 'a rigorous upper bound of the exact ground-state energy'; QMBL class projected per RULES 4 agrees.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#17 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.6",
+      "method": "E_VMC^RVB",
+      "energy": -21.8569
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.6, column E^RVB_VMC/L",
+    "reported_as": "-0.84065(1) per site, units of t",
+    "conversion": "-0.84065 x 26 = -21.8569; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -22.4476525747; row lies above it. Not a duplicate: the only other rows on the instance are this paper's own other columns. bound_type variational and sampled agree (VMC of Eq. 2). method_detail 'projected BCS + Jastrow': the text does not settle which Jastrow the RVB state carries (Table I caption: differs from Pfaff by Delta_AF only; Fig. 6 caption: Pfaff adds the spin Jastrow); left as is.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#20 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.6",
+      "method": "E_FN^RVB",
+      "energy": -22.13432
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; PDF md5 475a6ff1..., pypdf layout and plain modes, out/.../work/layout.txt); journal PDF Phys. Rev. B 74, 165122 (published 2006-10-31, received 2006-06-26) not reached: journals.aps.org returned HTTP 401 to node fetch on 2026-10-24 (subscription); Crossref metadata (title, authors, volume, article number) agree with the stored reference",
+    "location": "p. 7, Table II (4 holes on 26 sites), row J/t = 0.6, column E^RVB_FN/L",
+    "reported_as": "-0.85132(1) per site, units of t",
+    "conversion": "-0.85132 x 26 = -22.13432; sigma 1e-5 x 26 = 0.00026",
+    "note": "Stored total and sigma reproduce the printed cell; t = 1 per-site units (Eq. 1 with -n n/4, no shift); 4 holes, N_up = N_dn = 11; periodic; cluster shape inferred (5,1), supported by the exact-recompute group's diagonalization reproducing the printed Lanczos column on that cluster; QMBL ED at this J: -22.4476525747; row lies above it. Not a duplicate: the only other rows on the instance are this paper's own other columns. Lattice fixed node at gamma = 0 ('we will denote the standard FN energy for γ = 0 simply by E_FN', p. 5); the paper calls E^γ_FN 'a rigorous upper bound of the exact ground-state energy'; QMBL class projected per RULES 4 agrees.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c3#21 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.6",
+      "method": "E_VMC^Pfaff",
+      "energy": -21.8842
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 0.6, column E^Pfaff_VMC/L (layout line 396)",
+    "reported_as": "-0.84170(1) per site (E/L, units of t)",
+    "conversion": "-0.84170 x 26 = -21.88420; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 0.6, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). Final variational Monte Carlo estimate of Eq. (2) with (Pfaff) or without (RVB) the antiferromagnetic field; variational. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.6",
+      "method": "E_FN^Pfaff",
+      "energy": -22.14914
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 0.6, column E^Pfaff_FN/L (layout line 396)",
+    "reported_as": "-0.85189(1) per site (E/L, units of t)",
+    "conversion": "-0.85189 x 26 = -22.14914; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 0.6, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). bound_type projected fits (lattice fixed node, ten Haaf et al.; the paper proves E^γ_FN is 'a rigorous upper bound of the exact ground-state energy', Eq. 12); the stored bound_type_reason 'not a strict variational bound' is generic text and understates this. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.8",
+      "method": "E_VMC^RVB",
+      "energy": -25.83386
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 0.8, column E^RVB_VMC/L (layout line 397)",
+    "reported_as": "-0.99361(1) per site (E/L, units of t)",
+    "conversion": "-0.99361 x 26 = -25.83386; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 0.8, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). Final variational Monte Carlo estimate of Eq. (2) with (Pfaff) or without (RVB) the antiferromagnetic field; variational. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.8",
+      "method": "E_FN^RVB",
+      "energy": -26.12376
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 0.8, column E^RVB_FN/L (layout line 397)",
+    "reported_as": "-1.00476(1) per site (E/L, units of t)",
+    "conversion": "-1.00476 x 26 = -26.12376; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 0.8, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). bound_type projected fits (lattice fixed node, ten Haaf et al.; the paper proves E^γ_FN is 'a rigorous upper bound of the exact ground-state energy', Eq. 12); the stored bound_type_reason 'not a strict variational bound' is generic text and understates this. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.8",
+      "method": "E_VMC^Pfaff",
+      "energy": -25.92434
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 0.8, column E^Pfaff_VMC/L (layout line 397)",
+    "reported_as": "-0.99709(1) per site (E/L, units of t)",
+    "conversion": "-0.99709 x 26 = -25.92434; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 0.8, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). Final variational Monte Carlo estimate of Eq. (2) with (Pfaff) or without (RVB) the antiferromagnetic field; variational. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#7 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.8",
+      "method": "E_FN^Pfaff",
+      "energy": -26.17134
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 0.8, column E^Pfaff_FN/L (layout line 397)",
+    "reported_as": "-1.00659(1) per site (E/L, units of t)",
+    "conversion": "-1.00659 x 26 = -26.17134; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 0.8, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). bound_type projected fits (lattice fixed node, ten Haaf et al.; the paper proves E^γ_FN is 'a rigorous upper bound of the exact ground-state energy', Eq. 12); the stored bound_type_reason 'not a strict variational bound' is generic text and understates this. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "E_VMC^RVB",
+      "energy": -29.8376
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 1.0, column E^RVB_VMC/L (layout line 398)",
+    "reported_as": "-1.14760(1) per site (E/L, units of t)",
+    "conversion": "-1.14760 x 26 = -29.83760; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 1, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). Same stored total (-29.8376) as the 'VMC' row of Sorella, PRB 64, 024512 (-1.1476(1) per site) on this instance; not a duplicate: Lugas et al. print a separate number with one more digit and a 10x smaller bar, and at J/t = 0.3 and 0.5 the same two columns differ (-0.61372(1) vs -0.6138(1), -0.76461(1) vs -0.7647(1)), so the J/t = 1 agreement is within Sorella's error bar, not a reprint. Final variational Monte Carlo estimate of Eq. (2) with (Pfaff) or without (RVB) the antiferromagnetic field; variational. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#12 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "E_FN^RVB",
+      "energy": -30.17872
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 1.0, column E^RVB_FN/L (layout line 398)",
+    "reported_as": "-1.16072(1) per site (E/L, units of t)",
+    "conversion": "-1.16072 x 26 = -30.17872; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 1, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). bound_type projected fits (lattice fixed node, ten Haaf et al.; the paper proves E^γ_FN is 'a rigorous upper bound of the exact ground-state energy', Eq. 12); the stored bound_type_reason 'not a strict variational bound' is generic text and understates this. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#13 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "E_VMC^Pfaff",
+      "energy": -30.02454
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 1.0, column E^Pfaff_VMC/L (layout line 398)",
+    "reported_as": "-1.15479(1) per site (E/L, units of t)",
+    "conversion": "-1.15479 x 26 = -30.02454; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 1, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). Final variational Monte Carlo estimate of Eq. (2) with (Pfaff) or without (RVB) the antiferromagnetic field; variational. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#14 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "E_FN^Pfaff",
+      "energy": -30.26972
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0606659v1 (the only arXiv version; abs page lists [v1] only), PDF parsed with pypdf layout mode (sources/tjP1c4-dl/cond-mat-0606659v1.layout.txt, identical to the repo's sources/cond-mat-0606659.txt in Table II); journal version Phys. Rev. B 74, 165122 not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.74.165122 returned HTTP 401 to node fetch on 2026-10-24",
+    "location": "Table II (4 holes on 26 sites), row J/t = 1.0, column E^Pfaff_FN/L (layout line 398)",
+    "reported_as": "-1.16422(1) per site (E/L, units of t)",
+    "conversion": "-1.16422 x 26 = -30.26972; sigma (1) x 1e-5 x 26 = 0.00026",
+    "note": "Value and error bar agree with the stored row. Eq. (1) H = -t sum (c+c + h.c.) + J sum (S_i.S_j - n_i n_j/4), t = 1, the stored convention (no shift). 4 holes on 26 sites = 22 electrons, N_up = N_dn = 11 (Sz = 0 contains the singlet ground state). J/t = 1, no t'. Cluster: Lugas et al. print only '26 sites' and periodic boundaries (their L = 2l^2 rule excludes 26). The Lanczos column at J/t = 0.3, 0.5, 1.0 equals, digit for digit, the 'Exact' column of Sorella, PRB 64, 024512, Table I (N = 22, L = 26), which credits D. Poilblanc's unpublished 26-site data and cites Poilblanc, PRB 52, 9201 (arXiv:cond-mat/9505004v1) for '4 holes in 26 sites'. That paper uses 'small sqrt(N) x sqrt(N) N-site clusters ... N=18, 20 and 26' with 'full use of space group and spin inversion symmetries' giving 50 717 244 basis states for 22 electrons on 26 sites (footnote 17); 26!/(4! 11! 11!) / (26 translations x 4 rotations x 2 spin inversion) = 50 702 925 plus non-free orbits, which fits the chiral (5, 1) x (-1, 5) torus (point group C4, order-208 group). The instance's (5, 1) cluster is therefore supported by the exact source the paper's own numbers coincide with; still not printed by Lugas et al. (needs_review stays until QMBL's own 26-site diagonalisation, requested). bound_type projected fits (lattice fixed node, ten Haaf et al.; the paper proves E^γ_FN is 'a rigorous upper bound of the exact ground-state energy', Eq. 12); the stored bound_type_reason 'not a strict variational bound' is generic text and understates this. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "tjP1-10-1103-physrevb-74-165122-c4#15 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "VMC",
+      "energy": -15.9588
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.3, column VMC (layout text line 1050; header line 1049)",
+    "reported_as": "-0.6138(1) per site, t = 1",
+    "conversion": "-0.6138 x 26 = -15.9588; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type variational: 'VMC is the standard variational method'; Fig. 1 caption: 'the lowest energy Jastrow-Slater variational singlet wavefunction'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "VMC+LS",
+      "energy": -16.4632
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.3, column VMC+LS (layout text line 1050; header line 1049)",
+    "reported_as": "-0.6332(1) per site, t = 1",
+    "conversion": "-0.6332 x 26 = -16.4632; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type variational: one Lanczos step on the variational state, sampled by the fixed-reference SR, which Sec. II.A calls 'rigorously variational'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "VMC+FN",
+      "energy": -16.3202
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.3, column VMC+FN (layout text line 1050; header line 1049)",
+    "reported_as": "-0.6277(1) per site, t = 1",
+    "conversion": "-0.6277 x 26 = -16.3202; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type projected: 'VMC+FN is the lattice fixed node approach'; Sec. VI: 'the FN energy reported in the table is only an upper bound of the expectation value of the hamiltonian on the FN state'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#3 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "VMC+2LS",
+      "energy": -16.5906
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.3, column VMC+2LS (layout text line 1050; header line 1049)",
+    "reported_as": "-0.6381(1) per site, t = 1",
+    "conversion": "-0.6381 x 26 = -16.5906; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type variational: two Lanczos steps on the variational state (Sec. II.A, 'rigorously variational'). N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "VMC+LS+FN",
+      "energy": -16.5646
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.3, column VMC+LS+FN (layout text line 1050; header line 1049)",
+    "reported_as": "-0.6371(1) per site, t = 1",
+    "conversion": "-0.6371 x 26 = -16.5646; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type projected: 'the fixed node over the VMC+LS wavefunction'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "Best SR",
+      "energy": -16.6062
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.3, column Best SR (layout text line 1050; header line 1049)",
+    "reported_as": "-0.6387(1) per site, t = 1",
+    "conversion": "-0.6387 x 26 = -16.6062; sigma 0.0001 x 26 = 0.0026",
+    "note": "Record row (read hardest): energy, sigma, cluster, filling, couplings, column and provenance all agree; the number is the paper's own computation (no citation on the column). Lowest non-exact value on the instance; it sits above the exact value of the same table. bound_type variational: caption '\"Best r\" is <psiSR|H|psiSR>, computed by \"forward walking\" as described in App.(B), by optimizing the parameter r' (the caption's 'Best r' names the energy column Best SR; the Best r column holds r itself); Sec. III: '<psiSR|H|psiSR> >= E0 ... This estimate is obviously variational'. Best r printed for this row: 0.375. Not a mixed estimate: Fig. 2 shows the forward-walking convergence for 4 holes / 26 sites at J/t = 1. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "VMC",
+      "energy": -19.8822
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.5, column VMC (layout text line 1051; header line 1049)",
+    "reported_as": "-0.7647(1) per site, t = 1",
+    "conversion": "-0.7647 x 26 = -19.8822; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type variational: 'VMC is the standard variational method'; Fig. 1 caption: 'the lowest energy Jastrow-Slater variational singlet wavefunction'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "VMC+LS",
+      "energy": -20.3112
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.5, column VMC+LS (layout text line 1051; header line 1049)",
+    "reported_as": "-0.7812(1) per site, t = 1",
+    "conversion": "-0.7812 x 26 = -20.3112; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type variational: one Lanczos step on the variational state, sampled by the fixed-reference SR, which Sec. II.A calls 'rigorously variational'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#9 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "VMC+FN",
+      "energy": -20.1734
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.5, column VMC+FN (layout text line 1051; header line 1049)",
+    "reported_as": "-0.7759(1) per site, t = 1",
+    "conversion": "-0.7759 x 26 = -20.1734; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type projected: 'VMC+FN is the lattice fixed node approach'; Sec. VI: 'the FN energy reported in the table is only an upper bound of the expectation value of the hamiltonian on the FN state'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "VMC+2LS",
+      "energy": -20.4152
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.5, column VMC+2LS (layout text line 1051; header line 1049)",
+    "reported_as": "-0.7852(1) per site, t = 1",
+    "conversion": "-0.7852 x 26 = -20.4152; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type variational: two Lanczos steps on the variational state (Sec. II.A, 'rigorously variational'). N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#11 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "VMC+LS+FN",
+      "energy": -20.3866
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.5, column VMC+LS+FN (layout text line 1051; header line 1049)",
+    "reported_as": "-0.7841(1) per site, t = 1",
+    "conversion": "-0.7841 x 26 = -20.3866; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type projected: 'the fixed node over the VMC+LS wavefunction'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#12 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "Best SR",
+      "energy": -20.423
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 0.5, column Best SR (layout text line 1051; header line 1049)",
+    "reported_as": "-0.7855(1) per site, t = 1",
+    "conversion": "-0.7855 x 26 = -20.423; sigma 0.0001 x 26 = 0.0026",
+    "note": "Record row (read hardest): energy, sigma, cluster, filling, couplings, column and provenance all agree; the number is the paper's own computation (no citation on the column). Lowest non-exact value on the instance; it sits above the exact value of the same table. bound_type variational: caption '\"Best r\" is <psiSR|H|psiSR>, computed by \"forward walking\" as described in App.(B), by optimizing the parameter r' (the caption's 'Best r' names the energy column Best SR; the Best r column holds r itself); Sec. III: '<psiSR|H|psiSR> >= E0 ... This estimate is obviously variational'. Best r printed for this row: 0.25. Not a mixed estimate: Fig. 2 shows the forward-walking convergence for 4 holes / 26 sites at J/t = 1. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#13 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "VMC",
+      "energy": -29.8376
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 1.0, column VMC (layout text line 1052; header line 1049)",
+    "reported_as": "-1.1476(1) per site, t = 1",
+    "conversion": "-1.1476 x 26 = -29.8376; sigma 0.0001 x 26 = 0.0026",
+    "note": "Not a duplicate: Lugas et al. PRB 74, 165122 Table II prints E_VMC^RVB/L = -1.14760(1) for the same instance (stored -29.8376, the same total), but that is the 2006 paper's own run with a 10x smaller error bar; at J/t = 0.3 and 0.5 the two papers' RVB VMC values differ (-0.61372(1) vs -0.6138(1), -0.76461(1) vs -0.7647(1)), so the J/t = 1 coincidence is within Sorella's error bar. bound_type variational: 'VMC is the standard variational method'; Fig. 1 caption: 'the lowest energy Jastrow-Slater variational singlet wavefunction'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#15 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "VMC+LS",
+      "energy": -30.3472
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 1.0, column VMC+LS (layout text line 1052; header line 1049)",
+    "reported_as": "-1.1672(1) per site, t = 1",
+    "conversion": "-1.1672 x 26 = -30.3472; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type variational: one Lanczos step on the variational state, sampled by the fixed-reference SR, which Sec. II.A calls 'rigorously variational'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#16 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "VMC+FN",
+      "energy": -30.1808
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 1.0, column VMC+FN (layout text line 1052; header line 1049)",
+    "reported_as": "-1.1608(1) per site, t = 1",
+    "conversion": "-1.1608 x 26 = -30.1808; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type projected: 'VMC+FN is the lattice fixed node approach'; Sec. VI: 'the FN energy reported in the table is only an upper bound of the expectation value of the hamiltonian on the FN state'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#17 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "VMC+2LS",
+      "energy": -30.4694
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 1.0, column VMC+2LS (layout text line 1052; header line 1049)",
+    "reported_as": "-1.1719(1) per site, t = 1",
+    "conversion": "-1.1719 x 26 = -30.4694; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type variational: two Lanczos steps on the variational state (Sec. II.A, 'rigorously variational'). N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#18 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "VMC+LS+FN",
+      "energy": -30.4356
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 1.0, column VMC+LS+FN (layout text line 1052; header line 1049)",
+    "reported_as": "-1.1706(1) per site, t = 1",
+    "conversion": "-1.1706 x 26 = -30.4356; sigma 0.0001 x 26 = 0.0026",
+    "note": "bound_type projected: 'the fixed node over the VMC+LS wavefunction'. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#19 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "Best SR",
+      "energy": -30.4824
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0009149v1 PDF, pypdf layout mode (table row parsed by out/tjP2-10-1103-physrevb-64-024512/build.py)",
+    "location": "Table I (page 17), row N = 22, L = 26, J/t = 1.0, column Best SR (layout text line 1052; header line 1049)",
+    "reported_as": "-1.1724(1) per site, t = 1",
+    "conversion": "-1.1724 x 26 = -30.4824; sigma 0.0001 x 26 = 0.0026",
+    "note": "Record row (read hardest): energy, sigma, cluster, filling, couplings, column and provenance all agree; the number is the paper's own computation (no citation on the column). Lowest non-exact value on the instance; it sits above the exact value of the same table. bound_type variational: caption '\"Best r\" is <psiSR|H|psiSR>, computed by \"forward walking\" as described in App.(B), by optimizing the parameter r' (the caption's 'Best r' names the energy column Best SR; the Best r column holds r itself); Sec. III: '<psiSR|H|psiSR> >= E0 ... This estimate is obviously variational'. Best r printed for this row: 0.25. Not a mixed estimate: Fig. 2 shows the forward-walking convergence for 4 holes / 26 sites at J/t = 1. N = 22 electrons on L = 26 sites = 4 holes, N_up = N_dn = 11 (singlet); t = 1 and J/t from the row; energy per site, converted to total by x 26; sigma (1) in the last printed digit = 1e-4 per site (caption: 'statistical accuracy of 10^-4 t on the energy per site'). Hamiltonian not printed in this paper; the convention J(S.S - n n/4) and the sqrt(26) x sqrt(26) periodic cluster are fixed by the paper's ref. 23 (Poilblanc, PRB 52, 9201 (1995), arXiv:cond-mat/9505004v1, which prints H = t sum c+c + J sum (S.S - n n/4) on sqrt(N) x sqrt(N) clusters and footnote 17 '22 electrons on 26 sites'), by the exact column being reproduced on the (5, 1) cluster with that Hamiltonian (out/tjE-exact-recompute, this run), and by Lugas et al. PRB 74, 165122 Table II printing the same exact column. arXiv:cond-mat/0009149v1 (only arXiv version, 11 Sep 2000), PDF text by pypdf layout and plain mode (sources/tjP2-dl/cond-mat-0009149v1.layout.txt); journal version Phys. Rev. B 64, 024512 (2001) not reached: the APS PDF returned HTTP 401 from this session on 2026-10-24 (abstract page only: received 12 Sep 2000, published 19 Jun 2001).",
+    "source_entry": "tjP2-10-1103-physrevb-64-024512#20 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL0, power = 0",
+      "energy": -41.2352
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 0, column PL0 (shared layout line 410, page 8)",
+    "reported_as": "-0.6443(1) (per site, units of t)",
+    "conversion": "-0.6443 per site x 64 sites = -41.2352 (stored -41.2352); sigma 0.0001 x 64 = 0.0064 (stored 0.0064); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL1, power = 0",
+      "energy": -42.9376
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 0, column PL1 (shared layout line 410, page 8)",
+    "reported_as": "-0.6709(1) (per site, units of t)",
+    "conversion": "-0.6709 per site x 64 sites = -42.9376 (stored -42.9376); sigma 0.0001 x 64 = 0.0064 (stored 0.0064); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL2, power = 0",
+      "energy": -43.6416
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 0, column PL2 (shared layout line 410, page 8)",
+    "reported_as": "-0.6819(11) (per site, units of t)",
+    "conversion": "-0.6819 per site x 64 sites = -43.6416 (stored -43.6416); sigma 0.0011 x 64 = 0.0704 (stored 0.0704); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL0, power = 2",
+      "energy": -42.0672
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 2, column PL0 (shared layout line 411, page 8)",
+    "reported_as": "-0.6573(4) (per site, units of t)",
+    "conversion": "-0.6573 per site x 64 sites = -42.0672 (stored -42.0672); sigma 0.0004 x 64 = 0.0256 (stored 0.0256); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#3 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL1, power = 2",
+      "energy": -43.3152
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 2, column PL1 (shared layout line 411, page 8)",
+    "reported_as": "-0.6768(2) (per site, units of t)",
+    "conversion": "-0.6768 per site x 64 sites = -43.3152 (stored -43.3152); sigma 0.0002 x 64 = 0.0128 (stored 0.0128); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL2, power = 2",
+      "energy": -43.7312
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 2, column PL2 (shared layout line 411, page 8)",
+    "reported_as": "-0.6833(11) (per site, units of t)",
+    "conversion": "-0.6833 per site x 64 sites = -43.7312 (stored -43.7312); sigma 0.0011 x 64 = 0.0704 (stored 0.0704); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL0, power = 4",
+      "energy": -42.6048
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 4, column PL0 (shared layout line 412, page 8)",
+    "reported_as": "-0.6657(6) (per site, units of t)",
+    "conversion": "-0.6657 per site x 64 sites = -42.6048 (stored -42.6048); sigma 0.0006 x 64 = 0.0384 (stored 0.0384); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL1, power = 4",
+      "energy": -43.5392
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 4, column PL1 (shared layout line 412, page 8)",
+    "reported_as": "-0.6803(6) (per site, units of t)",
+    "conversion": "-0.6803 per site x 64 sites = -43.5392 (stored -43.5392); sigma 0.0006 x 64 = 0.0384 (stored 0.0384); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#7 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL2, power = 4",
+      "energy": -43.8464
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 4, column PL2 (shared layout line 412, page 8)",
+    "reported_as": "-0.6851(29) (per site, units of t)",
+    "conversion": "-0.6851 per site x 64 sites = -43.8464 (stored -43.8464); sigma 0.0029 x 64 = 0.1856 (stored 0.1856); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL0, power = 6",
+      "energy": -43.104
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 6, column PL0 (shared layout line 413, page 8)",
+    "reported_as": "-0.6735(9) (per site, units of t)",
+    "conversion": "-0.6735 per site x 64 sites = -43.104 (stored -43.104); sigma 0.0009 x 64 = 0.0576 (stored 0.0576); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#9 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL1, power = 6",
+      "energy": -43.648
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 6, column PL1 (shared layout line 413, page 8)",
+    "reported_as": "-0.6820(8) (per site, units of t)",
+    "conversion": "-0.682 per site x 64 sites = -43.648 (stored -43.648); sigma 0.0008 x 64 = 0.0512 (stored 0.0512); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL0, power = 8",
+      "energy": -43.3216
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 8, column PL0 (shared layout line 414, page 8)",
+    "reported_as": "-0.6769(12) (per site, units of t)",
+    "conversion": "-0.6769 per site x 64 sites = -43.3216 (stored -43.3216); sigma 0.0012 x 64 = 0.0768 (stored 0.0768); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#11 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL1, power = 8",
+      "energy": -43.872
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Table I ('Power-Lanczos energies of J/t = 0.2 for 50 electrons in a 8 x 8 lattice'), row power 8, column PL1 (shared layout line 414, page 8); the same number is Table II row 50/64, column E_PL (line 499), one row",
+    "reported_as": "-0.6855(13) (per site, units of t)",
+    "conversion": "-0.6855 per site x 64 sites = -43.872 (stored -43.872); sigma 0.0013 x 64 = 0.0832 (stored 0.0832); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type variational agrees: E(p) = <H^(2p+1)>/<H^(2p)> (page 4) is the energy of the state H^p|PL_n>, PL_n being n Lanczos steps on the d-wave RVB + AF trial state with C1 (C2) optimised variationally (Eqs. 31-35), pure estimator, no fixed node; the paper states 'the energy calculated from the power-Lanczos method is still a variational estimate and an upper bound of the ground state energy' (lines 391-393); the sign problem enlarges the error bar, it does not bias the estimator",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#12 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL0, power → ∞ (exponential fit)",
+      "energy": -44.0384
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Sec. II end, text after Eq. (36) 'E = E0 + ae^{-bp}', shared layout lines 458-459 (Fig. 6 shows the fit curves)",
+    "reported_as": "E0 = −0.6881(35), a = 0.0438(33), and a = 0.174(26) (per site, units of t)",
+    "conversion": "-0.6881 per site x 64 sites = -44.0384 (stored -44.0384); sigma 0.0035 x 64 = 0.224 (stored 0.224); t = 1 in the source, factor 1",
+    "note": "Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type extrapolated agrees (fit of E(p) to p -> infinity, Eq. 36; no state reached it); an unweighted least-squares fit of E0 + a exp(-b p) to the five Table I PL0 points (p = 0..8) gives E0 = -0.6881, a = 0.0438, b = 0.175, the printed values; the third parameter printed as 'a = 0.174(26)' is b (a typo in the paper); an error-weighted fit gives E0 = -0.6883",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#13 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h14_J0.2",
+      "method": "PL1, power → ∞ (exponential fit)",
+      "energy": -44.1856
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0104067v1 (the only arXiv version), PDF in the shared cache sources/cond-mat-0104067v1.pdf (md5 135746f0..., identical to the project's sources/cond-mat-0104067.pdf), re-extracted independently on 2026-10-24 with pypdf layout mode (identical to sources/cond-mat-0104067v1.layout.txt, whose line numbers are cited). Journal version J. Phys. Chem. Solids 62(9-10), 1797-1811 (2001) not reached: doi.org resolves to ScienceDirect, whose article and /pdfft pages return 403 on 2026-10-24; arXiv version alone",
+    "location": "Sec. II end, text after Eq. (36), shared layout lines 459-460 (Fig. 6 shows the fit curves)",
+    "reported_as": "E0 = −0.6904(48), a = 0.0193(46), and b = 0.158(70) for PL1 energies (per site, units of t)",
+    "conversion": "-0.6904 per site x 64 sites = -44.1856 (stored -44.1856); sigma 0.0048 x 64 = 0.3072 (stored 0.3072); t = 1 in the source, factor 1",
+    "note": "RECORD ROW of tJ/square_64_P_h14_J0.2 (lowest unflagged; an extrapolation, 1 sigma below the lowest variational row PL1 power 8 at -43.872). Eq. (1) H = -t sum (c~+ c~ + h.c.) + J sum (S_i.S_j - 1/4 n_i n_j), each nearest-neighbour pair once, is the instance Hamiltonian (nn_term true, no shift; the paper's e_H = -1.169J per site in Sec. IV = -0.669 - 0.5 confirms the -n n/4 term); t = 1, J/t = 0.2; 50 electrons with Ne/2 up and Ne/2 down (Eq. 9) = N_up = N_dn = 25 (closed shell on the 8 x 8 torus: 1+4+4+4+8+4 = 25 k-points); 8 x 8 lattice (Table I caption), 'uniform trial wave functions and periodic boundary conditions' (line 577) and 'the same lattices and boundary conditions as those used by HM' (page 2), boundary P; energy per site in units of t (Table I unlabelled; per site from Eq. 37 'E x Ns' and Table II's comparison with Hellberg-Manousakis' per-site -0.6825(23); per site and not per electron, since 50/90 at -0.9184 per site is only consistent with a per-site kinetic energy); own computation; the only other rows on data/tJ/square_64_P_h14_J0.2.json are this group's 15, no duplicate; bound_type extrapolated agrees (fit of E(p) to p -> infinity, Eq. 36; no state reached it); an unweighted least-squares fit of E0 + a exp(-b p) to the five Table I PL1 points (p = 0..8) gives E0 = -0.6904, a = 0.0193, b = 0.159, the printed values; an error-weighted fit (1/sigma^2 from Table I) gives E0 = -0.6865, a = 0.0156, b = 0.236, 0.8 printed sigma above; the printed (48) is the fit-parameter error of a 3-parameter fit to 5 points",
+    "source_entry": "tjP3-10-1016-s0022-3697-01#14 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "FLST, p = 1, Δ_BCS = 0.20",
+      "energy": -11.7738
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "location": "arXiv Table 1.1 = journal Table 1, row N = 16, Delta_BCS = 0.20, p = 1, column E0/L (FLST)",
+    "reported_as": "-0.6541(1) per site (E0/L, units of t)",
+    "conversion": "-0.6541 x 18 = -11.7738; sigma 0.0001 x 18 = 0.0018",
+    "note": "Instance agrees with the source: Eq. (1.1) H = J sum (S_i.S_j - n_i n_j/4) - t sum c~+c~ with t = 1 (the VarBench-style t-J form with the -n n/4 term, nn_term true; sign of t immaterial on the bipartite (3,3)x(3,-3) cluster), J = 0.4, L = 18, N = 16 electrons = 2 holes, S_z = 0 (N_up = N_dn = 8); E0/L per site in units of t, total = 18 x E0/L. The chapter prints 'Pauli matrices' for the spin operator without the 1/2; the spin-1/2 reading is fixed by QMBL's diagonalisation (checks/tj-ed-2026-10/results.jsonl, tilted18_h2_J0.4: -0.6590431107 per site) reproducing the printed exact -0.65904. Cluster shape and boundary are not printed ('the small 18-site cluster'); the square-shaped periodic (3,3),(3,-3) cluster (the only square-shaped 18-site cluster) is inferred from that agreement (accepted practice, prior findings 2026-10-03). arXiv v1 and journal print identical digits in both tables. FLST = statistical sampling of the p-Lanczos-step state of Eq. (1.2) (stochastic reconfiguration), variational; error bar '(1)' in the last digit, meaning not stated. Table 1.1's exact value for the same state (-0.65420, row 1) lies within 1 sigma. sampled (fallback true) is right. No variance printed for FLST rows. peer_reviewed: see the ambiguous entry on 'exact (p = infinity)'. Not a duplicate: the instance holds only this chapter's 13 rows.",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#0 (qmbl-verify 2026-10-23)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "FLST, p = 2, Δ_BCS = 0.55",
+      "energy": -11.8494
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "location": "arXiv Table 1.1 = journal Table 1, row N = 16, Delta_BCS = 0.55, p = 2, column E0/L (FLST)",
+    "reported_as": "-0.6583(1) per site",
+    "conversion": "-0.6583 x 18 = -11.8494; sigma 0.0001 x 18 = 0.0018",
+    "note": "Instance agrees with the source: Eq. (1.1) H = J sum (S_i.S_j - n_i n_j/4) - t sum c~+c~ with t = 1 (the VarBench-style t-J form with the -n n/4 term, nn_term true; sign of t immaterial on the bipartite (3,3)x(3,-3) cluster), J = 0.4, L = 18, N = 16 electrons = 2 holes, S_z = 0 (N_up = N_dn = 8); E0/L per site in units of t, total = 18 x E0/L. The chapter prints 'Pauli matrices' for the spin operator without the 1/2; the spin-1/2 reading is fixed by QMBL's diagonalisation (checks/tj-ed-2026-10/results.jsonl, tilted18_h2_J0.4: -0.6590431107 per site) reproducing the printed exact -0.65904. Cluster shape and boundary are not printed ('the small 18-site cluster'); the square-shaped periodic (3,3),(3,-3) cluster (the only square-shaped 18-site cluster) is inferred from that agreement (accepted practice, prior findings 2026-10-03). arXiv v1 and journal print identical digits in both tables. FLST = statistical sampling of the p-Lanczos-step state of Eq. (1.2) (stochastic reconfiguration), variational; error bar '(1)' in the last digit, meaning not stated. Table 1.1's exact value for the same state (-0.65826, row 6) lies within 1 sigma. sampled (fallback true) is right. No variance printed for FLST rows. peer_reviewed: see the ambiguous entry on 'exact (p = infinity)'. Not a duplicate: the instance holds only this chapter's 13 rows.",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#2 (qmbl-verify 2026-10-23)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h1_J0.333333",
+      "method": "|Ψ_0⟩_1h",
+      "energy": -6.72966666667
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2406.16865v1 (only version; sources/2406.16865.pdf + .txt, pypdf layout and plain modes) and the accepted manuscript of Phys. Rev. B 110, 155111 (CHORUS, dated 2024-09-23; sources/PhysRevB.110.155111-am.pdf, pypdf layout and plain modes). The publisher's version of record is closed access (APS page shows locked content); the accepted manuscript is the post-review text.",
+    "location": "Table I, row |Ψ0⟩1h, column Etot (arXiv v1 p. 3; AM p. 4)",
+    "reported_as": "|Ψ0⟩1h -20.189 -2.224 -17.965 0 (Etot, Et, EJ, Lz; units of J, t/J = 3)",
+    "conversion": "-20.189 / 3 = -6.72966666667 (source H = 3 x instance H: J = 1, t/J = 3; instance t = 1, J = 1/3); stored -6.72966666667",
+    "note": "Et + EJ = -2.224 - 17.965 = -20.189. Hamiltonian Eqs. (1)-(2) H = P(Ht + HJ)P, Ht = -t sum (c+c + H.c.), HJ = J sum (Si.Sj - ninj/4): the instance's nn_term = true. Cluster: 24-site honeycomb with OBC and C6 rotation symmetry (Sec. II A, Fig. 2), the coronene flake, pinned by the ED reproduction. Sector: one hole; the ED ground state is fourfold degenerate (Lz = ±2 for each Sz = ±1/2); the VMC Ansatz removes an up electron (Sz = -1/2), the instance stores N_up = 12, N_dn = 11 (Sz = +1/2): equal energy by spin-flip symmetry. Arxiv v1 and accepted manuscript print the same digits for this row. No error bar printed (sampled VMC energies; sigma stays null). Own computation (not quoted). No duplicate: the instance file holds only this paper's rows. Bound type: VMC on a variational Ansatz, the coefficients from the generalized eigenvalue problem Ht-J x = Et-J A x (App. C, Eq. C10); variational.",
+    "source_entry": "tjP5-arxiv-2406-16865#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h1_J0.333333",
+      "method": "|Ψ_±1⟩_1h",
+      "energy": -7.64466666667
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2406.16865v1 (only version; sources/2406.16865.pdf + .txt, pypdf layout and plain modes) and the accepted manuscript of Phys. Rev. B 110, 155111 (CHORUS, dated 2024-09-23; sources/PhysRevB.110.155111-am.pdf, pypdf layout and plain modes). The publisher's version of record is closed access (APS page shows locked content); the accepted manuscript is the post-review text.",
+    "location": "Table I, row |Ψ±1⟩1h, column Etot (arXiv v1 p. 3; AM p. 4)",
+    "reported_as": "|Ψ±1⟩1h -22.934 -5.588 -17.346 ±2",
+    "conversion": "-22.934 / 3 = -7.64466666667 (source H = 3 x instance H: J = 1, t/J = 3; instance t = 1, J = 1/3); stored -7.64466666667",
+    "note": "Et + EJ = -5.588 - 17.346 = -22.934. Hamiltonian Eqs. (1)-(2) H = P(Ht + HJ)P, Ht = -t sum (c+c + H.c.), HJ = J sum (Si.Sj - ninj/4): the instance's nn_term = true. Cluster: 24-site honeycomb with OBC and C6 rotation symmetry (Sec. II A, Fig. 2), the coronene flake, pinned by the ED reproduction. Sector: one hole; the ED ground state is fourfold degenerate (Lz = ±2 for each Sz = ±1/2); the VMC Ansatz removes an up electron (Sz = -1/2), the instance stores N_up = 12, N_dn = 11 (Sz = +1/2): equal energy by spin-flip symmetry. Arxiv v1 and accepted manuscript print the same digits for this row. No error bar printed (sampled VMC energies; sigma stays null). Own computation (not quoted). No duplicate: the instance file holds only this paper's rows. Bound type: VMC on a variational Ansatz, the coefficients from the generalized eigenvalue problem Ht-J x = Et-J A x (App. C, Eq. C10); variational.",
+    "source_entry": "tjP5-arxiv-2406-16865#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h1_J0.333333",
+      "method": "|Ψ̃_±1⟩_1h",
+      "energy": -8.08033333333
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2406.16865v1 (only version; sources/2406.16865.pdf + .txt, pypdf layout and plain modes) and the accepted manuscript of Phys. Rev. B 110, 155111 (CHORUS, dated 2024-09-23; sources/PhysRevB.110.155111-am.pdf, pypdf layout and plain modes). The publisher's version of record is closed access (APS page shows locked content); the accepted manuscript is the post-review text.",
+    "location": "Table I, row |˜Ψ±1⟩1h, column Etot (arXiv v1 p. 3; AM p. 4)",
+    "reported_as": "|˜Ψ±1⟩1h -24.241 -7.032 -17.209 ±2",
+    "conversion": "-24.241 / 3 = -8.08033333333 (source H = 3 x instance H: J = 1, t/J = 3; instance t = 1, J = 1/3); stored -8.08033333333",
+    "note": "Et + EJ = -7.032 - 17.209 = -24.241; text: 'within 2.18% as compared to the exact ED result' (24.782-24.241)/24.782 = 2.18%. Hamiltonian Eqs. (1)-(2) H = P(Ht + HJ)P, Ht = -t sum (c+c + H.c.), HJ = J sum (Si.Sj - ninj/4): the instance's nn_term = true. Cluster: 24-site honeycomb with OBC and C6 rotation symmetry (Sec. II A, Fig. 2), the coronene flake, pinned by the ED reproduction. Sector: one hole; the ED ground state is fourfold degenerate (Lz = ±2 for each Sz = ±1/2); the VMC Ansatz removes an up electron (Sz = -1/2), the instance stores N_up = 12, N_dn = 11 (Sz = +1/2): equal energy by spin-flip symmetry. Arxiv v1 and accepted manuscript print the same digits for this row. No error bar printed (sampled VMC energies; sigma stays null). Own computation (not quoted). No duplicate: the instance file holds only this paper's rows. Bound type: VMC on a variational Ansatz, the coefficients from the generalized eigenvalue problem Ht-J x = Et-J A x (App. C, Eq. C10); variational. Record row: the |˜Ψ⟩ Ansatz is Lanczos-inspired (App. D, Eq. D1: linear combination with extra variational parameters), still a variational state, not a Lanczos step on a sampled state.",
+    "source_entry": "tjP5-arxiv-2406-16865#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h2_J0.333333",
+      "method": "|Ψ_0⟩_2h",
+      "energy": -7.166
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2406.16865v1 (only version; sources/2406.16865.pdf + .txt, pypdf layout and plain modes) and the accepted manuscript of Phys. Rev. B 110, 155111 (CHORUS, dated 2024-09-23; sources/PhysRevB.110.155111-am.pdf, pypdf layout and plain modes). The publisher's version of record is closed access (APS page shows locked content); the accepted manuscript is the post-review text.",
+    "location": "Table III, row |Ψ0⟩2h, column Etot (arXiv v1 p. 6; AM p. 7)",
+    "reported_as": "|Ψ0⟩2h -21.498 -5.000 -16.498 0",
+    "conversion": "-21.498 / 3 = -7.16600000000 (source H = 3 x instance H: J = 1, t/J = 3; instance t = 1, J = 1/3); stored -7.166",
+    "note": "Et + EJ = -5.000 - 16.498 = -21.498. Hamiltonian Eqs. (1)-(2) H = P(Ht + HJ)P, Ht = -t sum (c+c + H.c.), HJ = J sum (Si.Sj - ninj/4): the instance's nn_term = true. Cluster: 24-site honeycomb with OBC and C6 rotation symmetry (Sec. II A, Fig. 2), the coronene flake, pinned by the ED reproduction. Sector: two holes, total spin S = 0 (Table III caption), N_up = N_dn = 11. Arxiv v1 and accepted manuscript print the same digits for this row. No error bar printed (sampled VMC energies; sigma stays null). Own computation (not quoted). No duplicate: the instance file holds only this paper's rows. Bound type: VMC on a variational Ansatz, the coefficients from the generalized eigenvalue problem Ht-J x = Et-J A x (App. C, Eq. C10); variational.",
+    "source_entry": "tjP5-arxiv-2406-16865#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h2_J0.333333",
+      "method": "|Ψ_±1⟩_2h",
+      "energy": -8.892
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2406.16865v1 (only version; sources/2406.16865.pdf + .txt, pypdf layout and plain modes) and the accepted manuscript of Phys. Rev. B 110, 155111 (CHORUS, dated 2024-09-23; sources/PhysRevB.110.155111-am.pdf, pypdf layout and plain modes). The publisher's version of record is closed access (APS page shows locked content); the accepted manuscript is the post-review text.",
+    "location": "Table III, row |Ψ±1⟩2h, column Etot (arXiv v1 p. 6; AM p. 7)",
+    "reported_as": "|Ψ±1⟩2h -26.676 -10.909 -15.767 ±2",
+    "conversion": "-26.676 / 3 = -8.89200000000 (source H = 3 x instance H: J = 1, t/J = 3; instance t = 1, J = 1/3); stored -8.892",
+    "note": "Et + EJ = -10.909 - 15.767 = -26.676. Hamiltonian Eqs. (1)-(2) H = P(Ht + HJ)P, Ht = -t sum (c+c + H.c.), HJ = J sum (Si.Sj - ninj/4): the instance's nn_term = true. Cluster: 24-site honeycomb with OBC and C6 rotation symmetry (Sec. II A, Fig. 2), the coronene flake, pinned by the ED reproduction. Sector: two holes, total spin S = 0 (Table III caption), N_up = N_dn = 11. Arxiv v1 and accepted manuscript print the same digits for this row. No error bar printed (sampled VMC energies; sigma stays null). Own computation (not quoted). No duplicate: the instance file holds only this paper's rows. Bound type: VMC on a variational Ansatz, the coefficients from the generalized eigenvalue problem Ht-J x = Et-J A x (App. C, Eq. C10); variational. RECORD NOTE: the accepted manuscript (post-review) adds a Table III row absent from arXiv v1: '|˜Ψ±1⟩2h -28.656 -13.029 -15.628 ±2' (AM p. 7, layout and plain modes agree; Et + EJ = -28.657). -28.656 / 3 = -9.552, below this row's -8.892 and above the ED -9.94466666667: it would take this instance's best-variational record. Not on the table (unlisted).",
+    "source_entry": "tjP5-arxiv-2406-16865#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/rectangular-6x16_96_PO_h8_J0.35",
+      "method": "SU(2) DMRG, m = 500",
+      "energy": -52.284
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0103096v1 PDF (sources/cond-mat-0103096v1.pdf, byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Table I, row 'SU(2) 500'",
+    "reported_as": "−52.284 (total energy, units of t)",
+    "conversion": "none: total energy in units of t; stored -52.284",
+    "note": "Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + J(sum S_i.S_j - 1/4 n_i n_j), nn pairs once, t = 1, J = 0.35 (Table I caption): the instance form; 16 x 6, 8 holes (88 electrons, SU(2) basis targets the singlet, N_up = N_dn = 44); 'periodic boundary conditions in the y direction and open boundary conditions in the (generally longer) x direction' (p. 7): periodic along the 6-site side = rectangular-6x16 PO; Table I E is the total energy (-52.65/96 = -0.548 per site); own SU(2) DMRG (the U(1) m = 1000 row is quoted from White & Scalapino 1999 and is not in QMBL); bound_type variational is right: finite-m DMRG, the text calls DMRG 'a variational upper bound on the energy'; no sigma exists for a DMRG energy; journal version (Philos. Mag. B 81, 1603) not reached: tandfonline.com PDF returned 403 on 2026-10-24; arXiv v1 is the only arXiv version; no duplicate on the instance (the data file holds only these four rows)",
+    "source_entry": "tjP6-tj#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/rectangular-6x16_96_PO_h8_J0.35",
+      "method": "SU(2) DMRG, m = 800",
+      "energy": -52.463
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0103096v1 PDF (sources/cond-mat-0103096v1.pdf, byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Table I, row 'SU(2) 800'",
+    "reported_as": "−52.463 (total energy, units of t)",
+    "conversion": "none: total energy in units of t; stored -52.463",
+    "note": "Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + J(sum S_i.S_j - 1/4 n_i n_j), nn pairs once, t = 1, J = 0.35 (Table I caption): the instance form; 16 x 6, 8 holes (88 electrons, SU(2) basis targets the singlet, N_up = N_dn = 44); 'periodic boundary conditions in the y direction and open boundary conditions in the (generally longer) x direction' (p. 7): periodic along the 6-site side = rectangular-6x16 PO; Table I E is the total energy (-52.65/96 = -0.548 per site); own SU(2) DMRG (the U(1) m = 1000 row is quoted from White & Scalapino 1999 and is not in QMBL); bound_type variational is right: finite-m DMRG, the text calls DMRG 'a variational upper bound on the energy'; no sigma exists for a DMRG energy; journal version (Philos. Mag. B 81, 1603) not reached: tandfonline.com PDF returned 403 on 2026-10-24; arXiv v1 is the only arXiv version; no duplicate on the instance (the data file holds only these four rows)",
+    "source_entry": "tjP6-tj#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/rectangular-6x16_96_PO_h8_J0.35",
+      "method": "SU(2) DMRG, m = 1200",
+      "energy": -52.52
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0103096v1 PDF (sources/cond-mat-0103096v1.pdf, byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Table I, row 'SU(2) 1200'",
+    "reported_as": "−52.520 (total energy, units of t)",
+    "conversion": "none: total energy in units of t; stored -52.52",
+    "note": "Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + J(sum S_i.S_j - 1/4 n_i n_j), nn pairs once, t = 1, J = 0.35 (Table I caption): the instance form; 16 x 6, 8 holes (88 electrons, SU(2) basis targets the singlet, N_up = N_dn = 44); 'periodic boundary conditions in the y direction and open boundary conditions in the (generally longer) x direction' (p. 7): periodic along the 6-site side = rectangular-6x16 PO; Table I E is the total energy (-52.65/96 = -0.548 per site); own SU(2) DMRG (the U(1) m = 1000 row is quoted from White & Scalapino 1999 and is not in QMBL); bound_type variational is right: finite-m DMRG, the text calls DMRG 'a variational upper bound on the energy'; no sigma exists for a DMRG energy; journal version (Philos. Mag. B 81, 1603) not reached: tandfonline.com PDF returned 403 on 2026-10-24; arXiv v1 is the only arXiv version; no duplicate on the instance (the data file holds only these four rows)",
+    "source_entry": "tjP6-tj#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/rectangular-6x16_96_PO_h8_J0.35",
+      "method": "SU(2) DMRG, m → ∞ (zero truncation error)",
+      "energy": -52.65
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0103096v1 PDF (sources/cond-mat-0103096v1.pdf, byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Table I, row '- ∞' (caption: 'an estimate of the true energy, extrapolated to zero truncation error')",
+    "reported_as": "−52.65 ± 0.05 (total energy, units of t)",
+    "conversion": "none: total energy in units of t; stored -52.65",
+    "note": "Hamiltonian Eq. (1) H = -t sum (c+c + H.c.) + J(sum S_i.S_j - 1/4 n_i n_j), nn pairs once, t = 1, J = 0.35 (Table I caption): the instance form; 16 x 6, 8 holes (88 electrons, SU(2) basis targets the singlet, N_up = N_dn = 44); 'periodic boundary conditions in the y direction and open boundary conditions in the (generally longer) x direction' (p. 7): periodic along the 6-site side = rectangular-6x16 PO; Table I E is the total energy (-52.65/96 = -0.548 per site); own SU(2) DMRG (the U(1) m = 1000 row is quoted from White & Scalapino 1999 and is not in QMBL); bound_type extrapolated is right (zero-truncation-error extrapolation, not a bound); sigma 0.05 is the printed ± of the extrapolation; internal check: the text says the m = 1200 energy is 'around 0.25% higher than the estimated true ground state energy' ((-52.520 + 52.65)/52.65 = 0.247%); journal version (Philos. Mag. B 81, 1603) not reached: tandfonline.com PDF returned 403 on 2026-10-24; arXiv v1 is the only arXiv version; no duplicate on the instance (the data file holds only these four rows)",
+    "source_entry": "tjP6-tj#3 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_O_h1_J0.333333",
+      "method": "VMC (single-hole ansatz with antimeron, Eq. 6)",
+      "energy": -23.8223333333
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2602.21206v1 PDF (sources/2602.21206v1.pdf, byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Sec. II.B text, 'total energy E_tot(VMC) = −71.467 close to the DMRG result E_tot(DMRG) = −72.979' (p. 4)",
+    "reported_as": "−71.467 (E_tot, units of J, t = 3, J = 1)",
+    "conversion": "-71.467 / 3 = -23.8223333333 (normalised.factor 3); stored -23.8223333333",
+    "note": "Eqs. (4)-(5): H_t = -t sum (c+c + H.c.), H_J = J sum (S_i.S_j - 1/4 n_i n_j); 'The superexchange term J = 1 is set as the energy unit, and the hopping integral t = 3 is fixed throughout the paper unless explicitly specified. The size of the square lattice is N_x x N_y under the OBC.' So the source H is 3 x the instance H (t = 1, J = 1/3); E_tot is a total energy in units of J; division by 3 is right. Table III caption: 'single-hole ground-state energies (in units of J) ... on an 8x8 lattice for the t-J model'; sector S_z = -1/2 (Appendix A), equivalent to the instance's N_up = 32, N_dn = 31 by spin symmetry. Internal check: Table III E_t + E_J reproduces E_tot (-2.16 - 65.82 = -67.98; -6.41 - 65.00 = -71.41 vs -71.42 printed, rounding; -8.64 - 64.34 = -72.98); Table I gives <H - E0> = -3.853 and E_t = -6.659 for the Eq. (6) state, consistent with E_tot(VMC) = -71.467 and E0 = -67.614 (8x8 OBC Heisenberg with the -n n/4 term, -0.619 per site in S.S units after adding back 112/4). Monte Carlo estimate of the Eq. (6) state; no error bar printed anywhere in v1 (searched ±, 'error', 'statistical', 'samples'); variational; journal version (Phys. Rev. B 114, 185101, doi:10.1103/c75n-7j8f, journal title adds 'and cat states') not reached: journals.aps.org PDF returned 401 on 2026-10-24; the APS abstract page was read and its abstract matches arXiv v1; arXiv v1 is the only arXiv version; no duplicate on the instance (the data file holds only these four rows)",
+    "source_entry": "tjP6-tj#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_O_h1_J0.333333",
+      "method": "DMRG",
+      "energy": -24.3263333333
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2602.21206v1 PDF (sources/2602.21206v1.pdf, byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Sec. II.B text (p. 4); Table III row DMRG prints the same value rounded, -72.98 (E_t -8.64, E_J -64.34, Lz ±1)",
+    "reported_as": "−72.979 (E_tot, units of J, t = 3, J = 1)",
+    "conversion": "-72.979 / 3 = -24.3263333333 (normalised.factor 3); stored -24.3263333333",
+    "note": "Eqs. (4)-(5): H_t = -t sum (c+c + H.c.), H_J = J sum (S_i.S_j - 1/4 n_i n_j); 'The superexchange term J = 1 is set as the energy unit, and the hopping integral t = 3 is fixed throughout the paper unless explicitly specified. The size of the square lattice is N_x x N_y under the OBC.' So the source H is 3 x the instance H (t = 1, J = 1/3); E_tot is a total energy in units of J; division by 3 is right. Table III caption: 'single-hole ground-state energies (in units of J) ... on an 8x8 lattice for the t-J model'; sector S_z = -1/2 (Appendix A), equivalent to the instance's N_up = 32, N_dn = 31 by spin symmetry. Internal check: Table III E_t + E_J reproduces E_tot (-2.16 - 65.82 = -67.98; -6.41 - 65.00 = -71.41 vs -71.42 printed, rounding; -8.64 - 64.34 = -72.98); Table I gives <H - E0> = -3.853 and E_t = -6.659 for the Eq. (6) state, consistent with E_tot(VMC) = -71.467 and E0 = -67.614 (8x8 OBC Heisenberg with the -n n/4 term, -0.619 per site in S.S units after adding back 112/4). own DMRG: Appendix A 'We perform DMRG calculations for the single-hole-doped t-J model using the ITensor library. For the single-hole case the bond dimension is kept up to D = 5000, yielding a maximum truncation error eps ~ 5.5 x 10^-6 ... U(1) spin symmetry is enforced by fixing the total S_z = -1/2'; a finite-D energy, so variational is right; the compute block could carry bond_dimension 5000 (not in the method string); not a quote; journal version (Phys. Rev. B 114, 185101, doi:10.1103/c75n-7j8f, journal title adds 'and cat states') not reached: journals.aps.org PDF returned 401 on 2026-10-24; the APS abstract page was read and its abstract matches arXiv v1; arXiv v1 is the only arXiv version; no duplicate on the instance (the data file holds only these four rows)",
+    "source_entry": "tjP6-tj#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_O_h1_J0.333333",
+      "method": "|Ψ_Bloch⟩_1h",
+      "energy": -22.66
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2602.21206v1 PDF (sources/2602.21206v1.pdf, byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Appendix B, Table III, row |Ψ Bloch⟩1h, column E_tot (E_t -2.16, E_J -65.82, Lz 0)",
+    "reported_as": "-67.98 (E_tot, units of J, t = 3, J = 1)",
+    "conversion": "-67.98 / 3 = -22.6600000000 (normalised.factor 3); stored -22.66",
+    "note": "Eqs. (4)-(5): H_t = -t sum (c+c + H.c.), H_J = J sum (S_i.S_j - 1/4 n_i n_j); 'The superexchange term J = 1 is set as the energy unit, and the hopping integral t = 3 is fixed throughout the paper unless explicitly specified. The size of the square lattice is N_x x N_y under the OBC.' So the source H is 3 x the instance H (t = 1, J = 1/3); E_tot is a total energy in units of J; division by 3 is right. Table III caption: 'single-hole ground-state energies (in units of J) ... on an 8x8 lattice for the t-J model'; sector S_z = -1/2 (Appendix A), equivalent to the instance's N_up = 32, N_dn = 31 by spin symmetry. Internal check: Table III E_t + E_J reproduces E_tot (-2.16 - 65.82 = -67.98; -6.41 - 65.00 = -71.41 vs -71.42 printed, rounding; -8.64 - 64.34 = -72.98); Table I gives <H - E0> = -3.853 and E_t = -6.659 for the Eq. (6) state, consistent with E_tot(VMC) = -71.467 and E0 = -67.614 (8x8 OBC Heisenberg with the -n n/4 term, -0.619 per site in S.S units after adding back 112/4). Bloch-wave trial state Eq. (B1); Table III caption 'obtained from VMC and DMRG'; no error bar printed; journal version (Phys. Rev. B 114, 185101, doi:10.1103/c75n-7j8f, journal title adds 'and cat states') not reached: journals.aps.org PDF returned 401 on 2026-10-24; the APS abstract page was read and its abstract matches arXiv v1; arXiv v1 is the only arXiv version; no duplicate on the instance (the data file holds only these four rows)",
+    "source_entry": "tjP6-tj#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_O_h1_J0.333333",
+      "method": "|Ψ_Lanczos⟩_1h",
+      "energy": -23.8066666667
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2602.21206v1 PDF (sources/2602.21206v1.pdf, byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Appendix B, Table III, row |Ψ Lanczos⟩1h, column E_tot (E_t -6.41, E_J -65.00, Lz 2)",
+    "reported_as": "-71.42 (E_tot, units of J, t = 3, J = 1)",
+    "conversion": "-71.42 / 3 = -23.8066666667 (normalised.factor 3); stored -23.8066666667",
+    "note": "Eqs. (4)-(5): H_t = -t sum (c+c + H.c.), H_J = J sum (S_i.S_j - 1/4 n_i n_j); 'The superexchange term J = 1 is set as the energy unit, and the hopping integral t = 3 is fixed throughout the paper unless explicitly specified. The size of the square lattice is N_x x N_y under the OBC.' So the source H is 3 x the instance H (t = 1, J = 1/3); E_tot is a total energy in units of J; division by 3 is right. Table III caption: 'single-hole ground-state energies (in units of J) ... on an 8x8 lattice for the t-J model'; sector S_z = -1/2 (Appendix A), equivalent to the instance's N_up = 32, N_dn = 31 by spin symmetry. Internal check: Table III E_t + E_J reproduces E_tot (-2.16 - 65.82 = -67.98; -6.41 - 65.00 = -71.41 vs -71.42 printed, rounding; -8.64 - 64.34 = -72.98); Table I gives <H - E0> = -3.853 and E_t = -6.659 for the Eq. (6) state, consistent with E_tot(VMC) = -71.467 and E0 = -67.614 (8x8 OBC Heisenberg with the -n n/4 term, -0.619 per site in S.S units after adding back 112/4). Eq. (B2): the Bloch state improved 'via a first-order Lanczos step' with free amplitudes phi1, phi2, phi3; Lz = 2 sector state, still an upper bound; no error bar printed; journal version (Phys. Rev. B 114, 185101, doi:10.1103/c75n-7j8f, journal title adds 'and cat states') not reached: journals.aps.org PDF returned 401 on 2026-10-24; the APS abstract page was read and its abstract matches arXiv v1; arXiv v1 is the only arXiv version; no duplicate on the instance (the data file holds only these four rows)",
+    "source_entry": "tjP6-tj#7 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_32_P_h4_J0.3_tp0.3_tpp-0.2",
+      "method": "exact diagonalization",
+      "energy": -20.461647
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0508035v1 and v2 PDFs (sources/cond-mat-0508035v{1,2}.pdf; v2 byte-identical to the repo copy), pypdf layout mode, read 2026-10-24",
+    "location": "Table I, row Nc = 4 (k = (0, 0), s, NB = 2,817,694,064); identical in v1 and v2",
+    "reported_as": "−20.461647 (E_Nc total, units of |t|)",
+    "conversion": "none: total energy, |t| = 1; stored -20.461647",
+    "note": "Eq. (1) H = -sum_<ij> t_ij (c+c + c+c) + J sum_nn (S_i.S_j - 1/4 n_i n_j), J = 0.3; 'by electron-doped model we mean (1) with hopping parameters t = -1, t' = 0.3, and t'' = -0.2'; t_ij = t, t', t'' at distances 1, sqrt2, 2; 32-site square lattice with periodic boundary conditions. RULES 2.1: on the bipartite 32-site cluster the gauge takes t = -1 to t = 1 and leaves t', t'' (same sublattice): instance t2 = 0.3, t3 = -0.2; Nc carriers = instance holes (32 - Nc spin objects). Internal checks: E00 = -11.329720 = 0.3 (E_S.S - 16) gives -0.680179 per site (the 32-site Heisenberg value), so the -n n/4 term and one count per bond hold; Table II E(pi,0) = -2.583895 gives E1 = E00 + E = -13.913615 (printed -13.913616); Eq. (5) binding energies E2I = -0.1042 and E4I = 1.2037 are reproduced from Table I (-0.104177, 1.203657). Independent exact recompute of this run (out/tjE-exact-recompute) reproduces h1 (-13.9136156041) and h2 (-16.6016890531) in the printed ground-state sectors; h4 was out of reach there. Table I caption: 'Ground state energies, momenta and point group symmetries of the electron-doped model with Nc charge carriers': the global ground state at Nc = 4; bound_type exact (Lanczos ED) is right; journal version (Phys. Rev. B 73, 075104) not reached: journals.aps.org PDF returned 401 on 2026-10-24; arXiv v1 and v2 both read, Table I identical in both; no duplicate on the instance (the data file holds only this row)",
+    "source_entry": "tjP6-tj#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h8_J0.4",
+      "method": "zero variance extrapolation",
+      "energy": -42.944
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0110460v1 PDF text (sources/cond-mat-0110460.txt, pypdf layout), read 2026-10-24; journal PDF not reachable (APS 401)",
+    "location": "p. 3, right column, paragraph 'For 8 holes on the 8×8 lattice and J/t=0.4'",
+    "reported_as": "close to the zero variance extrapolation E=−0.671(1)t",
+    "conversion": "-0.671 x 64 = -42.944; sigma 0.001 x 64 = 0.064",
+    "note": "Record row. Own computation; PBC 8x8, 8 holes (N_up = N_dn = 28), J/t = 0.4, Eq. (1) is the QMBL form incl. -n n/4; variance extrapolation (Ref. 6) -> extrapolated, correct. Lies 4.3 sigma below the FN+2LS bound; holds the record as an extrapolation under RULES 6. No duplicate on the instance.",
+    "source_entry": "tjP7-tj#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h8_J0.4",
+      "method": "FN+2LS",
+      "energy": -42.67008
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0110460v1 PDF text (sources/cond-mat-0110460.txt, pypdf layout), read 2026-10-24; journal PDF not reachable (APS 401)",
+    "location": "p. 3, right column",
+    "reported_as": "our best variational energy per site (FN+2LS) is E=−0.66672(6)t",
+    "conversion": "-0.66672 x 64 = -42.67008; sigma 0.00006 x 64 = 0.00384",
+    "note": "Fixed node with the 2-Lanczos-step state as guiding function (ten Haaf lattice FN, Ref. 14): projected, correct. Same cluster/sector/couplings as the record row. No duplicate.",
+    "source_entry": "tjP7-tj#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_64_P_h8_J0.4",
+      "method": "VMC",
+      "energy": -41.13024
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0110460v1 PDF text (sources/cond-mat-0110460.txt, pypdf layout), read 2026-10-24; journal PDF not reachable (APS 401)",
+    "location": "p. 3, right column",
+    "reported_as": "much better than the pure variational calculation, E=−0.64266(8)t",
+    "conversion": "-0.64266 x 64 = -41.13024; sigma 0.00008 x 64 = 0.00512",
+    "note": "Pure VMC of the projected BCS + Jastrow state (Eq. 2): variational, correct. No duplicate.",
+    "source_entry": "tjP7-tj#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_16_O_h2_J0.4",
+      "method": "E_ED",
+      "energy": -9.02976
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "npj Quantum Mater. 5, 28 journal PDF (sources/tjP7-dl/osti-1760263.pdf, eScholarship copy of the publisher PDF) and SI (sources/tjP7-dl/npjqm-5-28-SI.pdf), pypdf plain+layout; arXiv:1908.10000v1 text also read",
+    "location": "journal p. 2 'Ground state energies'; SI section B; arXiv v1 line 94",
+    "reported_as": "compared with the exact energy EED = −0.56436",
+    "conversion": "-0.56436 x 16 = -9.02976",
+    "note": "Transcribed correctly; same in journal, SI and arXiv. The printed value is truncated, not rounded: QMBL ED (checks/tj-ed-2026-10) gives -0.564366793 per site = -9.0298686872, 1.09e-4 below the stored total (outside the printed half-digit, 8e-5); for the exact-recompute pass. Producer not named in the paper; Ref. 13 (Hellberg & Manousakis, arXiv:cond-mat/9812022v1) treats a 4x4 open only in x and prints no -0.56436, so the row stays primary. No duplicate.",
+    "source_entry": "tjP7-tj#9 (qmbl-verify 2026-10-23)",
+    "journal": true
+  },
 ];

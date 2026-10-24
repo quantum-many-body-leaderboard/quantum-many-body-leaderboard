@@ -194,6 +194,7 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-10-22-quoted.json` | the primaries behind held t′ = −0.2 quotes: Gu et al. (Nat. Commun. 17, 7838; arXiv:2507.02644) Supplementary Table 5, PBC energies at t′ = 0 and −0.2 on 8 × 8 to 32 × 8, and the two zero-variance extrapolations of the main text, read in the journal version (the arXiv text has no raw-data table); Liang (PRB 113, 155121; arXiv:2507.01856) Tables V and VI at t′ = −0.2. Held: Gu et al.'s OBC table (doping not printed) and 16 × 8 cylinder (doping and periodic direction not printed), and four error-bar values quoted by arXiv:2609.22618 that PRB 113, 155121 does not print |
 | `sweep-rows-2026-10-22-tc.json` | electron gas: Tanatar & Ceperley, PRB 39, 5005 (1989), no arXiv version, Tables I and II: VMC energies of the normal (N = 26-114, rs = 1-50) and fully polarized (N = 21-113, rs = 5-75) fluids in square cells, and fixed-node GFMC at N = 58 and 57. Read from the text layer of the publisher's 1989 scan, every number checked against the page image; Rydberg, Madelung term included (QMBL's HF check). Held: Table III, the crystal, whose cell is not printed |
 | `sweep-rows-2026-10-22-instances.json` | the rows the 2026-10-16 NQS-papers pass held for want of an instance, on the 22 instances created for them: 32 × 16 at t′ = 0 and −0.2, 32 × 32, the open 16 × 16 at t′ = 0 and −0.2, attractive U = −2 and −8 at δ = 1/8 (arXiv:2604.25775, arXiv:2609.22618); 12 × 12 and the 12√2 × 12√2 tilted torus at δ = 1/6, and 24 × 4 (arXiv:2511.07566); 4 × 4 at n = 7/8 (arXiv:2111.10420, arXiv:2507.10705); pyrochlore 4 × 2²× {3, 4, 6} and 4 × 2 × 4 × 6 (arXiv:2101.08787). Written by the 2026-10-16 generator in its `QMBL_PASS=2026-10-22-instances` mode; Table II of arXiv:2604.25775 names each stripe state by orientation and filling |
+| `sweep-rows-2026-10-22-tj.json` | the first rows of the t-J family (RULES.md §2.1): 145 energies on 27 new instances from 12 papers, written by `scripts/tj_2026_10_22.mjs`; see [The t-J pass](#the-t-j-pass-2026-10-22) |
 
 The five passes of 2026-10-16 to 2026-10-19 had their second reading on 2026-10-19 (1079 rows, eight reader groups,
 each with a skeptic). No energy was misread. The fixes went into the pass generators, so the pass files above carry
@@ -271,6 +272,72 @@ methods on a transcorrelated Hamiltonian without its three-body term are `approx
   above.
 - The three code-link rows carry `artifacts` in the shape `add_code_links.mjs` writes (`code`,
   `read_from` with the quote, location, date and pass).
+
+### The t-J pass (2026-10-22)
+
+The family was opened on a branch and ported onto `main` on 2026-10-24.
+
+- **Finding.** `sweep_search.mjs --only tj-energy,tj-methods --since 1992-01-01` gave 823 candidates
+  (58 and 806 hits). Their abstracts were screened (Haiku): 146 likely to print a finite-cluster t-J
+  energy, 303 possible, 374 not. The 449 likely and possible papers were fetched
+  (`fetch_pdfs.mjs`, old-style ids stored as `sources/cond-mat-XXXXXXX.txt`); 442 texts were
+  extracted, and 7 PDFs could not be fetched or parsed (cond-mat/9311013, cond-mat/0605226,
+  cond-mat/9212009, cond-mat/9312075, cond-mat/0409367, cond-mat/0508357, 2402.10455). The texts were
+  ranked by energies printed to 3 and 4 decimals and by tables; 69 went to a full-text screen
+  (Haiku), and 30 to Sonnet readers in eight batches, with an adversarial re-read of the exact,
+  record-holding and converted rows. Only the texts of the 30 papers read are committed.
+- **Checks by diagonalization** ([`checks/tj-ed-2026-10/`](checks/README.md)). QMBL's own Lanczos
+  runs reproduce six printed exact energies: the periodic 18-site cluster, the open 4 x 4 lattice,
+  the 3 x 6 ladder with antiperiodic legs (1 and 2 holes), the 2 x 11 ladder and the 24-site
+  honeycomb flake with one hole. They fix the -n_i n_j / 4 term, the boundaries, the clusters and
+  the factor 3 of the t/J = 3 source.
+- **The 32-site cluster with t' and t''** (arXiv:cond-mat/0508035) is checked against print, not by
+  diagonalization: its half-filling energy E00 = -11.329720 at J = 0.3 gives -0.6801792 per site
+  for the S_i.S_j Heisenberg energy with -n_i n_j / 4 included, the 32-site value -0.680179 of
+  arXiv:cond-mat/9402061 Table II (`sources/cond-mat-9402061.txt` line 1642).
+- **Correction to a commit message.** Commit e7ae212 says five exact energies were reproduced by
+  QMBL's diagonalization at that point; it was four (18-site, open 4 x 4, and the 3 x 6 ladder with 1
+  and 2 holes). The six of `checks/tj-ed-2026-10/` came with the next commit.
+- **Second reading.** It changed three rows: the method labels of the zero-variance extrapolation
+  and of the pure VMC energy of arXiv:cond-mat/0110460, and the provenance of three 26-site exact
+  energies. arXiv:cond-mat/0009149 credits D. Poilblanc's unpublished 26-site data, and its Exact
+  column (J = 0.3, 0.5, 1, 4 holes) is reprinted without a citation in arXiv:cond-mat/0606659
+  Table II. Those three rows are `secondary`, cited to the private communication through the paper
+  that printed it first (RULES.md §8). The other nine exact values of arXiv:cond-mat/0606659 are not
+  in any earlier paper read here and stay with it.
+- **The 26-site cluster is inferred.** arXiv:cond-mat/0606659 describes its clusters as rotated by
+  45 degrees with L = 2l², l odd, which excludes 26, and states no shape for it. The 12 instances use
+  the square-shaped (5, 1) cluster of RULES.md §2.1; arXiv:cond-mat/0009149's 13 shells on 26 sites
+  agree with it. A symmetry-resolved diagonalization (2 holes, about 3e7 states per momentum) would
+  settle it. It did: QMBL's diagonalization of the (5, 1) cluster
+  ([`checks/tj-exact-recompute-2026-10/`](checks/README.md), 2026-10-23) reproduces all 12 printed
+  26-site exact energies (ruled 2026-10-24).
+- **Held, with the reason** (not rows until the reason is resolved):
+  - arXiv:cond-mat/9911071 (Hellberg & Manousakis, Tables I, II, IV, V and the text value
+    E(4) = -42.23 ± 0.12; 161 energies): each cluster uses one of four boundaries, periodic with a
+    0 or π phase in x and in y, and the tables do not say which. The quoted DMRG value of White &
+    Scalapino (8 x 8 cylinder) waits for its primary.
+  - arXiv:cond-mat/0104067 Table II (15 energies): 'the lattices and boundary conditions are chosen
+    exactly the same as those chosen by Hellberg et al.', so the same open question.
+  - arXiv:1812.03657 Table III (fPEPS, 4 x 4 to 12 x 12, 14 energies): the boundary is not stated.
+  - arXiv:cond-mat/0009149, the 32- and 98-site rows (21 energies, including P. W. Leung's
+    unpublished 32-site exact energy): no boundary or cluster is stated.
+  - arXiv:0708.0788, 0801.2722, 0805.2400 (VMC with J S_i.S_j and no -n_i n_j / 4): the boundary,
+    and for two of them the cluster, are not stated; 0805.2400 quotes the other two.
+  - arXiv:cond-mat/9705156 (one energy): cluster, boundary and quantity are not stated.
+  - arXiv:cond-mat/9607050 Table I: the model has a three-site term whose coupling the table does
+    not state.
+  - arXiv:cond-mat/9502097 (triangular, J = 0): the zero of the printed hole energies is not stated.
+  - arXiv:cond-mat/0103096 Table I, U(1) m = 1000: quoted from White & Scalapino (1999); waits for
+    its primary.
+- **Not in the family**, read and rejected: arXiv:2604.25775 (its t-J table has a staggered pinning
+  field), 2606.17045 (sawtooth chain with J2), 2404.11950 and cond-mat/0601301 (extra density
+  terms), 2003.02850 (kagome). The other papers read print t-J energies only in figures, as
+  thermodynamic-limit values, or as energies relative to the undoped cluster.
+- **No code link.** None of the 12 papers with rows names a repository for its own code in the
+  arXiv text, so no row carries `artifacts`.
+- **Journal versions** were not reached (the publishers returned 403 to this session); every row
+  says it was read from the arXiv text. arXiv:2602.21206 was published under a different title.
 
 ## Rejected papers
 

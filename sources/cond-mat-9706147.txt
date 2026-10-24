@@ -1,0 +1,1980 @@
+              Lightly  Doped  t-J Three-Leg Ladders
+
+          - an  Analog for  the Underdoped Cuprates
+
+
+T.M. Rice(1), Stephan Haas(1), Manfred Sigrist(1)∗, and Fu-Chun Zhang(2)
+
+   (1)  Theoretische  Physik, ETH-H¨onggerberg, CH-8093 Z¨urich,  Switzerland
+
+
+  (2)  Department of Physics, University of Cincinnati, Cincinnati, OH 45221
+
+                                    (December 5, 2017)
+
+
+
+                                         Abstract
+
+
+
+
+     The three-leg ladder has one odd-parity and two even-parity channels.  At
+
+ low doping these behave quite diﬀerently.  Numerical calculations  for a t − J
+
+ model  show  that  the  initial  phase  upon  hole  doping  has  two  components  -
+
+ a  conducting  Luttinger  liquid  in  the  odd-parity  channel,  coexisting  with  an
+
+ insulating (i.e.  undoped) spin liquid phase in the even-parity channels.  This
+
+ phase has a partially truncated Fermi surface and violates the Luttinger the-
+
+ orem.  This coexistence of conducting fermionic and insulating paired bosonic
+
+ degrees of freedom is similar to the recent proposal of Geshkenbein, Ioﬀe, and
+
+ Larkin (Phys.  Rev.  B55,  3173  (1997))  for  the underdoped spin-gap  normal
+
+ phase of the cuprates.  A mean ﬁeld approximation is derived which has many
+
+ similarities  to  the  numerical  results.   One  diﬀerence  however  is  an  induced
+
+ hole pairing in the odd-parity channel at arbitrary small dopings, similar  to
+
+ that proposed by Geshkenbein, Ioﬀe, and Larkin for the two-dimensional case.
+
+ At higher dopings, we propose that a quantum phase transition will occur as
+
+ holes enter the even-parity channels, resulting in a Luther-Emery liquid with
+
+ hole pairing with essentially  d-wave character.  In the mean ﬁeld approxima-
+
+ tion  a  crossover  occurs  which  we  interpret  as  a  reﬂection  of  this  quantum
+
+                                                1
+phase transition deduced from the numerical results.
+74.20.Mn,71.27.+a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                      Typeset using REVTEX
+
+                                           2
+                                            I.  INTRODUCTION
+
+
+    The  properties of electrons  conﬁned  to ladders with various numbers  of legs have  been
+
+investigated by many groups in the past few years [1].  The reason for this interest lies both in
+
+the unusual properties of the ladder systems and the possibility to realize ladder structures
+
+in the cuprates, but also in the insight these systems give to the full two-dimensional problem
+
+of a square lattice.  Two diﬀerent approaches have been taken.  One is based on the weak-
+
+coupling  limit  and  uses  renormalization  group  methods  to  analyze  the  multi-leg  ladders
+
+[2–7].   A  very  complete  analysis  of  this  type  for  N-leg  ladders  in  the  Hubbard  model  has
+
+recently been given by Lin, Balents and Fisher [7].
+
+    A second approach is more numerical and examines the strong-coupling limit described
+
+mostly by the t-J model.  Recent progress on the loop algorithm for Monte Carlo calculations
+
+has allowed large undoped systems described by a Heisenberg model to be investigated down
+
+to  very  low  temperatures.   However,  when  doped  holes  are  introduced,  the  fermion  sign
+problem  prevents  one  from using  this  method,  and other  methods  must  be employed,  e.g.
+
+using  Lanczos  techniques  to  diagonalize  relatively  small  systems  [8,9]  or  the  new  density
+
+matrix renormalization group method (DMRG) to obtain the groundstate of large systems
+
+[10].
+
+    In this paper we examine the case of the lightly doped t − J  three-leg ladder.  This case
+
+is specially  interesting  because in a certain sense  it combines  the contrasting properties of
+
+a  single  chain  [11,12]  and  a  two-leg  ladder  [8].  These  behave  quite  diﬀerently,  both  when
+
+undoped or when lightly doped, so it is of great interest to follow the evolution of the three-leg
+
+ladder in this regime.  In particular, the evolution of the Fermi surface as the Mott insulating
+
+state is approached is very diﬀerent in the diﬀerent transverse channels.  As we shall discuss
+further below, this leads to a region where the Fermi surface is truncated in two channels,
+
+but remains in one channel - a behavior which clearly violates the Luttinger theorem.  We
+
+shall  argue  that  this  presence  of  transverse  channels  which  behave  quite  diﬀerently  helps
+
+us  to  make  inferences  for  the  limit  of  the  two-dimensional  plane  which  of  course  can  be
+
+
+                                                          3
+represented as the limit of very many channels or patches on the Fermi surface.  The lightly
+
+doped  limit  of  the  three-leg  ladder  can  serve  as  a  simpler  analog  for the  underdoped  spin
+
+gap region of the cuprates, which has attracted so much attention, if one assumes that the
+
+patches or channels near (±π, 0) and (0, ±π) are truncated and show a spin gap, while those
+
+near (±π/2, ±π/2) are gapless [13].
+
+    The t-J  three-leg ladder Hamiltonian is given by
+
+                                             3∑
+                           H =  − t ∑                j,ν,σcj+1,ν,σ + H.c.)P
+                                        j,σ ν=1 P (c†
+                                              2∑
+                                   − t′ ∑             j,ν,σcj,ν+1,σ + H.c.)P
+                                        j,σ ν=1 P (c†
+                                              3∑
+                                   + J ∑                            4nj,ν · nj+1,ν)
+                                          j ν=1(Sj,ν · Sj+1,ν − 1
+                                               2∑
+                                   + J ′ ∑                           4nj,ν · nj,ν+1),                                      (1)
+                                          j  ν=1(Sj,ν · Sj,ν+1 − 1
+where j runs over L rungs, σ(=↑, ↓), and ν are spin and leg indices.  The t-J three-leg ladder
+
+is sketched in Fig.  1.  The ﬁrst two terms are the kinetic energy (P  is a projection operator
+
+which  prohibits  double  occupancy),  and  the  last  two  exchange  couplings  J  (J ′)  act  along
+
+the legs (rungs).  Periodic or antiperiodic boundary conditions (PBC, APBC) are used along
+
+the legs.
+                                   t,J                                                            ν=3
+
+                         t’,J’                                                                    ν=2
+
+                y                                                                                 ν=1
+                            j=1         2        3        4        5                           L
+
+                                x
+
+    FIG. 1.  The t-J  ladder with three legs and L rungs.  The couplings along the legs are t and J,
+
+and those along the rungs t′ and J ′.
+
+
+    The paper is organized as follows.  In the next section we recapitulate brieﬂy the known
+
+                                                           4
+results in the undoped limit described by a Heisenberg Hamiltonian.  Then in section 3 we
+
+discuss  the  case of a single doped  hole,  using  the results  of a Lanczos diagonalization and
+
+also the earlier DMRG results by White and Scalapino [10].  The low-energy properties are
+
+described by a single Luttinger liquid channel in contact with an insulating spin liquid (ISL).
+
+Next in section 4 we consider states with two and more holes.  In the presence of a ﬁnite hole
+
+density, there are two possibilities - either all the holes repel each other and enter the single
+
+Luttinger  liquid  channel,  or  at  some  density,  the  other  channels  are  also  populated  with
+
+holes.  Since doping a resonating valence bond (RVB) spin liquid  leads to a Luther-Emery
+
+liquid  [8],  this  will  cause  a  qualitative  change  in  the  physical  properties.   There  will  be  a
+
+critical  hole  density,  δc,  which  controls  the  transition  between  the  low-density  phase  with
+
+only a Luttinger liquid, in contact with a spin liquid, to the case with both Luttinger and
+Luther-Emery  liquids.  In  section  5  we  develop  a  mean  ﬁeld  approach  to  the  t-J  three-leg
+
+ladder.  In this mean ﬁeld approximation, as we shall see, the critical density, δc, is not ﬁnite
+
+but arbitrarily small, whereas the numerical results give a ﬁnite δc  for values of J/t ∼ 0.5.
+
+In  the  ﬁnal  section  we  draw  some  conclusions  and  discuss  the  relationship  to  the  planar
+
+two-dimensional case.
+
+
+
+          II. UNDOPED  CASE:  THE  HEISENBERG THREE-LEG LADDER
+
+
+    In  this  section  we  recapitulate  brieﬂy  the  known  results  for  three-leg  ladders  in  the
+
+Heisenberg model.  In this case the fermion sign problem does not occur, and very accurate
+
+quantum Monte Carlo calculations have been carried out by Frischmuth et al. [14], and by
+
+Greven et al. [15].  The low-energy properties can be mapped onto an eﬀective single S=1/2
+antiferromagnetic (AF) Heisenberg chain model, although the starting model has three spins
+
+per set of ladder rungs.  This  arises because  the additional spin degrees  of freedom have  a
+
+spin  gap,  and  enter  with  an  excitation  energy  ∼  J ′.   The  spinon  velocity  of  the  eﬀective
+
+model  in  fact  is  hardly  changed  from  the  value  of  the  nearest  neighbor  Heisenberg  chain
+
+with exchange constant J.  However the energy scale parameter which controls the spinon-
+
+
+                                                          5
+spinon interactions and the size of logarithmic corrections to the uniform spin susceptibility
+
+at ﬁnite temperatures is greatly changed.  Frischmuth et al. [14] interpret this result in terms
+
+of  a  Heisenberg  model  for  the  eﬀective  chain  with  longer  range  and  unfrustrated  eﬀective
+
+interactions which act to enhance the AF correlations.
+
+    The key point however is the fact that the low-energy Hilbert subspace is greatly reduced
+
+so that not three chains but only a single chain model is active at low energies, or in other
+
+words  only  a  single  S=1/2  degree  of  freedom  per  rung  of  three  spins  remains  in  the  low-
+
+energy  region.  The  remaining  spin  degrees  of freedom  are gapped in the  same way  as the
+
+spin liquid of a two-leg ladder.
+
+                             2.0                            (a)     2.0
+                             1.5                                                                 (c)
+
+
+                             1.0
+
+                             0.5                                    1.5
+
+                             0.0 -1                   0                   1
+                             2.5                      k/π         vs/J
+                             2.0                            (b)
+                                                                    1.0
+                             1.5
+                             1.0
+                             0.5
+                             0.0 -1                   0                   10.50.0   0.1   0.2   0.3   0.4   0.5
+                                                      k/π                             1/L
+
+    FIG. 2.  (a) and (b) Spinon excitation spectra for the isotropic (3×7)- and (3×8)-site Heisenberg
+
+ladders.   The  circles  correspond  to  the  even  parity  and  the  squares  to  the  odd  parity  channels
+
+respectively.  (a) Single spinon excitation spectrum (S = 1/2) in a (3 × 7)-cluster.  (b) Two-spinon
+
+excitation  spectrum  (S  =  1)  in  a  (3 × 8)-cluster.   (c)  Spinon-velocity,  vs,  in  (3×L)-Heisenberg
+
+ladders.   vs  extrapolates  with  high  accuracy  to  the  value  1.81J  (diamond),  obtained  by  QMC
+
+calculations [13].
+
+    This behavior is clearly observed in the numerical Lanczos diagonalization of (3×7)- and
+
+(3×8)-clusters, shown in Fig.  2.  As Bares et al. [12] emphasized in their study of the exactly
+
+                                                              6
+solvable supersymmetric t-J  model in one dimension, the spinon and holon dispersions can
+
+be  directly  obtained  in  the  limit  of  vanishing  hole  density  by  examining  the  groundstate
+
+of  an  appropriately  chosen  ﬁnite  chain.   Thus  if  one  takes  the  case  of  one  undoped  chain
+
+with  an  odd  number  of  sites  and  PBC,  then  the  groundstate  for  each  total  wavevector
+
+along  the  chain  gives  the  dispersion  of  a  single  spinon.   This  groundstate  manifold  has  a
+
+total spin quantum number S=1/2.  For the present case of a three-leg ladder we show the
+
+dispersion for a (3 × 7)-sample with PBC in Fig.  2(a).  The single spinon with S=1/2 has
+
+odd parity with  respect  to reﬂection  about the center  leg and disperses  with  a bandwidth
+
+∼   π2 J  and  minima  at  ± π2 .   The  corresponding  one-spinon  excitation  spectrum  of  a  7-site
+
+single Heisenberg chain is shown in Fig.  3(a).  To estimate ﬁnite size eﬀects, the calculation
+
+was  repeated  for  a  19-site  Heisenberg  chain  (Fig.   3(c)).   We  observe  that  the  qualitative
+
+features, i.e.  the positions of extrema and the overall bandwidth, are already present in the
+smaller cluster.  This is important since in the exact diagonalization study of (3×L)-ladders,
+
+we are restricted to relatively small (L≤8) systems.
+
+                             2.0                                      2.0
+                                                         (a)                                       (c)
+                             1.5                                      1.5
+
+                             1.0                                      1.0
+
+                             0.5                                      0.5
+
+                             0.0 -1                  0                   10.0-1                  0                   1
+                                                       k/π                                    k/π
+                             2.5                                      2.5
+                             2.0                          (b)         2.0                          (d)
+
+                             1.5                                      1.5
+                             1.0                                      1.0
+                             0.5                                      0.5
+                             0.0 -1                  0                   10.0-1                  0                   1k/π
+                                                       k/π
+
+    FIG. 3.  Spinon excitation spectra for 7- and 8-site Heisenberg chains.  (a) Single spinon excita-
+
+tion spectrum (S = 1/2) in a 7-site chain.  (b) Two-spinon excitation spectrum (S = 1) in an 8-site
+
+chain.  (c) Same as (a), but for a 19-site chain.  (d) Same as (b), but for a 20-site chain.
+
+
+                                                              7
+    For  the  (3 × 7)-ladder  single  spinon  dispersion  shown  in  Fig.   2(a),  there  appears  an
+
+additional  even-parity  band,  corresponding  to  the  gapped  spin  degrees  of  freedom.   It  is
+
+separated from the odd-parity band by a gap ∼ J, and its bandwidth is much smaller than
+
+that of the low-energy band.  For the case of an even number of rungs (as shown in Fig.  2(b)
+
+for  the  case  of  (3 × 8)),  the  low-lying  spin  excitations  now  have  even  parity  with  respect
+
+to  reﬂection  about  the  center  leg,  and  involve  pairs  of  spinons  with  S=1  and  groundstate
+
+wavevectors k=± π2 ± π2  = 0, ±π.  The ﬁnite size gap at k=±π vanishes in the thermodynamic
+
+limit.  Again, a comparison of the low-energy two-spinon band with that of the corresponding
+
+8-site single Heisenberg chain (Fig.  3(c)) shows qualitative (almost quantitative) agreement,
+
+supporting our conclusion that the low-energy degrees of freedom of the (3×L)-ladders can
+
+be mapped onto eﬀective single chains.
+
+    Finally,  we  analyze  the  ﬁnite  size  scaling  behavior  of  the  spinon  velocity,  vs  =   ∂ω∂k |k=0,
+for  the  three-leg  Heisenberg  ladders  (Fig.   2(c)).   In  the  ﬁnite  systems,  we  approximate
+
+the  derivative  by  vs  ≈   ω(2π/L)−ω(0)2π/L        (L  even).   Using  L=2,  4,  6,  and  8,  we  obtain  with  the
+
+approximate  scaling  form,  vs(L)  =  vs(∞) + aL−2 + bL−4,  a  bulk  value  of  vs(∞)  ≃  1.81J,
+
+which is in excellent agreement (∼ 1%) with that obtained by recent QMC calculations on
+
+clusters with up to 600 spins [16].
+
+
+
+                        III. SINGLE  HOLE  IN  A  THREE-LEG LADDER
+
+
+    We  start  the  study  of  eﬀects  of  doping  by  recalling  the  single  electron  non-interacting
+
+bandstructure.  This takes the form of three overlapping bands (in the isotropic case t = t′).
+
+These  can  be  classiﬁed  according  to  their  parity  under  the  reﬂection  operation  (R)  about
+the center leg.  The two even-parity bands we denote as bonding (b) and anti-bonding (ab),
+
+and they have the dispersion relation
+
+
+                                       ǫb,ab(k) = ∓√2t′ − 2t cos k,                                                      (2)
+
+
+while the odd-parity band (or non-bonding band) has the form
+
+
+                                                           8
+                                            ǫnb(k) = −2t cos k.                                                             (3)
+
+
+At half-ﬁlling, the chemical potential is µ = 0, and all three bands are partially ﬁlled.  The
+
+Fermi surface consists of three pairs of Fermi points (±kF,λ, λ = ab, nb, b), arising from each
+
+band (or channel).
+
+                                         ε(   )k
+
+                                                                      anti-bonding (+)
+                                                                      non-bonding (-)
+                                                                      bonding (+)
+
+
+                             −π                                    π0   k
+
+
+
+    FIG. 4.  Schematic plot of  the non-interacting  one-electron  bandstructure of  a (3 × L)-ladder.
+
+The parities of the bands with respect to reﬂection about the center leg are indicated by (±).  The
+
+splitting between the bands is √2t′.
+
+
+    We consider the case of a single hole, and we start with a (3×7)-sample.  The groundstate
+
+is  now  a  total  singlet  (S=0)  and  non-degenerate.   The  wavevector  dependence  determines
+
+the single holon dispersion, again in a single chain eﬀective model.  In Fig.  5(a), the results
+
+are shown for a parameter value J/t = 0.5.  The holon energy has absolute minima at k=±π
+
+and a local minimum at k=0.  This latter behavior is consistent with a ﬁnite size eﬀect.  For
+
+example in Fig.  5(c) we show the holon dispersion calculated in a 7-site single chain t − J
+
+model where a similar behavior is obtained.  This in turn reﬂects the doubling of the period
+
+in the single Heisenberg chain dispersion, when the chain length goes to inﬁnity.
+
+    The three-leg ladder has reﬂection symmetry with respect to the center leg.  The eigen-
+values of the corresponding operator, R, are ±1, i.e.  even (odd) parity under reﬂection.  The
+
+groundstate for the undoped ladder with (3×L) legs (L odd) has parity -1.  The groundstate
+
+
+                                                          9
+                             1.0                                      1.0
+                             0.8                         (a)          0.8                          (c)
+
+                             0.6                                      0.6
+                             0.4                                      0.4
+                             0.2                                      0.2
+                             0.0 -1                  0                   10.0-1                  0                   1
+                                                       k/π                                    k/π
+                             1.0                                      1.0
+                             0.8                          (b)         0.8                          (d)
+
+                             0.6                                      0.6
+                             0.4                                      0.4
+                             0.2                                      0.2
+                             0.0 -1                  0                   10.0-1                  0                   1
+                                                       k/π                                     k/π
+    FIG. 5.  Hole excitation spectra for the isotropic (3 × 7)- and (3 × 8)-site t − J  ladders, and for
+
+7- and 8-site t − J  chains.  In (a) and (b), the circles correspond to the even parity and the squares
+
+to the odd-parity channels respectively.  (a) Single holon (δ = 1/21, S = 0) in a (3 × 7)-cluster.  (b)
+
+Single hole excitation  spectrum (δ = 1/24,  S = 1/2) in a (3 × 8)-cluster.  (c) Filled circles:  single
+
+holon excitation spectrum (δ = 1/21, S = 0) in a 7-site chain.  Dashed line:  same in a 19-site chain.
+
+(d) Filled  circles:  single hole excitation  spectrum (δ = 1/24,  S = 1/2) in an 8-site chain.  Dashed
+
+line:  same in a 20-site chain.
+
+
+manifold of the same ladders with one hole has parity +1.  Therefore we associate parities
+
++1 and -1 with a single holon and spinon respectively.  It follows that the parity of a single
+
+hole which  is the product of those parities is -1, i.e.  the hole goes into the band with odd
+
+parity  with  respect  to  R.  This  is  the  middle  non-bonding  band  with  odd  parity.  The  in-
+
+terpretation is clear:  the two bands with even parity in the t − J  model combine to form a
+
+spin liquid which is insulating (ISL), and the initial doped holes go into the odd-parity band
+(or channel), and form a single Luttinger liquid (LL). So the non-interacting bandstructure
+
+Fermi surface is truncated from three sets of Fermi points to a single Luttinger liquid in the
+
+odd channel.  Note that this Fermi surface truncation implies a form of spin pairing and a
+
+reduction of the low-energy spin degrees of freedom, but it does not imply the formation of
+
+                                                             10
+Cooper pairs.  Note also that this Fermi surface truncation is not due to a breaking of trans-
+
+lational  symmetry  along  the  ladder  since  the  spin-spin  correlations  in  the  ISL  are  purely
+
+short ranged.
+
+
+
+                              0.2
+                                             L=4
+
+                                                 L=6
+                              0.1                    L=8
+
+                        <n1Szj>
+
+
+                              0.0
+
+
+                                       1stleg             2ndleg            3rdleg
+                             -0.1
+                                                            j
+
+    FIG. 6.  Spin-charge correlations for one hole in (3×L) isotropic t − J  clusters with L = 4, 6, 8,
+
+and J/t = 0.5.  The holon is ﬁxed at the site indicated by the circle.
+
+
+    White and Scalapino have performed DMRG calculations on large samples (3 × 16) with
+
+open boundary conditions [10].  They ﬁnd upon doping a single hole that the spin and charge
+
+densities  are  well  separated,  indicating  the  decay  of  a  single  hole  into  a  separated  spinon
+
+and holon as expected for a Luttinger liquid.  The Lanczos results for smaller clusters show
+
+similar results.  In Fig.  6, the results  for the spin-charge correlation are shown.  If we add
+
+one  hole  to  a (3×L)  cluster  with  L  even,  then  the  groundstate  has  total spin  S=1/2,  and
+
+odd parity.  Therefore if we take the state with Sz = +1/2, we can calculate the local value
+of Sz  at each site for conﬁgurations with the holon ﬁxed at the origin.  In Fig.  6, we show
+
+these  results  for L=4,  6,  and 8.  The  results  show  clearly  that the  spin  is  distributed  over
+
+the whole cluster,  and agree nicely with those of White and Scalapino [10].  This behavior
+
+is fully consistent with a single Luttinger liquid interpretation.
+
+    The Lanczos method allows one to examine also the low-lying excited states.  This in turn
+
+raises the question of the energy gap between the Luttinger liquid with odd parity and the
+
+                                                          11
+    TABLE I.  Energies  (in  units  of  t)  of  the  (3 × 6)-site  isotropic  t − J  ladder  with  antiperiodic
+
+boundary conditions and J/t = 0.5.
+
+             0 holes                                   1 hole                                  2 holes
+
+   k          R          energy             k          R          energy             k          R          energy
+
+   0         +1        -9.017603          π/6         +1        -10.24582            0         +1        -11.80680
+
+ π/3         +1        -8.393170          π/2         +1        -10.25131          π/3         +1        -11.42219
+
+ 2π/3        +1        -8.409188          5π/6        +1        -10.25673          2π/3        +1        -11.49704
+
+   π         +1        -9.243230                                                     π         +1        -11.69586
+
+   0          -1       -8.450508          π/6          -1       -9.987594            0          -1       -11.59084
+
+ π/3          -1       -8.211651          π/2          -1       -10.40757          π/3          -1       -11.57428
+
+ 2π/3         -1       -8.224553          5π/6         -1       -10.18534          2π/3         -1       -11.53402
+
+   π          -1       -8.403831                                                     π          -1       -11.54535
+
+
+next channel with even parity.  This latter channel should correspond to placing the hole in
+
+the spin liquid.  From the experience with the two-leg ladder one expects that doping the spin
+
+liquid will lead to a Luther-Emery liquid with a bound spin-charge distribution for a single
+
+hole.  Therefore if our expectation is correct, we should expect the lowest-lying excited states
+
+with even  parity to show  a very  diﬀerent  spin-charge distribution.  In Fig.  7, we  show the
+
+corresponding distributions for the lowest eigenstates with even and odd parities of clusters
+
+with L=6.  The eigenvalues are given in Table 1.  The diﬀerence is clear.  In the odd parity
+channel the energy dispersion is large, the minimum energy lies at k=±π/2, corresponding
+
+to a half-ﬁlled Luttinger liquid.  In the even  parity channel,  the energy dispersion  is much
+
+less,  and  the  minimum  lies  at  values  k=±5π/6  which  we  interpret  as  a  hole  entering  the
+
+anti-bonding even parity band.  As can be seen from Fig.  7, the instantaneous spin-charge
+
+distribution for this minimum energy even parity state is quite diﬀerent, and shows a clear
+
+binding of the spin and charge.  This behavior is fully consistent with that of a single hole
+
+in  a  Luther-Emery  liquid  and  with  the  interpretation  of  a  spin  liquid  in  the  even  parity
+
+
+                                                         12
+channels.  Also shown in Fig.  7 are the instantaneous spin-charge distributions for the set of
+
+lowest  excited  states  with  ﬁxed  wavevector  and  parity.  These  show  intermediate  behavior
+
+which we interpret as arising from (attractive) interactions between a spinon and a holon at
+
+wavevectors away from the Fermi surface.
+
+                          0.4
+                                      k=π/6 (−)               k=π/2 (−)              k=5π/6 (−)
+
+                          0.2
+                           z
+                    <n1S    j>
+                          0.0
+
+
+                          0.4
+                                      k=π/6 (+)               k=π/2 (+)              k=5π/6 (+)
+
+                          0.2
+                           z
+                    <n1S    j>
+                          0.0
+                                                         1stleg  2ndleg  3rdleg
+                                                                   j
+
+    FIG.  7.   Spin-charge  correlations  for  one  hole  in  a  (3×6)-site  isotropic  t − J  cluster  with
+
+J/t = 0.5.  The holon is ﬁxed at the site indicated by the circle.
+
+
+    An  important  quantity  is  the  single  hole  energy  gap  between  the  odd  and  even  parity
+
+channels.  The value we obtain in the (3×6)-cluster is ≈ 0.15t (or 0.30J) - a value which is
+smaller than that of the spin gap in the ISL (≈ J).
+
+    To  summarize,  the  results  for  a  single  hole  show  that  the  minimum  energy  is  in  the
+
+non-bonding channel,  and this channel  forms a single Luttinger liquid.  The even channels
+
+are gapped,  forming  an insulating  spin  liquid  (ISL),  and  the  minimum  energy  for a single
+
+hole in these channels lies higher in energy.
+
+
+
+
+
+
+
+                                                           13
+                                    IV.  TWO  AND  MORE  HOLES
+
+
+    We  begin  with  the  case  of  two  holes.   White  and  Scalapino  have  performed  DMRG
+
+calculations  for  (3×L)-samples  with  a  value  of  J/t  =  0.5  [10].   They  ﬁnd  that  the  holes
+
+do not bind and in fact repel each other, so that the most likely conﬁguration has the two
+
+holons as widely separated as possible, consistent with the open boundary conditions used
+
+in their study.  This behavior can be immediately interpreted as that of two holes doped in a
+
+single Luttinger liquid (LL), while the remaining transverse channels form an ISL, consistent
+
+with the discussion given above.  In view of the ﬁnite energy gap between the even and the
+
+odd  parity  states,  there  will  be  a  ﬁnite  density  range  within  which  this  LL  +  ISL  phase
+
+remains stable.  We then conclude that the hole density in the White-Scalapino calculations
+
+(δ = 1/24) lies within this density range.
+
+    The next issue is to determine the critical hole density, δc, that limits the stability of this
+
+LL + ISL phase.  At ﬁrst sight it would seem straightforward to use the single hole energy gap
+between odd and even parities to determine the critical value for the hole chemical potential,
+
+µc, and thus δc:  µc = µ(δc).  However,  we expect the even parity channels  to evolve  into a
+
+Luther-Emery liquid (LE) when doped, in analogy to the doped two-leg ladder.  As a result,
+
+µc  will be determined by the energy of the two-hole bound state of the LE rather than the
+
+single-hole energy gap.
+
+    In Fig.  8, we show the instantaneous hole-hole correlation function for various two-hole
+
+states  of  a  (3×6)-cluster  with  APBC  (J/t=0.5).   These  boundary  conditions  were  chosen
+
+since they give a non-degenerate (i.e.  closed shell) groundstate for non-interacting electrons
+
+[17].  The  groundstate  has  even  parity  and  a  total wavevector  of  k=0.  The  instantaneous
+
+hole-hole  correlation  function  (Fig.  8(a)) shows  the  maximum  weight  at the  largest  rung-
+rung  separation  possible  in  this  small  cluster,  but  with  both  holes  preferentially  on  the
+
+same edge.  This behavior is similar to that found by White and Scalapino, and leads us to
+
+interpret  this  as  a groundstate  with  LL + ISL  character.  Note  that the  hole  density  here
+
+(δ = 1/9), is larger than that considered by White and Scalapino.
+
+
+                                                         14
+                               0.20
+                                       1stleg    2ndleg  3rdleg  1stleg    2ndleg   3rdleg
+
+                               0.15
+                       <nh                                         (a)                              (b)
+                             1nhj>
+                               0.10
+
+
+
+                               0.05
+
+
+
+                               0.00   1         6  7        12 13        18           6   7        12 13        18
+                                                      j                                 j
+
+    FIG. 8.  Instantaneous hole-hole correlations for two holes in a (3×6)-site isotropic t − J  cluster
+
+with J/t = 0.5.  The ﬁrst hole is ﬁxed at the origin (j=1), not shown in the ﬁgure.  (a) groundstate,
+
+k=0.  (b) excited state, k=π.  The sites on the ﬁrst (outer) leg are labeled 1 ≤ j ≤ 6, on the second
+
+(center) leg 7 ≤ j ≤ 12, and on the third (outer) leg 13 ≤ j ≤ 18.
+
+    There should however be an excited state of the cluster, also with even parity and S=0,
+
+which  has  the  two  holes  in  the  LE.  This  state  should  have  a  total  wavevector  of  k  =  π,
+
+i.e.  the same value as the undoped system [18].  In fact, such a state appears in the cluster
+
+with  an  excitation  energy  of  0.111t  above  the  groundstate.   The  instantaneous  hole-hole
+
+correlations  in this excited  state  (Fig.  8(b)) are also quite  diﬀerent  from the  groundstate,
+
+with  a  maximum  for  the  next-nearest-neighbor  separation,  indicating  that  the  two  holes
+
+are  bound  in  this  state.   Therefore  we  identify  this  state  as  that  with  two  holes  in  a  LE
+
+formed  from  the  even  parity  transverse  channels  (i.e.   bonding  and  anti-bonding  bands).
+
+This identiﬁcation is conﬁrmed if we look at the average hole density on the central vs.  the
+
+outer legs.  The results quoted in Table 2 show a marked increase in the hole density on the
+central leg in the LE state.
+
+    The binding energy of the two holes in the LE state can be estimated from the energy
+
+
+
+                                                            15
+    TABLE II.  Average hole densities on the central and the outer legs in the (3 × 6)-site isotropic
+
+t − J  ladder with two holes and J/t = 0.5.
+
+   k                              R                             < nh >out                              < nh >central
+
+   0                              +1                             1.050053                                 0.899894
+
+ π/3                              +1                             0.791384                                 1.417232
+
+ 2π/3                             +1                             0.809848                                 1.380304
+
+   π                              +1                             0.794342                                 1.411316
+
+   0                              -1                             1.170123                                 0.659754
+
+ π/3                              -1                             0.995565                                  1.00887
+
+ 2π/3                             -1                             0.978532                                 1.042936
+
+   π                              -1                             0.884392                                 1.231216
+
+
+diﬀerence to add the two holes together in the LE state (ELE2  ) and separately in the LE state
+
+(ELE1  ).   This  diﬀerence  is  an  estimate  of  the  binding  energy,  Eb  =  2ELE1    − ELE2    =  -2.028t
+
++ 2.453t = 0.425t.  Note  however  that this  value  may  well  be  a considerable  overestimate
+
+because of ﬁnite size eﬀects (see below).
+    We now turn to the estimate  of the chemical  potential,  µ(δ).  In view  of the small size
+
+of the clusters (i.e.  mostly 3×6 sites) we need to take care about ﬁnite size corrections.  In
+
+particular, in small clusters there is generally a large energy gain for total singlet states, and
+
+if one calculates µ through single hole additions one ends up subtracting the energies of states
+
+with total spin S=0 and S=1/2.  In order to avoid this, we use two-hole additions since then
+
+the total spin quantum number remains unchanged; i.e.  µ(δ) =  12[EG(Nh + 1) − EG(Nh − 1)].
+
+The  result  is  shown  in  Fig.   9.   The  curve  of  µ(δ)  rises  initially  with  δ,  consistent  with  a
+
+repulsive  interaction  between  holes  in  the  LL  +  ISL  phase.   Our  previous  estimate  of  the
+
+excitation energy of the LE state with Nh = 2 allows us to determine the chemical potential
+
+rise needed for holes to enter the LE phase at 0.055t.  From Fig.  9 we estimate then for the
+critical hole density a value of δc ≃ 0.13.  Note that this value is calculated using a relatively
+
+
+                                                          16
+small cluster size, and it is not possible to estimate the ﬁnite size corrections.  Therefore this
+
+value of δc is an estimate whose accuracy is hard to predict.
+
+
+
+
+                            4.0
+
+                            3.0                                                    µ
+
+                            2.0
+
+                            1.0
+
+                            0.0                                                E/site
+
+                           -1.0
+
+                           -2.00.0           0.2           0.4           0.6           0.8           1.0
+                                         δc                     δ
+
+
+    FIG. 9.  Energy per site (circles) and chemical potential (squares) for a (3×6)-site isotropic t−J
+
+ladder with  J/t=0.5.  The critical  hole density,  δc, beyond which  the holes  enter  the LE phase is
+
+indicated by a dashed line.
+
+
+    We  conclude  that  the  LL  +  ISL  phase  remains  stable  over  a  ﬁnite  hole  density  range,
+
+0< δ  < δc,  and in  this  range there  is no hole  pairing although a large fraction of the spin
+degrees of freedom are gapped in the ISL. Beyond this density range, δ > δc, there is a LE
+
+channel in contact with the LL channel.  The presence of holes in a LE channel leads to hole
+
+pairing and dominant superconducting or charge density wave correlations as in the case of
+
+the lightly doped two-leg ladder.
+
+    In  order  to  further  explore  the  low-density  LL  +  ISL  phase,  we  calculated  the  single
+
+particle spectral function, Aλ(k, ω) = − 1π Im[Gλ(k, ω − iη)], in the groundstate of the (3×6)-
+
+cluster with two holes.  Here, λ labels the linear combinations of c-operators, corresponding
+
+to  the  non-interacting  shell  structure  shown  in  Fig.   5:  cj,b,σ  =   12[cj,1,σ + √2cj,2,σ + cj,3,σ],
+cj,nb,σ =    1√2[cj,1,σ − cj,3,σ], cj,ab,σ =  12[cj,1,σ − √2cj,2,σ + cj,3,σ].  The results are displayed in Fig.
+
+
+                                                            17
+10 for (3×6) ladders with APBC and PBC. The energy region below the chemical potential
+
+corresponds to a transition to three-hole states.  In a small cluster, such as the (3×6) under
+
+study here, the ﬁnite size eﬀects are large.  Thus to interpret the spectrum, one should keep
+
+in  mind  the  non-interacting  shell  structure.   We  begin  with  the  case  of  APBC.  The  two-
+
+hole LL + ISL state has then 16 electrons which in a non-interacting state would occupy the
+
+states b(± π6 , ± π2 ), ab(± π6 ), and nb(± π6 ).  Through the strong correlation interaction the state
+
+with  electron  pairs  in  the  b(± 5π6 ) state  will  be  admixed.  In  this  way  we  can  interpret  the
+
+electron removal (or photoemission) part of the spectrum with the strong peaks to inserting
+
+holes into the b(± π2 , ± 5π6 ) and ab(± π6 ) even parity channels.  The state with an added hole at
+
+b(± π6 ) is far removed from the Fermi level, and so it is strongly broadened.  Turning to the
+
+nb-channel, we see that the main weight is at (± π6 ) as expected, but this is again broadened
+due  to  many-body  eﬀects.   The  resulting  photoemission  spectrum  then  shows  signs  of  a
+
+Fermi surface in all three channels, and with kF-values in line with our expectations.
+
+                                                   APBC                              PBC
+
+
+                                                                                                   anti-
+                                                                                                   bonding
+
+
+                    A(k,ω)                                5π/6                              π
+                                                           π/2                              2π/3   non-
+                                                           π/6                              π/3    bonding
+                                                                                             0
+
+
+
+                                                                                                   bonding
+
+
+                           0.0              1.0              2.00.0              1.0              2.0
+                                            ω/t                                ω/t
+    FIG. 10.  Spectral functions for a (3×6)-site isotropic t − J  ladder with two holes and J/t=0.5.
+
+The poles have been given  a ﬁnite width of η = 0.02t,  and the chemical  potential is indicated by
+
+the dashed line.  APBC (PBC) were used in the left (right) panel.
+
+
+
+                                                           18
+    Clearly  all  three  bands  (b,  ab,  and  nb)  are  partially  occupied.   This  is  illustrated  by
+
+calculating  the  momentum  distribution  function,  nλ(k)  =  ∫ µ dωAλ(k, ω).   The  results  for
+
+nλ(k)  are  shown  in  Fig.   11.   These  show  drops  as  k  increases  which  one  can  interpret  as
+
+giving estimates for kF,λ, but in a small system one cannot draw conclusions about the actual
+
+behavior for k ∼ kF,λ.  The case of PBC has a diﬀerent shell structure.  The LL + ISL state is
+
+now a state with total momentum ±2π/3, with the 4 electrons in the nb-channel occupying
+
+k=0 (2 electrons) and k=±π/3 (2 electrons) [19].  The values of nλ(k) for PBC in the LL +
+
+ISL state are also included in Fig.  11, and also conﬁrm the interpretation of a partial ﬁlling
+
+of all three bands.
+
+
+
+                           0.7
+
+                           0.6
+
+                           0.5
+                  nλ(k)    0.4
+
+                           0.3
+                           0.2                 bonding
+                                               non-bonding
+                           0.1                 anti-bonding
+
+                           0.00.0           0.2           0.4           0.6           0.8           1.0
+                                                             k/π
+
+    FIG. 11.  Momentum distribution function for a (3×6)-site isotropic t−J  ladder with two holes
+
+and J/t=0.5.  Results with APBC and PBC were combined.
+
+
+    However,  at  a  true  Fermi  surface  in  a  bulk  system  one  must  be  able  to  add  as  well  as
+
+to  remove  electrons  at  the  chemical  potential  (or  Fermi  energy).   The  strong  correlation
+condition clearly inﬂuences this part of the spectrum much more strongly, since as we pass
+
+to  the  undoped  Mott  insulator  electron  addition  is  totally  forbidden  (or  allowed  only  on
+
+paying the Mott correlation energy gap), whereas in photoemission electrons can always be
+
+
+                                                          19
+removed.  With this in mind we examine the electron addition part of the spectrum which
+
+corresponds to a transition to a one-hole state.  From Fig.  10 we see that the main weight
+
+at low  energy  is  in  the  nb(± π2 )-channel.  Clearly  this  corresponds  to a transition  from  the
+
+two-hole  LL  +  ISL-groundstate  to  the  one-hole  LL  +  ISL-groundstate,  and  conﬁrms  that
+
+we  have  a  Fermi  surface  in  the  odd-parity  LL-channel.   Next  we  look  at  the  even-parity
+
+channels  which  form  an  ISL  in  the  groundstate.   Therefore  we  should  expect  that  then
+
+electron addition in these channels at low energy will be forbidden.  In fact, if we look at the
+
+b-channel, then this behavior is clear, and there is no Fermi surface in this channel.  On the
+
+other hand, in the other even-parity channel, λ = ab, we ﬁnd two relatively strong peaks at
+
+k = ± π2 .  These values actually correspond to a transition not to the minimum energy state
+
+of one hole in this channel but to an excited state.  We interpret these peaks as sidebands,
+
+involving the creation of a S=1 odd-parity magnon with k = 0 or π in addition.  Clearly it is
+too strong a statement to say that all processes which add an electron to a LL + ISL-state
+
+with  even  parity  are  forbidden,  since  sidebands  in  which  an  electron  is  added  in  the  odd-
+
+parity LL channel and simultaneously odd-parity S=1 magnons are created can have a total
+
+parity which is even and a total spin of S=1/2.  We interpret the weight in the ab-channels
+
+then  in  terms  of  such  processes  which  in  turn  may  be  enhanced  by  the  ﬁnite  size  eﬀects
+
+associated with these small clusters.  The behavior of the PBC case is analogous.  Here the
+
+main weight at low energy is the nb (k=π/3) channel, corresponding also to a transition to
+
+the  one-hole  LL  +  ISL  state.   However,  again  there  is  weight  in  the  antibonding  channel
+
+which we interpret also as a higher energy sideband and a transition to a one-hole LE state.
+
+This is strongly admixed due to the enhanced stability of this state which has a ﬁlled shell
+character in the nb-channel as we discussed earlier.
+
+    In conclusion, the single particle spectra in the LL + ISL state show a strong asymmetry
+
+between  removing  and  adding  electrons,  and  it  is  the  latter  process,  which  unfortunately
+
+is  not  easy  to  detect  experimentally,  where  the  eﬀects  of  the  Fermi  surface  truncation  on
+
+approaching the Mott insulating state are most evident.
+
+
+
+                                                         20
+                            V.  ANALYSIS  BY  MEAN  FIELD THEORY
+
+
+    In  this  section  we  analyze  the  properties  of  the  three-leg  ladder  using  the  mean  ﬁeld
+
+description in the same spirit as previously done for the two-leg ladder [20].  For this purpose
+
+we  introduce  spinon  and  holon  operators,  f  and  b  respectively,  by  replacing  the  electron
+
+creation and annihilation operators in the following way [21],
+
+
+                              c†i,ν,σ = f †i,ν,σbi,ν        and        ci,ν,σ = b†i,νfi,ν,σ                                       (4)
+
+
+which  lead  to  the  local  constraint  ∑σ f †i,ν,σfi,ν,σ + b†i,νbi,ν  =  1.   The  Hamiltonian  can  be
+
+reformulated in these operators, and can then be decoupled by introducing mean ﬁelds.  The
+
+constraint is included by adding a term with Lagrange multipliers.  Since this treatment is
+
+quite  standard  we  do not go into  details  here.  The  system  is not translationally  invariant
+
+along the rung, so that the mean ﬁelds depend on the position of the bonds, resulting in 10
+
+independent mean ﬁelds:  6 hopping and 3 pairing mean ﬁelds, deﬁned on nearest neighbor
+bonds (j, ν; j′, ν′),
+
+                                        χj,ν;j′,ν′ =  1 ∑
+                                                      2    σ⟨f †j,ν,σfj′,ν′,σ⟩
+
+
+                                        Bj,ν;j′,ν′ = ⟨bj,νb†j′,ν′⟩                                                   (5)
+
+
+
+                                        ∆j,ν;j′,ν′ = ⟨fj,ν↓fj′,ν′↑⟩
+
+and a uniform Lagrange multiplier  µ.  We denote the mean ﬁelds  along the outer two legs
+
+and  the  middle  leg  with  the  index  1  and  2,  respectively,  while  the  rung  mean  ﬁelds  have
+
+the index 3.  In order to avoid ambiguities we have to deﬁne the direction of the bond mean
+
+ﬁelds.  We give here the convention using the example of χ,
+
+
+
+
+
+
+
+
+
+                                                           21
+                                  χ1 =  1   ∑
+                                          2   σ⟨f †j,ν,σfj+1,ν,σ⟩        ν = 1, 3
+
+
+                                  χ2 =  1   ∑                                                                        (6)
+                                          2   σ⟨f †j,2,σfj+1,2,σ⟩
+
+
+                                  χ3 =  1   ∑
+                                          2   σ⟨f †j,2,σfj,ν,σ⟩        ν = 1, 3
+
+The same convention is applied to the mean ﬁelds B and ∆.  The parity with respect to the
+
+reﬂection  operator  R  allows  us  to  separate  the  mean  ﬁeld  Hamiltonian  into  the  even  (+)
+
+and odd (−) parity channels,
+
+                      Hmf =  H(b)+   + H(b)−   + H(f)+   + H(f)−
+
+
+                                +L[µ +  J2 (2χ21 + χ22 + 2∆21 + ∆22) + J ′(χ23 + ∆23)                                (7)
+
+
+
+                                +2t(B1χ1 + B2χ2) + 4t′B3χ3]
+
+We deﬁne the corresponding combinations for the operators, operator combinations,
+
+                                               √  1  ∑
+                                   fk±,σ  =      2L     j(fj,1,σ ± fj,3,σ)eikrj
+                                               √  1  ∑
+                                   bk±     =     2L     j(bj,1 ± bj,3)eikrj                                                    (8)
+
+with the momentum k along the legs of the ladder.  Then we can write the four terms of the
+
+Hamiltonian (in Nambu space for the spinons) as
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          22
+H(b)−    = (−4tχ1 cos k − µ)b†k−bk−
+
+
+                                                                                
+                         −4tχ1 cos k − µ       −2√2t′χ3              bk+  
+H(b)+    = (b†k+, b†k,2)
+                               −2√2t′χ3       −4tχ2 cos k − µ                 bk,2
+
+
+                                                                                                                           
+                                     −(2tB1 +  32Jχ1) cos k − µ            − 32J∆1 cos k                    fk−,σ    
+H(f)−    = ∑σ(f †k−,σ, f−k−,−σ)
+                                                − 32J∆1 cos k             (2tB1 +  32Jχ1) cos k + µ                f †−k−,−σ
+
+
+                                                                            
+                                                               fk+↑
+
+                                               ˆξk      ˆ∆k    fk,2,↑
+H(f)+    = (f †k+↑, f †k,2,↑, f−k+↓, f−k,2,↓)     ˆ∆k  −ˆξ−k
+                                                                    f †−k+↓
+
+                                                                    f †−k,2,↓
+                                                                                                                         (9)
+
+where  ˆξk  and  ˆ∆k  are 2 × 2-matrices of the form
+                                                                                                  
+                        −(2tB1 +  3                               2t′B3 −  3√2              
+                                         2Jχ1) cos k − µ      −2√                     4  J ′χ3
+                  ˆξk =
+
+                              −2√2t′B3 −  3√2
+                                                  4  J ′χ3      −(2tB2 +  32Jχ2) cos k − µ
+                                                                                                                       (10)
+                                                                
+                          − 3                  2          
+                               2J∆1 cos k    − 3√4  J ′∆3
+                  ˆ∆k =
+
+                              − 3√2
+                                  4  J ′∆3    − 32J∆2 cos k
+Note that we have neglected the terms with −ninj/4 in the exchange term, because in the
+
+mean  ﬁeld  calculation  they  tend  to  artiﬁcially  enhance  the  tendency  towards  pairing  and
+
+favor a ﬂux phase close to half-ﬁlling.
+
+    We can now solve the single-particle problem of Hmf  and determine the mean ﬁelds self-
+
+consistently.  For the groundstate we obtain the self-consistent equations by minimizing the
+
+groundstate energy of Hmf  in Eq.(4) with respect to all mean ﬁelds.  In this description the
+
+                                                            23
+holons are Bose-condensed so that ∑ν=1,2,3⟨b†j,νbj,ν⟩ = 3δ where δ is the doping concentration.
+
+In  the  following,  we  will  use  the  same  parameters  as  used  in  the  numerical  simulations,
+
+t = t′ = 2J = 2J ′.
+
+
+
+                                                  A.  Half  ﬁlling
+
+
+    For half-ﬁlling, δ = 0, there are no holons and the Hamiltonian of the spinons is invariant
+
+under the following SU(2) transformation
+                                                                             
+                                f †j,ν,σ →  ˆU f †j,ν,σ =  f ′†j,ν,σ                                        (11)
+
+                                  fj,ν,−σ               fj,ν,−σ           f ′j,ν,−σ
+
+which  reﬂects  the  constraint  at  half-ﬁlling.  The  absence  of  an  up-spin  corresponds  to  the
+
+presence  of a down-spin and vice versa  [22].  Note that due to the SU(2) invariance of the
+
+Hamiltonian the self-consistent solution of the mean ﬁeld is not unique, but  ˆU  corresponds
+
+to  a  rotation  in  the  mean  ﬁeld  space  {χ1,2,3, ∆1,2,3}  which  leaves  the  groundstate  and  the
+
+excitation spectrum unchanged.
+
+    In this formulation various properties of the three-leg ladder can be interpreted at least
+on  a  qualitative  level.   The  Hamiltonian  yields  six  distinct  bands  in  Nambu  space  for  the
+
+spinons (Fig.  12 ).  For the symmetric channel the spinons have a gapped spectrum where
+
+the lower two bands are completely ﬁlled.  On the other hand, the antisymmetric channel has
+
+gapless excitations which give a spectrum analogous to that of a single chain.  It is now easy
+
+to  compare  the  spin  excitation  spectrum  of  the  mean  ﬁeld  and  the  exact  diagonalization.
+
+For the mean ﬁeld case the excitation corresponds to a particle-hole excitation of the spinon
+
+gas.  The gapless spectrum is that of a single Heisenberg chain and is exactly what we obtain
+
+for  the  same  type  of  mean  ﬁeld  treatment  of  a  single  chain.  The  other  bands  are  gapped
+
+and describe a spin liquid state coexisting with the gapless system.  The agreement with the
+
+numerical simulation is qualitatively very good.
+
+
+
+
+
+                                                           24
+                                          0.2
+
+
+
+
+
+                                          0.0
+
+
+
+
+
+                                        −0.2
+
+
+
+                                             0.0         0.5         1.0         1.5         2.0
+                                                                k/ π
+
+
+    FIG. 12.  Spinon bands at  half  ﬁlling obtained  by  the mean ﬁeld  theory.  All states  below  the
+
+chemical  potential  (located  at  ǫk  =  0)  are  occupied  by  a  spin-up  and  a  spin-down  spinon.   The
+
+gapped  bands  correspond  to  the  even-parity  states,  while  the  gapless  bands  in  the  center  are  in
+
+the odd-parity channel.
+
+                                                 B.  A  single  hole
+
+
+    We now insert a single hole into the half-ﬁlled system, i.e.  we remove one spinon and add
+
+one holon.  This immediately  breaks the SU(2) symmetry,  because the groundstate energy
+
+of the holon has to be minimized which yields  a constraint on the hopping mean ﬁelds χi.
+
+Three holon bands appear, two even  parity bands and one odd parity band, with energies
+
+given by
+
+                                 ǫk+ =  −2t(χ1 + χ2) cos k − µ
+
+
+                                            √
+                                          ±    4t2(χ1 − χ2)2 cos2 k + 8t2χ23                                         (12)
+
+
+
+                                 ǫk− =  −4tχ1 cos k − µ.
+
+
+                                                           25
+Obviously  the  lowest  holon  state  can  be  found  in  the  lower  of  the  two  even-parity  bands.
+
+Thus, the single hole groundstate can be obtained by removing a spinon at the Fermi level
+
+of the odd-parity  band and by  inserting  a holon at bottom of the  lower  even-parity  holon
+
+band.  This results in a change of the parity of the groundstate compared with that of the
+
+half-ﬁlled case, in agreement with the numerical result.
+
+
+                                         2
+
+
+
+
+                                         1
+
+
+
+
+                                         0
+
+
+
+
+                                       −1
+
+
+
+
+                                       −20.0         0.5         1.0         1.5         2.0
+                                                               k/π
+
+    FIG.  13.   Holon  bands  for  a  single  hole  obtained  by  the  mean  ﬁeld  theory.     The  outer
+
+bands  are  the  even-parity  bands  (bonding  and  anti-bonding)  and  the  center  band  has  odd  par-
+
+ity (non-bonding).
+
+
+    The single particle spectrum is incoherent, because the excitations are composed of the
+
+annihilation  of  a  spinon  and  the  creation  of  a  holon.   We  deﬁne  the  single  hole  Green’s
+function as a matrix
+                                                 ∫
+                             Gνν′(k, ω) = −         dte−iωt⟨T (c†k,ν,σ(t)ck,ν′,σ(0)⟩                                     (13)
+
+where the indices ν and ν′ denote the three legs of the ladder (T  the time-ordering operator).
+
+Decomposing the c-operators into spinon and holon parts we obtain the convolution
+                                           ∑    ∫
+                       Gνν′(k, ω) =  1L            dω′Gfνν′(k + q, ω + ω′)Gbνν′(q, ω′)                             (14)
+                                             q
+
+                                                            26
+with
+                                                 ∫
+                            Gfνν′(k, ω) = −         dte−iωt⟨T (f †k,ν,σ(t)fk,ν′,σ(0))⟩
+                                                 ∫                                                                     (15)
+                            Gbνν′(k, ω) = −         dte−iωt⟨T (bk,ν(t)b†k,ν′(0))⟩
+
+
+
+
+
+
+
+
+
+                                         0.2
+
+
+
+
+
+
+
+                                         0.1
+
+
+
+
+
+
+
+                                         0.00.0          0.5          1.0          1.5          2.0
+                                                                k/π
+
+
+
+         FIG. 14.  Low-energy spectrum for a single hole obtained by the mean ﬁeld theory.
+
+    The  spectrum  is  obtained  by  diagonalizing  the  Green’s  function  with  respect  to  the
+
+leg  indices.   We  show  in  Fig.  14  the  lowest  one-hole  states  for  given  momenta  and  parity
+analogous to the numerical results in Fig.  5.  The spectrum changing the parity with respect
+
+to  the  groundstate  of  the  half-ﬁlled  system  has  gapless  excitations  at  momentum  k  =  0
+
+and  π.   This  corresponds  to  the  LL  component  of  the  three  leg  ladder.   The  states  which
+
+keep  the  parity  of  the  groundstate,  however,  are  gapped  with  minima  at  k  =  0  and  π.
+
+In our mean ﬁeld  calculation the latter excitations  lie  above the  LL spectrum,  in contrast
+
+to  the  numerical  result.   The  reason  is  that  in  the  mean  ﬁeld  treatment  these  excitations
+
+are  almost  exclusively  carried  by  the  spinon  part,  i.e.   we  remove  a  spinon  in  the  lower
+
+even-parity  spinon  bands,  while  the  holon  remains  in  the  lowest  even-parity  band.  In  the
+
+numerical calculation this spectrum lies clearly lower and cannot be identiﬁed directly with
+
+
+                                                             27
+spinon excitations which  are higher in energy.  Therefore,  we conclude that our mean ﬁeld
+
+calculation  overestimates  the  splitting  of  the  holon  bands.   Nevertheless,  we  can  interpret
+
+both  types  of  excitations  consistently  with  the  numerical  calculations.   In  particular,  we
+
+emphasize  that  the  gapless  spinons  are  in  both  treatments  in  odd-parity  channel  giving  a
+
+consistent picture of the symmetries of the ground state and the low-lying excitations.
+
+
+
+                                               C.  Finite  doping
+
+
+    The analysis of our numerical data led us to the conclusion that there would be a ﬁnite
+
+range of doping close to half-ﬁlling where the LL state would coexist with the ISL. Beyond a
+
+critical doping δc the ISL would be doped and the whole system would turn into a LE where
+all channels open a spin gap.  We might hope to describe this behavior within our mean ﬁeld
+
+picture.  However, in this treatment the mean ﬁeld LL state is immediately unstable against
+
+the formation of a LE state, and there is no obvious transition between two diﬀerent phases.
+
+    As  soon  as  we  introduce  a  ﬁnite  concentration  of  holes  in  the  system,  the  holons  are
+
+described  by  a  Bose-condensate  in  the  mean  ﬁeld  groundstate.   Consequently,  the  single-
+
+particle Green’s function consists of a coherent and an incoherent part due to the presence
+
+of the condensate,
+
+
+                              Gνν′(k, ω) = Cνν′Gfνν′(k, ω) + Gincνν′(k, ω)                                         (16)
+
+where Cνν′  is a constant proportional to the doping concentration δ.  Thus, we ﬁnd conven-
+
+tional Fermi liquid quasiparticles in the single particle spectrum.  This has implications on
+
+the pairing in the doped ladder.  The exchange term in the t-J  model allows to scatter spin-
+
+singlet pairs of electrons between the even-parity and odd-parity channel.  The relevant terms
+
+are derived from the exchange terms along the two outer legs, J ∑1(Si,1 ·Si+1,1 +Si,3 ·Si+1,3),
+
+and become in electron operator formulation,
+
+                   H+− = ∑           ∑
+                               k,k′,q   σ=↑,↓ vk,k′,q  [c†k+q+,σc†k′+,−σck−,−σck′+q−,σ
+                                                                                                                 (17)
+                                                       +c†k+q−,σc†k′−,−σck+,−σck′+q+,σ].
+
+                                                         28
+with  vk,k′,q  =  −J(cos q +  12 cos(k − k′)).   The  even-parity  channel  corresponds  to  the  ISL
+
+phase  which  is not populated by holes  at small  doping.  However,  via virtual scattering  of
+
+hole  pairs into  the  even-parity  channel  an eﬀective  pairing  interaction  for the  holes  in  the
+
+odd-parity channel is generated, in lowest order given by
+
+  Vk,k′  = −2i ∑k′′ ∫ dωvk,k′′,k+k′′Gf++(k′′, ω)Gf++(−k′′, −ω)vk′,k′′,k′+k′′
+
+
+                        ∫
+         = −J 22 i ∑       dω(9 cos k cos k′ cos2 k′′ + sin k sin k′ sin2 k′′)Gf++(k′′, ω)Gf++(−k′′, −ω)
+                    k′′
+                                                                                                                 (18)
+
+
+where Gf++(k, ω) is the spinon Green’s function in the even-parity channel corresponding to
+
+Gf++ =   12(Gf11 + Gf13 + Gf31 + Gf33) from Eq.(15).  In weak coupling theory this leads to the
+
+instability equation (ladder approximation) in the odd-parity channel,
+
+                            1 = −kBT ∑        Vk,kG−−(k, ωn)G−−(−k, −ωn)                                     (19)
+                                          k,n
+for ﬁnite temperature (G−− = G11 − G13 − G31 + G33, and ωn are the fermionic Matsubara
+
+frequencies).  Since the Green’s function has a standard quasiparticle pole as shown above in
+
+Eq.(16), we ﬁnd a usual Cooper instability and a non-vanishing transition temperature for
+
+any ﬁnite coupling and density δ (note that G is proportional to δ).  Thus, holes in the odd-
+
+parity  channel  would  be paired  in  the  groundstate.  This  is  in  contrast  to the  expectation
+
+for a LL where  a critical  coupling strength  exists  below which  the LL remains  stable  [23].
+
+Thus, this instability of the LL for any non-zero concentration of holes is a deﬁciency of the
+
+mean  ﬁeld  description.   On  the  other  hand,  it  clearly  indicates  the  trend  towards  pairing
+due to the coupling of the LL to the insulating or doped spin liquid which occupies a part of
+
+the spectrum.  The RVB correlation of the ISL provides a pool of “preformed pairs” which
+
+triggers the instability of the LL towards the LE [24].
+
+    Although there is no obvious (non-zero) critical concentration where the character of the
+
+groundstate  changes  within  the  mean  ﬁeld  treatment,  we  observe  an  interesting  crossover
+
+between two regimes in the BCS mean ﬁeld for the holes,
+
+                                                         29
+                                                2
+                                                1         ∆’2
+
+                                                0                     ∆’1
+
+                                              −1                     ∆’3
+
+                                                4
+
+
+
+                                                2
+
+
+
+                                                00.00    0.05    0.10    0.15
+                                                                 δ
+
+
+    FIG.  15.   The  superconducting  mean  ﬁelds  for  ﬁnite  doping.   The  solid  lines  correspond  to
+
+the  mean  ﬁeld  calculation.    The  dashed  lines  are  ﬁts  of  the  crossover  assuming  an  underlying
+√δ − δc-dependence of ∆′ with δc ≈ 0.034.  In the lower ﬁgure a linear ﬁt is possible for ∆′2.
+
+
+                                ∆′ij = ⟨ci↑cj↓⟩ = ⟨b†ib†j⟩⟨fi↑fj↓⟩ = Bij∆ij.                                         (20)
+
+The behavior of ∆′  and ∆′2  as a function of δ  is shown in Fig.  15.  The crossover indicates
+
+a critical  concentration  δc  ≈ 0.034 (for t = 2J) found  by  extrapolation of the  square  root
+
+dependence  of  ∆′  (∝  √δ − δc).   For  0  <  δ  ≪  δc  ∆′  is  rather  small  as  can  be  understood
+
+from Eq.(15) and (16).  For small doping the dominant contribution to Vk,k′  originates from
+
+k′′ ≈ ±π/2 the momenta for the spin gap in the even-parity channel and the Fermi points
+in  for  the  odd-parity  holes  are  close  to  ±π/2  as  well.   Therefore  the  cosine-term  in  Vk,k′
+
+contributes  only  little.   This  changes  with  increased  doping  where  both  the  Fermi  points
+
+and the lowest even-parity spinon energies are located at momenta gradually shifting away
+
+from  ±π/2.  This  leads  to  an  eﬀective  enhancement  of the  pairing  interaction  as  an  eﬀect
+
+of doping which yields the pronounced crossover whose symmetry aspects we discuss below.
+
+We  expect  that  the  same  tendency  is  at  work  in  the  real  system  where  in  the  very  small
+
+                                                            30
+doping regime the eﬀective interaction is suﬃciently reduced to avoid pairing in the LL. Only
+
+with increased doping both the enhanced attractive interaction and the density of states at
+
+the Fermi level drive the system into the paired state.
+
+    Finally we would like to characterize this crossover by considering the symmetry of the
+
+gap  function  in  momentum  space.   Thus,  we  introduce  transverse  momenta  k⊥  along  the
+
+rung.  The bonding, antibonding and non-bonding states as given in Eq.(2) and (3) can be
+
+related to momenta k⊥ by using the following form for the dispersion,
+
+
+                                      ǫk,k⊥ = −2t(cos k + cos k⊥),                                                   (21)
+
+
+resulting from ﬁxed boundary conditions along the rung.  With Eq.(2) and (3) we ﬁnd the
+
+correspondence:  b → k⊥ = ±π/4, nb → k⊥ = ±π/2 and ab → ±3π/4.  Then we obtain for
+the momentum dependent gap function,
+
+    ∆′k,k⊥  = ⟨ck,k⊥↓c−k,−k⊥↑⟩
+                                                                                                               (22)
+
+            = −(2∆′1 sin2(k⊥) + ∆′2 sin2(2k⊥)) cos k − ∆′3 sin(2k⊥)(sin(k⊥) + sin(3k⊥)).
+
+We can use this form now to show the phase of the gap function in the ﬁrst Brillouin zone
+
+(BZ). We observe that the gap function is basically positive along the k-direction (|k⊥| ≪ π)
+
+and negative along the transverse momentum direction k⊥ (|k| ≪ π).  This is essentially the
+structure of a “dx2−y2-wave” pairing function.  This is also reﬂected in real space where the
+
+gap  function  along  the  legs  is  positive  (∆′1, ∆′2)  and  along  the  rungs  is  negative  (∆′3)  as
+
+shown in Fig.  15.  It is interesting to compare the position of the nodes in the two regimes
+
+separated by  δc.  For 0 < δ  ≪ δc  we ﬁnd that the gap functions have  practically  the same
+
+magnitude on all bonds.  With this property Eq.(22) leads to nodes which correspond exactly
+
+to the [110]-direction in the BZ and we might consider this state as “purely” dx2−y2-wave like
+
+(see Fig.  16).  On the other hand, for the regime δ > δc  the gap functions have the relation
+
+∆′1 < ∆′2 = −∆′3  which yields nodes clearly shifted away from the [110]-direction.  We may
+
+consider  this  as  an  admixture  of  an  (extended)  s-wave-like  component  to  the  d-wave  gap,
+
+
+                                                        31
+although, strictly speaking, the underlying symmetries are not present in the ladder system
+
+to justify the distinction between s- and d-wave pairing.
+
+
+                                                             −                     ab
+
+                                                                                   nb
+
+                                                                                    b
+                              k             +                    +
+                                        b
+
+                                       nb
+
+                                       ab                    −
+
+                                   −π                                              π−π/20π/2
+                                                             k
+    FIG. 16.  Nodelines  for  the  BCS  gap,  Eq.   (22),  in  the  ﬁrst  Brillouin  zone.   The  dashed  line
+
+connecting the empty circles shows the nodelines for δ = 0.01.  The dotted-dashed line connecting
+
+the x-marks gives the nodelines for δ = 0.06.  We deﬁne the transverse momenta k⊥ by b → ±π/4,
+
+nb → ±π/2, and ab → ±3π/4.
+
+
+    The diﬀerence of the two regimes may therefore be interpreted in the following way.  The
+
+mean ﬁeld superconducting state in the small doping regime is mainly carried by the even-
+
+parity channel  and the odd-parity channel  participates  weak  through proximity.  Contrary
+
+to  the  exact  numerical  diagonalization,  in  the  mean  ﬁeld  treatment  we  cannot  avoid  the
+
+population of the ISL by holes strictly even at very small doping concentrations.  The three-
+
+leg  structure  is  apparently  wide  enough  to  create  a  LE  state  with  a  gap  structure  which
+
+is  approximatively  d-wave  like.   In  the  larger  doping  regime,  however,  the  LL  of  the  odd-
+
+parity channel acquires its own hole pairing so that an additional symmetry lowering occurs
+reﬂecting the 1D nature of the LL and generates an s-wave like additional component as seen
+
+in the shift of the nodelines (Fig.  16).  Since there is no real symmetry distinguishing s- and d-
+
+wave from each other this transition appears only as a crossover when the interaction among
+
+
+                                                         32
+holes  become  strong  enough  in  the  (odd-parity)  LL.  This  behavior  is  again  in  qualitative
+
+agreement with the interpretation obtained from our numerical calculation.
+
+
+
+                                            VI.  CONCLUSIONS
+
+
+    The  three-leg  ladder  is  specially  interesting  because  in a certain  sense  it combines  two
+
+quite diﬀerent elements - an odd-parity channel which behaves like a single chain, and two
+
+even-parity  channels  which  behave  similar  to  the  two-leg  ladder.   This  result  is  already
+
+foreshadowed in the undoped limit where the low-energy degrees of freedom can be mapped
+
+onto  a  single  Heisenberg  S=1/2  chain  with  longer  range  interactions,  and  the  remaining
+
+transverse  spin  degrees  of  freedom  have  a  substantial  energy  gap.   In  this  work,  we  show
+that the initially doped holes enter only this odd-parity channel and form a Luttinger liquid,
+
+so  that  the  system  has  two  distinct  components  -  the  conducting  Luttinger  liquid  in  the
+
+odd-parity  channel,  and  the  insulating  spin  liquid  in  the  even-parity  channel.   This  phase
+
+we  denoted as LL + ISL, and the numerical  evidence  from the Lanczos diagonalization of
+
+small clusters reported here and the DMRG calculations of White and Scalapino [10], that
+
+such a phase exists up to a critical hole density, δc, is we believe quite clear.  In addition, we
+
+introduced a mean ﬁeld approximation scheme which gave similar but not identical results.
+
+Initially,  holes  enter  only  the  odd-parity  channel  which  is  gapless  in  the  undoped  system.
+
+However  in  the  mean  ﬁeld  approximation,  a small  gap  develops  in the  odd-parity  channel
+
+upon doping.  This - as we discussed - reﬂects the inadequacy of the mean ﬁeld description
+
+of the Luttinger liquid.
+
+    The LL + ISL phase has unusual properties.  First of all, we note that the diﬀerent parity
+channels of the original Fermi surface behave quite diﬀerently, so that only in the odd-parity
+
+channel is there a Fermi surface.  The truncation of the Fermi surface in the partially occupied
+
+even-parity channels is not a consequence of a breaking of translational symmetry since the
+
+spin order here is purely short range.  Rather it is a consequence of the proximity to the Mott
+
+insulating  phase  which  in  this  channel  is  ISL.  This  truncation  of  some  partially  occupied
+
+
+                                                          33
+bands is a clear violation of Luttinger’s theorem.  Usually if one approaches a Mott insulator
+
+which has AF order, then one may proceed through incommensurately ordered phases which
+
+progressively  truncate the Fermi surface, but do not violate Luttinger’s theorem.  However
+
+this option is not available if one approaches an RVB Mott insulator which is an ISL. However
+
+the example of the three-leg ladder shows us that here also a partial truncation of the Fermi
+
+surface is possible, but now it violates the Luttinger theorem.
+
+    This LL + ISL phase has certain features in common with a recent proposal by Geshken-
+
+bein,  Ioﬀe,  and  Larkin  (GIL)  for  the  underdoped  spin  gap  normal  phase  of  the  cuprates.
+
+They  argue  that  the  spin  pairing  implied  by  the  spin  gap did  not cause  immediately  hole
+
+pairing.  Instead they broke up the Fermi surface into two distinct parts - a fermionic part
+
+and  a  paired  bosonic  part.   The  latter  they  argued  should  have  inﬁnite  mass  to  prevent
+conductivity from these bosons, and they associated this with the van-Hove singularity.  In
+
+our speciﬁc example, the spin pairs are also insulating, but the origin lies in the proximity to
+
+the Mott insulating phase.  In both models, the coexistence of fermionic and bosonic degrees
+
+of freedom leads to processes whereby a fermionic Cooper pair can scatter in and out of the
+
+bosonic channels, which however lie at higher energy.  In a LL, there is no Cooper instability
+
+for an inﬁnitesimal attraction, and a ﬁnite attraction is required for pairing.  For this reason
+
+we believe a LL + ISL phase is possible in the three-leg ladder.  By contrast, as we discussed
+
+above,  the  mean  ﬁeld  description  of  the  odd-parity  channel  has  a  true  Cooper  instability
+
+due  to the holons  being Bose condensed,  and as a result  hole pairing occurs  at arbitrarily
+
+small  hole  densities.   In  the  case  of  two  dimensions,  where  the  Fermi  surface  channels  or
+
+patches near to the saddle points, (±π, 0) and (0, ±π), ﬁrst become paired and insulating,
+it is clearly crucial whether the remaining fermionic part of the Fermi surface has a Cooper
+
+instability  (as assumed  by  GIL) or not.  A Cooper pairing instability  leads to hole pairing
+
+in the groundstate as in our mean ﬁeld description.
+
+    The experimental examination of the Fermi surface evolution has been made by ARPES
+
+(Angle-Resolved-Photoemission-Spectroscopy).  However,  as we have  seen,  the inverse  pro-
+
+cess would be more illuminating, but it is much more diﬃcult to realize experimentally.  In
+
+                                                         34
+the  electron  addition process,  as  we  have  shown,  the Fermi  surface  truncation is  very  evi-
+
+dent, although sidebands do allow an electron addition on the even-parity channel which is
+
+in the ISL state.  Nonetheless the total weight at low energies will vanish as the hole doping
+
+vanishes, and will be concentrated mainly in the fermionic part of the Fermi surface.
+
+    In the three-leg ladder at dopings beyond δc, the ISL is converted into a doped Luther-
+
+Emery  liquid,  and a LL + LE phase occurs.  This phase will show  hole pairing and power
+
+law  correlations  in  the  CDW  and  singlet  superconductivity  channels.   As  the  mean  ﬁeld
+
+approximation  shows,  the  pairing  is  in  an  essentially  d-wave  channel.   In  the  mean  ﬁeld
+
+theory,  the  quantum  phase  transition  at  δc  appears  as  a  crossover  where  the  hole  pairing
+
+increases rapidly as the hole density increases.
+
+    We wish to thank V.B. Geshkenbein, R. Hlubina, L.B. Ioﬀe, P.A. Lee, S.R. White, and
+D. Scalapino for useful discussions, and acknowledge the Swiss National Science Foundation
+
+for ﬁnancial support.  In particular, M.S. is grateful for the support by the Swiss  National
+
+Science Foundation through a PROFIL-fellowship.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        35
+                                            REFERENCES
+
+
+
+∗      New address:  Yukawa Institute for Theoretical Physics. Kyoto University, Kyoto 606-01,
+
+     Japan.
+
+ [1] E. Dagotto and T.M. Rice, Science 271, 618 (1996), and references therein..
+
+ [2] H. Schulz, Phys. Rev. B 53, R2959 (1996); H. Schulz, cond-mat/9605075.
+
+ [3] D.V. Khveshchenko and T.M. Rice, Phys. Rev. B 50, 252 (1994).
+
+ [4] E. Arrigoni, Phys. Lett. A215, 91 (1996).
+
+ [5] L. Balents and M.P. Fisher, Phys. Rev. B 53, 12133 (1996).
+
+ [6] T.  Kimura,  K.  Kuroki,  and  H.  Aoki,  Phys.  Rev.  B  54,  R9608  (1996);  T.  Kimura,  K.
+
+     Kuroki, and H. Aoki, cond-mat/9610200.
+
+ [7] H.H. Lin, L. Balents, and M.P. Fisher, cond-mat/9703055.
+
+ [8] M. Troyer, H. Tsunetsugu, and T.M. Rice, Phys. Rev. B 53, 251 (1996).
+
+ [9] C.A. Hayward and D. Poilblanc, Phys. Rev. B 53, 11721 (1996).
+
+[10] S.R. White and D. Scalapino, Phys. Rev. B 55, 6504 (1997).
+
+[11] M. Ogata, M.U. Luchini, S. Sorella, and F.F. Assaad, Phys. Rev. Lett. 66, 2388 (1991).
+
+[12] P.A.  Bares  and  G. Blatter,  Phys.  Rev.  Lett.  64,  2567 (1990);  P.A.  Bares,  G. Blatter,
+
+     and M. Ogata, Phys. Rev. B 44, 130 (1991).
+
+[13] D.S. Marshall et al., Phys. Rev. Lett. 76, 4841 (1996).
+
+[14] B. Frischmuth, S. Haas, G. Sierra, and T.M. Rice, Phys. Rev. B 55, R3340 (1997).
+
+[15] M. Greven, R.J. Birgeneau, and U.-J. Wiese, Phys. Rev. Lett. 77, 1865 (1997).
+
+[16] B. Frischmuth, B. Ammon, and M. Troyer, Phys. Rev. B 54, R3714 (1996).
+
+
+
+                                                      36
+[17] Boundary conditions with open shell conﬁgurations strongly favor paired groundstates
+
+     and skew the balance between paired and unpaired states.
+
+[18] As a consequence of the Marshall theorem, Heisenberg chains and odd-leg ladders with
+
+     L= 2, 6, 10, ... have a groundstate wavevector k=π, while systems with L= 4, 8, 12, ...
+
+     have k=0.
+
+[19] Note  that  this  2-hole  LL  +  ISL  state  for  PBC  lies  slightly  higher  in  energy  than  the
+
+     2-hole LE state which has total momentum k=0, and a ﬁlled shell conﬁguration in the
+
+     nb-channel, i.e. 6 electrons with k=0 and k=±π/3 states fully occupied. We ascribe the
+
+     extra stability of the LE state to this favorable ﬁlled shell structure.
+
+[20] M. Sigrist, T.M. Rice and F.C. Zhang, Phys. Rev. B 49, 12058 (1994).
+
+[21] G. Kotliar and J. Liu, Phys. Rev. B 38, 5142 (1988).
+
+[22] I. Aﬄeck, Z. Zou, T. Hsu and P.W. Anderson, Phys. Rev. B 38, 745 (1988).
+
+[23] A.V. Balatsky,  Philosophical  Magazine Lett. 68, 251 (1993); Y. Ren and F.C. Zhang,
+
+     Phys. Rev. B 52, 536 (1995).
+
+[24] V.B. Geshkenbein, L.B. Ioﬀe and A.I. Larkin, Phys. Rev. B 55, 3173 (1997).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       37

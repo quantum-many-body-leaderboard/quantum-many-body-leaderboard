@@ -1,0 +1,1572 @@
+            One-Dimensional t-J  Model  from  a  Variational Viewpoint
+
+
+                      Hisatoshi  Yokoyama(1)∗  and  Masao Ogata(2)∗∗
+
+
+
+                          (1)Department of Physics, Tohoku University,
+                        Aramaki Aoba, Aoba-ku, Sendai 980-77, JAPAN
+
+        (2)Institute of Physics, College of Arts and Sciences, University of Tokyo
+                             Komaba, Meguro-ku, Tokyo 153, JAPAN
+
+
+                                    (Received                                 )
+
+
+
+Abstract
+The one-dimensional (1D) t-J  model is investigated by using a Gutzwiller-Jastrow-type
+variation method and the exact diagonalization of small systems.  Variational expecta-
+tion values are estimated by the variational Monte Carlo method with suﬃcient  accu-
+racy.  First, we represent the diagonalization results.  Physical quantities like momentum
+distribution and some correlation functions show some behaviors which are not expected
+in repulsive models, as the value of J/t increases.  These properties as well as energy are
+well  understood  by  introducing  intersite  correlation  factors  into  wave  functions.   The
+phase transition to a separated phase in large-J/t region can be described by an attrac-
+tive  Jastrow  wave  function  in  quantitative  agreement  with  the  exact  results.   On  the
+other hand, for the supersymmetric case (J/t = 2) the original Gutzwiller wave function
+becomes  an extremely good trial function  for all the range of electron density.  Here a
+kind of “free electron” state is realized,  particularly in the low electron density.  Next,
+the above wave functions are compared with the Tomonaga-Luttinger-liquid-type wave
+function proposed by Hellberg and Mele.  It is found that the correlation factors in short
+distances control bulk quantities like energy and the magnitude of correlation functions,
+while the long-range part of correlataion factors determines the critical behavior of cor-
+relation  functions.   Lastly,  using  these  functions,  charge  and  spin  susceptibilities  and
+magnetization  curve  are  estimated,  which  agree  with  the  exact  results.   It  is  shown
+that  the  Mott  transition  in  1D  t-J  model  is  quite  diﬀerent  from  the  Brinkman-Rice
+transition.
+
+PACS numbers:  75.10.Jm, 71.10.+x, 74.65.+n, 74.70.Vy
+
+                                                      1
+§1.  Introduction
+
+The  t-J  model  is  an  important  model  to  study  highly  correlated  electron  systems  for
+its simplicity and close relationship to the high temperature superconductivity.1) Many
+properties in one-dimensional (1D) systems have been clariﬁed extensively by a number
+of  methods:  Bethe-Ansatz  solutions,  g-ology, Tomonaga-Luttinger (TL)  liquid theory,
+quantum Monte Carlo simulations, exact diagonalization studies of small clusters, and
+conformal ﬁeld theory.  We expect that the study of 1D systems will shed light on more
+realistic  higher-dimensional  systems  and  that  the  comparison  of  the  various  methods
+with  the  well-established  1D  results  enables  us  to  judge  the  validity  of  such  methods
+and approximations.
+     In contrast to the 1D Hubbard model,2)  the Bethe Ansatz solution does not exist
+in  the  1D  t-J  model  except  for  J/t  =  0  (spinless-fermion  case)  and  J/t  =  2  (super-
+symmetric case).3,4)  In both soluble cases, TL liquid5)  is realized and the exponents of
+long-range behaviors of correlation functions were calculated exactly by combining the
+Bethe  Ansatz  equations  and  the  conformal  ﬁeld  theory.6−9)  Also  obtained  were  bulk
+quantities  like  spin  susceptibility  χs,  charge  susceptibility  χc,  speciﬁc  heat  coeﬃcient
+and eﬀective transport mass,  which characterize  metal-insulator (Mott) transitions.10)
+On the other hand, for general values of J/t, Ogata et al.11) studied the low-lying energy
+spectrum of ﬁnite systems to obtain the correlation exponents.  In the phase diagram of
+J/t and the electron density n, the TL liquid theory holds in the small-J  region below
+Jc/t  =  2.5  ∼  3.5,  depending  on  n.   A  phase  separation  takes  place  in  the  larger-J/t;
+there  is  a  region  in  which  the  superconducting  correlation  is  dominant,  between  the
+phase separation and the supersymmetric case.
+     Meanwhile,  as for  physical  quantities such  as  momentum  distribution function  or
+spin-  and  charge-correlation  functions,  only  the  long-range  behaviors  were  clariﬁed  in
+the  above  analytic  methods;  the  global  features  were  calculated  numerically.   In  the
+limit of J/t → 0, identical with the large-U  limit of the Hubbard model, the correlation
+functions were obtained by taking advantage of the spin-charge separation in the ground
+state.12) For the other values of J/t, Assaad and W¨urtz13) and Imada14) have carried out
+quantum Monte Carlo simulations.  Pruschke and Shiba15) studied the superconducting
+correlation functions by the exact diagonalization.  All these results are consistent with
+the correlation exponents obtained by the analytic methods.
+     Although the ground-state properties in the 1D t-J  model have been clariﬁed quite
+well,  it is still important to examine variational wave functions.  For the  explicit form
+of  the  wave  function  will  make the  complicated  physics  easy  to grasp.  So  far,  various
+kinds of variational states have been proposed for strongly correlated systems.16−23) The
+
+                                                       2
+Gutzwiller wave function (GWF)24) was studied numerically16,17) and analytically.18,19)
+These studies concluded that the GWF is excellent for the one-dimensional Heisenberg
+model, but is unsatisfactory, even qualitatively, in describing the properties of the strong
+coupling  Hubbard  model  or  of  the  small-J  region  of  the  t-J  model.  For example,  the
+GWF does not reproduce the 2kF peak in the spin correlation function; in the momen-
+tum  distribution,  it  has  a  strange  enhancement  for  k  >  kF.   The  main  reason  is  that
+the  density  correlation  is  not  suﬃciently  introduced  in  the  GWF,  although  the  spin
+correlation is  well  incorporated.  These  unsatisfactory  features  are  partly remedied  by
+introducing Jastrow-type intersite correlation factors.20,22,23)
+      In this paper we show that the ground state properties of the 1D t-J  model become
+more  easily  accessible  from  a  variational  viewpoint.   First,  the  behaviors  obtained  by
+the  exact  diagonalization  for  J/t = 2  is  described  extremely  well  by  the  GWF.  Next,
+the wave function is improved for other values of J/t by introducing Jastrow-type wave
+functions with intersite correlation factors, which are classiﬁed into two types:  one is the
+conventional repulsive and attractive Jastrow-correlation factors and the other is a long-
+range Jastrow factor introduced by Hellberg and Mele.23)  The exponent in the former
+state is the same as the Fermi  liquid, while the latter state has non-trivial exponents.
+It is found  that the long-range behavior of the Jastrow factor is essential  for the non-
+trivial  exponent,  or  non-Fermi  liquid  behavior.    On  the  other  hand,  the  variational
+energy and the global features of the correlation functions  are modiﬁed mainly by the
+short-range behavior of the Jastrow factor.  We also show that quantities like χc, χs and
+magnetization  curve  obtained  by  the  above  wave  functions  are  not  only  qualitatively
+but  quantitatively  consistent  with  the  exact  results.   This  aspect  is  in  sharp  contrast
+with the so-called Brinkman-Rice transition.
+      The outline of this paper is as follows:  in §2 we discuss the diagonalization results
+for  various  correlation  functions  as  well  as  the  ground-state  energy.   In  §3  the  prop-
+erties  of  the  GWF  are  studied  comparing  with  those  of  the  exact  calculations  for  the
+supersymmetric  case.   Section  4  is  devoted  to  the  study  of  the  other  values  of  J/t  by
+introducing  Fermi-liquid-type Jastrow  wave  functions.  In  §5  another  variational  state
+with  an  essentially  long-range  Jastrow  correlation  (TL-liquid-type)  is  examined  and
+compared with the former type.  In §6, χc, χs and magnetization curve are investigated.
+Section  7 is assigned  to summary.  In  Appendices  A and  B, an analytical approach  to
+the  GWF  used  in  §3  and  the  behavior  of  χc  and  χs  in  the  Gutzwiller  approximation
+compared  in  §6  are  summarized  respectively.   A  part  of  the  results  in  this  paper  was
+reported before.22,25)
+
+
+
+                                                        3
+§2.  Ground-State Properties  Obtained in  Small  Clusters
+
+We study the one-dimensional (1D) t-J  model deﬁned as
+
+                                                 H = Ht + HJ,                                                       (2.1)
+
+
+                                    Ht = −t ∑(c†jσcj+1σ + h.c.),                                           (2.1a)
+                                                 jσ
+                                   HJ  = J ∑(Sj · Sj+1 − 14njnj+1),                                    (2.1b)
+                                                j
+
+in  the subspace  with no double  occupancy  with t, J  ≥ 0.  Spin  operators  vanish  when
+they are applied to empty sites.  Henceforth we take t as the unit of energy.
+      We  use  the  Lanczos  method  and  the  conjugate  gradient  method26)  to  obtain  the
+ground-state  wave  function  in  small  clusters.   Figures  1(a)-(c)  show  the  momentum
+distribution function
+                                               n(k) = ⟨c†kσckσ⟩,                                                     (2.2)
+
+and spin- and charge-correlation functions
+                             S(k) =   1     ∑    4⟨Szj Szℓ ⟩eik(rj−rℓ),
+                                        Na   j,ℓ
+                                            ∑
+                            N(k) =   1Na         {⟨njnℓ⟩ − ⟨nj⟩⟨nℓ⟩}eik(rj−rℓ),                             (2.3)
+                                             j,ℓ
+
+obtained exactly for various values of J.  These results are for the quarter-ﬁlled case:  n =
+N/Na = 0.5, with N  and Na  being the number of electrons and sites, respectively.  As
+shown in the 1D U  → ∞ Hubbard model,12) even the 16-site cluster gives fairly reliable
+correlation functions.  The thermodynamic limit is estimated easily by interpolating the
+data points for the 16-site cluster except for the singularities.  Notice that S(k) and N(k)
+are  also  calculated  by  Assaad  and  W¨urtz13)  using  quantum  Monte  Carlo  simulations.
+Their results agree with Figs. 1(a)-(c).
+      There  are  power-law  singularities  in  the  momentum  distribution  n(k)  at  kF  and
+3kF.   The  3kF  singularity  is  not  so  prominent  in  the  small  systems  in  Fig.  1(a).   The
+power-law  singularity  at  kF  is  the  strongest  when  J/t  =  0.   With  increasing  J/t,  its
+singularity  becomes  weaker  until  J/t  =  2  where  n(k)  seems  to  have  a  jump  at  kF.
+In  the  region  J/t  >  2  the  power-law  singularity  shows  up  again.   This  dependence
+on J  is consistent  with the behavior  of the  numerically  obtained correlation exponent
+Kρ  which  increases  from  1/2  as  J  increases.11)  Here  the  exponent  Kρ  is  deﬁned  such
+
+                                                         4
+that  ⟨szi szj ⟩  decays  as  exp{2ikFrij}/rKρ+1ij      .   The  exponent  at  kF  of  n(k)  is  deﬁned  as
+n(k)  =  n0 − Csgn(k − kF)|k − kF|α.   Since  this  exponent  α  is  related  to  Kρ  as  α  =
+(Kρ + 1/Kρ − 2)/4,  it  starts  from   18  at  J/t  =  0,  decreases  for  0  <  J/t  <  2,  becomes
+α = 0 near J/t = 2 and then begins to increase  for J/t > 2 where  Kρ  becomes  larger
+than 1.
+      There are 2kF  singularities in S(k) and N(k).  The TL liquid theory predicts that
+these singularities have the same correlation exponents Kρ and that the size-dependence
+is A−CN −Kρa      .  As seen from Fig. 1, it is diﬃcult to estimate Kρ from the size-dependence
+of  the  2kF  peak.  Especially  the  peak  in  N(k)  is  much  weaker  than  that  in  S(k).  We
+expect the coeﬃcient C  of the size-dependence N −Kρa       is very small for N(k).
+      The global features of the correlation functions for small values of J  resemble the
+results in the large-U Hubbard model.12) As J increases they lose this behavior and near
+the supersymmetric case (J/t = 2), the system behaves similarly to the non-interacting
+case.  This again corresponds to the fact that the exponent Kρ becomes 1 (free-electron
+value) near J/t = 2 (J/t ∼ 2.3 for n = 0.5).11) N(k) and S(k) become almost ﬂat in the
+region  k  >  2kF,  which  is  the  same  behavior  as  in  the  non-interacting  case.   However,
+note  that  this  global  features  of  correlation  functions  are  non-trivial  even  if  Kρ  =  1,
+since this exponent only guarantees that the long-range behavior of correlation functions
+is the same as in the non-interacting case.  Actually the absolute value in the ﬂat region
+is quite diﬀerent from the non-interacting value.  For the case of 8 electrons in 16 sites,
+we get
+
+                                      N(k > 2kF) = 0.312 ∼ 0.319,
+                                       S(k > 2kF) = 0.698,                                                         (2.4)
+
+while  in  the  non-interacting  case,  N(k  > 2kF) = S(k  > 2kF) = n = 0.5.  The  sum  of
+these two values is, however,
+
+                             N(k > 2kF) + S(k > 2kF) = 1.001 ∼ 1.009,                              (2.5)
+
+and this is surprisingly close to the non-interacting value (2n = 1).  We will discuss this
+result in the light of the GWF in the following chapter.
+      Next we estimate the ground-state energy.  The ground state is always singlet and
+non-degenerate,  if  we  choose  periodic  (antiperiodic)  boundary  conditions  for  N/2  =
+odd  (even),  respectively.12,11)  Under  these  boundary  conditions,  the  energy  converges
+smoothly  to  the  thermodynamic  limit.    For  n  =  0.5  we  calculate  the  ground-state
+energies in 4, 8, 12, and 16 sites clusters and ﬁt the results to the formula
+
+                              E/Na = ǫ∞ + C1/N 2a  + C2/N 4a  + C3/N 6a .                                (2.6)
+
+                                                        5
+In  Fig.  2  the  ﬁtted  values  of  ǫ∞  are  shown  by  a  solid  line.   In  the  region  J/t  ≥  3.4
+the energies cannot be ﬁtted to this formula because the system phase separates in this
+region  and  the  size-dependence  is  diﬀerent  from  (2.6).   To  check  the  convergence  for
+J/t < 3.4, we calculate another series of singlet energies by using a diﬀerent boundary
+conditions, i.e., antiperiodic ones for N/2 = odd and vice versa.27) Fitting of the data to
+the same formula (2.6) gives another estimate of the ground-state energy, (ǫ′∞).  [In this
+case C1 > 0, while the former ﬁtting gives C1 < 0.]  The ﬁtted values are shown in Table
+I. The diﬀerence between ǫ∞ and ǫ′∞ is very small (∆ǫ∞ < 10−6t),28) which ensures the
+reliability of the estimate.  For n = 3/4, we estimate similarly the ground-state energy
+by  using  8  and  16  sites  clusters  with  6  and  12  electrons,  respectively.   The  obtained
+ǫ∞  is shown  in Table II. Because  in this case  we ﬁt the data with two parameters  ǫ∞
+and C1, the error is larger than that in the quarter-ﬁlled case.  We will use ǫ∞  later to
+compare with the variational energies.
+
+§3.  Comparison  with  the GWF  Near  the Supersymmetric  Case
+
+In this section we compare the results in the previous section with the Gutzwiller wave
+function (GWF). The GWF is deﬁned as
+
+                                      PdΦF = ∏(1 − nj↑nj↓)ΦF,                                            (3.1)
+                                                   j
+where  ΦF  is  a  simple  Fermi  sea.   In  1D  case,  the  analytic  expression  for  the  physical
+quantities were developed.18,19)
+     First  let  us  compare  the  variational  energy.  The  expectation  value  of  the  kinetic
+energy is calculated as
+                                                    ∑    ∫   π
+                            Et =  ⟨Ht⟩Na   = − 2t2π                        kσckσ⟩,                              (3.2)
+                                                      σ    −π dk cos k⟨c†
+
+where  ⟨· · ·⟩  indicates  the  expectation  value  in  the  GWF.  The  analytic  expression  for
+⟨c†kσckσ⟩ has  been  given by  an inﬁnite summation.18)  The detailed calculation is sum-
+marized in Appendix  A. Here we show that the exchange energy can be obtained in a
+compact form.19)  From the expression of S(k) and N(k) (see below and Appendix A),
+we get
+             ⟨4Szi Szi+1⟩ = −  1   {Si(π) − Si((1 − n)π)},
+                                 π
+               ⟨nini+1⟩ =n2 +   12π2 (cos 2nπ − 1)                                                         (3.3)
+                                   ( sin nπ                        ){Si(π) − Si((1 − n)π)},
+                             +  1π      π      + (1 − n) cos nπ
+
+                                                       6
+with n = N/Na being the electron density.  Using a fact that the GWF is singlet,29) we
+obtain analytically
+
+
+              EJ  =⟨HJ⟩Na
+                              {{3 + sin nπ
+                   = −  J4π                π      + (1 − n) cos nπ}{Si(π) − Si((1 − n)π)}
+                                                         }
+                       + πn2 +   12π (cos 2nπ − 1)          .                                                                   (3.4)
+
+
+      In Fig. 3, we compare the total energy of the GWF with that of the Bethe Ansatz
+(BA) at J/t = 2.  It is surprising that two results are indistinguishable for any value of
+n in the scale of this ﬁgure.  In fact,  for the half-ﬁlled or the Heisenberg case (n = 1),
+the energy of the GWF,16,18)
+
+                           E(GWF)/t = −12[ 3π Si(π) + 1] = −1.384235 · · · ,                          (3.5)
+
+is extremely close to that of the Bethe-Ansatz result,
+
+                                   E(BA)/t = −2 ln 2 = −1.386294 · · · .                                    (3.6)
+
+For n = 0.5, analytic expressions (3.2) and (3.4) give
+
+                                             Et/t = −0.574632 · · · ,                                                (3.7)
+
+                                            EJ/J  = −0.164230 · · · .                                               (3.8)
+
+Thus the total energy of the GWF becomes
+
+                                        E(GWF)/t = −0.903092 · · · ,                                           (3.9)
+
+which is quite close to the exact one:
+
+                                         E(BA)/t = −0.903649 · · · .                                           (3.10)
+
+The diﬀerence is only 0.06%, which is better than the half-ﬁlled case (0.15%).
+      In the low density region, we ﬁnd that the coincidence is much better.  We can see
+that the ground-state wave function for 2-electron problem at J/t = 2 is given by
+
+                                            |Ψ⟩ = Pdc†k=0↑c†k=0↓|0⟩.                                              (3.11)
+
+                                                           7
+This means that the GWF is exact in the low density limit.  In fact, the total energies
+of the GWF at J/t = 2 is
+
+
+                                 E(GWF)/t = −2n + π212 n3 + O(n4),                                  (3.12)
+
+which  coincides  with  the  BA  results  up  to  the  order  of  n3.   The  detailed  calculation
+for (3.12) is also given in Appendix A. This is consistent with the fact that the critical
+exponent Kρ approaches 1 for n → 0.  This Fermi liquid state is nothing but the GWF.
+     In Fig. 4, we compare n(k) for the GWF with that for the small cluster calculation.
+As for n(k), two results almost coincide quantitatively except for the singularity at kF.
+It is remarkable that the ground state of the t-J  model has an enhancement of n(k) in
+the vicinity of π, which was considered before as a pathological behavior of the GWF.17)
+It can be shown that this enhancement originates from the correlated electron motion,
+
+                                    ⟨c†iσcjσ(1 − ni−σ)(1 − nj−σ)⟩0,                                       (3.13)
+
+where  ⟨· · ·⟩0  represents  the  expectation  value  in  the  free  Fermi  see  ΦF  without  the
+Gutzwiller projection.  After a straightforward calculation, (3.13) becomes
+
+                           Pijσ(1 − n−σ + n2−σ + δijn−σ − Pij−σPji−σ),                          (3.14)
+
+and its Fourier transform is
+
+                                      n0σ(k) − 2n−σn0σ(k) + f2(k).                                         (3.15)
+
+Here Pijσ is the Fourier transform of n0σ(k) = θ(kF −|k|), and f2 is given in Appendix A
+as one of the lowest order terms in the analytic calculation.  The enhancement  of n(k)
+in the region of k > kF  is roughly reproduced from this simple lowest-order, (3.13).
+     The slight diﬀerence between the GWF and the exact ground state is the behavior
+around kF which originates from the TL liquid nature.  The GWF is essentially a Fermi
+liquid state with discontinuity  q = √1 − n at k = kF.  On the other hand,  n(k) in the
+true ground state has a power-law singularity as
+
+                                n(k) = n(kF) − c|k − kF|αsgn(k − kF)                                 (3.16)
+
+with α = (Kρ + 1/Kρ − 2)/4. For n = 0.5, Kρ is about 0.85 and is not far from 1 of the
+Fermi liquid case.11,13) This is the reason for the two results are relatively close to each
+other even in the vicinity of kF.  In order to describe these power-law behaviors around
+
+                                                       8
+kF, it seems necessary to introduce low energy excited states around the Fermi surface
+into the trial wave function,20)  or a long-range Jastrow factor21,23)  as discussed in §5.
+      In Fig. 5, S(k) and N(k) are compared with the GWF. S(k) increases for k < 2kF
+and becomes constant for k > 2kF:
+                                      { − ln(1 −  |k|    ) ,            0 ≤ k < 2kF
+                            S(k) =       − ln(1 − n) ,               2kF < k ≤ π                             (3.17)π
+
+(2kF = nπ).  N(k) has diﬀerent curves
+                ()
+                    1             1−n+ |k|π
+                    π −  |k|2π ln   (1−n)      ,
+                                  (           )   (0 ≤ k < min(2kF, 2π − 4kF))
+                    |k|             1+n− |k|π                        ) ,
+                     π  −  |k|2π ln  (1−n)     + ln(1 + n −  |k|π
+                                                  (2kF < k < min(4kF, 2π − 4kF)
+                                                  when 2kF < 2π − 4kF, or n < 2/3)
+                                       (           )
+                    2 − 2n +  |k|      (n−1+ |k|π  )  ,
+                                2π ln    1−n+ |k|
+                                                π
+     N(k) =     (2π − 4kF < k < 2kF                                      (3.18)
+                                                  when 2π − 4kF < 2kF, or 2/3 < n < 1)
+
+                    2n + ln(1 − n) ,
+                                                  (4kF < k < π
+                                                  when 4kF < π, or n < 1/2)
+                                       (           )                       ) .
+                    2 − 2n +  |k|      (n−1+ |k|π  ) + ln(1 + n −  |k|
+                                2π ln    1+n− |k|                       π
+                                                π
+                                                  (max(2kF, 2π − 4kF) < k < π
+                                                  when π < 4kF, or 1/2 < n < 1)
+      Figures 4 and 5 show that the GWF is an extremely good trial function to describe
+globally  the  1D  t-J  model  in  the  supersymmetric  case,  although  it  is  not  the  exact
+ground state.  The  J-dependence  of the variational energy  for the GWF is also shown
+in Fig.  2 using (3.7) and  (3.8).  It is apparent  that the GWF  is very  good only  in the
+vicinity of the supersymmetric case.
+      It  is  possible  to  speculate  the  reason.  An  up-spin  electron,  for  example,  can  hop
+to  a  neighboring  site  with  the  same  magnitude  t  =  J/2  independent  of  the  state  of
+the neighboring site (hole or down-spin electron).4) This fact makes the up-spin part of
+the wave function similar to the Fermi sea where the up-spins move freely without any
+correlation to the down-spins.  Actually the electron system without any interaction has
+an energy
+                             Et/t = − 4π sin πn2   = −2n + π212 n3 + O(n5),
+
+                                                         9
+which coincides with the exact result up to O(n3).
+     Now we discuss the ﬂat region of S(k) + N(k) in k > 2kF  which we have shown in
+the previous chapter (Fig. 1).  The summation of them is rewritten as
+
+                         1  ∑{2⟨nj↑nℓ↑⟩ + 2⟨nj↓nℓ↓⟩ − ⟨nj⟩⟨nℓ⟩}eik(rj−rℓ)
+                       Na    j,ℓ
+                               ∑{⟨nj↑nℓ↑⟩ − ⟨nj↑⟩⟨nℓ↑⟩}eik(rj−rℓ).                                   (3.19)
+                       =   4Na
+                                j,ℓ
+
+Therefore  it  represents  the  density  correlation  between  the  same  species  of  spin.  The
+coincidence  of  this  quantity  to the  non-interacting  value  shows  that the  each  spin  be-
+haves freely.  The Gutzwiller projection only aﬀects the correlation between the diﬀerent
+species of spins, such as ⟨nj↑nℓ↓⟩.  The fact that the GWF behaves almost as a free state
+will be conﬁrmed  also for such  quantities as charge and spin  susceptibilities and mag-
+netization curve in §6.
+     It seems  that the fact  the GWF  is excellent  in the  supersymmetric  case  does  not
+occur by chance.  Recall that for the 1D supersymmetric t-J model with 1/r2 long-range
+coupling,  the  exact ground  state is  the  GWF.30,31)  The  lowest  eigenvalue  speciﬁed  by
+electron density n and magnetic polarization m = (N↑ −N↓)/Na consists of independent
+contributions  of  n  and  m;  the  logarithmic  correction  does  not  exist  for  the  critical
+behaviors.  It is surprising that except for the long-range behaviors the main features of
+this long-range model are shared with the ordinary t-J  model.  Furthermore recently it
+has been found that many low-lying excited states of the above long-range t-J  model,
+including  the  case  of  ﬁnite  magnetic  polarization,  are  represented  also  by  Gutzwiller-
+projected determinantal wave functions.32,25,33)  Thus to elucidate the relation between
+these  models  and  to  study  excited  states  by  the  variational  approach  are  fascinating
+future problems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       10
+§4.  Fermi-Liquid-Type  Jastrow  Functions
+
+In this section we study the Fermi-liquid-type wave functions to describe the t-J  model
+away  from  J/t  =  2,  keeping  the  application  to  higher  dimensions  in  mind.   In  many-
+body problems Jastrow-type wave functions with two-body correlation factors are often
+used.  First, notice that the trial state becomes non-singlet if the Jastrow correlation is
+spin-dependent.34)  Therefore  we  study  here  only  the  spin-independent  charge  density
+correlation:35)                          ∏[                                  ]
+                               Ψ = ∏           1 − (1 − η(rjℓ))njσnℓσ′         ΦF,                                 (4.1)
+                                      jℓ σσ′
+where  rjℓ  =  |rj − rℓ|.  For  η(r)  simple  forms  are  desirable,  satisfying  the  condition  of
+the  t-J  model:  η(0) = 0.  This  condition  is  to project  out the  double  occupancies.  In
+this section we consider two cases in addition to the GWF:
+                                      2
+                                     π arctan  rζ                     (a)         (RJWF)
+                        η(r) =      1                                    (b)         (GWF),                         (4.2)
+                                     1 +   αrβ                           (c)         (AJWF)
+where  r ⁄= 0 and  ζ, α and β  are positive variational parameters.  The typical forms of
+η(r) are shown in Fig. 6.  In these function, η(∞) = 1 holds and the value of η(1)/η(∞)
+is  ﬁnite  for  every  parameter  set.   This  point  is  essentially  diﬀerent  from  the  function
+with a long-range Jastrow factor discussed in the next section.
+      The  form  (a),  which  we  call  the  repulsive  Jastrow  wave  function  (RJWF)  in  this
+paper,  includes repulsive correlation.  It prefers conﬁgurations with electrons mutually
+apart.   In  the  limit  ζ  →  0,  it  is  reduced  to  the  GWF  (b).   This  wave  function  was
+previously introduced to study the repulsive Hubbard model in strong correlation.20) In
+that  work  it  was  found  that  the  RJWF  lowers  the  variational  energy  in  the  Hubbard
+model  and  it  reproduces  qualitatively the  enhancement  at  2kF  of  S(k).  Therefore  we
+expect that the RJWF is suitable also for the small-J  region of the t-J  model.
+      An attractive Jastrow wave function (AJWF) with the correlation factor (c) favors
+local  conﬁgurations  with  electrons  close  to  each  other.   The  parameter  α  adjusts  the
+amplitude of such attractiveness; as α increases, more emphasis are laid upon attractive
+electron conﬁgurations.  On the other hand, the other parameter β controls the decaying
+behavior of η(r).  With increasing β, eﬀective attractive range becomes narrower.  It is
+reduced  to  the  GWF  when  α → 0  or  β  →  0.  We  will  show  that  the  AJWF  properly
+describes a homogeneous phase for relatively small α as well as a fully phase-separated
+state for large values of α.
+      Comparing with the RJWF  and the  AJWF,  we may  regard the GWF  as a “free-
+electron” state in that there is no amplitude modiﬁcation from the non-interacting state
+except for the exclusion of doubly occupied sites.
+
+                                                       11
+      We evaluate the expectation values by the variational Monte Carlo (VMC) method.16,17)
+This  method  gives  virtually  exact  expectation  values  for  given  trial  functions.   In  the
+VMC  calculations  in  this  work  we  use  systems  with  electron  number  N  =  4I + 2  (I:
+integer) with the periodic boundary condition.  Sample numbers (3×104 ∼ 2×105) and
+sampling  intervals  (50  Monte  Carlo  steps  at  the  maximum) are  taken  so  as  to  reduce
+statistical ﬂuctuations enough.  In this section we use typically 60- and 72-site systems.
+      Before  going  to  the  cases  of  J/t  ⁄=  2,  we  check  the  supersymmetric  case.   Total
+energy per site of the RJWF and the AJWF for J/t = 2 and n = 0.5 are shown in Figs.
+7(a)  and  7(b),  respectively.   These  ﬁgures  tell  us  that  the  Jastrow  correlation  factors
+raise  the  variational  energy  and  that  the  GWF  is  the  best  trial  state  for  J/t = 2.  In
+the following we will see that the RJWF  has lower energy  than the GWF for J/t < 2
+(§4.1) and the AJWF has lower energy than the GWF for J/t > 2 (§4.2).
+
+4.1    Repulsive Case
+We  starts  with  a  brief  survey  of  energy.   In  Fig.  8,  Et/t  and  EJ/J  in  the  RJWF  are
+plotted  as a function  of  ζ  for  n = 0.5.  As ζ  increases,  electrons  keep  apart from  each
+other  and  thus  Et  tends  to  decreases  and  EJ  increases.    We  show  the  total  energy
+E(ζ) for J/t = 1.0, as an example, in Fig. 9 using the values in Fig. 8.  The minimum
+is  situated  at  ζ  ∼  0.7;  the  energy  is  considerably  improved  upon  the  GWF  (ζ  =  0).
+Similarly  we  ﬁnd  that  the  minimum  appears  at  ζ  ∼  1.6  (for  J/t  =  0),  1.2  (0.5),  0.7
+(1.0), 0.4 (1.5), and 0 (2.0), respectively.  The repulsive interaction represented  by the
+magnitude of ζ  becomes  weaker with increasing  J.  Variational energies  thus obtained
+are plotted also in Fig. 2 to compare with the exact ground-state energy.
+      Next,  let  us  consider  the  critical  value  Jc  below  which  the  RJWF  has  a  lower
+variational  energy  than  the  GWF.  In  order  to  estimate  Jc  we  only  have  to  see  the  ζ-
+dependence  of the variational energy near ζ  = 0:  if the slope of the energy at ζ  = 0 is
+positive, the optimal state is ζ = 0, which is the GWF. On the other hand, if the slope
+at ζ  = 0 is negative, the variational energy has a minimum at a certain value of ζ  > 0
+and the RJWF is more stable than the GWF (ζ = 0).
+      In Fig. 10 variational expectation values, Et/t and EJ/J, in the RJWF are shown
+for  n  =  0.3  and  small  ζ.   From  this  ﬁgure  we  read  Et(ζ)/t  =  −0.471 − 0.0413ζ  and
+EJ(ζ)/J = −0.0540 + 0.0217ζ.  Since the total variational energy is given by
+
+                                          E(ζ) = Et(ζ) + EJ(ζ),                                                (4.3)
+
+the  slope  of  E(ζ)  near  ζ   =  0  is  −0.0413t + 0.0217J.    This  means  that  for  J/t  <
+0.0413/0.0217  ≃  1.9,  the  slope  is  negative  and  the  RJWF  improves  the  variational
+energy  upon the GWF.  In a similar way,  we obtain the value of Jc/t also for n = 0.5,
+
+                                                       12
+0.75  and  0.833 · · ·.  As  n  increases,  the  statistical  ﬂuctuation  becomes  severe  and  it  is
+not easy to estimate accurate values.  However,  we ﬁnd Jc/t = 2.0 ± 0.2 for the above
+densities.  From this we conclude that a repulsive correlation is necessary to reproduce
+the ground state for J/t < 2.  Actually the value of Jc/t ought to be slightly shifted to
+a larger value of J/t in the high density region, as will be seen in the next section.  This
+is consistent with the diagonalization study.11)
+     Leaving the discussion of correlation functions in the next section, here we focus on
+the discontinuity q of momentum distribution n(k) at kF, which is one of the character-
+istic properties of a Fermi-liquid-type wave function.  This quantity is equal to the wave
+function renomalization factor and related to the inverse of the eﬀective mass m∗/m in
+the  Fermi  liquid  theory.   Similarly  it  is  the  energy  reduction  factor  in  the  Gutzwiller
+approximation.  In  Fig.  11  the  value  of  q  is plotted  as  a  function  of  n  calculated  with
+the optimized wave function for each value of J/t.
+     For the supersymmetric case the result of the GWF,18)  q = √1 − n,  is shown.  In
+this  case  q  becomes  1 in  the  limit of  n → 0,  which  is  the  value  of  the  non-interacting
+system.  In the other limit n → 1, q  vanishes.  This implies the Fermi surface vanishes,
+namely eﬀective mass diverges, corresponding to the metal-insulator transition.  As J/t
+decreases,  q  becomes  small;  the  correlation  aﬀects  the  whole  electron  density  in  this
+case.  Although  the  result  for  J/t = 2.5  includes  relatively  large  statistical  error,  it  is
+obvious that q tends to decrease, with increasing J/t from J/t = 2.0.  Thus we conclude
+that the supersymmetric case is the most weakly interacting; as J/t goes away from it,
+the correlation eﬀect becomes severer.
+
+4.2 Attractive Case
+We  study  the  AJWF  in  this  subsection.  For  J/t > 2,  it  is  natural  to  expect  that the
+attractive correlation between electrons is dominant.  In Fig. 12 we show the variational
+expectation values of Ht  and HJ  for the AJWF (n = 0.75).  EJ  becomes lower and Et
+becomes  higher as α increases,  because  the amplitude of conﬁgurations  with electrons
+located  next  to  one  another  increases.  Note  that  Et  abruptly  approaches  to  zero  and
+EJ  to  the  energy  of  the  spin  system  in  the  region  α > 10  for  β  = 0.625 ∼ 1.  This  is
+nothing but a sign of the phase transition.  We will come back to this point shortly.
+     First we estimate the critical values above which the GWF becomes unstable against
+the AJWF by studying the small-α (and various β) behavior, as in the RJWF case.  We
+obtain Jc/t = 2.0 ± 0.1 for n = 0.5 and 2.0 ± 0.4 for n = 0.25 and 0.75.
+     Searching  the energy  minimum  in the α-β  plane,  we  obtain the optimized energy
+for J/t > 2.  The cases of n = 0.5 are included in Fig. 2.  For n = 0.75 and J/t = 3.3,
+3.4 and 3.5, the total energies as a function of variational parameters are shown in Figs.
+
+                                                       13
+13(a)-(c), respectively.  The energy is improved on that of the GWF in every case.  The
+value of α giving the energy  minimum becomes  large with increase of J/t;  this means
+the enhancement of the attractive correlation.
+     One can read that the aspects of the minima are quite diﬀerent among three ﬁgures
+of Figs. 13(a)-(c).  For simplicity, let us consider the case of β = 1 (empty circle).  In each
+ﬁgure the energy curve of β  = 1 has two local minima, that is,  one around α = 1 ∼ 2
+(minimum H) and one around α = 15 (minimum S). In Fig. 13(a) the lowest energy is
+given  by  the  minimum  H,  and  the  minimum  S  has  a  higher  value.   In  Fig.  13(b)  the
+two  minima  have  comparable  values.   On  the  other  hand,  for  J/t  =  3.5  (Fig.  13(c))
+the situation is opposite to Fig. 13(a).  Thus we ﬁnd a switching from the state of the
+minimum H to one of the minimum S around J/t = 3.4.
+     Let  us  see  that  the  optimal  state  for  J/t  >  3.4  represents  the  phase  separation.
+First, the snapshots of electron conﬁgurations taken along a Monte Carlo (MC) sweep
+(Fig.  14)  show  a  formation  of  an  electron  cluster.  Although  small  density  ﬂuctuation
+can be seen near the boundary, this edge eﬀect will be irrelevant as Na → ∞.  Second,
+the minimized energy for J/t > 3.4 is quite close to the energy of the Heisenberg chain
+corrected by electron density (Fig. 2).
+     To see this more quantitatively, charge-density correlation function in real space,
+
+                                     Nr =   1     ∑[⟨nini+r⟩ − n2],                                           (4.4)
+                                             Na    i
+
+is plotted in Fig. 15 for β = 0.75.  For α = 0 (GWF), Nr  has a negative dip in a short
+distance  due  to  the  exchange  hole  of  the  original  Fermi  sea,  and  falls  oﬀ  as  r−2  in  a
+long distance and converges to zero.  When α is switched on, the eﬀect of the exchange
+hole is compensated by the weak attractive correlation; on the other hand,  long range
+part of Nr  hardly changes.  As the value of α increases further, Nr  abruptly changes its
+behavior at α = 10.  It approaches the value of the completely separated phase (α = ∞)
+expressed as
+                 { n − n2 − r/Na    (0 ≤ r/Na ≤ 1 − n)
+         Nr =      2n − n2 − 1         (1 − n ≤ r/Na ≤ 1/2)         for  12  ≤ n ≤ 1              (4.5a)
+
+                       { n − n2 − r/Na    (0 ≤ r/Na ≤ n)
+               Nr =      −n2                      (n ≤ r/Na ≤ 1/2)         for 0 ≤ n ≤  12.            (4.5b)
+
+In Fig. 16 N1, Nr=Na/2  and δNa/4 ≡ −Na(dNr/dr) for r = Na/4 are plotted versus α.
+The transition at α ∼ 10 can be seen.  When a large cluster of electrons is formed, N1 and
+Nr=Na/2 are most inﬂuenced by the density ﬂuctuation near the boundary.  Inversely δr
+
+                                                      14
+for  r ∼ Na/4 depends  mainly  on  the ﬂuctuation  in  the middle  of  the  electron cluster,
+so that it represents the phase transition sharply.
+      In Fig. 17 S(k) is shown for some values of α.  For α = 0 it has a cusp at k = 2kF =
+π/2.  As  α  becomes  large  S(π) is  enhanced,  showing  antiferromagnetic  correlation for
+the  Heisenberg  chain.   For  α  =  30,  S(k)  of  the  AJWF  is  considerably  similar  to  the
+Heisenberg spin system corrected with n.  The behavior of S(k) is also consistent with
+the phase separation.
+      In this way we ﬁnd the phase boundary to the phase separation is at J/t = 3.4 for
+n  =  0.75.   Similarly  we  obtain  J/t  ≃  3.2  (n  =  0.25)  and  J/t  ≃  3.3  (n  =  0.5).   These
+values are in good agreement with the exact-diagonalization result.11)
+
+§5.  Tomonaga-Luttinger-Liquid-Type Jastrow  Function
+
+In  this  section  we  study  the  trial  state  proposed  by  Hellberg  and  Mele.23)  For  the
+variational  states  treated  in  the  previous  section,  the  correlation  exponent  is  always
+the  same  as  the  Fermi  liquid  (Kρ  =  1).  This  is  because  the  Jastrow  factor  η(r)  used
+in  (4.2) approaches  1 rapidly,  namely  is short  ranged.  If  the  correlation factor  η(r) is
+long-ranged, the correlation exponent becomes non-trivial which is consistent with the
+TL liquid behavior.  Hellberg and Mele23)  showed that a variational state
+
+                                               |F (ri↑, rj↓)|νΦF,                                                     (5.1)
+
+gives non-trivial exponents, where |F (ri↑, rj↓)| is a Slater determinant of all the electron
+positions.  Actually  the  correlation  exponent  is  related  to the  variational  parameter  ν
+as36)
+                                                 Kρ =      12ν + 1,                                                        (5.2)
+
+which was derived using the asymptotic Bethe Ansatz and the scaling relations of the
+TL-liquid theory.
+      If we rewrite this wave function in the form (4.1) using the Vandermonde’s deter-
+minant identity, the corresponding Jastrow correlation can be written as
+                                                   [Na
+                                         η(r) =       π   sin(  πNa r)]ν.                                              (5.3)
+
+
+When ν > 0, this correlation is repulsive and is attractive for ν < 0.  As we can see from
+(5.3), the factor η(r) behaves as N νa  at the longest distance, r = Na/2.  It depends on the
+system size Na, and thus it is a very long-ranged Jastrow factor which is diﬀerent from
+the  conventional  Jastrow  factor,  (4.2).   This  long-range  behavior  stands  for  the  eﬀect
+
+                                                        15
+of phase shift of two-particle collisions and eventually changes the correlation exponent
+from the non-interacting value.
+     In  Fig.  18,  we  show  the  phase  diagram  obtained  using  this  trial  state.  The  solid
+lines represent the contours of constant correlation exponent Kρ.  Comparing this phase
+diagram with that obtained from the exact diagonalization of small clusters,11) we ﬁnd
+that the variational wave function is very good in the vicinity of J/t = 2 including the
+correlation exponents.  However agreement  is not so good near J/t ∼ 0.  For example,
+the optimized variational parameter ν for J/t = 0 is ν = 1, (ν = 0.75, ν = 0.5) near n =
+0, (n =  12, n = 1), respectively, while the exact exponent is Kρ =  12, which corresponds to
+ν =  12, regardless of n.  One can see this deviation directly by examining the correlation
+functions.   Since  the  density  correlation  function  N(k)  is  exactly  the  same  as  that  of
+the free spinless fermions at J/t = 0, there must not be a peak at 2kF.  However N(k)
+calculated with η of (5.1) has a small peak at 2kF owing to the deviation of the exponent
+(Fig. 19(a)).
+     To  understand  the  reason  of  this  deviation,  we  rewrite  the  variational  state  (5.1)
+as37)
+
+                  |F (ri↑, rj↓)|νΦF, = ∏       |zi − zj|ν ∏     |zi↑ − zj↑| ∏    |zi↓ − zj↓|
+                                           i<j              i<j              i<j
+                                        = ∏    |zi − zj|1+ν/ ∏      |zi↑ − zj↓|,                                 (5.4)
+                                           i<j                   i,j
+
+apart from  the  sign.  Here  zjσ  = exp(2πirjσ/Na) and  {zj} represents  all the  electrons
+irrespective of their spins.  On the other hand, the exact density correlation function at
+J/t = 0 is reproduced by the free spinless fermion, ∏i<j |zi − zj|.  We can see that it is
+diﬃcult to reproduce the exact density correlation using the form (5.4).
+     In this connection, for the region of J/t ∼ 0, a better trial function will be obtained
+as the form, Ψ = χΦSF on the analogy of the exact eigenfunction in the small-J/t limit,
+12)  where ΦSF  is the wave function of spinless fermion and χ is that for spin degree of
+freedom.38)
+     Next we make a comparison of correlation functions.  Figure 19(a) shows n(k), S(k)
+and N(k) for the optimized wave function (5.1) at J/t = 0 and n = 0.5, together with the
+result of exact diagonalization.  The reproducibility of the global features is not so good.
+In  the  same  ﬁgure  we  compare  the  correlation  functions  calculated  in  the  optimized
+RJWF;  the  two  variational  states  give  almost  identical  results.   Actually  we  ﬁnd  the
+two optimized forms of η(r) of two variational states are similar in short distance.  This
+suggests that the global features of the correlation functions are determined mainly by
+the short-range behavior of the Jastrow factor.
+
+                                                       16
+      Figures  19(b)  and  19(c)  show  similar  comparisons  between  the  variational  states
+and the exact diagonalization at J/t = 1 and 2.6, respectively.  Since the values of J/t
+is nearer to 2, three results are close to each other except for the vicinity of kF in n(k).
+      Before  closing  this  section  we  conﬁrm  that  the  long-range  part  of  the  correlation
+factor controls the critical behavior of correlation functions, while the short-range part
+determines the global features of correlation functions as well as energy.  Let us consider
+the wave functions with four diﬀerent types of correlation factors, two of which connect
+the correlation factors of two kind of variational states.  Namely,
+                        case 1)        η(r) = ηTLL(r)                for all r,{ ηFL(r),              for r < rc;
+
+                        case 2)        η(r) =      ηTLL(r),            for r ≥ rc,
+                                                { ηTLL(r),            for r < rc;
+                        case 3)        η(r) =      ηFL(r),              for r ≥ rc,
+
+                        case 4)        η(r) = ηFL(r)                    for all r,
+where ηTLL  denotes η(r) of (5.3), ηFL  either that of the RJWF or of the AJWF (4.2),
+and  rc  is  a  certain  value  of  r  which  divides  η(r)  into  a  short-range  part  and  a  long-
+range part.  We choose the variational parameters and rc  so that the two parts may be
+smoothly connected.  By using these correlation factors, we perform VMC calculations
+for  the  energy,  n(k),  S(k) and  N(k).  We  ﬁx  the system  size  to Na  = 100 for  n = 0.5
+and take 5 × 104  samples for each case.
+      For the repulsive case we choose rc = 5, ν = 0.5 (the optimal value for J/t ∼ 0.7)
+and ζ = 6.9847.  In Table III(a) we show expectation values of several physical quantities
+for the four cases.  δn(k) in the last two columns indicates the diﬀerences of n(k) between
+the two possible k-points adjacent to kF  from inside and outside, respectively.  For the
+bulk  quantities like Et/t,  EJ/J  and  n(k = 0),  the  cases  1) and  3) give similar values,
+which are diﬀerent from the cases 2) and 4).  This implies that the short-range part of the
+correlation factor is responsible  for the bulk  properties like energy and the magnitude
+of correlation functions.  On the other hand, for δn(k) the cases 1) and 2) have similar
+values compared with the cases 3) and 4).  This indicates the long-range part controls
+the critical behavior of correlation functions.
+      In Table III(b), the result of the same quantities in the attractive regime is summa-
+rized.  Here we select rc = 10 and ν = −0.15 (the optimal value for J/t ∼ 2.5), and the
+two parameters are determined by requesting ηTLL(1) = ηAJ(1) and ηTLL(rc) = ηAJ(rc)
+as  α  =  0.6804  and  β  =  0.5481.   The  tendency  agrees  with  the  repulsive  case.   These
+facts explain the similarity of n(k) and the slight energy diﬀerence shown in Figs.19.
+
+
+
+                                                       17
+§6.  Static Properties of  Charge  and  Spin
+
+In this section we focus on the behavior of charge susceptibility χc and spin susceptibility
+χs.  Since the trial states in the half ﬁlling are always Mott-insulating for the t-J  model,
+we  can  see  the  critical  behavior  variationally,  and  discuss  the  diﬀerence  between  the
+present case and the Brinkman-Rice transition (Appendix B).
+     We calculate χc  and χs  from the VMC data for systems with ﬁnite sizes from the
+formulae:
+
+                 χ−1c    =  ∂2E∂n2  =  N 2a4  {E(N + 2, 0) + E(N − 2, 0) − 2E(N, 0)},                (6.1)
+
+and
+                       χ−1s    =  ∂2E∂m2  =  N 2a16 {E(N, 8) + E(N, 0) − 2E(N, 4)},                       (6.2)
+
+where  E(N, M)  is  total  energy  per  site  of  N-electron  systems  with  M  =  N↑ − N↓.
+Henceforth we take 1/t as the unit of χc and χs.  We conﬁrm that the size dependence is
+mostly negligible for the systems we use:  Na = 100 ∼ 200.  In contrast to the Hubbard
+model  in  the  strong  coupling  regime,  relatively  accurate  estimate  of  χ  is  possible  for
+the 1D t-J  model because of the less statistical ﬂuctuations.  In this section, we mainly
+use the wave function (5.3) and GWF. Typically 5 × 104 ∼ 2 × 105  independent VMC
+samples  are  used  for  each  value  of the  parameter  ν.  To search  the  optimized  value of
+E(N, M) for each N  and M, we pick out 61∼121 values of ν  between −1 and 2.
+
+6.1    Charge Susceptibility
+In Fig. 20 χc  is shown  for several  values of J/t.  Here we observe  that with increasing
+J/t, χc becomes large.  This is because enhanced attractive interaction between electrons
+enlarges charge  compressibility  κ (= χc/n2).  In  the high electron density  region (n ∼
+1)  χc  for  every  value  of  J/t  is  divergent  as  n  →  1.   This  divergence  is  due  to  the
+strong  correlation  eﬀect,  which  suppresses  charge  ﬂuctuation;  this  is  in  contrast  with
+the non-interacting case, where χ−1c    = π sin(nπ/2) and remains a ﬁnite value 1/π as n
+approaches 1.  For J/t = 0 and 2 the exact values are known; the spinless fermion result
+χ−1c    = 2π sin(nπ) for the former case, and the Bethe Ansatz solution for the latter.4,9)
+In both cases the exact χc  diverges as χc ∝ 1/δ (δ = 1 − n) in the limit of n → 1.  The
+variational result is quantitatively similar to the exact one.  To see this divergence more
+closely, we plot chemical potential µ = ∂E/∂n vs.  δ2  for J/t = 0 and 2 in Fig. 21.  For
+J/t  ≤  2  we  can  ﬁt  µ  as  µ  =  µ0 − aδ2  in  the  vicinity  of  the  half  ﬁlling,  although  the
+linearity  is  not  so  clear  for  J/t > 2.  Since  χc  = ∂n/∂µ,  the  coeﬃcient  a  is  related  to
+the  divergence  of  χc  as χc  = 2a/δ(δ → 0).  From Fig.21,  we determine  this coeﬃcient
+2a for a couple of values of J/t, which are shown in Table IV.
+
+                                                       18
+      As  can  be  seen  in  Table  IV,  the  estimation  by  the  variational  state  is  in  good
+agreement with the exact value at J/t = 0.  However at J/t = 2, the deviation is quite
+large.   This  is  probably  because  the  range  of  linear  behavior  of  µ  vs.   δ2  is  rapidly
+reduced as J/t increases.9)
+      The divergence of χc near the Mott transition has been understood from the Bethe
+Ansatz.  Using the correlation exponent Kρ and the charge velocity vc, χc can be written
+as5−8)                                                      Kρ
+                                                  χc =  2π  vc  .
+
+Since vc  vanishes linearly as δ → 0, vc = bδ, χc  diverges as39,10,14)
+
+                                                     2 Kρ   1
+                                                    π   b   δ .
+
+Since Kρ → 1/2 as δ → 011) the coeﬃcient 2a is solely related to the coeﬃcient b, which
+is  2π  ≥ b ≥ 3πζ(3)/(16(ln 2)2)  for  0 ≤ J/t ≤ 2.11,9)  However,  for  J/t > 2,  we  cannot
+expand  µ  as  µ  =  µ0 − aδ2,  but  ﬁt  µ  as  µ  =  µ0 − aδp  instead.   The  leading  power  p
+is  estimated  as  1  <  p  <  2,  namely  p  =  1.8  (for  J/t  =  2.0),  1.5  (2.5)  and  1.3  (3.0).
+Although χc  diverges as δ → 0 for J/t ≥ 2,  we have not understood the origin of this
+power.  This  may  be  due  to  the  poorness  of  the  trial  wave  function  of  (5.1) or  due  to
+an anomalous dependence  of vc  as vc  ∼ aδp−1.  At any rate, we can consider that this
+divergence  is  attributed  to  the  divergence  of  density  of  state  at  the  band  edge  of  the
+spinless fermion.
+      In low electron density area (n ∼ 0) χc  again diverges except for the case of J/t =
+2.5,  in  which  the  variational  state  becomes  unstable  against  phase  separation  and  χc
+becomes  negative.   One  can  ﬁnd  that  the  divergence  of  χc  is  proportional  to  1/n  by
+plotting µ as a function of n2.  The coeﬃcients of 1/n are shown also in Table IV. Since
+for J/t = 2 the trial wave function (GWF) is exact in the limit n → 0, the exact value is
+within the range of error.  Furthermore, the GWF result and the exact one are extremely
+close to the non-interacting gas,  which  means a “free electron” state is realized in the
+supersymmetric case.  Actually using the variational energy (3.12), we obtain
+
+                                            χc =    2π2n + O(n0),
+
+which  is  the  same  as  in  the  non-interacting  case.   As  n  increases,  however,  the  sup-
+pression  of  charge  ﬂuctuation  in  the  t-J  model  prevents  the  wave  function  from  the
+free-electron behavior.
+      For  J/t  =  0  the  variational  value  is  a  little  diﬀerent  from  the  exact  one.   This
+diﬀerence corresponds to the deviation of Kρ  in this area, as described in the previous
+
+                                                        19
+section.   The  divergence  of  χc  is  not  due  to  the  correlation  eﬀect,  but  simply  to  the
+divergence of the density of state at the band edge.
+
+6.2    Magnetic Properties
+First, we discuss spin susceptibility under zero ﬁeld.  Figure 22 shows χs for a couple of
+values of J/t.  In sharp contrast to χc, χs  does not diverge as n → 1 for every value of
+J/t but remains a ﬁnite value close to that of the Heisenberg chain.40)  The divergence
+of χc hardly aﬀects χs; this is due to the separation between spin and charge degrees of
+freedom in the low-energy excitations.
+      For J/t = 0,  all  the  spin  conﬁgurations  are  degenerate,  hence  χs  is inﬁnite.  This
+aspect  is  special  in  1D.  By  introducing  J/t,  this  degeneracy  is  lifted  and  the  value  of
+χs becomes ﬁnite except for the low density limit, which is shown in Fig. 22.  In the TL
+liquid theory, χs  can be represented as5,6,39,7)
+
+                                                  χs =  2    1
+                                                          π vs
+
+where vs is the spin velocity.  Basically vs is proportional to the exchange coupling J and
+thus  χs  decreases  as J/t increases,  which means  that the enhanced  exchange coupling
+hinders  the response of spins to the magnetic ﬁeld.  For a low density  area (n ∼ 0) χs
+diverges since vs ∝ n, which is due to the divergence of density of states.  On the other
+hand as n → 1, χs  approaches that of Heisenberg chain,
+
+                                                 χs →  2     1
+                                                         π  vsw
+
+with vsw  being the spin wave velocity of Heisenberg chain:  vsw = Jπ/2.
+      For  the  supersymmetric  case,  we  observe  that  the  variational  results  agree  quite
+well with that of the non-interacting system (Pauli paramagnetism) χ−1s    = π sin(nπ/2),
+especially  in  low  density  region.  Here  the  idea  of  the  GWF  as  a  “free  electron”  state
+is again useful.  Like χc,  however,  the two results become a little apart as n → 1.  For
+J/t = 2.5 and n < 0.1, the decrease of χs  is due to the phase separation.
+      Now let us  turn to the  case  under  a ﬁnite magnetic  ﬁeld gµBH,  and  here  we put
+g = 2 and µB = 1.  Applying an external ﬁeld along z-axis, a Zeeman term,
+
+                                    Hext = −2H ∑          Szj  = −NaHm,                                        (6.3)
+                                                       j
+
+is added to the original Hamiltonian (2.1).  Total energy per site is written as,
+
+                                           E = E(m, n) − Hm,                                                  (6.4)
+
+                                                       20
+where  E(m, n)  is  total  energy  per  site  with  electron  density  n  and  magnetization  m
+under zero ﬁeld.
+     In Fig. 23 E(m, n) is shown  for n = 0.5 and 1.0 as a function  of m (0 ≤ m ≤ n).
+For  each  case  the  energy  is  a  monotonically  increasing  function  of  m.  By  minimizing
+the total energy (6.4), we obtain the magnetization curves, which are shown in Fig. 24.
+The  critical  ﬁeld  Hs  at  which  spin  saturates  is  determined  from  the  slope  of  E(m, n)
+near m = n.  The value of Hs  is 0.34(J/t = 1.0), 0.99(2.0) and 1.32(2.5) for the quarter
+ﬁlling, and 2.000(2.0) for the half ﬁlling.
+     For the half ﬁlling, the data of the GWF is very close to the exact value (Heisenberg
+antiferromagnet)40)  for  all the  range  of  H.41)  In  the  weak  ﬁeld  limit,  m/H  is  nothing
+but χs, the similarity of the two results is obvious from Fig. 22.
+     For the quarter ﬁlling, m saturates at smaller H as J/t decreases.  This is naturally
+understood  since  the  energy  to excite  the  system  to  higher  spin  state becomes  less  as
+J/t decreases.  In the supersymmetric case, the GWF is in good agreement with the BA
+result also for the quarter ﬁlling.42) Furthermore, the non-interacting result agrees well
+for all the values of H/t.
+
+6.3    Comparisons and Discussions
+First, we compare the above result with the Hubbard model.  Exact results43,44,39) show
+that in the limit of n → 1, χc  diverges as χc = α/δ, where α is a numeral factor which
+depends on U/t.39) The value of α changes from zero for U/t = 0 to 1/2π2 for U/t = ∞,
+which is the same with the t-J  model  with J/t = 0.  On the other hand,  χs  converges
+upon a ﬁnite value as n approaches 1.43) In the strong-U  limit the expansion coeﬃcient
+in t2/U  of χs  is the same as the t-J  model.  These features qualitatively agree with the
+variational results of the present study as well as the exact one for the t-J  model.
+     Meanwhile, Otsuka45) and Furukawa and Imada10) investigated the critical behavior
+of χc and χs for the Hubbard model on 2D square lattice by using quantum Monte Carlo
+methods.  According to their results, essentially the same properties with the 1D models
+are observed.  Thus one can consider that a universal proﬁle of a kind of Mott transition
+appears in these results of χc  and χs.
+     Keeping  these  in  mind,  next  let  us  compare  with  the  Brinkman-Rice  transition
+in the Hubbard  model.  As summarized  in Appendix  B, χs  calculated with Gutzwiller
+approximation diverges when U  → Uc  (n = 1) or n → 1 (U  ≥ Uc).  On the other hand,
+χc  remains ﬁnite for a ﬁnite value of U, even if U  > Uc, although eﬀective mass m∗/m
+diverges similarly as χs.  This indicates  that the Brinkman-Rice transition describes  a
+quite diﬀerent type of metal-insulator transition from those in the 1D and 2D Hubbard
+models and the 1D t-J  model.
+
+                                                      21
+      Lastly  we  mention  the  results  in  the  long-range  t-J  model.30)  In  this  model,  sus-
+ceptibilities are written as
+
+
+                            χ−1c    =  π22  (1 − n),                 χ−1s    =  π22  (1 − m).                            (6.6)
+
+Notice  that  χs  does  not  depend  on  n  and  χc  does  not  on  m,  since  the  contributions
+to  energy  of  n  and  m  are  mutually  independent,  and  that  there  are  no  system  size
+dependence,  because  the  size-dependent  terms  in  energy  are  exhausted  in  the  linear
+order.  The value of χs is constant (2/π2) under zero ﬁeld irrespective of n, which is the
+same  for  the  nearest-neighbor  Heisenberg  model  and  is  close  to  the  variational  value
+(GWF).  The  divergent  behavior  of  χc  near  the  half  ﬁlling  is  also  similar  to  the  t-J
+model  (see  Table  IV).  On  the  other  hand,  a  quite  diﬀerent  feature  appear  in  the  low
+electron  density  region,  where  there  is  no  divergence.   This  diﬀerence  is  originated  in
+the band structure of the model; the non-interacting long-range model has linear energy
+dispersion  and  there  is  no  divergence  in  density  of  state  at  the  band  edge.  From  this
+we can see that electron correlation aﬀects severely high-electron-density regime, while
+in  the  low-density  regime  the  density  of  states  of  the  original  non-interacting  system
+determines the charge susceptibility.
+      In Fig. 24 we also plot the magnetization curve of the long-range t-J  model:46,32)
+                                                          √   1
+                                             m = 1 − 2        4 −  Hπ2t.                                                 (6.7)
+
+This  formula  does  not  depend  on  n.  The  critical  ﬁeld  Hs  for  the  long-range  model  is
+somewhat larger (π2/4 for n = 1 and 3π2/16 for n = 0.5) than the value of the ordinary
+t-J  model.   And  the  diﬀerence  is  larger  for  n  =  0.5.   This  is  probably  because  the
+long-range exchange terms tend to disturb ferromagnetic spin alignment.  Especially in
+the  low density  region,  where  the  particle  distance  is large,  the  long-range  terms  play
+important roles.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          22
+§7.  Summary  and  Discussion
+
+We have  pursued  the ground-state  properties of the  one-dimensional  t-J  model in the
+light of  wave  functions.  By  comparing  the  variational Monte  Carlo results  with those
+of  the  exact  diagonalization,  the  Bethe  Ansatz  and  the  Gutzwiller  approximation,  we
+have obtained some remarkable aspects as follows:
+[1]  From  diagonalization,  exact  energy,  momentum  distribution,  and  spin  and  charge
+correlation functions are obtained, which show unusual behaviors as J/t increases.
+[2] In the supersymmetric case (J/t = 2) the Gutzwiller wave function is an extremely
+good state for bulk quantities.  In the low-density limit the GWF becomes exact.
+[3]  Whole  parameter  space  spanned  by  electron  density  n  and  coupling  strength  J/t
+is  well  described  by  the  repulsive  or  the  attractive  Jastrow-type  wave  functions.   The
+parameter space can be roughly divided into:
+     (a)        J/t < 2         repulsive region (RJWF),
+     (b)        J/t = 2         free-like region (GWF),
+     (c)        J/t > 2         attractive region (AJWF).
+In the region (a), the electron hopping term is dominant.  In the region (c), dominant
+is the exchange term, which induces attractive interaction.  In the supersymmetric case
+(b),  the  two terms  are well balanced  and a kind of “non-interacting” state is realized,
+especially for the low electron density.
+[4]  Phase  transition from a  homogeneous  state  to a phase-separated  state  is quantita-
+tively described within the AJWF.
+[5] In the Jastrow wave functions, a short-range part of intersite correlation factors are
+responsible  for  relatively  high  energy  processes  which  determine  bulk  properties  like
+energy  and  magnitude  of  correlation functions.  On  the  other  hand,  a  long-range  part
+is  mainly  concerned  in  low  energy  processes  near  the  Fermi  surface,  which  cause  the
+critical properties characteristic of the Tomonaga-Luttinger liquid.
+[6] The Jastrow wave functions reproduces charge and spin susceptibilities and magne-
+tization curve correctly, in contrast with the Gutzwiller approximation.
+     Keeping these results in mind, we mention some remaining issues.
+     In  the  region  of  low  electron  density  and  J/t  >  2,  there  exists  a  spin  gap  state
+(without a charge gap).11,47) We have not found an indication of a spin gap in the trial
+functions used.  On the other hand,  Chen and Lee48)  introduced a trial state for a gas
+of  singlet  pairs,  and  showed  that  there  is  a  region  where  this  function  is  stabler  than
+the TL-liquid wave function (5.1).
+     An interesting extension of the present method is to 2D systems.  In 2D we do not
+know even the ground state—the Fermi liquid or the TL liquid for the metallic regime.
+
+                                                      23
+Furthermore,  magnetically  ordered  phases  can  be  stabilized,  near  the  half  ﬁlling.49)
+Actually the TL-liquid wave function has been extended to a 2D system by Valenti and
+Gros.50)  According to their results, the energy lowering by their function is very small
+(1%)  compared  with  the  simple  Gutzwiller  wave  function.   Also  the  critical  exponent
+at  kF  in  the  momentum  distribution  is  small,  assuming  that  it  exists.   Since  critical
+properties  are  in  a  low  energy  scale,  it  may  not  be  easy  to  judge  the  realization  of  a
+TL-liquid state in 2D only by the stability in energy.
+     Recently the behaviors of speciﬁc-heat coeﬃcient, eﬀective mass, χc, χs, etc. are in-
+vestigated experimentally for the high-Tc superconductors and related Mott insulators,51)
+in connection with the metal-insulator transition.  The results of these experiments to-
+gether with the theoretical calculations45,10)  have suggested reconsideration of the ap-
+propriate  Hamiltonian,  namely  whether  the  simple  t-J  model  is  pertinent  to  describe
+various aspects of the high-Tc  cuprates.
+     In these contexts, 2D systems have to be further studied with the variation theory.
+
+                                           Acknowledgment
+
+     The  authors  are  grateful  to  T.M.  Rice,  H.  Shiba,  Y.  Kuramoto,  D.  Vollhardt,
+W.O.  Putikka,  M.U.  Luchini,  S.  Sorella  and  P.-A.  Bares  for  fruitful  discussions.   One
+of  the  authors  (H.Y.)  thanks  N.  Kawakami,  W.  Metzner,  Y.  ¯Ono,  T.  Pruschke,  K.
+Sano,  B.S.  Shastry,  P.G.J.  van  Dongen  and  F.C.  Zhang  for  useful  comments.   This
+work  is  supported  partly  by  Grant-in-Aids  for  Scientiﬁc  Research  on  Priority  Areas,
+“Computational Physics as a New Frontier in Condensed Matter Research” and “Science
+of  High-Tc  Superconductivity”  and  for  Encouragement  of  Young  Scientists  given  by
+Ministry of Education, Science and Culture, Japan.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       24
+Appendix A: Analytical Approach  to  the  Gutzwiller Wave  Function.
+
+In this appendix, we summarize the analytic expressions for various expectation values
+in the GWF. They were developed by Metzner and Vollhardt,18)  and by Gebhard and
+Vollhardt19)  for the Hubbard model.  In order to apply to the 1D t-J  model, we carry
+out the calculation of ⟨ninj⟩ and ⟨Szi Szj ⟩.
+     The momentum distribution for spin σ is obtained by an inﬁnite summation18)
+
+                nσ(k) =n0σ(k) − (1 − g)2n−σn0σ(k)
+                                          ∞∑
+                           +       1(1 + g)2  (g2 − 1)m{1 − (1 − g2)n0σ(k)}fmσ(k),              (A.1)
+                                         m=2
+
+where  g  is  identical  to  η(0)  in  our  notation  (eq.  (4.1)),  and  thus  g  =  0  for  the  t-J
+model.   n0σ(k)  is  the  momentum  distribution  of  the  non-interacting  system  given  by
+n0σ(k) = θ(kF − |k|), and nσ = n/2.  In 1D case, fm(k) is given by a polynomial of order
+≤ m.  According to the notation in Ref.18), we can summarize as follows:
+                nmRm(k) ,
+                           (in region (I) : 0 ≤ k ≤ kF)
+
+                   nmQm(k) + Cm−1  ,
+                           (in region (II) : kF ≤ k ≤ min(3kF, 2π − 3kF)
+    fm(k) =                                                                            (A.2)
+                   Cm−1  ,
+                           (in region (III) : 3kF ≤ k ≤ π, when 3kF < π)
+
+                   nm(Qm(k) + Qm(2π − k)) + Cm−1  ,
+                           (in region (IV) : 2π − 3kF ≤ k ≤ π, when 2π − 3kF < π)
+
+where
+                                          Cm−1 = (−1)m nm2m ,
+
+                                                m∑  R(j)m (   k        )j,
+                                   Rm(k) =            j!    2πn − 14
+                                               j=1
+
+                                                m∑  Q(j)  (   k        )j.                                        (A.3)
+                                   Qm(k) =             m
+                                               j=1    j!    2πn − 34
+
+The coeﬃcients of these Taylor series are determined via a recursion relation;
+
+                      2(m − j + 1)R(j)m+1 = −(2m − 2j + 1)R(j)m  − Q(j+1)m+1 ,
+
+           Q(j+2)m+1  = 2(m − 2j)Q(j+1)m+1  + 2mR(j)m  − 4j(m − j + 1)(R(j)m  + R(j)m+1),
+
+                                                     25
+                                            { 0                             m + 1 = odd
+                             R(m+1)m+1    =    −2Q(m+1)
+                                                      m+1   ,            m + 1 = even                             (A.4)
+with initial values
+                                                   R(j)1    = −12δj,0,
+
+                                               Q(0)m+1 = Q(1)m+1 = 0.
+
+      Apparently  the  series  in  (A.1)  gives  an  expansion  with  respect  to  n  in  the  low
+density region.  For m = 2, we get
+                            n2(    k2         )                                                     in (I)
+                                     4π2n2  +   5(   k16)2 +  n2
+                f2(k) =        − n22   2πn −  34           4                                             in (II)    (A.5)
+                            n2
+                                 4                                                                            in (III)(   k)2 −  n2( 2π−k)2 +  n2
+                               − n22   2πn −  34           2    2πn  −  34          4             in (IV)
+Then the kinetic energy in the dilute limit is
+                                            (                               )
+                               Et = −2t       n − n22  − π224 n3 − n33         + O(n4).                             (A.6)
+
+      Compact  analytic  expressions  for  S(k)  and  N(k)  are  given  in  (3.17)  and  (3.18).
+Their  Fourier  transforms  give  the  spin  and  charge  correlation  functions  in  real  space.
+Through a straightforward calculation, we get
+                             4⟨Szi Szi+r⟩ =  (−1)r       {Si(πr) − Si((1 − n)πr)},                           (A.7)
+                                                  πr
+and
+       ⟨nini+r⟩ = n2 +     1            (cos 4kFr − 1)
+                               2π2r2                                                                                (A.8)
+                    − (−1)r     {sin nπr
+                          πr          πr     + (1 − n) cos nπr){Si(πr) − Si((1 − n)πr)},
+where  r  is  an  integer,  r  ≥ 1.  When  r  = 1,  (A.7)  and  (A.8) give  the  exchange  energy
+given in (3.3).  In the low density limit, we obtain
+
+                                       ⟨Szi Szi+1⟩ = −n28  − n312 + O(n4),
+
+and
+                                        ⟨nini+1⟩ =  n22  + n33  + O(n4).                                         (A.9)
+
+Total energy is
+                     E = −2tn + (t − J          )n2 + π2
+                                              2           12 tn3 + (23t − 13J)n3 + O(n4).               (A.10)
+At J/t = 2, we get (3.12).
+
+                                                            26
+Appendix B:  χs  and  χc  around  Brinkman-Rice  Transition.
+
+Brinkman  and  Rice  discussed  the  metal-insulator  transition  for  the  Hubbard  model
+based on the Gutzwiller approximation (GA).52)  Although it was conﬁrmed by solving
+the variation problem accurately that this transition does not exist in the realistic (1,2
+and 3) dimensions,17,18)  the conception  of the Brinkman-Rice transition is still widely
+used.  In this Appendix we brieﬂy review the behavior of χs and χc in the GA, especially
+around the Brinkman-Rice transition for the comparison in §6.53)
+      According to the GA, the state of n ⁄= 1 in the Hubbard model is always metallic
+and has a Fermi surface  with a ﬁnite discontinuity  q  of n(k) at k = kF.  On the other
+hand,  in  the  half  ﬁlling  the  GA  gives  a  metallic  state  for  U  <  Uc  and  an  insulating
+one  for  U  > Uc,  where  Uc  = 8|ε0|  and  ε0  is  the  energy  of  the  non-interacting  system;
+the  Brinkman-Rice  transition  occurs  at  U  =  Uc.   When  U  increases  from  under  Uc
+ﬁxing  n  =  1,  χs  as  well  as  eﬀective  mass  m∗/m(∝  q−1)  diverges  as  1/(1 − (U/Uc)2).
+χs  and  m∗/m  remain  inﬁnite  for  U  ≥  Uc.   Meanwhile,  χc  decreases  with  increasing
+U  and  vanish  at  U  =  Uc  and  then  increases  for  U  >  Uc.   In  Fig.  25  we  actually  plot
+the  numerical  GA  values  of  χs  and  χc.   According  to  the  Fermi  liquid  theory,  charge
+susceptibility is related to m∗/m as
+
+                                               χc =  m∗/m1 + F s0 χ0c,                                                     (B.1)
+
+
+where  F s0  is  the  usual  Landau  parameter  and  χ0c  is  the  value  for  the  non-interacting
+case.  Therefore F s0  is more divergent than m∗/m at U  = Uc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        27
+                                                References
+
+   *  E-mail address:  yoko@cmpt01.phys.tohoku.ac.jp
+  **  E-mail address:  ogata@sola.c.u-tokyo.ac.jp
+ 1)   P.  W.  Anderson:  Science  235,  1196  (1987);  F.  C.  Zhang  and  T.  M.  Rice:  Phys.
+      Rev. B 37, 3759 (1988).
+ 2)   E.H. Lieb and F.Y. Wu:  Phys. Rev. Lett.  20, 1445 (1968).
+ 3)   B. Sutherland:  Phys.  Rev. B  12,  3795 (1975);  P. Schlottmann:  Phys.  Rev. B 36,
+      5177 (1987).
+ 4)   P.-A.  Bares  and  G.  Blatter:   Phys.  Rev.  Lett.   64,  2567  (1990);  P.-A.  Bares,  G.
+      Blatter and M. Ogata:  Phys. Rev. B 44, 130 (1991).
+ 5)   F.D.M. Haldane:  Phys. Rev. Lett.  45, 1358 (1980); J. Phys. C 14, 2585 (1981).
+ 6)   H.J. Schulz:  Phys. Rev. Lett.  64, 2381 (1990).
+ 7)   H. Frahm and V.E. Korepin:  Phys. Rev. B 42, 10553 (1990).
+ 8)   N. Kawakami and S.-K. Yang:  Phys. Lett. A 148, 359 (1990).
+ 9)   N.  Kawakami  and  S.-K.  Yang:  Phys.  Rev.  Lett.  65,  2309 (1990);  J.  Phys.  Cond.
+      Mat.  3, 5983 (1991).
+10)   N. Furukawa and M. Imada:  J. Phys. Soc. Jpn.  61, 3331 (1992), J. Phys. Soc. Jpn.
+      62, 2557 (1993).
+11)   M. Ogata, M. U. Luchini, S. Sorella and F. F. Assaad:  Phys. Rev. Lett.  66, 2388
+      (1991).
+12)   M.  Ogata  and  H.  Shiba:  Phys.  Rev.  B  41,  2326 (1990);  H.  Shiba  and  M.  Ogata:
+      Int. J. of Mod. Phys.   B5, 31 (1991).
+13)   F. F. Assaad and D. W¨urtz:  Phys. Rev. B 44, 2681 (1991).
+14)   M.  Imada:  J.  Phys.  Soc.  Jpn.  59,  4121 (1990);  in Quantum  Simulations  of  Con-
+      densed  Matter  Phenomena,  ed. J. D. Dell and J. E. Gubernatis (World Scientiﬁc,
+      Singapore, 1990), p. 127.
+15)   T.  Pruschke  and  H.  Shiba:  Phys.  Rev.  B  44,  205  (1991);  Phys.  Rev.  B  46,  356
+      (1992).
+16)   C. Gros, R. Joynt and T.M. Rice:  Phys. Rev. B 36, 381 (1987).
+17)   H. Yokoyama and H. Shiba:  J. Phys. Soc. Jpn.  56, 1490 (1987).
+18)   W. Metzner and D. Vollhardt:  Phys. Rev. B 37, 7382 (1988).
+19)   F. Gebhard and D. Vollhardt:  Phys. Rev. B 38, 6911 (1988).
+20)   H. Yokoyama and H. Shiba:  J. Phys. Soc. Jpn.  59, 3669 (1990).
+21)   C.  S.  Hellberg and  E. J.  Mele:  Phys.  Rev.  B 44,  1360 (1991);  Int.  J.  Mod.  Phys.
+      5, 1791 (1991).
+22)   H. Yokoyama and M. Ogata:  Phys. Rev. Lett.  67, 3610 (1991).
+
+                                                      28
+23)   C. S. Hellberg and E. J. Mele:  Phys. Rev. Lett.  67, 2080 (1991).
+24)   M.C. Gutzwiller:  Phys. Rev. Lett.  10, 159 (1963); Phys. Rev.  134, A1726 (1965).
+25)   H. Yokoyama, Y. Kuramoto and M. Ogata:  to be published in J. Phys. Soc. Jpn.
+      Suppl. (1995).
+26)   T. Oguchi, H. Nishimori, and Y. Taguchi:  J. Phys. Soc. Jpn.  55, 323 (1986).
+27)   In  this  case,  level  crossings  take  place  and  thus  the  singlet  state  does  not  have
+      the  lowest  energy  in  the  small-J  region.    However  we  identify  the  energy  level
+      corresponding to the lowest singlet state by following the singlet state as a function
+      of J.
+28)   Other combinations of the powers of 1/Na are tried to show that this formula gives
+      the best ﬁtting as expected.
+29)   P. W. Anderson, B. S. Shastry, and D. Hristopulos, Phys. Rev. B 40, 8939 (1989).
+30)   Y. Kuramoto and H. Yokoyama:  Phys. Rev. Lett.  67, 1338 (1991).
+31)   Y. Kato and Y. Kuramoto:  Phys. Rev. Lett.  74, 1222 (1995).
+32)   H. Yokoyama and Y. Kuramoto:  J. Phys. Soc. Jpn.  61, 3046 (1992).
+33)   Z.N.C. Ha and F.D.M. Haldane:  Phys. Rev. B 46, 9359 (1992).
+34)   If one introduces spin-dependent correlation factor keeping the singlet nature, one
+      has to use spin operators isotropically, which means that the Jastrow factor includes
+      oﬀ-diagonal elements.  This issue is left for future study.
+35)   There was an unfortunate typographical error in eq. (2) of the previous report.22)
+      The present equation (4.1) is the correct one.
+36)   N. Kawakami and P. Horsch:  Phys. Rev. Lett.  68, 3110 (1992); C. S. Hellberg and
+      E. J. Mele:  Phys. Rev. Lett.  68, 3111 (1992).
+37)   Suggested by Y. Kuramoto.
+38)   M. Ogata:  Correlation Eﬀects in Low-Dimensional Electron Systems, ed. A. Okiji
+      and N. Kawakami (Springer Verlag 1994) p.121; K. Kobayashi:  unpublished.
+39)   T. Usuki, N. Kawakami and A. Okiji:  Phys. Lett. A 135, 476 (1989); N. Kawakami
+      and  A.  Okiji:   Strong  Correlation  and  Superconductivity,  ed.  H.  Fukuyama,  S.
+      Maekawa and A. P. Malozemoﬀ (Springer Verlag, 1989).
+40)   R. B. Griﬃths:  Phys. Rev.  133, A786 (1964).
+41)   For  the  Hubbard  model  with  ﬁnite  U/t  in  the  half-ﬁlled  band,  the  behavior  of
+      the GWF is diﬀerent.  As H  approaches Hs, total energy comes to have two local
+      minima,  one  of  which  is  at  m  =  n.   And  the  global  minimum  switches  from  one
+      at  0  <  m  <  n  to  the  other  at  m  =  n  abruptly.    Thus  m  has  a  jump  to  the
+      full  momentum  at  the  critical  ﬁeld.   This  aspect  is  common  with  the  Gutzwiller
+      approximation53)  but not consistent with the exact result.43)
+
+                                                      29
+42)   M. Quaisser, A. Schadschneider and J. Zittartz:  J. Phys.  A 25, L1127 (1992).
+43)   M. Takahashi:  Prog. Theor. Phys.  42, 1092 (1969).
+44)   H. Shiba:  Phys. Rev. B 6, 930 (1972).
+45)   H. Otsuka:  J. Phys. Soc. Jpn.  59, 2916 (1990).
+46)   N. Kawakami:  Phys. Rev. B 45, 7525 (1992); Phys. Rev. B 46, 1005 (1992).
+47)   C.S. Hellberg and E.J. Mele:  Phys. Rev. B 48, 646 (1993); Physica B 199 & 200,
+      322 (1994).
+48)   Y.C. Chen and T.K. Lee:  Phys. Rev. B 47, 11548 (1993).
+49)   H.  Yokoyama  and  H.  Shiba:  J.  Phys.  Soc.  Jpn.   56,  3570  (1987),  ibid.,  57,  2482
+      (1988);  C.  Gros:   Phys.  Rev.  B  38,  931  (1988),  Ann.  Phys  189,  53  (1989);  T.
+      Giamarchi and C. Lhuillier:  Phys. Rev. B 43, 12943 (1991).
+50)   R. Valenti and C. Gros:  Phys. Rev. Lett.  68, 2402 (1992); C. Gros and R. Valenti:
+      Mod. Phys. Lett. B 7, 119 (1992).
+51)   For instance, Y. Tokura et al.:  Phys. Rev. Lett.  70, 2126 (1993); K. Kumagai et al.:
+      Phys.  Rev.  B  48,  7636  (1993);  N.E.  Phillips et  al.:  Progress  in  Low  Temperature
+      Physics, ed.  D. Brewer (Elsevier, the Netherland, 1990).
+52)   W. F. Brinkman and T. M. Rice, Phys. Rev. B 2, 4302 (1970).
+53)   Detailed  discussions  on  the  Gutzwiller  approximation  are  given  in,  D.  Vollhardt,
+      Rev. Mod. Phys.  56, 99 (1984).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      30
+Table I  Ground-state  energies  of  the  1D  t-J  model  for  the  quarter-ﬁlled  case  (n  =  1/2).
+           They are extrapolated to the thermodynamic limit using the formula (2.6).  ǫ∞ and
+           ǫ′∞  are obtained from the two set of boundary conditions (see the text).  The unit
+           of the energy is t.
+
+                                       J/t               ǫ∞                      ǫ′∞
+                                       0.0          −0.6366197       −0.6366198
+                                       0.2          −0.6578750       −0.6575043
+                                       0.4          −0.6804029       −0.6806269
+                                       0.6          −0.7041767       −0.7041768
+                                       0.8          −0.7291701       −0.7291701
+                                       1.0          −0.7553587       −0.7553586
+                                       1.2          −0.7827211       −0.7827209
+                                       1.4          −0.8112399       −0.8112396
+                                       1.6          −0.8409031       −0.8409028
+                                       1.8          −0.8717049       −0.8717046
+                                       2.0          −0.9036477       −0.9036477
+                                       2.2          −0.9367449       −0.9367452
+                                       2.4          −0.9710250       −0.9710259
+                                       2.6          −1.0065398       −1.0065415
+                                       2.8          −1.0433801       −1.0433827
+                                       3.0          −1.0817130       −1.0817179
+                                       3.2          −1.1219079       −1.1219533
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                           31
+Table II  Ground-state energies of the 1D t-J  model for n = 3/4 similarly obtained as in the
+            quarter-ﬁlled case in Table I.
+
+                                        J/t               ǫ∞                      ǫ′∞
+                                        0.0          −0.4501050       −0.4502187
+                                        0.2          −0.5216656       −0.5219004
+                                        0.4          −0.5943201       −0.5944475
+                                        0.6          −0.6678961       −0.6680324
+                                        0.8          −0.7422736       −0.7424195
+                                        1.0          −0.8173650       −0.8175213
+                                        1.2          −0.8931052       −0.8932726
+                                        1.4          −0.9694457       −0.9696252
+                                        1.6          −1.0463508       −1.0465437
+                                        1.8          −1.1237962       −1.1240038
+                                        2.0          −1.2017671       −1.2019909
+                                        2.2          −1.2802580       −1.2805002
+                                        2.4          −1.3592732       −1.3595368
+                                        2.6          −1.4388286       −1.4391186
+                                        2.8          −1.5189551       −1.5192801
+                                        3.0          −1.5997064       −1.6000835
+                                        3.2          −1.6811763       −1.6816414
+                                        3.4          −1.7635421       −1.7641837
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                            32
+Table III  Comparison  of  expectation  values  for  four  kinds  of  correlation  factors  hybridized
+             (a) between the RJWF eq.(4.2) (ζ = 6.9847) and eq.(5.1) (ν = 0.5) for the repulsive
+             case,  and  (b)  between  the  AJWF  eq.(4.2) (α =  0.6804,  β  =  0.5481) and  eq.(5.1)
+             (ν = −0.15) for the attractive case.  Digits include some statistical errors.
+
+
+             (a)            Et/t            EJ/J           n(k = 0)        δn(k)  < kF         δn(k)  > kF
+           case 1)       −0.60865         −0.13972         0.73826          −0.02925             −0.02948
+           case 2)       −0.60959         −0.12047         0.70705          −0.02665             −0.02811
+           case 3)       −0.60880         −0.13955         0.73804          −0.01958             −0.01989
+           case 4)       −0.60983         −0.12037         0.70816          −0.02242             −0.02178
+
+
+
+
+             (b)            Et/t            EJ/J           n(k = 0)        δn(k)  < kF         δn(k)  > kF
+           case 1)       −0.55403         −0.17331         0.74876          −0.00589             −0.01103
+           case 2)       −0.54695         −0.17619         0.74777          −0.00309             −0.00559
+           case 3)       −0.55392         −0.17334         0.74871          −0.00096             −0.00553
+           case 4)       −0.54701         −0.17615         0.74745          −0.00090             −0.00279
+
+
+
+
+Table IV  Coeﬃcient of 1/n and 1/δ of charge susceptibility in the limit of n → 0 and δ → 0,
+             respectively.   For  comparison  we  also  show  the  values  of  the  free  electron  system
+             and the supersymmetric t-J  model with long-range exchange and transfer, denoted
+             by ‘Free’ and ‘L.-r. t-J’ respectively in the ﬁrst column.
+
+
+                                         n → 0                                        δ → 0
+             J/t          Variational              Exact             Variational               Exact
+              0              0.046           2π2  = 0.050661            0.054              2π2  = 0.050661
+              1              0.053                  —                   0.062                    —
+              2              0.204             2                        0.070           16(ln 2)2
+                                              π2  = 0.202642                             3π2ζ(3)  = 0.21598
+             Free              —              π2  = 0.20264               —                  Finite χc
+          L.-r. t-J          Exact              Finite χc               Exact               2
+                                                                                           π2  = 0.20264
+
+
+
+
+
+
+
+
+
+                                                           33
+                                               Figure  Captions
+
+Fig. 1  (a)  The  momentum  distribution  function,  (b)  spin  correlation  function,  and  (c)
+         charge correlation function for the quarter-ﬁlled case at J/t = 0.5, 1.0, 2.0 and 3.0
+         obtained in the exact diagonalization of the systems with 4, 8, 12 and 16 sites.  For
+         J  =  0,  we  show  the  result  in  the  wave  function  for  the  U  →  ∞  Hubbard  model
+         with 52 sites.12,15)
+Fig. 2  Ground-state energy of the 1D t-J  model as a function of J/t at n = 0.5.  Extrap-
+         olated values (Na → ∞) of the exact diagonalization, the energy of the fully phase
+         separated  (Heisenberg) state,  and  variational energies  of  the three  types  of varia-
+         tional functions are compared.  The transition to a phase separated state occurs at
+         J/t ∼ 3.3 shown by a hollow arrow.  In the VMC calculations systems with 50-100
+         sites are used.
+Fig. 3  Comparison  of  the  total  energy  per  site  between  the  Gutzwiller  wave  function
+         (closed circles) and Bethe Ansatz (Solid line) for J/t = 2 as a function of electron
+         density.   Although  the  VMC  results  for  Na  =  102  is  plotted  in  the  ﬁgure,  the
+         analytic expression for the Gutzwiller wave function is available as in the text.  The
+         non-interacting case is also shown.
+Fig. 4  Comparison of momentum distribution function between the GWF (solid line) and
+         the exact diagonalization (open and closed circles) at J/t = 2.  The analytic expres-
+         sions for the GWF have been obtained in Ref.18,19) and given in Appendix A. Here
+         we  show  the  results  of  VMC  calculations in  60-  and  72-site  systems  with  5 × 104
+         samples.  For the diagonalization, the data in Na = 4, 8, 12 and 16 sites for n = 0.5
+         and Na = 8 and 16 sites for n = 0.75 are shown.
+Fig. 5  Comparison of spin and charge correlation functions between the GWF (solid line)
+         and  the  exact  diagonalization  (open  and  closed  circles)  at  J/t  =  2.   Numerical
+         results are obtained similarly as in Fig. 4.
+Fig. 6  Correlation factor η(r) for three types of Fermi-liquid-type wave functions.  Typical
+         values of the parameters are chosen for each case.
+Fig. 7  Variational  expectation  values  of  total  energy  in  the  supersymmetric  case  for  (a)
+         the RJWF and for (b) the AJWF. The value of the GWF is shown by an arrow on
+         the vertical axis.  In this calculation 3 × 104  samples are used for a 60-site system.
+Fig. 8  Expectation values of two energy component Ht (solid circle) and HJ  (open circle)
+         per  site  for  the  RJWF  for  n  =  0.5.   The  value  of  the  GWF  (ζ  =  0)  is  shown  by
+         arrows on the vertical axis.  We use 3 × 104 samples for a 60-site system.
+Fig. 9  Energy expectation values for the RJWF at J/t = 1.0.  Arrow on the vertical axis
+         is the value of the GWF and that of the exact diagonalization (extrapolated values
+
+                                                          34
+           for Na → ∞).
+Fig. 10  Expectation values of two energy component Ht (solid circle) and HJ  (open circle)
+           per site for the RJWF and for small-ζ region.  In this VMC calculation 105 samples
+           are collected for a 72-site system.
+Fig. 11  Discontinuity  of  momentum  distribution  n(k)  at  kF  as  a  function  of  n.   The  op-
+           timized Fermi-liquid-type wave  function is used  for each  value of n and J/t.  The
+           size  of  the  symbols  represent  the  relative  magnitude  of  possible  error.   For  the
+           cases n → 0 and J/t → 0 and for the AJWF it is not easy to determine the value
+           accurately owing to the diﬃculty in optimizing the parameters.
+Fig. 12  Variational expectation  values  of  (a) Ht  and  (b)  HJ  per  site  for  the  AJWF.  The
+           arrow  on  the  left  vertical  axis  shows  the  value  of  the  GWF  (α = 0).  The  arrows
+           on  the  right  axis  in  (b)  shows  the  value  of  the  Heisenberg  chain  (Bethe  Ansatz)
+           multiplied by n.  The sample number is 3 × 104 for each point and Na = 72.
+Fig. 13  Total  energy  of  the  AJWF  for  a  couple  of  values  of  J/t  around  the  phase  transi-
+           tion.  The  same  symbol  with  Fig.  12  is  used  for  each  value  of  β.  (a) corresponds
+           the  homogeneous  regime,  (b)  is  the  case  near  the  phase  transition,  and  (c)  is  in
+           the  phase-separated  regime.   The  arrow  on  the  left  vertical  axis  shows  the  value
+           of  the  GWF.  The  Heisenberg  value  corrected  by  the  electron  density  is  given  by
+           −n(J/t) ln 2:  −1.8195 · · · for n = 0.75 and J/t = 3.5.
+Fig. 14  Snapshots of the electron conﬁgurations in the VMC sweep for Na = 60, n = 0.5 at
+           J/t = 3.4 (separated  phase).  Each  horizontal  line represents  the  one-dimensional
+           system.    An  solid  (open)  circle  means  an  up-(down-)spin  electron,  and  an  null
+           space (horizontal line) an empty site.  In the Monte Carlo sweep, the conﬁguration
+           of the system evolves vertically.  Before taking these snapshots, 3000 MC steps are
+           discarded for obtaining the statistical equilibrium.  Sampling interval is determined
+           (I = 20MCS) so as to make the acceptance ratio per electron larger than the unit.
+Fig. 15  Real-space charge density correlation function for the AJWF are shown for various
+           values  of  α.   The  value  of  β  is  ﬁxed  at  0.75,  which  gives  minima  approximately
+           around  the  phase  transition.   The  solid  line  shows  the  values  of  the  completely
+           separated phase (α = ∞).  The system size is 60 sites and 5 × 104 samples are used.
+Fig. 16  Real-space correlation function Nr  for the nearest neighbor sites and its derivative
+           δr  for  r  =  Na/2  are  plotted  as  a  function  of  α.   Arrows  on  the  vertical  axes  of
+           the  left  and  right  represent  the  values  of  α  =  0  (GWF)  and  α  =  ∞  (completely
+           separated state), respectively.  The used data are the same ones in Fig. 15.
+Fig. 17  Spin  correlation  function  for  the  AJWF  for  various  values  of  α.   The  solid  line
+           represents the value of the Heisenberg chain obtained by the exact diagonalizations,
+
+                                                             35
+           which is corrected by the electron density.  The system size is 60 sites and 5 × 104
+           samples are used.
+Fig. 18  Phase  diagram  of  the  1D  t-J  model  calculated  in  the  TL-liquid  wave  function
+           (5.1).   The  curves  show  the  contours  of  constant  correlation  exponent  Kρ.   The
+           used system has 100 sites.
+Fig. 19  Comparison of momentum distribution function n(k), spin and charge correlation
+           functions, S(k) and N(k) among the TL-liquid wave function (bold solid line), the
+           Fermi-liquid-type wave function (dot) and the exact diagonalization (open diamond,
+           open  circle and  exceptionally thin  solid  line for  N(k) of  J/t = 0) for  (a) J/t = 0
+           (ν  = 0.75 for the TL-liquid state,  ζ  = 1.6 for the RJWF),  (b) J/t = 1 (ν  = 0.37,
+           ζ  =  0.7)  and  (c)  J/t  =  2.6  (ν  =  −0.19  for  the  TL-liquid  state,  α  =  0.4  and
+           β = 1.0 for the AJWF). For the variational calculations, 105  samples are averaged
+           for  220-site  systems.   Total  energy  for  each  case  is  also  given  in  digits  (the  last
+           digit for each include the ambiguity due to the statistical ﬂuctuations).  For exact
+           diagonalization, 52-site system is used in (a) and up to 16-site systems in (b) and
+           (c).
+Fig. 20  Charge susceptibility  vs. n for some values of J/t.  Symbols are the results of the
+           optimized  TL-liquid  state.   Solid  line  for  J/t  =  0  and  29)  represents  the  exact
+           analytic  value.   Dashed  line  is  the  result  for  the  non-interacting  system.   Dotted
+           line for J/t = 1.0 and 2.5 is a guide to the eyes.  The sizes of the symbols represent
+           the relative magnitude of possible error.  50 ∼ 210-site systems are used.
+Fig. 21  Chemical potential as a function of δ2 for J/t = 0 and 2.  Symbols indicate diﬀerent
+           system sizes, namely Na = 200 (solid diamond), 150 (open circle), 100 (solid circle),
+           70 (solid square), 50 (open diamond).
+Fig. 22  Spin  susceptibility  vs.   n  for  some  values  of  J/t.   Open  circle  is  the  result  of  the
+           GWF for J/t = 2 and open diamond is the result of the optimized TL-liquid state.
+           Solid line for J/t = 2 represent the exact analytic value.4,9) Dashed line is the value
+           for the non-interacting system.  Dotted line for J/t = 1.0 and 2.5 is a guide to the
+           eyes.   Arrow  on  the  right  vertical  axis  shows  the  exact  value  for  the  Heisenberg
+           antiferromagnet 2/π2 for J/t = 2.40) The sizes of the symbols represent the relative
+           magnitude of possible error.  50 ∼ 210-site systems are used.
+Fig. 23  Total energy under zero ﬁeld as a function of m calculated with the TL-liquid wave
+           function.   For  the  half  ﬁlling,  where  the  TL-liquid  state  is  reduced  to  the  GWF,
+           the value in the supersymmetric case is shown for an example.  For n = 1.0 (0.5),
+           a 102-(100-)site system is used.  5 × 104 samples are averaged.
+Fig. 24  Comparison  of  magnetization  curves  for  n  =  0.5  and  1.0.   Symbols  represent  the
+
+                                                            36
+           result  of  the  variational  functions.   The  optimized  TL-liquid  wave  functions  are
+           used except for the supersymmetric case, in which the GWF is substituted.  Solid
+           line  is  the  Bethe  Ansatz  result  for  J/t =  2.40,42)  Dotted  line  is  the  result  for  the
+           non-interacting system.  The result for the supersymmetric long-range t-J  model is
+           shown by dashed line.46,32)
+Fig. 25  (a) Charge and (b) spin susceptibilities calculated with Gutzwiller Approximation
+           for the Hubbard model as a function of electron density for some values of U/Uc.
+           Inset  in  (a)  represents  χc  vs.   U/Uc  for  the  half  ﬁlling.   The  1D  cosine  band  is
+           assumed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                            37

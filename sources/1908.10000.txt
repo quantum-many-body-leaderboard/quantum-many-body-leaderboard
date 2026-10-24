@@ -1,0 +1,293 @@
+  Stable  diagonal  stripes  in  the t-J model  at  ¯nh=1/8  doping  from  fPEPS calculations
+
+                  Shao-Jun  Dong,1, 2  Chao  Wang,1, 2  Yong-Jian Han,1, 2,                ∗ Chao  Yang,3  and  Lixin  He1, 2,        †
+
+                                1CAS  Key  Laboratory  of  Quantum  Information,  University  of  Science
+                                  and  Technology  of  China,  Hefei  230026,  People’s  Republic  of  China
+                           2Synergetic  Innovation  Center  of  Quantum  Information  and  Quantum  Physics,
+                                 University  of  Science  and  Technology  of  China,  Hefei  230026,  China
+             3Computational  Research  Division,  Lawrence  Berkeley  National  Laboratory,  Berkeley,  CA  94720,  USA
+
+                   We investigate the 2D t-J model at a hole doping of ¯nh=1/8 using recently developed high accuracy
+                fermionic projected entangled pair states(fPEPS) method.  By applying stochastic gradient descent
+                method  combined  with  Monte  Carlo  sampling  technique,  we  obtain  the  ground  state  hole  energy
+                Ehole=-1.6186  for  J/t=0.4.   We  show  that  the  ground  state  has  stable  diagonal  stripes  instead  of
+                vertical stripes with  width of 4 unit cells,  and stripe ﬁlling ρl=0.5.  We further show that the long
+                range superconductivity order is suppressed at this point.
+
+                PACS numbers:
+
+
+   The  high-Tc  superconductivity  [1,          2]  is  probably  one            The     projected     entangled     pair     states     method
+of the most exciting and also challenging open problems                        (PEPS),[24–29]   and   its   generalization   to   fermionic
+in  condensed  matter  physics.   The  strong  coupling  be-                   systems   (fPEPS)   [30–33]   provide   systematically   im-
+tween  the  spin  and  charge  degrees  of  freedom  leads  to                 provable   variational   wave   functions   for   many-body
+various  competing  orders  at  low  temperature,  resulting                   problems.    In  recent  works,  we  developed  a  gradient
+in  rich  phase  diagrams[3].    Speciﬁcally,  the  hole  dop-                 method combined with Monte Carlo sampling techniques
+ing  near  ¯nh=1/8  provides  an  ideal  system  to  experi-                   to optimize the (f)PEPS wave functions with controlled
+mentally  study  the  ground  state  of  the  pseudogap  [4]                   accuracy[34–36].   This  method  signiﬁcantly  reduces  the
+which  is  one  of  the  most  salient  phenomena  in  high-Tc                 scaling  with  respect  to  the  bond  dimension  D,  thereby
+superconductivity[5].  Near this  doping level, the charge                     allowing  a  much  larger  bond  dimension  to   be  used,
+and spin stripe orders are observed in some cuprate com-                       resulting  in  highly  accurate  and  converged  results  for
+pounds, e.g., La1.875Ba0.125CuO4, by various experimen-                        large ﬁnite systems.  In this work, we apply this recently
+tal  techniques,  including  angle-resolved  photoemission                     developed and highly accurate fPEPS method to explore
+and  scanning  tunneling  microscopy  [4],  neutron  and  x-                   the  true  ground  state  of  the  t-J  model  at  doping  level
+ray scattering [6], etc.                                                       ¯nh  ∼  1/8.   The  computational  results  allow  us  to  shed
+   It is widely believed that the  physics of superconduc-                     some  new  light  on  this  long  standing  open  problem.
+tivity  could be  understood as  doped  Mott  insulators[5],                   From our computation we obtained the hole energy Eh=
+which could be described by the 2-dimensional Hubbard                          -1.6186  for  J/t=0.4  in  the  thermodynamic  limit.    Re-
+model  [7,   8]  and  the  t-J  model  [9],  the  strong  coupling             markably, we ﬁnd that the ground state of the t-J  model
+limit  of  Hubbard  model.    However,  the  theoretical  re-                  at  1/8  hole  doping  has  stable  stripes  that  are  along
+sults about the ground state near hole doping ¯nh=1/8 in                       the  diagonal  directions  instead  of  the  vertical  direction
+the t-J  model are still highly controversial [10–12].  The                    suggested   by   previous   works[10,          12,   14,   17,   18,  37]
+question about whether the  ground state has the stable                        with  stripe  hole  ﬁlling  ρl=0.5.    We  further  show  that
+stripe order, and the  relation between the superconduc-                       the  long  range  superconductivity  order  at  this  point  is
+tivity  and  the  stripe  order  are  under  intensive  debates.               suppressed.
+[10–18] Early works on this  issue have been reviewed in                          The t-J  model is deﬁned on a two-dimensional square
+Refs.19,   20.   Very  recently,  variational  quantum  Monte                  lattice as,
+Carlo (vQMC)  simulations  combined  few  Lanczos  steps                         H = −t  ∑        (c†                           (Si·Sj − 1
+[16],  suggest that  the  ground state  at  ¯nh=1/8 is  homo-                                        i,σcj,σ +H.c.)+J ∑                    4 ninj)  (1)
+geneous without stripes order.  These results are contra-                                  ⟨i,j⟩,σ                         ⟨i,j⟩
+dictory  to  the  results  of  the  early  DMRG  calculations
+[14, 21–23].  More recently,  iPEPS with  full  update  cal-                   where  ⟨i, j⟩  are  the  nearest-neighbor  sites.   ci,σ  (c†i,σ)  is
+culations   [17,   18] suggest that the ground state has sta-                  the  electron  annihilation  (creation)  operator  of  spin  σ
+ble  stripes.  Nevertheless,  the  calculations   [17,         18]  sug-       (σ  =↑, ↓) on site  i, whereas ni  = ∑σ c†i,σci,σ  and  ⃗Si  are
+gest that the uniform phase is energetically very close to                     the  electron  number  and  the  spin-1/2 operators respec-
+the stripe phase, and the energy diﬀerence become even                         tively.  Double occupations are not allowed.
+smaller with increasing bond dimension.  Therefore, it is                         We   solve   the   model   by   using   recently   developed
+hard  to  determine  what  the  true  ground  state  is  unless                fPEPS [17,     30–33,   36,  38] method.  The fPEPS wave func-
+fully converged calculations are performed.                                    tions are ﬁrst optimized via an imaginary time evolution
+                                                                                                                                                        2
+
+with simple update (SU) [26] scheme, followed by gradi-                              -0.56
+ent  optimization  combined  with  Monte  Carlo  sampling                                          VQMC Ref. [16]
+techniques.[34,     36] U(1) symmetry is enforced during the                         -0.58         iPEPS Ref. [17]
+calculations  to  conserve  the  number  of  electrons  in  the                                    DMRG Ref. [17]
+system.   More  details  of  the  methods  are  discussed  in                        -0.60
+Refs.  34–36.   It  is  well  known  that  the  environment  ef-
+fects  are  oversimpliﬁed  in  the  SU  method.    Therefore,                        -0.62
+the  use of SU may introduce large errors.  However, the
+results can be used as a good starting point for the sub-                            -0.64
+sequent  gradient  optimization.   The  gradient  optimiza-
+tion method treats the environment eﬀects exactly with                               -0.66
+controllable errors, and therefore can obtain much more
+accurate results.  The  Monte  Carlo sampling  techniques                            -0.680         0.05        0.1       0.15       0.2       0.25       0.3
+[39, 40] are used to calculate the energies and their gra-                                                         (L  L  )-1/2
+dients,  which  may  greatly  reduce  the  complexity  of  the                                                       1    2
+calculations,  and  allow  us  to  use  large  virtual  bond  di-              FIG. 1:  The ground state energies of t-J model with t=1, and
+mension  D  and  truncation  parameters  Dc  to  converge                      J/t  =  0.4  at  hole  doping  ¯nh  =    18 .   The  red  squares  repre-
+the  results.[36]  In  this  work,  open  boundary  conditions                 sent  the  energies  on  diﬀerent  lattice  sizes.   The  energies  are
+(BC) are used.  We  focus  on the  parameters of t=1 and                       extrapolated  to  the thermodynamic  limit  via  a  second-order
+J/t = 0.4 with hole doping of  ¯nh =  18.                                      polynomial  function  of  √L1L2.   The  green,  blue  and  black
+                                                                               lines are the ground state energies obtained by QMC, iPEPS
+   Figure   1 depicts the ground state energies of t-J model                   simple update and DMRG methods respectively.
+at hole doping ¯nh=1/8, for diﬀerent system sizes L1×L2,
+ranging from 4×4 to 12×12.  In all calculations, the vir-
+tual bond dimension D is ﬁxed to 12, whereas the trun-
+cated dimension is set to Dc=48 to ensure that the ener-                       TABLE  I:  Compare  the  ground  state  hole  energies   of  t-
+gies  are  well  converged  at  the  given  D.    As  shown  in                J   model   obtained   by   diﬀerent   methods   at   hole   doping
+our  previous  work,[36]  for  t-J  model  at  ¯nh=1/8,  usu-                  ¯nh=1/8 (except for the full update iPEPS  calculation  where
+ally  the  choice  of  Dc=3D=36  can  ensure  convergence,                     ¯nh=0.120).  The parameters t=1, J/t=0.4 are used in all cal-
+which  is  only  weakly  size  dependent.   For  the  4×4  sys-                culations.
+tem,  the  ground  state  energy  obtained  by  our  calcula-                                method                 parameter    ¯nh    Hole Energy
+tion  is  EfPEPS=-0.56428,  compared  with  the  exact  en-                        VQMC + Lanczos [16]         p=2         1/8         -1.546
+ergy EED=-0.56436, where the energy diﬀerence is about                            iPEPS simple update[17]    D → ∞     1/8         -1.593
+1×10−4.                                                                            iPEPS full update [18]        D=14      0.120        -1.578
+   We extrapolate the ground state energies to the ther-                                  DMRG [17]                χ → ∞      1/8         -1.612
+modynamic limit using a second-order polynomial ﬁtting                                     This work                   D=12       1/8         -1.619
+on √L1L2.  The extrapolated ground state energy in the
+thermodynamic  limit  is  E∞  =-0.6701.  The  correspond-                      close to EQMC
+ing energy per hole is deﬁned as Ehole = [E(¯nh)−E0]/¯nh,                                   hole  .
+where E0=-0.467775 is the energy at zero doping, taken                            We now take a closer look at the t-J model.  The hole
+from  Ref.   41.   We  compare  the  ground  state  hole  ener-                density  and  magnetization  of  the  4×4  lattice  obtained
+gies at  ¯nh=1/8 obtained by various methods in Table I.                       from fPEPS are compared with those obtained by diag-
+The hole energy we obtained is EfPEPShole    =-1.619, which is                 onalization method[13] in Fig. S1  of the  Supplementary
+slightly lower than the hole energy obtained from DMRG                         materials (SM[42]).  They are in remarkably good agree-
+calculation,[17]  EDMRGhole     =-1.612  with  χ  extrapolated  to             ment.  The calculations suggest that ground state of the
+∞.   The  result  is  also  lower  than  the  one  from  iPEPS                 t-J model with hole ﬁlling of  ¯nh  =   18  on the 4×4 lattice
+SU calculations EiPEPShole    =-1.593, [17] which was obtained                 is in an uniform phase with virtually no local magnetiza-
+by  extrapolating  bond  dimension  D  to  ∞.   The  recent                    tion (the local magnetization is less than 10−4), which is
+iPEPS full update calculations with D=14 give the hole                         in good agreement with the conclusions of Ref.13.
+energy EiPEPShole    =-1.578 for ¯nh=0.12,[18] which is expected                  Would the uniform state be stable when the size of the
+to  has  lower  (more  negative)  hole  energy  than  that  of                 system is increased?  Unfortunately, the hole distribution
+¯nh=1/8.  As  a  comparison,  the  recent  variational QMC                     become non-uniform when increase the size of the system.
+simulation  gives  EQMChole  =-1.546  [16].   We  note  that  the              For the 4×8 system, the ground state of the system is not
+ground state energy obtained in this work is signiﬁcantly                      uniform any more.  The holes clusters are more localized
+lower than the ground state energies obtained by DMRG                          in the center of the lattice without local magnetic order
+and  iPEPS  calculation  before  extrapolation,  which  are                    [see  Fig.  S2(a)  in  the  SM[42]].    When  the  lattice  size
+                                                                                                                                                         3
+
+                                                                                   To  investigate  the  structure  of  the  diagonal  stripe
+                                                                                states,  we  plot  the  hole  density  ⟨nhi,j⟩=1-⟨ni,j⟩,  where
+                                                                                ⟨ni,j⟩  is  the  average  number  of  electrons  on  site  (i, j),
+                                                                                and staggered magnetization (−1)i−1Szi,j  along the diag-
+                                                                                onal direction perpendicular to the stripes in Fig.              3.  The
+                                                                                staggered magnetization  (red  line)  shows  a  period  of  8,
+                                                                                whereas the hole  density shows a period of 4.  The site-
+                                                                                centered nature of the hole stripes is evident from the hole
+                                                                                density  ⟨nhi,j⟩ (green line).  These  hole  and  spin pattern
+                                                                                with period of 4 and 8, which are robust for diﬀerent size
+                                                                                of systems, can be  used to explain why the  stripe  order
+                                                                                cannot be  stabled in  the  small 4× 4  and 4×  8  systems,
+                                                                                which  are  too  small  to  accommodate  such  stripes.  The
+                                                                                stripes has a hole ﬁlling ρl=W · ¯nh=0.5, where W  is the
+                                                                                width of the domain wall, i.e., half ﬁlling.[14]
+                                                                                   To  further  test  the  robustness  of  the  diagonal stripes
+                                                                                against the size of the system, we simulated on lattices of
+                                                                                diﬀerent sizes (see  Table. S1 in the  SM[42]),  and aspect
+                                                                                ratios.  Except in some extreme cases, e.g.  the  width of
+                                                                                the lattice is  less than 4, we always obtain the  diagonal
+                                                                                stripes with similar spin and hole distribution structures.
+FIG.  2:  The  ground  state  hole  density  and  spin  moment  on              These  results  clearly  demonstrate  the  diagonal  stripes
+the 12×12 lattice.  The diameter of the circles represents the                  ground  states  are  robust  against  the  size  and  shape  of
+magnitude of holes density and length of the arrow represents                   the lattices.
+the local magnetic moments.                                                        The t-J model at ¯nh=1/8 has been intensively investi-
+
+                                                                                gated by various methods, and the results are still highly
+                                                                0.25            controversial.[10–12]  On  the  one  hand,  the  recent  vari-
+    0.30                                                                        ational quantum  Monte  Carlo  (QMC)  simulations  com-
+                                                                0.20            bined with few Lanczos steps [16] suggest that the ground
+    0.20                                                                        state  at  ¯nh=1/8  is  homogeneous  without  stripes  order.
+    0.10                                                                        Its  hole  energies  are  very  close  to  those  obtained  from
+                                                                0.15            DMRG  [14,       21–23]  and  recent  iPEPS  calculations[18].
+    0.00                                                                        On  the  other  hand,  DMRG  calculations  show  that  the
+   -0.10                                                        0.10            ground state has stable stripes.  [14,          18,  21–23]
+                                                                                   Our  results  support  that  the  stripe  phase  is  stable,
+   -0.20                                                        0.05            which  is  in  agreement  with  the  DMRG  calculations.
+   -0.30                                                                        [14,  18,  21–23]  In  DMRG  calculations,  the  stripes  are
+                                                                0.00            further characterized as the site-centered vertical stripes,
+         1    2     3     4     5     6     7     8     9    10   11  12        and the width of the stripes are 4 at ¯nh ∼ 1/8,[14] which
+                              site index                                        are  also  in  good  agreement  with  our  results.   However,
+FIG.  3:   The  average  hole  density  ⟨nh⟩  (green  squares)  and             in our calculations, the stripes are along the diagonal di-
+spin structure function (red circles) along the diagonal direc-                 rection in contrast to  the  vertical stripes  obtained  from
+tion on the 12 × 12 lattice.                                                    DMRG  calculations.   This  discrepancy  may  come  from
+                                                                                diﬀerent  BCs  used  in  the  calculations.   In  the  DMRG
+                                                                                calculations,  a  periodic  BC  in  y-axis,  and  an  open  BC
+                                                                                in x-axis are used, which favors the vertical stripes along
+is  further  increased  to  6×8  and  larger,  the  holes  form                 the y direction.[14] One possible way to clarify this prob-
+stripes  along  the  diagonal  direction  [see  Fig.  S2(b,c)  in               lem would be to perform DMRG calculations with peri-
+the SM[42]].                                                                    odic BC along the diagonal direction, to enforce a ground
+   Figure   2 depicts the ground state hole distribution and                    state with diagonal stripes, and compare the energy with
+local magnetization of the 12×12 lattice.  The sizes of the                     that of vertical stripes.
+circles  and  arrows  represent  the  magnitude  of  the  hole                     Very recently, the iPEPS calculations [17,             18] also sug-
+density and local magnetic moments.  The systems show                           gest that the ground state is a vertical stripe phase, where
+clear stripe order along diagonal direction on the antifer-                     the width of stripes and stripe hole ﬁlling depend on the
+romagnetic background, with a π phase-shifted magnetic                          exchange parameter J.  At J/t=0.4, and  ¯nh  ∼1/8, they
+order across the domain wall.[14]                                               obtain stripe ﬁlling ρl ∼ 0.5, which is in agreement with
+                                                                                                                                                        4
+
+DMRG  calculations.    They  also  compare  the  energies                          100
+of  diagonal stripes  and  vertical stripes,  and  it  has  been
+found  that  the  diagonal  stripes  have  somewhat  higher                        10-1                                                   d-wave
+energies  than  the  vertical stripes.  [17,       18]  However,  the                                                                     s-wave
+diagonal stripes obtained by the iPEPS calculations are                           10-2
+very diﬀerent  from our  cases.  In Ref.18,  the  L × L  (for
+L  up  to  11)  supercells  were  used  to  obtain  the  diago-                   10-3
+nal stripe phase, but only L (instead of L2) tensors were
+independent.  With these constrains, the resulting diago-                         10-4
+nal stripes are insulating with ﬁlling ρl=1 holes per unit
+length, compared to ρl=0.5 holes per unit length in our                           10-5
+calculations.  We  remark that our calculations are unbi-                         10-6
+ased in the sense that we do not have any constrains on                                1                   2          3       4     5    6   7  8  9102                   4                   8
+the  tensors.   All  L1 × L2  tensors  are  independent  and                                                         ∆  r
+free  to  change  during  the  optimization.   We  always  ob-
+tain  the  same stripe  ground states  for  randomly chosen                    FIG. 4:  The pair correlation function for the d-wave and the s-
+initial states.  Another important diﬀerence between our                       wave superconductivity on 12 × 12 lattice.  We ﬁx ri = (6, 2)
+method and the iPEPS method is that the iPEPS method                           and  scan  rj  =  (6, 2)  to  rj  =  (6, 12),  where  r  is  deﬁned  as
+directly works in the thermodynamic limit, which require                       |rj − ri|.
+extremely  large  D  to  converge  the  results.   In  practice,
+such large D is infeasible, and therefore, the ﬁnal results
+rely heavily on the extrapolation on the bond dimension
+D.  In fact, it has been found that the energy diﬀerences                      with ri being the coordinate at site i, with “+” for s- wave
+between the uniform state and the stripes states become                        and “−” for d-wave paring.  In Fig.           4, we show both the s-
+smaller and smaller with increasing D,[18] Therefore, no                       and the d-wave pair correlation functions Ps,d(i, j) with
+deﬁnite  conclusion  can  be  made  based  on  their  current                  ri ﬁxed at (6,2) and rj changed from (6,2) to (6,12) in the
+numerical results.  On the contrary, we work on ﬁnite sys-                     12× 12 lattice.  To obtain highly accurate results, Dc=6D
+tems,  where the  results can be  fully  converged with the                    is used to calculate the correlation functions.  The dips in
+given  D.   We  then  extrapolate  the  results  to  the  ther-                the correlation functions around r ∼ 3 - 5 are presumably
+modynamic  limit  by  the  well  established  ﬁnite-scaling                    related  to  the  hole  stripe  structures.   As  shown  in  the
+method [43].                                                                   ﬁgure,  the  superconductivity  order  for  both  s-wave and
+   As  a  comparison,  we  also  calculate  the  anisotropic                   d-wave pairing in the t-J model at  ¯nh=1/8 decay rather
+t-J  model  with  tx/ty=0.85,  and  Jx/Jy=0.852  following                     quickly with distance.  Even though the pair correlations
+Ref.18.   We  show  the  result  of  Jx  =  0.4tx,  ty  =  0.85tx              can be ﬁtted roughly by power law decay functions, i.e.,
+and  Jy  =  0.289tx  for  diﬀerent  sizes  in  Fig.  S3  of  the               Ps,d(r)  ∼  r−α,  with  α  ∼  4.9  and  4.4  for  s-wave  and  d-
+SM[42].    Compared  with  the  isotropic  case,  the  stripe                  wave  pairing  respectively,  since  α  ≫1,  the  long  range
+orients  along  the  bonds  with  stronger  couplings,  which                  order of superconductivity is suppressed at  ¯nh=1/8.
+is  in  agreement with  previous  results,  [18,         44,  45].   The          To  summarize,  we  investigate  the  ground state  of  t-J
+results  can  be  understood  as  the  kinetic  energy  can  be                model  at  hole  doping  ¯nh  =  1/8,  using  the  recently  de-
+eﬀectively lowered by hopping along this directions.  The                      veloped highly  accurate fPEPS method.  We  obtain  the
+anisotropic  interaction  converts  the  site-centered  diago-                 most competitive ground state hole energy.  We ﬁnd that
+nal stripes into bond-centered vertical ones in these sim-                     the ground state has stable stripes along the diagonal di-
+ulations.                                                                      rection, with stripe hole ﬁlling ρl=0.5.  These results par-
+   To  further  investigate  the  relationship  between  the                   tially agree with recent DMRG and iPEPS calculations,
+stripe order and the superconductivity, we calculate the                       in the sense that the ground state has stable stripes, ex-
+hole pair correlation functions, which are deﬁned as,                          cept  that  in  above  calculations  the  stripes  are  vertical.
+                 ⟨                                                   ⟩         We further  show that the long range order of supercon-
+  Ps,d(i, j) =     ∆†                                                          ductivity is suppressed in this phase.  The work provides
+                      s,d (ri) ∆s,d (rj) + ∆s,d (ri) ∆†s,d (rj)                a new scenario of the  ground state of the  long  standing
+                                                                      (2)      open problem.
+where  s,  d  denote  the  s-  or  d-wave  paring.   The  super-                  This   work   was   funded   by   the   National   Key   Re-
+conductivity order parameter ∆s,d(ri) is deﬁned as,                            search  and  Development  Program  of  China  (Grant  No.
+                      1                                                        2016YFB0201202), the  Chinese  National  Science  Foun-
+  ∆s,d (ri) = ∑       2 {(ci↑ci±ˆx↓ − ci↓ci±ˆx↑) ± (ci↑ci±ˆy↓                  dation  (Grants   No.     11774327,   No.     11874343,   No.
+                  ±                                                   (3)      11474267), and the Strategic Priority Research Program
+                 − ci↓ci±ˆy↑)}                                                 (B)  of  the  Chinese  Academy  of  Sciences  (Grant  No.
+                                                                                                                                                              5
+
+XDB01030200).  China Postdoctoral Science Foundation                                    J.  M.  Tranquada,  A.  Kapitulnik,  and  C.  Howald,  Rev.
+funded project (Grant No.  2018M632529). It is also par-                                Mod. Phys. 75, 1201 (2003).
+tially  funded  by  the  U.S.  Department  of  Energy,  Oﬃce                      [20]  E.  W.  Carlson,  S.  A.  Kivelson,  D.  Orgad,  and  V.  J.
+of Science, Oﬃce of Advanced Scientiﬁc Computing Re-                                    Emery,  in  Physics  of  Conventional  and  Unconventional
+search, Scientiﬁc  Discovery through Advanced Comput-                                   Superconductors,  edited by  K. H. Bennemann  and  J. B.
+ing (SciDAC) program.(C.Y.) The numerical calculations                                  Ketterson (Springer, Berlin, 2003).
+have been done on the USTC HPC facilities and the Na-                             [21]  S. R. White and D. J. Scalapino, Phys. Rev. B 61, 6320
+                                                                                        (2000).
+tional  Energy  Research  Scientiﬁc  Computing  (NERSC)                           [22]  S.  R.  White  and  D.  J.  Scalapino,   Phys.  Rev.  B  70,
+center.                                                                                 220506(R)  (2004).
+                                                                                  [23]  S.  R.  White  and  D.  J.  Scalapino,   Phys.  Rev.  B  79,
+                                                                                        220504(R)  (2009).
+                                                                                  [24]  U. Schollw¨ock, Annals of Physics 326, 96 (2011).
+                                                                                  [25]  F.   Verstraete,   V.   Murg,   and   J.   Cirac,   Advances   in
+   ∗  Electronic address:     smhan@ustc.edu.cn                                         Physics 57, 143 (2008).
+   †  Electronic address:     helx@ustc.edu.cn                                    [26]  H. C. Jiang, Z. Y. Weng, and T. Xiang, Phys. Rev. Lett.
+ [1]  J.  G.  Bednorz  and  K.  A.  M¨uller,  Z.  Phys.  B:  Condens.                   101, 090603 (2008).
+     Matter 64, 189 (1986).                                                       [27]  F.  Verstraete  and  J.  I.  Cirac,  arXiv:cond-mat/0407066
+ [2]  M. K. Wu, J. R. Ashburn, C. J. Torng, P. H. Hor, R. L.                            (2004).
+     Meng, L. Gao, Z. J. Huang, Y. Q. Wang, and C. W. Chu,                        [28]  A. Sfondrini, J. Cerrillo, N. Schuch, and J. I. Cirac, Phys.
+     Phys. Rev. Lett. 58, 908 (1987).                                                   Rev. B 81, 214426 (2010).
+ [3]  A.  Damascelli,  Z.  Hussain,  and  Z.-X.  Shen,  Rev.  Mod.                [29]  F.  Verstraete,  M.  M.  Wolf,  D.  Perez-Garcia,  and  J.  I.
+     Phys. 75, 473 (2003).                                                              Cirac, Phys. Rev. Lett. 96, 220601 (2006).
+ [4]  T.  Valla,  A.  V. Fedorov,  J.  Lee,  J.  C.  Davis,  and  G.  D.          [30]  Z.-C. Gu, F. Verstraete, and X.-G. Wen, arXiv:1004.2563
+     Gu, Science 314, 1914 (2006), ISSN 0036-8075.                                      (2010).
+ [5]  P. A. Lee, N. Nagaosa, and X.-G. Wen, Rev. Mod. Phys.                       [31]  Z.-C. Gu, H.-C. Jiang, D. N. Sheng, H. Yao, L. Balents,
+     78, 17 (2006).                                                                     and X.-G. Wen, Phys. Rev. B 88, 155112 (2013).
+ [6]  N. Ichikawa,  S. Uchida, J.  M.  Tranquada, T.  Niem¨oller,                 [32]  P. Corboz, R. Or´us, B. Bauer, and G. Vidal, Phys. Rev.
+     P. M. Gehring, S.-H. Lee, and J. R. Schneider, Phys. Rev.                          B 81, 165104 (2010).
+     Lett. 85, 1738 (2000).                                                       [33]  C.  V.  Kraus,  N.  Schuch,  F.  Verstraete,  and  J.  I.  Cirac,
+ [7]  J.  Hubbard,  Proceedings  of  the  Royal  Society  of  Lon-                      Phys. Rev. A 81, 052338 (2010).
+     don A: Mathematical, Physical and Engineering Sciences                       [34]  W.-Y. Liu, S.-J. Dong, Y.-J. Han, G.-C. Guo, and L. He,
+     276, 238 (1963), ISSN 0080-4630.                                                   Phys. Rev. B 95, 195154 (2017).
+ [8]  P.  W.  ANDERSON,  Science  235,  1196  (1987),   ISSN                      [35]  L.  He,  H.  An,  C.  Yang,  F.  Wang,  J.  Chen,  C.  Wang,
+     0036-8075.                                                                         W. Liang, S. Dong, Q. Sun, W. Han, et al., IEEE Trans-
+ [9]  F.  C.  Zhang  and  T.  M.  Rice,  Phys.  Rev.  B  37,  3759                      actions  on  Parallel  and  Distributed  Systems  29,  2838
+     (1988).                                                                            (2018).
+[10]  J. Han, Q.-H. Wang, and D.-H. Lee, International Jour-                      [36]  S.-J.  Dong,  C.  Wang,  Y.  Han,  G.-c.  Guo,  and  L.  He,
+     nal of Modern Physics B 15, 1117 (2001).                                           Phys. Rev. B 99, 195153 (2019).
+[11]  A. Sherman and M. Schreiber, European Physical Jour-                        [37]  B. Normand and A. P. Kampf, Phys. Rev. B 64, 024521
+     nal B 32, 203 (2003).                                                              (2001).
+[12]  M. Capello, M. Raczkowski, and D. Poilblanc, Phys. Rev.                     [38]  T.  Barthel,  C.  Pineda,  and  J.  Eisert,  Phys.  Rev.  A  80,
+     B 77, 224502 (2008).                                                               042333 (2009).
+[13]  C. S. Hellberg and E. Manousakis,  Phys. Rev. Lett. 83,                     [39]  W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Ra-
+     132 (1999).                                                                        jagopal, Rev. Mod. Phys. 73, 33 (2001).
+[14]  S.  R.  White  and  D.  J.  Scalapino,  Phys.  Rev.  Lett.  80,             [40]  A. W. Sandvik and G. Vidal, Phys. Rev. Lett. 99, 220602
+     1272 (1998).                                                                       (2007).
+[15]  J.  M.  Tranquada,  J.  D.  Axe,  N.  Ichikawa,  A.  R.  Mood-              [41]  A. W. Sandvik, Phys. Rev. B 56, 11678 (1997).
+     enbaugh, Y. Nakamura, and S. Uchida, Phys. Rev. Lett.                        [42]  See   Supplemental  Material   for   more  detailed   results,
+     78, 338 (1997).                                                                    which includes Ref. [18].
+[16]  W.-J.  Hu,  F.  Becca,  and  S.  Sorella,  Phys.  Rev.  B  85,              [43]  J. L. CARDY, ed., 1 - Introduction  to Theory  of  Finite-
+     081110(R) (2012).                                                                  Size Scaling, vol. 2 of Current Physics–Sources and Com-
+[17]  P. Corboz,  S. R. White, G. Vidal, and M. Troyer, Phys.                           ments  (Elsevier, 1988).
+     Rev. B 84, 041108(R) (2011).                                                 [44]  A.  P.  Kampf,  D.  J.  Scalapino,  and  S.  R.  White,  Phys.
+[18]  P. Corboz, T. M. Rice, and M. Troyer, Phys. Rev. Lett.                            Rev. B 64, 052509 (2001).
+     113, 046402 (2014).                                                          [45]  C.-P. Chou  and T.-K. Lee,  Phys. Rev. B 81, 060503(R)
+[19]  S. A. Kivelson, I. P. Bindloss, E. Fradkin, V. Oganesyan,                         (2010).

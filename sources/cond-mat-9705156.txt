@@ -1,0 +1,308 @@
+                            Phase  Separation  of  the Two-Dimensional  t − J  model
+
+                                                 C.T. Shih1, Y.C. Chen2, and T.K. Lee3
+                                     1Dept.  of Physics,  National  Tsing Hua Univ., Hsinchu, Taiwan
+                                           2Dept.  of Physics,  Tunghai  Univ., Taichung,  Taiwan
+                                      3  Inst.  of Physics,  Academia Sinica, Nankang,  Taipei, Taiwan
+                                                                 (April 18, 2018)
+                 The boundary of phase separation of the two-dimensional t − J  model is investigated by the power-
+                Lanczos  method  and  Maxwell  construction.   The  method  is  similar  to  a  variational  approach  and
+                it determines the lower bound of the phase separation  boundary with Jc/t = 0.6 ± 0.1 in the limit
+                ne ∼ 1.  In the physical interesting regime of high Tc  superconductors where 0.3 < J/t < 0.5 there
+                is no phase separation.
+
+                PACS numbers:  74.20.-z, 71.27.+a, 74.25.Dw
+
+  It is believed that the main physical properties of the                     tributed  mesoscopically  and  segregated into  walls  sepa-
+high-temperature  superconductors  can  be  described  by                     rating the hole-poor antiferromagnetic domains.
+the two-dimensional (2D) t−J model on a square lattice.                          Theoretically,  there  are  conﬂicting  results.   The  ﬁrst
+The Hamiltonian is:                                                           important  paper  on  this  issue  is  by  Emery  et  al.  [11].
+                                                                              They  used  the  exact  diagonalization (ED)  to  study  the
+H = −t   ∑        (˜c+iσ˜cjσ + h.c.) + J  ∑      (Si · Sj − 14ninj),          4 × 4 cluster.  Using Maxwell construction they claimed
+          <i,j>σ                          <i,j>                               that  phase  separation occurs  for  all  values  of  J/t.  This
+                                                                     (1)      result is contradictory to the  later calculations by using
+                                                                              quantum  Monte  Carlo  (QMC)  [12]  and  ED  [13]  on  the
+where  <  i, j  >  is  the  nearest-neighbor  pairs  and  ˜ciσ  =             Hubbard model, which should be consistent with the t−J
+ciσ(1−ni,−σ).  In this model the two terms compete with                       model for small J/t.  Putikka et al.  studied this problem
+each other.  The kinetic term favors the phase which the                      using  the  high-temperature  series  expansion  and  found
+electrons are homogeneously distributed in the plane  to                      phase  separation  at  T=0  for  J/t  lying  above  a  line  ex-
+minimize  the  kinetic  energy.   While  the  exchange  term                  tending from J/t = 3.8 at zero ﬁlling to J/t = 1.2 at half
+attracts the electrons together to lower the magnetic en-                     ﬁlling [14].  Prelovˇsek et al. [15] calculated the two-point
+ergy.  It is easy to see that for very large J/t the system                   and four-point density correlations using ED on clusters
+will  phase  separate  into  a  hole-rich  region and  a  region              of size 18 and 20 sites.  They  found the  two-hole bound
+without holes to maximize the magnetic energy gain.                           state  for  J/t  >  0.2.   For  J/t  >  1.5  the  holes  form  do-
+  There are experimental evidences as well as theoretical                     main walls along (1,0) or (0,1) direction, and phase sepa-
+studies that indicate phase separation and superconduc-                       rate into a hole-rich and a hole-free phase for even larger
+tivity are closely related.  It is even argued that the driv-                 J/t  >  2.5.   Hellberg  et  al.   determined  very  accurately
+ing mechanism of superconductivity is the same as that                        that the critical J/t for phase separation at low electron
+of phase separation [1] or superconductivity comes from                       density  limit  is  J/t  =  3.4367  [16].   Poilblanc  calculated
+the frustrated phase separation [2].  Hence it is extremely                   the  energy  of  2  and  4  holes  by  ED  on  several  clusters
+important  to  determine  the  phase  separation  boundary                    up  to  26  sites.   The  phase  diagram  includes  a  liquid  of
+of the 2D t − J  model to resolve these issues.  This paper                   d-wave hole pairs for J/t ≥ 0.2, a liquid of hole droplets
+reports our ﬁndings of the phase separation boundary.                         (quartets)  for  larger  J/t  ≥  0.5,  and  at  even  larger  J/t,
+  Experimentally, phase separation of the superconduct-                       an instability  towards phase  separation [17].  Yokoyama
+ing La2CuO4+δ  compound are observed by several mea-                          et  al.  investigated the phase diagram by the variational
+surements  [3–6].     The  compound  phase  separates  for                    Monte  Carlo  (VMC)  method  [18].   The  critical  J/t  for
+0.01 ≤ δ  ≤ 0.06 below Tps  ≈ 300K  into the  nearly sto-                     phase separation at the high density limit they found is
+ichiometric  antiferromagnetic  La2CuO4+δ1  with  δ1  less                    1.5, which is consistent with Putikka et al..
+than  0.02  and  N´eel  temperature  TN   ≈  250K,  and  a                       Most  recently  Hellberg  and  Manousakis  [19]  investi-
+metallic superconducting oxygen-rich phase La2CuO4+δ2                         gated this  problem by the  Green Function Monte  Carlo
+with δ2 ≈ 0.06 with Tc ≈ 34K.  The Sr doped compound                          (GFMC)  method  and  Maxwell  construction  for  larger
+La2−xSrxCuO4+δ  also phase separates for x ≤ 0.03 into                        clusters.  Their phase diagram is similar to Emery et  al.
+superconducting La2−xSrxCuO4+δ′  (δ′ ≈ 0.08) and non-                         [11].  They conclude that the t− J model phase separates
+superconducting  La2−xSrxCuO4+δ′′  (δ′′  ≈  0.00)  phases                     for all values of J/t in the low doping regime.
+[7].  Recent muon spin resonance and nuclear quadrupole                          The  theoretical  results  of  diﬀerent  groups  discussed
+resonance experiments [8–10] on La2−xSrxCuO4  also in-                        above  are  consistent  at  the  large  J/t  and  low  electron
+dicate  that  the  doped  holes  were  inhomogeneously  dis-                  density  region.    But  unfortunately,  in  the  interesting
+
+
+
+                                                                          1
+physical regime of high Tc superconductors, 0.3 < J/t <                         pared our energy of J/t = 1 for 50/64 with the result of
+0.5 and high electron density 0.75 < ne < 0.95, they are                        high-temperature series expansion [25].  The best energy
+in disagreement.  We have used the power-Lanczos (PL)                           we get is -1.183(2) while the high-temperature expansion
+method [20,21] to obtain the best estimate of the ground                        result  is  -1.20(2).   They  are  well  in  agreement.   In  Fig.
+state energy in this physical regime for the largest clus-                      1(b) we show the best energies we are able to obtain for
+ter  (82  sites)  that  have  been  studied  so  far.   Based  on               clusters  with  36,  50  and  82  sites  as  a  function  of  elec-
+the variational argument we show that there is no phase                         tronic  density.   For  comparison  we  also  show  the  exact
+separation in this physical regime [22].                                        energies of 16 sites [13].  Energies are little lower for the
+                                                                                smaller clusters.  For  50 and  82 sites,  there  seems  to  be
+                                                                                very little ﬁnite size eﬀect.  The energy per site is a fairly
+                                                                                smooth  function  of  density.  We  do  not  ﬁnd  large  eﬀect
+                                                                                due  to  diﬀerent  Fermi  surface  topology  in  the  physical
+                                                                                regime.
+                                                                                   To   ﬁnd   the   phase   separation   boundary   by   using
+                                                                                Maxwell construction  we  are  interested  in  the  variation
+                                                                                of  the  slopes  in  ﬁgures  like  Fig.   1(b).   In  other  words
+                                                                                we are interested in the second derivative of energy with
+                                                                                respect to the electronic density, or the inverse compress-
+                                                                                ibility.  It turns out that there is a systematic variation of
+                                                                                this quantity as the energy approaches the ground state
+                                                                                or  as  the  power  increases  in  our  PL  method.  Although
+                                                                                in  the  physical  regime  most  of  our  best  data  have  not
+                                                                                yet converged to the exact ground state, this systematic
+                                                                                variation is enough for us to determine the lower bound
+                                                                                of the phase separation boundary.
+                                                                                   It is  diﬃcult  to  read out the  slope  variation from ﬁg-
+                                                                                ures like Fig.1(b), as the curve is almost a straight line for
+                                                                                ne > 0.85.  Therefore we shall follow Emery et al. [11] by
+                                                                                examining another quantity.  In the one-dimensional t−J
+                                                                                model the phase separated state contains an electron-free
+                                                                                and a electron-rich phases.  However, it phase  separates
+  FIG. 1.  (a):  Typical plots of energy per site vs powers for                 into a hole-free phase, i.e., the antiferromagnetic Heisen-
+J/t  =  0.6,  ne  =  32/36  (open  circles)  and  ne  =  44/50  (full           berg island, and a hole-rich phase in the two-dimensional
+circles)  ne  =  74/82  (open  triangles);  (b)Energy  per  site  as            t − J  model.   Thus  the  energy  of  the  phase  separated
+a  function  of  electronic  density  for  J/t  =  0.6  with  diﬀerent          state is in the form:
+cluster sizes.  Diamonds are the exact result of 16 sites.  Open
+circles  are  for  36  sites  and  full  circles  are  for  50  sites,  both                       E = (Ns − N)eH + Neh                          (2)
+are  obtained  by  PL1power=6.  Triangles  are  for  82  sites  with            where Ns is the total number of sites and N is the number
+PL1power=4.                                                                     of sites in the hole-rich phase.  eH  = 1.169J  denotes the
+
+   The  ground state  energy of  the  Hamiltonian  of equa-                     Heisenberg energy per site [26].  And eh is energy per site
+tion (1) is calculated by  using the  PL method.  The  PL                       in the uniform hole-rich phase, which is a function of the
+method  we  used  is  similar  to  the  GFMC  method  but                       hole density in this phase x = Nh/N.  Nh  is the number
+without  using  importance  sampling  and  the  ﬁxed  node                      of holes.  E can be rearranged into the form:
+approximation.   The  method  is  essentially  a  variational                                         E = NseH + Nhe(x)                             (3)
+approach.  Applying more powers to a trial wave function
+implies a better approximation of the ground state wave                         where
+function.    Details  of  the  method  are  discussed  in  Ref.                                     e(x) ≡ [−eH + eh(x)]/x                          (4)
+[20].  The trial wave functions we used are the optimized
+Gutzwiller wave functions, resonating valence bond state                        If e(x) of a particular J/t has a minimum at x = xm and
+(RVB) [23], and RVB with antiferromagnetic long range                           the hole density of the total system is smaller than xm,
+order  [24].   In  Fig.   1(a)  energy  per  site  is  plotted  as  a           the  system  will  adjust  the  size  of  the  hole-rich phase  N
+function of power for J/t = 0.6 and three diﬀerent den-                         such that xm is equal to Nh/N  and it minimizes the total
+sities:   ne  =  32/36  (open  circles)  and  ne  =  44/50  (full               energy in Eq.(3).  Since Ns, eH, and Nh are all constants,
+circles) ne = 74/82 (open triangles).  Error bar is shown                       the total energy is minimized as e(x) is minimized.  Thus
+only  when  it  is  larger  than  the  symbol.   We  also  com-                 xm is the critical density for phase separation at this J/t.
+
+
+                                                                            2
+   We  calculated  e(x)  from  the  energy  of  the  uniform                     interesting  to  note  the  trend  of  the  shift  of  e(x)  with
+states eh(x) by the PL method and found the minimum                              powers.  For J/t = 0.4 (Fig.2 (a)), at the VMC level, the
+of  e(x)  on  6 × 6,  √50 × √50,  and  √82 × √82  clusters                       minimum  of e(x)  is  at xm  = 0.16.  It  shifts  to  x = 0.04
+for  several  densities  and  J/t.   It  is  very  diﬃcult  to  get              (the minimum hole density we calculated for this cluster)
+the converged ground state energy in the physical regime                         immediately  after  the  ﬁrst  order  Lanczos  improvement
+due  to  the  sign  problem.   After  we  have  found  the  op-                  (PL1-VMC)  and  stays  at  the  density  up  to  6  powers.
+timized  wave  function  in  the  VMC  calculation  we  used                     For J/t = 0.6 (Fig.2(b)), xm  shifts from x = 0.2 (VMC)
+the  PL  method  to  project  the  trial  wave  function  onto                   to x = 0.16 (PL1-VMC) and to x = 0.08 (PL1-power=6)
+the ground state systematically.  The PL-1 power=4 (for                          at  last.   For  J/t  =  1.5  (Fig.2  (c)),  xm  shifts  from  x  =
+82 sites) or PL-1 power=6 (for 50 and 36 sites) energy is                        0.48 (PL1-VMC) to x = 0.4 (PL1-power=2) and to x =
+used here  as  the  eh(x).  It  is  about 2 ∼ 4  percent lower                   0.36  (PL1-power=6)  at  last.   It  is  clear  that  xm  shifts
+than  the  variational energy.  We  estimate  the  diﬀerence                     monotonically  toward  a  smaller  value  when  the  energy
+between the best PL energy is within one or two percent-                         moves closer to the ground state.
+age of the true ground state energy.                                                The  results  presented  in  Fig.2(a)-2(c)  are  calculated
+                                                                                 with  a  ﬁxed  lattice  size  and  diﬀerent  electron  numbers.
+                                                                                 Hence  Fermi  surfaces have  diﬀerent shapes  and,  in par-
+                                                                                 ticular,  there  are  open  and  closed  shells.    It  has  been
+                                                                                 argued  [19]  that  comparing  energies  obtained  for  these
+                                                                                 diﬀerent  Fermi  surfaces  might  be  inaccurate.  To  exam-
+                                                                                 ine  this  argument  carefully,  we  have  compared  systems
+                                                                                 with  closed  shell  Fermi  surfaces  only.   In  Fig.2(d)  e(x)
+                                                                                 calculated  from  close  shells  of  diﬀerent  size  of  lattices
+                                                                                 for  J/t  =  0.4  shows  similar  behavior  as  Fig.2(a).   The
+                                                                                 minimum of e(x) shifts toward smaller hole density.  The
+                                                                                 trend  of  xm  moving  with  increasing  power  is  the  same
+                                                                                 for  both  close  and  open shells.  Hence  the  shell  eﬀect  is
+                                                                                 not important here.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                    FIG. 3.  Phase  separation  boundary on  the phase diagram
+                                                                                 of  the two-dimensional  t − J  model  evaluated  by ED  on  the
+                                                                                 4 × 4  lattice[11]  (open  diamonds),  by  the  high-temperature
+                                                                                 series  expansion[14]  (dashed  line)  by  the GFMC  method[19]
+  FIG.  2.   e(x)  vs  hole   density  x  for   (a)J/t   =   0.4,   (b)          (dotted line), and the PL method on 36 sites (full triangles),
+J/t  =  0.6  and  (c)J/t  =  1.5  for  several  powers:   PL0-VMC                50  sites  (full  circles),  and  82  sites(full  square).   The  phase
+(open  circles),  PL1-VMC  (full  circles),  PL1-power=2  (open                  boundary determined by the VMC method for 36 sites (open
+triangles),  PL1-power=4  (full  triangles),  and  PL1-power=6                   triangles) and 50 sites (open circles) are shown in the inset.
+(open squares).  (d)J/t = 0.4 for close shells for diﬀerent size
+of lattices, 74/82, 42/50, and 50/64.                                               In Fig.3 we show the phase separation boundary deter-
+                                                                                 mined by the best xm.  The PL1-power=6 phase bound-
+   e(x) vs x = 1 − ne  calculated on 50 sites for J/t=0.4,                       aries  of  36  sites  and  50  sites  are  shown  as  full  trian-
+0.6  and 1.5  is  shown in  Fig.2(a)-2(c),  respectively.  It  is                gles and full circles, respectively.  Also some of the PL1-
+
+
+                                                                             3
+power=4 data of 82 sites are also shown as full squares.                       separation in the physical regime where 0.3 < J/t < 0.5.
+For J/t = 0.6 the error bars of the e(x) for ne = 80/82,                          We  have  found  that  for  J/t  ≤  0.5,  the  minimum  of
+78/82, and 76/82 are larger than the diﬀerence of these                        e(x)  is  always at two  holes for  clusters of diﬀerent  sizes
+three e(x), thus error bars of xm  are shown in the ﬁgure                      (16,  36,  50  and  82).   As  argued  by  Dagotto  et  al.,  this
+near these electron densities.                                                 might indicate a two-hole bound state [13] but not phase
+  The dashed line  in Fig.3 is the result of high temper-                      separation.  If there were phase separation, the xm would
+ature  series  expansion  [14].    Similar  result  is  obtained               be at the same (or nearby) density rather than the same
+by  the  variational  study  [18].    They  assumed  the  sys-                 number of holes.
+tem  separates  into  a  hole-free  Heisenberg  antiferromag-                     It is also interesting to note that in Fig.2(b), for J/t =
+net  and  an  electron-free  vacuum  state.    This  overesti-                 0.6 the minimum xm  seems to be at 4 holes instead of 2
+mates the energy required for the phase-separated state,                       holes.  This is observed for both 36 and 50 sites.  It seems
+since  electrons  can ”evaporate”  from  the  Heisenberg  is-                  to  be  quite  consistent  with  a  recent  claim  by  Poilblanc
+land  to  gain  energy.   Their  critical  Jc/t  ≈  1.2  is  larger            [17] that there is a  phase with quartets for 0.5 ≤ J/t ≤
+than our Jc/t ≈ 0.6.  Similar argument was also given by                       0.8.  But our data is not accurate enough for 82 sites to
+Hellberg and Manousakis [19].                                                  make a more deﬁnite conclusion.
+  Our estimate of the Jc/t = 0.6 ± 0.1 is actually a lower                        Recently   Hellberg   and   Manousakis   [19]   have   used
+bound.  The exact phase separation boundary should be                          GFMC to determine the phase separation boundary.  The
+to  the  right  of  our  result  in  Fig.3.   When  we  use  much              phase  boundary  they  reported  (dotted  line  in  Fig.3)  is
+poorer estimate of the ground state energy as our VMC                          similar  to  our  variational  boundary  (see  the  inset  of
+result, the phase boundary is shifted lower.  This is shown                    Fig.3).  Without  knowing details  of  their  calculation we
+in the inset of Fig.3.  The VMC results of 36 sites (open                      cannot  completely  understand  this  discrepancy.  A  pos-
+triangles) and 50 sites (open circles) show a much smaller                     sible  clue  is  that  they  might  not  have  obtained  lower
+Jc/t.0.6                                                                       enough  energy  in  the  high  electron  density  regime.   As
+                                                                               shown in Fig.2, in particular Fig.2(d), until the energy is
+      0.5       ✉∆e(x) = 0.5                                                   lower enough to be closer to the ground state, it is very
+                                                                               easy to to make the conclusion that there is a minimum
+      0.4                                                                      of e(x) at a ﬁnite hole density.
+   x                                                                              In   summary,   we   determined   the   phase   separation
+      0.3                                                                      boundary by the PL method and Maxwell construction.
+                                                                               We have studied various size of clusters and densities of
+      0.2                                                                      holes.  The largest cluster studied is 2 holes in an 82 site
+                                ssrr      rrrrq                 rqqqq♣         lattice.   Using  the  variational  nature  of  the  PL  method
+      0.1                                                                      and the systematic variation of the energy as a function of
+                      tssssttsstssrrr                                          hole density we conclude that the critical Jc/t for phase
+         0.0             0.5             1.0             1.5                   separation in the low hole density limit is at least ≈ 0.6.
+                               J/t                                             There is no phase separation in the physical regime.
+                                                                                  It should be pointed out that the result reported above
+  FIG.   4.     e(x)    diﬀerence    between    PL1-power=6    and             are  obtained  by  assuming  the  hole-rich  region  in  the
+PL0-VMC  for  50  sites.   The  values  are  proportional  to  the             phase  separated  state  has  a  uniform  hole  density.   We
+area of the circles.                                                           have not yet considered more exotic possibilities such as
+  Another  way  to  understand  this  argument  of  lower                      the stripe phase [15,27,28].
+bound is to examine the variation of e(x) with power.  In                         We  wish  to  thank  C.S.  Hellberg,  H.Q.  Lin  and  W.O.
+Fig.4 we show the change of e(x) between PL1-power=6                           Putikka  for  many  useful  discussions.   This  work  is  par-
+and  VMC  for  50  sites.   The  values  are  proportional  to                 tially supported by the  National Science Council of Re-
+the area of the circles.  Because of the 1/x factor in Eq.                     public  of  China,  Grant  Nos.   NSC  86-2811-M-007-001R
+(4), the smaller the hole density the more improvement of                      &  86-2112-M-001-042T  &  86-2112-M-029-001.   Part  of
+e(x) will likely occur.  Because of the variational nature                     computations were performed at the National Center for
+of the PL method, the larger the improvement observed                          High-Performance Computing in Taiwan.  We are grate-
+between  VMC  and  PL1-power=6  the  larger  the  diﬀer-                       ful for their support.
+
+ence between the exact result and PL1-power=6 will be.
+Hence, once the minimum xm is at the lowest hole density
+such as J/t = 0.4 in Fig.2, better estimate of the ground
+state  energy  by  applying  more  powers  will  not  change
+the minimum to higher hole density.  Based on this argu-
+ment we are conﬁdent to conclude that there is no phase                         [1]  E. Dagotto et al., Phys. Rev. B 49, 3548 (1994).
+
+
+                                                                           4
+ [2]  V.  J.  Emery,  and  S.  A.  Kivelson,  Physica  C  209,  597
+     (1993).
+ [3]  J. D. Jorgensen et  al, Phys. Rev. B 38, 11337 (1988).
+ [4]  P. C. Hammel et al., Phys. Rev. B 42, 6781 (1990)
+ [5]  P. C. Hammel et al., Physica C 185-189, 1095 (1991).
+ [6]  F. C. Chou et al., Phys. Rev. B 54, 572 (1996).
+ [7]  J. H. Cho et al., Phys. Rev. Lett. 70, 222 (1993).
+ [8]  J. H. Cho et al., Phys. Rev. B 46, 3179 (1992).
+ [9]  F. Borsa et al., Physica C 235-240, 1713 (1994).
+[10]  F. Borsa et al., Phys. Rev. B 52, 7334 (1995).
+[11]  V. J. Emery,  S. A. Kivelson,  and H. Q. Lin,  Phys. Rev.
+     Lett. 64, 475 (1990).
+[12]  A. Moreo et al., Phys. Rev. B 43, 11442 (1991).
+[13]  E. Dagotto et  al., Phys. Rev. B 45, 10741 (1992).
+[14]  W. O. Putikka et al., Phys. Rev. Lett. 68, 538 (1992).
+[15]  P. Prelovˇsek, and X. Zotos, Phys. Rev. B 47, 5984 (1993).
+[16]  C.  S.  Hellberg,  and  E.  Manousakis,  Phys.  Rev.  B  52,
+     4639 (1995).
+[17]  D. Poilblanc, Phys. Rev. B 52, 9201 (1995).
+[18]  H. Yokoyama and M. Ogata, cond-mat/9607050.
+[19]  C. S. Hellberg, and E. Manousakis, cond-mat/9611195.
+[20]  Y. C. Chen, and T. K. Lee, Phys. Rev. B51, 6723 (1995).
+[21]  E. S. Heeb, and T. M. Rice, Z. Phys. B 90, 73 (1993).
+[22]  Similar  result  has  been  reported  by  M.  Khono,  Phys.
+     Rev.  B  55,  1435  (1997).  Although  he  has  also  used  the
+     PL  method,  but  the  largest  cluster  he  used  is  50  site
+     in  the  physical  regime.  Using  the  polynomial  ﬁtting  of
+     energy as a function of density, he determined the phase
+     boundary with Jc/t = 0.75±0.25. This is consistent with
+     our result obtained with a much more careful analysis.
+[23]  C. Gros, Phys. Rev. B38, 931 (1988).
+[24]  T. K. Lee and C. T. Shih, Phys. Rev. B 55, 5983(1996).
+[25]  W. O. Putikka, private communication.
+[26]  E. Manousakis, Rev. Mod. Phys. 63, 1 (1991).
+[27]  H. Tsunetsugu et al., Phys. Rev. B 51, 16456 (1995).
+[28]  S. R. White, and D. J. Scalapino, cond-mat/9610104.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               5

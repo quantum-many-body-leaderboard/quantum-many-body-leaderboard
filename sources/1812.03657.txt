@@ -1,0 +1,648 @@
+  .
+Gradient  optimization  of fermionic  projected entangled  pair states on directed lattices
+
+              Shao-Jun Dong,1, 2  Chao  Wang,3, 2  Yongjian Han,3, 2,               ∗ Guang-can Guo,3, 2  and  Lixin  He3, 2,         †
+
+       1Key  Laboratory  of  Quantum  Information,  University  of  Science  and  Technology  of  China,  Hefei,  230026,  China
+                          2Synergetic  Innovation  Center  of  Quantum  Information  and  Quantum  Physics,
+                                University  of  Science  and  Technology  of  China,  Hefei,  230026,  China
+            3Key  Laboratory  of  Quantum  Information,  University  of  Science  and  Technology  of  China,  Hefei,  China
+
+                  The  recently  developed  stochastic  gradient  method  combined  with  Monte  Carlo  sampling  tech-
+                niques [PRB 95, 195154 (2017)] oﬀers a low scaling and accurate method to optimize the projected
+                entangled  pair states  (PEPS). We extended this method to  the fermionic  PEPS  (fPEPS).  To sim-
+                plify the implementation,  we introduce a Fermi arrow  notation  to specify  the order of the fermion
+                operators in the virtual entangled EPR pairs.  By deﬁning some local operation rules associated with
+                the Fermi arrows, one can implement fPEPS algorithms very similar to that of standard PEPS. We
+                benchmark the method for the interacting spin-less fermion models, and the t-J models.  The numer-
+                ical calculations show that the gradient optimization greatly improves the results of simple update
+                method.  Furthermore, very large virtual bond dimensions (D) and truncation dimensions (Dc) are
+                necessary  to  converge  the  results  of  these  models.   The  method  therefore  oﬀer  a  powerful  tool  to
+                simulate fermion systems because it has much lower scaling than the direct contraction methods.
+
+                PACS numbers:
+
+                    I.     INTRODUCTION                                      time  evolution  with  simple  update12           method  may  have
+                                                                             large errors because the environment eﬀects are oversim-
+  Interacting quantum many-body systems pose some of                         pliﬁed.  To  exactly  consider the  environment,  the  tradi-
+the most exciting open problems in physics.  Particularly,                   tional methods,  e.g.,  the  full  update  method,28,29           suﬀer
+fermion  systems  are  central  to  many  of  the  most  fasci-              from extremely  high  computational scaling  to  the  bond
+nating eﬀects in condensed matter physics, such as high-                     dimensions.  This problem is more serious for the fermion
+temperature superconductivity,1           the fractional quantum             models  when  large  D  is  required.  We  note  that  the  re-
+Hall eﬀect,2    and Mott insulator transitions.3,4         The simu-         cently developed inﬁnite PEPS (iPEPS) with full update
+lation of the strongly correlated fermion system plays the                   method has achieved great success,21,30             by making use of
+critical  role  to  understand  these  system  and  is  also  one            the translation symmetry, which may greatly reduce the
+of  the  most  challenging  problems  in  condensed  matter                  number of independent tensors.  However, not all systems
+physics.                                                                     have such symmetry, e.g., defects, disorders and systems
+                                                  5                          with spontaneous symmetry broken, etc.  In these cases,
+  The  Quantum  Monte  Carlo  (QMC)                  method  as  one         the ﬁnite PEPS method is essential.
+of  the  leading  methods  in  studying  many-body  physics
+has  achieved  great  success  in  bosonic  and  spin  systems                  The  recently  developed  Monte  Carlo  sampling  tech-
+since  its  ﬁrst  proposed.   However,  except  in  some  spe-               niques  for  PEPS  can  greatly  reduce  the  computational
+cial cases,6  the fermion systems are extremely diﬃcult to                   scaling.15,31–35    By combining with stochastic gradient op-
+treat using QMC simulations7,8           because of the notorious            timization (GO) method, one can achieve great precision
+“sign problems”.                                                             in obtaining the ground states.35,36           In this work, we ex-
+  Recently,    the   methods   based   on   tensor   network                 tended  the  stochastic  gradient  method35,36            to  optimize
+states  (TNS),  especially  the  projected  entangled  states                the fPEPS wave functions for fermion systems.  To sim-
+(PEPS)9–16     have shown their power on simulation of the                   plify  the  implementation  of  the  fPEPS  algorithms,  we
+strongly  correlated  many-particle  systems.   The  PEPS                    introduce  a  “Fermi  arrow”  notation  to  specify  the  or-
+is  sign-problem  free  and  has  achieved  great  successes                 der of the fermion operators in the entangled EPR pairs.
+in  studying  the  frustrated  spin  models.17–19         The  PEPS          With this notation and some local operation rules associ-
+method  has  been  extended  to  study  fermion  models                      ated with the Fermi arrows, we can greatly simplify the
+(namely  fPEPS)  by  diﬀerent  approaches.20–25                Apper-        implementation  of  the  stochastic  gradient  optimization
+ently,  the  fPEPS  are  more  complicated  than  PEPS  be-                  method (and other methods) for fPEPS. We  implement
+cause of the anti-commutation properties of the fermion                      this local operation rules for fPEPS in our recently devel-
+operators.  In addition, fermion systems are highly frus-                    oped TNSpack,37        in which the anti-commutation proper-
+trated.    It  has  been  proven  that  the  entanglements  of               ties of the fermion operators are automatically taken ac-
+the  ground  states  of  some  fermion  systems  are  beyond                 count of.  Therefore, one can implement fPEPS algorithm
+the  area  law.26,27   Therefore,  to  faithfully  simulate  such            very similar to that of the standard PEPS without worry
+models,  it  usually  requires  very  large  bond  dimensions                too much about the details of the anti-commutation be-
+(D).  Furthermore, it has been shown that the imaginary                      tween the fermion operators.
+                                                                                                                                                            2
+
+   We  benchmark  the  stochastic  gradient  method  for                                        (a)                      (b)
+fPEPS on the  interacting  spin-less  fermion  models,  and                                          A            B           A            B
+the  t-J  models.   The  numerical  calculations  show  that
+the gradient optimization greatly improves the results of                         FIG. 1:  Schematic diagrams  of Fermi arrows between  tensor
+simple  update  method.   Furthermore,  for  these  models,                       A and tensor B, corresponding to (a) Eq.7             and (b) Eq.     8.
+very large virtual bond dimensions D and truncation di-
+mensions Dc are necessary to converge the results which
+is the dominate diﬃcult to simulate the fermion systems.
+Therefore the present method is advantageous because it                              To  make  the  fPEPS  well  deﬁned,  the  state  |ΦfPEPS⟩
+has  much  lower  scaling  than  the  traditional  direct  con-                   should be  independent of the order of the projectors up
+traction method.                                                                  to a global phase, i.e, the parity of all elements in a pro-
+                                                                                  jector  should  be  the  same.   The  parity  of  the  element
+      II.     DEFINITION  OF  FPEPS  BASED  ON                                    Tβ,β1,β2,β3,β4[i, j]a†,β(i,j)aβ1(i,j)laβ2(i,j)daβ3(i,j)raβ4(i,j)u  of  the  pro-
+                   DIRECTED  NETWORK                                              jector   ˆP [i, j]  is  obtained  by  ˜p(β)˜p(β1)˜p(β2)˜p(β3)˜p(β4),
+                                                                                  where  ˜p(x)=-1,  if  the  parity  of  x  is  odd,  and  ˜p(x)=+1
+   The deﬁnition of the fPEPS25             on a lattice is similar to            if  the  parity  of  x  is  even.   Therefore,  the  parity  of  all
+that of the standard PEPS.14,16            Without lose of general-               elements  can be  obtained by  the  lower indices  of tensor
+ity, we take a fermion system on a L1 × L2 square lattice                         Tβ,β1,β2,β3,β4[i, j].  Without lose of generality, we assume
+as an example, where the physical dimension of each site                          all  nonzero  projector  elements  have  even  parity  in  this
+is d.  For each horizontal bond connecting sites (i, j) and                       paper.  As  a  consequence,  the  elements  with  odd  parity
+(i, j + 1), there is a EPR pair, i.e., a Bell type entangled                      vanish,  i.e.,  Tβ,β1,β2,β3,β4[i, j]=0,  if  β+β1+β2+β3+β4  is
+state,                                                                            odd.  In this deﬁnition of fPEPS, we may interchange the
+                                                                                  positions of any two projectors and EPR pairs, because
+                               D−1∑                                               they all have even parity.
+               ˆIh(i, j)|0⟩ =        |k⟩(i,j)r |k⟩(i,j+1)l ,              (1)        One  of  the  key  issues  in  the  fPEPS  is  the  order  of
+
+                                k=0                                               the  fermion  operators,  including  the  operators  in  the
+where  |k⟩(i,j)r  and  |k⟩(i,j+1)l  are  the  fermion  states  on                 projectors  and  in  EPRs.    We  deﬁne  the  standard  or-
+site  (i, j)  and  site  (i, j  +  1).     States  |k⟩  are  gener-               der of the fermion operators in each projector operators
+ated  as,  |k⟩  =  |k1k2 · · · kp⟩  =  a†k1                                       on the square lattice as followings, physical creation op-
+                                           1   a†k22    · · · a†kpp   |0⟩,  where erator,  left,  down,  right,  and  up  virtual  operators  (i.e.,
+(k1k2 · · · kp)  is  the  binary  representation of  k  and  |0⟩  is              anti-clockwise order), which  is  the  same as  the  order of
+the vacuum state.  ais and a†js are the fermion operators                         the lower indices  in the tensor Tβ,β1,β2,β3,β4  (see Eq.               3).
+that  satisfy  {ai, a†j}  =  δij.   For  convenience,  we  denote                 When  changing  the  order  of  fermion  operators,  a  sign
+the  state  |k(i,j)r ⟩  =  a†k                                                    which  is  determined  by  the  parity  of  the  indices  will
+                              (i,j)r |0⟩.   Similarly,  for  each  ver-           appear.   For  example,  if  we  exchange  the  two  adjacent
+tical  bond  connecting  site  (i, j)  and  (i + 1, j),  there  is                fermion  operators  aβ3
+also  a  Bell  type  entangled state,  (in  short)  ˆIv(i, j)|0⟩ =                                           (i,j),r  and  aβ4(i,j),u,  there  will  be  an
+∑D−1                                                                              extra  phase,  i.e.,  Tβ,β1,β2,β4,β3  =  ˜p(β3, β4)Tβ,β1,β2,β3,β4,
+   k=0  a†k(i,j)da†k(i+1,j)u|0⟩.    Therefore,  a  standard  virtual              where
+mother state of a fPEPS can be deﬁned as,                                                               { −1,     both   ˜p(β3),    ˜p(β4) = −1,
+             |Φ0⟩ = ΠL1−1                                                              ˜p(β3, β4)  =          1,     otherwise.                               (5)
+                         i=1   ΠL2−1j=1   ˆIh(i, j)ˆIv(i, j)|0⟩.            (2)
+To deﬁne a quantum state in the real physical space, we                           ˆP ,  we  also  need  to  specify  the  operators’  order  in  theBeside  the  fermion  operators  appeared  in  projector
+project |Φ0⟩ to the physical space.  The projector on site
+(i, j) is deﬁned as:                                                              EPR  pairs,  which  is  not  given  in  the  tensors  explic-
+                                                                                  itly.    In  this  work,  we  introduce  a  Fermi  arrow  nota-
+                     d−1      D−1                                                 tion  to  specify  the  order  of  the  EPR  pairs.    For  ex-
+        ˆP [i, j]  = ∑        ∑                                                   ample,  as  shown  in  Fig.         1(a),  the  arrow  points  from
+                                       Tβ,β1,β2,β3,β4[i, j]a†,β(i,j)     (3)      site  A  to  site  B  ,  and  the  corresponding  EPR  state  is
+                     β=0β1,β2,β3,β4                                               ˆIA→B|0⟩  =  ∑D−1
+                                                                                                      k=0  a†kB a†kA |0⟩,  whereas  in  Fig.     1(b),  the
+                     aβ1(i,j),laβ2(i,j),daβ3(i,j),raβ4(i,j),u .                   arrow points  from  B  to  A,  and  the  corresponding  EPR
+Here,  a†                                                                         state is  ˆIB→A|0⟩ = ∑D−1k=0  a†kA a†kB |0⟩.  The two states can
+          (i,j)  is  the  creation operator of  the  physical par-                be transformed to each other as follows,
+ticle  on  site  (i, j)  whereas  an(i,j),m  (m  =  l, d, r, u  and                           D−1∑                  D−1∑
+n  =  0, 1, · · · , D − 1)  are  the  annihilation  operators  of                                   a†k                  (−1)˜p(k)a†k
+the state |n⟩(i,j),m.  The fPEPS is then deﬁned as,                                                  A a†kB |0⟩ =                     B a†kA |0⟩ .          (6)
+                                                                                              k=0                   k=0
+                    |ΦfPEPS⟩ = Πi,j ˆP [i, j]|Φ0⟩ .                     (4)          We   may   also   assign   Fermi   arrows   to   the   physi-
+                                                                                                                                                      3
+
+                                                                              {i1, i2, · · · , ik, ik+1, · · · , iN}  are  the  joint  bonds  to  be
+                                                                              contracted.     Assume  that  bonds  {i1, i2, · · · , ik}  have
+                                                                              Fermi arrows pointing from B to A , and the rest bonds
+                                                                              {ik+1, · · · iN }  have Fermi arrows pointing  from A to  B.
+                                                                              We  ﬁrst reshape A to  AI,iN ,iN −1,··· ,i1  and reshape B to
+                                                                              Bi1,i2,··· ,iN ,J, where {I}, {J} are the bonds that are not
+                                                                              to be contracted in A and B respectively.  For the conve-
+                                                                              nience of notation, we assume the signs due to the change
+                                                                              of bond order in the tensors according to Eq.             5  have been
+                                                                              absorbed into the tensors, then the resulting tensor is,
+                                                                                RI,J  =      ∑         ∏    ˜p(il)AI,iN ,iN −1,··· ,i1Bi1,i2,··· ,iN ,J
+
+
+                                                                                          i1,i2,··· ,iNl=1,k
+                                                                                                                                                   (9)
+FIG. 2:  A schematic example of a fPEPS on the 4×4 lattice.                      Other often used operations associated with Fermi ar-
+The  circles  are  the  tensors  on  the  lattice  whereas  the  black        rows  are  given  in  the  Appendix.   We  implement  these
+solid  lines  are  the  virtual  EPR  pairs  and  the  arrows  on  the        operation  rules  for  fPEPS  in  our  recently  developed
+bonds specify the order of the fermion operators in the EPR                   TNSpack,37      in which the anti-commutation properties of
+pairs.  The red  solid  lines  are  the  physical indices  associated         the  fermion  operators  are  automatically  taken  account
+with creation operators.                                                      of by  these rules.  Therefore, one  can implement  fPEPS
+                                                                              algorithm  very  similar  to  that  of  standard  PEPS  with-
+                                                                              out  worrying  too  much  about  the  details  of  the  anti-
+cal   indices:     the   Fermi   arrows   point   into   the   sites          commutation between the fermion operators.
+for  the  physical  creation  operators,  and  pointing  out                     The  Fermi  arrows  deﬁne  the  fermionic  order  for  the
+of   the   sites   for   the   annihilation   operators.       This           fPEPS. In  some  previous  methods,21             the  EPS pairs  are
+deﬁnition  is  equivalent  to  insert  EPR  pairs  between                    not explicitly used.  We note that in this work, the EPR
+the   physical   operators   when   contracting   the   phys-                 pairs  are  only  used  in  the  derivation  of  the  operation
+ical    indices    e.g.,    ⟨0| ∑                                             rules associated with Fermi arrows.  Once we have these
+                     ∑            βA,βB A†∑βAaβAA  BβBa†,βBB    |0⟩     =     rules, one may ignore the underlying EPR pairs, and use
+⟨0| ∑βA A†βAaβAA        βB BβBaβBB        k a†kB a†kA |0⟩.    With  this      only Fermi arrows for  all operations.  In Ref.20,  the  au-
+deﬁnition, we can treat the physical indices and the vir-                     thors proposed a general fermionization procedure using
+tual  indices  in  the  same  manner,  and  do  not  need  to                 so  called  fermionic  operator  circuits  (FOCs),  in  a  bra
+distinguish the real fermions and virtual fermions during                     and  ket  notation,  instead  of  EPR  pairs.  Our  Fermi  ar-
+operations.   We  can  now  uniquely  deﬁne  a  fPEPS  on  a                  rows are similar to the contraction arcs deﬁned in Ref.20
+directed lattice, as shown for example in Fig.            2, on a 4×4         albeit the starting point and detailed implementations of
+lattice.                                                                      the two methods are diﬀerent.
+  By  deﬁning  some  calculation  rules  associated  with
+Fermi arrows, we are able to perform fPEPS calculations.
+Contraction is  one  of  the  most  important  operations  in                 III.     STOCHASTIC  GRADIENT  OPTIMIZATION
+PEPS algorithms.  When we contract the tensors on two                                                      OF  FPEPS
+sites  in  a  fPEPS,  we  need  to  consider  the  Fermi  arrow
+direction.   We  take  the  two  situations  in  Fig.          1 as  an          In  order  to  ﬁnd  the  ground  state  of  a  given  Hamil-
+example, which gives two diﬀerent contraction formula,                        tonian using fPEPS, diﬀerent  methods  have been intro-
+      ∑                                                                       duced.  The leading method is the imaginary time evolu-
+             AβAaβAA  BβBaβBB  a†βB a†βA |0⟩ = ∑      AβBβ|0⟩     (7)         tion (ITE) method.12         However, due  to  the  high compu-
+   β,βA,βB                                         β
+                                                                              tation complexity to  obtain the  exact environment dur-
+for Fig.  1(a) and,                                                           ing the time evolution, some kinds of approximations are
+     ∑                                                                        necessary.  The simple update method12               has been widely
+            AβAaβAA  BβBaβBB  a†βA a†βB |0⟩ = ∑       ˜p(β)AβBβ|0⟩            used,  which  however may  have  large  errors  because  the
+   β,βA,βB                                        β                           environment  is  over  simpliﬁed.    Several  methods  have
+                                                                     (8)      been developed to treat the environment more rigorously,
+for Fig.  1(b).  The anti-commutation relation of fermions                    such  as  the  full  update  method,28,29          and  the  gradient
+has  been  used.    The  Fermi  arrow  helps  to  distinguish                 method,35,38     which may signiﬁcantly improve the results,
+the two situations of contraction in the graphical notions                    but the scaling to D of these methods is rather high.
+of Fig.  1.  Using the  graphic representation may greatly                       We  recently  developed  stochastic  gradient  optimiza-
+simplify the notation.                                                        tion method for PEPS, combined with Monte Carlo sam-
+  More    generally,    giving    two    tensors    A    and    B,            pling  techniques.35,36      This  method gives remarkable ac-
+connected   via   multi   virtual   bonds   (EPRs),    where                  curacy of the results which may be even better than the
+                                                                                                                                                        4
+
+results of full update method at given D.35              The method                          (a)                         |V
+has  two  advantages.   First,  the  environments  of  tensors                                          D
+are treated rigorously, and therefore, the results are more
+accurate than SU and even FU methods.35                 Secondly, the
+Monte Carlo sampling technique may greatly reduce the
+scaling  of  the  method  to  the  virtual  bond  dimension  D                                          D
+from D10 to D6 for OBC,15,31–33            which is even more cru-
+cial  for  fPEPS,  where  larger  D  is  often  needed  to  con-
+verge the results.  In this work, we extended this method
+to fPEPS.
+   The  fPEPS wave functions  of a  many-particle system                                     (b)                         |X
+in Eq.   4 can be rewritten as,
+                     [ ∏                       ]                                                       Dc
+    |Ψ⟩  =  ∑C             T [i]n,β1,β2,β3,β4   |n1, n2, . . . , nN ⟩
+               {n}       i
+          ≡  ∑W (n)|n⟩ ,                                                (10)
+               {n}
+where i=(i, j) is the site index of the lattice, and C means                   FIG.  3:  Approximate (a)  a  double  row  PEPS  with  bond  di-
+to  contract all  the  entangled virtual  fermions  according                  mension D by (b) a MPO with bond dimension Dc.
+to the rules deﬁned in Sec.         II. W (n) is the coeﬃcient of
+the  physical  state  |n⟩=  |n1, n2, . . . , nN ⟩  in  the  particle
+number representation.  The energy of the system can be                                         |X                                   |V
+written as,
+
+            E   =   ⟨Ψ|H|Ψ⟩⟨Ψ|Ψ⟩                                                                                   =
+                     ∑                 ∑
+                =              1            |W (n)|2E(n)         (11)                           Xi,j|
+                        n′ |W (n′)|2     n                                                                                           Xi,j|
+
+where,                                                                         FIG.  4:   The  equation  ⟨Xi,j|X⟩  =  ⟨Xi,j|Ψ⟩,  where  |Ψ⟩  is
+                  E(n) = ∑        W (n′)                                       shown  in  Fig.    3(a)  and  |X⟩  is  shown  in  Fig.     3(b).    |Xi,j⟩
+                                  W (n) ⟨n′|H|n⟩ .                 (12)        is obtained by taking the tensor T i,j  out of |X⟩.
+                              n′
+The  total  energy  of  the  system  for  a  given  fPEPS  can
+be evaluated via Monte Carlo sampling over the physical                           Once  we  have  the  energy  and  its  gradients,  we  can
+conﬁgurations space.15,31–33,35                                                optimize  the  system  energy  using  stochastic  gradient
+   To  optimize  the  energy  function,  we  need  the  deriva-                method,31,35      which  has  been  successfully  applied to  the
+tives of the energy with respect to the tensor elements,                       standard PEPS method.
+             ∂E                                                                   The  overall algorithm for  fPEPS  is  similar  to  that  of
+     ∂T [i]n,β1,β2,β3,β4  = 2⟨∆[i]n,β1,β2,β3,β4(n)E(n)⟩    (13)                PEPS. We  need to  contract the  fPEPS tensors at given
+                         −2⟨∆[i]n,β1,β2,β3,β4(n)⟩⟨E(n)⟩,                       particle conﬁguration to obtain W (n) and the gradients.
+                                                                               However,  contracting  a  fPEPS  is  much  more  compli-
+where  ⟨· · · ⟩ denotes  the  MC average.  ∆[i]n,β1,β2,β3,β4  is               cate  than  contacting  a  standard  PEPS,  because  of  the
+deﬁned as                                                                      anti-commutation  relation  of  fermions.    One  must  be
+                                                                               very careful about the contraction order and underlying
+    ∆[i]n,β1,β2,β3,β4(n) =      1              ∂W (n)                          fermions’  order  in  EPR  pairs.   We  show  here  that  with
+                                 W (n)   ∂T [i]n,β1,β2,β3,β4 ,      (14)       the help of Fermi arrows and the operation rules associ-
+                                                                               ated with them, the contraction can be done easily as in
+and the derivative of W (n) is                                                 the standard PEPS algorithms.
+      ∂W (n)                [                                          ]          To  obtain  W (n),  we  need  to  contact a  single  layer of
+                             T [1] · · · T [i − 1]T [i + 1] · · · T [N] .      fPEPS  with  ﬁxed  particle  conﬁguration  |n⟩.   We  adopt
+∂T [i]n,β1,β2,β3,β4  = C                                                       the  boundary-MPO  method,28,29where  we  need  to  ﬁnd
+                                                                    (15)       a fermionic matrix product operator (fMPO) denoted as
+The   derivatives   can   be   also   evaluated   by   the   MC                |X⟩  with  bond  dimension  Dc  [see  Fig.3(b)]  to  approx-
+samplings.35                                                                   imate  the  two  rows  of  fPEPS  with  bond  dimension  D,
+                                                                                                                                                          5
+
+              (a)
+                                                                                        Q1        Q2                    Q4Ti,j
+                                            i,j                                                             RL
+                                           T                                                                                               Ti,j
+                                                                                                                             =               RL
+                                                                                       Q1†        Q2†                   Q4†
+
+              (b)
+
+                                                 i,j                            FIG.  6:   By  applying  the  orthogonality  conditions  QiQ†i =I,
+                    Q1         R               T                                the left side of Fig.    4 reduces to a single tensor T i,j
+                                                                                                                                             RL.
+
+
+              (c)
+                        Q1        Q2        i,j     Q4
+                                           TRL
+
+                                                                                              Ti,j     =
+                                                                                               RL
+
+FIG. 5:  Simpliﬁcation of |X⟩:  (a) To make use of the orthog-                                                    Q1†        Q2†                   Q4†
+onality conditions, we ﬁrst reverse the directions some Fermi
+arrows.  (b) We perform QR decompositions starting form the
+ﬁrst tensor.  (c) The tensor state |X⟩ after simpliﬁcation.                     FIG.  7:     The  equation  in  Fig.    4  after  the  LQ  and  the  QR
+                                                                                decomposition on the |Xi,j⟩.
+
+
+denoted as |Ψ⟩ [see Fig.3(a)].  To ﬁnd such |X⟩, we min-
+imize                                                                              We perform the same operations for |Xi,j⟩.  After these
+                                                                                operations, the left side of Fig.          4 become that of Fig.         6.
+                         δ =  ||X⟩ − |Ψ⟩|2⟨Ψ|Ψ⟩      ,                           (16)By  using  the  orthogonality  of   ˆQ  and   ˆQ†,  i.e.,   ˆQ ˆQ†=I,
+                                                                                which  is  discussed in  the  Appendix  for  the  fPEPS with
+which lead to the linear equation for each tensor T i,j  on                     Fermi arrows, we obtain the right side of Fig.             6.  The orig-
+site (i, j),                                                                    inal equation Fig.      4 become of Fig.      7, which can be solved
+                                                                                iteratively  as  in  standard  boundary  MPO  method,28,29
+                       ⟨Xi,j|X⟩ = ⟨Xi,j|Ψ⟩ ,                        (17)        which usually converges in a few sweeps.
+                                                                                   The contraction in Eq.        15  can be calculated in the same
+where |Xi,j⟩ is obtained by taking the tensor T i,j  out of                     procedures.   Once  we  have  W (n),  and  ∆niβ1β2β3β4,  the
+|X⟩, as graphically shown in Fig.            4.                                 energies and their gradients can be easily calculated.
+   To solve the equation, we ﬁrst contract the tensors on                          In our  calculations, we  ﬁrst perform ITE with  simple
+the  left  side  of  Fig.  4.   We  change  the  arrow  directions              update method to obtain a approximate ground state,35
+from  Fig.   3(b)  to  Fig.   5(a),  i.e.,  all  arrows are  pointing           which usually  have  energy errors around 10−2.  We  fur-
+into  site  (i, j).   The  rule  of  changing  the  directions  of              ther optimize the fPEPS via gradient decent method to
+Fermi arrows are given in the Appendix.  As will be seen                        obtain the highly accurate ground state.
+in the following text, the change of Fermi arrow directions
+is to take the advantages of the canonic form of fMPO.10
+   We  next  do  QR  decomposition  to  the  tensor  on  the                                   IV.     BENCHMARK  RESULTS
+ﬁrst  site  of  |X⟩,  resulting  in  two  tensors,  Q1  and  R  as
+shown in Fig.     5(b).  The rules for QR (and other decom-                        We  benchmark  our  method  for  two  typical  fermion
+positions) in the presence of Fermi arrows are also given                       models on ﬁnite size square lattices, including the inter-
+in the Appendix.  We then contract the R tensor with the                        acting  spin-less  fermions  model  and  the  t-J  model.   We
+second tensor on the right site, and perform QR decom-                          demonstrate  that  our  method  can  give  highly  accurate
+position on the second site again to obtain the Q2 tensor.                      results compared with the exact results.
+We  repeat  this  process  until  reach  the  tensor  T i,j.   We
+contract  the  last  R  tensor  with  the  T i,j,  resulting  in  a
+new tenor T i,jR  .  Similarly, we perform the LQ decompo-
+sition on the right side of |X⟩, starting from the last site                                  A.     The  spin-less  fermions  model
+to the site (i, j), and contract the last L tensor with T i,jR
+to  get  T i,jRL.   During  the  LQ  (QR)  decompositions,  new                    The interacting spin-less fermions model reads,
+Fermi arrows have been inserted between L (Q)  tensors
+and Q (R) tensor.  After  these processes, we obtain |X⟩                                    H = −t ∑(c†i cj + H.c.) + V  ∑              ninj ,        (18)
+in Fig.  5(c).                                                                                         ⟨i,j⟩                       ⟨i,j⟩
+                                                                                                                                                       6
+
+TABLE I: The ground state energies  of the interacting spin-                   mance  of  GO  is  much  better,  and  we  always  get  stable
+less  fermion  models  on  a  4 × 4  lattice.    The  ground  state            results.  Even with  a  small D=6,  the  relative  errors are
+energies  obtained from  the simple update (SU) method, and                    about 10−3 ∼ 10−4, and reduce to ∼ 10−5 when D=8 is
+the  gradient  optimization  (GO)  method  are  compared  with                 used.  On the other hand, the violation of the area law is
+those from exact diagonalization method.  The relative errors                  also showed in this table, that the accuracy gets lower in
+between the GO results and exact results are in the order of                   larger systems for a given D.
+10−5.                                                                             From  the  above  tests,  we  ﬁnd  that  the  SU  method
+         V        SU           GO        Exact    relative error               sometimes  may  give  rather  accurate  results  (∼  10−2  -
+         0.1  -0.66590  -0.67124  -0.67125       1×10−5                        10−3),  but  the  situation  may  change  from  case  to  case.
+         0.8  -0.59255  -0.59309  -0.59312       5×10−5                        On  the  other  hand  the  GO  always  gives  reliable  and
+          2   -0.48136  -0.50643  -0.50646       5×10−5                        highly accurate results (∼ 10−5).
+
+
+                                                                                                         B.     t-J  model
+where  c†i  and  cj  are  the  creation  and  the  annihilation
+operators, and ⟨i, j⟩ denotes  the  nearest neighbor pairs.                       In this  section, we  benchmark  our method  on the  t-J
+The chemical potential µ is set to zero here.  We set hop-                     model,
+ping parameter t=1, and the interaction strength V  ≥ 0.
+In general this model is not exactly solvable, and has been                     H = −t  ∑        (c†i,σcj,σ+H.c.)+J ∑(⃗Si ⃗Sj − 14ninj)  (19)
+numerically investigated in Ref.39           by the mean ﬁeld the-                         ⟨i,j⟩,σ                        ⟨i,j⟩
+ory and in Ref.21      by the iPEPS method.  Both methods
+give similar phase diagrams.  For the parameters we used,                      where  σ  =↑, ↓  is  the  spin  index  and  ⃗Si  is  the  spin  1/2
+the ground state is in a uniform metallic phase when V                         operator  on  site  i.   ni  =  ∑σ c†i,σci,σ  is  the  number  of
+is small and moves towards the phase boundary between                          electrons  on  site  i.     In  t-J  model,   the  electron  dou-
+the uniform phase and the phase separation with the in-                        ble  occupancy  is  forbidden.    The  t-J  model  is  one  of
+creasing of V .  Therefore the  ground state of  the model                     the key  models  to  understand many important physical
+is expected to have entanglement beyond area law.27                            phenomena,40       such as high Tc  superconductivity.1           Here,
+  We  ﬁrstly  calculate  this  model  on  a  4×4  square  lat-                 we  calculate  the  model  with  J/t  =  0.4  and  hole  ﬁlling
+tice  so  we  can  compare  the  fPEPS  results  with  those                   of  ¯nh =0.125.  The U(1) symmetry is adopted to enforce
+obtained  from  the  exact  diagonlization  method.   In  the                  the particle number conservation.  But true physics of the
+calculations,  we  take  D  =  10,  and  Dc  =  30  ∼  40.  The                system at this point, whether the ground state is a stripe
+convergence of these parameters will be discussed in de-                       state22,30,41,42   or an uniform phase,43,44        is still under de-
+tails  in  Sec.V.  The  results  are  presented  in  Table         I  for      bate.   Without  doubt,  the  energy  is  one  of  the  critical
+various  V .   As  seen  from  Table  I,  the  SU  method  may                 criterions  to  determine  the  ground  state  of  the  system.
+give  the  results  with  errors  around  5×10−3  when  V   is                 We calculate the ground energies of diﬀerent system sizes,
+small, but the  errors increase for larger V .  When V =2,                     using D = 12, Dc = 36 ∼ 50, and the results are shown in
+the error of SU is about 10−2.  The GO may signiﬁcantly                        Table  III  for both SU and GO methods.  Again we see GO
+improve  the  ground  state  energies.   By  using  the  given                 method greatly improves the energies obtained from SU
+D  and  Dc,  we  are  able  to  obtain  an  impressive  highly                 method.  By extrapolating the energy to thermodynamic
+accurate ground state with relative error near ∼ 10−5.                         limit,  we  obtain  that  the  ground  state  energy  -0.6701,
+  We  now  consider  a  special  case  of  V =0,  where  the                   which is lower than the value -0.669330             from state of art
+model  reduces  to  the  free  fermion  model.   Although  in                  DMRG calculations42         with χ → ∞, and -0.6619 obtained
+this case, the model is exactly solvable, it is a challenging                  from variation quantum Monte Carlo plus p-step Lanczos
+model  for  the  fPEPS method  because  the  free  fermions                    methods.45     More results of t-J model46         will be published
+have  strong  entanglement  in  real  space  S  ∼  Ld−1logL                    in a separate paper.
+that violates the area law.27       Especially at µ=0, the Fermi
+surface is very large, making the problem more diﬃcult.
+One  may  expect  that  to  obtain  the  high  accuracy  re-                               V.     CONVERGENCE  OF  FPEPS
+sults it requires very large D  and Dc.  Furthermore, the
+required  parameters  D  and  Dc  will  generally  increase                       Fermion systems may have large entanglement that be-
+rapidly  with  the  increasing  of  the  size  of  the  system  to             yond  the  area  law27     and  therefore  it  may  need  large  D
+keep the given accuracy.  In Table           II, we list the ground            to  represent the  many-particle  state.  One  may  also  ex-
+states  energies  of  the  free  fermion  model  on  the  square               pect that the D and Dc will increase with the size of the
+lattice with diﬀerent sizes obtained from the SU and GO                        system.  The speed of the increasing of D  and Dc  along
+methods,  compared with  the  exact results  Eex.  We  see                     with the size of the system indicates the eﬃciency of the
+that the relative errors of the SU are usually about 10−2                      simulation methods.  It is  important to understand how
+for  D=8,  but  sometimes  the  SU  method  may  have  nu-                     the  fPEPS  calculations  converge  respect  to  D  and  Dc.
+merical  instability  in  some  small  systems.   The  perfor-                 For  ﬁnite  systems,  we  can  explicitly  exam  what  D  and
+                                                                                                                                                            7
+
+
+TABLE II: Compare the ground state energies of the free fermion model of SU (D=8), and GO (D=6, 8) with the exact results.
+For the 4×4 lattice, the SU result is numerically instable for D=8.
+                                     SU(D=8)                GO(D=6)                               GO(D=8)
+                             Size      Energy     Energy   Dc  relative error   Energy   Dc   relative error    exact
+                             4×4            -          -0.68398  16       4×10−5       -0.68401   32        1×10−5       -0.68402
+                             6×6     -0.67721   -0.73269  24       5×10−4       -0.73305   52        5×10−5       -0.73309
+                             8×8     -0.74763   -0.75414  40       1×10−3       -0.75492   84        2×10−4       -0.75510
+                            10×10   -0.75387   -0.76619  55       1×10−3       -0.76705  110       5×10−4       -0.76748
+                            12×12          -          -0.77094  80       5×10−3              -           -               -             -0.77538
+
+
+                                                                                              0.001
+TABLE III: Compare the ground state energies of t-J model
+with hole ﬁlling ¯nh=0.125 calculated by SU and GO methods.                                   0.000
+A virtual bond dimension D = 12 is used.
+                       size          SU           GO                                         -0.001                                V=0,L=4
+                       4×4     -0.55108  -0.56420                                                                                  V=0,L=10
+                       4×8     -0.57994  -0.59055                                            -0.002                                V=2,L=4
+                       6×8     -0.59431  -0.60349                                                                                  V=2,L=10
+                       8×8     -0.60849  -0.61184                                                                                                    (a)-0.003
+
+                      8×10    -0.61068  -0.61738                                              0.000
+                      8×12    -0.61707  -0.62164
+                      12×12   -0.62307  -0.62973                                             -0.001                            L=4
+                     L → ∞  -0.66757  -0.67008                                                                                 L=6
+                                                                                                                               L=12
+                                                                                             -0.002
+Dc  are needed to converge the  results  as the size of the                                                                                      (b)
+systems grow up.  In this section, we will discuss the con-                                  -0.003       10         20         30         40         50
+vergence  of  the  parameters  D  and  Dc  respectively.   We                                                                D
+show that the behavior depends strongly on the models.                                                                         c
+   We ﬁrst investigate the convergency of the ground state                        FIG. 8:  (a) The energy errors ∆E (See Eq.           20) as functions of
+energies to Dc in a given system with ﬁxed parameter D.                           Dc  for the interacting electron model on the 4×4 and 10×10
+We calculate the error of energy deﬁned as,                                       lattices.    A  virtual  bond  dimension  D  =  8  is  used  in  the
+                                                                                  calculations.   (b)  The  energy  errors  ∆E  as  functions  of  Dc
+                    ∆E = E(Dc) − E(Dmaxc     ) ,                   (20)           for the t-J model with  ¯nh=0.125 on the 4×4, 6×6 and 12×12
+                                                                                  lattices.    A  virtual  bond  dimension  D  =12  is  used  in  the
+where E(Dc) is the  energy with a giving truncation pa-                           calculations.  The dashed black line is a guide to the eye.
+rameter Dc  and E(Dmaxc     ) is the converged energy where
+the maximal Dc  is used.
+   Figure   8(a) depicts the results of the spin-less fermion
+model with V  = 0 (free fermion) and V  = 2; and diﬀerent                         (about  3D),  whereas  the  energy  of  free  fermions  is  not
+system sizes, the  4 × 4  and 10 × 10 lattices.  We  ﬁx  the                      well converged even at Dc = 48.
+bond dimension at D = 8.  We use Dmaxc      = 48 for the 4×4                         We investigate the convergence of the t-J model at hole
+system and Dmaxc      = 64 for the 10 × 10 system.  We ﬁrst                       doping ¯nh=0.125, and the results are shown in Fig.                  8(b).
+note that ∆Es approach 0 in a non-trivial way, which are                          In  the  calculations,  D  =  12  is  used,  and  the  result  of
+not  always  from  above  (i.e.,  ∆E  >0).  This  means  that                     Dmaxc     =50  is  used  as  a  reference.   Interestingly,  we  ﬁnd
+the  ground  state  energy  is  not  variational  to  Dc,  and                    the  ground  state  energies  converge rather  fast  with  Dc.
+therefore one must be  very careful to extrapolate Dc  to                         The errors reduce to 3×10−4 for Dc=2D, and the errors
+inﬁnite.  The convergency of energy is model dependent.                           reduce to 1×10−5 for Dc=3D, More importantly, unlike
+As shown in the ﬁgure, Dc converge much faster for V  =                           the interacting fermion model, Dc is only slightly depen-
+2 (correlated electrons) than for V =0 (free electrons).  In                      dent on the size of the system.
+both cases, the convergency of energy strongly depend on                             The  energy  errors  in  the  calculations  are  induced  by
+the size of the systems.  In the cases of small sizes L=4,                        the contraction errors due to bond dimension truncation.
+the  energies converge rather fast with Dc.  However, for                         We further test the relationship between the convergent
+the 10×10 system, ∆E converge much slower as functions                            truncation dimension Dc  and the size of the system, i.e.
+of Dc.  For V  = 2, the energy is well converged at Dc = 26                       we  exam  the  minimal  Dc  needed  to  ensure  the  relative
+                                                                                                                                                       8
+
+contracting  error  δ  <  10−6  (see  Eq.       16)  along  with  the                        80        free electron       (a)
+increasing of the system size.  The bond dimension used                                                V=2
+here is ﬁxed to a relatively small one D = 6.  We compare                                    60        t-J model
+the truncation errors for the spin-less interacting electron                                           Heisenberg
+model at V =0 and V =2.  For the t-J model, we compare                                       40
+two situations, the hole doping ¯nh=0.125, and the ¯nh=0,                                    20
+and the later one reduces to the Heisenberg model.  The
+results are shown in Fig.       9(a).  We ﬁnd that the required                               04              6              8             10            12
+Dc is almost independent of the size of the system for the                                                           L
+Heisenberg model, and for the t-J model with hole ﬁlling
+¯nh=0.125.   However,  the  required  Dc  increases  rapidly                               100        free electron         (b)
+with  the  size  of  the  system  for  the  interacting  electron                                     V=2
+model, especially for the free electrons.  At L=12, Dc=80                                    75       t-J model
+is required to ensure the desired contraction accuracy for                                            Heisenberg
+the free electron model and Dc=40 for the V =2 model.                                        50
+  We  also  exam  the  relationship  between  Dc  and  the                                   25
+bond dimension D.  In this test, we ﬁxed the size of the
+system  to  L=10.   The  results  are  shown  in  Fig.             9(b).                      04              5              6              7              8
+We  see  that  the  required  Dc  increase  roughly  linearly                                                        D
+with D for these models.  For the Heisenberg model (and
+even  J1-J2  model)47      and  the  t-J  model  with  hole  ﬁlling           FIG. 9:  The bond truncation dimensions Dc needed to ensure
+¯nh  =0.125,  Dc∼  2D  -  3D  is  enough  to  ensure  the  ac-                the  contraction  error  δ  <10−6  (see  Eq.       16)  as  functions  of
+curacy  of  contraction,  whereas  for  the  interacting  elec-               (a)  the  lattice  size  L  and  (b)  the  virtual  bond  dimension  D
+tron  model,  Dc∼  9D  -  15D  are  required  to  ensure  the                 for various models, including the spin-less interacting fermion
+desired  contraction  accuracy,  which  becomes  the  major                   models,  and the t-J model.  The  “t-J model”  in  the ﬁgure is
+diﬃcult  to  simulate  these  models.   We  note  that  in  the               calculated  with  parameters  J  =  0.4,  ¯nh=0.125,  whereas  the
+standard  contraction  method,  the  bond  truncation  di-                    “Heisenberg” model is calculated using t-J model in the limit
+mension  Dc2  for  a  double  layer  tensor  network  should                  of  ¯nh=0.
+scale as D2,28,29     making the simulation of fermions with
+large D even more diﬃcult.
+  With the convergent Dc for each D, we can analyze the                       techniques  to  optimize  the  fPEPS  wave  functions  for
+convergence of the  energy against D  for  a  given system                    fermion systems.  The Monte Carlo sampling techniques
+size.  The energy of a model in the thermodynamic limit                       may  greatly  reduce  the  scaling  of  the  calculation,  and
+can  be  further  extracted  by  ﬁnite  size  scaling  method.                therefore  allow  using  larger  bond  dimensions  (D)  and
+The convergence of the energy against the parameter D                         bond  truncation  dimensions  (Dc)  in  the  calculations,
+are  shown  in  Fig.     10,  where  ∆E  is  deﬁned  as  the  en-             which is important for the faithful simulations of fermion
+ergy diﬀerences compared to those of maxima D, which                          systems.
+are Dmax=8 for the free fermion model and Dmax=10 for                            We  benchmark  the  method  on  the  interacting  spin-
+the interacting fermion model with V =2.  A Dmax=12 is                        less  fermion  models,  and  the  t-J  models.   The  numeri-
+used for the t-J  model with  ¯nh=0.125.  Surprisingly, for                   cal calculations show that the gradient optimization may
+the free fermion model (V =0), we have ∆E  ≈ 4 × 10−4                         greatly enhance the accuracy of the results over the sim-
+for  D=7  on  the  10×10  lattice,  as  shown  in  Fig.          10(a),       ple update method.  We further investigate the converge
+where one may expect a much larger error.  For the inter-                     of  fPEPS calculation  with  respect  to  D  and  Dc  for  the
+acting fermion with V  = 2, which is shown in Fig.               10(b),       models.    The  free  fermion  model  is  most  challenging
+the energy is also converged to ∆E ≈ 1 × 10−4 at D=8.                         to  simulate  with  fPEPS,  because  the  Dc  increase  very
+On the  other hand,  for the  t-J  model, the  energies con-                  rapidly with D and the size of the system.  For t-J mod-
+verge rather slowly with D.  For the 12 × 12 system, the                      els,  we  ﬁnd  that  large  Ds  are  needed  to  converge  the
+energy errors reduces to about 3 × 10−4 at D = 11.  The                       results.   Our  method  therefore  oﬀer  a  powerful  tool  to
+non-trivial dependence of D and Dc for diﬀerent models                        simulate fermion systems because it has much lower scal-
+may  pose  some  interesting  questions  to  understand  the                  ing in both computational time and memory than direct
+structure  of  fPEPS. We  leave  these  problems  for  future                 contraction methods.
+studies.
+
+                                                                                                  VII.     ACKNOWLEDGE
+                        VI.     SUMMARY
+                                                                                 This   work   was   funded   by   the   National   Key   Re-
+  In  this  work,  we  extend  the  stochastic  gradient  opti-               search  and  Development  Program  of  China  (Grant  No.
+mization  method  combined  with  Monte  Carlo  sampling                      2016YFB0201202), the  Chinese  National  Science  Foun-
+                                                                                                                                                           9
+
+               0.008                                                                                                           A'         B
+                                  free electron           (a)
+               0.006                       L=4                                                     A         B    =                or
+               0.004                       L=6                                                                                 A         B'
+                                           L=10
+
+               0.002                                                                    FIG. 11:  The rule for reversing the Fermi arrow.
+
+               0.000
+
+               0.012                   V=2                (b)                                          u                              l
+               0.010
+               0.008                       L=4                                                 l                  rAHermitianu                 dA†
+               0.006                       L=6                                                                   conjugate
+                                           L=10
+               0.004                                                                                 d                              r
+               0.002
+               0.000                                                             FIG. 12:  The rule of taking a Hermitian conjugate a tensor.
+
+               0.025                  t-J model            (c)
+               0.020
+               0.015                       L=4                                   follows.  Suppose,
+                                           L=8
+               0.010                       L=12                                                        ˆA  =   ∑     Aβ1,β2aβ11  aβ22   ,
+               0.005                                                                                          β1,β2
+               0.000                                                                                  ˆB   =   ∑
+                    4              6              8             10            12                                     Bβ3,β4aβ33  aβ44   ,
+                                         D                                                                    β3,β4
+
+FIG. 10:  The convergence of ground state energy as functions                    are  two  projectors  in  a  fPEPS  that  are  connected  by  a
+of D for (a) the free fermion model, (b) the interacting spin-                   Fermi arrow pointing from  ˆA to  ˆB, as shown on the left
+less  fermions  model  with  V =2,  and  (c)  the  t-J  model  with              side of Fig.   11.  We may reverse the Fermi arrow, pointing
+¯nh=0.125, on the lattices of diﬀerent sizes.  The dashed black                  from  ˆB  to  ˆA, and resulting in two possible (but equiva-
+line is a guide to the eye.                                                      lent) forms that are given on the right side of Fig.                11.  It
+                                                                                 is easy to prove that,
+
+                                                                                                   ˆA′   =   ∑    ˜p(β2)Aβ1,β2aβ11  aβ22  ,
+dation   (Grants  No.     11774327,   No.     11874343,   No.                                              β1,β2
+11474267), and the Strategic Priority Research Program                                             ˆB′   =   ∑    ˜p(β3)Bβ3,β4aβ33  aβ44  .               (A1)
+(B)  of  the  Chinese  Academy  of  Sciences  (Grant  No.                                                  β3,β4
+XDB01030200).  China Postdoctoral Science Foundation                                When we calculate the expectation value of a physical
+funded project (Grant No.  2018M632529).  The numeri-                            quantity,  ⟨ΨfPEPS| ˆO|ΨfPEPS⟩,  we  need  take  the  Hermi-
+cal calculations have been done on the USTC HPC facil-                           tian conjugate of ket state |ΨfPEPS⟩ to get the bra state
+ities.                                                                           ⟨ΨfPEPS|.   When  taking  the  Hermitian  conjugate  of  the
+
+                                                                                 projectors in a fPEPS, we need to (i) reserve the orders
+                                                                                 of  the  indices  of  the  tensor  associated  with  the  projec-
+                                                                                 tors,  e.g.,  change  tensor  Al,d,r,u  to  A†u,r,d,l,  as  shown  in
+           Appendix  A:  Rules  for  Fermi  arrows                               Fig.  12;  and (ii) reverse all the  Fermi arrows associated
+                                                                                 with the projectors.  Note that here the reversion of the
+   In this Appendix, we give the rules of operations asso-                       Ferim arrows is required by the Hermitian conjugate, and
+ciated with the  Fermi arrows in fPEPS. These rules are                          no change is needed for the tensors during the process.
+straightforward to prove.
+                                                                                           b.    Matrix decompositions  and contractions
+
+                                                                                    The  operations  such  as  tensor  decompositions  also
+  a.    Reversing  Fermi  arrows  and the Hermitian conjugate                    have  close  relation  to  the  Fermi  arrows.   For  example,
+                                                                                 in the standard PEPS, when we do SVD to a matrix C,
+                                                                                 we have C=USV .  However, in fPEPS, two Fermi arrows
+   Sometimes, we need to reverse the direction of a Fermi                        should be inserted to the inner bonds after the decompo-
+arrow.   The  rule  of  reversing  Fermi  arrows  is  giving  as                 sition, i.e., the Fermi arrow pointing from  ˆU to  ˆS, and the
+                                                                                                                                                              10
+
+      (a)       C          SVD            U         S            V                 Fermi arrows (i.e.,  directed EPR pairs) between the de-
+                                                                                   composed matrices, as shown in Fig.                 13(b),(c).
+
+      (b)                  QR
+                C                              Q         R
+
+      (c)                   LQ                                                                            Q        Q†             =
+                C                               L         Q
+
+FIG.  13:        The  rules  for   (a)  SVD  decomposition,    ˆC   =                                     Q        Q†             =
+ˆU ˆS ˆV ˆI ˆU→ ˆS ˆI ˆS→ ˆV ;  (b)  the QR  decomposition,  ˆC  =  ˆQ ˆRˆI ˆQ→ ˆR;
+and (c) the LQ decomposition,  ˆC =  ˆL ˆQ ˆI ˆL→ ˆQ.  The EPR pairs               FIG.  14:  The  rule  of  contacting   ˆQi ˆQ†
+with Fermi arrows has been inserted into decomposed matri-                                                                         i .   To  use  the  orthogo-
+ces.  The bonds on the left  and right side can have arrows in                     nality   ˆQi ˆQ†i =I,  the  Fermi  arrows  must  have  “consistent  di-
+either direction,  which  keep unchanged  after  the decomposi-                    rections” as shown above.
+tions.
+
+
+
+one  pointing  from  ˆS  to  ˆV  as  follows,  and  schematically                     In  standard  PEPS,  we  often  use  so  called  canonical
+shown in Fig.      13(a),                                                          form of MPS in the MPO algorithm28,29                    to contract the
+                      ˆC =  ˆU ˆS ˆV ˆI ˆU→ ˆS ˆI ˆS→ ˆV ,                        (A2)PEPS, taking the  advantage of the  orthogonality of the
+                                                                                   Qi  tensors  obtained  from  LQ/QR  decompositions  (or
+                                                                                   the  U  and  V  matrices  from  SVD  decompostions),9                    i.e.,
+where                                                                              QiQ†i =I,  where  I  is  a  unit  matrix.    However,  this  re-
+                       ˆC   =  ∑    Cα,βaαLaβ                                      lation  cann’t  be  directly  used  in  the  fPEPS,  where  we
+                                                R                                  need to take the Fermi arrows into consideration during
+                                α,β                                                the  contractions.   It  is  easily  prove  that  only  when  the
+                       ˆU   =   ∑    Uα,δU aαLaδUU                                 Fermi arrows have “consistent directions”, i.e., all Fermi
+                               α,δU                                                arrows  point  from   ˆQ  to   ˆQ†,  or  from   ˆQ†  to   ˆQ,  we  can
+                        ˆS   =   ∑   Sδ1,δ2aδ1S1aδ2S2                              use  the  orthogonality  condition  for   ˆQ  matrix.   The  re-
+                                                                                   sults  after  contraction are Fermi  arrows pointing  to  the
+                               δ1,δ2                                               right  or  to  the  left,  as  schematically  shown  in  Fig.             14.
+                       ˆV   =   ∑    VδV ,βaδVV  aβR                       (A3)    If the Fermi arrows are not “consistent”, we need to re-
+                               δV ,β                                               arrange the directions of the Fermi arrows ﬁrst to make
+                                                                                   them  “consistent”,  before  we  can  use  the  orthogonality
+Other matrix decompositions such as LQ/QR decompo-                                 condition.  This is done in Sec.III, when we contract two
+sitions  follow  the  similar  rules,  i.e.,  one  need  to  insert                rows of fPEPS via a MPO scheme.
+
+
+
+
+
+
+
+ ∗  Electronic address:      smhan@ustc.edu.cn                                      9  U. Schollwck,  Annals of  Physics 326,  96   (2011),  january
+ †  Electronic address:      helx@ustc.edu.cn                                          2011 Special Issue.
+ 1  P.  A. Lee,  N.  Nagaosa,  and  X.-G.  Wen,  Rev. Mod.  Phys.                  10  D. Perez-Garcia, F. Verstraete, M. M. Wolf, and J. I. Cirac,
+   78, 17 (2006).                                                                      Quantum Info. Comput. 7, 401 (2007).
+ 2  H. L. Stormer, D. C. Tsui, and A. C. Gossard, Rev. Mod.                        11  F. Verstraete, V. Murg, and J. Cirac, Advances in Physics
+   Phys. 71, S298 (1999).                                                              57, 143 (2008).
+ 3  D.  M.  Edwards  and  A.  C.  Hewson,  Rev.  Mod.  Phys.  40,                  12  H. C.  Jiang,  Z. Y. Weng,  and T.  Xiang,  Phys. Rev. Lett.
+   810 (1968).                                                                         101, 090603 (2008).
+ 4  M.  Imada,  A.  Fujimori,  and  Y. Tokura,  Rev. Mod.  Phys.                   13  G. Vidal, Phys. Rev. Lett. 101, 110501 (2008).
+   70, 1039 (1998).                                                                14  F.  Verstraete  and  J.  I.  Cirac,   arXiv:cond-mat/0407066
+ 5  W. M. C. Foulkes, L. Mitas, R. J. Needs, and G. Rajagopal,                         (2004).
+   Rev. Mod. Phys. 73, 33 (2001).                                                  15  A. Sfondrini, J. Cerrillo, N. Schuch, and J. I. Cirac, Phys.
+ 6  Z.-X. Li and H. Yao, arXiv:1805.08219v2  (2018).                                   Rev. B 81, 214426 (2010).
+ 7  E. Y. Loh, J. E. Gubernatis, R. T. Scalettar, S. R. White,                     16  F. Verstraete, M. M. Wolf, D. Perez-Garcia, and J. I. Cirac,
+   D.  J.  Scalapino,  and  R.  L.  Sugar,  Phys.  Rev.  B  41,  9301                  Phys. Rev. Lett. 96, 220601 (2006).
+   (1990).                                                                         17  L.  Wang,  Z.-C.  Gu,  F.  Verstraete,  and  X.-G.  Wen,  Phys.
+ 8  M.  Troyer  and  U.-J.  Wiese,  Phys.  Rev.  Lett.  94,  170201                    Rev. B 94, 075143 (2016).
+   (2005).                                                                         18  G. Vidal, Phys. Rev. Lett. 98, 070201 (2007).
+                                                                                                                                                                11
+
+
+19  A.  M.-H.,  J.  I.  Cirac,  and  M.  C.  Bauls,  New  Journal  of               34  S.-J.  Dong,  W.  Liu,  X.-F.  Zhou,  G.-C.  Guo,  Z.-W.  Zhou,
+   Physics 14, 075003 (2012).                                                           Y.-J. Han, and L. He, Phys. Rev. B 96, 045119 (2017).
+20  T.  Barthel,  C.  Pineda,  and  J.  Eisert,  Phys.  Rev.  A  80,                35  W.-Y. Liu,  S.-J. Dong, Y.-J. Han, G.-C.  Guo,  and L. He,
+   042333 (2009).                                                                       Phys. Rev. B 95, 195154 (2017).
+21  P. Corboz, R. Or´us, B. Bauer, and G. Vidal, Phys. Rev. B                       36  L.  He,  H.  An,  C.  Yang,  F.  Wang,  J.  Chen,  C.  Wang,
+   81, 165104 (2010).                                                                   W. Liang, S. Dong, Q. Sun, W. Han, et al., IEEE Transac-
+22  P.  Corboz,  S.  R.  White,  G.  Vidal,  and  M.  Troyer,  Phys.                    tions on Parallel and Distributed Systems 29, 2838 (2018).
+   Rev. B 84, 041108 (2011).                                                        37  S.-J.  Dong,  W.-Y.  Liu,  C.  Wang,  Y.  Han,  G.-C.  Guo,
+23  Z.-C.  Gu, F. Verstraete,  and  X.-G. Wen, arXiv:1004.2563                          and  L.  He,  Computer  Physics  Communications  228,  163
+   (2010).                                                                              (2018).
+24  Z.-C.  Gu,  H.-C.  Jiang,  D.  N.  Sheng,  H.  Yao,  L.  Balents,               38  L.  Vanderstraeten,  J.  Haegeman,  P.  Corboz,  and  F.  Ver-
+   and X.-G. Wen, Phys. Rev. B 88, 155112 (2013).                                       straete, Phys. Rev. B 94, 155123 (2016).
+25  C.  V.  Kraus,  N.  Schuch,  F.  Verstraete,  and  J.  I.  Cirac,               39  J. de Woul and E. Langmann, Journal of Statistical Physics
+   Phys. Rev. A 81, 052338 (2010).                                                      139, 1033 (2010).
+26  M.  B. Hastings,  Journal of  Statistical  Mechanics:  Theory                   40  F. C. Zhang and T. M. Rice, Phys. Rev. B 37, 3759 (1988).
+   and Experiment 2007, P08024 (2007).                                              41  C.  S.  Hellberg  and  E.  Manousakis,  Phys.  Rev.  Lett.  83,
+27  M. M. Wolf, Phys. Rev. Lett. 96, 010404 (2006).                                     132 (1999).
+28  M.  Lubasch,  J.  I. Cirac,  and  M.-C.  Ba˜nuls,  Phys. Rev. B                 42  S. R. White and D. J. Scalapino, Phys. Rev. Lett. 80, 1272
+   90, 064425 (2014).                                                                   (1998).
+29  M. Lubasch, J. I. Cirac, and M.-C. Bauls, New Journal of                        43  A. Sherman and M. Schreiber, European Physical Journal
+   Physics 16, 033014 (2014).                                                           B 32, 203 (2003), cond-mat/0302356.
+30  P.  Corboz,  T.  M.  Rice,  and  M.  Troyer,  Phys.  Rev.  Lett.                44  A.  Vineet  Mallik,  G.  K.  Gupta,  V. B.  Shenoy, and  H. R.
+   113, 046402 (2014).                                                                  Krishnamurthy, arXiv:1805.02429  (2018).
+31  A. W. Sandvik and G. Vidal, Phys. Rev. Lett. 99, 220602                         45  W.-J.  Hu,  F.  Becca,  and  S.  Sorella,  Phys.  Rev.  B  85,
+   (2007).                                                                              081110 (2012).
+32  N.  Schuch,  M.  M.  Wolf,  F.  Verstraete,  and  J.  I.  Cirac,                46  S.-J. Dong, C. Wang, Y. Han, C. Yang, and L. He, unpub-
+   Phys. Rev. Lett. 100, 040501 (2008).                                                 lished.
+33  M.     C.     Ba˜nuls,      K.     Cichy,      J.     Ignacio     Cirac,        47  W.-Y. Liu, S. Dong, C. Wang, Y. Han, H. An, G.-C. Guo,
+   K.      Jansen,       S.      K¨uhn,       and      H.      Saito,       in          and L. He, Phys. Rev. B 98, 241109 (2018).
+   European Physical Journal Web of Conferences      (2017),
+   vol. 137, p. 04001.

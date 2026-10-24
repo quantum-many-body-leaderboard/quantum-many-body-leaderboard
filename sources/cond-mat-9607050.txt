@@ -1,0 +1,866 @@
+                                                                                                             typeset using JPSJ.sty <ver.0.7f>
+
+
+                 Phase  Diagram  and  Pairing Symmetry  of  the Two-Dimensional  t-J
+                                                  Model  by a  Variation  Theory
+
+                                             Hisatoshi Yokoyama∗ and Masao Ogata1,∗∗
+
+                             Department  of  Physics,  Tohoku  University,  Aramaki  Aoba,  Aoba-ku,  Sendai  980-77
+            1Department  of  Basic  Science,  Graduate  School  of  Arts  and  Sciences,  University  of  Tokyo,  Komaba,  Meguro-ku,
+                                                                      Tokyo  153
+
+                                                        (Received                                             )
+
+                   Two-dimensional t-J  model is studied by a variational Monte Carlo method, using Gutzwiller-
+                 Jastrow-type wave functions.  Various kinds of superconducting pairing symmetries are compared
+                 in  order  to  determine the phase  diagram  of  the  ground  state  in  the full  J/t-n  plane.  Near the
+                 half  ﬁlling  where the high  temperature superconductivity is expected, the dx2−y2  wave pairing
+                 state is always  the most  stable among various symmetries.  The three-site term hardly changes
+                 the phase diagram in this regime.  In the low electron density, the extended s-type wave becomes
+                 a  quantitatively  good  state  for  large  J/t  although  the  energy  gain  is  small.   The  Gutzwiller
+                 wave  function  is  shown  to  be  the  exact  ground  state  in  the  low-electron-density  limit  for  the
+                 supersymmetric case (J/t = 2).
+
+
+              KEYWORDS:  high temperature superconductivity,  t-J  model, variation theory, pairing symmetry, three-site term,
+                              Monte Carlo method,  phase diagram, Gutzwiller wave function,  Gutzwiller approximation
+
+
+
+§1.     Introduction                                                          the  wider  range  of  parameter  space,  it  is  necessary  to
+   Symmetry of Cooper pairs is considered as a key point                      clarify  the  region  where  the  dx2−y2-wave  is  stable.   For
+to elucidate the mechanism of high-Tc superconductivity.                      example, in the low-electron-density side a metallic state
+Many extensive experiments suggest that the unconven-                         is  expected,  while  in the  large-J/t region a  phase  sepa-
+tional  dx2−y2  anisotropic  pairing  is  realized  in  high-Tc               ration is predicted.16, 17) The relation between the phase
+oxides.1)  Interesting  phenomena  due  to  this  anisotropic                 separation and the dx2−y2-wave state is not so clear.  Ac-
+pairing have been studied phenomenologically.  Actually                       tually  from  the  phase  diagram  of  the  one-dimensional
+the two-dimensional (2D)t-J model, which is considered                        (1D) t-J   model,  we  expect  that  the  superconducting
+as an eﬀective Hamiltonian for the high-Tc oxides,2) will                     state is next to the phase separation.18)  But even if this
+probably have a ground-state with the dx2−y2-wave pair-                       is the case in 2D, we have to clarify the pairing symmetry
+ing state for the reasonable parameters.                                      of the neighboring superconducting state.
+   The  2D t-J  model  is  derived  by  regarding  a  singlet                    Meanwhile, in the low-electron densities, there may be
+between  the  Cu  spin  and  the  hole’s  spin  on  the  neigh-               a region where the s-wave pairing becomes stable.13) The
+boring O sites (Zhang-Rice singlet) as a mobile vacancy                       two-electron problem is analytically solved,16, 19, 20, 21) to
+in  the  Heisenberg  spin  system.3)  Diﬀerent  approaches,                   show a stable s-wave bound state forJ/t ≥ 2.  This sug-
+such  as  mean-ﬁeld  theories,4, 5, 6, 7, 8, 9)  variational  stud-           gests that the extended s-wave pairing state is favorable
+ies10, 11, 12)  and  exact  diagonalization  methods,13, 14, 15)              for J/t  ≥  2  in  the  low-density  region.   Actually  in  the
+support the dx2−y2-wave pairing near half ﬁlling and for                      1D t-J  model,  such  a  state  was  expected.18)  For  ﬁnite
+J/t ∼ 0.4.                                                                    electron densities  in the  2D case, we  have to  check this
+   In this paper we study more extensively various pairing                    possibility.  It is far from clear how this s-wave state re-
+states  in  the  whole  parameter  space  (J/t  and  electron                 lates  to  the  dx2−y2-wave  state  as  well  as  to  the  phase
+densityn) using a variational Monte Carlo method, and                         separation.
+determine the phase diagram of the ground state.                                 For the supersymmetric case (J/t = 2), or on the edge
+   It  seems  natural  that  the  strong  on-site  repulsion                  of this extended s-wave region, we expect that the Gutz-
+between   up-spin   and   down-spin   electrons   favors  the                 willer wave function (GWF)22) becomes the exact ground
+anisotropic dx2−y2-wave pairing.  However, it is not at all                   state for n → 0.  This fact was predicted before in con-
+apparent why, for example, the extended s-wave pairing                        nection with  the  1D t-J  model.23)  It  is  very interesting
+state, which does not have the on-site pairing amplitude                      to clarify the role of the GWF in the phase diagram.
+either, is not realized.                                                         With these aspects in mind, we focus on the following
+   Furthermore,  many  discussions  on  the  dx2−y2-wave                      points  in  this  paper.   (1)  How  and  why  is  the  dx2−y2-
+pairing have been limited to the low doping regime (near                      wave pairing stabilized, but not the other pairing states
+the half ﬁlling) and to small values ofJ/t.  If we consider                   for  the  high-Tc  parameters?  (2)  The  ranges  of  the  sta-
+                                                                              ble  dx2−y2-wave  state  as  well  as  other  ones.   Namely  is
+
+∗ Electronic address:  yoko@cmpt01.phys.tohoku.ac.jp                          there any possibility for the other pairing state to be re-
+
+∗∗ Electronic address:  ogata@sola.c.u-tokyo.ac.jp                            alized in the phase diagram?  (3) How large is the region
+
+
+                                                                            1
+2                                                                                       Hisatoshi Yokoyama and Masao Ogata
+
+where the phase separation takes place?  (4) Is there any                    model.25)  Thus our model is written as
+region where  the  extended  s-wave state  is  stable  in  the                                       H = Ht + HJ + H3,                       (2.1)
+low-electron density?  (5) How are the variational states
+connected to the states in the low electron density limit                                                      (                    )
+and what happens at the supersymmetric case (J/t = 2)?                                        Ht = −t ∑          c†iσcjσ +c†jσciσ     ,             (2.2)
+(6) How does the three-site term aﬀect the above results?                                                ⟨i,j⟩σ
+   In  order  to  study  these  questions  on  the  phase  di-                                               (                      )
+agram,   we   use   the   variational   Monte   Carlo   (VMC)                                HJ  =J∑           Si · Sj − 1             ,             (2.3)
+method.  So  far, the  exact treatments like the  quantum                                                                   4ninj
+Monte  Carlo  methods  have  been  often  useless  for  the                                             ⟨i,j⟩
+2D t-J  model  because  of  the  minus  sign  problem.   On                                             ∑      (
+the  other  hand,  the  present  VMC  method  is  free  from                         H3 = −J (3)                 c†j,−σcj,−σc†j+τ,σcj+τ ′,σ
+such an obstacle and treats exactly the constraint of no                                          4  j,τ ⁄=τ ′,σ
+doubly occupied sites.10, 11, 12) Accurate estimates of the                                                                           )
+expectation values are possible, which are indispensable                                              +c†j+τ,−σcj,−σc†j,σcj+τ ′,σ       ,           (2.4)
+to take advantage of merits of the variation theory.                         where ⟨i,j⟩ represents the sum over the nearest-neighbor
+   As  variational  wave  functions  for  superconductivity,                 pairs. τ  and τ ′  run  as  vectors  pointing  to  the  nearest-
+we  use  Gutzwiller-projected  BCS  functions  which  were                   neighbor sites.  We  take t  as the  energy unit  in  the  fol-
+originally  proposed  by  Anderson  as  a  resonating  va-                   lowing.   This  model  has  four  parameters: J/t, J (3)/J,
+lence  bond  state.2)  It  has  been  shown  that  the  dx2−y2-              electron  density n   = N/Na  and  magnetization m   =
+wave  pairing  state  is  the  best  variational  state  among               (N↑ −N↓)/Na, whereN  (=N↑ +N↓) is the total electron
+Gutzwiller-projected BCS states near half ﬁlling.10, 11, 12)                 number, Na  the number  of sites  and Nσ  the  number  of
+In this paper, we extend previous works to include a va-                     electrons with spinσ.  We study mostly the nonmagnetic
+riety  of  pairing  symmetries  in  the  full  parameter  space              case (m = 0).
+of  the  2D t-J  model  with  the  three-site  term.  We  con-                  The  three-site  term,  H3,  shows  up  in  the  eﬀective
+struct  a  phase  diagram  of  the  ground  state  within  the               Hamiltonian  of  the  Hubbard  model  in  the  strong  cou-
+Gutzwiller-Jastrow-type wave functions.  As will be seen                     pling  regime  (U  ≫ t).25)  In  this  case J (3)  is  equal  to
+later,  the  resultant  2D  phase  diagram  shares  some  fea-               4t2/U(=J).  For the electron-doped high-Tc cuprate (Nd
+tures with the 1D phase diagram.18)                                          system),  the  doped  electrons  directly  enter  the  Cu  or-
+   The  mean-ﬁeld  theories  are  sometimes  useful  to  pre-                bitals, so that the Hubbard model becomes an adequate
+dict the behaviors of the system qualitatively.4, 5, 6, 7, 8, 9)             model26)  and thus we should assume J (3) =J.
+However,  they  treat  the  constraint  of  no  double  occu-                   On  the  other  hand,  if  the  eﬀective  Hamiltonian  is
+pancy approximately.  We are going to compare the ob-                        derived  from  a  hole-doped  CuO2  model  including  Cu
+tained phase  diagram with that  predicted in  the mean-                     dx2−y2   and   O   2p   orbitals,3, 27) J (3)   could   be   nega-
+ﬁeld  theories  with  the  Gutzwiller  approximation.   It  is               tive.28, 29)  Therefore  in  this  paper  we  use J (3)  as  a  pa-
+found  that  a  qualitatively  correct phase  diagram is  ob-                rameter and discuss its eﬀect on the phase diagram.
+tained,  but  quantitatively  we  need  some  modiﬁcations                      For  this  Hamiltonian,  we  study  Gutzwiller-Jastrow-
+for the Gutzwiller approximation.                                            type variational wave functions deﬁned as:
+   The outline of this paper is as follows:  In §2 we explain                                   ∏[        {              }           ]
+the  model  Hamiltonian  and  the  variational  wave  func-                          Ψ =∏            1 −    1 −η(rjℓ)      njσnℓσ′    Φ,          (2.5)
+tions.  In  §3  the  relation between  our  variational states                              j,ℓ σσ′
+and the slave-boson mean-ﬁeld theory is mentioned.  Sec-                     withrjℓ = |rj −rℓ|.  The function Φ is a one-body mean-
+tion 4 is devoted to the discussion on the metallic, mag-                    ﬁeld-type wave function; we consider (1) a simple Fermi
+netic  and  superconducting  states  for  the  high-electron-                sea ΦF  as a metallic state, (2) a Hartree-Fock antiferro-
+density  or  low-doping  regime.  We  study  the  properties
+of the stable dx2−y2-wave state and search for the origin                    magnetic  (AF)  function  for  the  AF  ordered  state,  and
+of  its  stability  in  terms  of  the  resonating  valence  bond            (3)  a  BCS  wave  function  with  various  pairing  symme-
+theory.  In §5 a phase diagram is constructed in the full                    tries.   So  far  these  types  of  wave  functions  have  been
+J/t-n  plane,  and  properties  of  wave  functions  are  de-                widely  used  for  the  small-doping  region.  In  this  paper,
+scribed  in  the  low  electron  density.   We  summarize  in                we study these states in the whole parameter regime.
+§6.  In Appendix  A the energy of the Hubbard model is                          The AF state state is deﬁned as30, 31, 32)[          ]
+shown  for  a  comparison in  §4.1.  The  brief  summary  of                       ΦAF =∏          ˜uk c†                              |0⟩,        (2.6)
+the Gutzwiller approximation is given in Appendix B.                                                    kσ + sgn(σ)  ˜vk c†k+Kσ
+                                                                                             k,σ
+   A part of the present results was published before.24)                    with
+§2.     Model  and  Trial  Wave  Functions                                                         [    (                      )]1/2
+   We consider thet-J model deﬁned in the Hilbert space                                     ˜uk =    1    1 −    εk√                    ,
+without double occupancy of electrons.  In this paper we                                             2             ε2k + ∆2AF
+include the  so-called “three-site term” or “pair-hopping
+term”,  H3,  which  is  usually  neglected  but  is  present
+in  the  eﬀective  Hamiltonian  derived  from  the  Hubbard
+                                          Phase Diagram and Pairing Symmetry of the 2D t-J  Model                                                                     3
+                     [    (                       )]1/2                       ∏
+              ˜vk =    1    1 +    εk√                    .                      j[1 −nj,↑nj,↓] and (b) an intersite correlation factor,
+                       2             ε2k + ∆2AF                                                [L√                )                )]ν
+Here, sgn(σ) takes either +1 or −1 according asσ =↑ or                               η(r) =      π    sin2(πxL      + sin2(πyL          .          (2.12)
+
+↓; εk  =  −2t(coskx + cosky)  and  the  wave  vector K  =                     Here L is the linear dimension of the lattice: Na =L ×
+(π,π)  represents  the  AF  reciprocal lattice  vector.  ∆AF                  L.   We  abbreviate  this  correlation  factor  as  PTLL.   It
+is  an  AF  variational  parameter;  ΦAF  is  reduced  to  the                works  as  repulsive  Jastrow  correlation  for ν >  0  and
+simple Fermi sea ΦF  as ∆AF → 0.                                              attractive one for ν < 0, and is reduced to Pd  for ν = 0.
+   The BCS wave function is given as10, 11, 12)                               This  factor  is  a  Tomonaga-Luttinger-liquid (TLL)  type
+                              [                    ]                          and has been investigated in detail for the 1D,33, 23) and
+                ΦSC =∏         uk +vkc†k↑c†−k↓       |0⟩,             (2.7)   the  2D  systems.34)  Here  we  choose  this  form  only  for
+                           k
+with                                                                          its  simplicity  as  an  intersite  factor.   Alternatively  one
+                                                                              can  use  a  short-range  correlation  factor,23, 35)  but  the
+        ak = vk                                           .           (2.8)   diﬀerence  of  the  optimized  variational  energy  between
+               uk  =                      ∆kεk −µ +√(εk −µ)2 + ∆2k            the two choices is negligibly small.
+For most cases we takeµ as the chemical potential for the                     §3.     Relation   between   Variation   Theory   and
+noninteracting system,µ0.  However the optimal value of                               Slave-Boson  Mean-Field Approximation
+µ ought to change due to the correlation.  We will check                         The phase diagram and physical properties of the 2D
+the µ dependence of the variational energy in §4.3.                           t-J  model  were  extensively  studied  in  the  slave-boson
+   The pairing symmetry of ∆k  is chosen as follows:                      mean-ﬁeld approximation.9) Thus it is important to clar-
+             ∆                                          (i)    s wave         ify  the  relation  to  the  present  variation  theory.   In  the
+ ∆k =        ∆ sinkx sinky                      (ii)    dxy  wave             slave-boson  mean-ﬁeld  approximation,  the  electron  op-
+          ∆(coskx +C cosky)          (iii)    s+d wave                     erator at site i and spin σ is decoupled as36)
+             ∆(coskx +eiθ cosky)         (iv)    s+id wave.                                                ci,σ =b†
+                                                                   (2.9)                                             ifi,σ,                              (3.1)
+In each case ∆ (≥ 0) is a variational parameter and when                      where bi  is  a  slave-boson operator which represents the
+∆ = 0, ΦSC is reduced to the simple Fermi sea, ΦF.  Note                      vacant site (holon), and fi,σ  is a fermion (spinon) oper-
+here  that  the  expectation  value  of  the  order  parameter                ator.
+⟨c†k↑c†−k↓⟩ = ∆SC is not necessarily equal to ∆.  ∆SC is to                      The  mean-ﬁeld  approximation  using  this  slave-boson
+be  calculated as an expectation value in the variational                     representation gives a d-wave pairing state as the ground
+state.  Actually ∆SC  is largely reduced from ∆ near the                      state  near  half  ﬁlling.5, 6, 7)  In  this  state,  the  fermion
+half ﬁlling due to the strong electron correlation.10, 8)                     (spinon)  degrees  of  freedom  have  a  BCS  order  param-
+   By  changing  the  value  of C  (−1  ≤ C  ≤  1)  and θ                     eter
+(0 ≤θ ≤π) in the cases (iii) and (iv), various symmetries
+are  continuously  realized.   For  example,  ∆k  of  the  case                                  ⟨f †i,↑f †i+x,↓⟩ = −⟨f †i,↑f †i+y,↓⟩,                 (3.2)
+(iii) is rewritten as:                                                        and its wave function is the same with eq. (2.7).
+ ∆k = ∆s(coskx + cosky) + ∆d(coskx − cosky),  (2.10)                             On  the  other  hand,  the  slave  bosons  are  assumed  to
+with  ∆s  =  ∆(1 +C)/2  and  ∆d  =  ∆(1 −C)/2.   Thus                         form a bose condensate.6, 7)  Since the slave bosons have
+the state with C  = −1 represents the pure dx2−y2  sym-                       hard-core nature or two bosons cannot occupy the same
+metry,  the  state  with C  =  0  s+d  state,  and  the  state                site,  it  is  not  clear  whether  the  bosons  really  form  a
+with C  = 1 the pure extended s state, respectively.  For                     bose  condensate  in  the  two  (or  quasi-two)  dimensional
+the  case  −1 < C <  1,  the  wave  function  has  diﬀerent                   systems.   In  the  slave-boson  mean-ﬁeld  approximation,
+gap amplitudes in the directions of x and y  axes, which                      however, the hard-core nature is neglected and thus the
+conﬂicts with the symmetry of the lattice.  On the other                      ground-state for the bosons is written as
+hand,  ∆k  of  the  state  (iv)  represents  a  complex  mix-                                              (b†k=0)Nb|0⟩,                              (3.3)
+ture  of the  dx2−y2  and extended s  states.  Especially  at                 where Nb is the number of holes.
+θ =π/2, ∆k  is the so-called s+id state.5)                                       We can take account of the hard-core nature by using
+   Many-body  eﬀects  are  introduced  into  eq.  (2.5)  by  a                a Gutzwiller projection operator for bosons
+two-body Jastrow correlation factor
+                  ∏[         {              }           ]                                                 Pb(b†k=0)Nb|0⟩,                            (3.4)
+        P =∏            1 −    1 −η(rjℓ)      njσnℓσ′    .           (2.11)
+               j,ℓσσ′                                                         instead  of  (3.3).   Even  in  this  case,  the  wave-function
+This  factor  reduces  the  amplitude  of  the  wave  func-                   amplitude for the slave boson is equal to 1 for any boson
+tion  according  to  the  charge  conﬁguration.   By  requir-                 conﬁgurations.
+ing η(0)  =  0,  the  local  constraint  of  the  prohibition  of                The   electronic   wave-function   in    the    slave-boson
+double occupancy (Gutzwiller projection) is strictly sat-                     scheme  is  the  product  of  the  fermion  and  boson  wave
+isﬁed.   For r  ⁄=  0,  we  consider  two  cases:  (a) η(r)  =  1,            functions.   Therefore  the  ground-state  obtained  in  the
+which  is  nothing  but  the  Gutzwiller  projection  Pd  =                   slave-boson mean-ﬁeld  theory  is  equal  to  eq.  (2.7);  our
+                                                                              variational calculations take full account of the eﬀect of
+4                                                                                       Hisatoshi Yokoyama and Masao Ogata
+
+the Gutzwiller projection.                                                  in itself against the phase separation.
+  The  VMC  method24, 37)  enables  us  to  estimate  accu-                    As shown in Appendix A, this is in sharp contrast with
+rate expectation values even in the presence of the Gutz-                   the  GWF  in  the  Hubbard  model,  for  which  both Et/t
+willer projection.  We use square lattices with L = 10-26                   and EU/U  are  proportional  to δ  as δ  →  0.   The  total
+for  the  metallic  states  and L  =  10-20  for  the  ordered              energy is always downward convex, leading to no phase
+states;  mainly the  system with L = 10 is used for ΨSC,                    separation.  This indicates that as long as the 2D GWF
+because the size dependence is negligible forL ≥ 10 as far                  is concerned, thet-J  model forJ/t> 0 is not connected
+as energy is concerned.  The periodic(x)-antiperiodic(y)                    to the Hubbard model near the half ﬁlling.
+boundary conditions are used and Nσ  is chosen so as to                        We  study  this  instability also for the  TLL-type func-
+satisfy  the  closed-shell  condition.   To  suppress  statisti-            tion,  ΨTLL  =  PTLLΦF,  which  Valent´ı  and  Gros  stud-
+cal errors, we  take suﬃcient sample numbers  (3 × 104  -                   ied.34)  The results are summarized in Table I, indicated
+2 × 105) and Metropolis trials (50 at maximum for each                      as  TLL.  As n  →  1  (i.e. δ  →  0),  intersite  correlation
+electron) between the samplings.                                            factors  generally  become  less  eﬀective,  so  that  the  oc-
+  To treat the coherent states for the superconductivity,                   currence  of  the  phase  separation  near  the  half  ﬁlling
+two VMC schemes have been applied:  one by using the                        is  not  aﬀected  even  by  this  intersite  correlation  factor.
+grand canonical scheme10) and one by ﬁxing the electron                     Namely, as far as a form of PΦF  is  assumed, the  insta-
+number.11, 38)  The  results  of  the  two  methods  ought  to              bility  against  the  phase  separation  is  inevitable.   Later
+coincide in the thermodynamic limit.  The former scheme                     when we study the projected BCS state, this phase sep-
+has  a merit in  calculating the  order parameter directly,                 aration is removed.
+but  it  needs  much  longer  CPU  time.   In  this  work  we
+adopt the latter scheme.                                                    4.2    Half-Filled  Case
+§4.     Pairing  Symmetry  in  Low-Doping  Regime                              First, let us look at the results for the half ﬁlling.  Fig-
+  In this section we study the region of high electron den-                 ure 3 shows the  variational energy for  the  the  case (iii)
+sity or low doping, laying emphasis on the stable pairing                   in eq. (2.9) for various values ofC.  For the dx2−y2-wave
+symmetry of superconductivity.  In §4.1 we study metal-                     case  (C  =  −1.0), EJ/J  is  symmetric  with  respect  to
+lic states as a starting point, since the other states with                 ∆/t  =  2  and  thus  has  two  minima  at  ∆/t  ∼  0.57  and
+AF order or superconducting order parameter reduces to                      7.   (This  fact  was  not  discussed  in  the  previous  VMC
+the  GWF  when  the  order  parameter vanishes.  The  en-                   calculations.11)) As the parameterC  increases, the min-
+ergy gain due to the occurrence of the order is discussed                   imal value monotonically increases, as seen in the inset,
+in comparison with the  variational energy of the GWF.                      where the scale is expanded.  Thus the dx2−y2  wave has
+The instability of metallic states against the phase sep-                   the  lowest energy in  the  class  of  variational states  (iii).
+aration  and  the  eﬀect  of  the  Jastrow  correlation factor              For  the  extended  s  wave  (C  =  1.0)  there  is  no  depen-
+are described.  Next we investigate various pairing states                  dence on ∆ of the variational energy.11)  This is because
+for the half-ﬁlled case in §4.2 and for less-than-half-ﬁlled                µ  =  0  at  half  ﬁlling  and  thus ak  becomes  a  constant,
+cases in  §4.3.  We  show that  the  ordered states are  free               which means that ΨSC  is equivalent to ΨG.
+from  the  instability  against  the  phase  separation  for  a                In Fig. 4 we show the variational energy for the s+id-
+small value of J/t.  Finally in §4.4 we look at the prop-                   type wave function (iv) in eq. (2.9).  As in the inset the
+erties of the stable dx2−y2-wave state.                                     energy minima forπ/2 ≤θ ≤π are degenerate within the
+                                                                            error bars.  This degeneracy is due to the SU(2) symme-
+4.1    Metallic  states                                                     try of the Heisenberg model;41) it was proved that under
+  First, we consider the GWF, ΨG = PdΦF, as a metallic                      the Gutzwiller projection the state withπ/2 ≤θ ≤π are
+state.  In Fig. 1 three energy components:  transfer energy                 all the same state.8)
+Et  = ⟨Ht⟩,  exchange energy EJ  = ⟨HJ⟩  and the  three-                       These  VMC  calculations  for  the  projected  BCS-type
+site contributionE3 = ⟨H3⟩ are plotted as a function of                     wave functions  ΨSC  are consistent with  the  slave-boson
+n; size dependence is almost negligible in this scale.                      mean-ﬁeld theory.  However, the  actual ground state at
+  Near the half ﬁlling,EJ  is upward convex.  This means                    half ﬁlling should be an AF magnetically ordered state.
+that when J/t → ∞ the system must have a phase sep-                         In fact, ΨAF  = PdΦAF  is slightly stabler than ΨSC  and
+aration.  In order to study this kind of phase separation                   the best variational state among the present states.  This
+in  the  small-J/t  region,  it  is  necessary  to  study  the n            feature  is  in  contrast  with  1D  systems,  where  ordered
+dependence  of  variational  energies  more  carefully.   Fig-              states—AF32)   and  s-type  superconducting42)   states—
+ure 2 shows the close-up of this dependence near the half                   have  higher  energies  than  the  GWF.  The  expectation
+ﬁlling.  On  one  hand, Et/t  and E3/J (3)  are  linear  with               values  of  ⟨Si · Sj⟩  for  the  nearest-neighbor i  and j  are
+respect to δ ≡ 1 −n; on the other hand, EJ/J  does not                      −0.3206 for  ΨAF,32)  and −0.3199 for  the  dx2−y2  or  the
+behave linearly but                                                         s+id  state,  which  are  close  to  the  best  estimation,40)
+                                                                            −0.3346.
+            EJ/J =EJ(δ = 0)/J + const. ×δ0.7,        (4.1)
+for wide range ofn.39) Thisδ-dependence means that the                      4.3    Symmetry of Cooper pairs in less-than-half-ﬁlling
+total energyE =Et +EJ +E3 is always upward convex                              Now,  we  consider  less-than-half-ﬁlled cases.  We  con-
+for any non-zero value ofJ/t.  Thus the GWF is unstable                     centrate on the s+id-type wave function, (iv) of eq. (2.9),
+                                                                            which  contains  the  dx2−y2  and  extended  s-wave  states.
+                                          Phase Diagram and Pairing Symmetry of the 2D t-J  Model                                                                     5
+
+All  the  other  states  give  higher  energy  than  the  s+id-               we compare each energy component for some variational
+type  state.  For  example,  the  s+d-type-wave states  (iii)                 states;  the  optimal functions  are  used for  the  TLL,  AF
+in  eq. (2.9)  with  −1 < C < 1  always give higher  varia-                   and dx2−y2-wave states.  The diﬀerences from the GWF
+tional  energy  as  in  the  half-ﬁlled  case.   As  for  the  dxy-           value are shown.
+wave state (ii), we ﬁnd that each energy component is a                          First of all, we notice that the metallic state with Jas-
+monotonically increasing function of ∆/t for every elec-                      trow correlation (indicated as TLL) has slightly lower ki-
+tron density.  Thus there is no chance for the dxy wave to                    netic energy (< 1% ) than the GWF. This is because the
+be  stabilized.   The  behavior  of  the  conventional  s-wave                Jastrow (repulsive)  correlation factor  tends  to  separate
+state  (i)  is  very  similar  to  the  extended  s  wave  in  the            the  electrons  so  as  to  gain the  kinetic  energy.  However
+high  density  regime;  the  energy  is  always  higher  than                 its gain is so small that TLL state cannot overcome the
+the dx2−y2  wave for smallδ.                                                  dx2−y2-wave state.
+   Let  us  return  to  the  s+id-type  state.   Figures  5(a)-                  In  contrast  to  this,   the  other  ordered  states  (AF,
+(c)  show the  energy components  of  the  s+id-type wave                     d,  s+id  state)  unanimously  gain  the  exchange  energy,
+function.  As a typical electron density, we use δ = 0.12                     namely  ⟨Si · Sj⟩  and  ⟨−ninj/4⟩,  but  all  of  them  lose
+(n  =  0.88).   The  dx2−y2  wave  (θ  = π)  is  the  most  fa-               the  kinetic  energy.   As  the  doping  increases  the  energy
+vorable except the three-site term.  Thus, when there is                      gain for the exchange term becomes smaller and smaller.
+no three-site term (J (3) = 0), the dx2−y2-wave state has                     Finally  at some doping,  the  energy  gain due  to  the  AF
+always the  lowest variational energy.43)  As  an example,                    order or superconducting order vanishes.  This tendency
+we  show  in  Fig.  6  the  total  energy E/t  for J/t  =  0.25               gives then-dependences of the variational energy shown
+and  several values  of θ.   The  situation  does  not  change                in Fig. 7.
+for J/t <∼ 2.0.                                                                  Comparing  the  dx2−y2-wave  with  the  AF  states,  we
+   Here we mention the eﬀect of the three-site term H3.                       can  see  that  the  loss  of  the  kinetic  energy  is  always
+The variational energy for the extended s wave is lowered                     smaller  than  that  for  the  AF  state,  while  the  gain  of
+in the presence of H3.  We have found, however, that the                      the  exchange  energy  is  larger  for  the  dx2−y2  wave  for
+most stable state is still the dx2−y2  wave, even when the                    every electron density.  This  makes  the  dx2−y2  the  best
+value  of J (3)/J  is  as  large  as  1.0.  On the  contrary, the             variational state.
+dx2−y2  wave  is  further  stabilized  in  the  ferromagnetic                    In  Table  I,  we  also  include  the  energy  components
+case  (J (3) < 0).  The  situation does  not  change for  any                 for  the  s+id  and  extended  s  states.    For  comparison
+value of J/t and for electron densities n = 0.52-0.96.                        we  borrow  the  same  value  of  ∆/t  with  the  optimal
+   Figure 7 shows the optimal variational energy for the                      dx2−y2  case,  namely  ∆/t  =  0.7, 0.55, 0.40,  and  0.25  for
+dx2−y2-wave  state  for n  ∼  1  and J/t  =  0.5.   In  com-                  n = 096, 0.88, 0.80, and 0.72, respectively.  As for the ex-
+parison  with  the  metallic  GWF,  there  is  a  deﬁnite  en-                change term ⟨Si · Sj⟩, the dx2−y2-wave state has a large
+ergy  gain  due  to  the  superconducting  order  parame-                     energy gain.  For example atn = 0.88 (δ = 0.12) it gains
+ter.   In  Fig.  7  we  also  plot  the  data  of  the  AF  state,            29% of the exchange term of the GWF. The s+id-wave
+ΨAF  =  PdΦAF  and  the π-ﬂux  state.   Just  at  half  ﬁll-                  also gains the exchange term similar to the dx2−y2  wave,
+ing  ΨAF  is  slightly  lower  than  the  dx2−y2-wave  state.                 but  its  magnitude  is  slightly  smaller.  For  the  extended
+However  even  at δ  =  0.02  the  dx2−y2-wave  state  has  a                 s wave the energy gain is very small.  This is the reason
+lower  energy,  so  that  the  AF  state  disappears  immedi-                 why  the  dx2−y2-wave  state  is  favored  by  the  exchange
+ately when holes are doped in the 2D Heisenberg system.                       termJ.  We discuss this phenomena in terms of the res-
+   The π-ﬂux  state,5)  which  is  equivalent  to  the  s+id                  onating valence bond (RVB) representation of the wave
+state  at  half  ﬁlling,  has  exactly  the  same  energy  with               functions.
+the  dx2−y2-wave  state  for n  =  1.6, 8, 41)  For  the  doped                  Equation (2.7) can be rewritten as
+case,  however,  the π-ﬂux  state  has  much  higher  varia-                                       ∏              [∑                ]
+tional  energy  than  the  dx2−y2  wave.   It  is  even  higher                       ΨSC = Pd          uk · exp        ai,jc†i↑c†j↓  |0⟩,          (4.2)
+than  the  AF  state.   Therefore  it  is  not  likely  that  the                                    k              i,j
+dx2−y2-wave state is mixed with the π-ﬂux state.                              where ai,j  is Fourier transform of ak.  If we ﬁx the elec-
+   Finally,  we  refer  to  the µ  dependence  of  the  energy.               tron number by projecting out theN  electron states, we
+We  calculate  the  total  energy  for  some J/t  by  varying                 obtain
+the value of µ in eq. (2.8).  The smaller J/t is, the more                                         ∏                [∑                ] N2 |0⟩.    (4.3)
+weaklyE/t depends onµ.  As an example, the result for                            PN ΨSC = Pd            uk ·    1         ai,jc†
+J/t = 0.5 is plotted in Fig. 8, where ∆opt/t ∼ 0.55.  The                                                    ( N                i↑c†j↓
+                                                                                                    k          2 )!   i,j
+energy improvement by optimalµ upon the value forµ0                           This  form  of  the  wave  function  is  the  superposition  of
+is slight.  Thus the use of the noninteracting value µ0  is                   various RVB conﬁgurations.  Each valence bond (VB) is
+justiﬁed  for  small J/t  to  some  extent,  although  this  is
+not the case for a value of J/t as large as 2.                                represented by c†i↑c†j↓, whose amplitude is ai,j.
+                                                                                 By investigating the actual form of ai,j  from the def-
+4.4    Properties of dx2−y2  wave                                             inition  in  eq.  (2.8)  for  various  symmetries,  we  can  see
+   In  this  subsection  we  compare  the  properties  of  the                the diﬀerence between the dx2−y2  wave and s+id, or ex-
+dx2−y2-wave  state  with  other  variational  states  in  or-                 tended  s  wave.  The  main diﬀerence  is  that,  among  the
+der  to  consider  the  reason  of  its  stability.   In  Table  I,           dominant ai,j’s, the next-nearest neighbor bond exactly
+6                                                                                       Hisatoshi Yokoyama and Masao Ogata
+
+vanishes for the dx2−y2  state, i.e.                                           energy  gain  of  the  exchange  term  which  is  understood
+                                                                               from the RVB picture as discussed above.
+ ai,i+x+y=∑         cos(kx +ky)                     ∆kεk −µ +√(εk −µ)2 + ∆2k   §5.     Phase  Diagram
+                 k
+            = 0,                                                                  (4.4)In  this  section,  we  construct  a  phase  diagram  in  the
+because  of  the  antisymmetric  nature  for  exchanging kx                    whole J/t-n  plane.   First  of  all  we  show  the  summary
+and ky.  On the  other  hand,  for the  s+id and extended                      of  the  phase  diagram  in  Fig.  10.   In  the  following  sub-
+s  cases, ai,i+x+y  has  a  comparable  amplitude  with  the                   sections we describe the details of determining the phase
+nearest-neighborai,i+x  or ai,i+y.                                             boundaries.
+   Due  to  this  main  diﬀerence,  the  RVB  amplitude  for                      In  §5.1  we  discuss  the  phase  boundary  between  the
+the  nearest-neighbor  bond  for  the  dx2−y2  state  is  more                 dx2−y2-wave state and the metallic states.  The stabiliza-
+enhanced  than  the  s+id  or  extended  s  state.   As  a  re-                tion  of  the  extended  s  wave  in  the  low electron density
+sult, the dx2−y2-wave state is the most favorable for the                      is  studied  in  §5.2.   The  properties  of  the  GWF  around
+exchange  energy.   (Reversely  we  can  say  that  the  next-                 the supersymmetric  case  (J/t = 2) is  discussed in  §5.3.
+nearest-neighbor exchange energy favors the extended s-                        In  §5.4  the  phase  separation  in  the  large J/t  region  is
+wave state.)                                                                   studied.  We  consider in  §5.5  the  eﬀect of the  three-site
+   To see this more closely, the spin structure factor,                        term on each phase.
+
+               S(q) =   1     ∑4⟨SzjSzℓ ⟩eiq(rj −rℓ),            (4.5)         5.1    Range of dx2−y2  wave
+                         Na    j,ℓ                                                To begin with, we determine the phase boundary be-
+is compared in Fig. 9 for the optimized dx2−y2  wave and                       tween the dx2−y2-wave state and the metallic state.  Here
+extended  s  wave.   The  antiferromagnetic  correlation  is                   we  use  the  GWF  as  the  metallic  state,  because  the  en-
+enhanced for the dx2−y2  wave, which leads to the gain in                      ergy gain due to the intersite Jastrow correlation factors
+the exchange energy.                                                           is  very  small.  Figures 11  and  12 show the  energy  com-
+   Next we consider the diﬀerence in the kinetic energy in                     ponents of the dx2−y2-wave function for various electron
+Table I. The ordered states always lose the kinetic energy                     densities ranging from n = 1 down to 0.04.
+compared with the GWF. Without taking account of the                              The  kinetic  energy Et/t  shown  in  Fig.  11  goes  to  0
+Gutzwiller projection, we can estimate                                         as  the  electron  density  approaches  either  0  or  1.   The
+                           ∑                                                   latter is  due  to  the Gutzwiller  projection, Pd.  Further-
+       ⟨c†i,↑cj,↑⟩=   1        e−ik(ri−rj)|vk|2                                moreEt/t is a monotonically increasing function of ∆/t
+                      Na    k                                                  in  every  density.    This  means  that  the  kinetic  energy
+                              ∑     ǫk −µ                                      does  not  favor  the  superconductivity  for  every  electron
+                  = −   14Na          Ek    (coskx + cosky).  (4.6)            density.  On the other hand, EJ/J  shown in Fig. 12 de-
+                                k                                              creases at ﬁnite values of ∆/t.  The exchange term gives
+In the case of ∆ = 0, (ǫk −µ)/Ek = sign(ǫk −µ), but in                         the attractive force in the dx2−y2  channel as expected.
+the  presence  of  ∆,  the  amplitude  of  ⟨c†                                    Thus the dx2−y2  state is not realized without the  ex-
+                                                    i,↑cj,↑⟩  generally        change  interaction (J/t  = 0).  For  ﬁnite J/t,  the  varia-
+reduces.  This causes the loss of the kinetic energy for the                   tional energy
+ordered  state.   Since  there  is  a  zero  point  at kx  =  ±ky
+on the Fermi surface for the dx2−y2-wave state, the loss                                        E =t × (Et/t) +J × (EJ/J)               (5.1)
+is the least among the superconducting states.  This fact
+also favors the dx2−y2  symmetry.                                              has  a  minimum  at  a  ﬁnite  value  of  ∆/t.   The  obtained
+   Finally we discuss the ⟨−ninj/4⟩ term.  For example,                        optimal values of ∆/t are plotted in Fig. 13.  From this
+the GWF gives ⟨−ninj/4⟩ = −0.1925 for n = 0.88 case.                           ﬁgure  the  phase  boundary  is  estimated  for  every  elec-
+This is understood from the fact that ⟨ni⟩ = 0.88, then                        tron  density.   For  example, δ  =  0.2  (n  =  0.8)  case  the
+⟨ni⟩2/4  =  0.1936.   As  shown  in  Table  I,  the  value  of                 phase boundary is atJ/t = 0.1.  This boundary is shown
+this  term  for  the  other  states  does  not  change  so  much               by  a  solid  line  with  solid  triangles  in  Fig.  10.   For  the
+from that of the GWF. For example, ⟨−ninj/4⟩ changes                           higher  doping  case n <∼  0.64  [Fig.  13(b)],  it  is  diﬃcult
+only  0.5%  for  the  dx2−y2  wave.    Actually  the  charge-                  to  determine  the  boundary  deﬁnitely,  because  small  ∆
+density correlation function in the real space shows that,                     seems to be realized for small value ofJ/t.  However, this
+in  the  dx2−y2  case,  the  amplitude  of  the  nearest  and                  residual small ∆ is not so meaningful practically, because
+next-nearest  neighbors  is  slightly  enhanced.   This  is  in                the  energy  gain  is  as  small  as  that  of  the  TLL  (metal-
+contrast  to  the  GWF  which  shows  dips  at  those  sites                   lic)  state.   Therefore,  we  estimate  the  phase  boundary
+due  to  the  exchange  hole.   Meanwhile,  the  extended  s                   by extrapolating the straight ﬁtting lines as indicated in
+wave scarcely modiﬁes the GWF value.  Thus, we expect                          Fig. 13(b).  The boundary thus determined is represented
+that  an  attractive  correlation  factor  gives  more  energy                 by a dashed line with reversed triangles in Fig. 10.
+gain.  We check the eﬀect of the intersite correlation fac-
+tor  by  introducing  eq.  (2.11)  to  the  dx2−y2-wave  state:                5.2    Range of extended s wave
+PTLLΦSC.   However,  we  have  found  that  the  energy  is                       Next  we  discuss  the  stability  of  the  extended  s  wave
+hardly  aﬀected  by  the  intersite  correlation.   Therefore                  in  the  low  density  region.    As  shown  by  the  analytic
+the stability of the dx2−y2  state is mainly caused by the                     treatments  in  the n  →  0  limit,16, 19, 20, 21)  the  free  elec-
+                                         Phase Diagram and Pairing Symmetry of the 2D t-J  Model                                                                     7
+
+tron state is unstable against the s-wave bound state for                    where z  is  the  number  of  nearest  neighbor  sites  (here
+2<J/t< 3.4367.  We will discuss this possibility of the                      z = 4) and
+extended s wave in the ﬁnite electron densities.                                                     Ξ =∑       c†
+  In Figs. 14 and 15 we show the  expectation values of                                                          i+τ ↑c†i↓|0⟩.                        (5.4)
+energy components for the extended s wave.  [The result                                                     i,τ
+of s-wave symmetry (i) of eq. (2.9) is quantitatively sim-                   This means that if the condition
+ilar to that of the extended s wave.]  The kinetic energy,                                        2t −J − (z − 1)J (3) = 0                    (5.5)
+Et/t,  rapidly  approaches  zero  as  ∆/t  increases.   As  re-
+gardsEJ/J, energy gain is hardly seen for small doping                       i.e.
+as shown in Fig. 15(b).  This is consistent with the result                                        J
+in  the  half  ﬁlling  where Et/t  does  not  depend  on  ∆  as                                     t  =                21 + (z − 1)J (3)/J                     (5.6)
+discussed  before.   On  the  other  hand  for  small  electron
+densities [Fig. 15(a)], EJ/J  appreciably decreases.  This                   is satisﬁed, the GWF is an exact eigenstate with energy
+is the cause of the stability of the extended s wave in the                  −2zt,  irrespective  of Na  [  in  fact  ⟨ΨG|Ξ⟩/⟨ΨG|ΨG⟩  =
+low density.                                                                 O(1/Na) ].  The energy is identical with the noninteract-
+  In Fig. 16 we plot the total energy for n = 0.04 as an                     ing case.  As will be mentioned in §5.5, the free electron
+example.  No energy gain from the GWF can be seen for                        state has no instability against the bound-pair states of
+J/t ≤ 2, while the energy gradually decreases for J/t>                       both s and d waves when eq. (5.6) holds.  Thus the GWF
+2.   This  is  consistent  with  the  analysis  of  two  electron            is  shown  to  be  the  exact  ground  state.   This  property
+systems, where the electrons form a s-wave bound state                       does not depend on the lattice form and dimension.
+for J/t ≥ 2.                                                                    One can interpret this as the same aspect with the 1D
+  For  ﬁnite  electron  densities,  the  stable  region  of  the             t-J  model.23)  Namely the electron hopping term, which
+extended  s  wave  is  shown  in  Fig.  10.   Since  the  energy             favors  the  electrons  mutually  apart,  and  the  exchange
+gain is very small and the same order with that obtained                     term, which works attractively, are well balanced and a
+by a metallic state with an intersite correlation factor, it                 kind of “noninteracting” state is realized.
+is not easy to determine accurately the boundary of the
+extended s wave.                                                             5.4    Region of phase separation
+  In  Fig.  16  we  also  plot  the  energy  gain  due  to  the                 As was shown,16, 17) a phase separation appears in the
+intersite  correlation  factor,  ΨTLL.   For J/t <  2.0,  the                2D t-J  model for  the large J/t region.  Here  we  discuss
+optimal  value  of ν  in  eq.  (2.12)  is  positive,  which  cor-            it  from  our  variational  calculations.    The  phase  sepa-
+responds  to  the  repulsive  Jastrow factor.   For  example,                ration  occurs  between  the  Heisenberg  system  (without
+we  get νopt  ∼  0.25  (0.20,  0.14,  0.06)  for J/t  =  0  (0.5,            hole) and a hole-rich phase.  For the small-n region, the
+1.0,  1.5).   Just  at J/t  =  2.0  we  ﬁnd  that  the  Jastrow              state  with  phase  separation  is  approximated  as  a  state
+factor does not reduce the  variational energy, which in-                    with  the  Heisenberg  island  and  the  remaining  vacuum.
+dicates that the GWF is a good variational function for                      The energy of this state is
+this  “supersymmetric”  case  as  in  1D.23)  We  will  come                                   EPS =nEHeis. = −1.1693nJ,                (5.7)
+back  to  this  point  shortly.  For J/t > 2.0, νopt  is  nega-
+tive, namely, νopt ∼ −0.09 (−0.19, −0.27) for J/t = 2.5                      whereEHeis. is the ground state energy of the 2D Heisen-
+(3.0, 3.5).   This  means  that  eﬀective  attractive  interac-              berg  model.40)  Comparing  this  energy  with  the  opti-
+tion exists between electron.44)                                             mized variational energies of the GWF, the dx2−y2-wave
+                                                                             and  extended  s-wave  states,  we  determine  the  phase
+5.3    Supersymmetric Case                                                   boundary, which is also shown in Fig. 10.
+   Now we investigate the supersymmetric case (J/t = 2)                         In  Fig.  16,  the  energy EPS  is  also  plotted;  since  the
+more in detail.  For this  special parameter, the GWF is                     J/t-dependence  is  strong,  we  can  determine  the  phase
+shown to be  exact in the  low density  limit.23)  Actually,                 boundary accurately in the small electron density region.
+the two-electron problem can be solved analytically.  We                     Table II summarizes the phase boundary (Jc/t) obtained
+consider the GWF with two electrons,                                         in this  way.  The  extrapolation of these values to n = 0
+              ΨG =∏[1 −nj↑nj↓] c†                                            leads us toJc/t = 3.437, which is quite close to the exact
+                                           k=0↑c†k=0↓|0⟩                     value 3.4367.21)
+                      j                                                         As shown in Fig. 16 the GWF is a good trial function
+                   =∑(1 −δi,j)c†i↑c†j↓|0⟩.                        (5.2)      in  the  low-electron  density  and  the  variational  energy
+                      i,j                                                    has weakJ/t dependence.  Therefore we can broadly esti-
+If H (including H3) is applied to this state, the resultant                  mateJc/t asn → 0 from the GWF. In the limit ofn → 0
+equation is written as,                                                      the energy components of the GWF are analytically ex-
+                                                                             pressed as Et/t = −4n, EJ/J  = −n2, E3/J (3) = −3n2.
+    HΨG = −2ztΨG + {2t −J − (z − 1)J (3)}Ξ,       (5.3)                      These  values  are  the  same  with  the  free  electron  sys-
+                                                                             tem, because double occupation can be substantially ne-
+                                                                             glected.   Using EGWF  =  −4tn  and EPS  in  eq.  (5.7)  we
+                                                                             obtain the phase boundary16)
+                                                                                                Jc/t = 4/|EHeis./J| = 3.42.                 (5.8)
+8                                                                                       Hisatoshi Yokoyama and Masao Ogata
+
+   As n  increases,  our  estimation  of  the  phase  bound-                     The  phase  boundary  to  the  phase  separation  is  also
+ary  becomes  inaccurate.    For  one  thing,  we  have  as-                  estimated.  The shifted boundaries forJ (3)/J = ±0.5 are
+sumed that the phase separation takes place between the                       shown  with  open  circle  and  dotted  line  in  Fig.  10.  For
+Heisenberg island and the vacuum.  Another thing is that                      J (3)/J = 0.5 the extended s-wave state becomes so stable
+we have compared variational energies with the accurate                       that the  phase separation does  not take place  for  small
+energy of the phase separation with EHeis.  Nevertheless                      n.  On the other hand, forJ (3)/J = −0.5 the extended s-
+our  estimation  of  the  phase  boundary  agrees  well  with                 wave state is not stabilized and thus the phase separation
+other results17) up to fairly high density (n <∼ 0.9).                        expands to smaller J/t region.
+
+5.5    Eﬀect of the three-site term on the phase diagram                      §6.     Summary  and  Discussions
+   Next,  we  consider  the  eﬀect  of  the  three-site  term                    By using the variational Monte Carlo method, we have
+on  the  variational  energies  and  the  phase  diagram.   In                studied  the t-J  model  with  the  three-site  term  for  the
+Figs.  17  and  18, E3/J (3)  is  shown  for  the  dx2−y2-wave                square  lattice,  and  obtained  a  phase  diagram  in  the
+and extended s-wave states, respectively.  For the dx2−y2                     full J/t-n plane.  We have used Gutzwiller-Jastrow-type
+case,E3/J (3) behaves similarly toEt/t, while for the ex-                     wave  functions  describing  metallic,  antiferromagnetic,
+tended  s  wave  it  decreases  with  increasing  ∆/t  and  its               and  various  singlet-pairing  superconducting  states:  the
+shape resembles that ofEJ/J  rather thanEt/t.                                 BCS-like s,  dxy,  s+d-type,  and s+id-type  waves, which
+   First we consider the the boundary between the dx2−y2                      include the dx2−y2  and extended s waves.
+wave  and  the  metallic  phase.    In  Fig.  19  we  plot  the                  Main  results  are  summarized  in  the  phase  diagram
+∆opt/t  of  the  dx2−y2  wave  for  some  values  of J (3)/J                  shown in Fig. 10.  Remarkable points which we have con-
+and n  =  0.8.  The  phase  boundary  of  the  dx2−y2  wave,                  ﬁrmed and found are:
+Jc/t,  where  ∆opt  vanishes,  scarcely  changes  from  that                     (1)  At  half  ﬁlling,  many  pairing  states  including  the
+for J (3) = 0.  This aspect is common for other densities                     dx2−y2  and the s+id-wave states are degenerate and the
+(n  =  0.52-0.96).   Thus,  the  region  of  the  dx2−y2  wave                most  stable,  in  accordance  with  the  analysis  of  the  lo-
+hardly  changes  at  least  for n >  0.64  by  the  three-site                cal SU(2) symmetry.41, 8) Nevertheless, the antiferromag-
+term.                                                                         netic state is more stable here.
+   The  phase  boundary  of  the  extended  s  wave,  on  the                    (2) For  plausible  parameters of high-Tc  superconduc-
+contrary,  depends  on  the  three-site  term  considerably.                  tors, the dx2−y2 wave is the most stable state among var-
+For the extended s wave,E3/J (3) decreases with increas-                      ious pairing symmetries.  The range of the  dx2−y2  wave
+ing ∆/t as shown in Fig. 18.  Thus the extended s wave                        hardly changes even if the three-site term is added.  Sub-
+becomes  stabler  for J (3)/J > 0  and its  region expands.                   stantially,  there  is  no  chance  to  realize  s+d,  s+id,  and
+The  shift  of  the  boundary  is  also  shown  in  Fig.  10  by              extended s waves in this region.
+an  arrow  for E3/J (3)  =  0.5.   Inversely,  for J (3)/J <  0                  (3)  The  dxy  wave  always  has  higher  energy  than  the
+the  energy  of  the  extended  s  wave  increases  so  that  its             GWF  except  for  extraordinarily large negative  value  of
+region disappears for the case of J (3)/J = −0.5, namely                      J (3).
+the GWF is stable for every value of J/t.                                        (4) In the region of low electron density andJ/t> 2.0,
+   This  behavior  is  consistent  with  the  analysis  of  two-              the extended s wave becomes a good state, which almost
+electron problem.  If  we  solve  the  two  electron problem                  reproduces  the  exact  value  of  the  phase  boundary  for
+including H3, we obtain the eigenvalue equation                               n → 0.  However the energy gain from the GWF is small.
+     1    (1)                              [ 2    ( 1)        ]               This phase corresponds to the low-electron-density phase
+    πaK      a    = J4t(1 + 3J (3)/J)        πK     a    − 1       (5.9)      predicted  in  the  1D t-J  model,  which  consists  of  two-
+                                                                              electron singlet bound-pairs.18)
+for  the  two-electron  bound  state  with  the  extended  s                     (5) Metallic  states  PΦF  are unstable  in itself  against
+symmetry,45)  where a  =  −E/4t  ≥  1  and K(k)  is  the                      the phase  separation for n ∼ 1  and J/t > 0.  This  is  in
+complete elliptic integral of the ﬁrst kind.  Equation (5.9)                  contrast  with  the  cases  of  the  1D t-J,  and  1D  and  2D
+has a solution when                                                           Hubbard models.
+                       J                                                         (6) For the supersymmetric case (J/t = 2), the GWF
+                       4t(1 + 3J (3)/J) ≥  12.                    (5.10)      is  exact  in  the n  →  0  limit  and  behaves  like  the  non-
+As  a  result,  for  ﬁxed J (3)/J,  the  critical  value  above               interacting  state  in  the  low-electron-density  region  just
+which the two electrons form a bound state is                                 like the 1D t-J  model.23)  The GWF is also a very good
+                        Jc                                                    trial wave function in the region up to n <∼ 0.25.
+                                                                                 Our  result  that  the  dx2−y2   wave  is  stable  for  the
+                         t   =           21 + 3J (3)/J.                      (5.11)parameters  of  high-Tc  oxides  conﬁrms  the  early  VMC
+This value is exactly the same with the condition eq. (5.6)                   results.10, 11, 12)  The  obtained  phase  diagram  is  consis-
+where  the   GWF  becomes  an  exact  eigenstate.     For                     tent with the one by the high-temperature expansion,17)
+J (3)/J   =  0.5,  this  critical  value  is J/t  =  4/5.    This             and  is  qualitatively  similar  to  that  of  the  VMC  calcu-
+value  coincides  with  the  boundary  shown  in  Fig.  10                    lations  by  Dagotto  et  al.13)  We  suspect,  however,  that
+which we determine from the  VMC calculations.  When                          the  qualitative  and/or  quantitative  diﬀerences  between
+J (3)/J ≤ −1/3, there is no solution for the two-electron                     the  previous  VMC  works46, 47, 13)  and  the  present  one
+bound state.                                                                  are attributed to some insuﬃcient or erroneous numeri-
+                                                                              cal treatments of the the former works.
+                                         Phase Diagram and Pairing Symmetry of the 2D t-J  Model                                                                     9
+
+  We  should  not  consider  the  results  (1)-(5)  are  com-                yet  conclusive.52)  To  study  TLL  states  for  the  metallic
+pletely  decisive  because  of  the  approximate  trial  func-               phase,  a  VMC  method34)  and  a  Green  function  Monte
+tions used.  However, the results of the relative stability                  Carlo method53)  have been also used.  In  this  paper  we
+among  various  pairing  symmetries  are  persuasive,  be-                   have taken account of this possibility by adopting a TLL-
+cause we do not give partial treatment to a speciﬁc sym-                     type  correlation  factor.   Consequently,  the  energy  gain
+metry.                                                                       thereof is very small and it is not likely that the ground-
+  We  also  calculate  the  variational  energies  using  the                state becomes a Tomonaga-Luttinger liquid state in the
+Gutzwiller  approximation.8)  In  contrast  to  the  VMC                     present variational scheme.
+method,  the  Gutzwiller  approximation  assumes  the  ef-
+fect  of  the  projection  as  some  statistical  weights.   The                                    Acknowledgments
+details are summarized in Appendix B. Figure 20 shows                           The  authors  thank  H.  Shiba  for  useful  discussions.
+the obtained variational energy for various superconduct-                    One  of  the  authors  (H.Y.)  is  grateful  to  J.  Zittartz,  E.
+ing states including the dx2−y2  and extended s waves for                    M¨uller-Hartmann  and  A.  Kl¨umper  for  discussions  and
+n  ∼  1  and J/t  =  0.5.   The  variational  energies  for  the             hospitality at University of Cologne, where a part of the
+metallic GWF is also plotted.  This ﬁgure is to be com-                      calculations  was  carried  out.   A  part  of  the  computa-
+pared with Fig. 7  where the  same calculation is  carried                   tions was done using the facilities of the Supercomputer
+out using the VMC method.  The Gutzwiller approxima-                         Center,  Institute  for  Solid  State  Physics,  University  of
+tion gives a similar result.  In Fig. 20 there is a small re-                Tokyo.  This work is partly supported by Grant-in-Aids
+gion in the vicinity ofn = 1 where s+id state is realized,                   for  Scientiﬁc  Research  on  Priority  Areas,  “Anomalous
+which was found before.7) This is due to the violation of                    Metallic  States  near  the  Mott  Transition”  (07237101)
+the SU(2) symmetry in the approximation.                                     and “Science of High-Tc Superconductivity” and for En-
+  Figure  21  shows  the  phase  diagram  determined  from                   couragement of Young Scientists, given by the Ministry
+the  Gutzwiller  approximation.    As  expected  from  the                   of Education, Science, Sports and Culture.
+good coincidence of the variational energy with the VMC
+results, the obtained phase diagram resembles Fig. 10 de-                    Appendix A:     The GWF for the Hubbard Model
+termined from the VMC method.  Thus, the Gutzwiller                             In  this  appendix,  we  show  the  behavior  of E/t  as  a
+approximation gives broadly reasonable results.                              function ofn (n ∼ 1) for the 2D Hubbard model:
+  In  the  following  we  compare  our  results  with  other                                         (                      )
+works.                                                                         Hhub = −t ∑             c†i,σcj,σ +c†j,σci,σ    +U∑        nj↑nj↓,
+  As  for  the  stability  of  the  dx2−y2-wave  pairing,  our                               ⟨i,j⟩  σ                                 j
+result  is  common  with  one  for  the  2D  d-p  model.   Us-                                                                                 (A.1)
+ing  similar  variational  wave  functions  for  this  model,                with the GWF:
+Asahata and Oguri48)  recently showed that the dx2−y2-                                 ΨG(g) =∏        [1 − (1 −g)nj↑nj↓] ΦF.              (A.2)
+wave pairing state appears in the borders of metallic and                                           j
+AF  regions  in  the  phase  diagram.   On  the  other  hand,
+concerning  the  possibility  of  the  extended  s  wave,  it  is            The  optimized  results  near  the  half  ﬁlling  is  shown  in
+pointed out that modiﬁcation of the Fermi surface struc-                     Fig.  22; E/t  behaves  linearly  as δ  →  0,  although  size
+ture in Φ of eq. (2.5) is important.                                         dependence  becomes  a  little  larger  as n  approaches  1.
+  As shown by previous VMC calculations,32) the ferro-                       This linear behavior is in sharp contrast with the result
+magnetic  region  with  full  momentum  corresponding  to                    of the t-J  model as discussed in §4.1.
+Nagaoka’s  theorem49)  exists  in  the  region  0.6 <∼ n <  1                   This discordance may be intuitively understood as fol-
+and J/t <∼  0.1.   On  the  other  hand,  according  to  the                 lows.  By neglecting higher-order terms, H of eq. (2.1) is
+high-temperature-expansion,50)   partial  ferromagnetism                     a canonical transformation of the Hubbard Hamiltonian:
+appears in the similar region.  In this paper, we have not                                           H =e−iSHhub eiS.                       (A.3)
+discussed  this  ferromagnetism  in  detail,  since  it  is  con-
+ﬁned  in  a  small  parameter  range.   The  relation  among                 Therefore,  the  expectation  value  with  respect  to  the
+the above two calculations and our present results is an                     GWF is written as
+interesting issue left for future studies.                                               ⟨ΨG|H|ΨG⟩= ⟨ΨG|e−iSHhubeiS|ΨG⟩
+  Kagan and Rice20)  showed that the p-wave pairing is
+the  leading  instability  for  small  values  of J/t  and  low-                                         = ⟨ ˜Ψ|Hhub| ˜Ψ⟩                           (A.4)
+electron densities by means of thet-matrix technique.  In                    where  ˜Ψ =eiSΨG.  Consequently, we should adopt mod-
+this paper we have not discussed this possibility, because                   iﬁed functions  ˜Ψ for the Hubbard model to obtain a sim-
+its energy gain seems extremely small.21) It is rather dif-                  ilar behavior.
+ﬁcult to detect a tiny energy gain by the ordinary VMC                          Nevertheless, in 1D, where the modiﬁed wave functions
+calculations; moreover such a small energy gain is easily                    are  much  better,35, 54)  there  exists  no  conﬂict  between
+overcome by introducing the Jastrow correlation factors                      the two models  even within  the  GWF.  And  this  GWF-
+in the metallic states.                                                      result  is  consistent  with  the  exact  analysis,55)  which
+  Another  interesting  issue  is  the  possibility  of  spin-               shows  that  the  Hubbard  model  is  connected  to  the t-J
+charge separation in the  2D systems.  From the  density                     model for everyn in the strong coupling limit.  Anyway,
+correlation function, Putikka et al.51) discussed the spin-                  it is necessary to  conﬁrm by some reliable method that
+charge  separation.   However  as  claimed  later,  it  is  not
+10                                                                                      Hisatoshi Yokoyama and Masao Ogata
+
+the t-J  model  is  connected  to  the  Hubbard  model  also                           [1]  For a review, see D. J. Scalapino:  Phys. Rep. 250 (1995) 329.
+for 2D metallic states.                                                                [2]  P. W. Anderson:  Science 235 (1987) 1196.
+                                                                                       [3]  F. C. Zhang and T. M. Rice:  Phys. Rev. B 37 (1988) 3759.
+Appendix  B:     Gutzwiller  Approximation                                             [4]  G. Baskaran, Z. Zou, and P. W. Anderson:  Solid State Com-
+                                                                                           mun. 63 (1987)  973.
+   In this Appendix we summarize the Gutzwiller approx-                                [5]  G. Kotliar:  Phys. Rev. B 37 (1988) 3664; I. Aﬄeck and J. B.
+imation  for  the  2D t-J  model.   This  approximation  is                                Marston:  Phys. Rev. B 37 (1988) 3774.
+extensively  studied  in  connection  with  the  VMC  calcu-                           [6]  G. Kotliar and J. Liu:  Phys. Rev. B 38 (1988)  5142.
+lations.8)  In  order  to  compare with  the  present  results,                        [7]  Y. Suzumura, Y. Hasegawa, and H. Fukuyama:  J. Phys. Soc.
+we  only  have  to  include  the  estimation  of  the  ⟨ninj/4⟩                            Jpn. 57 (1988) 401.
+                                                                                       [8]  F.  C  Zhang,  C. Gros,  T.  M. Rice,  and  H.  Shiba:  Supercond.
+term.                                                                                      Sci. Technol. 1 (1988) 36.
+   In   the   Gutzwiller   approximation,   the   expectation                          [9]  T. Tanamoto, H. Kohno and H. Fukuyama:  J. Phys. Soc. Jpn.
+value                                                                                      62 (1993) 717 and J. Phys. Soc. Jpn. 63 (1994)  2739.
+                                                                                     [10]  H.  Yokoyama  and  H.  Shiba:   J.  Phys.  Soc.  Jpn.  57  (1988)
+                         ⟨ψ0|Pdc†i,σcj,σPd|ψ0⟩,                      (B.1)                 2482.
+                                                                                     [11]  C. Gros:  Phys. Rev. B 38 (1988) 931; Ann. Phys. (N.Y.) 189
+is approximated by8)                                                                       (1989) 53.
+                           2δ                                                        [12]  T. Giamarchi and C. Lhuillier:  Phys. Rev. B43 (1991) 12943.
+                                        i,σcj,σ|ψ0⟩,                     (B.2)       [13]  E.  Dagotto,  J.  Riera,  Y.  C.  Chen,  A.  Moreo,  A.  Nazarenko,
+                         1 +δ ⟨ψ0|c†                                                       F. Alacaraz, and F. Ortolani:  Phys. Rev. B 49 (1994)  3548.
+where δ  is  the  doping  rate  (δ  =  1 −n).   Similarly  the                       [14]  Y. Ohta, T. Shimozato, R. Eder and S. Maekawa:  Phys. Rev.
+                                                                                           Lett. 73 (1994)  324.
+exchange term is given by                                                            [15]  D. Poilblanc:  Phys. Rev. B 52 (1995) 9201.
+                                                                                     [16]  V. J. Emery, S. A. Kivelson, and H. Q. Lin:  Phys. Rev. Lett.
+  ⟨ψ0|PdSi · SjPd|ψ0⟩ =       4(1 +δ)2 ⟨ψ0|Si · Sj|ψ0⟩.   (B.3)                            64 (1990) 475.
+                                                                                     [17]  W.  O.  Putikka,  M.  U.  Luchini,  and  T.  M.  Rice:  Phys.  Rev.
+   For the ⟨ninj/4⟩ term, we introduce the following ap-                                   Lett. 68 (1992)  538.
+proximation,                                                                         [18]  M. Ogata, M. U. Luchini, S. Sorella, and F. F. Assaad:  Phys.
+                                                                                           Rev. Lett. 66 (1991) 2388.
+    ⟨ψ0|PdninjPd|ψ0⟩                                                                 [19]  H. Q. Lin:  Phys. Rev. B 44 (1991)  4674.
+                                                                                     [20]  M. Yu. Kagan and T. M. Rice:  J. Phys. Cond. Mat. 6 (1994)
+             =       4                                                                     3771.
+                 (1 +δ)2 ⟨ψ0|(1 −ni↓)ni↑nj↑(1 −nj↓)                                  [21]  C.  S.  Hellberg  and  E.  Manousakis:  Phys.  Rev.  B  52  (1995)
+                                                                                           4639.
+                                 +(1 −ni↓)ni↑nj↓(1 −nj↑)                             [22]  M. C. Gutzwiller:  Phys. Rev. Lett. 10 (1963) 159, Phys. Rev.
+                                                                                           134A (1965) 1726.
+                                 +(1 −ni↑)ni↓nj↑(1 −nj↓)                             [23]  H. Yokoyama and M. Ogata:  Phys. Rev. Lett. 67 (1991) 3610
+                                 +(1 −ni↑)ni↓nj↓(1 −nj↑)|ψ0⟩                               and Phys. Rev. B 53 (1996) 5758.
+                                                                                     [24]  H.  Yokoyama,  Y.  Kuramoto,  and  M.  Ogata:  Computational
+                                                                                           Physics  as  a  New  Frontier  in  Condensed  Matter  Research,
+             =       4(1 +δ)2 (1 −n↑)(1 −n↓)⟨ψ0|ninj|ψ0⟩                                   edited  by  H.  Takayama  et  al.  (Physical  Society  of  Japan,
+                                                                                           Tokyo, 1995) p160.
+             = ⟨ψ0|ninj|ψ0⟩.                                             (B.4)       [25]  A. B. Harris and R. V. Lange:  Phys. Rev. 157 (1967)  295.
+                                                                                     [26]  Y. Tokura, H. Takagi and S. Uchida:  Nature 337 (1989) 345;
+   Using  these  approximations, self-consistent equations                                 V. J. Emery:  Nature 337 (1989) 306.
+are given by                                                                         [27]  A. Ramsak and P. Prelovsek:  Phys. Rev. B 40 (1989)  2239.
+                       ∑                                                             [28]  C. D. Batista and A. A. Aligia:  Phys. Rev. B 48 (1993) 4212.
+         ∆k =  1                                                                     [29]  H. Matsukawa and K. Okamoto:  to appear  in proceedings  of
+                 Na     k′ γk−k′  ∆k′2Ek′,                                   (B.5)         LT21.
+                                 {                                                   [30]  T. Ogawa, K. Kanda, and T. Matsubara:  Prog. Theor. Phys.
+          ξk =         1            −gttγk − ˜µ                                            53 (1975) 614.
+                  3                                                                  [31]  H.  Yokoyama  and  H.  Shiba:   J.  Phys.  Soc.  Jpn.  56  (1987)
+                  4gsJ +  14J         )  1                         }                       3582.
+                    (3                        ∑                                      [32]  H.  Yokoyama  and  H.  Shiba:   J.  Phys.  Soc.  Jpn.  56  (1987)
+                 +    4gsJ − 14J         Na                 2Ek′     ,   (B.6)             3570.
+                                                k′ γk−k′ ξk′                         [33]  C.  S.  Hellberg  and  E.  J.  Mele:   Phys.  Rev.  Lett.  67  (1991)
+                       ∑     ξk                                                            2080.
+            δ =  1Na        Ek,                                               (B.7)  [34]  R. Valent´ı  and C. Gros:  Phys. Rev. Lett.  68 (1992)  2402;  C.
+                        k                                                                  Gros and R. Valent´ı:  Mod. Phys. Lett. B 7 (1993) 119.
+                                                                                     [35]  H.  Yokoyama  and  H.  Shiba:   J.  Phys.  Soc.  Jpn.  59  (1990)
+where                                                   √                                  3669.
+                                                                                     [36]  S.  E.  Barnes:  J.  Phys.  F  6  (1976)  1375;  P.  Coleman:  Phys.
+       γk= 2(coskx + cosky),   Ek =                        ξ2k + |∆k|2,                    Rev.  B  29  (1984)  3035;  A.  E.  Ruckenstein,  P.  J.  Hirschfeld
+                                                                                           and J. Appel:  Phys. Rev. B 36 (1987)  857.
+     gt =   2δ                                                  ∂⟨H⟩                 [37]  W.L.  McMillan:  Phys.  Rev.  138  (1965)  A442;  D.  Ceperley,
+           1 +δ, gs =       4(1 +δ)2,    ˜µ =µ +   1Na            ∂δ . (B.8)               G. V. Chester, and K. H. Kalos:  Phys. Rev. B 16 (1977) 3081.
+                                                                                     [38]  J. P. Bouchaud, A. Georges, and C. Lhuillier:  J. Phys. (Paris)
+These self-consistent equations are numerically solved for                                 49 (1988) 553.
+the dx2+y2, s+id and extended s-wave states.                                         [39]  This is diﬀerent from the 1D case,32) where EJ/J is also linear
+                                                                                           in δ.
+                                                                                     [40]  N. Trivedi and D. Ceperley:  Phys. Rev. B 40 (1989) 2737; K.
+                                                                                           J. Runge:  Phys. Rev. B 45 (1992) 12292.
+                                                Phase Diagram and Pairing Symmetry of the 2D t-J  Model                                                                    11
+
+[41]  I.  Aﬄeck,  Z.  Zou,  T.  Hsu,  and  P.  W.  Anderson:  Phys.  Rev.
+      B 38 (1988) 745.
+[42]  H. Yokoyama:  unpublished.                                                            Fig.  1.    Energy components  of the Gutzwiller wave function as a
+[43]  To  conﬁrm  the  θ  dependence,  we calculate  each  energy  com-                        function  of  electron  density.   Each  Symbol  represents  a  system
+      ponent  as  a  function  of  θ,  by  ﬁxing  ∆/t  at  0.6,  which  is  the                size:  solid  circle  (L = 26),  upward  triangle  (20),  downward  tri-
+      optimal value of the d2x−y2 wave for J/t = 0.5. Both Et/t and                            angle  (16),  circle  (14),  square  (12)  and  diamond  (10).   Curves
+      EJ /J  are  monotonically  decreasing  functions  except  for  the                       are a guide for the eyes.
+      very vicinity of  θ = 0. On the  contrary,  E3/J (3)  is an mono-
+      tonically  increasing  function  of  θ,  although  the  increment  is
+      relatively small.
+[44]  This feature is essentially the same for the high density region.
+      In this sense, even in the dx2−y2  wave superconducting state,
+      eﬀective repulsive force between electrons works for J/t < 2.0.                       Fig.  2.    Data of Fig. 1 are re-plotted.  Et/t and E3/J (3)  are plot-
+[45]  For the bound state with d-wave symmetry, we ﬁnd                                         ted versus 1−n in (a), and EJ/J versus (1−n)0.7 in (b).  Symbols
+                                                                                               have the same meanings with Fig. 1.
+                           Jc − J (3)c     =       4t8/π − 2  ∼ 7.32t.
+
+[46]  G.J. Chen, R. Joynt, F.C. Zhang, and C. Gros:  Phys. Rev. B
+      42 (1990)  2662.
+[47]  Q.P.  Lin,  B.E.  Koltenbah,  and  R.  Joynt:   Phys.  Rev.  B  48
+      (1993)  437.                                                                          Fig.  3.    Energy expectation  values  at half ﬁlling for the case (iii)
+[48]  A.  Oguri,  T.  Asahata,  and  S.  Maekawa:   Phys.  Rev.  B  49                         (s+d-type wave) of eq. (2.9) for several values of C  (−1.0, −0.6,
+      (1994) 6880; T. Asahata and A. Oguri:  J. Phys. Soc. Jpn. 65                             −0.4,  0,  0.4,  0.6,  1.0).    The  inset  is  the  magniﬁcation  of  the
+      (1996)  365.                                                                             minimum  area  around  ∆/t = 0.57.  Symbols  for  the  value  of  C
+[49]  Y. Nagaoka:  Phys. Rev. 147 (1966) 392.                                                  are  common  in  the  inset.   The  system  used  is  L  =  10,  and  the
+[50]  W.  O.  Putikka,  M.  U.  Luchini,  and  M.  Ogata:   Phys.  Rev.                        sample number is 3 - 5×104.  The value of Green function Monte
+      Lett.  69 (1992) 2288.                                                                   Carlo method is E/J  = −1.1693.40)
+[51]  W. O. Putikka, R. L. Glenister, R. R. P. Singh, and H. Tsunet-
+      sugu:  Phys. Rev. Lett. 73 (1994)  170.
+[52]  Y. C. Chen, A. Moreo, F. Ortolani, E. Dagotto and T. K. Lee:
+      Phys. Rev. B 50 (1994) 655.
+[53]  Y. C. Chen and T. K. Lee:  Phys. Rev. B 47 (1993)  11548.                             Fig.  4.    Energy expectation  values at half ﬁlling for the case (iv)
+[54]  P. Fazekas  and K. Penc:  Int.  J. Mod. Phys.  B1 (1988)  1021;                          (s+id-type wave) for several values of θ (0, π/12, π/4, π/2, 3π/4,
+      H. Otsuka:  J. Phys. Soc. Jpn. 61 (1992) 1645.                                           π).  The inset is the  magniﬁcation  of the  minimum area around
+[55]  M.  Ogata  and  H.  Shiba:   Phys.  Rev.  B  41  (1990)  2326;  H.                       0.5  -  2.   Symbols  of  θ  are  common  with  the  inset.   The  system
+      Shiba and M. Ogata:  Int.  J. Mod. Phys. B 5 (1991)  31.                                 used is L = 10, and the sample number is 3 - 5 × 104.
+
+
+
+
+
+
+
+                                                                                            Fig.  5.    Expectation values of three energy components for s+id-
+                                                                                               type wave and for some value of θ  (0,  π/4, π/2, 3π/4, π) in the
+                                                                                               same energy  scale.  Electron  density  is chosen  at  n = 0.88.  The
+                                                                                               system  used  is  L  =  10,  and  the  sample  number  is  3  -  5 × 104.
+                                                                                               Since there are large statistical ﬂuctuations in EJ/J and E3/J (3)
+                                                                                               for small θ and large ∆/t, we show the data of two Monte Carlo
+                                                                                               runs for θ = 0.
+
+
+
+
+
+
+                                                                                            Fig.  6.    Total  energy  of  s+id-type  wave  for  some  value  of  θ  (0,
+                                                                                               π/4,  π/2,  3π/4,  π).   J (3)/J  =  0.   The  inset  is  the  magniﬁed
+                                                                                               ﬁgure of the minimum area.  Symbols of θ are common with the
+                                                                                               inset.  The system used is L = 10, and the sample number is 3 -
+                                                                                               5 × 104
+
+
+
+
+
+
+                                                                                            Fig.  7.    Comparison   of   total   energies   among   four   variational
+                                                                                               states as a function of n near the half ﬁlling (J (3) = 0).  Symbols
+                                                                                               have  the  same  meaning  with  Figs.  1  and  2.   The  arrow  on  the
+                                                                                               right  axis  represents  the  accurate  value  obtained  by  the  Green
+                                                                                               function Monte Carlo method.40)
+12                                                                                      Hisatoshi Yokoyama and Masao Ogata
+
+
+
+Fig.  8.    Total energy of the dx2−y2-wave state versus µ/t for some                         Fig.  16.    Comparison among some variational energies as a func-
+  values  of  ∆/t.   Note  that  the  scale  is  small.   The  arrow  on  the                    tion of J/t for n = 0.04 for the t-J model (J (3)  = 0).  For J/t ≤ 2
+  horizontal  axis  indicates  the  noninteracting  value  of  µ.  3 × 103                       the optimal extended  s wave is reduced to the GWF. Note that
+  samples are used.  L = 10.                                                                     the scale is small.  L = 10 and the sample number is 2 × 105.
+
+
+
+
+Fig.  9.    Comparison of  spin structure  factors  between  the  GWF,
+  the  optimized  dx2−y2  wave  (∆/t  =  0.55),  and  the  extended  s                        Fig.  17.    Expectation values of three-site term of the dx2−y2 wave
+  wave  (∆/t  =  0.55).    The  path  of  q  is  Γ(0, 0)  →  X(π, 0)  →                          for  (a)  low  density  (n = 0.04  -  0.52)  and  (b)  high  density  (n =
+  M(π, π) → Γ.  The system with L = 10 and 5 × 104  samples are                                  0.60 - 0.96).  L = 10 and the sample number is 3 - 5 × 104.
+  used.
+
+
+
+
+
+Fig.  10.    Phase  diagram  for  the  ground  state  of  the  2D  t-J-type                   Fig.  18.    Expectation values of the three-site term of the extended
+  model.  Basically it represents the case of J (3)/J  = 0.  The shifts                          s wave for (a) low density (n = 0.04 - 0.52) and (b) high density
+  due  to  ﬁnite  J (3)/J  are  shown  by  shadowed  arrows  with  their                         (n  =  0.60  -  0.96).   L  =  10  and  the  sample  number  is  3  -  5 ×
+  values.  The exact phase boundary21)  between the s-wave bound                                 104.  For  the large value of ∆/t large statistical  ﬂuctuations  are
+  state  and  the  phase  separation  for  n  →  0  is  shown  by  a  solid                      observed,  and  the  results  of  two  trials  are  depicted  for  some
+  arrow on the abscissa.  For detailed explanations,  see the text.                              values of n.
+
+
+
+
+
+
+Fig.  11.    Expectation values of transfer energy of the dx2−y2 wave                         Fig.  19.    Optimized  value  of  ∆/t  for  some  values  of  J (3)/J  as  a
+  for  (a)  low  density  (n  =  0.04,  0.12,  0.16,  0.24,  0.32,  0.36,  and                   function of J/t.  Solid lines are guides for eyes.  The wave function
+  0.44) and (b) high density (n = 0.52, 0.60, 0.64, 0.72, 0.80, 0.88,                            has the dx2−y2-wave pairing symmetry.
+
+  and 0.96).  L = 10 and the sample number is 3 - 5 × 104.
+
+
+
+
+                                                                                              Fig.  20.    Comparison  of  total  energies  among  three  variational
+Fig.  12.    Expectation  values  of  exchange  energy  of  the  dx2−y2                          states  obtained  in  the  Gutzwiller  approximation  as  a  function
+  wave  for  (a)  low  density  (n = 0.04  -  0.52)  and  (b)  high  density                     of n near the half ﬁlling (J (3)  = 0).
+  (n = 0.60 - 1.0).  L = 10.  The sample number is 3 - 5 × 104.
+
+
+
+
+                                                                                              Fig.  21.    Phase  diagram  obtained  in  the  Gutzwiller  approxima-
+Fig.  13.    Optimized value  of  ∆/t for the  dx2−y2  wave  as  a  func-                        tion for the ground state of the 2D t-J-type model.
+  tion  of  J/t  (a)  in  the  high  density  (n = 0.64  -  0.96)  and  (b)  in
+  the medium density (n = 0.32 - 0.60).  In (a) we ﬁt the data with
+  curves, and in (b) with straight lines.  The arrow on the vertical
+  axis in (a) is the value for n = 1.0.
+                                                                                              Fig.  22.    Total  variational  energy  for  2D  Hubbard  model  as  a
+                                                                                                 function  of  electron  density  near  the  half  ﬁlling,  with  respect
+                                                                                                 to the Gutzwiller wave function.  Used lattice sizes are indicated
+                                                                                                 by the same symbols with Fig. 1.  Lines are a guide for the eyes.
+Fig.  14.    Expectation  values  of  transfer  energy  of the  extended  s                      3 × 104  samples are used.
+  wave  for  (a)  low  density  (n = 0.04  -  0.44)  and  (b)  high  density
+  (n = 0.52 - 0.96).  L = 10 and the sample number is 3 - 5 × 104.
+
+
+
+
+
+
+Fig.  15.    Expectation  values  of  exchange  energy  of  the  extended
+  s wave for (a) low density (n = 0.04 - 0.52) and (b) high density
+  (n = 0.60 - 1.0).  L = 10 and the  sample number  is 3 -  5 × 104.
+  Since  for  large ∆/t  statistical  ﬂuctuations  are  large,  the  results
+  of two trials are depicted for a few values of n.
+                                                          Phase Diagram and Pairing Symmetry of the 2D t-J  Model                                                                    13
+
+
+
+
+
+
+Table  I.    Diﬀerences  of  energy  components  from  the  GWF  for
+   J/t = 0.5  in the  high  electron  density.  The  values  of  the  GWF
+   are  given  as  the  references.   The  system  with  L  =  10  is  used.
+   The last digit for each value includes some error.
+
+    n          State           Et/t           ⟨SiSj⟩       ⟨− ninj4    ⟩         Total
+
+               GWF            0.0           −0.2706         −0.25         −0.5206
+                TLL             0.0                0.0                0.0                0.0
+  1.00          AF               0.0           −0.0500            0.0            −0.0500
+              dx2−y2           0.0           −0.0493            0.0            −0.0493
+               Exact            0.0           −0.0641            0.0            −0.0641
+               GWF        −0.1080      −0.2216       −0.2302       −0.5597
+                TLL             ∼ 0              ∼ 0               ∼ 0           −0.0001
+                 AF          +0.0098      −0.0543       −0.0000       −0.0447
+  0.96      dx2−y2      +0.0053      −0.0603       −0.0004       −0.0555
+                s+id        +0.0075      −0.0568       −0.0004       −0.0497
+               Ext.s        +0.0037      +0.0011       −0.0000       +0.0048
+               GWF        −0.3089      −0.1746       −0.1925       −0.6755
+                TLL         −0.0004      +0.0001       +0.0002       −0.0005
+                 AF          +0.0173      −0.0268       −0.0000       −0.0100
+  0.88      dx2−y2      +0.0149      −0.0499       −0.0012       −0.0367
+                s+id        +0.0203      −0.0435       −0.0011       −0.0242
+               Ext.s        +0.0212      +0.0007       −0.0003       +0.0216
+               GWF        −0.4834      −0.1426       −0.1575       −0.7834
+                TLL         −0.0022      +0.0005       +0.0005       −0.0012
+                 AF               0.0                0.0                0.0                0.0
+  0.80      dx2−y2      +0.0195      −0.0357       −0.0017       −0.0179
+                s+id        +0.0232      −0.0273       −0.0014       −0.0055
+               Ext.s        +0.0297      −0.0005       −0.0005       +0.0288
+               GWF        −0.6290      −0.1193       −0.1257       −0.8743
+                TLL         −0.0042      +0.0009       +0.0010       −0.0021
+                 AF               0.0                0.0                0.0                0.0
+  0.72      dx2−y2      +0.0102      −0.0143       −0.0010       −0.0050
+                s+id        +0.0168      −0.0118       −0.0009       +0.0040
+               Ext.s        +0.0226      −0.0002       −0.0004       +0.0219
+
+
+
+
+
+
+
+
+
+
+
+
+Table  II.    Critical  values  of  J/t  of  the  phase  boundary  between
+   homogeneous  and separated phases for the low electron density.
+   The  last  digit  for  each  value  of  Jc/t  includes  some  errors.   We
+   represent  data  for  L  ≥  14.   J (3)/J  =  0.   The  exact  value  for
+   n = 0 is by Hellberg and Manousakis.21)
+
+      n                             N/Na                          Jc/t                          State
+  0.0                                2/∞                         3.4367                       Exact
+  0.0059                        4/676                        3.432                          Ext.s
+  0.01                            4/400                        3.429                          Ext.s
+  0.0156                        4/256                        3.423                          Ext.s
+  0.0204                        4/196                        3.418                          Ext.s
+  0.03                           12/400                       3.389                          Ext.s
+  0.0612                       12/196                       3.345                          TLL
+  0.0816                       16/196                       3.313                          TLL
+  0.0938                       24/256                       3.284                          TLL

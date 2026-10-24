@@ -1,0 +1,1507 @@
+                                 Minimal loop currents in doped Mott insulators
+
+                                           Can  Cui,1  Jing-Yu  Zhao,2  and  Zheng-Yu  Weng1
+                             1Institute  for  Advanced  Study,  Tsinghua  University,  Beijing  100084,  China
+             2Department of Physics and Astronomy,  Johns Hopkins University,  Baltimore,  Maryland 21218,  USA
+                                                           (Dated:  February 25, 2026)
+                   For thet-Jmodel, variational wave functions can generally be constructed based on an accurate
+                description of antiferromagnetism (AFM) at half-filling and an exact phase-string sign structure un-
+                der doping.  The single-hole-doped and two-hole-doped states, as determined by variational Monte
+                Carlo (VMC) simulations, display sharply contrasting behaviors.  The single-hole state constitutes
+                a “cat state” that resonates strongly between a quasiparticle component and a local loop-current
+                component, with approximately equal weights. In the ground state, the quasiparticle spectral weight
+                Zk peaks at momentak    0 ≡(±     π2 ,±  π2 ).  The total-energy dispersion versuskagrees remarkably well
+                with the Green function Monte Carlo results throughout the Brillouin zone.   However,  Landau’s
+                one-to-one correspondence hypothesis for quasiparticles breaks down here with the incoherent com-
+                ponent exhibiting intrinsic magnetization originating from a minimal 2×2 loop current that forms
+                a 4×4 pattern on the square lattice—a finding in excellent agreement with density matrix renor-
+                malization group (DMRG) calculations.  In the two-hole ground state, a new pairing mechanism is
+                revealed:  the two holes are automatically fused into a tightly bound object consisting of an inco-
+                herentd  xy pairing along the diagonal direction by compensating the local loop currents.  This hole
+                pair is again a “cat state” that resonates strongly between the incoherentd  xy and a coherentd  x2−y    2
+                Cooper channel to gain substantial hopping energy.  Its size extends over an area of about 4×4
+                lattice spacings, much smaller than the divergent AFM correlation length, implying that it should
+                survive as a minimal superconducting building block even in the dilute doping regime. Experimental
+                implications and the generalization to the finite-doping case are briefly addressed.
+
+
+                     I.    INTRODUCTION                                          Traditionally, analogous to a quasielectron dressed by
+                                                                              electron-hole  pairs  in  a  normal  metal,  early  studies  of-
+  The  microscopic  mechanism  of  high-temperature  su-                      ten  described  a  doped  hole  as  a  coherent,  Landau-like
+perconductivity in the cuprates has remained controver-                       quasiparticle  dressed  by  a  distortion  of  the  spin  back-
+sial since its discovery in 1986 [1].  Although doped Mott                    ground—known as the “longitudinal spin polaron effect”
+insulators  are  widely  believed  to  capture  the  essential                [4–6]. In the self-consistent Born approximation (SCBA),
+physics of these materials [2,3], their strong correlations                   scattering between holes and spin magnons renormalizes
+are  inherently  nonperturbative,  leaving  the  theoretical                  the hole’s effective mass while its spectral weight remains
+understanding  of  their  ground-state  properties  incom-                    finite. The calculated energy minimum of the single-hole-
+plete.  Two of the most fundamental open questions are                        dopedt-Jmodel is located atk              0 = (±  π2 ,±  π2 ), consistent
+whether  or  how  single-particle  excitations  violate  Lan-                 with exact diagonalization (ED) results on small systems
+dau quasiparticle criteria, and how two doped holes can                       [7,8].
+become  intrinsically  paired  in  the  doped  Mott  insula-                     However, recent density matrix renormalization group
+tor without invoking an external force like the electron-                     (DMRG)  studies  of  the  single-hole-dopedt-Jmodel  in
+phonon interaction.                                                           two  dimensions  (2D)  with  open  boundary  conditions
+  The  dilute  doping  regime  is  characterized  by  a  long                 (OBC)  and  preservedC     4  rotational  symmetry  reveal  a
+antiferromagnetic (AFM) correlation length, which nat-                        twofold ground-state degeneracy characterized by a non-
+urally  distinguishes  between  long-wavelength  renormal-                    trivial quantum numberL    z =±1, corresponding to the
+ization effects and short-range spin–charge entanglement.                     chirality  of  “hidden”  charge  and  spin  loop  currents  in
+In the extreme limit of one or two holes, the AFM back-                       the system [9].  This short-range loop-current pattern is
+ground remains thermodynamically unchanged, allowing                          absent in the semiclassical SCBA approach, indicating a
+the local mutual entanglement between the spin environ-                       strong correlation effect emerging at the lattice scale.  It
+ment  and  the  dopants  to  be  cleanly  isolated.   As  this                implies that the single-hole state cannot be simply speci-
+work will demonstrate,  the resulting renormalization is                      fied by a momentumkas a Landau quasiparticle. Similar
+strongly  non-perturbative—so  much  so  that  it  endows                     dual behavior of a single hole in the infrared and ultra-
+a single hole with singular behavior—and, in turn, pro-                       violet  limits  has  also  been  found  in  the  two-leg  ladder
+vides  the  very  mechanism  that  binds  two  holes  into  a                 t-Jmodel  [10, 11],  where  a  Landau  quasiparticle  state
+compact pair on a scale far smaller than the AFM cor-                         is only recovered as the spin-spin correlation length be-
+relation length.  Such a tightly bound pair may thus be                       comes sufficiently short along the chain direction in the
+regarded as a minimal building block, opening a route to                      strongly anisotropic (strong rung) limit.
+study its interplay with long-range AFM correlations at                          On  general  grounds,  Anderson  argued  [12, 13]  that
+finite doping.                                                                when an additional hole is injected into a (doped) Mott
+                                                                                                                                                       2
+
+insulator,  the  many-body  system  can  acquire  a  nonlo-                   in the large-sample limit in 2D. To remedy this, one may
+cal “unrenormalizable Fermi-surface phase shift” to ac-                       note that the “twisted hole” can further induce an “an-
+commodate it, leading to an “orthogonality catastrophe”                       timeron” excitation [21,22] in the spin background, cre-
+such  that  the  doped  state  is  no  longer  Landau-Fermi-                  ating  a  spin  current  of  opposite  chirality  centered  at  a
+liquid-like.  Such a nontrivial many-body phase shift has                     sitevsuch that
+been explicitly identified as the phase-string effect in the
+t-Jmodel [14–16] and the Hubbard model [17].  It origi-                                            |ϕ 0⟩ → |˜ϕ0⟩=e    ±i   ˆΩv|ϕ 0⟩.                  (3)
+nates from the irreparable string-like spin mismatch cre-
+ated as the doped hole moves.  The spin-polaron picture                       Namely, it would be self-consistent to improve the single-
+mentioned earlier shows [6] that longitudinalS                          z spin mis-hole wave function Ansatz in Eq. (1) by replacing|ϕ        0⟩
+matches may be repaired through spin-flip processes, but                      with|       ˜ϕ0⟩to account for the feedback effect of the twisted
+it overlooks the fact that transverseS      ± mismatches can-                 hole’s  motion  on  the  spin  background  as  schematically
+not be simultaneously repaired.  The result is a trail of                     illustrated in Fig.1(b).
+signs±, depending on whether the hole exchanges places                           In this paper, we systematically examine such a new
+with an up or down spin along its trajectory; this is called                  Ansatz state using VMC and compare it with numerical
+the “phase string”, representing the transverse defect left                   results. While the ground state shows the same quantum
+by hole hopping.  Thus, the phase-string sign structure                       numberL    z =±1, the variational ground-state energy is
+can be regarded as a generalized many-body Berry phase                        significantly improved in this new single-hole wave func-
+accumulated when the hole completes a closed loop, and                        tion.  The quasiparticle component has a spectral weight
+it plays a key role in the quantum interference among dif-                    peaking at the fourk        0 points in the ground state, and its
+ferent Feynman paths of the doped holes, fundamentally                        excitation atkexhibits an energy dispersion in excellent
+shaping the many-body hole-spin states of a doped Mott                        agreement with large-scale numerical simulations of the
+insulator.                                                                    t-Jmodel across the entire Brillouin zone.  In particular,
+  To incorporate this phase-string sign structure in the                      it has been shown to be a “cat state” strongly resonat-
+single-hole problem, the following variational wave func-                     ing between a quasiparticle component and an incoherent
+tion  was  proposed  in  previous  variational  Monte  Carlo                  component  with  roughly  equal  weights  [cf.   Fig.1(b)].
+(VMC) studies [18]:                                                           Here,  the  charge  and  spin  loop  currents  discovered  by
+                   |Ψ G⟩1h = Xφh(i)˜c     iσ|ϕ 0⟩,                  (1)       DMRG [9] are consistently reproduced by the incoherent
+                                                                              component of the wave function, where minimal 2×2 loop
+                                  i                                           charge currents form a 4×4 pattern on the square lattice
+where ˜c  iσ creates a twisted hole                                           with magnetization∼0.1µ                                   B.  In other words, the single
+                                                                              hole is no longer a Bloch wave of a “point-like” particle
+                           ˜c  iσ ≡c   iσe∓i   ˆΩi                            (2)dressed by the many-body spin-polaron effect.  Instead,
+                                                                              the doped hole behaves as a resonating hopping process,
+on the “vacuum state”|ϕ             0⟩—the half-filling ground state          between the point-like quasiparticle and a “closed string”
+of the Heisenberg Hamiltonian. The phase-string effect is                     on a minimal 2×2 plaquette on the square lattice.
+encoded by the phase-shift operator  ˆΩi in Eq. (2), which                       This dual structure of the single-hole “cat state” illus-
+generates a transverse spin distortion [cf.  Eq. (7)] or a                    trates the non-Landau-quasiparticle nature of the wave
+“transverse spin-polaron” in the spin background that ef-                     function: since the quasiparticle component alone cannot
+fectively facilitates hole hopping. This effect manifests as                  specify the basic properties of the wave function—which
+transverse spin and charge currents mutually encircling                       also includes the incoherent component—Landau’s one-
+with chirality [schematically illustrated in Fig.1(a)], re-                   to-one correspondence principle is clearly violated here.
+sulting in a nontrivial angular momentumL        z =±1 [18]                   Experimentally, its implications are significant: although
+in  the  ground  state,  which  is  consistent  with  ED  and                 single-electron  detectors  like  angle-resolved  photoemis-
+DMRG results [9].  The calculated quasiparticle spectral                      sion spectroscopy (ARPES) and scanning tunneling spec-
+weight peaks atk    0 = (±  π2 ,±  π2 ), but vanishes in the ther-            troscopy (STS) can directly probe the quasiparticle com-
+modynamic limit.  In sharp contrast to the strong sup-                        ponent, the loop-current component is like “dark matter”
+pression of bare hole propagation, however, the “twisted”                     to ARPES/STS measurements; its crucial presence in the
+quasiparticle ˜c  iσ can still propagate coherently on top of                 single-hole state is only revealed via numerical DMRG.
+|ϕ 0⟩with an almost plane-wave-likeφ    h(i) determined by                    Thus,  the “dispersion” of the quasiparticle observed in
+VMC [18].  Similarly, the twisted hole state in terms of                      ARPES can be mistakenly attributed to a single-particle
+˜c|ϕ     0⟩is shown [19,20] to resemble a Bloch-wave propa-                   property  of  a  band  structure  with  conventional  many-
+gation in the two-leg ladder system, which is in excellent                    body renormalization, while in reality it is driven by the
+agreement with DMRG.                                                          loop-current component via the hopping term.  In con-
+  Although the twisted quasiparticle ˜c  iσ can hop coher-                    trast, if one artificially switches off the phase-string sign
+ently by effectively erasing the singular phase-string ef-                    structure in thet-Jmodel [cf. theσ·t-Jmodel discussed
+fect,  the spin-current vortex induced bye  ∓i   ˆΩi  can also                in AppendixB], the incoherent component can also be
+lead to a logarithmically divergent superexchange energy                      turned off by setting ˆΩi = 0 in Eq. (1), yielding a correct
+                                                                                                                                                          3
+
+                                                                                case are completely compensated in the non-degenerate
+                                                                                two-hole  ground  state  withL        z  =  2  (mod  4)  underC           4
+                                                                                symmetry.  In fact, it is still a “cat state” composed of
+                                                                                a  Cooper  pair  withd        x2−y    2  symmetry  and  an  incoher-
+                                                                                ent component withd        xy pairing symmetry, accompanied
+                                                                                by  an  additional  spin-singlet  excitation  [cf.   Fig.1(c)].
+                                                                                Again, a predominant hopping energy is gained through
+                                                                                strong resonance between the two components, meaning
+                                                                                that  such  a  two-hole  “fusion”  represents  a  new pairing
+                                                                                mechanism that cannot be simplified as a Cooper pairing
+                                                                                instability of two quasiparticles in a perturbative manner.
+                                                                                Unlike the single-hole case, we show that although the in-
+                                                                                coherent component is absent in the low-energy branch of
+                                                                                STS, it can still appear in the high-energy branch of the
+                                                                                single-particle spectral function (in an inverse ARPES or
+                                                                                STS on the positive bias side) above the pairing energy
+                                                                                scale. Such a hole pair approximately occupies an area of
+                                                                                about 4a  0×4a      0 (a  0 is the lattice constant) to constitute a
+                                                                                minimal superconducting (SC) building block, consistent
+                                                                                with recent STS experiments [25–27].
+                                                                                   The remainder of this paper is structured as follows. In
+                                                                                Sec.II, we introduce thet-Jmodel and present the opti-
+                                                                                mized single-hole variational Ansatz based on the phase-
+FIG. 1.   Schematic illustration of doped-hole wavefunctions.                   string sign structure.  Using this Ansatz, we compute the
+(a) A bare hole ofS    z  =±1/2 is transformed into a twisted                   single-hole dispersion and show that it successfully cap-
+hole [Eq.  (2)], a composite of charge and spin that encircle                   tures the quasiparticle degrees of freedom.  Benchmark-
+one another in the transverse (x-y) plane with chirality and                    ing against DMRG results, we further calculate both spin
+orbital angular momentumL       z  =±1.  While the bare hole’s                  and hole current patterns, revealing a 2×2 vortex struc-
+motion is blocked by the phase-string effect, the twisted hole                  ture  in  the  charge  current  that  produces  a  local  mag-
+is mobile on the AFM background via the hopping term [18].                      netic moment, as quantified numerically.  In Sec.III, we
+(b)  The  single-hole  variational  wave  function  [Eq.  (6)]  de-             analyze  the  structure  of  the  single-hole  wave  function,
+scribes a bound state between a twisted hole and an antimeron                   clarify  the  origin  of  the  charge  and  spin  currents,  and
+(centered at the cross).  Both exhibit vortex-like distortions                  demonstrate  the  resonant  coupling  between  the  quasi-
+in  the  spinx–yplane  with  opposite  chiralities,  thereby  re-               particle  and  incoherent  components.   Sec.IVexamines
+moving  the  logarithmically  divergent  superexchange  energy                  the two-hole ground state, where we distinguish its two
+associated with the twisted hole alone.  The bare-hole state                    constituent components using hole-hole correlators, pair-
+|Ψ qp⟩1h can be recovered when the vortex–antivortex pair an-
+nihilates at short distance. This single-hole state thus forms a                order parameters, and single-particle spectral functions.
+quantum “cat state”, arising from a strong resonance between                    Finally, Sec.Vprovides a summary and concluding re-
+the quasiparticle component|Ψ   qp⟩1h  and incoherent compo-                    marks.
+nent|Ψ   inc⟩1h  driven by the hopping term.  (c) The two-hole
+ground state [Eq. (18)]. Here, the hopping term again drives a
+strong resonance between a coherent Cooper-pair component                        II.    SINGLE-HOLE GROUND STATE: VMC VS.
+|Ψ Cooper⟩2h withd        x2−y    2 pairing symmetry on the AFM back-                                           DMRG
+ground|ϕ               0⟩—a condensate of spin-singlet pairs on opposite
+sublattices [23]—and an incoherent component|Ψ         inc⟩2h with                                      A.    Thet-Jmodel
+dxy  pairing  symmetry,  accompanied  by  the  same  sublattice
+spin-singlet pair (connected by the orange bond), whose am-
+plitude is no longer sign-definite and depends on the hopping                      One of the simplest models of doped Mott insulators
+history of the holes.                                                           is thet-Jmodel, whose Hamiltonian is given byH             t-J   =
+                                                                                Ps(H  t +H   J)P  s.  The expressions for the hopping term
+                                                                                Ht and superexchange termH         J  are listed below:
+and excellent VMC result in terms of the quasiparticle                                           Ht =−t     X      (c †
+component alone.                                                                                                     iσcjσ + H.c.),                (4)
+   A  two-hole  variational  ground  state  can  be  natu-                                                   ⟨ij⟩,σ
+rally constructed by placing the second hole at the an-                                        HJ =J   X        Si ·S j − 1             .                (5)
+timeron position in the modified single-hole wave func-                                                   ⟨ij⟩               4ninj
+tion  [24].   Such  a  two-hole  state  [cf.   Eq.  (18)]  shows
+strong binding of the two holes withd-wave symmetry.                            HereP         s  is  the  projection  operator  imposing  the  no-
+The charge/spin loop currents present in the single-hole                        double-occupancy  constraint  on  the  hole-doped  side:
+                                                                                                                                                                4
+P                                                                                  into the wave function Ansatz in Eq. (6) through the fac-
+   σ c†iσciσ  ≤1  at  each  site,  leading  to  the  strong  cor-
+relation effect.  The superexchange termJ= 1 is set as                             tore     imˆΩv.  Here,vdenotes the location of the antimeron
+the energy unit, and the hopping integralt= 3 is fixed                             center, which in our variational study will be placed at
+throughout the paper unless explicitly specified. The size                         the center of each plaquette on the square lattice.
+of the square lattice isN   x ×N   y under the OBC.                                    Finally, the variational parametersφ                     m(i, v) in Eq. (6)
+   At half-filling,H                    t-J    reduces toH    J  as the Heisenberg are determined by diagonalizing the effective matrices of
+model,  whose  ground  state|ϕ           0⟩ can  be  highly  accu-                 Ht-J   under the basis set defined in Eq. (6), following the
+rately  simulated  by  the  Liang-Doucot-Anderson  varia-                          method in Ref.  [30,31] .  Here the amplitude|φ                               m(i, v)|      2
+tional wave function [23] using the Monte Carlo method                             governs the distance between the twisted hole and the an-
+(cf.  Ref.  [28]).  Here|ϕ                0⟩is composed of the condensate          timeron.  Based onAnsatzEq. (6), the properties of the
+of spin singlets or resonating-valence-bond (RVB) pairs                            single-hole ground state and excited states can be system-
+that only connect opposite sublattices.  It is spin-singlet                        atically investigated in the following, using the unbiased
+and translationally invariant for a finite-size square lat-                        DMRG method as the benchmark (cf. AppendixA). For
+tice,  whose spin-spin correlation length diverges in two                          the 8×8 system, the variational ground energy is found
+dimensions (2D) in the thermodynamic limit [23].                                   to be lowered by 1.675 as compared to the previous vari-
+                                                                                   ational wave function without antimeron [18],  with the
+           B.    Single-hole wave functionAnsatz                                   total energyE           tot(VMC) =−71.467 close to the DMRG
+                                                                                   resultE           tot(DMRG) =−72.979.  It is noted that the to-
+                                                                                   tal energy may be further improved with incorporating
+   The simplest nontrivial problem of thet-Jmodel con-                             the  aforementioned  longitudinal  spin-polaron  effect  (cf.
+cerns  the  single-hole-doped  ground  state  and  low-lying                       AppendixB),  which  nevertheless  does  not  change  the
+excitations.  As outlined in the Introduction, we will in-                         quantum number (angular momentum)L         z =±1 and the
+vestigate the following single-hole wave function Ansatz:                          degeneracies of the single-hole ground state.  Thus, our
+                                                                                   following analyses will mainly focus on the simpler wave
+      |Ψ⟩     1h =   X       φm(i, v)c     iσe−im  (ˆΩi−ˆΩv)|ϕ 0⟩,      (6)        function in Eq. (6).
+                 i,v,m=±1
+in which a spin-σ/2 (σ=±1) electron is removed from                                   C.    Quasiparticle spectral weight and dispersion
+the 2D spin background|ϕ                  0⟩.
+   In  Eq.  (6),     ˆΩi  represents  the  many-body  phase  shift                     The quasiparticle spectral weight
+induced by the doped hole, defined as [18]:                                                                        ⟨ϕ  0|c †
+                                                                                                                                       2                       (8)
+                          ˆΩi = X       θi(l)n     l↓ ,                        (7)                         Zk =            kσ  |Ψ⟩     1h
+
+                                  l(̸=i)
+                                                                                   calculated by VMC shows four peaks at momentak    0 =
+wheren           l↓  is the number of↓-spins on sitel, andθ                    i(l) =(±  π2 ,±  π2 )  in  the  ground  state|Ψ           G⟩1h  (see  the  inset  of
+Im ln(z     l −z   i) is the statistical angle between the horizon-                Fig.2), which is consistent with ED [18] and DMRG re-
+tal axis and the vector from the hole to a down spin atl                           sults [9].  The single-hole ground state Eq.  (6) is degen-
+(denoted by the complex coordinatez               l =x   l +iy   l in 2D).         erate, characterized by the angular momentumL        z =±1
+By  modifying  the  bare  quasiparticlec                       iσ  to  the  twistedand  spinS        z  =±1/2.   Here,  the  total  angular  momen-
+quasiparticle  ˜c  iσ  defined  in  Eq.  (2),  each  down-spin  in                 tumL        z  =±1  means  that  it  is  a  superposition  at  four
+|ϕ 0⟩is rotated by an angleθ           i(l) around the  ˆzquantiza-                k0  that is present in the ground state of Eq. (6) as the
+tion axis.  In effect, a 2π-vortex centered at the hole site                       quasiparticle component.
+iis formed by the down spins.  It has been shown previ-                                The  dispersion  of  the  single  hole  is  characterized  by
+ously [18] that such a vortex-like twist of spins in thexy-                        the single-particle spectral function defined as follows:
+plane can effectively compensate the quantum frustration
+caused by the singular phase-string effect, thereby facili-                          An(k, ω) =−Im         X             |1h⟨Ψ(n)|c            kσ  |ϕ 0⟩|2
+tating hole hopping for the single-hole state in Eq. (1).                                                     n   ω+ [E    1h(n)−E          0 +µ   n] +iη    . (9)
+   However,  the  twisted  hole  ˜c  iσ  alone  also  generates
+a  nondissipative  neutral  spin  current  around  it  in  the                     Here,|Ψ(n)⟩                     1h denotes then-th excited single-hole state
+AFM  long-range-ordered  spin  background|ϕ                  0⟩.    Gen-           with  eigenenergyE                       1h(n),E       0  is  the  energy  of  the  half-
+erally,  such  a  superfluid-like  vortex  will  induce  a  loga-                  filling ground state|ϕ           0⟩andηis a broadening parameter.
+rithmically divergent self-energy due to the spin-vortex                           The chemical potentialµ      n is set to align the single-hole
+configuration in the large sample-size limit.  This effect                         ground-state  energy  with  the  zero  of  energy  such  that
+was not fully addressed in previous finite-size calculations                       the spectral functionA               n(k, ω) has non-vanishing weight
+[18], which primarily focused on the hopping process.  As                          at negative energies.
+noted before, an “antimeron” spin configuration [21,22]                                Figure2displays the spectral functionA                             n(k, ω) along
+with  opposite  chirality  should  be  spontaneously  gener-                       high-symmetry  lines  of  the  Brillouin  zone.   The  peak
+ated in the spin background.  This is now incorporated                             atZ    k  shows  a  quasiparticle  “dispersion”  in  agreement
+                                                                                                                                                           5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  2.     Single-particle  spectral  functionA               n(k, ω)  defined  in  Eq.  (9)  (withη=  0.15).   Intensity  of  the  spectral  function
+plotted along high-symmetry momentum directions in the Brillouin zone (scan paths indicated by yellow arrows in the inset)
+for energiesω <0.  Results are from VMC calculations on a 14×14 system witht/J= 2.5, where the energy bottom is set to
+ω= 0.  Crosses denote benchmark dispersion data from Green Function Monte Carlo simulations [29].  Inset:  Spectral weight
+Zk  for the ground state, showing pronounced peaks at momentak    0.  The white dashed lines indicate the magnetic Brillouin
+zone boundaries.
+
+
+with the Green function Monte Carlo calculations (beige                          deduced [18] from the continuity equations as follows:
+cross)  [29]  (note  thatt/J=  2.5  is  used  here  in  order
+to make a direct comparison) throughout the Brillouin                                         Jhij  =it  X        c†iσcjσ −c   †jσciσ   ,               (10)
+zone along the scans indicated in the insets:  (1) the dis-                                                 σ
+persion minima lie at the four momentak    0; (2) the ve-                                     Jsij  =i   J   S+                    ,                   (11)
+locity along the nodal direction is much larger than that                                                 2     i  S−j  −S   −i  S+j
+along the antinodal direction; (3) a relative flat segment                                                    X
+is present around the X points (π,0) and (0, π).  The ex-                                     Jbij  =−i      t2    σ    c†iσcjσ −c   †jσciσ   ,        (12)
+cellent  agreement  suggests  that  theAnsatzin  Eq.   (6)                                                      σ
+indeed  accurately  captures  the  quasiparticle  degrees  of                    whereJ           h denotes the hole current,J   s represents the neu-
+freedom  in  the  single-hole  states.   Consistent  with  our                   tral spin current associated with the superexchange term
+results, ARPES measurements on parent compounds of                               HJ, andJ       b is the backflow spin current generated by the
+cuprate  superconductors  [32, 33]  show  that  the  lowest-                     motion of the hole inH    t.
+energy states reside at thek      0  momenta.   However,  the                       Figure3displays the patterns of the hole currentJ                h
+dispersion  around  these  points  is  more  isotropic  in  ex-                  and total spin currentJ  stot =J    s +J    b on an 8×8 lattice,
+periments, which can be attributed to a negative next-                           calculated by both DMRG and VMC methods. Similarly,
+nearest-neighbor hoppingt            ′ in real materials [34,35].                the results for 6×6 system are presented in AppendixA.
+                                                                                 One  can  see  that  the  variational  ground-state  Eq.  (6)
+                                                                                 can  reproduce  the  detailed  loop  current  patterns  fairly
+                                                                                 consistent  with the  DMRG results.   Here  the hole  cur-
+                                                                                 rents form closed loops with a minimal size of 2×2 on
+           D.    Nontrivial loop current pattern                                 the lattice, with the neighboring loops separated by dis-
+                                                                                 tance  2a  0  along  the  ˆxand  ˆydirections.   For  the  8×8
+                                                                                 system, the strength of the hole current reaches its max-
+   The emergent nontrivial quantum numberL    z =±1 of                           imum within the central 4a  0 ×4a      0 area, where the hole
+the single-hole ground state implies the presence of non-                        density concentrates.  For the 6×6 system, a 2×2 loop
+zero  currents.   (Note  that  a  unique  ground  state  with                    current with a maximal strength is located on the central
+angular momentumL        z  = 0 orL    z  = 2 exhibits no cur-                   plaquette (see Fig.15).  The sensitivity of loop currents
+rent by symmetry analysis.)   Numerically the spin and                           to  the  boundary  conditions  indicates  a  single  hole  can
+charge currents in the single-hole ground state have been                        no longer be regarded as a point quasiparticle as will be
+revealed by ED on a 4×4 square lattice [9], which is fur-                        further explored later, which is a new factor that com-
+ther confirmed by DMRG at both 6×6 and 8×8 systems.                              plicates conventional DMRG studies of 2D doped Mott
+Here the definitions of the hole and spin currents can be                        insulators as a small finite size is usually employed along
+                                                                                                                                                             6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.   Hole and spin currents for the degenerate one-hole ground state (L  z = 1 andS       z =−    12).  Calculated hole currentJ  h
+(a, b) and total spin currentJ  stot (c, d) on an 8×8 lattice.  Results from DMRG (a, c) and VMC (b, d) are shown, respectively.
+Arrow thickness indicates relative current strength; hole and spin currents are displayed on separate scales.
+
+
+the  ˆydirection  in  a  ladder-like  geometry  in  a  DMRG                       the state whose magnetic moment  ⃗Mloop aligns with the
+simulation.                                                                       field  ⃗Bwith an energy shift ∆E=−            ⃗Mloop · ⃗B.  As shown
+   The presence of the loop current pattern exhibits re-                          in the inset of Fig.4, we introduce a uniform magnetic
+markable  robustness.   Fort/J=  3,  our  VMC  calcula-                           flux via Peierls substitution−tc                     †iσcjσ → −te   iAeijc†iσcjσ in
+tion confirms its existence for lattice sizes up to at least                      the hopping term Eq. (4), and compute the energy split-
+14×14.  Although the two-fold degeneracy of the single-                           ting  of  the  two  lowest  states  with  opposite  magnetiza-
+hole ground state only persists over a finite range oft/J                         tions as a function of flux per plaquette Φp.  The slope of
+[9], it remains robust even as the AFM long-range order                           the ∆E– Φ       p curve yields the magnetizationM                            loop con-
+is artificially suppressed with replacing|ϕ                   0⟩by a short-       tributed by the loop current.  Figure4shows thatM                    loop
+range dimer state in Eq. (6), still yielding the 2×2 loop                         quickly converges to a finite value of 0.22 for system sizes
+currents within a specifict/Jrange.  Moreover, the pre-                           larger  than  the  intrinsic  loop  current  pattern  of  4×4.
+vious DMRG studies also confirm its survival in 3- and                            Inserting the unit ofM    loop, Jea 20/ℏ, and using realistic
+5-hole  doped  systems  (6×6  lattice)  [9],  suggesting  its                     cuprate parameters — the lattice constanta  0 = 4 ˚A and
+stability in finite-doping regimes with an odd number of                          superexchange coupling constantJ= 0.1 eV — we esti-
+holes across varying spin correlation lengths.                                    mateM          loop ≈0.1µ         B, which is detectable experimentally
+                                                                                  [36,37].
+
+              E.    Emergent magnetic moment
+                                                                                       F.    The hole state as a charge-spin composite
+   The 2×2 loop current pattern in the single-hole ground
+state  will  give  rise  to  an  emergent  magnetic  moment                          Finally, let us examine the origin of spin loop currents
+pointing  perpendicular  to  the  2D  plane.   An  external                       in  Figs.3(c)  and  (d).   The  DMRG  and  VMC  calcula-
+magnetic field lifts the ground-state degeneracy, selecting                       tions  of  the  hole-spin  correlator⟨n                    hi Szj ⟩both  reveal  an
+                                                                                                                                                                7
+
+                                                                                     A.    Resonating dual components of the single-hole
+                                                                                                                       state
+
+                                                                                       The loop current pattern in Fig.3implies the presence
+                                                                                   of  an  incoherent  component  in  the  single-hole  ground
+                                                                                   state.  This observation motivates decomposing the wave
+                                                                                   function Eq. (6) in the following form:
+
+                                                                                                       |Ψ G⟩1h =|Ψ     qp⟩1h +|Ψ     inc⟩1h,              (13)
+
+                                                                                   where|Ψ             qp⟩1h  takes  the  bare  hole  form Pi φ(i)c        iσ|ϕ 0⟩
+                                                                                   and its norm is associated with the quasiparticle spectral
+                                                                                   weight in Eq. (8) via      1h⟨Ψ  qp|Ψ qp⟩1h ≡2  Pk Zk, by not-
+                                                                                   ing that the incoherent component|Ψ   inc⟩1h is orthogonal
+                                                                                   to the quasiparticle component:  1h⟨Ψ  qp|Ψ inc⟩1h = 0 and
+                                                                                   φ(i) = 2⟨ϕ          0|c †iσ|Ψ G⟩1h with the factor 2 coming from the
+                                                                                   electrons being half-filling in|ϕ    0⟩. Physically, the|Ψ         qp⟩1h
+FIG. 4.     Magnetic momentM  loop  of the loop current as a                       and|Ψ         inc⟩1h components represent the average part and
+function of system sizeL.  Inset:  the energy changes, ∆E=                         fluctuation parts of the phase-shift operatore         −im  (ˆΩi−ˆΩv)
+E(Φ   p)−E(Φ         p = 0), induced by the polarization ofM    loop via           in single-hole wave function Eq. (6), as demonstrated in
+magnetic flux Φp on a 12×12 system.                                                AppendixC.
+
+
+enhanced  density  of↓spins  around  the  hole  projected                          TABLE I.  Energy contributions of the quasiparticle and inco-
+at a site shown in Figs.5(a) and (b) for anS                z  =−    12            herent components for the single-hole ground state on an 8×8
+ground  state  [withσ=↑in  Eq.  (6)].   The  local  mag-                           lattice, calculated using VMC. All values are given in units of
+netization⟨S                    zj ⟩around the hole creates a slightly more        J.  The hopping and superexchange terms are denoted by    ˆHt
+ferromagnetic spin environment to facilitate the hole hop-                         and  ˆHJ, respectively, as defined in Eqs. (4) and (5);         ˆHt-J    is
+ping, which favors loose binding of the spin-1/2 partner                           the full Hamiltonian.E                          0 refers to the superexchange energy
+around the hole despite the long-range spin-spin correla-                          of the half-filled (undoped) system.
+tion in the background.  Furthermore, the accumulated                                            ˆO=                        ˆHt-J   −E    0          ˆHt          ˆHJ −E    0
+↓spins (totalS             z =−    12) are actually circulating around                  1h⟨Ψ  qp| ˆO|Ψ     qp⟩1h               0.915   −0.038        0.953
+the hole as illustrated by Figs.5(c) and (d), indicating                                1h⟨Ψ  inc| ˆO|Ψ     inc⟩1h              0.476   −1.470        1.946
+that  once  the  charge  and  spin  are  partially  separated,                      1h⟨Ψ  qp| ˆO|Ψ     inc⟩1h +h.c.  −5.243  −5.152 −0.092
+they immediately produce mutual currents around each                                     1h⟨Ψ  G| ˆO|Ψ     G⟩1h           −3.853  −6.659        2.807
+other to form a hole composite.  This process is strongly
+generated  by  the  hopping  term,  as  schematically  illus-
+trated in Fig.1(b),  which will be further elaborated in                               The  energy  contributions  from|Ψ          qp⟩1h  and|Ψ         inc⟩1h,
+the following section.                                                             along  with  their  cross  terms,  are  summarized  in  Ta-
+                                                                                   bleIfor  the  8×8  lattice  size.   It  reveals  that  the  ki-
+                                                                                   netic  energy  contribution  from  the  quasiparticle  com-
+     III.    SINGLE-HOLE WAVE FUNCTION: A                                          ponent is actually very small (∼ −0.038),  which stems
+                  QUANTUM “CAT STATE”                                              from the fact that the dominant Bloch-wave component
+                                                                                   atk    0  =  (±  π2 ,±  π2 )  vanishes  in  a  tight-binding  model:
+                                                                                   −2t      eff(cos(k          0x  ) + cos(k      0y  ))  =  0.    In  contrast,  the  ki-
+   In the last section, we have shown that a single hole                           netic  energy  contribution  from|Ψ          inc⟩1h  is  much  larger
+injected into a Heisenberg AFM spin background can be                              (∼ −1.470), although it is offset by a substantial superex-
+well described by the variationalAnsatzEq. (6), which                              change energy cost (∼1.946).  Totally, the dominant ki-
+predicts a dual behavior in excellent agreement with the                           netic energy gain (∼ −5.152) comes from the off-diagonal
+large-scale numerical simulations:  On one hand, the sin-                          transition between|Ψ        qp⟩1h and|Ψ         inc⟩1h.  In other words,
+gle  hole  exhibits  a  quasiparticle-like  dispersion  extend-                    the off-diagonal contribution to the single-hole ground-
+ing  over  the  whole  Brillouin  zone;  on  the  other  hand,                     state energy is much larger than the difference between
+it shows minimal loop current patterns at the plaquette                            the two diagonal contributions. Correspondingly, the cal-
+scale, which seems incompatible with a point-like Bloch                            culated⟨Ψ                qp|Ψ qp⟩1h  = 0.447 and⟨Ψ             inc|Ψ inc⟩1h  = 0.553
+quasiparticle description.  As the unified wave function,                          are quite close.  It means the single-hole ground state in
+Eq. (6) will be carefully analyzed in the following to re-                         Eq.  (13)  forms  a  “cat  state”  with  the  two  components
+veal the novel nature of strong correlation that leads to                          strongly resonating, which cannot be approached pertur-
+such a dual picture.                                                               batively from the quasiparticle side.
+                                                                                                                                                             8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.    (a, b) Hole–spin correlator⟨n                   hi Szj ⟩and (c, d) neutral spin current pattern⟨n                 hi Jsjk⟩for the degenerate ground state
+with quantum numbersL     z  = 1,S   z  =−    12.  The projected position of the holeiis marked by a blue circle, and the results
+obtained with DMRG (left column) and VMC (right column) are comparatively shown.  In (a, b), the direction and length of
+each arrow represent the sign and magnitude of the correlator.  In (c, d), arrow thickness indicates the relative magnitude of
+the current.  Panels (a, b) share a common scale, and panels (c, d) share a separate common scale.  Note that the hole position
+is slightly off the center of the 6×6 lattice, such that theS           z =−    12  and spin current surrounding the hole look asymmetric.
+
+
+   Indeed, if one starts from the bare hole state|Ψ           qp⟩1h               which  governs  the  quasiparticle  component  discussed
+alone, even with incorporating the “longitudinal spin po-                         above,  decays  exponentially  with  distance|i−v| [31].
+laron  effects”  via,  e.g.,  a  first-order  Lanczos  step,  the                 In the ground state,|Ψ            qp⟩1h is basically a Bloch-wave at
+VMC  calculation  fails  to  yield  the  nontrivial  quantum                      momentak    0 = (±  π2 ,±  π2 ) [cf.  Fig.2], four of which are
+numberL    z  =±1 or the spin/hole current patterns ob-                           combined into a state with angular momentumL        z =±1
+served in DMRG calculations (See AppendixBfor de-                                 (cf. Eq. (E1) in AppendixEfor details). Moreover, since
+tails).   The  “hidden”  incoherent  part|Ψ       1h⟩inc  plays  a                |ϕ 0⟩as  a  spin  singlet  ground  state  does  not  break  the
+pivotal role in determining the physical properties of the                        translational  symmetry  even  in  the  large-sample  limit,
+single-hole ground state.  Here, the quasiparticle is emer-                       the four peak momentak    0 = (±  π2 ,±  π2 ) are unrelated to
+gent as a component of Eq. (6) rather than the funda-                             the usual AFM folding effect.  As a matter of fact, varia-
+mental building block, implying a critical departure from                         tionally|ϕ                0⟩may be tuned into a short-range AFM state,
+the conventional Landau Fermi liquid paradigm.                                    where the equal energy contours around fourk        0 are still
+   Physically, the creator of the bare holec        iσ = ˜c  iσe±i   ˆΩi          maintained.
+may be viewed as originating from the tight bonding of                               On the other hand, the incoherent component|Ψ   inc⟩1h
+the  twisted  hole  ˜c  iσ  with  the  excitation  of  antimeron                  emerges  in  Eq.  (13)  once  the  twisted  hole  and  the  an-
+e−im   ˆΩv  atv→i.   Thus,  the  quasiparticle  component                         timeron are spatially separated such that the hole state in
+|Ψ qp⟩1h  is primarily contributed in Eq. (6) by the hole-                        Eq. (6) becomes a composite object. Here, the chiral spin
+antimeron pair with small|i−v|.  Correspondingly, the                             current vortex surrounding the twisted hole can no longer
+average  part  of  the  phase-twist  operator⟨e           ∓i(    ˆΩi−ˆΩv)⟩,       be effectively compensated by a tight-binding antimeron,
+                                                                                                                                                               9
+
+and  a  transverse  distortion  induced  by  the  dipole-like                      distributed  slightly  loosely  around  Fig.6(b).   Further-
+phase-shift operatore         ∓i(    ˆΩi−ˆΩv)  intensifies.  This distor-          more, Figs.6(c) and6(d) show the corresponding charge
+tion corresponds to the “transverse spin-polaron effect”,                          and  spin  currents  surroundingv                        0  forL     z  =  +1  ground
+which  is  manifested  in  the  local  spin-current  pattern                       state.  Here, the local non-quasiparticle patterns, where
+around the hole shown in Figs.5(c)(d). The consistency                             the doped hole and its spin are closely distributed around
+between VMC and DMRG implies theAnsatzaccurately                                   v0 and form the charge and spin loop currents, are clearly
+captures this effect.                                                              specified by the antimeron coordinatev                0, which is fixed
+                                                                                   at the center of the sample 6×6.
+                                                                                      Note that the detailed spin-charge patterns can vary
+                        B.    The antimeron                                        with the antimeron locationsv.  The quasiparticle com-
+                                                                                   ponent of|Ψ     G(v  0)⟩  1h is also mixed here but its weight re-
+                                                                                   mains very weak whenv          0 coincides with the loop-current
+                                                                                   center  of  the  6×6  sample  [cf.   Fig.15].   To  quantify
+                                                                                   this behavior, we decompose|Ψ       G(v)⟩      1h in Eq. (14) into
+                                                                                   quasiparticle component|Ψ   qp(v)⟩      1h and incoherent com-
+                                                                                   ponent|Ψ   inc(v)⟩      1h.  We define the ratio:
+
+                                                                                                     I(v) =        1h⟨Ψ  inc(v)|Ψ       inc(v)⟩      1h
+                                                                                                                 1h⟨Ψ  G(v)|Ψ       G(v)⟩      1h  ,             (15)
+                                                                                   which measures the relative weight of the incoherent com-
+                                                                                   ponent on each plaquettev.  The calculated spatial dis-
+                                                                                   tribution ofI(v) on an 8×8 lattice is shown in Fig.7(a).
+                                                                                      A pronounced spatial heterogeneity is clearly revealed:
+                                                                                   single-hole ground state is not a uniform mix of quasipar-
+                                                                                   ticle and incoherent component.  Instead, certain plaque-
+                                                                                   ttes are dominated by the incoherent component (large
+                                                                                   I(v)),  while  others  are  dominated  by  the  quasiparticle
+                                                                                   component  (smallI(v)).    Most  importantly,  by  com-
+                                                                                   paring  this  distribution  with  the  hole  current  pattern
+                                                                                   obtained  from  VMC  [Fig.7(b)]  (or  DMRG  results  in
+                                                                                   Fig.3(a)),  we  find  that  the  centers  of  the  macroscopic
+                                                                                   2×2 loop currents coincide exactly with the plaquettes
+                                                                                   {v  j}where|Ψ               G(v  j)⟩  1h  is  dominated  by  the  incoherent
+FIG. 6.    Real-space profiles for the single-hole ground state                    component.   This  correlation  is  independent  of  system
+with  an  antimeron  pinned  at  the  center  of  a  plaquettev                   0size,  reinforcing the physical picture that the loop cur-
+(marked by the pink cross) in a 6×6 lattice.  Shown are (a)                        rents  are  direct  manifestations  of  the  incoherent  hole-
+the hole densityn  hi , (b) the spin densityS  zi , (c) the charge                 antimeron bound state, rather than a byproduct of the
+current pattern, and (d) the total spin current distribution.                      Bloch quasiparticle.
+These quantities illustrate the composite structure of the hole                       The staggered spatial pattern of quasiparticle and in-
+bound to a topological defect in the spin background.                              coherent components is further correlated with the an-
+                                                                                   timeron strength
+   Let  us  further  examine  the  incoherent  component  in                                            f(v) =      X       |φ m(i, v)|      2,                 (16)
+the single-hole ground state.  In contrast to a point-like
+Bloch-wave quasiparticle usually defined on lattice sites,                                                        m=±1,i
+we may fix the antimeron at positionvand analyze the                               which reflects the background spin texture induced by the
+corresponding wave function in Eq. (6):                                            “feedback effect” of the doped hole.  The distribution of
+                                                                                   f(v) for the 8×8 system is shown in Fig.7(b). Here,f(v)
+   |Ψ G(v)⟩      1h ≡   X     φm(i, v)c     iσe−im  (ˆΩi−ˆΩv)|ϕ 0⟩.   (14)         is maximized at centers of the hole current loops,  with
+                    i,m=±1                                                         a  4a  0 ×4a      0  checkerboard  pattern,  as  indicated  by  the
+                                                                                   dashed square, emerging in the 8×8 and larger systems,
+Fig.6(a) displays the hole density distribution with the                           whereasf(v)  is  maximized  at  the  single  2×2  charge
+antimeron projected at the center of a plaquette labeled                           loop current appears at the center of the sample 6×6
+by  the  cross,  i.e.,   1h⟨Ψ  G(v  0)|n   hi |Ψ G(v  0)⟩  1h.    The  hole        [cf.  Fig.15].  The minimal periodicity is 4a               0 ×4a      0 rather
+density  is  predominantly  localized  on  the  four  nearest-                     than  2a  0 ×2a      0  because  there  is  aπphase  shift  of  the
+neighbor  sites  of  the  projected  antimeron,  forming  the                      wave  function  upon  2a  0  translation  along  the  ˆxand  ˆy
+2×2 structure that confirms a strong attractive inter-                             directions (See AppendixEfor details).
+action between the hole and the antimeron.  A spin-1/2                                Before we further discuss this spatial-alternating prop-
+(hereσ=↑is considered such thatS                         z  =−1/2) is also         erty of the two components on the lattice in the following,
+                                                                                                                                                            10
+
+                                                                                     Previously, we have seen that the doped hole is tightly
+                                                                                  bound to an antimeron at the four sites of a plaquette, in
+                                                                                  which the antimeron is centered.  It is suggested that the
+                                                                                  minimal size for the incoherent component of the doped
+                                                                                  hole  to  appear  may  be  a  four-site  chain  with  periodic
+                                                                                  boundary  condition  (PBC).  In  the  following,  we  com-
+                                                                                  pare the VMC result with ED for such a 4-site system to
+                                                                                  elucidate the underlying local physics.
+                                                                                     Here,  the ground state degeneracy depends critically
+                                                                                  on the ratiot/J, reflecting the competition between the
+                                                                                  kinetic term and superexchange term (detailed analysis is
+                                                                                  provided in AppendixD). For 0.5< t/J <3.8, the dou-
+                                                                                  ble degeneracy withL        z =±1 for the 2×2 plaquette in-
+                                                                                  deed emerges (at a givenS     z =±1/2), which corresponds
+                                                                                  to momentak=±          π2  in the 1D picture.  The loop current
+                                                                                  patterns of the charge and spin att/J= 3 are shown in
+                                                                                  Figs.8(a) and8(b), respectively, with a good compari-
+                                                                                  son with the VMC result (not shown).  Furthermore, one
+                                                                                  may also construct two degenerate real wave functions,
+                                                                                  i.e., thep-wave|p           xy⟩and|p          yx⟩based onL      z =±1 states
+                                                                                  (cf.   Eq.(17)  below).   In  Figs. 8(c)  and8(d),  the  hole
+                                                                                  densities of the state|p          xy⟩for the quasiparticle and inco-
+                                                                                  herent components are illustrated, respectively.  Later in
+                                                                                  the next subsection, we will further discuss the one-hole
+                                                                                  “cat state” based on the real wave function at larger 2D
+                                                                                  systems.
+                                                                                     Therefore, Fig.8for the 2×2 system reproduces the
+                                                                                  2×2  loop  current  of  the  hole  in  a  larger  system  (cf.
+                                                                                  Fig.6for the 8×8 system),  which is approximately a
+                                                                                  minimal object of the hole motion along a 4-site ring at
+                                                                                  k=±      π2  as a “closed string”.  This emergent string-like
+FIG. 7.   (a) Spatial distribution of the ratioI(v) [Eq. (15)] on                 excitation — carrying the internal angular momentumL        z
+each plaquettevin the 8×8 lattice.  (b) Antimeron strength                        — deviates fundamentally from a point-like quasiparticle,
+f(v) [Eq. (16)] and VMC-calculated hole currentJ              h in the 8×         challenging the single-particle paradigm of Landau Fermi
+8 lattice.  The size of each cross is proportional tof(v).  The                   liquid theory.
+gray-colored square in the central region marks an emerging                          Finally,  in  AppendixE,  it  is  shown  that  an  approx-
+basic 4a  0 ×4a      0 structural unit in a large sample size.                    imate  Bloch-wave-like  state  atk    0  =  (±  π
+                                                                                                                                          2 ,±  π2 )  may  be
+                                                                                  constructed  based  on  the  2×2  “closed  string”  struc-
+let us reduce the system to a minimal 2×2 lattice to fur-                         tures with ( π2 , π2 ) momentum in a reduced Brillouin zone.
+ther examine the origin of the loop currents.                                     While the plaquette-based effective theories [38–40] treat
+                                                                                  the plaquette as a fundamental unit, we point out that
+                                                                                  the  doped  hole  as  a  2×2  closed  string  may  not  be  a
+        C.    The doped hole as a “closed string”                                 rigid building block in constructing the 2D eigenstates,
+                                                                                  but rather a dynamically emergent structure arising from
+                                                                                  the local hole motion.
+
+
+                                                                                                D.p-wave orbital representation
+
+                                                                                     The single-hole ground state [Eq.  (6)] withL            z  =±1
+                                                                                  may be reexpressed as real wave functions as follows:
+
+FIG. 8.    (a) Hole currentJ  h and (b) total spin currentJ  stot                              |p xy⟩=    1√2(|L   z =−1⟩+|L               z = +1⟩),
+for the ground state withS        z  =−    1                                                                                                              (17)
+                                            2  andL       z  = 1 on a 2×2
+lattice.  The corresponding hole density distributions of the                                  |p yx⟩=   −i√2(|L   z =−1⟩ − |L          z = +1⟩).
+quasiparticle  component|p   xy⟩qp  and  incoherent  component
+|p xy⟩inc  of  the  real  wave  function  [defined  in  Eq.  (17)]  are           The states|p            xy⟩and|p          yx⟩exhibit no current and are of
+displayed in panels (c) and (d), respectively.                                    p-wave symmetry.  Here a specific phase convention for
+                                                                                                                                                          11
+
+                                                                                 tice,v’s  are  marked  by  red  and  blue  in  Fig.9,  which
+                                                                                 indicates|p                 xy(v)⟩is  of  either  predominately  the  quasi-
+                                                                                 particle component (cf. Fig.20in AppendixF) or the in-
+                                                                                 coherentp-wave-like orbital (cf.  Fig.19in AppendixF).
+                                                                                 Note that here additional hole density with minor weight
+                                                                                 outside the orbital is omitted in Fig.9for clarity.  The
+                                                                                 sign  change  characteristic  of  thep-wave  orbital  is  con-
+                                                                                 firmed byφ  m(i  1, v)≈ −φ       m(i  2, v), wherei              1 andi       2 denote
+                                                                                 two lobes of the orbital.  The bluevpositions, at which
+                                                                                 |p xy(v)⟩is dominated by the incoherent component, co-
+                                                                                 incide with the centers of the 2×2 loop currents for the
+                                                                                 complex wave function in Fig.7.
+
+
+
+                                                                                     IV.    PAIRING OF TWO HOLES IN A “CAT
+                                                                                                                 STATE”
+
+FIG. 9.     Red and blue crosses mark plaquette positionsv                          In the previous section, it has been shown that a sin-
+where|p            xy(v)⟩is dominated by the quasiparticle or incoher-           gle hole moving in an AFM background forms a quan-
+ent component, respectively; the±labels indicate the phase                       tum “cat state”—a superposition of a bare hole compo-
+ofφ(i)  in  the  quasiparticle  expansion      Pi φ(i)c       i↑ |ϕ 0⟩.   The    nent and an incoherent component.  The essential non-
+spindle-shaped  blue  orbitals  represent  the  emergentp-wave
+character of the incoherent component when an antimeron is                       perturbative strong correlation arises because the hole’s
+projected onto the sites marked by blue crosses.  Notably, the                   kinetic  energy  is  gained  mainly  through  resonance  be-
+quasiparticle component|p   xy⟩qp has nearly zero weight on the                  tween  these  two  distinct  components:   a  quasiparticle
+Bsublattice.  For clarity, the small weights of|p        xy⟩inc on the           part  and  a  loop-current  part,  which  constitute  a  non-
+Asublattice are omitted from the plot.                                           Landau-type  quasiparticle.   When  two  holes  are  intro-
+                                                                                 duced, however, the structure of the state changes quali-
+                                                                                 tatively.   For  the  two-hole  case,  we  demonstrate  below
+Lz  =±1 states is chosen,  under which the Bloch-wave                            that  the  ground  state  is  also  a  quantum  “cat  state”,
+component of|p     xy⟩appears only at momenta (π/2, π/2)                         now  composed  of  a  bare  Cooper  pair  and  an  incoher-
+and  (−π/2,−π/2),  and  that  of|p                    yx⟩ at  (π/2,−π/2)         ent pair component with strong resonance between them.
+and  (−π/2, π/2).   In  the  following,  we  focus  solely  on                   Here,  the  two  holes  are  tightly  bound  at  a  scale  much
+the|p       xy⟩state,  as|p       yx⟩state  can  be  obtained  by  ro-           shorter than the long-range AFM correlation length, in-
+tating|p            xy⟩byπ/2.   Following  the  same  procedure  as              dicating  that  the  pairing  mechanism  does  not  rely  on
+in  Eq.  (13),  we  decompose|p             xy⟩into  the  quasiparticle          long-wavelength spin-wave fluctuations.  It is no longer
+and incoherent components,|p  xy⟩qp and|p        xy⟩inc, respec-                 a Cooper pair formed by the Landau quasiparticles.  In-
+tively,  and measure their respective hole density distri-                       stead, the key incoherent pair component emerges from
+butions:  qp⟨p  xy|n hi |p xy⟩qp and  inc⟨p  xy|n hi |p xy⟩inc, as pre-          the “fusion” of the loop-current contributions from each
+viously shown in Figs.8(c) and8(d) for the 4-site ring                           individual hole, which constitutes the foundation of the
+case.                                                                            proposed pairing mechanism.
+   As shown in Fig.9, for the 8×8 system in the central
+region,  one  finds  that  the  hole  densities  corresponding
+to  the  two  components  are  spatially  separated:  one  is                      A.    Two-hole ground-state wave functionAnsatz
+predominantly distributed on theAsublattice, while the
+other is mostly on theBsublattice (cf.  Fig.18in Ap-
+pendixF). In this staggered pattern, the spatial separa-                            The variational wave function in Eq. (6) can be inter-
+tion of the two components at nearest neighboring sublat-                        preted  as  a  composite  entity  in  which  a  doped  hole  is
+tices is connected by the hopping term  ˆHt as illustrated                       “twisted” and then is tightly bound to an antimeron tex-
+in Fig.9.  The kinetic energy of the hole predominantly                          ture in the AFM spin background.  Introducing a second
+originates from the resonance between the quasiparticle                          hole into the system naturally favors its binding with the
+and incoherent components similar to the previous com-                           latter antimeron texture, leading to a reduction in total
+plex wave functions.                                                             energy.  A paired state of two holes can thus be formu-
+   The real-space pattern in Fig.9depends critically on                          lated as a natural generalization of the single-hole wave
+the antimeron positionvmarked by crosses at the cen-                             function in Eq. (6).  A minimalAnsatzfor the two-hole
+ter  of  each  plaquette  of  the  square  lattice,  confirming                  ground state is given by:
+vas  an  emergent  dynamic  coordinate.   Projecting  the
+antimeron  at  a  specific  sitevas  in  Eq.  (14)  will  yield                     |Ψ G⟩2h =   X           gm(i, j)c     i↑ cj↓ e−im  (ˆΩi−ˆΩj)|ϕ 0⟩,  (18)
+|p xy(v)⟩in the present case.  Alternating at the dual lat-                                      i,j,m=±1
+                                                                                                                                                            12
+
+As  mentioned  above,  this  construction  is  analogous  to                      TABLE  II.  The  two-component  contributions  to  the  two-
+adding  an  extra  hole  at  the  center  of  an  antimeron  in                   hole  ground  state  energy  on  the  8×8  system  by  VMC
+the single-hole wave function in Eq. (6), with the vortex                         method.  Here the calculated  2h⟨Ψ  Cooper|Ψ Cooper⟩2h  = 0.366
+centervnow located at the original lattice sitej.                                 and  2h⟨Ψ  inc|Ψ inc⟩2h = 0.634.
+   The ansatz in Eq.  (18) has previously been studied by                                         ˆO=                        ˆHt-J   −E    0        ˆHt        ˆHJ −E    0
+VMC in Ref.  [24], where a dichotomy between ad-wave
+symmetry in thec-representation and a robusts-wave in                                2h⟨Ψ  Cooper| ˆO|Ψ     Cooper⟩2h         1.413  −0.012       1.426
+terms of the twisted holes ˜c[i.e., the symmetry ofg       m(i, j)]                      2h⟨Ψ  inc| ˆO|Ψ     inc⟩2h          −0.571 −4.105       3.534
+is  demonstrated.   In  the  following,  we  shall  only  focus                    2h⟨Ψ  Cooper| ˆO|Ψ     inc⟩2h +h.c.−6.967 −6.949−0.019
+on  thed-wave  symmetry  in  thec-representation,  and                                    2h⟨Ψ  G| ˆO|Ψ    G⟩2h           −6.125−11.066      4.941
+show that it is a strong resonating “cat state” between a
+dx2−y    2-wave Cooper-pair channel and an incoherentd  xy
+pairing  channel.   In  other  words,  the  two-hole  pairing                     state  ofL   z  =  2  mod 4  (with  aC  4  rotational  symme-
+wave function indicates a new non-Cooper-pairing mech-                            try) is given in Fig.10(c).  Similar hole-hole correlation
+anism,  which  further  suggests  that  a  non-BCS-like  SC                       structure has been reported in previous DMRG studies
+state may emerge in the lightly-doped Mott insulator.                             [41,42].  Here, the two components are connected by the
+                                                                                  hopping term  ˆHt, with one hole hopping to its NN site,
+ B.    Two distinct components of the two-hole wave                               concomitant with a spin backflow such that a spin-singlet
+                                function                                          RVB pair at two opposite lattice sites in the half-filling
+                                                                                  ground-state|ϕ                          0⟩is transferred to a same-sublattice spin-
+   Analogous to the single-hole case, one may decompose                           singlet pairing, constituting anexcitationabove|ϕ                           0⟩as
+the two-hole wave function into two components:                                   indicated in Fig.10(b). The incoherent component refers
+                                                                                  to such ad  xy-wave Cooper pair of holes accompanied by
+               |Ψ G⟩2h =|Ψ     Cooper⟩2h +|Ψ     inc⟩2h ,           (19)          the same-sublattice spin-singlet excitation, whose analy-
+                                                                                  sis will be given at the end of this subsection.
+where       the       quasiparticle/Cooper-pair       compo-                         Figures10(d)-(f) further show that when the two holes
+nent   |Ψ   Cooper⟩2h     takes     the     conventional     form                 are further separated spatially in the ground-state wave
+P                                                                                 function,  the  spin  loop  currents  will  reemerge  for  each
+   i,j φ(i, j)c        i↑ cj↓ |ϕ 0⟩.        The   incoherent   component          m=±in Eq.  (18).  Here the neutral spin current pat-
+|Ψ inc⟩2h  is  constructed  to  be  orthogonal  to|Ψ     Cooper⟩2h                terns (J  sij)kl,proj  are calculated based on Eq.  (11) with
+by  imposing⟨ϕ            0|c †i↑ c†j↓ |Ψ inc⟩2h  =  0  for  all  lattice  sites, the spin-↑and spin-↓holes being projected at different
+i, j.   As  in  the  single-hole  case,  these  two  components                   locationskandlaccording to Eq. (18) at a givenm=−
+may be interpreted as arising from the average and fluc-                          without loss of generality.  Thus, the tight-binding of two
+tuation  parts  of  the  phase-twist  operatore         −im(        ˆΩi−ˆΩj)      holes is actually driven by the fusion of the incoherent
+(see AppendixC).                                                                  components of the single holes to remove the loop cur-
+   Table.IIlists  the  calculated  VMC  ground-state  en-                         rents. Due to the strong “resonating” between the quasi-
+ergy  terms  (in  an  8×8  system)  associated  with  the                         particle and incoherent components, the Cooper pair of
+two components in Eq. (19).  The kinetic energy of the                            bare holes is formed merely as the consequence of such
+quasiparticle  component|Ψ   Cooper⟩2h  is  highly  unfavor-                      a fusion of the incoherent non-quasiparticle components
+able (∼ −0.012J) in comparison with that (∼ −4.105J)                              of the holes.  Therefore, the pairing mechanism here for
+of the|Ψ        inc⟩2h.  But the latter is off-set by a higher su-                two holes is fundamentally different from the usual BCS
+perexchange energy cost (∼3.354J) such that the total                             mechanism where the Landau quasiparticles are paired
+energy is lower than the former by∼ −2J.  The domi-                               up to directly form a Cooper pair via exchanging a vir-
+nant kinetic (and total) energy contribution (∼ −6.9J)                            tual bosonic mode, say, a spin-wave excitation above|ϕ   0⟩
+to the two-hole ground state mainly comes from the cross                          in the spin-fluctuation theory [43].
+matrix of  ˆHt between the two components (cf. Table.II).                            The  binding  energy  of  the  hole  pair  can  be  deter-
+   Namely,  similar  to  the  single-hole  case,  the  two-hole                   mined by calculating the energy difference between the
+ground  state  also  forms  a  “cat  state”  with  strong  res-                   first  pair-broken  excited  state  and  the  ground  state  of
+onating between the Cooper and incoherent pairing state.                          Eq. (18), which is found [24] byE              pair ≈2Jwith a scal-
+Figures10(a)-(c) illustrate the real-space hole-hole cor-                         ing analysis showing the typical area occupied by the two
+relators,⟨n                 hi nhj ⟩withifixed  at  the  center  of  the  sys-    holes is 3.8a      0 ×3.8a         0.  Figure11shows that the two-hole
+tem  (blue  cross),  in  Cooper  and  incoherent  channels,                       density distribution in the central 4a  0 ×4a      0 area of the
+as  well  as  in  the  total  ground  state  Eq.  (19),  respec-                  8×8 system, calculated by DMRG and VMC method,
+tively.  It can be verified that|Ψ          Cooper⟩2h contributes to              respectively.  (Note that in the VMC calculation,  holes
+a  predominantly  nearest-neighbor  (NN)d          x2−y    2  pairing             are confined to the central 8×8 region of a 10×10 lattice
+in Fig.10(a) and|Ψ                     inc⟩2h gives rise to the next-nearest-     to suppress boundary localization and thereby reduce the
+neighbor (NNN)d             xy pairing in Fig.10(b), while the total              energy penalty from broken superexchange bonds.)
+density-density correlation in the non-degenerate ground                             Finally, in the momentum space, the Cooper-pair order
+                                                                                                                                                                     13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  10.      (a–c)  Expectation  value  of  the  hole-hole  correlatorn                  hi nhj  for  the  two-hole  ground  state:   the  size  of  each  red
+circle  indicates  the  weight  of  the  correlator  with  one  hole  fixed  at  a  given  (blue  cross)  sitei.   Panels  show  results  for:  (a)
+the quasiparticle (Cooper-pair) component|Ψ   Cooper⟩2h, which corresponds to ad  x2−y    2  pairing symmetry; (b) the incoherent
+component|Ψ   inc⟩2h which shows ad  xy pairing symmetry with spin-singlet pairing created at the same sublattice sites (shown
+schematically with sitejlocated on the upper-right NNN site of the reference sitei); and (c) the full variational wave function
+|Ψ G⟩2h.  Note that the slight deviation from perfectC           4  symmetry in hole-hole correlation pattern (a-c) arises from the off-
+centered placement of the reference site.  (d–f) Corresponding projected neutral spin-current pattern (J  sij)kl,proj   between sites
+iandj, with two holes projected at siteskandlcreated byc                              k↑   andc       l↓  in them=−sector of Eq. (18).  The plotted quantity
+has been normalized by the hole-hole correlation⟨n                     hknhl ⟩to factor out the spatial dependence of the hole positions.  Arrow
+thickness represents the relative current magnitude.  All panels within each row are plotted on the same scale.
+
+
+                                                                                          However, for the incoherent component, due to its di-
+                                                                                       rect orthogonality with a Cooper pair channel, one has
+                                                                                       to explicitly take into account the aforementioned spin
+                                                                                       excitations  in|Ψ     inc⟩2h.   The  consequence  is  to  have  a
+                                                                                       dxy-symmetry in a generalized pairing order parameter
+                                                                                       ink-space  as  shown  in  Fig.12(b)  with  a  sign  reversal
+                                                                                       under  π2  rotation and the nodal lines along thek      x  = 0
+                                                                                       andk       y = 0 axes.
+                                                                                          Below we demonstrate the characterization of the pair-
+                                                                                       ing of the incoherent component.  We may start by reex-
+                                                                                       pressing the two-hole ground stateAnsatzin Eq. (18) in
+FIG. 11.     Hole density distribution of the two-hole ground                          the following form
+state computed using (a) DMRG and (b) VMC.
+                                                                                              |Ψ G⟩2h =   X             g′m(i, j)c     i↑ cj↓ eim ˆAsij|ϕ 0⟩,       (21)
+
+                                                                                                            i,j,m=±1
+parameter ∆k may be defined by
+                                                                                       whereg         ′m(i, j)≡g        m(i, j)e    −imθ   i(j)  e−imϕ    0ij.  Here,ϕ          0ij  and
+              ∆k =2h ⟨Ψ  G|c k↑  c−k↓    −c   k↓  c−k↑   |ϕ 0⟩,        (20)             ˆAsij are defined as follows
+
+which indeed shows thed      x2−y    2  pairing symmetry of the                                             ϕ0ij = 1    X     [θ i(l)−θ        j(l)],                (22)
+quasiparticles (Fig.12(a)) as evidenced by sign changes                                                              2  l̸=i,j
+under  π2  rotation with the nodal lines alongk          x  =±k       y.
+This aligns with theL      z  = 2 angular momentum of the
+two-hole wave function.  This VMC calculation is carried                                                    ˆAsij = X      [θ i(l)−θ        j(l)]S      zl .               (23)
+out on a 12×12 lattice.                                                                                              l̸=i,j
+                                                                                                                                                                 14
+
+                                                                                          C.    “Cat state” revealed by spectral function
+
+                                                                                        In  the  previous  section,  it  has  been  shown  that  for
+                                                                                     a  single  hole  excited  state|Ψ          n⟩1h  created  by  injecting
+                                                                                     a  hole  into  the  half-filling  ground  state  in  an  ARPES
+                                                                                     or STS probe,  only its quasiparticle component can be
+                                                                                     detected  by  the  spectral  functionA               n(k, ω)  defined  in
+                                                                                     Eq.  (9)  atω  <0,  which  is  plotted  in  Fig.2.    The
+                                                                                     equal-ω-contour  ofA                 n(k, ω)  is  replotted  in  Fig.13at
+                                                                                     t/J=  3.   Four-Fermi-pocket-like  contours  centered  at
+                                                                                     (±π/2,±π/2) are shown in Figs.13(a)-(c) at low ener-
+                                                                                     gies.   Figures13(d)-(f)  further  show  the  high-energy
+                                                                                     trail  of  the  quasiparticle  component,  which  eventually
+                                                                                     disappears beyond the upper edge of the dispersion (cf.
+                                                                                     Fig.2,  wheret/J=  2.5  is  slightly  smaller).   Here,  the
+                                                                                     incoherent component of the single-hole state is absent
+                                                                                     in the spectral function due to the vanishing overlap in
+                                                                                     the  structure  factor|           1h⟨Ψ(n)|c            kσ  |ϕ 0⟩|2  in  Eq.  (9),  i.e.,
+                                                                                     |1h⟨Ψ  inc(n)|c       kσ  |ϕ 0⟩|2 = 0.  Thus, a Landau-quasiparticle-
+                                                                                     like  excitation  may  be  wrongly  concluded,  simply  be-
+                                                                                     cause the crucial incoherent component of the “cat state”
+                                                                                     cannot be detected by the single-particle experiment as
+                                                                                     “dark matter” [31].
+                                                                                        On  the  other  hand,  for  the  present  two-hole  ground
+                                                                                     state,  it  has  been  pointed  out  [31]  that  the  unconven-
+                                                                                     tional incoherent pairing component can be detected by
+                                                                                     the single-particle spectral function, which is defined by
+                                                                                                                           1h⟨Ψ(n)|c          †      2
+FIG. 12.   (a) Cooper pair order parameter ∆k and (b) Imag-                              Ap(k, ω) =−Im         X                          k↓  |Ψ G⟩2h
+inary part of the twisted pair order parameter Im( ˜∆−k ),  re-                                                   n   ω−[E        1h(n)−E          2h0   +µ   p] +iη   ,
+vealingd           x2−y    2  andd       xy pairing symmetries, corresponding to                                                                              (25)
+|Ψ Cooper⟩2h and|Ψ         inc⟩2h, respectively.                                     whereE            2h0   denotes the two-hole ground state energy and
+                                                                                     µp  is the chemical potential setting the excitation edge
+                                                                                     to zero.  It corresponds to injecting an electron into the
+So it is the nontrivial phase fluctuations ofe    +im    ˆAsij  that                 two-hole ground state to create a single-hole excitation
+prevents ∆k from measuring the pairing symmetry in the                               state at frequencyω >0, which can be measured by the
+incoherent sector|Ψ             inc⟩2h.  To probe the latter, one may                inverse ARPES or the STS on the positive bias side.
+introduce a “twisted” pairing order parameter:                                          Here,  the  Cooper  and  non-Cooper  parts  in  the  two-
+   ˜∆mij =2h ⟨Ψ  inc|c i↑ cj↓ e+im    ˆAs                                            hole  ground  state|Ψ           G⟩2h,  can  both  contribute  to  a  fi-
+                                       ij −c   i↓ cj↑ e+im    ˆAsji|ϕ 0⟩,  (24)      nite  spectral  weight|  1h⟨Ψ(n)|c          †
+                                                                                                                                  k|Ψ G⟩2h|2  in  Eq.    (25).
+(m=±1)  with  the  momentum-space  representation                                    Namely, by injecting an electron into the two-hole ground
+˜∆mk  =   1   P                                                                      state, a single-hole excitation that includes its incoherent
+          N      ij eik·(r      i−r   j) ˜∆mij .   The calculated Im( ˜∆−k ) is      component can be excited as characterized byA  p(k, ω).
+presented in Fig.12(b) to indicate thed                 xy  pairing sym-             The  equal-ω-contour  ofA       p(k, ω)  atω  >0  is  shown  in
+metry.  Here the focus on the imaginary part reflects the                            Fig.14,  which  illustrates  two  distinct  branches:   low-
+d±id-like  feature  of  orbital  wave  functionsg         ′∓(i, j)  in               energy branchω <2Jand high-energy branchω >2J,
+Eq.  (21), which is also found in the previous honeycomb                             corresponding  to  the  two-component  structure  of  the
+lattice  study  [30].   After  the  summation  overm=±,                              two-hole ground state [31].
+the  incoherent  component  primarily  hosts  the  reald       xy                       For  the  low-energy  branch,  bothA      n(k, ω)  atω  <0
+pairing  of  two  holes  with  the  spin-singlet  excitations,                       andA       p(k, ω)  atω  >0  show  the  symmetric  energies
+as  weaker  longer-distance  pairing  contributions  are  ne-                        for the same single hole excitation.  However, their mo-
+glected.   Note  that  the  two-componentd-wave  pairing                             mentum contour structures exhibit drastic differences in
+in thec-representation of the two-hole wave function is                              Figs.13(a)-(c)  and  Figs.14(a)-(c),  respectively.   Four-
+not contradictory with thes-wave pairing of the twisted                              Fermi-pocket-like contours centered at (±π/2,±π/2) are
+quasiparticles  ˜c  iσ  mentioned  in  Ref.  [24],  which  is  an                    shown atω <0 in Figs.13(a)-(c).  By contrast, atω >0
+equivalent  description  based  on  the  more  fundamental                           in Figs.14(a)-(c),d                          x2−y    2 nodal lines cut through the hole
+“building block” ˜c  iσ.                                                             pockets  such  that  densities  of  the  state  vanish  in  the
+                                                                                                                                                                   15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 13.   Constant-energy contours of the single-particle spectral functionA               n(k, ω) for a hole excited from the half-filled AFM
+ground state [see Fig.2and Eq. (9)].  The contours illustrate the evolution of spectral weight in momentum space at fixedω.
+The blue dashed lines indicate the boundary of the magnetic Brillouin zone.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 14.     Single-particle spectral functionA               p(k, ω) for the two-hole ground state [Eq. (25)].  (a-c) The dominant spectral
+weight peaks at the tips of the corresponding hole-pocket contours (pink dashed curves, extracted from the single-hole spectrum
+An(k, ω) in Fig.13).  These tips are separated by the nodal lines (brown) ofd                     x2−y    2  symmetry.  At higher energies (ω >2J),
+spectral weight appears on the two sides of the nodal lines (brown) ofd   xy symmetry and shows no counterpart in the single-hole
+spectrum, reflecting the contribution from the incoherent two-hole pairing component (see text).  Blue dashed lines mark the
+magnetic Brillouin-zone boundary.
+
+
+nodal regions,  which  are now  redistributed  and mainly                             the (π, π) point atω= 4J,  with suppressed intensities
+concentrate on the “tips” of the pockets, consistent with                             alongk          x  =  0  andk       y  =  0  consistent  withd        xy  pairing
+thed      x2−y    2-wave symmetry of|Ψ     Cooper⟩2h in the two-hole                  symmetry in|Ψ     inc⟩2h.  This is in contrast toA    n(k, ω) at
+ground state discussed before.                                                        ω <0 in Figs.13(d)-(f), which only show the high-energy
+   At  higher  energies  (ω =   2J−4J),A                   p(k, ω)  in                trail of the quasiparticle component as noted above.
+Figs.14(d)-(f) further shows that spectral weight max-
+ima  now  concentrate  along  thek      x  =±k       y  lines,  which
+systematically shift from (±π/2,±π/2) atω= 2Jtoward
+                                                                                                                                                    16
+
+          V.    SUMMARY AND DISCUSSION                                        state  extends  over  a  characteristic  region  of  compara-
+                                                                              ble size in large systems.  Both of these emergent length
+  Through  a  systematic  VMC  study,  we  reveal  novel                      scales remain finite and are significantly smaller than the
+properties of doped holes in Mott-AFM insulators.  Our                        divergent spin-spin correlation lengthξof the antiferro-
+approach is based on wave functions constructed from an                       magnetic background|ϕ                 0⟩.  As a result, long-wavelength
+accurate half-filled ground state of the Heisenberg model                     spin correlations in|ϕ     0⟩do not directly govern the forma-
+[23], augmented by a duality transformation that explic-                      tion of the non-Landau quasiparticle or the non-Cooper-
+itly tracks the singular phase-string sign structure of the                   pair “cat state”. Instead, the behavior of the doped holes
+t-Jmodel upon doping.  The VMC results are validated                          is dominated by strong entanglement with the local spin
+against numerical benchmarks.                                                 environment,  mediated by the transverse dipolar phase
+  One  of  our  key  findings  is  the  identification  of  the               factore         −im  (ˆΩi−ˆΩk).  In this description, the hole and its
+single doped hole as a non-Landau quasiparticle,                              bound antimeron [Eq.  (6)]—or the two holes forming a
+characterized by:                                                             pair [Eq.  (18)]—reside at positionsiandk, which pre-
+                                                                              cisely control the singular phase-string effect arising from
+    •A  two-component  “cat  state”  structure:  A                            hole motion in thet–Jmodel.  Indeed, suppressing the
+       quantum superposition of a bare hole and an inco-                      phase-string sign structure—as in theσ·t-Jmodel, where
+       herent part involving spin and charge loop currents.                   the factore         −im  (ˆΩi−ˆΩk)  is absent—restores conventional
+    •Resonant energy gain:  The system’s kinetic en-                          Landau quasiparticle behavior, as demonstrated in Ap-
+       ergy is predominantly gained through resonance be-                     pendixB. In summary,  the non-Landau nature of the
+       tween these two components, making the state non-                      single  hole  and  the  unconventional  pairing  mechanism
+       perturbative in nature.                                                for  two  holes  both  stem  from  quantum  interference  ef-
+                                                                              fects  inherent  to  the  phase-string  sign  structure  of  the
+    •Distinguishing  signatures:  This  state  exhibits                       t–Jmodel.
+       an emergent angular momentumL        z  =±1, a loop                       Experimental  detection  of  non-Landau  quasiparticles
+       magnetic  momentm  loop  ≃0.1µ         B,  and  a  4a  0 ×             or  non-Cooper  pairs  in  lightly  doped  Mott  insulators
+       4a  0  spatial  modulation.   These  features  explicitly              remains  a  significant  challenge.   For  example,  while  a
+       demonstrate the breakdown of a one-to-one corre-                       single-hole state can be introduced into the ground state
+       spondence  with  a  conventional  Bloch  wave,  con-                   |ϕ 0⟩by  electron  removal  in  ARPES  or  STS,  the  mea-
+       firming its non-Landau nature.                                         sured spectral functionA              n(k, ω) (Figs.2and13) cap-
+                                                                              tures  only  the  bare-hole  component.    The  incoherent
+  Another key finding is the instability of single holes to-                  loop-current portion remains hidden due to wave func-
+ward pair formation, leading toa tightly bound, non-                          tion orthogonality.  This is illustrated by the real-space
+Cooper-like pair.  This two-hole ground state is char-                        wave  function  in  Fig.9:  a  local  STS  probe  at  low  en-
+acterized by:                                                                 ergies would exhibit finite quasiparticle spectral weight
+                                                                              only at the red-dot sites, while vanishing at thep-orbital-
+    •A  two-component  “cat  state”  structure:  A                            like  (blue)  incoherent  sites.    As  a  result,  the  single-
+       quantum  superposition  of  ad  x2−y    2-wave  Cooper                 hole  non-Landau  state  could  be  misinterpreted  experi-
+       pair of bare holes at NN sites,  and an incoherent                     mentally  as  a  conventional—but  translation-symmetry-
+       component involvingd           xy-like pairing at NNN sites            breaking—quasiparticle,   with  its  essential  incoherent
+       together with spin-singlet excitations.                                part acting as undetected “dark matter”. A related effect
+                                                                              was shown previously [31]: a hole trapped near an off-site
+    •Resonant     binding     mechanism:          The                         impurity displays a four-lobe clover pattern in STS [27]
+       ground-state   energy   is   optimized   by   a   strong               at low energy due to a similar orthogonality catastrophe,
+       resonance  between  these  two  components.   Here,                    even though its actual density is distributed much more
+       the  incoherent  component  facilitates  the  fusion                   uniformly around the impurity and can only be recovered
+       of  the  two  holes,  while  the  Cooper  pairing  arises              by the STS at high energies.
+       primarily   from   resonant   coupling   between   the                    For the two-hole pairing state,  the Cooper-pair com-
+       sectors, mediated by the hopping term.                                 ponent is reflected in the spectral functionA               p(k, ω), ac-
+                                                                              cessible via inverse ARPES or positive-bias STS at low
+    •Distinguishing signatures: The bound pair car-                           energy.  In contrast, signatures of the incoherent pairing
+       ries an emergent angular momentumL        z  = 2 and                   component appear in thehigh-energy branchofA                  p(k, ω)
+       exhibits  a  compact  spatial  profile,  typically  con-               [Figs.14(d)-(f)].   Here,  an injected electron annihilates
+       fined within a∼4a        0 ×4a      0 region.                          one  hole  from  a  pair  in  the  ground  state,  generating
+                                                                              single-hole excited states that contribute finite spectral
+  Here, the single doped hole can be approximately de-                        weight toA    p(k, ω). This signal can be observed in STS as
+scribed by an effective Wannier-like wave function span-                      a high-energy peak above the pair-breaking energyE             pair
+ning a 4a  0 ×4a      0 plaquette, rather than being associated               [31], alongside the low-energy “coherent” peak linked to
+with a single lattice site.  Similarly, the two-hole bound                    nodal-quasiparticle-like  excitations  [Figs.14(a)-(c)].   In
+                                                                                                                                                          17
+
+particular, sharp “banana-tip” features in the density of                        |RVB⟩becomes an emerging short-range RVB liquid as
+states—enhanced by thed-wave pairing symmetry—are                                a self-consistent result of the condensation⟨                     ˆD⟩[50].
+expected  to  produce  pronounced  quasiparticle  interfer-                         The transition from Eq. (26) to Eq. (27) can be under-
+ence (QPI) patterns within each 4×4 hole-pair block in                           stood by rewriting
+real space (cf.  Fig.11).  Once these 4×4 building blocks
+pack into larger quasiperiodic arrangements, strong QPI                                   ˆD=   X    ˜c  i↑ ˜c  j↓g+(i, j)e     i2  ˆΩj +g   −(i, j)e     i2  ˆΩi
+signals may emerge at wavevectors that resonate between                                          i,j
+these spectral peaks along the spatial confined direction.
+Such emergent quantum interference effects beyond the                            and noting that [51]
+QPI  of  conventional  Landau/Bogoliubov  quasiparticles
+may provide an alternative explanation for the local STS                               g+(i, j)e     i2  ˆΩj +g   −(i, j)e     i2  ˆΩi |ϕ 0⟩ →g(i, j)|RVB⟩,
+observation [25,26] of novel internal checkerboard/stripe
+structures associated with two-hole plaquettes in the hole                       whereg(i, j) is ans-wave pair amplitude [24,52].  Physi-
+puddles of the underdoped cuprate.                                               cally, the double-antimeron fielde        i2  ˆΩv—originally bound
+   The  proposed  picture  further  yields  several  testable                    to  the  twisted-hole  pair  withv∈(i, j)—becomes  de-
+consequences in the lightly doped AFM phase.  First, the                         confined  and  smears  throughout  the  spin  background,
+minimal 2×2 loop-current pattern imparts an anoma-                               thereby  converting  the long-range  AFM state|ϕ           0⟩into
+lous magnetic momentm  loop ∼0.1µ         B  to the single-hole                  the   short-range   RVB   state|RVB⟩ [50,  52].      Self-
+composite.  Polarized by a perpendicular field, this mo-                         consistently,  the  proliferation  and  condensation  of  the
+ment allows a temperature gradient to induce a thermal                           deconfined  twisted-hole  pairs  with⟨        ˆD⟩ ̸=  0,  on  top  of
+Hall signal upon doping [44,45].  Second, a Rashba spin-                         the  RVB  background,  give  rise  to  the  superconducting
+orbit  coupling  can  lock  the  hole’s  orbital  angular  mo-                   and lower pseudogap phases proposed in Ref.  [50].  The
+mentumL        z =±1 to its spinS              z =±1/2, defining a total         nature of the highly unconventional transition between
+Jz =L   z +S    z [46].  The resulting spin textures provide a                   the AFM and emergent RVB phases remains an impor-
+distinct signature for spin-resolved ARPES [47–49].                              tant open question, reserved for future investigation.
+   Finally,  we  briefly  outline  a  possible  route  to  super-
+conductivity at finite doping, starting from the present
+two-hole  ground  state  as  a  minimal  pairing  building                                           ACKNOWLEDGMENTS
+block.  Eq. (18) can be recast as|Ψ            G⟩2h =  ˆD|ϕ     0⟩with
+
+            ˆD=      X       gm(i, j)c     i↑ cj↓ e−im  (ˆΩi−ˆΩj).                  Useful  discussions  with  H.-K.  Zhang,  J.-X.  Zhang,
+                  i,j,m=±1                                                       S.  Chen,  Y.  Qi,  Y.Y.  Wang,  H.H.  Wen,  X.J.  Zhou,
+                                                                                 Z.X.  Shen,   D.N.  Sheng,   J.  Zaanen,   R.B.  Laughlin,
+Within   the   AFM   phase,    one   may   conjecture   a                        T.  Devereaux,  C.  Varma,  and  P.A.  Lee  are  acknowl-
+finite-doping state of the form                                                  edged.     This  work  is  supported  by  NSF  of  China
+                                       ˆD Nh/2  |ϕ 0⟩                (26)        (Grant No.  12347107) and MOST of China (Grant No.
+                    |Ψ G⟩AFM =                                                   2021YFA1402101).
+
+whereN           h  is the total number of holes, implying a con-                       Appendix A:  Loop current patterns in the
+densation of⟨   ˆD⟩ ̸= 0 in the thermodynamic limit.  How-                          single-hole ground state as calculated by DMRG
+ever, because each hole pair described by  ˆDforms a “cat                                                       and VMC
+state”—a strong resonance between a mobile Cooper pair
+and an incoherent component confined to a region of size                            We      perform      DMRG      calculations      for      the
+∼4a      0 ×4a      0—such a finite-doping state may actually be                 single-hole-dopedt-J model   using   the   ITensor   li-
+spatially  confined  or  localized  as  an  insulator,  a  point                 brary [53].  For the single-hole case the bond dimension
+that requires further examination [24].                                          is kept up toD= 5000, yielding a maximum truncation
+   One may further conjecture that as the density of hole                        errorϵ∼5.5×10                   −6  ; for the two-hole case we maintain
+pairs  increases  at  low  doping,  these  localized  hole-rich                  ϵ∼1.6×10           −5  .  The U(1) spin symmetry is enforced by
+puddles  begin  to  percolate,  forming  domains  of  local                      fixing the totalS         z =−    1
+phase coherence, as hinted by STS experiments [25].  At                          loss of generality).  For the degenerate single-hole ground2 for the single-hole case (without
+sufficiently high doping, this process may culminate in a                        states, we first compute one ground state|Ψ           1⟩; a second
+uniform superconducting ground state [50]:                                       ground state|Ψ           2⟩, orthogonal to|Ψ       1⟩, is then obtained
+                                 ˆD Nh/2  |RVB⟩,                 (27)            by adding an energy penalty that suppresses any overlap
+                     |Ψ G⟩=                                                      with|Ψ          1⟩.  The two resulting real wave functions can be
+                                                                                 combined into the complex states
+where now  ˆD=   Pi,j g(i, j)˜c        i↑ ˜c  j↓  creates pairs of twisted                                       √
+holes  ˜c  iσ  =c   iσe−i   ˆΩi,  and  the  background  spin  state                                 |Ψ ±⟩1h =   12(|Ψ   1⟩ ±i|Ψ      2⟩),             (A1)
+                                                                                                                                                         18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 15.   Hole and spin currents for the degenerate one-hole ground state (L  z = 1 andS       z =−    12).  Calculated hole currentJ  h
+(a, b) and total spin currentJ  stot (c, d) on a 6×6 lattice.  Results from DMRG (a, c) and VMC (b, d) are shown, respectively.
+Arrow thickness indicates relative current strength; hole and spin currents are displayed on separate scales.
+
+
+which  are  eigenstates  with  angular  momentaL    z  =±1                      ing to the following variational state:
+underC           4-rotation symmetry.
+   Figure15displays  the  hole-current  and  spin-current
+patterns for theL      z = 1 ground state on a 6×6 lattice,                        |Ψ Lanczos⟩1h =X           φ1(i)c     i↑  +   X    (φ  2(i, j)n     i↑ cj↑
+as obtained from DMRG and VMC. In contrast to the                                                        i                  j∈NN(i)
+8×8 system (Fig.3), where the four strongest current                                                   +φ    3(i, j)S    −     |ϕ 0⟩.
+loops are symmetrically arranged around the center, the                                                               i  cj↓ )
+6×6  pattern  exhibits  a  single  dominant  2×2  current                                                                                            (B2)
+loop located at the center of the lattice.
+
+                                                                                TableIIIsummarizes  the  total  energy,  kinetic  and  su-
+                                                                                perexchange contributions, and the angular momentum
+     Appendix B: Variational results based on the                               Lz  for  each  variational  state.    The  plain  Bloch-wave
+                       quasiparticle picture                                    Ansatz yields a kinetic energy of approximately−2.158,
+                                                                                which  is  notably  poor.   Incorporating  the  longitudinal
+   In this appendix, we demonstrate that the conventional                       spin-polaron effect significantly improves the kinetic en-
+Landau quasiparticle picture fails to capture key nontriv-                      ergy to about−6.411; however, the resulting ground state
+ial properties of the single-hole ground state.  For com-                       is  unique  and  carriesL            z  =  2,  in  contrast  to  the  dou-
+parison  with  the  phase-string-based  Ansatz  in  Eq.  (6),                   bly  degenerateL                    z  =±1  states  identified  by  DMRG.
+we first consider a simple Bloch-wave trial state:                              These  results  confirm  that  the  nontrivialL           z  =±1  de-
+                                                                                generacy—together with the accompanying charge- and
+                 |Ψ Bloch⟩1h = X        φB(i)c     i↑ |ϕ 0⟩.             (B1)   spin-current patterns—can only be captured by includ-
+                                                                                ing the mutual statistics between holon and spinon (i.e.,
+                                     i                                          the phase-string sign structure), as implemented in our
+To  incorporate  the  renormalization  of  the  holon’s  ef-                    Ansatz in Eq. (6).
+fective mass due to holon-magnon scattering (the “lon-                             To  further  demonstrate  the  nontrivial  effects  arising
+gitudinal  spin-polaron”  effect),  we  further  improve  the                   from the phase string, we “turn off” this effect by modify-
+Bloch-wave Ansatz via a first-order Lanczos step, lead-                         ing the hopping term  ˆHt to  ˆHσ·t   , where a spin-dependent
+                                                                                                                                                                 19
+
+TABLE III. Comparison of single-hole ground-state energies                           Here,  we  point  out  that  the  quasiparticle  (or  Cooper-
+(in units ofJ) and angular momentumL             z on an 8×8 lattice                 pair)  and  incoherent  components  in  both  wave  func-
+for thet–Jmodel, obtained from VMC and DMRG.E                  tot,E t,              tions  can  be  naturally  interpreted  as  the  average  part
+andE       J denote the total, kinetic, and superexchange energies,                  ⟨e −im  (ˆΩi−ˆΩk)⟩avg and fluctuation part :e −im  (ˆΩi−ˆΩk) :≡
+respectively.                                                                        e−im  (ˆΩi−ˆΩk) −⟨e −im  (ˆΩi−ˆΩk)⟩avg of the phase-twist oper-
+                          Etot              Et               EJ              Lz      ator respectively.
+ |Ψ Bloch⟩1h            -67.98           -2.16           -65.82            0            In the single-hole case, we can rewrite the single-hole
+|Ψ Lanczos⟩1h           -71.42           -6.41           -65.00            2         wave function as:
+   DMRG              -72.98           -8.64           -64.34 ±1
+                                                                                          |Ψ⟩     1h =   X      φm(i, v)c     i↑ ⟨e −im  (ˆΩi−ˆΩv)⟩avg
+                                                                                                      m=±1,v
+                                                                                                                                                              (C1)
+signσis attached to the hopping process:                                                                       + :e −im  (ˆΩi−ˆΩv) :      |ϕ 0⟩
+                   ˆHσ·t    =−t     X   σc†                                                       ≡ |Ψ qp⟩1h +|Ψ     inc⟩1h,
+                                           iσcjσ +h.c.,       (B3)
+                                 ⟨ij⟩,σ                                              where the definition of the average part is:
+
+while  the  superexchange  term   ˆHJ  remains  unchanged.                                ⟨e −im  (ˆΩi−ˆΩv)⟩avg ≡ ⟨ϕ  0|n i↑ e−im  (ˆΩi−ˆΩv)|ϕ 0⟩
+Thisσ·t−Jmodel shares the same Marshall-sign struc-                                                                             ⟨ϕ  0|n i↑ |ϕ 0⟩                (C2)
+ture [54] with the half-filled Heisenberg Hamiltonian and
+exhibits no phase frustration in the single-hole hopping                             Here, then      i↑  operator in the numerator restricts the av-
+process [15].                                                                        erage in the Hilbert subspace with a spin-↑electron at
+   Table.IVpresents the ground-state energy and angu-                                siteiand⟨ϕ                 0|n i↑ |ϕ 0⟩=  0.5  in  the  denominator  is  the
+lar momentum calculated for this modified model using                                normalization factor.
+|Ψ Bloch⟩1h, |Ψ   Lanczos⟩1h,  and  DMRG.  DMRG  confirms                               Therefore, the coefficientφ(i) in quasiparticle compo-
+that the ground state is unique withL        z = 2 and exhibits                      nent|Ψ   qp⟩1h = Pi φ(i)c        iσ|ϕ 0⟩can be obtained by:
+no current patterns, reinforcing the connection between
+nontrivial  current  patterns  and  the  phase-string  effect.                               φ(i) =      X        φm(i, v)⟨e      −im  (ˆΩi−ˆΩv)⟩avg          (C3)
+The Bloch-wave Ansatz correctly reproduces this quan-                                                   m=±1,v
+tum number, and including the longitudinal spin-polaron                              which is equivalent to the expression given in the main
+effect  in|Ψ     Lanczos⟩1h  further  improves  the  kinetic  en-                    textφ(i) = 2⟨ϕ                  0|c †
+ergy (to approximately−10.398), bringing it close to the                                Similarly, we can also rewrite two-hole wave functioniσ|Ψ G⟩1h.
+DMRG result (−10.918).  The spectral weightZ            k calcu-                     into two components:
+lated by both VMC and DMRG shows a sharp peak at
+(π, π) for totalS             z =−    12  and at (0,0) for totalS              z =  12,|Ψ⟩     2h =   X        gm(i, j)c     i↑ cj↓⟨e −im  (ˆΩi−ˆΩj)⟩avg
+indicating that the single-hole ground state in theσ·t-
+Jmodel exhibits conventional Landau-quasiparticle be-                                              i,j,m=±1
+havior once the singular (±1) phase-string signs in the                                                      + :e −im  (ˆΩi−ˆΩj) :     |ϕ 0⟩                  (C4)
+hopping process are eliminated.
+                                                                                                ≡ |˜ΨCooper⟩2h +|   ˜Ψinc⟩2h,
+
+TABLE IV. Comparison of single-hole ground-state energies                            where
+(in  units  ofJ)  and  angular  momentumL             z  for  theσ·t-J
+model on an 8×8 lattice with totalS              z  =−1/2, calculated                   ⟨e −im  (ˆΩi−ˆΩj)⟩avg ≡ ⟨ϕ  0|n i↑ nj↓ e−im  (ˆΩi−ˆΩj)|ϕ 0⟩
+using VMC and DMRG.E     tot,E t, andE       J  denote the total,                                                            ⟨ϕ  0|n i↑ nj↓ |ϕ 0⟩          .  (C5)
+kinetic, and superexchange energies, respectively.
+                          Etot               Et               EJ             Lz      Although   the   decomposition   in   Eq.   (C4)   does   not
+ |Ψ Bloch⟩1h            -73.49           -8.17           -65.32            2         strictly  guarantee  orthogonality  between  the  two  com-
+|Ψ Lanczos⟩1h           -75.58           -10.40           -65.18            2        ponents,  their  overlap  is  numerically  negligible,  with
+   DMRG              -76.08           -10.92           -65.17            2           2h⟨˜ΨCooper|˜Ψinc⟩2h   =−0.004.    Moreover,  the  result-
+                                                                                     ing  components  show  close  agreement  with  those  ob-
+                                                                                     tained   from   the   strict   orthogonal   decomposition   in
+                                                                                     Eq.  (19):   the  overlaps         2h⟨˜ΨCooper|Ψ Cooper⟩2h  =  0.370
+                                                                                     and  2h⟨˜Ψinc|Ψ inc⟩2h  = 0.634 are nearly identical to the
+     Appendix C: Another perspective on the two                                      corresponding  weights  reported  in  TableII.  This  close
+                components in the “cat state”                                        quantitative consistency indicates that the Cooper-pair
+                                                                                     and incoherent components in Eq. (19) can equivalently
+   In  the  main  text,  we  decompose  the  single-hole  and                        be interpreted as the average and fluctuation parts of the
+two-hole wave function into two orthogonal components.                               phase-twist operator.
+                                                                                                                                                                       20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 16. (a) The half-filled ground state|ϕ           0⟩.η= 0.289. Bold lines indicate spin-singlet pairs| ↑                 i↓j⟩−| ↓i↑j⟩, and the light-blue
+crosses represent the spin/hole. The states are expressed under Ising basis:c     †l1,σl1 c†l2,σl2 . . . c†lNe,σlNe |0⟩wherel                 1 < l2 <···< l    Ne
+andN       e is the total particle number.  (b) Configuration of the|p       yx⟩ground state in the intermediate range (0.5< t/J <3.8).
+η1  = 0.214 andη           2  = 0.336 whent/J= 3.  (c) Representation ofc                      i↑ e−im(        ˆΩi−ˆΩv)|ϕ 0⟩fori= 2 (m=±1), withη                        ′1  = 0.204,
+η′2 =−0.204i,η                ′3 =−0.149.  (d) The two-hole doped ground state|Ψ⟩                         2h in the 2×2 system, withα               1 = 0.257 andα           2 = 0.343
+whent/J= 3.
+
+
+                                                                                            ED calculations reveal that in the smalltlimit (t/J <
+                                                                                        0.5), the ground state is unique and carries angular mo-
+                                                                                        mentumL        z = 2.  It can be expressed as:
+
+                                                                                                                                4X   1
+                                                                                                                |Ψ st⟩1h =          √2ci↑ |ϕ 0⟩,                (D1)
+                                                                                                                              i=1
+                                                                                        where|ϕ             0⟩is  the  half-filling  ground  state  of  the  2×2
+                                                                                        system  (which  itself  hasL      z  =  2  due  to  fermion  statis-
+                                                                                        tics, as shown in Fig.16(a)) and 1/         √2 is a normalization
+                                                                                        factor.  In this limit whereJ≫t, minimizing superex-
+                                                                                        change energy is prioritized.  When the hole is fixed at
+                                                                                        a  given  site,c        i↑ |ϕ 0⟩represents  sudden  removal  of  a↑-
+                                                                                        spin without additional spin distortion, thus preserving
+                                                                                        antiferromagnetic energy.  For hole hopping, the kinetic
+                                                                                        energy  is  minimized  when  the  quasiparticle  amplitudes
+FIG. 17.     The Bloch-wave phase factor on each site of the                            ci↑ |ϕ 0⟩at different sites are in phase, leading toE    t =−t,
+Lz  =  1 ground state.   The local angular momentum of the                              consistent with the form in Eq. (D1).
+2×2 closed-string structure isL        z(string) =−1.  The nearby                           For  intermediatet/Jratios  (0.5<  t/J  <3.8),  the
+two closed strings haveπphase shift, which is consistent with                           ground states become doubly degenerate withL        z  =±1
+the globalL           z = 1 symmetry under rotation around the system                   (equivalent to momentak=±π/2 in a 1D picture).  Fol-
+centerC.                                                                                lowing Eq. (17), we combine these into real-valued wave
+                                                                                        functions; the|p       yx⟩state is shown in Fig.16(b).
+                                                                                            The ground state exhibits two distinct components:  a
+   Appendix D: ED analysis on the plaquette state                                       quasiparticle  component  on  sites  2  and  4  (c  2↑ |ϕ 0⟩and
+                                                                                        c4↑ |ϕ 0⟩),  and  an  incoherent  component  involving  spin
+   In  this  appendix,  we  use  ED  to  investigate  how  the                          twists  ˆΠi on sites 1 and 3 (c  1↑  ˆΠ1|ϕ 0⟩andc         3↑  ˆΠ3|ϕ 0⟩).
+ground state quantum numbers evolve witht/Jin a mini-                                       Here, the operator  ˆΠi  represents a specific spin exci-
+mal 2×2 single-hole-doped system with totalS              z =−1/2.                      tation  or  “twist”  on|ϕ      0⟩.   Physically,   ˆΠi  induces  a  di-
+                                                                                                                                                            21
+
+agonal spin-singlet pairing between the two sites on the                          tum numberL    z =±1 of the closed-string excitation, re-
+sublattice opposite to the hole (e.g., if the hole is at site                     mains robust when the system size significantly exceeds
+1 on the A-sublattice,  ˆΠ1  forms a singlet between sites                        the string size, as boundary effects diminish.  Based on
+2  and  4  on  the  B-sublattice).   This  contrasts  with  the                   this, we investigate the tunneling behavior of the closed
+nearest-neighbor singlet structure of|ϕ     0⟩.  Consequently,                    string below.
+one can verify that⟨ϕ          0|c †i↑ ci↑  ˆΠi|ϕ 0⟩= 0, ensuring orthog-            To  elucidate  the  relative  phase  between  neighboring
+onality between the incoherent and quasiparticle compo-                           closed  strings,  we  plot  the  argument  of  the  quasiparti-
+nents even when the hole resides on the same site.                                cle  wave  function  component  Arg(φ(i))  for|Ψ                      qp⟩1h  =
+                                                                                  P
+   The  presence  of  this  incoherent  component  increases                      We find that the local angular momentum of the closedi φ(i)c        i↑ |ϕ 0⟩on  an  8×8  lattice,  shown  in  Fig.17.
+the overlap with  ˆHtci↑ |ϕ 0⟩(the hopping term acting on                         strings  isL   z(string)  =−1.    This  contrasts  with  the
+the  quasiparticle  part),  enhancing  kinetic  energy  gain                      Lz = +1 of the full wave function.  This difference arises
+through resonance between the two components—a key                                because the closed string carries momentum ( π
+aspect of hole dynamics.   The sign change underπro-                              folded Brillouin zone, rather than (0,0).  The (      π2 , π2 ) in the
+tation  of  this|p        yx⟩state,  corresponding  toL     z  =±1                mentum implies aπphase shift when the closed string2 , π2 ) mo-
+in theC      4-symmetric state, stems from the phase-string                       translates by 2a  0 along ˆxor ˆydirection.  Accounting for
+sign structure:  In the antiferromagnetic environment, a                          thisπphase shift implies that the closed-string pattern
+two-step  hole  hopping  process  typically  exchanges  the                       exhibits a minimal spatial periodicity of 4a  0 ×4a      0.
+hole with two opposite spins (S  z), accumulating a phase                            In  the  6×6  system,  the  angular  momentum  of  the
+(−1) = (±1)×(∓1) in the wave function.                                            closed string coincides with that of the full wave function,
+   Figure16(c)  shows  the  expression  of  the  basis  state                     as the string resides at the system center (see Fig.15).
+ci↑ e−im(        ˆΩi−ˆΩv)|ϕ 0⟩(i= 2) used in our variational wave                 This  explains  the  differing  local  chiralities  observed  in
+function Ansatz [Eq. (6)], withvat the plaquette center.                          the hole current patterns betweenL      z = 1 ground states
+Both the quasiparticle componentc  i↑ |ϕ 0⟩and the inco-                          on the 6×6 and 8×8 lattices.
+herent componentc  i↑  ˆΠi|ϕ 0⟩are recovered in this basis.                          The phase pattern shown in Fig.17precisely matches
+The different interference patterns between them=±1                               the phaseϕ  i associated with the following superposition
+bases (e.g., Pm=±1       mci↑ e−im(        ˆΩi−ˆΩv)|ϕ 0⟩yields only the           of Bloch-wave states (up to an arbitrary U(1) phase fac-
+incoherent component) explain thev-dependent behav-                               tor):
+ior of the 2D|p       xy(v)⟩state noted in the main text (cf.                                                                                 X
+Fig.9).                                                                           1                                                     √          ϕici↑ |ϕ 0⟩
+   In the largetlimit (t >3.8), ED yields a uniqueL                             z = 02 (c  K1↑ −ic   K2↑ −c   K3↑ +ic   K4↑)|ϕ   0⟩ ≡    1N     i
+ground state:                                                                                                                                            (E1)
+
+                        4X  c†                                                    whereK            1  =  ( π2 , π2 ),K   2  =  (−  π2 , π2 ),K   3  =  (−  π2 ,−  π2 ),
+  |Ψ lt⟩1h =    1√12          i+1↑     c†i+2↓     c†i+3↓     +c   †i+1↓     c†i+2↑     c†i+3↓K4  = ( π2 ,−  π2 ).  Therefore, the quasiparticle component
+                       i=1                                                        at momentum (±  π2 ,±  π2 ) can be viewed as emerging from
+                              +c   †                 |0⟩,                        the ( π2 , π2 ) momentum inherent to the closed string exci-
+                                  i+1↓     c†i+2↓     c†i+3↑                      tation.
+                                                                      (D2)
+
+wherec           i+4,σ     ≡c   i,σ and the|0⟩denotes the vacuum state.              Appendix F: The emergentp-wave orbital in the
+This  equal-weight  superposition  over  Ising  basis  states                                   single-hole incoherent component
+minimizes the kinetic energy toE    t =−2t(the theoretical
+minimum), analogous to Nagaoka polaron physics [55].                                 In  this  appendix,  we  show  the  density  distributions
+   Finally, we present the ground state of the two-hole-                          of  quasiparticle  and  incoherent  components  of  the  real
+doped system in Fig.16(d).  This state exhibits a pair-                           wave function|p                xy⟩in Fig.18, which shows the staggered
+ing structure consistent with our discussion in the main                          pattern  manifested  in  Fig.9,  i.e.,  the  two  components
+text.  Specifically, it comprises a NN Cooper-pair compo-                         mainly distribute on the different sublattices.  When we
+nent (first bracket) and an incoherent component (second                          project  the  antimeron  at  different  positionsv               1  andv       2,
+bracket).  The latter features NNN pairing accompanied                            the  incoherent  and  quasiparticle  component  dominates
+by  a  same-sublattice  singlet  pair,  which  acts  as  a  spin                  in|p     xy(v  1)⟩and|p           xy(v  2)⟩respectively  [cf.   Fig.19and
+excitation.                                                                       Fig.20], which is consistent with the incoherent compo-
+                                                                                  nent ratioI(v) results shown in Fig.7(a).  The incoher-
+Appendix E: The momentum of the “closed string”                                   ent  component  of|p     xy(v)⟩dominates  ifvis  chosen  on
+                               structure                                          the loop-current centers of the complexL               z  =±1 wave
+                                                                                  functions.
+   In SectionIII, we identified a 2×2 closed-string-like
+excitation  in  the  single-hole  ground  state.   The  emer-
+gent degree of freedom, characterized by the local quan-
+                                                                                                                                                                     22
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   FIG. 18.   The hole densities of the (a) quasiparticle component and (b) incoherent component of the|p       xy⟩real function.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 19.    The hole densities of the (a) quasiparticle component and (b) incoherent component of the|p       xy(v  1)⟩real function.
+The projected antimeron positionv             1 is labeled by the black cross.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 20.    The hole densities of the (a) quasiparticle component and (b) incoherent component of the|p       xy(v  2)⟩real function.
+The projected antimeron positionv             2 is labeled by the black cross.
+                                                                                                                                                               23
+
+
+
+
+
+ [1]J.  G.  Bednorz  and  K.  A.  M¨uller,  Possible  HighT             c  Su-      [22]S.-P. Kou and Z.-Y. Weng, Holes as dipoles in a doped
+     perconductivity in the Ba-La-Cu-O System,Z. Phys. B -                               antiferromagnet and stripe instabilities,Phys. Rev. B67,
+     Condensed Matter64, 189 (1986).                                                     115103 (2003).
+ [2]P.  W.  Anderson,  The  Resonating  Valence  Bond  State                        [23]S.  Liang,  B.  Doucot,  and  P.  W.  Anderson,  Some  New
+     in  La2CuO4  and  Superconductivity,Science235,  1196                               Variational Resonating-Valence-Bond-Type Wave Func-
+     (1987).                                                                             tions for the Spin- 12 Antiferromagnetic Heisenberg Model
+ [3]P. A. Lee, N. Nagaosa, and X.-G. Wen, Doping a mott in-                              on a Square Lattice,Phys. Rev. Lett.61, 365 (1988).
+     sulator:  Physics of high-temperature superconductivity,                       [24]J.-Y. Zhao, S. A. Chen, H.-K. Zhang, and Z.-Y. Weng,
+     Rev. Mod. Phys.78, 17 (2006).                                                       Two-hole ground state:  Dichotomy in pairing symmetry,
+ [4]W. F. Brinkman and T. M. Rice, Single-particle excita-                               Phys. Rev. X12, 011062 (2022).
+     tions in magnetic insulators,Phys. Rev. B2, 1324 (1970).                       [25]S. Ye, C. Zou, H. Yan, Y. Ji, M. Xu, Z. Dong, Y. Chen,
+ [5]S. Schmitt-Rink, C. M. Varma, and A. E. Ruckenstein,                                 X. Zhou, and Y. Wang, The emergence of global phase
+     Spectral function of holes in a quantum antiferromagnet,                            coherence from local pairing in underdoped cuprates,Na-
+     Phys. Rev. Lett.60, 2793 (1988).                                                    ture Physics19, 1301–1307 (2023).
+ [6]C. L. Kane, P. A. Lee, and N. Read, Motion of a single                          [26]H.  Li,  H.  Li,  Z.  Wang,  S.  Wan,  H.  Yang,  and  H.-H.
+     hole  in  a  quantum  antiferromagnet,Phys.  Rev.  B39,                             Wen,  Low-energy  gap  emerging  from  confined  nematic
+     6880 (1989).                                                                        states in extremely underdoped cuprate superconductors,
+ [7]E. Dagotto, Correlated electrons in high-temperature su-                             npj  Quantum  Materials8, 10.1038/s41535-023-00552-z
+     perconductors,Rev. Mod. Phys.66, 763 (1994).                                        (2023).
+ [8]P. W. Leung and R. J. Gooding, Dynamical properties                             [27]S. Ye, J. Zhao, Z. Yao, S. Chen, Z. Dong, X. Li, L. Shi,
+     of  the  single-hole  t-j  model  on  a  32-site  square  lattice,                  Q. Liu, C. Jin, and Y. Wang,Visualizing the zhang-rice
+     Phys. Rev. B52, R15711 (1995).                                                      singlet, molecular orbitals and pair formation in cuprate
+ [9]W. Zheng, Z. Zhu, D. N. Sheng, and Z.-Y. Weng, Hidden                                (2023),arXiv:2309.09260 [cond-mat.supr-con].
+     spin current in doped mott antiferromagnets,Phys. Rev.                         [28]A. W. Sandvik and H. G. Evertz, Loop updates for varia-
+     B98, 165102 (2018).                                                                 tional and projector quantum Monte Carlo simulations in
+[10]Z.  Zhu  and  Z.-Y.  Weng,  Quasiparticle  collapsing  in  an                        the valence-bond basis,Phys. Rev. B82, 024407 (2010).
+     anisotropict−jladder,Phys. Rev. B92, 235156 (2015).                            [29]M. Boninsegni, Monte carlo study of the energy disper-
+[11]Z.  Zhu,  D.  N.  Sheng,  and  Z.-Y.  Weng,  Intrinsic  trans-                       sion curve of a mobile hole in a quantum antiferromagnet,
+     lational  symmetry  breaking  in  a  doped  mott  insulator,                        Physics Letters A188, 330 (1994).
+     Phys. Rev. B98, 035129 (2018).                                                 [30]C. Cui, J.-Y. Zhao, and Z.-Y. Weng, Variational monte
+[12]P. W. Anderson, “Luttinger-liquid” behavior of the nor-                              carlo study of the dopedt−Jmodel on the honeycomb
+     mal metallic state of the 2D hubbard model,Phys. Rev.                               lattice,Phys. Rev. B110, 155111 (2024).
+     Lett.64, 1839 (1990).                                                          [31]J.-Y.  Zhao  and  Z.-Y.  Weng,  Composite  structure  of
+[13]P. W. Anderson, Infrared catastrophe in fermi gases with                             single-particle spectral function in lightly-doped mott in-
+     local  scattering  potentials,Phys.  Rev.  Lett.18,  1049                           sulators,Phys. Rev. B111, 104502 (2025).
+     (1967).                                                                        [32]F. Ronning, C. Kim, D. L. Feng, D. S. Marshall, A. G.
+[14]D. N. Sheng, Y. C. Chen, and Z. Y. Weng, Phase string                                Loeser, L. L. Miller, J. N. Eckstein, I. Bozovic, and Z.-X.
+     effect in a doped antiferromagnet,Phys. Rev. Lett.77,                               Shen, Photoemission evidence for a remnant fermi surface
+     5102 (1996).                                                                        and a d-wave-like dispersion in insulating ca2cuo2cl2,Sci-
+[15]Z. Y. Weng, D. N. Sheng, Y.-C. Chen, and C. S. Ting,                                 ence282, 2067–2072 (1998).
+     Phase String Effect in thet-JModel:  General Theory,                           [33]C. Hu, J.-F. Zhao, Y. Ding, J. Liu, Q. Gao, L. Zhao, G.-
+     Phys. Rev. B55, 3894 (1997).                                                        D. Liu, L. Yu, C.-Q. Jin, C.-T. Chen, Z.-Y. Xu, and X.-
+[16]K. Wu, Z. Y. Weng, and J. Zaanen, Sign structure of the                              J. Zhou, Evidence for multiple underlying fermi surface
+     t−jmodel,Phys. Rev. B77, 155102 (2008).                                             and isotropic energy gap in the cuprate parent compound
+[17]L. Zhang and Z.-Y. Weng, Sign structure, electron frac-                              ca2cuo2cl2 *,Chinese Physics Letters35, 067403 (2018).
+     tionalization, and emergent gauge description of the hub-                      [34]A.  Nazarenko,  K.  J.  E.  Vos,  S.  Haas,  E.  Dagotto,  and
+     bard model,Phys. Rev. B90, 165120 (2014).                                           R. J. Gooding, Photoemission spectra of sr2cuo2cl2:  A
+[18]S.  Chen,  Q.-R.  Wang,  Y.  Qi,  D.  N.  Sheng,  and  Z.-Y.                         theoretical analysis,Phys. Rev. B51, 8676 (1995).
+     Weng,  Single-hole  wave  function  in  two  dimensions:  A                    [35]T. Tohyama and S. Maekawa, Angle-resolved photoemis-
+     case study of the doped mott insulator,Phys. Rev. B99,                              sion in high tc cuprates from theoretical viewpoints,Su-
+     205128 (2019).                                                                      perconductor Science and Technology13, R17 (2000).
+[19]Q.-R. Wang, Z. Zhu, Y. Qi, and Z.-Y. Weng,Variational                           [36]B.  Fauqu´e,  Y.  Sidis,  V.  Hinkov,  S.  Pailh`es,  C.  T.  Lin,
+     wave  function  for  an  anisotropic  single-hole-dopedt-j                          X. Chaud, and P. Bourges, Magnetic order in the pseudo-
+     ladder(2015),arXiv:1509.01260 [cond-mat.str-el].                                    gap phase of high-T         C  superconductors,Phys. Rev. Lett.
+[20]J.-Y. Zhao, S. A. Chen, R.-Y. Sun, and Z.-Y. Weng, Con-                              96, 197001 (2006).
+     tinuous transition from a landau quasiparticle to a neu-                       [37]M.  E.  Simon  and  C.  M.  Varma,  Detection  and  impli-
+     tral spinon,Phys. Rev. B107, 085112 (2023).                                         cations of a time-reversal breaking state in underdoped
+[21]S.-P. Kou and Z.-Y. Weng, Topological gauge structure                                cuprates,Phys. Rev. Lett.89, 247003 (2002).
+     and phase diagram for weakly doped antiferromagnets,                           [38]H. Yao, W.-F. Tsai, and S. A. Kivelson, Myriad phases
+     Phys. Rev. Lett.90, 157003 (2003).                                                  of  the  checkerboard  hubbard  model,Phys.  Rev.  B76,
+                                                                                         161104 (2007).
+                                                                                                                                                                   24
+
+[39]E.  Altman  and  A.  Auerbach,  Plaquette  boson-fermion                                munications   Materials5,  10.1038/s43246-024-00567-4
+      model of cuprates,Phys. Rev. B65, 104508 (2002).                                      (2024).
+[40]S.  Capponi  and  D.  Poilblanc,  Charge  density  correla-                       [49]H.   Iwasawa,   K.   Sumida,   S.   Ishida,   P.   Le   F`evre,
+      tions  int−Jladders  investigated  by  the  contractor-                               F. Bertran, Y. Yoshida, H. Eisaki, A. F. Santander-Syro,
+      renormalization method,Phys. Rev. B66, 180503 (2002).                                 and  T.  Okuda,  Exploring  spin-polarization  in  bi-based
+[41]S. R. White and D. J. Scalapino, Hole and pair structures                               high-tc cuprates, Scientific Reports13,10.1038/s41598-
+      in the t-j model,Phys. Rev. B55, 6504 (1997).                                         023-40145-1(2023).
+[42]T. Blatz, U. Schollw¨ock, F. Grusdt, and A. Bohrdt, Two-                          [50]Z.-Y.  Weng,  Superconducting  ground  state  of  a  doped
+      dopant  origin  of  competing  stripe  and  pair  formation                           mott  insulator,New  Journal  of  Physics13,  103039
+      in  hubbard  andt−jmodels,Phys.  Rev.  X15,  031074                                   (2011).
+      (2025).                                                                         [51]In the previous approach [50],  ˜c              iσ  =c   iσe−i   ˆΩi  is specif-
+[43]P. Monthoux and D. Pines, Spin-fluctuation-induced su-                                  ically  taken.  It  is  noted  that  one  may  also  define  the
+      perconductivity in the copper oxides:  A strong coupling                              twisted hole operator ˜c  iσ =c   iσeiˆΩi  by changing the sign
+      calculation,Phys. Rev. Lett.69, 961 (1992).                                           in front of  ˆΩi. Correspondingly, one has
+[44]G. Grissonnanche, A. Legros, S. Badoux, E. Lefran¸cois,
+      V.  Zatko,  M.  Lizaire,  F.  Lalibert´e,  A.  Gourgout,  J.-                            ˆD=   X    ˜c  i↑ ˜c  j↓g−(i, j)e    −i2     ˆΩj +g    +(i, j)e    −i2     ˆΩi
+      S.  Zhou,  S.  Pyon,  T.  Takayama,  H.  Takagi,  S.  Ono,
+      N. Doiron-Leyraud, and L. Taillefer, Giant thermal hall                                         i,j
+      conductivity  in  the  pseudogap  phase  of  cuprate  super-                          such that a mean-field solution of|RVB⟩associated with
+      conductors,Nature571, 376–380 (2019).
+[45]J. Hu, H. Xu, J. Yao, G. Gu, Q. Li, and N. P. Ong,High-                                 the double-antimeron fielde       −i2     ˆΩv  with an opposite chi-
+      resolution  measurements  of  thermal  conductivity  ma-                              rality  can  be  obtained.  Two  ground  states  have  equal
+      trix and search for thermal hall effect in la2cuo4 (2025),                            energy without time-reversal symmetry breaking [50]. A
+      arXiv:2507.21403 [cond-mat.str-el].                                                   possible topological order in the superconducting phase
+[46]S.  A.  Chen,  Z.-Y.  Weng,  and  J.  Zaanen,  Spin  texture                            due  to  such  double  choices  of  the  chirality  will  be  dis-
+      in doped mott insulators with spin-orbit coupling,Phys.                               cussed elsewhere.
+      Rev. B105, 075136 (2022).                                                       [52]Y. Ma, P. Ye, and Z.-Y. Weng, Low-temperature pseudo-
+[47]K. Gotlieb, C.-Y. Lin, M. Serbyn, W. Zhang, C. L. Small-                                gap phenomenon:  precursor of high-tcsuperconductivity,
+      wood, C. Jozwiak, H. Eisaki, Z. Hussain, A. Vishwanath,                               New Journal of Physics16, 083039 (2014).
+      and A. Lanzara, Revealing hidden spin-momentum lock-                            [53]M. Fishman, S. R. White, and E. M. Stoudenmire, Code-
+      ing in a high-temperature cuprate superconductor,Sci-                                 base release 0.3 for ITensor,SciPost Phys. Codebases , 4
+      ence362, 1271–1275 (2018).                                                            (2022).
+[48]H.  Luo,  K.  Currier,  C.-Y.  Lin,  K.  Gotlieb,  R.  Mori,                      [54]W.  Marshall,  Antiferromagnetism,Proc.  R. Soc.  Lond.
+      H. Eisaki, A. Fedorov, Z. Hussain, and A. Lanzara, Dop-                               232, 48 (1955).
+      ing  dependence  of  spin-momentum  locking  in  bismuth-                       [55]Y.  Nagaoka,  Ferromagnetism  in  a  narrow,  almost  half-
+      based high-temperature cuprate superconductors, Com-                                  filledsband,Phys. Rev.147, 392 (1966).

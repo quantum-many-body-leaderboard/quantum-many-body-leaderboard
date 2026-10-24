@@ -1,0 +1,1375 @@
+                              Green’s  Function  Monte Carlo  for  Lattice Fermions:
+                                                   Application  to the t-J  Model
+
+                                            C. Stephen Hellberg†  and Efstratios Manousakis‡
+               †Center  for Computational  Materials Science,  Naval  Research  Laboratory,  Washington,  D.C., 20305
+                  ‡Department  of Physics and MARTECH, Florida State  University,  Tallahassee,  FL 32306-3016
+                                                               (September 18, 2021)
+                 We  develop  a  general  numerical  method  to  study  the  zero  temperature  properties  of  strongly
+                correlated electron models on large lattices.  The technique, which resembles Green’s Function Monte
+                Carlo,  projects  the  ground  state  component  from  a  trial  wave  function  with  no  approximations.
+                We  use  this  method  to  determine  the  phase  diagram  of  the  two-dimensional  t-J  model,  using  the
+                Maxwell  construction  to  investigate  electronic  phase  separation.   The  shell  eﬀects  of  fermions  on
+                ﬁnite-sized periodic lattices are minimized by keeping the number of electrons ﬁxed at a closed-shell
+                conﬁguration  and  varying  the  size  of  the  lattice.   Results  obtained  for  various  electron  numbers
+                corresponding  to  diﬀerent  closed-shells  indicate  that  the  ﬁnite-size  eﬀects  in  our  calculation  are
+                small.   For  any  value  of  interaction  strength,  we  ﬁnd  that  there  is  always  a  value  of  the  electron
+                density above which the system can lower its energy by forming a two-component phase separated
+                state.  Our results  are  compared  with  other  calculations  on  the  t-J  model.  We  ﬁnd  that  the most
+                accurate results are consistent with phase separation at all interaction strengths.
+
+                PACS numbers:  71.10.+x, 71.45.Gm, 74.20.-z
+
+                      I.  INTRODUCTION                                         such as quantum Monte Carlo which can give information
+                                                                               about  larger  size  systems.   Many  interesting  problems,
+   Correlated  quantum  many-body  systems  have  pro-                         however, involve fermionic degrees of freedom.  If one at-
+vided  a  host  of  new  phenomena  such  as  new  states  of                  tempts a simulation of fermions at low temperature one
+matter,  new  forms  of  ordering  transitions,  etc.    These                 encounters the so-called fermion sign problem.  Namely,
+phenomena  are  the  result  of  the  appearance  of  funda-                   one  needs  to  deﬁne  conﬁgurations  which  carry  a  phase
+mentally  new relevant degrees of freedom which emerge                         (a  positive  or  negative  sign)  along  with  their  statistical
+as a coherent superposition of the underlying degrees of                       weights, a reﬂection of the transformation property of the
+freedom  of  the  many  variable system.  Once  one identi-                    fermion wave function under particle permutation.  In the
+ﬁes  the  important  degrees  of  freedom,  these  degrees  of                 computation of  many  quantities  of  interest,  such  as  the
+freedom  can  be  treated  by  analytical or  semi-analytical                  energy, the “positive” and the “negative” conﬁgurations
+techniques which are variants of generalized perturbation                      give nearly opposite contributions, leading to wildly ﬂuc-
+expansions around the deﬁning framework.  The problem                          tuating  weights.   The  negative-sign  problem  causes  the
+which arises is that such frameworks cannot be imagined                        statistical ﬂuctuations  to  diverge  exponentially  with  in-
+before  hand  unless  there  are  hints  from  either  experi-                 creasing system size for ﬁxed density.
+ment or numerical studies of models correctly capturing                           The  Green’s  function  Monte  Carlo  (GFMC)  method
+the dynamics of more basic degrees of freedom which, at                        has  been  successfully  applied  to  lattice  spin  systems,
+ﬁrst sight, seem featureless.                                                  in  particular  to  the  square  lattice  spin-1/2  Heisenberg
+   Several such models on a discrete lattice exist and a va-                   quantum   antiferromagnet.1,3–7   In   this   case,   through
+riety of numerical techniques are at our disposal to use.1                     the  Marshall-sign  transformation,  the  problem  can  be
+Exact diagonalization techniques suﬀer from the fact that                      mapped to a hard-core boson problem which presents no
+the dimensionality NH  of the Hilbert space grows expo-                        sign problem and solved accurately on large size systems.
+nentially with system size Ns  (number of sites).  Taking                         An  approximate  method  to  deal  with  the  sign  prob-
+into  account  all  the  symmetries  of  the  problem  can  re-                lem   in   fermionic   systems   is   the   ﬁxed   node   (FN)
+duce  the  size  of  the  invariant  subspaces  to  smaller  size              approximation.8,9  This  approach  projects  a  trial  state
+NR  (which  may  be  a  few  orders  of  magnitude  smaller                    onto the best variational state with the same nodal struc-
+than  NH).   However,  the  largest  possible  size  increases                 ture, thus controlling the statistical ﬂuctuations.  The FN
+only with the logarithm of the ratio of NH/NR.  In par-                        approximation has been used for lattice fermion systems
+ticular,  most interesting quantities  scale  with  the linear                 also.10–12
+                                                                        1         The  GFMC  method  for  lattice  fermions  without  the
+dimension of the system which scales with [ln(NH/NR)]d
+where  d  is  the  dimensionality  of  the  problem.   Renor-                  ﬁxed   node   approximation   has   been   applied   to   one-
+malization group approaches, such as the density matrix                        dimension systems.13  In two dimensions it has been ap-
+renormalization  group  (DMRG)  technique,2  have  been                        plied to  the  t-J model in the  limits  of small numbers of
+very successful in one dimension but there are signiﬁcant                      electrons14 or holes.15,16
+limitations in higher dimensions.                                                 In  this  paper,  we  present  an  eﬃcient  implementation
+   Attractive alternatives seem to be stochastic methods                       of  GFMC  for  lattice  fermions  at  arbitrary  densities  of
+
+
+                                                                            1
+electrons  or  holes.    We  demonstrate  the  utility  of  the                example  of  the  t-J  Hamiltonian  on  a  two-dimensional
+method in the case of the two dimensional t-J model.  The                      square  lattice.   This  model  in  itself  is  a  non-trivial  ex-
+method projects a trial wave function onto the lowest en-                      tension of the square lattice Heisenberg antiferromagnet1
+ergy eigenstate that it overlaps.  If the trial state overlaps                 where GFMC was ﬁrst applied on a lattice model.
+the ground state, the projection yields the ground state.                         The t-J model is written in the subspace with no dou-
+The projection becomes statistically more accurate as the                      bly occupied sites as
+ground-state  component  of  the  trial  state  increases  rel-
+ative to the excited-state components.  Results obtained                         H = −t∑         (c†iσcjσ + h.c.) + J∑(Si·Sj − ninj4   ).   (1)
+for the t-J model with this method have been published                                      ⟨ij⟩σ                         ⟨ij⟩
+by  the  authors.17  In  this  paper  we  present  the  general
+method  and  in  addition,  our  results  for  the  t-J  model                 Here  ⟨ij⟩  enumerates  neighboring  sites  on  a  square  lat-
+are  presented  in  detail  and  compared with  other  recent                  tice,  c†iσ  creates  an  electron  of  spin  σ  on  site  i,  ni  =
+calculations.                                                                  ∑
+   The  t-J  model  is  thought  to  contain  some  impor-                        σ c†iσciσ, and Si  is the spin- 12  operator.
+tant  aspects  of  the  environment  in  the  copper-oxide
+superconductors.    For  instance,  the  calculated  single-                                     A.  Details  of  the  Projection
+hole  spectrum18  is  in  agreement  with  the  results  of  the
+photo-emission  data.19  The  model  gives  rise  to  a  two-                     We take a trial wave function Ψ and project it onto the
+hole  bound  state15  with  the  dx2−y2  symmetry  which  is                   ground state by generating a series of increasingly accu-
+the  believed  symmetry  of  the  superconducting  state  in                   rate approximants to the ground state labeled by integers
+these  materials.   In  addition,  Emery,  Kivelson,  and  Lin                 |m⟩ = (H − W )m|Ψ⟩.  Here H  is the Hamiltonian and W
+(EKL)20  suggested  that  the  cuprates  are  near  an  elec-                  is an appropriately chosen numerical constant.30–33
+tronic  phase  separation  (PS)  instability  which  is  pre-                     We  may  expand  the  trial  state  in  terms  of  the  exact
+vented  by  the  long-range  part  of  the  Coulomb  interac-                  eigenstates:
+tion.  In the  phase-separated state,  the  holes  cluster  to-
+gether  with  a  certain  density  of  electrons,  leaving  the                                 |Ψ⟩ = a0|Φ0⟩ + a1|Φ1⟩ + · · ·                       (2)
+rest of the system in an antiferromagnetic state with no
+holes.  Phase separation in the t-J model has been stud-                       where  |Φ0⟩  is  the  ground  state,  |Φ1⟩  is  the  ﬁrst  excited
+ied  by  a  number  of  techniques  which  seem  to  be  giv-                  state, and the ai’s are the expansion coeﬃcients.  Rewrit-
+ing conﬂicting conclusions.17,21–27  High temperature se-                      ing the projected states in this way, we see
+ries expansions23,24 and some studies on small systems25
+indicated  that  phase  separation  does  not  occur  at  the                   |m⟩ = (H − W )m|Ψ⟩                                                        (3)
+physical region for the cuprates, namely J/t ∼ 0.3 − 0.4,                            = a0(E0 − W )m|Φ0⟩ + a1(E1 − W )m|Φ1⟩ + · · ·    (4)
+while   other  studies   on  small  systems20,21   found   this                         {               (E1 − W       )m               }
+region  was  unstable  to  phase  separation.     Using  the                         ∝     |Φ0⟩ + a1                       |Φ1⟩ + · · ·               (5)
+GFMC  method  presented  in  this  paper,  Hellberg  and                                            a0     E0 − W
+Manousakis17  found  that  the  t-J  model  has  a  region  of                 where  Ei  is  the  energy  of  the  i’th  eigenstate.   So  |m⟩
+phase separation at all interaction strengths.                                 approaches the ground state for large m provided
+   In recent work, Calandra, Becca, and Sorella27 (CBS)
+emphasize that the  phase separated region does not ex-                                            |Ei>0 − W | < |E0 − W |                          (6)
+tend  below J/t <∼ 0.4.  In  addition,  the  DMRG  method
+has  been  also  applied  to  this  problem  by  White  and                    for  all  excited  state  energies  Ei>0.   The  projection  can
+Scalapino  (WS)28,29  who  ﬁnd  that  the  ground  state  of                   be formulated in this  simple way because eigenvalues of
+the  t-J  model  on  the  square  lattice  is  characterized  by               lattice Hamiltonians are bounded from below and above.
+stripes.                                                                       Continuum problems require a diﬀerent form for the pro-
+   In  the  last  section  of  this  paper,  we  compare  our  re-             jection operator.34,35 In what follows, we assume the oﬀ-
+sults to those of CBS and WS, concluding that the phys-                        set constant W  is incorporated in the Hamiltonian.
+ical region of the model is very close to or inside of a PS                       From (5) we see rate of convergence with m is governed
+instability.  Namely, the early conclusions that the  phys-                    by  the  overlap  of  the  trial  state  with  the  ground  state
+ical region of the t-J model is far from the critical Jc  for                  and  the  energy  of  the  lowest  excited  state  overlapping
+phase separation, are largely invalid.                                         the  trial  state.   In  Section  II D,  we  describe  the  steps
+                                                                               taken to insure fast convergence.
+                II.  NUMERICAL  METHOD                                            To calculate ground state expectation values of an ar-
+                                                                               bitrary operator A, we take the large m limit of
+
+   Even though our formalism is  general and can be  ap-                                       ⟨Φ0|A|Φ0⟩                 ⟨m|A|m⟩
+plied  to  other  lattice  fermion  models,  we  shall  use  the                                 ⟨Φ0|Φ0⟩    =   limm→∞     ⟨m|m⟩   .                     (7)
+
+
+                                                                            2
+   For large values of m, we cannot evaluate Hm directly.                                               wαβ  = zα ΨGα     ,                                 (16)
+The  number  of  position-space  states  generated diverges                                                          ΨGβ
+exponentially with the power m, so we calculate Hm  by
+a  stochastic  method  similar  to  Neumann-Ulam  matrix                       resulting in the accumulated weight for the m-step walk
+inversion.36 We decompose H  into a product of a transi-                       given by Eq.  (11).
+tion probability pαβ  to make a transition from state α to                        For an antisymmetric trial wave function ΨT , the stan-
+state β  and a residual weight wαβ  as                                         dard algorithm to evaluate
+
+                         Hαβ = pαβwαβ                                  (8)               ⟨ΨT |Hm|ΨT ⟩ =∑ΨT ∗α  ⟨α|Hm|β⟩ΨTβ ,             (17)
+
+                                                                                                               αβ
+where
+                    ∑    pαβ = 1,     pαβ ≥ 0.                          (9)    where  ΨT ∗α    =  ⟨ΨT |α⟩,  is  to  generate  a  set  of  M  ini-
+                                                                               tial states {αi} with probabilities proportional to Qαi  ∝
+                     β                                                         |ΨTαi|2 using Metropolis sampling as in Variational Monte
+To evaluate                                                                    Carlo.  At each initial state |αi⟩, we start an m-step ran-
+                                                                               dom walk, ending in the state |βi⟩.  For large M,
+     ⟨α0|Hm|αm⟩ =  ∑                   ⟨α0|H|α1⟩⟨α1|H|α2⟩...                                                   M∑
+                          α1,...,αm−1                                                                               ΨT ∗αi W (αi, ..., βi)ΨTβi
+                                       ⟨αm−1|H|αm⟩               (10)               ⟨ΨT |Hm|ΨT ⟩ →   1M                        Qαi               .      (18)
+                                                                                                               i=1
+stochastically,   we  average  over  m-step  random  walks
+α0  →  α1  →  · · ·  →  αm−1  →  αm,  where  each  αi  is  a
+position  space  state,  giving  each  walk  the  accumulated                                         C.  A  New  Approach
+weight
+    W (α0, α1, ..., αm) = wα0α1wα1α2 · · · wαm−1αm.      (11)                     The  standard  algorithm  is  ineﬃcient  since  a  random
+                                                                               walk  in  conﬁguration space  of  length  m must  be  gener-
+The probability of the walk α0 → α1, · · · → αm  is                            ated  for  each  term  in  the  sum  (18).   The  details  of  the
+                                                                               intermediate  states  are  thrown  away.   The  expectation
+     P (α0, α1, ..., αm) = pα0α1pα1α2 · · · pαm−1αm.        (12)               value ⟨Ψ|Hm|Ψ⟩ can be evaluated more eﬃciently if the
+                                                                               generation of the initial states {αi} is combined with the
+Thus, it follows that                                                          generation  of  the  random  walks.   In  the  random  walk,
+                                                                               new  states  are  chosen  with  a  probability  given  by  (14).
+      ⟨α0|Hm|αm⟩ =  ∑                  W (α0, α1, ..., αm)        (13)         After a large number of steps, these states are distributed
+                          α1,...,αm−1                                          with a probability
+
+for  a  large  number  of  walks  guided  by  the  probability                                          Qα ∝ zα[ΨGα ]2                                 (19)
+(12).                                                                          which is derived by solving the “detailed balance” condi-
+
+                                                                               tion
+                   B.  Importance  Sampling                                                           Qαpαβ = Qβpβα,                               (20)
+
+   The Monte Carlo sum (13) is evaluated most eﬃciently                        where  pαβ  is  the  probability  to  make  a  transition  from
+using importance sampling.  We cannot use the trial state                      conﬁguration α to β  given by (14), and Qα  is the prob-
+as a guiding function for the random walk, since the guid-                     ability  to  visit  a  state  |α⟩.37  Thus  we  may  use  states
+ing function must be  positive for all allowed states.  La-                    generated in the m-step random walk as initial states for
+beling our guiding function ΨG, we let                                         new m-step random walks.
+                                   ΨGβ                                            For maximum eﬃciency, we use every state generated
+                      pαβ =   1zα  ΨGα Hαβ                               (14)  as the starting point for a new walk, so at each step we
+                                                                               calculate diﬀerent stages of m-walks simultaneously.  We
+where the normalization is simply the local energy:                            simply  generate  one  very  long  random  walk  using  the
+                                                                               probability  (14).   At  each  step  in  the  walk,  we  look  m
+                                  ΨGβ                                          steps  into  the  past to  evaluate  an element  of (18).  The
+                      zα =∑       ΨGα Hαβ.                              (15)   computer  time  needed  to  calculate  a  given  number  of
+                               β                                               observations of ⟨Hm⟩ is independent of m.  An additional
+                                                                               advantage  is  that  since  only  one  long  random  walk  is
+Deﬁned  in  this  way,  (14)  satisﬁes  (9),  and  the  residual               generated,  we  may  calculate  all  diﬀerent  powers  m  in
+weight is                                                                      parallel.  The fundamental observation becomes
+
+                                                                            3
+                           M∑  ΨT ∗                                                                a(r) =∑       ak cos(k · r).                         (24)
+⟨ΨT |Hm|ΨT ⟩ =   1                αi−mW (αi−m, ..., αi)ΨTαi
+                      M                zαi−m|ΨGαi−m|2           .  (21)                                      k
+                          i=1
+   The  method  is  easily  generalized  to  evaluate  the  ex-                Then
+pectation  value  Am  ≡ ⟨Ψ|HmAHm|Ψ⟩ for  any  diagonal                              |RVB⟩ = PN       ∏(uk + vkc†
+operator A, such as the density or spin structure factors,                                                           k↑c†−k↓)|0⟩
+                                                                                                      k
+ninj  and  Szi Szj .   At  each  stage  in  the  walk,  we  look  m                                                               N/2
+steps into the past to obtain the expectation value of ⟨A⟩                                   =   ∑       a(ri↑ − rj↓)c†ri↑c†rj↓          |0⟩        (25)
+and 2m steps into the past to calculate the accumulated
+weight.   By  summing  M  observations  from  a  walk,  we                                         ri↑,rj↓
+ﬁnd
+                  M∑                                                           can be written as the   N2  ×  N2  determinant
+    Am =   1          ΨT ∗αk W (αk, ..., αi)ΨTαi                                        ⏐⏐⏐⏐⏐⏐⏐⏐⏐                                                       ⏐⏐⏐⏐⏐⏐⏐⏐⏐
+             M                zαk|ΨGαk|2          ⟨αj|A|αj⟩.      (22)                     a(r1↑ − r1↓)    a(r1↑ − r2↓)   · · ·   a(r1↑ − r N
+                 i=1                                                                                                                              2 ↓)
+                                                                                           a(r2↑ − r1↓)    a(r2↑ − r2↓)   · · ·   a(r2↑ − r N
+                                                                                                                                                  2 ↓)
+where j = i − m and k = i − 2m.                                                 |D| =             ...                        ...             ...              ...
+   The speed of convergence of the procedure with power                                   a(r N
+m is determined by the ratio R = |E1−W |/|E0−W | < 1,                                          2 ↑ − r1↓)  a(r N2 ↑ − r2↓)  · · ·  a(r N2 ↑ − r N2 ↓)
+where E1  is the energy of the ﬁrst excited state overlap-                                                                                          (26)
+ping the trial state.  Since this gap is caused by the ﬁnite
+size of the system, we generally calculated powers of the                      in position space.
+Hamiltonian up to several times the linear system size.                           In  this  form,  |RVB⟩  spans  a  broad  class  of  Fermion
+                                                                               wave functions.  A Fermi liquid state corresponds to
+                   D.  Trial  Wave  Functions                                                            { 1  k ∈ Fermi sea
+                                                                                                 ak =       0  otherwise                                 (27)
+   Care  is  needed  to  choose  a  trial  state  with  maximal                while by allowing other choices for ak, the wave function
+overlap with the true ground state.  We restrict ourselves
+to total spin singlet states with zero momentum and try                        can  describe  a  pairing  state,  which  may  be  s-wave,  d-
+to write a very arbitrary form yielding a good initial guess                   wave, or something more general.
+throughout the phase diagram.
+   We use a Jastrow resonating-valence-bond wave func-
+tion for the trial state, written                                                                     E.  Guiding  Function
+
+ ΨT  = ∏                                                                          We are tempted to use the magnitude of the trial state
+         i<j,σ,σ′ f(ri,σ − rj,σ′)|RVB⟩                               (23)      as our guiding wave function, but this would be a serious
+                                          ∏                                    mistake.  By  construction, the  sites  of  a  periodic lattice
+      = ∏                                    (uk + vkc†k↑c†−k↓)|0⟩,            lie  at  high  symmetry  points,  and  the  nodes  of  a  Fer-
+         i<j,σ,σ′ f(ri,σ − rj,σ′)PN        k                                   mion wave function also respect these symmetries.  One
+where c†                                                                       ﬁnds ⟨ΨTα|α⟩ = 0 for a signiﬁcant fraction of states in the
+         kσ is the usual Fermion creation operator and PN                      Hilbert space not violating the Pauli exclusion principle.
+projects the state onto the subspace with the number of                        Since
+particles ﬁxed to be N.
+   It is important that the Jastrow factor f  correlate all                      ⟨ΨT |Hp|ΨT ⟩ = ∑               ⟨ΨTα0|H|α1⟩ · · · ⟨αm−1|H|ΨTαm⟩
+pairs  of  particles  independent  of  spin,  yielding  a  corre-                                     α0,...,αn
+lated state that is still a total spin singlet.  If we allow dif-
+ferent Jastrow factors for like and unlike spins, we could                                                                                          (28)
+usually  reduce  the  variational  energy  of  the  trial  state.              where the intermediate sums over α1, α2, . . . , αn−1  span
+However, the resultant state would be a superposition of                       the complete Hilbert space, we must guide with a positive
+many  spin  states  and  in  general  would  overlap  excited                  function.
+states with non-zero spin closer in energy to the ground                          Every  guiding  function   that  samples  the   complete
+state than the lowest spin zero excited state, resulting in                    Hilbert  space  will  yield  correct  results.   Our  challenge
+slower  projection  than  a  singlet  trial  state  with  higher               is to pick a function that minimizes the statistical ﬂuctu-
+variational energy.                                                            ations of our output.  The guiding function cannot ame-
+   We  write  the  determinantal  part  of  the  trial  state  in              liorate the sign problem in (21).  We can, however, choose
+the  usual  way.38  The  ratio  ak  ≡  vk/uk  is  the  physical                a  function  to  reduce  the  ﬂuctuations  in  |ΨT |/|ΨG|.  We
+quantity, and, assuming ak  = a−k, we deﬁne a(r)  as its                       deﬁne
+Fourier transform:
+
+                                                                            4
+              ΨT(r)                                       -ΨT(r)                the determinant and inverse may be  updated after such
+                                                                                moves eﬃciently in O(N 2) steps.  This so called “inverse
+                                                                                update”  works  well  for  variation  Monte  Carlo  or  ﬁxed
+                                     ΨB(r)                                      node  Monte  Carlo,  but  it  cannot  be  used  directly  with
+                                                                                GFMC on a lattice since the random walk steps directly
+                                                                                on nodes for a signiﬁcant fraction of steps.  In a reason-
+                                                                                ably  dense  system,  we  ﬁnd  as  many  as  1/3  of the  steps
+                                                                 r              land on nodes.  On a node, the matrix is singular, the de-
+                                                                                terminant is zero, and the inverse is undeﬁned.  Recalcu-
+                                                                                lating the determinant and inverse after walking through
+                                                                                a node will cause the running time to scale as O(N 3).
+                                                                                   We  developed  a  new  O(N 2)  technique  to  hop  over
+  FIG. 1.     Schematic  behavior  of  the guiding  function  near              nodes  without  recalculation  of  the  determinant  or  in-
+a  node.   The  squares  and  diamonds  are  the  trial  state  and             verse.  The essence of the method is this:  When the ran-
+its  negative,  respectively.   The  circles  are  the  bosonic  state,         dom walk generated by the guiding function hits a state
+and  the  guiding  function,  ΨG  = max{|ΨT |, cΨB},  is  shown                 or series of states where the determinant of the trial func-
+by the ﬁlled symbols.  r  represents a single coordinate of one                 tion  vanishes,  we  generate  a  “detour”  walk  around  the
+electron.                                                                       region  where  the  matrix  is  singular,  rejoining  the  guid-
+                                                                                ing  walk  when  the  determinant  is  non-zero  again.   We
+                  ΨG ≡ max{|ΨT |, cΨB} ,                        (29)            stress that the real random walk goes though the  node,
+                                                                                the detour walk is a ﬁctitious one which is used only to
+where ΨB  is a positive  function,  typically a good varia-                     calculate the determinant and its inverse.  It serves only
+tional state of the bosonic Hamiltonian.  We take ΨB  to                        as a calculational tool for the inverse update.  The details
+be  a  spin-dependent  Jastrow function.14  This  is  similar                   of  this  detour-walk-approach of  evaluating  the  determi-
+to a choice used in continuum problems, but on a discrete                       nant and its inverse when the walk went through a node
+lattice,  it is  not necessary to  match the ﬁrst derivatives                   are explained in the Appendix A.
+as in the continuum.39                                                             Since we often land on a node where the inverse of the
+   We rescale c so the eﬀective number of conﬁgurations                         matrix (26) is not deﬁned, it is diﬃcult to calculate the
+contributing  to  the  norm  is  approximately  N   ≈  1/L                      probabilities  pαβ  (Eqs. 14  and  15) for  the  random walk
+for  an  L × L  system.40  This  guiding  function  is  shown                   we deﬁned earlier.  When we are on a node with ΨTα  = 0,
+schematically in Fig. 1.                                                        we  need  to  choose  the  next  step  of  the  walk  from  the
+   For  the  guiding  function,  we  use  the  Jastrow-pairing                  various possible β states.  Therefore we need to calculate
+function                                                                        zα  with Eq. (15).  Since  we are on the node, calculating
+                                                                                each ΨTβ  requires a detour walk which in itself takes N 2
+  ΨB =∏        f(ri↑ − rj↑)∏f(ri↓ − rj↓)∏               g(ri↑ − rj↓)            steps.  Thus,  the  calculation of  zα  is  an O(N 3) process,
+           i<j                 i<j                   i,j                        whereas when ΨTα  ⁄= 0 it is an O(N 2) process.  Therefore,
+                                                                     (30)       we  make  the  following  adjustments  so  that  each  step  is
+                                                                                an O(N 2) process.  We deﬁne
+of  Bose  spin   12  particles  (i.e.,  two  kinds  of  bosons,  up                                   pαβ =   1
+bosons and down bosons).  We have chosen this function                                                          zα fαβHαβ                                (31)
+to  mimic  the  physics  of  the  Fermion  state  as  closely  as                                      zα =∑       fαβHαβ                                (32)
+possible  without  having  nodes.   Since  it  is  not  impor-
+tant to guide with a spin singlet function, we use a more                                                       β
+arbitrary spin-dependent  Jastrow factor  where  like  spin                        where if ΨTα  ⁄= 0
+particles are correlated diﬀerently than opposite spin par-                                        { ΨGβ /ΨGα                if ΨTβ  ⁄= 0
+ticles.
+                                                                                          fαβ =       c2ΨBα ΨBβ /|ΨGα |2   if ΨTβ  = 0                (33)
+
+              F.  Walking  Through  The  Nodes                                     and if ΨTα  = 0,
+
+   To  evaluate  the  determinantal  wave  function,  at  the
+beginning  of  the  random  walk  we  calculate  the  deter-                                                fαβ =  ΨBβΨBα                                      (34)
+minant,  an  O(N 3)  operation for  a  N × N  determinant,
+and  its  inverse,  also  an  O(N 3)  operation.   Each  kinetic                   It  is  easy  to  show  that  detailed  balance  is  obeyed  by
+step  in  the  walk  changes  either  a  row  or  column  of  the               these deﬁnitions.  The advantage of using these probabil-
+determinant,  while  superexchange  changes  both  a  row                       ities is that if ΨTα  = 0, then calculating ΨTβ  for all β with
+and column.  Ceperley, Chester, and Kalos41 showed that                         Hαβ  ⁄= 0  not  required.  Since  we  don’t  have  the  inverse
+
+
+                                                                             5
+                                                                                                                                          
+matrix of the trial function’s determinant in state α, such                                   |Ψα|2 (1 − Aα) + Bα           ∑                (37)
+a calculation would be computationally very expensive.                                =∑                                            |Ψβ|2
+  Calculating ΨBβ  is always easy due to the simple form                                  α                                β∈{Hα}
+of  (30),  but  ΨTβ  is  more  diﬃcult.   The  kinetic  operator             where  {Hα}  is  the  set  of  all  states  neighboring  |α⟩  by
+moves a single electron, so ΨTβ  may be calculated in O(N)                   application of the Hamiltonian.  We see (37) follows from
+steps since the inverse need not be updated.  The superex-                   (36)  if  we  choose  Bα  =  C  and  Aα  =  CNα  for  some
+change operator moves two electrons and changes both a                       constant C, where Nα  is the number of neighbors of |α⟩
+row and column of (26).  Updating  the inverse to calcu-                     where Ψ does not vanish.  Since this version of the norm
+late  this  term requires  O(N 2) steps,  which would cause                  is  calculated  from  all  the  states  entering  the  energy,  no
+the  overall algorithm to  scale  as  O(N 3)  for  the  system.              factors in the numerator of (35) are absent from the de-
+In Appendix B we derive an O(N) method of calculating                        nominator.
+superexchange.                                                                  We  calculate  the  eﬀective  number  of  conﬁgurations
+                                                                             contributing to the normalization as
+                 G.  Trial  State  Optimization                                                 (  m∑   ⏐⏐ΨTαi⏐⏐2)2/   m∑    ⏐⏐ΨTαi⏐⏐4
+  It  is  important  that  we  start  the  GFMC  with  good                            Neﬀ  =            wαi                   w2αi   .             (38)
+                                                                                                   i=1                  i=1
+trial and guiding states.  In this section, we describe our                  This quantity approaches n if all states contribute equally
+method for optimizing these functions.
+  In  continuum  systems,  one  usually  assumes  a  func-                   to  the  integral  and  drops  to  1  as  one  state  begins  to
+tional form for the trial and guiding functions and opti-                    dominate.40  We  adjust  the  length  of  our  random  walks
+mizes a function of the energy to ﬁnd the best variational                   so  Neﬀ  is  at  least  10  times  the  number  of  parameters
+parameters.  On a lattice, there are only a ﬁnite number                     being optimized.
+of distances r or equivalently wave vectors k in any given                      We found that close to phase separation, the standard
+simulation, so we allow the functions in (23) and (30) to                    Metropolis algorithm develops a small acceptance ratio,
+have a parameter describing each distance or wave vector                     and  tends  to  stay  in  the  same  conﬁguration  for  many
+not related by symmetry.                                                     steps.  In  order to  sample  more phase  space  quickly,  we
+  For  the  Jastrow and  position  space  pair  factors,  f(r)               choose  our  conﬁgurations using  the  transition probabil-
+and g(r), we apply all rotational and mirror symmetries.                     ity  (14) where  we  take  H  to  be  the  oﬀ-diagonal part of
+Translational symmetry is always assumed.  However, we                       the Hamiltonian, ensuring a new conﬁguration with each
+insist only on the  mirror symmetries about the axes for                     move.  Thus the conﬁgurations are distributed according
+the Fermion pairing ﬁeld ak, so the function may be any                      to the weight wαi  = zαi|ΨGαi|2, where zαi is given by (15).
+linear combination of an s and dx2−y2  pairing state.  The
+mirror symmetry excludes dxy  symmetry.
+  For a 20 × 20 lattice,  we have 172 parameters for the                     III.  FITTING  PROJECTION  OUTPUT:  INVERSE
+trial  state  and  192  parameters  for  the  guiding  function                                            THEORY
+with the pairing term.
+  We  tried  optimizing  several  functions  of  the  energy,                                A.  The  Ground  State  Energy
+but  found  minimizing  the  variance  of  the  local  energy
+to be the most robust.42 We generate a set of conﬁgura-                         The Green’s Function Monte Carlo procedure takes a
+tions {α1, α2, . . . , αm} distributed according to a weight                 trial  state  and  projects  it  onto  the  exact  ground  state.
+wαi.  The conﬁgurations remain the same throughout the                       Its output consists of the observables for the energy
+minimization procedure.  We minimize the function
+             ∑m     [HΨTαi/ΨTαi − E]2⏐⏐ΨTαi⏐⏐2 /wαi                                                E(n) = ⟨Ψ|Hn|Ψ⟩                              (39)
+     σ2 =       i=1      ∑m     ⏐⏐ΨTαi⏐⏐2 /wαi              ,         (35)   where  the  trial state  |Ψ⟩  has  been  normalized.  For  any
+
+                            i=1                                              operator A  which  does  not  commute  with  the  Hamilto-
+where  E  is  a  guess  for  the  ground state  energy that  we              nian, using the present Monte Carlo method we calculate
+determine self consistently.  We use the same function to                                       amn = ⟨Ψ|HmAHn|Ψ⟩                          (40)
+optimize both our trial and guiding functions.
+  With  a ﬁnite  random walk, the  calculation of the  en-                   as functions of powers of the Hamiltonian m and n.
+ergy in (35) uses many more states than the calculation of                      These values converge to their ground state values, ex-
+the  norm.  Occasionally, this created instabilities, which                  cept for a normalization factor, for large powers n and m.
+we cured by deriving another way of calculating the norm                     However,  their  statistical  errors  increase  exponentially
+using all the neighbors in the random walk.  We may write                    with increasing power due to the Fermion sign problem.
+⟨Ψ|Ψ⟩ =∑        |Ψα|2                                                           (36)To extract the most information on the ground state,
+             α                                                               we use the calculated observable for all powers less than
+
+                                                                          6
+some  maximum  power  pmax.    By  including  the  highly                              1.0
+converged small powers in the approach, we obtain much
+more  accurate  ground  state  properties  than  can  be  ob-                          0.8
+tained using the large powers alone.  Let us consider the
+ground  state  energy  as  an  example  to  demonstrate  the
+approach next.                                                                         0.6
+   Let us deﬁne the T-spectral function c(E) with respect
+to the trial state |Ψ⟩ as                                                       c*(E)  0.4
+
+             c(E) ≡  1π   limη→0+ Im⟨Ψ|         1ˆH − E + iη |Ψ⟩
+                                                                                       0.2
+                   =∑|⟨Ψ|Φi⟩|2δ(E − Ei)                       (41)
+                        i                                                              0.0
+To show this, one may expand the trial state in the exact
+eigenstates |Φi⟩ of  ˆH  as
+                                                                                         −17      −16      −15      −14      −13      −12      −11      −10       −9
+                       |Ψ⟩ =∑       ai|Φi⟩.                               (42)                                         E* / t
+                                i=0                                                FIG. 2.   The  T-spectral  function  of  the  full  Hamiltonian.
+                                                                                The lowest  energy  peak  is  at  the lowest  energy  eigenstate  of
+It is immediately  evident from the  above that the poles                       the  system  which  is  non-orthogonal  to  the  trial  state.   The
+of c(E) and of the exact spectral function are at the same                      value  of  spectral  weight  is  the  square  of  the  overlap  of  the
+energy values for those eigenstates |Φi⟩ which have non-                        true ground state to the initial trial state.
+zero overlap with the trial state |Ψ⟩.
+   In order to proceed we discretize the energy interval us-                    statistical correlations between results of diﬀerent powers
+ing a ﬁne mesh with ∆E, thus, the energy takes discrete                         which must be treated accordingly.43
+values E∗m, m = 1, 2, ..., M  and the T-spectral function                          We divide the measurements into M  bins.  The covari-
+c∗(E) is written as                                                             ance matrix is deﬁned
+
+                            M∑                                                                     (       M∑                                    )
+               c∗(E) =          c∗mδ(E − E∗m)                      (43)          Cij  =      1         1       (E(i)                                 (45)
+                          m=1                                                             M − 1       M           k   −  ¯E(i))(E(j)k    −  ¯E(j))
+                                                                                                          k=1
+where c∗m ≥ 0 are non-negative real numbers.  Thus, this                        where  E(i)
+spectral function is  thought of as a histogram, where in                       bin.  For uncorrelated output, C is diagonal.  With corre-k    is  the  average  of  the  i’th  power  in  the  k’th
+each  ﬁne  slice  of  the  histogram  the  value  of  the  inte-                lations, χ2  is deﬁned
+gral  of  c(E)  multiplied  by  any  function  f(E)  is  simply
+c∗mf(E∗m).   We  have  used  a  mesh  interval  ∆E  smaller                            χ2 =∑( ¯E(i) − E(i)∗)C−1
+than the ﬁnite-size gap between the lowest and the ﬁrst                                                                ij  ( ¯E(j) − E(j)∗),          (46)
+excited state.  Thus, the contribution of the ground state                                     ij
+to c∗  is accurately represented as a single delta-function                     where  E(i)∗  is  the  ﬁtting  function  given in  terms  of  the
+peak.   Namely,  up  to  some  m  =  m0,  c∗m<m0  =  0,  while                  coeﬃcients cm  (which are to be determined by this min-
+c∗m0 > 0 and c∗m0<m<m1 = 0 and c∗m1  > 0, etc.                                  imization) by means of Eq.  (44).
+   Then  the  moments  of  the  T-spectral  function  c∗(E)                        When  C  is  diagonal,  its  inverse  is  trivial.   For  more
+can be calculated using both Eq.  (41) and Eq.  (43) and,                       general  C,  small  errors  in  its  components  can  result  in
+thus, we obtain:                                                                large errors in its inverse, so it is important to calculate
+
+                                    M∑                                          C accurately.  Increasing the number of bins decreases the
+                  ⟨Ψ|Hn|Ψ⟩ =             c∗mE∗nm                        (44)    statistical  error  in  C  but  increases  the  systematic  error
+                                   m=1                                          due  to  autocorrelations.   To  balance  these  two  sources
+where n = 0, 1, ..., pmax.  Since pmax < M, because typi-                       of error, we choose the number of measurements in each
+cally pmax = 40 − 60 and M  = 200 − 500, we have more                           bin to be n = Mpmax, where pmax is the maximum power
+unknowns (the c∗m’s) than equations.  However, the solu-                        of the Hamiltonian.43 We calculate statistical errors with
+tion needs  to satisfy the  constraint c∗m ≥ 0 which limits                     the bootstrap method.44
+the possible solutions.  The optimal way to ﬁnd the most                           Fig.  2 gives a typical example for the T-spectral func-
+likely solution is to minimize the χ2.                                          tion  c∗(E)  obtained  from  the  calculation  of  the  two-
+   We gain very large computational savings by calculat-                        dimensional  t-J  model.   The  lowest  value  of  E∗  where
+ing all powers of H  in parallel.  However, this  results in                    we have a delta function peak gives the lowest eigenstate
+                                                                                of H which is not orthogonal to the trial state.  The value
+
+                                                                            7
+                                                                                         −0.68
+
+      −15.25
+                                                                                         −0.69                       J/t = 0.5
+
+       −15.4                   4x4 10 electrons                                                                      50 electrons on a 7x8 lattice
+                               Exact Diagonalization                                      −0.7
+
+
+      −15.55                                                                             −0.71
+
+
+       −15.7                                                                             −0.72
+                                                             Extrapolation
+
+                                                                                         −0.73
+      −15.85                                                                                                                                 Extrapolation
+                                                                                         −0.74
+
+         −16 0              5             10            15            20            25              ∞−0.75
+                                             p                                                 0              5             10            15            20            25                    ∞
+  FIG. 3.     The  energy  for  10  electrons  in  a  4 × 4  lattice  as                                                       p
+a  function  of  the  power  of  the  Hamiltonian.    The  value  of                  FIG. 4.     The  energy  for  50  electrons  in  a  7 × 8  lattice  as
+the  energy  obtained  by  the  extrapolation  method  described                   a  function  of  the  power  of  the  Hamiltonian.    The  value  of
+in this section is also shown.                                                     the  energy  obtained  by  the  extrapolation  method  described
+                                                                                   in previous section is also shown.
+
+of the peak gives the square of the overlap of the lowest
+energy state to the trial state.                                                   Following  the  approach  for  the  energy  T-spectral  func-
+   We  have tested our method  by comparing our results                            tion, we can deﬁne a discrete overlap function
+with  exact results  for  the  4 × 4  size lattice  with  several                                                M∑
+electrons.  In  Fig.   3  we  show  the  results  for  the  energy                                  a∗(E) =           δ(E − E∗i )a∗i .                        (50)
+as a function of the iteration for the case of 10 electrons.
+   The energy estimate deﬁned by                                                                                 i=0
+                                                                                   Here the values of E where the T-spectral function a∗(E)
+                      Ep =  ⟨Ψ|Hp+1|Ψ⟩⟨Ψ|Hp|Ψ⟩                                 (47)attains  peaks  are  all  possible  geometric  means √EiEj
+                                                                                   of  all  the  eigenenergies  which  correspond to  eigenstates
+as  a  function  of  p  is  shown  in  Fig.  (3)  starting  from                   which have non-zero overlap with |Ψ⟩ and they give non-
+the  Jastrow-RVB value  of the  energy  at m = 0.  Notice                          zero matrix element of A.  The lowest energy peak corre-
+that  with  the  length  of  our  walk  in  conﬁguration space                     sponds to the geometric mean of the ground state energy
+which  we  used  for  this  calculation,  the  error  (which  al-                  with  itself,  i.e  E0  = √E0E0  thus,  if  the  ground state is
+ways  grows  exponentially)  becomes  annoyingly  big  for                         not degenerate it is uniquely speciﬁed.  Here we also need
+values of p not shown.  The value of the energy obtained                           to solve for all the a∗i  given that they obey the following
+by  the  extrapolation  method  described  in  previous  sec-                      pmax equations:
+tion  is  also  shown.  By  using  the  information  contained                                                            M∑
+in all the powers of H  up to pmax instead of the just the                                                ⟨Ψ|A|Ψ⟩ =            a∗i
+estimates of the energy at or just below pmax  we obtain                                                                  i=0
+a much better estimate for the energy.                                                                                    M∑
+                                                                                                    ⟨Ψ|HAH|Ψ⟩ =               (E∗i )2a∗i
+                        B.  Other  Operators                                                                              i=0
+                                                                                                                    ...
+   For an arbitrary operator A, we have                                                                                   M∑
+                                                                                                 ⟨Ψ|HpAHp|Ψ⟩ =                (E∗i )2pa∗i .                    (51)
+  ⟨Ψ|HnAHn|Ψ⟩ =∑(EiEj)P ⟨Ψ|Φi⟩⟨Φi|A|Φj⟩⟨Φj|Ψ⟩                                                                             i=0
+                           ∫ij                                                        Fig.      5   gives   a   typical   example   for   the   spectral
+
+                       =      dEE2pa(E)                                (48)        function  a∗(E)  obtained  for  the  spin-structure  function
+                                                                                   S(π/2, π/2) from the calculation of the two-dimensional
+where the operator overlap function a(E) is given by                               the t-J model.  Notice that the energy of the lowest peak
+                                                                                   is the energy of the lowest energy state having non-zero
+a(E) =∑         δ(E +√EiEj)⟨Ψ|Φi⟩⟨Φi|A|Φj⟩⟨Φj|Ψ⟩.   (49)                           overlap with the trial state and which has non-zero ma-
+            ij                                                                     trix elements  with the  operator A.  For the  value  of the
+
+                                                                               8
+       0.12                                                                           0.1202
+
+                                                                                                                                             Extrapolation
+       0.10                                                                           0.1200
+
+
+       0.08
+                                                                                      0.1198
+       0.06                                                                                                   Exact
+a*(E)                                                                                 0.1196
+
+       0.04
+
+
+       0.02                                                                           0.1194
+
+
+       0.00                                                                           0.1192
+                                                                                                 0     1     2     3     4     5     6     7     8     9    10             infinity
+                                                                                                                            p
+           −17      −16      −15      −14      −13      −12      −11      −10       −9FIG. 6.  The spin-spin correlation  function for 10 electrons
+                                        E* / t                                  in a 4×4 lattice as a function of the power of the Hamiltonian.
+  FIG.  5.    The   T-spectral   function   associated   with   the             The  value  of  the  correlation  obtained  by  the  extrapolation
+spin-structure function.  Notice that the lowest energy peak is                 method described in previous section is also shown.
+at the same energy as that of the energy T-spectral function.
+The  value  of  spectral  weight  is  related  to  the  spin-structure
+function in a simple way.                                                          In the one-dimensional t-J model,  the  compressibility
+                                                                                diverges continuously at the transition point in contrast
+                                                                                to  the  discontinuous  transition  in  two  dimensions.24,45
+peak, which is a∗i , the expectation value of A can be cal-                     The behavior of the energy derivatives across the  phase
+culated in a straightforward manner.                                            separation  boundary  is  discussed  in  Appendix  C.    We
+   In principle, we can also extract information about the                      have  veriﬁed  that  in  one  dimension,  the  Maxwell  con-
+excited states along with the ground state.  This possibil-                     struction yields  the  same phase-separation boundary  as
+ity is indicated by the fact that we can see higher energy                      that calculated using the inverse compressibility.
+peaks in these spectral functions.                                                 In the two-dimensional t-J model, the situation is more
+   In Fig. 6 we compare our results for the spin-spin cor-                      complicated.    The  Fermi  surface  can  change  dramati-
+relation  function  with  that  obtained  by  exact  diagonal-                  cally with electron density for a given system size.  These
+ization of the 4 × 4 size system with 10 electrons.  Notice                     strong shell eﬀects make accurate comparisons of energies
+the ﬁne scale used to be able to distinguish the diﬀerence                      calculated with diﬀerent numbers of electrons impossible.
+between exact and extrapolated correlation functions.                              Many of the previous studies used a vanishing inverse
+                                                                                compressibility  as  the  criterion  for  the  onset  of  phase
+                                                                                separation.24,25  The compressibility, however, is not the
+       IV.  RESULTS  FOR  THE  2D  T-J  MODEL                                   proper observable to ﬁnd the phase-separation boundary
+                                                                                in the two-dimensional t-J model, where the transition is
+      A.  Maxwell Construction:  Phase  Separation                              ﬁrst order.  It is true that the compressibility diverges in
+                                                                                the region of phase separation, but it jumps  discontinu-
+   A  number  of  methods  to  determine  the  phase  sepa-                     ously at the boundary with the  uniform phase.  Numer-
+ration boundary numerically have been used.  In one di-                         ically,  this  discontinuity  is  diﬃcult  to  see  in  even  large
+mensional systems the divergence of the density structure                       ﬁnite  systems  due  to  the  surface  energy  of  the  two  co-
+factor at long wavelengths has been used.13 Divergence of                       existing phases.  When one is in the region of the  phase
+the compressibility as determined from the second deriva-                       diagram  where  phase  separation  exists,  then,  the  com-
+tive of the energy with respect to electron or hole density                     pressibility suﬀers strong ﬁnite-size eﬀects because of the
+was  used  successfully  on  the  one-dimensional t-J  model                    rather large surface energy of the two coexisting phases.
+by  calculating  the  energy  for  three  diﬀering  densities.45                   The ground-state energy as a function of electron den-
+In  the  one-dimensional  model,  phase  separation  occurs                     sity  at  J  =  2.5t  for  32  electrons  on  a  variety  of  system
+between  two  regimes,  one  with  no  electrons  while  the                    sizes is shown in Fig. 7.  These ﬁnite systems necessarily
+other  contains  some electrons  and some holes.  For  a  ﬁ-                    constrain the electron density to be uniform on the length
+nite  system,  electrons  may  tunnel  through  the  vacuum,                    scales  of  the  system  size.   We  ﬁt  the  discrete  data  to  a
+lowering  the  ground  state  energy.   For  this  reason,  the                 polynomial, e(ne), shown as the solid curve, in order to
+inverse compressibility actually passes through zero and                        treat the energy as a continuous function of density.  The
+becomes slightly negative.  This  eﬀect is a surface eﬀect                      dashed  line,  eps(ne),  is  a  linear  function  that  intersects
+and vanishes in the limit of inﬁnite system size.                               the Heisenberg energy, eH  at electron density ne = 1 and
+
+
+                                                                             9
+intersects e(ne) tangentially at a density labeled nps.                          ergy  from  that  of  the  uniform  phase  approximated  by
+   It is straight forward to show that the ground state of                       the  ﬁtting  polynomial  in  Fig.  7,  by  separating  into  two
+the  inﬁnite  system  at  a  density  ne  >  nps  cannot  be  a                  regions with densities nA = nps and nB = 1, resulting in
+uniform phase, because the energy of the uniform phase,                          an energy given by the dashed line at the average density.
+e(ne),  is  higher  than  eps(ne)  at  the  same  density.   This                   In order to be stable, the energy of the inﬁnite system
+latter  energy  corresponds  to  the  energy  of  a  mixture  of                 must be concave everywhere.  Given the solid line in Fig.
+two phases, one at electron density nA = 1 and the other                         7  and  the  allowed  density  range  of  the  t-J  model,  the
+at electron density nB = nps.  Therefore the inﬁnite sys-                        dashed line drawn in the ﬁgure is the only line possible to
+tem  phase  separates  into  two  regions  with  densities  nA                   make the energy of the inﬁnite system globally concave.
+and nB, and its ground-state energy is given by eps(ne),                         This  energy  is  given  by  the  solid  line  for  ne  <  nps  and
+the value of the dashed line at the average density of the                       the dashed line for ne > nps.
+system.  This is known as the Maxwell construction.20                               Since the t-J model is deﬁned only for electron densities
+                                                                                 0 ≥ ne ≥ 1, the energy of the phase-separated state, the
+                                                                                 dashed  line  in  Fig.  7,  is  tangent  to  the  ﬁtting  curve  at
+        0.1                                                                      ne  =  nps  but  not  at  the  Heisenberg  point,  ne  =  1,  an
+                                                                                 extremal density.
+                                                                                    We never examined systems with densities ne >∼ 0.94,
+                                      ncomp                                      so  we  cannot  exclude  the  reentrance  of  a  homogeneous
+                                                                                 phase  in  this  region.  For  such  a  phase  to  be  stabilized,
+        0.0                                                                      the solid curve in Fig. 7 would have to drop back below
+                                                                                 the dashed line in this density range.  We never saw any
+                                                                                 indication of this possibility at any interaction strength.
+                           nps                                                   If  a  reentrant  homogeneous  phase  did  exist,  the  phase-
+                                                                                 separated  region  would  persist  at  densities  ne  <∼  0.94.
+       -0.1                                                                      The  new  Maxwell  line  would  lie  slightly  below  the  one
+                                                                                 drawn and would  be  tangent to  the  solid curve  at  both
+                                                                                 intersections, but the phase-separated region would per-
+                                                                                 sist at densities ne <∼ 0.94.  We never saw any indication
+           0.0              0.2              0.4              0.6              0.8              1.0of this possibility at any interaction strength.
+                               Electron Density ne
+                                                                                    In  the  inﬁnite  system,  the  energy  is  a  concave  func-
+  FIG.  7.      The  ground-state  energy  per  site  at  J  =  2.5t             tion  of  density  with  continuous  ﬁrst  derivative.   In  the
+for  32  electrons.    For  clarity,  the  energies  are  shifted  by  a         phase-separated regime, the  energy linearly interpolates
+linear  factor,  −eHne.   The  circles  with  error  bars  show  the             between the energies of the two constituent phases.  The
+energies calculated  on lattices  of dimensions 6 × 6, 7 × 6, ...,               inverse  compressibility,  the  second  derivative  of  the  en-
+28 × 28.   A  sixth-order  polynomial  ﬁt  to  the  data  is  shown              ergy  with  respect  to  density,  is  positive  in  the  uniform
+as the solid line, which is extended to the Heisenberg energy,                   phase  and  zero  where  the  system  phase  separates.   in
+the  square  at  energy  zero  in  this  shifted  plot.   The  dashed            the phase-separated regime.  On a ﬁnite lattice, the sur-
+line shows the ground-state energy of the inﬁnite system in the                  face eﬀects of phase separation raise the energy, and we
+phase-separated region.  We ﬁnd the onset of phase separation                    ﬁnd  the  inverse  compressibility  calculated  from  diﬀer-
+occurs at nps = 0.296±0.004, while the inverse compressibility                   ent system sizes obtained from a ﬁt to the discrete data
+vanishes at ncomp = 0.52 ± 0.10.                                                 remains  positive  even  where  the  system  is  unstable  to
+                                                                                 phase separation.  For electron density ne, the completely
+   The energy of the inﬁnite system is given by the solid                        phase-separated energy per  site,  evar  = eHne,  is  a  vari-
+line  in  Fig.  7  for  ne  <  nps  and  by  the  dashed  line  for              ational  upper  bound  to  the  phase-separated  energy.   is
+ne > nps.  A diﬀerence between the Maxwell construction                          given by the completely phase-separated energy per site,
+in Fig. 7 and that commonly used is that the density of                          evar = eHne.  To show that, let Ne be the total number of
+one  of  the  constituent  phases,  the  Heisenberg  phase  at                   electrons on a square lattice of N  sites (ne = Ne/N  < 1).
+ne  =  1,  lies  at  an  extreme  limit  of  the  allowed  density               Then,  the  total  energy  of  the  system  is  less  or  equal to
+range.  It is not possible to add electrons to the Heisen-                       eHNe  plus corrections which are negligible compared to
+berg  solid,  which  has  one  electron  on  every  site,  so  the               this term in the thermodynamic limit.  To show that, let
+dashed line is not tangent to the ﬁtting curve at ne = nps,                      one constrain all the electrons to be close-packed in one
+it is not at ne = 1.  If the t-J model did allow electron den-                   region of the lattice so that only the interaction term in
+sities ne > 1, then the intersection point of the solid and                      (1) is operative.  If the system chooses not to do that, it
+dashed  lines  would  be  shifted  to  higher  densities  where                  means that the energy of any other chosen state is lower
+the  curves could intersect tangentially.  The  dashed line                      than the energy of this artiﬁcially imposed state.  Thus,
+might intersect the solid curve tangentially at the higher                       the energy per site of the unconstrained system is lower
+density  point  in  this  region.  At  any  electron  density  in                than  eHne.   The  system  is  deﬁnitely  unstable  to  phase
+the  range,  nps  <  ne  <  1,  the  system  can  reduce  its  en-               separation at least where this variational energy is lower
+
+                                                                             10
+than the calculated energy per site of a ﬁnite system.                                  0.40.4
+   We ﬁt the calculated energies in the uniform phase to a                                                 N=42
+low-order polynomial.  The energies in the uniform phase,
+where  there  is  no  surface  energy,  suﬀer  much  smaller                            0.3                Ne=50
+ﬁnite-size  eﬀects  than  energies  in  the  phase-separated                                               Ne=60
+regime.  We  extrapolate the  tangent of  the  ﬁtting  func-                            0.2
+tion to electron density ne = 1.  At the phase-separation
+boundary, the tangent to the curve e(ne) extrapolates to
+the  Heisenberg  energy,  e(ne  = 1) = eH.  This  construc-                             0.1
+tion  ensures  that  the  resulting  inﬁnite-system  energy  is
+concave everywhere.  This  is  the  only possible  construc-
+tion  that  ensures  the  resulting  inﬁnite-system  energy  is                           0                                                J/t=1
+concave everywhere.  An  example  for  J  = 2.5t is  shown
+in Fig. 7.
+
+                                                                                       −0.1−0.10                      0.2                    0.4                    0.6                    0.80                                                           0.5
+                        B.  Results  at  J  = t                                                                       Hole Density
+                                                                                    FIG. 9.    The energy  per hole  at  J  = t  for  Ne  = 42 (open
+                                                                                 diamonds) Ne = 50 (solid squares) and Ne = 60 (solid circles).
+     −1.05                                                                       The shell-eﬀects have non-monotonic inﬂuence on the scaling
+                                                                                 with size of the energy per hole.
+                     Ne=60
+                     Ne=50               J/t=1
+                                                                                 density.  An additional (technical reason) for wanting to
+      −1.1           Ne=42                                                       keep closed shell conﬁgurations is that on a ﬁnite lattice
+                                                                                 it leads to an energy gap between the  ground state and
+                                                                                 the ﬁrst excited state which helps our projection method
+                                                                                 to converge.
+                                                                                    In Fig. 8 we  study  the  size  dependence  of the  critical
+     −1.15                                                                       value  of  electron  density  nps  for  phase  separation.  The
+                                                                                 value of nps is determined by making a cubic polynomial
+                                                                                 ﬁt to each curve and using the corresponding energy for
+                                                                                 the lattice full of electrons calculated for the same num-
+      −1.2                                                                       ber of electrons and the same boundary conditions.  This
+             0.60                 0.70                 0.80                 0.90                 1.00can be done by using the GFMC results obtained for vari-
+                                 Electron Density ne                             ous size lattices for the square-lattice spin-1/2 Heisenberg
+  FIG.  8.      The  ground-state  energy  per  site  at  J  =  t  for           antiferromagnet and using the extrapolation1
+Ne = 42 electrons and Ns = 49, 56, 64, 72, 81, 90 sites (bottom
+curve)  Ne  =  50  and  Ns  =  56, 64, 72, 81, 90  (second  from  the                                 E/N  = e0 + λN −3/2                             (52)
+bottom),  and  Ne  =  60  and  Ns  =  64, 72, 81, 90, 100, 110, 121              where N  is the total number of electrons.
+sites  (top curve).  Each  curve has been shifted  upwards with                     The  ground-state  energy  per  site  at  J  =  t  for  ﬁxed
+respect to the previous by 0.025 in order to distinguish them.                   number  of  electrons  Ne  and  for  various  number  of  sites
+
+   Using  the  Maxwell  construction  we  have  determined                       Ns  can be  grouped together.  The  bottom  curve  in Fig.
+the boundary for phase separation of the t-J model in the                        8 gives the energy per site as a function of density ne =
+J < t region.  In these calculations we minimize the shell-                      Ne/Ns for Ne = 42 and Ns = 49(7 × 7), 56(7 × 8), 64(8 ×
+eﬀects when varying the electron-density by keeping the                          8), 72(8 × 9), 81(9 × 9) and 90(9 × 10).  The second from
+number of electrons ﬁxed at a closed shell conﬁguration                          the  top  gives  the  energy  per  site  shifted  by  a  constant
+and changing the size of the lattice.  In addition, we also                      amount of 0.025 for Ne = 50 and Ns = 56, 64, 72, 81, 90.
+choose the number of electrons to correspond to a closed                         The third from the top gives the energy per site shifted by
+shell  conﬁguration.   This  choice  eliminates  possible  de-                   an 0.05 for Ne = 60 and Ns = 64, 72, 81, 90, 100, 110, 121.
+generacies of states at the Fermi level.  Such degeneracies                      The  unshifted  energies  are  given  in  Table  I.   If  we  plot
+might favor ﬂatness of the energy as a function of density                       these  curves  on  the  same scale  without  a  shift,  they  all
+which might be mistaken for phase separation.  When one                          fall on almost the same curve.  However, there are small
+varies  the  number  of  electrons  keeping  the  system  size                   deviations from such a curve which are shell eﬀects.
+ﬁxed when adding an electron to a closed shell conﬁgura-                            Also shown in Table I is the lowest energy obtained by
+tion the kinetic energy goes up by a ﬁnite amount which                          diagonalizing within the subspace spanned by a subset of
+leads to oscillatory behavior of the energy per site versus                      2, 3, or 4 diﬀerent powers.  This is similar to the Lanczos
+                                                                                 algorithm for Quantum Monte Carlo data introduced by
+
+                                                                             11
+   TABLE I.  The energy per site for J/t = 1 and for various                             where  E(Nh)  is  the  total  energy  of  the  Ns-site  system
+electrons  densities  and  size  lattices.   The  extrapolation  en-                     with  Nh  holes,  and  x  =  Nh/Ns  is  the  hole  density.   In
+ergy is obtained by the procedure described in section III-A.                            Fig. 9 the energy per hole is plotted for all the points cal-
+The Lanczos energy is the lowest obtained by diagonalization                             culated for 42, 50, and 60 electrons.  The cubic ﬁts attain
+within a subspace of projection powers.                                                  minima at approximately the same values as the tangent
+Ne             Ns            ne                 EExtrap/Ns            ELanc/Ns           constructions.  The  energies in  Fig.  9  are  not  shifted  as
+32            100            0.32              -0.9019(12)             -0.9008(7)        they are in Fig. 8, and the shell eﬀects are obvious.  For
+              81            0.395            -1.0204(34)             -1.0197(47)         each  number  of  electrons,  the  energy  is  a  smooth  func-
+              72            0.444            -1.0767(12)             -1.0750(15)         tion of the density.  However, taking all electron numbers
+              64            0.5                -1.1249(48)             -1.1220(27)       together, the energy is a very jagged function:  The shell
+              56            0.571            -1.1727(48)             -1.1760(72)         eﬀects  systematically  bias  the  energies  of  systems  with
+              49            0.653            -1.1828(44)             -1.1840(35)         a given number of electrons.  Therefore it is  essential to
+              42            0.762            -1.1853(57)             -1.1801(18)         compare the  energies  of  systems  with  the  same number
+              36            0.889            -1.1637(40)             -1.1681(29)         of  electrons,  thus  canceling  the  unavoidable  systematic
+42            121            0.347            -0.9463(13)             -0.9448(5)         errors.  Many  previous  studies  of  the  2D  t-J  model  suf-
+            100            0.42              -1.0583(38)             -1.0548(39)         fered from shell eﬀects.  A diﬀerent demonstration of shell
+              81            0.519            -1.1335(37)             -1.1383(41)         eﬀects is given in Ref. 21.
+              72            0.583            -1.1562(34)             -1.1548(15)
+              64            0.656            -1.1695(18)             -1.1662(22)
+              56            0.75              -1.1768(32)             -1.1765(24)                         C.  Results  in  the  J  < t  Region
+              49            0.857            -1.1674(33)             -1.1656(16)
+50            121            0.413            -1.0229(36)             -1.0192(8)
+            100            0.5                -1.1080(38)             -1.1022(35)              −0.55
+              90            0.556            -1.1408(49)             -1.1338(32)
+              81            0.617            -1.1566(39)             -1.1612(63)
+              72            0.694            -1.1766(58)             -1.1741(37)               −0.65                      Ne=32
+              64            0.781            -1.1787(89)             -1.1663(38)                                          Ne=42       J/t=0.5
+              56            0.893            -1.1633(38)             -1.1606(30)               −0.75                      Ne=50
+60            110            0.545            -1.1451(40)             -1.1442(35)                                         Ne=60
+            100            0.6                -1.1601(36)             -1.1602(18)              −0.85
+              90            0.667            -1.1698(34)             -1.1697(23)
+              81            0.741            -1.1769(28)             -1.1759(41)               −0.95
+              72            0.833            -1.1771(37)             -1.1710(35)
+              64            0.938            -1.1628(18)             -1.1612(15)               −1.05
+
+
+
+                                                                                               −1.15
+Caﬀarel,  Gadea,  and  Ceperley.46  The  energies  obtained
+are upper bounds to the ground-state energy.                                                   −1.250.5               0.6               0.7               0.8               0.9                 1
+   We can greatly eliminate the shell eﬀects by examining                                                                     Electron Density ne
+several size lattices but keeping the number of electrons                                   FIG. 10.    The ground-state energy per site at J = 0.5t for
+ﬁxed.  We ﬁrst ﬁt each curve generated for ﬁxed Ne with                                  Ne = 32 electrons and Ns = 36, 49, 56, 64, 72, 81, 90 sites (top
+a  quartic  spline.  Next  from  the  point  e(ne  = 1)  on  the                         curve)  Ne  =  42  and  Ns  =  49, 56, 64, 72, 81, 90  (second  from
+graph, we construct the tangent to the spline which ﬁts                                  the top), Ne  = 50 and Ns = 56, 64, 72, 81, 90 (third from the
+our points.  The value of the density at which the tangent                               top) and Ne = 60 and Ns = 49, 56, 64, 72, 81, 90, 100, 110 sites
+and the spline meet gives us an estimate of the phase sep-                               (bottom curve).  each curve has been shifted downward  with
+aration density  for  the  given value  of J/t.  Individually,                           the  respect  to  the  previous  by  0.05  In  order  to  distinguish
+each  number  of  electrons  is  consistent  with  a  solution                           them.
+where  a  line  beginning  from  the  no-hole  limit  (ne  =  1)
+and being tangent on the polynomial (that ﬁts the data                                      The ground-state energy per site at J  = 0.5t for ﬁxed
+points) near ne  = 0.745 (see Fig. 8).  Therefore we con-                                number of electrons Ne and for various number of sites Ns
+clude that the ﬁnite-size eﬀects are small in our method                                 can be grouped together.  The top curve in Fig. 10 gives
+of determining nps  and the phase separation density for                                 the energy per site as a function of density ne = Ne/Ns
+J/t = 1 is nps = 0.745 ± 0.015.                                                          for Ne = 32 and Ns = 36(6×6), 49(7×7), 56(7×8), 64(8×
+   Emery, Kivelson, and Lin20 calculated the phase sepa-                                 8), 72(8×9), 81(9×9) and 90(9×10).  The second from the
+ration density using the energy per hole,                                                top gives the energy per site shifted by a constant amount
+                                                                                         of  0.05 for  Ne  = 42  and  Ns  = 49, 56, 64, 72, 81, 90.  The
+                    eh(x) =  E(Nh) − E(0)                                                third from the top gives the energy per site shifted by an
+                                         Nh                                     (53)     0.1 for Ne = 50 and Ns = 56, 64, 72, 81, 90.  The bottom
+
+
+                                                                                    12
+curve gives the energy per site shifted by 0.15 for Ne = 60                                     TABLE  III.   The  phase  separation  density  at  J/t  =  0.5
+and Ns = 49, 56, 64, 72, 81, 90, 100(10 × 10), 110(11 × 10).                                 determined by keeping the electron number ﬁxed and varying
+The unshifted energies are given in Table II.                                                the lattice size.
+                                                                                             n                                                σ                                                    Ne
+   TABLE II.  The energy per site for J/t = 0.5 and for vari-                                0.831782                                   0.00309639                                   32
+ous electrons densities and size lattices.                                                   0.838086                                   0.0136867                                     42
+Ne             Ns            ne                 Eextrap/Ns             Elanc/Ns              0.840684                                   0.00238198                                   50
+32               64            0.500            -1.0102(19)            -1.0111(18)           0.847915                                   0.00233589                                   52
+               56            0.571            -1.0151(24)            -1.0147(14)             0.857529                                   0.00913804                                   60
+               49            0.653            -0.9811(27)            -0.9802(15)
+               42            0.762            -0.8890(33)            -0.8893(32)
+               36            0.889            -0.7272(11)            -0.7277(17)             density for J/t = 0.5 is nps = 0.843 ± 0.015.
+42             100            0.420            -0.9695(22)            -0.9698(21)
+               81            0.519            -1.0158(31)            -1.0143(22)                   −0.4
+               72            0.583            -1.0115(50)            -1.0030(15)
+               64            0.656            -0.9734(32)            -0.9734(22)                   −0.5
+               56            0.750            -0.8918(39)            -0.8851(5)
+               49            0.857            -0.7715(24)            -0.7733(22)                   −0.6                          J/t=0.5, 8x8
+50             100            0.500            -1.0015(37)            -0.9925(11)
+               90            0.556            -0.9975(42)            -1.0009(29)                   −0.7
+               81            0.617            -0.9898(54)            -0.9887(68)
+               72            0.694            -0.9310(24)            -0.9340(36)                   −0.8
+               64            0.781            -0.8594(37)            -0.8565(59)
+               56            0.893            -0.7232(22)            -0.7242(15)                   −0.9
+52             100            0.520            -1.0090(40)            -1.0102(44)
+               90            0.578            -1.0020(58)            -1.0032(80)                     −1
+               81            0.642            -0.9791(46)            -0.9774(42)
+               72            0.722            -0.9110(44)            -0.9107(62)                   −1.1
+               64            0.812            -0.8158(29)            -0.8153(20)
+               56            0.929            -0.6688(31)            -0.6642(6)                    −1.20.5               0.6               0.7               0.8               0.9                 1
+60             110            0.545            -1.0069(33)            -1.0041(15)                                                  Electron Density ns
+             100            0.600            -0.9929(24)            -0.9911(20)                 FIG. 11.      The  energy  per  site  at  J  =  0.5t  for  an  8 × 8
+               90            0.667            -0.9676(32)            -0.9687(42)             lattice for 32, 42, 50 and 60 electrons.
+               81            0.741            -0.8938(11)            -0.8940(12)
+               72            0.833            -0.7947(31)            -0.7918(18)                We wish to demonstrate the signiﬁcance of shell eﬀects.
+               64            0.938            -0.6623(25)            -0.6605(31)             Let  us  select  from  our  results  of  Table  II  for  J/t  =  0.5
+
+                                                                                             those which correspond to the same size lattice 8 × 8 for
+   Here  again,  we  can  greatly  eliminate  the  shell  eﬀects                             Ne  =  32, 42, 50, 60.  They  are  shown  in  Fig.  11.   Notice
+by  examining  several size  lattices  but  keeping  the  num-                               that even though these data also give the same phase sep-
+ber  of  electrons ﬁxed.  We  ﬁrst ﬁt  each curve  generated                                 aration density within  error bars as that determined by
+for  ﬁxed  Ne  with  a  cubic  spline  where  the  Heisenberg                                our method  described before,  the  shell  eﬀects  are  large.
+point  has  been  excluded  from  the  ﬁt.  Next  we  ﬁnd  the                               Such deviations from a smooth curve could lead to draw-
+point (ne = 1, eH(Ne)) on the graph, where eH(Ne) is the                                     ing the wrong conclusions about phase separation bound-
+energy  per  electron  for  the  Heisenberg  antiferromagnet                                 aries.
+calculated on a ﬁnite-size system with the same number                                          For completeness in Fig. 12 the energy per hole is given
+of electrons Ne  (as  discussed previously).  Next we  con-                                  for  all  the  points  calculated  for  32,  42,  50  and  60  elec-
+struct the tangent to the spline which ﬁts our points.  The                                  trons.   The  curve  attains  a  minimum  at  approximately
+value  of  the  density  at  which  the  line  is  tangent  to  the                          the  same  value  as  that  determined  by  the  tangent  con-
+spline gives us an estimate of the  phase separation den-                                    struction  at  the  cubic  polynomial  ﬁt  of  the  energy  per
+sity for this value of J/t.  These values extracted from the                                 size  for  a  given number  of  electrons.  Notice,  again,  the
+diﬀerent  sets  of  energies  which  correspond  to  the  same                               shell eﬀects.
+number of electrons are given in Table III.  Individually,
+each number of electrons is consistent with a value of nps                                                              D.  Results  near  J Bc  .
+near ne = 0.84 (see Fig. 10).  Clearly the 42 electron data
+doesn’t prove that  there  is a  clear tangent at this  value
+of ne, but the data is consistent with this value.  There-                                      Boninsegni  and  Manousakis15  (BM)  found  a  critical
+fore  we  conclude  that  the  ﬁnite-size  eﬀects  are  small  in                            value J Bc   ≃ 0.27t of J/t below which there is no two-hole
+our method of determining nps and the phase separation                                       d-wave  bound  state.   This  value  of  J Bc   was  determined
+
+
+                                                                                        13
+     −0.8                                                                                       −0.2
+
+                         Ne=32, Ns=36,42,49,56,64                                                                                J/t = 0.3
+                         Ne=42, Ns=49,56,64,72,81
+     −0.9                Ne=50, Ns=56,64,72,90
+                         Ne=60,Ns=64,72,81,90,100,110                                           −0.4
+
+
+       −1                     J/t=0.5
+
+                                                                                                −0.6
+
+     −1.1
+
+
+                                                                                                −0.8                                              Ne=50,Ns=56,64,72,81,90
+     −1.2                                                                                                                                         Ne=52, Ns=56,64,72,81,90
+
+                                                                                                                                                  Ne=60, Ns=64,72,81,90
+
+     −1.3  0                 0.1               0.2               0.3               0.4               0.5−1
+                                                                                                     0.6                    0.7                    0.8                    0.9                      10.6                    0.7                    0.8                    0.9                      1
+                                        Hole Density                                                                           Electron Density ne
+   FIG. 12.     The  energy  per  hole  at  J  =  0.5t  for  32, 42, 50                      FIG.   13.             The    ground-state    energy    per    site    at
+and 60 electrons.                                                                         J    =    0.3t   for   50, 52   and   60   electrons   and   lattices   of
+                                                                                          sizes   Ns    =   56, 64, 72, 81, 90,   Ns    =   56, 64, 72, 81, 90   and
+by  calculating  the  binding  energy  for  two  holes  on  lat-                          Ns = 64, 72, 81, 90 respectively.
+tices  up  to  8 × 8.   BM  noticed  that  because  the  bound
+state  wave  function  decays  exponentially  with  distance                              the tangent construction.
+the  ﬁnite  size eﬀects  were rather small.  They  did, how-                                 There are no published GFMC results for the two-hole
+ever,  pursued  a  ﬁnite-size  analysis  from  which  they  de-                           case  for  J/t  =  0.3.   We  can  obtain  an  estimate  for  the
+termined J Bc  .  Nevertheless their  calculated value of the                             single-hole energy by ﬁtting the calculated values for that
+two hole binding energy at J/t = 0.7 was ∆/t = 0.31(03)                                   as  a  function  of  J/t  to  a  form  E  =  E0 + aJ 2/3.   The
+and  at  J/t = 0.4  ∆/t = 0.12(04).  Thus,  we  choose  the                               two-hole binding  energy for J/t = 0.3 can be  estimated
+J/t  =  0.3  to  examine  the  question  of  phase  separation                            using  the  formula  which  were  used  by  Boninsegni  and
+believing that this value is very close to the critical value                             Manousakis15  to  obtain  the  critical  value  of  J Bc  .   Thus,
+J Bc  .                                                                                   assuming  that  holes  are  bound  in  pairs  and  they  form
+   In Fig. 13 we give the ground state energy as a function                               a dilute  gas of hole-pairs, we  can obtain a value  for  the
+of the electron density for 50,52 and for 60 electrons for                                energy per hole in such a case.  This value of this energy
+J/t = 0.3 as three shifted curves.  Notice that the values                                is  higher  than  the  value  of  the  energy  per  hole  at  the
+of  Jc/t determined  from  the  these  sets  of  data  are  very                          minimum of our curve in Fig. 14.  This is another indica-
+close.  We obtain:  ne = 0.877 ± 0.010.                                                   tion that there is more binding energy gained due to the
+   TABLE IV.  The energy per site for J/t = 0.3 and for var-                              phase separation of the pairs of holes from the electrons
+ious electrons densities and size lattices.                                               in an antiferromagnetically ordered state.
+
+Ne             Ns             ne                  Eextrap/Ns             Elanc/Ns
+50              90            0.556             -0.9494(28)             -0.9469(25)                                 E.  Results  below  J Bc  .
+              81            0.617             -0.9199(37)             -0.9174(23)
+              72            0.694             -0.8469(25)             -0.8482(25)            Here we examine the situation below the critical value
+              64            0.781             -0.7381(42)             -0.7419(48)         J Bc   for two hole d-wave bound state in the 2D t-J model.
+              56            0.893             -0.5510(13)             -0.5523(15)         We shall examine the energy at J/t = 0.2.  First of all the
+52              90            0.578             -0.9407(31)             -0.9372(38)       ground  state  energy  per  site  for  Ne  =  50  and  Ne  =  60
+              81            0.642             -0.9064(41)             -0.9099(48)         and  for  various  size  lattices  is  shown  in  Fig.  15  and  is
+              72            0.722             -0.8110(38)             -0.8095(29)         given in Table V.
+              64            0.812             -0.6881(34)             -0.6852(49)            Notice  again that the  values  of  Jc/t determined  from
+              56            0.929             -0.4806(18)             -0.4777(9)
+60              90            0.667             -0.8814(11)             -0.8815(13)       the two sets of data are very close, we ﬁnd:  nps = 0.909±
+              81            0.741             -0.8010(13)             -0.7976(23)         0.008.
+              72            0.833             -0.6538(34)             -0.6496(13)            Below  J Bc    where  there  is  no  two-hole  d-wave  bound
+              64            0.938             -0.4640(23)             -0.4615(9)          state, (assuming there are no bound states in other chan-
+                                                                                          nels) if there is no phase separation the minimum energy
+                                                                                          per  hole  should  be  the  single-hole  energy  at  zero  hole
+   For J/t = 0.3 in Fig. 14 there is a minimum at nps =                                   density.  At J/t = 0.2 the single-hole energy was also cal-
+0.12 which agrees very well with the value obtained from                                  culated by Boninsegni and Manousakis for an 8 × 8 and
+
+
+                                                                                     14
+     −1.3                                                                                    TABLE V.  The energy per site for J/t = 0.2 and for vari-
+                                                                                          ous electrons densities and size lattices.
+     −1.4              Ne=50, Ns=56,64,72,81                                              Ne             Ns             ne                  Eextrap/Ns             Elanc/Ns
+                      Ne=52,Ns=56,64,72,81,90                                             50              90            0.556            -0.9246(35)             -0.9211(54)
+     −1.5             Ne=60, Ns=64,72,81,90                                                             81            0.617            -0.8905(34)             -0.8822(15)
+                                                                                                        72            0.694            -0.8103(28)             -0.8098(32)
+     −1.6                                                                                               64            0.781            -0.6825(23)             -0.6826(27)
+                                                                                                        56            0.893            -0.4681(18)             -0.4717(23)
+     −1.7                                                                                 60              90            0.667            -0.8426(32)             -0.8414(14)
+                                                                                                        81            0.741            -0.7419(24)             -0.7432(17)
+     −1.8                                                                                               72            0.833            -0.5857(23)             -0.5853(31)
+                                                                                                        64            0.938            -0.3701(17)             -0.3693(7)
+                                                               J/t=0.3
+     −1.9
+                                                                                               −1.4
+       −2  0                 0.1               0.2               0.3               0.4               0.5
+
+                                        Hole Density                                           −1.6            Single Hole Energy (BM)
+   FIG. 14.     The  energy  per  hole  at  J  = 0.3t  for  50, 52  and                                        Ne=60, Ns=64,72,81,90
+60 electrons.                                                                                                  Ne=50,Ns=56,64,72,81,90
+
+                                                                                               −1.8
+     −0.2                                                                    −0.15
+
+     −0.3                              J/t = 0.2                             −0.25
+                                                                                                  −2
+     −0.4           Ne=60                                                    −0.35
+
+     −0.5                                                                    −0.45             −2.2                                               J/t=0.2
+
+
+     −0.6                                                                    −0.55
+
+     −0.7                                                                    −0.65             −2.4  0                 0.1               0.2               0.3               0.4               0.5
+
+                                                                                                                                  hole density
+     −0.8                                                                    −0.75           FIG. 16.     The  energy  per  hole  at  J  =  0.2t  for  50  and  60
+                                                Ne=50                                     electrons.  The single-hole energy as obtained from Boninsegni
+     −0.9                                                                    −0.85        and  Manousakis  is  also  plotted  for  8 × 8  and  10 × 10  size
+
+       −1                                                                    −0.95        lattices.
+         0.55               0.65               0.75               0.85               0.950.55
+                                 Electron Density ne
+   FIG.   15.             The    ground-state    energy    per    site    at              the t-J model.  The  energy per  hole  in this  latter calcu-
+J   =   0.2t  for  50  and  60  electrons  and  lattices  with  sizes                     lation  gives  the  energy  per  hole  in  the  case  of  isolated
+Ns = 56, 64, 72, 81, 90 and Ns = 64, 72, 81, 90 respectively.                             bound  hole  pairs  (dotted  line).    Notice  that  while  the
+                                                                                          dashed  line  and  the  dotted  line  meet  at  J/t  ∼  0.3,  the
+10 × 10  size  lattices.  This  value  of  the  energy  is  shown                         minimum  at  the  phase  separation  density  and  the  dot-
+if  Fig.  16  and  it  is  clearly  higher  than  the  minimum  of                        ted line do not meet.  Notice that the additional energy
+the energy per hole curve which occurs at approximately                                   gained to  to phase separation decreases with decreasing
+hole density of x = 0.09.                                                                 J/t as expected.
+                                                                                             In Fig. 18 we show the phase separation boundary ob-
+                                                                                          tained  for  all  values  of  J/t  using  the  method  described
+     V.  PHASE  DIAGRAM  OF  THE  t-J  MODEL                                              in  the  present  paper  and  the  Maxwell  construction.   In
+                                                                                          Table  VI  we  give  the  phase  separation boundary  as  de-
+   In Fig. 17 we present as a function of J/t the minimum                                 termined  for  various values  of  J/t  from the  various  size
+energy per hole (solid line) (the  minimum of the energy                                  lattices and number of electrons.
+per hole versus density for a given value of J/t).  We also                                  A more complete phase diagram for the 2D t-J model
+plot the single hole energy (obtained by Boninsegni and                                   as  a  function  of  J/t  and  doping  was  given  in  Fig.   3  of
+Manousakis16)  as  a  function  of  J/t  which  is  the  energy                           Ref. 17.  That phase diagram is also accurate in the low
+per  hole  in  the  case  of  isolated  non-interacting  holes  in                        density region where exact calculations can be done.14
+
+the system (dashed line).  In addition, the energy per hole
+is compared with the energy per hole obtained by Bonin-
+segni and Manousakis15 from calculation of two holes in
+
+
+                                                                                     15
+       0.5                                                                                            1
+
+                                  1 hole (BM 92)                                                    0.9
+                                  2 holes (BM 93)
+         0                        Minimum at PS                                                     0.8
+
+                                                                                                    0.7                                   Non−Uniform Phase
+      −0.5
+                                                                                                    0.6
+
+        −1                                                                                          0.5          Uniform  Phase
+
+                                                                                                    0.4
+      −1.5
+                                                                                                    0.3
+
+        −2                                                                                          0.2              HM ’97 and this work
+                                                                                                                     HM ’97
+                                                                                                    0.1
+      −2.5  0       0.1     0.2     0.3     0.4     0.5     0.6     0.7     0.8     0.9       1       0
+                                                J/t                                                     0         0.5         1         1.5         2         2.5         3         3.5         4
+   FIG. 17.      The  energy  per  hole  at  the  density  where  the                                                                         J/t
+phase separation minimum occurs as a function of J/t (solid                                       FIG.  18.      The  phase  separation  boundary  as  calculated
+line).  This is compared to the energy per hole obtained from                                 using the present method and the Maxwell construction.
+the single hole calculation of Boninsegni and Manousakis (’92)
+(dashed line) and to the energy per hole obtained from the 2                                  is that the interesting region of J/t is either next to the
+hole calculation of Boninsegni and Manousakis (’93).                                          phase separation boundary or inside the phase separated
+                                                                                              region.  In both cases phase separation ﬂuctuations could
+             VI.  COMPARISON  WITH  OTHER                                                     play  an  important  role  in  the  mechanism  for  supercon-
+                            CALCULATIONS                                                      ductivity in the copper oxides.
+
+                                                                                                      1
+   In Fig. 19, our phase diagram is compared to the recent
+ﬁxed node Monte Carlo calculations of Callandra, Becca,
+and Sorella (CBS)27  and to the  high temperature series                                            0.9
+expansion  calculations  of  Putikka,  Luchini,  and  Rice.24
+Notice that our phase diagram and that of CBS are very                                              0.8
+close except in the delicate physical region of small J/t.
+Therefore,  we  can  draw  a  relatively  strong  conclusion
+from this comparison:  The ﬁndings drawn from the early                                             0.7
+studies  of  the  t-J  model  that  the  physical  region of  the
+model is safely away from the phase separation boundary                                             0.6
+are not correct.  What our work and the work of CBS ﬁnd                                                              Calandra et al.  ’98
+
+                                                                                                    0.5              HM ’97 and this work
+   TABLE VI.  The phase  separation  boundary as calculated                                                          Putikka et al. ’92
+using the present method.  The last value with n = 0 is derived                                                      HM ’97
+analytically in Ref. 14.                                                                            0.4
+J                                               n                                               σ       0                 0.5                 1                 1.5                 2                 2.5
+                                                                                                                                             J/t
+0.1                                            0.9484                                      0.017  FIG. 19.     Comparison  of  our  phase-separation  boundary
+0.2                                            0.909                                        0.008with that of Putikka et  al.24  and of CBS.27
+0.3                                            0.877                                        0.010
+0.5                                            0.845                                        0.015 There  is  an  important  diﬀerence  between  our  results
+1.0                                            0.730                                        0.016and those of CBS. Our results indicate that phase sepa-
+1.25                                          0.624                                        0.010ration  in  the  t-J  model  is  present  for  all  J/t,  while  the
+1.5                                            0.568                                        0.027conclusion of CBS is that there is a ﬁnite value of J ≃ 0.4t
+2.0                                            0.439                                        0.008below which there is no phase separation.  The reason for
+2.5                                            0.296                                        0.004this disagreement is that this region requires a very high
+3.0                                            0.145                                        0.0016degree  of  accuracy  in  the  numerical  results.   We  would
+3.25                                          0.0662                                      0.0006like to discuss the results of CBS where they claim that
+3.4367                                      0                                               0 at J/t = 0.4  there is  no  phase  separation for  lattices  of
+
+                                                                                              size  Ns  = 98.  In  Fig. 20 we  plot the  results of  CBS for
+
+
+                                                                                         16
+                                                                                 approach is  more  accurate  than  that  obtained  by  other
+     −1.51         Calandra Becca and Sorella, 1998                              methods simply because it gives a lower energy per hole.
+                         J/t = 0.4                                               However,  the  energy  per  hole  calculated  in  this  way  on
+                                                                                 systems with open boundary conditions is not variational
+                                                                                 and,  as  shown  below,  can  artiﬁcially  underestimate  the
+     −1.53                                                                       energy per hole.
+                                                                                    Systems with open boundary conditions can be made
+                    2        2                                                   from fully periodic systems by removing a row of bonds.
+                                                                                 Clearly  this  process  disrupts  the  periodic  ground  state
+                                                                                 and  raises  the  energy.48  Both  the  energy  of  the  system
+     −1.55                                                                       with Nh holes, E(Nh), and the energy of the system with
+                             6                         6                         no holes, E(0), increase with open boundary conditions,
+                       4
+                                   4                                             but generally not by the same amount.  The system with
+                                                                                 holes has more degrees of freedom than the no-hole sys-
+     −1.57  0                  0.05                 0.1                 0.15                 0.2tem,  allowing  it  to  respond  more eﬀectively  to  the  bro-
+                                     Hole Density                                ken  bonds.   For  example,  a  system  with  holes  has  free-
+  FIG. 20.    Quadratic ﬁts of the results obtained  by CBS27                    dom  to  twist  the  antiferromagnetic  order  parameter  at
+for  systems  with  50  sites  (solid  circles)  and  98  site  (open            the boundary required by certain phase separated states.
+squares)  to  a  quadratic  polynomial.   The  result  for  the  low-            An example of such a state is a single “stripe” shown in
+est  value of  x  for  the 98  site  system  was  not  included  in  the         Fig.  21.   In  this  example,  a  striped  or  structured  phase
+original publication by CBS.                                                     separated state is stabilized in the middle of the system.
+                                                                                    Thus,  one  expects  that  the  energy  per  hole  obtained
+                                                                                 with open boundary conditions (using as a reference state
+this  value  of  J/t  for  50  sites  (solid  circles)  and  98  sites           the no  hole energy with open boundary conditions) can
+(open  squares).  The  result for  the  lowest value  of x  for                  be  lower  than  the  exact  energy  per  hole  obtained  with
+the 98 site system was not included in the original pub-                         periodic boundary conditions (using as a reference state
+lication  by  CBS.  CBS  were  kind  enough  to  calculate  it                   the no hole energy with periodic boundary conditions).
+at  our  request  and  to  communicate  it  to  us.   Without                       In  Fig.  22,  we  compare  the  results  of  various  calcu-
+using  that  point,  CBS  concluded  that  the  fact  that  we                   lations  on  similar  size  lattices  for  the  energy  per  hole
+found PS at J/t = 0.4 was a ﬁnite-size eﬀect because the                         for  1,  2,  4  holes  and  at our  phase  separation minimum.
+energy per  site  in their  largest size  system  had no  min-                   The  results  for  one  and  two  holes  are  taken  from  the
+imum.   With  the  most  recently  calculated  point  for  the                   work  of  Boninsegni  and  Manousakis  (BM)16,15.   The  ﬁ-
+98-site, eh(x) has a minimum at xc ≈ 0.072.  This is close                       nite size eﬀects are smaller than the size of the symbols.
+to our value of about xc ≈ 0.1 for J/t = 0.4.                                    In  addition,  the  result  for  2  holes  for  a  50  site  cluster
+   Let  us  now  examine  more  speciﬁcally  the  results  in                    reported  by  CBS27  for  J/t  =  0.4  is  shown  as  an  open
+Fig. 20.  We have labeled by 2, 4, and 6 the points which                        square.    Notice  the  agreement  between  BM  and  CBS
+correspond  to  2,  4,  and  6  holes  in  the  50  and  98  site                (both used periodic boundary conditions).  The value for
+lattices.   Notice  that  the  energy  of  4  holes  is  the  same               the single hole energy obtained by WS is systematically
+within  error bars  in  both  lattices.  The  same is  true  for                 lower than the value for the periodic lattice.  The cylin-
+the 6 hole case.  Thus, the energy for 2,4 and 6 holes seems                     drical boundary conditions used by WS frustrate the no
+to  be  independent  of the  size  of the  lattice within  error                 hole  state,  and,  as  a  result,  the  energy  of  the  no  hole
+bars.   This  can  be  a  either  a)  a  genuine  characteristic                 state obtained by WS is much higher than that used by
+of presence of phase separation where the two, four and                          HM  and  CBS.  WS’s  calculation  gives  a  total  energy  of
+six-hole bubbles in a much larger system do not feel the                         E(0) = −35.66 (in units of t and here J/t = 0.5) for the
+size eﬀects because they are self bound at a characteristic                      no-hole  state  on  the  8 × 8  lattice,  while  for  a  periodic
+size much smaller than the total system or b) a result of                        8 × 8 lattice the energy which we (and CBS) use is much
+shell-eﬀects which we have discussed and are minimized                           lower, E(0) = −37.56.  WS’s total energy for 4 electrons
+in our calculation or c) the calculation of CBS has larger                       in a 8 × 8 lattice is E(4) = −41.028 ± 0.075, while we ﬁnd
+systematic  or  statistical  errors  than  those  reﬂected  by                   E(4)  =  −42.23 ± 0.12  on  a  periodic  lattice.   Thus  WS
+their error bars.                                                                obtain  a  value  for  the  energy  per  hole  eh(4)  =  −1.34,
+   White  and  Scalapino  (WS)  calculated the  energy per                       while our result corresponds to eh(4) = −1.17 ± 0.03.
+hole  on  systems  with  cylindrical  boundary  conditions,                         Qualitatively similar conclusions can be drawn for the
+that  is,  systems  with  open  boundaries  in  one  direction                   case of a single hole.  The results of BM for a single are
+of  the  lattice  and periodic  in  the  other.28,29,47  They  es-               shown by the dashed line in Fig. 22.  Clearly, WS’s single-
+timate  the  energy per  hole,  Eq. (53),  by  comparing the                     hole energies are below those  also.  This  lowering of the
+energy of a system with holes to the energy of the same                          energy can only  be  understood by  the  frustrating  eﬀect
+system  with  no  holes.   In  Ref.  47,  WS  argue  that  their                 of open boundary on the antiferromagnetic state.
+                                                                                    Finally  notice  the  very  small  diﬀerence  between  the
+
+                                                                            17
+                                                                                        −0.5
+                                                                                                    1 hole−BM
+                                                                                                    1 Hole−WS
+                                                                                                    2 holes−BM
+                                                                                                    2 holes−CBS
+                                                                                                    2holes−WS
+                                                                  (a)                    −1         Minimum at PS−HM
+                                                                                                    4 holes−WS
+
+
+
+
+
+
+                                                                                        −1.5
+
+
+
+
+
+
+                                                                                         −2     0.35                   0.45                   0.55                   0.650.4                     0.5                     0.6                     0.7
+                                                                  (b)                                                        J/t
+                                                                                     FIG. 22.      Comparison  of  the  energy  per  hole  eh(Nh)  at
+                                                                                  Nh  =  1,  2,  and  4  holes  and  at  the  phase  separation  min-
+                                                                                  imum.   The  dashed,  dotted,  and  solid  lines  are  polynomial
+                                                                                  ﬁts  to  eh(Nh  =  1)  from  BM,  eh(Nh  =  2)  from  BM,  and  eh
+  FIG.  21.   A  two-dimensional  stripe-type  phase  separated                   at  the phase separation  minimum from  HM. Notice that  be-
+state.  State (b) has a pi-phase shift which accommodates the                     cause of the cylindrical boundary conditions which frustrates
+hole motion along the stripe but frustrates the AF order in the                   the  no-hole  state,  WS  tend  to  get  more  lowering  of  the  en-
+case  of  periodic  boundary  conditions.  In state  (b) this  twist              ergy  when  they  introduce  holes.   For  these  size  lattices  the
+of the order parameter has no magnetic energy cost with open                      ﬁnite-size eﬀects on the 1 and 2 hole calculations are smaller
+boundary conditions along the x direction.  Thus, periodic BC                     than the symbol size.  For comparison we have also placed the
+conditions in this case frustrate either the hole motion along                    result of CBS for 2 holes in a 50 site lattice which is available
+the “stripe”  (state  (a))  or  the antiferromagnetic  state  (state              for J/t = 0.4.  Notice that the CBS and BM results are nearly
+(b)) along the boundary bonds.                                                    identical.
+
+
+energy per hole in the 2 hole case and in the 4 hole case                         trary to many previous studies that there is phase sepa-
+obtained  by  WS  at  J/t  =  0.35.    They  ﬁnd:   eh(2)  =                      ration (PS) at all interaction strengths of the t-J model.
+−1.72  and  energy  per  hole  for  a  stripe  −1.737  at  the                    The  signal  for  phase  separation is  clear  when  one  over-
+optimum doping  of 4  holes per  stripe.  The  diﬀerence  is                      comes the following diﬃculties:
+very small and suggests that the WS striped state is only                            First,  the  Maxwell  construction  is  the  cleanest  and
+a manifestation of frustrated phase separation.                                   strongest signal for  PS  because  it  suﬀers  the  least  from
+                                                                                  ﬁnite-size  eﬀects.  Second  the  shell-eﬀects  can mask  the
+                                                                                  signal because the energy as a function of density of dif-
+                      VII.  CONCLUSIONS                                           ferent  numbers  of  electrons  on  a  ﬁxed  lattice  is  not  a
+                                                                                  smooth curve.  The kinetic energy jumps discontinuously
+                                                                                  as  electrons  are  added  to  successive  shells.   Therefore,
+   We have developed an eﬃcient Greens Function Monte                             we  have  chosen  to  keep  the  electron  number  ﬁxed  at  a
+Carlo  method  for  fermions  on  a  lattice  that  iteratively                   closed  shell  conﬁguration  and  to  change  the  size  of  the
+projects  out  the  ground  state  with  no  approximations.                      lattice.  The number of electrons which form closed shell
+Fermionic minus-sign ﬂuctuations are controlled by using                          conﬁgurations depends  on the  boundary conditions.  To
+all  powers  of  the  projection  operator  up  to  some  maxi-                   generate as many as possible “magic numbers” of closed
+mum and extrapolating to inﬁnite power.  Starting from                            shell  conﬁgurations  we  have  used  four  types  of  bound-
+a good initial state allows us to converge before the sta-                        ary conditions.  Periodic with 0 or π  phase shifts  at the
+tistical  errors  become  too  large.   This  technique  comes                    boundary in each of the  ˆx and  ˆy  directions.
+also with solutions to a number of other technical prob-                             We  ﬁnd  that  for  any  value  of  J/t  the  energy  per  site
+lems such as a) enabling the guided random walk to walk                           e(ne) as a function of electron density ne for ﬁnite size lat-
+through  the  nodes  with  an  O(N 2)  algorithm  using  the                      tices does not remain a concave function at high electron
+idea of a “detour walk” b) using a single walker to com-                          density.  There  is  a  value  of  the  density  nps(J/t)  where
+pute  all  the  desired  powers  of  the  projection  operator                    a  straight line  starting  from the  no-hole  energy per  site
+(H − W )m, where m = 0, 1, ..., pmax, simultaneously.                             is  tangent  to  the  curve  e(ne)  at  ne  =  nps.   While  the
+   This  technique  is  applied  to  the  two-dimensional  t-J                    energy  e(ne  <  nps)  does  not  change  signiﬁcantly  with
+model to investigate its phase diagram.  It is found, con-
+
+                                                                              18
+system  size,  the  energy  of  a  ﬁnite  system  in  the  phase                                    Iij  = cofji(D)/|D|,                             (A1)
+separated  regime  e(ne  >  nps)  changes  with  system  size                  the  ratio  of  the  determinant  of  D  before  and  after  the
+and approaches this tangent line in the inﬁnite size limit.                    change is
+We interpret this as evidence for phase separation at all
+values of J/t.  The fact that the function e(ne) does not
+remain concave in our calculation above nps(J/t) can be                                             q ≡  |D′||D|  =∑    rjIjl.                           (A2)
+explained by the energy cost of forming an interface be-                                                             j
+tween the two phases in our ﬁnite system.                                      The new inverse matrix is given by
+   Our results have been compared to the most works of                                              (            )
+Calandra,  Becca,  and  Sorella,27  and  we  ﬁnd  very  close                                                                ∑
+agreement.   These  comparisons  indicate  that  the  early                              I′ij  = Iij  1 + 1q δlj    − 1q Iil      rkIkj,             (A3)
+conclusions that the critical Jc/t for phase separation is                                                                    k
+far away from the physical value of J/t are largely invalid.                   and  one  can  easily  conﬁrm∑
+This  comparison  also  indicates  that  Jc/t  is  very  small                 one column of the matrix results in a similar update forj D′ijI′jk  =  δik.   Changing
+and may vanish.  We discuss recent comparison by White                         the inverse.
+and Scalapino (WS)47  of our numerical results to theirs.                         The algorithm is straight forward, and has been used
+In that comparison, WS use the variational principle  to                       in many GFMC studies  in the  continuum and in Varia-
+argue  that  their  results  are  more  accurate  because  the                 tional  Monte  Carlo  on  a  lattice.   However,  it  cannot  be
+energy per hole in lower.  However, we demonstrate that                        used  directly  with  GFMC  on  a  lattice  since  the  random
+one should expect the exact energy per hole on periodic                        walk  steps  directly  on  nodes  for  a  signiﬁcant  fraction  of
+lattices  to  be  higher  than  that  obtained  with  the  cylin-              steps.    When the matrix becomes singular, its inverse is
+drical  boundary  conditions  used  by  WS.  Thus  on  such                    undeﬁned, and the algorithm breaks down.
+diﬀerent systems, a lower energy cannot be used as a cri-                         One  way  around  this  problem  is  to  recalculate  the
+terion for the  accuracy of an approach.  In addition,  we                     determinant  and  inverse  after  walking  through  a  node.
+interpret the results of WS as evidence for phase separa-                      However, in a reasonably dense system, a large faction of
+tion and the appearance of stripes in the t-J model as a                       steps will land on nodes, and the running time will scale
+ﬁnite-size eﬀect.                                                              as O(N 3).
+                                                                                  We   developed   a   new   O(N 2)   technique   to   hop
+             VIII.  ACKNOWLEDGEMENTS                                           over    nodes    without    recalculation    of    the    determi-
+                                                                               nant   or   inverse.       The   essence   of   the   method   is
+   We thank F. Becca, N.E. Bonesteel, M. Calandra, Y.C.                        this:     Let   us   suppose   that   the   random   walk   vis-
+Chen, R. Eder, V.J. Emery, S.A. Kivelson, T.K. Lee, P.                         its   a   node;   namely,   the   particles   were   in   a   conﬁg-
+Monthoux, W.O. Putikka, A.W.  Sandvik, C.T. Shih,  S.                          uration   ⃗R   =   (⃗r1↑, ⃗r2↑, ..., ⃗rN/2↑, ⃗r1↓, ⃗r2↓, ..., ⃗rN/2↓)  and
+Sorella, P.B. Stark, and S.R. White  for useful conversa-                      by   moving   a   particle,   say   the   ﬁrst   up-spin   particle
+tions.  This work was supported by the National Research                       from  position  ⃗r1↑   to  ⃗r′1↑   the  determinant  deﬁned  by
+Council and the Oﬃce of Naval Research.  Computational                         Eq.      (26)   is   zero   for   the   new   conﬁguration   ⃗R′    =
+work was performed at the Department of Defense Major                          (⃗r′1↑, ⃗r2↑, ..., ⃗rN/2↑, ⃗r1↓, ⃗r2↓, ..., ⃗rN/2↓).   That  is  a  problem
+Shared Resource Center ASCWP.                                                  for  the  application  of  the  inverse  update.   In  order  to
+                                                                               move  to  the  next  conﬁguration,  say  where  particle  2  is
+                                                                               positioned at ⃗r′2↑  and this corresponds to a new conﬁgu-
+ APPENDIX  A:  INVERSE  UPDATE THROUGH                                         ration  ⃗R′′ = (⃗r′1↑, ⃗r′2↑, ..., ⃗rN/2↑, ⃗r1↓, ⃗r2↓, ..., ⃗rN↓), we need
+                               NODES                                           the inverse matrix I = I(⃗R′) for the conﬁguration  ⃗R′ and
+   To  evaluate  the  determinant  in  the  trial  state,   we                 this  does not exist because the  determinant D( ⃗R′) = 0.
+use  the  usual  “inverse  update”  trick  ﬁrst  applied  to                   The  non-existence  of  the  inverse  is  no  problem  for  the
+condensed  matter  systems  by  Ceperley,  Chester,   and                      physics because all we need for computing the observables
+Kalos.41 We calculate the determinant and inverse of the                       is the determinant, not the inverse; the inverse matrix is
+matrix (26) together at the  start of each run, an opera-                      only a tool which saves us from having to recalculate the
+tion taking O(N 3) steps for a N × N  determinant.  Then                       full determinant at each step.  However, in a reasonably
+with  each  single  particle  move  in  the  random  walk,  we                 dense system, a large faction of steps will land on nodes,
+update the determinant in O(N) steps and the inverse in                        and the running time will scale as O(N 3).  We have been
+O(N 2) steps.                                                                  able  to  use  the  inverse  update  technique  by  making  a
+   Starting with the matrix D and its inverse I, suppose                       “detour”  around  the  node  as  follows.   The  real  motion
+we  change  row  l  of  the  matrix  to  Dlj  →  rj.   Since  the              of  the  random  walk  was  ⃗R  →   ⃗R′  →   ⃗R′′  and  because
+inverse  is  the  transpose  of  the  matrix  of  cofactors  nor-              D( ⃗R′)  =  0  we  cannot  update  the  inverse  to  ﬁnd  I( ⃗R′)
+malized by the determinant,                                                    which  we  need  in  order  to  calculate  D( ⃗R′′).   However,
+                                                                               all  we  need  is  D( ⃗R′′)  and  I( ⃗R′′)  independently  of  how
+
+                                                                           19
+the random walk got there.  Let us consider the conﬁgu-                             For  a  Fermi  liquid  state,  (26)  may  be  expanded  into
+ration  ⃗R′2 = (⃗r1↑, ⃗r′2↑, ..., ⃗rN/2↑, ⃗r1↓, ⃗r2↓, ..., ⃗rN↓), which is       the  product  of  two  Slater  determinants,  and  this  algo-
+obtained  from  ⃗R  by  imagining  that  we  moved  (without                     rithm suﬃces as it stands.  However with a pairing trial
+actually doing it) particle 2 with spin-up to ⃗r′2↑ and let us                   state,  this  decomposition  is  not  possible,  we  must  con-
+assume that D( ⃗R′2) ⁄= 0.  Since  ⃗R′′  can be obtained from                    sider moves of opposite spin electrons causing the deter-
+⃗R′2 by moving particle 1 to ⃗r′1↑, D( ⃗R′′) and I( ⃗R′′) can be                 minant to vanish.
+                                                                                    Suppose  we  ﬁnd  moving  either  the  ﬁrst  up  particle,
+obtained by imagining that the walk went through  ⃗R′2 to                        changing  the  ﬁrst  row  to  D1j  →  rj,  or  the  ﬁrst  down
+get to  ⃗R′′.  Thus, in order to calculate D( ⃗R′′) and I( ⃗R′′)                 particle,  changing  the  ﬁrst  column  to  Di1  →  ci,  results
+we  only need to  calculate D( ⃗R′2) and I( ⃗R′2) which both                     in a zero determinant for matrix (26).
+exist.                                                                              If I11 ⁄= 0 we move the ﬁrst row with the ﬁrst element
+   When the random walk generated by the guiding func-                           shifted by 1/I11, noting
+tion hits a state or series of states where the determinant                                       ⏐⏐⏐⏐⏐⏐⏐⏐⏐r1 +    1                ⏐⏐⏐⏐⏐⏐⏐⏐⏐
+of  the  trial  function  vanishes,  we  generate  a  “detour”                                         D21      D22   · · ·   D2nI11     r2    · · ·    rn
+walk around the region where the matrix is singular, re-                                 |D′| =          ...            ...      ...      ...= |D|.          (A7)
+joining  the  guiding  walk  when  the  determinant  is  non-
+zero again.                                                                                            Dn1      Dn2   · · ·  Dnn
+   To choose the detour walk, we simply delay any move                           We  then  try to  change the  ﬁrst column in  the  standard
+causing the determinant to vanish and place the particle                         manner.  We  have  artiﬁcially  changed the  upper  left  el-
+number  and  its  future  site  at  the  beginning  of  a  list  of              ement  of  the  determinant,  but  since  this  element  will
+moves to make.  For any subsequent move of a particle of                         be  changed  again  before  we  ﬁnish  the  detour  walk,  the
+the same spin, we try to move the ﬁrst particle in the list                      change will not aﬀect the true determinant.
+to that site.  If that move yields a non-zero determinant,                          If I11 = 0, this modiﬁed step is no longer possible, and
+we  accept  it  and  attempt  to  move  the  next  particle  in                  we need to prove that the true determinant,
+the list in the same manner.  We repeat the process until                                               ⏐⏐⏐⏐⏐⏐⏐⏐⏐                 ⏐⏐⏐⏐⏐⏐⏐⏐⏐
+either all moves give zero determinant or the list is empty,                                              x     r2    · · ·    rn
+in which case the true determinant is not zero.                                                           c2   D22   · · ·   D2n
+   Obviously, the  procedure will  not produce a  non-zero                                    |D′′| =      ...       ...      ...      ...= 0,                 (A8)
+determinant  when  the  true  determinant  is  zero.   How-
+ever, it is important to prove that the detour rejoins the                                                cn   Dn2   · · ·  Dnn
+guiding walk at the ﬁrst step with non-zero determinant.                         vanishes.   Here  x  is  the  upper  left  element  after  both
+   We  represent  the  rows  of  the  matrix  (26)  by  D  =                     moves.
+{|r1), |r2), . . . , |rn)} where |⃗ri) represents the row                           We  know  there  exist  coeﬃcients  α2, α3, . . . , αn  such
+
+|⃗ri) = (a(⃗ri↑ − ⃗r1↓), a(⃗ri↑ − ⃗r2↓), ..., a(⃗ri↑ − ⃗rN/2↓))   (A4)           that rj  =∑i≥2 αidij for all j.  Since the inverse is related
+                                                                                 to  the  matrix  of  cofactors  by  (A1),  cof11(D)  =  0,  and
+which is labeled by ⃗ri.  Suppose moving the ﬁrst up par-                        there  are  other  coeﬃcients  β2, β3, . . . , βn  such  that  0  =
+ticle to a new site, changing the ﬁrst row label to r1 → s,                      ∑
+                                                                                    i≥2 βidij  for all j ≥ 2.  If∑i≥2 βici = 0, then |D′′| = 0
+yields a zero determinant.  Then                                                 trivially.  Otherwise let γi = αi + λβi  where
+          |s) = α2|r2) + α3|r3) + · · · + αn|rn)              (A5)                                                    /∑
+                                                                                              λ =   x −∑         αici            βici.                 (A9)
+for some coeﬃcients α2, α3, . . . , αn.  Let the next random                                                 i≥2              i≥2
+walk step move the second particle, changing row r2 → t.
+Simply by checking if the matrix D′ = {|t), |r2), . . . , |rn)}                  Then  x  =∑i≥2 γici  and  rj  =∑i≥2 γidij  for  all  j  ≥  2,
+has zero determinant, we can determine if the true matrix                        so |D′′| = 0.
+D′′  = {|s), |t), |r3), . . . , |rn)} is singular.  If |D′| ⁄= 0, we                Again, this argument can be extended to any number
+accept the move, swap the particles, and try to move the                         of delayed moves.  By combining the two types of moves
+ﬁrst particle again.  If |D′| = 0,                                               described in this section, we are able to keep track of the
+                                                                                 true determinant without recalculating the inverse from
+           |t) = β2|r2) + β3|r3) + · · · + βn|rn)               (A6)             scratch.
+
+for  certain  coeﬃcients  β2, β3, . . . , βn.    Combining  (A5)
+and  (A6)  to  eliminate  r2,  we  see  that  |D′|  =  0  implies                       APPENDIX  B:  O(N)  CALCULATION  OF
+|D′′| = 0.  Thus by simply checking single particle moves,                                              SUPEREXCHANGE
+we  can  verify  that  the  determinant  of  the  matrix  two
+steps away is zero.  The argument is easily generalized to                          For a determinantal function, the kinetic terms in (33)
+any number of delayed moves.                                                     require O(N) steps per particle, so it scales as O(N 2) for
+
+
+                                                                             20
+the  system.   The  superexchange  term  in  the  t-J  model,                 energies.  Speciﬁcally, the  energy of the phase separated
+∑                                                                             state is given by
+   ⟨ij⟩ S+i  S−j  ,  exchanges  two  particles,  changing  both  a
+row and  a  column  of the  determinant  (26).  In  this  sec-
+tion, we show how the amplitude of swapping two parti-                            Eps(n, J) =   1 − n1 − nps Eu(nps, J) + n − nps1 − nps EHJ     (C1)
+cles may be calculated in O(N) steps.
+  Suppose  we  swap the  m’th  up  electron with  the  n’th                   where Eu(n, J) is the energy of the uniform density phase
+down electron.  We will modify both row m and column                          as a function of electron density and interaction strength,
+n  in  the  determinant.    We  write  the  new  elements  as                 EHJ  is  the energy of the  Heisenberg phase, and nps(J)
+Dmj  → rj  and Din  → ci.  Naturally, rn  = cm.  One can                      is the density of the onset of phase separation.
+show  the  ratio  of  the  determinant  before  and  after  the                  Across  the  phase  separation  boundary,  the  energy  is
+swap is                                                                       continuous as is its ﬁrst derivative with respect to density.
+                     (∑            )(∑              )                         Using  this  fact,  we  can  show  that  the  derivative  of  the
+            |D′|             riIim           Injcj    +                       energy in  the  phase  separated regime with  respect to  J
+            |D|  =        i               j                                   is given by
+                                       ∑                                         ∂Eps(n, J)                   ∂Eu(nps, J)
+                     Inmcm − Inm            riIijcj.                   (B1)
+                                        ij                                            ∂J         =   1 − n1 − nps   ∂J          + n − nps1 − nps EH   (C2)
+  Direct  evaluation  of  the  sum  S  = ∑ij riIijcj  takes                   so the ﬁrst derivative of the  energy with respect to J  is
+O(N 2) per pair of neighboring particles.  For this reason,                   continuous  at  the  phase  separation  point,  n  =  nps(J).
+many researchers evaluate  the  superexchange term only                       All terms of the form   ∂nps(J)∂J      are canceled from this ex-
+every N  Monte Carlo steps.38                                                 pression.   Note  that  for  J  >  Jc,  where  Jc  is  the  crit-
+  Our trick is to evaluate S once when a pair of particles                    ical  interaction  strength  for  complete  phase  separation,
+become nearest neighbors, and then to update it in O(N)                       nps(J  ≥ Jc) = 0 and Eu(n = 0, J) = 0.
+steps for any move not disrupting the pair.
+  Suppose  the  l’th  up  electron moves  (l  ⁄= m),  altering
+row l in the determinant (26), so Dlj  → sj.  The inverse
+I  is updated according to (A3) and cl → c′l  takes a new
+value.
+  We can write the new sum S′  in terms of the old sum
+and extra factors as                                                            1 E. Manousakis, Rev. Mod. Phys. 63, 1 (1991).
+                                                                                2 S. White, Phys. Rev. B 48, 10345 (1993).
+  S′ =∑riI′ijc′j                                                                3 K. J. Runge, Phys. Rev. B 45, 12292 (1992).
+          ij                                                                    4 N.  Trivedi  and  D.  M.  Ceperley,  Phys.  Rev.  B  40,  2737
+                (                             ∑           )                       (1989).
+     =∑ri         Iij(1 +  1                       skIkj     c′j     (B2)       5 N.  Trivedi  and  D.  M.  Ceperley,  Phys.  Rev.  B  41,  4552
+          ij                 γl δlj) −  1γl Iil k                                 (1990).
+                 (∑           )(                   )                            6 J. Carlson, Phys. Rev. B 40, 846 (1989).
+                                                                                7 M. Gross, E. S´anchez-Velasco, and E. Siggia, Phys. Rev. B
+     = S +  1γl         riIil      c′l −∑    γjcj                                 39, 2484 (1989).
+                     i                    j                                     8 D. M. Ceperley  and B. J. Alder, Phys. Rev. Lett. 45, 566
+where γj =∑k skIkj  is used in the inverse update.  This                          (1980).
+                                                                                9 D. M. Ceperley and B. J. Alder, Science 231, 555 (1986).
+calculation  requires  only  O(N)  steps,  so  the  local  su-                 10 H.  J.  M.  van  Bemmel  et  al.,  Phys.  Rev.  Lett.  72,  2442
+perexchange  energy  of  the  system  may  be  evaluated  in                      (1994).
+O(N 2) time.                                                                   11 D. F. B. ten Haaf, P. W. Brouwer, P. J. H. Denteneer, and
+
+                                                                                  J. M. J. van Leeuwen, Phys. Rev. B 51, 353 (1995).
+                                                                               12 D. F. B. ten Haaf et  al., Phys. Rev. B 51, 13039 (1995).
+     APPENDIX  C:  ENERGY  AT  THE  PHASE                                      13 C. S. Hellberg and E. J. Mele, Phys. Rev. B 48, 646 (1993).
+                SEPARATION  BOUNDARY                                           14 C. S. Hellberg and E. Manousakis,  Phys. Rev. B 52, 4639
+  In the  phase separated state,  the  t-J model separates                     15 M. Boninsegni and E. Manousakis, Phys. Rev. B 47, 11897(1995).
+into two phases, one with all electrons (no holes) and the                        (1993).
+other with some electrons and some holes.  The transition                      16 M.  Boninsegni  and  E.  Manousakis,  Phys.  Rev.  B  46,  560
+is  continuous:  As  J  is  increased  in  the  phase  separated                  (1992).
+regime,  the  electron  density  in  the  low-electron-density                 17 C.  S.  Hellberg  and  E.  Manousakis,  Phys.  Rev.  Lett.  78,
+phase decreases while the proportion of Heisenberg phase                          4609 (1997).
+increases.   The  energy  in  the  partially  phase  separated                 18 Z. Liu and E. Manousakis, Phys. Rev. B 45, 2425 (1992).
+regime is simply the weighted sum of the two constituent                       19 B. O. Wells et al., Phys. Rev. Lett. 74, 964 (1995).
+
+
+                                                                          21
+20 V.  J.  Emery,  S.  A.  Kivelson,  and  H.  Q.  Lin,  Phys.  Rev.
+   Lett. 64, 475 (1990).
+21 C.  S.  Hellberg  and  E.  Manousakis,  J.  Phys.  Chem.  Solids
+   59, 1818 (1998).
+22 E. Dagotto, Rev. Mod. Phys. 66, 763 (1994).
+23 M. U. Luchini, M. Ogata, W. O. Putikka, and T. M. Rice,
+   Physica C 185-189, 141 (1991).
+24 W. O. Putikka, M. U. Luchini, and T. M. Rice, Phys. Rev.
+   Lett. 68, 538 (1992).
+25 D. Poilblanc, Phys. Rev. B 52, 9201 (1995).
+26 M. Kohno, Phys. Rev. B 55, 1435 (1997).
+27 M.  Calandra,  F.  Becca,  and  S.  Sorella,  Phys.  Rev.  Lett.
+   81, 5185 (1998).
+28 S. R. White and D. J. Scalapino, Phys. Rev. Lett. 80, 1272
+   (1998).
+29 S.  White  and  D.  J.  Scalapino,  Phys.  Rev.  Lett.  81,  3227
+   (1998).
+30 S. Liang, Phys. Rev. Lett. 64, 1597 (1990).
+31 S. Liang, Phys. Rev. B 42, 6555 (1990).
+32 Y. C. Chen and T. K. Lee, Phys. Rev. B 47, 11548 (1993).
+33 Y.  C.  Chen  and  T.  K.  Lee,  in  Proceedings  of  the  Second
+   Beijing International Conference on High Temperature Su-
+   perconductors,  edited  by  Z.  Z.  Gan,  S.  S.  Xie,  and  Z.  X.
+   Zhao (World Scientiﬁc, Singapore, 1993).
+34 X.-P. Li, D. M. Ceperley, and R. M. Martin, Phys. Rev. B
+   44, 10929 (1991).
+35 M. Caﬀarel and D. M. Ceperley, J. Chem. Phys. 97, 8415
+   (1992).
+36 J. W. Negele and H. Orland, Quantum Many-Particle Sys-
+   tems (Addison-Wesley, New York, 1987).
+37 Monte  Carlo  Methods  in  Statistical  Physics,  edited  by  K.
+   Binder (Springer-Verlag, Berlin, 1986).
+38 C. Gros, Ann. Phys. (NY) 189, 53 (1989).
+39 M.  Caﬀarel  and  P.  Claverie,   J.  Chem.  Phys.  88,   1088
+   (1988).
+40 S.  A.  Alexander,  R.  L.  Coldwell,  and  J.  D.  Morgan,  J.
+   Chem. Phys. 97, 8407 (1992).
+41 D.  M.  Ceperley,  G.  V.  Chester,  and  M.  H.  Kalos,  Phys.
+   Rev. B 16, 3081 (1977).
+42 C.  J.  Umrigar,  K.  G.  Wilson,  and  J.  W.  Wilkins,  Phys.
+   Rev. Lett. 60, 1719 (1988).
+43 D.  Toussaint,  in  From  Actions  to  Answers:   Proceedings
+   of  the  1989  Theoretical  Advanced  Study  Institute  in  Ele-
+   mentary  Particle  Physics,  edited  by  T.  DeGrand  and  D.
+   Toussaint (World Scientiﬁc, Singapore, 1989).
+44 B. Efron and R. Tibshirani, Statistical Science 1, 54 (1986).
+45 M.  Ogata,  M.  U.  Luchini,  S.  Sorella,  and  F.  F.  Assaad,
+   Phys. Rev. Lett. 66, 2388 (1991).
+46 M. Caﬀarel, F. X. Gadea, and D. M. Ceperley, Europhysics
+   Letters 16, 249 (1991).
+47 S. White and D. J. Scalapino, cond-mat/9907375.
+48 C.  S.  Hellberg  and  E.  Manousakis,  Phys.  Rev.  Lett.  83,
+   132 (1999).
+
+
+
+
+
+
+
+
+
+
+                                                                               22

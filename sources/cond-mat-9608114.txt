@@ -1,0 +1,1460 @@
+       Variational  state  based  on  the Bethe ansatz  solution  and
+
+a correlated  singlet  liquid  state  in  the one-dimensional t-J  model
+
+
+                                                Kenji Kobayashi
+
+                     Department of Natural Science, Chiba Institute of Technology,
+
+                            2-1-1, Shibazono,  Narashino-shi,  Chiba 275,  Japan
+
+
+                                      Chikaomi Ohe and Kaoru Iguchi
+
+                     Department of Chemistry,  School of Science and Engineering,
+
+                                    Waseda University, Tokyo 169,  Japan
+
+                                               (September 4, 2018)
+
+
+
+                                                    Abstract
+
+
+            The one-dimensionalt-J model is investigated by the variational Monte Carlo
+
+            method.  A  variational  wave  function  based  on  the  Bethe  ansatz  solution  is
+
+            newly  proposed,  where  the  spin-charge  separation  is  realized,  and  a  long-
+
+            range  correlation  factor  of  Jastrow-type  is  included.   In  most  regions  of  the
+
+            phase  diagram,  this  wave  function  provides  an  excellent  description  of  the
+
+            ground-state properties  characterized  as  a Tomonaga-Luttinger  liquid;  Both
+
+            of  the  amplitude  and  exponent  of  correlation  functions  are  correctly  repro-
+
+            duced.  For the spin-gap phase, another trial state of correlated  singlet pairs
+
+            with  a  Jastrow  factor  is  introduced.   This  wave  function  shows  generalized
+
+            Luther-Emery liquid behavior, exhibiting enhanced superconducting correla-
+
+            tions and exponential decay of the spin correlation function.  Using these two
+
+            variational wave functions, the whole phase diagram is determined.  In addi-
+
+            tion,  relations  between  the  correlation  exponent  and  variational  parameters
+
+
+
+                                                           1
+in the trial functions are derived.
+PACS numbers:  71.10.Fd, 71.10.Hf, 71.10.Pm, 74.20.Mn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                        Typeset using REVTEX
+
+                                            2
+                                            I.  INTRODUCTION
+
+
+    The  anomalous properties found in high-Tc  superconducting  copper oxides  [1] have  led
+
+to a renewal  of interest  in strongly correlated electron systems  in low dimensions.  Among
+
+various candidates, thet-J model has attracted considerable attention as a model to describe
+
+the cuprate superconductors. [2,3]
+
+    For  the  one-dimensional  (1D) t-J  model,  much  progress  has  been  achieved  using  ana-
+
+lytical  and  numerical  techniques.  [4]  It  has  been  found  [5–7]  that  the  three  main  regions
+
+can be distinguished  in the phase diagram deﬁned by the electron density and the ratio of
+
+spin  exchange  interaction  to  hopping  amplitude, J/t.   First,  a  Tomonaga-Luttinger  liquid
+
+[8,9]  (TLL)  holds  for  small J/t,  which  is  characterized  by  power-law  decay  of  correlation
+
+functions.  It has been clariﬁed that the separation of spin and charge degrees of freedom is
+
+playing  an essential  role in this  region.  [10] Second,  phase  separation takes  place  for large
+
+J/t, where the system is separated into electron-rich and hole-rich phases.  Third, there is a
+region with a gap in the spin excitation spectrum forJ/t> 2 and at small electron densities.
+
+    On the other hand, in the 2Dt-J  model, although some aspects are obtained so far, [11]
+
+many problems are left unresolved.  Particularly, the crucial question is whether the features
+
+realized  in  1D  system,  like  the  charge-spin  separation  and/or  TLL,  take  place  also  in  2D
+
+system or not. [12] To obtain an uniﬁed and consistent understanding of the 2Dt-J  model,
+
+further progress of research is needed.
+
+    The variational Monte Carlo (VMC) method is one of the most powerful and transparent
+
+approaches  to  investigate  strongly  correlated  electron  systems.  [13]  It  provides  a  deeper
+
+insight because of its explicit  form of the wave function.  It is very important to construct
+
+a better trial function in the framework of the VMC technique.  One way to obtain further
+insight into the wave function in the 2Dt-J model is to extend the wave function realized in
+
+1D system.  For this purpose, examining trial wave functions for 1D system  in detail gives
+
+us  useful  references  in  the  pursuit  of  the  2D t-J  model.   We  shall  study  variational  wave
+
+functions in the 1Dt-J  model, keeping a possibility of extending to the 2D system in mind.
+
+
+                                                          3
+    So far, various kinds of variational functions have been proposed for strongly correlated
+
+electron systems. [14–19] The Gutzwiller wave function [20] has been extensively studied for
+
+its simplicity,  and shown  to be a good trial function for the supersymmetric  (J/t = 2) 1D
+
+t-J  model.  [17]  This  wave  function  was  improved  for other  values  of J/t by  introducing  a
+
+conventional Jastrow-correlation factor, but the expected TLL behavior was not recovered.
+
+[17,19] Recently, Hellberg and Mele have introduced a simple trial wave function of Jastrow-
+
+type. [18] It takes  into account an eﬀect of long-range correlations,  and shows  successfully
+
+the  anomalous  power-law  behavior  in  correlation  functions.   This  wave  function  has  been
+
+extended  to the 2D t-J  model to discuss  the TLL instability.  [21] However,  the properties
+
+of the exact ground-state are not wholly reproduced by this wave function, especially in the
+
+small J/t region. [19]
+    In this paper we introduce another type of variational wave functions.  Two kinds of trial
+
+functions are newly introduced.  First, we consider a variational wave function based on the
+
+Bethe ansatz solution.  In the limit of J/t → 0, the charge and spin degrees of freedom are
+
+completely separated, and the ground-state wave function obtained from the Bethe ansatz
+
+can be written as a product of the two contributions. [10] For ﬁnite values ofJ/t, although
+
+the charge and spin are separated, they interact strongly.  To take into account this eﬀect,
+
+we introduce a Jastrow-type correlation factor into the Bethe ansatz solution for J/t → 0.
+
+It is shown that this wave function has an advantage of providing an excellent  description
+
+of the ground-state properties in most regions of the phase diagram; Both of the magnitude
+
+and exponent of correlation functions are correctly reproduced, and a quantitative discussion
+
+can be made.
+    Next,  we  consider  a trial function for small electron  densities.  For the spin-gap phase,
+
+Chen and Lee have proposed a variational function of a gas of noninteracting bound singlet
+
+pairs. [6] This  wave  function  corresponds  to a Luther-Emery  state [22,8] with  inﬁnite  cor-
+
+relation exponent.  More accurate trial function can be generated by correlating the singlet
+
+pairs  with  a  Jastrow  factor.   This  is  just  our  trial  wave  function  for  the  spin-gap  phase
+
+introduced  in  this  paper.   This  wave  function  shows  generalized  Luther-Emery  liquid  be-
+
+                                                         4
+havior, exhibiting enhanced superconducting correlations and exponential decay of the spin
+
+correlation function.
+
+    Comparing  energies  of  the  trial  function  based  on  the  Bethe  ansatz  solution  and  the
+
+generalized  Luther-Emery  state,  the  entire  phase  diagram  is  determined.   Evaluating  the
+
+correlation exponents by a ﬁnite size scaling analysis, the relations between the correlation
+
+exponent and variational parameters in these trial functions are derived.
+
+    This paper is organized as follows.  In the next section our trial functions are introduced.
+
+Section  III  provides  the  results  of  physical  quantities  by  the  VMC  calculations.   Energies
+
+and  various  correlation  functions  are  compared  with  the  exact  calculations  in  Sec.   III  A.
+
+In Sec.  III B, the correlation exponents are evaluated from the ﬁnite size scaling to discuss
+
+the  long-range behavior  of correlation  functions.  The  phase  diagram  of the  1D t-J  model
+determined by our wave functions is shown in Sec.  III C. Section VI is devoted to a summary
+
+and discussions on related problems.
+
+
+
+                                     II. TRIAL  WAVE  FUNCTION
+
+
+    The t-J  model is deﬁned by the Hamiltonian,
+
+
+                        H = −t  ∑      (ˆc†iσˆcjσ + H.c.) +J ∑(Si · Sj − 14ninj),                                (1)
+                                  ⟨ij⟩σ                         ⟨ij⟩
+
+where ˆc†iσ =c†iσ(1−ni,−σ),c†iσ being the creation operator for an electron with spin projection
+
+σ  at  lattice  site i,  and ni  =  ∑σniσ  =  ∑σc†iσciσ.   Thus  ˆc†iσ  creates  an  electron  only  on  an
+empty site, avoiding double occupancy.  The spin operator associated with sitei is deﬁned as
+Si =  1 ∑
+       2   α,βc†iασα,βciβ, where σ = (σx,σy,σz) is a vector of Pauli matrices.  The summations
+in  Eq.  (1)  are  taken  over  nearest  neighboring  pairs.   This  model  reduces  to  the U  =  ∞
+
+Hubbard model in the limit J/t → 0.
+
+    For highly correlated electron systems, Gutzwiller-Jastrow-type wave functions with two-
+
+body correlation factor are fairly common. [14–19] The Gutzwiller wave function, [20] which
+
+is a prototype of the trial function of this type, is often used as a starting trial function for
+
+
+                                                          5
+its simplicity.  It is deﬁned as
+
+                                 |ψG⟩ =Pd |φF⟩ = ∏
+                                                          i  (1 −ni↑ni↓) |φF⟩,                                            (2)
+whereφF is a simple Fermi sea andPd is the operator projecting out the double occupancy.
+This wave function is essentially a Fermi-liquid state, having a discontinuity in momentum
+
+distribution at k =kF .  Thus, the expected TLL behavior was not recovered. [17] Hellberg
+
+and Mele have introduced a variational state with a long-range correlation: [18]
+
+                                             ∏
+                             |ψHM⟩ =  ∏
+                                         i⁄=jσσ′ [1 − (1 − |dij|ν)niσnjσ′] |ψG⟩,                                      (3)
+
+                                              dij = sin [πrij/Ns],                                                            (4)
+
+where rij  =  |ri −rj|  is  the  distance  between  the i-th  and j-th  sites,  and Ns  the  number
+
+of  sites.    When ν  =  0, ψHM  reduces  to ψG.   It  has  been  shown  that ψHM  exhibits  the
+
+characteristic behavior of TLL. [18] However, the correlation exponent estimated with this
+
+wave function does not coincide with the exact value for small J/t. [19] This disagreement
+
+becomes  apparent  when  the  global  features  of  various  correlation  functions  are  compared
+
+with the exact ones. [19]
+
+    An important feature of the TLL is the separation of spin and charge degrees of freedom
+
+in  the low-energy  excitations.  In  the  limit  of J/t → 0,  Ogata and Shiba  have  shown  that
+
+the  ground-state  wave  function  obtained  from  the  Bethe  ansatz  has  a  simple  form  due  to
+
+the complete decoupling of charge and spin degrees of freedom. [10] It can be written as a
+
+product of a Slater determinant of spinless fermions describing the charge degrees of freedom
+
+and the spin wave  function of the squeezed  Heisenberg  model in which  all empty  sites are
+omitted.  The ground-state wave function in the limit of J/t → 0 is expressed as
+
+                           ψ0(x1,...,xNe) =X(x1,...,xNe)Y (y1,...,yM),                                   (5)
+
+where
+
+                                    X(x1,...,xNe) = det [exp(iqixj)],                                               (6)
+
+                                                           6
+{xj}  are  the  positions  of Ne  electrons,  and  {yj}  are  the  coordinates  of M  up  spins  with
+
+vacant sites omitted. X(x1,...,xNe) is the wave function for noninteracting spinless fermions
+
+with  momenta  {qi},  and Y (y1,...,yM)  is  the  ground-state  wave  function  of  the S  =    12
+
+antiferromagnetic Heisenberg model.
+
+    For ﬁnite values ofJ/t, the charge and spin degrees of freedom are no longer completely
+
+separated, and the charge-spin coupling occurs.  Thus we introduce a Jastrow-type correla-
+
+tion  factor  in  our  trial  wave  function  to  mix  the  charge  and  spin  degrees  of  freedom.  We
+
+shall study the following variational state for the 1D t-J  model:
+
+                                               |ψBA⟩ =FJ |XY ⟩,                                                            (7)
+
+where the amplitude of |X⟩ = ∏Nei c†qi |0⟩ is given by Eq. (6), ensuring the absence of double
+
+occupancy.  The long-range correlation factor of Jastrow-type in Eq. (7) is deﬁned as
+
+                                           ∏
+                               FJ  = ∏
+                                       i⁄=jσσ′ {1 − [1 −η(rij;σσ′)]niσnjσ′},                                         (8)
+and the form of function η is assumed to be
+                                                    
+                                  η(rij;σσ′) =         |dij|ν1 ,      ifσ =σ′
+                                                    |dij|ν2 ,      ifσ ⁄=σ′ ,                                             (9)
+
+where dij  is  given  by  Eq.  (4).   The  Jastrow  factor FJ  modulates  the  Bethe  ansatz  wave
+
+function  by  the  distance  between  all  pairs  of particles.  Positive  value  of ν1  (ν2) induces  a
+
+repulsive correlation between particles with the same spins (opposite spins), while the neg-
+
+ative values provide an attractive correlation.  When ν1 =ν2, FJ  reduces to the correlation
+
+factor studied by Hellberg and Mele.
+
+    The  wave  function  of  the  spin  part  in  Eq.  (7)  is  approximated  as  a  trial  function  of
+
+Jastrow-Marshall-type, [23]
+
+                                  Y (y1,...,yM) = (−1)L{yi} ∏
+                                                                      i<j |sij|νs,                                             (10)
+where sij  =  sin [π(yi −yj)/Ne]  for  a  system  of Ne  electrons  and L {yi}  is  the  number  of
+
+up spins in one sublattice contained in the spin conﬁguration (y1,...,yM).  With this trial
+
+                                                             7
+function Y (y1,...,yM),  we  have  calculated  the  ground-state  energies  of  the  1D  antiferro-
+
+magnetic  Heisenberg  model, HHeis  = J ∑⟨ij⟩ Si · Sj  with Ne  ≤  70  by  the  VMC  technique,
+
+and estimated the energy in the thermodynamic limit from ﬁnite size scaling with a formula
+
+E/Ne =E∞ +C/N 2e .  The minimum energy is realized for νs ≈ 2, and the resultant energy
+
+is E∞ = (−0.4421 ± 0.0001)J, which is quite close to the exact value by the Bethe ansatz,
+
+[24] EBA/Ne  = −(ln 2 −  14)J  = −0.443147...J.  The  diﬀerence  is  only 0.24 %.  Therefore,
+
+Y (y1,...,yM)  well  reproduces  the  true  ground-state  wave  function  of  the  1D  Heisenberg
+
+model.
+
+    As a result, we have three variational parameters in our trial state (7), i.e., ν1, ν2, and
+
+νs.  In  most  regions  of the  phase  diagram,  this  wave  function ψBA  successfully  reproduces
+the exact ground state of the 1D t-J  model as shown in Sec.  III.
+
+    However,  a Luther-Emery liquid behavior, exhibiting a gap in the spin excitation spec-
+
+trum and enhanced superconducting correlations, is found forJ > 2t and at small densities.
+
+[6,7] The  true  ground state  for this  region lies  out of the  variational subspace  spanned  by
+
+ψBA.  To represent the spin-gap phase better, we introduce another trial state as follows.
+
+                                                 ∑     Ne/2∏
+                            |ψRVB⟩ =FJPd
+                                                {injn}   n hrinjn −1[in,jn] |0⟩,                                      (11)
+
+where [i,j] = (c†i↑c†j↓ −c†i↓c†j↑) is a singlet pair in a given conﬁguration {injn}, andPd projects
+
+out the double occupancy.  In Eq. (11),hrij−1 controls a weight for a singlet bond as a function
+
+of  its  length.  The  function η  in  the  Jastrow  factor  is  taken  to  be η(rij;σσ′)  =  |dij|λ,  i.e.,
+
+FJ  is assumed to be spin-independent.  Two variational parameters, λ and h, are contained
+in  the  trial  function ψRVB.   This  is  a  natural  generalization  of  the  wave  function  of  a  gas
+
+of noninteracting bound singlet pairs proposed by Chen and Lee, [6] which corresponds to
+
+a Luther-Emery state with inﬁnite correlation exponent.  Correlating the singlet pairs with
+
+the Jastrow factorFJ,ψRVB can be expected to exhibit generalized Luther-Emery behavior.
+
+It is also a particular form of the resonating valence bond (RVB) state.  In fact, ψRVB  can
+
+be rewritten as
+
+
+
+                                                          8
+                                          [∑         cosk −h                    ]Ne/2
+                      |ψRVB⟩ =FJPd              h2 − 2h cosk + 1c†k↑c†−k↓              |0⟩,                             (12)
+                                             k
+
+which explicitly shows a singlet liquid picture of the RVB state. [2]
+
+
+
+                                  III. SIMULATION  AND  RESULTS
+
+
+    In this section, we present the results of the VMC calculations for various values of J/t
+
+and ne =Ne/Ns with Ne and Ns  being the number of electrons and sites, respectively, and
+
+make comparisons with those of exact calculations and other trial functions.  We consider the
+
+1Dt-J  model with up to 300 sites under the periodic boundary condition withNe/2 = odd.
+    Variational  parameters  in  Eqs.  (7)  and  (11)  are  optimized  using  a  conjugate-gradient
+
+method combined with the ﬁxed sampling in the VMC calculations.  Technical details of the
+
+optimization  procedure  were  described  in  Ref.  [25],  and  some  practical  improvements  are
+
+made  to  achieve  the  convergence  rapid  enough  to  handle  multiparameter  optimization:  a
+
+quasi-Newton algorithm is employed instead of Powell’s optimization algorithm in Ref. [25],
+
+and  the  gradient  is  evaluated  by  the  numerical  diﬀerentiation.   Once  the  fully  optimized
+
+wave function is obtained, we use it in evaluating the physical quantities with another VMC
+
+run in order to examine the properties of the 1D t-J  model in detail.  Calculated quantities
+
+are the total energy per site, the momentum distribution function,
+
+                                                   ∑                       ⟩,                                               (13)
+                                   n(k) =    12Ns                    iσcjσ
+                                                   ijσeik(ri−rj) ⟨c†
+
+and the  equal-time  correlation functions,  where  ⟨· · ·⟩ indicates  the  expectation  value for a
+
+given trial function.  The spin- and charge- correlation functions in Fourier-transformed form
+
+are deﬁned as
+
+                                                   ∑                      ⟩,                                                (14)
+                                    S(k) =   4Ns
+                                                    ij eik(ri−rj) ⟨SziSzj
+
+
+                                            ∑                                     ],                                       (15)
+                             C(k) =   1Ns
+                                             ij eik(ri−rj)[⟨ninj⟩ − ⟨ni⟩⟨nj⟩
+
+                                                           9
+respectively.  The singlet pairing correlation function is deﬁned as
+
+                                                   ∑                       ⟩,                                               (16)
+                                    P (k) =   1Ns                      i∆j
+                                                    ij eik(ri−rj) ⟨∆†
+where ∆i is the annihilation operator of a nearest neighboring electron singlet pair,
+
+                                      ∆i =   1√2(ci↑ci+1↓ −ci↓ci+1↑).                                                  (17)
+
+We  collect  typically  30,000 samples  to take  averages  of  the  energy  for the  optimization  of
+
+variational parameters, and 100,000 – 200,000 samples for the evaluations of the expectation
+
+values of observables.
+
+
+
+                                             A.  Quarter-ﬁlled case
+
+
+    First  we  compare  the  properties  of ψBA  with  those  of ψHM  for  the  quarter-ﬁlled  case:
+ne =   12.  At this electron density,  the spin-gap state is absent.  In addition, when J/t → 0,
+
+the exact  results  of correlation functions  have  been  obtained [10,17,26] for fairly large Ns,
+
+with which we can compare the VMC results.
+
+    The  result  of  the  optimization  of  variational  parameters  in ψBA  is  shown  in  Fig.  1  for
+
+ne  = 1/2 as  a typical  case.  The  data in  the  region J/t ≤ 3.3  are ﬁtted  to polynomials  of
+
+degree m,  where m  =  2  for ν2  and νs,  and m  =  3  for ν1,  respectively.   For J/t  →  0,  the
+
+minimum energy is realized forν1 =ν2 = 0 andνs ≈ 2.  In the case of ﬁniteJ/t, the optimal
+
+variational parameters show the coupling of charge and spin degrees of freedom as expected,
+
+i.e., ν1 ⁄= 0 and/or ν2  ⁄= 0. ν2  and νs  decrease with J/t while the dependence  of ν1  on J/t
+
+is  week  for J/t  ≤  2.   Near J/t  =  2, νs  intersects  the  zero  line,  and ν2  becomes  −1.   For
+larger J/t,  the  attractive  correlation  between  electrons  with  opposite  spins  is  prominent.
+
+For J/t > 3.3,  the variational state separates  into the electron  rich and poor phases.  The
+
+variational parameters abruptly change their behavior at the phase separation boundary as
+
+shown in Fig. 1.  The data in the phase separated region are ﬁtted to other polynomials.
+
+    For other values ofne, the optimal values of variational parameters show similar behav-
+
+iors except  for curvatures.  Notice  that the  trial state  with optimal variational parameters
+
+                                                           10
+is  singlet  although  the  Jastrow  factor FJ  is  spin-dependent;  The  VMC  evaluation  of  the
+
+physical  quantities  shows  that  the  total  spin  is  zero,  and  the  spin  correlation  function  is
+
+isotropic (Sxx(k) =Syy(k) =Szz(k)), as far as the optimized ψBA is employed. [27]
+
+    Next we discuss the variational energies.  It has been shown that the ground-state energy
+
+converges  smoothly  to  the  thermodynamic  limit.  [17,19]  Following  Yokoyama  and  Ogata,
+
+[17,19] we estimate the variational energy per site in the limit Ns → ∞ from the ﬁnite size
+
+scaling.  We calculate the variational energies of 12-, 20-, 36-, 60-, and 100- site systems for
+
+ne = 0.5 using the optimized ψBA and ψHM, and then ﬁt the results to the formula
+
+
+                              E/Ns =E∞ +C1/N 2s  +C2/N 4s  +C3/N 6s.                                        (18)
+
+
+The ﬁtted values of E∞(ψBA) and E∞(ψHM) are listed in Table I for several  values of J/t.
+They are compared to the exact results obtained from the Bethe ansatz forJ/t = 0 [28] and
+
+2, [29] and the extrapolated values of the exact diagonalization of small clusters forJ/t = 1
+
+and 3.  The latter is evaluated from ﬁtting the energies of 4-, 8-, 12-, and 16- site clusters to
+
+Eq. (18). [19]
+
+    Using ψBA,  the  ground-state  energy  per  site  in  the  limit Ns  →  ∞  is  obtained  to  be
+
+E∞  = −2t/π  for J/t → 0,  equivalent  to the exact  energy.  The  reason  for the  coincidence
+
+is that the energy is determined only by the charge degree of freedom in the limit J/t → 0,
+
+whose treatment is rigorous in ψBA.  In fact, the variance ⟨(H −E(ψBA))2⟩ in VMC sweeps
+
+vanishes  at  any ne.   For  all  the  range  of J/t, E∞(ψBA)  is  quite  close  to  the  exact  energy,
+
+as shown in Table I.  Especially in the small J/t region, the advantage of ψBA  over ψHM  is
+
+obvious.   The  diﬀerence  in  energy  between ψHM  and  the  exact  one  is  largest  for J/t  =  0,
+while the error of ψBA gradually increases with J/t except for J/t = 2.
+
+    For J/t  =  2,  both  of E∞(ψBA)  and E∞(ψHM)  are  extremely  close  to  the  exact  energy
+
+obtained  by  the  Bethe  ansatz.  In  this  connection,  Yokoyama  and  Ogata have  shown  that
+
+the  Gutzwiller  function ψG  is  a  good  trial  function  for J/t  =  2  and  all  range  of ne.  [17]
+
+In  fact,  the  analytical  calculation  of  the  energy  using  the  Gutzwiller  wave  function  shows
+
+E∞(ψG) = −0.903092..., [30,17] which is close to the exact one.  Moreover, Kuramoto and
+
+                                                          11
+Yokoyama  [31]  have  found  that ψG  is  the  exact  ground  state  of  the t-J  model  with  long-
+
+range interactions and hoppings satisfyingJij = 2tij ∝r−2ij  .  In the supersymmetric case, the
+
+ground state behaves as almost a free-electron state [19] except for the exclusion of double
+
+occupancy because of the cancellation of hopping and interacting processes,  both of which
+
+have  the same  weight t = J/2.  Therefore,  it is natural to expect  that variational energies
+
+converge  to  the  same  value  if  a  trial  function  can  recover  the  “free-electron”  nature  for
+
+J/t = 2.  The above three variational wave functions have this property correctly although
+
+the long-range behavior of correlation functions is diﬀerent.
+
+    In Fig. 2, (a) the momentum distribution functionn(k), (b) the spin correlation function
+
+S(k), (c) the charge correlation functionC(k), and (d) the singlet pairing correlation function
+
+P (k)  are  shown  for J/t  =  0,  where  open  circles  denote  the  VMC  results  of ψBA,  and  the
+broken  lines  represent  those  of ψHM.   We  evaluate  the  data  for  the  lattice  with  100  sites
+
+at  quarter  ﬁlling.  The  exact  results  obtained  from  the  Bethe  ansatz  solution  for Ns  = 52
+
+are also shown in Fig. 2 with solid lines. [10,17,26] In the TLL, the momentum distribution
+
+function  exhibits  power-law  singularities  at kF  and  3kF  although  the  latter  is  very  weak.
+
+Qualitatively, both of ψBA  and ψHM  reproduce the anomalous power-law behavior inherent
+
+in TLL as shown in Fig. 2 (a).  However, n(k) byψHM departs appreciably from that by the
+
+Bethe  ansatz  while n(k)  by ψBA  almost  coincides  with  the  exact  one.  For  the  correlation
+
+functions,  there  are  also  the  apparent  diﬀerences  between ψHM  and  the  exact  result  while
+
+ψBA is quite close to the exact one, as shown in Figs. 2 (b)–(d).  In particular,C(k) calculated
+
+with ψHM  shows  diﬀerent  behavior:  it  has  a  small  cusp  at  2kF .  On  the  other  hand,  both
+
+of ψBA  and the exact result exhibit linear k-dependence in C(k) reﬂecting the free spinless
+fermions nature.  Thus ψBA recovers the global features of correlation functions correctly in
+
+contrast to ψHM.
+
+    In  Fig.  3,  we  show  the  VMC  results  of  the  momentum  distribution  function  and  the
+
+correlation  functions  for ﬁnite J/t  and ne  =   12.  We  have  plotted  the  results  of ψBA  (open
+
+symbols) andψHM (broken lines) for comparison.  AtJ/t = 1(open diamonds), the diﬀerence
+
+between ψBA andψHM is observed, but it is not so large as in the case ofJ/t = 0 except for
+
+                                                          12
+the peak ofC(2kF ).  ForJ/t = 2(open squares), the two variational functions give almost the
+
+same results, in accordance with the agreement of energies.  AtJ/t = 3(open triangles), it is
+
+remarkable thatP (k) atk = 0 is strongly enhanced due to the increased eﬀective attraction
+
+between neighboring electrons with opposite spins as shown in Fig. 3 (d).  One can also see
+
+the enhancement  of P (k) near k = π  as J/t increases.  The singularity of P (2kF ) becomes
+
+sharp when J/t = 2.
+
+    The  correlation  functions  by ψBA  shown  in  Fig.  3  agree  well  with  the  result  of  the
+
+Quantum  Monte  Carlo  calculation  [32]  or  of  the  exact  diagonalization  in  smaller  lattices.
+
+[17,19,26]
+
+
+
+                                             B.  Correlation  exponent
+
+
+    Let  us  now  examine  the  correlation  exponents  to  discuss  the  long-range  behavior  of
+
+correlation functions.  In the TLL regime, both the charge and spin excitations are gapless
+
+and the correlation functions show power-law decay.  Following the TLL theory, the leading
+
+singularities of the distribution function and correlation functions can be written as follows.
+
+[4,8]
+
+                              n(k) ∼ |k −kF |αsgn(k −kF )    fork ∼kF ,                                       (19)
+
+                              S(k) ∼ |k − 2kF |η−1    fork ∼ 2kF ,                                                    (20)
+
+                             C(k) ∼ |k − 2kF |η−1    fork ∼ 2kF ,                                                    (21)
+
+                             P (k) ∼ |k|µ−1    fork ∼ 0.                                                                    (22)
+
+Logarithmic  corrections  have  been  omitted  in  these  formulae.  As  far  as  the  interaction  is
+
+isotropic in spin space, the critical exponents are described by a dimensionless TLL param-
+
+eter Kρ as follows. [4,8]
+
+                                                  [1, (Kρ − 1)2/(4Kρ)],                                                  (23)
+                                      α = min
+
+                                       η =Kρ + 1,                                                                                 (24)
+
+                                      µ = 1/Kρ + 1.                                                                             (25)
+
+                                                              13
+    The correlation exponentKρ can now be rather easily calculated from our VMC result of
+
+P (k) thann(k),C(k), orS(k) since the singularities of these quantities become much weaker
+
+than  that  of P (k)  in  some  cases.   Following  Assaad  and  W¨urtz,  [32]  we  use  the  following
+
+procedure to obtain the exponent of P (k).  Let us assume a behavior
+
+
+                               ln |P (0) −P (k1)| = −(µ − 1) lnNs +a,                                         (26)
+
+
+where k1  =  2π/Ns,  and µ  and a  are  the  ﬁtting  parameters.   Fitting  the  data  for  various
+
+lattice sizes to Eq. (26), the exponent of P (k) can be evaluated by ﬁnite size scaling.  Once
+
+µ is obtained, Kρ is given by Eq. (25).
+
+    As an example, we plot the ﬁtting result ofP (k) forne =  12 in Fig. 4.  We have calculated
+
+P (k) of 12-, 20-, 36-, 60-, and 100- site systems forne =  12 using the optimizedψBA, and then
+ﬁt the results to Eq. (26).  The linearity of these plots is good.  The correlation exponentKρ
+
+obtained from the slope of these plots and Eq. (25) is tabulated in Table II.  For ψHM, one
+
+can rather analyze the exponent directly.  The relation between the variational parameter in
+
+ψHM  and Kρ  has been derived analytically from the generalized conformal ﬁeld theoretical
+
+argument to be [33]
+
+
+                                               Kρ =      12ν + 1.                                                               (27)
+
+
+Therefore, the optimal value ofν can be used to determineKρ forψHM.  The results forψHM
+
+in Table II are obtained from this equation.  The expected values of the exponents are also
+
+shown in Table II:  forJ/t = 0 and 2,Kρ has been exactly determined from the bosonization
+
+theory [34] or the conformal ﬁeld theory, [35,36] with Kρ = 0.5 and 0.85, respectively,  and
+the exact diagonalization on a 16-site ring has shown [5] thatKρ ≈ 0.62 and 2.2 forJ/t = 1
+
+and 3, respectively.
+
+    The  results  of ψHM  and ψBA  are  consistent  with  the  expected  values;  At J/t  =  3, Kρ
+
+becomes larger than 1 and thus the superconducting correlations correspondingly dominate
+
+the long-range behavior while  for smaller value of J/t, Kρ < 1.  However,  the quantitative
+
+coincidence is not so good forψHM, while the exponents evaluated fromψBA are surprisingly
+
+                                                         14
+close to the expected values.  Therefore, one could conclude that our variational wave func-
+
+tion ψBA  can quantitatively reproduce not only the amplitude of correlation functions, but
+
+also the correlation exponent.  The last column in Table II shows the value of (ν1 +ν2 + 2)−1
+
+evaluated from the optimized variational parameters in ψBA.  It seems that Kρ  agrees with
+
+(ν1 +ν2 + 2)−1.  This point will be discussed in the next subsection.
+
+
+
+                                              C.  Phase  diagram
+
+
+    The phase diagram of the 1Dt-J model obtained byψBA andψRVB is shown in Fig. 5 with
+
+contour lines for several values of Kρ.  As seen in Fig. 5, there are four distinct phases.  For
+
+smallJ/t, the ground state is a repulsive TLL withKρ < 1.  In this region, spin correlations
+dominate  the  long-range  behavior.   Increasing J/t,  these  correlations  are  suppressed,  and
+
+the  ground  state  changes  to  an  attractive  TLL  with Kρ >  1.    It  has  dominant  singlet
+
+pairing correlations.  For largerJ/t, the variational state is phase-separated into the electron-
+
+rich  phase  with  antiferromagnetic  order  and  the  empty  phase.   In  this  region,  the  longest
+
+wavelength charge correlationC(k1 = 2π/Ns) diverges when the system sizeNs is increased.
+
+This behavior is in contrast with the TLL, whereC(k1) remains ﬁnite.  The phase separation
+
+boundary in Fig. 5 is determined by the behavior ofC(k1).  These three phases are described
+
+by ψBA.   The  spin-gap  state  lies  between  the  TLL  and  phase  separated  regions  at  small
+
+densities, whereψRVB is more stable thanψBA.  The optimal values of variational parameters
+
+inψRVB ﬁt to the formulae ash = 1.037−0.151(J/t) andλ = 0.781−0.173(J/t) forne = 0.2
+
+and 2.8 ≤J/t ≤ 3.2, for example.
+
+    The  phase  diagram  determined  by  the  present  method  is  consistent  with  the  result  of
+the  exact  diagonalization  on  a  16-site  ring.  [5]  It  is  correctly  recovered  that Kρ  =  1/2  at
+
+any  electron  density  in  the  limit J/t  →  0.  [34,35]  When  we  compare  the  spin-gap  region
+
+with  the  result  of  the  wave  function  of  noninteracting  singlet  pairs  by  Chen  and  Lee,  [6]
+
+the  correlation  eﬀect  of  the  Jastrow  factor  introduced  in ψRVB  seems  to  play  no  essential
+
+role since these two trial functions give almost the same result;  The correlation eﬀect only
+
+
+                                                         15
+slightly  pushes  the  spin-gap  region  to  larger  values  of ne.   This  is  because  the  balance  of
+
+energy  hardly  changes,  i.e.,  the  magnitude  of  correlation  energy  induced  by  the  Jastrow
+
+factor inψRVB is less than 2%, which is comparable to the energy lowering ofψBA compared
+
+to ψHM.  However,  there is a signiﬁcant diﬀerence in the long-range behavior of correlation
+
+functions.  The wave function by Chen and Lee givesKρ = ∞ whileKρ is ﬁnite for ourψRVB
+
+as seen below.
+
+    Figure 6 shows  the distribution  function  and correlation functions  for 150 sites  and 30
+
+electrons.   The  selected  values  of J/t  are  0,  2.5,  and  3  as  typical  cases  of  the  repulsive
+
+TLL, attractive TLL, and spin-gap state, respectively.  Triangles and squares in Fig. 6 are
+
+evaluated with ψBA while circles with ψRVB.  The spin correlation functions for J/t = 0 and
+
+2.5 exhibit the linear behavior at smallk characteristic of TLL as shown in Fig. 6 (b).  On the
+
+other hand,S(k) forJ/t = 3 is quadratic at smallk and analytic for all wave vectors.  Unlike
+TLLs, a Luther-Emery liquid exhibits exponential decay of the spin correlation function in
+
+real  space,  while  both  charge  and  singlet  pairing  correlations  decay  algebraically.  [8]  The
+
+short-range  behavior  of S(k)  for J/t  =  3  shows  that  the  spin-gap  state  is  characterized
+
+as  a  Luther-Emery  liquid.  The  charge  correlation  function  for J/t = 3  exhibits  a cusp  at
+
+k  =  2kF ,  indicating  the  formation  of  bound  singlet  pairs.   As J/t  decreases,  this  cusp  is
+
+suppressed.  More deﬁnitive characters of the three phases can be seen in the singlet pairing
+
+correlation functions plotted in Fig. 6 (d). P (k) is fully suppressed  when J/t = 0.  As J/t
+
+increases, P (k  = 0) becomes  much  larger,  indicating  the growth  of long-range order.  The
+
+cusp at k = 0 is greatly enhanced for J/t = 3.
+
+    Finally, we plot the exponents of the singlet pairing correlation function for ne = 0.2 as
+a function ofJ/t in Fig. 7, whereµ − 1 is evaluated from ﬁttingP (k) to Eq. (26) for lattice
+
+sizes ranging from Ns = 30 to 150.  In the region 2.8 ≤J/t ≤ 3.2, the variational energy of
+
+ψRVB is lower than that ofψBA.  Correspondingly, squares and circles in Fig. 7 are evaluated
+
+with ψBA  and ψRVB, respectively.  In addition, ν1 +ν2 + 2 for ψBA  and 2λ − 1 for ψRVB  are
+
+shown in Fig. 7 with solid lines, where ν1, ν2, and λ are optimized variational parameters.
+
+It  seems  that  the  ﬁts  of ν1 +ν2 + 2  and  2λ − 1  to  the  exponents  of P (k)  are  good.  The
+
+                                                         16
+exponents  of  the  correlation  functions  in  the  Luther-Emery  liquid  that  decay  with  power
+
+laws can be also described by a single parameter Kρ like TLL, [8] and it holds that
+
+                                                     µ =   1Kρ.                                                                   (28)
+
+Using  Eqs.  (25) and  (28),  one  can  conclude  from Fig. 7 that Kρ  relates  to the  variational
+
+parameters in ψBA and ψRVB as
+
+                                      Kρ =          1ν1 +ν2 + 2        forψBA,                                                 (29)
+
+and
+
+                                           Kρ =   12λ        forψRVB,                                                        (30)
+
+respectively.   The  critical  exponent Kρ  evaluated  from P (k)  for ne  =  0.2  is  tabulated  in
+
+Table  III  together  with  the  predicted  values  by  Eqs.  (29)  and  (30),  and  they  agree  very
+
+well.  For other values ofne,Kρ also agrees with (ν1 +ν2 + 2)−1 or (2λ)−1.  The example for
+
+ne = 0.5 is shown in Table II. Kρ shown in Fig. 5 is evaluated from Eq. (29).
+
+    The relations (29) and (30) are conﬁrmed by the following facts.  (i) In the limitne → 1,
+
+we have ν1  = ν2  = 0 and νs  ≈ 2, i.e., ψBA  = Y  for the Heisenberg  chain since X  becomes
+
+only  a  constant.   This  is  in  accordance  with Kρ  →  1/2  as ne  →  1.  [5]  (ii)  It  is  correctly
+recovered  that Kρ  →  1/2  at  any  electron  density  in  the  limit J/t  →  0,  [34,35]  where  we
+
+have ν1  = ν2  =  0.   (iii)  The  magnitude  of  the  discontinuous  jump  in µ − 1  at J/t  ∼  2.8
+
+is  (ν1 +ν2 + 2) − (2λ − 1)  ≈  1  as  seen  in  Fig.  7.   This  is  consistent  with  the  crossover
+
+from  the  TLL  to  the  Luther-Emery  liquid  behavior  described  by  Eqs.  (29) and  (30).  (iv)
+
+ν1 +ν2 + 2 ≈ 0 on the phase separation boundary in Fig. 5, which leads to Kρ = ∞.  This
+
+corresponds to the divergence of C(k1).
+
+
+
+                                  IV. SUMMARY  AND  DISCUSSION
+
+
+    In this paper, we have carried out the VMC calculation for the 1Dt-J  model.  As a trial
+
+state, we have proposed a new type of variational wave function based on the Bethe ansatz
+
+                                                           17
+solution.  In this wave function, the separation of charge and spin degrees of freedom is real-
+
+ized explicitly, and the long-range correlation factor of Jastrow-type is included.  With this
+
+wave function, it has been shown that the remarkable improvement is achieved especially in
+
+the small J/t region:  the variational energy, momentum distribution function, and various
+
+correlation  functions  exhibit  an  excellent  coincidence  with  exact  ones.   The  evaluation  of
+
+correlation exponents with the ﬁnite size scaling has shown that this variational wave func-
+
+tion  can  correctly  reproduce  not  only  the  global  features  of  correlation  functions  but  also
+
+the long-range behavior with anomalous power-law decay, which is characteristic of TLL.
+
+    In addition, a variational wave function of singlet pairs correlated with a Jastrow factor
+
+has been introduced to describe  the spin-gap phase.  This wave  function correctly  exhibits
+
+enhanced superconducting  correlations and exponential decay of the spin correlation func-
+tion, as expected for the generalized Luther-Emery state.
+
+    Comparing the energies of the trial function based on the Bethe ansatz solution and the
+
+generalized Luther-Emery state, the whole phase diagram has been determined.  The VMC
+
+results show that our wave functions provide a more precise description of the ground-state
+
+properties  for  the  1D t-J  model  in  the  whole  phase  diagram.   Evaluating  the  correlation
+
+exponents by the ﬁnite size scaling analysis, the relations between the exponentKρ and the
+
+variational parameters in the trial functions have been established.
+
+    Let us now compare our trial wave  functions with others.  For strongly correlated elec-
+
+tron systems, the Gutzwiller-Jastrow-type trial state has been extensively  studied, but the
+
+conventional Jastrow factor does not recover the expected TLL behavior if only short-range
+
+correlations  are  included.  [17,19]  A  trial  wave  function  of  this  type  is  essentially  a  Fermi
+liquid state.  The wave  function introduced  by Hellberg and Mele successfully  exhibits  the
+
+power-law singularity of TLL. [18] The long-range nature of the Jastrow factor is essential
+
+for the non-Fermi liquid behavior.  However, the correlation exponent does not coincide with
+
+the exact value.  This disagreement becomes apparent when we compare the global features
+
+of various correlation functions.  The diﬀerence between ψHM and the exact result is largest
+
+forJ/t = 0.  These are in sharp contrast toψBA, with which we can quantitatively reproduce
+
+                                                        18
+both of the amplitude and the exponent of correlation functions.  This is because ψBA  has
+
+the separation of charge and spin degrees of freedom correctly.  The eﬀect of the spin-charge
+
+separation becomes clear especially in the small J/t region.  In fact, when we compare the
+
+phase diagram determined by the present method with that ofψHM, [19] the behavior ofKρ
+
+is much improved in the repulsive TLL region, while it agrees with the result of ψHM in the
+
+attractive TLL phase.
+
+    Finally  we  mention  some  remaining  issues.   The  spin  wave  function Y (y1,...,yM)  in
+
+Eq. (7) has been approximated as a trial function of Jastrow-Marshall-type for its simplicity.
+
+It is known, however, a liquid state is realized in the 1D antiferromagnetic Heisenberg model.
+
+When a RVB-type trial state is used as the spin part in Eq. (7) instead of Jastrow-Marshall-
+
+type,  further  improvement  may  be  expected.   Actually,  Ogata  [37]  has  examined  a  trial
+function  composed  of a spin  trial state  of RVB-type and  spinless  fermions  for J/t = 0.  It
+
+is interesting to correlate this trial function with a Jastrow factor, applying to all range of
+
+J/t.
+
+    An application of present method with some modiﬁcations to magnetic properties such
+
+as  spin  susceptibility  and  magnetization  curve  is  also  interesting  in  order  to  elucidate  the
+
+metal-insulator  transition  in  the  1D t-J  model.   In  fact,  it  was  shown  that  Jastrow  wave
+
+functions  reproduce  charge  and  spin  susceptibilities  and  magnetization  curve  correctly,  in
+
+contrast with the Gutzwiller approximation. [19]
+
+    An important question is whether the properties of strongly correlated electrons realized
+
+in  1D  system  can  be  extended  to  higher  dimensions  because  of  their  close  connection  to
+
+high-Tc superconductors. [12] In 2D system, it is not established even for the metallic regime
+whether the ground state is the Fermi liquid or TLL. In these contexts, an extension of the
+
+present method to 2D systems together with reexamination of the appropriate Hamiltonian
+
+is under consideration.
+
+    Quite recently, we have found that a part of our result for the variational wave function
+
+of correlated singlet pairs has been obtained independently by Chen and Lee. [38]
+
+
+
+                                                        19
+                                        ACKNOWLEDGMENTS
+
+
+    One  of  the  authors  (K.  K.)  is  grateful  to  H.  Yokoyama  for  useful  comments.   A  part
+
+of  the  numerical  calculations  was  performed  using  the  facilities  of  the  Computer  Center,
+
+University of Tokyo.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        20
+                                            REFERENCES
+
+
+ [1] J. G. Bednorz and K. A. M¨uller, Z. Phys. B 64, 189 (1986).
+
+ [2] P. W. Anderson, Science 235, 1196 (1987).
+
+ [3] F. C. Zhang and T. M. Rice, Phys. Rev. B 37, 3759 (1988).
+
+ [4] For a review, see H. Shiba and M. Ogata, Prog. Theor. Phys. Suppl. 108, 265 (1992).
+
+ [5] M. Ogata, M. U. Luchini, S. Sorella, and F. F. Assaad, Phys. Rev. Lett. 66, 2388 (1991).
+
+ [6] Y. C. Chen and T. K. Lee, Phys. Rev. B 47, 11548 (1993).
+
+ [7] C. S. Hellberg and E. J. Mele, Phys. Rev. B 48, 646 (1993).
+
+ [8] J.  S´olyom,  Adv.  Phys.  28,  201  (1979);   V.  J.  Emery,  in  Highly  Conducting  One-
+
+     Dimensional  Solids,  edited  by  J.  T.  Devreese,  R.  P.  Evrard,  and  V.  E.  van  Doren
+
+     (Plenum, New York, 1979), p. 247.
+
+ [9] F. D. M. Haldane, Phys. Rev. Lett. 45, 1358 (1980); J. Phys. C 14, 2585 (1981).
+
+[10] M. Ogata and H. Shiba, Phys. Rev. B 41, 2326 (1990).
+
+[11] For a review, see E. Dagotto, Rev. Mod. Phys. 66, 763 (1994) and references therein.
+
+[12] W. O. Putikka,  R. L. Glenister,  R. R. P. Singh, and H. Tsunetsugu,  Phys.  Rev. Lett.
+
+     73, 170 (1994); Y. C. Chen and T. K. Lee, Z. Phys. B 95, 5 (1994).
+
+[13] For a review, see H. Yokoyama, Y. Kuramoto, and M. Ogata, in Computational Physics
+     as  a  New  Frontier in  Condensed Matter  Research, edited  by  H. Takayama et  al. (The
+
+     Physical Society of Japan, Tokyo, 1995), p. 160.
+
+[14] C. Gros, R. Joynt, and T. M. Rice, Phys. Rev. B 36, 381 (1987); H. Yokoyama and H.
+
+     Shiba, J. Phys. Soc. Jpn. 56, 1490 (1987).
+
+[15] C. Gros, Ann. Phys. 189, 53 (1989).
+
+
+
+                                                      21
+[16] H. Yokoyama and H. Shiba, J. Phys. Soc. Jpn. 59, 3669 (1990).
+
+[17] H. Yokoyama and M. Ogata, Phys. Rev. Lett. 67, 3610 (1991).
+
+[18] C. S. Hellberg and E. J. Mele, Phys. Rev. B 44, 1360 (1991); Int. J. Mod. Phys. B 5,
+
+     1791 (1991); Phys. Rev. Lett. 67, 2080 (1991).
+
+[19] H. Yokoyama and M. Ogata, Phys. Rev. B 53, 5758 (1996).
+
+[20] M. C. Gutzwiller, Phys. Rev. Lett. 10, 159 (1965).
+
+[21] R. Valent´ı and C. Gros, Phys. Rev. Lett. 68, 2402 (1992); C. Gros and R. Valent´ı, Mod.
+
+     Phys. Lett. B 7, 119 (1993); C. Gros and R. Valent´ı, Phys. Rev. B 50, 11313 (1994).
+
+[22] A. Luther and V. J. Emery, Phys. Rev. Lett. 33, 589 (1974).
+
+[23] W. Marshall, Proc. R. Soc. London, Ser. A 232, 48 (1955); R. Jastrow, Phys. Rev. 98,
+
+     1479 (1955). See also, E. Manousakis, Rev. Mod. Phys. 63, 1 (1991).
+
+[24] H. A. Bethe, Z. Phys. 71, 205 (1931).
+
+[25] K. Kobayashi and K. Iguchi, Phys. Rev. B 47, 1775 (1993).
+
+[26] T. Pruschke and H. Shiba, Phys. Rev. B 46, 356 (1992).
+
+[27] As discussed in Ref. [19], a wave function of Jastrow-type generally becomes nonsinglet
+
+     if the Jastrow factor composed of only diagonal elements is spin dependent. Elucidating
+
+     the relation between ψBA and a Jastrow-type wave function with oﬀ-diagonal elements
+
+     is left for future study.
+
+[28] H. Shiba, Phys. Rev. B 6, 930 (1972).
+
+[29] P. -A. Bares and G. Blatter, Phys. Rev. Lett. 64, 2567 (1990); P. -A. Bares, G. Blatter,
+
+     and M. Ogata, Phys. Rev. B 44, 130 (1991).
+
+[30] W.  Metzner  and  D.  Vollhardt,  Phys.  Rev.  B  37,  7382  (1988);  F.  Gebhard  and  D.
+
+     Vollhardt, ibid. 38, 6911 (1988).
+
+
+                                                      22
+[31] Y. Kuramoto and H. Yokoyama, Phys. Rev. Lett. 67, 1338 (1991).
+
+[32] F. F. Assaad and D. W¨urtz, Phys. Rev. B 44, 2681 (1991).
+
+[33] N. Kawakami and P. Horsch, Phys.  Rev. Lett. 68, 3110 (1992); C. S. Hellberg and E.
+
+     J. Mele, ibid. 68, 3111 (1992).
+
+[34] H. J. Schulz, Phys. Rev. Lett. 64, 2831 (1990).
+
+[35] N.  Kawakami  and  S.  -K.  Yang,  Phys.  Lett.  A  148,  359  (1990);  H.  Frahm  and  V.  E.
+
+     Korepin, Phys. Rev. B 42, 10553 (1990).
+
+[36] N. Kawakami and S. -K. Yang, Phys. Rev. Lett. 65, 2309 (1990).
+
+[37] M.  Ogata,  in  Correlation  Eﬀects  in  Low-Dimensional  Electron  Systems,  edited  by  A.
+
+     Okiji and N. Kawakami (Springer-Verlag, Berlin, 1994), p. 121.
+
+[38] Y. C. Chen and T. K. Lee, preprint (cond-mat/9604191).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       23
+                                                       FIGURES
+
+    FIG.  1.       Optimization  result  of  variational  parameters  in ψBA  is  shown  for ne  =    12  and
+
+Ns = 100.  Triangles, squares, and circles represent ν1, ν2, andνs, respectively.  The solid lines are
+
+the least-squares ﬁts of the data.  The transition to a phase-separated state is shown by an arrow
+
+at J/t ≈ 3.3.
+
+
+    FIG. 2.    (a) the momentum distribution functionn(k), (b) the spin correlation functionS(k),
+
+(c) the charge correlation function C(k), and (d) the singlet pairing correlation  function P (k) for
+
+ne  =   12  and J/t  =  0.   Open  circles  and  broken  lines  denote  the  VMC  results  of ψBA  and ψHM,
+
+respectively, forNs = 100.  The exact results [10,17,26] forNs = 52 are also shown with solid lines.
+
+
+    FIG. 3.    (a) the momentum distribution functionn(k), (b) the spin correlation functionS(k),
+
+(c) the charge correlation function C(k), and (d) the singlet pairing correlation  function P (k) for
+
+ne =  12 andNs = 100.  The data are evaluated by the VMC calculations withψBA forJ/t = 1 (open
+
+diamonds),  2 (open  squares),  and  3 (open  triangles).  The broken  lines  denote  the corresponding
+
+results of ψHM.
+
+
+    FIG. 4.    The VMC results of ln |P (0) −P (k1)| at ne = 1/2 are plotted for J/t = 0 (circles), 1
+
+(diamonds), 2 (squares), and 3 (triangles) as a function of lnNs, wherek1 = 2π/Ns.  The data are
+
+evaluated  with ψBA  for Ns = 12,  20,  36, 60,  and 100.  The solid lines  are the least-squares  ﬁts of
+
+the plots.
+
+
+    FIG. 5.     The  phase  diagram  of  the  1D t-J  model  as  determined  by ψBA  and ψRVB.   In  the
+
+spin-gap phase,ψRVB is more stable thanψBA while other phases are described byψBA.  The curves
+
+represent the contours of constant correlation exponent Kρ evaluated from Eq. (29).
+
+
+    FIG. 6.    (a) the momentum distribution functionn(k), (b) the spin correlation functionS(k),
+
+(c) the charge correlation function C(k), and (d) the singlet pairing correlation  function P (k) for
+
+ne  = 0.2  and Ns  = 150.  Selected  values  of J/t  are  0 (triangles),  2.5  (squares),  and  3 (circles)  as
+
+typical cases of the repulsive TLL, attractive TLL, and spin-gap state, respectively.
+
+
+                                                             24
+    FIG. 7.    Exponents of the singlet pairing correlation function forne = 0.2 as a function ofJ/t.
+
+Squares are evaluated with ψBA, while circles with ψRVB, ﬁtting P (k) to Eq. (26) for lattice sizes
+
+ranging fromNs = 30 to 150.  Solid lines represent the value of ν1 +ν2 + 2 for ψBA  and 2λ − 1 for
+
+ψRVB, where ν1, ν2, and λ are the optimized variational parameters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                           25
+                                                                 TABLES
+     TABLE I.   Ground-state energies of the 1Dt-J model in the limitNs → ∞ for the quarter-ﬁlled
+
+case (ne =  12).  The VMC results are obtained from the ﬁnite size scaling Eq. (18) with Ns = 12,
+
+20,  36,  60, and 100.  Exact results obtained from the Bethe ansatz for J  = 0 [28]  and 2, [29] and
+
+extrapolated values of the exact diagonalization of small clusters [19] forJ = 1 and 3 are listed as
+
+a comparison.  The unit of the energy is t.
+
+J             Exact                   VMC E∞(ψHM)          (Error %)             VMC E∞(ψBA)             (Error %)
+
+0             −0.636620           −0.6119   ± 0.0003       (4)                        −0.636620 ± 0                (0)
+
+1             −0.755359           −0.7493   ± 0.0001       (0.8)                     −0.75488   ± 0.00005     (0.06)
+
+2             −0.903649           −0.90315 ± 0.00005     (0.06)                   −0.90318   ± 0.00006     (0.05)
+
+3             −1.081713           −1.0774   ± 0.0001       (0.4)                     −1.0806     ± 0.0001       (0.1)
+
+
+
+     TABLE II.   The correlation exponentKρ forne =  12.  Results forψBA are evaluated from ﬁtting
+
+P (k) to Eq. (26) for lattice sizes ranging fromNs = 12 to 100.  WithψHM,Kρ is directly obtained
+
+from Eq. (27).  The last column is evaluated from the optimized variational parameters in ψBA.
+
+                          Expected
+
+J/t                             value           Kρ(ψHM)       Kρ(ψBA)                   (ν1 +ν2 + 2)−1
+
+ 0                                  0.50 [34,35]                      0.40                      0.51 ± 0.03                            0.50
+
+ 1                                  0.62 [5]                             0.57                      0.62 ± 0.05                            0.65
+
+ 2                                  0.85 [36]                           0.95                      0.85 ± 0.07                            0.95
+
+ 3                                  2.2 [5]                               3.2                        2.2   ± 0.2                              2.4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                      26
+      TABLE III.    The correlation  exponent Kρ  for ne  = 0.2,  obtained  by  ﬁtting P (k)  to  Eq. (26)
+
+for  lattice  sizes  ranging  from Ns  =  30  to  150.   The  last  column  is  evaluated  from  the  optimized
+
+variational parameters in the trial wave functions.
+
+                                                                                                                                                 (ν1 +ν2 + 2)−1
+
+J/t                                 Type of ψ                Kρ                                              or (2λ)−1
+
+ 0.0                                       BA                                          0.51 ± 0.05                                            0.50
+
+ 1.0                                       BA                                          0.57 ± 0.07                                            0.63
+
+ 2.0                                       BA                                          0.97 ± 0.06                                            0.98
+
+ 2.5                                       BA                                          1.7   ± 0.2                                              1.6
+
+ 2.8                                     RVB                                         1.6   ± 0.2                                              1.7
+
+ 3.0                                     RVB                                         1.8   ± 0.2                                              1.9
+
+ 3.2                                     RVB                                         2.3   ± 0.4                                              2.2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                    27

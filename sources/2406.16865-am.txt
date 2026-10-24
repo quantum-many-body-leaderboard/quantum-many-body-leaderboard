@@ -1,0 +1,863 @@
+   This is the accepted manuscript made available via CHORUS. The article has been
+                                   published as:
+
+       Variational Monte Carlo study of the doped math
+xmlns="http://www.w3.org/1998/Math/MathML">mrow>mi
+>t/mi>mtext>−          /mtext>mi>J/mi>/mrow>/math> model on
+                          the honeycomb lattice
+                      Can Cui, Jing-Yu Zhao, and Zheng-Yu Weng
+               Phys. Rev. B 110, 155111 — Published  7 October 2024
+                        DOI: 10.1103/PhysRevB.110.155111
+     Variational Monte Carlo Study of the Doped t-J  Model on Honeycomb Lattice
+
+                                            Can  Cui,  Jing-Yu  Zhao,  and  Zheng-Yu  Weng
+                             Institute  for  Advanced  Study,  Tsinghua  University,  Beijing  100084,  China
+                                                          (Dated:  September 23, 2024)
+                   The ground state of the bipartite t-J model must satisfy a specific sign structure, based on which
+                the single-hole and two-hole ground state Ans¨atze on honeycomb lattice are constructed and studied
+                by a variational Monte Carlo (VMC) method.  The VMC results are in good agreement with the
+                exact diagonalization (ED) calculation.  For the single-hole case, the degenerate ground states are
+                characterized by quantum numbers of a spin-1/2 and an orbital angular momentum Lz = ±2.  The
+                latter is associated with the emergent chiral spin/hole currents mutually surrounding the hole/spin-
+                1/2 as a composite object or “twisted hole”.  A vanishing quasiparticle spectral weight is shown
+                in the large-sample limit.  In the two-hole ground state, the holes form a spin-singlet pairing with
+                d+id  symmetry  in  the  Cooper  channel,  but  are  of  s-wave  symmetry  as  a  tightly  bound  pair  of
+                the  “twisted  holes”.   Such  a  pairing  mechanism  of  dichotomy  can  be  attributed  to  eliminating
+                the local spin currents which has nothing to do with the long-range antiferromagnetic correlation.
+                Superconducting ground state at finite doping is briefly discussed in terms of the tightly bound hole
+                pairs as the building blocks.
+
+
+                    I.    INTRODUCTION                                        (or up-spins due to the bipartite symmetry) exchanged
+                                                                              with the hole.  The former originates from the disordered
+  Since the high-Tc cuprate superconductor was discov-                        Marshall  signs  which  prevent  a  perturbative  treatment
+ered  in  1986  [1],  the  microscopic  mechanism  behind  it                 of the doping problem even for the one-hole case, leading
+remains controversial despite more than three decades of                      to an “orthogonality catastrophe” effect [7,10,11].  As a
+intense  investigation  both  experimentally  and  theoreti-                  generalized Berry-like phase, the latter implies a topolog-
+cally.  Several basic facts related to the high-Tc problem                    ical gauge structure associated with mutual “semionic”
+are as follows:  (1) The ground state is an antiferromag-                     statistics between the spins and holes [8,12].  Here the
+netic (AFM) long-range ordered state at half-filling; (2)                     mutual charge-spin entanglement due to the phase-string
+Hole doping can quickly destroy the AFM order and gives                       sign structure is schematically illustrated in Fig.1.
+rise  to  a  superconducting  (SC)  state;  (3)  The  pairing                    The  ground-state  wave  functions  of  the  doped  t-J
+mechanism responsible for high-Tc  may be purely of an                        model  have  to  generally  satisfy  the  phase-string  sign
+electronic origin, not mediated by vibration of lattices.                     structure  [9]  in  replacing  the  Marshall  sign  upon  dop-
+  The  two-dimensional  t-J  Hamiltonian  has  been  pro-                     ing.  Demonstrating its non-perturbative nature, single-
+posed [2] as a minimal model to describe the physics in                       hole  and  two-hole  ground  states  for  the  square  lattice
+the  cuprate  as  a  doped  Mott  insulator.   At  half-filling,              of the t-J  model have been recently investigated by ex-
+the t-J  model reduces to the Heisenberg model,  whose                        act diagonalization (ED), density matrix renormalization
+ground  state  well  describes  the  AFM  state  [3].   Upon                  group (DMRG) numerical methods together with varia-
+doping, a resonating valence bond (RVB) state [2,4,5]                         tional  Monte  Carlo  (VMC)  study  based  on  variational
+has been proposed as the parent state responsible for the                     Ans¨atze [13–15].  The results have consistently revealed
+pairing of the doped holes, which leads to the SC instabil-                   that  the  single-hole  problem  is  indeed  highly  singular
+ity.  However, how to connect the true AFM state at zero                      on the square lattice, and the previous perturbative ap-
+doping to a possible RVB state with strong pairing of the                     proaches are problematic in producing the correct behav-
+doped charges upon doping has been a great theoretical                        ior. In particular, it is such a singularly frustrated motion
+challenge [5].                                                                of the single hole that leads to a strong local pairing be-
+  For an AFM Heisenberg model on a bipartite lattice,                         tween two doped holes [15], which becomes the building
+the ground state generally satisfies the so-called Marshall                   block  for  an  unconventional  pairing  mechanism  for  the
+sign rule [6], which ensures the wave function to be spin                     t-J  model at finite doping [16].
+singlet at any finite size.  Once the holes are doped into                       To further understand the novel propagations of a few
+such a spin background, it can be generally proved that                       doped holes in an AFM spin background, one may con-
+the Marshall signs will be disordered by the hopping of                       sider  the  t-J  model  on  a  honeycomb  lattice,  in  which
+the holes, leading to the so-called phase strings [7–9]. The                  the  AFM  order  does  not  lead  to  a  folding  of  the  Bril-
+latter  has  two  folds  of  non-perturbative  consequences:                  louin zone in contrast to the square lattice, as each unit
+One is that at each step of hole hopping, the propagator                      cell contains two sites with or without the AFM order.
+will be generally modulated by a singular sign ±, depend-                     The honeycomb lattice is also a bipartite lattice where
+ing on up- or down-spin exchanged with the hole; Second                       the  Heisenberg  Hamiltonian  still  satisfies  the  Marshall
+is that the accumulation of such signs over a closed path                     sign rule [6].  Thus by doping, the same phase-string sign
+of each doped hole amounts to a topological Berry-like                        structure  is  present  in  the  honeycomb  lattice,  whereas
+phase  depending  on  the  parity  of  the  total  down-spins                 the effect of the long-range AFM may be distinct on the
+                                                                                                                                                    2
+
+                                                                             clude in Sec.IV.
+
+
+                                                                                  II.    THE SINGLE-HOLE GROUND STATE
+
+FIG. 1.   Mutual entanglement between the hole and a spin-                                          A.    The t-J model
+1/2 in the single-hole-doped ground state Ansatz  due to the
+phase-string sign structure.  Here the hole is surrounded by                    In  this  paper,  we  shall  study  the  variational  ground
+the transverse spin current of the spin-1/2 and vice versa the               states  of  the  single-hole-doped  and  two-hole-doped  t-J
+latter is surrounded by the hole current, with the hole compos-              model on a honeycomb lattice with open boundary con-
+ite characterized by an emergent quantum number (angular                     dition (OBC) and C6 rotation symmetry.  A 24-site hon-
+momentum)  Lz  = ±2  on  honeycomb  lattice  in  contrast  to                eycomb lattice is illustrated in Fig.2.
+Lz = ±1 on square lattice [14].
+
+
+motion  of  doped  holes.   The  latter  has  been  argued  in
+some analytical and numerical approaches investigating
+the doped t-J  model or Hubbard model on honeycomb
+lattice recently [17–26].
+  In this paper, we construct the single-hole and two-hole
+ansatz states on the honeycomb lattice with properly in-
+corporating the phase-string sign structure. Then we use
+the  VMC  method  to  explore  the  ground  state  proper-
+ties  in  comparison  with  ED  results  on  a  small  system
+as  the  benchmark.   We  shall  identify  the  novel  quan-                 FIG. 2.   A 24-site honeycomb lattice with a1,a2,a3 denoting
+tum  numbers  for  the  single-hole  and  two-hole  ground                   the bond vectors and G1,G2  two Bravais vectors.  Here the
+states, which are fundamentally different from the con-                      lattice constant is set as a0 = 1.
+struction based on the conventional Landau quasiparti-
+cles and their BCS-like Cooper pairing.  For the former,                        The Hamiltonian of the t-J  model is given by Ht-J  =
+the two-component structures have been revealed in both                      P(Ht+HJ)P, where hopping term Ht and superexchange
+the single-hole and two-hole ground states.  Here,  even                     term HJ  are given by:
+though the quasiparticle weight for the single hole and a
+d + id pairing symmetry for the two holes can be iden-                                         Ht = −t X        (c†
+tified, the dominant components are characterized by ei-                                                           iσcjσ + H.c.) ,               (1)
+                                                                                                          ⟨ij⟩,σ
+ther vortex or the vortex-antivortex pair of spin currents
+surrounding  the  hole(s).   The  latter  as  the  transverse                                HJ = J X         Si · Sj − 1           .               (2)
+phase-string effect cannot be deduced perturbatively.  In                                              ⟨ij⟩               4ninj
+particular, they lead to vanishing quasiparticle weight for
+the single hole in the large-sample limit and a strong lo-                   Here  P  is  the  projection  operator  imposing  the  no-
+cal s-wave pairing for the two-hole composites insensitive                   double-occupancy  constraint:  Pσ c†iσciσ  ≤  1  on  each
+to the long-range AFM order.                                                 site,  which  leads  to  the  strong  correlation  of  the  elec-
+  The rest of this paper is organized as follows:  In Sec.                   trons.   Throughout  this  paper,  we  choose  the  superex-
+II, we introduce the  t-J model and put forward a single-                    change term J = 1 as the unit, and fix the hopping term
+hole  wave  function  Ansatz.   Based  on  the  VMC  study                   as t/J = 3.
+of  the  quantum  numbers  and  ground-state  energy,  the                      Similar to the square lattice case, the hopping of the
+spin-hole  mutual  entanglement  pattern  (cf.   Fig.1)  is                  doped holes on the bipartite honeycomb lattice will dis-
+further  revealed  in  terms  of  the  hole  and  spin  current              order the Marshall signs hidden in the ground state of
+patterns.  The quasiparticle spectral weight is calculated                   the half-filling to create the so-called phase string effect.
+which shows a non-Fermi-liquid behaviour in the large-                       By comparison, we shall also study the so-called σ · t-J
+sample size limit.  By contrast, a Landau-quasiparticle-                     model, which is similar to the above t-J  model but with
+like behavior is recovered for the single hole in the σ · t-J                the hopping term Ht changed to:
+model where the phase-string sign structure is precisely
+turned off.  In Sec.III, we put forward a two-hole wave                                       Hσ·t = −t X        σc†iσcjσ + H.c.,               (3)
+function Ansatz.  We will show the pairing symmetry in                                                     ⟨ij⟩,σ
+the Cooper channel is a d + id wave, which emerges from
+the s wave pairing symmetry of “twisted quasiparticles”.                     where an additional spin-dependent sign σ  = ±1 is in-
+The binding energy and pairing size of the hole pair are                     serted.   It  can  be  straightforwardly  shown  that  in  the
+also calculated.  Finally, we discuss the results and con-                   single-hole doped σ · t-J  model, the off-diagonal matrix
+                                                                                                                                                      3
+
+elements  for  both  Hσ·t  and  HJ  can  be  made  negative                   exchange of the doped hole at site i with a ↓ spin at the
+semidefinite in the hole and spin Ising basis (e.g., defined                  nearest-neighbor site j occurs due to θi(j) − θj(i) = ±π,
+with Sz  as the quantization axis) if the Marshall signs                      which precisely compensates the sequence of signs that
+are  explicitly  incorporated.   It  means  that  the  ground                 the hopping of the hole must pick up in the t-J  model,
+state must satisfy the Marshall sign without significant                      i.e., the phase-string effect (+1)×(−1)×(+1)... depend-
+frustration introduced by hole doping.  This is in sharp                      ing  on  the  spins  exchanged  with  the  hole.   Of  course,
+contrast to the t-J  model where the hopping term will                        the  other  sites  in  the  summation  of  Eq.   (6)  will  not
+explicitly violate the Marshall sign rule to result in the                    be completely compensated and contribute to both the
+phase-string sign structure.  A comparative study of the                      hopping  and  superexchange  terms  by  some  topological
+two models can further reveal the nature of strong cor-                       link variables known as the mutual Chern-Simons gauge
+relation in the t-J  model.                                                   fields which are much more smoothed and perturbatively
+                                                                              treatable [16]. Indeed, as a unitary transformation,     e∓iˆΩi
+B.    Wave function Ansatz  of the single-hole ground                         here should not change the physical consequence of the
+                                 state                                        phase string as a generalized Berry phase for each closed
+                                                                              loop,  which  is  to  be  captured  precisely  by  the  mutual
+                                                                              Chern-Simons gauge fields after the unitary transforma-
+  In the following, we shall study a single-hole wave func-                   tion. However, it significantly regulates the hopping term
+tion Ansatz:                                                                  by replacing the singular ± signs with the weakly fluctu-
+             |Ψm⟩1h = X        φ(m)                                           ating mutual Chern-Simons link variables [16].
+                                 h   (i)ci↑e−imˆΩi|ϕ0⟩,            (4)           In  the  present  VMC  approach,  the  single-hole  wave
+                            i                                                 function φ(m)
+                                                                                            h   (i) as a smooth functional after the “dual-
+in  which  a  “spin-up”  electron  is  moved  from  the  half-                ity transformation” in Eq. (4) can be decided variation-
+filling spin background |ϕ0⟩.  Here Eq. (4) is of the same                    ally.  The ground state energy and the quantum number
+form as that previously proposed for the square lattice                       obtained  by  VMC  and  ED  calculations  for  the  24-site
+case [14], with     |ϕ0⟩ representing the ground state at half                system (cf.  Fig.2) are listed in TableIfor comparison.
+filling, i.e. that of the Heisenberg Hamiltonian in Eq. (2).
+Such |ϕ0⟩ is well simulated by using the Liang-Doucot-                        TABLE I. The single-hole ground state energies and quantum
+Anderson-type variational wave function [3] on the hon-                       numbers in the 24-site system are calculated by VMC and ED
+eycomb lattice (cf.  AppendixA). Then, the single-hole                        methods.  Etot denotes the total energy, while Et and EJ  are
+variational wave function φ(m)h   (i) in Eq. (4) can be fur-                  the  kinetic  and  superexchange  energies,  respectively.   Lz  is
+ther determined by VMC.                                                       the angular momentum defined by  ˆR(θ)|Ψ⟩ = eiLzθ|Ψ⟩, where
+  If one takes m = 0 in Eq. (4), the ansatz state reduces                      ˆR(θ) is the generator of rotation in the C6 group.
+to a Bloch-wave-like state for the doped hole:                                                     Etot                Et                 EJ               Lz
+                   |Ψ0⟩1h = X       φBh (i)ci↑|ϕ0⟩,                   (5)       |Ψ0⟩1h            -20.189           -2.224           -17.965            0
+                                                                               |Ψ±1⟩1h           -22.934           -5.588           -17.346         ±2
+                                 i                                             |˜Ψ±1⟩1h           -24.241           -7.032           -17.209         ±2
+with φBh (i) ∝ eik·ri for a translationally invariant system,                     ED              -24.782           -7.553           -17.224         ±2
+where k is the wave vector of the Bloch electron (hole).
+This wave function in Eq. (5) will satisfy the Marshall                          The ED result of TableIshows that the ground states
+sign structure of σ · t-J  model as obeyed by |ϕ0⟩,  such                     of  this  model  are  double  degenerate  with  Lz  = ±2  for
+that it may serve as a variational wave function for the                      each given Sz = ±1/2. The VMC shows that |Ψ±1⟩1h can
+σ·t-J model in Eq. (3) (with a trivial    k = 0 in the ground                 capture this quantum number precisely:  Lz  = +2/ − 2
+state).                                                                       corresponds to the choice of m = +1/ − 1, respectively.
+  At m = ±1, Eq. (4) will differ from the usual Bloch-                        By contrast, the Bloch-wave-like state |Ψ0⟩1h gives rise to
+wave-like  quasiparticle  state  by  the  many-body  phase                    a wrong Lz  = 0 without incorporating the phase string
+shift  ˆΩi, which is given by [16,27]                                         sign structure.
+                         ˆΩi = X     θi(l)nl↓,                         (6)       With e±iˆΩi,  the variational ground-state energy  Etot
+                                                                              of |Ψ±1⟩1h  can  be  improved  significantly  compared  to
+                                l(̸=i)                                        the Bloch-wave-like state |Ψ0⟩1h.  To be self-consistent,
+where nl↓ = c†                                                                one may further incorporate a “longitudinal spin polaron
+                 l↓cl↓ measures the number of the spin-down                   effect” to the spin background: |ϕ0⟩ → ˆΠi|ϕ0⟩ as
+electron at site l and θi(l) = Im ln(zi − zl) is the statis-
+tical angle expanded between a straight line connecting                                   |˜Ψm⟩1h = Xφ(m)
+site i and l, and the horizontal axis (with zi = xi + iyi                                                     h   (i)ci↑e−imˆΩi ˆΠi|ϕ0⟩,          (7)
+                                                                                                         i
+denoting the complex coordinate of site i).  Here such a
+many-body phase shift operator as induced by the doped                        in  which  the  detailed  operator  Πi  is  presented  in  Ap-
+hole can contribute to a sign change each time when an                        pendixD. Consequently the variational energy of          |˜Ψ±1⟩1h
+                                                                                                                                                       4
+
+can be further improved within 2.18% as compared to the
+exact ED result with the quantum number Lz = ±2 un-
+changed [see TableI].
+
+
+
+
+      C.    Hidden spin current related to Lz = ±2
+
+  As shown in TableI, the single-hole ground state with
+a total Sz = −1/2 is degenerate with nontrivial angular
+momentum  Lz  = ±2.   In  the  following,  we  shall  iden-
+tify a spin current surrounding the hole and  vice  versa
+a hole current around the spin Sz = −1/2, as schemat-
+ically illustrated in Fig.1, which leads to the nontrivial
+Lz.  In particular, the chirality of the spin/hole current
+is  associated  with  the  sign  of  m  = ±1  in  Eq.  (4)  and
+Eq. (7).
+  In general, the hole and spin currents can be deduced
+from the continuity equations:
+                                                                               FIG. 3. (a) and (b): ED and VMC calculations of ⟨Phl Jsij⟩, re-
+                                                                               spectively; (c) and (d): ED and VMC calculations of ⟨Psl Jhij⟩,
+              Jhij = itX       c†iσcjσ − c†jσciσ    ,                   (8)    respectively.  Here the ground states with Lz = −2 are exam-
+                          σ                                                    ined,  and the thickness of the bonds represents the relative
+              Jsij = J                          ,                       (9)   magnitudes of the spin and hole currents in (a)-(d).
+                      2 i S+i  S−j  − S−i  S+j
+                            X
+              Jbij = −i t2      σ    c†iσcjσ − c†jσciσ    ,          (10)      TABLE II. The single-hole quantum numbers, and the chiral-
+                             σ                                                 ities of the hole current Jh  and the neutral spin current Js,
+                                                                               which  are  associated  with  the  phase-shift  operators ±ˆΩi  in
+where Jh  is the hole current, and the spin current con-                       the single-hole variational wave function.
+tains two parts: Js is the neutral spin current originating                    phase factor          eiˆΩi           e−iˆΩi            eiˆΩi            e−iˆΩi
+from  spin  exchange  interaction  and  Jb  is  the  backflow                        Sz                   1/2            1/2          −1/2         −1/2
+spin current caused by the motion of the hole.                                       Lz                   +2           −2            −2              +2
+  Here  we  use  the  variational  wave  function  |˜Ψ−1⟩1h                          Jh           ↷        ↶         ↶         ↷
+[Eq.  (7)]  to  examine  the  spin  and  hole  currents.    To                       Js           ↷        ↶         ↷         ↶
+demonstrate  the  entanglement  between  spin  and  hole,
+we  calculate  the  spin  current/hole  current  surrounding
+the hole/spin ↓ projected at a given site.   The correla-                              D.    Quasiparticle spectral weight Zk and
+tors ⟨Phl Jsij⟩ and ⟨Psl Jhij⟩ calculated by ED and VMC are                                      non-Fermi-liquid behavior
+presented  in  Fig.3for  comparison,  where        Phl  ≡  nhl   =
+1−Pσ c†lσclσ and Psl  ≡ nl↓ project the hole and a ↓ spin                         In the following, we examine the quasiparticle spectral
+at site l, respectively.                                                       weight function of the single-hole ground state by ED and
+  Figure3shows both ED and VMC results that clearly                            VMC. Note that for the honeycomb lattice, there are two
+illustrate the mutual entanglement pattern between the                         sites  per  unit  cell.   A  free-electron  tight-binding  model
+hole and the ↓ spin (cf. Fig.1), which originates from the                     based on Eq. (1) (without the no-double-occupancy pro-
+many-body phase shift operator e−imˆΩi in the variational                      jection) is given as follows
+wave function.  Here the transverse spin current pattern                                      c†                    0      −tf(k)          cAkσ
+around  the  hole  is  not  present  in  the  Bloch-like  wave                 H0 ≡ X          Akσ  c†Bkσ         −tf∗(k)       0             cBkσ
+function,  which  reveals  a  non-Fermi  liquid  behavior  in                          kσ                                                αkσ
+the one-hole limit. The chirality of the spin/hole currents                                   α†            t|f(k)|        0
+will change sign when a variational state |Ψ+1⟩1h is used                           = X         kσ  β†kσ           0     −t|f(k)|           βkσ     ,
+with  Lz  =  +2.   If  we  further  consider  the  spin  degree                        kσ
+of  freedom  associated  with  spin-1/2  introduced  by  the                                                                                       (11)
+doped hole, the vortex patterns of the hole current and                        where f(k) =        3P
+neutral spin current for the four degenerate states in the                                       j=1 eik·aj, cAkσ and cBkσ denotes the elec-
+OBC system with C6 symmetry are listed in Table.II.                            tron operators on sublattice A and B, and aj are defined
+                                                                                                                                                     5
+
+in Fig.2.  Then the quasiparticle spectral weight is de-
+fined by:
+                            D    α†  ΨGE    2 ,                 (12)
+                  Zk1 ≡       ϕ0    k↑
+                            D    β†  ΨGE1h
+                                                  2 ,                 (13)
+                  Zk2 ≡       ϕ0    k↑
+                                              1h
+where Zk1  and Zk2  denote  two  bands  described  by  αk
+and βk respectively.
+  The  calculated  Zk1  along  kx  direction  in  the  24-site
+honeycomb system [cf. Fig.2] is shown in Fig.4in which
+the  ED  and  VMC  (using |˜Ψ−1⟩1h)  are  in  good  agree-
+ment (Zk2 is the same and not shown in the figure).  The
+spectral weight Zk1 shows two independent peaks located
+at the vertices of the magnetic Brillouin zone boundary,
+which coincides with the peaks of the momentum distri-                        FIG. 5.   The hole momentum distribution function, nhk, based
+bution of the doped hole defined by                                           on the ansatz state |Ψ−1⟩1h on the 96-site honeycomb lattice,
+                                                                              which peaks at the K and K′ points with a broad distribution
+               nhk ≡ 2 − X(α†kσαkσ + β†kσβkσ),            (14)                in the whole Brillouin zone.
+
+                            σ
+which is presented in Fig.5for the VMC calculation in                         scaling analysis of Fig.6(a) shows an exponential decay
+the 96-site honeycomb lattice based on |Ψ−1⟩1h.                               behaviour:
+
+                                                                                                   ZK0 ≃ 0.238 e−L/5.119,                    (15)
+
+                                                                              which  reveals  that  the  doped  hole  behaves  as  a  non-
+                                                                              Landau quasiparticle.  By contrast, for the σ · t-J model,
+                                                                              Zk1  is peaked at a unique Γ = (0, 0) denoted by ZΓ  in
+                                                                              Fig.6(b).  As calculated by VMC, its variational state in
+                                                                              Eq. (5) is non-degenerate with     Lz  = +3 in consistency
+                                                                              with the ED calculation, where ZΓ converges to a finite
+                                                                              value in the large system size limit (cf.  Fig.6(b)).  With
+                                                                              “turning off” the phase string effect in the σ · t-J model,
+                                                                              a  finite  ZΓ  suggests  the  Bloch-wave-like  component  of
+                                                                              the wave function remains robust in the thermodynamic
+                                                                              limit.
+
+
+                                                                                    III.    THE TWO-HOLE GROUND STATE
+
+FIG. 4.   Zk1 calculated by VMC and ED along kx direction                      A.    Wave function Ansatz  and basic properties of
+in the 24-site system.   The dashed lines mark the Brillouin                                    the two-hole ground state
+zone boundary.
+                                                                                 Based on the single-hole wave function Ansatz given in
+  The momentum distribution in Fig.5indicates a two-                          Eq. (4), a two-hole wave function    Ansatz may be straight-
+component structure in the ground-state wave function:                        forwardly constructed:
+besides the coherent Bloch-wave-like component with six
+peaks proportional to Zk, there is an incoherent compo-                            |Ψm⟩2h = X        gm(i, j)ci↑cj↓e+im(ˆΩi−ˆΩj)|ϕ0⟩,       (16)
+nent corresponding to a broad distribution in nhk, which                                          ij
+can be attributed to the momentum transfer to the trans-
+verse  spin  current  pattern  surrounding  the  doped  hole                  where the pairing wave function gm(i, j) is to be deter-
+(cf.  Fig.3).  To show the importance of the incoherent                       mined by VMC.
+component,  the  coherent  component  as  represented  by                        It  can  be  checked  that  the  time  reversal  operator  ˆT
+the quasiparticle spectral weight Zk1 as a function of the                    will change one type of the ansatz state to the other, i.e.
+sample size is shown in Fig.6for both the         t-J model and               ˆT|Ψm⟩2h = eiθT |Ψ−m⟩2h, where θT  is an arbitrary phase
+σ · t-J  models,  respectively.   In  Fig.6(a),         ZK0  denotes          factor.   Under  the  spin-flip  transformation  ˆF,  the  two
+the peak value for the t-J model at K0 = ( 4√3π                               wave functions remain unchanged with an arbitrary U(1)
+                                                         9   , 0).  The
+                                                                                                                                                       6
+
+                                                                                  Note  that  null  spin  current  is  present  in  the  ground
+                                                                               state  on  account  of  the  spin-flip  symmetry  mentioned
+                                                                               above.  But one may find an emergent neutral spin cur-
+                                                                               rent pattern ⟨Jsij⟩ with two holes projected at some fixed
+                                                                               sites  as  shown  in  Fig.7.    In  the  single-hole  case,  we
+                                                                               have already seen that the hole is always surrounded by
+                                                                               the spin currents, originated from the many-body phase
+                                                                               shift e±iˆΩi  (cf.  Fig.3).  The two-hole wave function in
+                                                                               Eq. (16) indicates that the spin currents surrounding the
+                                                                               two doped holes are opposite in chiralities as shown in
+                                                                               Figs.7(a)-(c), which illustrates that as the two holes ap-
+                                                                               proach closer, the vortex and antivortex pair of the spin
+                                                                               currents  will  come  to  shrink  with  diminishing  net  spin
+                                                                               currents.  Namely the pairing force for the two holes to
+                                                                               form a tightly bound pair can be identified as the ten-
+                                                                               dency to eliminate the spin currents associated with the
+                                                                               hopping-induced phase string effect in the wave function.
+                                                                               By contrast, the pairing is negligible in |Ψ0⟩2h with the
+                                                                               absence of e±iˆΩi  in the latter.
+                                                                                  With  the  spin  current  being  canceled  on  average  in
+                                                                               the two-hole state, a finite angular momentum Lz = ±2
+                                                                               of the degenerate ground state is then solely associated
+                                                                               with a net chiral hole-current pattern.  The hole-current
+                                                                               distributions of the Lz  = +2 state as calculated by ED
+                                                                               and VMC, are shown in Figs.8(a) and8(b), respectively.
+                                                                               The chiral hole currents in the Lz = −2 state are opposite
+                                                                               to those in Fig.8.
+FIG.  6.   (a)  The  spectral  weight  ZK0  vanishes  in  the  large
+sample-length L along the  ˆx direction.  Calculated by VMC
+for the t-J model, the slope of ln ZK0 is about −1/5.119.  (b)                        B.    d + id symmetry of the Cooper pairing
+In σ · t-J  model, the spectral weight ZΓ at Γ point versus L
+is scaled to a finite value.                                                      In the following,  we show that the quantum number
+                                                                               Lz  = ±2 in the two-hole ground states will correspond
+phase factor θF :  ˆF|Ψm⟩2h = eiθF |Ψm⟩2h. The details are                     to a d + id symmetry of the Cooper pairing.  Here the
+shown in AppendixB.                                                            real space Cooper pair order parameter in the spin-singlet
+  The ground state energy and angular momentum cal-                            channel is defined by
+culated by VMC and ED are listed in TableIIIfor the                                           ∆ij =2h ⟨Ψm |ci↑cj↓ − cj↑ci↓| ϕ0⟩.            (17)
+24-site system (cf.  Fig2).  In TableIII, the Bloch-wave-
+like state |Ψ0⟩2h with m = 0 gives rise to an incorrect Lz                        Denote ∆ij  = ∆b, where b = rj − ri.  Let us fix the
+in comparison with the ED. The quantum numbers of the                          site i near the center of a 150-site sample and calculate
+states |Ψ±1⟩2h are found to be Lz = ±2, respectively, in                       the pairing order parameter of the nearest neighbors, i.e.
+agreement with the ED result with a good VMC energy.                           b = a1, a2, a3  in Fig.2based on       |Ψ2h⟩ = |Ψ+1⟩2h  with
+Note that the energy of |Ψ±1⟩2h can be further improved                        Lz = +2.  The ratios between ∆ai  are listed below:
+by considering the “longitudinal spin polaron effect” in                                           ∆a2
+the variational Ansatz |˜Ψ±1⟩2h as in the single-hole case.                                        ∆a1  = −0.4961 − 0.8628i,
+                                                                                                   ∆a3
+                                                                                                   ∆a2  = −0.5045 − 0.8691i,                 (18)
+TABLE III. The two-hole ground state energies and quantum                                          ∆a1
+numbers in the 24-site system as calculated by VMC and ED                                          ∆a3  = −0.4994 − 0.8663i.
+methods.  Here Etot  is the total energy,  Et  and EJ  are the
+kinetic and superexchange energies.  respectively.  Lz denotes                 Here all of the ratios are close to ei 4π3 , indicating a d+id
+the angular momentum with total spin S = 0.                                    pairing  symmetry.   Note  that  the  small  deviation  from
+                    Etot                Et                 EJ              Lz  the exact ei 4π3   comes from the deviation from the exact
+ |Ψ0⟩2h            -21.498           -5.000           -16.498            0     C3  symmetry for the site i in such a finite-size sample.
+|Ψ±1⟩2h           -26.676           -10.909           -15.767         ±2       And |Ψ−1⟩2h with Lz = −2 corresponds to a d−id pairing
+|˜Ψ±1⟩2h           -28.656-13.029-15.628                          ±2           symmetry.  The d+id pairing symmetry is also identified
+   ED              -29.834           -14.433           -15.401         ±2      by the tensor network method at finite but small doping
+                                                                               limit [17].
+                                                                                                                                                      7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.    The neutral spin current pattern emerges with two holes projected at fixed locations in the two-hole ansatz state
+|Ψ+1⟩2h.  Blue circles with the dashed arrows represent the projected hole with spin ↑ or ↓.  As the distance between the two
+holes increases in (a)-(c), the vortex-antivortex pair of the surrounding spin currents gets larger and stronger in strength.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.    The chiral charge currents in the two-hole ground
+state with Lz = +2 as calculated by (a) ED and (b) VMC for
+the 24-site lattice.  The thickness of the bonds represents the
+relative magnitude of the hole current.
+
+
+
+
+  Similarly,  we can examine the Cooper pair order pa-
+rameter in the momentum space:
+
+
+
+             ∆k =2h ⟨Ψm|ck↑c−k↓ − ck↓c−k↑|ϕ0⟩,         (19)
+
+
+
+in which ckσ ≡    1√2(cAkσ + cBkσ).  By decomposing ∆k
+into absolute and phase parts:  ∆k = |∆k|eiθk, the calcu-
+lated |∆k| and θk are shown in Fig.9(a) and Fig.9(b),                         FIG. 9.    Calculated (a) the absolute part |∆k| and (b) the
+respectively, for |Ψ+1⟩2h in the 96-site sample.  Here we                     angle part θk = Argz(∆k) of the Cooper pair order parameter
+fix ∆K0 to be a real number at K0 = ( 4√3π                                    ∆k, using |Ψ+1⟩2h  state (Lz  = +2 variational ground state)
+                                                     9   , 0) as the K        in the 96-site sample.
+point in the Brillouin zone.
+
+  Fig.9shows  that  the  absolute  part        |∆k|  peaks  at
+the K, K′ points at the Brillouin zone boundary, which                        C.    Pairing symmetry dichotomy:  an s-wave pairing
+should be contributed from the pairing of the quasiparti-                                         between “twisted holes”
+cle component peaked in Fig.5. Then         θk increases from 0
+to 4π when k is rotated counterclockwise by 360 degrees                          One  may  further  study  the  hole-hole  density  corre-
+from the K  direction.  Two nodal lines exist in Re(∆k)                       lator ⟨nhi nhj⟩  with  nhi  denoting  the  hole  density  at  site
+and Im(∆k), which is the feature of a d wave pairing to                       i.   By  fixing  the  hole  site  i  in  a  150-site  sample  using
+imply the d + id pairing symmetry.  Similarly, a d − id                       the ansatz state |Ψ+1⟩2h,  the spatial pattern of ⟨nhi nhj⟩
+pairing symmetry is found for the ansatz state |Ψ−1⟩2h.                       is given in Fig.10(a), which shows a pairing amplitude
+                                                                                                                                                    8
+
+nearly isotropic and decays quickly as the distance |ri−rj|
+increases. Here the ⟨nhi nhj⟩ reaches the largest value when
+the distance between the two holes is 2.  And the pairing
+amplitudes of distance √3 are very close to the largest
+value.
+  On the other hand, Fig.10(b) shows that the pattern
+of the real space Cooper pair order parameter in Eq.17is
+distinct from the above hole density distribution.  When
+site i and j  belong to different sublattices and |ri − rj|
+is small (≤ 2.65a0), the value of |∆ij| is relatively large
+(≥ 0.009).  But at |ri − rj| = 1, |∆ij| reach the largest
+whereas at |ri − rj| = √3, |∆ij| becomes very small (≈
+0.003).
+  To resolve this puzzle, we note that |g(i, j)| in Eq. (16)
+represents the pairing amplitude of the “twisted holes”
+described by ˜ci ≡ cie±iˆΩi.  Since ⟨nhi nhj⟩ ∝ |g(i, j)|2, the
+isotropic density structure of the two holes is thus related
+to the s-wave pairing of the “twisted holes”.  Here, the
+s-wave pairing symmetry may be directly seen from the
+quantum  numbers  of  the  ground  states.   Consider  the
+angular momentum Lz = 2 for the two-hole ground state
+|Ψ+1⟩2h.  It can be regarded as the direct summation of
+Lz of two single-hole ground states, i.e. (−2)+(−2) ≡ 2(
+mod 6),  which  means  zero  relative  angular  momentum
+for the two twisted holes, in consistency with the s-wave
+pairing.
+  Therefore,  the  two-hole  ground  state  has  a  pairing
+symmetry dichotomy:  a d + id pairing symmetry for the                       FIG. 10.  (a) hole-hole density correlator ⟨nhi nhj ⟩ for Lz  = 2
+bare holes, ci’s, emerges from the s-wave pairing in terms                   variational ground state in the 150-sites sample.  One hole is
+of twisted holes, ˜ci’s.  The phase-shift factor e±iˆΩi acts a               fixed at the site i with blue circle near the center of the sample.
+key role in such a dichotomy. And this pairing symmetry                      (b) The absolute value of Cooper pair order parameter |∆ij|
+dichotomy  has  been  previously  revealed  for  the  square                 for Lz  = 2 variational ground state in the 150-sites sample.
+lattice [15], which is thus a common characteristic of a                     Site i is fixed near the center of the sample, denoted by the
+bipartite t-J  model.                                                        empty site with blue circle.
+
+
+
+                                                                                    IV.    DISCUSSION AND CONCLUSION
+           D.    Pairing energy and pairing size
+                                                                                In this work, we have examined the ground-state prop-
+  The pairing (binding) energy of the two holes may be                       erties  of  the  single-hole-doped  and  two-hole-doped  t-J
+defined by:                                                                  model on honeycomb lattice based on the VMC study.
+                                                                             For the simplest models of doped Mott insulators, a mi-
+                   Epair = E2h + E0h − 2E1h,                 (20)            croscopic understanding of how the doped holes can prop-
+                                                                             agate  and  form  pairing  in  a  quantum  AFM  spin  back-
+                                                                             ground  can  provide  valuable  insight  into  the  nature  of
+where E0h, E1h, E2h  represent the half-filling, one-hole                    doping Mott insulators.
+doped, two-hole doped ground state energy, respectively.                        For  the  single-hole  doping  case,  a  nontrivial  angular
+  The scaling behavior of binding energies Epair for sys-                    momentum  Lz  =  ±2  is  identified  with  a  given  total
+tems with different sizes are shown in Fig.11.  The area                     Sz = ±1/2 in the variational wave function, which is in
+of n plaquettes is given by  3√3                                             agreement with the ED result.  It means that the orbital
+                           q       √2  n, which defines a typi-              part plays an important role in the profile of a single-hole
+cal length scale λ =           3√3    n ≈ 1.61√n.  The pairing               composite.   Indeed,  a  corresponding  chiral  spin  (hole)
+                                2
+energy will saturate to a finite value −0.7896J  at large                    current is found surrounding the doped hole (spin-1/2)
+n.  And the area “occupied” by the two holes is about                        mutually in the ground-state wave function Ansatz.  Be-
+λ0 = 9.05 such that the pairing size is 4.53, which is ap-                   sides the overall good agreement with the finite-size ED
+proximately the size of ≈ 4.017 inferred from |g(i, j)| as                   calculation, including the total energy, the single-particle
+a function of |ri − rj|.                                                     spectral weight Zk is further shown to vanish in the large-
+                                                                                                                                                  9
+
+                                                                            frustration can get substantially released for two doped
+                                                                            holes by forming a tightly bound pair.
+                                                                               Here the pairing is irrelevant to the AFM long-range
+                                                                            ordering of spins in the backdrop.  Given such a small-
+                                                                            size  pairing  as  a  building  block,  at  least  in  the  dilute
+                                                                            finite  doping  regime,  more  holes  are  expected  to  form
+                                                                            a  ground  state  composed  of  similar  building  blocks  to
+                                                                            the leading order of approximation.  Similar to the case
+                                                                            on square lattice [15], the two-hole ground state in Eq.
+                                                                            (16) (     m = ±1) may be reexpressed in the following form:
+                                                                            |ΨG⟩2h =  ˆD|RVB⟩ where  ˆD denotes the creation of two
+                                                                            “twisted holes” on top of a half-filling spin background
+                                                                            |RVB⟩.  Here
+
+                                                                                                    ˆD = X    g(i, j)˜ci↑˜cj↓                      (21)
+FIG. 11.  The binding energy Epair as the function of the √n                                               ij
+where n is the total plaquette number of several samples. The
+blue dots represent the VMC calculation results. The red line               with  g(i, j)  is  the  s-wave  pairing  amplitude  for  the
+denotes the fitting curve.                                                  “twisted  holes”  obtained  by  the  VMC  scheme  in  this
+                                                                            work, and ˜ciσ ≡ ciσe±iˆΩi.  Compared to the wave func-
+sample limit. The present VMC study clearly shows that                      tion in Eq.  (16), the “twisted” spin background     |RVB⟩
+locally  the  doped  hole  has  to  “twist”  the  spins  in  the            should be related to the original AFM state |ϕ0⟩ via a
+background into a vortex-like structure in order to facil-                  transformation e∓i2ˆΩv with v = i or j, or simply smeared
+itate its own hopping due to the underlying phase-string                    in the local two-hole region, which can be variationally
+effect.  Such a vortex-like “twist” in the spin background                  determined in the VMC scheme [15].  The implication is
+is manifested by an explicit angular momentum Lz = ±2                       that in order for  ˆD to describe an identical charge pair as
+as contributed by the mutual circulation between a net                      a mobile object in total, the background must be simul-
+spin-1/2 and the hole as illustrated in Fig.1.  It is noted                 taneously modified into |RVB⟩.  Then a straightforward
+that although the rest spin background does not directly                    generalization  to  finite  doping  will  give  rise  to  the  fol-
+contribute to Lz as the rest of spins are all in RVB pair-                  lowing  superconducting  ground-state  Ansatz  originally
+ing,  albeit  long-ranged  ones  in  an  AFM  state,  they  do              proposed in Ref.  [16]:
+play a crucial role in lowering the kinetic energy of the                                            |ΨG⟩ = e ˆD|RVB⟩,                       (22)
+hole composite.
+  For the two-hole doping case, a significant pairing be-                   where  a  short-range  AFM  or  RVB  state  |RVB⟩  will
+tween the holes is found, with the pairing symmetry in                      emerge self-consistently at finite doping [16,27].  How to
+the  Cooper  channel  to  be  purely  d + id  form.   How-                  realize such a superconducting state with a local AFM
+ever,  based  on  the  coordinates  of  the  “twisted”  holes               background from the present two-hole study, where the
+mentioned above, an s-wave pairing is identified instead.                   two-hole pair may be self-trapped in the original AFM
+Note  that  each  single  hole  here  has  an  angular  mo-                 spin background |ϕ0⟩, will be an interesting problem to
+mentum  of  Lz   =  ±2  and  the  two-hole  ground  state                   be explored elsewhere.
+has  the  total  spin  zero  (singlet)  and  angular  momen-
+tum Lz  = ±4 = ∓2  mod 6, consistent with the s-wave
+pairing of the twisted holes.  Namely a coherent d + id                                        ACKNOWLEDGMENTS
+Cooper pairing is just an inherited component of a two-
+hole state with a hidden s-wave pairing of the “twisted”                       Useful discussions with Z. C. Gu, Z. L. Wang and Z.
+holes.  Without the latter, the Cooper pairing cannot ex-                   J.  Song  are  acknowledged.   This  work  is  supported  by
+ist alone as demonstrated by the variational wave func-                     MOST of China (Grant No.  2021YFA1402101) and NSF
+tion. Such a dichotomy in the symmetry of the hole pair-                    of China (Grant No.  12347107).
+ing has been previously found in the square lattice case
+[15].  Here the binding energy 0    .79J is less than 1.97J in
+the square lattice case and the length scale of the pair                     Appendix A: Variational method used at half-filling
+size is about twice larger [15], which indicates that the
+pairing strength is weaker in the honeycomb lattice ge-                        At  half-filling  case,  the  t-J   model  reduces  to  the
+ometry due to the distinct geometries.  Nonetheless, the                    Heisenberg model, whose ground state is assumed to be
+underlying pairing mechanisms are the same as shown by                      RVB state by Anderson [3]:
+the forms of the two-hole wave function Ansatz.  Namely,
+as the single holes are strongly frustrated in the quan-                                              |ϕ0⟩ = Xωv|v⟩,                       (A1)
+tum spin background due to the phase-string effect, the                                                         v
+                                                                                                                                                    10
+
+where the valence bond (VB) state |v⟩ consists of spin-                       where eiθT  is an arbitrary U(1) phase.  The last equality
+singlet pairs (i, j) ≡   1√2(| ↑i↓j⟩−| ↓i↑j⟩) on any two sites                in Eq. (B3) requires:
+i and j belonging to different sublattices.
+  The amplitude ωυ  of each VB configuration v can be                             g∗m(j, i) = g−m(i, j)eiθT e−im[Pl(̸=i) θi(l)−Pl(̸=j) θj(l)].
+further factorized as ωυ = Q                                                                                                                     (B4)
+                                      (i,j)∈υ hij, where hij  is the             Eq.  (B3)  shows  that  time  reversal  operation  can
+positive “bond amplitude” related with the spin-singlet                       change  one  ansatz  state  |Ψm⟩2h  to  the  other  ansatz
+pair  connecting  to  site  i  and  j.   For  the  Monte  Carlo               state |Ψ−m⟩2h  with  opposite  Lz.    Since  hole  currents
+method used in this paper, we use hij  as our transition                      will change direction under time reversal transformation,
+probability in the states updation procedure when sam-                        the chiralities of hole currents in two degenerate ground
+pling the VB states, following Ref.  [28].  The variational                   states are opposite.
+ground state |ϕ0⟩ can be obtained by adjusting the bond                          Next, we consider a spin-flip symmetry, which reverse
+amplitude hij to minimize the energy.                                         the z component spin of electrons:
+  At  half-filling,  the  ground  state  energy  (having  sub-
+tracted − 14ninj  term in Hamiltonian) calculated by the                                                 ˆFciσ ˆF−1 = ci¯σ.                        (B5)
+VMC  method  above  for  the  24-site  system  shown  in
+Fig.2is        −0.3570J  per  bond,  which  is  very  close  to                            ˆFeimˆΩi ˆF−1 = e+imPl(̸=i) θi(l)nl↑
+the  exact  value −0.3586J  per  bond  calculated  by  ED.                                                                                       (B6)
+We also note that similar to the square lattice case [3],                                                 = e+imPl(̸=i) θi(l)e−imˆΩi.
+the optimized wave function by VMC here also has the
+AFLRO, which can be seen by the spin-spin correlation                            Under spin-flip transformation:
+|⟨Sx1 · Sx2⟩| → 0.0972 as |x1 − x2| → ∞.                                            ˆF|Ψm⟩2h =X        −e+im[Pl(̸=i) θi(l)−Pl(̸=j) θj(l)]
+
+                                                                                                   ij
+   Appendix B: Symmetry analysis of the two-hole                                                  × gm(i, j)cj↑ci↓e−im(ˆΩi−ˆΩj)|ϕ0⟩
+                            Ansatz state
+                                                                                               =X      −e−im[Pl(̸=i) θi(l)−Pl(̸=j) θj(l)]        (B7)
+  In Sec.III, we show that the two-hole wave function                                              ij
+can be viewed as an s wave pairing of two “twisted” holes,                                        × gm(j, i)ci↑cj↓e+im(ˆΩi−ˆΩj)|ϕ0⟩
+i.e.   two holes  with spin-current  vortex and  antivortex,                                   =eiθF |Ψm⟩2h,
+which  leads  to  the  Lz  = ±2  degeneracy  of  the  ground
+state.   Here  we  show  that  the  two  degenerate  ground                   where eiθF  is an arbitrary U(1) phase.  The last equality
+states can be connected through time reversal transfor-                       in Eq. (B3) requires:
+mation and are invariant under other symmetries of the
+Hamiltonian.                                                                     gm(j, i) = −gm(i, j)eiθF e+im[Pl(̸=i) θi(l)−Pl(̸=j) θj(l)].
+  We first check how the ansatz states in Eq. (16) change                                                                                        (B8)
+under time reversal operation. The definition of the time                        Therefore, the ansatz state |Ψm⟩2h remains unchanged
+reversal operator  ˆT  is:                                                    un  to  a  trivial  phase  under  spin-flip  transformation.
+                          ˆTciσ ˆT−1 = σci¯σ.                       (B1)      Since spin currents will change direction under spin-flip
+                                                                              transformation, Eq. (B7) guarantees there are no net spin
+  The  anti-unitary  ˆT  acts  on  the  phase  shift  operator                currents in the two-hole ground state.
+eimˆΩi  as:
+             ˆTeimˆΩi ˆT−1 = e−imPl(̸=i) θi(l)nl↑                              Appendix C: Variational Monte Carlo method used
+                                                                   (B2)                              in hole-doping case
+                            = e−imPl(̸=i) θi(l)e+imˆΩi.
+In the second equality above, we use the constrain nl↑ =                         In this appendix, we give a brief description of the vari-
+1 − nl↓ at half-filling state |ϕ0⟩.                                           ational Monte Carlo procedure used to calculate physical
+  Under time reversal transformation,                                         quantities for both single-hole and two-hole doped cases.
+                                                                                 The expectation value of an operator  ˆO over the single-
+      ˆT|Ψm⟩2h =Xe−im[Pl(̸=i) θi(l)−Pl(̸=j) θj(l)]                            hole  or  two-hole  variational  wave  function |Ψ⟩  can  be
+                     ij                                                       generally written as:
+                    × g∗m(i, j)cj↑ci↓eim(ˆΩi−ˆΩj)|ϕ0⟩                                      ⟨ ˆO⟩ ≡ ⟨Ψ| ˆO|Ψ⟩                   ⟨ϕ0|ϕ0⟩
+                  =Xeim[Pl(̸=i) θi(l)−Pl(̸=j) θj(l)]               (B3)                               ⟨Ψ|Ψ⟩   = ⟨Ψ| ˆO|Ψ⟩⟨ϕ0|ϕ0⟩⟨Ψ|Ψ⟩ .         (C1)
+
+                     ij                                                          By fixing the normalization condition as
+                    × g∗m(j, i)ci↑cj↓e−im(ˆΩi−ˆΩj)|ϕ0⟩                                                     ⟨Ψ|Ψ⟩
+                  =eiθT |Ψ−m⟩2h,                                                                          ⟨ϕ0|ϕ0⟩ = 1,                           (C2)
+                                                                                                                                                            11
+
+we obtain the formula to calculate ⟨ ˆO⟩.  For single-hole      case:
+
+
+                                                                                      D                                 E
+                                                                    X                   v′|e+imˆΩjc†j ˆOcie−imˆΩi|v        ,                             (C3)
+                                ⟨ ˆO⟩ = X     φ∗(m)h     (j)φ(m)h   (i)    P (v′, v)                ⟨v′ | v⟩
+                                          i,j                         v′,v
+
+and for two-hole case:
+                                                                                                                                         
+                 ⟨ ˆO⟩ =  X                              XP (v′, v) ⟨v′|e−im(ˆΩi′−ˆΩj′)c†j′↓c†i′↑ ˆOci↑cj↓e+im(ˆΩi−ˆΩj)|v⟩                .            (C4)
+                          i,j,i′,j′ g∗m(i′, j′)gm(i, j)    v′,v                                        ⟨v′|v⟩
+
+   where
+
+                                                               P (v′, v) ≡ wv′wv ⟨v′|v⟩⟨ϕ0|ϕ0⟩                                                                    (C5)
+
+is the probability distribution of VB configurations, which satisfies the normalization condition:Pv,v′ P (v′, v) = 1.  It
+can be used for Monte Carlo sampling as the half-filling case in AppendixA.
+   For single-hole-doping case, we can define matrix element:
+
+                                               Oj            P (v′, v) ⟨v′|e+imˆΩjc†j↑ ˆOci↑e−imˆΩi|v⟩
+                                                   i = X                                ⟨v′|v⟩                 .                                              (C6)
+                                                        v′,v
+
+   Similarly, for two-hole-doping case, we can define matrix element:
+
+                                  Oi′j′           P (v′, v) ⟨v′|e−im(ˆΩi′−ˆΩj′)c†j′↓c†i′↑ ˆOci↑cj↓e+im(ˆΩi−ˆΩj)|v⟩
+                                     ij   = X                                            ⟨v′|v⟩                               .                               (C7)
+                                             v′,v
+
+
+
+   If we view the variational parameter φ(m)h   (i) or gm(i, j)                      Following the method in Ref . [15], we transform the
+as  the  column  vector  x,  then  ⟨ ˆO⟩  in  Eq.  (C3)  and                      operators in Eq. (C3) and Eq. (C4) to the form below to
+Eq. (C4) can be expressed as a quadratic form:                                    calculate the matrix elements:
+
+                             ⟨ ˆO⟩ = x†Ox.                          (C8)               ⟨v′|ˆΛ−mnk1σ1nk2σ2 ··· nknσnSσ1l1 Sσ2l2  ··· Sσsls  ˆΛm|v⟩
+                                                                                                                     ⟨v′|v⟩                                 ,
+   Specifically, Eq. (C2) can be seen as the special case                                                                                              (C11)
+where  ˆO = ˆI in Eq. (C3) or Eq. (C4), which are denoted                         where  ˆΛm   =  e−imˆΩi  for  single-hole-doping  case  and
+as:                                                                               ˆΛm = e+im(ˆΩi−ˆΩj) ≡ ˆΛmij  for two-hole-doping case.
+                                                                                     We    consider    the    loop    configurations    in    the
+                          1 = ⟨ˆI⟩ = x†Ax.                        (C9)            transposition-graph covers (v, v′) and check the compat-
+                                                                                  ibility of the operator nknσn or Sσsls  with each loop when
+   Eq. (C9) imposes the normalization condition to the                            calculating the phase factor  ˆΛm.
+variational  wave  function.   By  optimizing  the  total  en-                       The expressions of the matrix elements of the operators
+ergy ⟨Ht-J⟩ within the constrain Eq. (C9), the procedure                          used in the main text are listed below.
+to  find  the  ground  state  turns  out  to  be  a  generalized
+eigenvalue problem:
+                          Ht-Jx = Et-JAx.                      (C10)               1.    Explicit expressions of matrix elements used in
+                                                                                                        single-hole-doping case
+
+   The  wave  function  of  variational  ground  state  is  the                      (1) The normalization matrix A defined in Eq. (C9) is
+generalized eigenvector that corresponds to the minimum                           proportional to identity matrix:
+energy  Et-J.   Once  the  ground  state  wave  function  is
+solved, the expectation of any observable can be calcu-                                                         Ai′
+lated using Eq. (C8).                                                                                              i  = 12δi,i′.                         (C12)
+                                                                                                                                                     12
+
+  (2)  The  matrix  elements  of  the  hopping  term  Ht  in                  in Eq. (9) are:
+Eq. (1) are:
+                                                                                (Jskl)i′i  = iJ2 (1 − δik)(1 − δil)    X            P(v′, v)    1⟨v′|v⟩
+                                                                                                                      v′,v,⟨kl⟩(̸=i)
+  (Ht)i′i  = tXP(v′, v)    1⟨v′|v⟩δi,NN(i′)                                              δii′⟨v′|e+imˆΩi′ ni↑(S+k S−l  − S−k S+l  )e−imˆΩi|v⟩.
+               v′,v                                               (C13)                                                                          (C16)
+          × ⟨v′|e+imˆΩi′ (ni↑ni′↑ + S−i  S+i′ )e−imˆΩi|v⟩,                       (5) The calculation procedures of spectral weight Zk1
+                                                                              or  Zk2  in  Eq.  (12)  and  Eq.  (13)  are  different  from
+                                                                              above.    For  simplicity,  we  first  consider  the  overlap
+where δi,NN(i′) = 1 when one of the nearest neighbors of                      ⟨ϕ0|c†ηk↑|Ψm⟩1h where η = A, B denote for A and B sub-
+site i′ is site i and δi,NN(i′) = 0 otherwise.                                lattice.  We normalize it as:
+
+  The  hole  current  Jhij  in  Eq.  (8)  can  be  obtained  by                      p     ⟨ϕ0|c†ηk↑|Ψm⟩1h
+taking the imaginary part of the matrix (Ht)i′i :                                       ⟨ϕ0|ϕ0⟩[1h]⟨Ψm|Ψm⟩1h
+
+                                                                                  =X      φmh (i)⟨ϕ0|c†ηk↑ci↑e−imˆΩi|ϕ0⟩
+                                                                                       i                   ⟨ϕ0|ϕ0⟩
+           Jhij = 2Im(φ∗(m)h     (j)(Ht)jiφ(m)h   (i)).             (C14)
+                                                                                  =X      √1                        P(v′, v)⟨v′|ni↑e−imˆΩi|v⟩
+
+                                                                                     i∈η     N eik·xiφmh (i)Xv′,v                    ⟨v′|v⟩        .
+  (3) The matrix elements of the superexchange term HJ                                                                                           (C17)
+in Eq. (2) are:                                                                  Since αk and βk can be written as the linear combina-
+                                                                              tion of cAkσ and cBkσ, Zk1 or Zk2 can be obtained from
+                                                                              the results in Eq. (C17).
+(HJ)i′               X        P(v′, v)    1
+       i  = J2                          ⟨v′|v⟩δii′⟨v′|e+imˆΩi′ ni↑
+                v′,v,⟨kl⟩(̸=i)                                                  2.    Explicit expressions of matrix elements used in
+          × (S+                                                                                      two-hole-doping case
+                k S−l  + S−k S+l  − nk↑nl↓ − nk↓nl↑)e−imˆΩi|v⟩.
+                                                                  (C15)          (1) The normalization matrix A defined in Eq. (C9)
+  (4) The matrix elements of the neutral spin current Jsij                    is:
+
+
+
+                                                     h                                                                          i
+                    Ai′j′ij   = X  P(v′, v)    1⟨v′|v⟩δii′δjj′⟨v′|ˆΛ−mij   ni↑nj↓ ˆΛmij|v⟩ − δij′δji′⟨v′|ˆΛ−mji   S−i  S+j  ˆΛmij|v⟩.               (C18)
+                              v′,v
+
+  (2) The matrix elements of the hopping term Ht in Eq. (1) are:
+
+                                       h
+  (Ht)i′j′ij   =tX   P(v′, v)    1⟨v′|v⟩ δii′δj,NN(j′)⟨v′|ˆΛ−mij′  ni↑(nj↓nj′↓ + S+j S−j′)ˆΛmij|v⟩
+                v′,v
+               +δjj′δi,NN(i′)⟨v′|ˆΛ−m                                                                                                            (C19)
+                                       i′j  nj↓(ni↑ni′↑ + S−i  S+i′ )ˆΛmij|v⟩ −δji′δi,NN(j′)⟨v′|ˆΛ−mi  j′i  S−i  (S+j nj′↑ + nj↓S+j′)ˆΛmij|v⟩
+               −δij′δj,NN(i′)⟨v′|ˆΛ−mji′  S−j (S+i  ni′↑ + ni↓S+i′ )ˆΛmij|v⟩     ,
+
+
+  (3) The matrix elements of the superexchange term HJ  in Eq. (2) are:
+
+                      X                         X       h
+     (HJ)i′j′ij   =J2      P(v′, v)    1⟨v′|v⟩           δii′δjj′⟨v′|ˆΛ−mij   ni↑nj↓(S+k S−l  + S−k S+l  − nk↑nl↓ − nk↓nl↑)ˆΛmij|v⟩
+                      v′,v                   ⟨kl⟩(̸=i,j)                                                                                         (C20)
+                                                                                                       i
+                   +δij′δji′⟨v′|ˆΛ−mji   S−i  S+j (nk↑nl↓ + nk↓nl↑ − S+k S−l  − S−k S+l  )ˆΛmij|v⟩        .
+
+
+  (4) The calculation procedures of Cooper pair order parameter ∆k in Eq. (19) are different from above.  We first
+                                                                                                                                                        13
+
+normalize it as:
+
+                               ∆k =         2h⟨Ψm| ˆ∆sk|ϕ0⟩p                    g∗m(i′, j′)⟨ϕ0|ˆΛ−mi′j′ c†j′↓c†i′↑ ˆ∆sk|ϕ0⟩
+                                          2h⟨Ψm|Ψm⟩2h⟨ϕ0|ϕ0⟩ = Xi′j′m                                 ⟨ϕ0|ϕ0⟩
+                                                                                                                                                   (C21)
+                                    = X       g∗m(i′, j′) 1                   P(v′, v)⟨v′|ˆΛ−mi′j′ c†j′↓c†i′↑ ˆ∆sij ˆΛ0ij|v⟩
+                                       i′j′,ij            N eik˙(ri−rj) Xv′,v                        ⟨v′|v⟩                ,
+
+where  ˆ∆sk ≡  ck↑c−k↓ − ck↑c−k↓  and  ˆ∆sij  ≡  ci↑cj↓ − cj↑ci↓  are  pair  operators  in  momentum  space  and  real  space,
+respectively.  Viewing   1N eik˙(ri−rj) as the column vector g0(i, j), ∆k can be written as the quadratic form in Eq. (C7).
+The matrix elements of it are:
+
+    (∆k)i′j′           P(v′, v)⟨v′|ˆΛ−mi′j′ c†j′↓c†i′↑ ˆ∆sij ˆΛ0ij|v⟩
+           ij   ≡X                             ⟨v′|v⟩
+                   v′,v                                                                                                                            (C22)
+                                          h                                                                                                i
+                =X     P(v′, v)    1⟨v′|v⟩ δii′δjj′⟨v′|ˆΛ−mij   (ni↑nj↓ − S+i  S−j )|v⟩ + δij′δji′⟨v′|ˆΛ−mji   (ni↓nj↑ − S−i  S+j )|v⟩        .
+                   v′,v
+
+   Eq. (C22) implies that the expectation value of real-space Cooper pair order parameter in Eq. (17) can be calculated
+by:
+                                                    h                                                                                               i
+  ∆ij = X                        P(v′, v)    1⟨v′|v⟩ δii′δjj′⟨v′|ˆΛ−mij   (ni↑nj↓ − S+i  S−j )|v⟩ + δij′δji′⟨v′|ˆΛ−mji   (ni↓nj↑ − S−i  S+j )|v⟩       .
+           i′j′ g∗m(i′, j′)Xv′,v
+                                                                                                                                                   (C23)
+   (5) Denote the matrix of the hole-hole correlator nhi nhj  is Nhij.  The expression of it is:
+                                                               h                                                                            i
+   (Nhkl)i′j′ij   = (δikδjl + δilδjk)X      P(v′, v)    1⟨v′|v⟩ δii′δjj′⟨v′|ˆΛ−mij   ni↑nj↓ ˆΛmij|v⟩ − δij′δji′⟨v′|ˆΛ−mji   S−i  S+j  ˆΛmij|v⟩ .    (C24)
+                                       v′,v
+
+   (6) The matrix elements of the neutral spin current Jsij in Eq. (9) are:
+                                                                             h
+                 (Jskl)i′j′ij   =iJ2 (1 − δ⟨ij⟩,⟨kl⟩)X    P(v′, v)    1⟨v′|v⟩ δii′δjj′⟨v′|ˆΛ−mij   ni↑nj↓(S+k S−l  − S−k S+l  )ˆΛmij|v⟩
+                                                     v′,v                                   i                                                      (C25)
+                                −δij′δji′⟨v′|ˆΛ−mji   S−i  S+j (S+k S−l  − S−k S+l  )ˆΛmij|v⟩  ,
+
+where δ⟨ij⟩,⟨kl⟩ = 0 when i ̸= k, l and j ̸= k, l, and δ⟨ij⟩,⟨kl⟩ = 1 otherwise.
+   When the hole with spin ↑ is projected at site i0 and the other hole with spin ↓ is projected at site j0 (See Fig.7),
+the matrix elements of neutral spin current are:
+
+  (Jskl)i′j′ij  (projected) = iJ2 (1 − δ⟨ij⟩,⟨kl⟩)XP(v′, v)    1⟨v′|v⟩δii′δjj′δii0δjj0⟨v′|ˆΛ−mij   ni↑nj↓(S+k S−l  − S−k S+l  )ˆΛmij|v⟩.   (C26)
+                                                     v′,v
+
+
+
+  Appendix D: The longitudinal spin polaron effect                              which is identified as the “longitudinal spin polaron ef-
+                           incorporation                                        fect” in this paper.
+
+   In  Sec.II,  we  show  that  the  phase-shift  operator
+e−imˆΩi  in  Eq.  (4)  leads  to  the     transverse  spin  current
+pattern around the hole, which plays the most essential                            This  effect  can  also  be  incorporated  here  by  making
+role in facilitating the hole’s hopping.                                        use of the Lanczos algorithm.  The basic idea of Lanczos
+   On  the  other  hand,  the  conventional  self-consistent                    algorithm  is  to  construct  a  new  state  by  linearly  com-
+Born approximation theory (SCBA) considers the renor-                           bining variational ground state |Ψ⟩ and  ˆH|Ψ⟩ to further
+malization of the hole’s effective mass due to the scatter-                     lower the variational energy.  Based on a similar idea, we
+ing between holon and spin magnon excitations [29,30],                          put forward the “improved” wave function Ansatz below:
+                                                                                                                                                            14
+
+                                                                                  parts compared to |Ψm⟩1h in Eq. (4) can be seen as the
+                                                                                  longitudinal spin polaron effect to the spin background,
+|˜Ψm⟩1h =X          φ(m)1   (i)ci↑e−imˆΩi +   X          (φ(m)2   (i, j)ni↑cj↑    which transforms the spin background |ϕ0⟩ →  ˆΠi|ϕ0⟩ as
+               i                               j∈NN(i)                            in Eq. (7).  Therefore, the definition of     ˆΠi in Eq. (7) is:
+             + φ(m)3   (i, j)S−i  cj↓)e−imˆΩj |ϕ0⟩,                                      ˆΠi = 1 +   X
+                                                                      (D1)                                     [a1(i, j)nj↑ + a2(i, j)S−j ],        (D2)
+                                                                                                      j∈NN(i)
+where  the  φ(m)1   (i),  φ(m)2   (i, j)  and  φ(m)3   (i, j)  are  varia-
+tional parameters to be optimized.  The extra variational                         where a1(i, j) and a2(i, j) are variational parameters.
+
+
+
+
+
+ [1]J.  G.  Bednorz  and  K.  A.  M¨uller,  Possible  High     Tc  Su-                  (2011).
+     perconductivity in the Ba-La-Cu-O System,Z. Phys. B -                        [17]Z.-C. Gu, H.-C. Jiang, D. N. Sheng, H. Yao, L. Balents,
+     Condensed Matter 64, 189 (1986).                                                   and X.-G. Wen, Time-reversal symmetry breaking super-
+ [2]P.  W.  Anderson,  The  Resonating  Valence  Bond  State                            conducting ground state in the doped mott insulator on
+     in  La2CuO4  and  Superconductivity,Science    235,  1196                          the honeycomb lattice,Phys. Rev. B          88, 155112 (2013).
+     (1987).                                                                      [18]Z.-T. Xu, Z.-C. Gu, and S. Yang, Competing orders in
+ [3]S.  Liang,  B.  Doucot,  and  P.  W.  Anderson,  Some  New                          the honeycomb lattice t-J model,Physical Review B  108,
+     Variational Resonating-Valence-Bond-Type Wave Func-                                035144 (2023).
+     tions for the Spin- 12 Antiferromagnetic Heisenberg Model                    [19]A. L¨uscher,  A. L¨auchli,  W. Zheng, and O. P. Sushkov,
+     on a Square Lattice,Phys. Rev. Lett.           61, 365 (1988).                     Single-hole  properties  of  the  t−J  model  on  the  honey-
+ [4]P. W. Anderson, Resonating Valence Bonds: A New Kind                                comb lattice,Phys. Rev. B          73, 155118 (2006).
+     of Insulator?,Mater. Res. Bull.                8, 153 (1973).                [20]F.-J.  Jiang,  F.  K¨ampfer,  M.  Nyfeler,  and  U.-J.  Wiese,
+ [5]P. A. Lee, N. Nagaosa, and X.-G. Wen, Doping a mott in-                             Loop-cluster simulation of the zero- and one-hole sectors
+     sulator:  Physics of high-temperature superconductivity,                           of the t−J  model on the honeycomb lattice,Phys. Rev.
+     Rev. Mod. Phys. 78, 17 (2006).                                                     B 78, 214406 (2008).
+ [6]W.  Marshall,  Antiferromagnetism,Proc.  R. Soc.  Lond.                       [21]S.  Jiang,  A.  Mesaros,  and  Y.  Ran,  Chiral  spin-density
+     232, 48 (1955).                                                                    wave, spin-charge-chern liquid, and d + id superconduc-
+ [7]D. N. Sheng, Y. C. Chen, and Z. Y. Weng, Phase string                               tivity in 1/4-doped correlated electronic systems on the
+     effect in a doped antiferromagnet,Phys. Rev. Lett.                     77,         honeycomb lattice,Phys. Rev. X          4, 031040 (2014).
+     5102 (1996).                                                                 [22]J.-J. Miao,  Z.-Y. Yue,  H. Zhang,  W.-Q. Chen, and Z.-
+ [8]Z. Y. Weng, D. N. Sheng, Y.-C. Chen, and C. S. Ting,                                C. Gu, Spin-charge separation and unconventional super-
+     Phase String Effect in the t-J  Model:  General Theory,                            conductivity in t-J  model on honeycomb lattice (2023),
+     Phys. Rev. B 55, 3894 (1997).                                                      arXiv:2301.02274.
+ [9]K.  Wu,  Z.  Y.  Weng,  and  J.  Zaanen,  Sign  Structure                     [23]A. M. Black-Schaffer, W. Wu, and K. Le Hur, Chiral       d-
+     of  the  t-J  model,Phys.  Rev.  B     77,  155102  (2008),                        wave  superconductivity  on  the  honeycomb  lattice  close
+     arXiv:0802.0273.                                                                   to the Mott state,Phys. Rev. B         90, 054521 (2014).
+[10]P. W. Anderson, Infrared catastrophe in fermi gases with                      [24]C. Peng, D. N. Sheng, and H.-C. Jiang, Superconductiv-
+     local  scattering  potentials,Phys.  Rev.  Lett.        18,  1049                  ity in lightly doped Hubbard model on honeycomb lattice
+     (1967).                                                                            (2023),arXiv:2303.12348.
+[11]P. W. Anderson, “Luttinger-liquid” behavior of the nor-                       [25]M.  Qin,  Stripes  versus  superconductivity  in  the  doped
+     mal metallic state of the 2D hubbard model,Phys. Rev.                              Hubbard model on the honeycomb lattice,Phys. Rev. B
+     Lett. 64, 1839 (1990).                                                             105, 035111 (2022).
+[12]Z.  Y.  Weng,  D.  N.  Sheng,  and  C.  S.  Ting,  Bosonic                    [26]T. Ying and S. Wessel, Pairing and chiral spin density
+     resonating-valence-bond  description  of  a  doped  antifer-                       wave instabilities on the honeycomb lattice:  A compar-
+     romagnet,Phys. Rev. Lett.               80, 5401 (1998).                           ative  quantum  Monte  Carlo  study, Phys.  Rev.  B   97,
+[13]W. Zheng, Z. Zhu, D. N. Sheng, and Z.-Y. Weng, Hidden                               075127 (2018).
+     spin current in doped mott antiferromagnets,Phys. Rev.                       [27]Z.-Y. Weng, Mott physics, sign structure, ground state
+     B 98, 165102 (2018).                                                               wavefunction,  and  high-Tc  superconductivity, Frontiers
+[14]S.  Chen,  Q.-R.  Wang,  Y.  Qi,  D.  N.  Sheng,  and  Z.-Y.                        of Physics 6, 370–378 (2011).
+     Weng,  Single-hole  wave  function  in  two  dimensions:  A                  [28]A. W. Sandvik and H. G. Evertz, Loop updates for varia-
+     case study of the doped mott insulator,Phys. Rev. B              99,               tional and projector quantum Monte Carlo simulations in
+     205128 (2019).                                                                     the valence-bond basis,Phys. Rev. B         82, 024407 (2010).
+[15]J.-Y. Zhao, S. A. Chen, H.-K. Zhang, and Z.-Y. Weng,                          [29]W. F. Brinkman and T. M. Rice, Single-particle excita-
+     Two-hole ground state:  Dichotomy in pairing symmetry,                             tions in magnetic insulators,Phys. Rev. B               2, 1324 (1970).
+     Phys. Rev. X 12, 011062 (2022).                                              [30]S. Schmitt-Rink, C. M. Varma, and A. E. Ruckenstein,
+[16]Z.-Y.  Weng,  Superconducting  ground  state  of  a  doped                          Spectral function of holes in a quantum antiferromagnet,
+     mott  insulator,New  Journal  of  Physics               13,  103039                Phys. Rev. Lett. 60, 2793 (1988).
