@@ -800,7 +800,9 @@ Each row cites the primary paper that produced the number. A number quoted from 
 is marked `secondary`, and the row names both papers. `peer_reviewed` follows the venue that
 printed the number. [RULES.md §8](RULES.md#8-provenance) says which paper is primary and how
 datasets and private communications are cited; [§8.1](RULES.md#81-venue-type) gives the venue
-types.
+types. Rows carry no separate venue field: the reference names the venue. The site badges a
+row that is not peer reviewed "proceedings" where its reference names conference or workshop
+proceedings, and "preprint" otherwise.
 
 [`scripts/validate.mjs`](scripts/validate.mjs) runs in every build. It checks:
 - `dof` and `einf` against the instance definition;
