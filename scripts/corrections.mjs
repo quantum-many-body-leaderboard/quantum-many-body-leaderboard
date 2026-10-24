@@ -22499,4 +22499,230 @@ export const CORRECTIONS = [
     "reason": "An exact energy has no statistical error, which QMBL states as a missing sigma (DATA.md); VarBench writes 0 in the sigma column for it. With this entry no row in the table has sigma 0 (the DMRG row on pyrochlore-3x3x3_108_P was set to null on 2026-09-29).",
     "source_entry": "consistency check 2026-10-22: one convention for a missing error bar; rule 2026-10-22"
   },
+  // Rule 2026-10-24: QMBL no longer flags an error bar for the way it was estimated; the 14
+  // sigma-understated flags are lifted and their findings stay on the rows, in `from`.
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -172.4172032
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -268.638
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_144_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -386.3236608
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_196_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -525.5224128
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_400_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -1071.5872
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_576_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -1542.7876608
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_784_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -2099.733888
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.55",
+      "method": "DMRG, extrapolated in the truncation error (4096-8192 SU(2) states)",
+      "energy": -71.306784
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_O",
+      "method": "2D tensorized-GRU RNN, zero-variance extrapolation",
+      "energy": -251.456456
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1024_P",
+      "method": "RNN (zero-variance)",
+      "energy": -2742.2216192
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_256_P",
+      "method": "RNN (zero-variance)",
+      "energy": -686.0479488
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_324_P",
+      "method": "RNN (zero-variance)",
+      "energy": -868.0373424
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_O",
+      "method": "2D tensorized-GRU RNN, zero-variance extrapolation",
+      "energy": -86.90615424
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "2D RNN wavefunction, zero-variance extrapolation",
+      "energy": -97.75753488
+    },
+    "field": "defect",
+    "to": null,
+    "reported_as": "n/a (flag lift)",
+    "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+    "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+    "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
+  },
 ];

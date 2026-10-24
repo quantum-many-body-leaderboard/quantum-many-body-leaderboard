@@ -249,11 +249,7 @@
         "confidence": "high",
         "note": "Extrapolated (M -> infinity) by a straight-line fit in truncation error of runs up to 8192 SU(2) states (about 32000 U(1) states); the fit points are stated only for L = 10 (4096/6144/8192), and Fig. 16(a) plots M = 1024-8192 at L = 8; no single bond dimension applies. No wall-clock, core count or memory stated anywhere in the paper or supplement. Torus L=6."
       },
-      "defect": {
-        "flag": "sigma-understated",
-        "finding": "DMRG (∞) -0.495186(1) per site (Table I, J2 = 0.55, L = 6; transcribed correctly, -71.306784 total, sigma 0.000144) sits 8.3e-6 per site = 8.3 printed bars below the exact ground-state energy of this instance, E0/N = -0.495177700 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28, k = 0 A1, -71.305588859664 total; the stored Schulz, Ziman & Poilblanc row -0.495178 agrees). The paper's own 8192-state energy -0.495167 lies 1.07e-5 above E0, so the straight-line extrapolation overshoots by 78% of the remaining gap. The printed (1) is a fit uncertainty (how estimated is not stated; the authors withdrew their L = 10 bars as 'not accurate'), not a total error. The same column at the other three L = 6 couplings sits -2.0 (J2 = 0.4), -2.6 (0.45) and +1.7 (0.5) bars from E0 (chi2 = 82 over the four), so the bar is understated throughout, but only this row passes 3 sigma. The instance is solved, so the flag withholds no record; it tells readers not to use the 1e-6 bar.",
-        "source_entry": "VP4-arxiv-1311-5962#32 (qmbl-verify 2026-09-29; skeptic upheld)"
-      },
+      "defect": null,
       "corrections": [
         {
           "field": "method",
@@ -282,6 +278,22 @@
           "source_entry": "VP4-arxiv-1311-5962#31 (qmbl-verify 2026-09-29; skeptic upheld; its compute-rows-2026-09-16.json line edit)",
           "from": "Extrapolated (M -> infinity) from the 4096/6144/8192 SU(2)-state runs (about 16000/24000/32000 U(1) states) by a straight-line fit in truncation error; no single bond dimension applies. No wall-clock, core count or memory stated anywhere in the paper or supplement. Torus L=6.",
           "to": "Extrapolated (M -> infinity) by a straight-line fit in truncation error of runs up to 8192 SU(2) states (about 32000 U(1) states); the fit points are stated only for L = 10 (4096/6144/8192), and Fig. 16(a) plots M = 1024-8192 at L = 8; no single bond dimension applies. No wall-clock, core count or memory stated anywhere in the paper or supplement. Torus L=6."
+        },
+        {
+          "field": "defect",
+          "to": null,
+          "reported_as": "n/a (flag lift)",
+          "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+          "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+          "conversion": "none",
+          "checked_on": "2026-10-24",
+          "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+          "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted",
+          "from": {
+            "flag": "sigma-understated",
+            "finding": "DMRG (∞) -0.495186(1) per site (Table I, J2 = 0.55, L = 6; transcribed correctly, -71.306784 total, sigma 0.000144) sits 8.3e-6 per site = 8.3 printed bars below the exact ground-state energy of this instance, E0/N = -0.495177700 (QMBL Lanczos, qmbl-runs/qmbl-ed-2026-09-28, k = 0 A1, -71.305588859664 total; the stored Schulz, Ziman & Poilblanc row -0.495178 agrees). The paper's own 8192-state energy -0.495167 lies 1.07e-5 above E0, so the straight-line extrapolation overshoots by 78% of the remaining gap. The printed (1) is a fit uncertainty (how estimated is not stated; the authors withdrew their L = 10 bars as 'not accurate'), not a total error. The same column at the other three L = 6 couplings sits -2.0 (J2 = 0.4), -2.6 (0.45) and +1.7 (0.5) bars from E0 (chi2 = 82 over the four), so the bar is understated throughout, but only this row passes 3 sigma. The instance is solved, so the flag withholds no record; it tells readers not to use the 1e-6 bar.",
+            "source_entry": "VP4-arxiv-1311-5962#32 (qmbl-verify 2026-09-29; skeptic upheld)"
+          }
         }
       ]
     },

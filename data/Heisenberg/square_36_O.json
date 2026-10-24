@@ -732,11 +732,7 @@
         "confidence": "high",
         "note": "Parameter count is for the OBC (tensorized-GRU) 2D RNN with d_h = 256, shared across all L (weight sharing, iterative retraining), so scope is the ansatz not the row. The four-A100 statement in the Fig. 7/8 captions is explicitly for the periodic-boundary timing runs; no hardware or run time is stated for the OBC runs, so device/n_devices/wall_clock are left null here. 10k samples is the final energy-estimation count (Fig. 12 caption); training batch size not stated. Iterations only as the schedule N_steps = s C exp(-r(L-6)) + F (C = 101e3, F = 2e3) over 10 (s, r) runs; zero-variance rows extrapolate over the low-variance runs, best-variational rows are the single best run, neither has a single stated step count."
       },
-      "defect": {
-        "flag": "sigma-understated",
-        "finding": "The printed bar 1e-8 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 2, 4 runs, OLS, np.random.seed(100)): intercept -0.6035149588 equals the authors' zero_var_energies.pkl and the printed value to its digits. The fit has 4 points but 2 distinct runs (at L = L0 = 6 the rate r does not enter Eq. (6), so the r = 0.25 and r = 0.475 runs are one run counted twice), so the line passes through both, the residuals are zero, the wild bootstrap returns the same intercept 1000 times (SD 2.2e-16, SE 7.1e-18, stored in zero_var_energies.pkl as 7.02e-18) and the printed (1) is that zero shown as one unit of the last digit: there is no uncertainty estimate at all. Against the ED (VarBench) value -0.6035218345 the row sits above by 6.87e-6 per site: 687 printed sigma. Value and bound_type (extrapolated) are right: Table V (open 6 x 6, This work (zero-variance)) prints −0.60351496(1), x 4 x 36 = -86.90615424. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
-        "source_entry": "VP7-arxiv-2502-17144#33 (qmbl-verify 2026-09-29; skeptic refuted; only the propagated error was refuted and is dropped from the finding; ruling 6, 2026-09-30)"
-      },
+      "defect": null,
       "corrections": [
         {
           "field": "peer_reviewed",
@@ -761,6 +757,22 @@
           "reason": "Add authors and the journal reference that make the row peer reviewed; the same string rows 7, 10, 23, 26, 29, 31 of this paper already carry (sweep-rows-2026-09-15.json line 1940).",
           "source_entry": "VP7-arxiv-2502-17144#32 (qmbl-verify 2026-09-29; skeptic upheld)",
           "from": "Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, arXiv:2502.17144"
+        },
+        {
+          "field": "defect",
+          "to": null,
+          "reported_as": "n/a (flag lift)",
+          "location": "scripts/defects.mjs, the sigma-understated entry on this row",
+          "version_read": "n/a (no source reread; the finding stands as a description of the error bar)",
+          "conversion": "none",
+          "checked_on": "2026-10-24",
+          "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
+          "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted",
+          "from": {
+            "flag": "sigma-understated",
+            "finding": "The printed bar 1e-8 per site is np.std(intercepts)/np.sqrt(Nb), Nb = 1000, the standard error of the mean of the wild-bootstrap intercepts (HeisenbergRNN@29bf62a get_zer_var_energies.ipynb cells 12-13), not the uncertainty of the extrapolated energy. Reproduced here with independent code (out/VP7-arxiv-2502-17144/work2/r2_zv_repro.py: same s = 2, 4 runs, OLS, np.random.seed(100)): intercept -0.6035149588 equals the authors' zero_var_energies.pkl and the printed value to its digits. The fit has 4 points but 2 distinct runs (at L = L0 = 6 the rate r does not enter Eq. (6), so the r = 0.25 and r = 0.475 runs are one run counted twice), so the line passes through both, the residuals are zero, the wild bootstrap returns the same intercept 1000 times (SD 2.2e-16, SE 7.1e-18, stored in zero_var_energies.pkl as 7.02e-18) and the printed (1) is that zero shown as one unit of the last digit: there is no uncertainty estimate at all. Against the ED (VarBench) value -0.6035218345 the row sits above by 6.87e-6 per site: 687 printed sigma. Value and bound_type (extrapolated) are right: Table V (open 6 x 6, This work (zero-variance)) prints −0.60351496(1), x 4 x 36 = -86.90615424. The earlier pass flagged only the zero-variance rows that sit below the SSE value; the bar is the same quantity on every zero-variance row of this paper, above or below.",
+            "source_entry": "VP7-arxiv-2502-17144#33 (qmbl-verify 2026-09-29; skeptic refuted; only the propagated error was refuted and is dropped from the finding; ruling 6, 2026-09-30)"
+          }
         }
       ],
       "artifacts": {
