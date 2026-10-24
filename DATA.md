@@ -85,6 +85,12 @@ fixed list in [`scripts/method_names.mjs`](scripts/method_names.mjs). A source t
 group reads `unspecified`. After a named group, `unspecified` means further groups the source
 does not name. The validator rejects symmetry or extrapolation wording outside a slot.
 
+`precision` (optional) is one unit in the last printed digit of an exact energy that carries
+no error bar, in the stored units: 4 × 1e-7 for an S.S total printed to seven decimals. It
+orders diagonalizations of the same instance (more digits first) and decides which of them
+state the exact energy shown ([RULES.md §6](RULES.md#6-best-values-and-ties)). A row without it
+counts as printed to full precision.
+
 `baseline: true` marks a row that VarBench computed as a reference run for the V-score. No
 paper published it. [RULES.md §8.2](RULES.md#82-baseline-collected-versus-computed) defines
 the field and how such a row ranks. The count is generated: `baseline_rows` in

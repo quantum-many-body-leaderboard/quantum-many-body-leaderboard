@@ -17,6 +17,12 @@ const STATEMENTS = ["sweep_schedule", "evaluation", "vmc_schedule", "circuit_sch
 // A row's reference is `[paper](url)`, `[code](url)` or a citation string; the passes key
 // on the url or the string, as the worklist that was read from did.
 const refKey = ref => (ref || "").match(/\((https?:[^)]+)\)/)?.[1] ?? (ref || "");
+// Where several rows share the energy (two sources printing one exact energy, RULES.md 6) and
+// a row's citation has been completed since the pass (a journal reference added), the arXiv id
+// both strings carry still names the same paper.
+const arxivId = ref => (ref || "").match(/arXiv:\s*([\w.\/-]+?\d)(?:v\d+)?(?=[\s,;)]|$)/i)?.[1] ?? null;
+const sameRef = (rowRef, passRef) => refKey(rowRef) === passRef ||
+  (arxivId(passRef) != null && arxivId(rowRef) === arxivId(passRef));
 
 const instances = new Map();
 for (const m of fs.readdirSync("data")) {
@@ -40,7 +46,7 @@ for (const file of PASSES) {
     if (!c.reported_as) { skipped++; continue; }
     const entry = instances.get(c.instance_id);
     const rows = entry?.inst.rows.filter(r => r.energy === c.energy) ?? [];
-    const row = rows.length > 1 ? rows.find(r => refKey(r.reference) === c.reference) ?? null : rows[0] ?? null;
+    const row = rows.length > 1 ? rows.find(r => sameRef(r.reference, c.reference)) ?? null : rows[0] ?? null;
     if (!row) { unmatched.push(`${c.instance_id} ${c.energy} ${c.reference.slice(0, 50)}`); continue; }
     if (row.compute) replaced++; else attached++;
     const block = {};

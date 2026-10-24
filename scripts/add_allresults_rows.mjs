@@ -59,11 +59,15 @@ for (const [id, rows] of Object.entries(byInst)) {
     // quoted value repeats a stored row only to its printed digits (Kochkov et al.'s -0.5022(4)
     // is not the 2048-state DMRG row 3e-4 away). A row flagged same_value_distinct_method is a second
     // method of the same paper that printed the same value (Marino et al.'s stripe and uniform states
-    // at t' = 0.25), so the same-paper test does not apply to it.
+    // at t' = 0.25), so the same-paper test does not apply to it. A row flagged independent_exact
+    // is a source's own calculation of an exact energy the instance already carries (RULES.md 6:
+    // every published calculation of the exact energy is a row), so neither the same-method nor the
+    // exact-against-exact test applies to it; a copy of another source's value stays out.
+    const indep = r.independent_exact && r.origin === "own" && r.bound_type === "exact";
     const dup = inst.rows.find(x => Math.abs(x.energy / div - r.eps) <=
       (r.origin === "quoted" && r.bound_type === "exact" ? Math.max(r.tol, r.sigma_per_site ?? 0) : r.tol) &&
-      ((r.origin === "quoted" && x.bound_type === r.bound_type) || x.method === r.method ||
-       (!r.same_value_distinct_method && ((x.reference || "").includes(srcKey) || (x.verified?.note || "").includes(srcKey))) || (x.bound_type === "exact" && r.bound_type === "exact")));
+      ((r.origin === "quoted" && x.bound_type === r.bound_type) || (!indep && x.method === r.method) ||
+       (!r.same_value_distinct_method && ((x.reference || "").includes(srcKey) || (x.verified?.note || "").includes(srcKey))) || (!indep && x.bound_type === "exact" && r.bound_type === "exact")));
     if (dup) { skipped.push(`${id} ${r.reported_as} [${srcKey}] = "${dup.method.slice(0, 40)}"`); continue; }
     const energy = +(r.eps * div).toPrecision(12);
     // sigma^2/N_site as printed; totals scale with the site count. A relative
@@ -87,6 +91,9 @@ for (const [id, rows] of Object.entries(byInst)) {
       },
     };
     if (r.compute) row.compute = r.compute;
+    // One unit in the last printed digit, read per site and stored in the instance's units
+    // (DATA.md): it orders exact rows that print no error bar (RULES.md 6).
+    if (r.precision_per_site != null) row.precision = +(r.precision_per_site * Math.abs(div)).toPrecision(6);
     inst.rows.push(row);
     added++;
   }
