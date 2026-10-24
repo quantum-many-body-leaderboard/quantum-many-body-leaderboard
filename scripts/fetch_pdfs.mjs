@@ -66,7 +66,8 @@ let fetched = 0, cached = 0;
 const failed = [];
 
 for (const [i, id] of ids.entries()) {
-  const pdf = `sources/${id}.pdf`, txt = `sources/${id}.txt`;
+  // An old-style id (cond-mat/9510150) is stored as sources/cond-mat-9510150.txt.
+  const pdf = `sources/${id.replace("/", "-")}.pdf`, txt = `sources/${id.replace("/", "-")}.txt`;
   if (!REEXTRACT && fs.existsSync(txt) && fs.statSync(txt).size > 2000) {
     cached++;
     if (ids.length < 30) console.error(`  ${id}: text already cached`);

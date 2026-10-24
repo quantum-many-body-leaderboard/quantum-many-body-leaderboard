@@ -59,8 +59,11 @@ export function marks(r) {
 export const MODELS = [
   ["Heisenberg", "Heisenberg"],
   ["J1J2", "J1-J2"],
+  ["Kitaev", "Kitaev (K-J-Γ)"],
+  ["ShastrySutherland", "Shastry-Sutherland"],
   ["Hubbard", "Hubbard"],
   ["tV", "Spinless t-V"],
+  ["tJ", "t-J"],
   ["TFIsing", "Transverse-field Ising"],
   ["Impurity", "Impurity"],
   ["HEG3D", "Electron gas, 3D"],
@@ -69,7 +72,8 @@ export const MODELS = [
 
 // Boundary codes as defined in vendor/varbench/lattice.md. Periodic is the default and
 // goes unsaid, as in the frontier labels.
-export const BOUNDARY = { O: "open", PO: "periodic/open", PA: "periodic/antiperiodic" };
+// A: antiperiodic along a ladder's legs, open across them (the t-J three-leg ladder, RULES.md 2.1).
+export const BOUNDARY = { O: "open", PO: "periodic/open", PA: "periodic/antiperiodic", A: "antiperiodic legs" };
 
 export function geometry(inst) {
   const n = inst.n_sites;
@@ -93,7 +97,19 @@ export function instanceLabel(inst) {
       ...(p.twist && p.twist !== "Gamma" ? [`twist ${p.twist}`] : [])].join(", ");
   const parts = [geometry(inst)];
   if (BOUNDARY[inst.boundary]) parts.push(BOUNDARY[inst.boundary]);
-  for (const k of ["J2", "h", "U", "V"]) if (p[k] != null) parts.push(`${k} = ${p[k]}`);
+  // t-J (RULES.md 2.1, 2026-10-22): t = 1; J, t' (t2) and t'' (t3); the hole count; and whether the
+  // exchange term carries -n_i n_j / 4.
+  if (inst.model === "tJ") {
+    const holes = inst.n_sites - p.N_up - p.N_dn;
+    parts.push(`J = ${+Number(p.J).toPrecision(6)}`); // 1/3 (t/J = 3 sources) prints as 0.333333
+    if (p.t2 != null) parts.push(`t&prime; = ${p.t2}`);
+    if (p.t3 != null) parts.push(`t&Prime; = ${p.t3}`);
+    parts.push(`${holes} hole${holes === 1 ? "" : "s"}`);
+    if (p.nn_term === false) parts.push("without n<sub>i</sub>n<sub>j</sub>/4");
+    return parts.join(", ");
+  }
+  // Kitaev: K, J, Gamma; Shastry-Sutherland: J (inter-dimer) and Jd (dimer); J3 on honeycomb J1-J2.
+  for (const k of ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V"]) if (p[k] != null) parts.push(`${k} = ${p[k]}`);
   if (p.Nf != null) {
     // Filling per site. Hubbard files carry Nf = N_up = N_dn; t-V is spinless.
     const fill = (inst.model === "Hubbard" ? 2 * p.Nf : p.Nf) / inst.n_sites;

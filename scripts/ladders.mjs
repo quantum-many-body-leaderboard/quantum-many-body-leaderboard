@@ -23,23 +23,28 @@ import { MODELS, BOUNDARY, geometry } from "./readme_table.mjs";
 import { groundStateExact } from "./units.mjs";
 import { W, PAD } from "./chart.mjs";
 
-const COUPLINGS = ["J2", "h", "U", "V", "t2", "rs"]; // t2: the t12 variants at more than one t2
+const COUPLINGS = ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V", "t2", "t3", "rs"]; // t2: the t12 variants at more than one t2; J, t3: t-J
 
 // Particles per site: Hubbard files carry Nf = N_up = N_dn, t-V is spinless.
 // The electron gas (track 2) has no filling; its spin polarization zeta = (N_up - N_dn) / N plays
 // that part in a ladder, since N_up and N_dn grow with N.
 const zetaOf = inst => /^HEG/.test(inst.model) ? Number(((inst.params.N_up - inst.params.N_dn) / inst.n_sites).toFixed(4)) : null;
-const fillingOf = inst => zetaOf(inst) != null ? zetaOf(inst) : inst.params?.Nf == null ? null
+// tJ carries N_up and N_dn: its filling is (N_up + N_dn) / N (RULES.md 2.1, 2026-10-22).
+const tjFill = inst => inst.model === "tJ" && inst.params?.N_up != null ? (inst.params.N_up + inst.params.N_dn) / inst.n_sites : null;
+const fillingOf = inst => zetaOf(inst) != null ? zetaOf(inst) : tjFill(inst) != null ? Number(tjFill(inst).toFixed(4)) : inst.params?.Nf == null ? null
   : Number(((inst.model === "Hubbard" ? 2 : 1) * inst.params.Nf / inst.n_sites).toFixed(4));
 const fillingLabel = inst => {
   if (zetaOf(inst) != null) return `ζ = ${zetaOf(inst)}`;
-  const f = fillingOf(inst), exact = (inst.model === "Hubbard" ? 2 : 1) * inst.params.Nf / inst.n_sites;
+  const f = fillingOf(inst), exact = tjFill(inst) ?? (inst.model === "Hubbard" ? 2 : 1) * inst.params.Nf / inst.n_sites;
   return `n ${f === exact ? "=" : "≈"} ${f}`;
 };
 const latticeOf = inst => (inst.model === "Impurity" ? inst.lattice.split("-").slice(0, 2).join("-") : inst.lattice.replace(/-.*$/, ""));
 const sidesOf = inst => inst.lattice.match(/^rectangular-(\d+)x(\d+)$/)?.slice(1).map(Number) ?? null;
+// A coupling written into the id (K-1, J0.5, G0.5, J3-0.1, Jd1), and a t-J coupling or hole count
+// (J0.4, tp0.3, tpp-0.2, h2), is a coupling or the filling, labelled from params, not a variant.
 const variantsOf = inst => inst.instance_id.split("/")[1].split("_").slice(2)
-  .filter(s => /[A-Za-z]/.test(s) && !(s in BOUNDARY) && s !== "P");
+  .filter(s => /[A-Za-z]/.test(s) && !(s in BOUNDARY) && s !== "P" && !/^(K|J|G|J3|Jd)-?[\d.]+$/.test(s) &&
+    !(inst.model === "tJ" && /^(J|tp|tpp|h)-?[\d.]+$/.test(s)));
 const gcd = (a, b) => (b ? gcd(b, a % b) : a);
 
 // The rows a figure draws: a bound, a projection, an extrapolation or a ground-state exact
@@ -128,8 +133,13 @@ const SCAN = {
   J2: { of: i => i.params?.J2, label: "J2" }, h: { of: i => i.params?.h, label: "h" },
   U: { of: i => i.params?.U, label: "U" }, V: { of: i => i.params?.V, label: "V" },
   // A Hubbard instance without the t12 tag has no next-nearest hopping: t2 = 0, so its ladder sits
-  // at t2 = 0 when a figure's axis is t2 (Marino et al.'s 6-leg tori at t' != 0).
-  t2: { of: i => i.params?.t2 ?? (i.model === "Hubbard" ? 0 : undefined), label: "t2" },
+  // at t2 = 0 when a figure's axis is t2 (Marino et al.'s 6-leg tori at t' != 0); a t-J instance
+  // without t' likewise.
+  t2: { of: i => i.params?.t2 ?? (i.model === "Hubbard" || i.model === "tJ" ? 0 : undefined), label: "t2" },
+  t3: { of: i => i.params?.t3, label: "t3" },
+  J3: { of: i => i.params?.J3, label: "J3" }, K: { of: i => i.params?.K, label: "K" },
+  J: { of: i => i.params?.J, label: "J" }, Gamma: { of: i => i.params?.Gamma, label: "Gamma" },
+  Jd: { of: i => i.params?.Jd, label: "Jd" },
   rs: { of: i => i.params?.rs, label: "rs" },
   n: { of: fillingOf, label: "filling n" }, variant: { of: i => variantsOf(i).join(", "), label: "variant" },
 };
@@ -170,7 +180,7 @@ function scansOf(instances) {
 export const STRIP = { left: PAD + 56, right: W - PAD - 10, top: 92, bottom: 252, labelY: 40 };
 export const stripX = (k, count) => STRIP.left + ((k + 0.5) / count) * (STRIP.right - STRIP.left);
 
-const AXES = ["J2", "h", "U", "V", "n", "t2", "rs"];
+const AXES = ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V", "n", "t2", "t3", "rs"];
 const slug = s => s.replace(/[^\w.]+/g, "_").replace(/^_+|_+$/g, "");
 const multiSize = L => new Set(L.members.map(i => i.n_sites)).size >= 2;
 const drawnCount = L => L.members.reduce((a, i) => a + drawnRows(i).length, 0);
@@ -209,6 +219,10 @@ export function energyFigures(instances) {
         const at = axis ? SCAN[axis].of(L.members[0]) : null;
         return { at, label: axis ? valueLabel(at) : L.label, name: axis ? `${base}--${axis}_${valueLabel(at)}` : base, energies: drawnCount(L), ladder: L };
       }).sort((a, b) => (a.at ?? 0) - (b.at ?? 0));
+      // Couplings that agree to three digits (J = 0.6772 and 0.67724 on the Shastry-Sutherland
+      // clusters) keep their full value, so each stop keeps its own label and file.
+      for (const s of stops) if (axis && typeof s.at === "number" && stops.filter(t => t.label === s.label).length > 1)
+        Object.assign(s, { label: String(s.at), name: `${base}--${axis}_${s.at}` });
       facets.push({ label, stops });
     }
     // The strip's slots: the stops in facet order, an empty slot between facets, which are

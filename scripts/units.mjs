@@ -1,7 +1,12 @@
 // Unit and bookkeeping conventions for the VarBench schema, and the record eligibility rules.
 // Every script imports them from here, so each rule is written once.
 
-export const SPIN_MODELS = new Set(["Heisenberg", "J1J2", "TFIsing"]);
+// Kitaev (K, J, Gamma on the honeycomb lattice) and ShastrySutherland (J, Jd) are written with
+// spin-1/2 operators S = sigma/2 and normalised couplings (|K| = 1, Jd = 1; RULES.md 2.1,
+// 2026-10-21), and stored like Heisenberg and J1J2: totals in the Pauli form, 4x the S-operator
+// energy, so E/N in the S convention is energy / (4 N) (RULES.md 5). All their terms are
+// traceless: einf 0.
+export const SPIN_MODELS = new Set(["Heisenberg", "J1J2", "TFIsing", "Kitaev", "ShastrySutherland"]);
 // Track 2 (RULES.md 12): the homogeneous electron gas, stored as totals in Hartree; n_sites holds N.
 export const HEG_MODELS = new Set(["HEG2D", "HEG3D"]);
 
@@ -155,7 +160,8 @@ export const approximateEligible = r => r.bound_type === "approximate" && !r.def
 export function perSiteDivisor(inst) {
   if (inst.model === "TFIsing" || HEG_MODELS.has(inst.model)) return inst.n_sites;
   if (SPIN_MODELS.has(inst.model)) return 4 * inst.n_sites;
-  if (inst.model === "Hubbard" || inst.model === "tV") return inst.n_sites;
+  // tJ (RULES.md 5, 2026-10-22): totals in units of t, papers quote per site.
+  if (inst.model === "Hubbard" || inst.model === "tV" || inst.model === "tJ") return inst.n_sites;
   return null; // Impurity: no meaningful per-site energy
 }
 
@@ -172,6 +178,8 @@ export function expectedDof(inst) {
   if (SPIN_MODELS.has(inst.model) || HEG_MODELS.has(inst.model)) return inst.n_sites;
   // t-V is spinless, so Nf is already the total particle number.
   if (inst.model === "tV") return inst.params?.Nf ?? null;
+  // tJ carries N_up and N_dn (the hole count fixes N_up + N_dn; RULES.md 2.1).
+  if (inst.model === "tJ") return inst.params?.N_up != null && inst.params?.N_dn != null ? inst.params.N_up + inst.params.N_dn : null;
   if (inst.params?.Nf != null) return 2 * inst.params.Nf;
   return null;
 }
@@ -185,6 +193,8 @@ export function expectedEinf(inst) {
   if (inst.model === "Hubbard" && !/UV|V1|V2/.test(inst.instance_id)
       && inst.params?.U != null && inst.params?.Nf != null)
     return (inst.params.U * inst.params.Nf * inst.params.Nf) / inst.n_sites;
+  // tJ: the exchange term in the projected space, with or without -n_i n_j / 4, is not
+  // traceless, and no source states E_inf, so it is not checked (null).
   return null;
 }
 
