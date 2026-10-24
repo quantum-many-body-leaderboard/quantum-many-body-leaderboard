@@ -284,8 +284,21 @@ function rowIssueUrl(r, inst) {
     `source: ${c.text}${c.url ? ` ${c.url}` : ""}`,
     `on qmbl.org: https://qmbl.org/instances/#${id}`,
   ].join("\n");
-  const q = new URLSearchParams({ template: "row-feedback.yml", title: `[row] ${inst.instance_id}, ${methodLabel(r)}: `, row: id, instance: inst.instance_id, shown });
+  const q = new URLSearchParams({ template: "row-feedback.yml", title: `[row] ${rowTitle(r, inst)}: `, row: id, instance: inst.instance_id, shown });
   return `${REPO}/issues/new?${q}`;
+}
+// The issue title names the row as the table shows it. Rows that differ only past what the
+// table shows (a bond dimension, a stripe orientation) would share it, so those add the method
+// detail, else the published method, else the hash from the row's id.
+const titleBase = (r, inst) => `${inst.instance_id}, ${methodLabel(r)}, ${quoteRow(r, inst).text}, ${citeRef(r, cache).text}`;
+function rowTitle(r, inst) {
+  const base = titleBase(r, inst), twins = inst.rows.filter(x => titleBase(x, inst) === base);
+  if (twins.length === 1) return base;
+  for (const extra of [methodDetail, x => shorten(publishedMethod(x), 60)]) {
+    const e = extra(r);
+    if (e && twins.filter(x => extra(x) === e).length === 1) return `${base}, ${e}`;
+  }
+  return `${base}, ${rowId(inst, r).match(/[0-9a-f]{8}(?:-\d+)?$/)[0]}`;
 }
 const editCell = (r, inst) =>
   `<td class="edit"><a href="${esc(rowIssueUrl(r, inst))}" title="Report a problem or comment on this row" aria-label="Report a problem or comment on this row">${PENCIL}</a></td>`;
