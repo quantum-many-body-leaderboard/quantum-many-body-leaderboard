@@ -1,0 +1,1480 @@
+         Field stability of Majorana spin liquids in antiferromagnetic Kitaev models
+
+                                         Christoph  Berke,∗  Simon  Trebst,  and  Ciar´an  Hickey
+                          Institute  for  Theoretical  Physics,  University  of  Cologne,  50937  Cologne,  Germany
+                                                               (Dated:  April 3, 2020)
+                   Magnetic  ﬁelds  can  give  rise  to  a  plethora  of  phenomena  in  Kitaev  spin  systems,  such  as  the
+                formation of non-trivial spin liquids in two and three spatial dimensions.  For the original honeycomb
+                Kitaev  model,  it  has  recently  been  observed  that  the  sign  of  the  bond-directional  exchange  is  of
+                crucial  relevance  for  the  ﬁeld-induced  physics,  with  antiferromagnetic  couplings  giving  rise  to  an
+                intermediate spin liquid regime between the low-ﬁeld gapped Kitaev spin liquid and the high-ﬁeld
+                polarized state, which is not present in the ferromagnetically coupled model.  Here, by employing a
+                Majorana mean-ﬁeld approach for a magnetic ﬁeld pointing along the [001] direction, we present a
+                systematic study of ﬁeld-induced spin liquid phases for a variety of two and three-dimensional lattice
+                geometries.  We ﬁnd that antiferromagnetic couplings generically lead to (i) spin liquid phases that
+                are considerably more stable in ﬁeld than those for ferromagnetic couplings, and (ii) an intermediate
+                spin liquid phase which arises from a change in the topology of the Majorana band structure.  Close
+                inspection of the mean-ﬁeld parameters reveal that the intermediate phase occurs due to a ﬁeld-
+                driven sign change in an ‘eﬀective’ z-bond energy parameter.  Our results clearly demonstrate the
+                richness  of  the  Majorana  physics  of  the  antiferromagnetic  Kitaev  models,  in  comparison  to  their
+                ferromagnetic counterparts.
+
+
+                     I.    INTRODUCTION                                         for  ﬁngerprints  of  spin  liquid  physics  [19, 20].   Promi-
+                                                                                nent examples include the honeycomb materials Na2IrO3
+   Few  ﬁelds  of  condensed  matter  physics  have  experi-                    [21,22],  Li           2IrO3  [23],  and   α-RuCl [24–27],  all of which
+enced a similar ﬂourishing in recent decades as the study                       have  been  identiﬁed  as  having  ferromagnetic  (FM)  Ki-
+of quantum spin liquids (QSLs).  These are captivating                          taev interactions [28,29].  However, all of these materials
+states of matter, in which strongly interacting spins avoid                     exhibit magnetically ordered states at low temperatures
+symmetry  breaking  magnetic  order  down  to  the  lowest                      [15, 30–37],  indicating  the  presence  of  additional  inter-
+temperatures due to strong quantum ﬂuctuations [1–4].                           actions,  beyond those of the pure Kitaev model,  which
+A powerful framework to understand such states has been                         tend to stabilize conventional magnetic ordering.
+to  express  –  or  fractionalize  –  the  constituent  spins  in                  Motivated by the discovery that a magnetic ﬁeld sup-
+terms  of  emergent  degrees  of  freedom,  similar  to  spin-                  presses the magnetic order inα-RuCl and brings it to the
+charge separation in Luttinger liquids [5].  In the context                     proximity of a potential QSL phase [27,37–45], intensive
+of QSLs, the spins naturally decompose into spinons, ei-                        theoretical research on the Kitaev model in an external
+ther bosons or fermions, and emergent gauge ﬁelds in a                          ﬁeld  has  been  initiated  [46–55].   As  already  shown  by
+deconﬁned phase [6–10].                                                         Kitaev  himself,  a  weak  magnetic  ﬁeld  in  the  perturba-
+   A paradigmatic example of a QSL occurs in Kitaev’s                           tive  regime  induces  next  nearest  neighbor  hopping  be-
+eponymous  honeycomb  model  [11],  which  provides  an                         tween  the  Majorana  fermions  and  gaps  out  the  other-
+analytically tractable example of a local quadratic spin                        wise  gapless  spectrum.   Going  beyond  the  perturbative
+Hamiltonian whose exact  ground state is a QSL. In this                         regime, recent studies found evidence that the antiferro-
+model,S = 1/2 spins are subject to strong exchange frus-                        magnetic (AFM) Kitaev model hosts a gapless QSL with
+tration arising from bond-directional Ising interactions.                       a U(1)  gauge  structure  at  intermediate  ﬁeld  strengths,
+Its exact solution is typically formulated in terms of itin-                    using  numerical  exact  diagonalization  [46]  and  density
+erant  Majorana  fermions  and  a  static  Z2  gauge  ﬁeld,                     matrix  renormalization  group  techniques  [50].   Shortly
+which has allowed for a plethora of conceptual studies of                       afterwards,  implementations  of  such  AFM  interactions
+spin liquid physics phenomena [12].  The signiﬁcance of                         in  actual  materials  were  proposed,  e.g.   in  4f  electron
+this model, however, goes far beyond being the drosophila                       based systems [56–58], further enriching the zoo of pos-
+of  QSLs:   Despite  its  seemingly  artiﬁcial  interactions,                   sible Kitaev materials.
+Khaliullin, Jackeli, and Chaloupka have shown in a series                          In this manuscript, we discuss the physics of the Kitaev
+of works [13–15] that bond-directional Kitaev-like inter-                       model in a [001] magnetic ﬁeld on various two- and three-
+actions  can  actually  be  realized  in  spin-orbit  entangled                 dimensional lattice geometries and compare and contrast
+j = 1/2 Mott insulators [16–18].  Over the last decade, a                       the FM and AFM cases.  Technically, we adopt a Majo-
+variety of such 4d and 5d Kitaev materials have been syn-                       rana mean-ﬁeld approach that was ﬁrst applied by Nasu
+thesized  and  subject  of  an  intense  experimental  search                   et al. [54] and which focuses on the Majorana signatures
+                                                                                of  the  model.    Fractionalization  into  these  quasiparti-
+                                                                                cles  is  the  deﬁning  property  of  the  Kitaev  model  and
+                                                                                believed to be the driving force for a number of astonish-
+∗ berke@thp.uni-koeln.de
+                                                                                ing experimental ﬁndings [25,26,41,45,59–61], making
+                                                                                                                                                                     2
+
+                                                                                              rana  Fermi  line  (dc = 2)  and  the  hyperoctagon  lattice
+                                                                                              which exhibits a full Fermi surface (dc =1).  As shown in
+                                                                                              Fig.1these three particular lattices are the natural 3D
+                                                                                              analogues of the three 2D lattices.
+                                                                                                 Switching  on  a  ﬁeld h  in  the  [001]  direction  and  us-
+                                                                                              ing a Majorana mean-ﬁeld approach, we ﬁnd the generic
+                                                                                              behavior summarized in Fig.2for all lattices under con-
+                                                                                              sideration.  The phase diagram of the FM Kitaev model
+                                                                                              (Fig.2a) shows a single transition from the KSL phase
+                                                                                              to  the  ﬁeld-polarized  phase  at  a  critical  ﬁeld  strength
+                                                                                              hp≈ 0.05.  As Fig.2bdepicts, the KSL with AFM cou-
+                                                                                              plings is stable to much higher ﬁelds and the polarized
+                                                                                              phase only appears at hp≈ 0.5.  A universal feature for
+                                                                                              all lattices is the emergence of an additional intermediate
+                                                                                              phase(s) in the AFM model, appearing at ﬁeld strengths
+                                                                                              of hc≈ 0.4.  The precise critical ﬁelds for the FM and
+                                                                                              AFM models are summarized in TableI.
+                FIG. 1. Overview over tricoordinated lattices in 2D,(a)                          In the presence of a [001] ﬁeld the Kitaev model can
+                honeycomb lattice,(b)square-octagon lattice,(c)decorated                      be written as
+                honeycomb  lattice),  and  their  3D  analogues,(d)(10,3)b  or
+                hyperhoneycomb lattice,(e)(10,3)a or hyperoctagon lattice,                                    H =∑       Hγ +Hh
+                (f)(8,3)b lattice.                                                                                    γ
+                                                                                                                 =−∑         JγSγiSγj−h∑Szi,               (1)
+                                                                                                                       ⟨ij⟩γ                   i
+                a Majorana-focused point of view a well-motivated start-
+                ing  point.   We  show  that,  in  all  cases,  the  Kitaev  spin             whereJγ > 0 (Jγ < 0) is the FM (AFM) Kitaev coupling
+                liquid  (KSL)  in  the  AFM  Kitaev  model  is  signiﬁcantly                  along the bond γ∈{x,y,z}.  For the AFM model, with
+                more  stable  when  ramping  up  the  magnetic  ﬁeld  than                    isotropic couplingsJγ =J, the nature of both the transi-
+                the one for the analogous FM model.  Furthermore, for                         tion athc and the intermediate phase(s) between hc and
+                AFM couplings, the models generically host an interme-                        hp  can  in  fact  be  directly  related  to  the  nature  of  the
+                diate spin liquid phase, between the KSL and the trivial                      corresponding  zero-ﬁeld  Kitaev  model  with  variable Jz
+                ﬁeld-polarized  phase,  whose  precise  nature  depends  on                   and ﬁxed AFM Jx, Jy.  Indeed, by deﬁning an eﬀective
+                the underlying lattice structure.                                             parameter
+
+                                                                                                Eeﬀz  (h) =⟨Heﬀz  (h)⟩/N =⟨Hz +Hh⟩/N−h2/2J,   (2)
+
+                                       Overview of results                                    we ﬁnd for all lattices that (i) Eeﬀz  (h) goes to zero pre-
+                                                                                              cisely at the transition from the KSL to the intermediate
+                  As essential ingredients for this study, we have chosen                     phase, i.e. Eeﬀz  (hc) = 0.  (ii) Analyzing the band struc-
+                three two-dimensional (2D) and three three-dimensional                        ture  demonstrates  that  the  structure  of  the  Majorana
+                (3D)  tricoordinated  lattice  geometries,  as  illustrated  in
+                Fig.1.   The  distinguishing  feature  of  the  QSL  ground
+                state  of  the  Kitaev  model  for  each  of  these  lattice  ge-
+                ometries is the resulting band structure of the Majorana
+                fermions,  whose  features  (gapped  versus  gapless,  topo-
+                logical versus trivial) depend sensitively on the underly-
+                ing  lattices.   An  overview  of  the  lattices,  together  with
+                information  on  their  zero-ﬁeld  band  structure,  is  given
+                in  TableI.  For  the  2D  models,  we  discuss  a  gapped
+                and  topologically  trivial  Kitaev  model  on  the  square-
+                octagon lattice [62] and a gapped and topologically non-
+                trivial Kitaev model on the decorated honeycomb lattice,
+                whose ground state is a chiral spin liquid [63].  We also                     FIG. 2.  Generic phase diagram  for(a)the FM and(b)
+                brieﬂy recapitulate the gapless Kitaev model on the hon-                      the AFM Kitaev model under a magnetic ﬁeld in [001] direc-
+                eycomb lattice, already discussed within this framework                       tion.   The  dashed  line  denotes  a  change  in  the  topology  of
+                in Ref. [61].  For the 3D models, we discuss one example                      the Fermi surface and solid lines the transition to the ﬁeld-
+                for each codimension dc = 1, 2, 3 of the Majorana Fermi                       polarized phase. Eeﬀz  (h) changes sign athc, while the nearest
+                surface [64]: The lattice (8,3)b [65] that hosts Weyl points                  neighbor correlation function⟨SziSzj⟩z changes sign within the
+                (dc =3), the hyperhoneycomb lattice that hosts a Majo-                        intermediate phase.
+
+
+
+
+
+
+
+
+(a)
+(b)(a)(b)(c)(d)(e)(f)
+                                                                                                                                                         3
+
+
+TABLE I. Overview of two and three dimensional tricoordinated lattices and the results for the critical [001] ﬁelds at
+which the polarized phase is entered (hp), and for the ﬁelds where the non-universal intermediate phase sets in (hc) for AFM
+couplings.  For the decorated honeycomb and (8,3)b lattice, hc gives the ﬁrst critical ﬁeld strength.
+                                                                                 FM                 AFM
+        lattice                                       band structure at h = 0   hp     hc     hp            Fermi surface at hc
+        square-octagon                         gapped (ν = 0)                     0.075       0.423       0.527       nodal line
+        decorated honeycomb               gapped (ν =±1)                  0.025       0.405       0.523       Dirac points/nodal line
+        honeycomb                               Dirac cones                          0.042       0.417       0.503       nodal line
+        (8,3)b                                        Weyl nodes (dc = 3)             0.030       0.415       0.489       nodal line
+        (10,3)b / hyperhoneycomb       nodal line (dc = 2)               0.028       0.415       0.485       nodal line
+        (10,3)a / hyperoctagon             Fermi surface (dc = 1)         0.028       0.416       0.487       ﬂat bands
+
+
+Fermi  surfaces  obtained  at  the  ﬁeld-induced  transition,                   in SectionIII B. We end in SectionIVwith a discussion
+Eeﬀz  (hc)  =  0,  and  in  the  completely  decoupled  limit  of               and outlook, where we consider potential connections to
+the  corresponding  zero-ﬁeld  model, Jz  =  0  and  hence                      experiments, limitations of our method and possible ex-
+E0z = 0, are identical (hereE0γ =⟨Hγ⟩/N indicates ener-                         tensions thereof.
+gies of the zero-ﬁeld model).  The speciﬁc forms of these
+Fermi surfaces are listed in TableI. (iii) The nature of
+the  phase  for Eeﬀz  (h) >  0,  i.e.  the  intermediate  phase,                               II.     MODEL AND METHOD
+is  identical  to  that  of  the  phase  in  the  corresponding
+zero-ﬁeld  model  with E0z >  0.   Taken  together,  (i)-(iii)                                          A.    Kitaev model
+indicate  that  the  physics  of  the  isotropic  AFM  Kitaev
+model for h < hp, in particular, the transition into and
+nature  of,  the  intermediate  phase,  is  intimately  related                    The Kitaev honeycomb model [11] consists of   S =1/2
+to the physics of the corresponding zero-ﬁeld model with                        spins at the vertices of a honeycomb lattice, coupled via
+variable Jz and ﬁxed AFM Jx,Jy.  Note that the sign of                          bond-dependent Ising interactions, and is one of the few
+the nearest neighbor (NN) spin-spin correlations does not                       quantum spin models that can be solved exactly in two
+change at the transition, Eeﬀz  (hc) = 0, but rather within                     dimensions.  The Hamiltonian, in the presence of a [001]
+the intermediate phase when⟨Hz⟩ = 0.  The subsequent                            ﬁeld,  is given in Eq. (1).  In the absence of a magnetic
+transition to the polarized phase at h = hp  is triggered                       ﬁeld,  two  main  ingredients  are  necessary  to  solve  the
+simply whenEpol <EKSL.  Fig.3summarizes this simple                             model.  The ﬁrst is the choice of a clever representation –
+picture behind the phase diagram.                                               or better fractionalization  scheme – for the spin degrees
+   The remainder of the paper is organized as follows:  In                      of freedom.  This procedure – rather routine in the con-
+SectionIIwe introduce the Kitaev model and explain the                          text of frustrated magnets – often only oﬀers a new start-
+fermionization procedure on which the Majorana mean-                            ing point for making approximations,  e.g.  a mean-ﬁeld
+ﬁeld theory that is exploited in the following sections is                      decoupling for the emerging four-fermion terms.  Fortu-
+based.  SectionIII Apresents the mean-ﬁeld results for                          nately, in the Kitaev model, fractionalization of the spins
+the 2D models, followed by a discussion of the 3D models                        turns out to be exact.  This is due to the fact that we can
+                                                                                identify an extensive number of conserved quantities, pla-
+                                                                                quette  ﬂuxes,  which consitute the second main ingredi-
+                                                                                ent.   Following  Kitaev,  one  can  for  example  substitute
+                                                                                each  spin  degree  of  freedom  by  four  diﬀerent  ﬂavors  of
+                                                                                Majorana  fermions  and  then  combine  them  to  form  a
+                                                                                single ﬂavor of itinerant non-interacting Majoranas cou-
+                                                                                pled  to  a  static Z2  gauge  ﬁeld.   After  ﬁxing  the  gauge
+                                                                                ﬁeld sector, the system is then described by its Majorana
+                                                                                band structure.  For the honeycomb model, one ﬁnds two
+                                                                                gapless Majorana cones, atK andK′, for approximately
+                                                                                equal couplings on all bonds and a gapped phase if one
+                                                                                exchange  dominates.   It  was  quickly  realized  that  gen-
+                                                                                eralizations of the model to other lattices, even in three
+                                                                                dimensions, inherit the analytical solvability, as long as
+                                                                                the lattices remain tricoordinated. As multifaceted as the
+FIG. 3. Schematic representation of the evolution of Eeﬀz                       possible lattices are, so are the resulting Majorana band
+and  the  energies  in  the  KSL  (EKSL)  and  polarized  phase                 structures:  For isotropic couplings,  gapped band struc-
+(Epol).                                                                         tures [62], both topologically trivial and non-trivial, are
+                                                                                                                                                    4
+
+possible as are Dirac points and Weyl points, nodal lines                    The Kitaev Hamiltonian then becomes
+and  Fermi  surfaces  in  three  dimensions  [66–69].   Note                                          ∑                      ∑
+that the ground-state energy and band structure do not                                   H =iJx4             cbcw− iJy4             cwcb
+depend on the sign of the Kitaev coupling, whether FM                                               x-bonds                y-bonds
+or AFM. However, this no longer applies in the presence                                                   ∑
+of a magnetic ﬁeld.                                                                             − iJz4          δrαrcicj
+                                                                                                      (∑z-bonds                  )
+
+                                                                                                − ih2         cb¯cb−∑      cw¯cw    ,              (10)
+                                                                                                          b            w
+            B.    Jordan-Wigner transformation
+                                                                             where i  and j  in  the  third  sum  are  connected  via  the
+  The Kitaev model can be fermionized using a Jordan-                        z-bond r  and  in  the  last  sum, b  (w)  numbers  all  black
+Wigner  transformation  [70–74].   Compared  to  Kitaev’s                    (white)  lattice  sites  and δr  equals−1  if  the z-bond r
+original   solution   [11]   or   alternative   fractionalization            connects two sites of the same color and 1 otherwise.  So
+schemes [75], it has the advantage that the Hilbert space                    far, Eq. (10) is an exact rewriting of Eq. (1).  For    h = 0,
+is  not  enlarged  and  we  are  not  faced  with  the  techni-              αr  = i¯ci¯cj  is  a  conserved Z2  quantity  deﬁned  on  each
+cal diﬃculty of imposing constraints to obtain physical                      z-bond.  It eﬀectively plays the role of the gauge ﬁeld in
+states.  At the same time,  the transformation is ideally                    the original solution, where these Z2 conserved quantities
+suited  to  coupling  the  spins  to  a  [001]  ﬁeld  due  to  the           are deﬁned for all bonds.
+simple form of Sz.                                                              The conserved loop or plaquette operator to whom the
+                                                                             Kitaev model owes its exact solvability is deﬁned as
+  In order to apply the transformation, the lattices are
+considered as arrangements of chains consisting ofx- and                                            Wp =  ∏            SγiSγj ,                      (11)
+y-bonds that are connected by z-bonds.  For each chain,                                                     (i,j)γ∈∂p
+the Jordan-Wigner transformation
+                                                                             where the product is taken over all bonds that form the
+                                     iπ ∑                                    plaquette p  [76]:  Its  eigenvalue  determines  the     Z2  ﬂux
+                                        l<na†mlaml,                   (3)    through the plaquette.  An eigenvalue of +1(−1) corre-
+                   S+mn = 12a†mne                                            sponds to 0(π)-ﬂux.  In the original solution, this eigen-
+                   Szmn = 1    (2a†mnamn− 1),                    (4)         value  is  given  by  the  product  of  the  gauge  variable  on
+                             2                                               every bond.  As the Jordan-Wigner transformation cor-
+                                                                             responds to a gauge  ﬁxing procedure for all bonds lying
+is applied.  The index m labels the chain and the index                      in  the  Jordan-Wigner  chains  [70],  only   z-bonds  remain
+n  the  position  within  the  chain.   For  the  2D  lattices,              in the product and we get
+m  (n)  corresponds  to  the  row  (column)  number  of  the                                         Wp =  ∏            ¯ci¯cj.                       (12)
+topologically equivalent brick lattices, see Fig.4.  For the
+3D  lattices  see  Fig.13.   Each  lattice  is  divided  in  two                                             (i,j)z∈∂p
+sublattices, colored in black (b) and white (w), such that                   Note that time reversal symmetry is broken in the ﬂux
+sites belonging to diﬀerent sublattices alternate on each                    sector if this product contains an odd number of the op-
+chain.  The z-bonds can either connect sites of diﬀerent                     erators ¯ci¯cj  with purely imaginary expectation value.
+color (e.g.  honeycomb lattice), same color (e.g.  square-
+octagon)  or  both  (e.g.   decorated  honeycomb).   Using
+Eq. (3) and Eq. (4), the interactions are rewritten as                                            C.    Mean-ﬁeld theory
+
+                        (amn−a†mn)(                             )               Forh = 0, replacingαr by±1 results in a free hopping
+ SxmnSxmn+1 =− 14                          amn+1 +a†mn+1          ,  (5)     problem for thec-Majorana fermions and we recover Ki-
+                     (amn +a†mn)(                           )                taev’s  exact  solution.  The exact solubility  is  no  longer
+ SymnSymn+1 =14                         amn+1−a†mn+1          ,      (6)     given when the ﬁeld is switched on due to the hybridiza-
+                     (2a†mnamn− 1)(                      )                   tion  between c-  and  ¯c-Majoranas  that  is  generated  by
+      SzmnSzkl =14                         2a†klakl− 1     .          (7)    the  last  term  in  Eq.  (10).   In  the  Jordan-Wigner  lan-
+                                                                             guage, the system is composed of interacting Majoranas
+We  introduce  Majorana  operators c  and  ¯c  on  the  two                  along  the z-bonds  and  freely  hopping  Majoranas  on x-
+sublattices according to                                                     and y-bonds.  The interactions are decoupled via
+
+                                                                             i¯ci¯cjicicj≈i ¯Aijcicj +iAij¯ci¯cj−  ¯AijAij +i ¯Bij¯cjci
+           cw =a +a†,              ¯cw =−i(a−a†),         (8)                             +iBij¯cicj−  ¯BijBij−iΓi¯cjcj−iΓj¯cici + ΓiΓj,
+            ¯cb =a +a†,      cb =−i(a−a†).         (9)                                                                                          (13)
+                                                                                                                                                                        5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                FIG. 4. Kitaev model, unit cells and translation vectors for 2D lattices:  (a)square-octagon,(c)decorated honeycomb
+                lattice and(e)honeycomb.  The topologically equivalent brick lattice versions are shown in(b),(d)and(f).  The Jordan-Wigner
+                strings correspond to the xy-chains running from left to right in the brick lattice versions.
+
+
+                where the real mean-ﬁeld parameters                                            For  all  three  lattices,  we  follow  the  same  scheme  and
+                    Aij =⟨icicj⟩,      ¯Aij =⟨i¯ci¯cj⟩,                                        discuss ﬁrst the FM Kitaev model and then the AFM one.
+                                                                                               Finally, we consider the inﬂuence of anisotropic couplings
+                    Bij =⟨i¯cicj⟩,      ¯Bij =⟨i¯cjci⟩,     Γl =⟨i¯clcl⟩,     (14)             in the AFM model to shed more light on the nature of
+                were  introduced.   For  the  white  (black)  sublattice,  the                 the intermediate phases appearing in the isotropic case.
+                quantity Γl corresponds to twice the (negative) magneti-
+                zation inz-direction⟨Szi⟩≡Mzi .  Assuming translational
+                invariance, the Fourier transformed Hamiltonian                                                     1.    Square-octagon lattice
+
+                                       HMF =∑         c†kH(k)ck                     (15)          The  Kitaev  model  on  the  square-octagon  lattice  was
+                                                   k
+                is used to solve the mean-ﬁeld equations self-consistently.                    ﬁrst  studied  by  Yang  et  al.  [62]  using  Kitaev’s  original
+                The  sum  in  Eq.  (15)  is  restricted  to  half  of  the  Bril-              approach.   The  lattice  and  its  deformed  brick-wall  ver-
+                louin  zone  to  avoid  double  counting  of  states  and  in                  sion  are  shown  in  Fig.4aand  Fig.4b.   We  start  the
+                ck = (ck,1,...,ck,N, ¯ck,1,..., ¯ck,N)T, the index labels the                  discussion by brieﬂy reviewing the results for h = 0 us-
+                sites within a unit cell.                                                      ing Jordan-Wigner fermions and relate them to Ref. [62].
+                                                                                               Considering a four-site unit cell as depicted in Fig.4a,
+                                                                                               we ﬁnd two diﬀerent mean-ﬁeld solutions for all coupling
+                                          III.    RESULTS                                      conﬁgurations, corresponding to the ﬂux-free sector, with
+                                                                                               zero ﬂux through every plaquette, and the full-ﬂux sec-
+                   We now devote ourselves to a detailed discussion of our                     tor, with a ﬂux ofπ through both the square and octagon
+                results on the Kitaev model in the presence of a uniform                       plaquettes.  The ground state is found to belong to the
+                magnetic ﬁeld in the [001] direction, summarized in Table                      full-ﬂux  sector,  in  accordance  with  Lieb’s  theorem  [77]
+                I, Fig.2and Fig.3.  In the following, we use the termi-                        for  lattices  with  loop  length  0  mod 4  [78].   The  condi-
+                nus ‘polarized phase’ for the phase that is adiabatically                      tion  for  the  Majorana  band  structure  to  be  gapless  is
+                connected to the fully polarized state with Mz = 1/2 at                        J2z  =J2x−J2y , leading to the phase diagram shown at the
+                h→∞.  The phase that smoothly evolves from the KSL                             bottom of Fig.7a.  The spectrum for     kx = 0 and isotropic
+                at zero ﬁeld is referred to as the KSL (or B, Ai),  even                       coupling constants is shown in Fig.6a[79].
+                at ﬁniteh.  Unless otherwise noted, we consider isotropic                         For  AFM  (FM)  couplings,  the  exact  solution  for  the
+                couplings  and  set|J| = 1.   Detailed  information  about                     ground-state energy E0 =−0.804 per unit cell is repro-
+                the lattices can be found in AppendixA, together with                          duced with the non-vanishing mean-ﬁeld parameters
+                explicit expressions of the original spin Hamiltonian and                                          A13 =−A24 =±(∓)0.595,
+                their Jordan-Wigner forms.  The discussion of the mean-                                             ¯A13 =− ¯A24 =±1.                             (16)
+                ﬁeld results is supplemented by AppendixB, where more
+                details on form and evolution of the mean-ﬁeld parame-
+                ters and properties of the Majorana band structure are                         The latter ensures that
+                provided.
+                                                                                                            ⟨W□⟩ =⟨¯c1¯c3¯c4¯c2⟩ =  1i2  ¯A13 ¯A42 =−1         (17)
+                                     A.    2D Kitaev models
+                                                                                               for  all  square  plaquette  operators  and  similarly  for  the
+                   We  start  the  detailed  discussion  of  the  results  with                octagon  plaquettes W          .   For h >  0,  the  mean-ﬁeld  pa-
+                the  two-dimensional  lattices  that  are  shown  in  Fig.4.                   rameters for both AFM and FM couplings fulﬁll the re-
+
+
+
+
+
+
+
+
+(a)
+(b)(c)(d)(e)(f)
+                                                                                                                                                                     6
+
+                                                                                              the one hand, the magnetic ﬁeld and, on the other hand,
+                                                                                              of anisotropies in the coupling constants in the absence
+                                                                                              of a ﬁeld, on the low-energy spectrum are the same.  For
+                                                                                              isotropic couplings the zero-ﬁeld band structure is shown
+                                                                                              in  Fig.6a,  with  the  ﬂat  bands  arising  from  ¯   c-fermions
+                                                                                              localized on the z-bonds.  On increasing h, the two dif-
+                                                                                              ferent Majorana ﬂavors hybridize and all bands become
+                                                                                              dispersive.   The  energy  gap  closes  quadratically,  giving
+                                                                                              rise  to  a  nodal  line  at  the  transition Eeﬀz  (hc)  =  0,  as
+                                                                                              illustrated  in  Fig.6b.   Note  that  –  as  the  white  con-
+                                                                                              tour  lines  indicate  –  only  the  nodal  line  is  dispersion-
+                                                                                              less.  The low-energy excitations are governed by both,
+                                                                                              c-  and  ¯c-Majorana  fermions,  see  also  Fig.16,  whereas
+                                                                                              the  ¯c-sector  is  not  present  for h  =  0.    On  the  other
+                                                                                              hand,  in  the  absence  of  a  ﬁeld,  by  setting Jz  =  0  and
+                                                                                              hence E0z  = 0, the lattice decouples into chains and the
+                                                                                              spectrum is again dispersionless with a nodal line along
+                                                                                              the diagonal of the Brillouin zone, as shown in Fig.6c,
+                                                                                              the same nodal line that appears for Eeﬀz  (hc) = 0.  In-
+                FIG. 5.  Summary of the results for the Kitaev model                          deed,  the  condition  for  gapless  modes  to  appear  in  the
+                on the square-octagon lattice under a magnetic ﬁeld                           zero-ﬁeld  model, J2z  = J2x−J2y ,  is  simply  replaced  by
+                in  [001]  direction  for(a)FM  and(b)AFM  couplings.                         (JzEeﬀz /E0z)2  = J2x−J2y .   Note  that  the  NN  spin-spin
+                Shown here are the magnetization,  the expectation value of                   correlations along z-bonds change from AFM to FM at
+                the ﬂux operator for the two diﬀerent plaquettes and the NN                   a ﬁeld strength just above hc, see Fig.5b.
+                correlations⟨SziSzj⟩z as a function of h.                                        As shown in Fig.5b, the ﬂuxes   ⟨W⟩ through the square
+                                                                                              and octagon plaquettes exhibit a similar evolution in the
+                lations                                                                       KSL  phase.   Between hc  and hp, ⟨W                ⟩  drops  rapidly,
+                                                                                              nearly approaching zero at hp, whereas⟨W□⟩ decreases
+                                 A13 =−A24,                                                   slower,  having  a  large  residual  value  even  in  the  ﬁeld-
+                                  ¯A13 =− ¯A24,                                               polarized phase.
+                                                                                                 c.    Anisotropic  couplings    We can gain more insight
+                                 B13 =B24 =  ¯B13 =  ¯B24 = 0,                                into  the  nature  of  the  transition  at hc  by  allowing  for
+                                  Mz1  =Mz2  =Mz3  =Mz4.                       (18)           anisotropic couplings.  To do so, we consider varying the
+                                                                                              AFM coupling strengths, while keeping∑i|Ji| = 1.  As
+                  a.    FM  couplings    Fig.5adisplays  the  main  results                   depicted in ﬁgure Fig.7a,  the phase diagram at     h = 0
+                for FM couplings.  The magnetization increases rapidly                        consists of two gapped phases, Ax and Ayz, named after
+                with increasing ﬁeld strength and a single phase transi-                      the  dominating  coupling  constants Jx  and Jy/z  respec-
+                tion to the ﬁeld-polarized phase occurs at a critical ﬁeld                    tively  [62].   The  transition  between  the  two  phases  is
+                strength of hc = 0.075.  This is the highest critical ﬁeld                    accompanied by the emergence of Dirac cones at Γ and
+                for  all  FM  models  considered  in  this  study.   The  band                M.  This line separatingAx andAyz is denoted asB.  As
+                structure is gapped for allh≥ 0.  In the polarized phase,                     for the honeycomb lattice, a magnetic ﬁeld in the [111]
+                all mean-ﬁeld parameters disappear, apart from the mag-                       direction induces an eﬀective hopping between next near-
+                netization.  However, there is a residual ﬂux through the                     est neighbors and theB line expands into a gapped phase
+                square plaquettes that approaches zero only in the limit                      covering a ﬁnite region in parameter space [62,80].  The
+                h→∞.  More details on mean-ﬁeld parameters,  corre-                           Chern number of the nowB phase isν =±1 at low ﬁelds,
+                lation functions and susceptibility are presented in Ap-                      with anisotropies in the couplings facilitating phases with
+                pendixB.                                                                      even higher Chern number, up to ν =±4 [80].
+                  b.    AFM    couplings    The   results   from   the   self-                   The  phase  diagram  for  the  model  under  a  [001]  ﬁeld
+                consistent  calculations  for  AFM  couplings  are  summa-                    is  presented  in  Fig.7a.   In  contrast  to  the  ﬁndings  for
+                rized in Fig.5b.  There are two phase transitions present.                    a ﬁeld in the [111] direction, the B line does not spread
+                A kink in the evolution of the ﬂuxes and magnetization                        out but remains a line, though it does deform and shift
+                indicates a second-order transition at hc = 0.423.  Then,                     within parameter space.  The gapless points along the B
+                at hp = 0.527, all mean-ﬁeld parameters, except for the                       line always appear at Γ and M, as shown in Fig.6dfor
+                magnetization,  vanish  and  the  polarized  phase  appears                   h=0.075 andJy =Jz =−0.31. The KSL is more stable for
+                via a continuous transition.                                                  larger AFM Jz  and, as the ﬁeld increases, the polarized
+                  As noted in SectionI, by deﬁning      Eeﬀz  (h), Eq. (2), we                phase  covers  an  increasingly  large  region  in  the  phase
+                see that the ﬁrst phase transition, athc, is simply due to                    diagram, starting from the lower edge where Jz = 0.
+                a sign change in Eeﬀz  (h).  Furthermore, the eﬀect of, on                       For Jx = Jy  = 0,  the  lattice  decouples  into  isolated
+
+
+
+
+
+
+
+
+(a)
+(b)
+                                                                                                                                                                      7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                              FIG. 7.(a)   Phase diagram of the Kitaev model on the
+                                                                                              square-octagon lattice in a [001] ﬁeld with anisotropic
+                                                                                              AFM  couplings.   With  increasing  ﬁeld  strenght,  the  po-
+                                                                                              larized  phase  covers  more  and  more  space,  the  border  be-
+                                                                                              tween Ax and Ayz  deforms and a new phase (NOS), charac-
+                                                                                              terized by spins aligned antiparallel alongz-bonds emerges for
+                                                                                              |Jx|,|Jz|>>|Jy|. (b)Phase diagram for   h and the parameters
+                                                                                              chosen along the line deﬁned byJy =Jz and|Jx|+|Jy|+|Jz|=1
+                FIG.  6.   Mean  ﬁeld  band  structure  for  the  square-                     (white  dotted  line  in(a)).   The  point  where  the  gap  closes
+                octagon  lattice.   (a)Cut  along  the  high  symmetry  lines                 along a line in k-space is denoted by the red star.  From this
+                that are shown in(b).  The ﬂat bands for    h = 0 correspond                  perspective, it appears that the ﬁrst phase transition is just
+                to ¯c-Majoranas that are localized on z-bonds.(b)Energy of                    a touching of the B phase.
+                the lowest band for isotropic couplings and hc with a gapless
+                mode along the diagonal of the ﬁrst Brillouin zone (marked
+                by the dashed line).(c)Energy of the lowest band for      Jz = 0              betweenM and Γ.  The transition is thus simply a touch-
+                and Jx = Jy. (d)Energy of the lowest lying band for the   B                   ing of the critical B line.  Both sides of hc lie within the
+                phase at h=0.075, Jx =−0.38 and Jy =Jz =−0.31.                                Ayz  phase, and are smoothly connected once anisotropy
+                                                                                              is introduced.  Note that starting slightly to the left of
+                                                                                              the isotropic cut in Fig.7benables a sequence of ﬁeld-
+                dimers and the KSL solution simply corresponds to iso-                        induced transitions from Ayz→Ax→Ayz→ polarized.
+                lated dimer singlets and is degenerate in energy with a
+                solution in which spins align antiparallel along z-bonds
+                with|Mzi| = 1/2.  In the latter solution, spins connected                                      2.    Decorated honeycomb lattice
+                by y-bonds can point either in the same or opposite di-
+                rection, resulting in stripy or N´eel order on each square.                      Inﬂating  each  site  of  the  honeycomb  lattice  to  a  tri-
+                A  ﬁnite Jx(Jy)  prefers  an  arrangement  smoothly  con-                     angle, whose size is chosen such that all bonds have the
+                nected  to  the  N´eel  (stripy)  order.   If Jx,y,h⁄= 0,  these              same  length,  generates  a  new  lattice  which  we  refer  to
+                states  can  lower  their  energy  by  suppressing  the  mag-                 here as the decorated honeycomb lattice (also known as
+                netization  pointing  opposite  to  the  ﬁeld  direction.   In-               the  triangle-honeycomb  or  Fisher  lattice).   As  already
+                deed, for|Jx|>|Jy|, the phase descending from the N´eel-                      foreseen by Kitaev [11], and fully elucidated by Yao and
+                ordered squares (NOS) actually becomes preferable over                        Kivelson [63], new physics arises due to the      odd number
+                the  KSL,  occupying  a  ﬁnite  region  of  parameter  space,                 of bonds forming the triangular plaquettes:  The eigen-
+                as shown in Fig.7a.  However, for   |Jy|>|Jx|, the phase                      value of W∆ is±i and therefore odd under time reversal
+                evolving from the stripy-ordered squares never becomes                        symmetry  (TRS)  implying  that  TRS  is  spontaneously
+                the groundstate.                                                              broken upon the transition into the QSL regime.  Such a
+                   How can these observations enlighten our understand-                       QSL with broken TRS is called a chiral spin liquid (CSL)
+                ing  of  the  transition  at hc  in  the  case  of  isotropic  cou-           [81].
+                plings?  Fig.7bshows the phase diagram along the white                           As shown in Fig.4c, two sets of coupling parameters
+                line indicated at the bottom of Fig.7a.  For increasing                       not connected by symmetries can be distinguished,Ji on
+                ﬁeld strength, theB line moves to lower values ofJz and                       the  bonds  forming  the  up  and  down  pointing  triangles
+                the lowest energy band between the M  and Γ points be-                        and J′i  on the  bonds connecting  them.  For  isotropic J
+                comes  increasingly  ﬂat.   At hc,  the B  line  reaches  the                 andJ′, two diﬀerent ground states are possible depending
+                isotropic point and there are zero-energy modes for all k                     on  the  ratio J′/J  [63]:  A  topologically  trivial  CSL  for
+
+
+
+
+
+
+
+
+(a)(b)(a)(b)(c)(d)
+                                                                                                                                                                   8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               FIG. 8.  Summary of the results for the Kitaev model
+               on the decorated honeycomb lattice in a [001] ﬁeld.
+               Shown are the evolution of the magnetization, the expectation
+               values of plaquette operators and the NN correlations⟨SziSzj⟩z
+               for(a)the FM Kitaev model and(b)the AFM Kitaev model.
+               Dashed (solid) lines belong to expectation values on dashed
+               (solid) bonds in Fig.4c.  In(b), the Chern number        ν changes            FIG.  9.   Energy  of  the  lowest  band  for  isotropic  AFM
+               its sign at hc2  and jumps to zero at hc3.  An additional gap                 couplings(a)at         hc1,(b)at   hc2 and for h = 0 but anisotropic
+               closing that does not aﬀect ν appears at hc1.                                 couplings, namely(c)     J′z = 0 and(d)   J′z≈ 0.214 and Jz = 0.
+                                                                                             The gapless line that appears at hc1 can also be obtained by
+                                                                                             decoupling the lattice for J′z = 0.  The gapless points at hc2,
+               J′/J >√3  and  a  non-trivial  CSL  with  Chern  number                       marked by the yellow stars, also appear for small FM J′z and
+               ν  =±1  otherwise.   The  non-trivial  CSL  hosts  anyonic                    Jz = 0.
+               excitations with non-Abelian braiding statistics [11,63,
+               82].   For  h  =  0  and  AFM  couplings J =J′ =−1,  the
+               mean-ﬁeld solution with the lowest energy andν = +1 is                        diﬀerentz-bonds, as we show below.  The phase diagram
+               given by                                                                      exhibits a total of four critical ﬁeld values, each of which
+                                                                                             is either characterized by certain mean-ﬁeld parameters
+                        A12 =A45 =±0.482,     A36 =±0.566,                                   approaching  zero  or  by  a  gap  closing  in  the  excitation
+                         ¯A12 =  ¯A45 =±1,                  ¯A36 =∓1,           (19)         spectrum.  As for FM couplings,  mean-ﬁeld parameters
+                                                                                             on diﬀerent bonds are found to diﬀer with spins on lat-
+               corresponding to the uniform ﬂux conﬁguration that was                        tice sites 1,2,4 and 5 being stronger polarized.  Starting
+               identiﬁed as the ground state ﬂux sector both numerically                     in  a  gapped  CSL  phase  with ν = +1  in  zero  ﬁeld,  the
+               and – in the limits J≪J′ andJ≫J′ – analytically [63].                         Majorana gap becomes smaller ash increases and ﬁnally
+               The TRS partner withν =−1 is obtained by changing the                         disappears at hc1  = 0.405 along the line kx  = 0 in the
+               sign of all mean-ﬁeld parameters on solid bonds.  For FM                      ﬁrst Brillouin zone, as show in Fig.9a.  Upon further in-
+               couplings, the relative sign betweenA and  ¯A is reversed.                    creasing the ﬁeld, the gap reopens.  The Chern number,
+               We now turn to a discussion of the model in a [001] ﬁeld,                     however, is not aﬀected and remains +1.  At hc2 =0.438,
+               starting again with isotropic FM couplings.                                   the sign ofν changes, accompanied by a re-closing of the
+                  a.    FM  couplings    Turning  on  the  magnetic  ﬁeld,  a                gap at the two isolated points P = (−0.214,π/√3) and
+               phase diagram very similar to the square-octagon lattice                      −P .  The transition at hc3 = 0.448 is characterized by a
+               is obtained.  Only a single ﬁrst-order transition from the                    ﬂat band at E = 0.  The resulting phase is topologically
+               CSL to the polarized phase appears at hc = 0.025, that                        trivial  with ν = 0.   It  will  be  addressed  in  more  detail
+               manifests itself in a jump in the magnetization in Fig.8a.                    in  the  next  paragraph.   Finally,  the  polarized  phase  is
+               The  ﬂux  expectation  values  shrink  in  the  CSL  phase,                   entered (without a gap closing) via a continuous phase
+               with W       decreasing fastest.  They jump to zero as the                    transition at hp = 0.523.  The ﬂuxes through both trian-
+               polarized phase is entered.                                                   gular and dodecagonal plaquettes vanish at hc3.  Details
+                  b.    AFM  couplings    For  AFM  Kitaev  interactions,                    on the mean-ﬁeld parameters in each phase are given in
+               the resulting phase diagram is more complex, as seen in                       AppendixB.
+               Fig.8b. This can partly be traced back to the existence of                       Again, the nature of the phase transitions at hc1  and
+
+
+
+
+
+
+
+
+(a)
+(a)(b)(c)(d)(b)
+                                                                                                                                                   9
+
+                                                                             tend over a large range of h.  If J =0,J′ =−1, the mean-
+                                                                             ﬁeld theory reproduces the exact solution of the decou-
+                                                                             pled dimer system, sketched on the right of Fig.10, which
+                                                                             transitions to the polarized phase whenh=0.5. The same
+                                                                             applies to the opposite scenario, J′ = 0,J  =−1, of de-
+                                                                             coupled triangles.  In that case,  the intermediate phase
+                                                                             and the polarized solution share the same mean-ﬁeld con-
+                                                                             ﬁguration (and therefore also the same color in the ﬁg-
+                                                                             ure).  They are separated by a narrow phase descending
+                                                                             from an exact solution at J′  = 0 and h = 1/2.  Within
+                                                                             the phase sketched in blue, continuously connected to the
+                                                                             exact solution for J =0,J′ =−1,h< 1/2, there is a ﬁrst-
+                                                                             order phase transition where the mean-ﬁeld parameters
+FIG. 10.  Phase diagram of the anisotropic AFM Ki-                           change discontinuously,  marked by the dotted line.  All
+taev model on the decorated honeycomb lattice with                           intermediate phases discussed thus far are topologically
+coupling constants parametrized as J′  =−t and J  = t− 1.                    trivial, and are discussed in more detail in AppendixB.
+Phase transitions where the absolute value of the Chern num-                    Let us know turn to the region of the phase diagram
+ber changes by 1 are marked by a dotted black line, the black                where J≈J′.  The topological phase that appeared be-
+dashed line denotes a sign change in ν.                                      tween hc2  and hc3  in  Fig.8bfor  isotropic  couplings  is
+                                                                             colored  in  green.    The  transition  where  the  sign  of ν
+                                                                             changes is indicated by a dashed black line.  Along this
+hc2  can be revealed by comparing the low energy spec-                       line, the band structure hosts gapless modes at two iso-
+trum  with  the  spectrum  of  the  zero-ﬁeld  anisotropic                   lated points, just as in the zero-ﬁeld Jz = 0 case, consis-
+model,  as  done  in  Fig.9.   As  a  comparison  of  Fig.9a                 tent with Eeﬀz  (h) = 0 on this line.  The same reasoning
+and Fig.9creveals, a dispersionless zero-energy mode is                      can be applied to the red line,  where the gap closes at
+obtained along kx  = 0 both for h = hc1  with isotropic                      kx = 0. The appearance of these zero modes is attributed
+J,J′, and also for h = 0 with J′z  = 0 and all other cou-                    to a sign change in Eeﬀz′ (h) and they are expected to ap-
+plings equal J′x,y  = Ji.  The latter scenario is trivial, as                pear at higher ﬁelds as J  is increased.
+the  lattice  decouples  into  one-dimensional  chains  when
+J′z  =  0,  resulting  in  no  dispersion  along ky.   The  gap-
+less points found athc2, Fig.9b, that are shifted slightly                                          3.    Honeycomb lattice
+away fromkx = 0, can also be obtained in zero ﬁeld, but
+with Jz  = 0 and a small  FM  coupling J′z,  for example                        For completeness, we provide a brief overview of the re-
+with the couplings chosen in Fig.9d.                                         sults for the honeycomb Kitaev model with both FM and
+  As  before,  this  can  be  understood  by  introducing  a                 AFM  exchange  couplings,  ﬁrst  reported  by  Nasu  et  al.
+parameter Eeﬀz  (h)  whose  sign  change  triggers  the  ﬁeld-               [54] and summarized in Fig.11.
+induced  transitions.   However,  in  this  case,  we  need  to                 a.    FM couplings    For FM interactions, switching on
+introduce two such parameters, Eeﬀz′ (h) and Eeﬀz  (h), for                  the ﬁeld induces a rapidly increasing magnetization.  The
+the two diﬀerentz-bonds [83].  We ﬁnd that  Eeﬀz′ (hc1) = 0                  Dirac  cones  are  not  gapped  out  but  move  away  from
+andEeﬀz  (hc2) = 0.  The Chern number only changes sign                      the  high  symmetry  points.    At  a  critical  ﬁeld  value
+at the second transition,Eeﬀz  (hc2) = 0, the same behavior                  hc  =  0.042,  the  magnetization  and  the  ﬂux W                show
+encountered  in  the  zero-ﬁeld  model  wherein  the  Chern                  a discontinuous jump denoting a ﬁrst-order phase tran-
+number only changes sign when Jz  changes sign, and is                       sition from the KSL to the trivial, gapped ﬁeld-polarized
+independent of the sign of J′z.  The two transitions can                     phase.
+thus be understood as due to a sign change in, ﬁrst,Eeﬀz′ ,                     b.    AFM couplings    As displayed in Fig.11b, the sit-
+and then, Eeﬀz  , mirroring the physics encountered in the                   uation is more complex for the AFM Kitaev model.  A
+zero-ﬁeld model due to a sign change in, ﬁrst, E0z′, and                     continuous transition at hc =0.417 from the gapless spin
+then, E0z.                                                                   liquid to an intermediate phase is followed by a jump in
+  c.    Anisotropies   in J′/J    The   phase   diagram   for                the mean-ﬁeld parameters at hp = 0.503 when the ﬁeld-
+anisotropic couplings is illustrated in Fig.10.  Along the                   polarized  phase  is  entered.   The  intermediate  phase  is
+x-axis, J(J′) changes linearly from -1 (0) to 0 (-1) with                    also  gapless,  with  both  the  KSL  and  the  intermediate
+J′+J  being ﬁxed to -1.  In total we ﬁnd seven diﬀerent                      phase exhibiting a pair of Dirac cones.  Precisely at hc, a
+phases,  color-coded  in  Fig.10.   Transitions  from  topo-                 line node connecting the two cones appears, marking the
+logical to trivial phases are marked by dotted lines.  For                   transition.
+h = 0, we regain the phase diagram from Ref. [63] that                          As before, the existence of the intermediate phase can
+shows a phase transition at J′/J =√3 between a topo-                         be tied to a sign change in an eﬀective parameterEeﬀz  (h).
+logical CSL (red) and a trivial one (light red).                             The exact same shift in k-space of the Dirac cones and
+  When eitherJ orJ′ dominate, intermediate phases ex-                        the  nodal  line  that  appears  when  tuning Eeﬀz  (h)  from
+                                                                                                                                                                     10
+
+                negative to positive values also emerges, in the absence
+                of a ﬁeld, when tuning Jz, and hence E0z, from negative
+                to positive values (keeping Jx, Jy  AFM). In Ref. [54], it
+                was  also  shown  that  the  change  in  the  topology  of  the
+                wave  function  around  the  Dirac  points  as  you  cross hc
+                is  the  same  as  when  you  cross Jz  =  0  in  the  zero-ﬁeld
+                model.
+                   c.    Anisotropic couplings    Going beyond the analysis
+                of  Nasu  et  al.  [54],  we  now  ﬁx  the  sum  of  all  absolute
+                values ∑i|Ji| = 1  and  consider  anisotropies  in Ji.   To
+                be more speciﬁc, Jz  is tuned from FM (Jz=1) to AFM
+                (Jz=−1), while the couplings Jx andJy are always ﬁxed
+                to be AFM. Fig.12presents the phase diagram as a func-
+                tion  of Jz  and  magnetic  ﬁeld.   The  intermediate  phase
+                persists for all AFM Jz, with hc  naturally increasing as
+                |Jz| increases.  In the limit Jz→−1,Jx,Jy→ 0, the lat-
+                tice  decouples  into  isolated  dimers  and  the  KSL  phase
+                is  smoothly  connected  to  a  covering  of  dimer  singlets
+                on  the z-bonds  with Mzi   =  0  on  all  lattice  sites,  even
+                at  ﬁnite  ﬁeld,  and Esinglet  =−|Jz|/4  per  unit  cell.   At                FIG. 12. Phase diagram of the Kitaev model for varying
+                h  =  1/2,  there  is  a  transition  to  the  polarized  phase,               coupling constants with(a)    h = 0 and(b)for varying ﬁeld
+                with E =−Jz/4−h.                                                               strengths.  The coupling constants are taken along the white
+                   In the opposite limit, Jz→ 0, the width of the inter-                       dotted line sketched in(a).    Jx and Jy  are always AFM, but
+                mediate  phase  shrinks  to  zero,  meaning  that  the  criti-                 their signs do not aﬀect the results.
+                cal  ﬁeld  values hc,hp→  0.   Here,  the  lattice  decouples
+                into  one-dimensional  chains.    The  self-consistent  solu-
+                tions for the KSL and polarized phase become identical                         Jz  increases, as one might naively expect.  As explained
+                forJz = 0,h = 0 as only the terms⟨Jx,yicbcw⟩ contribute                        above, the KSL and polarized phases are indistinguish-
+                equally in both phases to the ground-state energy.  A ﬁ-                       able  at Jz = 0  and hp  shifts  to  higher  values  for  rising
+                nite h immediately favors the polarized solution.                              Jz  before approaching zero again as Jz→ +1.  More de-
+                   For  FM Jz,  the  phase  diagram  does  not  host  an  in-                  tails on the anisotropic phase diagram are presented in
+                termediate phase.  The boundary between the KSL and                            AppendixB.
+                the  polarized  phase  does  not  monotonically  increase  as
+
+                                                                                                                    B.    3D Kitaev models
+
+                                                                                                  We  complete  our  study  of  AFM  Kitaev  spin  liquids
+                                                                                               under  the  inﬂuence  of  a  magnetic  ﬁeld  in  the  [001]  di-
+                                                                                               rection with a brief discussion of three-dimensional gen-
+                                                                                               eralization on three representative 3D lattice geometries,
+                                                                                               shown in Fig.13.  We have selected three diﬀerent lat-
+                                                                                               tice  geometries,  which  are  the  natural  3D  analogues  of
+                                                                                               the  2D  lattices  of  SectionIII A,  that  realize  Majorana
+                                                                                               Fermi  surfaces  with  co-dimensions dc  =  1, 2, 3,  speciﬁ-
+                                                                                               cally the lattices denoted as (8,3)b with dc = 3, (10,3)b
+                                                                                               with dc = 2 and (10,3a) with dc = 1.
+                                                                                                  For  all  of  these  lattices,  the  mean-ﬁeld  parameters
+                                                                                               evolve very similar to the honeycomb lattice case.  The
+                                                                                               codimension has no discernible inﬂuence on the stability
+                                                                                               of  the  KSL  nor  on  the  mean-ﬁeld  parameter  evolution.
+                                                                                               There  is  a  ﬁrst-order  transition  to  the  polarized  phase
+                                                                                               athp with an order of magnitude diﬀerence between the
+                                                                                               critical  ﬁelds  for  FM  and  AFM  coupling.   In  the  latter
+                FIG. 11. Summary of the results for the Kitaev model                           case, there is also an intermediate phase, which appears
+                on  the  honeycomb  lattice  under  a  magnetic  ﬁeld  in                      at a somewhat smaller ﬁeld hc.  The critical ﬁelds for all
+                [001]  direction  for(a)FM  and(b)AFM  couplings.   The                        lattices are extremely similar, particularly in the case of
+                magnetization,  the  ﬂux  through  the  honeycomb  plaquettes                  AFM couplings, as can be seen in TableI. We focus in
+                W    and the NN correlations⟨SziSzj⟩z are shown.                               our  discussion  on  the  evolution  of  the  respective  Fermi
+
+
+
+
+
+
+
+
+(a)(a)
+(b)(b)
+                                                                                                                                                                        11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                FIG. 13. Unit cells and translation vectors for the Kitaev model on three dimensional lattices.(a)For (8,3)b, the Jordan-
+                Wigner  chains  consist  of  the xy-parts  of  alternating  up-  and  down-pointing  triangle-spirals,  connected  by x-  and y-bonds
+                belonging to the dodecagon-spirals and evolve in a1−a2−a3 direction.(b)For (10,3)b, the zigzag-chains running in                  a1 and a2
+                direction form the Jordan-Wigner chains.(c)For (10,3)a, the Jordan-Wigner chains are the      xy-square spirals and penetrate
+                the lattice in a2−a3 direction.
+
+
+                surfaces and point out similarities to their behavior for                       tive lattice consists of 1D chains and the band structure is
+                anisotropic couplings. The speciﬁc form of the mean-ﬁeld                        therefore dispersionless in planes, as sketched in Fig.14c.
+                parameters and their exact values at zero ﬁeld are given                           a.    FM couplings    As the magnetic ﬁeld is increased,
+                in AppendixB.                                                                   Weyl  points  of  opposite  chirality  approach  each  other,
+
+
+                                           1.    (8,3)b lattice
+
+                   The (8,3)b lattice can probably be best understood as
+                a three-dimensional version of the decorated honeycomb
+                lattice, where the up and down pointing triangles are re-
+                placed by coupled counter rotating spirals, see Fig.13a.
+                There  are  two  diﬀerent  sets  of  coupling  parameters, J
+                for  the  bonds  forming  the  spirals  and J′  for  the  bonds
+                coupling them.  The Kitaev model on this lattice hosts
+                a  gapless  QSL  in  a  ﬁnite  parameter  region  around  the
+                isotropic point [66], where the Majorana gap closes with
+                a linear dispersion at isolated points in the Brillouin zone.
+                Such Weyl  points  have been studied in considerable de-
+                tail in electronic band structures in the context of Weyl
+                semimetals [84].  As monopoles of Berry curvature, they
+                carry a topological charge.  To guarantee overall charge
+                neutrality, Weyl points always occur in pairs of opposite
+                chirality [85].  However, for (8,3)b, a combination of TRS                      FIG. 14.  Brillouin zone, evolution of Weyl points and
+                and  particle-hole  symmetry  enforces  them  to  occur  in                     band structure for (8,3)b.  (a)Brillouin zone and position
+                multiples of four [86].  At zero ﬁeld and for isotropic cou-                    of Weyl points for isotropic couplings.(b)Periodic pattern
+                plings, we ﬁnd four Weyl points located in the Brillouin                        appearing in the extension of the plane marked in red in(a).
+                zone as shown in Fig.14a.                                                       The blue dotted line marks the 120◦ invariant line, on which
+                   Tuning Jz  or J′z  to zero decouples the lattices into ef-                   the Weyl points are located for isotropic couplings.  The mid-
+                fective 2D systems, leading to a vanishing Weyl velocity                        dle  hexagon  shows  the  movement  of  the  Weyl  points  with
+                v and v′  in k-space in the direction normal to these 2D                        increasing  ﬁeld.   Black  stars  show  the  position  at hc1.   For
+                                                                                                comparison, the evolution for varying FM (towards red dots)
+                systems.  We ﬁnd that Eeﬀz  (h) determines the velocity v                       and AFM (green dots) Jz =J′z  is shown in the bottom. Jx,y
+                in precisely the same way as Jz  in the zero-ﬁeld model                         is ﬁxed to -1.(c)Energy dispersion at    hc2.  A ﬂat bands oc-
+                and similar for Eeﬀz′ (h), v′ and J′z.  However, Eeﬀz  (h) and                  curs in the two planes sketched in yellow in the small inset
+                Eeﬀz′ (h)  evolve  almost  identically  in  ﬁeld,  and,  as  a  re-             for Jz  = J′z  = 0.  Near the critical ﬁelds,  the lowest energy
+                sult, the Weyl point evolution is nearly identical to the                       band is nearly ﬂat in this plane, as can be seen e.g.  between
+                zero-ﬁeld case with Jz = J′z.  For Jz =J′z = 0, the eﬀec-                       W1 and W2.
+
+
+
+
+
+
+
+
+(a)(a)
+(b)(c)(b)(c)
+                                                                                                                                                                     12
+
+                their  trajectory  mimicking  that  observed  for  increas-
+                ing Jz  = J′z  in  zero  ﬁeld,  sketched  at  the  bottom  of
+                Fig.14b.   However,  while  they  annihilate  in  the  zero-
+                ﬁeld anisotropic model at Jz  = 1.51,  for the ﬁnite-ﬁeld
+                isotropic model their movement is terminated by a ﬁrst-
+                order transition at hp = 0.030 to the gapped, polarized
+                phase.  In the polarized phase, the magnetization is iden-
+                tical on all lattice sites and all other mean-ﬁeld parame-
+                ters vanish.
+                   b.    AFM couplings    For the AFM case, the evolution
+                of the Weyl points can be compared to the trajectories
+                observed for decreasing Jz =J′z  in zero ﬁeld, illustrated
+                with the arrows pointing towards the green points in the                       FIG. 15. Brillouin zone and location of gapless modes
+                lower hexagon in Fig.14b.  The evolution is almost iden-                       for (10,3)b and (10,3)a.(a)For (10,3)b,  the gapless modes
+                tical for both cases, driven by the almost identical evolu-                    form a closed line that is shown here for Jz  = 1.5 (yellow),
+                tion of Eeﬀz  (h) and Eeﬀz′ (h).  The ﬁeld-induced movement                    1 (orange) and 0 (red).  As Jx  = Jy  = 1, the gapless line is
+                is  color-coded  in  the  middle  hexagon.   The  two  veloci-                 always located in the planekx =−ky, that is grayed out here.
+                ties v′  and v  become  zero  at  closely  successive  values,                 (b)For (10,3)a, there are two Fermi surfaces located around
+                hc1 = 0.415 and hc2 = 0.416,  at each of which the spec-                       the  corners  of  the  Brillouin  zone  (π,π,±π),  shown  here  for
+                trum  has  a  line  of  gapless  excitations.   At hc1,  we  ﬁnd               isotropic couplings.
+                v(hc1)/v(h = 0)≈ 0.0025 and similar for v′  and hc2.  In
+                the vicinity of the critical ﬁelds, the lowest band is thus                    even  though  TRS  is  broken  by  the  magnetic  ﬁeld,  see
+                nearly dispersionless in the planes shown in Fig.14c.  De-                     AppendixBfor details.
+                tails are given in AppendixB. Upon further increasing                             b.    AFM couplings    For the AFM case, the nodal line
+                the ﬁeld,  the velocities acquire a ﬁnite value again and                      is inﬂated and athc = 0.415, it connects with nodal lines
+                the  Weyl  points  continue  their  movement.   The  polar-                    from neighboring Brillouin zones, leading to a change in
+                ized phase is entered via a ﬁrst-order phase transition at                     the topology of the Fermi line,  as depicted in Fig.16e.
+                hp = 0.489.                                                                    This transition is accompanied by a closing of the gap for
+                                                                                               the second band, such that the nodal line athc is twofold
+                                                                                               degenerate, as shown in Fig.16c.  The spectrum of the
+                                         2.    (10,3)b lattice                                 zero-energy modes at the transition is again identical to
+                                                                                               that of the zero-ﬁeld anisotropic case with Jz  = 0.  For
+                   The (10,3)b or hyperhoneycomb lattice is most clearly                       ﬁelds  between hc  and hp,  the Fermi  line  shrinks  again.
+                visualized when it is understood as parallel zigzag chains                     The  ﬁrst-order  phase  transition  to  the  polarized  phase
+                consisting ofx- andy-bonds along two distinct directions                       occurs at hp = 0.485.  As the color-coded weight of the
+                that are coupled by z-bonds, see Fig.13b.  This lattice                        ¯c  contribution  to  the  wave  functions  in  Fig.16shows,
+                geometry has been widely studied after the discovery that                      c-  and  ¯c-Majorana  sector  are  separated  for h = 0  and
+                the spin-orbit entangled Mott insulatorβ-Li2IrO3 [87] re-                      hybridize for h>0, see also SectionIII A 1.
+                alizes this structure [67,69,88–90].  The phase diagram                           The similarity between changing h and Jz  can be fur-
+                of the Kitaev model on (10,3)b looks identical to the hon-                     ther  substantiated  by  a  simple  analytical  calculation.
+                eycomb lattice.  Around the point of isotropic couplings,                      We  start  with  the  pure  Kitaev  model  (h  =  0)  and  set
+                the system hosts a gapless phase with a closed nodal line                      Jx =Jy =−1, but allow for diﬀerent values of Jz.  Gap-
+                of zero energy excitations in the Brillouin zone, pictured                     less modes appear for
+                in Fig.15a.  This Majorana nodal line lies in the plane                                                   kx =−ky,
+                kx  =−ky  for Jx  = Jy  and  is  protected  by  a  combina-
+                tion of TRS and particle-hole symmetry.  For decreasing                                           cos(2kz) = J2z2 − cos(2kx).                 (20)
+                Jz,  the  nodal  line  starts  shrinking  and  vanishes  at  the
+                transition to the gapped spin liquid.  AsJz increases, the                     On  the  other  hand,   the  mean-ﬁeld  solution  for  the
+                nodal line expands as shown in Fig.15a.  Breaking TRS                          isotropic  model,  with Jγ  = J,  under  a  magnetic  ﬁeld
+                by applying a ﬁeld in [111] direction in the perturbative                      has the structure
+                regime gaps out the line everywhere except for two iso-                                             Mz1  =Mz2  =Mz3  =Mz4,
+                lated points, giving rise to a Weyl spin liquid phase [69].                                                    A13 =A14 < 0,
+                   a.    FM couplings    For FM couplings and a ﬁeld in the                                                     ¯A13 =  ¯A14 > 0.                   (21)
+                [001] direction, the nodal line is preserved and starts to
+                shrink.   This  contraction  is  terminated  by  a  ﬁrst-order                 Deﬁning
+                phase transition at hp = 0.028 to the gapped,  polarized
+                phase.   Note  that  –  in  contrast  to  a  [111]  ﬁeld  in  the                                ξ = J2A ¯A + (2JMz + 2h)2
+                perturbative  regime  –  the  nodal  line  does  not  gap  out,                                                    JA       ,                (22)
+
+
+
+
+
+
+
+
+(a)
+(b)
+                                                                                                                                                                        13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                FIG. 17. Comparison of the (10,3)a band structure for
+                                                                                                (a)the  isotropic  Kitaev  model  in  a  magnetic  ﬁeld  and(b)
+                                                                                                the  pure  Kitaev  model  with Jx  = Jy  and  varying Jz.   The
+                                                                                                parameters  here  are  (from  left  to  right) h  =  0, 0.304, 0.416
+                                                                                                and Jz  =−1,−0.5, 0.   As  the  red  line  indicates,  the  Fermi
+                                                                                                surface undergoes the same modiﬁcations in both cases, even
+                                                                                                though  the  band  structures  diﬀer.   The  points  along  which
+                                                                                                the spectrum is shown are indicated in Fig.15b.
+
+
+                                                                                                of the ﬁrst Brillouin zone at (π,π,±π).  As discussed in
+                FIG.  16.    Mean-ﬁeld  band  structure  and  color-coded                       detail  in  Ref.  [66],  the  Fermi  surface  for  isotropic  cou-
+                quasiparticle weights for the hyperhoneycomb lattice (10,3)b,                   plings is topological, with the topological features inher-
+                with β  the norm of the  ¯c part of the wavefunction.(a)For                     ited  from  the  enclosed  Weyl  points  occurring  at  ﬁnite
+                h = 0,  there  are  two  ﬂat  bands,  coming  from  localized  ¯c-              energy.
+                Majoranas.(b)As        h increases, c- and ¯c-Majoranas mix and                     a.    FM couplings    In the FM Kitaev model, the Fermi
+                the  bands  hybridize.(c)At        hc,  there  is  an  additional  gap          surface is stretched in the kz-direction and becomes nar-
+                closing coming from the second band. (d)Upon further in-                        rower in the ky- and kz-directions, just as in the case of
+                creasing  the  ﬁeld,  the  gapless  node  shrinks  again.(e)Plot                increasing coupling Jz.  A ﬁrst-order phase transition to
+                of  the  lowest  lying  band  in  the  plane  indicated  in  gray  in           the gapped polarized phase occurs at hp =0.028.
+                Fig.15a.  The ﬁelds are chosen as in the ﬁgures above.  At     hc,                  b.    AFM couplings    For AFM interactions, increasing
+                the topology of the nodal line changes.                                         the  ﬁeld  ﬂattens  the  Fermi  surface  in  the kz-direction.
+                                                                                                Opposite sides of the Fermi surface approach each other
+                and exploiting the simple form of the mean-ﬁeld solutions                       and touch at hc =0.416, forming two ﬂat planes.  Again,
+                in Eq. (21), the second condition in Eq. (20) becomes                           we  ﬁnd  that  the  system  undergoes  the  same  Lifshitz
+                                                                                                transition  as  when  decoupling  the  lattice  by  setting
+                                     cos(2kz) = ξ2                                              Jz  =  0.   Fig.17illustrates  this  behavior  by  comparing
+                                                     2 − cos(2kx)                  (23)         the  band  structure  of  the  isotropic  model  for  diﬀerent
+                                                                                                ﬁeld strengths,  Fig.17a,  with the zero-ﬁeld anisotropic
+                for  the  gapless  modes.    If  we  again  deﬁne Eeﬀz  (h)  as                 case, Fig.17b.  Although the band structure diﬀers sub-
+                in  Eq.  (2)  then  ξ  =  4Eeﬀz /A  or,  more  generally, ξ  =                  stantially, the zero-energy modes appear at the same k-
+                JEeﬀz /E0z.  Comparing Eq. (20) and Eq. (23) directly re-                       points.  In AppendixB, we show analytically that chang-
+                veals  that  the  eﬀect  of  tuning Jz  from  AFM  to  FM  or                   ing the coupling or the magnetic ﬁeld deforms the Fermi
+                changing the sign of Eeﬀz  (h) has in fact the  exact  same                     surface in an equivalent way.
+                eﬀect on the nodal lines.  Indeed, Eeﬀz  (h) crosses zero at
+                hc.
+                                                                                                               IV.    SUMMARY & OUTLOOK
+
+                                          3.    (10,3)a lattice                                     To summarize, we studied the stability of Kitaev spin
+                                                                                                liquids in the presence of a uniform magnetic ﬁeld in the
+                   The (10,3)a or hyperoctagon lattice consists of counter-                     [001]  direction  for  AFM  Kitaev  models  on  various  two
+                rotating spirals that are formed by squares and octagons,                       and  three  dimensional  lattice  geometries.   Using  a  Ma-
+                as  illustrated  in  Fig.13c.   It  can  be  interpreted  as  a                 jorana  mean-ﬁeld  approach,  based  on  a  Jordan-Wigner
+                higher-dimensional variant of the square-octagon lattice.                       representation of the spin degrees of freedom, we mapped
+                It hosts a gapless QSL with two Majorana Fermi surfaces                         out the phase diagrams for both FM and AFM couplings.
+                at  the  point  of  isotropic  couplings  [68],  with  Fig.15b                  In both cases, a generic phase diagram is obtained, inde-
+                showing  the  gapless  modes  located  around  the  corners                     pendent of the underlying lattice.  While FM couplings
+
+
+
+
+
+
+
+
+(a)
+(b)(a)(b)(c)(d)(e)
+                                                                                                                                                      14
+
+generally result in a single phase transition to the polar-                    in the gauge sector, as e.g.  the Higgs transition between
+ized phase at a relatively small ﬁeld strength hp≈ 0.05,                       Z2  and U(1)  gauge  ﬁelds  suggested  for  the  honeycomb
+the AFM model exhibits a more multifarious phase dia-                          lattice in a [111] ﬁeld [46].
+gram.  The KSL is stable up to a critical ﬁeld strength                           Our  study  highlights  the  richness  of  Kitaev  systems
+hc  which  is  an  order  of  magnitude  higher  than  that  of                with antiferromagnetic bond-directional exchanges in the
+the FM case.  At this critical ﬁeld, the Majorana Fermi                        presence  of  a  magnetic  ﬁeld,  as  opposed  to  their  ferro-
+surface changes its  topology  at the  transition to an  in-                   magnetic  counterparts.   The  enhanced  stability  of  the
+termediate  spin  liquid  phase.   Interestingly,  the  gapless                KSL and the possibility of realizing transitions between
+modes  at  the  critical  ﬁeld  are  the  same  as  those  that                diﬀerent spin liquid phases, which lie beyond the conven-
+emerge  at  the  zero-ﬁeld  decoupled  point, Jz  =  0  and                    tional Landau paradigm, seen in a number of tricoordi-
+henceE0z = 0.  Indeed, we showed that the transition can                       nated  lattice  geometries  in  both  two  and  three  spatial
+be understood as the vanishing of the eﬀective parameter                       dimensions,  provides  further  motivation  for  the  search
+Eeﬀz  (h), deﬁned in Eq. (2), that occurs when the eﬀect of                    of new Kitaev materials that naturally exhibit dominant
+the external ﬁeld competes with that of the AFM cou-                           AFM  Kitaev  interactions.   Potential  routes  include  ex-
+plings.  The physics due to the sign change of Eeﬀz  (h) is                    ploring Mott materials whose magnetism arises from elec-
+directly related to the physics due to the sign change of                      trons with an 4f1 conﬁguration or whose lattice exhibits
+E0z  in the zero-ﬁeld model.                                                   polar asymmetry, both of which have been predicted to
+                                                                               give rise to AFM Kitaev-type bond-directional exchanges
+   Our mean-ﬁeld approach is well suited to investigate                        [56–58].  An alternative route might be to explore Kitaev
+the physics of the Kitaev model in the presence of a mag-                      materials with higher spin degrees of freedom.  Of partic-
+netic ﬁeld from the view point of the emergent itinerant                       ular interest might be spin-1 Kitaev systems, which have
+Majoranas  but  it  has  two  important  limitations.   The                    recently  been  shown  to  exhibit  much  of  the  same  phe-
+Jordan-Wigner representation does not allow us to study                        nomenology  as  their  spin-1/2  counterparts  in  the  pres-
+the  eﬀects  of  other  ﬁeld  directions.   Adding  additional                 ence of a [111] ﬁeld – including a strongly enhanced sta-
+magnetic ﬁeld terms,−hα∑iSαi  withα =x,y, will lead                            bility for AFM couplings and the occurrence of interme-
+to  highly  non-local  terms  appearing  in  the  fermionized                  diate spin liquid phases [91–95], while experimental real-
+Jordan-Wigner Hamiltonian asSxi  andSyi  contain string                        izations are predicted to naturally favor the formation of
+operators.   It  is  thus  not  possible  to  construct  a  local              AFM couplings [96].
+fermionized Hamiltonian when more than one ﬁeld com-
+ponent is non-zero, limiting our study to a [001] ﬁeld. Un-
+like the conventional parton decompositions used to de-                                           ACKNOWLEDGMENTS
+scribe QSLs, the Jordan-Wigner representation does not
+create  an  enlarged  Hilbert  space,  nor  does  it  introduce                   We  acknowledge  partial  support  from  the  Deutsche
+any  gauge  redundancy.   This  means  that  gauge  ﬁelds,                     Forschungsgemeinschaft (DFG, German Research Foun-
+either  conﬁned  or  deconﬁned,  do  not  naturally  appear                    dation), Projektnummer 277146847 – CRC 1238 (project
+in our approach.  These restrictions imply that our ap-                        C03).  The numerical simulations were performed on the
+proach cannot capture phase transitions that take place                        CHEOPS cluster at RRZK Cologne.
+
+
+
+
+
+ [1]L.  Savary  and  L.  Balents,Quantum  spin  liquids:  a  re-                [8]X.-G.  Wen,     Quantum  Field  Theory  of  Many-Body  Sys-
+     view,Reports on Progress in Physics        80, 016502 (2016).                  tems:  From  the  Origin  of  Sound  to  an  Origin  of  Light
+ [2]L.  Balents,Spin  liquids  in  frustrated  magnets,Nature                       and Electrons  (Oxford University Press, 2007).
+     464, 199 (2010).                                                           [9]N.  Read  and  S.  Sachdev,Large-N  expansion  for  frus-
+ [3]J. Knolle and R. Moessner,A Field Guide to Spin Liq-                            trated quantum antiferromagnets,Physical Review Let-
+     uids,Annual  Review  of  Condensed  Matter  Physics        10,                 ters 66, 1773 (1991).
+     451 (2019).                                                               [10]T.  Senthil  and  M.  P.  A.  Fisher,   Z2  gauge  theory  of
+ [4]P. W. Anderson,Resonating valence bonds:  A new kind                            electron fractionalization in strongly correlated systems,
+     of insulator?Materials Research Bulletin               8, 153 (1973).          Physical Review B 62, 7850 (2000).
+ [5]F.  D.  M.  Haldane,‘Luttinger  Liquid  Theory’  of  one-                  [11]A.  Kitaev,Anyons  in  an  exactly  solved  model  and  be-
+     dimensional  quantum  ﬂuids.  I.  Properties  of  the  Lut-                    yond,Annals of Physics       321, 2 (2006).
+     tinger  model  and  their  extension  to  the  general  1D  in-           [12]M. Hermanns, I. Kimchi,   and J. Knolle,Physics of the
+     teracting spinless Fermi gas,Journal of Physics C: Solid                       Kitaev Model:  Fractionalization, Dynamic Correlations,
+     State Physics 14, 2585 (1981).                                                 and Material Connections,Annual Review of Condensed
+ [6]C. Broholm, R. J. Cava, S. A. Kivelson, D. G. Nocera,                           Matter Physics 9, 17 (2018).
+     M. R. Norman,   and T. Senthil,Quantum spin liquids,                      [13]G.  Khaliullin,Orbital  Order  and  Fluctuations  in  Mott
+     Science 367 (2020).                                                            Insulators,Progress  of  Theoretical  Physics  Supplement
+ [7]Y. Zhou, K. Kanoda,  and T.-K. Ng,Quantum spin liquid                           160, 155 (2005).
+     states,Reviews of Modern Physics          89, 025003 (2017).              [14]G.  Jackeli  and  G.  Khaliullin,Mott  Insulators  in  the
+                                                                                                                                                           15
+
+     Strong Spin-Orbit Coupling Limit: From Heisenberg to a                       [29]S.  M.  Winter,  A.  A.  Tsirlin,  M.  Daghofer,  J.  van  den
+     Quantum Compass and Kitaev Models,Physical Review                                  Brink, Y. Singh, P. Gegenwart,   and R. Valent´ı,Models
+     Letters 102, 017205 (2009).                                                        and materials for generalized Kitaev magnetism,Journal
+[15]J.  Chaloupka,  G.  Jackeli,    and  G.  Khaliullin,Kitaev-                         of Physics:  Condensed Matter 29, 493002 (2017).
+     Heisenberg Model on a Honeycomb Lattice:  Possible Ex-                       [30]I. Kimchi and Y.-Z. You,Kitaev-Heisenberg-    J2-J3 model
+     otic Phases in Iridium Oxides A2IrO3,Physical Review                               for  the  iridates A2IrO3, Physical  Review  B  84,  180407
+     Letters 105, 027204 (2010).                                                        (2011).
+[16]W. Witczak-Krempa, G. Chen, Y. B. Kim,   and L. Ba-                           [31]J. Chaloupka, G. Jackeli,  and G. Khaliullin,Zigzag Mag-
+     lents,Correlated  Quantum  Phenomena  in  the  Strong                              netic Order in the Iridium Oxide Na2IrO3,Physical Re-
+     Spin-Orbit Regime,Annual Review of Condensed Matter                                view Letters 110, 097204 (2013).
+     Physics 5, 57 (2014).                                                        [32]J. G. Rau, E. K.-H. Lee,   and H.-Y. Kee,Generic Spin
+[17]B. J. Kim,  H. Jin,  S. J. Moon,  J.-Y. Kim,  B.-G. Park,                           Model  for  the  Honeycomb  Iridates  beyond  the  Kitaev
+     C. S. Leem, J. Yu, T. W. Noh, C. Kim, S.-J. Oh, J.-H.                              Limit,Physical Review Letters         112, 077204 (2014).
+     Park,  V.  Durairaj,  G.  Cao,    and  E.  Rotenberg,Novel                   [33]I.  Rousochatzakis,  J.  Reuther,  R.  Thomale,  S.  Rachel,
+     Jeﬀ   =  1/2  Mott  State  Induced  by  Relativistic  Spin-                        and N. B. Perkins,Phase Diagram and Quantum Order
+     Orbit Coupling in Sr2IrO4,Physical Review Letters  101,                            by Disorder in the Kitaev K1−K2 Honeycomb Magnet,
+     076402 (2008).                                                                     Physical Review X 5, 041035 (2015).
+[18]B. J. Kim, H. Ohsumi, T. Komesu, S. Sakai, T. Morita,                         [34]L. Janssen,  E. C. Andrade,   and M. Vojta,Magnetiza-
+     H. Takagi,   and T. Arima,Phase-Sensitive Observation                              tion processes of zigzag states on the honeycomb lattice:
+     of  a  Spin-Orbital  Mott  State  in  Sr2IrO4, Science  323,                       Identifying spin models forα-RuCl3 and Na2IrO3,Phys-
+     1329 (2009).                                                                       ical Review B 96, 064430 (2017).
+[19]S. Trebst,Kitaev Materials,arXiv:1701.07056  (2017).                          [35]K.  Kitagawa,  T.  Takayama,  Y.  Matsumoto,  A.  Kato,
+[20]H. Takagi, T. Takayama, G. Jackeli, G. Khaliullin,   and                            R.   Takano,   Y.   Kishimoto,   S.   Bette,   R.   Dinnebier,
+     S. E. Nagler,Concept and realization of Kitaev quantum                             G.  Jackeli,    and  H.  Takagi,A  spin–orbital-entangled
+     spin liquids,Nature Reviews Physics           1, 264 (2019).                       quantum liquid on a honeycomb lattice,Nature          554, 341
+[21]Y. Singh and P. Gegenwart,Antiferromagnetic Mott in-                                (2018).
+     sulating state in single crystals of the honeycomb lattice                   [36]J.  A.  Sears,  M.  Songvilay,  K.  W.  Plumb,  J.  P.  Clancy,
+     material Na2IrO3,Physical Review B  82, 064412 (2010).                             Y. Qiu, Y. Zhao, D. Parshall,  and Y.-J. Kim,Magnetic
+[22]S.  H.  Chun,   J.-W.  Kim,   J.  Kim,   H.  Zheng,   C.  C.                        order inα-RuCl3: A honeycomb-lattice quantum magnet
+     Stoumpos, C. D. Malliakas, J. F. Mitchell, K. Mehlawat,                            with strong spin-orbit coupling,Physical Review B              91,
+     Y.  Singh,  Y.  Choi,  T.  Gog,  A.  Al-Zein,  M.  M.  Sala,                       144420 (2015).
+     M. Krisch, J. Chaloupka, G. Jackeli, G. Khaliullin,  and                     [37]Y.  Kubota,   H.  Tanaka,   T.  Ono,   Y.  Narumi,     and
+     B. J. Kim,Direct evidence for dominant bond-directional                            K.  Kindo,Successive  magnetic  phase  transitions  in     α-
+     interactions in a honeycomb lattice iridate Na2IrO3,Na-                            RuCl3:   XY-like  frustrated  magnet  on  the  honeycomb
+     ture Physics 11, 462 (2015).                                                       lattice,Physical Review B          91, 094422 (2015).
+[23]Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale,                       [38]R. D. Johnson, S. C. Williams, A. A. Haghighirad, J. Sin-
+     W. Ku, S. Trebst,   and P. Gegenwart,Relevance of the                              gleton,  V.  Zapf,  P.  Manuel,  I.  I.  Mazin,  Y.  Li,  H.  O.
+     Heisenberg-Kitaev Model for the Honeycomb Lattice Iri-                             Jeschke,  R. Valent,   and R. Coldea,Monoclinic crystal
+     dates A2IrO3,Phys. Rev. Lett.  108, 127203 (2012).                                 structure  of α-RuCl3  and  the  zigzag  antiferromagnetic
+[24]K.  W.  Plumb,  J.  P.  Clancy,  L.  J.  Sandilands,  V.  V.                        ground state,Physical Review B      92, 235119 (2015).
+     Shankar,  Y.  F.  Hu,  K.  S.  Burch,  H.-Y.  Kee,   and  Y.-                [39]J. A. Sears, Y. Zhao, Z. Xu, J. W. Lynn,  and Y.-J. Kim,
+     J.  Kim, α-RuCl3:  A  spin-orbit  assisted  Mott  insulator                        Phase diagram ofα-RuCl3 in an in-plane magnetic ﬁeld,
+     on a honeycomb lattice,Physical Review B           90, 041112                      Physical Review B 95, 180411 (2017).
+     (2014).                                                                      [40]D.  Hirobe,   M.  Sato,   Y.  Shiomi,   H.  Tanaka,     and
+[25]A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,                          E. Saitoh,Magnetic thermal conductivity far above the
+     M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu,                                N´eel  temperature  in  the  Kitaev-magnet  candidate α-
+     J. Knolle, S. Bhattacharjee, D. L. Kovrizhin, R. Moess-                            RuCl3,Physical Review B  95, 241112 (2017).
+     ner, D. A. Tennant, D. G. Mandrus,   and S. E. Nagler,                       [41]Y.  Kasahara,   K.  Sugii,   T.  Ohnishi,   M.  Shimozawa,
+     Proximate  Kitaev  quantum  spin  liquid  behaviour  in  a                         M. Yamashita,  N. Kurita,  H. Tanaka,  J. Nasu,  Y. Mo-
+     honeycomb magnet,Nature Materials            15, 733 (2016).                       tome, T. Shibauchi,  and Y. Matsuda,Unusual Thermal
+[26]A.  Banerjee,  J.  Yan,  J.  Knolle,  C.  A.  Bridges,  M.  B.                      Hall Eﬀect in a Kitaev Spin Liquid Candidate α-RuCl3,
+     Stone, M. D. Lumsden, D. G. Mandrus, D. A. Tennant,                                Physical Review Letters 120, 217205 (2018).
+     R. Moessner,  and S. E. Nagler,Neutron scattering in the                     [42]A. Banerjee, P. Lampen-Kelley, J. Knolle, C. Balz, A. A.
+     proximate  quantum  spin  liquid α-RuCl3, Science  356,                            Aczel,  B.  Winn,  Y.  Liu,  D.  Pajerowski,  J.  Yan,  C.  A.
+     1055 (2017).                                                                       Bridges, A. T. Savici, B. C. Chakoumakos, M. D. Lums-
+[27]M.  Majumder,  M.  Schmidt,  H.  Rosner,  A.  A.  Tsirlin,                          den, D. A. Tennant, R. Moessner, D. G. Mandrus,   and
+     H. Yasuoka,  and M. Baenitz,Anisotropic Ru                3+4d5 mag-               S.  E.  Nagler,Excitations  in  the  ﬁeld-induced  quantum
+     netism in theα-RuCl3 honeycomb system: Susceptibility,                             spin liquid state of α-RuCl3,npj Quantum Materials  3,
+     speciﬁc heat, and zero-ﬁeld NMR,Physical Review B         91,                      1 (2018).
+     180401 (2015).                                                               [43]N. Jana, A. Zorko, M. Gomilek, M. Pregelj, K. W. Krmer,
+[28]S. M. Winter, Y. Li, H. O. Jeschke,  and R. Valent´ı,Chal-                          D. Biner, A. Biﬃn, C. Regg,  and M. Klanjek,Observa-
+     lenges in design of Kitaev materials:  Magnetic interac-                           tion  of  two  types  of  fractional  excitation  in  the  Kitaev
+     tions from competing energy scales,Physical Review B                               honeycomb magnet,Nature Physics            14, 786 (2018).
+     93, 214431 (2016).                                                           [44]A. U. B. Wolter, L. T. Corredor, L. Janssen, K. Nenkov,
+                                                                                                                                                                16
+
+     S.   Schnecker,   S.-H.   Do,   K.-Y.   Choi,   R.   Albrecht,                       R.  Moessner,Fermionic  response  from  fractionalization
+     J. Hunger,  T. Doert,  M. Vojta,   and B. Bchner,Field-                              in an insulating two-dimensional magnet,Nature Physics
+     induced  quantum  criticality  in  the  Kitaev  system α-                            12, 912 (2016).
+     RuCl3,Physical Review B  96, 041405 (2017).                                    [62]S. Yang, D. L. Zhou,  and C. P. Sun,Mosaic spin models
+[45]Y.  Kasahara,  T.  Ohnishi,  Y.  Mizukami,  O.  Tanaka,                               with  topological  order,Physical  Review  B          76,  180404
+     S. Ma, K. Sugii, N. Kurita, H. Tanaka, J. Nasu, Y. Mo-                               (2007).
+     tome, T. Shibauchi,  and Y. Matsuda,Majorana quanti-                           [63]H.  Yao  and  S.  A.  Kivelson,Exact  Chiral  Spin  Liquid
+     zation and half-integer thermal quantum Hall eﬀect in a                              with Non-Abelian Anyons,Physical Review Letters       99,
+     Kitaev spin liquid,Nature          559, 227 (2018).                                  247203 (2007).
+[46]C. Hickey and S. Trebst,Emergence of a ﬁeld-driven U(1)                         [64]In the following, the terminus ‘Fermi surface’ refers to the
+     spin liquid in the Kitaev honeycomb model,Nature Com-                                manifold of gapless excitations, independent of dimension
+     munications 10, 1 (2019).                                                            and codimension.
+[47]H.-C. Jiang,  Z.-C. Gu,  X.-L. Qi,   and S. Trebst,Possi-                       [65]We  use  the  so-called  Schl¨aﬂi  symbol  (  p,c)  to  label  the
+     ble proximity of the Mott insulating iridate Na2IrO3  to                             lattices. p is the elementary loop length and c = 3 refers
+     a  topological  phase:  Phase  diagram  of  the  Heisenberg-                         to the tricoordination.
+     Kitaev model in a magnetic ﬁeld,Physical Review B        83,                   [66]K. O’Brien, M. Hermanns,  and S. Trebst,Classiﬁcation
+     245104 (2011).                                                                       of  gapless  Z2  spin  liquids  in  three-dimensional  Kitaev
+[48]M. Gohlke, R. Moessner,   and F. Pollmann,Dynamical                                   models,Physical Review B       93, 085101 (2016).
+     and topological properties of the Kitaev model in a [111]                      [67]S.  Mandal  and  N.  Surendran,Exactly  solvable  Kitaev
+     magnetic ﬁeld,Physical Review B        98, 014418 (2018).                            model in three dimensions,Physical Review B          79, 024426
+[49]S. Fey,       Field driven instabilities of the Non-Abelian topo-                     (2009).
+     logical phase in the Kitaev model  (MSc Thesis, Technis-                       [68]M. Hermanns and S. Trebst,Quantum spin liquid with a
+     che Universit¨at Dortmund, 2013).                                                    Majorana Fermi surface on the three-dimensional hyper-
+[50]H.-C. Jiang, C.-Y. Wang, B. Huang,  and Y.-M. Lu,Field                                octagon lattice,Physical Review B          89, 235102 (2014).
+     induced quantum spin liquid with spinon Fermi surfaces                         [69]M.  Hermanns,  K.  OBrien,    and  S.  Trebst,Weyl  Spin
+     in the Kitaev model,arXiv:1809.08247  (2018).                                        Liquids,Physical Review Letters            114, 157202 (2015).
+[51]L.   Zou   and   Y.-C.   He,Field-induced   QCD             3-Chern-            [70]S.  Mandal,  R.  Shankar,   and  G.  Baskaran,RVB  gauge
+     Simons   quantum   criticalities   in   Kitaev   materials,                          theory and the topological degeneracy in the honeycomb
+     arXiv:1809.09091  (2019).                                                            Kitaev model,Journal of Physics A: Mathematical and
+[52]S.  Liang,  M.-H.  Jiang,  W.  Chen,  J.-X.  Li,   and  Q.-H.                         Theoretical 45, 335304 (2012).
+     Wang,Intermediate gapless phase and topological phase                          [71]X.-Y.  Feng,  G.-M.  Zhang,    and  T.  Xiang,Topologi-
+     transition  of  the  Kitaev  model  in  a  uniform  magnetic                         cal  Characterization  of  Quantum  Phase  Transitions  in
+     ﬁeld,Physical Review B        98, 054433 (2018).                                     a  Spin-1/2  Model,Physical  Review  Letters      98,  087204
+[53]D. C. Ronquillo, A. Vengal,   and N. Trivedi,Signatures                               (2007).
+     of magnetic-ﬁeld-driven quantum phase transitions in the                       [72]H.-D.  Chen  and  Z.  Nussinov,Exact  results  of  the  Ki-
+     entanglement entropy and spin dynamics of the Kitaev                                 taev  model  on  a  hexagonal  lattice:   spin  states,  string
+     honeycomb model,Physical Review B      99, 140413 (2019).                            and brane correlators,  and anyonic excitations,Journal
+[54]J. Nasu, Y. Kato, Y. Kamiya,   and Y. Motome,Succes-                                  of Physics A: Mathematical and Theoretical 41, 075001
+     sive  Majorana  topological  transitions  driven  by  a  mag-                        (2008).
+     netic ﬁeld in the Kitaev model,Physical Review B      98,                      [73]H.-D. Chen and J. Hu,Exact mapping between classical
+     060416 (2018).                                                                       and topological orders in two-dimensional spin systems,
+[55]L. Janssen and M. Vojta,Heisenberg-Kitaev physics in                                  Physical Review B 76, 193101 (2007).
+     magnetic  ﬁelds,Journal  of  Physics:  Condensed  Matter                       [74]J.  Nasu,  M.  Udagawa,   and  Y.  Motome,Vaporization
+     31, 423002 (2019).                                                                   of  Kitaev  Spin  Liquids,Physical  Review  Letters             113,
+[56]S.-H. Jang, R. Sano, Y. Kato,  and Y. Motome,Antifer-                                 197205 (2014).
+     romagnetic  Kitaev  interaction  in f-electron  based  hon-                    [75]F. J. Burnell and C. Nayak,SU(2) slave fermion solution
+     eycomb magnets,Physical Review B             99, 241106 (2019).                      of the Kitaev honeycomb lattice model,Physical Review
+[57]Y.  Motome,   R.  Sano,   S.-H.  Jang,   Y.  Sugita,     and                          B 84, 125125 (2011).
+     Y.  Kato,Materials  design  of  Kitaev  spin  liquids  be-                     [76]This  form  of   Wp  is  consistent  with  Lieb’s  deﬁnition  of
+     yond the Jackeli-Khaliullin mechanism,arXiv:2001.03731                               a  ﬂux  [77].  In  an  alternative  deﬁnition,  the  product  in
+     (2020).                                                                              Eq. (11) comprises only the spin component not included
+[58]Y. Sugita, Y. Kato,  and Y. Motome,Antiferromagnetic                                  along the loop. Depending on the lattice, these two def-
+     Kitaev Interactions in Polar Spin-Orbit Mott Insulators,                             initions can diﬀer by a sign, e.g. for the square-octagon
+     arXiv:1905.12139  (2019).                                                            lattice.
+[59]L. J. Sandilands, Y. Tian, K. W. Plumb, Y.-J. Kim,  and                         [77]E. H. Lieb,Flux Phase of the Half-Filled Band,Physical
+     K.  S.  Burch,Scattering  Continuum  and  Possible  Frac-                            Review Letters 73, 2158 (1994).
+     tionalized Excitations in α-RuCl3,Physical Review Let-                         [78]Note  that  a  diﬀerent  deﬁnition  of  the  loop  operator  is
+     ters 114, 147201 (2015).                                                             used  in  Ref.  [62],  which,  in  that  language,  results  in  a
+[60]L. J. Sandilands,  Y. Tian,  A. A. Reijnders,  H.-S. Kim,                             ﬂux-free ground state [68].
+     K. W. Plumb, Y.-J. Kim, H.-Y. Kee,   and K. S. Burch,                          [79]Compared  to  Fig.6a,  the  band  structure  in  Ref.  [62]
+     Spin-orbit excitations and electronic structure of the pu-                           is  shifted  by  (π, 0),  the  reason  being  that  the  Jordan-
+     tative  Kitaev  magnet α-RuCl3, Physical  Review  B  93,                             Wigner  transformation  induces  a  diﬀerent  gauge  struc-
+     075144 (2016).                                                                       ture for x/y-bonds [70]. In Ref. [62], choosing a diﬀerent
+[61]J.  Nasu,  J.  Knolle,  D.  L.  Kovrizhin,  Y.  Motome,   and                         gauge  that  still  ensures  the  full-ﬂux  sector  restores  the
+                                                                                                                                                        17
+
+     band structure shown here.                                                          Appendix A: Explicit expressions for the
+[80]G. Kells, J. Kailasvuori, J. K. Slingerland,  and J. Vala,                                              Hamiltonians
+     Kaleidoscope of topological phases with multiple Majo-
+     rana species,New Journal of Physics        13, 095014 (2011).                 In this ﬁrst appendix, we provide explicit expressions
+[81]V.  Kalmeyer  and  R.  B.  Laughlin,Equivalence  of  the                    for the Kitaev model on all lattices under consideration.
+     resonating-valence-bond  and  fractional  quantum  Hall                    Both,  the  original  spin  Hamiltonian  and  its  Majorana
+     states,Physical Review Letters          59, 2095 (1987).                   version  after  Jordan-Wigner  transformation  are  given.
+[82]S. Dusuel,  K. P. Schmidt,  J. Vidal,   and R. L. Zaﬃno,                    For  the  three-dimensional  lattices,  information  on  unit
+     Perturbative study of the Kitaev model with spontaneous
+     time-reversal symmetry breaking,Physical Review B              78,         cells and lattice vectors is also speciﬁed.
+     125102 (2008).
+[83]Using Eq. (2) to deﬁne    Eeﬀz(′)(h), Hh  now only contains
+     spins belonging to z(′)-bonds.                                                                        1.    2D lattices
+[84]X.  Wan,  A.  M.  Turner,  A.  Vishwanath,    and  S.  Y.
+     Savrasov,Topological  semimetal  and  Fermi-arc  surface                      a.    Square-octagon  lattice    The Kitaev model on the
+     states in the electronic structure of pyrochlore iridates,                 square-octagon lattice reads [62]
+     Physical Review B 83, 205101 (2011).                                                                    ∑
+[85]H. B. Nielsen and M. Ninomiya,The Adler-Bell-Jackiw                                 HKitaev =−Jx              Sxr−a1,4Sxr,1 +Sxr,2Sxr−a2,3
+     anomaly and Weyl fermions in a crystal,Physics Letters                                                    r
+     B 130, 389 (1983).                                                                                      ∑
+[86]Note that in contrast to electronic systems, Weyl points                                          −Jy         Syr,1Syr,2 +Syr,3Syr,4
+     occur at the Fermi level even though neither TRS nor in-                                                ∑r
+     version symmetry are broken. For a detailed explanation                                          −Jz         Szr,1Szr,3 +Szr,2Szr,4,            (A1)
+     on how the projective symmetries make this possible, see
+     [66].                                                                                                    r
+[87]T. Takayama, A. Kato, R. Dinnebier, J. Nuss, H. Kono,                       where the sum is taken over all unit cells.  After applying
+     L. Veiga, G. Fabbris, D. Haskel,  and H. Takagi,Hyper-                     the Jordan-Wigner transformation and adding the mag-
+     honeycomb Iridate β− Li2IrO3 as a Platform for Kitaev                      netic ﬁeld h, we obtain the expression
+     Magnetism,Physical Review Letters                 114, 077202 (2015).                 ∑
+[88]I.  Kimchi,  J.  G.  Analytis,   and  A.  Vishwanath,Three-                   H =i          Jx [cr−a1,4cr,1 +cr,2cr−a2,3]
+     dimensional quantum spin liquids in models of harmonic-                             4
+     honeycomb iridates and phase diagram in an inﬁnite-D                                    r
+     approximation,Physical Review B              90, 205126 (2014).                     −Jy [cr,1cr,2 +cr,3cr,4]
+[89]E. K.-H. Lee, R. Schaﬀer, S. Bhattacharjee,   and Y. B.                              +Jz [i¯cr,1¯cr,3cr,1cr,3 +i¯cr,2¯cr,4cr,2cr,4]
+     Kim,Heisenberg-Kitaev model on the hyperhoneycomb                                   + 2h [cr,1¯cr,1 +cr,3¯cr,3−cr,2¯cr,2−cr,4¯cr,4].   (A2)
+     lattice,Physical Review B          89, 045117 (2014).
+[90]I. Kimchi, R. Coldea,   and A. Vishwanath,Uniﬁed the-                       The black sublattice consists of the lattice sites 2 and 4.
+     ory of spiral magnetism in the harmonic-honeycomb iri-                        b.    Decorated  honeycomb  lattice    The  Kitaev  model
+     datesα,β, andγLi2IrO3,Physical Review B  91, 245134                        on the decorated honeycomb lattice, introduced by Yao
+     (2015).                                                                    and Kivelson [63], is given by
+[91]H.-Y.  Lee,  N.  Kawashima,    and  Y.  B.  Kim,Tensor
+     network  wavefunction  of S   =  1  Kitaev  spin  liquids,                                      ∑                                   ∑
+     arXiv:1911.07714  (2019).                                                  HKitaev =−Jx              Sxr,3Sxr,2 +Sxr,5Sxr,6−J′x          Sxr,4Sxr+a2,1
+[92]X.-Y.    Dong    and    D.    N.    Sheng,Spin-1    Kitaev-                                      ∑r                                  ∑r
+     Heisenberg model on a two-dimensional honeycomb lat-                                     −Jy        Syr,1Syr,3 +Syr,6Syr,4−J′y           Syr,2Syr+a1,5
+     tice,arXiv:1911.12854  (2019).                                                                   r                                    r
+[93]Z. Zhu, Z.-Y. Weng,   and D. N. Sheng,Magnetic Field                                             ∑                                   ∑
+     Induced Spin Liquids in S=1 Kitaev Honeycomb Model,                                      −Jz        Szr,1Szr,2 +Szr,5Szr,4−J′z           Szr,3Szr,6.
+     arXiv:2001.05054  (2020).                                                                        r                                    r
+[94]I.  Khait,  P.  P.  Stavropoulos,  H.-Y.  Kee,    and  Y.  B.                                                                                    (A3)
+     Kim,Characterizing spin-one Kitaev quantum spin liq-                       Its fermionized version subject to a [001] ﬁeld is
+     uids,arXiv:2001.06000  (2020).
+[95]C. Hickey, C. Berke, P. P. Stavropoulos, H.-Y. Kee,  and                                       ∑
+     S. Trebst,Field-Driven Gapless Spin Liquid in the Spin-1                      HKitaev =i4          Jx [cr,3cr,2 +cr,5cr,6] +J′xcr,4cr+a2,1
+     Kitaev Honeycomb Model,arXiv:2001.07699  (2020).                                                r
+[96]P. P. Stavropoulos,  D. Pereira,   and H.-Y. Kee,Micro-                                      −Jy [cr,1cr,3 +cr,6cr,4]−J′ycr,2cr+a1,5
+     scopic Mechanism for a Higher-Spin Kitaev Model,Phys.
+     Rev. Lett. 123, 037203 (2019).                                                              +Jz [i¯cr,1¯cr,2cr,1cr,2 +i¯cr,4¯cr,5cr,4cr,5]
+[97]P.  Hoˇrava,Stability  of  Fermi  Surfaces  and    K  Theory,                                −J′zi¯cr,3¯cr,6cr,3cr,6
+     Physical Review Letters 95, 016405 (2005).                                                  + 2h [cr,1¯cr,1 +cr,2¯cr,2−cr,3¯cr,3
+
+                                                                                                 −cr,4¯cr,4−cr,5¯cr,5 +cr,6¯cr,6].               (A4)
+                                                                                The black sublattice consists of the lattice sites 3,4,5.
+                                                                                                                                                      18
+
+   c.    Honeycomb  lattice    Kitaev’s  original  honeycomb                   magnetic ﬁeld, the Hamiltonian becomes
+model is given by [11]                                                                    ∑
+                                                                                 H =i4         Jx [cr,5cr−a3,6 +cr,1cr−a3,2] +J′xcr,4cr−a2,3
+       HKitaev =∑        −JxSxr−a1,2Sxr,1−JySyr,1Syr−a2,2                                  r
+                      r                                                                 −Jy [cr,3cr,5 +cr,2cr,4] +J′ycr−a3−a1,6cr,1
+                    −JzSzr,1Szr,2.                                    (A5)              +Jz [i¯cr,1¯cr,4cr,1cr,4 +i¯cr,3¯cr,6cr,3cr,6]
+Adding the [001] ﬁeld and performing the Jordan-Wigner                                  −J′zi¯cr,2¯cr,5cr,2cr,5
+transformation yields [54,71,72]                                                        + 2h [cr,2¯cr,2 +cr,3¯cr,3 +cr,6¯cr,6
+                                                                                        −cr,1¯cr,1−cr,4¯cr,4−cr,5¯cr,5].                      (A10)
+          ∑                                                                    The black sublattice consists of the lattice sites 1, 4 and
+  H =i4        Jxcr−a1,2cr,1−Jycr,1cr−a2,2
+            r                                                                  5.
+        −Jzi¯cr,1¯cr,2cr,1cr,2 + 2h [cr,1¯cr,1−cr,2¯cr,2].   (A6)                 b.    (10,3)b lattice    With the lattice vectors given by
+
+                                                                                          a1 = (−1, 1,−2),           a2 = (−1, 1, 2),
+                                                                                          a3 = (2, 4, 0),                                              (A11)
+                          2.    3D lattices
+                                                                               and the four sites per unit cell at
+   a.    (8,3)b lattice    The lattice vectors are chosen as                              r1 = (0, 0, 0),           r2 = (1, 2, 1),
+           (               √    )              (            √    )                        r3 = (1, 1, 0),           r4 = (2, 3, 1),             (A12)
+    a1 =      1               2    ,     a2 =    0,   1√        2   ,          the Kitaev model on the lattice (10,3)b reads
+              2,   12√3, 15   3                        3, 25    3                                        ∑
+           (       √    )                                                            HKitaev =−Jx             Sxr,1Sxr+a1−a3,4 +Sxr−a2,2Sxr,3
+    a3 =     0, 0,    6   .                                                (A7)
+                    5                                                                                    ∑r
+                                                                                                  −Jy         Syr−a3,4Syr,1 +Syr,3Syr,2
+The lattice (8,3)b has six sites per unit cell at the posi-                                              ∑r
+tions                                                                                             −Jz         Szr,1Szr,3 +Szr,2Szr,4.             (A13)
+         (                √    )              (      √     √   )                                          r
+  r1 =      1                2    ,     r2 =     1     3     6    ,            The  Jordan-Wigner  chains  correspond  to  the  two  dif-
+            10,   12√3, 15   3                   5,   5 ,   5                  ferent xy-zigzag chains running in positive a1(a2) direc-
+         (                  √    )            (               √    )           tion.  After adding the magnetic ﬁeld and transforming
+  r3 =      3                  2    ,   r4 =     1               2    ,        to Jordan-Wigner fermions, the Hamiltonian reads
+            10,   1110√3, 45   3                 5,   25√3, 25   3                          ∑
+         (              √    )                (           √    )                   H =i         Jx [cr,1cr+a1−a3,4 +cr−a2,2cr,3]
+  r5 =      3        3     6   ,        r6 =     2   √        2   .                      4   r
+            10, 3√10 ,   5                       5,   13,     3                           −Jy [cr−a3,4cr,1 +cr,3cr,2]
+                                                                   (A8)                   −Jz [i¯cr,1¯cr,3cr,1cr,3 +i¯cr,2¯cr,4cr,2cr,4]
+
+The Kitaev model then reads                                                               + 2h [−cr,1¯cr,1−cr,2¯cr,2 +cr,3¯cr,3 +cr,4¯cr,4].
+                                                                                                                                                 (A14)
+HKitaev =−Jx        ∑Sxr,5Sxr−a3,6 +Sxr,1Sxr−a3,2
+                                                                               The black sublattice consists of the lattice sites 1 and 2.
+                    ∑r                        ∑                                   c.    (10,3)a lattice    The lattice vectors for (10,3)a are
+             −J′x       Sxr,4Sxr−a2,3−Jy           Syr,3Syr,5 +Syr,2Syr,4      given by
+                    ∑r                          r
+             −J′y       Sy                                                                a1 = (1, 0, 0),              a2 = 12(1, 1,−1),
+                          r−a3−a1,6Syr,1
+                    ∑r                                 ∑                                  a3 = 1
+             −Jz        Szr,1Szr,4 +Szr,3Szr,6−J′z          Szr,2Szr,5.                          2(1, 1, 1).                                           (A15)
+                     r                                   r                     The unit cell vectors
+                                                                   (A9)
+The Jordan-Wigner chains run along the direction a1−                                  r1 = 18(3, 1, 1),             r2 = 18(−1, 3,−1),
+
+a2−a3.   They  are  visualized  in  Fig.13a.   Expressed  in                          r3 = 1
+terms  of  Jordan-Wigner  fermions  and  after  adding  the                                   8(−3, 1,−1),        r4 = 18(1, 3, 1),         (A16)
+                                                                                                                                                     19
+
+are chosen such that lattice sites connected by z-bonds                       hopping  as h  is  increased  and  the  corresponding  corre-
+belong to the same unit cell.  The Kitaev model is [68]                       lations become non-zero.  They evolve non-monotonic in
+                          ∑                                                   h  for x-  and y-bonds  with  a  maximum  in  the  absolute
+      HKitaev =−Jx            Sxr,4Sxr,2 +Sxr−a1,1Sxr,3                       value near hp, see Fig.18c- Fig.18f.  Similar results are
+                           r                                                  obtained for the honeycomb lattice [54].
+                          ∑
+                   −Jy        Syr−a2,2Syr−a1,1 +Syr,3Syr−a3,4
+                         ∑r                                                                 2.    Decorated honeycomb lattice
+                   −Jz        Szr,1Szr,4 +Szr,2Szr,3.             (A17)
+                           r                                                     a.    Mean-ﬁeld  parameters  for J  = J′    The  relative
+The Jordan-Wigner chains correspond to the square spi-                        signs of the AFM A and  ¯A given in Eq. (19) change for
+rals running in a2−a3 direction.  The Hamiltonian in the                      FM couplings.  This holds for all lattices.  Fig.19illus-
+presence of a [001] ﬁeld is then calculated to                                trates  the  evolution  of  the  mean-ﬁelds  in  an  increasing
+                                                                              ﬁeld h.  Throughout the whole range of h, the relations
+    H =i    ∑    Jx [cr,4cr,2 +cr−a1,1cr,3]
+          4                                                                        Mz :=Mz1 =Mz2 =Mz4 =Mz5⁄=Mz3 =Mz6  =:M′z,
+              r                                                                     ¯B12 =− ¯B45 =B12 =−B45                                 (B1)
+          −Jy [cr−a2,2cr−a1,1 +cr,3cr−a3,4]
+          +Jz [i¯cr,1¯cr,4cr,1cr,4 +i¯cr,2¯cr,3cr,2cr,3]                      hold.  In addition, for h<hc3, the mean-ﬁelds
+          + 2h [−cr,1¯cr,1 +cr,2¯cr,2 +cr,3¯cr,3−cr,4¯cr,4].                                       A36,  ¯A36⁄= 0,
+                                                                  (A18)
+                                                                                                   A12 =A45,    ¯A12 =  ¯A45,                  (B2)
+The black sublattice consists of the lattice sites 1 and 4.
+                                                                              are  non-zero.   For  solid  (dashed)  bonds, A  and   ¯A  ap-
+                                                                              proach zero athc3 (hc4).  Betweenhc3 andhc4, the phase
+    Appendix B: Details on the mean-ﬁeld results                              is thus characterized by Eq. (B1) and
+
+  In this second appendix,  we extend the discussion of                                                    A36,  ¯A36⁄= 0,                           (B3)
+the  mean-ﬁeld  results.   For  all  lattices,  we  provide  the              In  the  polarized  phase,  the  mean-ﬁelds  are  given  by
+mean-ﬁeld parameters for h = 0,  if not already done in                       Eq.  (B1)  alone.    B  and  ¯B  vanish  for h→∞.   The  sig-
+the main text.  Correlation functions and susceptibility                      natures of the phase transitions (the ‘kinks’) at hc1,hc2,
+are  discussed  using  the  example  of  the  square-octagon                  albeit diﬃcult to recognize, still occur in Fig.19.
+lattice.   For  honeycomb  and  decorated-honeycomb  lat-                        b.    Dirac  points  in  the  anisotropic  Kitaev  model    In
+tice, more details on the anisotropic phase diagrams are                      order to compare the Dirac points forJz =0 andEeﬀz   = 0,
+provided.  For (8,3)b, the band structure is subjected to                     we calculate their positions for ﬁxed AFM couplings on
+closer examination.  For (10,3)b, we discuss the stability                    x/x′- and y/y′-bonds and Jz =0.  They are then located
+of the nodal line and for (10,3)a, we calculate and com-                      at
+pare the zero-energy modes for the anisotropic model in                                                                          √         
+zero-ﬁeld and the isotropic model subject to a ﬁeld.                                                                                 4−J′2z
+                                                                                      kx =±4 arctan        −2 + sgn(J′z)J′z           J′2z ,
+                                                                                                                           J′z
+                  1.    Square-octagon lattice
+                                                                                      ky =± π√3.                                                      (B4)
+  Fig.18aand Fig.18bshow the evolution of the mean-
+ﬁeld parameters and the susceptibility.  The mean-ﬁelds                       ForJ′z =−1, their position is±(π/3,π/√3).  As|J′z| de-
+evolve  continuously  as hp  is  crossed.   All  other  lattices              creases, the gapless points move towardskx = 0, crossing
+(except for decorated honeycomb) show a similar evolu-                        zero as J′z  changes from AFM to FM. This is the same
+tion,  with  the  only  diﬀerence  that  there  the  transition               behavior  found  along  the  black  dashed  line  in  Fig.10,
+at hp  is  of  ﬁrst  order.   The  susceptibility χ  jumps  at                where Eeﬀz   = 0.   Starting  at  high J′,  we  ﬁnd  the  same
+hp  for  both,  AFM  and  FM  couplings.   For  AFM  cou-                     gapless excitation that a system withJz = 0 and a small
+plings, the kink in the mean-ﬁeld evolution at hc  mani-                      J′z that changes from AFM to FM as the red line – where
+fests itself in a further peak in χ.  The evolution of the                    Eeﬀz′  =0 – is crossed, hosts.
+NN spin-spin correlations⟨SγiSγj⟩ is shown in Fig.18c-                           c.    Details  on  the  anisotropic  phase  diagram    Here,
+Fig.18h.    ⟨SγiSγj⟩γ′ contains only terms of the form⟨cicj⟩                  we  provide  more  details  on  the  phases  appearing  in
+(⟨¯ci¯cj⟩) for γ =γ′ (γ⁄=γ′) and therefore measures the ki-                   Fig.10.
+netic  energy  of  the c-  (¯c-)Majorana  fermions  [54].   The                  The CSLs (green, red) all share the parameter conﬁg-
+¯c-Majoranas,  localized  on  the z-bonds  for h = 0,  start                  uration  characterized  by  Eq.  (B1)  and  Eq.  (B2).   The
+                                                                                                                                                                20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               FIG. 18.  Mean-ﬁeld parameters, susceptibility and correlations for the square-octagon lattice.  Mean-ﬁelds and
+               magnetic susceptibility χzz  for(a)FM couplings and(b)AFM couplings.  The ﬁeld dependence of the correlators      ⟨Sγ′i Sγ′j ⟩
+               along the bond γ  is shown in(c),(e),(g)for FM couplings and in(d),(f),(h)for AFM couplings.  For               γ′ =x,y and γ = z,
+               string factors from the Jordan-Wigner chains emerge and prevent a simple evaluation of the correlation functions.
+
+
+                                                                                            level  crossing  of  the  two  coexisting  self-consistent  solu-
+                                                                                            tions belonging to I1 and CSL respectively.
+                                                                                               In order to understand the origin of the intermediate
+                                                                                            phases, we will now address the two limiting cases J =0
+                                                                                            and J′ =0.
+
+                                                                                               The limit J → 0    For J  = 0, the system decouples
+                                                                                            to isolated dimers.  The ground state energy for x′- and√
+                                                                                            y′-dimers isE0 =− 14        1 + 16h2 and the magnetization is
+                                                                                            given by Mz = 2h/√1 + 16h2.  The mean-ﬁeld solution
+                                                                                            I1  reproduces  these  exact  results.   For z-bonds,  AFM
+                                                                                            order and a covering of dimer singlets are degenerated,
+                                                                                            but an arbitrary small J  prefers the solution stemming
+               FIG.  19.   Evolution  of  the  mean-ﬁeld  parameters  in                    from the latter.  ForJ =0, the transition athp =0.5 only
+               the  isotropic  AFM  Kitaev  model  on  the  decorated                       aﬀects thez′-bonds, whereM′z changes from zero to fully
+               honeycomb lattice.  Solid (dashed) lines denote mean-ﬁeld                    polarized.  ForJ,h=0, the phasesI1 and CSL both have
+               parameters belonging to solid (dashed) bonds in Fig.4c.                      the  mean-ﬁeld  parameters A36 =− ¯A36  =  1  and  in  the
+                                                                                            CSL phase  ¯A12 =  ¯A45 = 1 additionally applies.  CSL and
+                                                                                            I1 are then degenerated because the energy contributions
+               intermediate phase shown in yellow, which occurs at low                      from the solid bonds vanish forJ =0.  However, the CSL
+               J′ is called ∆1.  It has the same parameter conﬁguration                     still has|W| = 1 and AFM correlations on solid bonds
+               as the polarized phase, i.e.  Eq. (B1).  The narrow, orange                  for any ﬁniteJ, in contrast to the phaseI1 with|W| = 0
+               phase,  separating the polarized phase and ∆1,  is called                    and FM correlations on solid bonds.  To summarize, we
+               ∆2.  Its mean-ﬁeld parameters are discussed below.  The                      ﬁnd that the intermediate phaseI1 is smoothly connected
+               intermediate  phase  highlighted  in  blue  is  called I1  and               to  the  exact  solution  at J = 0  and h< 0.5,  consisting
+               characterized by Eq. (B1) and Eq. (B3).  It exhibits two                     of singlets on z′-bonds and singlet formation competing
+               peculiarities, an intraphase transition marked by the blue                   with magnetic order on x′- and y′-bonds.
+               dotted line in Fig.10, where the mean-ﬁelds evolve dis-
+               continuously  and  a  kink  occurring  in  the  boundary  to                    The limit J ′→0    ForJ′ =0, the system decouples to
+               the  CSL  at J′/J  =  0.94,  originating  in  an  additional                 a collection of independent triangles.  Two eigenenergies
+
+
+
+
+
+
+
+
+(a)
+(b)(c)(d)(e)(f)(g)(h)
+                                                                                                                                                                 21
+
+               of the triangle model are of relevance,E1 =−(√3+2h)/4
+               andE2 =−(2h+Υ)/4, where the shorthand notation Υ =
+               √3− 8h + 16h2  was  introduced.   They  are  degenerated
+
+               at h = 0  and  intersect  again  at h = 0.5.   In  between,
+               E1  is  the  ground-state  energy.   In  this  ﬁeld  range,  the
+               ﬁeld-independent mean-ﬁelds
+
+                   Mz = 3−√3                                               3
+                              12  ,  M′z =    12√3,  B12 = 3+√6  ,    (B5)
+               are exact and reproduce the correctE1.  The correlations
+               ⟨SziSzj⟩z  are AFM (FM) for solid (dashed) bonds.  The
+               phase ∆1  can  be  understood  as  a  descendant  from  the
+               exact  solution  for h< 0.5.   At h = 0.5,  the  mean-ﬁeld
+               parameters on solid bonds change discontinuously to
+
+                         Mz = 3 +√3                                  3
+                                    12  ,     B12 = 3−√6  ,            (B6)
+               which induces a sign change in the correlation from AFM
+               to FM. The magnetizations now evolve according to                            FIG. 20.  Phase diagram for anisotropic couplings.  (a)
+                                                                                            Phase  diagram  showing  the  three  pathes  along  which  the
+                       Mz = 1                                                               anisotropic phase diagrams are plotted in(b)-(d). (b)Phase
+                                4 + 4h− 14Υ ,    M′z = 4h− 12Υ .          (B7)              diagram for Jz  = 2/3.(c)Phase diagram that includes the
+               Again,  the  mean-ﬁeld  solution  is  exact  and  reproduces                 point Jx = 5/8, Jy  =  3/8, Jz  =  0.(d)Phase  diagram  for
+               the correct ground-state energyE2.  The polarized phase                      Jz = 1/6.
+               is thus smoothly connected to the exact solution of the
+               triangle system with energyE2.  Ath = 0.5, the phase ∆2                      phase  appears  even  if  the  ground  state  at h = 0  is  the
+               emerges between ∆1 and the polarized phase.  Its mean-                       gapped Ax/y  phase, as shown in Fig.20dand Fig.20c.
+               ﬁeld conﬁguration is similar to the polarized phase, but                     The nodal line athc disappears if mirror symmetries are
+               in addition, the parameters  ¯A,A on solid bonds become                      broken by Jx⁄=Jy [52].  Instead, the transitions from the
+               non-zero for J′ > 0.  For J =0,  the width of this phase                     B phase to theAx/y phase and then on to the intermedi-
+               is  zero  and  we  ﬁnd Mz  = 1/4, B12 = 1/2  and M′z  =                      ate phase are characterized by an opening and reclosing
+               1/(2√3).  This is again an exact solution, corresponding                     of the Dirac points.  A further gapped intermediate phase
+               to  a  superposition  of  the  states  described  by  Eq.  (B5)              for small anisotropies inJx/y, identiﬁed here as stemming
+               and Eq. (B6), that are degenerated for   h=0.5.                              from the phase Ax/y, was also found in Ref. [52].
+                  To summarize, we ﬁnd that the intermediate phases ∆1
+               and ∆2 at ﬁniteJ′ can both be understood as stemming
+               from  exact  solutions  of  the  triangle  system.   The  same                                            4.    (8,3)b
+               holds for the polarized phase that approaches an exact
+               solution of the isolated triangles for J′→ 0.                                   a.    Mean-ﬁeld  parameters    For h  =  0  and  FM  cou-
+                                                                                            plings, the mean-ﬁeld parameters are given by
+
+                                    3.    Honeycomb lattice                                         A14 =−A36 =−0.521,    A25 =−0.505,
+                                                                                                     ¯A14 =− ¯A36 = 1,                    ¯A25 =−1.         (B9)
+                  a.    Mean-ﬁeld  parameters    At zero ﬁeld and for FM                    The relations between the mean-ﬁelds also hold forh>0.
+               couplings, the mean-ﬁeld parameters are given by                             In the KSL phase, the magnetizationMz2,Mz5  diﬀer from
+
+                              A12 = 0.525,                   ¯A12 = 1.           (B8)       the rest.  In the polarized phase, all Mzi  are equal.
+               The magnetization on the two sublattices is equal for all                       b.    Evolution  of  Weyl  points    With  Eq.  (A7)  given,
+                                                                                            the reciprocal lattice vectors are
+               h. B and  ¯B are always zero, as for all lattices except for                                                               (                 )
+               the decorated honeycomb lattice.                                                  b1 = (4π, 0, 0),                 b2 =      −2π, 2√3π, 0       ,
+                  b.    Details  on  the  anisotropic  phase  diagram    Here,                          (           √      )
+               we  discuss  the  anisotropic  Kitaev  model  along  further                      b3 =     0, 4π√       2      .                                     (B10)
+               lines  in  coupling  space,  shown  in  Fig.20a.   As  can  be                                  3, 5    3π
+               seen in Fig.20band Fig.20d, intermediate phase and           B
+               phase  only  touch  for Jx  = Jy.   For  small Jz  and  large                Forh = 0 and isotropic couplings, Weyl points of positive
+               anisotropies betweenJx andJy, the gapless intermediate                       chirality are located atW1 = 5/8 b1+3/4 b2+3/8 b3 and
+
+
+
+
+
+
+
+
+(a)
+(b)(c)(d)
+                                                                                                                                                 22
+
+                                                                            the Bloch matrix.  Using the simple form of the mean-
+                                                                            ﬁelds, this transformation on the honeycomb lattice has
+                                                                            the compact form U  =VK, where K  is complex conju-
+                                                                            gation and V  = 12⊗σx, with the 2× 2 identity matrix
+                                                                            12.  Owing to this symmetry, their exists a Z2 invariant
+                                                                            protecting the Dirac points [54].  This argument can be
+                                                                            expanded to the lattice (10,3)b by considering only two
+                                                                            momentum  directions  as  physical  and  the  third  one  as
+                                                                            a tunable parameter.  Choosing the latter such that the
+                                                                            plane of physical momenta cuts the nodal line gives an
+FIG.  21.  Evolution  of  the  velocities  and  v′  describing              eﬀective 2D Brillouin zone containing two Dirac points.
+the linear dispersion around the Weyl point in the directions               The further conclusions are analogous to Ref. [54], with
+n and n’.                                                                   the matrix V  now given by 12⊗σx⊗σx.
+
+
+W2 =−1/8 b1+1/4 b2+1/8 b3 and due to particle-hole                                                      6.    (10,3)a
+symmetry,  a  pair  of  negative  charge  is  found  at W3 =
+−W2 and W4 =−W1.                                                               a.    Mean-ﬁeld   parameters    For  FM  couplings,   the
+  SettingJ′z to zero decouples the lattice to an eﬀectively                 mean-ﬁeld parameters for h = 0 are given by
+2D system with normal vector n′ =(1,√3, 0).  As|J′z| is
+decreased, the velocityv′ describing the linear dispersion                        A23 =A14 = 0.513,         ¯A23 =  ¯A14 =−1.        (B12)
+in direction n′ decreases and reaches zero forJ′z = 0, giv-                 The relations between the mean-ﬁelds also hold forh>0.
+ing rise to a gapless line.  These observations also hold for               The magnetization is equal on all lattice sites.
+Jz and the velocity v in direction n =(−√6,√2,−5/2).                           b.    Gapless modes    Here, we show that a calculation
+ForJz =J′z =0, the two planes of zero energy excitations                    similar to the one presented in SectionIII B 2can also be
+are  given  by  5/√2kx− 5/√6ky− 8/√3kz  =±10π/√2.                           done for the lattice (10,3)a.  First, we examine the pure
+Upon  increasing  the  ﬁeld, Eeﬀz    and Eeﬀz′   approach  zero             Kitaev model with Jx =Jy =−1.  Gapless modes appear
+resulting  in  the  same  development  of  the  velocities,  as             for
+shown  in  Fig.21.   As  mentioned  in  the  main  text,  the
+two  ﬁelds  where  nodal  lines  in  the  directions n  and n’
+appear range very close together.                                                cos(kz) = 1 + J4z2  +J2z (cos(ky)− cos(kx)).      (B13)
+  The ﬁeld h not only changes v and v′  but also moves
+the Weyl points.  At hc1  they are found to be at W1  =                     For  isotropic  couplings  and  ﬁnite  ﬁelds,  deﬁning ξ  =
+3/4 b1+3/4 b2+1/2 b3 andW2 = 1/4 b1+1/4 b2, which is                        −Eeﬀz /E0z, as discussed in the main text, the gapless con-
+the exact same position found forJ′z,h = 0 and arbitrary                    dition becomes
+Jz.  Their position at hc2 is also found in a system with
+Jz,h=0 and a very small FM J′z.                                                   cos(kz) = 1 + ξ4
+                                                                                                     2  +ξ2 (cos(ky)− cos(kx)).      (B14)
+
+                            5.    (10,3)b                                   Again,  we  ﬁnd  that ξ  is  zero  at hc  and  tuning Jz  or
+                                                                            increasingh deforms the Fermi surface in the same way.
+
+  a.    Mean-ﬁeld parameters    For FM couplings andh =
+0, the mean-ﬁeld parameters are
+
+      A13 =A24 = 0.526,         ¯A23 =  ¯A14 = 1.        (B11)
+
+They evolve according to Eq. (21).
+  b.    Stability  of  the  nodal  line    The  Dirac  points  ap-
+pearing in the honeycomb lattice and the Fermi line in
+the  lattice  (10,3)b  both  have  an  even  codimension  and
+are  thus  not  a  priori  stable  [97].   For   h = 0,  they  are
+protected by TRS. However, not all TRS-breaking per-
+turbations gap them out, but only those mixing fermions
+of the same ﬂavor on the same sublattice [75].  A mag-
+netic ﬁeld in [001] direction can not do so by construction
+and  Dirac  points  and  Fermi  line  remain  stable.   It  was
+shown by Nasu  et  al. [54], that the stability is reﬂected
+in the existence of an antiunitary symmetry preserving

@@ -1,0 +1,810 @@
+Proximate Dirac spin liquid in honeycomb lattice J1-J3 XXZ model:  Numerical study
+                                                  and application to cobaltates
+
+                        Anjishnu Bose,1, ∗  Manodip Routh,2, ∗  Sreekar Voleti,1, ∗  Sudip Kumar Saha,2
+                          Manoranjan Kumar,2  Tanusri Saha-Dasgupta,2  and Arun Paramekanti1, 2, 3
+             1Department of Physics, University of Toronto, 60 St.  George Street, Toronto, ON, M5S 1A7 Canada
+                                   2Department  of  Condensed  Matter  Physics  and  Materials  Science,
+                                S.N.  Bose  National  Centre  for  Basic  Sciences,  Kolkata  700098,  India.
+                               3International  Centre  for  Theoretical  Sciences,  Bengaluru  560089,  India
+                                                           (Dated:  November 6, 2023)
+                   Recent theoretical and experimental work suggest that the honeycomb cobaltates, initially pro-
+                posed as candidate Kitaev quantum magnets, are in fact described by a pseudospin-1/2 easy-plane
+                spin Hamiltonian with nearest neighbor ferromagnetic (FM) exchange J1 being frustrated by anti-
+                ferromagnetic third-neighbor exchange J3 and weaker compass anisotropies.  Using exact diagonal-
+                ization and density-matrix renormalization group (DMRG) calculations, we show that this model
+                exhibits FM order at small J3/J1 and zig-zag (ZZ) order at large J3/J1, separated by an interme-
+                diate phase, which we label as fSL.  This fSL phase is shown to exhibit spin-liquid-like correlations
+                in DMRG, although we cannot preclude weak broken symmetries, e.g.  weak Ising type N´eel order,
+                given the limits on our explored system sizes.  Using a modified parton mean field theory and vari-
+                ational Monte Carlo on Gutzwiller projected wavefunctions, we show that the optimal FM and ZZ
+                orders as well as the intermediate fSL state are proximate to a ‘parent’ Dirac spin liquid (SL). This
+                Dirac SL is shown to capture the broad continuum in the temperature and magnetic field depen-
+                dent terahertz spectroscopy of BaCo2(AsO4)2, and the reported low temperature metallic thermal
+                conductivity in Na2Co2TeO6 and BaCo2(AsO4)2 upon incorporating disorder induced broadening.
+
+
+  Quantum spin liquids (SLs) are exotic magnetic liquids                      Kitaev model [35,36]. This has led to a large body of ex-
+featuring fluctuating singlet correlations and fractional-                    perimental work on a variety of these materials including
+ized spin excitations, which may be fruitfully described                      BaCo2(AsO4)2 [37–42], BaCo             2(PO4)2 [43], Na      2Co2TeO6
+using the language of gauge-matter theories [1–5].  While                     [44–48], and Na             3Co2SbO6 [45,49].  While most of these
+initially proposed as interesting magnetic ground states                      cobaltates  display  collinear  or  spiral  magnetic  ground
+formed by a quantum superposition of a large number of                        states  [37–41, 43, 50–52],  or  proposed  triple-Q  orders
+classically frustrated spin or singlet dimer configurations                   [53],  there  are  tantalizing  signatures  in  BaCo      2(AsO4)2
+[6,7], interest in SLs exploded with the idea that doping                     of  a  spin-liquid-like  broad  continuum  in  the  terahertz
+such insulators might lead to high temperature supercon-                      (THz) response [40].  Experiments on Na      2Co2TeO6  and
+ductivity [8,9].  For gapped SLs, their robust topological                    BaCo2(AsO4)2  have  also  reported  a  residual  metallic
+order [1] and the absence of local order parameters in SLs                    thermal conductivity κ ∝ T  [42,48] which hints at mo-
+has also rendered them as platforms of potential interest                     bile fermionic spinons; however, phonon contributions to
+for topologically protected quantum memories [10].                            κ(T) remain to be understood [54].
+  The  search  for  quantum  SLs  has  unearthed  several                        The THz and thermal conductivity results suggest that
+promising candidates in materials with strong geometric                       although the ground state of the cobaltates might exhibit
+frustration such as kagom´e [11–15], hyperkagom´e [16–18],                    magnetic order, a parent gapless quantum SL could be
+and pyrochlore [19–22] magnets, as well as in quantum                         lurking in close proximity to these ordered phases. While
+simulators  using  Rydberg  atoms  [23].   A  significant  ef-                bond-anisotropic interactions are relevant to some of the
+fort has also been devoted to exploring the physics of the                    observations [46,52,55],               ab initio and exact diagonaliza-
+exactly solvable Kitaev quantum SL with Majorana ex-                          tion (ED) calculations of the magnetic exchange interac-
+citations [10,24,25] in pseudospin-1             /2 honeycomb mag-            tions [56–58],  as well as detailed fits to high resolution
+nets such as iridates [26–29],           α-RuCl3 [30–32], and their           inelastic neutron scattering data on BaCo2(AsO4)2 [41],
+higher spin generalizations [33,34].  While many of these                     suggest that a more appropriate starting point is an XXZ
+quantum magnets have ordered ground states, their dy-                         ferromagnet, with easy-plane anisotropy, and frustration
+namical  response  is  nevertheless  expected  to  provide  a                 arising from third-neighbor antiferromagnetic (AFM) ex-
+window into SL physics at intermediate energy scales.                         change.  Could such XXZ models in the J1-J3  parame-
+  Recently, it was proposed that the honeycomb cobal-                         ter space with subdominant bond-anisotropic exchanges
+tates,  with  d7  Co2+  ions  in  an  octahedral  crystal  field              support quantum SLs distinct from the Kitaev SL? If so,
+environment, provide an alternative venue to realize the                      can such SLs explain the dynamical THz spin response
+                                                                              [40] and the unusual remarkable metallic thermal trans-
+                                                                              port observed in a Mott insulator [42,48]?  Addressing
+                                                                              these  questions  can  open  up  new  lines  of  investigation
+∗ These authors contributed equally to this work.
+                                                                              into these exotic magnetic fluids.
+                                                                                                                                                     2
+
+  The impact of further-neighbor frustration in honey-
+comb magnets has been previously explored with com-
+peting  second-neighbor  exchange  in  J1-J2  models.   For
+classical  Heisenberg  models,  the  ferromagnetic  or  N´eel
+order of the nearest-neighbor Heisenberg magnet gets de-
+stroyed with increasing J2  [59,60],  leading to coplanar
+spirals  which  support  a  Bose  surface  of  spin  wave  ex-
+citations [61,62].  In the quantum spin-1         /2 Heisenberg
+antiferromagnet, a regime of this fluctuating spiral order
+gives way to valence bond crystals [60,61,63–66].  In the
+strong easy-plane limit, this model may realize a gapped
+(possibly chiral) spin liquid [67–69].
+  Here, we study the spin-1/2 J1-J3 model on the hon-
+eycomb lattice, with FM J1 and frustrating AFM third-
+neighbor  exchange  J3,  in  the  strong  easy-plane  limit
+[41, 56, 70],  as relevant to the cobaltates,  and also ex-
+plore  the  impact  of  weaker  bond-dependent  exchange                     FIG.  1.     Schematic  view  of  honeycomb  lattice  showing
+couplings.  Our main result, obtained using exact diag-                      pseudospin-1/2  Co2+  ions  enclosed  in  edge-sharing  oxygen
+onalization  (ED)  and  DMRG,  is  evidence  of  a  distinct                 octahedra.  Solid lines connecting A-B sublattices represent
+intervening phase, between the FM phase at small J3/J1                       first-nearest  neighbors  (1NN),  while  dotted  lines  represent
+and  the  zig-zag  phase  at  large  J3/J1.   Given  the  spin-              third-nearest neighbors (3NN); bonds are labelled (a, b, c) as
+liquid-like characteristics of this intermediate phase, we                   shown on the right.  We also show crystallographic xyz coor-
+                                                                             dinate system which is used for the Hamiltonian.
+label it fSL.  Our numerics, however, do not definitively
+rule out weak symmetry breaking orders in the proposed
+fSL  state.   We  present  a  parton  theory  and  Gutzwiller                written in the global xyz basis, where ˆz is perpendicular
+wavefunction study which suggests that this fSL state de-                    to the honeycomb plane as shown in Fig.1. The exchange
+scends from a parent gapless Dirac SL with large low en-                     couplings Jij  are chosen to be ferromagnetic Jij = −J1
+ergy spinon density of states.  While the Dirac SL state                     for  the  first  neighbor  bond,  and  frustrating  antiferro-
+may be ultimately be unstable to fSL via confinement or                      magnetic  Jij = +J3  for  the  third  neighbor  bond,  with
+spinon pairing, it is nevertheless shown to provide an ex-                   J1, J3 > 0.  The Heisenberg limit of this model,  λ = 1,
+cellent starting point to describe the experimental THz                      has  been  partially  explored  earlier  [59, 60]  inspired  by
+spin response and thermal conductivity in the honeycomb                      old experiments on BaCo2(AsO4)2  [37].  Here, we focus
+cobaltates.                                                                  on the easy-plane regime of interest 0 < λ≪ 1.  We sup-
+                                                                             plement this Hamiltonian with weaker nearest-neighbor
+                                                                             compass anisotropy terms
+               I.    MODEL HAMILTONIAN                                          H2  =  X      (K1 cos ϕij + K2 sin ϕij) Sxi Sxj − Sy             
+                                                                                                                                             i Syj
+                                                                                         ⟨i,j⟩
+  The honeycomb cobaltates have the structure depicted                                   − (K1 sin ϕij − K2 cos ϕij) Sxi Sy                    .(2)
+in  Fig.1.    Their  magnetism  is  described  by  an  easy-                                                                      j  + Syi Sxj
+plane  XXZ  spin  model,  with  weaker  bond-dependent                       The compass terms have couplings K1, K2, with the an-
+anisotropies, which was derived using  ab  initio and ED                     gles ϕij =0, 2π/3, 4π/3 corresponding respectively to the
+studies  [56–58].   In  CoTiO             3  [50, 51],  a  dominant  FM      three nearest-neighbor honeycomb bonds c, a, b centered
+J1,  with  weaker  interlayer  AFM  exchange,  leads  to  in-                on  the  A-sublattice  (see  Fig.1).   Motivated  by          ab  ini-
+plane ferromagnetic order staggered from one layer to the                    tio studies [56] and fitting to neutron data [41],  we set
+next.  Small compass anisotropies pin the moment orien-                      K1 = −K2 = K,  with  K > 0  and  work  in  the  regime
+tation and can induce a weak gap to the Goldstone mode                       K ≪ J1  as relevant to the cobaltates.  The total Hamil-
+[51,56].  By contrast, in BaCo            2(AsO4)2, BaCo2(PO4)2,             tonian we study is thus H = H1 + H2.
+Na2Co2TeO6,  and Na3Co2SbO6,  the larger spacing be-
+tween  layers  renders  the  system  more  two-dimensional
+(2D), while the pnictogen (P, As, Sb) or chalcogen (Te)                            II.    EXACT DIAGONALIZATION STUDY
+mediates significant frustrating antiferromagnetic J3 [56]
+1as also deduced from fits to the neutron scattering data                       We have carried out extensive ED calculations on this
+[41].  Motivated by this, we consider the 2D honeycomb                       model for system sizes ranging from N  = 18 to N  = 30
+lattice XXZ model, with the Hamiltonian                                      spins (using the Davidson algorithm [71–73]).  Fig.2(a)
+                    X                                         ,      (1)    shows the zero field phase diagram of this model as we
+        H1  =   12        Jij  Sxi Sxj  + Syi Syj  + λSzi Szj                vary  J3/J1  and  K/J1  for  fixed  λ  =  0.25.    Based  on
+                     i,j                                                     studying spin correlations we find (i) an easy-plane FM
+                                                                                                                                                      3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              FIG.  3.   Cylinder  clusters  XC  (top)  and  YC  (bottom)  em-
+                                                                              ployed in DMRG calculations with indicated maximum sys-
+                                                                              tem sizes.  We use periodic boundary conditions (PBC) along
+                                                                              y  and open boundary conditions (OBC) along  x.  The spin
+                                                                              correlations are computed with respect to the reference site
+                                                                              (black filled circle) along two indicated paths for each cluster
+                                                                              (XC path P-1, blue; XC path P-2, yellow; YC path P-1, red;
+                                                                              YC path P-2, green).  For finite size scaling of the order pa-
+                                                                              rameters we use the spin correlation of sites s1 and s2 (open
+                                                                              circles) with respect to reference site.
+
+
+                                                                                III.    DENSITY MATRIX RENORMALIZATION
+                                                                                                     GROUP RESULTS
+
+FIG. 2.  (a) Phase diagram of the model Hamiltonian H (see                       To  further  characterize  the  phases  found  in  ED,  we
+text) for fixed λ = 0.25 as a function of third-neighbor ex-                  have used the modified DMRG algorithm [75–78] to cal-
+change J3/J1  and compass anisotropy K/J1.  Based on ED                       culate the ground state of H on cylinders, studying sys-
+and  DMRG  spin  correlations,  we  identify  three  phases:  an              tem sizes upto 66 sites (XC cylinder) and 68 sites (YC
+easy-plane  ferromagnet  FM,  spin-liquid-like  phase fSL,  and               cylinder);  the clusters are shown in Fig.3(see Supple-
+a zig-zag phase ZZ. The phase boundaries are identified by                    mental  Material  [74]  for  details  about  the  DMRG  and
+peaks  in  ED  of  (−∂2E/∂J23 ).   (b)  Cuts  through  the  phase             for  comparison  with  ED  results).   We  have  computed
+diagram in showing −E′′0 /N = (1/N)(−∂2E/∂J23 ) computed                      spin correlations, in the three different phases identified
+using ED on 24-site torus, as a function of J3/J1 for various                 in ED, going along different paths as indicated in Fig.3.
+compass anisotropies K/J1.  The two peaks in −E′′0 /N  serve                  These include the labelled zigzag and armchair paths on
+to delineate the FM-fSL and fSL-ZZ phase boundaries.                          the honeycomb lattice, with sites indexed by steps n and
+                                                                              spin correlations computed with respect to the reference
+                                                                              point marked by  a  filled circle.   Since  the  intermediate
+                                                                              fSL phase identified in ED is most visible at K  = 0, we
+state  for  small  J3/J1,  (ii)  a  zig-zag  phase  ZZ  for  large            focus on the parameter set K/J1 = 0 and λ = 0.25.  In
+J3/J1, and (iii) a small window of an intervening phase                       this  case,  the  Sx  and  Sy  correlations  are  identical  but
+where spin correlations appear to exhibit liquid-like be-                     they differ from the Sz correlations.
+havior [74]; we characterize this phase further below using                      Fig.4(a) shows the         Sx,y correlations on the 66-site XC
+DMRG calculations on larger system sizes.  This inter-                        cluster  along  path  P-1  (blue  armchair  path  in  Fig.3).
+mediate state could arise from quantum disordering the                        The spin correlations for J3/J1 = 0.2 and J3/J1 = 0.5 re-
+incommensurate spiral order of the classical spin model                       spectively indicate FM and period-2 ZZ order, while they
+[60].  Due to the spin-liquid-like nature of this interme-                    decay  rapidly  in  the  intermediate fSL  phase.   The  spin
+diate phase, we term it as fSL.  The phase boundaries in                      correlations along path P-2 (yellow zigzag path Fig.3)
+Fig.2(a) are obtained from peaks in the second derivative                     of  the  XC-cluster  show  qualitatively  similar  results  as
+of the ground state energy with respect to J3, as shown                       displayed in Fig.4(b).  By contrast, the         Sz  correlations
+in in Fig.2(b).  With increasing compass anisotropy, the                      decay rapidly to zero in all three phases as seen for both
+FM-fSL and fSL-ZZ phase boundaries shift such that the                        path P-1 and path P-2 as seen from Figs.4(c) and4(d).
+ZZ phase expands as seen from Fig.2(a) while the FM                           We find no evidence for any tendency to incommensurate
+and fSL phases shrink.  Nevertheless, the intermediate fSL                    correlations or other wavevectors in our study.
+persists over a window of K/J1  in this extended phase                           Turning to the YC-cluster, we find somewhat ambigu-
+diagram.                                                                      ous results.  Fig.5(a) and Fig.5(c) show that the                 Sx,y
+                                                                                                                                                      4
+
+                                                                              tinger liquid phases [79–81]. Such sliding phases have also
+                                                                              been proposed to occur, on intermediate energy scales, in
+                                                                              certain crossed spin-chain models [82,83].  This spatial
+                                                                              anisotropy of correlations observed in the fSL phase on the
+                                                                              YC-cluster might reflect the physics of a strongly fluctu-
+                                                                              ating and partially melted incommensurate spiral order
+                                                                              which decouples adjacent zigzag chains. In this YC geom-
+                                                                              etry, the Sz  correlations are ambiguous.  From Fig.5(b)
+                                                                              and  Fig.5(d),         Sz  correlations  along  path-1  are  oscilla-
+                                                                              tory, indicative of Sz  N´eel order (z-N´eel) on the honey-
+                                                                              comb lattice.  However, Fig.5(d) shows that such oscilla-
+                                                                              tory Sz correlations are also found in the ZZ phase (but
+                                                                              not in FM) even for our largest system size, suggesting
+                                                                              that these Sz  correlations might be strongly influenced
+                                                                              by the YC cylinder geometry and are not necessarily a
+                                                                              distinguishing feature of fSL.
+                                                                                 We  have  studied  the  the  finite  size  scaling  of  Sx, Sy
+                                                                              spin correlations on the XC and YC clusters at distant
+                                                                              points s1  and s2  with respect to the reference site (see
+                                                                              Fig.3).   These  points  are  chosen  to  be  one  layer  away
+                                                                              from  the  boundary  to  decrease  edge  effects.   We  com-
+                                                                              puted  these  spin  correlations  extrapolated  to  the  large
+                                                                              cylinder size limit as a measure of m2, the square of the
+                                                                              magnetic order parameter.  As shown in Fig.6(a) for the
+                                                                              XC  cluster,  we  find  nonzero  extrapolated  FM  order  at
+                                                                              small  J3/J1  (blue  circles,  blue  squares),  and  ZZ  order
+                                                                              at large J3/J1 (orange circles and orange squares).  This
+                                                                              leaves  a  window  0.3 ≲  J3/J1 ≲  0.33  where  such  mag-
+                                                                              netic orders appear to vanish as indicated by the open
+                                                                              symbols.  For the YC cluster, we find similar results as
+                                                                              seen in Fig.6(b); although the extrapolated correlation
+                                                                              for site s1 suggests a very narrow intermediate phase or a
+                                                                              direct transition, there is a clear intermediate phase from
+                                                                              studying correlations for site s2.
+                                                                                 We have checked that, together with no clear evidence
+                                                                              of magnetic orders,  there is also no evidence of Kekul´e
+                                                                              type  valence  bond  orders  in  the  intermediate  window
+                                                                              with no FM and ZZ order.  Our results are thus strongly
+                                                                              suggestive of an intermediate SL phase, distinct from the
+FIG. 4.  DMRG spin correlations on XC cluster with respect                    FM  and  ZZ  phases.   Nevertheless,  given  the  ambiguity
+to  the  reference  site  shown  in  Fig.3for  (        K = 0, λ = 0.25).     in  our  DMRG  spin  correlation  results  between  the  XC
+(a) Sx  correlations along path P-1 showing FM behavior at                    and YC clusters, we continue to label this phase as fSL
+J3/J1 = 0.2,  ZZ  order  at  J3/J1 = 0.5,  and  spin-liquid-like              to highlight its spin-liquid-like character.
+short range correlations at J3/J1 = 0.32.  (b) Similar to (a)                    We emphasize that our results do not definitively rule
+but for path P-2.  (c) and (d) Sz  correlations showing that                  out weak broken symmetries in the fSL phase which might
+they rapidly decay to zero for both paths in all phases.                      become  apparent  on  larger  system  sizes.   Indeed,  after
+                                                                              the initial report of our work [84], a more recent DMRG
+                                                                              study  of  this  model  by  Jiang,  White,  and  Chernyshev
+long ranged spin correlations in the FM and ZZ phases                         [85], has reported evidence for an intervening phase con-
+along path P-1 and path P-2 are qualitatively consistent                      sistent  with  our  results.   However,  they  conclude  from
+with our findings on the XC-cluster.  However, in the in-                     studying larger cylinder system sizes that this intermedi-
+termediate fSL phase, the Sx,y correlations along path P-1                    ate phase, which we call fSL, is a symmetry broken phase
+seem to indicate long-range order while it is nearly van-                     with weak z-N´eel order.  Crucially, they deduce this or-
+ishing along path P-2. This striking spatial anisotropy —                     der using finite-size scaling of the induced order in the
+relatively long correlations along the same zigzag chain                      presence  of  an  additional  strong  z-N´eel  boundary  pin-
+but strongly suppressed correlations with the neighboring                     ning  field.   Whether  our  results  differ  from  their  work
+zigzag chain — is somewhat reminiscent of sliding Lut-                        due to this difference in methodology, or simply due to
+                                                                                                                                                          5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                FIG. 6.  Extrapolated ⟨Sx0 Sxr ⟩ correlations at distant points
+                                                                                s1  and  s2  with  respect  to  the  reference  site  in  the  limit  of
+                                                                                large cylinder sizes for (K = 0, λ = 0.25).  The dashed (FM)
+                                                                                and solid (ZZ) lines are a guide to the eye.  (a) XC cluster
+                                                                                and (b) YC cluster.  These extrapolated correlations indicate
+                                                                                an  intermediate  phase  (open  squares)  which  is  neither  FM
+                                                                                nor  ZZ.  This  window  is  similar  in  three  of  the  four  cases,
+                                                                                0.3 ≲ J3/J1 ≲ 0.33, except the result from extrapolating the
+                                                                                s1  correlation  in  the  YC  cluster  which  shows  either  a  very
+                                                                                narrow fSL  window  or  even  a  direct  FM-ZZ  transition.   We
+                                                                                denote this extrapolated correlation as m2 since it is expected
+                                                                                to  be  a  measure  of  the  square  of  the  order  parameter  (for
+FIG. 5.  DMRG spin correlations on YC cluster computed for                      the  FM  or  ZZ  orders).   Open  squares  correspond  to  nearly
+(K = 0, λ = 0.25).  (a) Sx  correlations along path P-1 show-                   vanishing m2 which is the fSL phase.
+ing  apparently  non-decaying  correlations  in  all  phases.   (b)
+Sx correlations along path P-2 showing FM, ZZ, and strongly
+suppressed  correlations  for  indicated  J3/J1  values.   (c)  and             renormalization group study (pf-FRG) of this model [86]
+(d) show Sz correlations which exhibit weak oscillatory com-                    has also found a small intervening state with z-N´eel or-
+ponent indicative of z-N´eel order for J3/J1 = 0.32 in the fSL                  der,  but  the  quantitative  reliability  of  this  method  for
+phase, but these oscillations are more pronounced in the ZZ                     identifying phases of spin-1/2 models is unclear.
+phase for path P-2 on this YC cluster.                                             To  conclude  this  section,  our  DMRG  results  for  the
+                                                                                spin-1/2  J1-J3  XXZ  model  on  the  honeycomb  lattice
+                                                                                finds  evidence  for  the  fSL  phase,  with  spin-liquid-like
+a difference in system sizes, remains to be clarified.  We                      characteristics,  at intermediate  J3/J1.  Whether or not
+leave this as an open issue for further studies.  Moreover,                     the fSL hosts weak symmetry breaking (e.g., weak z-N´eel
+even  if  we  take  into  account  the  larger  system  DMRG                    order),  it is important to understand the nature of the
+results which argue that this fSL state hosts z-N´eel order,                    proximate SL state from which this phase descends, and
+the deduced order parameter they deduce is very small,                          to explore its implications for the phase diagram and for
+≲ 0.1, suggesting extremely strong quantum fluctuations                         experiments on the honeycomb cobaltates. We next turn
+in this fSL state.  This places it in proximity to a genuine                    to this issue using parton mean field theory and a numeri-
+SL state and well beyond the purview of any linear spin-                        cal variational Monte Carlo study of Gutzwiller projected
+wave  theory  description.   A  pseudo-fermion  functional                      parton wavefunctions.
+                                                                                                                                                   6
+
+    IV.    GUTZWILLER PROJECTED PARTON
+                     WAVEFUNCTIONS
+
+  To identify a candidate for the fSL phase, we turn to a
+parton theory of the spin Hamiltonian, using Schwinger
+fermions to represent spins via Sµi  =  12f†iγσµγδfiδ, where
+σµ  are the Pauli matrices.  The spin Hamiltonian H  is
+then expressed as a quartic interaction in terms of par-
+tons,  and  we  have  to  impose Pγ f†iγfiγ =  1 as  a  local
+Hilbert space constraint to faithfully represent spin con-
+figurations.
+
+
+
+               A.    Parton mean field theory
+
+  We can simplify H expressed in terms of partons using
+mean  field  theory  where  we  allow  nonzero  expectation
+values for parton bilinears in multiple channels: the Weiss
+channel which permits magnetic order ⟨Sai ⟩ ̸= 0 and the
+hopping  channel ⟨f†iγfjδ⟩  ≡  W γδij   which  allows  parton
+dispersion.   Since  mean  field  theory  overestimates  the
+tendency to order, we propose a modified parton mean
+field theory, replacing
+  
+Sµ      = (1 − α)⟨Sµ             − 1                         (3)
+     i Sνj                  i ⟩
+Sνj      4 Tr σµW∗ijσνW Tij
+
+while computing the mean field energy; this rescales the                    FIG. 7.    (a) Mean field parton band structure of the Dirac
+Weiss  channel  energy  by  (1 − α).   When  α  =  0,  we                   SL in the original BZ along a path through the Γ-K-M points.
+find that the mean field solution converges to the classi-                  Energy is measured in units of t1, and we have set t3/t1 = 0.2
+cal magnetically ordered phases with no spinon hopping                      as  found  from  our  VMC  optimization.    In  self-consistent
+(Wij  = 0),  reproducing  the  classical  phase  diagram  of                parton  mean  field  theory,  we  find  a  slightly  smaller  value
+the J1-J3 XY model.  The choice of intermediate values                      t3/t1 =0.15.  (b) Energy gap in units of t1, shown using color
+0  <  α  <  1  phenomenologically  incorporates  quantum                    scale,  in the full hexagonal BZ - we find low energy modes
+fluctuation effects beyond parton mean field theory.  For                   along  the  entire  edge  of  the  BZ  with  vanishing  gap  at  the
+α  =  1,  magnetic  orders  are  completely  suppressed  by                 Dirac K points.
+hand and we find pure spin liquid solutions.
+  For α = 1, we have done the parton mean field theory                      parton band dispersion with  t1, t3  hoppings is particle-
+calculations, exploring possible spatially inhomogeneous                    hole symmetric,  with t1 ≈ 0.13J1  and t3/t1 ≈ 0.15,  and
+solutions directly in real space mean field theory, as well                 features Dirac nodes at the K, K′ points of the hexagonal
+as using momentum space mean field theory with vari-                        Brillouin zone (BZ) as shown in Fig.7, so this state is a
+ous unit cell sizes.  Motivated by the THz [40] and ther-                   Dirac SL. We note that a similar Dirac SL, but with first
+mal  conductivity  [48]  experiments  which  find  an  abun-                and  second  neighbor  hopping,  also  appears  as  a  proxi-
+dance  of  low  energy  excitations,  we  have  chosen  to  re-             mate  state  in  the  J1-J2  honeycomb  XY  model  [68]  al-
+strict our attention to spin liquids without spinon pairing                 though its physical properties and relevance to magnetic
+terms (which might potentially open gaps in the excita-                     solids have not been explored.
+tion spectrum).  In all cases examined, we find that the
+mean  field  theory  converges  to  a  SL  phase  which  cor-
+responds  to  a  zero  flux-state,  described  by  the  spinon
+Hamiltonian Hsp = −Pi,jtµνij f†i,µfj,ν  with µ, ν  denoting                             B.    Variational Monte Carlo study
+spin.  Here, the nearest-neighbor parton hopping matrix
+is  tij  =  σzt1  and  third-neighbor  hopping  is  tij = σzt3                 Going beyond mean field theory, we have studied the
+with t1, t3 > 0,  such  that the ↑ and ↓ spinons each see                   phase diagram of the J1-J3 XXZ model using Gutzwiller
+zero flux on all plaquettes on the honeycomb lattice, but                   projected parton wavefunctions.  We compute the energy
+have opposite sign hopping amplitudes relative to each                      and correlations of the projected wavefunction through a
+other.  This breaks the global SU(2) spin rotation sym-                     Monte Carlo sampling of real space configurations which
+metry down to a U(1) spin rotation symmetry, consistent                     obey the strict Hilbert space constraint.  To obtain the
+with a wavefunction for an XXZ model.  The mean field                       best variational ground state with the lowest energy, and
+                                                                                                                                                  7
+
+                                                                            the ED energies extremely well (we label this state ‘SL
+                                                                            + FM’). For J3/J1 ≳ 0.33, the optimal state is a Dirac
+                                                                            SL state with imposed ZZ order - this exhibits a good
+                                                                            energy match to within 2-3% of the ED result (we label
+                                                                            this state ‘Dirac SL + ZZ’) In the intermediate regime,
+                                                                            0.3 ≲ J3/J1 ≲ 0.33, we find all ansatzes (Dirac SL, Dirac
+                                                                            SL+FM,  and  Dirac  SL+ZZ)  to  be  very  close  to  each
+                                                                            other,  with  the  largest  discrepancy  with  the  ED  ener-
+                                                                            gies being ∼ 4%.  These energy differences between ED
+                                                                            and VMC are comparable to the previous best VMC re-
+                                                                            sults on the J1-J2  honeycomb XY model [67,68].  The
+                                                                            Gutzwiller projected Dirac SL parton state thus captures
+                                                                            a large fraction ∼96% of the ED energy in the fSL regime.
+                                                                            The Gutzwiller projected Dirac SL has rapidly decaying
+                                                                            Sz correlations, while the XY spin correlations decay as
+FIG. 8.  VMC optimized energies on N = 24 sites cluster as a                ∼ 1/rα, with α ≈ 1.5.
+function of J3/J1, for different ansatzes, compared with ED
+energies  on  the  same  cluster.   We  have  fixed  λ  =  0.25  and
+K = 0.  In the FM phase, the VMC energy is within 0.1-0.5%
+of the ED. In the ZZ phase VMC is within 2-3% of ED. The                          C.    Relation between fSL and the Dirac SL:
+largest difference of ≈ 4% occurs for J3/J1 ≈ 0.32 where the                                   Deformations of Dirac SL
+VMC  energy  of  the  Dirac  SL  is  comparable  to  that  of  the
+Dirac SL with coexisting FM or ZZ order.                                       As  described  in  the  previous  section,  the  Gutzwiller
+                                                                            projected Dirac SL captures 96% of the ED energy for
+to study its correlations, we first optimize the variational                0.3 ≲  J3/J1 ≲  0.32.   This  suggests  that  we  can  treat
+parameters  encoded  in  the  parton  mean  field  Hamilto-                 the Dirac SL as a proximate parent SL state (i.e., a SL
+nian.  In our variational wavefunction, we fix t1  = 1 in                   very  close  by  in  energy),  and  the fSL  state  observed  in
+the parton Hamiltonian, and treat t3, the on-site Weiss                     this  window  (in  ED  and  DMRG)  as  a  related  descen-
+fields Bi (which allow for FM, ZZ, or z-N´eel order), and                   dant.   In  field  theory  language,  the  Dirac  SL  we  have
+long-range Jastrow factors as variational parameters. For                   found involves Nf = 4 flavors of massless two-component
+optimizing these parameters, we use the state of the art                    Dirac fermions coupled to an SU(2) gauge field.  Large-
+stochastic reconfiguration technique (a modified gradient                   Nf  versions of closely related theories have been studied
+descent method) [87].                                                       in previous work [88–91]; however, the low energy fate of
+  We focus below on VMC results for the 24-site cluster                     this theory is unclear at Nf = 4.  In this framework, the
+which we compare with our ED results in TableI; this                         fSL phase might descend from the Dirac SL as a result
+allows  independent  Jastrow  factors  upto  third-nearest                  of symmetry breaking or spinon pairing or confinement.
+neighbors. We worked with 10,000 thermalization sweeps                      To  explore  this  in  VMC,  we  have  incorporated  various
+followed by 10,000 measurement sweeps for each  Monte                       mass terms in our Dirac SL ansatz, as well as rotational
+Carlo  run.   We  performed  500  such  Monte  Carlo  runs                  symmetry breaking hoppings (nematic order).
+per optimization, checking that the stochastic reconfigu-                      We find that Dirac mass terms such as the (i) time-
+ration drives the variational parameters towards the op-                    reversal preserving Kane-Mele (quantum spin Hall) mass,
+timum value in between runs.                                                (ii) the time-reversal breaking Haldane (chiral) mass, or
+  As seen from Fig.8and TableIwe find that the op-                          (iii) a Kekul´e mass which leads to √3×√3 valence bond
+timal  state  for  J3/J1 ≲  0.3  corresponds  to  a  Dirac  SL              order,  do  not  lower  the  energy  of  the  Dirac  SL.  Moti-
+state with imposed FM order - its energy matches with                       vated  by  related  DMRG  work  [85]  and  pf-FRG  results
+                                                                            [86], we have also considered (iv) a z-N´eel mass, but also
+                                                                            do not find it to be favored within VMC. We found that
+  J3/J1     E.D.     Dirac SL+FM        Dirac SL     Dirac SL+ZZ            a rotational symmetry breaking nearest-neighbour hop-
+   0.24   -0.33331    -0.33114(4)      -0.31797(4)    -0.31806(4)           ping decreased the energy, but only in the ZZ phase and
+   0.28   -0.32265    -0.31897(4)      -0.31110(4)    -0.31122(4)           by  a  negligibly  small  value ≈  0.1%;  this  is  too  small
+                                                                            to  impact  our  comparison  with  ED.  Given  the  compu-
+   0.32   -0.31743    -0.30721(4)      -0.30441(4)    -0.30302(4)           tational complexity of studying spinon pairing states in
+   0.36   -0.32266    -0.29581(4)      -0.29790(4)    -0.31555(4)           XXZ models within VMC (which must account for co-
+   0.40   -0.33978    -0.28481(4)      -0.29148(4)    -0.32908(4)           existing singlet and triplet pairing), we defer a study of
+                                                                            such  pairing  states,  as  well  an  exhaustive  study  for  all
+TABLE I. Optimized VMC ground state energies (per spin)                     Dirac mass terms, to a future investigation.
+for the three ansatzes, as compared to the results from exact                  In order to examine how some of these perturbations,
+diagonalization on the 24-site cluster.                                     specifically  the  FM,  ZZ,  and  z-N´eel  order,  impact  the
+                                                                                                                                                   8
+
+mean field parton dispersion, we studied the effect of such
+perturbations on the single-particle band structure.  As
+seen from Fig.9(a), including a         z-N´eel Weiss field in the
+Dirac SL parton ansatz gaps out the Dirac touchings at
+the K points. Fig.9(b) shows that an in-plane FM Weiss
+field, which is equivalent to an in-plane Zeeman field, has
+a very similar effect.  This is an interesting point to keep
+in mind when later examine experimentally relevant re-
+sponse functions of the Dirac SL. In particular, although
+fSL might be a weakly gapped/ordered phase descending
+from the Dirac SL, its high energy response in all these
+cases will look very similar to the Dirac SL. Moreover,
+weak disorder-induced broadening of the parton spectral
+functions on the scale of a small Dirac mass gap might
+lead to apparent gapless behavior even at low energy.
+  Unlike  the  FM  and  z-N´eel  order,  the  ZZ  Weiss  field
+is not a simple Dirac mass term .  Here,  we work with
+the  quadrupled  2 × 2  unit  cell  (8  site  unit  cell)  which
+accommodates the ZZ ordering.  With increasing mZZ,
+the Dirac points persist as gapless band touching points
+(although they can shift in momentum), so this parton
+mean  field  state  would  have  ZZ  order  coexisting  with
+fractionalized gapless excitations.  Such a state has been
+conjectured to occur in Na2Co2TeO6 [48]. Fig.9(c) shows
+that for mZZ ≈ 0.1 there is a band touching at the ΓR
+point of the folded BZ. Further increase of mZZ leads to
+a quadratic band touching at M2R for mZZ ≈0.25, before
+the bands eventually get fully gapped out for mZZ ≳0.25.
+
+
+
+
+       V.    EXPERIMENTAL IMPLICATIONS                                       FIG. 9.   Mean field parton band structures of the perturbed
+                                                                             Dirac  SL  (with  energy  in  units  of  t1)  for  t3/t1 = 0.2.   (a)
+  With  the  above  results  on  the  phase  diagram  and                    Band structure in the original BZ with z-N´eel order parameter
+the  variational  wavefunction  in  hand,  we  next  turn  to                mzN = 0.1 showing that the Dirac nodes get gapped out.  (b)
+a discussion of the experimental data on the honeycomb                       Band structure with in-plane Zeeman field h/t1 = 0.5 showing
+                                                                             that the Dirac nodes get gapped out.  (c) Band structure in
+cobaltates which exhibit SL like characteristics such as a                   the reduced BZ (dashed line) for 2×2 unit cell in the presence
+broad continuum in THz spectroscopy and a low temper-                        of  ZZ  order  with  order  parameter  mZZ  =  0.1  showing  that
+ature metallic thermal conductivity.  The ideal compari-                     band touching points persist (here at ΓR).  The ZZ order is
+son between theory and experiments would have been to                        chosen  with  wavevector  (0, π).   For  large  mZZ ≳  0.25,  the
+explore response and transport in the fSL ground state.                      dispersion is fully gapped at the chemical potential (E = 0).
+However,  given  our  difficulty  in  identifying  the  precise
+nature of the fSL phase, and the considerable challenge of                                      A.    THz spin dynamics
+exploring dynamics and transport in this strongly fluc-
+tuating  state,  we  take  a  slightly  simpler  tack  here  and
+explore the corresponding results in the parent Dirac SL                        Using the Dirac SL ansatz, we have calculated the THz
+state  using  parton  mean  field  theory.   Remarkably,  we                 spin  response  in  terms  of  the  mean  field  parton  Green
+find that the Dirac SL, within parton mean field theory,                     functions  using  the  bubble  diagram  to  obtain  the  spin
+provides an excellent semi-quantitative description of the                   susceptibility.  The zero momentum response is given by
+existing THz and metallic thermal conductivity data in                                         X
+these cobaltates.  We speculate that the reason for this                     χab(iΩn)=−1            Tr[σaGT(k, iωn)σbGT(k, iωn+iΩn)]  (4)
+good  agreement  might  be  that  at  intermediate  energy                                   4k, ωn
+scales,  or  in  the  presence  of  weak  disorder  or  thermal                                          D                            E
+fluctuations in the real materials, the balance might shift                  where Gαβ                     f†                           .  We can
+in favor of the parent Dirac SL over the fSL state as a rea-                            ij  (k, iωn) =      iα(k, iωn)fjβ(k, iωn)
+sonable description of the spin-liquid-like behavior found                   analytically continue χab(iΩn → Ω + i0+) to obtain the
+in the cobaltates.                                                           real frequency response.
+                                                                                                                                                      9
+
+                                                                              theoretical  plot  Fig.10       a  and  in  the  experimental  data
+                                                                              in the inset.  Extrapolating the THz data to lower fre-
+                                                                              quency using constraints from Kramers-Kr¨onig relations
+                                                                              [40] does seem to suggest that the response decreases be-
+                                                                              low ≲ 0.2 THz, which would be consistent with the Dirac
+                                                                              SL.  We  have  checked  that  incorporating  a  small  Dirac
+                                                                              mass, for instance via weak z-N´eel order, leaves the high
+                                                                              energy continuum unaffected while inducing a small gap
+                                                                              at very low energies, so this would still be consistent with
+                                                                              the experimental THz data.
+                                                                                 Fig.10(b)  shows  that  an  in-plane  Zeeman  field  digs
+                                                                              out a low energy spectral gap which increases with the
+                                                                              field, while the high frequency response remains broad.
+                                                                              This gap is because the in-plane field induces the mix-
+                                                                              ing and splitting of degenerate spin-↑ and spin-↓ parton
+                                                                              bands. We have set B =gµBH for the in-plane field, with
+                                                                              g = 5 [40,56] and          H  measured in Tesla.  This behavior
+                                                                              is also qualitatively similar to the experimental data on
+                                                                              BaCo2(AsO4)2  [40],  which is replotted in the inset,  al-
+                                                                              though the theoretical gap scale is smaller by a factor of
+                                                                              ∼ 2 for comparable B/J1.  We attribute this difference
+                                                                              to  parton  mean  field  theory  underestimating  the  inter-
+                                                                              nal Zeeman field generated by J1, which can significantly
+                                                                              boost the gap as the uniform magnetization increases.
+                                                                                 At  high  field,  the  gapped  experimental  data  may  be
+                                                                              better  thought  of  in  terms  of  gapped  spin-1  magnons
+                                                                              around  a  polarized  state;   in  the  parton  theory,  the
+                                                                              magnons arise most simply as bound states of the spin-
+                                                                              1/2 partons.   However,  the full theory of this magnon-
+                                                                              parton response needs a more careful discussion of con-
+                                                                              finement effects which deserves a separate investigation.
+FIG. 10.  Imaginary part of the dynamic spin susceptibility
+od  Dirac  SL  at  zero  momentum  χ′′xx(Ω),  a.   as  a  function
+of  varying  temperatures  T  at  B = 0,  and b.   at  a  fixed  T                  B.    Low temperature thermal conductivity
+with varying in-plane B along  ˆx.  Insets show corresponding
+experimental THz spectroscopy data for BaCo2(AsO4)2 [40];                        Within parton mean field theory, the low temperature
+we  use  B  = gµBH  with  g ≈ 5  and  H  measured  in  Tesla,                 2D  longitudinal  thermal  conductivity  may  be  obtained
+and J1 =7.6 meV to scale the experimental data [40,41].  The                  indirectly by assigning a conserved ‘electric charge’ e⋆ to
+shaded regions correspond to frequency windows not explored
+in the THz measurements.                                                      the spinons,  computing the bubble diagram for the 2D
+                                                                              longitudinal ‘electrical conductivity’ σ ∝ e2⋆, and appeal-
+                                                                              ing  to  the  Wiedemann-Franz  law  to  extract  κ/T  = σL
+  Fig.10(a)  shows  the  real  frequency  zero  wavevector                    where the Lorenz number L = π2k2B/3e2⋆;  the charge e⋆
+THz  spin  response,  the  imaginary  component  χ′′xx(Ω),                    thus drops out of the final result for κ/T.  We obtain σ
+plotted at zero field as function of frequency Ω, for var-                    using the bubble diagram with disorder-broadened Green
+ious  temperatures  T,  in  the  mean  field  Dirac  SL  with                 functions,
+t1  = 0.13J1  and t3/t1  = 0.2.  As we cool from high T,                                              X
+χ′′xx(Ω)  develops  a  broad  feature  which  is  strongly  en-                  Re(σµν) = −e2⋆ℏ           Tr [vµ(k)A(k, 0)vν(k)A(k, 0)]   (5)
+hanced as a low frequency ‘peak’, before decreasing for                                                k
+Ω/J1 ≲ 0.1.  This enhancement arises from the large low
+energy density of states for spinon excitations around the                    where  vµ(k)  =  ∂H/∂kµ  are  velocity  matrices,  with  H
+entire BZ edge, as seen from Fig.7, with the peak com-                        being the parton mean field Hamiltonian for the Dirac
+ing from states at the M point of the original honeycomb                      SL (or Dirac SL with coexisting ZZ or z-N´eel order), and
+BZ. For comparison, the inset of Fig.10(a) shows the ex-                      A(k, ω)  is  the  spectral  function  matrix.   The  source  of
+perimental data on BaCo2(AsO4)2 [40], which highlights                        this  disorder  might  be,  for  example,  Na  positional  dis-
+their striking similarity.  We note that the THz absorp-                      order  in  Na2Co2TeO6  [92].   The  inferred      κ/T  is  plot-
+tion data on BaCo2(AsO4)2  [40] does not extend below                         ted  in  Fig.11(a)  as  a  function  of  the  disorder  broad-
+≲  0.2 THz;  using  J1  = 7.6 meV  [41],  this  corresponds                   ening  Γ  for  the  Dirac  SL,  as  well  as  for  the  Dirac  SL
+to  Ω/J1 ≲ 0.1.   We  mark  this  frequency  cutoff  in  our                  with  coexisting  FM,  or  z-N´eel,  or  ZZ  order.   For  com-
+                                                                                                                                                  10
+
+                                                                                Fig.11(b)  shows  the  dependence  of           κ/T  per  honey-
+                                                                             comb layer on the strength of coexisting FM, or z-N´eel,
+                                                                             or  ZZ  order  parameter.   While  the  FM  and  z-N´eel  or-
+                                                                             ders  monotonically  suppress  the  thermal  conductivity
+                                                                             due to gapping of the Dirac nodes (see Figs.9)(a) and
+                                                                             9)(b)), the dependence on the ZZ order parameter is non-
+                                                                             monotonic since the Dirac nodes persist, and additional
+                                                                             quadratic band touching points appear in the dispersion,
+                                                                             before the spinons get fully gapped; cobaltates with more
+                                                                             strong  ZZ  order  should  thus  have  a  very  strongly  sup-
+                                                                             pressed κ/T  at low temperature.
+
+
+                                                                                                   VI.    DISCUSSION
+
+                                                                                In  summary,  we  have  used  ED  and  DMRG  calcula-
+                                                                             tions to show that the spin-1/2 J1-J3 honeycomb lattice
+                                                                             XXZ  model  exhibits  easy-plane  FM  order  at  small  J3
+                                                                             and  ZZ  order  at  large  J3,  separated  by  a  phase  which
+                                                                             exhibits spin-liquid-like spin correlations at intermediate
+                                                                             J3/J1.   This  intervening  phase  persists  in  the  presence
+                                                                             of  weak  compass  anisotropy.   Using  a  modified  parton
+                                                                             mean field theory, supported by a Gutzwiller wavefunc-
+                                                                             tion study, we have identified a candidate Dirac SL state
+                                                                             which might be a parent of the numerically observed fSL.
+                                                                             The parent Dirac SL was shown to qualitatively capture
+                                                                             the observed temperature and field dependent broad con-
+                                                                             tinuum in THz response of BaCo2(AsO4)2  [40],  as well
+FIG. 11.  2D thermal conductivity κavg/T  = (κxx + κyy)/2T                   as  a  linear-in-T  thermal  conductivity  even  in  the  pres-
+(in physical units) for the Dirac SL from parton mean field                  ence of coexisting weak symmetry breaking orders if we
+theory with t3/t1 =0.2 and weak disorder induced broadening                  account  for  disorder  induced  broadening  of  the  parton
+Γ. (a) κavg/T as a function disorder-induced broadening Γ for                spectral function. The presence of low energy excitations
+(i) the Dirac SL, (ii) for Dirac SL with coexisting z-N´eel or               along the entire hexagonal BZ edge in the Dirac SL can
+FM order with fixed order parameter of m = 0.1 (both yield                   also allow a variety of magnetic orders to be energetically
+almost  identical  result),  and  (iii)  coexisting  ZZ  order  with         competitive and to be stabilized by small changes in the
+fixed order parameter of m = 0.1.  The purple band indicates                 exchange couplings.  This provides a parton theory per-
+the range of experimental values of κ/T  in Na2Co2TeO6.  (b)                 spective on the diversity of magnetic orders observed in
+κavg for Dirac SL with fixed disorder broadening Γ = 0.025J1                 the honeycomb cobaltates.
+and coexisting magnetic order (z-N´eel/FM or ZZ) with vary-                     In future studies, it would be important to study the
+ing order parameter m.                                                       impact of gauge fluctuations on the dynamical spin re-
+                                                                             sponse and thermal conductivity presented here.  In ad-
+                                                                             dition, it would be useful to explore how nonlinear spin
+parison,  Fig.11(a)  also  shows  the  band  of  experimen-                  wave  theory  and  magnon  interaction  effects  [70]  might
+tally  reported  values  in  Na2Co2TeO6  [48]  at  zero  field               possibly also lead to SL type signatures in the excitation
+in  the  ZZ  phase.   Here,  we  have  multiplied  the  mea-                 spectra and how they might also provide a description of
+sured 3D value of κ/T ≈0.03-0.04 mW/K2cm by the hon-                         thermal conductivity experiments.  On the experimental
+eycomb  interlayer  spacing  dc = 5.63˚A  for  Na2Co2TeO6                    front,  looking  for  THz  signatures  of  low  energy  excita-
+[93] to get the experimental result for      κ/T  per 2D hon-                tions in Na2Co2TeO6 would provide support for the co-
+eycomb  plane.   We  find  reasonable  agreement  between                    existence of ZZ order and Dirac partons.  Investigating
+experiment  and  theory  (for  ‘Dirac  SL  +  ZZ’)  over  a                  these  connections  would  lead  to  a  further  understand-
+wide range of Γ/J1.  Metallic thermal conductivity has                       ing of the physics observed in these remarkable quantum
+also been reported in BaCo2(AsO4)2 [42], but only when                       magnets.
+the  magnetic  order  is  suppressed  to  reveal  a  window
+of  SL.  For  BaCo2(AsO4)2,  dc = 7.83˚A  and  the  metal-
+lic  κ/T ≈ 0.03-0.06 mW  K−2cm−1  [42],  which  leads  to                                     ACKNOWLEDGEMENTS
+the 2D κ/T ≈0.23-0.46 × 10−8 mW K−2 per honeycomb
+plane, in rough agreement with the theoretical estimate                         We thank Federico Becca, Sasha Chernyshev, and Mar-
+for the Dirac SL (over a range of Γ) in Fig.11(a).                           tin  Klanjsek  for  extremely  useful  discussions.   This  re-
+                                                                                                                                                          11
+
+search was funded by NSERC of Canada (AB, SV, AP),                               the Niagara supercomputer at the SciNet HPC Consor-
+DST India (MR, SS, MK, and TS-D), and a SERB-India                               tium and the Digital Research Alliance of Canada.  AP
+Vajra  Fellowship  VJR/2019/000076  (AP,  TS-D).  TS-D                           acknowledges helpful conversations with Ciaran Hickey,
+acknowledges a J.C.Bose National Fellowship (grant no.                           Stephan  Rachel,   Yasir  Iqbal,   Matthew  Fisher,   Oleg
+JCB/2020/000004) for funding.  MK acknowledges sup-                              Starykh, and Cenke Xu during the KITP workshop “A
+port from SERB through grant no.  CRG/2020/000754.                               New Spin on Quantum Magnets”, supported in part by
+The parton and VMC computations were carried out on                              the National Science Foundation under Grants No.  NSF
+                                                                                 PHY-1748958 and PHY-2309135.
+
+
+
+
+
+ [1]X. G. Wen,     Quantum field theory of many-body systems:                          perkagome  lattice  of  Na4Ir3O8, Phys.  Rev.  Lett.  101,
+     from  the  origin  of  sound  to  an  origin  of  light  and  elec-               197202 (2008).
+     trons (Oxford University Press, Oxford, 2007).                              [18]Y. Zhou, P. A. Lee, T.-K. Ng, and F.-C. Zhang, Na       4Ir3O8
+ [2]P. A. Lee, Quantum spin liquid: a tale of emergence from                           as a 3D spin liquid with fermionic spinons,Phys. Rev.
+     frustration,Journal of Physics:  Conference Series                 529,           Lett. 101, 197201 (2008).
+     012001 (2014).                                                              [19]K.  A.  Ross,  L.  Savary,  B.  D.  Gaulin,  and  L.  Balents,
+ [3]L. Savary and L. Balents, Quantum spin liquids:  a re-                             Quantum excitations in quantum spin ice,Phys. Rev. X
+     view,Reports on Progress in Physics        80, 016502 (2016).                     1, 021002 (2011).
+ [4]C. Broholm, R. J. Cava, S. A. Kivelson, D. G. Nocera,                        [20]M.  J.  P.  Gingras  and  P.  A.  McClarty,  Quantum  spin
+     M.  R.  Norman,  and  T.  Senthil,  Quantum  spin  liquids,                       ice:   a  search  for  gapless  quantum  spin  liquids  in  py-
+     Science 367, eaay0668 (2020).                                                     rochlore  magnets,Reports  on  Progress  in  Physics              77,
+ [5]J.  Knolle  and  R.  Moessner,  A  field  guide  to  spin  liq-                    056501 (2014).
+     uids,Annual Review of Condensed Matter Physics        10,                   [21]Y.-P. Huang, G. Chen, and M. Hermele, Quantum spin
+     451 (2019).                                                                       ices and topological phases from dipolar-octupolar dou-
+ [6]P. Anderson, Resonating valence bonds:  A new kind of                              blets  on  the  pyrochlore  lattice,Phys.  Rev.  Lett.           112,
+     insulator?,Materials Research Bulletin               8, 153 (1973).               167203 (2014).
+ [7]R. Moessner and S. L. Sondhi, Resonating valence bond                        [22]R.  Sibille,   N.  Gauthier,   H.  Yan,   M.  Ciomaga  Hat-
+     phase  in  the  triangular  lattice  quantum  dimer  model,                       nean, J. Ollivier, B. Winn, U. Filges, G. Balakrishnan,
+     Phys. Rev. Lett. 86, 1881 (2001).                                                 M.  Kenzelmann,  N.  Shannon,  and  T.  Fennell,  Experi-
+ [8]P.  W.  Anderson,  The  resonating  valence  bond  state                           mental signatures of emergent quantum electrodynamics
+     in  La2CuO4  and  superconductivity, Science  235,  1196                          in Pr2Hf2O7,Nature Physics  14, 711 (2018).
+     (1987).                                                                     [23]G.  Semeghini,  H.  Levine,  A.  Keesling,  S.  Ebadi,  T.  T.
+ [9]D. S. Rokhsar and S. A. Kivelson, Superconductivity and                            Wang,  D.  Bluvstein,  R.  Verresen,  H.  Pichler,  M.  Kali-
+     the quantum hard-core dimer gas,Phys. Rev. Lett.      61,                         nowski,  R. Samajdar,  A. Omran,  S. Sachdev,  A. Vish-
+     2376 (1988).                                                                      wanath, M. Greiner, V. Vuletic, and M. D. Lukin, Prob-
+[10]A.  Kitaev,  Anyons  in  an  exactly  solved  model  and  be-                      ing topological spin liquids on a programmable quantum
+     yond,Annals of Physics       321, 2 (2006).                                       simulator,Science          374, 1242 (2021).
+[11]J. S. Helton, K. Matan, M. P. Shores, E. A. Nytko, B. M.                     [24]M. Hermanns, I. Kimchi, and J. Knolle, Physics of the
+     Bartlett,  Y.  Yoshida,  Y.  Takano,  A.  Suslov,  Y.  Qiu,                       Kitaev  model:  Fractionalization,  dynamic  correlations,
+     J.-H.  Chung,  D.  G.  Nocera,  and  Y.  S.  Lee,  Spin  dy-                      and material connections,Annual Review of Condensed
+     namics  of  the  spin-1/2  kagome  lattice  antiferromagnet                       Matter Physics 9, 17 (2018).
+     ZnCu3(OH)6Cl2,Phys. Rev. Lett.  98, 107204 (2007).                          [25]Y. Motome and J. Nasu, Hunting Majorana fermions in
+[12]P.  Mendels  and  F.  Bert,  Quantum  kagome  frustrated                           Kitaev magnets,Journal of the Physical Society of Japan
+     antiferromagnets:   One  route  to  quantum  spin  liquids,                       89, 012002 (2020).
+     Comptes Rendus Physique 17, 455 (2016).                                     [26]G.  Jackeli  and  G.  Khaliullin,  Mott  insulators  in  the
+[13]Y.  Ran,   M.  Hermele,   P.  A.  Lee,  and  X.-G.  Wen,                           strong spin-orbit coupling  limit:  From  Heisenberg  to a
+     Projected-wave-function  study  of  the  spin-1/2  Heisen-                        quantum compass and Kitaev models,Phys. Rev. Lett.
+     berg model on the kagom´e lattice,Phys. Rev. Lett.           98,                  102, 017205 (2009).
+     117205 (2007).                                                              [27]I. Kimchi and A. Vishwanath, Kitaev-Heisenberg models
+[14]Y.  Iqbal,  F.  Becca,  S.  Sorella,  and  D.  Poilblanc,  Gap-                    for iridates on the triangular, hyperkagome, kagome, fcc,
+     less  spin-liquid  phase  in  the  kagome  spin- 12  Heisenberg                   and pyrochlore lattices,Phys. Rev. B       89, 014414 (2014).
+     antiferromagnet,Phys. Rev. B                    87, 060405 (2013).          [28]H. Takagi, T. Takayama, G. Jackeli, G. Khaliullin, and
+[15]Y.-C.  He,  M.  P.  Zaletel,  M.  Oshikawa,  and  F.  Poll-                        S. E. Nagler, Concept and realization of Kitaev quantum
+     mann,  Signatures  of  Dirac  cones  in  a  DMRG  study  of                       spin liquids,Nature Reviews Physics           1, 264 (2019).
+     the kagome Heisenberg model,Phys. Rev. X      7, 031020                     [29]S. Trebst and C. Hickey, Kitaev materials,Physics Re-
+     (2017).                                                                           ports 950, 1 (2022).
+[16]Y. Okamoto, M. Nohara, H. Aruga-Katori, and H. Tak-                          [30]K.  W.  Plumb,  J.  P.  Clancy,  L.  J.  Sandilands,  V.  V.
+     agi, Spin-liquid state in the s = 1/2 hyperkagome antifer-                        Shankar,  Y.  F.  Hu,  K.  S.  Burch,  H.-Y.  Kee,  and  Y.-J.
+     romagnet Na4Ir3O8,Phys. Rev. Lett.  99, 137207 (2007).                            Kim, α-RuCl3: A spin-orbit assisted Mott insulator on a
+[17]M.  J.  Lawler,  A.  Paramekanti,  Y.  B.  Kim,  and  L.  Ba-                      honeycomb lattice,Phys. Rev. B          90, 041112 (2014).
+     lents, Gapless spin liquids on the three-dimensional hy-
+                                                                                                                                                           12
+
+[31]L.  J.  Sandilands,  Y.  Tian,  K.  W.  Plumb,  Y.-J.  Kim,                   [46]H.  Yang,  C.  Kim,  Y.  Choi,  J.  H.  Lee,  G.  Lin,  J.  Ma,
+     and K. S. Burch, Scattering continuum and possible frac-                           M. Kratochv´ilov´a, P. Proschek, E.-G. Moon, K. H. Lee,
+     tionalized excitations in α-RuCl3,Phys. Rev. Lett.  114,                           Y. S. Oh, and J.-G. Park, Significant thermal Hall effect
+     147201 (2015).                                                                     in the 3d cobalt Kitaev system Na2Co2TeO6,Phys. Rev.
+[32]A.  Banerjee,  J.  Yan,  J.  Knolle,  C.  A.  Bridges,  M.  B.                      B 106, L081116 (2022).
+     Stone, M. D. Lumsden, D. G. Mandrus, D. A. Tennant,                          [47]S.   Zhang,   S.   Lee,   A.   J.   Woods,   S.   M.   Thomas,
+     R. Moessner, and S. E. Nagler, Neutron scattering in the                           R.  Movshovich,  E.  Brosha,  Q.  Huang,  H.  Zhou,  V.  S.
+     proximate  quantum  spin  liquid  α-RuCl3, Science  356,                           Zapf,   and   M.   Lee,   Electronic   and   magnetic   phase
+     1055 (2017).                                                                       diagrams   of   Kitaev   quantum   spin   liquid   candidate
+[33]G.  Baskaran,  D.  Sen,  and  R.  Shankar,  Spin-     S  Kitaev                     Na2Co2TeO6 (2023),arXiv:2212.03849 [cond-mat.str-el].
+     model:  Classical ground states, order from disorder, and                    [48]S.  Guang,  N.  Li,  R.  L.  Luo,  Q.  Huang,  Y.  Wang,
+     exact  correlation  functions,Phys.  Rev.  B               78,  115116             X.  Yue,  K.  Xia,  Q.  Li,  X.  Zhao,  G.  Chen,  H.  Zhou,
+     (2008).                                                                            and X. Sun, Thermal transport of fractionalized antifer-
+[34]P.  P.  Stavropoulos,  D.  Pereira,  and  H.-Y.  Kee,  Micro-                       romagnetic and field-induced states in the Kitaev mate-
+     scopic mechanism for a higher-spin Kitaev model,Phys.                              rial Na2Co2TeO6,Phys. Rev. B  107, 184423 (2023).
+     Rev. Lett. 123, 037203 (2019).                                               [49]J.-Q. Yan, S. Okamoto, Y. Wu, Q. Zheng, H. D. Zhou,
+[35]H. Liu and G. Khaliullin, Pseudospin exchange interac-                              H. B. Cao, and M. A. McGuire, Magnetic order in single
+     tions in d7 cobalt compounds:  Possible realization of the                         crystals of Na3Co2SbO6 with a honeycomb arrangement
+     Kitaev model,Phys. Rev. B      97, 014407 (2018).                                  of 3d7 Co2+ ions,Phys. Rev. Materials       3, 074405 (2019).
+[36]H. Liu, J. c. v. Chaloupka, and G. Khaliullin, Kitaev spin                    [50]B. Yuan, I. Khait, G.-J. Shu, F. C. Chou, M. B. Stone,
+     liquid in 3d transition metal compounds,Phys. Rev. Lett.                           J.  P.  Clancy,  A.  Paramekanti,  and  Y.-J.  Kim,  Dirac
+     125, 047201 (2020).                                                                magnons  in  a  honeycomb  lattice  quantum  XY  magnet
+[37]L. Regnault, P. Burlet, and J. Rossat-Mignod, Magnetic                              CoTiO3,Phys. Rev. X  10, 011062 (2020).
+     ordering in a planar XY model:  BaCo2(AsO4)2,Physica                         [51]M. Elliot, P. A. McClarty, D. Prabhakaran, R. D. John-
+     B+C 86-88, 660 (1977).                                                             son,  H.  C.  Walker,  P.  Manuel,  and  R.  Coldea,  Order-
+[38]L. P. Regnault, C. Boullier, and J. E. Lorenzo, Polarized-                          by-disorder from bond-dependent exchange and intensity
+     neutron investigation of magnetic ordering and spin dy-                            signature of nodal quasiparticles in a honeycomb cobal-
+     namics  in  BaCo2(AsO4)2  frustrated  honeycomb-lattice                            tate,Nature Communications       12, 3936 (2021).
+     magnet,Heliyon            4, E00507 (2018).                                  [52]X. Li,  Y. Gu,  Y. Chen,  V. O. Garlea,  K. Iida,  K. Ka-
+[39]R.  Zhong,  T.  Gao,  N.  P.  Ong,  and  R.  J.  Cava,  Weak-                       mazawa,  Y.  Li,  G.  Deng,  Q.  Xiao,  X.  Zheng,  Z.  Ye,
+     field  induced  nonmagnetic  state  in  a  Co-based  honey-                        Y. Peng,  I. A. Zaliznyak,  J. M. Tranquada, and Y. Li,
+     comb,Science Advances    6 (4), aay6953 (2019).                                    Giant magnetic in-plane anisotropy and competing insta-
+[40]X. Zhang,  Y. Xu,  T. Halloran,  R. Zhong,  C. Broholm,                             bilities in Na3Co2SbO6,Phys. Rev. X  12, 041024 (2022).
+     R.  J.  Cava,  N.  Drichko,  and  N.  P.  Armitage,  A  mag-                 [53]W. G. F. Kr¨uger, W. Chen, X. Jin, Y. Li, and L. Janssen,
+     netic continuum in the cobalt-based honeycomb magnet                               Triple-q order in Na2Co2TeO6 from proximity to hidden-
+     BaCo2(AsO4)2,Nature Materials  22, 58 (2023).                                      SU(2)-symmetric point (2022),arXiv:2211.16957 [cond-
+[41]T. Halloran, F. Desrochers, E. Z. Zhang, T. Chen, L. E.                             mat.str-el].
+     Chern, Z. Xu, B. Winn, M. Graves-Brook, M. B. Stone,                         [54]X.  Hong,  M.  Gillig,  W.  Yao,  L.  Janssen,  V.  Kocsis,
+     A. I. Kolesnikov, Y. Qiu, R. Zhong, R. Cava, Y. B. Kim,                            S.  Gass,  Y.  Li,  A.  U.  B.  Wolter,  B.  B˜A¼chner,  and
+     and C. Broholm, Geometrical frustration versus Kitaev                              C.  Hess,  Phonon  thermal  transport  shaped  by  strong
+     interactions  in  BaCo2(AsO4)2, Proceedings  of  the  Na-                          spin-phonon scattering in a Kitaev material Na2Co2TeO6
+     tional Academy of Sciences 120, e2215509119 (2023).                                (2023),arXiv:2306.16963 [cond-mat.str-el].
+[42]C. Tu, D. Dai, X. Zhang, C. Zhao, X. Jin, B. Gao, P. Dai,                     [55]A. L. Sanders, R. A. Mole, J. Liu, A. J. Brown, D. Yu,
+     and S. Li, Evidence for gapless quantum spin liquid in                             C.  D.  Ling,  and  S.  Rachel,  Dominant  kitaev  inter-
+     a  honeycomb  lattice,  arXiv  e-prints  ,  arXiv:2212.07322                       actions  in  the  honeycomb  materials  Na3Co2SbO6  and
+     (2022),arXiv:2212.07322 [cond-mat.str-el].                                         Na2Co2TeO6,Phys. Rev. B  106, 014413 (2022).
+[43]H. S. Nair, J. M. Brown, E. Coldren, G. Hester, M. P.                         [56]S. Das, S. Voleti, T. Saha-Dasgupta, and A. Paramekanti,
+     Gelfand,  A.  Podlesnyak,  Q.  Huang,  and  K.  A.  Ross,                          Xy magnetism, Kitaev exchange, and long-range frustra-
+     Short-range order in the quantum XXZ honeycomb lat-                                tion in the Jeff =  12  honeycomb cobaltates,Phys. Rev. B
+     tice  material  BaCo2(PO4)2, Phys.  Rev.  B  97,  134409                           104, 134425 (2021).
+     (2018).                                                                      [57]P. A. Maksimov, A. V. Ushakov, Z. V. Pchelkina, Y. Li,
+[44]E. Lefrancois, M. Songvilay, J. Robert, G. Nataf, E. Jor-                           S. M. Winter, and S. V. Streltsov, Ab initio guided mini-
+     dan,  L.  Chaix,  C.  V.  Colin,  P.  Lejay,  A.  Hadj-Azzem,                      mal model for the “Kitaev” material BaCo2(AsO4)2: Im-
+     R. Ballou,  and V.  Simonet, Magnetic properties of  the                           portance of direct hopping, third-neighbor exchange, and
+     honeycomb oxide Na3Co2TeO6,Phys. Rev. B  94, 214416                                quantum fluctuations,Phys. Rev. B              106, 165131 (2022).
+     (2016).                                                                      [58]S. Samanta, P. Detrattanawichai, S. Na-Phattalung, and
+[45]M. Songvilay, J. Robert, S. Petit, J. A. Rodriguez-Rivera,                          H.-S. Kim, Active orbital degree of freedom and potential
+     W. D. Ratcliff, F. Damay, V. Bal´edent, M. Jim´enez-Ruiz,                          spin-orbit-entangled moments in the Kitaev magnet can-
+     P. Lejay, E. Pachoud, A. Hadj-Azzem, V. Simonet, and                               didate BaCo2(AsO4)2,Phys. Rev. B  106, 195136 (2022).
+     C. Stock, Kitaev interactions in the Co honeycomb anti-                      [59]E.  Rastelli,  A.  Tassi,  and  L.  Reatto,  Non-simple  mag-
+     ferromagnets Na3Co2SbO6 and Na3Co2TeO6,Phys. Rev.                                  netic order for simple Hamiltonians,Physica B+C                    97, 1
+     B 102, 224429 (2020).                                                              (1979).
+                                                                                                                                                             13
+
+[60]J. B. Fouet, P. Sindzingre, and C. Lhuillier, An investiga-                   [77]M. Kumar, Z. G. Soos, D. Sen, and S. Ramasesha, Mod-
+     tion of the quantum J1-J2-J3 model on the honeycomb                                ified density matrix renormalization group algorithm for
+     lattice,The European Physical Journal B - Condensed                                the zigzag spin- 12 chain with frustrated antiferromagnetic
+     Matter and Complex Systems 20, 241 (2001).                                         exchange:  Comparison with field theory at large J2/J1,
+[61]A. Mulder, R. Ganesh, L. Capriotti, and A. Paramekanti,                             Phys. Rev. B 81, 104406 (2010).
+     Spiral order by disorder and lattice nematic order in a                      [78]U.   Schollw¨ock,   The   density-matrix   renormalization
+     frustrated Heisenberg antiferromagnet on the honeycomb                             group,Rev. Mod. Phys.          77, 259 (2005).
+     lattice,Phys. Rev. B          81, 214419 (2010).                             [79]V. J. Emery, E. Fradkin, S. A. Kivelson, and T. C. Luben-
+[62]R. Ganesh, D. N. Sheng, Y.-J. Kim, and A. Paramekanti,                              sky, Quantum theory of the smectic metal state in stripe
+     Quantum paramagnetic ground states on the honeycomb                                phases,Phys. Rev. Lett.           85, 2160 (2000).
+     lattice  and  field-induced  N´eel  order,Phys.  Rev.  B         83,         [80]A.  Vishwanath  and  D.  Carpentier,  Two-dimensional
+     144414 (2011).                                                                     anisotropic non-Fermi-liquid phase of coupled Luttinger
+[63]F.  Mezzacapo  and  M.  Boninsegni,  Ground-state  phase                            liquids,Phys. Rev. Lett.           86, 676 (2001).
+     diagram of the quantum J1−J2 model on the honeycomb                          [81]R. Mukhopadhyay, C. L. Kane, and T. C. Lubensky, Slid-
+     lattice,Phys. Rev. B          85, 060402 (2012).                                   ing  Luttinger  liquid  phases,Phys.  Rev.  B           64,  045120
+[64]R. Ganesh, J. van den Brink, and S. Nishimoto, Decon-                               (2001).
+     fined criticality in the frustrated Heisenberg honeycomb                     [82]O. A. Starykh, R. R. P. Singh, and G. C. Levine, Spinons
+     antiferromagnet,Phys. Rev. Lett.                    110, 127203 (2013).            in a crossed-chains model of a 2d spin liquid,Phys. Rev.
+[65]S. Pujari, K. Damle, and F. Alet, N´eel-state to valence-                           Lett. 88, 167203 (2002).
+     bond-solid transition on the honeycomb lattice: Evidence                     [83]P.   Sindzingre,   J.-B.   Fouet,   and   C.   Lhuillier,   One-
+     for deconfined criticality,Phys. Rev. Lett.  111, 087203                           dimensional behavior and sliding Luttinger liquid phase
+     (2013).                                                                            in  a  frustrated  spin- 12  crossed  chain  model:   Contribu-
+[66]S.-S. Gong, D. N. Sheng, O. I. Motrunich, and M. P. A.                              tion of exact diagonalizations,Phys. Rev. B                        66, 174424
+     Fisher,  Phase  diagram  of  the  spin- 12  J1-J2  Heisenberg                      (2002).
+     model on a honeycomb lattice,Phys. Rev. B          88, 165138                [84]A.  Bose,  M.  Routh,  S.  Voleti,  S.  K.  Saha,  M.  Kumar,
+     (2013).                                                                            T. Saha-Dasgupta, and A. Paramekanti, Proximate dirac
+[67]J. Carrasquilla, A. D. Ciolo, F. Becca, V. Galitski, and                            spin liquid in the j1-j3 xxz model for honeycomb cobal-
+     M.  Rigol,  Nature  of  the  phases  in  the  frustrated  XY                       tates (2023),arXiv:2212.13271 [cond-mat.str-el].
+     model on the honeycomb lattice,Phys. Rev. B          88, 241109              [85]S.  Jiang,  S.  R.  White,  and  A.  L.  Chernyshev,  Quan-
+     (2013).                                                                            tum   phases   in   the   honeycomb-lattice   J1–J3   ferro-
+[68]A.  Di  Ciolo,  J.  Carrasquilla,  F.  Becca,  M.  Rigol,  and                      antiferromagnetic model (2023),arXiv:2304.06062 [cond-
+     V.  Galitski,  Spiral  antiferromagnets  beyond  the  spin-                        mat.str-el].
+     wave  approximation:   Frustrated  XY   and  Heisenberg                      [86]Y. Watanabe, S. Trebst, and C. Hickey, Frustrated fer-
+     models  on  the  honeycomb  lattice,Phys.  Rev.  B           89,                   romagnetism of honeycomb cobaltates:  Incommensurate
+     094413 (2014).                                                                     spirals,  quantum  disordered  phases,  and  out-of-plane
+[69]Y.  Huang,  X.-Y.  Dong,  D.  N.  Sheng,  and  C.  S.  Ting,                        Ising order (2022),arXiv:2212.14053 [cond-mat.str-el].
+     Quantum phase diagram and chiral spin liquid in the ex-                      [87]F.  Becca  and  S.  Sorella,        Quantum  Monte  Carlo  Ap-
+     tended spin- 12  honeycomb XY model,Phys. Rev. B      103,                         proaches for Correlated Systems  (Cambridge University
+     L041108 (2021).                                                                    Press, 2017).
+[70]P.  A.  Maksimov  and  A.  L.  Chernyshev,  Easy-plane                        [88]I. Affleck, Z. Zou, T. Hsu, and P. W. Anderson, SU(2)
+     anisotropic-exchange  magnets  on  a  honeycomb  lattice:                          gauge  symmetry  of  the  large-U  limit  of  the  Hubbard
+     Quantum  effects  and  dealing  with  them,Phys.  Rev.  B                          model,Phys. Rev. B      38, 745 (1988).
+     106, 214411 (2022).                                                          [89]M. Hermele, SU(2) gauge theory of the Hubbard model
+[71]E.  R.  Davidson,  The  iterative  calculation  of  a  few  of                      and application to the honeycomb lattice,Phys. Rev. B
+     the lowest eigenvalues and corresponding eigenvectors of                           76, 035125 (2007).
+     large real-symmetric matrices,Journal of Computational                       [90]N. Karthik and R. Narayanan, Scale-invariance and scale-
+     Physics 17, 87 (1975).                                                             breaking   in   parity-invariant   three-dimensional   QCD,
+[72]E. R. Davidson and W. J. Thompson, Monster matrices:                                Phys. Rev. D 97, 054510 (2018).
+     their eigenvalues and eigenvectors,Computers in Physics                      [91]A. Thomson and S. Sachdev, Fermionic spinon theory of
+     7, 519 (1993).                                                                     square lattice spin liquids near the N´eel state,Phys. Rev.
+[73]C.  W.  Murray,  S.  C.  Racine,  and  E.  R.  Davidson,  Im-                       X 8, 011012 (2018).
+     proved algorithms for the lowest few eigenvalues and as-                     [92]A. M. Samarakoon, Q. Chen, H. Zhou, and V. O. Garlea,
+     sociated eigenvectors of large matrices,Journal of Com-                            Static  and  dynamic  magnetic  properties  of  honeycomb
+     putational Physics 103, 382 (1992).                                                lattice antiferromagnets Na2M2TeO6, M  = Co and Ni,
+[74]See Supplemental Material for details about (i) ED clus-                            Phys. Rev. B 104, 184415 (2021).
+     ters and additional ED data and (ii) supporting DMRG                         [93]G. Xiao, Z. Xia, W. Zhang, X. Yue, S. Huang, X. Zhang,
+     data.                                                                              F. Yang, Y. Song, M. Wei, H. Deng, and D. Jiang, Crys-
+[75]S.  R.  White,  Density  matrix  formulation  for  quantum                          tal growth and the magnetic properties of Na2Co2TeO6
+     renormalization groups,Phys. Rev. Lett.           69, 2863 (1992).                 with  quasi-two-dimensional  honeycomb  lattice,Crystal
+[76]S.  R.  White,  Density-matrix  algorithms  for  quantum                            Growth & Design 19, 2658 (2019).
+     renormalization groups,Phys. Rev. B           48, 10345 (1993).

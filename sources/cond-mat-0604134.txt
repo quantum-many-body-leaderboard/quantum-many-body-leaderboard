@@ -1,0 +1,874 @@
+                                                          Variational treatment of the Shastry-Sutherland antiferromagnet using Projected
+                                                                                   Entangled Pair States (PEPS).
+                                                                                                  A. Isacsson1 and O. F. Syljuåsen1
+                                                                                    1
+                                                                                        NORDITA, Blegdamsvej 17, Copenhagen Ø, DK-2100, Denmark
+                                                                                                       (Dated: August 22, 2018)
+                                                                       We have applied a variational algorithm based on Projected Entangled Pair States (PEPS) to
+arXiv:cond-mat/0604134v1 [cond-mat.other] 5 Apr 2006
+
+
+
+
+                                                                    a two dimensional frustrated spin system, the spin-1/2 antiferromagnetic Heisenberg model on the
+                                                                    Shastry-Sutherland lattice. We use the class of PEPS with internal tensor dimension D = 2, the
+                                                                    first step beyond product states (D = 1 PEPS). We have found that the D = 2 variational PEPS
+                                                                    algorithm is able to capture the physics in both the valence-bond crystal and the Neel ordered state.
+                                                                    Also the spin-textures giving rise to the magnetization plateaus seen in experiments on SrCu2 (BO3 )2
+                                                                    are well reproduced. This shows that PEPS with the smallest nontrivial internal dimension, D = 2,
+                                                                    can provide valuable insights into frustrated spin-systems.
+
+                                                                    PACS numbers:
+
+
+                                                                        I.   INTRODUCTION                               tal phase is the spin–1/2 Heisenberg antiferromagnet
+                                                                                                                        on the Shastry-Sutherland lattice, see Fig. 1. This
+                                                                                                                        model was initially proposed as a toy model possess-
+                                                          Spins with antiferromagnetic interactions prefer oppo-
+                                                                                                                        ing an exact dimerized eigenstate known as a valence
+                                                       site alignment. However, in many materials the lattice
+                                                                                                                        bond crystal7 . However the interest in this model is
+                                                       structure does not allow all antiferromagnetic bonds to
+                                                                                                                        more than academic as it is believed that the material
+                                                       be satisfied simultaneously. These are known as frus-
+                                                                                                                        compound SrCu2 (BO3 )2 is reasonably well described by
+                                                       trated antiferromagnets and display a variety of differ-
+                                                                                                                        this model for particular values of the antiferromagnetic
+                                                       ent phases ranging from rather well-known Neel-ordered
+                                                                                                                        couplings8 . Although extensively studied, the zero tem-
+                                                       phases to much less understood exotic phases such as va-
+                                                                                                                        perature phase diagram of the Shastry-Sutherland anti-
+                                                       lence bond crystals and spin liquids. There is no general
+                                                                                                                        ferromagnet remains elusive. While two of the phases are
+                                                       theory of frustrated antiferromagnets, thus the different
+                                                                                                                        known, the possible existence of an intermediate phase
+                                                       lattice structures are usually studied as separate models.
+                                                                                                                        and its nature are still unresolved issues. In addition ex-
+                                                       Especially difficult are 2D models. Finding the phase
+                                                                                                                        periments on SrCu2 (BO3 )2 in a magnetic field show the
+                                                       diagram of any of these models is made difficult by the
+                                                                                                                        appearance of magnetization plateaus9 with rather pe-
+                                                       lack of effective numerical tools that goes beyond exact
+                                                                                                                        culiar spin structures10 . Several theoretical approaches,
+                                                       diagonalization of the Hamiltonian.
+                                                                                                                        based on the Shastry-Sutherland model have attempted
+                                                          It is an unfortunate fact that the most powerful numer-       to explain these steps11,12,13,14,15,16,17,18,19 . The ap-
+                                                       ical methods such as the Density Matrix Renormalization          proaches used so far have ranged from exact diagonaliza-
+                                                       Group (DMRG) and Quantum Monte Carlo (QMC) that                  tion10,11,19 , perturbative analysis12,13,14,15,16,17 and mean
+                                                       are very effective for studying general quantum magnets          field theory calculations18 .
+                                                       do not work well when applied to frustrated 2D antifer-             The PEPS or TPS are higher dimensional general-
+                                                       romagnets. DMRG is mainly restricted to 1D systems,              izations of Matrix Product States20,21 which are known
+                                                       and QMC suffers from the sign-problem. However there             to be particularly useful variational states in 1D22 . In
+                                                       are promising variational methods1,2,3,4,5 that performs         contrast to the variational algorithm proposed in Ref.6
+                                                       an energy minimization in a large class of states known          the variational calculations using TPS carried out in
+                                                       as Tensor Product States (TPS). Recently Verstraete and          refs. 1,2,3,4,5 build in translational invariance at the
+                                                       Cirac suggested an alternative minimization strategy in          outset in the minimization procedure by using site-
+                                                       this space of states, there termed Projected Entangled           independent tensors. While this reduces the number of
+                                                       Pair States (PEPS), that promises to be very efficient6          variational parameters it is often desirable not to assume
+                                                       and deserves further study. The PEPS or TPS have a               this when dealing with a spin system where the a priori
+                                                       natural “refinement” parameter, the internal dimension           unknown magnetic unit cell can be bigger than the unit
+                                                       D of the tensors. This parameter determines how well             cell of the lattice. There are also systems for which trans-
+                                                       the particular class of states covers the full Hilbert space.    lational symmetry is explicitly broken by for instance im-
+                                                       The lowest level D = 1 corresponds to product states,            purities or boundaries. Thus it is desirable to have a
+                                                       thus yielding mean field theory results. The aim of the          method that is capable of treating also these situations.
+                                                       present article is to investigate how well the next level        As a relevant example here, the NMR experiment on the
+                                                       in the hierarchy, D = 2, can describe a 2D frustrated            1/8 magnetization plateau in SrCu2 (BO3 )2 showed that
+                                                       antiferromagnet of real physical interest.                       the results were best explained in terms of a state that
+                                                          An interesting frustrated antiferromagnet that exhibits       breaks translational symmetry10 .
+                                                       both a Neel ordered phase and a valence bond crys-                  From the viewpoint of 1D variational calculations
+                                                                                                                                              2
+
+                                                                                                                           s
+                                                                           [As7 ]rd             [As8 ]l,rd            [A9 ] ld
+
+
+                                                                                                                           s
+                                                                           [As4 ]rd,u                s
+                                                                                                 [A5 ]l,rd,u           [A6 ]ld,u
+
+
+                                                                                                     s                     s
+                                                                          [As1 ]ru               [A2 ]l,ru            [A3 ]lu
+              J1
+             J2                                                 FIG. 2: Computational lattice and associated tensors. Shown
+                                                                here is an example of a 3×3 computational lattice. With each
+FIG. 1: Bond configuration for the Shastry-Sutherland model.    site i is associated 2 tensors Asi , s =↑, ↓. Each tensor has
+All bonds have antiferromagnetic couplings. Vertical and hor-   indices u, d, l, r corresponding to bonds connecting the site i
+izontal bonds a coupling strength J1 and diagonal bonds J2 .    to neighboring sites.
+
+
+                                                                is the same as the dimensionality of the physical lattice.
+where the MPS have internal matrix dimensions D ∼               The bonds in the computational lattice determine the
+32 − 12823 , it would at first sight seem inadequate to re-     index structure of the tensors Ai . A tensor Ai will have
+strict the 2D calculations to D = 2. However as argued          one index for each bond in the computational lattice em-
+in Ref. 24 even the D = 2 class of states is very rich, a       anating out from site i. Note that different choices of the
+fact that is supported by our findings. We find that the        underlying computational lattice lead to different classes
+D = 2 PEPS capture most of the known physics of the             of variational PEPS-wave functions. As an example, con-
+Shastry-Sutherland model such as the valence bond crys-         sider Fig. 2 where a computational lattice in the form of
+tal phase, the Neel-ordered phase and the magnetization         a simple 3 × 3 square lattice with open boundary con-
+steps.                                                          ditions is shown. With each lattice site i we then asso-
+   The outline of this paper is as follows; In section II we    ciate two tensors Asi , s =↑, ↓ corresponding to spin up
+give a detailed outline of the variational method and in        and spin down respectively. Each tensor has a rank de-
+Section III we introduce the Shastry-Sutherland model           termined by the number of bonds in the computational
+and give a brief account of what is known about the             lattice connecting the site and a dimension D. Hence on
+ground state and the connection to the experimental             site 5 in the lattice in Fig. 2 we have two (s5 =↑, ↓) D-
+results on SrCu2 (BO3 )2 . In section IV we comment
+                                                                dimensional rank 4 tensors [As55 ]d,ul,r with indices for the
+on the application of variational PEPS to the Shastry-
+                                                                bonds going down, up, left and right, whereas on site 6
+Sutherland model and in sections V and VI we look at
+the ground state with and without of external field re-         we have two rank 3 tensors [As65 ]d,u
+                                                                                                   l . While for PEPS one
+spectively, examining the phase transition and magneti-         associates the tensor indices with the bonds in the com-
+zation plateaus. Finally in section VII we address the          putational lattice one could alternatively associate them
+performance of the algorithm.                                   with plaquettes as in the interaction-round-face TPS25 .
+                                                                   For a system with M sites we have the following form
+                                                                of the trial wave function
+                                                                           X         X
+   II.   VARIATIONAL METHOD USING PEPS                              |Ψi =       ···        T r (As11 · · · AsMM ) |s1 i · · · |sM i
+                                                                           s1 =↑,↓      sM =↑,↓
+
+   Although the algorithm is described in Ref. 6 we reiter-     The symbol T r(·) means here that one should trace over
+ate it here in detail for completeness. As any variational      all indices (bonds) in the computational lattice. As an
+algorithm, the aim is to minimize the expectation value of      example, for the 3 × 3 lattice in Fig. 2 this operation
+the Hamiltonian within a given class of trial states. The       becomes
+class of states used here are Projected Entangled Pair
+States (PEPS) represented by an array of complex ten-             T r(As11 As22 · · · As99 ) = [As11 ]ur11 [As22 ]ur12,r2 [As33 ]ur23
+sors Ai , each tensor associated with a physical spin. To                                    × [As44 ]ur41 u4 [As55 ]ur42,r
+                                                                                                                         ,u5
+                                                                                                                            5
+                                                                                                                              [As66 ]ur53 ,u6
+define a PEPS trial wave function an auxiliary lattice, the                                      s7 u4         s8 u5
+                                                                                             × [A7 ]r7 [A8 ]r7 ,r8 [A9 ]r8    s9 u6
+                                                                                                                                             (1)
+computational lattice, is introduced. While the sites on
+the computational lattice coincide with the sites on the        where repeated indices should be summed over.
+physical lattice the bonds need not. However, it is impor-        For D = 1 the Asi :s are complex scalars and the trial
+tant that the dimensionality of the computational lattice       wave function is a simple product state Ansatz similar to
+                                                                                                                                                                                                              3
+                                                                                                                 c−1   c       c+1                                            c−1 c        c+1
+a mean field                                                                                                                                            r+1
+                                                                                                                                                          r
+                                                                                                                                                                                       k
+                                          M X
+                                          Y                                                                                                              r−1
+                   |ΨD=1 i =                              Asi i |si i .                        r+1                                                              (II) Horizontal contractions
+
+                                          i=1 si =↑,↓                                           r
+                                                                                                                           k
+                                                                                                                                                                     (III) Calculation of effective matrix
+                                                                                               r−1
+For D = 2 each index takes on two values. Although we                                                                                                                         r+1
+                                                                                                                                                                                 c−1       c       c+1
+
+will not make explicitly use of it in the following, each                                      U2
+                                                                                                          EN+2
+                                                                                                                                                (I) Vertical
+                                                                                                                                                contractions                   r
+Asi i can for D = 2 be represented as a vertex with arrows,
+                                                                                                                                                                                               k
+                                                                                               U1                                               and reduction                 r−1
+                                                                                                     E1   E2                               EN
+one for each index, each pointing either in or out. The
+contraction of all indices corresponds then to evaluating                                    FIG. 3: Steps in obtaining contribution to the effective oper-
+the partition function of a particular vertex model where                                    ator matrices Nkeff and Heff
+                                                                                                                        k in Eq. (4). For a site k located at
+Asi i represent the vertex weights26 .                                                       row r and column c we first contract row-wise from the top
+   To minimize the energy (or to even calculate it) we                                       down to row r + 1 and upwards from the bottom to row r − 1
+need to evaluate                                                                             all the E-tensors contributing to the operator. After each row
+                                                                                             contraction the left-right dimension of the tensors are reduced
+                                            hΨ|H|Ψi                                          to a dimension Df before next row is contracted. When only
+                                hHi =               .
+                                             hΨ|Ψi                                           rows r and r ± 1 remain we contract vertically to columns
+                                                                                             c ± 1 after which the effective matrices can be obtained.
+To see how this is done in practice we consider first the
+normalization N = hΨ|Ψi with our 3 × 3 example above
+which explicitly gives                                                                       By treating the 2D4 components of A5 as a 2D4 dimen-
+                                                                                             sional vector A5 and the 4D8 components of δs′5 ,s5 N5 as
+                                              s′ u′             s′ u′             u′
+                                                                                             a (2D4 ) × (2D4 ) matrix N5eff Eq. (3) becomes
+             XX
+hΨ|Ψi =                        h{s′ }| ([A11 ]r′1 )∗ ([A22 ]r′2,r′ )∗ ([As33 ]r′3 )∗
+                                                     1               1    2        2
+             {s′i } {si }
+                                                                                                                                 hΨ|Ψi = A†5 N5eff A5 .
+                   s′ u′ u′                s′ u′ ,u′             s′ u′ ,u′6 ∗
+         × ([A44 ]r′1 4 )∗ ([A55 ]r′2,r′5 )∗ ([A66 ]r′3                       )
+                           4                    4     5               5
+                                                                                               The evaluation of hΨ|H|Ψi can be done in a similar
+                 s′ u′             s′ u′               s′ u′
+         ×   ([A77 ]r′4 )∗ ([A88 ]r′5,r′ )∗ ([A99 ]r′6 )∗                                    fashion if we treat
+                                                                                                             P each term in the Hamiltonian individ-
+                        7                7 8                8
+
+         ×   [As11 ]ur11 [As22 ]ur12,r2 [As33 ]ur23                                          ually, i.e, H = n H (n) where H (n) can be written as a
+                                                                                                                                  QM     (n)
+                                                                                             product of on-site operators H (n) = j=1 Ôj . Again
+         ×   [As44 ]ur41 u4 [As55 ]ur42,r
+                                       ,u5
+                                          5
+                                            [As66 ]ur53 ,u6
+                                                                                                                                                                (n)
+         ×   [As77 ]ur74 [As88 ]ur75,r8 [As99 ]ur86 |{s}i                          (2)       we form D2 dimensional tensors Ej from the D dimen-
+                                                                                             sional tensors Asi i by
+We now single out a specific site, say k = 5, and construct                                              (n)
+                                                                                                                 X      ′                    (n)
+the D2 dimensional tensors Ei , i 6= 5                                                                 Ei =         (Asi )∗ ⊗ (Asi ) hs′ | Ôi |si .
+                                                                                                                                s,s′
+                      X
+                Ei =       (Asi )∗ ⊗ (Asi ).
+                                      s
+                                                                                             For each term H (n) we can now again write this in vector
+                                                                                             form if we single out a particular site k
+Here the tensor product acts on all indices in the tensor,                                                  D           E
+                                                                                                                                  (n)
+i.e., the tensors Ej have composite indices                                                                   Ψ|H (n) |Ψ = A†k Hk Ak
+
+                                                (d′ d),(u′ u)
+                         [Ej ]d̃,ũ
+                              l̃,r̃
+                                    = [Ej ](l′ l),(r′ r) .                          and sum the matrices Hk to obtain an effective Hamil-
+                                                                                                                                          (n)
+
+                                                                                                                (n)
+                                                                                    tonian matrix Hkeff = n Hk for site k.
+                                                                                                         P
+The normalization can now be written as                                               The overall structure of the optimization algorithm is
+         X           u ′
+                         ,u ′
+                                     (u ′
+                                          u  )     (u ′
+                                                        u  )              (u ′
+                                                                               u  ) now  the following. We pick a site k and calculate Nkeff
+hΨ|Ψi =      ([As55 ]r′2,r′5 )∗ [E1 ](r′1r11) [E2 ](r′1r12),(r′ r2 ) [E3 ](r′3r23) and Heff by contracting all indices of the E-tensors sur-
+                      4 5              1             1        2             2              k
+          s5
+                ′         ′            ′        ′
+                                                                                    rounding it. Then we solve the generalized eigenvalue
+              (u u ),(u u )          (u u ),(u u )
+       × [E4 ] ′1 1 4 4 [E6 ] ′3 3 6 6                                              problem
+                       (r4 r4 )                     (r5 r5 )
+
+         ×
+                  (u′ u )       (u′ u )                (u′ u )
+             [E7 ](r′4r74) [E8 ](r′5r75),(r′ r8 ) [E9 ](r′6r86) [As55 ]ur42,r
+                                                                           ,u5                                                       Hkeff Ak = λNkeff Ak                                                    (4)
+                    7             7        8             8                    5
+
+                                                                                             from which a new Ask with lower energy can be deter-
+Contracting all indices except those connecting site k = 5
+                                                                                             mined. While it is in principle possible to chose this new
+we get
+                                                                                             Ask to be the eigenvector corresponding to the smallest
+             X              s′ u′ ,u′                          (u′ u ),(u′ u )               eigenvalue in Eq. (4) this occasionally leads to problems
+hΨ|Ψi =                ([A55 ]r′2,r′5 )∗ δs′5 ,s5 [N5 ](r′2r42),(r′ 5r5 )5 [As55 ]ur42,r
+                                                                                      ,u5
+                                                                                         5   with convergence. Instead we only gradually project out
+                                  4   5                          4        5
+             s5 ,s′5                                                                         the high energy eigenvectors from Ak in the optimiza-
+                                                                                       (3)   tion. We then continue in this vein sweeping over all
+                                                                                                                                                                                                4
+
+   12                                          12                                              formally viewed as a matrix
+                                                                                                              d1 ,u1      dN ,uN
+   10                                          10
+                                                                                                       X
+                                                                                               U2 =         EN  +1 · · · EN +N |u1 , · · · , uN i hd1 , · · · , dN | .
+    8                                           8
+                                                                                                     {di },{ui }
+    6                                           6
+
+                                                                                               Contracting row 1 with row 2 is thus formally equiv-
+    4                                           4
+                                                                                               alent to a vector-matrix multiplication giving rise to a
+    2                                           2                                              new N D2 dimensional vector U21 = U2 U1 represented
+                                                                                               by N D2 D4 × D4 matrices Fiu [cnf. Eq. (5)]. We now
+    0                                           0
+
+                                                                                               seek a new vector
+   (a)   0   2      4     6     8   10     (b)
+                                          12        0   2    4    6        8   10   12
+
+                                                                                                                X
+                                                                                                         Ũ21 =    F̃1u1 · · · F̃NuN |u1 , · · · , uN i (6)
+FIG. 4: Boundary conditions used in the simulations. (a)                                                            {ui }
+Open boundary conditions. (b) Periodic BC.
+                                                                                               represented by N D2 Df × Df matrices (Df ≤ D4 ) F̃iui
+                                                                                               such that
+sites 1 ≤ k ≤ M until no further reduction in energy can
+be achieved.                                                                                                             κ = |U21 − Ũ21 |2
+   While it is no problem to obtain Nkeff and Hkeff in the
+small 3 × 3 example above it becomes a problem as we                                           is minimal. One does this in an iterative way starting
+move to largerQsystems. For a general set of tensors Ei                                        with an Ansatz for the solution and then optimizes the
+the trace T r( i Ei ) is in its most general form, an NP-                                      matrices F̃iui one by one until convergence is reached. In
+complete problem24 and cannot be evaluated exactly for                                         practice we do this by first forming the Df2 × Df2 matrices
+large systems but approximate strategies have to be used.                                                                    X
+We have employed the strategy suggested in Ref. 6 doing                                                             Gi =              (F̃iu )∗ ⊗ F̃iu ,
+this in a row-wise fashion. To calculate either Nkeff or                                                                      u
+                             (n)
+one of the contributions Hk the three steps in Fig. (3)                                        the Df D4 × Df D4 matrices
+are performed. For a site k located at row r and column
+c we first contract vertically from the top down to row                                                        Hi =
+                                                                                                                    X
+                                                                                                                        (F̃iu )∗ ⊗ Fiu
+r + 1 and upwards from the bottom to row r − 1. When                                                                              u
+only rows r and r ± 1 remain we contract vertically to
+columns c ± 1 after which the effective matrices can be                                        and the D8 × D8 matrices
+obtained.                                                                                                           X
+   When contracting vertically the left-right dimension of                                                     Ji =     (Fiu )∗ ⊗ Fiu
+the E-tensors will increase. For instance contracting the                                                                     u
+
+D2 dimensional tensors [E2 ]ul,r with [EN +2 ]d,u
+                                              l,r in Fig. (3)                                  in terms of which κ can be written
+generates a new tensor                                                                                         Y           Y        Y
+                                          2
+                                                                                                           κ=     Gi − 2Re     Hi +   Ji .
+                                         D
+                                         X                                                                          i                         i                    i
+                 [F2 ]u(l′ l),(r′ r) =          [E2 ]xl′ ,r′ [EN +2 ]xu
+                                                                     l,r                 (5)
+                                         x=1                                                   For a given site 1 ≤ k ≤ N along the row we can now get
+                                                                                               a linear equation for F̃ku that will locallyminimize
+                                                                                                                                                    κ. To
+with D4 dimensional left-right indices. This leads to                                                                                                                                    ∗
+an exponential growth of the left-right index dimensions                                       see this we differentiate with respect to [F̃k ]ul′ ,r′
+with each row-contraction. To handle this we use the ap-                                                                 "             #                       "              #
+proximation technique suggested for approximating an                                                    ∂κ                   Y                                     Y
+MPS with dimension Di with another MPS with a lower                                                              ∗ =            Gi              [F̃k ]ul,r             Gi
+dimension Df ≤ Di described in Ref. 6, which has also                                             ∂ [F̃k ]ul′ ,r′           i<k            l′ l                i>k            r′ r
+been successfully used to simulate time-evolution in 1D                                                                  "             #                       "              #
+systems27 . Below we give an example of how this is done
+                                                                                                                             Y                                     Y
+                                                                                                                    −             Hi              [Fk ]ul,r              Hi              = 0,
+for the contraction of row 1 with row 2 in Fig. 3.                                                                          i<k            l′ l                    i>k            r′ r
+  Any row in Fig. 3 can be viewed as a Matrix Product
+Operator (MPO). For the bottom row this corresponds                                            and treat the left-right indices of Fku and F̃ku as the in-
+formally to a vector                                                                           dices of vectors Fuk and F̃uk which leads to the system of
+               X                                                                               equations
+          U1 =     E1u1 E2u2 · · · EN
+                                    uN
+                                       |u1 , · · · , uN i
+                        {ui }                                                                                               GF̃uk = HFuk .
+
+represented by a set of N D2 D2 × D2 matrices Eiu . One                                        Although the matrices Ji are not needed to actually do
+of the middle rows, for instance the second one, can be                                        the minimization we still calculate them to keep control
+                                                                                                                                         5
+
+of the error. If the error, after the F̃ku :s have converged                   (a)
+                                                                                                         1st order
+is too large we increase Df to obtain a better approxi-                                  Dimer                             Neel
+mation.
+   For an N × N system we need to calculate of the or-                                                   (J1 /J2)c
+der of N 2 contributions H(n) to the effective Hamiltonian
+Heff . For each contribution the contractions and approx-
+imations of MPO:s [cnf. Fig 3] need to be calculated.
+                                                                               (b)           1st order                   2nd order
+This is the most computationally costly part of the algo-
+rithm and to avoid unnecessary calculations we optimize                                                  ???
+                                                                                                         Helical
+the tensors Asi in the computational lattice row-wise and                                            Plaquette singlet
+store all calculated MPO:s which can be reused. This                                                 Plaquette RVB
+means that the memory needed for storage of MPO:s                                                       Columnar
+                                                                                                        WISDW
+scales as N 4 D2 Df2 .                                                               Dimer               FQPM                     Neel
+   Finally we would like to point out that in this imple-                                                 ???
+mentation we make no use whatsoever of any symmetries
+of the Hamiltonian, neither in algorithm nor in the trial                                (J1 /J2)c1                  (J1 /J2)c2
+states. This means that our program can treat very gen-
+eral Hamiltonians with nonuniform ground states.                         FIG. 5: Proposed phase diagrams for the Shastry-Sutherland
+                                                                         model. Two possible scenarios for the phase diagram have
+                                                                         been proposed. Either a direct transition between the dimer
+     III.   SHASTRY-SUTHERLAND MODEL                                     state and the Neel state (a) or a transition via an intermediate
+                                                                         phase as in (b). The nature of this intermediate phase has not
+                                                                         been established.
+   The Shastry-Sutherland model was originally intro-
+duced as an example of a model with an exact dimerized
+ground state7 . The model is a frustrated spin-1/2 anti-
+ferromagnet with a bond configuration shown in Fig. 1                    between the dimer state into a helical state and a sec-
+                                                                         ond order transition to a Neel state. Another possible
+                                                                         intermediate state, the plaquette singlet phase was dis-
+                                                                         cussed by Koga and Kawakimi in Ref. 31. Both plaquette
+                     X                        X
+            H = J1           S i · S j + J2            Si · Sj .   (7)
+                     hi,ji                    hi,ji′
+                                                                         states and Helical states were considered in Ref. 32. Ar-
+                                                                         guments against both plaquette and helical phases was
+Although the model was introduced for reasons of purely                  put forward in Ref. 33 who performed extensive series
+theoretical nature, interest was renewed along with ex-                  expansions around both the helical and plaquette phases
+periments on SrCu2 (BO3 )2 9 . In SrCu2 (BO3 )2 the crystal              and even columnar phases. This is in contrast to Ref. 34
+structure is layered with alternating planes of CuBO3 and                which supports either a plaquette phase or a columnar
+Sr and the magnetic properties stem from the CuBO3 -                     phase. Other suggestions for the intermediate phase are
+layers. It has been argued that these layers are well mod-               Weakly Incommensurate Spin-Density Waves (WISDW)
+eled by the Shastry-Sutherland model8 .                                  or Fractionalized Quantum Para-Magnet (FQPM)35 . Fi-
+   In the limit J2 ≫ J1 the ground state, which is sepa-                 nally a resonant valence bond plaquette phase was sug-
+rated from the excited states by a gap, is a dimer state                 gested as the intermediate state in Ref. 36. Thus, neither
+with localized spin singlets on the diagonal bonds, the                  the existence of an intermediate phase nor its exact na-
+ground state energy per spin being Edimer = −3/8J2 per                   ture are presently known.
+diagonal bond. In the other limit J1 ≫ J2 the model re-                     Experiments on SrCu2 (BO3 )2 in strong external fields
+verts to the ordinary antiferromagnetic Heisenberg model                 show the existence of magnetization plateaus8,9 . While
+with a Neel ordered ground state and gapless spectrum.                   the ground state in absence of an external field is believed
+From high temperature series expansion and exact diago-                  to be the dimer-state, the magnetization steps were orig-
+nalization11,28,29 a possible direct transition between the              inally thought to be formed by strongly localized triplets
+dimer phase to the Neel phase has been estimated to lie                  forming a periodic patterns which may spontaneously
+at (J1 /J2 )c = 0.7 ± 0.01.                                              break the translational symmetry12,13,14,15,16,17 (for an
+   Other works point to the existence of an intermediate                 alternative explanation hypothesis see Ref. 18). Subse-
+phase between the antiferromagnet and the dimer phase.                   quent NMR experiments10 at the 1/8 plateau revealed
+A sketch of the phase diagram is shown in Fig. 5. Most                   a more complex structure, inconsistent with the simple
+estimates agree that below (J1 /J2 )c1 > 0.6 the ground                  triplet-singlet picture. By including coupling to phonon
+state is the dimer state and above (J1 /J2 )c2 < 0.9 the                 degrees, with the sole purpose of breaking the transla-
+ground state is the Neel state. The nature of this inter-                tional symmetry, exact diagonalization studies of small
+mediate state has been addressed in several publications.                systems10,19 revealed more complex spin textures. Again,
+In Ref. 30 Albrecht and Mila used Schwinger Boson mean                   at all steps (except the 1/2) translational symmetry is
+field theory to argue in favor of a first order transition               broken and larger unit cells are formed.
+                                                                                                                                  6
+
+ IV. APPLICATION OF VARIATIONAL PEPS
+  TO THE SHASTRY-SUTHERLAND MODEL                                         −0.4                                          6x6
+
+                                                                          −0.5                                          8x8
+   Applying variational PEPS to the Shastry-Sutherland
+model is straight forward. Two issues should be noted.                    −0.6                                          10 x 10
+First, we stress again that the computational lattice does
+                                                                          −0.7                                          12 x 12
+
+
+
+
+                                                                   E/Ns
+not need to have the same bond-configuration as the un-                                 −0.4
+
+derlying Hamiltonian. For the purpose of studying the                     −0.8
+                                                                                        −0.6
+
+
+Shastry-Sutherland model it is sufficient to use an ordi-                               −0.8
+
+
+
+
+                                                                                 E/Ns
+nary square lattice as depicted in Fig. 2. It is easy to                  −0.9           −1
+
+                                                                                        −1.2
+show that already with a low tensor dimension D = 2
+                                                                           −1           −1.4
+it is possible to represent exactly the dimerized ground                                −1.6
+state with singlets on all diagonal bonds.                                −1.1                 0.5    1      1.5    2
+                                                                                                      J /J
+   The second issue regards boundary conditions. In                                                    1 2
+
+
+
+implementing the algorithm we have used a computa-                                              0.5                 1     1.5
+                                                                                                             J /J
+                                                                                                              1 2
+tional lattice with open boundary conditions. The rea-
+son for this is two-fold. Firstly, using a computational
+                                                             FIG. 6: (Color online) Variational minimum energy as a func-
+lattice with periodic boundary conditions severely re-
+                                                             tion of J1 /J2 for system sizes 6 × 6 (blue squares), 8 × 8 (red
+duces the performance of the algorithm, the difference
+                                                             circles), 10 × 10 (green diamonds) and 12 × 12 (black stars).
+being that between matrix-vector multiplications rather      For open boundary conditions (main figure) the transition
+than matrix-matrix multiplications. Secondly, our pro-       from the dimer state to the Neel state is clearly visible in
+gram suffers from stability problems arising due to ill-     the energy which has been scaled to the number of diago-
+conditioning and round-off errors in the case of compu-      nal bonds. The inset shows energies for periodic boundary
+tational lattices with periodic boundary conditions.         conditions using the same energy scaling.
+   Although, the computational lattice does not have pe-
+riodic boundary conditions it is not necessary to adopt
+the same boundary conditions to the Hamiltonian. In          the ground state energy approaches -3/8J2 for the sys-
+this study we have used two different physical bound-        tem with open boundary conditions confirming the con-
+ary conditions, open and periodic. For the open BC we        vergence to the dimerized ground state. From the graph
+have adopted the geometry shown in Fig. 4(a) while for       obtained using open boundary conditions it can be seen
+the periodic the geometry in Fig. 4(b). The interpreta-      that already for D = 2 we find a phase transition from
+tion of using periodic BC in the physical problem while      the dimerized state. The transition point being located
+using open BC in the computational lattice is reminis-       at 0.69 ± 0.02 which is in agreement with estimates for
+cent of using a self-consistent field on the boundary. The   the transition point of the direct dimer-Neel transition.
+bonds across the boundary have only a tensor dimension       Further, in the energy a clear finite size effect is seen as
+Dboundary = 1 which in the limit of large lattices implies   the transition point is approached.
+that the contribution from a such a bond will approach          From the inset showing the energies obtained using
+the product form hSi · Sj i → hSi i · hSij for limited D.    periodic boundary conditions the location and nature
+   We have mainly restricted ourselves to using a tensor-    of the transition is less clear. Here we have again di-
+dimension D = 2 for which a usual work-station with          vided the total energy by the number of internal diago-
+1GB of internal memory suffices. Although our program        nal bonds. Since the diagonal bonds across the bound-
+can in principle handle D > 2 (see section. VII), it is in   ary are not counted this gives rise to energies lower than
+its present incarnation too slow and unstable for D > 2.     −3/8J2. The transition is revealed by looking at the
+For the dimension of effective MPO:s when calculating        strength of the diagonal singlets and the staggered mag-
+effective operators we have used a variable 16 ≤ Df ≤ 24     netization, as shown in Fig. 7. The singlet mixing is
+for all simulations except for the largest (12×12) systems   calculated by projecting the diagonal bonds on to the
+where the 1GB memory limit restricts us to 16 ≤ Df ≤         singlet state, i.e. 1 indicates a singlet while 0 indicates
+18.                                                          a triplet. The staggered   magnetization displayed is cal-
+                                                             culated as 2< ( i Si (−1)i )2 >1/2 . Note that for large
+                                                                               P
+                                                             J1 /J2 the staggered magnetization is higher than the
+     V.    GROUND STATE IN ZERO FIELD.                       value expected for a Heisenberg antiferromagnet. The
+                                                             reason for this can be two-fold. Firstly, finite size effects
+  In Fig. 6 the lowest energies obtained by the algorithm    explain a part of the discrepancy as can be seen from the
+for D = 2 are shown for system sizes of 6×6, 8×8, 10×10      graph. Secondly, while D = 2 gives a good value for the
+and 12 × 12 with both open (main panel) and periodic         energies involved, being only a few percent off the exact
+boundary conditions (inset). The total energy has been       values, observables may differ by more (see Sec. VII).
+scaled by the number of internal diagonal bonds Ns and          As stated in Section III, there are good reasons to be-
+the coupling energy J2 . As can be seen, for low J1 /J2      lieve that an intermediate phase exists between the dimer
+                                                                                                                                                         7
+
+                                                                              10
+
+
+                                                                              8
+                                                                        0.5
+                                                                              6
+
+
+                                                                              4
+
+                                                                        0.4
+                                                                              2
+
+
+                                                                              0
+
+                                                                        0.3        0   2     4   6       8       10
+                                                                                                                       10
+
+
+
+
+                                                                    M
+                                                                                                                       8
+                                                                                        8x8
+                                                                        0.2            10x10                           6
+
+
+                                                                                                                       4
+
+
+                                                                        0.1                                            2
+
+
+                                                                                                                       0
+
+                                                                                                                            0   2       4   6   8   10
+                                                                         0
+                                                                              0        0.5           1                1.5           2
+                                                                                                             B
+FIG. 7: (Color online) Order parameters, singlet mixing
+on diagonal bonds (solid lines) and staggered magnetization
+                                                                 FIG. 8: (Color online) Magnetization curve at J1 /J2 = 0.6 for
+(dashed lines) for periodic boundary conditions for system
+                                                                 system sizes 8 × 8 (blue squares) and 10 × 10 (red circles). A
+sizes 6x6 (blue squares), 8x8 (red circles), 10x10 (green dia-
+                                                                 clear step like structure corresponding to fillings 1/4,1/3 and
+monds) and 12x12 (black stars). Results obtained with in-
+                                                                 1/2 are seen. The insets show the distribution of singlets (red
+ternal tensor dimension D = 2 suggests a direct first order
+                                                                 lines), triplets (blue lines). The Sz component of the spin
+transition from the dimer-state to the Neel state.
+                                                                 on each site illustrated by a circle with radius proportional
+                                                                 to | hSz i |. Filled circles are aligned with the field while open
+                                                                 circles represent spins pointing opposite to the field.
+phase and the Neel phase. However, it is hardly sur-
+prising that we don’t see this intermediate phase in our
+D = 2 variational calculation. First of all, with ten-           Fig. 8). Localized singlets are drawn in red whereas
+sor dimension D = 2 we typically overshoot the true              triplets are blue. To determine the color of a bond we
+ground state energy by a few percent, thus higher D is           use the following criterion
+likely needed to capture any additional phase that may
+differ by a percent or less in energy. Second, the influ-
+                                                                    
+                                                                     red hΨ| Si · Sj |Ψi < 0.1ǫtriplet + 0.9ǫsinglet
+ence of boundary conditions scales as 1/N which implies                blue hΨ| Si · Sj |Ψi > 0.9ǫtriplet + 0.1ǫsinglet (8)
+that boundary effects can have a big impact even for the             black                  otherwise
+largest systems (12 × 12) in cases where the energy split-
+tings between ground state candidates are small.                 Furthermore we have measured the spin component par-
+                                                                 allel to the direction of the applied field (B = Bẑ) and vi-
+                                                                 sualized hSz i by circles with radii proportional to | hSz i |.
+        VI.   MAGNETIZATION PLATEAUS                             Spins aligned (anti-aligned) with the field are drawn as
+                                                                 filled (open) circles.
+   To study the magnetization curve we have deliberately             For small fields, B < 1, we see a finite magnetization
+chosen a somewhat smaller coupling constant J1 /J2 =             where one would expect a spin gap. This is due to the
+0.6 than the experimental value (J1 /J2 )SrCu2 (BO3 )2 =         inability of our trial states to form singlets across the
+0.635. This makes the dimer state more stable and the            boundary. As can be seen in the inset, for B < 1 the
+algorithm converges faster but should not significantly          interior of the system is still in the dimer phase while only
+affect the physics. In Fig. 8 we show the results for a          spins on the boundary have aligned with the field. Thus,
+finite magnetic field for systems with periodic boundary         by looking at when the magnetization in the interior of
+conditions of sizes 8 × 8 and 10 × 10 (D = 2). Although          the system becomes finite we estimate the spin gap to be
+our square geometry and (periodic) boundary conditions           roughly B = 1 corresponding to 33 T where we have used
+are inconsistent with the unit cells proposed in Refs. 10,       coupling constants J = 85 K, g = 2.28 (with J=71K the
+19 a clear step like structure is nevertheless visible in        corresponding number is 28 T).
+Fig. 8. A closer inspection reveals that locally the spin            For B > 1 three steps can be distinguished, 1/4, 1/3
+configurations we have obtained match those in Ref. 19           and 1/2. While the spin texture at 1/2 matches that
+very well.                                                       of earlier predictions, half of the diagonal bonds being
+   To study the spin configurations at the plateaus we           triplets while the other half being singlets, the spin tex-
+have visualized the wave functions by coloring the bonds         tures for other points are more elaborate and only agrees
+according to the amount of triplet or singlet mixing (see        with earlier predictions locally. An example is shown in
+                                                                                                                                              8
+
+          −40                                                                                         −5
+                        −50.017                                                                    x 10
+                                                                                             4.5
+                       −50.0175
+                        −50.018                                                               4
+          −42
+                       −50.0185
+                        −50.019                                                              3.5
+
+
+                   E
+          −44          −50.0195
+                         −50.02                                                               3
+                       −50.0205
+          −46                                                                                2.5
+      E
+
+
+
+
+                                                                                     |N−1|
+                        −50.021
+                       −50.0215
+                                                                                              2
+          −48                       3.1   3.2    3.3    3.4
+                                                optimizations
+                                                              3.5    3.6
+                                                                           4
+                                                                       x 10
+                                                                                             1.5
+
+          −50                                                                                 1
+
+                                                                                             0.5
+          −52
+             0           1              2                3                 4                  0
+                                  optimizations                     x 10
+                                                                         4
+                                                                                               0           1         2         3          4
+                                                                                                               optimizations          4
+                                                                                                                                   x 10
+FIG. 9: Convergence of energy in a 10 × 10 system with peri-
+odic boundary conditions for D = 2. The energy is shown as                     FIG. 10: Deviation of the norm from unity during the opti-
+a function of the number of diagonalizations of the general-                   mization of a 10 × 10 system with J1 = J2 .
+ized eigenvalue problem in Eq. 4. The inset shows a closeup
+of the final part of the optimization where fluctuations due
+to the approximation strategy used to calculate expectation
+values are visible.
+                                                                               scales with increasing D.
+                                                                                  In Fig. 9 the energy as a function of number of opti-
+                                                                               mizations is shown for a 10×10 system with J1 = J2 = 1.
+the top left inset of Fig. 8. Here, three of the 1/3 unit                      While smooth on a large scale, the errors accumulated in
+cells obtained by Miyahara et al19 are reproduced in the                       the successive approximations are clearly visible in the
+interior of the 10 × 10 system. Note that the total mag-                       inset which shows a closeup of the final convergence.
+netization is larger than 1/3 at this point due to the spin                    In this simulation and others we have used a final di-
+configurations on the boundary.                                                mension in the approximation of E-tensors (see Sec. II)
+   The spin textures obtained at the steps can only be                         16 ≤ Df ≤ 24 (For 12 × 12 we have been restricted
+found when translational symmetry is broken. In the                            to 16 ≤ Df ≤ 18 due to the limited memory (1GB) of
+variational method employed here translational symme-                          the workstation). As can be seen, despite the heavy re-
+try is broken partly because of our choice of computa-                         duction of the state space in the calculations, we have a
+tional lattice and boundary conditions, and partly be-                         precision of the order of 4 digits. This can also be seen
+cause a D = 2 PEPS cannot represent the coherent                               by looking at the norm of the wave function. In Fig. 10
+superposition of degenerate plateau states connected by                        the deviation of the norm from the nominal value 1 is
+global symmetry transformations.                                               shown for the simulation in Fig. 9.
+                                                                                  To estimate the accuracy, i.e. how close to the true
+                                                                               ground state energy the variational PEPS algorithm can
+       VII.      ALGORITHM PERFORMANCE                                         get we have compared it to QMC on an ordinary Heisen-
+                                                                               berg antiferromagnetP (QMC being unable to handle the
+   So far we have only concerned ourselves with D = 2                          SS-model), H = J hi,ji Si · Sj with open boundary con-
+which is the first step beyond a simple on-site factorizable                   ditions. The QMC was run at an inverse temperature of
+wave function. Restricting ourselves to D = 2 and sizes                        β = 256/J and the results are shown in Fig. 11 where the
+up to 12 × 12 allows the program to run on an ordinary                         quantity 1 − EPEPS /EQMC is shown for different system
+workstation with 1GB internal memory without using                             sizes and tensor dimensions D. For the smallest system
+any swapping to disk.                                                          4 × 4 sites we find good agreement with the figures re-
+   Because the method is based on a sequence of approx-                        ported in Ref. 6 obtained using imaginary time evolution.
+imations, i.e., for a 12x12 system there are over 700 con-                     We further note that as the system size is increased the
+tributions to the effective Hamiltonian on any given site,                     relative error decreases slightly, and that a linear increase
+each contribution being obtained in a series of up to 10                       in D seems to give an exponential increase in accuracy.
+consecutive approximations one has to ask whether or not                          We want to point out that although the energies ob-
+the precision is compromised. Another important factor                         tained by PEPS are in good agreement with exact results,
+to consider is how much more accuracy (how much closer                         observables may deviate more. In the left inset of Fig. 11
+to the true ground state energy we can come) can be ob-                        the staggered magnetization for the Heisenberg model is
+tained by increasing D, and how the computational effort                       compared with the staggered magnetization obtained us-
+                                                                                                                                                                                                9
+
+                    0
+                                                                                                                                        order N D6 Df2 (Df > D2 ) and scaling with D is at best
+                   10
+                                                                                                                                  D=1   D10 . This then sets a limit to the maximum internal
+                                                                                                                                  D=2
+                                                                                                                                  D=3   dimensions that can be practically used and the large
+                                                                                                                                        values of D ∼ 102 used in 1D variational MPS cannot be
+                                                                                                                                        reached. However, as we have seen here (see also Ref. 24),
+                    −1
+                   10
+                                                                                                                                        for 2D PEPS we expect small D ∼ 2−5 to be able capture
+                                                                                                                                        the essential physics for many problems with short range
+             QMC
+
+
+
+
+                                                                                                                                        interactions. The scaling of the algorithm with linear
+           /E
+
+
+
+
+                                                                                                                                        system size is N 4 and is less severe.
+             var
+           1−E
+
+
+
+
+                                                            (a)                                    (b)
+                    −2                                                                         0
+                   10                                    1
+
+                                                       0.95
+                                                                              QMC
+                                                                              D=2 PEPS
+                                                                                              10
+                                                                                                                                           All simulations were run on Linux workstations with
+                             Staggered Magnetization
+
+
+
+
+                                                        0.9                                                                             2.0 GHz AMD Athlon processor and 1GB of internal
+                                                       0.85
+
+                                                        0.8
+                                                                                               −1
+                                                                                              10                                        memory. On such a machine the graph in Fig. 9 took
+                                                       0.75                                                                             96h to produce.
+                    −3                                  0.7
+                   10
+                                                       0.65
+                                                           4      6   8        10        12
+                                                                                               −2
+                                                                                              10
+                                                                                                                                           Finally we comment on the stability of the algorithm.
+                         4                              5         6
+                                                                      N
+
+                                                                          7         8              9
+                                                                                                         4   4.5
+
+
+                                                                                                             10
+                                                                                                                   5
+
+
+                                                                                                                       11
+                                                                                                                            5.5    6
+
+
+                                                                                                                                   12
+                                                                                                                                        We have found that the technique used to optimize ten-
+                                                                                    N
+                                                                                                                                        sors one by one often becomes unstable and may not be
+                                                                                                                                        the optimal way to find the ground state. It may well be
+                                                                                                                                        that using imaginary time evolution is a more effective
+FIG. 11: (Color online) Comparison between ground state                                                                                 way.
+energies obtained by variational PEPS and Quantum Monte
+Carlo for open Heisenberg antiferromagnet with open bound-
+ary conditions for system sizes 4 × 4 to 12 × 12 and ten-
+sor dimensions ranging from D = 1 to D = 3. Inset (a)
+shows a comparison between QMC and D = 2 PEPS for                                                                                                      VIII.   CONCLUSIONS
+the staggered magnetization for the Heisenberg model. Inset
+(b) shows a comparison between exact diagonalization of the
+                                                                                                                                           We have applied a variational procedure based on Pro-
+Shastry-Sutherland model with periodic boundary conditions
+and PEPS D = 1 to D = 3.
+                                                                                                                                        jected Entangled Pair States (PEPS) to study the ground
+                                                                                                                                        state properties of a frustrated spin system, the Shastry-
+                                                                                                                                        Sutherland model. Using the smallest nontrivial dimen-
+ing D = 2 PEPS. Compared to the accuracy in energy                                                                                      sion on the tensors D = 2 a direct phase transition be-
+which is of the order one percent (see main panel) the                                                                                  tween the dimer state and the Neel state can be observed,
+error in the staggered magnetization is an order of mag-                                                                                the location being well in agreement with other theoreti-
+nitude larger.                                                                                                                          cal estimates for a direct transition. Within D = 2 we see
+   Although the above comparison for the Heisenberg                                                                                     no clear indication of an intermediate phase which may
+model does not, in a strict sense, tell us anything about                                                                               require higher D, larger systems, or proper handling of
+the accuracy obtained for the SS-model away from the                                                                                    periodic boundary conditions. We also find that already
+limit J2 /J1 ≫ 1 it still serves as a good indication on                                                                                with PEPS D = 2, magnetization plateaus are possible
+the general behavior as one varies N and D. For the                                                                                     to reproduce, and that the non-trivial spin textures as-
+SS-model we have compared with exact diagonalization                                                                                    sociated with these plateaus can be seen.
+results obtained using SPINPACK37,38 at J1 = J2 using                                                                                      Furthermore we have examined the performance of the
+periodic boundary conditions. The comparison is shown                                                                                   algorithm and conclude that it degrades rather severely
+in the right inset of Fig. 11.                                                                                                          for intermediate to large values of the internal dimension
+   The internal tensor dimension D plays an important                                                                                   D. However, this scaling of the performance degradation
+role in how faithfully a PEPS can represent ground states.                                                                              might not be so restrictive as already the D = 2 class of
+The algorithm scales very badly with increasing D, the                                                                                  PEPS is well suited for studies of frustrated spin systems
+bottle neck being the contraction of two rows (See Eq. 6).                                                                              at a level beyond mean field theory. The method can
+To form an MPO by contracting two rows requires of the                                                                                  readily be extended to other 2D frustrated spin-models.
+
+
+
+
+1
+  T. Nishino, K. Okunishi, Y. Hieida, N. Maeshima and Y.                                                                                  Phys. 110, 691 (2003).
+                                                                                                                                        5
+  Akutsu, Nucl. Phys. B 575, 504 (2000).                                                                                                  N. Maeshima, Jour. Phys. Soc. Jpn. 73, 60 (2004).
+2                                                                                                                                       6
+  T. Nishino, Y. Hieida, K. Okunishi, N. Maeshima, Y.                                                                                     F. Verstraete and J. I. Cirac, arXiv: cond-mat/04047066
+  Akutsu and A. Gendiar, Prog. Theo. Phys. 105, 409                                                                                       (2004).
+                                                                                                                                        7
+  (2001).                                                                                                                                 B. S. Shastry and B. Sutherland, Physica (Amsterdam)
+3
+  N. Maeshima, Y. Hieida, Y. Akutsu, T. Nishino and K.                                                                                    108B, 1069 (1981).
+                                                                                                                                        8
+  Okunishi, Phys. Rev. E 64, 016705 (2001).                                                                                               S. Miyahara and K. Ueda, J. Phys. Cond. Mat. 15, R327
+4
+  A. Gendiar, N. Maeshima and T. Nishino, Prog. Theo.                                                                                     (2003).
+                                                                                                                         10
+
+9
+   H. Kageyama et al., Phys. Rev. Lett. 82, 3168 (1999).             cond-mat/9811170).
+10                                                                26
+   K. Kodama et al., Science, 298, 395 (2002).                       H. Niggemann, A. Klümper, J. Zittatz, Z. Phys. B 104,
+11
+   S. Miyhara and K. Ueda, Phys. Rev. Lett. 82, 3701 (1999).         103 (1997).
+12                                                                27
+   T. Momoi and K. Totsuka, Phys. Rev. B. 61, 3231 (2000).           J. J. Garcia-Ripoll, arXiv: cond-mat/0602305 (2006).
+13                                                                28
+   T. Momoi and K. Totsuka, Phys. Rev. B. 62, 15067 (2000).          Z. Weihong, C. J. Hamer and J. Oitmaa. 60, 6608 (1999).
+14                                                                29
+   S. Miyahara and K. Ueda, Phys. Rev. B. 61, 3417 (2000).           E. Müller-Hartmann, R. P. Singh, C. Knetter and G. S.
+15
+   S. Miyahara and K. Ueda, Physica B. 281/282, 661                  Uhrig, Phys. Rev. Lett. 84, 1808 (2000).
+                                                                  30
+   (2000).                                                           M. Albrecht and F. Mila, Europhys. Lett. 34, 145 (1996).
+16                                                                31
+   Y. Fukumoto and A. Oguchi, J. Phys. Soc. Jpn. 69, 1286            A. Koga and N. Kawakami, Phys. Rev. Lett. 84, 4461
+   (2000).                                                           (2000).
+17                                                                32
+   Y. Fukumoto, J. Phys. Soc. Jpn. 70 1397 (2001).                   C. H. Chung, J. B. Marston and S. Sachdev 64, 134407
+18
+   G. Misguich, Th. Jolicoeur and S. M. Girvin, Phys. Rev.           (2001).
+                                                                  33
+   Lett. 87, 097203 (2001).                                          Z. Weihong, J. Oitmaa and C. J. Hamer, Phys. Rev. B.
+19
+   S. Miyahara, F. Becca and F. Mila, Phys. Rev. B. 68,              65, 014408 (2002).
+                                                                  34
+   024401 (2003).                                                    M. Al. Hajj and J.-P. Malrieu, Phys. Rev. B. 72, 094436
+20
+   I. Affleck, T. Kennedy, E. H. Lieb and H. Tasaki, Phys.           (2005).
+                                                                  35
+   Rev. Lett. 59, 799 (1987).                                        D. Carpentier and L. Balents, Phys. Rev. B. 65, 024427
+21
+   M. Fannes, B. Nachtergaele and R. F. Werner, Commun.              (2001).
+                                                                  36
+   Math. Phys., 144, 443 (1992).                                     A. Lauchli, S. Wessel and M. Sigrist, Phys. Rev. B. 65,
+22                                                                   014401 (2002).
+   S. Östlund and S. Rommer, Phys. Rev. Lett.75 3537
+                                                                  37
+   (1995); Phys. Rev. B 55, 2164 (1997).                             J.         Schulenburg,          SPINPACK           2.24,
+23                                                                   http://wase.urz.uni-magdeburg.de/jschulen/spin/index.html
+   F. Verstraete, A. Weichselbaum, U. Schollwöck, J. I. Cirac,
+                                                                  38
+   and J. von Delft, arXiv: cond-mat/0504305                         J. Richter, J. Schulenburg and A. Honecker, Chapter 2 in
+24                                                                   quantum magnetism, eds. U. Schollwöck, J. Richter, D. J.
+   F. Verstraete, M. M. Wolf, D. Perez-Garcia, and J. I. Cirac,
+   arXiv: quant-ph/0601075 (2006).                                   J. Farell, R. F. Bishop, Lecture notes in physics 645, 85
+25                                                                   (2004).
+   G. Sierra and M. A. Martin-Delgado, Proc. of the Work-
+   shop on the Exact Renormalization Group, Faro (Por-
+   tugal), 10-12 September 1998, World Scientific (arXiv:
+

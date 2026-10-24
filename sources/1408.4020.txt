@@ -1,0 +1,530 @@
+ Probing the stability of the spin liquid phases in the Kitaev-Heisenberg model using
+                                                    tensor network algorithms
+
+                                              Juan  Osorio  Iregui∗  and  Matthias  Troyer†
+                                      Theoretische  Physik,  ETH  Z¨urich,  8093  Z¨urich,  Switzerland.
+
+                                                                Philippe  Corboz‡
+                                      Theoretische  Physik,  ETH  Z¨urich,  8093  Z¨urich,  Switzerland.
+                                       Institute  for  Theoretical  Physics,  University  of  Amsterdam
+                              Science  park  904  Postbus  94485,  1090  GL  Amsterdam,  The  Netherlands.
+                                                          (Dated:  September 12, 2018)
+                   We  study  the  extent  of  the  spin  liquid  phases  in  the  Kitaev-Heisenberg  model  using  inﬁnite
+                Projected  Entangled-Pair  States  tensor  network  ansatz  wave  functions  directly  in  the  thermo-
+                dynamic  limit.    To  assess  the  accuracy  of  the  ansatz  wave  functions  we  perform  benchmarks
+                against exact results for the Kitaev model and ﬁnd very good agreement for various observables.
+                In  the  case  of  the  Kitaev-Heisenberg  model  we  conﬁrm  the  existence  of  6  diﬀerent  phases:
+                N´eel,  stripy,  ferromagnetic,  zigzag  and  two  spin  liquid  phases.   We  ﬁnd  ﬁnite  extents  for  both
+                spin liquid phases and discontinuous phase transitions connecting them to symmetry-broken phases.
+
+
+
+                    I.    INTRODUCTION                                        as  Monte  Carlo  based  methods  may  fail  to  provide
+                                                                              accurate   results   due   to   the   infamous   sign   problem
+  The ﬁeld of frustrated magnets is arguably one of the                       arising  in  generic  fermionic  or  strongly  frustrated  spin
+most  exciting  areas  of  research  in  modern  condensed                    models.
+matter  physics.    The  competing  interactions  in  these
+systems give rise to a rich variety of remarkable states of                      Over recent years the development of so-called tensor
+matter.  In some cases, strong quantum ﬂuctuations will                       network   algorithms   (TNA)   opened   the   doors   to   a
+preclude  the  formation  of  any  conventional  symmetry-                    new  approach  towards  understanding  the  physics  of
+breaking  order,  even  in  the  limit  of  zero  temperature,                novel  strongly  correlated  phases  based  on  the  notion
+giving  rise  to  so-called  quantum  spin  liquids  (QSL).1–3                of  entanglement.   One  of  the  earliest  triumphs  of  such
+Interestingly enough certain instances of phases lacking                      entanglement-based  algorithms  was  the  development  of
+a  Landau-type  description  may  give  rise  to  so-called                   the  Density  Matrix  Renormalization  Group17  (DMRG)
+topological   order,4,5   possibly   hosting   exotic   anyonic               based   on   renormalization   group   ideas   originally   de-
+excitations.                                                                  veloped  by  Wilson.18  The  DMRG  is  now  understood
+                                                                              to   produce   variational   wave   functions   belonging   to
+  The  possibility  of  ﬁnding  novel  materials  exhibiting                  the  class  of  so-called  Matrix  Product  States  (MPS)
+such  exotic  phases  has  motivated  the  search  for  QSLs                  which  have  been  rigorously  shown  to  provide  eﬃcient
+from  several  directions.3,6,7  Among  others,  interesting                  approximations  to  the  ground  states  of  1D  gapped
+proposals have been developed based on so-called Iridate                      local  hamiltonians.19   By  now,   two  decades  after  its
+compounds  of  the  form A2IrO3  (A  = Na,Li).   Even                         development,    MPS   (or   the   DMRG)   have   become
+though these compounds are now known to be magneti-                           the  golden  standard  for  the  simulation  of  1D  lattice
+cally ordered at low temperatures8–10 and the question of                     models.   Furthermore,  their  2D  generalizations  known
+which eﬀective model underlies their low-energy physics                       as  Projected  Entangled-Pair  States  (PEPS)20,21  (and
+remains under debate with ideas ranging from spin-orbit                       their  thermodynamic  limit  version  inﬁnite  PEPS  or
+coupled  Mott  insulators11,12  to  the  formation  of  quasi-                iPEPS)22,23  have  been  successfully  used  to  study  both
+molecular  orbitals,13  there  appears  to  be  consensus  on                 fermionic  systems  as  well  as  frustrated  magnets,24–28
+the  fact  that  anisotropic  exchange  interactions  play  a                 with  a  notable  example  being  the  lowest  variational
+key  role.    In  particular, Na2IrO3  being  an  insulator                   energies  for  the  t-J  model  available  to  date  for  large
+with Curie-like magnetic susceptibility as well as a large                    systems.29
+spin-orbit splitting strongly suggests that it may belong
+to  the  category  of  spin-orbit  coupled  Mott  insulators                     In what follows we will make use of the iPEPS ansatz to
+with well-localized magnetic moments.12  These ingredi-                       study the simple yet remarkably rich Kitaev-Heisenberg
+ents have sparked an interest in the possibility of ﬁnding                    model11,12 originally developed to encode the low energy
+anisotropic  Kitaev-type  physics14  in  these  and  related                  degrees of freedom in the iridates.  In particular, we will
+compounds.15,16                                                               focus on the stability of the spin liquid phases around the
+                                                                              Kitaev  points  in  the  model  and  we  will  provide  strong
+  However, the study of such highly correlated systems                        evidence for their survival over a considerable extent of
+has posed tremendous challenges to their understanding                        the phase diagram in the thermodynamic limit.
+                                                                                                                                                      2
+
+     II.    THE KITAEV-HEISENBERG MODEL
+
+  A very interesting proposal was recently put forward
+by  Chaloupka  et  al.12  based  on  the  Kitaev-Heisenberg
+model11 yet extended to its full parameter space, i.e.
+                     (                                       )
+        H(γ)i,j  =A    cosϕ ⃗Si·⃗Sj + 2 sinϕS(γ)i S(γ)j         ,      (1)
+
+  with (i,j) labeling nearest-neighbour sites of a honey-
+comb lattice, the ﬁrst term being an isotropic Heisenberg
+interaction, the second an anisotropic Kitaev interaction
+in  which γ ∈  (x,y,z)  determines  the  spin  components
+interacting  along  a  given  bond, ϕ∈  [−π,π)  and A  an
+overall scaling factor which we set to one.
+
+  This  model  has  been  tackled  in  the  past  using  a
+variety  of  approaches  in  diﬀerent  regions  of  its  full
+parameter regime.11,12,30–32 In its original formulation11
+(covering  only  the  region ϕ ∈  [−π/2, 0])  small  system
+studies11,31  found  either  a  second  or  weak  ﬁrst  order
+phase transition joining a spin liquid phase to a so-called
+stripy  phase  at  roughly ϕ ≈ −76◦  (or α ≈   0.8  in
+the  original  formulation),  see  Fig.  4.     This  value  is
+also  reported  in  the  extended  formulation  on  a  24-site
+system.12  The  restricted  formulation  was  also  studied
+from   a   slave-particle   mean   ﬁeld   approach30   where                  FIG. 1.   Top:  4-site unit cell iPEPS ansatz on the brick-wall
+the  behaviour  of  the  order  parameter  itself  showed  a                  lattice.  Introducing trivial (dashed) bonds in a square lattice
+discontinuity,  yet  it  was  suggested  that  the  transition                leads to a so-called brick-wall lattice reproducing the connec-
+could  indeed  be  of  either  second  or  weak  ﬁrst  order                  tivity  of  the  honeycomb  lattice.   The  blue,  red,  green  and
+type  at  a  value  of ϕ ≈ −72◦  (α ≈  0.76),  owing  to                      purple tensors (circles) in the unit cell (highlighted cluster)
+the  lack  of  quantum  ﬂuctuations  beyond  the  mean                        provide the variational parameters.  Bottom:  Eﬀective map-
+ﬁeld level in their approach.  Finally,  a so-called mixed                    ping used for the evaluation of observables.  On the left the
+PEPS  (mPEPS)  approach  found  a  phase  transition  at                      ket portion of the network prior to contraction. On the right a
+ϕ≈−89◦ (α≈ 0.99).32                                                           contracted bra-ket network is shown from the top with tensors
+                                                                              labeled by lowercase letters representing a bra-ket pair con-
+  In  this  study  we  approach  the  model  directly  in  the                tracted.  The orange tensors (squares) labelled by E represent
+thermodynamic limit and provide results that go system-                       environment  tensors,  obtained  eg.   via  the  CTM  algorithm,
+atically beyond the mean ﬁeld level using iPEPS.33                            accounting for an eﬀectively inﬁnite environment.  Thick lines
+                                                                              (bonds) correspond to indices of dimensionχ, solid lines to in-
+                                                                              dices of dimensionD and dashed lines represent trivial bonds.
+                                                                              Bond labeling convention adopted is given by the x,y,z labels.
+               III.    THE METHOD (IPEPS)
+  In  general,  TNA  rely  on  the  use  of  tensors  as  varia-                 The  dimension  of  the  virtual  indices  is  refered  to  as
+tional parameters used for the optimization of the ansatz                     the  bond  dimension  and is usually denoted by D.  The
+wave  function,  i.e.   in  the  TNA  approach  ansatz  wave                  bond dimension determines the amount of entanglement
+functions take on the form                                                    that can be encoded in the wave function and controls the
+                                                                              underlying accuracy of the algorithm.  At the heart of the
+                                                                              eﬃciency of the algorithms lies the fact that the number
+               |ψ⟩ = ∑        Tr∏      A[r]Sr|{Sr}r⟩,               (2)       of variational parameters only scales polynomially with
+                                    r                                         D and linearly with the system size for ﬁnite systems.
+                       {Sr}r
+
+  where A[r]  are  tensors  of  rank k + 1,  with k  (typ-
+ically)  the  coordination  number  of  the  lattice  and  an                                              A.    Ansatz
+additional index labelling the local basis elements, with
+|{Sr}r⟩ =|Sr1,Sr2,...,SrN⟩ a many-body basis state (ri                           In  the  present  study  we  formulate  the  iPEPS  ansatz
+labeling  the  diﬀerent  lattice  sites)  and Tr  symbolizing                 on the honeycomb lattice by mapping it onto a brick-wall
+the  contraction  of  all  auxiliary  (also  called  virtual)  in-            lattice in which the connectivity of the honeycomb lattice
+dices between adjacent tensors, see Fig. 1.                                   is  reproduced  exactly  by  introducing  a  trivial  index  on
+                                                                                                                                                     3
+
+each tensor.26  We have studied wave functions made of                       will eventually converge to the ground state.
+up  to  2  by  2  unit  cells  with  all  four  (rank  5)  tensors
+being  independent,  see  Fig.  1.   Despite  the  increase  in                 For the data presented it was observed that values be-
+computational  complexity  tensors  with  complex  entries                   low τ  =  0.01  for  the  imaginary-time  evolution  did  not
+were employed as these yielded the best results.                             provide  a  signiﬁcant  improvement  in  the  quality  of  the
+                                                                             data.   In  all  cases  the  number  of  cumulative  iterations
+                                                                             was such that it lead to values of at least β = 20 and in
+                         B.    Contraction                                   all cases it was found to be large enough to achieve con-
+                                                                             vergence of the variational energies.  Here we point out
+  As mentioned above, in the TNA approach an eﬃcient                         that lower cost variants like the simple update,42 in which
+representation  of  ground  state  wavefunctions  can  be                    an  explicit  construction  of  the  environment  is  omited,
+achieved  via  a  tensor  decomposition  ansatz.   It  should                failed to yield good results in the Kitaev limit and thus
+be noted, however, that in the case of PEPS the compu-                       we opted for performing all the simulations using the full
+tational complexity of contracting a full tensor network                     update,  inspite  of  its  signiﬁcantly  larger  computational
+involved  in  eg.   the  evaluation  of  expectation  values  of             cost.23
+observables increases exponentially with system size and
+thus can only be evaluated in an approximate way.
+                                                                                      IV.    KITAEV LIMIT BENCHMARKS
+  In practice approximate contraction schemes based on
+corner  transfer  matrices  (CTM),34,35  MPS,36,37  tensor-                     In the limits ϕ =±90◦ the model in Eq.  (1) becomes
+entanglement  renormalization  group  (TERG)38,39  and                       the  well-known  Kitaev  honeycomb  model14  with  equal
+higher-order (HOTRG) variants40,41 are used for the con-                     bond  couplings  (B-phase).    Indeed,  even  though  the
+traction  of  tensor  networks  both  in  the  ﬁnite  and  inﬁ-              interactions on each bond are of Ising type, the fact that
+nite cases.  Here we have relied on the directional CTM                      diﬀerent bonds correspond to diﬀerent quantization axes
+scheme of Ref. 35 for constructing the tensor networks in-                   makes  the  Kitaev  model  a  highly  frustrated  one,  even
+volved in both the optimization of the tensors as well as                    classically,  since  it  is  impossible  to  satisfy  all  energy
+the evaluation of observables.  In this scheme the contrac-                  constraints  simultaneously.   From  the  exact  solution  of
+tion of the inﬁnite bra and ket tensor networks surround-                    the Kitaev model14  it is known that inside the B-phase
+ing a unit cell is eﬀectively represented by introducing a                   two diﬀerent types of excitations arise: magnetic vortices
+boundary made up of so-called environment tensors, see                       which  are  gapped  and  localized  in  the  absence  of  an
+Fig. 1.  The environment tensors are constructed via iter-                   external  magnetic  ﬁeld  and  gapless  Majorana  fermions
+ative absorption and renormalization of unit cell tensors                    moving  in  the  static  background  ﬁeld  of  the  vortices.
+into  the  boundary  tensors  in  Fig.  1.   Importantly,  the               Perhaps  more  interestingly,   these  excitations  can  be
+accuracy of the contraction is controlled by the bond di-                    gapped  into  a  topological  phase  exhibiting  non-abelian
+mension of the environment tensors, usually denoted by                       anyonic statistics.14
+χ.  For the data presented hereχ was chosen to be larger
+than D2 in all cases and large enough to yield negligible                       From  both  Kitaev’s  seminal  paper14  as  well  as  later
+variations in the energies.  For a more precise description                  work43  it  can  be  gathered  that  the  energy  per  site
+of the details involved in the contraction scheme we refer                   for  this  model  at  the  equal  coupling  limit  considered
+the reader to Ref. 35.                                                       here  is Esite  = −0.3936  independent  of  the  nature  of
+                                                                             the  couplings,  i.e.    for  both  ferromagnetic  as  well  as
+                        C.    Optimization                                   antiferromagnetic  couplings.    Our  best  variational  ap-
+                                                                             proximations to the energy per site are EFMsite  =−0.3931
+                                                                             and EAFMsite     =−0.3933  with  a  bond  dimension D  =  7
+  Optimization of the tensors generating the ansatz wave                     (χ = 60), yielding good agreement with the exact value,
+functions is typically performed using either direct energy                  see Fig. 2.
+minimization or imaginary-time evolution.  Here we have
+used the latter combined with the so-called full update                         A feature of the Kitaev model is that the ground state
+scheme.23 In the imaginary-time evolution procedure by                       is known to be a Z2 spin liquid and as such develops no
+starting from some initial state|ψ0⟩ of the form (2) we                      local  order  parameter.   In  our  case,  we  ﬁnd  variational
+perform subsequent projection steps                                          states  exhibiting  a  strongly  suppressed  magnetization,
+                                                                             with   the   largest   values   of   the   magnetization   being
+                                                                             around  0.03  and  0.02  in  the  ferromagnetic  and  antifer-
+                     |ψk+1⟩ =   e−τ ˆH|ψk⟩                                   romagnetic  cases,  respectively,  with  a  bond  dimension
+                                  ‖e−τ ˆH|ψk⟩‖,                      (3)     D  =  4.    The  level  of  symmetry  breaking  is  observed
+                                                                             to  decrease  in  general  as  a  function  of  increasing D
+  so provided that the initial state|ψ0⟩ had some overlap                    (entanglement)  and  for  our  best  variational  states  the
+with  the  ground  state  of  the  model  enough  iterations                 magnetization reaches a minimum of approximately 0.02
+                                                                                                                                                      4
+
+for the ferromagnetic case and 0.01 for the antiferromag-
+netic case, with D = 7.  See Eqs.  (4)-(8) below for our
+deﬁnition  of  magnetization  as  well  as  similar  magnetic
+order parameters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              FIG. 3.   Nearest neighbor correlators for corresponding bond
+                                                                              types in the ferromagnetically coupled case (a), and antiferro-
+                                                                              magnetically coupled case (b).  All remaining correlators are
+                                                                              at most of the order of 10−3  for the largest value of D  and
+                                                                              exhibit similar improvement with increasing D.
+
+FIG.  2.      (a)  Energy  per  site  and  (b)  Magnetization  as  a             Another   remarkable   feature   of   the   Kitaev   model
+function of inverse bond dimension.  Errors in the energy for                 has   to   do   with   the   peculiar   form   of   the   spin-spin
+the  largest  value  studied  (D  =  7)  are  of  the  order  of  10−4.       correlators,  for  which  it  is  known  that  only  spin  com-
+Magnetization values are normalized to 1.                                     ponents matching the type of a given bond will exhibit⟨ ⟩
+                                                                              non-vanishing correlations43  i.e.            σ(γ)i σ(γ)j  = 0.525 iﬀ
+  The  fact  that  the  model  is  strongly  frustrated  and                  γ  = (i,j).  Examining the spin correlators we ﬁnd that
+exhibits  gapless  excitations  turns  it  into  a  formidable                the correlator structure is well represented by our ansatz
+challenge  for  numerical  methods  in  general.    In  what                  wave  functions  with  all  correlators  heading  towards
+follows we will show that iPEPS ansatz wave functions                         the  exact  values  monotonically  as  the  bond  dimension
+are  capable  of  capturing  the  essential  features  of  this               increases,  see Fig. 3.  Here a curious stronger deviation
+model quite well, even in the absence of an energy gap,                       for  the  Z-type  correlators  can  be  initially  observed.
+using only a modest value of the bond dimension D.                            This  is  nothing  but  a  consequence  of  the  way  we  map
+                                                                              the  honeycomb  lattice  onto  a  brick-wall  lattice  when
+  As  mentioned  above  the  bond  dimension D  controls                      constructing the environment.  Importantly, this feature
+the amount of entanglement in the wave functions.  This                       is  systematically  reduced  as  we  increase  the  amount
+means  that  one  may  systematically  tune  the  degree  to                  of  variational  parameters  nicely  reﬂecting  the  putative
+which quantum ﬂuctuations manifest themselves in the                          non-symmetry broken nature of our wave functions.
+ansatz  state.   In  particular,  the  case D  =  1  represents
+a product state and as such leads to a mean ﬁeld level                           Indeed, the quality of our data could be improved even
+ansatz potentially overestimating the degree of symmetry                      further by increasing the value of the bond dimensionD.
+breaking inside a phase.  Upon increasing D  additional                       We  have,  however,  not  pushed  our  simulations  beyond
+quantum ﬂuctuations allow for a renormalization of ob-                        this  point  as  we  believe  the  current  data  already  pro-
+servables such as the magnetization and thus lead to the                      vide strong support for the spin liquid character of our
+obeserved suppression above.                                                  variational wave functions.
+                                                                                                                                                      5
+
+        V.    KITAEV-HEISENBERG RESULTS                                       netic order we deﬁne 5 diﬀerent order parameters, i.e.
+                                                                                               √1
+  Having  established  the  accuracy  of  our  ansatz  wave                         Omag =         4 (⟨⃗σA⟩2 +⟨⃗σB⟩2 +⟨⃗σC⟩2 +⟨⃗σD⟩2),    (4)
+functions  in  the  Kitaev  limit  we  proceed  to  evaluate                                   √
+the  stability  of  the  spin  liquid  phases  in  the  Kitaev-                    Oferro =        1
+Heisenberg   model   of   Eq.      (1).      In   their   proposal                             √4 (⟨⃗σA⟩ +⟨⃗σB⟩ +⟨⃗σC⟩ +⟨⃗σD⟩)2,         (5)
+Chaloupka  et  al.12  performed  a  24-site  Lanczos  diago-                                       1
+nalization study of this model in which 6 diﬀerent phases                         Ostripy =        4 (⟨⃗σA⟩−⟨⃗σB⟩−⟨⃗σC⟩ +⟨⃗σD⟩)2,         (6)
+were  identiﬁed,  namely:   antiferromagnetically  coupled                                     √1
+QSL (ASL), ferromagnetically coupled QSL (FSL), N´eel,                            Ozigzag =
+stripy,  ferromagnetic  and  zigzag.    We  have  found  the                                   √4 (⟨⃗σA⟩ +⟨⃗σB⟩−⟨⃗σC⟩−⟨⃗σD⟩)2,         (7)
+same phases using iPEPS, see Figs.  4 and 5.                                                       1
+                                                                                    ON´eel =       4 (⟨⃗σA⟩−⟨⃗σB⟩ +⟨⃗σC⟩−⟨⃗σD⟩)2,         (8)
+
+                                                                              with the ﬁrst one providing a signature for any  form of
+                                                                              magnetic  order  and  the  rest  being  designed  to  identify
+                                                                              the  diﬀerent  types  of  order  expected  inside  diﬀerent
+                                                                              regions of the phase diagram.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  4.       Regions  spanned  by  the  diﬀerent  phases  found
+using iPEPS. Four diﬀerent magnetically ordered (collinear)
+phases are found: N´eel (orange/top right), zigzag (yellow/top
+left), ferromagnetic (dark green/bottom left) and stripy (light
+green/bottom right).  Magnetically ordered phases are char-
+acterized using the order parameters in (4)-(8).  Blue regions
+correspond to the spin liquid phases.  Phase boundary angles
+correspond to D  = 6 estimates with the spin liquid regions
+increasing their extent as the bond dimensionD is increased.
+
+  In the study by Chaloupka et al.  the phase transitions
+between   symmetry   broken   phases   (stripy/N´eel   and
+ferromagnetic/zigzag)  were  found  to  be  of  ﬁrst  order,
+whereas the FSL to ordered transitions were found to be                       FIG. 5.   Order parameters as a function of the angleϕ in the
+of either second or weak ﬁrst order.12 In the case of the                     vicinity of the points ϕ = ±90◦, normalized to 1.  Regions of
+ASL phase, the nature of the transitions to the ordered                       strongly suppressed symmetry breaking are clearly visible in
+zigzag  and  N´eel  phases  was  not  directly  identiﬁed  but                both cases with ﬁnite discontinuities in the order parameters.
+observed to correspond to level crossings, thus pointing                      The shaded regions indicate the estimated extents of the re-
+towards  ﬁrst  order-type  transitions.   For  a  summary  of                 gions covered by the QSL phases.  All order parameters not
+the locations of the phase transitions found in the small                     shown remain very close to zero.
+cluster, see Table I.
+                                                                                 To  locate  diﬀerent  phase  transitions,  we  proceed  as
+  Here,  in order to capture the diﬀerent types of mag-                       follows.   Starting  from  a  set  of  preliminary  runs  across
+                                                                                                                                                     6
+
+the  phase  diagram  in  which  the  diﬀerent  competing                      remarkably  close  to  zero  within  the ϕ ∈  [−90◦,−80◦]
+phases   are   identiﬁed   by   performing   imaginary   time                 range, as expected for the FSL, and a jump in bothOmag
+evolution for all angles ϕ∈ [−π,π) we locate regions far                      and Ostripy occurs as the energies of the FSL and stripy
+away  from  potential,  yet  to  be  accurately  determined,                  phases cross, indicating a transition into a stripy ordered
+phase transitions.  Once we have optimized tensors well                       phase.  In the upper inset in Fig. 6 we show the relative
+inside each phase we use these tensors as starting states                     deviation  in  bond  energies  from  the  average  value  and
+for a second set of imaginary-time evolution runs across                      here a jump is also visible.  Similarly, the transition be-
+a  given  range  of ϕ  values  and  compare  the  energies  of                tween symmetry-broken stripy and N´eel phases is found
+the two (competing) phases inside this angle window.                          to be of ﬁrst order and located at ϕ≈−33◦  (data not
+                                                                              shown).
+
+                                    iPEPS    Lanczos
+                   ASL - N´eel        88◦      88◦
+                  ASL - Zigzag        92◦      92◦
+                   FSL - Stripy      −80◦     −76◦
+                   FSL - Ferro      −102◦     −108◦
+                  Ferro - Zigzag     161◦      162◦
+                  Stripy - N´eel     −33◦     −34◦
+
+TABLE I.   Transition points between diﬀerent phases found
+using iPEPS with a bond dimension D = 6.  We include the
+original  24-site  Lanczos  results  from  Chaloupka  et  al.12  for
+reference.
+
+  The reasoning behind this procedure relies on the fact
+that  in  the  presence  of  a  ﬁrst  order  phase  transition
+we  expect  to  observe  a  certain  amount  of  hysteresis  as
+we  cross  the  transition  point.   This  should  allow  us  to
+evaluate the energies of two diﬀerent (competing) phases
+across a (possibly narrow) parameter range, thus making
+a potential level crossing visible.  This, together with the
+behavior of the diﬀerent order parameters as the transi-
+tion is crossed, should allow us to identify the type of the
+transition.
+
+
+                  A.    FSL-Stripy transition
+
+  In  order  to  illustrate  the  procedure  proposed  above                  FIG. 6.    Top:  Energy crossings for the FSL to stripy phase
+let  us  consider  the  region  corresponding  to  FM  Kitaev                 transition.  Dotted (Purple), Dash-Dotted (Red) and Dashed
+couplings  and  AFM  Heisenberg  couplings  deﬁned  by                        (Orange) lines correspond to the location of the phase tran-
+ϕ∈ [−90◦, 0].  After a preliminary set of runs we ﬁnd 3                       sition forD = 4, 5, 6, respectively.  The inset shows the maxi-
+diﬀerent phases in this quadrant:  FSL, stripy and N´eel                      mum deviation of the bond energies from the mean value nor-
+as one moves from ϕ =−90◦ to ϕ = 0.  Noting that this                         malized to the mean value.  Bottom: Omag within each phase
+matches  the  results  from  previous  studies11,12,30–32  it                 (green  circles:   stripy  /  blue  squares:   FSL)  and  the  recon-
+remains to verify how our results agree with the transi-                      structed ground state curve (red diamonds).  The inset shows
+tion  points  found  previously.   Having  obtained  tensors                  the behaviour ofOstripy over the same range of angles.  Order
+representing the phases at the two extremes of the angle                      parameters are normalized to one.  Dashed orange lines indi-
+window  shown  in  Fig.  6  we  perform  imaginary-time                       cate the estimated location of the phase transition forD = 6.
+evolution  on  these  states  for  all  values  of ϕ  in  this
+window.                                                                          We  also  note  that  the  phase  boundary  here  system-
+                                                                              atically shifts towards smaller values of ϕ (in norm) as
+  There  an  energy  crossing  at  a  ﬁnite  angle  is  clearly               we  increase  the  bond  dimension D,  eﬀectively  increas-
+observed for a value of ϕ≈−80◦  with D  = 6.  We ar-                          ing  the  size  of  the  FSL  region.   A  linear  extrapolation
+gue  that  this  is  an  actual  level  crossing  in  the  system.            in 1/D to the D→∞ limit yields a phase boundary at
+Moreover,  the  magnetization  data  shows  a  pronounced                     ϕ∞≈−77◦,  very  close  to  the  value  found  in  previous
+jump consistent with a ﬁrst order phase transition,  see                      studies11,12,31  i.e. ϕ≈−76◦  (or α≈  0.8  in  the  origi-
+bottom plot in Fig. 6.  Here all order parameters remain                      nal parametrization11).  As it is not clear that such an
+                                                                                                                                                  7
+
+extrapolation should hold we quote the transition values                    transformation.11   The   same   transformation   connects
+for D = 6 in Table I and interpret this value as a lower                    the stripy phase to the ferromagnetic phase.  As is well
+bound for the extent of the FSL phase on this part of the                   known, stronger quantum ﬂuctuations in the N´eel phase
+phase diagram.                                                              lead to a suppression in the order parameters compared
+                                                                            to  the  ferromagnetic  phase  thus  yielding  weaker  dis-
+                                                                            continuities  in  the  phase  transitions  in  the  upper  half
+            B.    FSL-Ferromagnetic transition                              of  the  phase  diagram  as  compared  to  those  found  in
+                                                                            the lower half.  This is also nicely reﬂected in the order
+  Keeping the sign of the couplings for the Kitaev term                     parameters  shown  in  Fig.  5  as  their  magnitudes  at  the
+and  ﬂipping  the  interaction  from  AFM  to  FM  for  the                 phase transition points match quite well.
+Heisenberg term (this puts us in the third quadrant of the
+phase diagram, see Fig. 4) we ﬁnd two phases:  ferromag-                       As  a  concluding  remark,  we  note  that  a  weak  sup-
+netic and FSL, with the phase boundary being located                        pression  in  the  order  parameters  as  a  function  of  bond
+at ϕ≈−102◦  for D  =  6  and  a D→∞  extrapolated                           dimension D  both  for  the  spin  liquid  (as  in  Fig.  2)  as
+value of ϕ∞≈−106◦.  An energy crossing at a ﬁnite an-                       well as the symmetry-broken phases (data not shown) is
+gle together with a discontinuity in the order parameters                   observed,  albeit small so that ultimately we expect the
+Omag andOferr of comparable magnitude to that of the                        discontinuities found to persist in the large D limit.  For
+FSL-stripy  transition  again  indicate  that  this  is  a  ﬁrst            a graphical summary of the results pertaining the span
+order phase transition, see Fig. 7 and the bottom plot in                   of the spin liquid phases see Figs.  4 and 5.
+Fig. 5.
+
+                                                                                     VI.    SUMMARY AND DISCUSSION
+                 C.    ASL-Zigzag transition
+                                                                               In    summary,    we    have    complemented    previous
+  Switching  the  character  of  the  interaction  of  the  Ki-             studies11,12,30–32   with  accurate  iPEPS  simulations  of
+taev term to AFM brings us to the second quadrant of                        the   Kitaev-Heisenberg   model   in   the   thermodynamic
+the  phase  diagram  where  we  ﬁnd  3  phases:   ferromag-                 limit.  We have found excellent results when comparing
+netic, zigzag and ASL with the zigzag phase in between                      with  the  pure  Kitaev  model  even  for  moderate  bond
+the ASL and ferromagnetic phases, see Fig. 4.  The tran-                    dimensions.44  The  full  ground-state  phase  diagram  of
+sition  from  ASL  to  zigzag  is  located  at ϕ≈  92◦  with                the  Kitaev-Heisenberg  model  was  obtained  where  we
+D = 6 (aD→∞ extrapolation increases this value only                         were able to identify spin liquid phases covering regions
+very slightly toϕ∞≈ 93◦), see Fig. 7, whereas that from                     of ﬁnite span.
+ferromagnetic to zigzag is found to be atϕ≈ 161◦. These
+transitions also exhibit energy crossings at ﬁnite angles                      In  the  case  of  the  spin  liquid  with  antiferromagnetic
+with the angle (strength of the transition) being signif-                   couplings  we  found  ﬁrst  order  phase  transitions  into
+icantly enhanced between the symmetry-broken phases.                        symmetry-broken N´eel and zigzag phases thus clarifying
+Discontinuities in the order parameters Omag / Ozigzag                      the  nature  of  these  transitions  in  the  thermodynamic
+in the ﬁrst case (see the top plot in Fig. 5) and Oferro /                  limit.    In  the  case  of  the  spin  liquid  with  ferromag-
+Ozigzag in the second (data not shown) again allow us to                    netic  couplings  we  have  also  found  ﬁrst  order  phase
+infer that these transitions are of ﬁrst order type.                        transitions  leading  to  ferromagnetic  and  stripy  ordered
+                                                                            phases  in  contrast  with  results  from  previous  small
+                                                                            system studies11,12,31 and a reduced extent compared to
+                  D.    ASL-N´eel transition                                these previous results.  Given that the phase boundaries
+                                                                            showed a systematic shift as a function of D  eﬀectively
+  Finally,   in   the   regime   with   all   antiferromagnetic             increasing the size of the QSL phases we conclude that
+couplings ϕ ∈  [0◦, 90◦],  we  ﬁnd  2  phases:   ASL  and                   our D  =  6  results  correspond  to  lower  bounds.   This
+N´eel.   The  phase  transition  is  located  at ϕ≈  88◦  with              means that upon increasing the bond dimension in our
+D = 6 (extrapolating D→∞ again brings only a very                           ansatz beyondD = 6 we expect the FSL to span at least
+slight lowering to ϕ∞≈ 87◦) and an energy crossing at                       a regionϕ∈ [−102◦,−80◦], whereas the ASL is expected
+a  ﬁnite  angle  together  with  discontinuities  in Omag /                 to  cover  at  least  the  region ϕ∈  [88◦, 92◦].   The  eﬀect
+ON´eel  tell us that this transition is of ﬁrst order type as               being more noticeable in the former case can be related
+well,  see  Fig.  7.   It  should  be  said  that  the  magnitude           to  the  nature  of  the  competing  phases  (ferromagnetic
+of  the  jumps  in  the  ASL-N´eel  and  ASL-zigzag  cases  is              and stripy) allowing the ferromagnetic spin liquid phase
+somewhat  weaker  than  in  the  lower  half  of  the  phase                to proﬁt more eﬀectively from additional quantum ﬂuc-
+diagram, see top plot in Fig. 5.                                            tuations introduced as the bond dimension is increased.
+
+  As  noted  previously,   the  regions  corresponding  to                     Interesting future directions extending this study could
+N´eel and zigzag phases are connected via a 4-sublattice                    involve a tensor network approach to the doped system,
+                                                                                                                                                          8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.     Left:  energy crossings (top) and Omag  (bottom) for N´eel and spin liquid phases.  Center:  energy crossings (top)
+and magnetization (bottom) for zigzag and spin liquid phases.  Right:  energy crossings (top) and magnetization (bottom) for
+ferromagnetic and spin liquid phases
+
+
+a direction which even at the mean ﬁeld level has brought                       LevelScheme48  package  in  Mathematica.   This  work  is
+to light an interesting variety of superconducting phases                       part of the D-ITP consortium, a program of the Nether-
+arising in the model.45–47                                                      lands Organisation for Scientiﬁc Research (NWO) that is
+                                                                                funded by the Dutch Ministry of Education, Culture and
+                                                                                Science (OCW). This work is also part of the FOR1807
+                   ACKNOWLEDGMENTS                                              Advanced  Computational  Methods  for  Strongly  Corre-
+                                                                                lated  Quantum  Systems  research  unit  of  the  Deutsche
+   All simulations were performed using the Brutus clus-                        Forschungsgemeinschaft (DFG).
+ter at ETH Z¨urich.  Figures 2 and 3 were made using the
+
+
+
+
+
+
+
+ ∗  osorio@itp.phys.ethz.ch                                                         Lett. 110, 097204 (2013).
+ †  troyer@phys.ethz.ch                                                         13  I. Mazin, H. O. Jeschke, K. Foyevtsova, R. Valent´ı,   and
+ ‡  P.R.Corboz@uva.nl                                                               D. Khomskii, Phys. Rev. Lett. 109, 197201 (2012).
+ 1  P. A. Lee, Science (New York, NY) 321, 1306 (2008).                         14  A. Kitaev, Annals of Physics 321, 2 (2006).
+ 2  F. Mila, European Journal of Physics 21, 499 (2000).                        15  I.  Kimchi  and  A.  Vishwanath,  Phys.  Rev.  B 89,  014414
+ 3  L. Balents, Nature 464, 199 (2010).                                             (2014).
+ 4  X.-G. Wen, International Journal of Modern Physics B 4,                     16  I.   Kimchi,    J.   G.   Analytis,       and   A.   Vishwanath,
+   239 (1990).                                                                      arXiv:1309.1171  (2013).
+ 5  X.-G. Wen and Q. Niu, Phys. Rev. B 41, 9377 (1990).                         17  S. R. White et al., Phys. Rev. Lett. 69, 2863 (1992).
+ 6  Z. Meng,  T. Lang,  S. Wessel,  F. Assaad,   and A. Mura-                   18  K. G. Wilson, Reviews of Modern Physics 47, 773 (1975).
+   matsu, Nature 464, 847 (2010).                                               19  F.  Verstraete  and  J.  I.  Cirac,  Phys.  Rev.  B  73,  094423
+ 7  R.  Coldea,  D.  Tennant,  A.  Tsvelik,   and  Z.  Tylczynski,                  (2006).
+   Phys. Rev. Lett. 86, 1335 (2001).                                            20  F.  Verstraete  and  J.  I.  Cirac,  arXiv:cond-mat/0407066
+ 8  X. Liu,  T. Berlijn,  W.-G. Yin,  W. Ku,  A. Tsvelik,  Y.-J.                    (2004).
+   Kim, H. Gretarsson, Y. Singh, P. Gegenwart,  and J. Hill,                    21  F.  Verstraete,  M.  M.  Wolf,  D.  Perez-Garcia,    and  J.  I.
+   Phys. Rev. B 83, 220403 (2011).                                                  Cirac, Phys. Rev. Lett. 96, 220601 (2006).
+ 9  Y.  Singh  and  P.  Gegenwart,  Phys.  Rev.  B  82,  064412                 22  J.  Jordan,  R.  Or´us,  G.  Vidal,  F.  Verstraete,    and  J.  I.
+   (2010).                                                                          Cirac, Phys. Rev. Lett. 101, 250602 (2008).
+10  Y. Singh,  S. Manni,  J. Reuther,  T. Berlijn,  R. Thomale,                 23  P. Corboz, R. Or´us, B. Bauer,   and G. Vidal, Phys. Rev.
+   W.  Ku,  S.  Trebst,   and  P.  Gegenwart,  Phys.  Rev.  Lett.                   B 81, 165104 (2010).
+   108, 127203 (2012).                                                          24  L. Wang, D. Poilblanc, Z.-C. Gu, X.-G. Wen,  and F. Ver-
+11  J. Chaloupka,  G. Jackeli,   and G. Khaliullin, Phys. Rev.                      straete, Phys. Rev. Lett. 111, 037202 (2013).
+   Lett. 105, 027204 (2010).                                                    25  P. Corboz and F. Mila, Phys. Rev. B 87, 115144 (2013).
+12  J. Chaloupka,  G. Jackeli,   and G. Khaliullin, Phys. Rev.                  26  P. Corboz, M. Lajk´o, A. M. L¨auchli, K. Penc,  and F. Mila,
+                                                                                                                                                            9
+
+   Phys. Rev. X 2, 041013 (2012).                                                    033014 (2014).
+27  Y. Matsuda, N. Abe, S. Takeyama, H. Kageyama, P. Cor-                        38  M.  Levin  and  C.  P.  Nave,  Phys.  Rev.  Lett.  99,  120601
+   boz,  A.  Honecker,  S.  Manmana,  G.  Foltin,  K.  Schmidt,                      (2007).
+   and F. Mila, Phys. Rev. Lett. 111, 137204 (2013).                             39  Z.-C. Gu, M. Levin,   and X.-G. Wen, Physical Review B
+28  P.  Corboz  and  F.  Mila,  Phys.  Rev.  Lett.  112,  147203                     78, 205116 (2008).
+   (2014).                                                                       40  Z. Xie, J. Chen, M. Qin, J. Zhu, L. Yang,   and T. Xiang,
+29  P. Corboz, T. Rice,  and M. Troyer, Phys. Rev. Lett. 113,                        Phys. Rev. B 86, 045139 (2012).
+   046402 (2014).                                                                41  J. Yu, Z. Xie, Y. Meurice, Y. Liu, A. Denbleyker, H. Zou,
+30  R. Schaﬀer, S. Bhattacharjee,  and Y. B. Kim, Phys. Rev.                         M. Qin, J. Chen,  and T. Xiang, Phys. Rev. E 89, 013308
+   B 86, 224417 (2012).                                                              (2014).
+31  H.-C. Jiang, Z.-C. Gu, X.-L. Qi,  and S. Trebst, Phys. Rev.                  42  H. C. Jiang, Z. Y. Weng,  and T. Xiang, Phys. Rev. Lett.
+   B 83, 245104 (2011).                                                              101, 090603 (2008).
+32  H.   He,   Z.   Wang,   C.   Li,   Y.   Han,      and   G.   Guo,            43  G. Baskaran, S. Mandal,  and R. Shankar, Phys. Rev. Lett.
+   arXiv:1303.2431  (2013).                                                          98, 247201 (2007).
+33  Here, however, we do not claim that the iPEPS mean ﬁeld                      44  This shows that contrary to recent claims in Ref. 32, the
+   ansatz  provides  a  quality  equivalent  to  the  slave-particle                 iPEPS ansatz can in fact properly encode the basic features
+   mean ﬁeld study in Ref. 30 which was designed to represent                        of the Kitaev honeycomb model ground state.
+   the kitaev point exactly.                                                     45  Y.-Z. You, I. Kimchi,   and A. Vishwanath, Phys. Rev. B
+34  T. Nishino and K. Okunishi, Journal of the Physical Soci-                        86, 085145 (2012).
+   ety of Japan 65, 891 (1996).                                                  46  T. Hyart, A. R. Wright, G. Khaliullin,   and B. Rosenow,
+35  R. Or´us and G. Vidal, Phys. Rev. B 80, 094403 (2009).                           Phys. Rev. B 85, 140510 (2012).
+36  J.  I.  Cirac,  D.  Poilblanc,  N.  Schuch,   and  F.  Verstraete,           47  S. Okamoto, Phys. Rev. B 87, 064508 (2013).
+   Phys. Rev. B 83, 245134 (2011).                                               48  M. A. Caprio, Comput. Phys. Commun. 171 (2005).
+37  M. Lubasch, J. I. Cirac, et al., New Journal of Physics 16,

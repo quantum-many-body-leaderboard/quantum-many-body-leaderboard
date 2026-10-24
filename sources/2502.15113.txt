@@ -1,0 +1,553 @@
+Constructing a variational ground state of matter fermions coupled to a vison pair in
+                                                    Kitaev’s honeycomb model
+
+                                               Theo  Grace1,∗   and  Alessandro  Principi1,†
+                 1Department of Physics and Astronomy,  University of Manchester,  Manchester M13 9PL, UK
+
+                   We develop a new method to construct simple and explicit variational approximations for the
+                ground state  of Kitaev’s  honeycomb model with  a non-trivialZ                    2  flux configuration  consisting of
+                a  pair  of  visons  on  neighbouring  plaquettes.   The  method  consists  of  retaining  only  the  largest
+                singular values of the generator of the transformation between the vison-pair and flux-free ground
+                states.  We compare physical quantities calculated using the approximate state to those obtained
+                by extrapolating results of exact diagonalisation of finite lattices, finding them to be in very good
+                agreement.  We discuss ways to extend the method to more complicated flux configurations.
+
+
+                    I.    INTRODUCTION                                        the stability of the spin liquid phase which are dependent
+                                                                              on the sign of the Kitaev coupling [19]. In magnetic fields
+  Kitaev’s  honeycomb  model  [1]  is  a  much-studied  ex-                   visons may form topologically non-trivial bands for anti-
+actly  solvable  model  of  a  frustrated  quantum  magnet                    ferromagnetic Kitaev coupling and contribute to a quan-
+which realises a quantum spin liquid (QSL). It exhibits                       tized thermal Hall effect [18,19].  The important role of
+the characteristic features of a QSL, with long-range en-                     Z2 fluxes in phases at higher magnetic field strengths is
+tanglement of the ground state and fractionalised exci-                       an active area of research, with recent work suggestingZ                   2
+tations [2,3].  In Kitaev’s model the spins fractionalise                     flux dynamics produces an emergent glassy phase [21] at
+into Majorana fermions interacting with an emergentZ  2                       intermediate field strengths.  In weakly perturbed mod-
+gauge field, which gives rise to both gapless fermionic ex-                   els pairs of visons on neighbouring plaquettes can form
+citations (spinons) and gapped excitations due toπfluxes                      bound states with spinons when Heisenberg and Gamma
+of theZ      2 gauge field (visons).                                          interactions are considered, which can destabilise the spin
+  The appeal of Kitaev’s model is not solely for theoreti-                    liquid for sufficiently strong interaction,  and has a dis-
+cal study of exotic phenomena. There are a growing num-                       tinct  signature  in  the  spin  structure  factor  [16].   The
+ber of materials for which Kitaev interactions are thought                    method developed in Ref. [16] relates hopping parame-
+to be dominant [4,5], notablyα-RuCl                       3 [6,7].  However,  ters  for  vison  pairs,  generalised  to  individual  visons  in
+despite evidence of strong Kitaev interactions, these ma-                     [18,19], to matrix elements between exact eigenstates of
+terials are also found to magnetically order at low tem-                      the unperturbed Kitaev model with a fixed gauge. These
+peratures [8–10].  This has motivated extensive theoret-                      can then be calculated numerically using exact diagonal-
+ical  study  of  the  interplay  between  the  Kitaev  Hamil-                 isation on finite lattices and extrapolated to infinite ones.
+tonian and other interactions expected in real materials,                        In order to develop an understanding of vison excita-
+the largest of which are Heisenberg and symmetric off di-                     tions beyond numerical work it is useful to find simple
+agonal (Gamma) interactions [11]. The inclusion of other                      approximate  explicit  expressions  for  Kitaev  eigenstates
+terms  in  the  Hamiltonian  spoils  its  exact  solution  and                in  the  presence  of  vison  excitations.   The  strong  inter-
+produces a rich phase diagram with an extended Kitaev                         action  between  visons  and  spinons  affects  many  vison
+QSL phase as well as a number of competing convention-                        properties,  such  as  their  excitation  energy  and  mobil-
+ally ordered phases.  This has been established through                       ity  in  perturbed  Kitaev  models,  which  in  turn  affects
+multiple techniques including parton mean field theories                      the stability of the spin liquid phase itself.  In this work
+[11,12], Monte-Carlo methods [13], coupled chain analy-                       we calculate an approximate explicit expression for the
+sis [14], and exact diagonalisation [15].                                     lowest energy eigenstate of the Kitaev model with a non-
+  An open area of research is finding signatures that can                     trivialZ           2  gauge  field  consisting  of  a  pair  of  visons  on
+distinguish  the  QSL  from  competing  phases  in  experi-                   neighbouring plaquettes.  We show that a simple ansatz
+ments.   A  means  of  detecting  the  emergent  gauge  field                 may be used to approximate the vison pair state which
+would be a valuable indicator of QSL behavior.  Several                       we then optimise by minimising the matter sector ground
+recent theoretical works with this aim have focused on the                    state energy.  We then compare results for hopping pa-
+dynamics of vison excitations in weakly perturbed Kitaev                      rameters  of  vison  pairs  obtained  with  our  approximate
+models [16–20].  The visons, which are static at the ex-                      method  to  those  of  Ref.  [16]  based  on  exact  diagonali-
+actly solvable point [1], become mobile when other inter-                     sation.  Our results are summarised in TableI. We note
+actions are present.  The motion of visons sets bounds on                     that the largest relative error is of the order of just≈6%,
+                                                                              which shows the good performance of the method we have
+                                                                              developed.  We stress that, compared to exact diagonal-
+                                                                              isation for which the largest systems studied are of the
+∗ theo.grace@manchester.ac.uk                                                 order 100×100 unit cells, our method allows direct study
+† alessandro.principi@manchester.ac.uk
+                                                                              of much larger lattices exceeding 1000×1000 unit cells.
+                                                                                                                                                                 2
+
+
+TABLE I. Comparison of vison pair hopping amplitudes cal-
+culated using exact diagonalisation on finite lattices extrapo-
+lated to infinite size and the variational approximation.
+Interaction        Kitaev sign           Exact           Approximate
+Heisenberg              FM              0.0938J            a            0.0991J
+                         AFM             1.4702J            a            1.4964J
+  Gamma                FM              -1.4391Γa           -1.4632Γ
+                         AFM            -0.1733Γa           -0.1809Γ
+  Zeeman                FM               1.35ih         b             1.387ih
+                         AFM            0.0494ih             b            0.0495ih
+
+a Taken from [16]
+b Taken from [17].
+
+
+   The structure of the paper is as follows. In sectionIIwe
+review Kitaev’s honeycomb model and its exact solution.
+In sectionIIIwe provide a justification for the variational                         FIG. 1.  The geometry of Kitaev’s honeycomb model.a       1  =
+ansatz and for the application of the variational method                             1       3)  anda       2  =  1      3)  are  the  primitive  lattice  vec-
+                                                                                     2(1,   √                  2(−1,     √
+to the determination of approximate eigenstates.  In sec-                           tors, whiler      α (α=x, y, z) denotes the vectors connecting a
+tionIVwe compare the results from our approximation                                 site  of  sublattice  A  to  its  three  B-type  nearest  neighbours.
+with  those  obtained  via  exact  diagonalisation.   Finally,                      Dimensionless units are used such that|a         1|=|a      2|= 1.
+in sectionVwe discuss our results and draw conclusions,
+highlighting possible further applications of our method.
+                                                                                    Hilbert space can be projected onto the physical subspace
+                                                                                    by using the projection operator:
+    II.    REVIEW OF KITAEV’S HONEYCOMB                                                                                     1 +D   r
+                                 MODEL                                                                           ˆP=  Y
+                                                                                                                        r       2     ,                         (2)
+   Kitaev’s  honeycomb  model  describes  spinsS=  1/2                              The Hamiltonian in the Majorana representation is given
+on  a  honeycomb  lattice  with  a  bond  direction  depen-                         by:
+dent  Ising  interaction  between  nearest  neighbour  spins
+[1].  The Hamiltonian is given by:                                                                       Hˆu   =iK    X        crˆu  αr cr+r     α,                  (3)
+
+                                                                                                                      r∈A,α
+                       H=−K       X      σαr σαr+r     α,                     (1)
+                                     r,α                                            where ˆu  αr =ib   αr bαr+r     α is a (conserved) link operator with
+whereσ           α (α=x, y, z) are Pauli matrices,rlabels a site                    eigenvalues±1.  The link operators satisfy [ˆu               αr ,ˆu   βr′] = 0
+on the A sublattice, whiler  α are the vectors connecting                           and [ˆu  αr ,H ˆu  ] = 0, so the eigenstates may be labelled by
+such site to its three nearest neighbours (which belongs                            their link operator eigenvalues.  This allows eigenstates
+to the B sublattice).  See Figure1for the definition of                             in the extended Hilbert space to be written as a tensor
+rα.                                                                                 product of the state of the link variables denoted as|u⟩
+   This  Hamiltonian  has  an  extensive  number  of  con-                          and the state of the matter fermions. The Hamiltonian is
+served  quantities  which  are  crucial  for  its  exact  solu-                     invariant under localZ     2 transformations in whichc  r →
+tion  [1].    For  each  plaquette  one  can  define  a  (con-                      (−1)     nrcr, ˆu  αr →(−1)         nr ˆu  αr (−1)     nr+r    α  with site dependent
+served)  “flux”  operator  as  the  product  of  Pauli  matri-                      nr ∈ {0,1}.  A Wilson loop given by a product of link
+ces associated to exterior bonds [1] [see also Eq. (4) be-                          operators ˆu  αr around a closed loop is invariant under aZ  2
+low].   The  model  can  be  exactly  solved  using  Kitaev’s                       gauge transformation, and corresponds to the flux of the
+representation  of  each  spins  in  terms  of  four  Majorana                      emergentZ  2 gauge field through the loop.  The smallest
+fermions, namedb            xr,b yr,b zr andc      r, such thatσ        αr  =ib   αr cr.Wilson loop is around a single hexagonal plaquette:
+
+We  will  take  the  convention  that  the  Majorana  oper-                                                     Wp =   Y           ˆu  αr .                         (4)
+ators  satisfy{c             r, cr′}=  2δ    r,r      ′, {b   αr , bβr′}=  2δ    r,r      ′δα,β,                         uα∈∂9     p
+{c  r, bαr}= 0.  Complex fermions formed from combina-
+tions of Majoranas denoted asc   r  will be referred to as                          The loop operators commute with the Hamiltonian and
+’matter’  fermions.   The  Majorana  representation  has  a                         satisfy [W p, Dr] = 0 so physical states may be labeled by
+larger  Hilbert  space  than  that  of  the  spin  states:  only                    theirZ         2 flux configuration.
+states  which  satisfyD         r |ψ⟩=|ψ⟩withD                     r  =b   xrbyrbzrcr  Acting on an eigenstate of the link operators|u⟩gives
+represent physical spin states. The states in the enlarged                          a Hamiltonian for the matter fermions which is quadratic
+                                                                                                                                                               3
+
+in matter fermion operators.                                                       create  degenerate  excitations  so  may  be  combined  into
+                                                                                   new eigenstate creation operatorsη             u0k,+    = (η  u0k  +η   u0−k  )/ √2
+                    Hu =iK    X          cAr Mur,r      ′cBr′.                 (5) andη      k,−    =i(η       u0−k   −η   u0k  )/ √2 which do have the form of
+                                 r,r      ′∈A                                      Eq. (7).  The physical ground state is given by:
+HereM         ur,r      ′  =u   zrδr,r      ′ +u   xrδr−a       1,r  ′ +u   yrδr−a       2,r  ′  is a link |Ω⟩=       ˆP(|u     0⟩ ⊗ |0 u0⟩).                     (9)
+variable dependent matrix and the Majorana operators
+have  been  given  explicit  sublattice  labelsc     Ar  =c   r  and               As well as the matter fermion excitations, there are ex-
+cBr  =c   r+r     z.  This may be diagonalised exactly by tak-                     citations associated with link variable configurations in
+ing the singular value decompositionM             u  =U    uEuV uT ,               which there are Wilson loops withW        p =−1 on some of
+whereU           u andV        u are real orthogonal matrices andE       u is      the plaquettes.   These excitations,  due to a flux of the
+a diagonal matrix of singular values.  The superscriptu                            emergentZ  2 gauge field, are called visons.
+is used to highlight the dependence on the configuration
+(i.e.the  eigenstates)  of  the  link  operators.   Note  that
+although the singular valuesE          uk  depend on the link con-                   III.    MATTER FERMION GROUND STATE IN
+figuration, they are independent ofZ   2 gauge transforma-                                   THE PRESENCE OF A VISON PAIR
+tions, so they only depend on theZ      2 flux configuration.
+Using the singular value decomposition, one can rewrite                               AZ   2 flux configuration with a pair of visons on neigh-
+the Hamiltonian:                                                                   bouring plaquettes may be represented by a single link
+                  Hu =iK   XEuk Cu,Ak   Cu,Bk                                      variableu             αr  =−1 with all others equal to +1.  The posi-
+                                k                                                  tion of a vison pair can be labelled by the link joining the
+                       =|K|     X    Euk (2η    u†                                 plaquettes, which can be identified by a siteron the A
+                                             k  ηuk −1),               (6)         sublattice and the link orientationα.  For a vison pair at
+                                 k                                                 the origin separated by az-oriented link, the link state
+whereC           u,A                                                               may be written asb    z0 |u 0⟩and the corresponding Hamil-
+           k     =U    u,Tk,r  cAr  andC       u,Bk     =V    u,Tk,r  cBr  are Majoranatonian for the matter fermions isH   0,z  , with ground state
+fermions which may be combined into a complex fermion                              |0 0,z ⟩.  The HamiltonianH                        0,z   can be written as the sum
+which diagonalises the matter sector Hamiltonian for a                             of the trivial link configuration HamiltonianH                        u0  and a
+particular link variable configuration.                                            local perturbation due to the flipped link variableu  z0:
+
+                  ηuk = (C  u,Ak    +iK/|K|C            u,Bk    )/2                (7)                   H0,z   =H   u0 −2iKc     A0 cB0 .                 (10)
+Note that we have included a factor which depends on                               The Hamiltonian with a single flipped linkH       0,z   can be
+the  sign  of  the  Kitaev  coupling  in  the  definition  ofη    uk               written in terms of the excitations of the trivial link con-
+to ensureη            uk  is an annihilation operator for both ferro-              figuration:
+magnetic and antiferromagnetic Kitaev interaction.  The
+matter fermion ground state corresponding to a particu-                               H0,z   =H   u0 + 2|K|U         u00,k  V u00,k    ′(η  u0k   +η   u0†
+lar link variable configuration is then defined by:                                                                                     k   )(η   u0†k′  −η   u0k′ )
+                                                                                                                                                           (11)
+                           ηuk |0 u⟩= 0 ∀k.
+                                                                                   where a sum over indiceskandk                  ′ is understood.  Writ-
+Lieb’s Theorem [22] guarantees that the ground state of                            ten in this form the Hamiltonian is independent of the
+the model is in the fluxless sector in which the Wilson                            sign of the Kitaev coupling.  This means that the ground
+loop operator has eigenvaluesW         p = +1 on all plaquettes.                   state|0          0,z ⟩will have the same form for both signs of the
+The simplest link configuration in this sector is the trivial                      Kitaev interaction, when expressed in terms of the cre-
+configuration, labelled byu  0, in which all link variables                        ation and annihilation operatorsη             u0,η u0† and the ground
+areu      αr  = +1.  For this configuration the corresponding                      state of the trivial flux configuration|0                          u0⟩[see Eq. (13)
+matter sector Hamiltonian is a translationally invariant                           below].   It  is  important  to  emphasise  that  the  ground
+nearest  neighbour  hopping  model,  so  the  diagonalising                        state wavefunction is not the same for both signs of the
+matter fermion operators may be found explicitly using                             Kitaev interaction, as the dependence on the sign of K
+a Fourier transformation [1].                                                      has been included in the definition ofη    u0.  The difference
+                      X                                                            between eigenstates for different signs of the Kitaev inter-
+    ηu0k   =    1√2N         eik·r    cAr  +i    K|K|    ei(k·r+φ           k)cBr(8)action becomes important when non-Kitaev interactions
+                       r                                                           are included in the Hamiltonian.
+Whereφ           k  is  defined  bye  iφk  =  ∆k/|∆   k| with  ∆ k  =                 Using  the  singular  value  decomposition  ofM    u  in
+1 +e   ik·a      1 +e   ik·a      2.  The corresponding energies areE      u0k   = Eq. (5) the Majorana operatorsC                 u,A  andC       u,B  on the
+2|K||∆       k|. Note that the operators in Eq. (8) are not writ-                  A and B sublattice which diagonalise each Hamiltonian
+ten as the sum of a Majorana operator on each sublat-                              may be related by real orthogonal transformations:
+
+tice in the form of Eq. (7).  The operatorsη             u0†k    andη       u0†−k           C(0,z),A       =UC    u0,A,       C(0,z),B       =V C    u0,B,
+                                                                                                                                                              4
+
+whereU=U                 (0,z),T      Uu0  andV=V             (0,z),T      V u0.  The rela-the ground states of the two sectors is:
+tion between the complex fermionsη                (0,z)      andη       u0, defined                                                               
+in Eq. (7), is given by a real transformation:                                                                      −1     X                      |0 u0⟩
+                   η(0,z)          X   Y       ηu0                                    |0 0,z ⟩=⟨0       u0|0 0,z ⟩exp    2       ηu0†k   Zk,k′ηu0†k′
+                               =                          ,             (12)                                                k,k′
+                    η(0,z)†          Y   X       ηu0†                                                                                                     (17)
+whereX= (U+V)/2 andY= (U−V)/2.  The corre-                                                    ≈(cos(θ/2) + sin(θ/2)¯η                          u0†a   ¯η  u0†b   )|0   u0⟩.         (18)
+sponding matter sector ground states are related by [23]:                         The  matrixZmay  be  determined  exactly  numerically
+                                                                                for finite size systems using exact diagonalisation of the
+  |0 0,z ⟩=⟨0       u0|0 0,z ⟩exp−1    X    ηu0†              |0 u0⟩,           matter sector Hamiltonians for the two different flux con-
+                                     2         k   Zk,k′ηu0†k′                    figurations,  as  has  been  carried  out  in  previous  works
+                                        k,k′                                      on vison dynamics in perturbed Kitaev models [16–19].
+                                                                       (13)       However by approximatingZby only its largest singu-
+whereZ=X               −1  Yis  a  real  antisymmetric  matrix.   As              lar  values  the  relation  between  ground  states  is  simple
+                                                                                  enough to find an approximate explicit expression.  This
+Zis real antisymmetric it may be decomposed by a real                             allows calculations on much larger lattices than can be
+orthogonal matrixQinto the form:                                                  directly studied using exact diagonalisation, and is a sim-
+                             −t   1                                             ple starting point for further study of vison pair excita-
+                       t1                         QT ,         (14)     tions in perturbed Kitaev models.  The approximation in
+                                          −t   2                                  Eq. (17) will be the ansatz for a variational calculation
+              Z=Q                    t2                                           of the matter fermion ground state in the presence of a
+                                                 ...                              neighbouring pair of visons.
+
+
+where the non-zero elementst   j = tan(θ        j/2) are real num-                    A.    Variational approximation of the vison pair
+bers,  and|tan(θ                j/2)|correspond to the singular values                                                state
+ofZ.  The orthogonal matrixQcan be used to define a                                   The ansatz for the ground state of the matter sector
+canonical transformation to a new set of creation oper-                           Hamiltonian for a single flipped bond is:
+ators  ¯η  †j  =Q   Tjkη†k.  The transformed creation operators
+corresponding to non-zero tan(θ        j/2) are paired, with the
+two operators in the pair labelled  ¯η  u0†                                                   |¯00,z ⟩=    cos(θ/2) + sin(θ/2)¯η                 †a¯η  †b|0 u0⟩     (19)
+                                                 j,a ,  ¯η  u0†j,b .  They are
+not  unique,  as  the  following  transformation  leaves  the                     The operator ¯η  †a can be written in the basis of the eigen-
+relation between ground states unchanged:                                         state operators ofH    u0:
+               ¯η  †a                     ¯η  †a
+                ¯η  † →exp (iϕσ      y)     ¯η  †,    ϕ∈R.         (15)                ¯η  †a =   X    (a k,+   ηu0,†k,+    +a   k,−   ηu0,†k,−   ) =  Xakηu0,†k
+                  b                          b                                                                                            k∈BZ
+                                                                                              k∈BZ/2
+The operator relating ground states may then be written                                ¯η  †           (b k,+   ηu0,†                            bkηu0,†
+in terms of the transformed operators as                                                b =   X                 k,+    +b   k,−   ηu0,†k,−   ) =  X   k
+                                                                                              k∈BZ/2                                      k∈BZ
+                                                                     
+       −1     X                       = exp     X                             wherea          k,+   , a k,−    are  real  anda      k  =  (a  k+   +ia   k,−   )/ √2
+  exp       2       ηu0†k   Zk,k′ηu0†k′                   tj ¯η  u0†j,a ¯η  u0†j,bare complex and satisfya          −k   =a   ∗k.  The expansion coeffi-
+               k,k′                                    j                          cientsb   k satisfy analogous conditions. The eigenstate op-
+              = Y(1 + tan(θ        j/2)¯η    u0†j,a ¯η  u0†j,b ).                  (16)eratorsη             u0k   from Eq. (8) and complex parametersa                      k,b k
+                   j                                                              are used in order to make the following calculation more
+                                                                                  compact.  The parametersa                   k,b k, andθare to be deter-
+Here, sums and products are over the pairs of non-zero                            mined by minimisation of the ground state energy expec-
+singular values ofZ.                                                              tation value.  Note that the parametersa                   k,b k  are con-
+   A single flipped bond variable is a local perturbation                         strained by their normalisation Pk |a k|2 = Pk |b k|2 = 1
+of the flux free HamiltonianH      u0  and the change to the                      and orthogonality Pk akb∗k = 0, with the constraints en-
+ground state as described byZis localised around the                              forced by Lagrange multipliers Λa, Λb, and Λab  respec-
+vison pair [16].  This means that there are very few non-                         tively.
+zero values of tan(θ        j/2), with the corresponding fermion                      We  performed  the  minimisation  of  the  expectation
+operators  localised  around  the  vison  pair.   The  change                     value for the ground state energy  ¯E0,z   =⟨   ¯00,z |H0,z  |¯00,z ⟩
+to the ground state may be approximated as being due                              with  respect  to  each  of  the  variational  parameters  and
+solely to the largest term such that the operator relating                        solve  the  resulting  equations  in  a  case  where  Λab  =  0.
+                                                                                                                                                              5
+
+This is always possible for a suitable value ofϕin Eq.                            the  central  region  where  the  majority  of  the  energy  is
+(15), and this is a convenient choice as the resulting equa-                      localised the relative error is approximately 5%.  This al-
+tions fora     k andb      k are decoupled.  The details of the so-               lows us to conclude that the approximation is robust and
+lution are given in appendixA. For the most general case                          we expect it to be able to produce reliable results.  Fur-
+of a vison pair at siterwith orientationαthe optimised                            thermore,  it can be consistently improved by including
+parameters are:                                                                   further terms coming from the second, third, etc.  largest
+                               1 +e   iφk+ik·(r         α−r   z)                  singular values ofZin the variational Ansatz (19).
+            a(r,α)k      =  Aa√N     Λa +|∆    k|       eik·r    ,       (20)
+                                                                                                     B.    Hopping of vison pairs
+             b(r,α)     √      eiφk+ik·(r         α−r   z) −1                        Zhang et.al [16] showed that the hopping parameters
+              k      =  AbN          Λb +|∆    k|       eik·r    .       (21)
+                                                                                  for vison pairs can be related to matrix elements of mat-
+with                                                                              ter sector ground states for fixed link configurations. The
+                                                                                  hopping parameter of vison pairs in the presence of a per-
+                             Λa = 1.5384,                                         turbing Heisenberg interactionH                 J  =J   Pr,α  σr ·σ r+r     α
+                              Λb = 0.2995,                                        is [16]:
+                               θ= 0.9565.                                                 T J =⟨r+a          1, z|H  J |r, z⟩
+The  energy  of  the  vison  pair  above  the  ground  state                                   =J(⟨0          a1,z|0 0,z ⟩+⟨0       a1,z|ic Aa1cB0 |0 0,z ⟩)        (22)
+in   this   approximation   is   given   by   ¯∆    =     ¯E0,z   −               This was calculated using exact diagonalisation on finite
+⟨0  u0|Hu0 |0 u0⟩  ≈0.272|K|,  which  is  within  3%  of  the                     size lattices and extrapolating to the limit of infinite-size
+exact result calculated analytically ∆ = 0.263|K|[24].                            lattices [16].  The dependence on the sign of the Kitaev
+                                                                                  coupling of the second term is clear once matrix elements
+     IV.    COMPARISON TO EXACT RESULTS                                           are expressed in terms of creation and annihilation oper-
+                                                                                  ators of matter fermion excitations for a given link con-
+   We  evaluate  the  accuracy  of  the  optimized  approxi-                      figuration:
+mate ground state by calculating physical quantities and                             ⟨0  a1,z|ic Aa1cB0 |0 0,z ⟩
+comparing  them  to  the  results  of  exact  diagonalisation                        =  K
+performed on finite lattices [16,17].  While the ground                                  |K|    Uu0a1,kV u00,k    ′ ⟨0  a1,z|(η   u0k   +η   u0†k   )(η   u0k′ −η   u0†k′  )|0   0,z ⟩
+state is calculated for a particular link configuration, and
+it is therefore not gauge invariant, it can still be used to                      Once  the  matrix  elements  are  expressed  using  matter
+calculate physical quantities by acting on it with the pro-                       fermion excitation operators they are independent of the
+jection operator in Eq. (2).  Depending on the boundary                           sign of K, so the second term in Eq. (22) differs in sign
+conditions  [25],  the  projection  operator  will  annihilate                    between AFM and FM Kitaev models, as concluded in
+states with either even or odd fermion parity.  In cases in                       [16].  These matrix elements may also be calculated us-
+which a lone vison pair is annihilated, the projector may                         ing  the  approximate  ground  states  with  the  optimised
+be modified to annihilate states with the opposite parity,                        parameters.  The details of the calculation are given in
+as detailed in [16].                                                              the  AppendixB.  For  antiferromagnetic  (AFM)  Kitaev
+                                                                                  coupling our approximation givesT     J = 1.496, compared
+                                                                                  toT     J →1.470Jfrom exact diagonalisation [16].  For fer-
+            A.    Link energy around vison pairs                                  romagnetic coupling, as noted in [16], there is destructive
+                                                                                  interference between the two terms.  Our approximation
+   We start by calculating the change in link energy, de-                         givesT     J  = 0.0991Jwhereas the extrapolation of exact
+fined  asε    αr  =K⟨σ         αr σαr+r     α⟩=K⟨ˆu            αr icrcr+r     α⟩,  betweendiagonalisation  results  givesT     J  →0.0938J.   The  rel-
+the ground states with and without the vison pair.  This                          ative error is approximately 6%,  which denotes a good
+quantity provides a direct test for the performance of our                        performance of the approximate method, particularly as
+optimized approximation.  Fig.2(a) shows the change in                            this quantity is sensitive to small changes in the ground
+link  energy  calculated  using  the  optimised  approxima-                       state due to the destructive interference between the two
+tion.   The  majority  of  the  change  in  link  energy  is  lo-                 terms.
+calised on thexandylinks neighbouring the visons, and                                In   appendix   we   have   also   calculate   hopping   due
+on the flippedzlink itself.  The difference between the                           to    the    off-diagonal    symmetric    exchangeH           Γ     =P
+link energy calculated using exact diagonalisation for a                          ΓPr        α̸=β̸=γ        σβr σγr+r     α, and the Zeeman couplingH                h =
+finite lattice of 58×58 unit cells and the optimised ap-                          hPr,α  σαr .  Our results, compared to the ones extrapo-
+proximation is shown in Fig.2(b).   Note the difference                           lated from exact diagonalisation of finite lattices [16,17],
+in  scale  between  Fig.2(a)  and  (b).   The  largest  differ-                   are reported in TableIin units of the respective coupling
+ences are on thezbonds neighbouring the plaquette.  In                            constants.
+                                                                                                                                                    6
+
+                                                                                                     V.    DISCUSSION
+
+
+                                                                                In this work we have shown that the change to the mat-
+                                                                             ter fermion ground state due to the presence of a vison
+                                                                             pair in a generalised Kitaev model may be approximated
+                                                                             by  a  simple  expression.   Using  the  variational  method
+                                                                             we developed here, we obtained an analytical expression
+                                                                             for the vison-pair state in terms of the eigenstates of the
+                                                                             vison-free Hamiltonian.
+
+                                                                                The approximate state was used to calculate the link
+                                                                             energy and vison hopping amplitudes that we then com-
+                                                                             pared to results of exact diagonalisation. We have shown
+                                                                             that the approximate state is successful in capturing the
+                                                                             main effect of the vison pair-spinon interaction to within
+                                                                             ≈6%.  A more precise determination of the matrix ele-
+                                                                             ments requires including more variational parameters in
+                                                                             the ansatz corresponding to the smaller singular values,
+                                                                             or resorting to exact diagonalisation.
+
+                                                                                The power of the method we have developed hinges on
+                                                                             the possibility to explicitly construct a simple expression
+  (a)                                                                        for  the  vison  pair  state,  Eq.  (19).   This  is  achieved  by
+                                                                             retaining only the contribution of the largest pair of sin-
+                                                                             gular values ofZto Eq. (16).  More precise results may
+                                                                             be obtained by including further terms coming from the
+                                                                             second, third, etc.  largest pairs of singular values ofZ
+                                                                             in the variational ansatz.  However, this complicates the
+                                                                             minimisation and it is beyond the scope of the present
+                                                                             work.
+
+                                                                                The  variational  method  we  have  developed  could  be
+                                                                             used to go beyond numerical calculations in studies of,
+                                                                             e.g.,  magnon-like  bound  states  formed  between  vison
+                                                                             pairs and spinons or to describe the ground state of the
+                                                                             extended  Kitaev  model  [1].   The  latter  includes  time-
+                                                                             reversal symmetry breaking three-spin interactions that
+                                                                             emerge in weak magnetic fields. It can also in principle be
+                                                                             extended to ground states of more complicated vison con-
+                                                                             figurations. For example to “open pairs”, in which visons
+                                                                             are separated by longer chains of flipped link variables.
+                                                                             The  study  of  these  more  complicated  cases  is  however
+                                                                             beyond the scope of the present work.
+
+                                                                                IfZpresents  too  many  singular  values  that  need  to
+  (b)                                                                        be retained, a direct application of the method could be-
+                                                                             come  impractical  due  to  the  number  of  variational  pa-
+FIG. 2.     Panel (a):  The change in link energy around the                 rameters  needed  to  accurately  describe  the  state.    In
+vison pair calculated using the variational Ansatz in Eq. (19).              these  cases,  a  possible  solution  could  be  breaking  too
+Panel (b): The difference between the link energies calculated               long chains in shorter ones,i.e.by considering changes
+using the variational Ansatz (19) and exact diagonalisation on               to the ground state induced by flipping a smaller num-
+a 58×58 lattice with periodic boundaries. Note the change in                 ber of  links.   These could  likely  be  written in  terms  of
+scale compared to Fig. (2) by about one order of magnitude.                  few variational parameters onto which minimisation can
+In both panels, visons are located on the shaded plaquettes                  be performed.  Repeating the process,  it could then be
+marked with “π”.                                                             possible to build up and approximate the ground state
+                                                                             of longer chains of flipped bonds.  Further work, beyond
+                                                                             the  scope  of  the  present  paper,  is  needed  to  generalise
+                                                                             our method to these cases.
+                                                                                                                                                                       7
+
+                    ACKNOWLEDGMENTS                                                    Multiplying Eq. (A2) byb        k and summing over the Bril-
+                                                                                       louin zone gives an equation for the Lagrange multiplier
+   We acknowledge support from the European Commis-                                    Λab:
+sion under the EU Horizon 2020 MSCA-RISE-2019 pro-                                           4 sin2(θ/2)   Xbk|∆ k|a ∗k + Λab
+gramme  (project  873028  HYDROTRONICS),  from  the
+Leverhulme Trust under the grant agreement RPG-2023-                                                           k                                                  (A4)
+253 and from the Engineering and Physical Sciences Re-                                          = 4 sin2(θ/2)((Ua)             0(V b)   0 + (V a)    0(Ub)   0).
+search Council grant number 2856485.                                                   We will seek a solution to the equations with Λab  = 0.
+                                                                                       This  is  possible  by  exploiting  theU(1)  redundancy  of
+    Appendix A: Minimisation of the ground state                                       Eq.  (15)  to  require  that  (Ua)          0  =  (V a)    0  and  (Ub)   0  =
+                                   energy                                              −(V b)       0.  Enforcing this ensures Pk |∆ k|b ∗kak = 0 is also
+                                                                                       satisfied.  A solution of this form has:
+   The  optimised  parameters  for  the  variational  ansatz                                                    ak =  Aa√        1 +e   iφk
+given in Eq. (19) are found using the standard variational                                                                 N   Λa +|∆    k|,                   (A5)
+method,i.e.by writing down the ground state energy                                     and
+expectation in terms of the variational parameters and
+minimising with respect to them.  The expectation value                                                          bk =  Ab√      eiφk −1
+for  the  ground  state  energy  ¯E0,z   =⟨   ¯00,z |H0,z  |¯00,z ⟩in                                                      N   Λb +|∆    k|,                   (A6)
+terms of the variational parameters is- given by Eq. (A1):
+     ¯E0,z   =⟨0     u0|H  0z  |0 u0⟩                                                  with
+
+           + 2 sin2(θ/2)   X|∆ k|(|b    k|2 +|a    k|2)                                                   Aa = (Ua)    0 −(Ub)       0 cot(θ/2),             (A7)
+
+                                k                                                                          Ab = (Ub)   0 + (Ua)    0 cot(θ/2).             (A8)
+           + 2 sin(θ)((Ub)               0(V a)    0 −(Ua)       0(V b)   0)           The  quantitiesA         a  andA       b  may  be  related  to  Λa  and
+           −4 sin   2(θ/2)((Ua)             0(V a)    0 + (Ub)   0(V b)   0)           Λb by using the normalisation constraints.  Furthermore,
+                                                                          (A1)         Eq. (A7) and Eq. (A8) allow Λ              b andθto be determined
+           + 2 sin2(θ/2)Λ    a(X|a k|2 −1)                                             from Λa.  Minimising  ¯E0,z   with respect toθgives
+                                     k
+           + 2 sin2(θ/2)Λ    b(X|b k|2 −1)                                                  sin(θ)      X|∆ k|(|b    k|2 +|a    k|2) + 4 cos(θ)(Ua)               0(Ub)   0
+                                    k                                                                 k
+           + Λab(X        akb∗k),                                                                         = 2 sin(θ)((Ua)                20 −(Ub)       20).
+                      k                                                                                                                                           (A9)
+where                                                                                  Using Eq. (A5) and Eq. (A6),
+                                         X                                              X     |∆ k||a  k|2 = 2A  a(Ua)    0 −Λ   a,
+                    (Ua)    0 =    1√           ak,
+                                    N   k∈BZ                                              k
+                                 √       X                                               X                  = 2(Ua)      20 −2(Ua)         0(Ub)   0 cot(θ/2)−Λ                 a
+                    (V a)    0 =    1N          ake−iφ   k.                                   |∆ k||b  k|2 =−2A         b(Ub)   0 −Λ   b
+                                        k∈BZ
+                                                                                          k
+There  are  analogous  expressions  for  (Ub)   0  and  (V b)   0.                                          =−2(Ub)            20 −2(Ua)         0(Ub)   0 cot(θ/2)−Λ                 b.
+Differentiating  ¯E0,z   with respect toa   k andb      k gives:
+ 4 sin2(θ/2)(|∆         k|+ Λ a)a ∗k + Λabb∗k                                          Substituting these into Eq. (A9) and simplifying gives
+
+                                                                                                        Λa + Λb =−4(Ua)            0(Ub)   0 csc(θ).         (A10)
+                 =    4√N sin2(θ/2)((Ua)             0e−iφ   k + (V a)    0)(A2)       Both sides of the equation may be regarded as functions
+
+                     −   2√    θ)((Ub)               0e−iφ   k −(V b)       0),        of Λa.  Solving numerically for Λa,  and using Eq. (A7)
+                           N sin(                                                      and Eq. (A8) to determine Λ       b andθgives:
+and                                                                                                                   Λa = 1.5396,
+  4 sin2(θ/2)(|∆         k|+ Λ b)b ∗k + Λaba∗k                                                                         Λb = 0.2995,
+                                                                                                                         θ= 0.9561.
+                  =    4√N sin2(θ/2)((Ub)             0e−iφ   k + (V b)   0)(A3)       This may be generalised to an arbitrary vison pair site
+
+                     +   2√    θ)((Ua)                0e−iφ   k −(V a)       0).       rand orientationαto give the result stated in Eq. (20)
+                           N sin(                                                      and Eq. (21) in the main text.
+                                                                                                                                                                                                             8
+
+                                                                                                               Appendix B: Calculation of hopping parameters
+
+                                                                                                               The matrix elements that must be calculated to cal-
+                                                                                                           culate  the  hopping  parameters  of  vison  pairs  have  the
+                                                                                                           general form:
+
+
+
+                     ⟨0 R,α  |0 R′,β⟩= cos  2(θ/2) + sin    2(θ/2)((a          R,α   ·a R′,β)(b   R,α   ·b R′,β)−(a      R,α   ·b R′,β)(b   R,α   ·a R′,β))           (B1)
+
+
+                              K
+                             |K|    ⟨0 R,α  |ic Ar cBr′ |0 R′,β⟩=−(U          u0V u0T )r,r      ′ ⟨0 R,α  |0 R′,β⟩
+
+                                                       +12 sin(θ)          (Ub  R,α   )r(V a  R,α   )r′ −(V b    R,α   )r′(Ua  R,α   )r
+
+                                                       +12 sin(θ)          UbR′,β)r(V a  R′,β)r′ −(V b    R′,β)r′(Ua  R′,β)r
+                                                                                                                                                                                                      (B2)
+                                                    + sin2(θ/2)            (b R,α   ·b R′,β)((Ua    R,α   )r(V a  R′,β)r′ + (V a  R,α   )r′(Ua  R′,β)r)
+
+                                                                       +(a    R,α   ·a R′,β)((Ub    R,α   )r(V b  R′,β)r′ + (V b  R,α   )r′(Ub  R′,β)r)
+                                                                       −(a    R,α   ·b R′,β)((Ub    R,α   )r(V a  R′,β)r′ + (V b  R,α   )r′(Ua  R′,β)r)
+                                                                       −(b    R,α   ·a R′,β)((Ua    R,α   )r(V b  R′,β)r′ + (V a  R,α   )r′(Ub  R′,β)r)
+
+Where:
+                                                         (Ua  (R,α)      )r = Aa          X       eik·(r−R)           1 +e   i(k·(r        z−r   α)−φ    k)
+                                                                                   N    k∈BZ                               Λa +|∆    k|                                                  (B3)
+
+                                                         (V a  (R,α)      )r = (Ua  (R,α)      )2R−r+r             α−r   z                                                                     (B4)
+                                                                                         X
+                                                         (Ub  (R,α)      )r = AbN                 eik·(r−R)           1−e     i(k·(r        z−r   α)−φ    k)Λb +|∆    k|                                                   (B5)
+                                                                                        k∈BZ
+                                                         (V b  (R,α)      )r =−(Ub        (R,α)      )2R−r+r             α−r   z                                                                  (B6)
+
+
+                      (a  (R,α)      ·a (R   ′,β)   ) = A2a     X        eik·(R−R                        ′) 1 +e   ik·(r      α−r   z)+φ    k +e   −ik·(r         β−r   z)−φ    k +e   ik·(r      α−r   β)
+                                                         N     k∈BZ                                                         (Λa +|∆    k|) 2                                             (B7)
+                       (b  (R,α)      ·b (R   ′,β)   ) = A2b    X       eik·(R−R                        ′) 1−e     ik·(r      α−r   z)+φ    k −e   −ik·(r         β−r   z)−φ    k +e   ik·(r      α−r   β)
+                                                         N     k∈BZ                                                          (Λb +E   k)2                                               (B8)
+                      (a  (R,α)      ·b (R   ′,β)   ) = AbAa         X       eik·(R−R                        ′) 1 +e   ik·(r      α−r   z)+φ    k −e   −ik·(r         β−r   z)−φ    k −e   ik·(r      α−r   β)
+                                                           N       k∈BZ                                                (Λa +|∆    k|)(Λ b +|∆    k|)                                  (B9)
+
+
+
+
+                        1.    Heisenberg Interaction                                                       actions:
+
+    The Heisenberg interaction Hamiltonian is given by:                                                       T J =⟨R+a            1, z|H  J |R, z⟩
+                                                                                                                    =J   ⟨0 R+a        1,z|0 R,z  ⟩+⟨0      R+a        1,z|ic AR+a        1cBR |0 R,z  ⟩
+                           HJ =J     X                σr ·σ r+r     α
+                                            r∈A                                                            Using the general formulae Eq. (B1) and Eq. (B2):
+                                          α=z,y,z
+Using the expression from Ref. [16], the hopping param-                                                                                 ⟨0 R+a        1,z|0 R,z  ⟩= 0.7977
+eter for vison pairs in the presence of Heisenberg inter-                                                            ⟨0 R+a        1,z|ic AR+a        1cBR |0 R,z  ⟩=−0.6986 sign(K)
+                                                                                                                                                                 9
+
+                     2.    Gamma Interactions                                                            3.    Zeeman Interactions
+
+   The Gamma interaction Hamiltonian is given by:                                      The Zeeman interaction for a uniform magnetic fieldh
+                                                                                    in the [1,1,1] direction is given by:
+
+                       HΓ = Γ  X           σβr σγ                                                              Hh =h    X           σαr                      (B12)
+                                                r+r     α                 (B10)                                            r∈A,B
+                                    r∈A                                                                                   α=x,y,z
+                                  α̸=β̸=γ
+                                                                                    The hopping parameter for vison pairs due to the Zeeman
+                                                                                    interaction at first order is given by:
+The  hopping  parameter  for  vison  pairs  due  to  Gamma
+interactions [16] is:                                                                   T h =ih   ⟨0 R,β  |0 R,α  ⟩ − ⟨0  R,β  |ic ARcBR+r      γ−r   z |0 R,α  ⟩
+                                                                                                                                                           (B13)
+                                                                                    Note  that  in  this  calculation  we  have  neglected  the
+  T Γ = Γ ⟨0 R+a        1,y|ic AR+a        1cBR |0 R,z  ⟩ − ⟨0  R+a        1,y|0 R,z  ⟩change to the matter sector Hamiltonian due to the Hal-
+                                                                      (B11)         dane mass term which is induced at third order in the
+                                                                                    magnetic  field  strength  [1].    Inclusion  of  these  effects
+                                                                                    is  open  for  further  work.   Using  the  general  formulae
+Using the general formulae Eq. (B1) and Eq. (B2):                                   Eq. (B1) and Eq. (B2):
+
+                                                                                                                ⟨0 R,β  |0 R,α  ⟩= 0.7184
+                       ⟨0 R+a        1,y|0 R,z  ⟩= 0.8220                                   ⟨0 R,β  |ic ARcBR+r      γ−r   z |0 R,α  ⟩=−0.6689 sign(K)
+        ⟨0 R+a        1,y|ic AR+a        1cBR |0 R,z  ⟩=−0.6411 sign(K)
+
+
+
+
+ [1]A.  Kitaev,  Anyons  in  an  exactly  solved  model  and  be-                         with strong spin-orbit coupling,Physical Review B91,
+     yond,Annals of Physics321, 2 (2006).                                                 144420 (2015).
+ [2]L. Savary and L. Balents, Quantum spin liquids:  a re-                          [10]J. Chaloupka, G. Jackeli, and G. Khaliullin, Zigzag Mag-
+     view,Reports on Progress in Physics80, 016502 (2017).                                netic Order in the Iridium Oxide Na 2 IrO 3,Physical
+ [3]J.  Knolle  and  R.  Moessner,  A  field  guide  to  spin  liq-                       Review Letters110, 097204 (2013).
+     uids,Annual Review of Condensed Matter Physics10,                              [11]M. Gohlke, R. Verresen, R. Moessner, and F. Pollmann,
+     451 (2019).                                                                          Dynamics of the Kitaev-Heisenberg Model,Physical Re-
+ [4]G.  Jackeli  and  G.  Khaliullin,  Mott  Insulators  in  the                          view Letters119, 157203 (2017).
+     Strong Spin-Orbit Coupling Limit: From Heisenberg to a                         [12]J.  Knolle,   S.  Bhattacharjee,  and  R.  Moessner,  Dy-
+     Quantum Compass and Kitaev Models,Physical Review                                    namics  of  a  quantum  spin  liquid  beyond  integrability:
+     Letters102, 017205 (2009).                                                           The Kitaev-Heisenberg-Γ model in an augmented parton
+ [5]S. Trebst and C. Hickey, Kitaev materials,Physics Re-                                 mean-field theory,Physical Review B97, 134432 (2018).
+     ports950, 1 (2022).                                                            [13]J.  Wang,  B.  Normand,  and  Z.-X.  Liu,  One  Proximate
+ [6]A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,                            Kitaev Spin Liquid in the K−J−Γ Model on the Hon-
+     M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu,                                  eycomb  Lattice,Physical  Review  Letters123,  197201
+     J. Knolle, S. Bhattacharjee, D. L. Kovrizhin, R. Moess-                              (2019).
+     ner,  D. A. Tennant,  D. G. Mandrus, and S. E. Nagler,                         [14]M.  Gohlke,  J.  C.  Pelayo,  and  T.  Suzuki,  Proximate
+     Proximate  Kitaev  quantum  spin  liquid  behaviour  in  a                           tomonaga-luttinger   liquid   in   an   anisotropic   kitaev-
+     honeycomb magnet,Nature Materials15, 733 (2016).                                     gamma model,Phys. Rev. B109, L220410 (2024).
+ [7]Y. Wang, G. B. Osterhoudt, Y. Tian, P. Lampen-Kelley,                           [15]J.  Chaloupka,  G.  Jackeli,  and  G.  Khaliullin,  Kitaev-
+     A. Banerjee, T. Goldstein, J. Yan, J. Knolle, H. Ji, R. J.                           Heisenberg Model on a Honeycomb Lattice: Possible Ex-
+     Cava,  J. Nasu,  Y. Motome,  S. E. Nagler,  D. Mandrus,                              otic Phases in Iridium Oxides A2IrO3,Physical Review
+     and  K.  S.  Burch,  The  range  of  non-Kitaev  terms  and                          Letters105, 027204 (2010).
+     fractional particles inα-RuCl3,npj Quantum Materials                           [16]S.-S.   Zhang,   G.   B.   Hal´asz,   W.   Zhu,   and   C.   D.
+     5, 1 (2020).                                                                         Batista,  Variational  study  of  the  Kitaev-Heisenberg-
+ [8]R. D. Johnson, S. C. Williams, A. A. Haghighirad, J. Sin-                             Gamma model,Physical Review B104, 014411 (2021).
+     gleton,  V.  Zapf,  P.  Manuel,  I.  I.  Mazin,  Y.  Li,  H.  O.               [17]S.-S. Zhang, G. B. Halasz, and C. D. Batista, Theory of
+     Jeschke,  R.  Valenti,  and  R.  Coldea,  Monoclinic  crystal                        the kitaev model in a [111] magnetic field,Nature Com-
+     structure ofα-RuCl 3 and the zigzag antiferromagnetic                                munications13, 399 (2022).
+     ground state,Physical Review B92, 235119 (2015).                               [18]C. Chen and I. S. Villadiego, Nature of visons in the per-
+ [9]J. A. Sears,  M. Songvilay,  K. W. Plumb,  J. P. Clancy,                              turbed ferromagnetic and antiferromagnetic Kitaev hon-
+     Y. Qiu, Y. Zhao, D. Parshall, and Y. Kim, Magnetic or-                               eycomb models,Physical Review B107, 045114 (2023).
+     der inα-RuCl 3 :  A honeycomb-lattice quantum magnet
+                                                                                                                                                              10
+
+[19]A. P. Joy and A. Rosch, Dynamics of Visons and Thermal                         [23]J.-P. Blaizot and G. Ripka,Quantum theory of finite sys-
+     Hall Effect in Perturbed Kitaev Models,Physical Review                              tems(MIT Press, Cambridge, 1986).
+     X12, 041004 (2022).                                                           [24]A. Panigrahi, P. Coleman, and A. Tsvelik, Analytic cal-
+[20]A. P. Joy and A. Rosch, Gauge field dynamics in multi-                               culation of the vison gap in the Kitaev spin liquid,Phys-
+     layer Kitaev spin liquids,npj Quantum Materials9, 62                                ical Review B108, 045151 (2023).
+     (2024).                                                                       [25]F. Zschocke and M. Vojta, Physical states and finite-size
+[21]K.  B.  Yogendra,  T.  Das,  and  G.  Baskaran,  Emergent                            effects in Kitaev’s honeycomb model: Bond disorder, spin
+     glassiness in the disorder-free kitaev model:  Density ma-                          excitations, and NMR line shape,Physical Review B92,
+     trix  renormalization  group  study  on  a  one-dimensional                         014403 (2015).
+     ladder setting,Phys. Rev. B108, 165118 (2023).
+[22]E. H. Lieb, Flux Phase of the Half-Filled Band,Physical
+     Review Letters73, 2158 (1994).

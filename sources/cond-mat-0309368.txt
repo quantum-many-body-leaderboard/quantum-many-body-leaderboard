@@ -1,0 +1,930 @@
+                                                                                                                                        Typeset with jpsj2.cls <ver.1.1.1>
+
+
+                                                                                  The Stochastic State Selection Method
+arXiv:cond-mat/0309368v2 [cond-mat.stat-mech] 2 Mar 2004
+
+
+
+
+                                                                          for Energy Eigenvalues in the Shastry-Sutherland Model
+
+                                                                                          Tomo Munehisa and Yasuko Munehisa
+                                                                                     Faculty of Engineering, Univ. of Yamanashi, Kofu 400-8511
+                                                                                                    (Received October 24, 2018)
+
+
+                                                                     We apply a recently developed stochastic method to the Shastry-Sutherland model on
+                                                                     4×4 and 8×8 lattices. This method, which we call the Stochastic State Selection Method
+                                                                     here, enables us to evaluate expectation values of powers of the Hamiltonian with very
+                                                                     limited number of states. In this paper we first apply it to the 4 × 4 Shastry-Sutherland
+                                                                     system, where one can easily obtain the exact ground state, in order to demonstrate that
+                                                                     the method works well for this frustrated system. We numerically show that errors of
+                                                                     the evaluations depend much on representations of the states and that the restructured
+                                                                     representation is better than the normal one for this model. Then we study the 8 × 8
+                                                                     system to estimate energy eigenvalues of the lowest S = 1 state as well as of the lowest
+                                                                     excited S = 0 state, where S denotes the total spin of the system. The results, which
+                                                                     are in good accordance with our previous data obtained by the Operator Variational
+                                                                     method, support that an intermediate spin-gap phase exists between the singlet dimer
+                                                                     phase and the magnetically ordered phase. Estimates of the critical coupling and of
+                                                                     the spin gap for the transition from the dimer phase to the intermediate phase are also
+                                                                     presented.
+
+                                                                 KEYWORDS: quantum spin, large size, numerical calculation, Monte Carlo, Shastry-Sutherland
+
+
+
+
+                                                           1.   Introduction
+
+                                                                Considerable effort has been exerted to develop effective methods to calculate various quantities
+                                                           in quantum spin systems.1–3) A new method we have proposed in a previous paper4) is a kind of
+                                                           Monte Carlo approach, where stochastic variables play an important role. It is completely different
+                                                           from the conventional quantum Monte Carlo methods which employ random walks or importance
+                                                           samplings.3) In our method, which we call the Stochastic State Selection (SSS) method hereafter,
+                                                           random variables are used to reduce the number of states in the vector space which is huge for
+                                                           most systems of large sizes. To generate these random variables we introduce a probability function
+                                                           named on-off probability function, which “switches off” a number of states in the vector space so
+                                                           that we can calculate approximate expectation values of powers of the Hamiltonian from a small
+                                                           number of the “on” states. Repeating this process with a new set of random variables we can
+                                                           obtain averaged expectation values which are very close to the exact ones.
+                                                                The fundamental idea in the SSS method is deeply connected with the variational approach
+                                                           to quantum spin systems, where one searches for an effective basis, a set of states which can be
+                                                           treated within the limit of computer facilities. In the variational approach there are two essential
+
+                                                                                                                  1
+2                                Tomo Munehisa and Yasuko Munehisa
+
+steps: increasing the number of states in the wave function under current investigation, and then
+reducing it. In the former step one usually operates the Hamiltonian to the wave function, which
+is a mathematically established procedure. How to formulate the latter step, on the other hand, is
+quite controversial. In early works5) states with small coefficients are dropped, but the resultant
+wave functions are not satisfactory. Sampling the states using the Monte Carlo techniques has
+also been suggested in recent works.6, 7) In the SSS method one can reduce the number of states
+based on a mathematically justified way. It is this remarkable property that makes us to believe
+the method is worth investigating.
+     In the previous paper we described the SSS method and applied it to the two-dimensional spin
+one-half Heisenberg model. In this paper we demonstrate that it can be applied to the system
+suffering from the negative sign problem, too. A concrete example is the Shastry-Sutherland (SS)
+model8–17) on a 4 × 4 lattice, whose results reproduce the exact values in good precision. Next we
+try to obtain physical quantities, the energy eigenvalues with fixed values of total spin S, for the
+8 × 8 lattice changing the coupling ratio across the critical region.
+     In the next section we briefly explain the SSS method. After defining the on-off probability
+function and the random choice matrix, we describe how we calculate expectation values of Ĥ L , Ĥ
+being the Hamiltonian of the system under study. Section 3 is a short description of the SS model,
+where we explain the Hamiltonian and several properties of this model. In section 4 numerical
+results on a 4 × 4 lattice near the critical point are presented for two representations, normal
+and restructured.18) Deviations of the data here indicate that the restructured representation is
+more effective for the coupling ratio we study in this section, which supports the picture that
+the orthogonal dimers dominate here. Based on these discussions we try in section 5 to obtain
+physical quantities on a 8 × 8 lattice, the energy eigenvalues with the total spin S = 0 and S = 1,
+in the intermediate region of the coupling ratio. As noted previously,4) there are two model-
+dependent problems to be solved. One of them is how we generate a good approximate state | ψA i.
+Another is how we extract eigenvalues from the expectation values hψA | Ĥ L | ψA i. In addition
+to the calculations of expectation values for the restructured representation, extensive discussions
+on these subjects are given in this section. We will show that we successfully obtain the results
+on the energy eigenvalues which indicate a phase transition from the singlet dimer phase to an
+intermediate spin-gap phase. Finally, the last section is devoted to summary and discussions.
+
+
+2.   Stochastic State Selection Method
+
+     Here we give a brief description of the SSS method.4) We define the on-off probability function
+by
+                                         1                1
+                               P (η) ≡     δ(η − a) + (1 − )δ(η),                                (1)
+                                         a                a
+          The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model      3
+
+where a is a constant which is greater than or equal to 1. It is clear by definition that
+                                             Z ∞
+                                    hh1ii ≡       P (η)dη = 1,                                            (2)
+                                             Z0 ∞
+                                    hhηii ≡       ηP (η)dη = 1,                                           (3)
+                                             Z0 ∞
+                                  hhη 2 ii ≡      η 2 P (η)dη = a,                                        (4)
+                                                           0
+
+where hhii denotes the statistical average.
+      Let us expand a state | ψi by a basis { | ii}
+                                                          NV
+                                                          X
+                                                 | ψi =         | iici ,                                  (5)
+                                                          i=1
+
+where NV denotes the size of the full vector space, and define the expectation values E(L) (L =
+1, 2, · · · ) as
+
+                                             E(L) ≡ hψ | Ĥ L | ψi .                                      (6)
+
+We then introduce the random choice matrix, an NV × NV diagonal matrix,
+                                                         
+                                     η1    0   ···     0
+                                                         
+                                  0      η2 · · ·     0 
+                          M{η} ≡                          .                                             (7)
+                                                         
+                                  ··· ··· ···        ··· 
+                                                         
+                                     0     0   · · · ηNV
+
+Each random variable ηi in (7) is determined by the on-off probability function
+                                                     1                    1
+                                  Pi (ηi )     =        δ(ηi − ai ) + (1 − )δ(ηi ),                       (8)
+                                                     ai                   ai
+where
+                                         (
+                                               max(1, ǫ/|ci |)      (if ci 6= 0)
+                                  ai ≡                                                                    (9)
+                                               ǫ/δ                  (if ci = 0) ,
+
+with given constants ǫ and δ (0 < δ < ǫ). Using (L + 1) independent random choice matrices
+                      (m)   (m)          (m)
+M{η(m) } = diag.{η1 , η2 , · · · , ηNV }19) we define
+
+                   E{η} (L) ≡ hψ | M{η(L+1) } ĤM{η(L) } ĤM{η(L−1) } · · · ĤM{η(1) } | ψi.             (10)
+
+It is easy to see that hhE{η} (L)ii = E(L). Note that by operating M{η(m) } we can obtain a truncated
+                                                                     (m)
+vector space for ĤM{η(m−1) } · · · ĤM{η(1) } | ψi, since ηi
+                                                      is zero with the probability 1 − 1/ai . Also
+                            (m)                                       (m)          (m)
+note that the variances of ηi are the same for all m because both hhηi ii and hh[ηi ]2 ii do not
+depend on m.
+4                                             Tomo Munehisa and Yasuko Munehisa
+
+     In numerical studies we measure
+                                                               nsmpl
+                                                         1     X
+                         hhE{η} (L)iismpl         ≡                    E{η}k (L),                      (11)
+                                                       nsmpl
+                                                               k=1
+                                   ρ2{η} (L)      ≡    hh[E{η} (L)]2 iismpl − hhE{η} (L)ii2smpl ,      (12)
+
+using nsmpl samples. The error of E{η} (L) is evaluated by
+                                               s
+                                                  ρ2{η} (L)
+                                   Er(L) ≡ 2                .                                          (13)
+                                                   nsmpl
+
+The fact that the number of non-zero components much reduces by operating M{η(m) } to
+ĤM{η(m−1) } · · · ĤM{η(1) } | ψi is essential to numerical calculations. Let us denote by hhNb (m)iismpl
+and hhNa (m)iismpl the number of non-zero coefficients we count in the measurement bef ore and
+af ter we operate M{η(m) } to ĤM{η(m−1) } · · · ĤM{η(1) } | ψi, respectively.
+
+
+3.   Shastry-Sutherland Model
+
+     As is discussed in several papers,9–17) one of recent fascinating topics in two-dimensional quan-
+tum spin systems is the Shastry-Sutherland (SS) model,8) the model of orthogonal dimers with the
+intra-dimer coupling J (> 0) and the inter-dimer coupling J ′ (> 0).
+     In this model a spin is located at the sites
+                                      d         d                         d         d
+                              (2nx a + , 2ny a + ),               (2nx a − , 2ny a − ),
+                                      2         2                         2         2
+                            d              d                       d                  d
+               ((2nx + 1)a + , (2ny + 1)a − ), ((2nx + 1)a − , (2ny + 1)a + ),
+                            2              2                       2                  2
+on the 2N × 2N lattice in Fig. 1, where nx = 0, 1, · · · , N − 1 and ny = 0, 1, · · · , N − 1, 2a is the
+                                 √
+unit distance between dimers and 2d is the distance of spins in a dimer. The Hamiltonian is given
+by
+                               N −1
+                           1   X
+              Ĥ     =       J      {ha (nx , ny ) + hb (nx , ny )}
+                           4 n ,n =0
+                                   x    y
+
+                                       N −1
+                           1 ′         X
+                     +      J       {h1 (nx , ny ) + h2 (nx , ny ) + h3 (nx , ny ) + h4 (nx , ny )},
+                           4 n ,n =0
+                                   x     y
+
+
+where the partial Hamiltonians are, as given in ref.17,
+                                                       d         d             d         d
+                   ha (nx , ny )        ≡     σ(2nx a + , 2ny a + ) · σ(2nx a − , 2ny a − ),
+                                                       2         2             2         2
+and so on with σ(x, y) denoting the Pauli matrix at the location (x, y).
+     This model provides a nontrivial system which relates an exactly solvable spin-gap model
+obtained in the J ′ → 0 limit to a square lattice model where intra-dimer interaction vanishes
+          The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model      5
+
+(J = 0). It is known that the exact ground state of the SS model is the direct product of the
+singlet dimers when J ′ ≤ Jc′ ∼ 0.68J,12) while for sufficiently large J ′ /J the system is in the
+magnetic order phase with the Néel ground state. It is almost doubtless that another phase exists
+between these two phases, but the location and the properties of this phase are not definite yet.11–17)
+This phase is suggested to be gapless or nearly so in refs.13 and 15, while authers in refs.11, 12,
+14, 16 and 17 conclude it is gapped. Numerical data for the spin-gap is presented only in refs.12
+and 17.
+     In study of these phases a fundamental quantity to be examined is the difference between the
+energy of the singlet-dimer state E0 and the lowest energy E as a function of the coupling J ′ /J,
+when the momentum p=(0, 0), the total spin S = j (j = 0, 1) and the I+ parity is even or odd,
+                                                                    †
+where the I+ parity is the parity for the x-y reflection I+ σ(x, y)I+ = σ(y, x).
+
+
+4.   Numerical results on a 4×4 lattice
+
+     In this section we show the numerical results obtained on a small lattice in order to demonstrate
+that we can apply the SSS method to the SS model with J ′ ∼ Jc′ , where the negative sign problem
+is serious, without any difficulty.
+     It is quite easy to calculate the exact ground state | ψE i of the model on the 4×4 lattice using
+the Lanczos techniques. We therefore do not need to pursue any trial state here. We just measure
+
+                EE{η} (L) ≡ hψE | M{η(L+1) } ĤM{η(L) } ĤM{η(L−1) } · · · ĤM{η(1) } | ψE i             (14)
+
+(L = 1, 2, · · · ) and compare them with EE (L) = E L , where E denotes the eigenvalue of Ĥ, namely
+Ĥ | ψE i =| ψE iE.
+     In this section we fix the coupling ratio J ′ /J = 0.7, a value slightly above the critical point,
+for which E/J = −6.3502. Here we calculate hhEE{η} (L)iismpl using two representations. One
+of them is the normal one, where the state on each site of the lattice is represented by the z
+component of the spin sitting on the site. In another representation we named restructured, two
+spins connected with the coupling J are rearranged in three triplets and one singlet states.18)
+The total number of non-zero coefficients in expansion of | ψE i is 12,870 (8,565) in the normal
+(restructured) representation.
+     Table I shows our results up to L = 10 obtained from 104 samples with ǫ = 0.1, together with
+the exact values. Note that δ in (9) is not necessary for | ψE i. We see that the results using the
+restructured representation are in good agreement with the exact ones. Especially for small values
+of L the agreement is excellent. The relative errors are in the range from 0.11% (L = 1) to 2.8%
+(L = 10). The results from the normal representation are also compatible with the exact values.
+We, however, observe that the statistical errors are much larger than those in the restructured
+representation except for very low L. The relative error is 0.12% for L = 1 but it rapidly increases
+6                                  Tomo Munehisa and Yasuko Munehisa
+
+as L grows to reach 113% (L = 9), where the evaluated value is not meaningful. For larger values of
+ǫ such tendency is more outstanding. With ǫ = 0.2 and nsmpl = 104 , for example, we cannot obtain
+reliable values of hhEE{η} (L)iismpl (L ≥ 6) in the normal representation, while the results from the
+restructured representation are satisfying up to L = 10. When the number of samples is increased
+we are in principle to obtain satisfactory evaluations even in the normal representation. In fact,
+we observe that for 105 samples with ǫ = 0.1 the statistical errors become smaller than those for
+104 samples except for L = 10. hhEE{η} (9)iismpl /J 9 and hhEE{η} (10)iismpl /J 10 for 105 samples are
+−(0.189 ± 0.066) × 108 and −(0.120 ± 0.088) × 109 , respectively.
+     Table II presents the numbers of non-zero coefficients measured in the same calculations with
+104 samples, which is to show how the number of non-zero coefficients decreases by each operation
+of the random choice matrix. In both representations we see that hhNaE (L)iismpl , which denotes the
+number of the “on” states after the operation, is less than a tenth part of hhNbE (L)iismpl , the number
+of non-zero coefficient before the operation. In addition, the data suggest that both hhNaE (L)iismpl
+and hhNbE (L)iismpl become constants for large L in each representation and these constants very
+weakly depend upon the representation.
+     Results in Table I strongly indicate that the restructuring is quite effective here. What is the
+reason for such qualitatively different behaviors in these two representations then? To answer this
+question we plot in Fig. 2 the distributions of sorted coefficients in the expansion of | ψE i in both
+representations. The abscissa is the basis number i′ which is reordered so that |ci′ | ≥ |cj ′ | holds
+for i′ < j ′ . We observe the distributions are different in the region of the small coefficients, where
+the normal representation has a longer tail. The minimum value of the non-zero coefficients in the
+normal representation is 7.6 × 10−6 while it is 1.5 × 10−4 in the restructured representation. We
+will return to this issue in an Appendix.
+
+
+5.   Numerical results on a 8×8 lattice
+
+     Let us proceed to a larger lattice with 8×8 sites and show that the SSS method is helpful to
+evaluate the energy of the first excited states. We study the system with the total spin S = 0 and
+1 in the parameter region 0.55 ≤ J ′ /J ≤ 0.8. Here we use
+
+                     E{η} (L) = hψ | ĤM{η(L) } ĤM{η(L−1) } · · · ĤM{η(1) } | ψi                 (15)
+
+instead of (10) in order to decrease the statistical errors. Throughout this section we employ
+the restructured dimer representation, which is a very powerful technique for the model under
+investigation. The results we present here are compared to those in ref.17, where we have been
+successful to obtain approximate values on the energy difference for this system by means of the
+operator variational (OV) method.
+     For this lattice size it is necessary to find an approximate state | ψA i without knowing the
+        The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model            7
+
+exact eigenstate | ψE i. Here we employ a systematic way using the Lanczos-like method in small
+vector spaces; we start with a trial state | ψtrl i, calculate the matrix elements of Ĥ from the basis
+{ | ψtrl i, Ĥ | ψtrl i, Ĥ 2 | ψtrl i, · · · , Ĥ p | ψtrl i} with a small integer p, numerically diagonalize the
+matrix to obtain its all energy eigenvalues and define | ψA i as the eigenstate which provides the
+lowest eigenvalue among them. In the following calculations we fix p = 6.
+    As for the trial state | ψtrl i we employ one of the states described in the appendix D in ref.17
+whose energy eigenvalue is found to be the lowest of all states we tried in the numerical study by
+means of the OV method. Namely we start from | ψtrl i = | Ψnn,0,(0,0),b′ i for S = 0 and | ψtrl i =
+| Ψnn,1,(0,0),d′ i for S = 1, which are among the two-nearest-neighboring-triplet states with the odd
+and the even I+ parity, respectively. It should be noted that in our previous study17) the energy
+eigenvalue for the even I+ is much higher than that for the odd I+ when S = 0 while for S = 1 the
+lowest energy is independent of the I+ parity.
+    Now we present the results. Table III and IV show values of hhEA{η} (L)iismpl observed for
+the S = 0 and S = 1 cases, where the suffix A represents that | ψi in (10) is an approximate state
+| ψA i. In both tables we see very small errors, which support that the restructuring technique is
+quite effective. How many non-zero coefficients appear here? When S = 0 the number of non-
+zero coefficients in | ψA i is 1,264,256, while hhNbA (5)iismpl , the number of non-zero coefficients in
+ĤM{η(4) } ĤM{η(3) } ĤM{η(2) } ĤM{η(1) } | ψA i in measurements, ranges from (9.78 ± 0.03) × 105 at
+J ′ /J = 0.55 to (1.912 ± 0.004) × 106 at J ′ /J = 0.75. In the S = 1 case | ψA i contains 690,624
+components and we observe hhNbA (5)iismpl is (2.84±0.02)×105 ((1.534±0.004)×106 ) at J ′ /J = 0.55
+(0.8). By operating M{η(5) } we can reduce it to less than a tenth. In concrete terms, hhNaA (5)iismpl
+for S = 0 ranges from (8.35 ± 0.02) × 104 at J ′ /J = 0.55 to (1.657 ± 0.003) × 105 at J ′ /J = 0.75
+and for S = 1 it is (2.27 ± 0.01) × 104 ((1.271 ± 0.003) × 105 ) at J ′ /J = 0.55 (0.8). Thus we see that
+we can evaluate expectation values of Ĥ L not only for small J ′ /J but also in the critical region of
+the parameter space.
+    How do we extract energy eigenvalues from these data? We try two ways, one is to use the
+extrapolation formula and another is to do the Lanczos-like calculation with the basis { | ψA i,
+Ĥ | ψA i, Ĥ 2 | ψA i}, noting that the Hamiltonian matrix elements from this basis are given by
+hψA | Ĥ L | ψA i up to L = 5.
+    The extrapolation formula is the one discussed in the previous paper,4)
+                                                      q1
+                   hψA | Ĥ L | ψA i = E L (q0 +          ) ≡ F (L, E, q0 , q1 , α) .                        (16)
+                                                    L+α+1
+In process of determining four parameters in this formula, E, q0 , q1 and α, we use two relations
+                                                         q1
+                       F (0, E, q0 , q1 , α)   =   q0 +       = hψA | ψA i = 1 ,
+                                                       α + 1     
+                                                              q1
+                       F (1, E, q0 , q1 , α)   =   E · q0 +         = hψA | Ĥ | ψA i ,
+                                                             α+2
+8                                   Tomo Munehisa and Yasuko Munehisa
+
+so that q1 and α are calculated from E and q0 . Note that the value of hψA | Ĥ | ψA i is known in
+the process of generating | ψA i. Then we look for the values of E and q0 which minimize
+                                        5 
+                                                  hhEA{η} (L)iismpl 2
+                                        X                              
+                               Sfit ≡         1−                         ,                                 (17)
+                                                 F (L, E, q0 , q1 , α)
+                                        L=1
+
+within the ranges hψA | Ĥ | ψA i − 0.5 ≤ E ≤ hψA | Ĥ | ψA i and 0.5 ≤ q0 ≤ 1.0. Results of the
+fitting for J ′ /J > 0.5 are shown in Tables V (S = 0) and VI (S = 1). The statistical errors of the
+measured values,
+                                          5                       2
+                                          X          Er(L)
+                                 S2Er ≡                               ,                                    (18)
+                                                 hhEA{η} (L)iismpl
+                                          L=1
+
+are also presented in the tables. The fact that Sfit is smaller than S2Er means the fitting is
+statistically acceptable. We see that values of q0 obtained from the fit are close to 1. Since q0
+represents the overlapping between the trial state and the exact state, hψA | ψE i, this implies that
+our way to generate the state | ψA i supplies good approximations of the exact eigenstate | ψE i for
+this model. The energy difference from the fit normalized by the intra-dimer coupling, (Efit −E0 )/J,
+is plotted in Fig. 3 (S = 0) and Fig. 4 (S = 1) together with those obtained by the OV method.
+Here E0 denotes the energy of the ground state in the singlet dimer phase, which is −24.0J for the
+8 × 8 system. We see that the data from the OV method with Lmax = 4 and the data from the SSS
+method are in good agreement when J ′ /J = 0.55. For larger coupling ratios the data from the SSS
+method are below the data from the OV method. Especially near the critical point this tendency is
+outstanding, suggesting that the SSS method is more suitable to study the phase transition in the
+SS model. The data by the SSS method also support that an intermediate spin-gap phase exists,
+because at J ′ /J ≃ 0.71 Efit − E0 becomes zero for S = 0 while Efit − E0 ∼ 0.18J for S = 1 there.
+    Let us turn to another way we try to extract energy eigenvalues. Based on the observation that
+| ψA i is a good approximate of | ψE i, we apply the Lanczos-like method to evaluate the eigenvalue
+E (n) (n= 1, 2, 3) from the matrix H (n) whose matrix elements are calculated from bases {| ψA i},
+{| ψA i , Ĥ | ψA i} and {| ψA i , Ĥ | ψA i , Ĥ 2 | ψA i}, respectively. Substituting hhEA{η} (L)iismpl in
+Tables III and IV for EA (L) = hψA | Ĥ L | ψA i in
+
+       α1   ≡    hψA | Ĥ | ψA i ,
+                 q
+       β1   ≡       hψA | Ĥ 2 | ψA i − α21 ,
+                  1              3               3
+                                                    
+       α2   ≡           hψA  | Ĥ   |  ψ A i −   α1   − 2α1 ,
+                 β12
+                 s
+                     1                                                                        
+                                      4 | ψ i − 2α hψ | Ĥ 3 | ψ i + α2 hψ | Ĥ 2 | ψ i − α2 − β 2 ,
+       β2   ≡             hψ A  | Ĥ        A         1 A             A      1 A            A       2  1
+                    β12
+                   1                 5                          4           2         3
+                                                                                               
+       α3   ≡              hψ A | Ĥ    | ψ  A i −  2α hψ
+                                                      1 A  |  Ĥ   | ψA i + α  hψ
+                                                                             1 A  | Ĥ   | ψA i  − 2α2
+                 β12 β22
+        The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model    9
+
+                 β12               α32
+            −        (α1 + 2α2 ) −     ,
+                 β22               β22
+
+we diagonalize
+                                                                                      
+                                                     !                 α1    β1    0
+                                           α1   β1
+              H (1) ≡ (α1 ) ,   H (2) ≡                      H (3) ≡ 
+                                                                                    
+                                                         ,            β1    α2      .
+                                                                                  β2 
+                                           β1   α2
+                                                                        0    β2   α3
+
+The results are also in Tables V (S = 0) and VI (S = 1). As we see in tables we obtain better
+estimates by E (2) than by E (1) . Note that values of E (2) are in good accordance with Efit in
+Tables III and IV, which indicates that the fits are reliable. We could not, on the other hand,
+obtain trustworthy values of E (3) from the present data. It is mainly because of the insufficient
+statistical precision, which we can cope with by increasing the number of samples, or by decreasing
+the parameter ǫ. It seems that the latter is much more effective than the former. In the S = 0 and
+J ′ /J = 0.7 case, for instance, we observe that we cannot obtain any E (3) from 9 × 104 samples with
+ǫ = 0.001 while E (3) calculated from 104 samples with ǫ = 0.0005 is −23.928J, which is slightly
+lower than the value of E (2) in Table V.
+
+
+6.   Summary and Discussions
+
+     In this paper we calculated the expectation values of Ĥ L (L = 1, 2, · · · ) of the two-dimensional
+SS model8) using the SSS method.4) Comparing our results on a 4 × 4 lattice with exact values
+we demonstrated that the method is applicable even to this strongly frustrated quantum spin
+system. We also showed that deviations of the evaluated values are much less in the restructured
+representation than in the normal representation. In the normal representation of the SS model
+we observed rapid increase of the statistical errors for large values of L, which is in contrast with
+our previous study of the 4 × 4 spin one-half Heisenberg model.4) A qualitative discussion on the
+reason why such increase occurs is given in the appendix.
+     In study of the 8×8 SS system we concentrated our attention on an intermediate phase reported
+in refs.11-17. We examined energy eigenvalues of the lowest excited states with the total spin S = 0
+and S = 1 for several values of the coupling ratio. It should be emphasized that the method is
+powerful even in the critical region of the model, where the negative sign problem prevents us
+from obtaining statistically meaningful results by means of the standard quantum Monte Carlo
+techniques.20) In order to numerically extract the energy eigenvalues from the observed hĤ L i we
+tried two ways, a fitting within some parameter space and a Lanczos-like diagonalization. We see
+results from these two ways are consistent to give us reliable estimate of energy eigenvalues. It
+should be kept in mind that employing highly qualified trial states in the SSS method is a key for
+the success. Thus we see that the critical value of J ′ /J is less than 0.71 for the phase transition
+10                                               Tomo Munehisa and Yasuko Munehisa
+
+from the singlet dimer phase to the intermediate phase, which is compatible with the value in
+ref.12. Note that this upper bound is obtained with a non-perturbative method. The spin gap at
+the critical point, ∼ 0.18J, is about one-half of the one reported in ref.12, however. More intensive
+investigations should be made in future work before we establish physical properties of this phase.
+
+
+Appendix:      Large Variances
+
+     In this appendix we discuss the reason why very large variances are observed in the normal
+representation of the SS model. As we have seen in Fig. 2 much more terms with very small coeffi-
+cients appear in the expansion of the wave function | ψA i in the normal representation compared to
+the restructured representation. So we analyze the expression for the variance paying our attention
+to contributions from those terms.
+                     2 (L), the variance of hhE
+     Let us examine σ{η}                       {η} (L)ii introduced in ref. 4,
+
+         2
+        σ{η} (L)       ≡       hhE{η} (L)2 ii − hhE{η} (L)ii 2
+                               XX          XX
+                       =               ···         ci hij · · · hkl cl · ci′ hi′ j ′ · · · hk′ l′ cl′
+                               i,i′ j,j ′       k,k ′ l,l′
+                                       (1) (1)         (2) (2)           (L) (L)        (L+1) (L+1)
+                               × hhηi ηi′ iihhηj ηj ′ ii · · · hhηk ηk′ iihhηl             ηl′         ii − E(L)2
+                               XX         XX
+                       =              ···        ci hij · · · hkl cl · ci′ hi′ j ′ · · · hk′ l′ cl′ · {1 + δii′ (hhηi2 ii − 1)}
+                               i,i′ j,j ′  k,k ′ l,l′
+
+                               × {1 + δjj ′ (hhηj2 ii − 1)} · · · {1 + δkk′ (hhηk2 ii − 1)}{1 + δll′ (hhηl2 ii − 1)}
+                       −       E(L)2 .                                                                                            (A.1)
+
+For L ≥ 2 this variance contains one or more terms that might blow up with small non-zero
+coefficients, because the statistical average hhη 2 ii = ǫ/|cs |, which follows from (4) and (9), becomes
+huge if a non-zero coefficient cs in (8) is much less than ǫ . The most dangerous term among them
+is
+                                X
+           T   ≡                            c2i c2n (hij )2 (hjk )2 · · · (hlm )2 (hmn )2
+                       i,j,k,··· ,l,m,n
+
+               ×                                                                          2
+                       (hhηi2 ii − 1)(hhηj2 ii − 1)(hhηk2 ii − 1) · · · (hhηl2 ii − 1)(hhηm ii − 1)(hhηn2 ii − 1).
+
+For L = 1 this term is harmless since in this case
+                                 X                           X
+                   T       =           c2i (hhηi2 ii − 1)        c2j (hhηj2 ii − 1)(hij )2
+                                   i                         j
+                                                                X                              
+                                  X
+                                         2                 ǫ                 2               ǫ
+                           =            ci max 1,                −1         cj max 1,              − 1 (hij )2
+                                                         |ci |                             |cj |
+                                 ci 6=0                              cj 6=0
+                                     X                         X
+                           =               (ǫ|ci | − c2i )        (ǫ|cj | − c2j )(hij )2 .
+                                 0<|ci |<ǫ                   0<|cj |<ǫ
+       The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model                      11
+
+Actually we observe on a 4 × 4 lattice that the measured variances of hhE{η} (1)ii, which are defined
+by (12), are comparable in both representations. They are 0.153J 2 and 0.135J 2 when ǫ = 0.1 and
+nsmpl = 104 for the normal representation and the restructured representation, respectively.
+    Let us then consider the case L = 2, where
+                         X                           X                          X
+               T    =           c2i (hhηi2 ii − 1)         c2k (hhηk2 ii − 1)        (hij )2 (hjk )2 (hhηj2 ii − 1)
+                            i                          k                        j
+                            X                              X                        X
+                    =             (ǫ|ci | − c2i )          (ǫ|ck | − c2k )              (hij )2 (hjk )2 (hhηj2 ii − 1)
+                         0<|ci |<ǫ                0<|ck |<ǫ                j
+                            X                              X                          X                          ǫ
+                    ∼                (ǫ|ci | − c2i )             (ǫ|ck | − c2k )             (hij )2 (hjk )2         .
+                                                                                                               |cj |
+                         0<|ci |<ǫ                     0<|ck |<ǫ                    0<|cj |≪ǫ
+
+If the Hamiltonian matrix is positive-definite (hjk ≥ 0) and all coefficients of the eigen state are
+non-negative (ck ≥ 0),
+                                                               X
+                                          0 ≤ hjk ck ≤               hjl cl = Ecj
+                                                                 l
+
+holds for any k. In this case it follows that
+                                 X                         X                    X                               ǫ
+                   T    ∼               (ǫci − c2i )             (ǫ − ck )             (hij )2 hjk · hjk ck ·
+                                                                                                                cj
+                                0<ci <ǫ                0<ck <ǫ               0<cj ≪ǫ
+                                 X                         X                    X                              ǫ
+                        ≤               (ǫci − c2i )             (ǫ − ck )             (hij )2 hjk · Ecj ·
+                                0<ci <ǫ                0<ck <ǫ               0<cj ≪ǫ
+                                                                                                               cj
+                                      X                        X                     X
+                        =       ǫE             (ǫci − c2i )           (ǫ − ck )            (hij )2 hjk ,
+                                     0<ci <ǫ                  0<ck <ǫ             0<cj ≪ǫ
+
+which gives a safe upper bound of T . This means that the positive-definite systems are free from
+unacceptably large variances caused by the smallness of the coefficients. For the frustrated systems
+with the negative sign problem, on the contrary, there is no guarantee that they can escape from
+this difficulty. It is very likely, therefore, that the frustration and a lot of small coefficients would be
+responsible together to such behavior of the statistical errors in the measurement. Clearly similar
+discussions are possible for L ≥ 3.
+
+
+
+ 1) E. Dagotto: Rev. Mod. Phys. 66 (1994) 763.
+    E. Dagotto and A. Moreo: Phys. Rev. D31 (1985) 865.
+    E. S. Heeb and T. M. Rice: Z. Phys. B90 (1993) 73.
+    E. R. Gagliano, E. Dagotto, A. Moreo and F. Alcaraz: Phys. Rev. B34 (1986) 1677.
+    H. Nishimori and H. Nakanishi: J. Phys. Soc. Jpn. 57 (1988) 626.
+ 2) N. Hatano and M. Suzuki: Quantum Monte Carlo Methods in Condensed Matter Physics, ed. M. Suzuki (World
+    Scientific, Singapore, 1993) p.13.
+ 3) H. De Raedt and W. von der Linden: The Monte Carlo Method in Condensed Matter Physics, ed. K.Binder
+    (Springer, Berlin, 1995) p.249.
+ 4) T. Munehisa and Y. Munehisa: J. Phys. Soc. Jpn.72 (2003) 2759.
+ 5) H. De Raedt and W. von der Linden: Phys. Rev. B45 (1992) 8787.
+    J. Riera and E. Dagotto: Phys. Rev. B48 (1993) 9515.
+12                                     Tomo Munehisa and Yasuko Munehisa
+
+    M. Honma, T. Mizusaki and T. Otsuka: Phys. Rev. Lett. 75 (1995) 1284.
+    N. A. Modine and E. Kaxiras: Phys. Rev. B53 (1996) 2546.
+    E. Dagotto, G. B. Martins, J. Riera, A. L. Malvezzi and C. Gazza: Phys. Rev. B58 (1998) 12063.
+ 6) M. Imada and T. Kashima: J. Phys. Soc. Jpn. 69 (2000) 2723.
+    T. Kashima and M. Imada: J. Phys. Soc. Jpn. 70 (2001) 2287.
+ 7) S. Sorella: Phys. Rev. B64 (2001) 24512.
+ 8) B. S. Shastry and B. Sutherland: Physica B108 (1981) 1069.
+ 9) S. Miyahara and K. Ueda: Phys. Rev. Lett. 82 (1999) 3701.
+    W. Zheng, C. J. Hamer and J. Oitmaa: Phys. Rev. B60 (1999) 6608.
+    E. Müller-Hartmann, R. R. P. Singh, C. Knetter and G. S. Uhrig: Phys. Rev. Lett. 84 (2000) 1808.
+    T. Momoi and K. Totsuka: Phys. Rev. B61 (2000) 3231; Phys. Rev. B62 (2000) 15067.
+    K. Totsuka, S. Miyahara and K. Ueda: Phys. Rev. Lett. 86 (2001) 520.
+10) Y. Fukumoto: J. Phys. Soc. Jpn. 69 (2000) 2755.
+11) M. Albrecht and F. Mila: Europhys. Lett. 34 (1996) 145.
+12) A. Koga and N. Kawakami: Phys. Rev. Lett. 84 (2000) 4461.
+13) C. Knetter, A. Bühler, E. Müller-Hartman and G. S. Uhrig: Phys. Rev. Lett. 85 (2000) 3958.
+14) C. H. Chung, J. B. Marston and S. Sachdev: Phys. Rev. B64 (2001) 134407.
+15) W. Zheng, J. Oitmaa and C. J. Hamer: Phys. Rev. B65 (2002) 14408.
+16) A. Läuchli, S. Wessel and M. Sigrist: Phys. Rev. B66 (2002) 14401.
+17) T. Munehisa and Y. Munehisa: J. Phys. Soc. Jpn. 72 (2003) 160.
+18) T. Munehisa and Y. Munehisa: Phys. Rev. B49 (1994) 3347; Prog. Theor. Phys. 92 (1994) 309; Prog. Theor.
+    Phys. 93 (1995) 251; Prog. Theor. Phys. 96 (1996) 59.
+                        (m)
+19) For each i, all of ηi   (m = 1, 2, · · · , L + 1) are generated by the on-off probability function (8) with the same
+    ai in (9), which is related to the expansion of the initial state (5).
+20) For example, we observe that the r-ratio of the 8 × 8 SS system with βJ = 4 in the Suzuki-Trotter method,
+    where β denotes the inverse temperature, is r ∼ 0.7 at J ′ /J = 0.5 while it drops to r ∼ 0.15 at J ′ /J = 0.635
+    even in the restructured representation. Here the r-ratio is defined by r ≡ (N+ − N− )/(N+ + N− ), N+ (N− )
+    being the number of configurations with positive (negative) weight, respectively.
+        The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model                 13
+
+
+
+
+                                                  Normal                              Restructured
+        L        EE (L)/J L                                   hhEE{η} (L)iismpl /J L
+
+
+         1   −0.63502      ×101      −(0.63484 ± 0.00078)          ×101     −(0.63486 ± 0.00073)          ×101
+
+
+         2     0.40325     ×102        (0.40336 ± 0.00071)         ×102       (0.40298 ± 0.00063)         ×102
+
+
+         3   −0.25607      ×103      −(0.25580 ± 0.00096)          ×103     −(0.25601 ± 0.00052)          ×103
+
+
+         4     0.16261     ×104           (0.1619 ± 0.0023)        ×104       (0.16277 ± 0.00052)         ×104
+
+
+         5   −0.10326      ×105         −(0.1056 ± 0.0052)         ×105     −(0.10307 ± 0.00053)          ×105
+
+
+         6     0.65576     ×105              (0.692± 0.043)        ×105          (0.6568 ± 0.0042)        ×105
+
+
+         7   −0.41642      ×106           −(0.425 ± 0.053)         ×106        −(0.4148 ± 0.0035)         ×106
+
+
+         8     0.26443     ×107              (0.277 ± 0.081)       ×107          (0.2655 ± 0.0034)        ×107
+
+
+         9   −0.16792      ×108              −(0.06 ± 0.19)        ×108        −(0.1701 ± 0.0025)         ×108
+
+
+       10      0.10663     ×109              (0.107 ± 0.048)       ×109          (0.1048 ± 0.0030)        ×109
+
+
+
+Table I. Results on hhEE{η} (L)iismpl (L = 1, 2, · · · , 10) obtained for the 4 × 4 Shastry-Sutherland (SS) model by the
+  Statistic State Selection (SSS) method. The number of samples is 104 and ǫ = 0.1 for both of the normal and the
+  restructured representations. Exact values of EE (L) are also presented for comparison.
+14                                   Tomo Munehisa and Yasuko Munehisa
+
+
+
+
+                                   Normal                             Restructured
+                 L     hhNbE (L)iismpl    hhNaE (L)iismpl    hhNbE (L)iismpl   hhNaE (L)iismpl
+
+
+                  1        12870              577.7              8565               641.0
+
+
+                  2       7250.2              486.5             7464.7              532.8
+
+
+                  3       6353.7              468.0             6494.0              502.8
+
+
+                  4       6159.0              463.3             6189.0              492.8
+
+
+                  5       6110.6              462.4             6079.7              488.9
+
+
+                  6       6101.0              462.2             6037.5              487.5
+
+
+                  7       6097.7              462.3             6020.0              487.0
+
+
+                  8       6099.1              461.9             6015.6              486.6
+
+
+                  9       6097.0              462.0             6010.9              486.5
+
+
+                10        6097.7              462.0             6009.5              486.3
+
+
+
+Table II. Numbers of non-zero coefficients bef ore and af ter operating the random choice matrix M{η(L) } to the
+  state ĤM{η(L−1) } · · · ĤM{η(1) } | ψE i for the 4 × 4 SS model obtained from 104 samples with ǫ = 0.1.
+        The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model              15
+
+
+
+
+              L                                  hhEA{η} (L)iismpl /J L
+                                J ′ /J = 0.55                              J ′ /J = 0.60
+
+               1   −(0.23268865 ± 0.00000027)        ×102     −(0.23467222 ± 0.00000030)        ×102
+
+               2       (0.5414619 ± 0.0000011)       ×103         (0.5507468 ± 0.0000012)       ×103
+
+               3   −(0.12600061 ± 0.00000047)        ×105     −(0.12925980 ± 0.00000050)        ×105
+
+               4       (0.2932180 ± 0.0000036)       ×106         (0.3033880 ± 0.0000032)       ×106
+
+               5        −(0.682344 ± 0.000021)       ×107          −(0.712097 ± 0.000032)       ×107
+
+                                J ′ /J = 0.65                              J ′ /J = 0.70
+
+               1   −(0.23680656 ± 0.00000033)        ×102     −(0.23908546 ± 0.00000036)        ×102
+
+               2       (0.5608338 ± 0.0000014)       ×103         (0.5717199 ± 0.0000015)       ×103
+
+               3   −(0.13283432 ± 0.00000055)        ×105     −(0.13673295 ± 0.00000061)        ×105
+
+               4       (0.3146405 ± 0.0000031)       ×106         (0.3270462 ± 0.0000032)       ×106
+
+               5        −(0.745321 ± 0.000023)       ×107          −(0.782349 ± 0.000030)       ×107
+
+                                J ′ /J = 0.75
+
+               1   −(0.24149807 ± 0.00000039)        ×102
+
+               2       (0.5833748 ± 0.0000016)       ×103
+
+               3   −(0.14095261 ± 0.00000067)        ×105
+
+               4       (0.3406212 ± 0.0000035)       ×106
+
+               5        −(0.823245 ± 0.000028)       ×107
+
+
+Table III. S = 0 results on hhEA{η} (L)iismpl (L = 1, 2, · · · , 5) obtained for the 8 × 8 SS model by the SSS method
+  with nsmpl = 104 , ǫ = 0.001 and δ = 0.00001.
+16                                    Tomo Munehisa and Yasuko Munehisa
+
+
+
+
+              L                                  hhEA{η} (L)iismpl /J L
+                                J ′ /J = 0.55                              J ′ /J = 0.60
+
+               1   −(0.23403813 ± 0.00000013)        ×102    −(0.23504307 ± 0.00000016)        ×102
+
+               2     (0.54774476 ± 0.00000056)       ×103      (0.55246007 ± 0.00000065)       ×103
+
+               3   −(0.12819601 ± 0.00000026)        ×105    −(0.12985518 ± 0.00000029)        ×105
+
+               4       (0.3000356 ± 0.0000021)       ×106         (0.3052268 ± 0.0000022)      ×106
+
+               5        −(0.702218 ± 0.000023)       ×107         −(0.717444 ± 0.000027)       ×107
+
+                                J ′ /J = 0.65                              J ′ /J = 0.70
+
+               1   −(0.23622014 ± 0.00000019)        ×102    −(0.23762394 ± 0.00000024)        ×102
+
+               2     (0.55801950 ± 0.00000081)       ×103         (0.5647149 ± 0.0000010)      ×103
+
+               3   −(0.13182375 ± 0.00000034)        ×105    −(0.13421698 ± 0.00000042)        ×105
+
+               4       (0.3114219 ± 0.0000023)       ×106         (0.3190188 ± 0.0000023)      ×106
+
+               5        −(0.735702 ± 0.000014)       ×107         −(0.758308 ± 0.000017)       ×107
+
+                                J ′ /J = 0.75                              J ′ /J = 0.80
+
+               1   −(0.23936605 ± 0.00000029)        ×102    −(0.24150001 ± 0.00000036)        ×102
+
+               2       (0.5731340 ± 0.0000012)       ×103         (0.5835473 ± 0.0000015)      ×103
+
+               3   −(0.13726176 ± 0.00000049)        ×105    −(0.14106434 ± 0.00000057)        ×105
+
+               4       (0.3287936 ± 0.0000028)       ×106         (0.3411166 ± 0.0000030)      ×106
+
+               5        −(0.787688 ± 0.000021)       ×107         −(0.825086 ± 0.000022)       ×107
+
+
+Table IV. S = 1 results on hhEA{η} (L)iismpl (L = 1, 2, · · · , 5) obtained for the 8 × 8 SS model by the SSS method
+  with nsmpl = 104 , ǫ = 0.001 and δ = 0.00001.
+ The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model         17
+
+
+
+
+J ′ /J         S2Er             Sfit        q0 fit    Efit /J     E (1) /J    E (2) /J     E (3) /J
+
+
+ 0.55    1.1    ×10−9     3.7   ×10−10      0.995     −23.276    −23.269      −23.272     −23.273
+
+
+ 0.60    2.1    ×10−9     8.4   ×10−11      0.994     −23.478    −23.467      −23.473     −23.476
+
+
+ 0.65    1.1    ×10−9     8.5   ×10−11      0.988     −23.700    −23.681      −23.691     −58.851
+
+
+ 0.70    1.6    ×10−9     1.7   ×10−10      0.979     −23.942    −23.909      −23.927         −
+
+
+ 0.75    1.3    ×10−9     3.6   ×10−10      0.975     −24.196    −24.150      −24.178     −24.183
+
+
+
+    Table V. Results from the fit and from the Lanczos-like evaluation for S=0 data in Table III.
+
+
+
+
+J ′ /J         S2Er             Sfit         q0 fit    Efit /J    E (1) /J     E (2) /J    E (3) /J
+
+
+0.55     1.1    ×10−9     4.9    ×10−11     0.986     −23.410     −23.404     −23.408         −
+
+
+0.60     1.4    ×10−9     5.4    ×10−12     0.994     −23.509     −23.504     −23.506      −23.507
+
+
+0.65     4.2    ×10−10    2.7    ×10−10     0.995     −23.629     −23.622     −23.626      −23.626
+
+
+0.70     5.6    ×10−10    4.9    ×10−11     0.991     −23.780     −23.762     −23.776         −
+
+
+0.75     8.2    ×10−10    2.2    ×10−10     0.978     −23.982     −23.937     −23.967      −23.969
+
+
+0.80     8.1    ×10−10    3.8    ×10−10     0.971     −24.223     −24.150     −24.205      −24.209
+
+
+
+   Table VI. Results from the fit and from the Lanczos-like evaluation for S=1 data in Table IV.
+18                                                     Tomo Munehisa and Yasuko Munehisa
+
+
+
+
+                               ny
+
+
+                           3
+
+
+                           2
+
+
+                           1
+
+
+                           0
+
+
+                                                                                                    nx
+                                                        0          1            2            3
+
+Fig. 1. A schematic view of the Shastry-Sutherland (SS) model on a 8×8 lattice. Solid lines represent the inter-dimer
+  coupling (J ′ ) and other lines do the intra-dimer coupling (J).
+
+
+
+
+                                               0
+                                           10
+
+
+
+
+                                           −1
+                                          10
+                               | c_i’ |
+
+
+
+
+                                           −2
+                                          10
+
+
+
+
+                                           −3
+                                          10                Rest. Rep.
+                                                            Normal Rep.
+
+
+
+
+                                                   1          10           100        1000       10000
+                                                                          Basis No.
+
+
+Fig. 2. Distributions of coefficients for the 4 × 4 SS model in the normal representation (the dashed line) and in the
+  restructured representation (the solid line). The ordinate is the absolute values of each coefficient ci′ while the
+  abscissa denotes the basis number i′ reordered so that |ci′ | ≥ |cj ′ | holds for i′ < j ′ .
+        The Stochastic State Selection Method for Energy Eigenvalues in the Shastry-Sutherland Model            19
+
+
+
+
+                                            1
+
+
+                            (E − E0)/J
+
+                                          0.5
+
+
+
+
+                                            0
+                                                     OV, Lmax=3
+                                                     OV, Lmax=4
+                                                     SSS + fit
+
+                                         −0.5
+                                             0.4   0.5       0.6          0.7   0.8   0.9
+                                                                   J’/J
+
+
+Fig. 3. Results for S = 0 energy difference for the 8 × 8 SS model obtained by the Stochastic State Selection (SSS)
+  method with the fit and the Operator Variational (OV) method.17) Here E0 = −24.0J is the ground state energy
+  in the singlet dimer phase.
+
+
+
+
+                                            1
+                            (E − E0)/J
+
+
+
+
+                                          0.5
+
+
+
+
+                                            0
+                                                     OV, Lmax=3
+                                                     OV, Lmax=4
+                                                     SSS + fit
+
+                                         −0.5
+                                             0.4   0.5       0.6          0.7   0.8   0.9
+                                                                   J’/J
+
+
+Fig. 4. Results for S = 1 energy difference for the 8 × 8 SS model obtained by the SSS method with the fit and the
+  OV method.17) The dotted line is the spin gap estimated by the perturbation theory up to the fifth order.10)
+

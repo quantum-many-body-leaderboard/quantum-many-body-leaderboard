@@ -1,0 +1,593 @@
+       Robustness of Vacancy-Bound Non-Abelian Anyons in the Kitaev Model in a
+                                                              Magnetic Field
+
+                                    Bo  Xiao,1, 2,∗   Gonzalo  Alvarez,2, 3  and  G´abor  B.  Hal´asz1, 2
+       1Materials Science and Technology Division, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+                                    2Quantum  Science  Center,  Oak  Ridge,  Tennessee  37831,  USA
+                                            3Computational  Science  and  Engineering  Division,
+                                 Oak  Ridge  National  Laboratory,  Oak  Ridge,  Tennessee  37831,  USA
+                                                            (Dated:  October 8, 2025)
+                   Non-Abelian anyons in quantum spin liquids (QSLs) provide a promising route to fault-tolerant
+                topological quantum computation.  In the exactly solvable Kitaev honeycomb model, such anyons of
+                the QSL state can be bound to nonmagnetic spin vacancies and endowed with non-Abelian statistics
+                by an infinitesimal magnetic field. Here, we investigate how this approach for stabilizing non-Abelian
+                anyons extends to a finite magnetic field represented by a proper Zeeman term.  Through large-scale
+                density-matrix renormalization group (DMRG) simulations, we compute the vacancy-anyon binding
+                energy as a function of magnetic field for both the ferromagnetic (FM) and antiferromagnetic (AFM)
+                Kitaev models.  We find that anyon binding remains robust within the entire QSL phase for the FM
+                Kitaev model but breaks down already inside this phase for the AFM Kitaev model.  To compute a
+                binding energy several orders of magnitude below the magnetic energy scale, we introduce both a
+                refined definition and an extrapolation scheme based on carefully tailored perturbations.
+
+
+  Introduction.—Quantum spin liquids (QSLs) are mag-                          Kondo coupling.  In an external magnetic field, eachZ   2
+netic insulators characterized by long-range quantum en-                      gauge flux then becomes a non-Abelian anyon, readily lo-
+tanglement [1–5].  They support fractionalized quasipar-                      calized at the given spin vacancy.  However, the stability
+ticle excitations that interact via emergent gauge fields                     of the resulting vacancy-anyon bound state has only been
+and  possess  nontrivial  “anyonic”  particle  statistics  be-                studied [59,60,65] in an exactly solvable extension of the
+yond conventional bosons and fermions.  For gapped non-                       Kitaev model where the magnetic field is represented by
+Abelian QSLs, these anyonic quasiparticles—called non-                        an effective three-spin interaction [8].  Although this ex-
+Abelian  anyons—enable  topological  quantum  computa-                        actly solvable model captures the universal properties of
+tion [6,7]—an inherently fault-tolerant approach for stor-                    the non-Abelian QSL phase, it fails to account for some
+ing and processing quantum information.                                       key nonuniversal features, e.g., the small size of the topo-
+  The  celebrated  Kitaev  model  on  the  honeycomb  lat-                    logical gap [69,70], which may significantly impact the
+tice  [8]  provides  an  exactly  solvable  realization  of  such             vacancy-anyon bound state.
+a  non-Abelian  QSL.  Indeed,  while  the  ground  state  of                     In this Letter, we numerically investigate the robust-
+the  pure  Kitaev  model  is  a  gaplessZ              2  QSL  featuring      ness  of  anyon  binding  at  spin  vacancies  in  the  Kitaev
+gapless Majorana fermions coupled to gappedZ     2  gauge                     model under an external magnetic field represented by a
+fields,  an  external  magnetic  field  immediately  gaps  out                proper Zeeman term rather than the effective three-spin
+the Majorana fermions while turning theZ      2 gauge fluxes                  interaction.  By employing the numerically exact density-
+into non-Abelian Ising anyons [8].  Moreover, the bond-                       matrix renormalization group (DMRG) method [71–74],
+dependent  spin  interactions  of  the  Kitaev  model  natu-                  combined with an extrapolation scheme based on tailored
+rally emerge [9,10] in a class of spin-orbit-coupled hon-                     perturbations,  we  calculate  the  vacancy-anyon  binding
+eycomb  magnets  commonly  known  as  “Kitaev  materi-                        energy as a function of the magnetic field inside the non-
+als”  [11–15].   Therefore,  these  honeycomb  magnets,  in-                  Abelian QSL phase of the Kitaev model.  We observe a
+cludingα-RuCl                 3 [16–44], are promising candidates for re-     pronounced  difference  between  the  ferromagnetic  (FM)
+alizing the non-Abelian QSL phase of the Kitaev model—                        and  antiferromagnetic  (AFM)  Kitaev  models,  with  ro-
+along with its anyonic quasiparticles—in the presence of                      bust anyon binding throughout the non-Abelian phase in
+an applied magnetic field.                                                    the former case and a clear finite-field breakdown of the
+  Recent years have seen numerous practical proposals                         vacancy-anyon bound state in the latter case.  For both
+for detecting, stabilizing, and controlling anyonic quasi-                    signs of the Kitaev exchange, however, we find that anyon
+particles in this non-Abelian QSL phase [45–61], culmi-                       binding  becomes  weaker  upon  including  a  proper  mag-
+nating in concrete designs for prototype QSL-based topo-                      netic field, which is in stark contrast to the corresponding
+logical qubits [62].  Several of these proposals [56,58–61]                   behavior for the effective three-spin interaction [59].  Cal-
+rely  on  the  specific  property  of  the  pure  Kitaev  model               culations across various system dimensions and boundary
+thatZ        2 gauge fluxes are bound to both nonmagnetic spin                conditions suggest that our results extend all the way to
+vacancies [63–65] and Kondo impurities [66–68] that are                       the thermodynamic limit (TDL).
+equivalent to such spin vacancies in the limit of strong                         Model and methods.—We consider the Kitaev honey-
+                                                                                                                                                             2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  Honeycomb lattice in a narrow cylindrical geometry with (a) zigzag, (b) twisted, and (c) armchair boundary conditions,
+as well as a single spin vacancy in the center.  The lengthL           X, the widthL          Y , and the partial lengthsL           left  andL       right  of the
+cylinder are indicated, with (a)L     Y  = 3 and (b,c)L        Y  = 4.  This figure showsL     left =L    right = 3 andL       X =L    left +L    right + 1 = 7
+for compactness, but the calculations correspond toL    left =L    right = 7 andL       X = 15 in order to reduce edge effects.  Each loop
+operatorW       P,W O, andW       X  introduced in the text is a simple product of appropriate spin operators (x, y, z) specified along
+the given green, purple, or red path.  Anisotropic Kitaev spin interactionsS                  αSα alongα=x, y, zbonds are also shown.
+
+
+comb model in an external magnetic field along the [111]                          infinitesimal field (h >0), eachZ        2 gauge flux becomes a
+direction.  The Hamiltonian of this model reads [8]                               non-Abelian Ising anyon and remains bound to its parent
+                                                                                  spin vacancy.  We aim to understand the stability of such
+        H=−J      X        Sαi Sαj −h  X      (S  xi  +S    yi  +S    zi ),    (1)a  vacancy-flux  bound  state  at  finite  fields  by  studying
+                    ⟨i,j⟩     α           i                                       the energetics of flux binding at a single vacancy in the
+                                                                                  center of our cylinder (see Fig.1).
+whereS           αi   withα=x, y, zare conventional spin-1/2 op-                     We start by providing an appropriate definition of the
+erators at each lattice sitei, and⟨i, j⟩                  α  areαbonds of         vacancy-flux binding energy in our narrow cylindrical ge-
+the  lattice  (see  Fig.1)  connecting  pairs  of  sitesiand                      ometry.  At zero field (h= 0), theZ           2  gauge fluxes cor-
+j.  The first term represents the anisotropic Kitaev spin                         respond to conserved loop operatorsWthat are simple
+interactions, and the second term describes the Zeeman                            products of spin operators along closed loops of the lat-
+coupling of the spins to the magnetic field of magnitude                          tice (see Fig.1) and take eigenvalues             W=±1 [8].  These
+h.  At finite fields, the behavior of the model depends on                        loop  operators  include  the  regular  plaquette  operators
+the sign of the Kitaev exchangeJ[69,75,76].  For the                              WP, the vacancy-plaquette operatorW         O, and the topo-
+FM  Kitaev  model  (J=  +1),  the  non-Abelian  QSL  di-                          logical loop operatorsW             X, labeled by their coordinateX
+rectly transitions into a trivial polarized phase at a very                       along the cylinder length.  Assuming no flux excitations
+small field.  For the AFM Kitaev model (J=−1), how-                               on  regular  plaquettes  (i.e.,       WP  =  +1),  there  are  only
+ever, the non-Abelian QSL persists up to a much larger                            two independent loop eigenvalues,              W left ≡    W X<XO  and
+field and is separated from the polarized phase by an in-                         W right ≡    W X>XO, that correspond to topological loops
+termediate QSL phase.  Note that we set|J|= 1 as the                              on the left and right sides of the vacancy atX=X         O,
+energy unit throughout this work.                                                 respectively, with the vacancy-plaquette eigenvalue given
+   DMRG simulations are performed on narrow cylinders                             by their product:       WO =      W leftW right.  The four topolog-
+of widthL    Y  and lengthL      X ≫L    Y , using open (periodic)                ical flux sectors labeled by         W left =±1 and        W right =±1
+boundary conditions along theX(Y) direction. To quan-                             each have a lowest-energy state (“ground state”), and the
+tify  finite-size  effects  originating  from  the  small  width,                 four individual ground-state energies can be written as
+we  implement  distinct  versions  of  the  periodic  bound-                           E                                      W left +E    rightW right
+ary conditions for which loops winding around the short                                  W left,W right =E    const +E    left
+direction  connect  back  to  themselves  through  different                                               +E   OW leftW right.                         (2)
+twists along the long direction (see Fig.1).  These bound-
+ary conditions interpolate between zigzag and armchair                            The coefficientsE    const,E left,E right, andE      O  can be ob-
+edges at the two ends of the cylinder and give access to                          tained  by  computing  the  ground-state  energy  for  each
+different  sets  of  parallel  lines  in  momentum  space  [76],                  topological sector and solving the resulting four equations
+thus giving rise to comparable but different finite-size ef-                      for the four coefficients.  The scalings of these coefficients
+fects.  Our DMRG simulations use a maximum bond di-                               with the system dimensions (see End Matter) reveal that
+mensionχ                max = 4500 and a truncation error ofO(10      −10  )      Eleft andE       right are emphasized in our narrow cylindrical
+to ensure numerical accuracy [77].                                                geometry  as—in  contrast  to  the  TDL—the  topological
+   Spin vacancies and flux binding.—In the pure Kitaev                            loop operatorsW             X  are actually local (see Fig.1).
+model at zero field (h= 0),  isolated spin vacancies are                             WhileE            left andE       right depend linearly onL     X and decay
+known to bindZ         2 gauge fluxes of the QSL [63,64]. For an                  to zero withL        Y  (see End Matter),E             O has a much weaker
+                                                                                                                                                           3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  (a-d) Expectation value of the topological loop operator,⟨W              X⟩, against the coordinate 1≤X≤15 along the cylinder
+length for the perturbed Hamiltonians (a)H      λ(+1,+1), (b)H              λ(+1,−1), (c)H                λ(−1,+1), and (d)H              λ(−1,−1) in Eq. (5) with
+perturbation  strengthλ=  0.06,  FM  Kitaev  exchangeJ=  1,  as  well  as  magnetic  fieldsh=  0.002  (colorful  solid  symbols)
+andh= 0.012 (gray empty symbols) on a narrow cylinder withL                    X  = 15,L     Y  = 3,L    left =L    right = 7, and twisted boundary
+conditions.  The light blue shading marks the non-existent topological loop operator going through the vacancy at coordinate
+X=X     O = 8.  (e) Extraction of the unperturbed energy coefficientE O in Eq. (3) through a linear extrapolation of the perturbed
+energy coefficientE  λO  in Eq. (7) from 0.06≤λ≤0.1 toλ= 0 for a variety of magnetic fields 0≤h≤0.014.  The gray cross
+marks an obvious outlier value that is excluded from the extrapolation.
+
+
+dependence on the cylinder dimensions and directly cor-                          perturbatively in the fieldhand remain conserved quan-
+responds to half the energy difference between                WO = +1            tities even ath >0 [2].  Given that the four combinations
+(no vacancy-flux binding) and             WO  =−1 (vacancy-flux                  of the associated eigenvalues           W left ≡    W′X<XO(h) =±1
+binding) even in the TDL. Hence, the most natural way                            and   W right ≡    W′
+to infer the binding energy in the TDL is to obtain this                         four  disconnected  topological  sectors  with  well-definedX>XO(h) =±1 [78] still correspond to
+coefficient—explicitly given by                                                  ground-state  energiesE
+                                                                                                                   W left,W right,  we  can  then  con-
+               h                                                 i               tinue to define the vacancy-flux binding energy through
+    EO = 14     E+1,+1     +E   −1,−1      −E    +1,−1      −E   −1,+1 (3)       Eqs. (4) and (3).
+                                                                                    To  extract  the  four  individual  ground-state  energies
+in terms ofE     W left,W right  [see Eq. (2)]—for each finite ge-               EW left,W right, we employ an extrapolation scheme where
+ometry and then extrapolate to the TDL:                                          each of the ground states is turned into the overall ground
+                Ebinding =−2   limLY →∞   lim                                    state by applying an appropriate perturbation that ap-
+                                            LX→∞ EO.              (4)            proximately commutes with the Hamiltonian and ener-
+                                                                                 getically favors the given ground state.  For a sufficiently
+Here it is implicitly assumed that the vacancy is near the                       small fieldh >0 inside the non-Abelian QSL phase, the
+center of the cylinder so that the partial lengthsL              left and        most natural perturbations are the topological loop op-
+Lright (see Fig.1) both diverge forL               X → ∞.                        eratorsW             X  ath= 0 whose expectation values are still
+   We stress that our refined definition of the vacancy-flux                     approximately±1 forh >0.  The appropriate perturbed
+binding energy in Eqs. (4) and (3) is critical for making a                      Hamiltonian  for  extracting  the  ground  state  of  a  given
+connection from our narrow cylindrical geometry to the                           topological sector (W left,       W right) is then
+TDL. More naive definitions (see End Matter) would not
+extractE           O  on its own but together withE         left  orE    right   Hλ(W left,    W right) =H−λH          X(W left,   W right)−λ   X      WP,
+that  are  artifacts  of  the  cylindrical  geometry  and  may                                                                                     P
+overshadowE   O.  We further note that, using our refined                                                                                                (5)
+definition, we findE        binding  =−0.006762±0.000009 for                     where the first termHis the unperturbed Hamiltonian
+the binding energy in the TDL (see End Matter)—which                             in Eq. (1), the second term with
+is consistent with Ref.63but has an order of magnitude                                                                 X                         X
+better accuracy.                                                                 HX(W left,W right) =        W left          WX +W right                WX
+   Finite-field  binding  energy.—At  finite  fields  (h  >0),                                                       X<XO                      X>XO
+the  original  versions  of  the  topological  loop  operators,                                                                                          (6)
+WX, no longer commute with the HamiltonianH.  Nev-                               makes the specific topological sector energetically favor-
+ertheless, inside the non-Abelian QSL phase, the under-                          able, while the third term suppresses spurious flux excita-
+lying topological order implies modified versions of these                       tions on regular plaquettesPinduced by the small cylin-
+topological loop operators,W            ′X(h), that can be obtained              der width.  Above a finite critical perturbation strength
+                                                                                                                                                           4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.  Vacancy-flux binding energy,E binding =−2E       O, as a function of the external magnetic fieldhfor the (a) FM and (b)
+AFM Kitaev model on a widthL          Y  = 3 cylinder with zigzag (teal triangles) and twisted (blue circles) boundary conditions as
+well as a widthL          Y  = 4 cylinder with armchair (purple diamonds) and twisted (red squares) boundary conditions.  The orange
+triangle, circle, diamond, and square represent the corresponding exact values ath= 0, while the orange star shows the exact
+value ath= 0 in the TDL. For the FM Kitaev model, the dash-dotted line marks the approximate critical field,h                 FMC   ≈0.014,
+for the transition out of the non-Abelian QSL phase [76].  For the AFM Kitaev model, the analogous critical field,h                AFMC    ≈0.22,
+lies outside the simulated field range.  The cylinder dimensions areL      X = 15 andL       left =L    right = 7 throughout this figure.
+
+
+λ,  the  overall  ground  state  of  each  perturbed  Hamilto-                   values of Fig.2(e) that appear due to incomplete DMRG
+nianH        λ(W left,W right) is in the desired topological sec-                convergence  can  be  readily  identified  and  excluded,  as
+tor, (W left,  W right), and the perturbed ground-state en-                      described in the Supplemental Material (SM) [79].  The
+ergy of this topological sector,E            λW left,W right, can thus be        complete set of results forE     λO at representative values of
+directly calculated by DMRG as the overall ground-state                          the perturbation strength, including the outliers, are also
+energy.  SinceE  λ                                         λ, even               provided in the SM.
+                     W left,W right  varies smoothly with                           Results  and  discussion.—Figure3shows  our  results
+below  the  critical  value  where  it  may  no  longer  be  the                 for  the  vacancy-flux  binding  energy, E binding  =−2E       O,
+overall ground-state energy, one can then extrapolate to                         against the magnetic fieldhfor both FM and AFM Ki-
+λ=  0  from  a  finite  range  above  the  critical  value  in                   taev  models  with  a  single  vacancy  in  the  center  of  the
+order  to  obtain  the  corresponding  ground-state  energy                      cylinder.  For each sign of the Kitaev exchange, the four
+EW left,W right  for the unperturbed model.                                      curves correspond to different cylinder widthsL            Y  and/or
+   Figure2illustrates this extrapolation scheme through                          boundary conditions.  At zero field, the binding energy is
+a concrete example.  As depicted in Figs.2(a-d), the ex-                         identical for the two signs, and can be readily obtained
+pectation values of the topological loop operatorsW             X in             through the exact solution of the Kitaev model [8].  This
+the overall ground state, as obtained by DMRG, already                           benchmark is quantitatively reproduced by our DMRG
+have  the  desired  sign  structure  in  each  topological  sec-                 results for both signs across all finite geometries, demon-
+tor for perturbation strengthλ= 0.06.  Hence,  we can                            strating the accuracy and reliability of the method.
+extract  the  coefficientE O  in  Eq.  (3)  by  directly  com-                      As  shown  in  Fig.3,  the  binding  energy  at  zero  field
+puting  the  perturbed  ground-state  energyE             λW left,W right        is  consistently  negative  across  all  cylinder  widths  and
+of  each  topological  sector  (W left,W right)  as  the  over-                  boundary conditions, confirming that flux binding to the
+all  ground-state  energy  of  the  perturbed  Hamiltonian                       vacancy is energetically favorable.  Despite the significant
+Hλ(W left,    W right) for a range of perturbation strengths,                    scattering among the binding energies found for the var-
+0.06≤λ≤0.1, and then extrapolating                                               ious geometries, all values have the same order of magni-
+               h                                                 i               tude and are between−0.009 and−0.003.  Reassuringly,
+    EλO = 14    Eλ+1,+1     +E    λ−1,−1      −E    λ+1,−1      −E    λ−1,+1(7)  the binding energy in the TDL,E           binding ≈ −0.00676 [63],
+                                                                                 is near the center of this range, indicating that a rough
+toλ= 0 in order to findE           O ≡E    λ=0O   .  Figure2(e) shows            “average” of our four finite-size binding energies is a good
+that a simple linear extrapolation works well in the entire                      representation of the TDL value. Therefore, any common
+range 0.06≤λ≤0.1 and can thus be reliably used to                                trend observed in the binding energy for all four finite ge-
+determineE               O. The suitability of the linear extrapolation          ometries is expected to apply even in the TDL.
+stems from the fact that the topological loop operators                             At finite fields, the behavior of the binding energy ex-
+WX  ath= 0 have approximately constant expectation                               hibits striking differences between the FM and AFM Ki-
+values±1 (i.e., approximately commute with the Hamil-                            taev models.  For the FM Kitaev model, the binding en-
+tonian) even for the largest fields in the non-Abelian QSL                       ergy decreases in magnitude but remains clearly negative
+phase [see Figs.2(a-d)].  Occasional “outliers” in theE                 λO       all the way to the phase transition out of the non-Abelian
+                                                                                                                                                           5
+
+QSL ath    FMC   ≈0.014 [76], indicating that the flux remains                         451 (2019).
+robustly bound to the vacancy in the presence of a finite                         [5]C.   Broholm,   R.   J.   Cava,   S.   A.   Kivelson,   D.   G.
+field.  For the AFM Kitaev model, in contrast, the bind-                               Nocera,    M.   R.   Norman,   and   T.   Senthil,   Quan-
+ing  energy  drops  more  rapidly  and  already  approaches                            tum   spin   liquids,Science367,   eaay0668   (2020),
+zero ath≈0.14, i.e., significantly before the phase transi-                            https://www.science.org/doi/pdf/10.1126/science.aay0668.
+tion out of the non-Abelian QSL ath    AFM                                        [6]A.   Kitaev,   Fault-tolerant   quantum   computation   by
+                                                 C    ≈0.22 [76].  In                  anyons,Annals of Physics303, 2 (2003).
+other words, flux binding is energetically favorable in the                       [7]C.  Nayak,  S.  H.  Simon,  A.  Stern,  M.  Freedman,  and
+weak-field regime but is destabilized as the field strength-                           S. Das Sarma, Non-abelian anyons and topological quan-
+ens.  Since the same trends for the two signs of the Kitaev                            tum computation,Rev. Mod. Phys.80, 1083 (2008).
+exchange are observed for all four finite geometries,  we                         [8]A.  Kitaev,  Anyons  in  an  exactly  solved  model  and  be-
+expect that the marked distinction between the FM and                                  yond, Annals of Physics321, 2 (2006).
+AFM Kitaev models persists even in the TDL.                                       [9]G.  Jackeli  and  G.  Khaliullin,  Mott  insulators  in  the
+                                                                                       strong  spin-orbit  coupling  limit:  From  heisenberg  to  a
+   Summary.—We numerically computed the binding en-                                    quantum  compass  and  kitaev  models,Phys.  Rev.  Lett.
+ergy between a non-Abelian Ising anyon and a nonmag-                                   102, 017205 (2009).
+netic spin vacancy in both the FM and AFM Kitaev mod-                            [10]J. c. v. Chaloupka, G. Jackeli, and G. Khaliullin, Kitaev-
+els under an external magnetic field. We observed a strik-                             heisenberg model on a honeycomb lattice: Possible exotic
+ing difference between the two cases, with robust anyon                                phases  in  iridium  oxidesA          2iro3, Phys.  Rev.  Lett.105,
+binding within the entire non-Abelian QSL phase for the                                027204 (2010).
+FM Kitaev model but only up to a finite field inside this                        [11]S.  Trebst,Kitaev  materials(2017),arXiv:1701.07056
+                                                                                       [cond-mat.str-el].
+phase for the AFM Kitaev model.  Our results highlight                           [12]M. Hermanns,  I. Kimchi, and J. Knolle, Physics of the
+the robustness of vacancy-bound non-Abelian anyons in                                  Kitaev Model:  Fractionalization, Dynamic Correlations,
+realistic models,  thus providing a promising foundation                               and Material Connections,Annu. Rev. Condens. Matter
+for qubit architectures based on QSL materials.                                        Phys. , 17 (2018).
+                                                                                 [13]H. Takagi, T. Takayama, G. Jackeli, G. Khaliullin, and
+   Acknowledgments—We are grateful to Lukas Weber for                                  S. E. Nagler, Concept and realization of Kitaev quantum
+assistance in creating the schematic figure. We also thank                             spin liquids,Nat. Rev. Phys.1, 264 (2019).
+Satoshi Fujimoto, Wen-Han Kao, Natalia Perkins, Miles                            [14]Y. Motome and J. Nasu, Hunting Majorana Fermions in
+Stoudenmire,  and Masahiro Takahashi for valuable dis-                                 Kitaev Magnets,J. Phys. Soc. Jpn.89, 012002 (2019).
+cussions.   This  material  is  based  upon  work  supported                     [15]Y. Matsuda, T. Shibauchi, and H.-Y. Kee,Kitaev quan-
+by the U.S. Department of Energy, Office of Science, Na-                               tum spin liquids(2025),arXiv:2501.05608 [cond-mat.str-
+                                                                                       el].
+tional  Quantum  Information  Science  Research  Centers,                        [16]K.  W.  Plumb,  J.  P.  Clancy,  L.  J.  Sandilands,  V.  V.
+Quantum Science Center.  This research used resources                                  Shankar,  Y.  F.  Hu,  K.  S.  Burch,  H.-Y.  Kee,  and  Y.-J.
+of  the  National  Energy  Research  Scientific  Computing                             Kim,α−RuCl                 3:  A spin-orbit assisted Mott insulator on
+Center (NERSC), a DOE Office of Science User Facility                                  a honeycomb lattice,Phys. Rev. B90, 041112 (2014).
+supported by the Office of Science of the U.S. Department                        [17]Y.   Kubota,   H.   Tanaka,   T.   Ono,   Y.   Narumi,   and
+of Energy under Contract No.  DE-AC02-05CH11231 us-                                    K. Kindo, Successive magnetic phase transitions inα−
+ing NERSC award ASCR-ERCAP0032461.                                                     RuCl3: XY-like frustrated magnet on the honeycomb lat-
+                                                                                       tice,Phys. Rev. B91, 094422 (2015).
+   Data availability—The data that support the findings                          [18]L.  J.  Sandilands,  Y.  Tian,  K.  W.  Plumb,  Y.-J.  Kim,
+of  this  Letter  are  not  publicly  available.   The  data  are                      and K. S. Burch, Scattering continuum and possible frac-
+available from the authors upon reasonable request.                                    tionalized excitations inα−RuCl          3,Phys. Rev. Lett.114,
+                                                                                       147201 (2015).
+                                                                                 [19]J.  A.  Sears,  M.  Songvilay,  K.  W.  Plumb,  J.  P.  Clancy,
+                                                                                       Y. Qiu, Y. Zhao, D. Parshall, and Y.-J. Kim, Magnetic
+                                                                                       order inα−RuCl          3:  A honeycomb-lattice quantum mag-
+                                                                                       net  with  strong  spin-orbit  coupling,Phys.  Rev.  B91,
+   ∗  xiaob@ornl.gov;   This  manuscript  has  been  authored                          144420 (2015).
+     by   UT-Battelle,    LLC,   under   contract   DE-AC-05-                    [20]M.  Majumder,  M.  Schmidt,  H.  Rosner,  A.  A.  Tsirlin,
+     00OR22725 with the US Department of Energy (DOE).                                 H. Yasuoka, and M. Baenitz, Anisotropic Ru3+4d  5 mag-
+     The publisher acknowledges the US government license to                           netism in theα−RuCl             3 honeycomb system:  Susceptibil-
+     provide public access under the DOE Public Access Plan                            ity, specific heat, and zero-field NMR,Phys. Rev. B91,
+     (http://energy.gov/downloads/doe-public-access-plan).                             180401 (2015).
+ [1]L.  Balents,  Spin  liquids  in  frustrated  magnets,Nature                  [21]R. D. Johnson, S. C. Williams, A. A. Haghighirad, J. Sin-
+     464, 199 (2010).                                                                  gleton,  V.  Zapf,  P.  Manuel,  I.  I.  Mazin,  Y.  Li,  H.  O.
+ [2]L.  Savary  and  L.  Balents,  Quantum  spin  liquids:  a  re-                     Jeschke,  R.  Valent´ı,  and  R.  Coldea,  Monoclinic  crystal
+     view, Reports on Progress in Physics80, 016502 (2016).                            structure ofα−RuCl          3 and the zigzag antiferromagnetic
+ [3]Y. Zhou, K. Kanoda, and T.-K. Ng, Quantum spin liquid                              ground state,Phys. Rev. B92, 235119 (2015).
+     states,Rev. Mod. Phys.89, 025003 (2017).                                    [22]L. J. Sandilands,  Y. Tian,  A. A. Reijnders,  H.-S. Kim,
+ [4]J.  Knolle  and  R.  Moessner,  A  field  guide  to  spin  liq-                    K. W. Plumb,  Y.-J. Kim, H.-Y. Kee, and K. S. Burch,
+     uids,Annual  Review  of  Condensed  Matter  Physics10,                            Spin-orbit excitations and electronic structure of the pu-
+                                                                                                                                                                  6
+
+     tative Kitaev magnetα−RuCl                  3,Phys. Rev. B93, 075144                  M.  D.  Lumsden,  D.  Mandrus,  and  S.  E.  Nagler,  Finite
+     (2016).                                                                               field regime for a quantum spin liquid inα-RuCl       3,Phys.
+[23]A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,                             Rev. B100, 060405 (2019).
+     M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu,                             [36]M.  Yamashita,  J.  Gouchi,  Y.  Uwatoko,  N.  Kurita,  and
+     J. Knolle, S. Bhattacharjee, D. L. Kovrizhin, R. Moess-                               H. Tanaka, Sample dependence of half-integer quantized
+     ner, D. A. Tennant, M. D. G., and S. E. Nagler, Proxi-                                thermal  hall  effect  in  the  kitaev  spin-liquid  candidate
+     mate Kitaev quantum spin liquid behaviour in a honey-                                 α−RuCl       3,Phys. Rev. B102, 220404 (2020).
+     comb magnet,Nature materials , 733–740 (2016).                                  [37]P. Czajka, T. Gao, M. Hirschberger, P. Lampen-Kelley,
+[24]I. A. Leahy, C. A. Pocs, P. E. Siegfried, D. Graf, S.-H.                               A. Banerjee, J. Yan, D. G. Mandrus, S. E. Nagler, and
+     Do,  K.-Y.  Choi,  B.  Normand,  and  M.  Lee,  Anomalous                             N.  P.  Ong,  Oscillations  of  the  thermal  conductivity  in
+     thermal  conductivity  and  magnetic  torque  response  in                            the spin-liquid state ofα-RuCl       3,Nature Physics17, 915
+     the honeycomb magnetα-RuCl                  3,Phys. Rev. Lett.118,                    (2021).
+     187203 (2017).                                                                  [38]T. Yokoi, S. Ma, Y. Kasahara, S. Kasahara, T. Shibauchi,
+[25]J. A. Sears, Y. Zhao, Z. Xu, J. W. Lynn, and Y.-J. Kim,                                N. Kurita,  H. Tanaka,  J. Nasu, Y. Motome, C. Hickey,
+     Phase diagram ofα-RuCl       3 in an in-plane magnetic field,                         S.   Trebst,   and   Y.   Matsuda,   Half-integer   quantized
+     Phys. Rev. B95, 180411 (2017).                                                        anomalous thermal hall effect in the kitaev material can-
+[26]A.  Banerjee,  J.  Yan,  J.  Knolle,  C.  A.  Bridges,  M.  B.                         didateα-RuCl                3,Science373, 568 (2021).
+     Stone, M. D. Lumsden, D. G. Mandrus, D. A. Tennant,                             [39]J. A. N. Bruin, R. R. Claus, Y. Matsumoto, N. Kurita,
+     R. Moessner, and S. E. Nagler, Neutron scattering in the                              H.  Tanaka,  and  H.  Takagi,  Robustness  of  the  thermal
+     proximate quantum spin liquidα−RuCl                  3,Science356,                    hall effect close to half-quantization inα-RuCl       3,Nature
+     1055 (2017).                                                                          Physics18, 401 (2022).
+[27]A. U. B. Wolter, L. T. Corredor, L. Janssen, K. Nenkov,                          [40]E. Lefran¸cois,  G. Grissonnanche,  J. Baglo,  P. Lampen-
+     S.   Sch¨onecker,   S.-H.   Do,   K.-Y.   Choi,   R.   Albrecht,                      Kelley,  J.-Q.  Yan,  C.  Balz,  D.  Mandrus,  S.  E.  Nagler,
+     J. Hunger, T. Doert, M. Vojta, and B. B¨uchner, Field-                                S. Kim, Y.-J. Kim, N. Doiron-Leyraud, and L. Taillefer,
+     induced  quantum  criticality  in  the  Kitaev  systemα-                              Evidence of a phonon hall effect in the kitaev spin liquid
+     RuCl3,Phys. Rev. B96, 041405 (2017).                                                  candidateα−rucl                          3,Phys. Rev. X12, 021025 (2022).
+[28]S.-H. Baek, S.-H. Do, K.-Y. Choi, Y. S. Kwon, A. U. B.                           [41]P. Czajka, T. Gao, M. Hirschberger, P. Lampen-Kelley,
+     Wolter, S. Nishimoto, J. van den Brink, and B. B¨uchner,                              A.  Banerjee,  N.  Quirk,  D.  G.  Mandrus,  S.  E.  Nagler,
+     Evidence  for  a  field-induced  quantum  spin  liquid  inα-                          and N. P. Ong, Planar thermal hall effect of topological
+     RuCl3,Phys. Rev. Lett.119, 037201 (2017).                                             bosons in the kitaev magnetα−RuCl                     3,Nature Materials
+[29]S.-H. Do, S.-Y. Park, J. Yoshitake, J. Nasu, Y. Motome,                                22, 36 (2023).
+     Y. S. Kwon, D. T. Adroja, D. J. Voneshen, K. Kim, T.-                           [42]B.  Yang,  Y.  M.  Goh,  S.  H.  Sung,  G.  Ye,  S.  Biswas,
+     H.  Jang,  J.-H.  Park,  K.-Y.  Choi,  and  S.  Ji,  Majorana                         D.  A.  S.  Kaib,  R.  Dhakal,  S.  Yan,  C.  Li,  S.  Jiang,
+     fermions in the Kitaev quantum spin systemα−RuCl                    3,                F.  Chen,  H.  Lei,  R.  He,  R.  Valent´ı,  S.  M.  Winter,
+     Nature Physics13, 1079 (2017).                                                        R. Hovden, and A. W. Tsen, Magnetic anisotropy rever-
+[30]A. Banerjee, P. Lampen-Kelley, J. Knolle, C. Balz, A. A.                               sal driven by structural symmetry-breaking in monolayer
+     Aczel,  B.  Winn,  Y.  Liu,  D.  Pajerowski,  J.  Yan,  C.  A.                        α-rucl3,Nature Materials22, 50 (2023).
+     Bridges, A. T. Savici, B. C. Chakoumakos, M. D. Lums-                           [43]K.  Imamura,   Y.  Mizukami,   O.  Tanaka,   R.  Grasset,
+     den, D. A. Tennant, R. Moessner, D. G. Mandrus, and                                   M.  Konczykowski,  N.  Kurita,  H.  Tanaka,  Y.  Matsuda,
+     S.  E.  Nagler,  Excitations  in  the  field-induced  quantum                         M. G. Yamada, K. Hashimoto, and T. Shibauchi, Defect-
+     spin liquid state ofα−RuCl          3,npj Quantum Materials3,                         induced  low-energy  majorana  excitations  in  the  kitaev
+     8 (2018).                                                                             magnetα−rucl                     3,Phys. Rev. X14, 011045 (2024).
+[31]R.  Hentrich,  A.  U.  B.  Wolter,  X.  Zotos,  W.  Brenig,                      [44]K.  Imamura,  S.  Suetsugu,  Y.  Mizukami,  Y.  Yoshida,
+     D. Nowak, A. Isaeva, T. Doert, A. Banerjee, P. Lampen-                                K.  Hashimoto,  K.  Ohtsuka,  Y.  Kasahara,  N.  Kurita,
+     Kelley, D. G. Mandrus, S. E. Nagler, J. Sears, Y.-J. Kim,                             H.  Tanaka,  P.  Noh,  J.  Nasu,  E.-G.  Moon,  Y.  Mat-
+     B. B¨uchner, and C. Hess, Unusual phonon heat transport                               suda,  and  T.  Shibauchi,  Majorana-fermion  origin  of
+     inα−RuCl          3:   Strong  spin-phonon  scattering  and  field-                   the   planar   thermal   hall   effect   in   the   kitaev   mag-
+     induced spin gap,Phys. Rev. Lett.120, 117204 (2018).                                  netα−RuCl             3, Science  Advances10,  eadk3539  (2024),
+[32]N.  Janˇsa,  A.  Zorko,  M.  Gomilˇsek,  M.  Pregelj,  K.  W.                          https://www.science.org/doi/pdf/10.1126/sciadv.adk3539.
+     Kr¨amer, D. Biner, A. Biffin, C. R¨uegg, and M. Klanjˇsek,                      [45]D. Aasen, R. S. K. Mong, B. M. Hunt, D. Mandrus, and
+     Observation  of  two  types  of  fractional  excitation  in                           J. Alicea, Electrical probes of the non-abelian spin liquid
+     the Kitaev honeycomb magnet,Nature Physics14, 786                                     in kitaev materials,Phys. Rev. X10, 031014 (2020).
+     (2018).                                                                         [46]R.  G.  Pereira  and  R.  Egger,  Electrical  access  to  Ising
+[33]Y.  Kasahara,  T.  Ohnishi,  Y.  Mizukami,  O.  Tanaka,                                anyons  in  Kitaev  spin  liquids,Phys.  Rev.  Lett.125,
+     S. Ma, K. Sugii, N. Kurita, H. Tanaka, J. Nasu, Y. Mo-                                227202 (2020).
+     tome, T. Shibauchi, and Y. Matsuda, Majorana quanti-                            [47]E.  J.  K¨onig,  M.  T.  Randeria,  and  B.  J¨ack,  Tunneling
+     zation and half-integer thermal quantum hall effect in a                              spectroscopy  of  quantum  spin  liquids,Phys.  Rev.  Lett.
+     kitaev spin liquid,Nature559, 227 (2018).                                             125, 267206 (2020).
+[34]S.  Widmann,  V.  Tsurkan,  D.  A.  Prishchenko,  V.  G.                         [48]M. Udagawa, S. Takayoshi, and T. Oka, Scanning tunnel-
+     Mazurenko, A. A. Tsirlin, and A. Loidl, Thermodynamic                                 ing microscopy as a single Majorana detector of Kitaev’s
+     evidence of fractionalized excitations inα-RuCl       3,Phys.                         chiral spin liquid,Phys. Rev. Lett.126, 127201 (2021).
+     Rev. B99, 094415 (2019).                                                        [49]K. Klocke, D. Aasen, R. S. K. Mong, E. A. Demler, and
+[35]C. Balz, P. Lampen-Kelley, A. Banerjee, J. Yan, Z. Lu,                                 J.  Alicea,  Time-domain  anyon  interferometry  in  kitaev
+     X. Hu, S. M. Yadav, Y. Takano, Y. Liu, D. A. Tennant,                                 honeycomb  spin  liquids  and  beyond,Phys.  Rev.  Lett.
+                                                                                                                                                                  7
+
+     126, 177204 (2021).                                                            [69]C. Hickey and S. Trebst, Emergence of a field-driven u(1)
+[50]S.-H.  Jang,  Y.  Kato,  and  Y.  Motome,  Vortex  creation                           spin liquid in the kitaev honeycomb model,Nature Com-
+     and control in the Kitaev spin liquid by local bond mod-                             munications10, 530 (2019).
+     ulations,Phys. Rev. B104, 085142 (2021).                                       [70]S.-S. Zhang, G. B. Hal´asz, and C. D. Batista, Theory of
+[51]Z.  Wei,  V.  F.  Mitrovi´c,  and  D.  E.  Feldman,  Thermal                          the kitaev model in a [111] magnetic field,Nature Com-
+     interferometry of anyons in spin liquids,Phys. Rev. Lett.                            munications13, 399 (2022).
+     127, 167204 (2021).                                                            [71]S.  R.  White,  Density  matrix  formulation  for  quantum
+[52]K.  Klocke,  J.  E.  Moore,  J.  Alicea,  and  G.  B.  Hal´asz,                       renormalization groups,Phys. Rev. Lett.69, 2863 (1992).
+     Thermal  probes  of  phonon-coupled  kitaev  spin  liquids:                    [72]S.  R.  White,  Density-matrix  algorithms  for  quantum
+     From accurate extraction of quantized edge transport to                              renormalization groups,Phys. Rev. B48, 10345 (1993).
+     anyon interferometry,Phys. Rev. X12, 011034 (2022).                            [73]U. Schollw¨ock, The density-matrix renormalization group
+[53]Y. Liu, K. Slagle, K. S. Burch, and J. Alicea, Dynamical                              in  the  age  of  matrix  product  states,Annals  of  Physics
+     anyon generation in Kitaev honeycomb non-abelian spin                                326, 96 (2011), january 2011 Special Issue.
+     liquids,Phys. Rev. Lett.129, 037201 (2022).                                    [74]R. Or´us, Tensor networks for complex quantum systems,
+[54]T. Bauer, L. R. D. Freitas, R. G. Pereira, and R. Egger,                              Nature Reviews Physics1, 538 (2019).
+     Scanning tunneling spectroscopy of Majorana zero modes                         [75]Z. Zhu, I. Kimchi, D. N. Sheng, and L. Fu, Robust non-
+     in a Kitaev spin liquid,Phys. Rev. B107, 054432 (2023).                              abelian spin liquid and a possible intermediate phase in
+[55]Z.  Wei,  N.  Batra,  V.  F.  Mitrovi´c,  and  D.  E.  Feldman,                       the antiferromagnetic kitaev model with magnetic field,
+     Thermal  interferometry  of  anyons,Phys.  Rev.  B107,                               Phys. Rev. B97, 241110 (2018).
+     104406 (2023).                                                                 [76]M.  Gohlke,  R.  Moessner,  and  F.  Pollmann,  Dynamical
+[56]M.   O.   Takahashi,   M.   G.   Yamada,   M.   Udagawa,                              and topological properties of the kitaev model in a [111]
+     T.  Mizushima,  and  S.  Fujimoto,  Nonlocal  spin  correla-                         magnetic field,Phys. Rev. B98, 014418 (2018).
+     tion as a signature of Ising anyons trapped in vacancies                       [77]The perturbations used in our extrapolation scheme act
+     of the Kitaev spin liquid,Phys. Rev. Lett.131, 236701                                like pinning fields, accelerating DRMG convergence. As
+     (2023).                                                                              a result, the bond dimensionχremains significantly be-
+[57]C. Harada, A. Ono, and J. Nasu, Field-driven spatiotem-                               low the maximum valueχ        max  in most simulations,  and
+     poral manipulation of Majorana zero modes in a Kitaev                                χmax = 4500 is sufficient to ensure good convergence.
+     spin liquid,Phys. Rev. B108, L241118 (2023).                                   [78]Note that, for simplicity, we use the same notation for the
+[58]W.-H.  Kao,  N.  B.  Perkins,  and  G.  B.  Hal´asz,  Vacancy                         topological eigenvalues       W left/right       as before but implicitly
+     spectroscopy  of  non-abelian  kitaev  spin  liquids,Phys.                           understand that they are eigenvalues ofW   X ath= 0 and
+     Rev. Lett.132, 136503 (2024).                                                        eigenvalues ofW   ′X(h) ath >0.
+[59]W.-H. Kao, G. B. Hal´asz, and N. B. Perkins, Dynamics                           [79]See  Supplemental  Material  at  [URL]  for  a  detailed  de-
+     of vacancy-induced modes in the non-abelian kitaev spin                              scription of the extrapolation procedure used to extract
+     liquid,Phys. Rev. B109, 125150 (2024).                                               the binding energy in both the ferromagnetic and antifer-
+[60]G. B. Hal´asz, Gate-controlled anyon generation and de-                               romagnetic Kitaev models at representative values of the
+     tection  in  kitaev  spin  liquids,Phys.  Rev.  Lett.132,                            magnetic field. The Supplement further details the sys-
+     206501 (2024).                                                                       tematic  protocol  employed  to  identify  and  discard  out-
+[61]X. Xiao, M. O. Takahashi, P. Stevenson, S. Fujimoto, and                              liers in the extrapolation process.
+     A. Bansil,Signatures of non-abelian kitaev quantum spin                        [80]Ref. [63] uses a different convention for the spin Hamil-
+     liquids in noise magnetormetry(2025),arXiv:2501.19165                                tonian, and our value for the binding energy corresponds
+     [cond-mat.str-el].                                                                   toE    binding =−0.02705±0.00004 in their convention.
+[62]K.  Klocke,  Y.  Liu,  G.  B.  Hal´asz,  and  J.  Alicea,Spin-
+     liquid-based topological qubits(2024),arXiv:2411.08093
+     [cond-mat.str-el].
+[63]A. J. Willans, J. T. Chalker, and R. Moessner, Disorder
+     in a quantum spin liquid: Flux binding and local moment
+     formation,Phys. Rev. Lett., 237203 (2010)104.
+[64]A. J. Willans, J. T. Chalker, and R. Moessner, Site di-
+     lution in the kitaev honeycomb model,Phys. Rev. B84,
+     115146 (2011).
+[65]W.-H.  Kao,  J.  Knolle,  G.  B.  Hal´asz,  R.  Moessner,  and
+     N.  B.  Perkins,  Vacancy-induced  low-energy  density  of
+     states in the kitaev spin liquid,Phys. Rev. X11, 011034
+     (2021).
+[66]K. Dhochak, R. Shankar, and V. Tripathi, Magnetic im-
+     purities in the honeycomb kitaev model,Phys. Rev. Lett.
+     105, 117201 (2010).
+[67]S.  D.  Das,  K.  Dhochak,  and  V.  Tripathi,  Kondo  route
+     to spin inhomogeneities in the honeycomb kitaev model,
+     Phys. Rev. B94, 024411 (2016).
+[68]M.  Vojta,  A.  K.  Mitchell,  and  F.  Zschocke,  Kondo  im-
+     purities  in  the  kitaev  spin  liquid:  Numerical  renormal-
+     ization  group  solution  and  gauge-flux-driven  screening,
+     Phys. Rev. Lett.117, 037202 (2016).
+                                                                                                                                                            8
+
+                             End Matter                                           and are typically an order of magnitude larger than the
+                                                                                  binding energy in the TDL.
+  System-size dependence of the energy coefficients                                  To demonstrate the utility of our refined definition in
+                                                                                  Eqs.  (4)  and  (3),  even  away  from  the  narrow  cylindri-
+   Figure4illustrates  how  the  coefficientsE                   const, E left,   cal  regime,  we  employ  this  refined  definition  to  deter-
+Eright, andE      O  in Eq. (2) depend on the cylinder width                      mine the vacancy-flux binding energy in the TDL up to
+LY  as well as the partial cylinder lengthsL              left andL       right   one more significant figure than in Ref.63.  By setting
+(see Fig.1).  Since the coefficientE            const  determines the             the cylinder dimensions to beL  left =L    right =L   Y  =L,
+overall  ground-state  energy,  it  scales  linearly  withL        Y ,            and performing a standard finite-size scaling, as shown in
+Lleft,  andL       right  alike.   In  contrast,  the  coefficientE  left         Fig.5(a), we extract the binding energy in the TDL to be
+(E  right) scales linearly withL    left (L  right) but is largely in-            Ebinding =−0.006762±0.000009. This value is consistent
+dependent ofL    right (L  left). The reason is that the number                   with the one previously found in Ref.63but has an order
+of independent topological loop operators with the same                           of magnitude better accuracy [80].  If we instead use the
+eigenvalue     W left  (W right) on the left (right) side of the                  naive definitions in Eq. (8), analogous finite-size scalings
+vacancy is precisely the appropriate partial lengthL             left             in Figs.5(b,c) yieldE                ′binding =−0.00676±0.00005 as well
+(L  right).  At the same time, bothE       left  andE       right  decay          asE   ′′binding =−0.00676±0.00007, which are comparable
+to  zero  asL    Y  is  increased,  which  indicates  that  these                 to Ref.63in terms of their accuracy.
+coefficients are emphasized in our narrow cylindrical ge-
+ometry.  Most importantly, the final coefficientE O  does
+not scale linearly with any system dimension and appears
+to converge to a finite value in the TDL.                                          Expectation value of the vacancy-plaquette operator
+
+
+         Refined definition of the binding energy                                    To elucidate the nature of flux binding at a finite field
+                                                                                  h, we also consider the expectation value of the vacancy-
+   The refined definition of the vacancy-flux binding en-                         plaquette operator,⟨W           O⟩, for the four distinct topologi-
+ergy in Eqs. (4) and (3) is critical for establishing a con-                      cal sectors.  At zero field (h= 0), the vacancy-plaquette
+nection between our narrow cylindrical geometry and the                           operatorW         O  is  a  conserved  quantity,  and  its  expecta-
+TDL.  Using  this  definition,  the  binding  energy  is  ob-                     tion value is simply⟨W           O⟩=     WO  =     W leftW right  =±1
+tained  as  a  linear  combination  of  four  distinct  ground-                   for each topological sector, with the eigenvalue +1 (−1)
+state energies.  In contrast, naive definitions adopted di-                       indicating the absence (presence) of flux binding.  At fi-
+                                                                                  nite  fields  (h  >0),  however,  the  conserved  eigenvalue
+rectly from the TDL would take a simple difference be-                            WO =±1 corresponds to a modified version of this pla-
+tween two ground-state energies:                                                  quette operator, as described for the analogous topologi-
+         E′binding =   lim                                                        cal operators in the main text, and the expectation value
+                        LY →∞   limLX→∞ [E −1,+1    −E    +1,+1     ]             of the original plaquette operatorW         O thus deviates from
+                    =−2   limLY →∞   lim                                          ±1.  Nevertheless,  as plotted in Fig.6,  the expectation
+                                     LX→∞ [E O +E    left],             (8)       value⟨W       O⟩remains close to±1 in each topological sector
+         E′′binding =   lim                                                       even for the largest fields considered, which means that
+                        LY →∞   limLX→∞ [E +1,−1      −E    +1,+1     ]           a  positive  (negative)  expectation  value⟨W        O⟩still  indi-
+                    =−2   limLY →∞   lim                                          cates the absence (presence) of flux binding.  We remark
+                                     LX→∞ [E O +E    right].
+                                                                                  that, while the curves in Fig.6correspond to finite val-
+SinceE          left (E  right) scales linearly withL         left (L  right) for aues of the perturbation strengthλ[see Eq. (5)], a rough
+narrow cylinder, these naive definitions give binding en-                         extrapolation reveals that the same conclusion also holds
+ergies that depend heavily on the precise cylinder length                         for the unperturbed model atλ= 0.
+                                                                                                                                                                          9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.  Energy coefficientsE    const,E left,E right, andE    O  [see Eq. (2)] against (a) the partial cylinder length on the left side of
+the vacancy,L left, for fixedL          right =L   Y  = 4, (b) the partial cylinder length on the right side of the vacancy,L right, for fixed
+Lleft =L   Y  = 4, and (c) the cylinder widthL          Y  for fixedL          left =L    right = 20.  These coefficients are calculated through the exact
+solution of the pure Kitaev model at zero magnetic field (h= 0).  Note that certain coefficients are plotted with an appropriate
+scaling factor (see the legend of each panel) in order to be comparable with other coefficients.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.  Extraction of the vacancy-flux binding energy in the
+TDL of the pure Kitaev model via a standard finite-size scal-
+ing in the cylinder dimensionL=L                           left  =L    right  =L   Y  with
+11≤L≤40, using (a) the refined definition in Eqs. (4) and
+(3) as well as (b,c) the naive definitions in Eq. (8).  The solid,
+dashed,  and  dotted  lines  represent  quadratic  extrapolations
+in 1/Lfrom finite-size binding energies with specific moduli
+ofLwith respect to 3, as indicated by different colors.
+                                                                                                                                                                           10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6. Expectation value of the vacancy-plaquette operator,⟨W           O⟩, against the magnetic fieldhfor the perturbed Hamiltonians
+(a,e)H        λ(+1,+1), (b,f)H          λ(+1,−1), (c,g)H                    λ(−1,+1), and (d,h)H                 λ(−1,−1) in Eq. (5) with a range of perturbation strengths
+0.06≤λ≤0.1 (different colors) as well as (a-d) FM Kitaev exchangeJ= 1 and (e-h) AFM Kitaev exchangeJ=−1 on a
+narrow cylinder withL     X = 15,L     Y  = 3,L    left =L    right = 7, and twisted boundary conditions.

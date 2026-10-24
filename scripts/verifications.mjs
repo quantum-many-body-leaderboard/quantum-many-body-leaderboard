@@ -33382,4 +33382,1333 @@ export const VERIFICATIONS = [
    "note": "Transcription correct (arXiv v3 and PRB 110, 035108 Table II print -0.01387(2)), but the value sits 0.63 mHa per electron above the same paper's MP-NQS VMC and the quoted backflow DMC, while the FN-DMC column elsewhere sits within 0.08 mHa of MP-NQS; a misprint is possible. Kept as printed (ruled 2026-10-20).",
    "source_entry": "SP6-heg3d-heg2d-hubbard#110 (qmbl-verify 2026-10-19)"
   },
+  // ---------------------------------------------------------------------------------------
+  // qmbl-verify 2026-10-23 (families), apply step (2026-10-24): readings that found nothing wrong, one
+  // entry per row, from the readers, the skeptics (record rows and the rows behind the generator fixes)
+  // and the exact recompute (checks/exact-recompute-2026-10-families/). The recompute is the entry on an
+  // exact row and the readings of that row are named in its note; a row whose energy is corrected in
+  // corrections.mjs is left out. journal: true attaches the reading as verified.journal_read (88)
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "Exact",
+      "energy": -182.23409732
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "-0.75303346",
+    "conversion": "recomputed total (Pauli form, |K| = 1) -182.234098128575; stored -182.23409732; difference -8.086e-07; printed-digit resolution of the stored total 1.2e-06",
+    "note": "open 11 x 11 rhombus, flux-free sector; 100 single-vortex, 3000 vortex-pair, 500 random multi-vortex and the all-vortex configurations all higher (lowest gap 0.0794); 0.75303346 per site Pauli: recomputed -0.753033463. Open patch: A(m,n) bonded to B(m,n), B(m-1,n), B(m,n-1), 0 <= m,n < L (the 60-degree rhombus); the 120-degree rhombus (A to B(m,n), B(m-1,n), B(m-1,n-1)) gives -34.0130, -69.2244, -177.4229 and does not match, so the source's cluster is the 60-degree one. Also read by famP3-arxiv-2112-08394#0 (arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone; Table III (Appendix D), row (11, 11), column Exact; -0.75303346 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)): Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 242 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 11 x 11 patch (flux-free gauge) gives -182.23409813 total, -0.75303346 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type exact: free-Majorana exact solution of the finite patch. Provenance: the paper does not say who computed the Exact column (acknowledgement 'We thank J. Knolle for providing data for Kitaev model', which may refer to the Fig. 11 DSF); first printed here, primary is right. The stored total is the 8-digit per-site value x N; the full-precision free-fermion total (-182.23409813) differs by -8.1e-7, inside the printed rounding (+-0.5e-8 x N).",
+    "source_entry": "famE-exact-recompute#0, famP3-arxiv-2112-08394#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-3x4_24_P_K-1",
+      "method": "Exact (Table I)",
+      "energy": -19.09178
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "−9.54589",
+    "conversion": "recomputed total (Pauli form, |K| = 1) -19.091785322372; stored -19.09178; difference -5.322e-06; printed-digit resolution of the stored total 1.0e-05",
+    "note": "3 x 4 torus, full enumeration of 2^13 gauge classes with projection; spin ED of the same torus (2^24 states, own Lanczos ed.c) gives -19.091785322372 and scipy eigsh agrees; recomputed / 2 = -9.545892661, printed -9.54589. Also read by famP4-arxiv-1411-5198#4 (arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read; Table I, row Exact, column 3x4 unit cells; −9.54589 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)): factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.198873. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type exact agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate. Exact = exact diagonalization ('We show comparisons of the VMC calculation with the exact diagonalization results'); second reader 2026-10-24: flux-free free-Majorana sum E_src = -(1/2) sum_q |1+e^{iq1}+e^{iq2}| on the 3 x 4 torus (node, 12 closed-form terms, no diagonalisation) gives -9.545893 in the (antiperiodic, periodic) sector and -9.493500 for the next one, matching Exact -9.54589 and the text first excited -9.4934; this confirms cluster, PBC and the factor 2 independently of the loader comment.",
+    "source_entry": "famE-exact-recompute#1, famP4-arxiv-1411-5198#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-4x4_32_P_K-1",
+      "method": "Exact (Table I)",
+      "energy": -25.12818
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "−12.56409",
+    "conversion": "recomputed total (Pauli form, |K| = 1) -25.128174300047; stored -25.12818; difference 5.700e-06; printed-digit resolution of the stored total 1.0e-05",
+    "note": "4 x 4 torus, full enumeration of 2^17 gauge classes with the physical-parity projection; without the projection the minimum would be -25.416407865 (unphysical). Projection rule checked by spin ED on six projection-sensitive tori of 6-24 sites (all agree to 1e-12); 2^32 spin ED not run; recomputed / 2 = -12.564087150, printed -12.56409. Also read by famP4-arxiv-1411-5198#8 (arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read; Table I, row Exact, column 4x4 unit cells; −12.56409 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)): factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.196314. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type exact agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate. Exact = exact diagonalization ('We show comparisons of the VMC calculation with the exact diagonalization results'); second reader 2026-10-24: flux-free free-Majorana sum on the 4 x 4 torus gives -12.564087 in three sectors (the fourth, -12.708204, is the parity-forbidden periodic-periodic one), matching Exact -12.56409 and the stated triple degeneracy; this confirms cluster, PBC and the factor 2 independently of the loader comment.",
+    "source_entry": "famE-exact-recompute#2, famP4-arxiv-1411-5198#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-5x5_50_O_K-1",
+      "method": "Exact",
+      "energy": -35.7012005
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "-0.71402401",
+    "conversion": "recomputed total (Pauli form, |K| = 1) -35.701200406996; stored -35.7012005; difference 9.300e-08; printed-digit resolution of the stored total 2.5e-07",
+    "note": "open 5 x 5 rhombus, full enumeration of all 2^16 flux sectors: minimum is flux-free; recomputed -0.714024008 per site. Open patch: A(m,n) bonded to B(m,n), B(m-1,n), B(m,n-1), 0 <= m,n < L (the 60-degree rhombus); the 120-degree rhombus (A to B(m,n), B(m-1,n), B(m-1,n-1)) gives -34.0130, -69.2244, -177.4229 and does not match, so the source's cluster is the 60-degree one. Also read by famP3-arxiv-2112-08394#5 (arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone; Table III (Appendix D), row (5, 5), column Exact; -0.71402401 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)): Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 50 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 5 x 5 patch (flux-free gauge) gives -35.70120041 total, -0.71402401 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type exact: free-Majorana exact solution of the finite patch. Provenance: the paper does not say who computed the Exact column (acknowledgement 'We thank J. Knolle for providing data for Kitaev model', which may refer to the Fig. 11 DSF); first printed here, primary is right. The stored total is the 8-digit per-site value x N; the full-precision free-fermion total (-35.70120041) differs by 9.0e-8, inside the printed rounding (+-0.5e-8 x N).",
+    "source_entry": "famE-exact-recompute#3, famP3-arxiv-2112-08394#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-6x6_72_PO_K1",
+      "method": "exact ground-state energy Eg(Φy = 1)",
+      "energy": -54.4698474903
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "-54.469847490329",
+    "conversion": "recomputed total (Pauli form, |K| = 1) -54.469847490329; stored -54.4698474903; difference -2.900e-11; printed-digit resolution of the stored total 5.0e-13",
+    "note": "6 x 6 cylinder, flux-free; the two loop sectors give -54.469847490329 and -54.385529432483 (the source's Phi_y = -1 value, also reproduced); vortex configurations higher (gap 0.1166), so Eg(Phi_y = 1) is the global ground state; identical to all 12 printed decimals. Also read by famP7-kitaev-shastrysutherland#0 (arXiv:2009.04129v2 and v1 PDFs, pypdf layout mode (sources/2009.04129v{1,2}.famP7.txt); journal PRB 104, L020409 not reached (Cloudflare challenge page), arXiv v2 of 2021-05-04 read instead; Supplemental Material, 'Numerical data for Fig. 3 in the main text' (identical in v1 and v2); Eg(Φy = 1) =−54.469847490329): Eq. (1) Pauli form, Jx = Jy = Jz = 1, J3 = 0, sign + (K1 correct); 6 x 6 cylinder, Lx open, Ly periodic, N = 72; Phi_y = +1 sector, which the paper states is lower than Phi_y = -1 by about 0.084 (printed values differ by 0.0843181), so it is the cylinder ground state; boundary term deltaK -> 0+ commutes with H3; exact free-Majorana value, deterministic, no sigma; own computation (primary). No other row on the instance, no duplicate.",
+    "source_entry": "famE-exact-recompute#4, famP7-kitaev-shastrysutherland#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "Exact",
+      "energy": -71.94840226
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "-0.73416737",
+    "conversion": "recomputed total (Pauli form, |K| = 1) -71.948402533374; stored -71.94840226; difference -2.734e-07; printed-digit resolution of the stored total 4.9e-07",
+    "note": "open 7 x 7 rhombus, flux-free; single, pair, random vortex configurations higher (gap 0.0809); recomputed -0.734167373 per site. Open patch: A(m,n) bonded to B(m,n), B(m-1,n), B(m,n-1), 0 <= m,n < L (the 60-degree rhombus); the 120-degree rhombus (A to B(m,n), B(m-1,n), B(m-1,n-1)) gives -34.0130, -69.2244, -177.4229 and does not match, so the source's cluster is the 60-degree one. Also read by famP3-arxiv-2112-08394#9 (arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone; Table III (Appendix D), row (7, 7), column Exact; -0.73416737 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)): Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 98 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 7 x 7 patch (flux-free gauge) gives -71.94840253 total, -0.73416737 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type exact: free-Majorana exact solution of the finite patch. Provenance: the paper does not say who computed the Exact column (acknowledgement 'We thank J. Knolle for providing data for Kitaev model', which may refer to the Fig. 11 DSF); first printed here, primary is right. The stored total is the 8-digit per-site value x N; the full-precision free-fermion total (-71.94840253) differs by -2.7e-7, inside the printed rounding (+-0.5e-8 x N).",
+    "source_entry": "famE-exact-recompute#5, famP3-arxiv-2112-08394#9 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-hex24_24_P_K-1",
+      "method": "Exact (Table I)",
+      "energy": -19.0572
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "−9.52860",
+    "conversion": "recomputed total (Pauli form, |K| = 1) -19.057193434767; stored -19.0572; difference 6.565e-06; printed-digit resolution of the stored total 1.0e-05",
+    "note": "24-site hexagonal torus T1 = 2a1 + 2a2, T2 = -2a1 + 4a2, full enumeration (flux-free minimum); spin ED 2^24 gives -19.057193434767; recomputed / 2 = -9.528596717, printed -9.52860. Also read by famP4-arxiv-1411-5198#13 (arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read; Table I, row Exact, column hexagonal 24 sites; −9.52860 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)): factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.198513. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type exact agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate. Exact = exact diagonalization ('We show comparisons of the VMC calculation with the exact diagonalization results'); second reader 2026-10-24: flux-free free-Majorana sum on the 12-unit-cell torus T1 = 4a1 - 2a2, T2 = 2a1 + 2a2 (the hexagonal 24-site cluster) gives -9.528597 in three sectors, matching Exact -9.52860 and the triple degeneracy of Table II; this confirms cluster, PBC and the factor 2 independently of the loader comment.",
+    "source_entry": "famE-exact-recompute#6, famP4-arxiv-1411-5198#13 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.6772_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: own Lanczos ed.c, Sz = 0 basis of the 32-site tilted cluster (601080390 states), dimer state deflated; checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "-0.374999999999945",
+    "conversion": "recomputed -48.0000000000; stored -48; difference 0.00e+00",
+    "note": "Lowest state orthogonal to the dimer-singlet product state: E1 = -47.9971979211 after 218 Lanczos steps (last 10 steps moved it by about 1e-10; Ritz values are upper bounds). The dimer state is an exact eigenstate at E = -48. Printed value x 128 = -47.99999999999. Cluster: tilted torus (4,4),(4,-4), orthogonal dimers. E1 lies 2.802e-03 above -48, so the ground state is the dimer state, E0 = -48 exactly (Pauli total; -0.375 per site in S units). The stored value is the exact -48. Also read by famP2-10-1142-s0129183106009709#4 (arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; Table I (square N = 32, left half), row J2/J1 = 0.6772; -0.374999999999945 (E0/N, per site, units of J1 = Jd, S.S form)): Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: the 32-site square cluster of Fig. 6 (second N = 32 row, diamond drawing); its Table III sector dimension 75,164,451 equals exactly the Burnside count for the (4,4),(4,-4) torus with the translations (2,2),(2,-2), Sz = 0 and spin inversion, so QMBL's tilted instance is consistent. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. x is below this cluster's xc: the printed value is the Lanczos result 5.5e-14 per site above the dimer-product eigenvalue -0.375 (analytic total -48); the stored value reproduces the printed number, the 36-site rows above J = 0.5 keep the printed value (not recomputed; ruled 2026-10-24). Duplicate check (data/ShastrySutherland/square-tilted_32_P_J0.6772_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famE-exact-recompute#11, famP2-10-1142-s0129183106009709#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.6773_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.0030412715
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: own Lanczos ed.c, Sz = 0 basis of the 32-site tilted cluster (601080390 states), dimer state deflated; checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "-0.375023759933420",
+    "conversion": "recomputed -48.0030412715; stored -48.0030412715; difference 2.14e-11",
+    "note": "Lowest state orthogonal to the dimer-singlet product state: E1 = -48.0030412715 after 216 Lanczos steps (last 10 steps moved it by about 1e-10; Ritz values are upper bounds). The dimer state is an exact eigenstate at E = -48. Printed value x 128 = -48.00304127148. Cluster: tilted torus (4,4),(4,-4), orthogonal dimers. E1 < -48, so E0 = E1. Agrees with the printed value to 8e-13 (within the recompute's convergence, 1e-10). Also read by famP2-10-1142-s0129183106009709#5 (arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; Table I (square N = 32, left half), row J2/J1 = 0.6773; -0.375023759933420 (E0/N, per site, units of J1 = Jd, S.S form)): Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: the 32-site square cluster of Fig. 6 (second N = 32 row, diamond drawing); its Table III sector dimension 75,164,451 equals exactly the Burnside count for the (4,4),(4,-4) torus with the translations (2,2),(2,-2), Sz = 0 and spin inversion, so QMBL's tilted instance is consistent. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square-tilted_32_P_J0.6773_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famE-exact-recompute#12, famP2-10-1142-s0129183106009709#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.6775_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.0147430425
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: own Lanczos ed.c, Sz = 0 basis of the 32-site tilted cluster (601080390 states), dimer state deflated; checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "-0.375115180019318",
+    "conversion": "recomputed -48.0147430425; stored -48.0147430425; difference 2.96e-11",
+    "note": "Lowest state orthogonal to the dimer-singlet product state: E1 = -48.0147430425 after 213 Lanczos steps (last 10 steps moved it by about 1e-10; Ritz values are upper bounds). The dimer state is an exact eigenstate at E = -48. Printed value x 128 = -48.01474304247. Cluster: tilted torus (4,4),(4,-4), orthogonal dimers. E1 < -48, so E0 = E1. Agrees with the printed value to 2e-12 (within the recompute's convergence, 1e-10). Also read by famP2-10-1142-s0129183106009709#6 (arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; Table I (square N = 32, left half), row J2/J1 = 0.6775; -0.375115180019318 (E0/N, per site, units of J1 = Jd, S.S form)): Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: the 32-site square cluster of Fig. 6 (second N = 32 row, diamond drawing); its Table III sector dimension 75,164,451 equals exactly the Burnside count for the (4,4),(4,-4) torus with the translations (2,2),(2,-2), Sz = 0 and spin inversion, so QMBL's tilted instance is consistent. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square-tilted_32_P_J0.6775_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famE-exact-recompute#13, famP2-10-1142-s0129183106009709#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.7_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -49.5002695831
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "recomputed: own Lanczos ed.c, Sz = 0 basis of the 32-site tilted cluster (601080390 states), dimer state deflated; checks/exact-recompute-2026-10-families/",
+    "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+    "reported_as": "-0.386720856118170",
+    "conversion": "recomputed -49.5002695831; stored -49.5002695831; difference -1.82e-11",
+    "note": "Lowest state orthogonal to the dimer-singlet product state: E1 = -49.5002695831 after 153 Lanczos steps (last 10 steps moved it by about 1e-10; Ritz values are upper bounds). The dimer state is an exact eigenstate at E = -48. Printed value x 128 = -49.50026958313. Cluster: tilted torus (4,4),(4,-4), orthogonal dimers. E1 < -48, so E0 = E1. Agrees with the printed value to 8e-12 (within the recompute's convergence, 1e-10). Also read by famP2-10-1142-s0129183106009709#10 (arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; Table I (square N = 32, left half), row J2/J1 = 0.7; -0.386720856118170 (E0/N, per site, units of J1 = Jd, S.S form)): Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: the 32-site square cluster of Fig. 6 (second N = 32 row, diamond drawing); its Table III sector dimension 75,164,451 equals exactly the Burnside count for the (4,4),(4,-4) torus with the translations (2,2),(2,-2), Sz = 0 and spin inversion, so QMBL's tilted instance is consistent. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square-tilted_32_P_J0.7_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famE-exact-recompute#17, famP2-10-1142-s0129183106009709#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 2",
+      "energy": -179.6248
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 10, column '2 layers'",
+    "reported_as": "-0.449062 per site (in units of J')",
+    "conversion": "-0.449062 x 4 x 100 = -179.624800",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 100; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: ConvNext (6,3,3)[2,2] -179.7368 (arXiv:2505.03466); none repeats this number or quotes this paper (the ConvNext rows are Nutakki et al.'s own results). sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 4",
+      "energy": -179.6884
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 10, column '4 layers'",
+    "reported_as": "-0.449221 per site (in units of J')",
+    "conversion": "-0.449221 x 4 x 100 = -179.688400",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 100; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: ConvNext (6,3,3)[2,2] -179.7368 (arXiv:2505.03466); none repeats this number or quotes this paper (the ConvNext rows are Nutakki et al.'s own results). sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 8",
+      "energy": -179.7316
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 10, column '8 layers'",
+    "reported_as": "-0.449329 per site (in units of J')",
+    "conversion": "-0.449329 x 4 x 100 = -179.731600",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 100; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints -0.44929 in this cell, which is not the v4 value rounded; the stored value follows v4. Duplicate check: other rows on the instance: ConvNext (6,3,3)[2,2] -179.7368 (arXiv:2505.03466); none repeats this number or quotes this paper (the ConvNext rows are Nutakki et al.'s own results). sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Transformer, Extrap. (n_l → ∞, variance extrapolation)",
+      "energy": -179.788
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 10, column 'Extrap.'",
+    "reported_as": "-0.44947 per site (in units of J')",
+    "conversion": "-0.44947 x 4 x 100 = -179.788000",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 100; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type extrapolated agrees: the caption and Appendix C say the Extrap. column is obtained 'through variance extrapolation' over n_l = 2, 4, 8 for an infinite number of layers. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: ConvNext (6,3,3)[2,2] -179.7368 (arXiv:2505.03466); none repeats this number or quotes this paper (the ConvNext rows are Nutakki et al.'s own results). sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 2",
+      "energy": -258.543936
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 12, column '2 layers'",
+    "reported_as": "-0.448861 per site (in units of J')",
+    "conversion": "-0.448861 x 4 x 144 = -258.543936",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 144; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 4",
+      "energy": -258.631488
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 12, column '4 layers'",
+    "reported_as": "-0.449013 per site (in units of J')",
+    "conversion": "-0.449013 x 4 x 144 = -258.631488",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 144; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 8",
+      "energy": -258.668928
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 12, column '8 layers'",
+    "reported_as": "-0.449078 per site (in units of J')",
+    "conversion": "-0.449078 x 4 x 144 = -258.668928",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 144; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints -0.44911 in this cell, which is not the v4 value rounded; the stored value follows v4. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#12 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Transformer, Extrap. (n_l → ∞, variance extrapolation)",
+      "energy": -258.80256
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 12, column 'Extrap.'",
+    "reported_as": "-0.44931 per site (in units of J')",
+    "conversion": "-0.44931 x 4 x 144 = -258.802560",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 144; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type extrapolated agrees: the caption and Appendix C say the Extrap. column is obtained 'through variance extrapolation' over n_l = 2, 4, 8 for an infinite number of layers. Versions: v3 (28 Nov 2024) prints -0.44935 in this cell, which is not the v4 value rounded; the stored value follows v4. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#14 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 2",
+      "energy": -351.663984
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 14, column '2 layers'",
+    "reported_as": "-0.448551 per site (in units of J')",
+    "conversion": "-0.448551 x 4 x 196 = -351.663984",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 196; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision; v1/v2 (Table I, row 14 x 14) print -0.448545. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#16 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 4",
+      "energy": -351.868608
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 14, column '4 layers'",
+    "reported_as": "-0.448812 per site (in units of J')",
+    "conversion": "-0.448812 x 4 x 196 = -351.868608",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 196; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision; v1/v2 (Table I, row 14 x 14) print -0.448839. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#18 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 8",
+      "energy": -351.960336
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 14, column '8 layers'",
+    "reported_as": "-0.448929 per site (in units of J')",
+    "conversion": "-0.448929 x 4 x 196 = -351.960336",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 196; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision; v1/v2 (Table I, row 14 x 14) print -0.448925. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#20 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Transformer, Extrap. (n_l → ∞, variance extrapolation)",
+      "energy": -352.1728
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 14, column 'Extrap.'",
+    "reported_as": "-0.44920 per site (in units of J')",
+    "conversion": "-0.44920 x 4 x 196 = -352.172800",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 196; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type extrapolated agrees: the caption and Appendix C say the Extrap. column is obtained 'through variance extrapolation' over n_l = 2, 4, 8 for an infinite number of layers. Versions: v3 (28 Nov 2024) prints the same value to its printed precision; v1/v2 (Table I, row 14 x 14) print -0.449207. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#22 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 2",
+      "energy": -65.0396448
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 6, column '2 layers'",
+    "reported_as": "-0.4516642 per site (in units of J')",
+    "conversion": "-0.4516642 x 4 x 36 = -65.039645",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 36; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: exact diagonalisation (Lanczos) -65.0524471206 (Sindermann et al., cond-mat/0605464); ConvNext (4,3,2)[1,1] with/without patching -65.047248 / -65.035152 (arXiv:2505.03466); none repeats this number or quotes this paper (the ConvNext rows are Nutakki et al.'s own results, the ED row is Sindermann et al.'s). sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#28 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 4",
+      "energy": -65.0446704
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 6, column '4 layers'",
+    "reported_as": "-0.4516991 per site (in units of J')",
+    "conversion": "-0.4516991 x 4 x 36 = -65.044670",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 36; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: exact diagonalisation (Lanczos) -65.0524471206 (Sindermann et al., cond-mat/0605464); ConvNext (4,3,2)[1,1] with/without patching -65.047248 / -65.035152 (arXiv:2505.03466); none repeats this number or quotes this paper (the ConvNext rows are Nutakki et al.'s own results, the ED row is Sindermann et al.'s). sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#30 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 8",
+      "energy": -65.0458368
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 6, column '8 layers'",
+    "reported_as": "-0.4517072 per site (in units of J')",
+    "conversion": "-0.4517072 x 4 x 36 = -65.045837",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 36; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: exact diagonalisation (Lanczos) -65.0524471206 (Sindermann et al., cond-mat/0605464); ConvNext (4,3,2)[1,1] with/without patching -65.047248 / -65.035152 (arXiv:2505.03466); none repeats this number or quotes this paper (the ConvNext rows are Nutakki et al.'s own results, the ED row is Sindermann et al.'s). sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#32 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Transformer, Extrap. (n_l → ∞, variance extrapolation)",
+      "energy": -65.052
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 6, column 'Extrap.'",
+    "reported_as": "-0.451750 per site (in units of J')",
+    "conversion": "-0.451750 x 4 x 36 = -65.052000",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 36; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type extrapolated agrees: the caption and Appendix C say the Extrap. column is obtained 'through variance extrapolation' over n_l = 2, 4, 8 for an infinite number of layers. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: exact diagonalisation (Lanczos) -65.0524471206 (Sindermann et al., cond-mat/0605464); ConvNext (4,3,2)[1,1] with/without patching -65.047248 / -65.035152 (arXiv:2505.03466); none repeats this number or quotes this paper (the ConvNext rows are Nutakki et al.'s own results, the ED row is Sindermann et al.'s). Record note: the instance carries an exact row (ED -0.4517531050 per site, which this paper's caption also prints as -0.4517531), so by RULES.md 6 the exact row holds the record; this extrapolated row sits 3.1e-6 per site (4.5e-4 total) above it and is the closest challenger, not the record. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#34 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 2",
+      "energy": -115.108096
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 8, column '2 layers'",
+    "reported_as": "-0.449641 per site (in units of J')",
+    "conversion": "-0.449641 x 4 x 64 = -115.108096",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 64; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#36 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 4",
+      "energy": -115.149312
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 8, column '4 layers'",
+    "reported_as": "-0.449802 per site (in units of J')",
+    "conversion": "-0.449802 x 4 x 64 = -115.149312",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 64; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#38 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 8",
+      "energy": -115.156224
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 8, column '8 layers'",
+    "reported_as": "-0.449829 per site (in units of J')",
+    "conversion": "-0.449829 x 4 x 64 = -115.156224",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 64; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#40 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Transformer, Extrap. (n_l → ∞, variance extrapolation)",
+      "energy": -115.1872
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 8, column 'Extrap.'",
+    "reported_as": "-0.44995 per site (in units of J')",
+    "conversion": "-0.44995 x 4 x 64 = -115.187200",
+    "note": "H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 64; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type extrapolated agrees: the caption and Appendix C say the Extrap. column is obtained 'through variance extrapolation' over n_l = 2, 4, 8 for an infinite number of layers. Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#42 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.66697792_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -53.9999999994
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11",
+    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.66697792",
+    "reported_as": "-0.374999999995975 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "conversion": "-0.374999999995975 * 4 * 36 = -53.999999999420400; stored -53.9999999994 (12 significant digits, |diff| = 2.0e-11)",
+    "note": "Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: 6 x 6 periodic; Table III sector dimension 504,174,594 equals exactly the Burnside count for the 6 x 6 torus with the Shastry-Sutherland translations (2,0),(0,2), Sz = 0 and spin inversion. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. x is below this cluster's xc: the printed value is the Lanczos result 4.025e-12 per site above the dimer-product eigenvalue -0.375 (analytic total -54); the stored value reproduces the printed number, the 36-site rows above J = 0.5 keep the printed value (not recomputed; ruled 2026-10-24). Duplicate check (data/ShastrySutherland/square_36_P_J0.66697792_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famP2-10-1142-s0129183106009709#12 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.67441_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -54.0005711209
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11",
+    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.67441",
+    "reported_as": "-0.375003966117052 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "conversion": "-0.375003966117052 * 4 * 36 = -54.000571120855488; stored -54.0005711209 (12 significant digits, |diff| = 4.5e-11)",
+    "note": "Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: 6 x 6 periodic; Table III sector dimension 504,174,594 equals exactly the Burnside count for the 6 x 6 torus with the Shastry-Sutherland translations (2,0),(0,2), Sz = 0 and spin inversion. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square_36_P_J0.67441_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famP2-10-1142-s0129183106009709#13 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.675_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -54.0412095917
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11",
+    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.675",
+    "reported_as": "-0.375286177720292 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "conversion": "-0.375286177720292 * 4 * 36 = -54.041209591722048; stored -54.0412095917 (12 significant digits, |diff| = 2.2e-11)",
+    "note": "Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: 6 x 6 periodic; Table III sector dimension 504,174,594 equals exactly the Burnside count for the 6 x 6 torus with the Shastry-Sutherland translations (2,0),(0,2), Sz = 0 and spin inversion. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square_36_P_J0.675_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famP2-10-1142-s0129183106009709#14 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.68_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -54.3894826212
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11",
+    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.68",
+    "reported_as": "-0.377704740424690 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "conversion": "-0.377704740424690 * 4 * 36 = -54.389482621155360; stored -54.3894826212 (12 significant digits, |diff| = 4.5e-11)",
+    "note": "Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: 6 x 6 periodic; Table III sector dimension 504,174,594 equals exactly the Burnside count for the 6 x 6 torus with the Shastry-Sutherland translations (2,0),(0,2), Sz = 0 and spin inversion. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square_36_P_J0.68_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famP2-10-1142-s0129183106009709#15 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.7_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -55.9552967142
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11",
+    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.7",
+    "reported_as": "-0.388578449404367 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "conversion": "-0.388578449404367 * 4 * 36 = -55.955296714228848; stored -55.9552967142 (12 significant digits, |diff| = 2.9e-11)",
+    "note": "Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: 6 x 6 periodic; Table III sector dimension 504,174,594 equals exactly the Burnside count for the 6 x 6 torus with the Shastry-Sutherland translations (2,0),(0,2), Sz = 0 and spin inversion. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square_36_P_J0.7_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famP2-10-1142-s0129183106009709#16 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.85_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -69.7441170157
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11",
+    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.85",
+    "reported_as": "-0.484334145942023 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "conversion": "-0.484334145942023 * 4 * 36 = -69.744117015651312; stored -69.7441170157 (12 significant digits, |diff| = 4.9e-11)",
+    "note": "Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: 6 x 6 periodic; Table III sector dimension 504,174,594 equals exactly the Burnside count for the 6 x 6 torus with the Shastry-Sutherland translations (2,0),(0,2), Sz = 0 and spin inversion. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square_36_P_J0.85_Jd1.json, read-only): no other row on the instance carries this number.",
+    "source_entry": "famP2-10-1142-s0129183106009709#17 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -65.0524471206
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11",
+    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.8",
+    "reported_as": "-0.451753105004501 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "conversion": "-0.451753105004501 * 4 * 36 = -65.052447120648144; stored -65.0524471206 (12 significant digits, |diff| = 4.8e-11)",
+    "note": "Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: 6 x 6 periodic; Table III sector dimension 504,174,594 equals exactly the Burnside count for the 6 x 6 torus with the Shastry-Sutherland translations (2,0),(0,2), Sz = 0 and spin inversion. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square_36_P_J0.8_Jd1.json, read-only): no other row on the instance carries this number. Independent confirmation: arXiv:2311.16889v4 Table I caption prints the 6 x 6 ED as 'E = -0.4517531' per site in units of J' at J/J' = 0.8, equal to this value to its 7 printed digits; the loader skipped it as already carried, so it is not a second row.",
+    "source_entry": "famP2-10-1142-s0129183106009709#18 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "DMRG χ=512",
+      "energy": -175.22142616
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (11, 11), column DMRG χ = 512",
+    "reported_as": "-0.72405548 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.72405548 x 242 = -175.22142616 (stored -175.22142616); S = sigma/2 form per site -0.1810138700",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 242 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 11 x 11 patch (flux-free gauge) gives -182.23409813 total, -0.75303346 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type variational: DMRG at a stated bond dimension, no extrapolation stated; the column heading prints only 'DMRG' and χ (the text uses 1D DMRG with bond dimension 1024 as the TFI reference, Sec. III); the value lies above the Exact column (7.012671 in the stored total).",
+    "source_entry": "famP3-arxiv-2112-08394#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "DMRG χ=1024",
+      "energy": -176.19664502
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (11, 11), column DMRG χ = 1024",
+    "reported_as": "-0.72808531 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.72808531 x 242 = -176.19664502 (stored -176.19664502); S = sigma/2 form per site -0.1820213275",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 242 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 11 x 11 patch (flux-free gauge) gives -182.23409813 total, -0.75303346 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type variational: DMRG at a stated bond dimension, no extrapolation stated; the column heading prints only 'DMRG' and χ (the text uses 1D DMRG with bond dimension 1024 as the TFI reference, Sec. III); the value lies above the Exact column (6.037452 in the stored total).",
+    "source_entry": "famP3-arxiv-2112-08394#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "isoTNS D=4, η=8",
+      "energy": -180.16531918
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (11, 11), column isoTNS D = 4, η = 8",
+    "reported_as": "-0.74448479 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.74448479 x 242 = -180.16531918 (stored -180.16531918); S = sigma/2 form per site -0.1861211975",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 242 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 11 x 11 patch (flux-free gauge) gives -182.23409813 total, -0.75303346 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type projected (ruled 2026-10-24): isoTNS optimised by DMRG2 (App. D: 'We list the ground state energy for Kitaev honeycomb mode obtained through DMRG2 with 2D isoTNSs in Table III'), which Sec. III B calls 'not a standard variational algorithm', its energy 'bound by the MM error'; energy is a deterministic boundary-MPS contraction ('We contract each term approximately using the boundary MPSs approach [19]', D_bMPS = 2D^2, Sec. III B), so sampled false is right; the value lies above the Exact column. method_detail keeps only η; D is in method_as_published.",
+    "source_entry": "famP3-arxiv-2112-08394#3 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "isoTNS D=6, η=12",
+      "energy": -180.73124102
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (11, 11), column isoTNS D = 6, η = 12",
+    "reported_as": "-0.74682331 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.74682331 x 242 = -180.73124102 (stored -180.73124102); S = sigma/2 form per site -0.1867058275",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 242 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 11 x 11 patch (flux-free gauge) gives -182.23409813 total, -0.75303346 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type projected (ruled 2026-10-24): isoTNS optimised by DMRG2 (App. D: 'We list the ground state energy for Kitaev honeycomb mode obtained through DMRG2 with 2D isoTNSs in Table III'), which Sec. III B calls 'not a standard variational algorithm', its energy 'bound by the MM error'; energy is a deterministic boundary-MPS contraction ('We contract each term approximately using the boundary MPSs approach [19]', D_bMPS = 2D^2, Sec. III B), so sampled false is right; the value lies above the Exact column. method_detail keeps only η; D is in method_as_published. Read hardest as the record candidate: energy, lattice, boundary, couplings, column and producer agree; the skeptic upheld the number and refuted the variational class (Sec. III B).",
+    "source_entry": "famP3-arxiv-2112-08394#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-5x5_50_O_K-1",
+      "method": "DMRG χ=512",
+      "energy": -35.681458
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (5, 5), column DMRG χ = 512",
+    "reported_as": "-0.71362916 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.71362916 x 50 = -35.68145800 (stored -35.681458); S = sigma/2 form per site -0.1784072900",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 50 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 5 x 5 patch (flux-free gauge) gives -35.70120041 total, -0.71402401 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type variational: DMRG at a stated bond dimension, no extrapolation stated; the column heading prints only 'DMRG' and χ (the text uses 1D DMRG with bond dimension 1024 as the TFI reference, Sec. III); the value lies above the Exact column (0.019742 in the stored total).",
+    "source_entry": "famP3-arxiv-2112-08394#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-5x5_50_O_K-1",
+      "method": "DMRG χ=1024",
+      "energy": -35.700541
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (5, 5), column DMRG χ = 1024",
+    "reported_as": "-0.71401082 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.71401082 x 50 = -35.70054100 (stored -35.700541); S = sigma/2 form per site -0.1785027050",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 50 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 5 x 5 patch (flux-free gauge) gives -35.70120041 total, -0.71402401 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type variational: DMRG at a stated bond dimension, no extrapolation stated; the column heading prints only 'DMRG' and χ (the text uses 1D DMRG with bond dimension 1024 as the TFI reference, Sec. III); the value lies above the Exact column (0.000659 in the stored total). Record row (best variational bound on the instance): read hardest; energy, lattice, boundary, couplings, column and producer all agree.",
+    "source_entry": "famP3-arxiv-2112-08394#7 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-5x5_50_O_K-1",
+      "method": "isoTNS D=4, η=8",
+      "energy": -35.3449695
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (5, 5), column isoTNS D = 4, η = 8",
+    "reported_as": "-0.70689939 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.70689939 x 50 = -35.34496950 (stored -35.3449695); S = sigma/2 form per site -0.1767248475",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 50 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 5 x 5 patch (flux-free gauge) gives -35.70120041 total, -0.71402401 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type projected (ruled 2026-10-24): isoTNS optimised by DMRG2 (App. D: 'We list the ground state energy for Kitaev honeycomb mode obtained through DMRG2 with 2D isoTNSs in Table III'), which Sec. III B calls 'not a standard variational algorithm', its energy 'bound by the MM error'; energy is a deterministic boundary-MPS contraction ('We contract each term approximately using the boundary MPSs approach [19]', D_bMPS = 2D^2, Sec. III B), so sampled false is right; the value lies above the Exact column. method_detail keeps only η; D is in method_as_published. Column placement: the (5,5) row prints four numbers; the v2 HTML table has the empty cell in the last (D = 6, η = 12) column, so -0.70689939 is the D = 4, η = 8 cell.",
+    "source_entry": "famP3-arxiv-2112-08394#8 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "DMRG χ=512",
+      "energy": -71.14167704
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (7, 7), column DMRG χ = 512",
+    "reported_as": "-0.72593548 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.72593548 x 98 = -71.14167704 (stored -71.14167704); S = sigma/2 form per site -0.1814838700",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 98 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 7 x 7 patch (flux-free gauge) gives -71.94840253 total, -0.73416737 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type variational: DMRG at a stated bond dimension, no extrapolation stated; the column heading prints only 'DMRG' and χ (the text uses 1D DMRG with bond dimension 1024 as the TFI reference, Sec. III); the value lies above the Exact column (0.806725 in the stored total).",
+    "source_entry": "famP3-arxiv-2112-08394#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "DMRG χ=1024",
+      "energy": -71.57919314
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (7, 7), column DMRG χ = 1024",
+    "reported_as": "-0.73039993 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.73039993 x 98 = -71.57919314 (stored -71.57919314); S = sigma/2 form per site -0.1825999825",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 98 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 7 x 7 patch (flux-free gauge) gives -71.94840253 total, -0.73416737 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type variational: DMRG at a stated bond dimension, no extrapolation stated; the column heading prints only 'DMRG' and χ (the text uses 1D DMRG with bond dimension 1024 as the TFI reference, Sec. III); the value lies above the Exact column (0.369209 in the stored total). Record row (best variational bound on the instance): read hardest; energy, lattice, boundary, couplings, column and producer all agree.",
+    "source_entry": "famP3-arxiv-2112-08394#11 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "isoTNS D=4, η=8",
+      "energy": -71.24270426
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (7, 7), column isoTNS D = 4, η = 8",
+    "reported_as": "-0.72696637 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.72696637 x 98 = -71.24270426 (stored -71.24270426); S = sigma/2 form per site -0.1817415925",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 98 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 7 x 7 patch (flux-free gauge) gives -71.94840253 total, -0.73416737 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type projected (ruled 2026-10-24): isoTNS optimised by DMRG2 (App. D: 'We list the ground state energy for Kitaev honeycomb mode obtained through DMRG2 with 2D isoTNSs in Table III'), which Sec. III B calls 'not a standard variational algorithm', its energy 'bound by the MM error'; energy is a deterministic boundary-MPS contraction ('We contract each term approximately using the boundary MPSs approach [19]', D_bMPS = 2D^2, Sec. III B), so sampled false is right; the value lies above the Exact column. method_detail keeps only η; D is in method_as_published.",
+    "source_entry": "famP3-arxiv-2112-08394#12 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "isoTNS D=6, η=12",
+      "energy": -71.52760986
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+    "location": "Table III (Appendix D), row (7, 7), column isoTNS D = 6, η = 12",
+    "reported_as": "-0.72987357 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+    "conversion": "-0.72987357 x 98 = -71.52760986 (stored -71.52760986); S = sigma/2 form per site -0.1824683925",
+    "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 98 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 7 x 7 patch (flux-free gauge) gives -71.94840253 total, -0.73416737 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type projected (ruled 2026-10-24): isoTNS optimised by DMRG2 (App. D: 'We list the ground state energy for Kitaev honeycomb mode obtained through DMRG2 with 2D isoTNSs in Table III'), which Sec. III B calls 'not a standard variational algorithm', its energy 'bound by the MM error'; energy is a deterministic boundary-MPS contraction ('We contract each term approximately using the boundary MPSs approach [19]', D_bMPS = 2D^2, Sec. III B), so sampled false is right; the value lies above the Exact column. method_detail keeps only η; D is in method_as_published.",
+    "source_entry": "famP3-arxiv-2112-08394#13 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-3x4_24_P_K-1",
+      "method": "|ψpair⟩ (Table I)",
+      "energy": -18.04
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψpair⟩, column 3x4 unit cells",
+    "reported_as": "−9.02 ± 0.02 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-9.02 * 2 = -18.04; sigma 0.02 * 2 = 0.04",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.187917. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate.",
+    "source_entry": "famP4-arxiv-1411-5198#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-4x4_32_P_K-1",
+      "method": "|ψpair⟩ (Table I)",
+      "energy": -23.9
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψpair⟩, column 4x4 unit cells",
+    "reported_as": "−11.95 ± 0.03 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-11.95 * 2 = -23.9; sigma 0.03 * 2 = 0.06",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.186719. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate.",
+    "source_entry": "famP4-arxiv-1411-5198#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-4x4_32_P_K-1",
+      "method": "|ψMP⟩ (Table I)",
+      "energy": -24.86
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψMP⟩, column 4x4 unit cells",
+    "reported_as": "−12.43 ± 0.02 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-12.43 * 2 = -24.86; sigma 0.02 * 2 = 0.04",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.194219. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate.",
+    "source_entry": "famP4-arxiv-1411-5198#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-4x4_32_P_K-1",
+      "method": "|ψKL⟩ (Table I)",
+      "energy": -25.11
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψKL⟩, column 4x4 unit cells",
+    "reported_as": "−12.555 ± 0.005 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-12.555 * 2 = -25.11; sigma 0.005 * 2 = 0.01",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.196172. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate.",
+    "source_entry": "famP4-arxiv-1411-5198#7 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-4x4_32_P_K-1",
+      "method": "VMC, |ψKL⟩ with Wilson-loop projection, (Wx,Wy) = (+,+) (Table II)",
+      "energy": -25.1
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table II, 4x4 unit cells, (Wx,Wy) = (+,+), column VMC",
+    "reported_as": "−12.55±0.01 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-12.55 * 2 = -25.1; sigma 0.01 * 2 = 0.02",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.196094. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate. Distinct wave function from the Table I |psi_KL> row (additional Wilson-loop projection, Eq. 43); the (+,-) and (-,+) sectors print the same value and were rightly skipped by the loader as repeats. Sector label: the text names the degenerate 4x4 sectors (1,-1), (-1,1), (-1,-1), but Table II and Appendix B (Fig. 8 caption: for even L only (-,-) is excited) give (+,+), (+,-), (-,+); the label is copied from the table and does not change the energy.",
+    "source_entry": "famP4-arxiv-1411-5198#9 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-hex24_24_P_K-1",
+      "method": "|ψpair⟩ (Table I)",
+      "energy": -18.94
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψpair⟩, column hexagonal 24 sites",
+    "reported_as": "−9.47 ± 0.01 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-9.47 * 2 = -18.94; sigma 0.01 * 2 = 0.02",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.197292. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate.",
+    "source_entry": "famP4-arxiv-1411-5198#10 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-hex24_24_P_K-1",
+      "method": "|ψMP⟩ (Table I)",
+      "energy": -19.054
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψMP⟩, column hexagonal 24 sites",
+    "reported_as": "−9.527 ± 0.003 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-9.527 * 2 = -19.054; sigma 0.003 * 2 = 0.006",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.198479. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate.",
+    "source_entry": "famP4-arxiv-1411-5198#11 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-hex24_24_P_K-1",
+      "method": "|ψKL⟩ (Table I)",
+      "energy": -19.057
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψKL⟩, column hexagonal 24 sites",
+    "reported_as": "−9.5285 ± 0.0003 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-9.5285 * 2 = -19.057; sigma 0.0003 * 2 = 0.0006",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.198510. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate.",
+    "source_entry": "famP4-arxiv-1411-5198#12 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-hex24_24_P_K-1",
+      "method": "VMC, |ψKL⟩ with Wilson-loop projection, (Wx,Wy) = (+,+) (Table II)",
+      "energy": -19.056
+    },
+    "checked_on": "2026-10-23",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table II, hexagonal 24 sites, (Wx,Wy) = (+,+), column VMC",
+    "reported_as": "−9.528±0.002 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-9.528 * 2 = -19.056; sigma 0.002 * 2 = 0.004",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.198500. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate. Distinct wave function from the Table I |psi_KL> row (additional Wilson-loop projection, Eq. 43); the (+,-) and (-,+) sectors print the same value and were rightly skipped by the loader as repeats.",
+    "source_entry": "famP4-arxiv-1411-5198#14 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_400_O_J0.8_Jd1",
+      "method": "finite PEPS, D = 4",
+      "energy": -707.3664
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2309.10955v2 PDF (SM Table III), pypdf layout mode; v1 Table III identical; PRL 133, 026502 accepted manuscript (CHORUS) for the main text; APS SM not reachable (HTTP 401)",
+    "location": "SM Table III, row D = 4, column E",
+    "reported_as": "-0.442104(8) (S.S units, per site of the 20 x 20 open lattice (setup B), J1/J2 = 0.8 with J2 = 1)",
+    "conversion": "-0.442104 x 1600 = -707.3664; sigma 8e-06 x 1600 = 0.0128",
+    "note": "Own computation; Eq. (1) is the instance's H (J = J1 = 0.8 on square bonds, Jd = J2 = 1 on dimers, S.S, no shift); open 20 x 20, setup B (App. S-2); fixed-D finite PEPS energy sampled by MC, variational, sampled; sigma = printed MC error x 1600. Whole-lattice per-site reading supported by the size of the open-edge loss (1.5% above the periodic 10 x 10 value). Journal main text agrees with arXiv; the journal SM was not reachable (APS 401), arXiv v2 (2024-05-29) post-dates the accepted manuscript (2024-05-21). No other batch's row on the instance.",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#0 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_400_O_J0.8_Jd1",
+      "method": "finite PEPS, D = 6",
+      "energy": -708.5776
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2309.10955v2 PDF (SM Table III), pypdf layout mode; v1 Table III identical; PRL 133, 026502 accepted manuscript (CHORUS) for the main text; APS SM not reachable (HTTP 401)",
+    "location": "SM Table III, row D = 6, column E",
+    "reported_as": "-0.442861(9) (S.S units, per site of the 20 x 20 open lattice (setup B), J1/J2 = 0.8 with J2 = 1)",
+    "conversion": "-0.442861 x 1600 = -708.5776; sigma 9e-06 x 1600 = 0.0144",
+    "note": "Own computation; Eq. (1) is the instance's H (J = J1 = 0.8 on square bonds, Jd = J2 = 1 on dimers, S.S, no shift); open 20 x 20, setup B (App. S-2); fixed-D finite PEPS energy sampled by MC, variational, sampled; sigma = printed MC error x 1600. Whole-lattice per-site reading supported by the size of the open-edge loss (1.5% above the periodic 10 x 10 value). Journal main text agrees with arXiv; the journal SM was not reachable (APS 401), arXiv v2 (2024-05-29) post-dates the accepted manuscript (2024-05-21). No other batch's row on the instance.",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#1 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_400_O_J0.8_Jd1",
+      "method": "finite PEPS, D = 8",
+      "energy": -708.672
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2309.10955v2 PDF (SM Table III), pypdf layout mode; v1 Table III identical; PRL 133, 026502 accepted manuscript (CHORUS) for the main text; APS SM not reachable (HTTP 401)",
+    "location": "SM Table III, row D = 8, column E",
+    "reported_as": "-0.442920(2) (S.S units, per site of the 20 x 20 open lattice (setup B), J1/J2 = 0.8 with J2 = 1)",
+    "conversion": "-0.44292 x 1600 = -708.672; sigma 2e-06 x 1600 = 0.0032",
+    "note": "Own computation; Eq. (1) is the instance's H (J = J1 = 0.8 on square bonds, Jd = J2 = 1 on dimers, S.S, no shift); open 20 x 20, setup B (App. S-2); fixed-D finite PEPS energy sampled by MC, variational, sampled; sigma = printed MC error x 1600. Whole-lattice per-site reading supported by the size of the open-edge loss (1.5% above the periodic 10 x 10 value). Journal main text agrees with arXiv; the journal SM was not reachable (APS 401), arXiv v2 (2024-05-29) post-dates the accepted manuscript (2024-05-21). No other batch's row on the instance.",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#2 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_400_O_J0.8_Jd1",
+      "method": "finite PEPS, D = 10",
+      "energy": -708.6848
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2309.10955v2 PDF (SM Table III), pypdf layout mode; v1 Table III identical; PRL 133, 026502 accepted manuscript (CHORUS) for the main text; APS SM not reachable (HTTP 401)",
+    "location": "SM Table III, row D = 10, column E",
+    "reported_as": "-0.442928(3) (S.S units, per site of the 20 x 20 open lattice (setup B), J1/J2 = 0.8 with J2 = 1)",
+    "conversion": "-0.442928 x 1600 = -708.6848; sigma 3e-06 x 1600 = 0.0048",
+    "note": "Own computation; Eq. (1) is the instance's H (J = J1 = 0.8 on square bonds, Jd = J2 = 1 on dimers, S.S, no shift); open 20 x 20, setup B (App. S-2); fixed-D finite PEPS energy sampled by MC, variational, sampled; sigma = printed MC error x 1600. Whole-lattice per-site reading supported by the size of the open-edge loss (1.5% above the periodic 10 x 10 value). Journal main text agrees with arXiv; the journal SM was not reachable (APS 401), arXiv v2 (2024-05-29) post-dates the accepted manuscript (2024-05-21). No other batch's row on the instance. Record row: D = 10 sits 8e-6 per site (2.2 combined sigma) below D = 8; the paper calls D = 8 converged.",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#3 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/honeycomb-7x7_98_P_0.2",
+      "method": "GNN (Table IV)",
+      "energy": -177.4976
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (pypdf layout mode) and the project's arXiv HTML (Table IV cells); only arXiv version, no journal (OpenAlex/Crossref 2026-10-24)",
+    "location": "App. A.6.b Table IV, Honeycomb, J2 = 0.2, N = 98, column GNN",
+    "reported_as": "-0.4528(2) (<E>/N, S.S units)",
+    "conversion": "-0.4528 x 4 x 98 = -177.4976; sigma 2e-04 x 392 = 0.0784",
+    "note": "Own computation (column order GNN 32/98, GNN-2 32/98, ResNet 32/98 confirmed in the HTML table); Eq. (4) S.S with J1 = 1, J2 = 0.2; 98-site cluster b1 = 7 a1, b2 = 7 a2, periodic (App. A.5.a Table I); Sz = 0; final MCMC estimate with 2x10^5 samples, variational, sampled; peer_reviewed false is right. No duplicate on the instance (the LCN paper's GNN/GNN-2 cells quote these and are not stored).",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#4 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/honeycomb-7x7_98_P_0.2",
+      "method": "GNN-2 (Table IV)",
+      "energy": -177.8112
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (pypdf layout mode) and the project's arXiv HTML (Table IV cells); only arXiv version, no journal (OpenAlex/Crossref 2026-10-24)",
+    "location": "App. A.6.b Table IV, Honeycomb, J2 = 0.2, N = 98, column GNN-2",
+    "reported_as": "-0.4536(5) (<E>/N, S.S units)",
+    "conversion": "-0.4536 x 4 x 98 = -177.8112; sigma 5e-04 x 392 = 0.196",
+    "note": "Own computation (column order GNN 32/98, GNN-2 32/98, ResNet 32/98 confirmed in the HTML table); Eq. (4) S.S with J1 = 1, J2 = 0.2; 98-site cluster b1 = 7 a1, b2 = 7 a2, periodic (App. A.5.a Table I); Sz = 0; final MCMC estimate with 2x10^5 samples, variational, sampled; peer_reviewed false is right. No duplicate on the instance (the LCN paper's GNN/GNN-2 cells quote these and are not stored).",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#5 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/honeycomb-7x7_98_P_0.2",
+      "method": "ResNet (Table IV)",
+      "energy": -176.2432
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (pypdf layout mode) and the project's arXiv HTML (Table IV cells); only arXiv version, no journal (OpenAlex/Crossref 2026-10-24)",
+    "location": "App. A.6.b Table IV, Honeycomb, J2 = 0.2, N = 98, column ResNet",
+    "reported_as": "-0.4496(4) (<E>/N, S.S units)",
+    "conversion": "-0.4496 x 4 x 98 = -176.2432; sigma 4e-04 x 392 = 0.1568",
+    "note": "Own computation (column order GNN 32/98, GNN-2 32/98, ResNet 32/98 confirmed in the HTML table); Eq. (4) S.S with J1 = 1, J2 = 0.2; 98-site cluster b1 = 7 a1, b2 = 7 a2, periodic (App. A.5.a Table I); Sz = 0; final MCMC estimate with 2x10^5 samples, variational, sampled; peer_reviewed false is right. No duplicate on the instance (the LCN paper's GNN/GNN-2 cells quote these and are not stored).",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#6 (qmbl-verify 2026-10-23)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "ConvNext (6,3,3)[2,2]",
+      "energy": -179.7368
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "Phys. Rev. Research 7, 043099 (2025) publisher PDF, pypdf layout mode; arXiv:2505.03466v1 and v2 print the same value",
+    "location": "Table I, Shastry-Sutherland (J1 = 0.8, J2 = 1), ConvNext row; network (6,3,3)[2,2] and L = 10 from Sec. IV.G",
+    "reported_as": "-0.449 342(4) (E/N, S = sigma/2)",
+    "conversion": "-0.449342 x 4 x 100 = -179.7368; sigma 4e-6 x 400 = 0.0016",
+    "note": "Own computation; Eq. (1) is the instance's H with J1 = 0.8 on square bonds, J2 = 1 on dimers (Table I label; the Sec. I phrase 'J1 = 1, J2 = 0.8' is a slip, still in the journal text); 10 x 10 periodic; k = 0, point-group and spin-parity symmetric; final evaluation with 6.4x10^5 samples (App. C), variational, sampled. Not a duplicate: Table I's quoted fViT -0.449 329(1) is the separate Transformer n_l = 8 row (-179.7316) of arXiv:2311.16889.",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#11 (qmbl-verify 2026-10-23)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "ConvNext (4,3,2)[1,1], with patching",
+      "energy": -65.047248
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "Phys. Rev. Research 7, 043099 (2025) publisher PDF, pypdf layout mode; arXiv:2505.03466v1 and v2 print the same value",
+    "location": "Fig. 5 caption, first of 'the respective final energies' for L = 6; order fixed by Sec. IV.A relative errors",
+    "reported_as": "-0.451 717(6) (E/N, S = sigma/2)",
+    "conversion": "-0.451717 x 4 x 36 = -65.047248; sigma 6e-6 x 144 = 0.000864; relative error vs EGS/N = -0.451 7531: (-0.451717 + 0.4517531)/0.4517531 = 7.99e-05, the text prints 8.0e-5",
+    "note": "Own computation; J1 = 0.8, J2 = 1 as in Table I and as fixed by the quoted ED -0.451 7531 = the stored Sindermann ED -65.0524471206 / 144; 6 x 6 periodic; k = 0, symmetrised; final MC evaluation, variational, sampled. The ED cited in the caption is the separate exact row on the instance, not this one; no duplicate.",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#12 (qmbl-verify 2026-10-23)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "ConvNext (4,3,2)[1,1], without patching",
+      "energy": -65.035152
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "Phys. Rev. Research 7, 043099 (2025) publisher PDF, pypdf layout mode; arXiv:2505.03466v1 and v2 print the same value",
+    "location": "Fig. 5 caption, second of 'the respective final energies' for L = 6; order fixed by Sec. IV.A relative errors",
+    "reported_as": "-0.451 633(6) (E/N, S = sigma/2)",
+    "conversion": "-0.451633 x 4 x 36 = -65.035152; sigma 6e-6 x 144 = 0.000864; relative error vs EGS/N = -0.451 7531: (-0.451633 + 0.4517531)/0.4517531 = 2.66e-04, the text prints 2.7e-4",
+    "note": "Own computation; J1 = 0.8, J2 = 1 as in Table I and as fixed by the quoted ED -0.451 7531 = the stored Sindermann ED -65.0524471206 / 144; 6 x 6 periodic; k = 0, symmetrised; final MC evaluation, variational, sampled. The ED cited in the caption is the separate exact row on the instance, not this one; no duplicate.",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#13 (qmbl-verify 2026-10-23)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_256_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 8",
+      "energy": -459.654144
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 16, column '8 layers'; Appendix D ('for these larger sizes, we utilize a network with hyperparameters h = 12, d = 72, nl = 8, and a local attention window size of 5x5 patches'); Fig. 15 caption ('a local attention mechanism with a patch size of b = 2 and a window size restricted to 5 x 5 patches')",
+    "reported_as": "-0.448881 per site, units of J'",
+    "conversion": "-0.448881 x 4 x 256 = -459.654144 (stored -459.654144)",
+    "note": "Energy, units, cluster, boundary, J, sector and bound_type verified; H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 256; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Architecture: Appendix D says L = 16 and 18 use 'a network with hyperparameters h = 12, d = 72, nl = 8, and a local attention window size of 5x5 patches' (Fig. 15 caption: patch size b = 2), unlike the full attention of L <= 14; the stored method_detail does not say so (method_detail says so since 2026-10-24). Versions: v3 (28 Nov 2024) prints the same value to its printed precision. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#24 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_324_P_J0.8_Jd1",
+      "method": "Transformer, n_l = 8",
+      "energy": -581.721264
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2311.16889v4 (10 Apr 2025, journal-ref Phys. Rev. B 111, 134411) PDF, pypdf layout and plain mode (sources/2311.16889v4.layout.txt, .plain.txt; byte-identical to the repo's sources/2311.16889.pdf) and the arXiv v4 HTML Table 1 parsed with node (sources/2311.16889v4.html); v1, v2, v3 PDFs read for comparison. Journal PDF not reached: journals.aps.org/prb/pdf/10.1103/PhysRevB.111.134411 returned HTTP 401 to node fetch on 2026-10-24, no accepted-manuscript link (link.aps.org/accepted 404), harvest.aps.org 'not authorized'. v4 was posted two days after the journal publication date (Crossref published 2025-04-08; accepted 17 March 2025).",
+    "location": "Table I (Appendix C), row L = 18, column '8 layers'; Appendix D ('for these larger sizes, we utilize a network with hyperparameters h = 12, d = 72, nl = 8, and a local attention window size of 5x5 patches'); Fig. 15 caption ('a local attention mechanism with a patch size of b = 2 and a window size restricted to 5 x 5 patches')",
+    "reported_as": "-0.448859 per site, units of J'",
+    "conversion": "-0.448859 x 4 x 324 = -581.721264 (stored -581.721264)",
+    "note": "Energy, units, cluster, boundary, J, sector and bound_type verified; H = J sum_<r,r'> S.S + J' sum_<<r,r'>> S.S, S = 1/2 (Eq. 1), J square bonds, J' dimer bonds, J/J' = 0.8 = instance J 0.8, Jd 1; energies per site in units of J' (Table I caption, Appendix C text); L x L sites, periodic along a1 = (2,0), a2 = (0,2), N = L^2 = 324; Sz = 0, ground state in Ka = (0,0) with the symmetrised state of Eq. (A1). bound_type variational agrees: a symmetrised (C4 x sigma_xy, Eq. A1) ViT state sampled in Sz = 0, final energy of the optimisation. Architecture: Appendix D says L = 16 and 18 use 'a network with hyperparameters h = 12, d = 72, nl = 8, and a local attention window size of 5x5 patches' (Fig. 15 caption: patch size b = 2), unlike the full attention of L <= 14; the stored method_detail does not say so (method_detail says so since 2026-10-24). Versions: v3 (28 Nov 2024) prints -0.44885 in this cell, which is not the v4 value rounded; the stored value follows v4. Duplicate check: other rows on the instance: no other row on the instance; none repeats this number or quotes this paper. sigma: the caption says only 'The Monte Carlo error due to finite sampling effects is on the last digit'; a table-wide 'error on the last digit' is not a sigma, so sigma stays null (rule of 2026-09-17). Journal version not reached (HTTP 401); the value is from arXiv v4, posted after the journal publication.",
+    "source_entry": "famP1-arxiv-2311-16889#26 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-3x4_24_P_K-1",
+      "method": "|ψMP⟩ (Table I)",
+      "energy": -19.086
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψMP⟩, column 3x4 unit cells",
+    "reported_as": "−9.543 ± 0.004",
+    "conversion": "-9.543 * 2 = -19.086; sigma 0.004 * 2 = 0.008",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 2 * E_src. Energy, sigma, cluster, boundary, couplings and bound_type agree with the source; own computation, variational.",
+    "source_entry": "famP4-arxiv-1411-5198#1 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-3x4_24_P_K-1",
+      "method": "|ψKL⟩ (Table I)",
+      "energy": -19.088
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table I, row |ψKL⟩, column 3x4 unit cells",
+    "reported_as": "−9.544 ± 0.004",
+    "conversion": "-9.544 * 2 = -19.088; sigma 0.004 * 2 = 0.008",
+    "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 2 * E_src. Energy, sigma, cluster, boundary, couplings and bound_type agree with the source; own computation, variational. The same paper's lower VMC energy on this instance, Table II (Wx,Wy) = (+,-) -9.546(1), is its own row.",
+    "source_entry": "famP4-arxiv-1411-5198#2 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (i) EP state",
+      "energy": -216.73152
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (i) ('(i) EP state'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37627 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37627 * 4 * 144 = -216.731520 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(i) EP state' prints E = -0.37627; -0.37627 * 4 * 144 = -216.731520 (S.S per site in units of J2 -> Pauli total) equals stored -216.73152. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#0 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (ii) switch plaquette",
+      "energy": -208.13184
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (ii) ('(ii) switch plaquette'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.36134 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.36134 * 4 * 144 = -208.131840 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(ii) switch plaquette' prints E = -0.36134; -0.36134 * 4 * 144 = -208.131840 (S.S per site in units of J2 -> Pauli total) equals stored -208.13184. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees; parameters of case (i) with eta_x switched (1.2957), not re-optimised (still an upper bound). Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#2 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (iii) switch plaquette, -Δ2",
+      "energy": -216.69696
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (iii) ('(iii) switch plaquette,-∆2'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37621 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37621 * 4 * 144 = -216.696960 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(iii) switch plaquette,-∆2' prints E = -0.37621; -0.37621 * 4 * 144 = -216.696960 (S.S per site in units of J2 -> Pauli total) equals stored -216.69696. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees; parameters of case (ii) with Delta2 sign flipped, not re-optimised (still an upper bound). Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#4 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (iv) No plaquette order",
+      "energy": -213.339456
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (iv) ('(iv) No plaquette order'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.370381 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.370381 * 4 * 144 = -213.339456 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(iv) No plaquette order' prints E = -0.370381; -0.370381 * 4 * 144 = -213.339456 (S.S per site in units of J2 -> Pauli total) equals stored -213.339456. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees; parameters of case (i) with eta_x fixed to 1, not re-optimised (still an upper bound). Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#6 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (v) other EP state",
+      "energy": -216.70272
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (v) ('(v) other EP state'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37622 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37622 * 4 * 144 = -216.702720 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(v) other EP state' prints E = -0.37622; -0.37622 * 4 * 144 = -216.702720 (S.S per site in units of J2 -> Pauli total) equals stored -216.70272. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#8 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (vii) no potential, t2 dominate",
+      "energy": -216.22464
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (vii) ('(vii) no potential,t2 dominate'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37539 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37539 * 4 * 144 = -216.224640 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(vii) no potential,t2 dominate' prints E = -0.37539; -0.37539 * 4 * 144 = -216.224640 (S.S per site in units of J2 -> Pauli total) equals stored -216.22464. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#10 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (viii) no potential, Δ2 dominate",
+      "energy": -216.15552
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (viii) ('(viii) no potential, ∆2 dominate'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37527 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37527 * 4 * 144 = -216.155520 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(viii) no potential, ∆2 dominate' prints E = -0.37527; -0.37527 * 4 * 144 = -216.155520 (S.S per site in units of J2 -> Pauli total) equals stored -216.15552. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#12 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (ix) small potential",
+      "energy": -216.21312
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (ix) ('(ix) small potential'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37537 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37537 * 4 * 144 = -216.213120 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(ix) small potential' prints E = -0.37537; -0.37537 * 4 * 144 = -216.213120 (S.S per site in units of J2 -> Pauli total) equals stored -216.21312. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#14 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (x) no Δ2",
+      "energy": -214.89408
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (x) ('(x) no ∆2'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37308 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37308 * 4 * 144 = -214.894080 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(x) no ∆2' prints E = -0.37308; -0.37308 * 4 * 144 = -214.894080 (S.S per site in units of J2 -> Pauli total) equals stored -214.89408. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#16 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (xi) splitting Néel phase",
+      "energy": -216.06912
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (xi) ('(xi) splitting Néel phase'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37512 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37512 * 4 * 144 = -216.069120 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(xi) splitting Néel phase' prints E = -0.37512; -0.37512 * 4 * 144 = -216.069120 (S.S per site in units of J2 -> Pauli total) equals stored -216.06912. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#18 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (xii) splitting Néel, no large t2",
+      "energy": -215.41248
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (xii) ('(xii) splitting Néel, no large t2'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37398 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37398 * 4 * 144 = -215.412480 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(xii) splitting Néel, no large t2' prints E = -0.37398; -0.37398 * 4 * 144 = -215.412480 (S.S per site in units of J2 -> Pauli total) equals stored -215.41248. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#20 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (xiii) splitting Néel, no Néel order",
+      "energy": -215.37792
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (xiii) ('(xiii) splitting Néel, no Néel order'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37392 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37392 * 4 * 144 = -215.377920 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(xiii) splitting Néel, no Néel order' prints E = -0.37392; -0.37392 * 4 * 144 = -215.377920 (S.S per site in units of J2 -> Pauli total) equals stored -215.37792. Lattice 12 x 12 (caption: 12x12 sites by default), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#22 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_256_P_J0.7_Jd1",
+      "method": "Gutzwiller-projected parton state, case (vi) EP phase in 16x16 sites",
+      "energy": -385.45408
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2503.20122v2 (submitted 2026-03-12, PDF dated March 16, 2026), PDF via pypdf layout mode and arXiv HTML v2; arXiv v1 (2025-03-26) has no Table VI energies; Phys. Rev. B 113, 224440 (2026) full text not reached (APS returned 401 / 'Authorization Required' from this session); APS page: Received 22 December 2025, Revised 12 March 2026, Accepted 2 June 2026, Published 23 June 2026",
+    "location": "Table VI, row (vi) ('(vi) EP phase in 16×16 sites'), column E; caption 'Energy and variational mean-field parameters for different cases (12×12 sites by default) with J1/J2 = 0.7, Jr = 0.'",
+    "reported_as": "-0.37642 (Table VI column E; unit not printed, per site in units of J2)",
+    "conversion": "-0.37642 * 4 * 256 = -385.454080 (S.S per site in units of J2 -> Pauli total)",
+    "note": "Value confirmed: Table VI row '(vi) EP phase in 16×16 sites' prints E = -0.37642; -0.37642 * 4 * 256 = -385.454080 (S.S per site in units of J2 -> Pauli total) equals stored -385.45408. Lattice 16 x 16 (row label), torus (fermion BCs +/- define 4 topological sectors on a torus), J1/J2 = 0.7, Jr = 0 (caption), J1 on square bonds, J2 on the dimer diagonals = QMBL J = 0.7, Jd = 1; no constant shift; no error bar printed; bound_type variational agrees. Published as Phys. Rev. B 113, 224440 (2026) (Crossref and the APS abstract page, read 2026-10-24); the journal full text was not reached.",
+    "source_entry": "famP5-arxiv-2503-20122#24 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/honeycomb-7x7_98_P",
+      "method": "LCN",
+      "energy": -212.5032
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2206.07370v1 (only arXiv version); SDM 2024 published text not reachable (epubs.siam.org HTTP 403)",
+    "location": "Table 1 (p. 8), Honeycomb 98, J2 = 0, column 'LCN (ours)'",
+    "reported_as": "-0.5421(4) (per site, S.S units)",
+    "conversion": "-0.5421 x 392 = -212.5032; sigma 0.0004 x 392 = 0.1568",
+    "note": "Value checked: Table 1 Honeycomb 98, J2 = 0, column 'LCN (ours)' prints -0.5421(4); -0.5421 x 392 = -212.5032 (stored -212.5032), sigma 0.0004 x 392 = 0.1568 (stored 0.1568); per site, S.S units (Reference column), Kochkov's periodic 98-site cluster, own computation, final 200,000-sample evaluation, variational. Published in refereed proceedings, Proc. 2024 SIAM SDM, pp. 490-498 (Crossref doi:10.1137/1.9781611978032.57); the SDM text itself was not read (epubs.siam.org 403).",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#7 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/honeycomb-7x7_98_P_0.2",
+      "method": "LCN",
+      "energy": -177.8896
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:2206.07370v1 (only arXiv version); SDM 2024 published text not reachable (epubs.siam.org HTTP 403)",
+    "location": "Table 1 (p. 8), Honeycomb 98, J2 = 0.2, column 'LCN (ours)'",
+    "reported_as": "-0.4538(4) (per site, S.S units)",
+    "conversion": "-0.4538 x 392 = -177.8896; sigma 0.0004 x 392 = 0.1568",
+    "note": "Value checked: Table 1 Honeycomb 98, J2 = 0.2, column 'LCN (ours)' prints -0.4538(4); -0.4538 x 392 = -177.8896 (stored -177.8896), sigma 0.0004 x 392 = 0.1568 (stored 0.1568); per site, S.S units (Reference column), Kochkov's periodic 98-site cluster, own computation, final 200,000-sample evaluation, variational. Published in refereed proceedings, Proc. 2024 SIAM SDM, pp. 490-498 (Crossref doi:10.1137/1.9781611978032.57); the SDM text itself was not read (epubs.siam.org 403).",
+    "source_entry": "famP6-shastrysutherland-j1j2-heisenberg#9 (qmbl-verify 2026-10-23; skeptic upheld)"
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-3x4_24_P_K-1",
+      "method": "VMC, |ψKL⟩ with Wilson-loop projection, (Wx,Wy) = (+,−) (Table II)",
+      "energy": -19.092
+    },
+    "checked_on": "2026-10-24",
+    "scope": "value",
+    "method": "arXiv:1411.5198v2 PDF, pypdf layout mode (v1 identical); journal PDF (PRB 92, 035122) HTTP 401, not read",
+    "location": "Table II, 3 x 4 unit cells, (Wx,Wy) = (+,-), column VMC; text: 'In the case of the 3 × 4 unit-cells lattice, it is different and we found the energy of (Wx,Wy) = (1, −1) state is −9.546 ± 0.001.'",
+    "reported_as": "−9.546±0.001 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+    "conversion": "-9.546 * 2 = -19.092; sigma 0.001 * 2 = 0.002",
+    "note": "Own VMC of |psi_KL> with the Wilson-loop projection (Eq. 43), variational; factor 2 (Eq. 28 at alpha = 1). It sits 0.00022 (0.11 sigma) below the Exact row -19.09178, within its bar. The loader had dropped it as a repeat of the same paper's Exact row (within the printed digits, a different method); restored 2026-10-24.",
+    "source_entry": "famP4-arxiv-1411-5198#3 and #2 (qmbl-verify 2026-10-23; skeptic upheld); ruled 2026-10-24"
+  },
 ];

@@ -1,0 +1,298 @@
+Typeset  with  jpsj3.cls<ver.1.0>                                                                                                                                             Letter
+
+
+                 Third  boundary  of  the  Shastry-Sutherland  Model  by  Numerical  Diagonalization
+
+                                                                     Hiroki  Nakano1  and  T ˆoru  Sakai1,2
+
+
+                             1  Graduate  School  of  Material  Science,  University  of  Hyogo,  Kamigori,  Hyogo  678-1297,  Japan
+               2  National  Institutes  for  Quantum  and  Radiological  Science  and  Technology,  SPring-8  Sayo,  Hyogo  679-5148,  Japan
+
+
+                           The   Shastry-Sutherland   model   –   the   S =    1/2   Heisenberg   antiferromagnet   on   the   square   lattice   ac-
+                       companied   by   orthogonal   dimerized   interactions   –   is   studied   by   the   numerical-diagonalization   method.
+                       Large-scale   calculations   provide   results   for   larger   clusters   that   have   not   been   reported   yet.   The   present
+                       study  successfully  captures  the  phase  boundary  between  the  dimer  and  plaquette-singlet  phases  and  clar-
+                       iﬁes   that   the   spin   gap   increases   once   when   the   interaction   forming   the   square   lattice   is   increased   from
+                       the  boundary.   Our  calculations   strongly  suggest   that  in  addition   to  the  edge   of  the  dimer  phase  given   by
+                        J2/J1 ∼  0.675  and  the  edge  of  the  N´eel-ordered  phase  given  by  J2/J1 ∼  0.76,  there  exists  a  third  boundary
+                       ratio   J2/J1 ∼   0.70  that  divides  the  intermediate  region  into  two  parts,  where   J1   and   J2   denote  dimer  and
+                       square-lattice  interactions,  respectively.
+
+
+
+   It  is  well  known  that  frustration  in  magnetic  materials  en-                              	B
+                                             	C
+ables  exotic  quantum states  to  be  realized.  However, not  many
+such   quantum  states   are   obtained  in   a   mathematically   rigor-
+ous  form.  The  Shastry-Sutherland  model1)  is  a  member  of  the
+family  of  mathematical  models  in  which  not  all  but  only  some
+of  the  eigenstates  are  exactly  obtained.2–11)  Among  such  sys-
+tems,  the  Shastry-Sutherland  model  became  important  after  a
+good  candidate  material,  SrCu2(BO3)2,  was  discovered.12, 13)
+The  discovery  was  followed  by  extensive  theoretical  and  ex-
+perimental  studies.                                                                              Fig.    1.        (Color)   Lattice   structure   of   the   orthogonal   dimer   system,   namely,
+   Between  the  region  with  the  exact  dimer  ground  state  and                                 the  Shastry-Sutherland  model.  Thick  solid  lines  and  thin  solid  lines  denote
+the   weakly   frustrated   region   with    the   typical   N´eel-ordered                           bonds   for   J1   and   J2,   respectively.   Panel   (a)   shows   the   ﬁnite-size   clusters
+ground  state,  the  existence  of  the  plaquette-singlet  phase  was                               of   Ns =   16,  32,  and   36  by   blue,   green,   and   red   dotted   lines,   respectively.
+pointed  out  in  Ref.  14.  Various  approaches15–19)  have  theoret-                               Panel  (b)  shows  the  ﬁnite-size  clusters  of  Ns =   20  and  40  by  blue  and  red
+                                                                                                     dotted  lines,  respectively.
+ically   attempted   to   clarify   the   behavior   of   the   system   in   the
+intermediate  region.  In  the  numerical-diagonalization studies,
+unfortunately,  the  maximum  of  the  treated  system  sizes  –  32                              are  diﬀerent  from  each  other.
+spin  sites  in  Ref.  16  to  the  best  of  our  knowledge  –  was  not  so                         The  Hamiltonian  studied  here  is  given  by
+large.  On  the  other  hand,  the  pressure  dependence  of  the  spin                                               ∑                                       ∑
+gap  was  observed  experimentally.20–22)   Among  these  studies,                                  H =                               J1Si ·  S j +                        J2Si ·  S j.    (1)
+Ref.   22,   employing   an   electron   spin   resonance   study   under                                   ⟨i, j⟩:   orthogonal   dimer              ⟨i, j⟩:   square   lattice
+high   pressure   and   high   ﬁeld,   recently   reported   the   behavior                       Here,   Si   represents   the   S =    1/2   spin   operator   at   site   i.   We
+of   the   spin   gap   around   the   phase   transition   at   the   edge   of                  consider  the   case   of  an   isotropic  interaction  in   spin   space   in
+the   dimer   phase.   This   experimental  result   becomes  a   signif-                         this  study.  Site   i  is   assumed  to  characterize  the  vertex  of  the
+icant   motivation   to   theoretically   clarify   the   behavior   of   the                     square  lattice.  The  number  of  spin  sites  is  denoted  by  Ns.  The
+spin  gap  around  the  intermediate  region  from  the  numerical-                               ﬁrst  term of Eq. (1) denotes orthogonal dimer interactions rep-
+diagonalization  calculations  for  even  larger  systems.                                        resented   by   thick   solid   bonds  in   Fig.   1.   The   second   term   of
+   Under  the  circumstances,  the  purpose  of  the  present  paper                              Eq.  (1)  represents  interactions  forming  the  square  lattice  rep-
+is   to   report   numerical-diagonalization  results   of   even   larger                        resented   by   thin   solid   bonds  in   Fig.   1.   We   consider   that   the
+systems   and   to   examine   the   behavior   of   the   system   around                        two  interactions  between  the  two  spins  are  antiferromagnetic,
+the  intermediate  region  between  the  dimer  and  N´eel-ordered                                namely,  J1 >  0  and  J2 >  0.  Energies  are  measured  in  units  of
+regions.  The  present  study  provides  results  for  36-site  and  40-                          J1;  hereafter,  we  set   J1 =   1.  We  denote  the  ratio   J2/J1   by  r.
+site  systems  in  addition  to  smaller  systems  to  deepen  our  un-                           Note  here  that  when  r =   0,  the  system  is  an  assembly  of  iso-
+derstanding  of  this  system.  In  particular,  numerical  diagonal-                             lated   dimerized-spin  models,   whereas   the   system   is   reduced
+izations  of  the  40-site  system  require  large-scale  parallel  cal-                          to   the   S =   1/2   Heisenberg  antiferromagnet  on   the   ordinary
+culations   in   an   appropriate   supercomputer.   We   successfully                            square  lattice  in  the  limit  r → ∞.
+detect  the  edge  of  the  dimer  phase  and  the  edge  of  the  N´eel-                             We   treat  ﬁnite-size  clusters  with   system  size   Ns   under  the
+ordered phase  from  the  results  of  the  two  large  sizes.  Between                           periodic  boundary  condition.  In   this   study,   Ns =   16,  20,  32,
+the   two   edges,   we   additionally   detect   the   third   ratio   of   the                  36,  and  40  are  treated;  ﬁnite-size  clusters  are  shown  in  Fig.  1.
+boundary dividing the  intermediate region into two  parts,  each                                 Note  here  that  Ns/4  is  an  integer  and  that  all  the  clusters  are
+state  of  which  has  characteristics  of  a  correlation function that                          regular  squares,  although  the  squares  for  Ns =  20,  32,  and  40
+
+
+                                                                                               1
+2                J.  Phys.  Soc.  Jpn.                                                                                                                                                                      Letter                                                                                                                                                                                                    Author  Name
+             1
+                                                                                                                    0.4
+
+                                                                               r  =  1.5
+
+                                                                                   0.72
+          0.5                                                                                                       0.2                                    0.3
+                                                                                    0.69
+                                                                                    0.66
+                                                                                                                                                           0.2             0.68         0.72
+             0                                                                                                         0               0.8              1              1.2             1.4
+                0                 0.02              0.04              0.061/Ns                                                                                    r
+
+
+
+Fig.    2.        (Color)   Finite-size   energy   diﬀerences ∆  of   the   cases   Ns =   16,   20,      Fig.    3.        r-dependence  of  the  spin  gap  for  Ns =  36  and  40.  Open  squares  and
+   32,  36,  and   40  for  some  representative   r   as  a  function   of  1/Ns .  Black   cir-            closed   circles   denote   results   for   Ns =   36   and   40,   respectively.   Inset   is   a
+   cles,  red  pluses,  blue  crosses,  and  green  squares  denote  results  for  r =  1.5,                 zoom-in  view  of  the  region  of  r  around  r ∼  0.7.
+   0.72,  0.69,  and  0.66,  respectively.
+
+                                                                                                                  –13
+are  tilted.  The  regular-square  clusters  help  us  capture  well  the                                                                 (a)  Ns=36               –15                  (b)  Ns=40
+
+two  dimensionality  of  the  present  system.                                                                    –14
+    We   carry   out   our   numerical   diagonalizations  on   the   basis
+of   the   Lanczos   algorithm   to   obtain   the   lowest   energy   of H                                                                                        –16
+in  the   subspace  belonging  to ∑j  S  zj =    M.   Note  here  that  the                                       –15
+z-axis  is  taken  as  the  quantized  axis  of  each  spin.  It  is  widely                                              0.66        0.69        0.72r                   0.66       0.69       0.72r
+believed   that   numerical-diagonalization  calculations   are   un-                                                 5                   (c)  Ns=36                   5                (d)  Ns=40
+biased.   Thus,   one   can   obtain   reliable   information   about   the                                        103                                              103
+system.   The   energy   is   denoted   by   E(Ns,  M),   where   M   is   an                                         5                                                5
+integer;  in  particular, we  calculate  the  cases  M =  0  and  M =  1                                           102                                              102
+because  our  attention  is  focused  primarily  on  the  behavior  of                                                5                                                5
+the  spin  gap  given  by
+                                                                                                                   101    0.66        0.69        0.72              101   0.66       0.69       0.72
+                              ∆ =  E(Ns, 1)−  E(Ns, 0).                                                  (2)                              r                                              r
+Some   of   the   Lanczos   diagonalizations   were   carried   out   us-
+ing MPI-parallelized code that was  originally developed in the                                           Fig.    4.        (Color)  Energy-level  scheme  and  second  derivatives  of  the  energies
+study  of  Haldane  gaps.23)  The  usefulness  of  our  program  was                                         with   respect   to   the   ratio   r.  Panels   (a)   and   (b)   show   results   of   the   energy-
+conﬁrmed  in  large-scale  parallelized  calculations.?, 24–27, 29–34)                                       level   scheme   for   Ns =    36   and   40,   respectively.   Panels   (c)   and   (d)   show
+Note  here  that  the  largest-scale  calculations  in  this  study  have                                    results  of  the  second  derivatives   for  Ns =  36  and  40,  respectively.   Squares
+been   carried   out   using   either   the   K   computer   or   Oakforest-                                 and  diamonds  denote  results  for  M =  0  and   M =  1,  respectively.
+PACS.
+    Now,   let   us   observe   the   Ns-dependence  of ∆/J1   for   some                                 for   the   two   sizes   agree   well  with   each   other.   The  agreement
+representative   cases   of   r;   the   results   are   depicted   in   Fig.   2.                        strongly suggests  that  the  system-size  dependence has  already
+One  ﬁnds  that  for  r =   1.5, ∆/J1   signiﬁcantly  decreases  as  Ns                                   become   weak   and   that   ﬁnite-size   results   almost   agree   with
+is   increased.   The   decreasing   behavior   of ∆/J1   is   consistent                                 the  corresponding  values  for  the  thermodynamic  limit.  Next,
+with   that   in   the   gapless   N´eel-ordered   phase.   Our   results   for                           in   the   region  from  r ∼   0.68  to   r ∼   0.70,  on   the   other   hand,
+r =    1.5   suggest   an   almost   linear   dependence   on   1/Ns.   On                                ∆/J1   gradually  increases  with   increasing  r.  The  good  agree-
+the   other   hand,   for   r =    0.72   and   0.69, ∆/J1   decreases   with                             ment  of  data  for  the  two  sizes  is  still  maintained,  although  the
+increasing   Ns   for   small   Ns   but   shows   only   a   very   weak   Ns-                           r-dependence   of   whether   it   increases   or   decreases   has   been
+dependence  for  large  Ns.  For  r =   0.66, ∆/J1   ﬁnally  becomes                                      changed.  In  the  region  above  r ∼   0.70, ∆/J1   decreases  once
+almost  constant  for  all  ranges  of  Ns .  From  these  observations,                                  but  increases  again  as  r  is  increased. The  upturn of∆/J1  is  ob-
+it  is  considered  that  clusters  with  Ns =  36  and  40  capture  well                                served  for  both  Ns =  36  and  40.  The  signiﬁcant  characteristic
+the  behavior of large systems  approaching the  thermodynamic                                            in  this  region  is  that  there  appears  a  considerable  system-size
+limit.  Therefore,  focusing  our  attention  on  the  results  of  Ns =                                  dependence:  that  is, ∆/J1   for  Ns =  40  is  smaller  than  that  for
+36  and  40,  we  hereafter  investigate  the  behavior  of  the  present                                 Ns =   36   at   a   given   r.   To   ﬁnd   whether   the   nonzero  spin   gap
+system.                                                                                                   exists  or   is  absent  in   the   thermodynamic  limit,   we   will  need
+    Next,  let  us  observe  the  r-dependence  of  the  spin  gap∆  for                                  to  carry  out  further  analysis.
+ﬁnite-size  clusters  in  detail;  the  results  of  Ns =  36  and  40  are                                   To  deepen  our  understanding  of  the  behavior  of∆  showing
+depicted in  Fig.  3.  First,  one ﬁnds,  in  the region up to  r ∼  0.67,                                a   complex   dependence   of   decreases   and   increases,   next,   let
+that ∆/J1   gradually  decreases  as  r   is  increased  and  that  data
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                         Letter                                                                                                                                                                                 Author  Name                3
+
+                                                                                                                       (a)                                        0.1                (b)  r  =  1.50
+          14
+
+                                                                                                                                                                    0
+          12
+                                                                                                                                                                –0.1
+          10                                                                                                                                                              1          2          3          4          5distance
+
+                                                                                                                   0.1                 (c)  r  =  0.73            0.1                (d)  r  =  0.68
+            8
+                                                                                                                      0                                             0
+            6
+                                                                                                                  –0.1                                          –0.1
+                                  0.7                                  .80                                                 1          2          3          4          5distance1          2          3          4          5distance
+                                                       r                                                                                                          0.05
+                                                                                                                       0     (e)                                             (f)
+
+Fig.    5.        r-dependence  of  the  product  of  the  system  size  and  the  spin  gap  for                  –0.1                                               0
+   Ns =  36  and  40.  Open  squares  and  closed  circles  denote  results  for  Ns =  36                         –0.2
+   and  40,  respectively.
+
+                                                                                                                   –0.3  0.66     0.67     0.68     0.69         –0.050.68          0.7          0.72
+us  observe  the  r-dependence  of   E(Ns,  M);  the  results  are  de-                                                                  r                                               r
+picted  in  Fig.  4(a)  and  (b).  First,  one  easily  ﬁnds  that  E(Ns, 0)
+in   the   region  up   to   r ∼   0.67  is   constant.  The   constant  value                           Fig.    6.        (Color)  Correlation  functions ⟨S  zi S  zj⟩.  Panel  (a)  shows  the  positions
+corresponds  to  the  eigenenergy  of  the  rigorous  dimer  ground                                          of  site  i  and   j.  For  a  given  site  i  denoted  by  the  double  circle,    j  is  taken  in
+                                                                                                             three  directions  shown  by  squares,  triangles,  and  inversed  triangles.  Panels
+state.  This  clearly  indicates  that  this  region  corresponds  to  the                                   (b),  (c),   and   (d)   show   results   for ⟨S  zi S  zj⟩   as   a   function   of   the   distance   be-
+dimer  phase  with  the  exact  ground  state.  One  ﬁnds,  from  the                                        tween  i  and   j  for  r =   1.50,  0.73,  and  0.68,  respectively.   Panels  (e)  and  (f)
+results   of   E(Ns, 0)   above   r ∼    0.675,   that   another   state   dif-                              show   the   r-dependence   of ⟨S  zi S  zj⟩   for   the   shortest-distance   pair   along   the
+ferent   from   the   dimer    state    becomes   the   ground   state.   No                                 direction   represented   by   triangles.   Black   and   red   symbols   denote   results
+signiﬁcant   size   dependence   is   observed   with   respect   to   the                                   for  Ns =  36  and  40,  respectively.
+boundary  ratio   r ∼    0.675.   This   result   agrees   well   with   pre-
+viously   known   estimates   of   the   phase   boundary:  r =    0.677                                 method   was   successfully   used   in   the   study   of   the   plateau   -
+in   Ref.   14,   r =   0.678  in   Ref.   16,   r =   0.687  in   Ref.   17,   and                      –   the   gap   under   the   magnetic   ﬁeld   –   at   the   one-third   height
+r =   0.675  in  Ref.  18.  In  order  to  capture  the  behavior  in  the                               of   the   saturation   in   the   triangular-lattice   Heisenberg   antifer-
+region  r >∼   0.675,  we  evaluate  a  numerical  second  derivative                                    romagnet  with   next-nearest-neighbor  interactions.30)   The   re-
+given  by−δ2[E(Ns,  M)]/δr2 =  [2E(Ns,  M)|r− E(Ns,  M)|r+δr−                                            sults  of  this  analysis  for  the  present  system  with  Ns =  36  and
+E(Ns,  M)|r−δr]/(δr)2;  the  results  are  depicted  in  Fig.  4(c)  and                                 40   are   depicted   in   Fig.   5.   One   clearly   ﬁnds   that   the   results
+(d).  It  is  known  that  the  analysis  based  on  second  derivatives                                 from  the  two  sizes  agree  with  each  other  in  the  region  down
+is   useful   to   detect   the   boundaries  of   a   target   system.30, 35, 36)                       to  r ∼  0.75. When  r  is  further decreased,  the  results  of  N =  40
+In  Fig.  4(c)  and  (d),  the  second  derivatives  can  appropriately                                  clearly  become  larger  than   those  of   N =   36.  The  agreement
+capture   the   discontinuity   at   r ∼    0.675   for   both   M =    0   and                          in   the   behavior   of   Ns∆/J1   in   the   region   of   large   r   suggests
+M =   1.  In  addition,  the  second  derivatives  for  Ns =   36  show                                  that  the  ﬁnite-size  spin  gap  in  this  region  exhibits ∆ ∝   1/Ns,
+another   discontinuity   around   r ∼    0.69-0.70.   For   Ns =    40,                                 which  means  that  the  system   is  gapless.  In  the   region  below
+the   second   derivative   of   M =    1   also   shows   a   discontinuity                             r ∼   0.75,  on  the  other  hand,  the  ﬁnite-size  spin  gap  does  not
+around  r ∼  0.70;  that  of  M =  0  does  not  show  a  discontinuity                                  have  the  dependence∆ ∝   1/Ns.  Although  the  Ns -dependence
+but  it  shows  a  peak  at  r ∼   0.71  instead.  The  behavior  around                                 of ∆  in  the  region  between  r ∼   0.71  and  r ∼   0.75  is  unclear
+r ∼   0.70  is  consistent  with  the  result  r =   0.702  for  the  edge                               at  the  present  stage,  there  are  two  possible  scenarios.  One  is
+of   the   plaquette-singlet  phase   reported  in   the   Ns =   32   diag-                             that  the  system  is  gapped  without  any  long-range  orders.  The
+onalization   study   in   Ref.   16.   On   the   other   hand,   the   present                         other  is  that  the  system  is  gapless,  but  the  Ns-dependence of∆
+result  of  r ∼   0.70  diﬀers  from  r =   0.86  in  Ref.  14,  r =   0.75                              is  diﬀerent  from∆ ∝  1/Ns  corresponding  to  the  N´eel-ordered
+in   Ref.   17,   and   r =    0.765(15)   in   Ref.   18   as   results   for   the                     phase.
+edge  of  the  plaquette-singlet  phase.  The  diﬀerence  will  be  ex-                                       To  capture  the  change  from  the  N´eel-ordered  phase  to  the
+amined  later.  From  Fig.  4,  therefore,  one  can  understand  that                                   plaquette-singlet phase,  let  us  observe  correlation functions  in
+the   observed  changes  in   the   dependence  of ∆   are   due   to   the                              the  ground  state,  namely,⟨S  z
+energy-level  structure  of  both  E(Ns, 0)  and  E(Ns, 1).                                              and   Ns =    40   are   depicted   in   Fig.   6.   The   case   r =    1.50   ini S  zj⟩;  the  results  for  both  Ns =  36
+    Next, let  us  examine the  system-size dependence of the  spin                                      Fig.  6(b)  is  a  typical  one  for  the  N´eel-ordered  phase.  All  the
+gap  in  the  region  of  large  r.  When  r  is  inﬁnitely  large,  the  sys-                           results  shown  by  triangles  and  inversed  triangles  are  positive;
+tem   is   reduced   to   the   simple   square-lattice   antiferromagnet,                               this  feature  is  explained by  the  fact  that  both  i  and   j  for  a  mea-
+showing  that  the  spin  excitation  is  gapless  owing  to  the  exis-                                 sured  pair  are  in  a  common  sublattice  among  the  two  sublat-
+tence  of  the  N´eel  order.  As  a  means  of  distinguishing  whether                                 tices  of  the  N´eel-ordered state.  The  results  shown  by  the  trian-
+the  system  is  gapped  or  gapless,  the  method  of  observing  the                                   gles  and  the  inversed triangles  also  indicate  a  gradual decay  as
+product   of   the   system   size   and   the   spin   gap   is   known.   This
+4                J.  Phys.  Soc.  Jpn.                                                                                                                                                                      Letter                                                                                                                                                                                                    Author  Name
+
+           0.06                                                                                                      1
+
+
+           0.04
+                                                                                                                  0.5
+           0.02
+
+
+                00.7          0.8          0.9            1            1.1          1.2
+                                                     r                                                               00.7                                0.75                                  .80
+                                                                                                                                                              r
+Fig.    7.        (Color)  r-dependence  of  correlation  functions.  Squares  and  crosses
+   denote  results  of⟨S  zi S  zj⟩  for  next-nearest-neighbor  pair  illustrated  in  left  in-       Fig.    8.        Ratios    of ⟨S  z
+   set.  Diamonds  and  pluses  denote  results  of ⟨S  zi S  zj⟩  for  the  longest-distance              Crosses  and  closed  circles  denote  results  for  the  next-nearest-neighbor  pairi S  zj⟩   for    Ns =     40   divided    by ⟨S  zi S  zj⟩   for    Ns =     36.
+   pair  in  the  ﬁnite-size  clusters.  The  right  inset  shows  the  pair  from  the  com-              and  for  the  longest-distance  pair  presented  in  Fig.  7.
+   mon   centered   site   by   the   double   circle   to   the   corner   sites   by   green   (red)
+   closed  triangles  of  the  dotted-line  squares  for  Ns =   36  (Ns =   40).  Squares
+   and  diamonds  are  for  Ns =  36;  crosses  and  pluses  are  for  Ns =  40.
+                                                                                                        for  the  next-nearest-neighbor pair  gradually  decreases,  but  its
+                                                                                                        magnitude  is  not  so  small.  On  the  other  hand, ⟨S  zi S  zj⟩  for  the
+the  distance  is  increased.  The  results  shown  by  the  squares  in-                               pair  between  the  longest  distance  decreases  more  rapidly;  its
+dicate  alternating  signs.  This  behavior  suggests  the  staggered                                   magnitude   becomes   considerably   small   in   the   region   below
+nature  of  the  N´eel-ordered state.  Therefore, the  characteristics                                  r ∼  0.8.  To  capture  the  diﬀerence  of⟨S  zi S  zj⟩  between  the  next-
+of  the  N´eel-ordered  state   are  well  captured  in  Fig.   6(b).  The                              nearest-neighbor  pair  and  the  longest-distance  pair,  we  exam-
+results  in  Fig.  6(d),  on  the  other  hand, are  completely  diﬀerent                               ine   Rcf ,   deﬁned   as   the   ratio   of ⟨S  zi S  zj⟩   for   Ns =    40   divided
+from  those  in  Fig.  6(b).  Among  the  results  shown  by  the  trian-                               by  the  corresponding⟨S  zi S  zj⟩  for  Ns =   36  presented  in  Fig.  7;
+gles  and the  inversed triangles,  only the  shortest-distant datum                                    the   results   are   depicted   in   Fig.   8.   One   ﬁnds   that   Rcf   for   the
+by  the  inversed  triangle  is  positive,  and  the  rest  are  negative.                              longest-distance  pair  signiﬁcantly  decreases  below  r ∼   0.76,
+Absolute   values   of ⟨S  zi S  zj⟩   for   distances   larger   than   two   are                      whereas  the  ratio  for  the  next-nearest-neighbor  pair  is  main-
+very   small.   These   behaviors   of   the   correlation   functions   are                            tained  at  Rcf ∼  1.  This  observation suggests  that  the  N´eel-type
+diﬀerent  from  those  of  the  N´eel-ordered  state,  but  are  consis-                                long-range  order   survives  in   the   region   above   r ∼    0.76   and
+tent  with  those  of  the  plaquette-singlet state.  In  this  state,  each                            that   the   order   may   disappear   in   the   region   below   r ∼    0.76,
+plaquette  singlet  is  located  at  a  local  square  involving  the   J1                              where  the  N´eel-type  short-range  correlations  still  survive.  As
+bond  and  is  the  one  that  has  a  component  of  two-spin  singlet                                 previous  estimates  for  the  edge  of  the  N´eel-ordered  phase,  re-
+in   diagonal   pairs   of   the   square   among   two   possible   singlet                            call   r =    0.75   in   Ref.   17,   and   r =    0.765(15)  in   Ref.   18;   the
+states   of   four   spins.   In   the   results   in   Fig.   6(c)   for   r =    0.73,                present  result,  r ∼   0.76  for  the  edge  of  the  region  where  the
+the  pattern  of  whether ⟨S  zi S  zj⟩  is  positive  or  negative  is  com-                           N´eel-type  long-range  order  deﬁnitely  exists,  agrees  well  with
+mon  with  Fig.  6(b)  and  diﬀerent  from  Fig.  6(d).  A  signiﬁcant                                  those  previous  estimates.
+diﬀerence   between   Fig.   6(c)   and   Fig.   6(d)   is ⟨S  zi S  zj⟩   for   the                        In  summary, we  have  studied  the  Shastry-Sutherland model
+shortest-distant  pair   shown   by   the   triangle;  its   r-dependence                               by   the   Lanczos-diagonalization   method.   The   present   study
+is   depicted  in   Fig.   6(e)   and  (f).   In   Fig.   6(e),   the   dependence                      has   presented   diagonalization   results   for   36-site   and   40-site
+reveals  a   discontinuity  at   r ∼   0.675  for   Ns =   36   and   40;  in                           clusters  that  have  not  been  reported  before.  Our  numerical  re-
+Fig.  6(f),  another  discontinuity appears  for  Ns =  36,  which  di-                                 sults   have   successfully   clariﬁed   the   dependence   of   the   spin
+vides  the  region  of  r  into  negative⟨S  zi S  zj⟩  and  positive⟨S  zi S  zj⟩                      gap on the ratio of  interactions. Our calculations have success-
+regions.   For   Ns =    40   in   Fig.   6(f), ⟨S  zi S  zj⟩   changes   its   sign                    fully  captured the  edge of  the  dimer  phase to  be  J2/J1 ∼  0.675
+around  r   similar  to  that  for  the  discontinuity  of   Ns =   36,  al-                            and   the   edge   of   the   N´eel-ordered  phase   to   be   J2/J1 ∼   0.76.
+though⟨S  zi S  zj⟩  for  Ns =  40  is  not  discontinuous.  One  possible                              A   noteworthy   ﬁnding   is   a   third   speciﬁc   ratio   J2/J1 ∼    0.70
+scenario  for  the  spin  state  in  the  larger-ratio  region  is  that,  if                           which   divides   the   intermediate   region   between   the   ratios   of
+the   system  forms  plaquette  singlets  located  at  a   local  square                                the   two   edges   into   two   parts.   We   have   found   from   observa-
+involving  the   J1   bond,  each  plaquette  singlet  is  the  other  sin-                             tion  of  correlation  functions  that  the  spin  state  in  the  smaller-
+glet   state   which   does   not   include   a   component   of   two-spin                             ratio  region  and  the  one  in  the  larger-ratio  region  are  diﬀerent
+singlet  in  diagonal  pairs  of  the  square.  Therefore,  our  calcu-                                 from  each  other.  The  properties of  the  ground states  in  the  two
+lations   suggest   that   the   state   for   r =   0.73   shows   a   behavior                        intermediate  regions  should  be  further  studied  from  diﬀerent
+that  is  diﬀerent  from  that  of  the  state  for  r =  0.68  and  that  the                          viewpoints  in  future.  Such  studies  would  greatly  contribute  to
+behavior  changes  at  common  r  values  for  Ns =  36  and  40.                                       our  fundamental  understanding  of  frustrated  magnetism.
+    To  ﬁnd  out  whether  or  not  the  N´eel-type  long-range  order                                  Acknowledgment
+survives,  next,  let  us  observe  the  r-dependence  of  correlation
+functions ⟨S  zi S  zj⟩   in   detail;  the   results  are   depicted  in   Fig.   7.                       We   wish   to   thank   Professor   N.   Todoroki   for   fruitful   dis-
+One   ﬁnds   that   as   r    is   decreased   down   to   r ∼     0.7, ⟨S  zi S  zj⟩                   cussions.    This    work    was    partly    supported   by    JSPS    KAK-
+                                                                                                        ENHI     Grant     Numbers     16K05418,     16K05419,    16H01080
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                         Letter                                                                                                                                                                                 Author  Name                5
+(JPhysics),     and     18H04330    (JPhysics).     Nonhybrid    thread-                                             12)     H.  Kageyama,  K. Yoshimura,  R.  Stern,  N.V. Mushnikov,  K. Onizuka,  M.
+parallel calculations in  numerical diagonalizations were  based                                                           Kato,   K.  Kosuge,   C.  P.  Slichter,   T.  Goto,   and   Y.  Ueda,   Phys.  Rev.  Lett.
+on    TITPACK    version    2    coded    by    H.    Nishimori.    In    this                                             82,  3168  (1999).
+research,    we    used    the    computational    resources    of    the    K                                       13)     S.  Miyahara  and  K.  Ueda,  Phys.  Rev.  Lett.  82,  3701  (1999).
+                                                                                                                     14)     A.  Koga  and  N.  Kawakami,  Phys.  Rev.  Lett.  84,  4461  (2000).
+computer    provided    by    the    RIKEN    Advanced    Institute    for                                           15)     Y.  Fukumoto,  J.  Phys.  Soc.  Jpn.  69,  2755  (2000).
+Computational   Science   through   the   HPCI   System   Research                                                   16)     A.  L ¨auchli,  S.  Wessel,  and  M.  Sigrist,  Phys.  Rev.  B  66,  014401  (2002).
+projects   (Project   ID:   hp170018,   hp170028,   and   hp170070).                                                 17)     J.  Lou,  T.  Suzuki,  K.  Harada,  and  N.  Kawashima,  arXiv:1212.1999.
+We  used  the  computational  resources  of  Fujitsu  PRIMERGY                                                       18)     P.  Corboz  and  F.  Mila,  Phys.  Rev.  B  87,  115144  (2013).
+CX600M1/CX1640M1(Oakforest-PACS)   provided   by    Joint                                                            19)     Z.  Wang  and  C.  D.  Batista,  Phys.  Rev.  Lett.  120,  247201  (2018).
+                                                                                                                     20)     H.    Ohta,    T.    Sakurai,    R.    Matsui,    K.    Kawasaki,    Y.    Hirao,    S.    Okubo,
+Center   for  Advanced  High   Performance  Computing  through                                                             K.  Matsubayashi,  Y.  Uwatoko,  K.  Kudo,  and  Y.  Koike,  J.  Phys.  Chem.  B
+the  HPCI  System  Research  project (Project  ID:  hp170207 and                                                           119,  13755  (2015).
+hp180053).  Some  of  the  computations  were  performed  using                                                      21)     M.   E.   Zayed,   Ch.   R ¨uegg,   J.   Larrea   J.,   A.   M.   L ¨auchli,   C.   Panagopou-
+the   facilities   of   the   Department   of   Simulation   Science,   Na-                                                los,   S.   S.   Saxena,   M.   Ellerby,   D.   F.   McMorrow,   Th.   Str¨assle,   S.   Klotz,
+tional   Institute   for   Fusion   Science;   Institute   for   Solid   State                                             G.   Hamel,   R.   A.   Sadykov,   V.   Pomjakushin,    M.   Boehm,   M.   Jim ´enez-
+                                                                                                                           Ruiz,  A.  Schneidewind,  E.  Pomjakushina,  M.  Stingaciu,  K.  Conder,  and
+Physics,   The   University   of   Tokyo;   and   Supercomputing  Di-                                                      H.  M.  Rønnow,  Nature  Physics,  13,  962  (2017).
+vision,    Information    Technology    Center,    The    University    of                                           22)     T.  Sakurai,  Y.  Hirao,  K.  Hijii,  S.  Okubo,  H.  Ohta,  Y.  Uwatoko,  K.  Kudo,
+Tokyo.                                                                                                                     and  Y.  Koike,  J.  Phys.  Soc.  Jpn.  87,  033701  (2018).
+                                                                                                                     23)     H.  Nakano,  and  A.  Terai,  J.  Phys.  Soc.  Jpn.  78,  014003  (2009).
+                                                                                                                     24)     H.  Nakano  and  T.  Sakai,  J.  Phys.  Soc.  Jpn.  80,  053704  (2011).
+ 1)     B.  S.  Shastry  and  B.  Sutherland,  Physica  B  &  C  108B,  1069  (1981).                                25)     H.  Nakano,  S.  Todo,  and  T.  Sakai,  J.  Phys.  Soc.  Jpn.  82,  043715  (2013).
+ 2)     C.  K.  Majumdar  and  D.  K.  Ghosh,  J.  Math.  Phys.  10  1388  (1969).                                   26)     H.  Nakano  and  T.  Sakai,  J.  Phys.  Soc.  Jpn.  83,  104710  (2014).
+ 3)     C.  K.  Majumdar,  J.  Math.  C  3  911  (1970).                                                             27)     H.  Nakano  and  T.  Sakai,  J.  Phys.  Soc.  Jpn.  84,  063705  (2015).
+ 4)     W.  J.  Caspers,  Physica  115A,  275  (1982).                                                               28)     H.   Nakano,   Y.   Hasegawa,   and   T.   Sakai,   J.   Phys.   Soc.   Jpn.  84,   114703
+ 5)     I.  Aﬄeck,  T.  Kennedy,   E.  Lieb,  and  H.  Tasaki,  Phys.  Rev.  Lett.  59,  799                               (2015).
+      (1987).                                                                                                        29)     H.  Nakano,  and  T.  Sakai,  J.  Phys.  Soc.  Jpn.  86,  063702  (2017).
+ 6)     C.  Lange,  A.  Klumper,  and  J.  Zittartz,  Z.  Phys.  B  96,  267  (1994).                                30)     H.  Nakano,  and  T.  Sakai,  J.  Phys.  Soc.  Jpn.  86,  114705  (2017).
+ 7)     M.  W.  Long  and  S.  Siak,  J.  Phys.:  Condens.  Matter  5,  5811  (1993).                                31)     H.  Nakano,  and  T.  Sakai,  J.  Phys.  Soc.  Jpn.  87,  063706  (2018).
+ 8)     H.  Nakano  and  M.  Takahashi,  Phys.  Rev.  B  54,  9000  (1996).                                          32)     Y.  Hasegawa,  H.  Nakano,  and  T.  Sakai,  Phys.  Rev.  B  98,  014404  (2018).
+ 9)     H.  Nakano  and  M.  Takahashi,  J.  Phys.  Soc.  Jpn.  66,  228  (1997).                                    33)     T.  Sakai,  and  H.  Nakano,  AIP  Advances  8,  101408  (2018).
+10)     H.  Nakano  and  M.  Takahashi,  J.  Phys.  Soc.  Jpn.  67,  1126  (1998).                                   34)     H.  Nakano,  and  T.  Sakai,  J.  Phys.  Soc.  Jpn.  87,  105002  (2018).
+11)     S.  Tonooka,  H.  Nakano,  K.  Kusakabe,  and  N.  Suzuki,  J.  Phys.  Soc.  Jpn.                            35)     W.-L.  You,  Y.-W.  Li,  and  S.-J.  Gu,  Phys.  Rev.  E  76,  022101  (2007).
+      76,  065002  (2007).                                                                                           36)     A.   F.   Albuquerque,    F.   Alet,    C.   Sire,    and    S.   Capponi,    Phys.    Rev.    B
+                                                                                                                           81,064418  (2010).

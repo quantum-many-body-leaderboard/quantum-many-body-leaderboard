@@ -1,0 +1,716 @@
+                  Quantum Criticality and Spin Liquid Phase in the Shastry-Sutherland model
+
+                                         Jianwei  Yang,1  Anders  W.  Sandvik,2, 3,∗  and  Ling  Wang4,†
+                       1Beijing Computational Science Research Center, 10 East Xibeiwang Road, Beijing 100193, China
+                 2Department of Physics, Boston University, 590 Commonwealth Avenue, Boston, Massachusetts 02215, USA
+ 3Beijing National Laboratory for Condensed Matter Physics and Institute of Physics, Chinese Academy of Sciences, Beijing 100190, China
+                                      4Department of Physics,  Zhejiang University,  Hangzhou 310000,  China
+                                                                  (Dated: March 1, 2022)
+                    Using the density-matrix renormalization group method for the ground state and excitations of the Shastry-
+                 Sutherland spin model, we demonstrate the existence of a narrow quantum spin liquid phase between the pre-
+                 viously known plaquette-singlet and antiferromagnetic states.  Our conclusions are based on ﬁnite-size scaling
+                 of excited level crossings and order parameters. Together with previous results on candidate models for decon-
+                 ﬁned quantum criticality and spin liquid phases, our results point to a uniﬁed quantum phase diagram where
+                 the deconﬁned quantum-critical point separates a line of ﬁrst-order transitions and a gapless spin liquid phase.
+                 The frustrated Shastry-Sutherland model is close to the critical point but slightly inside the spin liquid phase,
+                 while previously studied unfrustrated models cross the ﬁrst-order line.  We also argue that recent heat capacity
+                 measurements in SrCu2(BO3)2 show evidence of the proposed spin liquid at pressures between 2.6 and 3 GPa.
+
+
+   The quasi two-dimensional (2D)S = 1/2 quantum magnet                            L≡ Ly  =  2n, Lx  =  2L.  In this geometry, the model has
+SrCu2(BO3)2  [1–3] has emerged [4–9] as the most promis-                           a preferred singlet pattern which minimizes the boundary en-
+ing realization of a deconﬁned quantum-critical point (DQCP)                       ergy in the PS phase; thus the two-fold degeneracy is broken
+[10–12], where a state spontaneously forming a singlet pattern                     and the ground state is unique, as illustrated in Fig. 1.
+meets  an  antiferromagnetic  (AF)  state  in  a  phase  transition                   We have developed efﬁcient procedures for calculating not
+associated with fractionalized excitations (spinons).  The in-                     only the ground state with full SU(2) symmetry [23, 24], but
+tralayer interactions of the Cu spins correspond to the Shastry-                   also successively generating excited states by orthogonalizing
+Sutherland (SS) model [13], with highly frustrated AF inter-                       to previous states [25–27].   Imposing stringent convergence
+dimer (J) and intradimer (J’) Heisenberg couplings.  The SS                        criteria for given Schmidt numberm, we have reached sufﬁ-
+model  has  three  known  ground  states  versus g  = J/J′;  a                     ciently largem for reliably extrapolating to discarded weight
+dimer singlet (DS) state for smallg [13], a N´eel AF state for                     ϵm = 0 (Supplemental Material [28]) forL up to 10, 12, or 14
+largeg, and a two-fold degenerate plaquette-singlet (PS) state                     depending on quantity (energies and order parameters).  Any
+forg∈ [0.68, 0.77] [3, 6, 14, 15].                                                 remaining errors in the results are small on the scale of the
+   At ambient pressure SrCu2(BO3)2 is in the DS phase [1, 2]                       graph symbols in the ﬁgures presented below.
+but the other SS phases have been anticipated under high pres-                        We focus on the windowg∈ [0.7, 0.9], which straddles the
+sure [16].  Recent heat capacity [7, 8], neutron scattering [4],                   PS and AF phases.  The ground state of the system is always
+and Raman [9] experiments have indeed conﬁrmed some vari-                          a singlet, and we analyze the gaps ∆(S) to the lowest excited
+ant [17, 18] of the PS phase (from 1.7 to 2.5 GPa at temper-                       singlet (S = 0), triplet (S = 1), and qintuplet (S = 2). Finite-
+atures T <  2  K)  and  an  AF  phase  (between  3  and  4  GPa                    size crossings of excited levels with different spin are often
+below 4 K). A direct PS–AF transition may then be expected                         used  indicators  of  quantum  phase  transitions  in  spin  chains
+between 2.6 and 3 GPa [19] at temperatures not yet reached.                        [29–32], and this method was also applied to the 2DJ-Q [33]
+   Here we show that the above picture is incomplete.  Using                       andJ1-J2 [26, 34, 35] Heisenberg models. We here use level
+the  density-matrix  renormalization  group  (DMRG)  method                        crossings to detect the transitions out of the PS phase and into
+[20], we study the ground state and low-lying excitations of                       the AF state, following Ref. 26 closely. We also study the PS
+the  SS  model.   Based  on  the  lattice-size  dependence  of  the
+level spectrum and order parameters, we conclude that a nar-
+row gapless spin liquid (SL) phase intervenes between the PS
+and AF phases. In light of this ﬁnding, the absense of signs of
+any phase transition between 2.6 and 3 GPA [7, 8] opens the
+intriguing prospect of an SL phase in SrCu2(BO3)2.
+   DMRG calculations.—The SS model with AF couplingsJ
+between ﬁrst neighbor spins⟨ij⟩ andJ′ on a subset of second
+neighbors⟨ij⟩′ is illustrated in Fig. 1. The Hamiltonian is [13]
+                                                                                   Figure 1. The SS lattice with openx and periodicy boundary condi-
+               H =J ∑Si· Sj +J′ ∑                                                  tions.  The lengthsLx andLy are both even.  Nearest neighbors are
+                         ⟨ij⟩                 ⟨ij⟩′ Si· Sj,               (1)      coupled at strengthJ  by Eq. (1) and the blue diagonal links repre-
+                                                                                   sent the dimer couplingsJ′. The open edges break the Z2 symmetry
+here  on Lx× Ly  cylinders  [21,  22]  with  open  and  peri-                      of the PS phase, thus inducing a singlet density pattern as indicated
+odic  boundaries  in  the x  and y  direction,  respectively,  and                 schematically by the thickness of the red lines.
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                  Figure 3. Locations of gap crossings and singlet minimums, with the
+                                                                                  lines showing linear-in-1/L2 ﬁts. TheL = 4 singlet-quintuplet point
+                                                                                  is atg≈ 1.1, falling very close to the ﬁtted line.  The extrapolated
+                                                                                  critical points aregc1 = 0.788± 0.002 andgc2 = 0.820± 0.002.
+
+
+                                                                                  and becoming the gapped amplitude mode in the AF phase
+                                                                                  [6]. However, an AF phase starting atgc1 is inconsistent with
+                                                                                  the singlet-quintuplet crossing pointgc2.  Though the separa-
+                                                                                  tion between the transition pointsgc1≈ 0.79 andgc2≈ 0.82
+                                                                                  is small, an eventual ﬂow toward a common point for larger
+Figure 2. (a) The lowest singlet and triplet gaps vsg in the neighbor-            systems appears unlikely, given the absence of signiﬁcant cor-
+hood of the expected quantum phase transition out of the PS phase.                rections  to  the 1/L2  forms  in  Fig.  3.   Below  we  will  show
+(b) The lowest singlet and quintuplet gaps forg inside the AF phase,              evidence for a gapless SL phase forg∈ (gc1,gc2).
+close to its quantum phase transition. The curves are polynomial ﬁts.                 Both  gap  crossings  match  those  in  the J1-J2  Heisenberg
+                                                                                  model [26], where several numerical studies have reached a
+and AF order parameters to corroborate the quantum phases                         consensus  on  the  existence  of  a  gapless  SL  phase  between
+and phase transitions.                                                            dimerized and AF phases [24, 26, 34–36]. Field theories have
+                                                                                  also recently been proposed for this SL phase [37, 38]. More-
+   We  graph  singlet  and  triplet  gaps  in  Fig.  2(a)  and  simi-             over,  the  same  level  crossings  were  found  at  the  transition
+larly singlet and quintuplet gaps in Fig. 2(b),  in g  windows                    from a critical state to either a dimerized state (singlet-triplet
+where gap crossings are observed.  In Fig. 3 we analyze the                       crossing) or an AF state (singlet-quintuplet crossing) in a frus-
+gap crossing points and the singlet minimum that is also ob-                      trated Heisenberg chain with long-range interactions [26, 31].
+served  in  Fig.  2(a).   Given  the  previous  empirical  observa-               Given these results for related models, the distinctgc1 andgc2
+tions of crossing-point drifts in 2D systems [26, 33], we graph                   points suggest a gapless SL phase also in the SS model.
+the results versus 1/L2 and ﬁnd almost perfect linear behav-                          In Fig. 4 we analyze the size dependent gaps in and close
+iors.   Interesting,  the  singlet-triplet  crossing  and  the  singlet           to the putative SL phase.  Atg  = 0.80, both the singlet and
+minimum both extrapolate to gc1≈  0.79, while the singlet-                        triplet gaps exhibit asymptotic 1/L scaling, corresponding to
+quintuplet points scale to a higher value;gc2≈ 0.82.                              a dynamic exponentz = 1 inside the SL phase. Atg = 0.76,
+   It  was  previously  shown  [26,  31]  that  the  crossing  point              in the PS phase, the singlet (and also the not shown triplet)
+between  the  lowest  singlet  and  quintuplet  levels  is  a  useful             converges exponentially to a non-zero gap, as expected in the
+ﬁnite-size  estimator  for  a  quantum  phase  transition  into  an               SS model with cylindrical boundaries (Fig. 1) for which the
+AF  phase,  given  that  the  lowest S >  0  states  are  Ander-                  shifted PS state is gapped by boundary energies.  In the AF
+son quantum rotors, separated from the ground state by gaps                       phase, we ﬁnd convergence to a non-zero amplitude-mode en-
+∆A(S)∝S(S +1)/L2, while the singlet excited state should                          ergy at g  =  0.84.  In Fig. 4 we have ﬁtted a polynomial in
+be the gapped amplitude (“Higgs”) mode in the AF state [6].                       this case,  which works better than an exponentially conver-
+In contrast, in other putative phases adjacent to the AF phase                    gent form, likely due to a gapless spectrum above the lowest
+(in the SS model and many other models),  the S  =  2 state                       singlet (unlike the isolated singlet mode in the PS state).
+will be above the lowestS = 0 excitation.  Thus, we identify                          We next study order parameters.  We use the squared AF
+the extrapolated singlet-quintuplet crossing pointgc2≈ 0.82                       magnetization, m2s  = L−4∑ijφij⟨Si· Sj⟩,  where i,j  are
+with a quantum phase transition into the AF state.                                sites  in  the  central L× L  area  of  a  2L× L  system  and
+   Following previous work on theJ1-J2 model [26], we iden-                       φij =±1 is the staggered phase. To detect PS order we deﬁne
+tify the extrapolated singlet-triplet crossing pointgc1≈ 0.79                     Qr≡  12(Pr + P−1r   ), with Pr a cyclic permutation operator
+with the transition out of the PS state.  The singlet minimum                     on  the  four  spins  of  a  plaquette  at r.   Given  the  boundary-
+by itself is consistent with the PS gap vanishing at a DQCP                       induced plaquette pattern (Fig. 1), we can detect the PS order
+                                                                                                                                                            3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure  4.   Gaps  vs  inverse  system  size.   The  singlet  and  triplet  at
+g = 0.80 (SL phase) have been ﬁtted to the form ∆ =a/L +b/L2
+(a andb being ﬁtting parameters). The singlets in the PS (g = 0.76)              Figure  5.   Squared  AF  order  parameter  vs  inverse  system  size  for
+and AF (g  =  0.84) phases converge to non-zero values, as shown                 severalg values. The corresponding PS order parameters are shown
+with a ﬁt of the form ∆ = a +be−cL (ﬁtting parametersa,b,c) in                   in the inset. The dashed curves with colors matching the symbols in
+the former case and a quadratic form in the latter case.                         the main graph are second-order polynomials, while the solid curves
+
+                                                                                 are of the critical form∝ L−(1+η)  with η≈  0.32 and η≈  0.23
+as the difference of⟨Qr⟩ on two adjacent “empty” SS plaque-                      for g  =  0.80 and 0.82, respectively.  Fitting to the mp  data is not
+ttes [39]. Thus, we deﬁnemp =⟨QR− QR′⟩, where R and                              meaningful, but the non-monotonic behavior for g  =  0.80-0.84 is
+                                                                                 explained by boundary PS order outside the PS phase (Supplemental
+R′ are both close to the center of the cylinder (the landscape of                Material [28]) andmp→ 0 forL→∞.
+Qr values is shown in the Supplemental Material [28]). Both
+order parameters are graphed versus 1/L in Fig. 5.
+   Second-order  polynomial  extrapolations  of  the  AF  order                  ﬁrst-order transitions [41, 48, 55] or other scenarios [45, 50].
+parameter in Fig. 5 show thatm2s vanishes forg≈ 0.82, thus                       One proposal is that the DQCP is unreachable (e.g., existing
+providing  further  evidence  for  the  AF  phase  starting  at  the             only in dimensionality below 2+1) and described by a nonuni-
+extrapolated singlet-quintuplet point gc2≈  0.82.  The poly-                     tary conformal ﬁeld theory (CFT) [56–62].
+nomial form is strictly appropriate only inside the AF phase,                       In some variants of theJ-Q model clearly ﬁrst-order tran-
+while at a critical point (or phase)m2s∝ L−(1+η) should in-                      sitions were observed [5, 63, 64].   The Checker-Board J-Q
+stead apply asymptotically.  Theg = 0.80 and 0.82 data can                       (CBJQ) model [5] (and a closely related loop model [65]) has
+indeed be ﬁtted withη≈ 0.32 andη≈ 0.23, respectively. In                         a Z2 breaking PS phase like that in the SS model. A ﬁrst-order
+the PS phase, polynomial ﬁts extrapolate to unphysical neg-                      spin-ﬂop-like transition with emergent O(4) symmetry of the
+ative values, which can be understood on account of the ex-                      combined O(3) AF and scalar PS order parameters was found,
+pected∝ L−2  asymptotic form (which, however, cannot be                          with no conventional coexistence state with tunneling barriers
+ﬁtted because of large corrections).                                             up to the largest length scales studied.  This unusual behavior
+   The inset of Fig. 5 shows how PS order is stabilized only                     indicates close proximity to an O(4) DQCP.
+for the larger system sizes inside the PS phase, reﬂecting large                    Lee  et  al.  recently  considered  a  proxy  of  the  excitation
+ﬂuctuations in small systems (as shown explicitly in Supple-                     gap  with  the  IDMRG  method  (inﬁnite-size  DMRG,  where
+mental  Material  [28]).   The  central  plaquettes  where mp  is                Lx → ∞ and Ly  is ﬁnite),  studying correlation lengths of
+deﬁned are close to the cylinder edges for smallL, and only                      operators with the symmetries of the excited levels of interest
+for largerL canmp reﬂect a disordered bulk. Outside the PS                       [6].  Following Ref. 26,  they identiﬁed both crossing points
+phase the boundary-induced order close to the edges ﬁrst in-                     discussed here (Figs. 2 and 3), but these points were not ex-
+creases withL, thus causing non-monotonic behavior as seen                       trapolated to inﬁnite size.  It was nevertheless argued that the
+most clearly at g  =  0.82 and 0.84 (see also Supplementary                      singlet-triplet and singlet-quintuplet crossings will drift to a
+Material [28]).  Atg = 0.80,mp forL = 14 also falls below                        common DQCP with increasing system size, in the SS model
+the value forL = 12, indicating that indeedmp→ 0 when                            as well as in theJ1-J2 model. However, in a very recent work,
+L→∞, as it should in the SL phase.                                               Shackleton et al. revisited theJ1-J2 model and constructed a
+   DQCP  and  uniﬁed  phase  diagram.—The  originally  pro-                      quantum ﬁeld theory of a gapless SL phase and a DQCP sep-
+posed DQCP is generic, reachable by tuning a single parame-                      arating it from the AF state [37]. A different ﬁeld theory was
+ter [10].  Quantum Monte Carlo studies of several variants of                    outlined in Ref. 38.
+J-Q Hamiltonians [12] have indeed found direct transitions                          The narrow SL phase found here in the SS model suggests
+between AF and dimerized ground states [40–51]. Similar re-                      proximity to the DQCP discussed by Lee et al [6], which most
+sults have been obtained with related classical loop [52, 53]                    likely would be the same DQCP as the one inﬂuencing the
+and dimer [54] models. In most cases, no discontinuities were                    O(4) transition in the CBJQ model [5].  Moreover, it has re-
+observed,  though  unusual  scaling  violations  point  to  weak                 cently been argued that the DQCP is actually a multi-critical
+4
+
+                                                                                 at DQCPs may be ubiqutous between symmetry-breaking sin-
+                                                                                 glet and AF phases. The commonly studied Dirac SLs should
+                                                                                 be  unstable  on  square  lattices  and  lead  to  DQCPs  [6,  70],
+                                                                                 and the SL identiﬁed here should fall outside this framework
+                                                                                 [37, 38].  In our scenario, in a multi-parameter model the SL
+                                                                                 can be shrunk to a multi-critical DQCP with emergent sym-
+                                                                                 metry, followed by a ﬁrst-order direct PS–AF transition.  In
+                                                                                 principle there could be a triple point instead of the DQCP in
+                                                                                 Fig. 6, with weak ﬁrst-order transitions as in the non-unitary
+                                                                                 CFT proposal [56–60, 62].
+Figure 6.  Uniﬁed phase diagram, where an O(4) DQCP separates a                     A DQCP separating a line of ﬁrst-order transitions and an
+line of ﬁrst-order PS–AF transitions and an extended SL phase. The               SL phase is a compelling scenario also considering that the
+PS–SL  and  SL–AF  transition  may  both  be  continuous  DQCP-like              J-Q models can be continuously deformed into conventional
+transitions.   The dashed horizontal lines illustrate cuts through the           frustrated models.  Placing Q terms on the empty plaquettes
+phase diagram when a single parameter g  is tuned;  corresponding                of the SS lattice, by gradually turning offQ and turning onJ′
+the CBJQ model (top line) and the SS model (bottom line).
+                                                                                 the unusual ﬁrst-order PS–AF transition with emergent O(4)
+                                                                                 symmetry of the CBJQ model [5] should evolve as if the up-
+point [66, 67]; a second relevant scaling ﬁeld with all the sym-                 per dashed line in Fig. 6 moved to lower h,  and eventually
+metries of the Hamiltonian was detected in the conventional                      the SS SL phase should appear.   In general,  we expect that
+critical J-Q model [66],  and subsequently such a ﬁeld was                       many perturbations of the SS andJ1-J2 models could act as
+also identiﬁed in a deformed self-dual ﬁeld theory [67].   In                    the parameter h in Fig. 6,  e.g.,  longer-range interactions or
+the J-Q model it was found that the system ﬂows toward a                         multi-spin cyclic exchange with appropriate signs.  The O(4)
+ﬁrst-order transition when a certain interaction is turned on in                 symmetry should be replaced by SO(5) in cases where the PS
+a way maintaining a sign-free path integral [63]. It is possible                 phase is instead a dimerized phase, e.g., with some extensions
+that the interaction with the opposite sign could instead open                   of the conventional J-Q andJ1-J2 models.
+up an SL phase. Taken together, all these observations suggest                      An SL phase can explain the absence of any observed phase
+the uniﬁed phase diagram schematically illustrated in Fig. 6.                    transition in SrCu2(BO3)2 at pressures 2.6-3 GPa [7, 8], be-
+The two parameters (g,h) correspond to two relevant sym-                         tween  the  PS  and  AF  phases.   Since  SrCu2(BO3)2  can  be
+metric ﬁelds, and in models with just one tuning parameterg,                     synthesized with very low concentration of impurities, unlike
+e.g., the CBJQ and SS models, either the ﬁrst-order line or the                  many other potential spin liquid materials, an SL phase would
+SL phase is traversed. Possible ways to tuneh in a model are                     be signiﬁcant. A direct PS-AF transition has already been ob-
+further discussed below.                                                         served at high magnetic ﬁelds [8], but the nature of the tran-
+   Summary and Discussion.—Our DMRG results can consis-                          sition remains unexplored.  The phase diagram in Fig. 6 may
+tently be explained by a previously not anticipated SL phase                     also hold withh corresponding to the ﬁeld strength, but with
+between the known PS and AF phases of the SS model.  The                         the symmetry of the AF order reduced to O(2) and potentially
+PS–SL pointgc1≈ 0.79 is above the PS–AF pointgc≈ 0.765                           emergent  O(3)  symmetry  of  the  DQCP  [instead  of  O(4)  at
+obtained with tensor product states [14] (where the system is                    zero ﬁeld] and on the adjacent direct PS–AF line.
+inﬁnite but the results may be affected by small tensors) but is                    Note  added.—A  recent  functional  renormalization  group
+not at signiﬁcant variance with the more recent IDMRG cal-                       calculation, partially stimulated by our work, supports a gap-
+culation [6],  where gc ≈  0.77 for L  =  12 and an increase                     less  SL  phase  in  roughly  the  same  parameter  regime  as  re-
+ingc withL was observed (see Table 1 of Ref. 6). The tensor                      ported here [71]. Moreover, a study with tensor-product states
+technique used in Ref. 14 has a bias to ordered phases and may                   of  the  J1-J2-J3  Heisenberg  model  detected  an  isolated  SL
+induce AF order in the fragile SL phase. In Ref. 6 the AF order                  phase ending at a DQCP [72], very similar to our phase di-
+parameter was not studied, and its appearance only at higher                     agram in Fig. 6 wheng andh are identiﬁed withJ2/J1 and
+g may have been missed. While these works did not consider                       J3/J1, respectively ((and with a dimerized Z4 phase instead
+any other phase intervening between the PS and AF phases, an                     of the Z2 PS phase) However, a line of continuous dimerized–
+early ﬁeld theory of the SS model within an 1/Si expansion                       AF transition was proposed beyond the SO(5) DQCP, instead
+(withSi  = 1/2 being the target spin value) contains phases                      of the weakly ﬁrst-order transitions argued for here.
+not detected numerically to date, including a gapped SL and a                       Acknowledgments.—We would like to thank Fr´ed´eric Mila,
+helical phase, but no gapless SL [68].  Topological order has                    Zheng-Cheng  Gu,  Didier  Poliblanc,  Subir  Sachdev,  Sriram
+also been proposed [69].  As discussed further in the Supple-                    Shastry, Cenke Xu, and Yi-Zhuang You for stimulating dis-
+mental Material [28], for all values ofg we ﬁnd the dominant                     cussions  and  comments,  and  Subir  Sachdev  also  for  send-
+spin correlations at the N´eel wave-vector k = (π,π), i.e., no                   ing  us  an  early  version  of  Ref.  37.     A.W.S.  was  sup-
+helical order.                                                                   ported  by  the  Simons  Foundation  under  Simons  Investiga-
+   Given our SS results and the existence of a gapless SL in                     tor  Grant  No.  511064.     L.W.  was  supported  by  the  Na-
+the square-lattice J1-J2  model [24, 26, 34–37],  SLs ending                     tional  Key  Research  and  Development  Program  of  China,
+                                                                                                                                                                           5
+
+Grant  No.  2016YFA0300603,  and  by  the  National  Natural                             [15]H.  Nakano  and  T.  Sakai,  Third  Boundary  of  the  Shastry-
+Science  Foundation  of  China,  Grants  No.  NSFC-11874080                                    Sutherland Model by Numerical Diagonalization, J. Phys. Soc.
+and  No.  NSFC-11734002.    The  computational  results  pre-                                  Jpn. 87, 123702 (2018).
+sented here were  achieved partially using Tianhe-2JK com-                               [16]T.  Waki,   K.  Arai,   M.  Takigawa,   Y.  Saiga,   Y.  Uwatoko,
+puting  time  awarded  by  the  Beijing  Computational  Science                                H.   Kageyama,   and   Y.   Ueda,   A   novel   ordered   phase   in
+Research Center (CSRC).                                                                        SrCu2(BO3)2  under  high  pressure,   J.  Phys.  Soc.  Jpn.  76,
+                                                                                               073710 (2007).
+                                                                                         [17]C.  Boos,  S.  P.  G.  Crone,  I.  A.  Niesen,  P.  Corboz,  K.  P.
+                                                                                               Schmidt, and F. Mila, Competition between intermediate pla-
+                                                                                               quette  phases  in  SrCu2(BO3)2  under  pressure,  Phys.  Rev.  B
+                                                                                               100, 140413 (2019).
+   ∗  sandvik@bu.edu                                                                     [18]Z. Shi, S. Dissanayake, P. Corboz, W. Steinhardt, D. Graf, D.
+   †  lingwangqs@zju.edu.cn                                                                    M.  Silevitch,  H.  A.  Dabkowska,  T.  F.  Rosenbaum,  F.  Mila,
+ [1]H. Kageyama,  K. Yoshimura,  R. Stern,  N. V. Mushnikov,  K.                               and  S.  Haravifard,  Phase  diagram  of  the  Shastry-Sutherland
+      Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto, and Y.                             Compound SrCu2(BO3)2  under extreme combined conditions
+      Ueda, Exact Dimer Ground State and Quantized Magnetization                               of ﬁeld and pressure, arXiv:2107.02929.
+      Plateaus in the Two-Dimensional Spin System SrCu2(BO3)2,                           [19]G.  Sun,  N.  Ma,  B.  Zhao,  A.  W.  Sandvik,  and  Z.  Y.  Meng,
+      Phys. Rev. Lett. 82, 3168 (1999).                                                        Emergent O(4) symmetry at the phase transition from plaquette-
+ [2]S.  Miyahara  and  K.  Ueda,   Exact  Dimer  Ground  State  of                             singlet  to  antiferromagnetic  order  in  quasi-two-dimensional
+      the Two Dimensional Heisenberg Spin System SrCu2(BO3)2,                                  quantum magnets, Chin. Phys. B 30, 067505 (2021).
+      Phys. Rev. Lett. 82, 3701 (1999).                                                  [20]S. R. White, Density Matrix Formulation for Quantum Renor-
+ [3]A. Koga and N. Kawakami, Quantum Phase Transitions in the                                  malization Groups, Phys. Rev. Lett. 69, 2863 (1992).
+      Shastry-Sutherland Model for SrCu2(BO3)2,  Phys. Rev. Lett.                        [21]U.  Schollw       ¨ock,  The  density-matrix  renormalization  group  in
+      84, 4461 (2000).                                                                         the age of matrix product states, Ann. Phys. (Amsterdam) 326,
+ [4]M. Zayed, Ch. R     ¨uegg, J. Larrea, A. M. L¨auchli, C. Panagopou-                        96 (2011).
+      los, S. S. Saxena, M. Ellerby, D. McMorr, Th. Str¨assle, S. S.                     [22]E. M. Stoudenmire and S. R. White, Real-space parallel density
+      Klotz, G. Hamel, R. A. Sadykov, V. Pomjakushin, M. Boehm,                                matrix renormalization group, Phys. Rev. B 87, 155137 (2013).
+      M. Jim´enez-Ruiz,  A. Schneidewin,  E. Pomjakushin,  M. Stin-                      [23]A. Weichselbaum, Non-abelian symmetries in tensor networks:
+      gaciu, K. Conder, and H. M. Rønnow, 4-spin plaquette singlet                             A quantum symmetry space approach, Ann. Phys. (Amsterdam)
+      state in the Shastry-Sutherland compound SrCu2(BO3)2,  Na-                               327, 2972 (2012).
+      ture Phys. 13, 962 (2017).                                                         [24]S.-S. Gong, W. Zhu, D. N. Sheng, O. I. Motrunich, and M. P. A.
+ [5]B. Zhao, P. Weinberg, and A. W. Sandvik, Symmetry enhanced                                 Fisher, Plaquette Ordered Phase and Quantum Phase Diagram
+      ﬁrst-order phase transition in a two-dimensional quantum mag-                            in the Spin-1/2 J1-J2  Square Heisenberg Model,  Phys. Rev.
+      net, Nature Phys. 15, 678 (2019).                                                        Lett. 113, 027201 (2014).
+ [6]J. Y. Lee, Y.-Z. You, S. Sachdev, and A. Vishwanath, Signatures                      [25]I. P. McCulloch, From density-matrix renormalization group to
+      of  a  Deconﬁned  Phase  Transition  on  the  Shastry-Sutherland                         matrix product states, J. Stat. Mech. 2007, P10014 (2007).
+      Lattice: Applications to Quantum Critical SrCu2(BO3)2, Phys.                       [26]L. Wang and A. W. Sandvik, Critical Level Crossings and Gap-
+      Rev. X 9, 041037 (2019).                                                                 less Spin Liquid in the Square-Lattice Spin-1/2J1-J2 Heisen-
+ [7]J. Guo,  G. Sun,  B. Zhao,  L. Wang,  W. Hong,  V. A. Sidorov,                             berg Antiferromagnet, Phys. Rev. Lett. 121, 107202 (2018).
+      N. Ma, Q. Wu, S. Li, Z. Y. Meng, A. W. Sandvik, and L. Sun,                        [27]M. Lemm, A. W. Sandvik, and L. Wang, Existence of a Spectral
+      Quantum Phases of SrCu2(BO3)2 from High-Pressure Thermo-                                 Gap in the Afﬂeck-Kennedy-Lieb-Tasaki Model on the Hexag-
+      dynamics, Phys. Rev. Lett. 124, 206602 (2020).                                           onal Lattice, Phys. Rev. Lett. 124, 177204 (2020).
+ [8]J. Larrea Jim     ´enez,  S. P. G. Crone,  E. Fogh,  M. E. Zayed,  R.                [28]See Supplemental material for DMRG convergence procedures
+      Lortz, E. Pomjakushina, K. Conder, A. M. L¨auchli, L. Weber,                             and extrapolations, the 2D real-space landscape of PS ordering,
+      S. Wessel, A. Honecker, B. Normand, Ch. R¨uegg, P. Corboz, H.                            and the spin structure factor.
+      M. Rønnow, and F. Mila, A quantum magnetic analogue to the                         [29]K.  Nomura  and  K.  Okamoto,  Fluid-dimer  critical  point  in
+      critical point of water, Nature 592, 370 (2021).                                         S  =  1/2 antiferromagnetic Heisenberg chain with next near-
+ [9]S. Bettler, L. Stoppel, Z. Yan, S. Gvasaliya, and A. Zheludev,                             est neighbor interactions, Phys. Lett. A 169, 433 (1992).
+      Sign switching of dimer correlations in SrCu2(BO3)2 under hy-                      [30]S.  Eggert,  Numerical  evidence  for  multiplicative  logarithmic
+      drostatic pressure, Phys. Rev. Research 2, 012010(R) (2020).                             corrections from marginal operators, Phys. Rev. B 54, R9612
+[10]T. Senthil, A. Vishwanath, L. Balents, S. Sachdev, and M. P. A.                            (1996).
+      Fisher, Deconﬁned Quantum Critical Points, Science 303, 1490                       [31]A. W. Sandvik,  Ground States of a Frustrated Quantum Spin
+      (2004).                                                                                  Chain  with  Long-Range  Interactions,  Phys.  Rev.  Lett.  104,
+[11]S. Sachdev, Quantum magnetism and criticality, Nature Phys.                                137204 (2010).
+      4, 173 (2008).                                                                     [32]H. Suwa and S. Todo, Generalized Moment Method for Gap Es-
+[12]A. W. Sandvik, Evidence for Deconﬁned Quantum Criticality                                  timation and Quantum Monte Carlo Level Spectroscopy, Phys.
+      in a Two-Dimensional Heisenberg Model with Four-Spin Inter-                              Rev. Lett. 115, 080601 (2015).
+      actions, Phys. Rev. Lett. 98, 227202 (2007).                                       [33]H. Suwa, A. Sen, and A. W. Sandvik, Level spectroscopy in a
+[13]B.  S.  Shastry  and  B.  Sutherland,  Exact  ground  state  of  a                         two-dimensional quantum magnet: Linearly dispersing spinons
+      quantum mechanical antiferromagnet, Physica B+C 108, 1069                                at  the  deconﬁned  quantum  critical  point,  Phys.  Rev.  B  94,
+      (1981).                                                                                  144416 (2016).
+[14]P. Corboz and F. Mila,  Tensor network study of the Shastry-                         [34]Y. Nomura and M. Imada, Dirac-type nodal spin liquid revealed
+      Sutherland  model  in  zero  magnetic  ﬁeld,  Phys.  Rev.  B  87,                        by machine learning, Phys. Rev. X 11, 031034 (2021).
+      115144 (2013).                                                                     [35]F. Ferrari and F. Becca, Gapless spin liquid and valence-bond
+6
+
+      solid in theJ1-J2 Heisenberg model on the square lattice:  In-                       [53]A. Nahum, J. T. Chalker, P. Serna, M. Ortu       ˜no, and A. M. So-
+      sights  from  singlet  and  triplet  excitations,  Phys.  Rev.  B 102,                     moza, Deconﬁned Quantum Criticality, Scaling Violations, and
+      014417 (2020).                                                                             Classical Loop Models, Phys. Rev. X 5, 041048 (2015).
+[36]S.  Morita,  R.  Kaneko,  and  M.  Imada,  Quantum  spin  liq-                         [54]G. Sreejith, S. Powell, and A. Nahum, Emergent SO(5) sym-
+      uid  in  spin  1/2 J1-J2  Heisenberg  model  on  square  lattice:                          metry at the columnar ordering transition in the classical cubic
+      Many-variable  variational  Monte  Carlo  study  combined  with                            dimer model, Phys. Rev. Lett. 122, 080601 (2019).
+      quantum-number  projections,  J.  Phys.  Soc.  Jpn.  84,  024720                     [55]Z. Wang, M. P. Zaletel, R. S. K. Mong, and F. F. Assaad, Phases
+      (2015).                                                                                    of the (2+1) dimensional SO(5) non-linear sigma model with
+[37]H. Shackleton, A. Thomson, and S. Sachdev, Deconﬁned criti-                                  topological term, Phys. Rev. Lett. 126, 045701 (2021).
+      cality and a gapless Z2 spin liquid in the square lattice antifer-                   [56]C. Wang, A. Nahum, M. A. Metlitski, C. Xu, and T. Senthil,
+      romagnet, Phys. Rev. B 104, 045110 (2021).                                                 Deconﬁned Quantum Critical Points:  Symmetries and Duali-
+[38]W.-Y. Liu, S.-S. Gong, Y.-B. Li, D. Poilblanc, W.-Q. Chen, and                               ties, Phys. Rev. X 7, 031051 (2017).
+      Z.-C. Gu,  Gapless quantum spin liquid and global phase dia-                         [57]V.  Gorbenko,  S.  Rychkov,  and  B.  Zan,  Walking,  weak  ﬁrst-
+      gram of the spin-1/2 J1-J2 square antiferromagnetic Heisenberg                             order  transitions,  and  complex  CFTs,  J.  High  Energy  Phys.
+      model, arXiv:2009.01821.                                                                   2018, 108 (2018).
+[39]B. Zhao, J. Takahashi, and A. W. Sandvik, Comment on “Gap-                             [58]V.  Gorbenko,  S.  Rychkov,  and  B.  Zan,  Walking,  Weak  ﬁrst-
+      less  spin  liquid  ground  state  of  the  spin-1 J1-J2  Heisenberg                       order transitions, and Complex CFTs II. Two-dimensional Potts
+      model on square lattices”, Phys. Rev. B 101, 157101 (2020).                                model atQ> 4, SciPost Phys. 5, 050 (2018).
+[40]R. G. Melko and R. K. Kaul, Scaling in the Fan of an Uncon-                            [59]R. Ma and C. Wang, A theory of deconﬁned pseudo-criticality,
+      ventional Quantum Critical Point, Phys. Rev. Lett. 100, 017203                             Phys. Rev. B 102, 020407 (2020).
+      (2008).                                                                              [60]A.  Nahum,  Note  on  Wess-Zumino-Witten  models  and  quasi-
+[41]F.-J. Jiang, M. Nyfeler, S. Chandrasekharan, and U.-J. Wiese,                                universality in 2+1 dimensions, Phys. Rev. B 102, 201116(R)
+      From an antiferromagnet to a valence bond solid: evidence for                              (2020).
+      a ﬁrst-order phase transition, J. Stat. Mech.: Theory Exp. 2008,                     [61]Z.     Li,      Solving     QED         3     with     Conformal     Bootstrap,
+      P02009 (2008).                                                                             arXiv:1812.09281.
+[42]J. Lou, A. W. Sandvik, and N. Kawashima, Antiferromagnetic                             [62]Y.-C.  He,  J.  Rong,  and  N.  Su,  Non-Wilson-Fisher  kinks  of
+      to  valence-bond-solid  transitions  in  two-dimensional  SU(N)                            O(N) numerical bootstrap:  from the deconﬁned phase transi-
+      Heisenberg  models  with  multispin  interactions,  Phys.  Rev.  B                         tion to a putative new family of CFTs, SciPost Phys. 10, 115
+      80, 180414 (R) (2009).                                                                     (2021).
+[43]A. W. Sandvik, Continuous Quantum Phase Transition between                             [63]B. Zhao, J. Takahashi, and A. W. Sandvik, Tunable deconﬁned
+      an Antiferromagnet and a Valence-Bond Solid in Two Dimen-                                  quantum criticality and interplay of different valence-bond solid
+      sions:  Evidence for Logarithmic Corrections to Scaling, Phys.                             phases, Chin. Phys. B 29, 057506 (2020).
+      Rev. Lett. 104, 177201 (2010).                                                       [64]J.  Takahashi  and  A.  W.  Sandvik,  Valence-bond  solids,  vesti-
+[44]R. K. Kaul, Quantum criticality in SU(3) and SU(4) antiferro-                                gial order, and emergent SO(5) symmetry in a two-dimensional
+      magnets, Phys. Rev. B 84, 054407 (2011).                                                   quantum magnet, Phys. Rev. Research 2, 033459 (2020).
+[45]A.  W.  Sandvik,  Finite-size  scaling  and  boundary  effects  in                     [65]P. Serna and A. Nahum, Emergence and spontaneous breaking
+      two-dimensional valence-bond solids, Phys. Rev. B 85, 134407                               of approximate O(4) symmetry at a weakly ﬁrst-order decon-
+      (2012).                                                                                    ﬁned phase transition, Phys. Rev. B 99, 195110 (2019)
+[46]M.  S.  Block,  R.  G.  Melko,  and  R.  K.  Kaul,  Fate  of      CPN−1                [66]B.  Zhao,  J.  Takahashi,  and  A.  W.  Sandvik,  Multicritical  De-
+      Fixed Points withq Monopoles, Phys. Rev. Lett. 111, 137202                                 conﬁned  Quantum  Criticality  and  Lifshitz  Point  of  a  Helical
+      (2013).                                                                                    Valence-Bond Phase, Phys. Rev. Lett. 125, 257204 (2020).
+[47]K. Harada, T. Suzuki, T. Okubo, H. Matsuo, J. Lou, H. Watan-                           [67]D.-C.  Lu,   C.  Xu,   and  Y.-Z.  You,   Self-Duality  Protected
+      abe, S. Todo, and N. Kawashima, Possibility of deconﬁned crit-                             Multi-Criticality  in  Deconﬁned  Quantum  Phase  Transitions,
+      icality in SU(N) Heisenberg models at small N, Phys. Rev. B                                arXiv:2104.05147.
+      88, 220408(R) (2013).                                                                [68]C. H. Chung, J. B. Marston, and S. Sachdev, Quantum phases
+[48]K. Chen, Y. Huang, Y. Deng, A. B. Kuklov, N. V. Prokof’ev, and                               of  the  Shastry-Sutherland  antiferromagnet:    Application  to
+      B. V. Svistunov, Deconﬁned Criticality Flow in the Heisenberg                              SrCu2(BO3)2, Phys. Rev. B 64, 134407 (2001).
+      Model with Ring-Exchange Interactions, Phys. Rev. Lett. 110,                         [69]D. C. Ronquillo and M. R. Peterson, Identifying topological or-
+      185701 (2013).                                                                             der in the Shastry-Sutherland model via entanglement entropy,
+[49]S. Pujari, F. Alet, and K. Damle, Transitions to valence-bond                                Phys. Rev. B 90, 201108(R) (2014).
+      solid order in a honeycomb lattice antiferromagnet, Phys. Rev.                       [70]X.-Y.  Song,  Y.-C.  He,  A.  Vishwanath,  and  C.  Wang,  From
+      B 91, 104411 (2015).                                                                       Spinon Band Topology to the Symmetry Quantum Numbers of
+[50]H. Shao, W. Guo, A. W. Sandvik, Quantum criticality with two                                 Monopoles  in  Dirac  Spin  Liquids,  Phys.  Rev.  X 10,  011033
+      length scales, Science 352, 213 (2016).                                                    (2020).
+[51]A. W. Sandvik and B. Zhao, Consistent scaling exponents at the                         [71]A. Keles and E. Zhao,  Rise and fall of plaquette order in the
+      deconﬁned quantum-critical point, Chin. Phys. Lett. 37, 057502                             Shastry-Sutherland  magnet  revealed  by  pseudofermion  func-
+      (2020).                                                                                    tional  renormalization  group,   Phys.  Rev.  B  105,   L041115
+[52]A. Nahum, P. Serna, J. T. Chalker, M. Ortu       ˜no, and A. M. So-                          (2022).
+      moza, Emergent SO(5) Symmetry at the N´eel to Valence-Bond-                          [72]W.-Y. Liu, J. Hasik, S.-S. Gong, D. Poilblanc, W.-Q. Chen, and
+      Solid Transition, Phys. Rev. Lett. 115, 267203 (2015).                                     Z.-C. Gu, The emergence of gapless quantum spin liquid from
+                                                                                                 deconﬁned quantum critical point, arXiv:2110.11138.
+                                                                                                                                                          1
+
+                                                             Supplemental Material
+                 Quantum Criticality and Spin Liquid Phase in the Shastry-Sutherland model
+
+                                           Jianwei Yang,1, Anders W. Sandvik,2,3,∗, Ling Wang4,†
+                1 Beijing Computational Science Research Center, 10 East Xibeiwang Road, Beijing 100193, China
+           2 Department of Physics, Boston University, 590 Commonwealth Avenue, Boston, Massachusetts 02215, USA
+                                        3 Beijing National Laboratory for Condensed Matter Physics
+                              and Institute of Physics, Chinese Academy of Sciences, Beijing 100190, China
+                                 4 Department of Physics, Zhejiang University, Hangzhou 310000, China
+
+                                             ∗ e-mail: sandvik@bu.edu,† lingwangqs@zju.edu.cn
+
+
+   Here we present additional results in support of the conclusions drawn in the main paper.  In Sec. 1 we discuss the DMRG
+procedures and illustrate the convergence properties and extrapolations of energies and order parameters.  In Sec. 2 we present
+2D plots of the PS order “landscape” and discuss the effects of the openx boundaries of the cylindrical lattices, including an
+explanation for the nonmonotonic behavior of the PS order parameter forg≥ 0.80 in Fig. 5. In Sec. 3 we present the static spin
+structure factor in the full wave-vector space, which shows no evidence of helical magnetic correlations in the SS model.
+
+
+
+
+            1. DMRG convergence and extrapolations                              to 9000 for theS = 0 ground state and up tom = 10000 for
+                                                                                the excited singlet.  We do not have sufﬁciently good triplet
+   In  order  to  systematically  approach  the  correct  ground                results forL = 12 and therefore only showS = 1 results for
+states  and  excitations  in  the  DMRG  calculations,  we  carry               the smaller systems in Fig. S1.
+out calculations for several numbersm of Schmidt states, un-                       ForL = 6, the calculation for the largestm already has an
+til eitherm is sufﬁciently large for the discarded weightϵ to                   extremely small discarded weight, and it is not necessary to
+be negligible (in case of the smaller system sizes considered                   further extrapolate the results. We nevertheless show extrapo-
+here) or sufﬁciently small for reliably extrapolating toϵ = 0                   lations for all system sizes in Fig. S1. While the exact form of
+(for the largest system sizes). The discarded weight is deﬁned                  the error as a function ofϵ in the DMRG method is not known,
+in the standard way as the sum of discarded eigenvalues of the                  in all cases for which data are presented in the main paper our
+reduced density matrix [21, 22].                                                results are sufﬁciently converged for the extrapolated values to
+   After  an  initial  calculation  for  small m,  each  subsequent             not be very sensitive to the ﬁtting form used.  We have found
+calculation is started from either a previously well converged                  that the energies for smallϵ are well described by third-order
+calculation for a smallerm and the sameg value, or one for                      polynomials without linear term. Thus, in Fig. S1 all data are
+a  nearby g  value  and  the  same m.   For  a  given m,  we  de-               ﬁtted to such a form.
+mand that the energy difference (not divided by the system                         In the case of the order parameters, we ﬁnd that polynomial
+volume) between two successive updating sweeps is less than                     ﬁts work well in general (here including the linear terms). We
+10−6.   We  then  check  the  convergence  of  the  energies  and               typically use quadratic or third-order forms. Examples atg =
+other quantities as a function of the discarded weightϵ (which                  0.8 for the two largest system sizes,L = 12 andL = 14, are
+depends onm, withϵ→ 0 asm→∞).                                                   shown in Fig. S2. Here we observe nonmonotonic behavior of
+   Our DMRG program is implemented with full SU(2) sym-                         the AF order parameterm2s forL = 14 in Fig. S2(c). For the
+metry [23, 24], and we can therefore target the ground state                    smallϵ values (largem) used in the extrapolations, we have
+of any sector of total spin S.   Given that the lowest ground                   found such nonmonotonic behavior of the largest systems for
+state among these hasS = 0 and we are also interested in the                    g only outside the AF phase.
+lowestS = 0 excitation, in this sector we apply the technique                      We  point  out  that  the m2s  data  points  for L   =   14  in
+of orthogonalizing to the previously calculated ground state in                 Fig. S2(c) only exhibit nonmonotonicity in the two points for
+order to target the lowest excitedS = 0 state [25–27].                          smallestϵ, but even when these points are excluded the ﬁt still
+                                                                                results in a nonmonotonic polynomial.  Hence, we judge this
+                                                                                behavior as stable and the extrapolation as reliable.  It should
+                    A. Cylindrical 2L×L lattices                                also be noted that the overall range of they-axis of Fig. S2(c)
+                                                                                represents a vary small relative change in the value, and the
+   In Fig. S1 we show the lowest twoS = 0 energies as well                      uncertainties in the extrapolation for this case (less than 0.3%
+as the lowestS = 1 energy for system sizesL = 6, 8, 10, and                     between  different  extrapolations)  do  not  impact  the  conclu-
+12, in the important case ofg = 0.80 (inside the new gapless                    sions drawn on the basis of the data in Fig. 5.
+SL phase). For the challengingL = 12 system, we usedm up                           As  seen  in  Fig.  S2,  the  PS  order  parameter  shows  much
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S1.  Examples of extrapolations of DMRG energies to vanishing discarded weightϵ for the SS model withg = 0.8.  For each of the
+system sizesL = 6, 8, 10, 12 in panels (a)-(d), the two lowest singlets are shown (squares and triangles) along with the lowest triplet (circles),
+except forL = 12, for which we do not have sufﬁciently well converged triplet data. The ﬁtted curves are of the formE(ϵ) =E(0)+aϵ2+bϵ3,
+withE(0),a, andb optimized parameters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S2. Examples of extrapolations of DMRG results for the AF and PS order parameters in the ground state of the SS model atg = 0.8.
+Results for system sizeL = 12 are shown in (a) and (b), and corresponding results forL = 14 are shown in (c) and (d). The ﬁtted curves are
+quadratic polynimials in (a), (c) and cubic polynomials in (b),(d).
+                                                                                                                                                              3
+
+                                                                                  g = 0.78.  However, the other results in the main paper show
+                                                                                  that this g  value is inside the PS phase,  and,  therefore, mp
+                                                                                  should ﬂatten out to take a ﬁnite value ifL is further increased
+                                                                                  (as is seen for still smallerg values in Fig. 5 in the main paper).
+                                                                                  The  observed  nonmonotonic  behavior  outside  the  PS  phase
+                                                                                  (with its physical explanation in Sec. 2 below) allows us to
+                                                                                  put an upper bound on the extent of the PS phase,gc1 < 0.80,
+                                                                                  which is consistent with the SL phase boundaries in Fig. 3 of
+                                                                                  the main paper.
+
+
+                                                                                                           B. 6× 6 periodic system
+
+                                                                                     To further illustrate the soundness of the extrapolation pro-
+                                                                                  cedures and our methods of estimating the errors of theϵ→ 0
+                                                                                  energies and order parameters, we next consider a 6×6 lattice
+                                                                                  with fully periodic (toroidal) boundary condition. Its eigenen-
+                                                                                  ergies for the ground state, the ﬁrst singlet and triplet excita-
+                                                                                  tions, as well as the ground state order parameters, were ob-
+                                                                                  tained by Lanczos exact diagonalization.  Using DMRG with
+                                                                                  SU(2) symmetry, we computed the corresponding set of varia-
+                                                                                  tional energies and order parameters as a function of discarded
+                                                                                  weightϵ using several bond dimensionsm.  Even though the
+                                                                                  Hilbert space here is small enough for Lanczos diagonaliza-
+                                                                                  tion, the convergence properties for moderate values ofm are
+                                                                                  very similar to those discussed above for the larger cylindri-
+                                                                                  cal lattices.  Extrapolations as performed above can therefore
+                                                                                  serve as a bench-mark for the reliability of the procedures.
+                                                                                     Figure S4(a) shows variational energies for the 6× 6 SS
+                                                                                  lattice atg  = 0.80 obtained by SU(2) DMRG with bond di-
+Figure  S3.   Plaquette  order  parameter  vs  discarded  weight  for  (a)        mensionsm = 800, 1200, 2000, adn 3000.  The ﬁtting func-
+g = 0.78, (b)g = 0.80, and (c)g = 0.82. Each panel shows results                  tion is a third-order polynomial, again without the linear term
+for system sizes L  =  10, 12, 14,  and the curves are second-order               (E =a +bϵ2 +cϵ3). For a reasonable deﬁnition of the error
+polynomial ﬁts used for extrapolating toϵ  =  0.  The scatter of the              of extrapolation toϵ→ 0, we take the difference between ex-
+L  =  14 data (and to a lesser extent for L  =  12) in (c) originates
+from  incomplete  convergence  at  the  Lanczos  stage  of  the  DMRG             trapolated energies based on the largest threem values, shown
+calculation for some of the points.  These arrors are reﬂected in the             with colored curves in Fig. S4(a), and all four points, shown
+ﬁnal error bars of the extrapolatedmp value.                                      with  in  black  curves.   The  colored  dashed  horizontal  lines
+                                                                                  mark the exact energies, which areE0 =−16.263112,ET =
+                                                                                  −15.985471,ES =−15.910097, for the ground state, singlet
+larger overall dependence onϵ than does the AF order param-                       excitation, and triplet excitation, respectively. The DMRG ex-
+eter.   An important aspect of the PS order,  discussed in the                    trapolation errors deﬁned as above are 0.00017, 0.0003, and
+context of the inset of Fig. 5 in the main paper, is that its size                0.0003, respectively.
+dependence is nonmonotonic outside the PS phase; in the SL                           The “exact error”, which we for the sake of the illustration
+phase as well as in the AF phase close to the SL transition. In                   here (where we know the exact energies, which is of course
+Sec. 2 we will further illustrate how this behavior originates                    not of case for the cylindrical lattices used in our primary stud-
+from the cylindrical boundary conditions. To further illustrate                   ies of the SS model) deﬁne as the difference between extrap-
+the nonmonotonic behavior and its robustness in theϵ extrap-                      olated value based on three data points and the exact energy,
+olations, in Fig. S3 we showmp results for the three largest                      are 0.00022, 0.0008, 0.0007, respectively.  If the ﬁtting func-
+system  sizes, L  =  10, 12, 14,  for  three  values  of g  in  and               tion is switched to a second order polynomial (including the
+close to the SL phase. The nonmonotonic size dependence of                        linear term), the extrapolated results using all four m points
+theϵ→ 0 values is clear forg = 0.82, and also forg = 0.80                         go slightly below the exact energies for all three states. Over-
+does this trend begin to appear.  In the case ofg = 0.78, the                     all, we again found that the higher-order polynomials without
+extrapolated order parameter only grows withL.                                    the linear terms describe the data better.
+   Based  on  only  these  data,  it  is  of  course  not  possible  to              The above example shows that the estimated extrapolation
+exclude a maximum of theϵ→  0 values versus L followed                            errors are of the same magnitude as the “exact errors”.  Here
+by an eventually decrease to 0 for larger system sizes also for                   the  minimum  available  discarded  weight,  corresponding  to
+4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S4.  Exact and DMRG results for the 6× 6 periodic SS lattice atg = 0.80.  (a) DMRG energies of the ground state and ﬁrst excited
+state in the singlet and triplet sectors vs the discarded weightϵ, obtained with bond dimensionm = 800, 1200, 2000, and 3000. The colored
+dashed lines are the corresponding eigenvalues obtained by Lanczos exact diagonalization.  The colored solid curves show ﬁts to the form
+E =a +bϵ2 +cϵ3 using the three points with smallestϵ. The black solid curves show ﬁts to the same functional form using all four points.
+Their difference in theϵ→ 0 extrapolated values deﬁnes the DMRG error of the energy. (b) The staggered magnetization of the ground state.
+Colored (black) solid curves show ﬁts to the quadratic functionsm2s =a+bϵ+cϵ2 using three (four) points, and their extrapolation difference
+deﬁnes the DMRG error of the staggered magnetization. The red dashed line shows the exact value.
+
+
+m = 3000 isϵ≈ 2× 10−5.  Thisϵ is much larger than the                             der edges act as a Z2 symmetry-breaking “pinning ﬁeld”, al-
+truncation errors reached with larger m in cylinder systems                       lowing  us  to  study  the  PS  order  parameter mp  directly,  in-
+for L≤  10 and is comparable with the ϵ value reached for                         stead of using the squared order parameter in a system with
+L≥ 12, as seen in Fig. S1.  The way the energies ﬂatten out                       unbroken symmetry. This approach was discussed in detail in
+for the cylindrical systems when ϵ decreases is very similar                      Ref. 39 in the context of a different system, and it was argued
+to what we observe for the 6× 6 system, and we see no rea-                        that it is the best way to study the order parameters of “sin-
+son why the results should not have reachedϵ small enough to                      gletized”  phases  with  methods  that  use  symmetry-breaking
+perform the extrapolations as explained.                                          boundary conditions.
+   Figure  S4(b)  shows  extrapolations  of  the  staggered  mag-                     Fig. S5 shows examples of the singlet pattern forming on
+netization m2s(ϵ) in the ground state for which the energies                      two different lattices, of sizeL = 6 andL = 10, both inside
+are shown in Fig. S4(a).  Here the ﬁtting function is a regular                   the PS phase at g  =  0.75 and in the SL phase at g  =  0.80.
+second-order polynomial, m2s  = a +bϵ +cϵ2.  The error of                         In the PS phase, we can observe that the alternating pattern of
+the order parameter is again deﬁned as the difference between                     strong and weak empty plaquettes (those without the SS di-
+extrapolated values using either the three largestm points or                     agonal couplingsJ′) is much stronger in the larger systems.
+all four points.  The exact value from the Lanczos exact di-                      This order enhancement with increasingL in the PS phase was
+agonalization is m2s  =  0.143250.   The error of the DMRG                        already seen in the size dependentmp, deﬁned as the differ-
+extrapolation is 0.000026 in this case, and the “exact error”                     ence between central adjacent empty plaquettes, in the inset
+as deﬁned above is 0.000021.  We again see that the deﬁned                        of Fig. 5 in the main paper.  The strengthening of the PS or-
+extrapolation error is very reasonable.                                           der clearly reﬂects the diminishing quantum ﬂuctuations when
+   All  ﬁnite-size  errors  of  the  results  discussed  in  the  main            long-range order is established with increasing system size in
+paper were estimated as above, but in most cases the error bars                   the presence of the symmetry-breaking edge ﬁeld.  Note that
+are much smaller than the graph symbols and are not shown                         the edge order also strengthens with increasingL.
+explicitly.  In the extrapolations to inﬁnite size, the ﬁnite-size                    Turning now to the results in the SL phase, Fig. S5(c) and
+errors  were  propagated  in  the  standard  way  in  the  function               S5(d), here as well we observe how the edge order is signif-
+ﬁts, and the resulting error bars are displayed in some of the                    icantly stronger in the larger system.  The bulk order param-
+ﬁgures.                                                                           eter,  deﬁned in the center of the system,  is also stronger in
+                                                                                  the  larger  system.   However,  as  seen  in  the  inset  of  Fig.  5
+                                                                                  in the main paper, for the largest system size considered for
+                       2. Role of cylinder edges                                  g  =  0.80, L  =  14, mp  has  turned  downward  [and  this  is
+                                                                                  even more clear atg = 0.82 as also illustrated by the results
+   As shown in Fig. 1 in the main paper, the PS ordering pat-                     in Fig. S3(c)].   This nonmonotonic behavior outside the PS
+tern is unique on the cylindrical lattices used here. The cylin-                  phase can naturally be explained as a competition between the
+                                                                                                                                                              5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S5. Landscape of plaquette singlet strengths in systems of sizeL = 6 (left) andL = 10 (right), forg = 0.75 (inside the PS phase) in
+(a) and (b), and forg = 0.80 (in the SL phase) in (c) and (d). The colored squares correspond to the expectation value⟨QR⟩ of the plaquette
+operator deﬁned in the main paper for the plaquettes at lattice coordinate R.  The SS dimer couplingsJ′ are indicated with the blue lines.  In
+addition to the color coding shown on the vertical bar, the actual numerical values of⟨QR⟩ are also displayed inside each square.
+
+
+always present (for anyg) symmetry breaking at the cylinder                       order. The proposed helical phase and the helical correlations
+edge and the decay of this “artiﬁcial” induced order in the cen-                  of the gapped SL phase prompts us to investigate the possibil-
+tral part of the system asL increases. The initial increase with                  ity of helical spin correlations in the gapless SL phase identi-
+L for small systems is due to the strengthening of the edge                       ﬁed in the phase diagram of the SS model in the present work.
+order withL even when the system is in the SL or AF phase.                        To this end, we have calculated the static spin structure fac-
+The eventual down-turn of the order parameter for larger sys-                     torS(k) based on the spin correlation functions⟨Si· Si⟩ for
+tems is a sign of this edge effect not extending to the bulk, i.e.,               all spins i,j  within the central L×L square of sites on the
+that the system is not in the PS phase.                                           cylindrical 2L×L lattices, deﬁning
+   It is difﬁcult to imagine any realistic mechanism that would                                                  ∑
+causemp to turn back up asL increases further after the peak                                      S(k) =   1          e−ik·(ri−ri)⟨Si· Si⟩.            (S1)
+value has been reached and mp  has begun to decrease with                                                    L2   i,j
+L. Therefore, we regard the observation of a maximum inmp
+for a given L as a deﬁnite indicator of the system not being                      In a periodicL×L system the wave-vectors should take the
+in the PS phase.  Our results forg  = 0.80-0.84 in Fig. 5 all                     formka =na2π/L, fora∈{x,y} andna∈{0,...,L− 1}.
+exemplify this behavior.                                                          However,  since  we  do  not  have  periodic  boundaries  in  the
+                                                                                  x  direction,  we  can  evaluate  the  Fourier  transform  for  any
+                        3. Spin structure factor                                  kx∈ [0, 2π].  To obtain a smooth representation of the struc-
+                                                                                  ture factor in the 2Dk space, we also use a large number of
+   In an early ﬁeld-theoretical study of the SS model within                      values forky between the discrete points in principle allowed
+the framework of 1/Si expansions (Si being the spin quantum                       by the lattice geometry. Because of the periodicity ink-space
+number  of  the  individual  spins)  [68],  several  exotic  phases               we limit the values tokx,ky∈ [0,π].
+were found in the plane (g, 1/Si), including a gapped SL and                          In Fig. S6 we show results forL = 10 systems at three val-
+a phase with helical magnetic order. The gapped SL is located                     ues of the coupling ratio, representing the PS, (g = 0.72), SL
+close to a PS state but not between the PS and AF states as                       (g = 0.80), and AF (g = 0.88) phases. In all cases we observe
+we have found here in the case of the gapless SL. The AF, PS,                     that the structure factor is peaked at k = (π,π) indicating that
+SL, and helical phases meet at a point, which should be con-                      the correlations are of the N´eel AF type in all phases.
+trasted with our proposed uniﬁed phase diagram for DQCPs                              Given  the  rather  small  lattice  size,  we  can  of  course  not
+adjacent to gapless SL phase in Fig. 6, where the PS, AF, and                     rigorously rule out order or dominant short-range correlations
+gapless SL phases meet at a DQCP (or possibly a triple point                      at k  =  (π,q) or k  =  (q,π) (where the cylindrical lattices
+of ﬁrst-order transitions).                                                       would favor one case) withq very close toπ, but we ﬁnd such
+   The SL phase of Ref. 68 also hosts short-range helical spin                    a scenario unlikely.
+6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S6. The spin structure deﬁned in Eq. (S1) forL = 10 SS lattices at three differentg values as indicated. The slightly brokenkx↔ky
+reﬂection symmetry is due to the cylindricalN  = 2L×L lattice geometry, that is manifested even when the structure is factor deﬁned only
+on the centralL×L sites according to Eq. (S1). The symmetry is gradually restored for increasingL.

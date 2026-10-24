@@ -24,6 +24,46 @@ Instance identity is part of the claim. A submitter asserting a record must stat
 symmetry sector and particle number. If a paper's number is from a different sector, the
 row moves to the instance of that sector and does not compete here.
 
+### 2.1 Instance names
+
+An instance id reads `Model/lattice_N_boundary_couplings`, the form VarBench uses:
+`J1J2/square_100_P_0.5`. The boundary is `P` (periodic), `O` (open), `PO` (a cylinder, periodic in
+one direction and open in the other) or `PA`. A lattice name with a cluster after a hyphen
+(`kagome-36a`, `rectangular-10x20`, `honeycomb-4x4`) names a cluster. The cluster's shape is part
+of the instance, because two clusters with the same site count are two Hamiltonians.
+
+The honeycomb and Shastry-Sutherland families (2026-10-20):
+
+- `Kitaev/honeycomb-<cluster>_N_<b>_K<K>[_J<J>][_G<Γ>]`: the K-J-Γ model on the honeycomb lattice
+  (§5). The id carries the sign of K. J and Γ are written only when they are not zero.
+- `ShastrySutherland/<cluster>_N_<b>_J<J>_Jd<Jd>`: J on the bonds of the square lattice, Jd on the
+  orthogonal dimers. Sources call the dimer coupling J, J', J1 or J2. A source's coupling is
+  mapped by the bond it sits on, never by its letter.
+- `J1J2/honeycomb-<cluster>_N_<b>_<J2>[_J3<J3>]`, and `Heisenberg/honeycomb-<cluster>_N_<b>` at
+  J2 = J3 = 0: the J1-J2(-J3) Heisenberg model on the honeycomb lattice, with J1 = 1.
+
+Clusters:
+
+- `honeycomb-LxL` is a rhombic cluster of L x L two-site unit cells (N = 2 L²).
+- Any other cluster is named for its source (`honeycomb-hex24`, the 24-site hexagonal supercell;
+  `square-tilted`, the 32-site square cluster tilted by 45 degrees). The instance's `cluster` field
+  states the shape and where the source defines it.
+- A cluster the source does not define, or defines inconsistently, creates no instance. Its rows
+  wait until the shape is known.
+
+Couplings are normalised in the S = σ/2 form of §5 (2026-10-21), so Hamiltonians that differ only
+by an overall factor share one instance:
+
+- Kitaev: |K| = 1. The id keeps the sign of K (`K-1`, `K1`), and J and Γ are in units of |K|.
+- Shastry-Sutherland: Jd = 1 on the dimer bond, and J is the ratio J/Jd.
+- Honeycomb J1-J2-J3: J1 = 1.
+
+A source whose Hamiltonian is the instance's times a factor prints its energies times that
+factor. A source that writes Pauli matrices with coupling c has |K| = 4|c| in the S = σ/2 form.
+The loader divides the energy, its error bar and its variance by the factor, never by hand. The
+row keeps the factor and the source's couplings in `normalised`, and `reported_as` keeps the
+printed number.
+
 ## 3. Required fields
 
 | field | required | notes |
@@ -117,6 +157,20 @@ Stored conventions follow VarBench and are asserted per instance, not per row:
 - `einf` is `0` for traceless spin Hamiltonians, `U * N_up * N_dn / n_sites` for the plain
   Hubbard model. Hopping terms are traceless, so a `t'` variant keeps the same `einf`;
   extra density-density terms do not.
+- The honeycomb and Shastry-Sutherland families (2026-10-20) are written with spin-1/2 operators
+  S = σ/2. They are stored like Heisenberg and J1-J2, as totals in the Pauli form (4 times the
+  S-operator energy). `E/N = energy / (4 * n_sites)` is therefore the energy per site of the
+  S-operator Hamiltonian with the normalised couplings of §2.1.
+  - Kitaev: `H = Σ_⟨ij⟩γ [K S^γ_i S^γ_j + J S_i·S_j + Γ (S^α_i S^β_j + S^β_i S^α_j)]`, where γ = x,
+    y, z is the bond direction and (α, β) are the other two components.
+  - Shastry-Sutherland: `H = J Σ_square S_i·S_j + Jd Σ_dimers S_i·S_j`.
+  - Honeycomb J1-J2-J3: `H = Σ_⟨ij⟩ S_i·S_j + J2 Σ_⟨⟨ij⟩⟩ S_i·S_j + J3 Σ_⟨⟨⟨ij⟩⟩⟩ S_i·S_j`.
+
+  Every term is traceless, so `einf` is `0`. Not yet in scope:
+  - a magnetic field;
+  - Γ′, a third-neighbour coupling, or unequal Kx, Ky, Kz in the Kitaev family;
+  - XXZ anisotropy;
+  - four-spin or extra second-neighbour terms in the Shastry-Sutherland model.
 
 Any submitted number is converted by the loader, never by hand. The conventions of every
 model are listed in [DATA.md](DATA.md#units-and-conventions).

@@ -1,0 +1,1117 @@
+Eﬃcient tensor network algorithm for layered systems
+Patrick C.G. Vlaar ∗ and Philippe Corboz
+Institute for Theoretical Physics and Delta Institute for Theoretical Physics,
+University of Amsterdam, Science Park 904, 1098 XH Amsterdam, The Netherlands
+(Dated: February 7, 2023)
+Strongly correlated layered 2D systems are of central importance in condensed matter physics,
+but their numerical study is very challenging. Motivated by the enormous successes of tensor
+networks for 1D and 2D systems, we develop an eﬃcient tensor network approach based on inﬁnite
+projected entangled-pair states (iPEPS) for layered 2D systems. Starting from an anisotropic 3D
+iPEPS ansatz, we propose a contraction scheme in which the weakly-interacting layers are eﬀectively
+decoupled away from the center of the layers, such that they can be eﬃciently contracted using 2D
+contraction methods while keeping the center of the layers connected in order to capture the most
+relevant interlayer correlations. We present benchmark data for the anisotropic 3D Heisenberg
+model on a cubic lattice, which shows close agreement with quantum Monte Carlo (QMC) and
+full 3D contraction results. Finally, we study the dimer to N´ eel phase transition in the Shastry-
+Sutherland model with interlayer coupling, a frustrated spin model which is out of reach of QMC
+due to the negative sign problem.
+Understanding the emergent phenomena in strongly
+correlated systems is of central importance in modern
+physics. Among the most powerful tools to study these
+systems are tensor network (TN) methods, with the
+density matrix renormalization group (DMRG) [1] algo-
+rithm and its underlying variational ansatz, the matrix
+product state (MPS) [2, 3], being the best-known ex-
+amples for (quasi) one-dimensional systems. Projected
+entangled-pair states (PEPS) [4, 5] (or tensor product
+states [6–8]) provide a natural generalization of MPS to
+higher dimensions. Thanks to algorithmic advances in
+the past years, PEPS has become a versatile state-of-the-
+art tool for 2D systems, not only for ground states [9–26],
+but also for ﬁnite temperature calculations [27–37], ex-
+cited states [38–41], open systems [31, 42–44], and real-
+time evolution [31, 45–50]. 3D TN algorithms are more
+challenging because of their higher complexity, although
+progress has recently been made in developing methods
+with a tractable computational cost [51] (see also related
+works on 3D classical systems [52–57]).
+A special and highly relevant class of 3D quantum sys-
+tems is formed by layered 2D systems, in which the eﬀec-
+tive intralayer couplings are much stronger than the in-
+terlayer ones. Important realizations include the cuprate
+high-Tc superconductors [58] as well as various quasi-2D
+frustrated magnets such as Kagom´ e [59], triangular [60–
+64], Shastry-Sutherland [65–67], and honeycomb lattice
+compounds [68–71]. While pure 2D models often already
+capture the relevant physics of these systems, the inter-
+layer couplings can play an important role on the quanti-
+tative level. For example, they lead to a ﬁnite N´ eel tran-
+sition temperature in layered square lattice Heisenberg
+models as opposed to the pure 2D case [72], or they may
+play a signiﬁcant role in the competition of low-energy
+states in the 2D Hubbard model [12]. Thus, accurate
+TN approaches to study these systems would be highly
+desirable.
+In this letter, we introduce an eﬃcient TN algorithm
+for layered 2D systems, called the layered corner transfer
+matrix (LCTM) method, which is substantially simpler
+and computationally cheaper than full 3D approaches.
+Motivated by the layered nature of these systems, we
+start from an anisotropic PEPS ansatz, i.e., with a small
+interlayer bond dimensionDz compared to the intralayer
+bond dimension Dxy, which control the accuracy of the
+ansatz. The main idea of the algorithm is to contract the
+3D TN by (1) performing an eﬀective decoupling of the
+layers away from the center of each layer, (2) contract-
+ing the individual decoupled layers using the standard
+2D corner transfer matrix (CTM) method [10, 73, 74],
+and (3) contracting the remaining TN, formed by the
+contracted layers connected with a ﬁnite bond dimen-
+sion Dz > 1 in the center of each layer. A core ingredi-
+ent of the approach is the eﬀective decoupling procedure
+which we implement based on an iterative full-update
+(FU) truncation scheme [75, 76]. We present benchmark
+results for the anisotropic Heisenberg model on a cubic
+lattice, which show close agreement with a full 3D con-
+traction and with quantum Monte Carlo (QMC) data
+already for small Dz. As a more challenging example we
+consider a frustrated spin model, the Shastry-Sutherland
+model with interlayer coupling, for which QMC fails due
+to the negative sign problem. Finally, we highlight di-
+rections for future improvements and extensions of the
+LCTM approach.
+Method. — We consider an inﬁnite PEPS (iPEPS),
+shown in Fig. 1(a), consisting of a tensor (or more gener-
+ally a unit cell of tensors) that is repeated on the inﬁnite
+cubic lattice. Each tensor has 7 indices: one physical in-
+dex carrying the local Hilbert space of a site, four indices
+with bond dimension Dxy connecting to the intraplane
+nearest-neighbor tensors, and two indices of dimension
+Dz connecting to the tensors in the neighboring planes.
+The accuracy of the ansatz is systematically controlled
+arXiv:2208.06423v2  [cond-mat.str-el]  6 Feb 2023
+2
+(a)
+Dxy
+Dz
+(b)
+= D2xy
+D2z
+(c)
+=
+FIG. 1. (a) Anisotropic 3D iPEPS ansatz with intralayer and
+interlayer bond dimensionsDxy andDz, respectively. (b) The
+norm tensor represents the combined bra- and ket-tensors on
+each site where pairs of auxiliary indices are combined into
+new auxiliary indices with dimensions D2xy and D2z, respec-
+tively. (c) Same as in (b) but with a local operator between
+the bra- and ket-tensors for the evaluation of a local expecta-
+tion value.
+by Dxy and Dz, where we choose Dxy≥ Dz motivated
+by the anisotropic nature of layered 2D systems. In the
+limit of Dz = 1, the ansatz corresponds to a product
+state of 2D iPEPS layers, i.e., a state without entangle-
+ment between the layers (but with entanglement within
+the layers, controlled by Dxy).
+The main challenge of a 3D TN algorithm is the eﬃ-
+cient, approximate contraction of the 3D TN, which is
+needed to compute, e.g., a local expectation value. Let
+us consider computing the norm of the wave function.
+The corresponding TN is depicted in Fig. 2(a), where
+the norm tensors (blue) represent the combined bra- and
+ket-tensors on each site as shown in Fig. 1(b). To com-
+pute a local expectation value, we can simply put an
+operator between the local tensors as shown in Fig. 1(c)
+and replace the norm tensor with this new tensor at the
+desired location.
+In the simplest case, for Dz = 1, this network consists
+of independent 2D square lattice networks which can be
+eﬃciently contracted using the CTM method [10, 73, 74].
+The CTM method is an iterative approach that approx-
+imates the 2D TN surrounding a central tensor by a set
+of environment tensors, given by four corner and four
+edge tensors (shown by the black disc-shaped tensors in
+Fig.2(c)), where the accuracy is systematically controlled
+by the boundary bond dimension χ of the environment
+tensors.
+For the case Dz > 1, a full 3D contraction algorithm
+as in Ref. [51] could be used. This, however, is compu-
+tationally expensive, and we thus follow a more eﬃcient
+strategy here, exploiting the anisotropic nature of the
+ansatz. The main idea is to project the vertical indices
+of the bra- and ket-iPEPS tensors away from the cen-
+ter of each layer onto Dz = 1 (see details below), while
+keeping the full bond dimension Dz > 1 on the tensors
+in the center, see Fig. 2(b). This leads to an eﬀective
+decoupling of the 2D layers away from the center, such
+that the standard 2D CTM approach can be used to con-
+tract them (Fig. 2(c)) while the most relevant interlayer
+(a) (b)
+(c)
+χ
+(d)
+(e) (f)
+FIG. 2. The main steps of the LCTM contraction method.
+(a) 3D TN representing the norm. (b) TN with decoupled
+layers away from the center, obtained by a projection (black
+triangles) of the vertical indices of bra- and ket-tensors in (a)
+onto Dz = 1 (except in the center). (c) The decoupled 2D
+layers are contracted using the CTM method, which yields
+the environment tensors around the central tensor, i.e., four
+corner and four edge tensors (in black), with an accuracy con-
+trolled by the boundary bond dimension χ. (d) The inﬁnite
+central chain with contracted layers can be evaluated by re-
+placing the neighboring layers by the left- and right-dominant
+eigenvector (black squares) of the transfer matrix represented
+by a contracted layer. A local expectation value can be com-
+puted by replacing the central norm tensor by the yellow ten-
+sor shown in Fig. 1(c). (e)-(f) Relevant diagrams to compute
+intra- and interlayer nearest-neighbor observables, where the
+yellow tensor is obtained from contracting neighboring bra-
+and ket-tensors with a 2-site operator in between.
+correlations are still taken into account by the vertical
+connections of the tensors in the center. Since the bonds
+in the z-direction carry only little entanglement, the pro-
+jection onto Dz = 1 away from the center is expected
+to induce only a small error on a local expectation value
+measured in the center. After contracting each layer, the
+resulting TN corresponds to an inﬁnite 1D chain in the
+vertical direction with bond dimension D2z, which can be
+evaluated by sandwiching the central layer between the
+left- and right-dominant eigenvector of the correspond-
+ing transfer matrix (represented by a contracted layer),
+as shown in Fig. 2(d).
+A core ingredient of the algorithm is the projection
+step from Dz > 1 to Dz = 1. We use a scheme based
+3
+on a full-update (FU) truncation [75, 76], a technique
+that is also applied in the context of imaginary time
+evolution algorithms to truncate a bond index in an
+iPEPS. It is based on a minimization of the norm dis-
+tance, d =
+‖‖|ψ⟩−| ψ′⟩‖‖2, which can be solved itera-
+tively, where |ψ⟩ is the untruncated iPEPS and |ψ′⟩ is
+the iPEPS with one bond truncated down to Dz = 1,
+see the supplemental material [77] for details. The FU
+does, however, require the environment tensors, which
+we initially do not have. We thus start from an ini-
+tial approximate projection based on the simple update
+(SU) approach [78], which only considers local tensors
+for the truncation, from which the environment for the
+FU projection is computed. To improve the accuracy of
+the truncation, one can repeat the computation of the
+environment iteratively. In practice, for the model con-
+sidered here, we ﬁnd that one FU iteration is suﬃcient
+to reach convergence.
+The accuracy of the LCTM method is controlled by
+the boundary bond dimension χ and by the number of
+Dz > 1 connections kept in the center. Here, we fo-
+cus on the simplest case, where we only keep the con-
+nections on the central tensor for the evaluation of one-
+site observables and interplane two-site observables (see
+Fig. 2(f)), which we ﬁnd is suﬃcient in the limit of weak
+interlayer coupling, as we will show in our benchmark
+results. For intralayer two-site observables we keep two
+connections, as depicted in Fig. 2(e). The computational
+cost of these contractions are χ3D4xy + χ2D6xyD2z and
+min[χ3D6xy,χ 3D4xyD4z], respectively. In the supplemen-
+tal material [77] we discuss other layer decoupling ap-
+proaches and we also consider a scheme with more con-
+nections, which is more accurate, but also computation-
+ally more expensive.
+The LCTM contraction method can not only be used
+for the computation of observables, but also in combi-
+nation with accurate optimization schemes (to ﬁnd the
+optimal variational parameters in the tensors for a given
+Hamiltonian), e.g., in an imaginary time evolution with
+fast-full update (FFU) [76] or in energy minimization
+algorithms [79–81]. We further note that the LCTM
+method can be extended to arbitrary unit cell sizes in
+a similar way to the standard CTM in 2D [10, 82].
+Results. — To benchmark the method, we consider the
+anisotropic 3D Heisenberg model on a cubic lattice given
+by the Hamiltonian
+ˆH =Jxy
+∑
+⟨ij⟩xy
+SiSj +Jz
+∑
+⟨ij⟩z
+SiSj, (1)
+with Jxy the intralayer and Jz the interlayer coupling
+strengths and Si spin S = 1/2 operators. We use an
+iPEPS ansatz with two tensors, one for each sublattice,
+to capture the long-range antiferromagnetic order. The
+iPEPS is optimized with the FFU imaginary time evolu-
+tion algorithm [76], starting from initial tensors obtained
+(a)
+(b) (c)
+FIG. 3. Results for the anisotropic 3D Heisenberg model
+with Jz/Jxy = 0 .1 as a function of 1 /Dxy, obtained for
+Dz = 1 − 3. For comparison, the extrapolated QMC re-
+sults are indicated by the horizontal dashed lines with the
+extrapolation error bar shown on the y-axis, which is of the
+order of the line width in (a) and (c). Data based on the full
+3D contraction approach (SU+CTM) is shown by the black
+symbols. (a) Energy per site e in units ofJxy. (b) Local mag-
+netic momentm. (c) Nearest-neighbor spin-spin correlator in
+the z-direction,⟨SS⟩z (top), and in the xy-direction, ⟨SS⟩xy
+(bottom).
+with simple update optimization [78]. In the CTM ap-
+proach, we keep a suﬃciently large boundary bond di-
+mension χ, such that ﬁnite- χ eﬀects are negligible [77].
+To improve the computational eﬃciency, tensors with im-
+plemented U(1) symmetry [83, 84] are used [85]. We
+compare our results to the ones computed with the full
+3D contraction approach (SU+CTM) from Ref. [51] and
+with QMC results based on the directed loop algorithm
+from the ALPS library [86, 87] (obtained at a suﬃciently
+low temperature of T = 0.005Jxy). To extrapolate the
+QMC data to the thermodynamic limit, a ﬁnite size scal-
+ing analysis is performed using the scaling relations for
+the isotropic 3D Heisenberg model on the cubic lattice
+from Ref. [88] for lattices of size L×L×L/2 with L up
+to 20 for Jz/Jxy = 0.05 and 0 .1, and with L×L×L
+lattices for a maximum L of 12 for Jz/Jxy = 0.2− 0.4.
+We ﬁrst consider the results for the energy per site, e,
+for Jz/Jxy = 0.1 in Fig. 3(a), plotted as a function of
+inverse bond dimension Dxy for diﬀerent values of Dz.
+Already a product of iPEPS layers ( Dz = 1) yields a
+value that is remarkably close to the QMC result, with
+a relative error of only 0 .15% for Dxy = 6. When Dz
+is increased to 2, a signiﬁcant improvement is found and
+the relative error at Dxy = 6 is reduced to 0 .05%, while
+a further increase to Dz = 3 only yields a small enhance-
+ment. Overall, the improvement of the variational en-
+4
+FIG. 4. Energy per site as a function of Jz/Jxy for diﬀerent
+sets of bond dimensions, in comparison with data from a full
+3D contraction (SU+CTM) and extrapolated QMC results.
+ergy is clearly larger when increasing Dxy (at least up
+to 4) compared to the improvement when increasing Dz,
+which further motivates the use of an anisotropic ansatz
+withDxy >D z. Comparing the LCTM scheme with the
+full 3D contraction (SU+CTM) only a small diﬀerence
+between the two methods is found.
+Results for the local magnetic moment m are shown
+in Fig. 3(b). Whereas m systematically approaches the
+QMC result with increasing Dxy, the dependence on Dz
+is small, suggesting that the reduction of the magnetic
+moment is predominantly due to the intraplane quan-
+tum ﬂuctuations. The relative error of m at Dxy = 6
+and Dz = 3 is 1 .7(1)%. In Fig. 3(c) we present results
+for the nearest-neighbor spin-spin correlators in the in-
+traplane and z-direction. The former is more accurately
+reproduced, which is a natural consequence of the fact
+that the latter enters with a prefactor Jz/Jxy = 0.1 in
+the optimization of the tensors. Still, we ﬁnd that the
+QMC result is approached with increasing Dz at large
+Dxy (note that increasing the two bond dimensions has
+an opposite eﬀect on the change in the ⟨SS⟩z correla-
+tor [77]).
+In Fig. 4 we present results for the energy per site as
+a function of Jz/Jxy, for selected values of Dxy and Dz.
+Starting with the data for Dxy = 3 and Dz = 2 we ﬁnd
+that the deviation with respect to the SU+CTM result
+slightly increases with increasing Jz/Jxy, although the
+deviation remains small even at a relatively large value
+of Jz/Jxy = 0.4. For a small ratio Jz/Jxy = 0.05, a
+product of iPEPS layers ( Dz = 1) for Dxy = 6 already
+provides an energy close to the QMC result, with only a
+small improvement when increasingDz to 2. In contrast,
+forJz/Jxy = 0.4 the energy gain is large when increasing
+Dz, which is a natural consequence of the stronger entan-
+glement between the layers for larger interlayer coupling.
+We next consider a more challenging problem, the
+Shastry-Sutherland model [89] (SSM) - a frustrated spin
+(b)(a)
+FIG. 5. Energies per site as a function of J′′/J of the SSM,
+showing the phase transition between the exact dimer state
+(horizontal dashed line) and the antiferromagnetic state for
+diﬀerent bond dimensions, for (a)J′/J = 0.61 and (b)J′/J =
+0.66. The dashed-dotted line shows the energy extrapolated
+in inverse bond dimension.
+model relevant for SrCu2(BO3)2 [67] for which QMC suf-
+fers from the negative sign problem [90]. It is described
+by square lattice layers of coupled dimers with Hamilto-
+nian
+ˆH =J∑
+⟨i,j⟩
+SiSj +J′ ∑
+⟨i,j⟩′
+SiSj +J′′ ∑
+⟨i,j⟩′′
+SiSj, (2)
+with J and J′ the intra- and interdimer couplings, Si
+spinS = 1/2 operators, and with an additional interlayer
+couplingJ′′ to the model as in Ref. [91] (see supplemental
+material [77] for additional details).
+We consider the dimer to antiferromagnetic phase tran-
+sition for ﬁxed J′/J while varying J′′/J and compare it
+to fourth-order series expansion (SE) results [91]. The lo-
+cation of the phase transition is determined from the in-
+tersection of the exact energy of the dimer state (−0.375J
+per site) with the energy of the antiferromagnetic state.
+ForJ′/J = 0.61, shown in Fig. 5(a), we ﬁnd a close agree-
+ment with the SE result at large bond dimensions and
+also based on an extrapolation in inverse bond dimen-
+sion [77]. For larger values (within the dimer phase) no
+estimate from SE exists due to convergence problems [91].
+With iPEPS, in contrast, we can accurately determine
+the transition, as shown in Fig. 5(b) for J′/J = 0.66.
+Conclusions. — We have introduced the LCTM
+method which is an eﬃcient approach to study layered
+2D systems with a weak interlayer coupling. The main
+idea is to perform a decoupling of the 3D network using
+the FU truncation onto Dz = 1 away from the center of
+each plane, while keeping the full bond dimensionDz > 1
+in the center, such that the resulting network can be ef-
+ﬁciently contracted with the standard CTM method in
+each layer. Our benchmark results for the anisotropic
+Heisenberg model demonstrate that the method yields
+values in close agreement with a full 3D contraction
+(SU+CTM), at a substantially lower computational cost.
+5
+The results are close to QMC results even for a small in-
+terlayer bond dimension Dz = 2. Although the accuracy
+decreases when Jz/Jxy is increased, errors remain rela-
+tively small up to Jz/Jxy = 0.4. Our results for the SSM
+demonstrate that LCTM also enables the accurate study
+of problems which are out of reach of QMC due to the
+negative sign problem.
+There are several promising ways to further improve
+the LCTM method. First, the accuracy of the FU pro-
+jection onto Dz = 1 could be improved by making use
+of disentanglers between the layers [92, 93]. Second, the
+accuracy of the contraction can be increased by includ-
+ing more Dz > 1 bonds in the center [77], although at a
+higher computational cost. Instead of keepingk open legs
+with total bond dimension ( Dz)k in between the layers,
+the total dimension could be eﬀectively reduced by intro-
+ducing appropriate projectors between the layers. Third,
+instead of a complete decoupling away from the center,
+a small vertical bond dimension χz could be kept in the
+CTM environment tensors in order to capture the most
+relevant interlayer entanglement away from the center.
+And ﬁnally, the contraction scheme may also be com-
+bined with an energy minimization based on automatic
+diﬀerentiation [81] which is expected to provide more ac-
+curate tensors than the FFU optimization used here.
+We believe our approach provides a powerful and prac-
+tical tool for future studies of challenging layered 2D sys-
+tems, especially models that are out of reach of QMC. Fi-
+nally, we note that the LCTM method can be straightfor-
+wardly extended to fermionic systems and ﬁnite temper-
+ature calculations, e.g., by adapting ideas from Refs. [94–
+97] and Refs. [30, 31], respectively.
+This project has received funding from the European
+Research Council (ERC) under the European Union’s
+Horizon 2020 research and innovation programme (grant
+agreement Nos. 677061 and 101001604). This work is
+part of the D-ITP consortium, a program of the Nether-
+lands Organization for Scientiﬁc Research (NWO) that
+is funded by the Dutch Ministry of Education, Culture,
+and Science (OCW).
+∗ p.c.g.vlaar@uva.nl
+[1] S. R. White, Phys. Rev. Lett. 69, 2863 (1992).
+[2] M. Fannes, B. Nachtergaele, and R. F. Werner, Commun.
+Math. Phys. 144, 443 (1992).
+[3] S. ¨Ostlund and S. Rommer, Phys. Rev. Lett. 75, 3537
+(1995).
+[4] F. Verstraete and J. I. Cirac, arXiv:cond-mat/0407066
+(2004).
+[5] V. Murg, F. Verstraete, and J. I. Cirac, Phys. Rev. A 75,
+033605 (2007).
+[6] Y. Hieida, K. Okunishi, and Y. Akutsu, New J. Phys. 1,
+7.1 (1999).
+[7] N. Maeshima, Y. Hieida, Y. Akutsu, T. Nishino, and
+K. Okunishi, Phys. Rev. E 64, 016705 (2001).
+[8] Y. Nishio, N. Maeshima, A. Gendiar, and T. Nishino,
+arXiv:cond-mat/0401115 (2004).
+[9] P. Corboz and F. Mila, Phys. Rev. Lett. 112, 147203
+(2014).
+[10] P. Corboz, T. M. Rice, and M. Troyer, Phys. Rev. Lett.
+113, 046402 (2014).
+[11] H. J. Liao, Z. Y. Xie, J. Chen, Z. Y. Liu, H. D. Xie, R. Z.
+Huang, B. Normand, and T. Xiang, Phys. Rev. Lett.118,
+137202 (2017).
+[12] B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlers, M.-P.
+Qin, R. M. Noack, H. Shi, S. R. White, S. Zhang, and
+G. K.-L. Chan, Science 358, 1155 (2017).
+[13] I. Niesen and P. Corboz, Phys. Rev. B 95, 180404(R)
+(2017).
+[14] J.-Y. Chen, L. Vanderstraeten, S. Capponi, and D. Poil-
+blanc, Phys. Rev. B 98, 184409 (2018).
+[15] S. S. Jahromi and R. Or´ us, Phys. Rev. B 98, 155108
+(2018).
+[16] H.-Y. Lee and N. Kawashima, Phys. Rev. B 97, 205123
+(2018).
+[17] H. Yamaguchi, Y. Sasaki, T. Okubo, M. Yoshida,
+T. Kida, M. Hagiwara, Y. Kono, S. Kittaka, T. Sakak-
+ibara, M. Takigawa, Y. Iwasaki, and Y. Hosokoshi, Phys.
+Rev. B 98, 094402 (2018).
+[18] B. Ponsioen, S. S. Chung, and P. Corboz, Phys. Rev. B
+100, 195141 (2019).
+[19] A. Kshetrimayum, C. Balz, B. Lake, and J. Eisert, Ann.
+Phys. (N. Y.) 421, 168292 (2020).
+[20] S. S. Chung and P. Corboz, Phys. Rev. B 100, 035134
+(2019).
+[21] R. Haghshenas, S.-S. Gong, and D. N. Sheng, Phys. Rev.
+B 99, 174423 (2019).
+[22] J.-Y. Chen, S. Capponi, A. Wietek, M. Mambrini,
+N. Schuch, and D. Poilblanc, Phys. Rev. Lett. 125,
+017201 (2020).
+[23] H.-Y. Lee, R. Kaneko, L. E. Chern, T. Okubo, Y. Yamaji,
+N. Kawashima, and Y. B. Kim, Nat. Commun. 11, 1639
+(2020).
+[24] O. Gauth´ e, S. Capponi, M. Mambrini, and D. Poilblanc,
+Phys. Rev. B 101, 205144 (2020).
+[25] J. Hasik, D. Poilblanc, and F. Becca, SciPost Phys. 10,
+012 (2021).
+[26] W.-Y. Liu, J. Hasik, S.-S. Gong, D. Poilblanc, W.-Q.
+Chen, and Z.-C. Gu, arXiv:2110.11138 [cond-mat.str-el]
+(2021).
+[27] P. Czarnik, J. Dziarmaga, and A. M. Ole´ s, Phys. Rev. B
+96, 014420 (2017).
+[28] C. Peng, S.-J. Ran, T. Liu, X. Chen, and G. Su, Phys.
+Rev. B 95, 075140 (2017).
+[29] X. Chen, S.-J. Ran, T. Liu, C. Peng, Y.-Z. Huang, and
+G. Su, Sci. Bull. 63, 1545 (2018).
+[30] A. Kshetrimayum, M. Rizzi, J. Eisert, and R. Or´ us, Phys.
+Rev. Lett. 122, 070502 (2019).
+[31] P. Czarnik, J. Dziarmaga, and P. Corboz, Phys. Rev. B
+99, 035115 (2019).
+[32] A. Wietek, P. Corboz, S. Wessel, B. Normand, F. Mila,
+and A. Honecker, Phys. Rev. Res. 1, 033038 (2019).
+[33] P. Czarnik, A. Francuz, and J. Dziarmaga, Phys. Rev. B
+100, 165147 (2019).
+[34] P. Czarnik, M. M. Rams, P. Corboz, and J. Dziarmaga,
+Phys. Rev. B 103, 075113 (2021).
+[35] J. L. Jim´ enez, S. P. G. Crone, E. Fogh, M. E. Za-
+yed, R. Lortz, E. Pomjakushina, K. Conder, A. M.
+L¨ auchli, L. Weber, S. Wessel, A. Honecker, B. Normand,
+6
+C. R¨ uegg, P. Corboz, H. M. Rønnow, and F. Mila, Nature
+592, 370 (2021).
+[36] D. Poilblanc, M. Mambrini, and F. Alet, SciPost Phys.
+10, 019 (2021).
+[37] O. Gauth´ e and F. Mila, Phys. Rev. Lett. 128, 227202
+(2022).
+[38] L. Vanderstraeten, J. Haegeman, and F. Verstraete,
+Phys. Rev. B 99, 165121 (2019).
+[39] B. Ponsioen and P. Corboz, Phys. Rev. B 101, 195109
+(2020).
+[40] B. Ponsioen, F. Assaad, and P. Corboz, SciPost Phys.
+12, 006 (2022).
+[41] R.-Z. Chi, Y. Liu, Y. Wan, H.-J. Liao, and T. Xiang,
+arXiv:2201.12121 [cond-mat.str-el] (2022).
+[42] A. Kshetrimayum, H. Weimer, and R. Or´ us, Nat. Com-
+mun. 8, 1291 (2017).
+[43] D. Kilda, A. Biella, M. Schiro, R. Fazio, and J. Keeling,
+SciPost Physics Core 4, 005 (2021).
+[44] C. Mc Keever and M. H. Szyma´ nska, Phys. Rev. X 11,
+021035 (2021).
+[45] C. Hubig and J. I. Cirac, SciPost Phys. 6, 31 (2019).
+[46] C. Hubig, A. Bohrdt, M. Knap, F. Grusdt, and J. I.
+Cirac, SciPost Phys. 8, 21 (2020).
+[47] A. Kshetrimayum, M. Goihl, and J. Eisert, Phys. Rev. B
+102, 235132 (2020).
+[48] A. Kshetrimayum, M. Goihl, D. M. Kennes, and J. Eis-
+ert, Phys. Rev. B 103, 224205 (2021).
+[49] M. Schmitt, M. M. Rams, J. Dziarmaga, M. Heyl, and
+W. H. Zurek, arXiv:2106.09046 [cond-mat.str-el] (2021).
+[50] J. Dziarmaga, Phys. Rev. B 105, 054203 (2022).
+[51] P. C. G. Vlaar and P. Corboz, Phys. Rev. B 103, 205137
+(2021).
+[52] T. Nishino and K. Okunishi, J. Phys. Soc. Jpn. 67, 3066
+(1998).
+[53] T. Nishino, K. Okunushi, Y. Hieida, N. Maeshima, and
+Y. Akutsu, Nucl. Phys. B 575, 504 (2000).
+[54] T. Nishino, Y. Hieida, K. Okunushi, N. Maeshima,
+Y. Akutsu, and A. Gendiar, Prog. Theor. Phys. 105, 409
+(2001).
+[55] Z. Y. Xie, J. Chen, M. P. Qin, J. W. Zhu, L. P. Yang,
+and T. Xiang, Phys. Rev. B 86, 045139 (2012).
+[56] R. Or´ us, Phys. Rev. B85, 205117 (2012).
+[57] L. Vanderstraeten, B. Vanhecke, and F. Verstraete, Phys.
+Rev. E 98, 042145 (2018).
+[58] J. G. Bednorz and K. A. M¨ uller, Z. Phys. B 64, 189
+(1986).
+[59] M. P. Shores, E. A. Nytko, B. M. Bartlett, and D. G.
+Nocera, J. Am. Chem. Soc. 127, 13462 (2005).
+[60] R. Coldea, D. A. Tennant, A. M. Tsvelik, and Z. Tyl-
+czynski, Phys. Rev. Lett. 86, 1335 (2001).
+[61] Y. Shimizu, K. Miyagawa, K. Kanoda, M. Maesato, and
+G. Saito, Phys. Rev. Lett. 91, 107001 (2003).
+[62] Y. Shirata, H. Tanaka, A. Matsuo, and K. Kindo, Phys.
+Rev. Lett. 108, 057205 (2012).
+[63] R. Rawl, L. Ge, H. Agrawal, Y. Kamiya, C. R. Dela Cruz,
+N. P. Butch, X. F. Sun, M. Lee, E. S. Choi, J. Oitmaa,
+C. D. Batista, M. Mourigal, H. D. Zhou, and J. Ma, Phys.
+Rev. B 95, 060412(R) (2017).
+[64] Y. Cui, J. Dai, P. Zhou, P. S. Wang, T. R. Li, W. H.
+Song, J. C. Wang, L. Ma, Z. Zhang, S. Y. Li, G. M.
+Luke, B. Normand, T. Xiang, and W. Yu, Phys. Rev.
+Materials 2, 044403 (2018).
+[65] H. Kageyama, K. Yoshimura, R. Stern, N. V. Mushnikov,
+K. Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto,
+and Y. Ueda, Phys. Rev. Lett. 82, 3168 (1999).
+[66] S. Miyahara and K. Ueda, Phys. Rev. Lett. 82, 3701
+(1999).
+[67] S. Miyahara and K. Ueda, J. Phys.: Condens. Matter 15,
+R327 (2003).
+[68] Y. Singh and P. Gegenwart, Phys. Rev. B 82, 064412
+(2010).
+[69] K. W. Plumb, J. P. Clancy, L. J. Sandilands, V. V.
+Shankar, Y. F. Hu, K. S. Burch, H.-Y. Kee, and Y.-J.
+Kim, Phys. Rev. B 90, 041112(R) (2014).
+[70] H. Takagi, T. Takayama, G. Jackeli, G. Khaliullin, and
+S. E. Nagler, Nat Rev Phys 1, 264 (2019).
+[71] C. Wessler, B. Roessli, K. W. Kr¨ amer, B. Delley,
+O. Waldmann, L. Keller, D. Cheptiakov, H. B. Braun,
+and M. Kenzelmann, npj Quantum Mater. 5, 85 (2020).
+[72] P. Sengupta, A. W. Sandvik, and R. R. P. Singh, Phys.
+Rev. B 68, 094423 (2003).
+[73] T. Nishino and K. Okunishi, J. Phys. Soc. Jpn. 65, 891
+(1996).
+[74] R. Or´ us and G. Vidal, Phys. Rev. B80, 094403 (2009).
+[75] J. Jordan, R. Or´ us, G. Vidal, F. Verstraete, and J. I.
+Cirac, Phys. Rev. Lett. 101, 250602 (2008).
+[76] H. N. Phien, J. A. Bengua, H. D. Tuan, P. Corboz, and
+R. Or´ us, Phys. Rev. B92, 035142 (2015).
+[77] See Supplemental Material for more technical details and
+additional data.
+[78] H. C. Jiang, Z. Y. Weng, and T. Xiang, Phys. Rev. Lett.
+101, 090603 (2008).
+[79] P. Corboz, Phys. Rev. B 94, 035133 (2016).
+[80] L. Vanderstraeten, J. Haegeman, P. Corboz, and F. Ver-
+straete, Phys. Rev. B 94, 155123 (2016).
+[81] H.-J. Liao, J.-G. Liu, L. Wang, and T. Xiang, Phys. Rev.
+X 9, 031041 (2019).
+[82] P. Corboz, S. R. White, G. Vidal, and M. Troyer, Phys.
+Rev. B 84, 041108(R) (2011).
+[83] S. Singh, R. N. C. Pfeifer, and G. Vidal, Phys. Rev. B
+83, 115125 (2011).
+[84] B. Bauer, P. Corboz, R. Or´ us, and M. Troyer, Phys. Rev.
+B 83, 125106 (2011).
+[85] We note that the SU(2) spin symmetry is broken in the
+ground state.
+[86] A. Albuquerque, F. Alet, P. Corboz, P. Dayal, A. Feiguin,
+S. Fuchs, L. Gamper, E. Gull, S. G¨ urtler, A. Honecker,
+R. Igarashi, M. K¨ orner, A. Kozhevnikov, A. L¨ auchli,
+S. Manmana, M. Matsumoto, I. McCulloch, F. Michel,
+R. Noack, G. Paw/suppress lowski, L. Pollet, T. Pruschke,
+U. Schollw¨ ock, S. Todo, S. Trebst, M. Troyer, P. Werner,
+and S. Wessel, J. Magn. Magn. Mater. 310, 1187 (2007).
+[87] B. Bauer, L. D. Carr, H. G. Evertz, A. Feiguin,
+J. Freire, S. Fuchs, L. Gamper, J. Gukelberger, E. Gull,
+S. Guertler, A. Hehn, R. Igarashi, S. V. Isakov,
+D. Koop, P. N. Ma, P. Mates, H. Matsuo, O. Parcol-
+let, G. Paw/suppress lowski, J. D. Picon, L. Pollet, E. Santos,
+V. W. Scarola, U. Schollw¨ ock, C. Silva, B. Surer, S. Todo,
+S. Trebst, M. Troyer, M. L. Wall, P. Werner, and S. Wes-
+sel, J. Stat. Mech.: Theory Exp. 2011 (05), P05001.
+[88] P. Hasenfratz and F. Niedermayer, Z. Phys. B 92, 91
+(1993).
+[89] B. Sriram Shastry and B. Sutherland, Physica B+C 108,
+1069 (1981).
+[90] S. Wessel, I. Niesen, J. Stapmanns, B. Normand, F. Mila,
+P. Corboz, and A. Honecker, Phys. Rev. B 98, 174432
+(2018).
+[91] A. Koga, J. Phys. Soc. Jpn. 69, 3509 (2000).
+7
+[92] G. Vidal, Phys. Rev. Lett. 99, 220405 (2007).
+[93] G. Evenbly and G. Vidal, Phys. Rev. Lett. 115, 180405
+(2015).
+[94] C. V. Kraus, N. Schuch, F. Verstraete, and J. I. Cirac,
+Phys. Rev. A 81, 052338 (2010).
+[95] T. Barthel, C. Pineda, and J. Eisert, Phys. Rev. A 80,
+042333 (2009).
+[96] P. Corboz, R. Orus, B. Bauer, and G. Vidal, Phys. Rev.
+B 81, 165104 (2010).
+[97] Z.-C. Gu, F. Verstraete, and X.-G. Wen, arXiv:1004.2563
+[cont-mat.str-el] (2010).
+Supplemental Material for ”Eﬃcient tensor network algorithm for layered systems”
+Patrick C.G. Vlaar ∗ and Philippe Corboz
+Institute for Theoretical Physics and Delta Institute for Theoretical Physics,
+University of Amsterdam, Science Park 904, 1098 XH Amsterdam, The Netherlands
+(Dated: February 7, 2023)
+In this supplemental material, additional details and
+results on the LCTM method, the iPEPS optimization,
+and the Shastry-Sutherland model are presented. In
+Sec. I, the truncation used in the Dz > 1→Dz = 1 pro-
+jection step and in the fast-full update (FFU) optimiza-
+tion is discussed as well as two computationally cheaper
+truncation approaches. Details on the FFU optimiza-
+tion and a comparison between FFU and other imagi-
+nary time evolution algorithms are presented in Sec. II.
+Section III discusses the decay of the singular value spec-
+tra of the iPEPS, which further justiﬁes the use of an
+anisotropic ansatz. Additional results on the accuracy
+and convergence of the LCTM are provided in Sec. IV, in-
+cluding the dependence on the boundary bond dimension
+χ, a comparison with the higher-order tensor renormal-
+ization group (HOTRG) method, the number of inter-
+layerDz > 1 connections, and a comparison of diﬀerent
+layer decoupling procedures. Finally, in Sec. V additional
+details on simulations of the Shastry-Sutherland model
+with interlayer coupling are given.
+I. FULL UPDA TE TRUNCA TION
+In this section, we provide more details on the full-
+update (FU) truncation method [1, 2], which is used to
+perform the projection from Dz > 1 to Dz = 1 of the
+vertical bonds in the LCTM approach. The same scheme
+is also applied to truncate a bond within the FFU time
+evolution method (cf. next section).
+Let us consider an iPEPS |ψ⟩ where we want to trun-
+cate a speciﬁc bond with bond dimension ˜D down to a
+smaller bond dimension D. We can do this by insert-
+ing a pair of projectors (p,q ) on the corresponding bond,
+yielding a truncated state |ψ′⟩ which depends on p and
+q. In order to ﬁnd the optimal pair of projectors we need
+to minimize the norm distance between the two states,
+d(p,q ) =
+‖‖|ψ⟩−| ψ′⟩‖‖2
+=⟨ψ|ψ⟩ +⟨ψ′|ψ′⟩−⟨ ψ|ψ′⟩−⟨ ψ′|ψ⟩, (1)
+which is graphically represented in Fig. 1(a). The gray
+box corresponds to the environment of the bond to be
+truncated, i.e., the inﬁnite tensor network surrounding
+the corresponding bond, which is the same for |ψ⟩ and
+|ψ′⟩ (since they diﬀer only by the pair of projectors on
+∗ p.c.g.vlaar@uva.nl
+(b) (c)
+(a)
+d(p, q) = +
+p q
+p† q† − −
+FIG. 1. Relevant diagrams for the truncation scheme used in
+the LCTM method and in the FFU imaginary time evolution.
+(a) Diagrammatic representation of the norm distance in Eq. 1
+which depends on the projectors p and q (triangles). The
+gray box represents the environment of the bond, and can be
+computed using the LCTM approach as shown in (b) and (c)
+for an intraplane and interplane bond, respectively.
+the bond). The computation of these environments is
+done using the LCTM approach, and the corresponding
+diagrams for a horizontal and a vertical bond are shown
+in Figs. 1(b) and Figs. 1(c), respectively.
+We minimize Eq. 1 by an iterative scheme where we
+ﬁrst keep q ﬁxed and minimize d(p,q ) with respect to p,
+which can be done by solving the resulting linear sys-
+tem [2]. Then p is kept ﬁxed and d(p,q ) is minimized
+with respect to q, and the procedure is repeated until
+convergence is reached. Alternatively, a conjugate gradi-
+ent approach could also be used to minimize Eq. 1. To
+improve the stability of the algorithm, the norm matrix
+is explicitly made Hermitian and positive deﬁnite as pro-
+posed in Ref. [3].
+A. Simple update and cluster update truncation
+Besides the FU truncation, which takes the full wave
+function into account to truncate a bond, other schemes
+exist where the environment is approximated by only
+a ﬁnite number of tensors. These schemes are based
+on a modiﬁed iPEPS ansatz in which diagonal matri-
+ces with non-negative entries are introduced on each vir-
+tual bond [4, 5], shown in Fig. 2(a). The matrices are
+naturally obtained during an imaginary time evolution
+arXiv:2208.06423v2  [cond-mat.str-el]  6 Feb 2023
+2
+(a)
+=
+√λ1
+√λ3
+√λ2
+√λ4
+√λ5
+√λ6
+(b) (c)
+FIG. 2. The environment used in the SU truncation. (a) An
+alternative formulation of the iPEPS ansatz in which singular
+value matrices λi are introduced on the virtual bonds, repre-
+sented by small circles. To retrieve the standard ansatz, the
+square root of the singular value matrices can be absorbed
+into the iPEPS tensors on each side. (b) The SU environ-
+ment in the intraplane direction. (c) The SU environment in
+the interplane direction.
+algorithm as singular value matrix from an SVD of the
+projectors p and q. Alternatively they can be extracted
+by an algorithm like in Ref. [6]. The standard iPEPS
+tensors can be retrieved by absorbing the square root of
+the matrix on each bond into the tensor.
+In the simple update (SU) [5], the truncation is per-
+formed based on an environment made of only two ten-
+sors together with their adjacent singular values, shown
+in Figs. 2(b) and (c) for intralayer and interlayer bonds
+respectively. Because the sites that are optimized are
+not connected through the environment, the truncation
+can also be directly performed by an SVD of the tensors
+including the singular values [5]. The SU is computation-
+ally considerably cheaper than the FU, but it is also less
+accurate.
+An improvement over the SU truncation (but still less
+accurate than the FU) is provided by the cluster update
+(CU) truncation [3, 7–9], which takes a larger environ-
+ment consisting of a ﬁnite number of tensors around the
+bond into account to minimize Eq. 1. Figure 3(c) and
+3(d) show examples of a 4 × 3 cluster environment for
+intraplane update steps and a 3× 3 environment for the
+interplane bond respectively.
+II. IMAGINAR Y TIME EVOLUTION WITH
+LCTM
+Imaginary time evolution is a well-established ap-
+proach to obtain an iPEPS representing the ground state
+(a)
+=
+(b)
+=
+(c) (d)
+FIG. 3. The environments used in our implementation of
+the CU truncation. (a+b) For graphical brevity, a compact
+notation is used. The small circles on the traced-out bonds
+represent the corresponding singular value matrices on the
+bonds. (c) A 4×3 cluster environment used for the intraplane
+update steps. (d) A 3× 3 environment used in the interplane
+direction.
+(i) (ii) (iii)
+FIG. 4. Application of an imaginary time evolution gate to
+the iPEPS ansatz. (i) Applying the gate increases the dimen-
+sion of the respective bond to ˜D > D. (ii) In order to avoid
+the bond dimension from growing exponentially, projectors
+are inserted which truncate the bond ˜D→D. (iii) Absorbing
+the projectors into the tensors provides the updated tensors.
+of a given Hamiltonian ˆH. The main idea is to project an
+initial state onto the ground state by applying the imag-
+inary time evolution operator e−β ˆH with β→∞ on the
+initial state. For simplicity, let us consider a Hamiltonian
+consisting of only nearest-neighbor terms, ˆH = ∑i ˆHi.
+By using a Trotter-Suzuki decomposition the imaginary
+time evolution operator can be split into a product of
+local nearest-neighbor gates
+e−β ˆH = (e−τ ∑i ˆHi)M = M∏
+j
+∏
+i
+e−τ ˆHi +O(τ), (2)
+withβ =τM . The error can be further reduced toO(τ 2)
+using a second-order Trotter-Suzuki decomposition which
+is used in this work. The individual gates are sequentially
+applied to the iPEPS ansatz. Each application of a gate
+increases the bond dimension between the two sites to
+˜D > D, which needs to be truncated to avoid exponen-
+tial growth of the bond dimension, as diagrammatically
+shown in Fig. 4.
+In the full update (FU) [1, 2] method, the truncation
+is performed using the FU truncation discussed in Sec. I.
+The computational cost of this procedure is dominated
+3
+(a)
+ (b)
+FIG. 5. Comparison of results obtained with the SU, CU, and
+FFU imaginary time evolution methods for the anisotropic
+Heisenberg model with Jz/Jxy = 0.1 as a function of 1 /Dxy
+and Dz = 2. For reference, extrapolated quantum Monte
+Carlo (QMC) results are provided. (a) Energy per site e in
+units of Jxy. (b) Local magnetic moment m.
+by the environment contraction which must be computed
+every time a new gate is applied. The cost can be re-
+duced with the fast-full update (FFU) [2], which is the
+method used here. In the FFU, instead of performing
+a full convergence of the environment with the LCTM
+method after applying a gate, the environment from the
+previous time step is recycled, and, for intraplane bonds,
+only one single CTM iteration in the direction of the
+updated bond is performed, which is computationally
+cheaper. For bonds in the z-direction, no iteration of the
+CTM is required. The FFU is motivated by the obser-
+vation that an application of a single time-evolution gate
+with a small time step has typically only a small eﬀect on
+the environment. In addition to the CTM environment
+tensors, we also recycle both the projectors that truncate
+the iPEPS tensors to Dz→ 1 as well as the dominant
+eigenvectors carrying contributions from the other layers
+that are used in the x- and y-update steps. Both are
+recomputed after the updates in z-direction.
+In the main text, results have been obtained based on
+the FFU approach. Alternatively, we have also tested
+imaginary time evolution schemes based on a SU and
+CU truncation, which are computationally cheaper but
+also less accurate. Here, we compare results of these vari-
+ants obtained for the anisotropic Heisenberg model with
+Jz/Jxy = 0.1 in Fig. 5. The SU leads to slightly higher
+energies than the FFU, as shown in Fig. 5(a), whereas
+the CU yields similar results to the FFU. For the local
+magnetic moment m, shown in Fig. 5(b), the deviation
+between the SU and FFU is more pronounced. Also here,
+the CU gives a signiﬁcant improvement upon the SU re-
+sult, with slightly larger values compared to the FFU
+result at large bond dimensions.
+FIG. 6. Spectrum of the singular values si on the intra-
+and interplane bonds in the iPEPS ansatz obtained for the
+anisotropic Heisenberg model with Dxy = 6 and Dz = 3, ex-
+hibiting a fast decay (weaker entanglement) in the z-direction
+and a slow decay (stronger entanglement) in the xy-direction
+for small Jz/Jxy.
+III. DECA Y SINGULAR V ALUE SPECTRUM
+To further motivate the anisotropic ansatz and con-
+traction approach, we consider the singular value spec-
+trum on the intra- and interplane bonds in Fig. 6 ob-
+tained for the 3D anisotropic Heisenberg model. The
+singular value matrices are extracted from our FFU-
+optimized tensors using the algorithm from Ref. [6].
+A much faster decay of the singular values can be ob-
+served in the z-direction than in the intraplane direction,
+as expected, due to the weak entanglement between the
+planes. Increasing Jz/Jxy leads to a slower decay in the
+z-direction, suggesting that the value of Dz needs to be
+increased. Eventually, for suﬃciently large Jz/Jxy the
+singular values in all directions will become of similar
+magnitude, such that an anisotropic ansatz in combina-
+tion with the LCTM contraction is no longer justiﬁed.
+IV. ACCURACY OF THE LCTM
+CONTRACTION
+The accuracy of the LCTM contraction is controlled
+by both the boundary bond dimension χ of the CTM
+environment tensors as well as the number of untrun-
+cated interlayer connections that are kept in the cen-
+ter of the network. In this section, we analyze the de-
+pendence of the results on these parameters for the 3D
+anisotropic Heisenberg model. We also provide a com-
+parison to the higher-order tensor renormalization group
+(HOTRG) method [10, 11]. Finally, we examine alter-
+native approaches for the Dz > 1 to Dz = 1 truncation
+performed away from the center.
+4
+(b)(a)
+FIG. 7. Convergence as a function of the inverse CTM bound-
+ary dimension 1/χ for Dxy = 4− 6 and Dz = 2. The results
+are for the anisotropic Heisenberg model with Jz/Jxy = 0.1.
+(a) The energy per site e in units of Jxy. (b) Local magnetic
+momentm.
+A. Convergence in χ
+In Fig. 7(a) we show the energy per site, e, for
+Jz/Jxy = 0.1 as a function of 1 /χ for diﬀerent values
+of Dxy and Dz = 2. Convergence is reached at suﬃ-
+ciently largeχ, where a higher χ is needed for largerDxy
+for an accurate evaluation, as expected. Interestingly, we
+ﬁnd that an increase in Dz does not require a larger χ to
+converge. Similar observations can be made for the local
+magnetic moment m in Fig. 7(b). For the results in the
+main text,χ is chosen suﬃciently large such that ﬁnite-χ
+errors are negligible.
+B. Comparison with HOTRG
+In this section we present a comparison of the conver-
+gence behavior of the LCTM method as a function of χ
+with results obtained with the higher-order tensor renor-
+malization group (HOTRG) approach [10, 11], which is
+another method to contract 3D tensor networks. Fig-
+ure 7 shows the results for the energy and magnetization
+for diﬀerent bond dimensions and Dz = 2, using tensors
+obtained from a FFU optimization (the same optimized
+tensors are used for the two contraction approaches).
+For small bond dimension Dxy = 2 the two approaches
+yield similar results at large χ. However, with increasing
+bond dimension it becomes more and more challenging to
+reach convergence with HOTRG, which overall displays
+an irregular convergence behavior as a function of χ and
+which is computationally substantially more expensive
+than LCTM. Similar observations have been made for
+the isotropic 3D Heisenberg model in Ref. [12], in which
+it was found that SU+CTM shows a much more regular
+convergence behavior than HOTRG. For this reason we
+have taken results from SU+CTM as reference values in
+the main text.
+(a) (b)
+FIG. 8. Comparison between LCTM and HOTRG for the
+convergence of the energy (a) and the magnetization (b) as a
+function of inverse bond dimension 1/χ.
+C. Interlayer connectivity
+The number of untruncated Dz > 1 interlayer connec-
+tions is another parameter controlling the accuracy of
+the LCTM method. The results in the main text have
+been obtained by just keeping a single connection in the
+center for one-site observables and interlayer two-site ob-
+servables, and two connections for intralayer two-site ob-
+servables. Here we present a comparison to a diﬀerent
+scheme, in which we also keep the interlayer connections
+on the tensors neighboring the (two) central one(s). In
+practice, this can be implemented by absorbing tensors
+with Dz > 1 into the environment tensors at the ﬁnal
+CTM step, as depicted in Fig. 9(a). Figures 9(b)-(d)
+show the diagrams to evaluate a one-site observable, an
+intraplane two-site observable, and an interplane two-site
+observable, respectively. We call this scheme the star
+LCTM. It has the advantage that more of the interlayer
+correlations are taken into account, however, at the ex-
+pense of a signiﬁcantly higher contraction cost.
+In Fig. 10(a) results for the nearest-neighbor spin-spin
+correlator in the intraplane direction are shown, using
+diﬀerent contraction schemes to evaluate them. The ten-
+sors have been obtained for Jz/Jxy = 0.1 using the FFU
+imaginary time evolution based on the standard LCTM
+scheme. Besides the standard and star LCTM approach,
+we also include data from the 2D CTM in which no inter-
+layer connections are kept (i.e. also the connection on the
+central tensor is truncated to Dz = 1), and from the full
+3D contraction (SU+CTM) which we take as reference
+values. We observe that without the interlayer connec-
+tions (2D CTM) the deviation from the SU+CTM result
+is relatively large, whereas both the standard and star
+LCTM show a close agreement with the full 3D contrac-
+tion.
+Figure 10(b) shows results in the interlayer direction.
+The deviation from the SU+CTM result is larger here
+with the standard LCTM scheme, although it performs
+much better than the 2D CTM. A signiﬁcant improve-
+5
+(a) (b)
+(c) (d)
+FIG. 9. The star LCTM contraction which diﬀers from
+the standard LCTM because both the central and nearest-
+neighbor interlayer connections remain untruncated. The yel-
+low tensors indicate the contraction of bra- and ket-tensors
+with an operator in between. (a) The star LCTM diﬀers from
+the standard LCTM at the ﬁnal CTM step where a tensor
+with untruncated interlayer connections is absorbed into the
+environment. (b) The ﬁnal diagram for the computation of
+a one-site observable. The leading eigenvector is a larger ob-
+ject compared to the standard LCTM due to the additional
+untruncated bonds. (c) The diagram of an intraplane two-
+site observable. (d) The diagram of an interplane two-site
+observable.
+ment is obtained by using the star LCTM, with a close
+agreement to SU+CTM for Dxy = 2 and 3. For larger
+Dxy we expect that the results can be further improved
+by keeping even more interlayer connections.
+As already pointed out in the main text, increasing the
+two bond dimensions Dxy and Dz has an opposite eﬀect
+on the change in the ⟨SS⟩z correlator, which can be in-
+tuitively understood as follows. Firstly, an increase in
+Dz at ﬁxed Dxy naturally leads to a decrease in ⟨SS⟩z,
+because the higher bond dimension lowers the variational
+energy on these bonds. The increase in ⟨SS⟩z with in-
+creasingDxy is less obvious, but can be best understood
+in the Dz = 1 limit. In this limit the ⟨SS⟩z correlator
+(or equivalently the energy on a z-bond) is minimized
+by the classical antiferromagnetic state which is realized
+for Dxy = 1, and amounts to −m2, with m = 1/2 the
+magnitude of the local magnetic moment on each site.
+By increasing Dxy, m will become smaller due to intra-
+plane quantum ﬂuctuations (entanglement), and hence
+the⟨SS⟩z correlator between the layers with Dz = 1 will
+increase. We note that the opposite eﬀect is observed for
+(b)(a)
+FIG. 10. Contraction results for the nearest-neighbor spin-
+spin correlators obtained with a 2D CTM, standard LCTM,
+and star LCTM for the anisotropic Heisenberg model with
+Jz/Jxy = 0.1 as a function of 1 /Dxy and with Dz = 2.
+For comparison, results obtained from a full 3D contrac-
+tion (SU+CTM) and extrapolated QMC results are provided.
+(a) Nearest-neighbor spin-spin correlator in the intraplane di-
+rection⟨SS⟩xy. (b) Nearest-neighbor spin-spin correlator in
+the interplane direction⟨SS⟩z.
+⟨SS⟩xy, just that the dependence on Dz is very weak.
+D. Alternative layer decoupling approaches
+A key step in the LCTM method is the decoupling of
+the layers away from the center, which for the results
+in the main text is done by a FU truncation to Dz =
+1. In this section, we compare several alternative local
+truncation approaches to the FU results.
+The ﬁrst alternative we consider is to trace out the
+bonds in the z-direction by connecting the respective
+bonds of the iPEPS tensors in the bra- and in the ket-
+layers. On these bonds, we include the corresponding
+singular value matrices in the same spirit as done in the
+SU and CU truncation. Another option we test is the SU
+truncation. Finally, we consider a CU truncation based
+on the 3× 3 environment shown in Fig. 3(d).
+Figure 11(a) shows results for the energy per site, e, as
+a function of 1/Dxy and Dz = 2 at Jz/Jxy = 0.1. Here
+we ﬁnd that the alternative truncation approaches show
+a good agreement with the FU layer decoupling scheme.
+For the Dz = 3 case, presented in Fig. 11(b), however,
+the scheme based on tracing out the interlayer connec-
+tions and the SU truncation both give a signiﬁcant un-
+derestimation of the energy compared to FU. Although
+the CU 3× 3 truncation performs better, it yields values
+that are too small as well. These results indicate that
+performing an accurate truncation is important, at least
+for Dz > 2, and they motivate the use of the computa-
+tionally more expensive FU truncation in the main text.
+6
+(b)(a)
+FIG. 11. Results obtained with alternative layer decoupling
+approaches based on tracing out the z-bond, a SU trunca-
+tion, and a CU truncation using a 3 × 3 cluster size com-
+pared to a FU truncation. The energy per site is shown as a
+function of 1/Dxy for the anisotropic Heisenberg model with
+Jz/Jxy = 0.1. For reference, a SU+CTM contraction and an
+extrapolated QMC result are provided as well. (a) Dz = 2.
+(b) Dz = 3.
+(a)
+J
+J ′
+(b)
+J
+J ′′
+FIG. 12. Lattice structure of the Shastry-Sutherland model
+with interlayer coupling. (a) The 2D SSM consists of orthog-
+onal dimers with J the intra- and J′ the interdimer coupling
+indicated by dashed and solid lines, respectively. (b) In the 3D
+model the layers are stacked on top of each other such that
+dimers in neighboring layers are orthogonal to each other.
+Each site of a dimer interacts with both sites of the neighbor-
+ing dimer in the adjacent layer with an interlayer couplingJ′′
+shown by the dotted lines.
+V. DET AILS ON THE SIMULA TIONS OF THE
+SHASTR Y-SUTHERLAND MODEL WITH
+INTERLA YER COUPLING
+In this section we provide additional details on the
+iPEPS simulations of the Shastry-Sutherland model
+(SSM) with interlayer coupling. The 3D lattice struc-
+ture with the intra- and interdimer couplings J and J′,
+and interplane coupling J′′, is presented in Fig. 12.
+In our numerical simulations, a cubic iPEPS ansatz is
+used, with one tensor per dimer as previously done for
+the 2D model [13]. To improve the eﬃciency we use ten-
+sors with U(1) symmetry. To obtain the energies of the
+antiferromagnetic states across the phase transition, we
+initialize the FFU optimizations from states obtained in
+the antiferromagnetic phase. Thanks to hysteresis eﬀects
+across the ﬁrst order phase transition, the state remains
+in the antiferromagnetic phase even beyond the critical
+coupling, which enables us to accurately determine the
+phase transition by the intersection of the energy with
+the dimer energy (which is exactly −0.375J per site).
+The extrapolation of the energy shown in Fig. 5 in
+the main text is done based on a linear extrapolation in
+1/κ, with Dxy = κ and Dz = (κ− 1)/2, using the data
+for (Dxy = 5, Dz = 2), (Dxy = 7, Dz = 3) as well as
+the mean value of (Dxy = 6, Dz = 2) and (Dxy = 6 and
+Dz = 3). Since the energy typically converges faster than
+linearly in 1/D we take the average of the extrapolated
+value and largestD value as the inﬁniteD estimate, and
+its diﬀerence to the largest D value as an estimate of the
+error bar.
+[1] J. Jordan, R. Or´ us, G. Vidal, F. Verstraete, and J. I.
+Cirac, Phys. Rev. Lett. 101, 250602 (2008).
+[2] H. N. Phien, J. A. Bengua, H. D. Tuan, P. Corboz, and
+R. Or´ us, Phys. Rev. B92, 035142 (2015).
+[3] M. Lubasch, J. I. Cirac, and M.-C. Ba˜ nuls, Phys. Rev. B
+90, 064425 (2014).
+[4] G. Vidal, Phys. Rev. Lett. 91, 147902 (2003).
+[5] H. C. Jiang, Z. Y. Weng, and T. Xiang, Phys. Rev. Lett.
+101, 090603 (2008).
+[6] H. N. Phien, I. P. McCulloch, and G. Vidal, Phys. Rev.
+B 91, 115137 (2015).
+[7] L. Wang and F. Verstraete, arXiv:1110.4362 [cond-
+mat.str-el] (2011).
+[8] M. Lubasch, J. I. Cirac, and M.-C. Ba˜ nuls, New J. Phys.
+16, 033014 (2014).
+[9] J. Dziarmaga, Phys. Rev. B 104, 094411 (2021).
+[10] Z. Y. Xie, J. Chen, M. P. Qin, J. W. Zhu, L. P. Yang,
+and T. Xiang, Phys. Rev. B 86, 045139 (2012).
+[11] S. Iino, S. Morita, and N. Kawashima, Phys. Rev. B 100,
+035449 (2019).
+[12] P. C. G. Vlaar and P. Corboz, Phys. Rev. B 103, 205137
+(2021).
+[13] P. Corboz and F. Mila, Phys. Rev. B 87, 115144 (2013).

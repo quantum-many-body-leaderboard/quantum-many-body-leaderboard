@@ -1,0 +1,487 @@
+  Quantum phases of ferromagnetically coupled dimers on Shastry-Sutherland lattice
+
+                                 Monalisa  Chatterjee,∗  Santanu  Pal,†  and  Manoranjan  Kumar‡
+             S. N. Bose National Centre for Basic Sciences,  Block-JD, Sector-III, Salt Lake,  Kolkata 700106,  India
+
+                   The ground state (gs) of antiferromagnetically coupled dimers on the Shastry-Sutherland lattice
+                (SSL) stabilizes many exotic phases and has been extensively studied.  The gs properties of ferromag-
+                netically coupled dimers on SSL are equally important but unexplored.  In this model the exchange
+                coupling along thex-axis (Jx) andy-axis (Jy) are ferromagnetic and the diagonal exchange coupling
+                (J) is antiferromagnetic.  In this work we explore the quantum phase diagram of ferromagnetically
+                coupled dimer model numerically using density matrix renormalization group (DMRG) method.  We
+                note that in Jx-Jy  parameter space this model exhibits six interesting phases:(I) stripe (0,π), (II)
+                stripe (π, 0), (III) perfect dimer, (IV) X-spiral, (V) Y -spiral and (VI) ferromagnetic phase.  Phase
+                boundaries of these quantum phases are determined using the correlation functions and gs energies.
+                We also notice the correlation length in this system is less than four lattice units in most of the
+                parameter regimes.  The non-collinear behaviour inX-spiral andY -spiral phase and the dependence
+                of pitch angles on model parameters are also studied.
+
+
+                    I.    INTRODUCTION                                        very recently, Yang et al.44 predicted a spin liquid phase.
+                                                                              While it’s exact nature has been controversial, Ronquillo
+  Frustrated   magnetic   systems   are   promising   ma-                     and Peterson45 predicted the topological gs.
+terials   to   explore   exotic   phases   like   dimer1,   non-                 Among  the  layered  magnetic  materials,  spin-1/2  lay-
+collinear  spin  wave2,   spin-liquid3,4  ,   non-trivial  topo-              ered  copper  oxyhalides  (CuX)An−1BnO3n+1  are  frus-
+logical   phase5–8      in   the   ground   state   (gs).      In   the       trated 2D magnets which have many interesting features
+last  couple  of  decades  these  systems  are  extensively                   just by tuning the composition. The CuX layers are sand-
+synthesized   in   various   dimensions   for   example,   in                 wiched by non-magnetic layers, the anion orbitals are in-
+one   dimensional   geometry:    LiCuSbO49,   LiCuVO410                       volved in exchange pathways but the cation orbitals re-
+and   Rb2Cu2Mo3O1211,12    ;    in   ladder   like   geometry:                placement keeps the magnetic layer homogeneous.  How-
+SrCu2O313   and  (VO)2P2O714,15    ;   in  two  dimensional                   ever, a small change in exchange interaction can be tuned
+systems such as ZnCu3(OH)6Cl2(Herbertsmithite)7,16,17                         by  changing  the  lattice  parameters,  electrostatic  ﬁelds,
+and α-RuCl318.   Their  properties  have  been  rigorously                    and  crystal-ﬁeld  splittings46.   The  tuning  of  anion  and
+explored  theoretically  as  well19–22    .    In  presence  of  a            cation composition can drive the system across the quan-
+ﬁnite  magnetic  ﬁeld,   these  systems  exhibit  plethora                    tum critical points. Experimental results suggest that the
+of  quantum  phases  like  multipolar23,  spin  nematic24,                    gs can be tuned to have a collective singlet with a spin
+vector   chiral25,   plateaus   state   at   various   fractional             gap in (CuCl)LaNb2O7,47–50    , a collinear stripe magnetic
+magnetization5,6,26–28         .   To  explain  the  physical  proper-        order in (CuBr)LaNb2O7,51 and a magnetization plateau
+ties of these systems various models have been proposed                       at 1/3 of the saturated moment in (CuBr)Sr2Nb301052.
+like Heisenberg spin-1/2J1-J2 model for one dimensional                          (CuCl)LaNb2O7  was  initially  predicted  as S  =  1/2
+(1D)  spin  chain1,29–31       ,   Heisenberg  anti-ferromagnetic             frustrated square lattice47, however, band structure cal-
+spin-1/2  model  on  Shastry-Sutherland  lattice  (SSL)32                     culations revealed that the simplest model for this ma-
+and square lattice33 , J1-J2 model on square lattice34,35                     terial can be best described as strong antiferromagnetic
+etc.                                                                          (AFM) exchange interaction between fourth neighbours
+                                                                              forming a strong singlet dimer and these dimers are cou-
+  In  general,  frustrated  2D  magnets  are  found  in  lay-                 pled together by ferromagnetic (FM) interactions i.e this
+ered  materials36  and  these  2D  geometries:    square37,                   model looks like the Shastry-Sutherland model with fer-
+triangular38, kagome17 and SSL39–41      are particularly in-                 romagnetic  exchange Jx  and Jy  along  square  and  anti-
+teresting because 2D is supposed to be a critical dimen-                      ferromagnetic  diagonal  exchange J53.   This  model  was
+sion  in  the  purview  of  Mermin-Wagner  theorem42.   We                    theoretically  studied  using  mean-ﬁeld  and  exact  diago-
+are particularly interested in SSL which is shown in Fig.                     nalization  (ED)  methods  on  a  small  cluster  and  they
+1.   This  structure  is  similar  to  a  square  lattice  except             predicated  a  plethora  of  phases  in  exchange  parameter
+alternate  squares  have  a  diagonal  bond.   If  a  isotropic               space54.  In the intermediate FM coupling limit, they re-
+Heisenberg spin-1/2 model on the SSL is considered with                       ported two types of stripe phases, (0,π) and (π, 0), sepa-
+antiferromagnetic  exchange  along  the  square Jx  = Jy                      rated by a non-collinear spiral phase.  The dimer singlet
+and diagonal exchange J  = 2Jx  = 2Jy  then the model                         stabilizes for Jx,Jy < J/2,  whereas ferromagnetic gs is
+can be solved exactly32.  The ground state of this system                     stable for large Jx  and Jy54.  We notice that the phase
+has N´eel and dimer order for small and large J/Jy  limit                     boundaries  as  well  as  the  existence  of  diﬀerent  phases
+respectively considering (Jx =Jy).  Corboz   et al.43 pre-                    calculated from ED are not consistent with that calcu-
+dicted  the  existence  of  a  plaquette  phase  between  N´eel               lated from mean-ﬁeld,  for example,  non-collinear phase
+and  dimer  region  using  the  PEPS  technique,  whereas,                    does not appear in exact diagonalization results,  but is
+                                                                                                                                                  2
+
+present  in  the  mean  ﬁeld  calculations.   Therefore,  it  is
+very intriguing to explore such an interesting model with
+a more sophisticated numerical tool like density matrix
+renormalization group (DMRG) method which can give
+accurate results for large lattice sizes.
+  In this work, we explore the ferromagnetically coupled
+S  =  1/2  dimers  on  SSL  with  the  DMRG  method  and
+re-investigate the quantum phase diagram of this model.
+The  phase  diagram  is  based  on  the  nature  of  spin-spin
+correlations and ground state energy variation.  The gs
+exhibits predominantly six types of phases:  two types of
+stripe order with wave vector (0,π) and (π, 0) for large
+valueJy andJx respectively. A perfect dimer phase exists
+for Jx =Jy  and this phase separates two types of spiral
+phases namely X-spiral with wave vector (θ, 0) and Y -
+spiral with wavevector (0,θ), where θ is the pitch angle.
+In the large limit of Jx and Jy  the gs has ferromagnetic
+behaviour.   We  also  explore  the  eﬀect  of Jx  and Jy  on
+spiral behaviour and pitch angle and we notice that spin
+ordering  is  very  short  range  in  most  of  the  parameter
+regimes.
+  The  paper  is  organized  as  follows.   In  Sec.II,  the
+model of the ferromagnetically coupled SSL and numeri-                      FIG. 1.  Figure shows a schematic diagram of SSL. The cou-
+cal methods are discussed.  In Sec.III, all the numerical                   pling  constants  along x-axis  (Jx)  and  along y-axis  (Jy)  are
+results  are  presented  and  this  section  has  four  subsec-             FM and the diagonal bond couplings J  are AFM in nature.
+tions.  The quantum phase diagram is presented in Sec.                      The site index 0 is the reference site and the numbers along
+III A. Sec.III Band Sec.III Cdiscuss gs energy and spin-                    x-axis andy-axis represent the distance (r) from the reference
+spin correlation in various phases of the phase diagram.                    site.
+The pitch angles are discussed in Sec.III D. Results are
+discussed and compared with literature in Sec.IV. In an                     in  low  dimensions.   This  method  is  based  on  the  sys-
+appendix  we  presented  results  for  the  ground  state  en-              tematic truncation of irrelevant degrees of freedom while
+ergy per site and spin-spin correlation for various bond                    growing the system sizes and optimising the wavefunction
+dimensions (m) and various system sizes.                                    while  doing  the  ﬁnite  DMRG  algorithm.   In  this  work,
+                                                                            we use a modiﬁed DMRG method59 in which 4-new sites
+          II.     MODEL HAMILTONIAN AND                                     are  added  at  each  step  to  reduce  the  number  of  times
+                NUMERICAL METHODS                                           of renormalization of operators used to build the super
+                                                                            block59.  We retain up tom = 900 block states which are
+  We consider a Heisenberg spin S = 1/2 model on SSL                        the eigenvectors of the system block density matrix cor-
+where only diagonal interactionJ = 1 is antiferromagnet                     responding to the largest eigenvalues.  The chosen value
+and sets the energy scale of the system.  The strength of                   of ‘m’ keeps the truncation error to less than∼ 10−8.  We
+ferromagnetic exchange interaction along the x-axis and                     also carry out 10− 12 ﬁnite sweeps for improved conver-
+y-axis on the square is represented by Jx and Jy respec-                    gence and to optimise the wave function.  We use cylin-
+tively.  The arrangement of the exchange interactions are                   drical geometry of the SSL and a  periodic boundary is
+shown in Fig.1.  Now onward we will call this model as                      applied along the width of the lattice and open boundary
+Shastry-Sutherland (SSM) and can be written as                              along the length.  The largest system size studied is up
+               ∑                  ∑                                         to 12× 8 (length× width) system size.  We have anal-
+ H =−Jx              ⃗Si·⃗Sj−Jy          ⃗Si·⃗Sj+J ∑       ⃗Si·⃗Sj  (1)     ysed the convergence of energy with the various values of
+             <ij>x               <ij>y              <ij>d                   m in appendix.  The per-site energies for 12× 4 system
+                                                                            are shown for m = 256, 512 and 900, whereas for 12× 8
+where  the  ﬁrst  sum  runs  for  NN  bonds  along  the x-                  system, it is shown for m = 256, 512 and 700 in tableI.
+direction, the second sum runs for NN bonds along the                       We notice that m = 512 is suﬃcient for accuracy up to
+y-direction and the last sum runs for NN diagonal bonds                     5th  decimal place for 12× 4 and 4th  for 12× 8 system.
+in the square.                                                              We  also  show  the  dependence  of  the  spin-spin  correla-
+  We  use  the  exact  diagonalization  for  system  size  up               tion function on m in tableIIandIIIof appendix.  We
+to 32 sites and the density matrix renormalization group                    notice that the spin-spin correlations are accurate up to
+(DMRG) method 55–58     for large system size.  The DMRG                    4th decimal places.  Interestingly this model gives amaz-
+method is a state of art numerical method to handle the                     ing  accuracy  of  energies  as  well  as  correlation  function
+large  degrees  of  freedom  for  a  many-body  Hamiltonian                 and these accuracy may be attributed to the short-range
+                                                                                                                                                      3
+
+correlation length which is approximately  4 lattice unit.
+
+
+
+                         III.    RESULTS
+
+  To identify the existence of various phases of the model
+with isotropic Heisenberg exchange in Eq.1, we calcu-
+late  spin-spin  correlation C(r)  and  gs  energies.   There
+are  six  diﬀerent  phases  in  this  model:   (i)  stripe  (0,π)
+where  the  spin  conﬁguration  has  a  propagation  vector
+(kx,ky)  =  (0,π)  and  the  system  forms  stripes  along
+the x-direction where all the spins along x-direction are
+arranged  ferromagnetically  while  spin  modulates  with
+wavevectorπ along they-direction as shown in Fig.2(a).
+(ii)  In  the  stripe  (π, 0)  phase,  stripes  run  along  the y-
+direction where spins are arranged ferromagnetically in
+y-direction while spin wave has wavevector π  along the
+x-direction as shown in Fig.2(b).  (iii) The ground state                     FIG. 2.  Figure shows a schematic diagram of diﬀerent phases
+with  a X-spiral  phase  has  a  non-collinear  arrangement                   present in the ferromagnetically coupled dimers on the SSL,
+of  spins  along  the x-direction  and  ferromagnetic  order-                 where arrows represent the spin alignments and the ellipses
+ing  along  the y-direction  as  shown  in  Fig.2(c).   This                  are  the  dimers  (deﬁned  in  the  main  text).   (a)  and  (b)  are
+phase  appears  in  case  of  highly  frustrated  model  with                 two stripe phases with ordering wave vector (0,π) and (π, 0)
+AFM Jx =Jy  in Ref.  [32].  (iv) In   Y -spiral phase, spins                  respectively.  (c) and (d) are two non-collinear spiral phases,
+have a non-collinear arrangements along the y-direction                       the X-spiral and Y -spiral.  (e) and (f) are the perfect dimer
+and  ferromagnetic  ordering  sets  in  along x-direction  as                 and FM phase respectively.
+in Fig.2(d).  (v) In the perfect dimer phase the gs wave
+function  can  be  represented  as  a  product  of  dimer  sin-
+glets: |ψ⟩≡ ∏d     1√2(|↑↓⟩−|↓↑⟩)d,  where d  labels  a
+dimer32,54    .   In  this  phase,  the  dimers  are  formed  along
+the diagonal bonds as shown in Fig.2(e).  The spin-spin
+correlation C(r) =−0.75 along the diagonal bonds and
+C(r) = 0 along any other bonds on the square. (vi) When
+the FM couplings dominate over the diagonal antiferro-
+magnetic exchange interaction the FM phase appears.  In
+this phase, all spins are aligned in the same direction as
+shown in Fig.2(f).
+
+
+
+               A.    Quantum Phase Diagram
+
+  In  this  section,  the  quantum  phase  diagram  is  pre-
+sented in Jx  and Jy  parameter space as shown in Fig.3
+for a given diagonal exchangeJ = 1.  For a large value of
+Jx orJy stripe phases with wave vectors (0,π) and (π, 0)
+stabilized in the gs of the system.  In this region, frustra-
+tion is considerably small due to the small or large value                    FIG.  3.   Figure  shows  the  quantum  phase  diagram  of  the
+ofJx/Jy.  The strong FM coupling bonds prefer FM spin                         SSM.  The  phase  diagram  comprises  six  phases:  Two  stripe
+orderings, whereas, weak FM coupling bonds prefer anti-                       order phases with ordering wave vector (0,π) and (π, 0), two
+ferromagnetic spin ordering to satisfy the diagonal AFM                       spiral orders along both the x- andy-directions, theX-spiral
+exchange.  For the moderate exchange strength Jx < 1                          and Y -spiral  phase  respectively.   The  other  two  phases  are
+and Jy < 1 the gs has non-collinear spin ordering.  De-                       a perfect dimer phase (the yellow line separating two spiral
+pending on the relative exchange strength of Jx  and Jy                       phases) and a phase with FM spin ordering along all directions
+there  are  two  types  of  spiral  phases: X-spiral  and Y -                 of the lattice.
+spiral.  These two spiral phases are separated by a perfect
+dimer phase formed along the lineJx =Jy and extended
+up to Jx,Jy ≲ J.  The perfect dimer region is conﬁned                         with|Jx−Jy|.  In the strong coupling region of Jx  and
+along theJx =Jy line asC(r = 2) continuously increases                        Jy, long-range FM magnetic ordering sets in.
+                                                                                                                                                      4
+
+                  B.    Ground state energy                                   spin components in the singlet sector.  To understand the
+                                                                              spin arrangements in diﬀerent phases we have calculated
+  Ground state energies are calculated for the model in                       C(r) along diﬀerent spatial directions.  In Fig.1, the site
+Eq.1on  a  cylindrical  geometry  with  periodic  bound-                      with  0  index  represents  the  reference  site,  from  which
+ary condition (PBC) along the width (y-axis) and open                         correlations are calculated in various directions, and dis-
+boundary condition along the length (x-axis), and 12× 4                       tances r are shown in various directions with numerials
+system is used to calculate the accurate gs.  In Fig.4the                     as shown in Fig.1.  In Fig.5(a) we presented       C(r) along
+gs  energy  per  site ϵgs  is  plotted  as  a  function  of Jy  by
+keeping Jx ﬁxed value of Jx = 0.9.  Around Jy∼ 1.1 we
+saw  a  discontinuity  in  the  gs  energy,  indicating  a  ﬁrst-
+order phase transition from FM to X-spiral phase.  The
+maxima  of  the  energy  curve  is  close  to Jx  = Jy ∼  0.9
+which indicates the dimer line, and the small deviation of
+maxima from dimer lineJx =Jy is due to the rectangular
+geometry of the lattice.  The maxima shifts to Jx  = Jy
+line as we increase the width of the lattice.  The smooth
+variation ofϵgs withJy indicates the second-order dimer
+transition.  No signature of spiral and stripe transitions
+is detected from the gs energy variation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.  Figure shows gs energy per site (ϵgs) versusJy plot at
+Jx = 0.9 for 12× 4 lattice sites of the SSM. Around Jy = 1.1                  FIG. 5.  Figure shows the variation of spin-spin correlations
+we show a kink in the energy curve indicating a sharp phase                   C(r) with distance (r) for 12× 8 system size.  Spin-spin cor-
+transition fromX-spiral to FM phase. The transition between                   relations are calculated for diﬀerent Jy  values by keeping Jx
+the two spiral phases is not sharp.  Around Jy  = 0.6 system                  ﬁxed  at  0.6.   (a) C(r)  are  calculated  along x-direction.   (b)
+transits  from Y -spiral  to  stripe  (0,π)  phase.   (Shaded  lines          C(r) are calculated along y-direction.
+are only for eye guide of the transition points).
+                                                                              the x-direction, whereas Fig.5(b) represents the same
+                                                                              for y-direction.  In all plots, we have ﬁxed Jx = 0.6 and
+                                                                              calculatedC(r) for diﬀerentJy = 0.3, 0.45, 0.6, 0.75 and
+                  C.    Spin-spin correlation                                 1.3, whereJy values correspond to diﬀerent phases in the
+                                                                              phase diagram.
+  In  this  subsection,  we  present  spin-spin  correlation                     In  Fig.5(a)  for    Jy  =  0.3,  all  the  values  of C(r)  are
+C(r)  for  various  parameter  regimes  to  validate  the  ex-                positive  which  correspond  to  an  FM  spin  arrangment
+istence of diﬀerent phases in the phase diagram in Fig.                       alongx-direction.  Whereas in Fig.5(b) for same value of
+3.  We are dealing with isotropic system and total spin-                      Jy = 0.3, C(r) shows an antiferromagnetic arrangement
+spin correlationsC(r) =⟨⃗Si·⃗Si+r⟩ = 3⟨SziSzi+r⟩ whereSzi                     of spins alongy-direction. This kind of spin arrangements
+represents the z-component of the spin operator at the                        correspond to a stripe spin ordering with a wave vector
+reference site i. r  is the distance between the spin site                    (0,π) (see Fig.2(a)).  For    Jy  = 1.3 the behaviour of the
+and reference site along thex- andy-axis as shown in Fig.                     spin correlation along the x-direction interchanges with
+1.  The spin Hamiltonian in Eq.1has    SU(2) symmetry                         the behaviour along y-direction i.e antiferromagnetic ar-
+and one expects equal spin-spin correlation for all three                     rangement  along  the x-direction  and  ferromagnetic  ar-
+                                                                                                                                                    5
+
+rangement along they-direction.  This represents another
+kind of stripe phase with wave vector at (π, 0) as shown
+in Fig.2(b).
+  At Jy  = 0.45, C(r) along x-direction are all positive
+and correspond to an FM spin alignment in this direction,
+whereas  in  the y-direction  the C(r)  is  non-collinear  i.e
+pitch  angle  is  diﬀerent  from  0  or π.   The  non-collinear
+spin arrangement is shown along the y-direction and the
+Y -spiral phase can be seen in Fig.2(d).  For    Jy = 0.75,
+C(r)  shows  a  non-collinear  behaviour  along x-direction
+whereas  ferromagnetic  behaviour  along  the y-direction.
+The schematic of X-spiral phase is shown in Fig.2(c).
+  When Jx  = Jy(= 0.6), C(r) along x-direction and y-
+direction are exactly zero, whereas, we found the corre-
+lation for diagonal bonds are−0.75 This shows a perfect
+dimer formation along the diagonal bonds and this phase
+is shown in Fig.2(e).  A perfect dimer phase is formed
+along Jx =Jy ≲ 1 line.  In low Jx and Jy limit C(r> 1)
+have non zero value for|Jx−Jy|> 0, therefore the per-
+fect  dimer  phase  is  only  restricted  to Jx  = Jy.   In  the
+FM phase region C(r) have all positive values in all di-
+rections.
+
+
+                        D.    Pitch angle                                    FIG. 6.  Figure (a) shows the spin-spin correlationC(r) along
+                                                                             length  (x-direction)  for  diﬀerent Jy  at Jx  =  0.7.   The  solid
+  In a geometrically frustrated system wavevector or the                     curves  represent  respective  ﬁts  with  exponential  decaying
+pitch angle of a non-collinear spin ordering,  in general,                   function.   In  ﬁgure  (b)  we  have  plotted  pitch  angle  (Qx/π)
+                                                                             as  a  function  of Jy  at Jx  =  0.6  for  diﬀerent  phases  of  the
+depends on the competing exchange interactions60–62     and                  model,  where Qx  is  the  pitch  angle  for  the X-spiral  phase
+therefore,  it  is  important  to  understand  behaviour  of                 varying along x-direction.  The pink line is the value of pitch
+pitch  angle θ  in  various  exchange  interaction  limits  to               angles  calculated  using  Eq.3.   In  both  plots  we  have  used
+quantify spin modulation in terms of the pitch angle Qx                      12× 4 system size.
+and Qy.  Fig.6(a) shows spin-spin correlation    C(r) for
+Jx = 0.7 for diﬀerentJy values inside theX-spiral region.
+C(r)  shows  the  exponentially  decaying  behaviour  with                   dotted line with circles whereas the classical results are
+distance  r.   It  indicates  the  non-collinear  spin  ordering             shown as solid line as shown in Fig.6(b).  The calculated
+along x-direction, representing the X-spiral phase. C(r)                     values of Qx suggest that it is zero below the dimer line
+in Fig.6(a) shows an exponential decay, representing a                       and increase rapidly with Jy  and reaches to π  for Jy∼
+very  short-range  correlation  in  the  spiral  region.   Pitch             1.0.   In  the  stripe  (π, 0)  phase  the Qx  is π,  whereas  it
+angle (Qx) can be calculated in the X-spiral phase,  by                      is  zero  in  the  stripe  (0,π)  phase.   These  systems  have
+ﬁtting C(r) with the following equation                                      correlation length ξ≈ 4 lattice units, therefore, there is
+                                                                             an  error  in  calculating  the Qx  and  it  is  represented  by
+                 C(r) =a0 cos(Qxr +c) e−rξ ,                 (2)             error bars.  The system remains invariant by exchanging
+whereξ is the correlation length, a0 andc are constants.                     the Jy to Jx interaction, therefore Qx−Jy and Qy−Jx
+To calculate the pitch angles in theY -spiral phase, a sim-                  curves have the same nature as shown in Qx−Jy curve.
+ilar correlation function can be applied as above, where
+Qx will be replaced by Qy.  The variation of pitch angle
+Qx with Jy  is presented in Fig.6(b) and we notice that                              IV.    SUMMARY AND CONCLUSION
+Qx varies between 0 toπ. We also notice thatQx changes
+sharply nearJx∼ 0.6. Qx andQy variation withJy and                              In this work, we construct a new quantum phase dia-
+Jx for a classical system54 can be given as(Jy         )                     gram of ferromagnetically coupled S = 1/2 on the SSL.
+            cos(Qx) =−Jy                                 ,                   Exchange couplings along widthJy and lengthJx are fer-
+                             J  + J4Jx   (JxJx− JxJy   )                     romagnetic, whereas, the exchange couplings along diag-
+                                                                             onal bondsJ are antiferromagnetic.  The quantum phase
+            cos(Qy) =−JxJ  + J4Jy           Jy− JyJx      .           (3)    diagram of the SSM in Eq.1consists of six phases and
+                                                                             the phase boundaries are calculated based on spin-spin
+The  classical  results  seem  to  deviate  signiﬁcantly  from               correlation  and  the  gs  energies  obtained  using  the  ED
+our calculated values.  The DMRG results are shown as                        and the DMRG methods.  Our numerical calculations are
+                                                                                                                                                      6
+
+done upto 12× 8 lattices and we have used PBC along                           romagnetic Jy/J∼ 0.39 and Jx/J∼ 0.3853  and there-
+the width and OBC along length.  Almost everywhere in                         fore, we expect this system should behave like dimer as
+the phase space the order is short range and correlation                      it is on Jx = Jy  dimer singlet line.  Although, Tsirlin et
+length ξ  is  less  than  equal  to  4  lattice  unit,  therefore,            al.  shows diﬀerent exchange interactions using the two
+most of our calculations give reliable results for the two                    types of DFT calculations46.  However, the data of inelas-
+dimensional lattice of this model.  The six phases in the                     tic  neutron  scattering  (INS)  on  powder  samples  shows
+phase  diagrams  are:  (I)  stripe  (0,π),  (II)  stripe  (π, 0),             that the dynamical structure factor has S(Q,ω) maxima
+(III) perfect dimer, (IV) X-spiral, (V)Y -spiral and (VI)                     around Q∼  0.5˚A,  i.e.   it  is  in  a  non-collinear  regime.
+ferromagnetic state.  Our analysis also conﬁrms the ex-                       In our opinion this material is in the neighbourhood of
+istence of spiral phases in this model for moderate FM                        dimer phase but detailed theoretical investigation is re-
+couplings strength.                                                           quired to understand the spin conﬁguration in the sys-
+  Our   DMRG   results   are   very   diﬀerent   from   the                   tem.
+Schwinger-Boson  mean-ﬁeld  theory  in  Ref.    [54].    Al-                     In  conclusion,  we  numerically  studied  the  SSM  and
+though quantum phases predicted by mean-ﬁeld theory                           constructed  a  new  quantum  phase  diagram  using  the
+are also found in the DMRG results but phases bound-                          DMRG  method.   We  have  also  calculated  the  correla-
+aries  are  quite  diﬀerent.    DMRG  calculations  suggest                   tion function and pitch angle which can be directly con-
+that  perfect  dimer  singlet  phase  is  conﬁned  to  only  on               nected  to  INS  data.   The  phase  boundaries  calculated
+Jx  = Jy  line,  whereas  the  mean-ﬁeld  calculation  sug-                   from DMRG results are diﬀerent from that of mean-ﬁeld
+gests  a  large  area  of  this  regime.   Our  result  is  consis-           and  ED  calculations.   We  hope  that  interesting  quan-
+tent with the ED results54.  Our results also suggest that                    tum  phases  in  real  material  like  (CuCl)LaNb2O7  and
+second  nearest  neighbour  correlation  increases  continu-                  others53,63–65         can be revisited in light of this study.  The
+ously with|Jx−Jy| i.e.  short range but ﬁnite correla-                        short-range spiral phase in the frustrated regime of the
+tion exists in the neighbourhood of dimer line except the                     model can be manipulated by external probe like a mag-
+Jx  = Jy  line  where  only  diagonal  correlations  are  non                 netic ﬁeld, doping, etc.  and might lead to many interest-
+zero.   The  mean-ﬁeld  results  suggest  the  non-collinear                  ing phases.  The eﬀect of ﬁeld on phase diagram of the
+spin wave along the x- and y-direction but ED does not                        model in Eq.1is still an open problem.
+conﬁrm the results54.  DMRG results conﬁrm both types                                            ACKNOWLEDGMENTS
+of the non-collinear phases.  The mean-ﬁeld pitch angle                          MK thanks SERB for ﬁnancial support through grant
+variation is small compared to the DMRG value in most                         sanction number CRG/2020/000754.  MC thanks DST-
+parts of the parameter regime.                                                INSPIRE for ﬁnancial support and also thanks S K Saha
+  Tassel et al.  suggested that (CuCl)LaNb2O7  has fer-                       for fruitful discussions.
+
+
+
+
+
+
+
+ ∗  c.monalisa1993@bose.res.in                                                    Review Letters 109, 027203 (2012).
+ †  santanu1720@bose.res.in                                                   11  M.  Hase,  H.  Kuroe,  K.  Ozawa,  O.  Suzuki,  H.  Kitazawa,
+ ‡  manoranjan.kumar@bose.res.in                                                  G.  Kido,   and  T.  Sekine,Physical  Review  B           70,  104426
+ 1  S. White,  R. Noack,   and D. Scalapino,Physical Review                       (2004).
+   Letters 73, 886 (1994).                                                    12  A.  Yagi,  K.  Matsui,  T.  Goto,  M.  Hase,   and  T.  Sasaki,
+ 2  M. Kumar, A. Parvej,  and Z. G. Soos,Journal of Physics:                      in  Journal  of  Physics:  Conference  Series, Vol. 828 (IOP
+   Condensed Matter 27, 316001 (2015).                                            Publishing, 2017) p. 012016.
+ 3  Y. Zhou, K. Kanoda,   and T.-K. Ng,Reviews of Modern                      13  A. W. Sandvik, E. Dagotto,  and D. J. Scalapino,Physical
+   Physics 89, 025003 (2017).                                                     Review B 53, R2934 (1996).
+ 4  L. Savary and L. Balents,Reports on Progress in Physics                   14  D. Johnston, J. Johnson, D. Goshorn,   and A. Jacobson,
+   80, 016502 (2016).                                                             Physical Review B 35, 219 (1987).
+ 5  L. Balents,Nature    464, 199 (2010).                                     15  E. Dagotto and T. Rice,Science        271, 618 (1996).
+ 6  P. A. Lee,Science       321, 1306 (2008).                                 16  M.  P.  Shores,  E.  A.  Nytko,  B.  M.  Bartlett,   and  D.  G.
+ 7  T.-H.  Han,  J.  S.  Helton,  S.  Chu,  D.  G.  Nocera,  J.  A.               Nocera,Journal  of  the  American  Chemical  Society        127,
+   Rodriguez-Rivera,  C.  Broholm,    and  Y.  S.  Lee,Nature                     13462 (2005).
+   492, 406 (2012).                                                           17  J.  Helton,  K.  Matan,  M.  Shores,  E.  Nytko,  B.  Bartlett,
+ 8  M. Fu, T. Imai, T.-H. Han,   and Y. S. Lee,Science       350,                 Y. Yoshida,  Y. Takano,  A. Suslov,  Y. Qiu,  J.-H. Chung,
+   655 (2015).                                                                    et al.,Physical Review Letters  98, 107204 (2007).
+ 9  S.  Dutton,  M.  Kumar,  M.  Mourigal,  Z.  G.  Soos,  J.-J.              18  A.  Banerjee,  C.  Bridges,  J.-Q.  Yan,  A.  Aczel,  L.  Li,
+   Wen, C. L. Broholm, N. H. Andersen, Q. Huang, M. Zbiri,                        M. Stone,  G. Granroth,  M. Lumsden,  Y. Yiu,  J. Knolle,
+   R.  Toft-Petersen,  et  al., Physical  Review  Letters   108,                  et al.,Nature Materials  15, 733 (2016).
+   187206 (2012).                                                             19  C. Broholm, R. Cava, S. Kivelson, D. Nocera, M. Norman,
+10  M.  Mourigal,  M.  Enderle,  B.  F˚ak,  R.  Kremer,  J.  Law,                 and T. Senthil,Science       367 (2020).
+   A.  Schneidewind,  A.  Hiess,    and  A.  Prokoﬁev,Physical
+                                                                                                                                                             7
+
+
+20  B. Lake,  D. A. Tennant,  C. D. Frost,   and S. E. Nagler,                    46  A. A. Tsirlin, A. M. Abakumov, C. Ritter,  and H. Rosner,
+   Nature Materials 4, 329 (2005).                                                   Physical Review B 86, 064440 (2012).
+21  M. Norman,Reviews of Modern Physics             88, 041002 (2016).            47  H.  Kageyama,  T.  Kitano,  N.  Oba,  M.  Nishi,  S.  Nagai,
+22  H.  Takagi,  T.  Takayama,  G.  Jackeli,  G.  Khaliullin,   and                  K.  Hirota,  L.  Viciu,  W.  JB,  J.  Yasuda,  Y.  Baba,  et  al.,
+   S. E. Nagler,Nature Reviews Physics           1, 264 (2019).                      Journal of the Physical Society of Japan 74, 1702 (2005).
+23  J.-B. Fouet, F. Mila, D. Clarke, H. Youk, O. Tchernyshyov,                    48  H.   Kageyama,   J.   Yasuda,   T.   Kitano,   K.   Totsuka,
+   P. Fendley,  and R. Noack,Physical Review B    73, 214405                         Y.  Narumi,  M.  Hagiwara,  K.  Kindo,  Y.  Baba,  N.  Oba,
+   (2006).                                                                           Y. Ajiro,  et  al.,Journal of the Physical Society of Japan
+24  N. Shannon, T. Momoi,   and P. Sindzingre,Physical Re-                           74, 3155 (2005).
+   view Letters 96, 027213 (2006).                                                49  A.    Kitada,    Z.    Hiroi,    Y.    Tsujimoto,    T.    Kitano,
+25  T. Hikihara, L. Kecke, T. Momoi,  and A. Furusaki,Phys-                          H.  Kageyama,  Y.  Ajiro,   and  K.  Yoshimura,Journal  of
+   ical Review B 78, 144404 (2008).                                                  the Physical Society of Japan 76, 093706 (2007).
+26  A. Leonov and M. Mostovoy,Nature Communications  6,                           50  M.  Yoshida,   N.  Ogata,   M.  Takigawa,   J.-i.  Yamaura,
+   1 (2015).                                                                         M.  Ichihara,  T.  Kitano,  H.  Kageyama,  Y.  Ajiro,    and
+27  T. Momoi and K. Totsuka,Physical Review B    62, 15067                           K.  Yoshimura,Journal  of  the  Physical  Society  of  Japan
+   (2000).                                                                           76, 104703 (2007).
+28  J. Schulenburg, A. Honecker, J. Schnack, J. Richter,   and                    51  N.  Oba,  H.  Kageyama,  T.  Kitano,  J.  Yasuda,  Y.  Baba,
+   H.-J. Schmidt,Physical Review Letters          88, 167207 (2002).                 M. Nishi, K. Hirota, Y. Narumi, M. Hagiwara, K. Kindo,
+29  C. K. Majumdar and D. K. Ghosh,Journal of Mathemat-                              et al.,Journal of the Physical Society of Japan  75, 113601
+   ical Physics 10, 1388 (1969).                                                     (2006).
+30  R. Chitra, S. Pati, H. Krishnamurthy, D. Sen,  and S. Ra-                     52  Y. Tsujimoto, Y. Baba, N. Oba, H. Kageyama, T. Fukui,
+   masesha,Physical Review B             52, 6581 (1995).                            Y. Narumi, K. Kindo, T. Saito, M. Takano, Y. Ajiro, et al.,
+31  Z. G. Soos, A. Parvej,  and M. Kumar,Journal of Physics:                         Journal of the Physical Society of Japan 76, 063711 (2007).
+   Condensed Matter 28, 175603 (2016).                                            53  C.  Tassel,   J.  Kang,   C.  Lee,   O.  Hernandez,   Y.  Qiu,
+32  B. S. Shastry and B. Sutherland,Physica B+ C                 108, 1069           W. Paulus, E. Collet, B. Lake, T. Guidi, M.-H. Whangbo,
+   (1981).                                                                           et al.,Physical Review Letters  105, 167205 (2010).
+33  S. Chakravarty, B. I. Halperin,  and D. R. Nelson,Physical                    54  S. Furukawa, T. Dodds,  and Y. B. Kim,Physical Review
+   Review B 39, 2344 (1989).                                                         B 84, 054432 (2011).
+34  E.  Dagotto  and  A.  Moreo,Physical  Review  Letters           63,           55  S. R. White,Physical Review Letters          69, 2863 (1992).
+   2148 (1989).                                                                   56  S. R. White,Physical Review B          48, 10345 (1993).
+35  J. Sirker, Z. Weihong, O. Sushkov,  and J. Oitmaa,Phys-                       57  U. Schollw¨ock,Reviews of Modern Physics   77, 259 (2005).
+   ical Review B 73, 184420 (2006).                                               58  K. A. Hallberg,Advances in Physics      55, 477 (2006).
+36  S. Kundu, A. Shahee, A. Chakraborty, K. Ranjith, B. Koo,                      59  M. Kumar, Z. G. Soos, D. Sen,  and S. Ramasesha,Phys-
+   J.  Sichelschmidt,  M.  T.  Telling,  P.  Biswas,  M.  Baenitz,                   ical Review B 81, 104406 (2010).
+   I. Dasgupta,  et  al.,Physical Review Letters  125, 267202                     60  S. Furukawa, M. Sato, S. Onoda,  and A. Furusaki,Phys-
+   (2020).                                                                           ical Review B 86, 094417 (2012).
+37  E. Manousakis,Reviews of Modern Physics            63, 1 (1991).              61  A. Parvej and M. Kumar,Physical Review B            96, 054413
+38  Y. Shirata, H. Tanaka, A. Matsuo,  and K. Kindo,Physical                         (2017).
+   Review Letters 108, 057205 (2012).                                             62  D. Maiti and M. Kumar,Physical Review B            100, 245118
+39  H.  Kageyama,  K.  Yoshimura,  R.  Stern,  N.  Mushnikov,                        (2019).
+   K.  Onizuka,  M.  Kato,  K.  Kosuge,  C.  Slichter,  T.  Goto,                 63  Y. Uemura, A. Aczel, Y. Ajiro, J. Carlo, T. Goko, D. Gold-
+   and Y. Ueda,Physical Review Letters         82, 3168 (1999).                      feld,  A.  Kitada,  G.  Luke,  G.  MacDougall,  I.  Mihailescu,
+40  M. Zayed, C. R¨uegg, A. L¨auchli, C. Panagopoulos, S. Sax-                       et al.,Physical Review B  80, 174408 (2009).
+   ena,  M.  Ellerby,  D.  McMorrow,  T.  Str¨assle,  S.  Klotz,                  64  A. Kitada, Y. Tsujimoto, H. Kageyama, Y. Ajiro, M. Nishi,
+   G. Hamel, et al.,Nature Physics  13, 962 (2017).                                  Y. Narumi, K. Kindo, M. Ichihara, Y. Ueda, Y. Uemura,
+41  J.  Y.  Lee,  Y.-Z.  You,  S.  Sachdev,   and  A.  Vishwanath,                   et al.,Physical Review B  80, 174409 (2009).
+   Physical Review X 9, 041037 (2019).                                            65  Y.   Tsujimoto,   A.   Kitada,   H.   Kageyama,   M.   Nishi,
+42  N. D. Mermin and H. Wagner,Physical Review Letters         17,                   Y. Narumi, K. Kindo, Y. Kiuchi, Y. Ueda, Y. J. Uemura,
+   1133 (1966).                                                                      Y. Ajiro,  et  al.,Journal of the Physical Society of Japan
+43  P.  Corboz  and  F.  Mila,Physical  Review  B         87,  115144                79, 014709 (2009).
+   (2013).
+44  J.  Yang,  A.  W.  Sandvik,   and  L.  Wang,arXiv  preprint
+   arXiv:2104.08887  (2021).
+45  D. C. Ronquillo and M. R. Peterson,Physical Review B                                                   V.    APPENDIX
+   90, 201108 (2014).
+                                                                                                                                                8
+
+                               Lx×Ly              Jx              Jy              m                    ϵgs
+                                                                                  256              -0.357791
+                                12× 4             0.6            0.21             512              -0.357795
+                                                                                  900              -0.357798
+                                                                                  256              -0.36989
+                                12× 8             0.6             1.0             512              -0.36987
+                                                                                  700              -0.36984
+
+
+TABLE I.  The table shows the gs energy per site (ϵgs) calculated for various bond dimensions (m).  For the system size 12× 4
+gs energy calculated for Jx = 0.6 and Jy = 0.21, whereas for 12× 8 system size, it is calculated for Jx = 0.6 and Jy = 1.0.
+
+
+
+
+
+
+
+
+                     direction           r                m = 256                  m = 512                   m = 900
+                                         1                0.02154                   0.02153                   0.02152
+                                         2                0.00652                   0.00651                   0.00650
+                      length             3                0.00182                   0.00182                   0.00178
+                                         4                0.00056                   0.00056                   0.00053
+                                         5                0.00015                   0.00015                   0.00014
+                      width              1                -0.02269                 -0.02269                  -0.02267
+                                         2                0.01006                   0.01006                   0.01008
+
+
+TABLE II.  The table shows spin-spin correlation⟨SziSzi+r⟩ calculated for various bond dimensions (m) for 12× 4 system size.
+The correlation calculated along length and width for Jx = 0.6 andJy = 0.21, where the last three columns are the correlation
+values for the corresponding m.
+
+
+
+
+
+
+
+
+                     direction           r                m = 256                  m = 512                   m = 700
+                                         1                -0.02095                 -0.02097                  -0.02088
+                                         2                0.00354                   0.00338                   0.00328
+                      length             3                -0.00037                 -0.00032                  -0.00030
+                                         4               0.000058                  0.000050                  0.000042
+                                         5               -0.000006                 -0.000019                -0.000004
+                                         6               -0.000001                 0.000033                  0.000001
+                                         1               0.021093                  0.021144                  0.021042
+                      width              2               0.008490                  0.008516                  0.008512
+                                         3               0.002574                  0.002553                  0.002526
+                                         4               0.001771                  0.001719                  0.001769
+
+
+TABLE III.  The table shows spin-spin correlation⟨SziSzi+r⟩ calculated for various bond dimensions (m) for 12× 8 system size.
+The correlation calculated along length and width for Jx = 0.6 and Jy = 1.0, where the last three columns are the correlation
+values for the corresponding m.

@@ -1,0 +1,1453 @@
+Computational design of f-electron Kitaev magnets:  honeycomb and hyperhoneycomb
+                                        compounds A2PrO3 (A = alkali metals)
+
+                           Seong-Hoon  Jang,  Ryoya  Sano,  Yasuyuki  Kato,  and  Yukitoshi  Motome
+                        Department  of  Applied  Physics,  The  University  of  Tokyo,  Tokyo  113-8656,  Japan
+                                                         (Dated:  December 10, 2019)
+                  The Kitaev spin model oﬀers an exact quantum spin liquid in the ground state, which has stim-
+               ulated exploration of its material realization over the last decade.  Thus far, most of the candidates
+               are found in 4d- and 5d-electron compounds, in which the low-spin d5  electron conﬁguration sub-
+               ject to strong spin-orbit coupling comprises a Kramers doublet with the eﬀective angular momen-
+               tum jeﬀ  = 1/2 and gives rise to the bond-dependent anisotropic interactions in the Kitaev model.
+               Here we theoretically investigate another candidates in 4f-electron compounds with thef1 electron
+               conﬁguration  on  both  quasi-two-dimensional  honeycomb  and  three-dimensional  hyperhoneycomb
+               structures, A2PrO3 with A=Li, Na, K, Rb, and Cs.  Based on ab initio calculations, we show that
+               the electronic structures of these compounds host a spin-orbital entangled Kramers doublet with
+               jeﬀ = 1/2 in the Γ7 state.  By constructing the tight-binding Hamiltonian from maximally-localized
+               Wannier functions and performing a perturbation expansion in the strong coupling limit, we ﬁnd
+               that the low-energy magnetic properties of A2PrO3  are well described by an eﬀective spin model
+               with the isotropic Heisenberg, anisotropic Kitaev, and symmetric oﬀ-diagonal interactions, dubbed
+               the J-K-Γ′  model.  The most remarkable feature is that the Kitaev interaction K  can be antifer-
+               romagnetic, in contrast to the ferromagnetic one in the d5  candidates at hand.  We show that the
+               exchange interactions are systematically modulated by changing theA-site cations; while increasing
+               the A-site ionic radii, J  is not largely modulated but K is reduced and Γ′ is slightly increased.  As
+               a consequence, the compounds with A=Li and Na may have a dominant antiferromagnetic K, but
+               J  dominates K  and  Γ′  in  the  cases  with A=Rb  and  Cs.   We  analyze  the  systematic  changes  by
+               decomposing each interaction into the contributions from diﬀerent perturbation processes.  Also, by
+               computing the ground states of the J-K-Γ′ model by using the exact diagonalization, we map out
+               the systematic evolution of the model parameters in the phase diagram.  Our results will stimulate
+               material exploration of the antiferromagnetic Kitaev interaction inf-electron compounds, including
+               the previously-synthesized honeycomb and hyperhoneycomb compounds, Na2PrO3.
+
+
+                    I.    INTRODUCTION                                      candidates for the QSLs have been explored in geomet-
+                                                                            rically  frustrated  antiferromagnets  lying  on  triangular-
+  Electron correlation and spin-orbit coupling (SOC) are                    based  lattice  structures18,19,  the  spin-orbital  entangle-
+two crucial factors in the design of quantum materials.                     ment  by  the  SOC  in  the  Mott  insulators  can  oﬀer  an-
+Beyond the conventional band theory for metals and in-                      other playground through the frustration between bond-
+sulators, the strong electron correlation may yield Mott                    dependent exchange interactions,  dubbed compass-type
+insulators and anomalous metallic states1,2,  which may                     interactions, even on unfrustrated lattice structures20.
+endow high-temperature superconductivity.  Meanwhile,                          The  Kitaev  model  is  one  of  the  pragmatic  models
+the SOC entangles the orbital motion of electrons with                      with  such  exchange  frustration.   The  model  has  bond-
+the spin degree of freedom, leading to topological insula-                  dependent Ising-type interactions on a honeycomb struc-
+tors3,4 and topological semimetals5–7.  In recent years, it                 ture, whose Hamiltonian is given by21
+has been recognized that the synergy of the strong elec-                                                     ∑
+tron correlation and the SOC provides a fertile ground for                                       H  =∑             KµSµiSµi′,                     (1)
+yet another quantum states of matter, such as topological                                                µ  ⟨i,i′⟩µ
+Mott insulators, Weyl semimetals, and axion insulators8.                    where the summations are taken for the nearest-neighbor
+  The  quantum  spin  liquid  (QSL)  is  one  of  such  in-                 sitesi andi′ on theµ bonds (µ =x,y,z distinguishes the
+triguing phases potentially induced by the electron cor-                    three types of bonds on the honeycomb structure); Kµ
+relation and SOC. It is a massively entangled quantum                       describes the coupling constant for the Ising-type inter-
+phase in which interacting localized magnetic moments                       actions on the µ bonds, and Sµi  represents the µ compo-
+are  prevented  from  forming  a  magnetic  long-range  or-                 nent of spin-1/2 operator at site i.  As it is impossible to
+der  by  strong  quantum  ﬂuctuations9–12.   The  ﬂuctuat-                  optimize the exchange energy on all the bonds simulta-
+ing moments under the quantum entanglement can show                         neously,  the Kitaev model has severe frustration.  Nev-
+a  topological  order13,14  and  quantum  number  fraction-                 ertheless,  the  ground  state  was  exactly  obtained  as  an
+alization into nonlocal quasiparticle excitations15,16.  In                 exact QSL, whose excitations are described by fractional
+particular, nonabelian quasiparticles, which obey neither                   quasiparticles, itinerant Majorana fermions and localized
+Bose-Einstein nor Fermi-Dirac statistics, have attracted                    Z2 ﬂuxes21.
+great interest from application to decoherence-free topo-                      While the original proposal by Kitaev was rather math-
+logical  quantum  computing17.   While  the  prototypical                   ematical,  Jackeli  and  Khaliullin  pointed  out  the  possi-
+                                                                                                                                                2
+
+ble  realization  of  the  Kitaev  model  as  a  low-energy  ef-           2D  compounds A2PrO3  for  the A-site  substitution  be-
+fective  model  for  a  certain  series  of  oxides22.   In  their         yond the previous study49.  We also extend our analysis
+theory, the eﬀective spin-1/2 moments are given by the                     to the 3D hyperhoneycomb structure, which is realized in
+spin-orbital  entangled  Kramers  doublet  in  the  low-spin               β-Na2PrO348.  For the quasi-2D honeycomb cases, by ab
+d5  electron  conﬁguration  under  an  octahedral  crystal                 initio calculations with structural optimization, we show
+ﬁeld  (OCF)  and  strong  SOC.  These  moments  interact                   that the 4f1 states under the strong SOC and the OCF
+with each other via the Kitaev-type interactions predomi-                  are well approximated by the Γ7  Kramers doublet with
+nantly when the conventional Heisenberg interactions are                   the  eﬀective  angular  momentum jeﬀ  =  1/2  for  all  the
+cancelled out by quantum interference between diﬀerent                     A-site substitutions by alkali atoms (Li, Na, K, Rb, and
+perturbation  processes  via  the  ligands  in  edge-sharing               Cs).   We  ﬁnd  that  larger A-site  ionic  radii  lead  to  not
+MX6 octahedra (M  and X  represent a transition metal                      only  a  longer  bond  length  between  Pr  cations  but  also
+cation  and  a  ligand  ion,  respectively).   Stimulated  by              larger trigonal distortions of PrO6 octahedra, which bring
+this idea, material-oriented researches toward the Kitaev-                 about larger deviations from the ideal Γ7 Kramers dou-
+type QSL have been done explosively over the last decade                   blet.   Based  on  the  maximally-localized  Wannier  func-
+for  the  low-spin  4d5  and  5d5  electron  compounds23–28,               tions  (MLWFs)  obtained  by  the  ab  initio  calculations,
+such  as  quasi-two-dimensional  (2D)  honeycomb  mag-                     we construct multiorbital Hubbard models for these com-
+nets A2IrO3  (A=Li,  Na)29,30  and α-RuCl331,32,  three-                   pounds.   We  study  the  low-energy  magnetic  properties
+dimensional (3D) hyperhoneycomb magnet β-Li2IrO333,                        of these models by deriving eﬀective spin models in the
+and 3D stripy honeycomb magnetγ-Li2IrO334.  Among a                        strong  coupling  limit  by  a  perturbation  expansion  in
+lot of eﬀorts to identify the nature of the Kitaev QSL in                  terms  of  direct  4f-4f  and  indirect  4f-2p-4f  hoppings.
+these candidates, a recent highlight is the observation of                 We show that the eﬀective spin models are described by
+the half-quantized thermal Hall conductivity in α-RuCl3                    three dominant exchange interactions:  isotropic Heisen-
+as evidence of a gapped topological state of the Majorana                  bergJ, anisotropic KitaevK, and symmetric oﬀ-diagonal
+fermions35.  In addition,  by extending the argument by                    Γ′.  We ﬁnd that the coupling constants change system-
+Jackeli and Khaliullin, the high-spin d7 electron systems                  atically  by  the A-site  substitution;  the  increase  in  the
+have also been studied as another candidates with similar                  A-site ionic radii suppresses the AFM K and slightly in-
+Kramers doublet36–40.                                                      creases Γ′, while it does not modulate the AFM J  sub-
+  Recently,  rare-earth  materials,  in  which  the  strong                stantially.  As a consequence, the AFMK, which is domi-
+SOC coexists with electron correlations,  have attracted                   nant forA=Li and Na, becomes smaller than the AFMJ
+attention for materialization of the Kitaev-type interac-                  forA=K and Rb, and even changes the sign to be weakly
+tion.   For  instance,  Yb3+-based  compounds  with  4f13                  FM forA=Cs.  We also calculate the ground-state phase
+electron conﬁgurations were nominated41,42, and indeed,                    diagram for the J-K-Γ′ model by using the exact diago-
+Kitaev QSL behavior was argued for YbCl3, whose crys-                      nalization of 24-site clusters, and discuss the systematic
+tal structure is the same as α-RuCl343.  Another promis-                   changes of the exchange coupling constants on the phase
+ing candidate is found for the electron-hole counterpart,                  diagram.  We ﬁnd that the A=Li case is the most prox-
+4f1 electron conﬁgurations.  In this category, Pr4+-based                  imate to the AFM Kitaev QSL, and the increase of the
+materials are noteworthy, as several polymorphic struc-                    A-site ionic radii shifts the system into the deep inside of
+tures ofA2PrO3 (A = alkali metals) hosting edge-sharing                    the N´eel ordered phase.  We also perform similar analyses
+PrO6  octahedra  have  been  synthesized:   for  example,                  for the 3D hyperhoneycomb compound β-Na2PrO3.  In
+quasi-one-dimensional  chain44,45,  layered  honeycomb45,                  this case, we bypass the structural optimization in the ab
+triangular46,47, and hyperhoneycomb structures48.  The-                    initio calculations by using the experimental lattice pa-
+oretically,  the  authors  proposed  that,  based  on  ab  ini-            rameters.  We show that the values of the exchange cou-
+tio calculations, the magnetic properties of the quasi-2D                  pling constants for this compound are similar to those for
+honeycomb form of A2PrO3 with A=Li and Na are well                         the quasi-2D counterpart, suggesting that the compound
+described by the model with dominant antiferromagnetic                     provides a good platform for the 3D J-K-Γ′ model with
+(AFM) Kitaev interactions49.  This allows one to access                    the dominant AFM Kitaev coupling.
+unexplored parameter regions of the Kitaev QSLs, as the                       The organization of the rest of this paper is as follows.
+existing candidates with 4d and 5d electrons are believed                  In  Sec.  II,  we  describe  the  details  of  our  method:   ab
+to  possess  the  ferromagnetic  (FM)  Kitaev  interactions.               initio calculations of the electronic structures, construc-
+The AFM Kitaev model has recently been captivated by                       tion of the multiorbital Hubbard model from the MLWF
+its possibility of a ﬁeld-induced exotic state that cannot                 analysis,  formation  of  the jeﬀ  =  1/2  pseudospin  in  the
+be achieved for the FM Kitaev model50–55.  Despite the                     Γ7  doublet,  and  derivation  of  the  eﬀective  pseudospin
+intriguing possibility, the previous study in Ref. 49 was                  Hamiltonian by the perturbation expansion in the strong
+limited to the honeycomb materials with A=Li and Na.                       coupling limit.  In Sec. III A, we show the results for the
+Given the various polymorhs, further studies are desired                   quasi-2D  honeycomb  compounds A2PrO3.   We  discuss
+for the Pr-based materials.                                                the systematic changes in the electronic band structure
+  In  this  paper,  we  perform  a  systematic  study  of  the             obtained by the ab initio calculations including optimized
+electronic and magnetic properties of the Pr-based quasi-                  lattice structures, the tight-binding parameters obtained
+                                                                                                                                                3
+
+by the MLWF analysis, and the exchange coupling con-                       the  full-relativistic  ultrasoft  projector-augmented-wave-
+stants  in  the  eﬀective  pseudospin  Hamiltonian  derived                method  Perdew-Zunger  type58,59  for  the  Pr  cations60  .
+by  the  perturbation  expansion  for A-site  substitution                 We set the kinetic energy cutoﬀ at 250 Ry.  We perform
+(Sec. III A 1-III A 4).  In Sec. III A 5,  we analyze the re-              the structural optimization starting from the structural
+sults in detail by decomposing the contributions to each                   parameters for Rb2CeO3 listed in Materials  Project61.
+coupling  constant  into  diﬀerent  perturbation  processes.               In the structural optimization, we set the criteria for the
+We also map out the systematic evolution on the mag-                       maximum crystal stress at 0.1 GPa.  The remnant max-
+netic ground-state phase diagram for the J-K-Γ′  model                     imum atomic forces are less than 0.002 Ry/Bohr in the
+in Sec. III A 6.  In Sec. III B, we present similar analyses               ab-plane  and  less  than  0.0001  Ry/Bohr  along  the  axis
+for the experimentally-synthesized 3D hyperhoneycomb                       perpendicular to the plane.  All the results forA=K, Rb,
+compound β-Na2PrO348.   Section  IV  is  devoted  to  the                  and Cs converge onto monoclinic structures with C2/m
+summary.  In Appendices A and B, we show the details                       symmetry as in the previous study for A=Li and Na49.
+of the multiplets given for the 4f1 and the 4f2 electron                      Meanwhile,  in  the  calculations  for  the  hyperhoney-
+conﬁgurations, respectively.                                               comb  compound β-Na2PrO3,  we  adopt  the  pseudopo-
+                                                                           tentials  of  non-relativistic  norm-conserving  von  Barth-
+                                                                           Car  type62  for  Na,  non-relativistic  ultrasoft  projector-
+                         II.    METHOD                                     augmented-wave-method   Perdew-Zunger   type58,59   for
+                                                                           Pr,  and  non-relativistic  norm-conserving  Hartwigesen-
+  In this section,  we introduce the theoretical methods                   Goedecker-Hutter type57 for O. We use the experimental
+used in this paper.  In Sec. II A, we present the details                  structure with C2/c symmetry48  without further struc-
+of the ab initio calculations and the MLWF analysis.  In                   tural optimization.  Using the electron hopping parame-
+Sec.  II B,  we  introduce  the  Hamiltonian  for  the  multi-             ters from the MLWF analysis for the non-relativistic ab
+orbital  Hubbard  model,  whose  parameters  for  the  elec-               initio  calculations,  we  construct  the  multiorbital  Hub-
+tron  hopping  are  obtained  by  the  MLWF  analysis.   In                bard  model  by  adding  the  SOC  by  hand;  we  take  the
+Sec.  II C,  we  show  that  the  atomic  electronic  state  for           SOC  coeﬃcient λ=120  meV,  which  was  estimated  for
+the 4f1 electron conﬁguration under the strong SOC and                     the  quasi-2D  honeycomb  compound α-Na2PrO349  (see
+the OCF yields the Γ7  Kramers doublet with the eﬀec-                      Sec. III B 2).
+tive angular momentum jeﬀ  = 1/2.  In Sec. II D, we in-                       In both calculations, we compute the electronic band
+troduce the perturbation scheme in the strong coupling                     structures,  the  (projected)  density  of  states,  and  the
+limit to derive the low-energy eﬀective Hamiltonian for                    construction  of  MLWFs  by  using  the  Monkhorst-Pack
+the jeﬀ = 1/2 pseudospins.                                                 grids63 of 4×4×4 and 8×8×8 k-points determined from
+                                                                           the primitive cells.  We set the convergence threshold in
+                                                                           the  self-consistent  ﬁeld  calculations  at  1.0× 10−10  Ry.
+                                                                           We construct the MLWFs by using WANNIER9064.
+   A.     ab initio calculation of electronic structures
+
+  In  the  ab  initio  calculations,  we  study  the  electronic                          B.    Multiorbital Hamiltonian
+structures  of  the  quasi-2D  layered  honeycomb  com-                       For  both  quasi-2D  honeycomb  and  3D  hyperhoney-
+pounds A2PrO3  with A=K,  Rb,  and  Cs,  and  the  3D                      comb  cases,  we  construct  multiorbital  Hubbard  models
+hyperhoneycomb compound β-Na2PrO3.  For the former                         for  the f-orbital  manifold  on  the  basis  of  the  ab  initio
+honeycomb cases, the results for A=Li and Na are avail-                    results.  The Hamiltonian is commonly composed of four
+able in Ref. 49.  For the latter hyperhoneycomb case, we                   terms as
+focus on the Na case, as the structural data is available
+only for the Na compound and the structural optimiza-                                    H  = HSOC + HCEF + Hint + Hhop.             (2)
+tion  is  computationally  expensive  for  other A-site  ions
+because of the large number of atoms in the unit cell.  All                   The ﬁrst term HSOC  describes the eﬀect of the SOC.
+the ab initio calculations are performed by using Quantum                  The Hamiltonian is given by
+ESPRESSO56.
+  In  the  calculations  for  the  honeycomb  compounds,                                          HSOC =∑        HSOC,i,                         (3)
+we adopt the pseudopotentials of non-relativistic norm-                                                       i
+conserving Hartwigesen-Goedecker-Hutter type57 for the
+A-site cations (A=K, Rb, and Cs) and the O ions, while                     where
+
+
+
+
+
+                                𝓁∑  ∑                           𝓁−1∑  √
+               HSOC,i = λ2               mσ˜c†imσ˜cimσ + λ2             𝓁 +m + 1√𝓁−m(˜c†im+1−˜cim+ + ˜c†im+˜cim+1−),              (4)
+                             m=−𝓁     σ                        m=−𝓁
+                                                                                                                                                  4
+
+whereλ> 0 is the SOC coeﬃcient,𝓁 is the orbital quan-                       oxygen  ions  octahedrally  coordinated  around  the  Pr4+
+tum number taken as 𝓁 = 3 for the f-orbital manifold,                       cation,  which  we  denote HOCF.   In  the  OCF,  the  only
+and m and σ =±1 denote the magnetic and spin quan-                          nonzero coeﬃcients are B44 = 5B40 and B64 =−21B60,
+tum numbers, respectively; ˜c†imσ and ˜cimσ represent cre-                  and hence, HOCF is given by
+ation and annihilation operators of an electron with m
+and σ at site i in the spherical harmonics basis, respec-                       HOCF =B40(O40 + 5O44) +B60(O60− 21O64).     (6)
+tively.
+  The  second  term  in  Eq.  (2), HCEF,  describes  the  ef-               For  Pr4+-based  materials  with  the  OCF, B40  and B60
+fect of the crystalline electric ﬁeld.  It is in general de-                are  positive  and  negative,   respectively,   and B60 ≃
+scribed  by  the  rank-r  Stevens  multipole  operators Ors                 −0.004B4065.   We  take  into  account HOCF  only  in  the
+(s =−r,−r + 1,··· ,r) as                                                    following discussions in this section, while all other con-
+                       HCEF =∑BrsOrs,                        (5)            tributions are incorporated in Sec. III by the MLWF anal-
+                                  r,s                                       ysis under realistic lattice structures.
+                                                                               The third term in Eq. (2) describes the Coulomb in-
+whereBrs denotes the coupling coeﬃcient. In the present                     teractions betweenf electrons.  The Hamiltonian is given
+situation, the dominant contribution is the OCF from the                    by
+
+
+                        ∑         ∑                          ∑
+     Hint =∑                            δm1+m2,m3+m4                 FkC(k)(m1,m4)C(k)(m2,m3)˜c†im1σ1˜c†im2σ2˜cim3σ2˜cim4σ1,       (7)
+               i  m1,m2,m3,m4     σ1,σ2                    k=0,2,4,6
+
+
+
+whereFk andC(k) denote the Slater-Condon parameters                         where the ﬁrst termtiu,i′v,σ describes the direct hopping
+and the Guant coeﬃcients, respectively (k = 0, 2, 4, 6); δ                  between orbitalu at sitei and orbitalv at sitei′ for spin
+is the Kronecker delta.  Here, the Slater-Condon param-                     σ,  and the second term describes the indirect hoppings
+eters are related with the onsite Coulomb interaction U                     via oxygen 2p orbitals;tiu,op,σ is the transfer integral for
+and the Hund’s-rule coupling JH as66,67                                     spinσ between 4f orbitalu at sitei and 2p orbitalp(=x,
+            U =F 0,                                                        (8)y, and z) at one of two ligand sites o(= 1 and 2) shared
+                         (286F 2 + 195F 4 + 250F 6).         (9)            by two PrO6 octahedra for the sites i and i′, and ∆p-uv
+           JH =    16435                                                    is the harmonic mean of the energies of orbitals u and v
+                                                                            measured from that of p.
+  The fourth term in Eq. (2) describes the kinetic energy                      We estimate the values of tiu,i′v,σ, tiu,op,σ, and ∆p-uv
+as                                 ∑                                        by the MLWF analyses for the electronic band structure
+                    Hhop =∑              H (µ)                              obtained by the ab initio calculations.  Note that we take
+                                           hop,ii′,                   (10)  into account the electron hopping only between nearest-
+                               µ  ⟨i,i′⟩µ
+                                                                            neighbor Pr pairs for simplicity.  The validity of this ap-
+where  H (µ)                                                                proximation  will  be  examined  by  comparing  the  tight-
+           hop,ii′   denotes  the  electron  hopping  between               binding  band  structures  and  those  obtained  by  the  ab
+nearest-neighbor  sites i  and i′  on  the µ  bond  (one  of                initio calculations (see Figs. 3 and 10).  For the quasi-2D
+the three types of bonds on the tricoordinate structure,                    honeycomb cases, we average the values over three types
+labeled as µ =x, y, and z) as                                               of bonds by assuming C3  symmetry in each honeycomb
+                        ∑                                                   layer  for  simplicity,  as  the  deviations  are  very  small  in
+      H (µ)hop,ii′ =∑       (˜tiu,i′v,σc†iuσci′vσ + h.c.).        (11)      each Pr layer (see Sec. III A 1).
+                   u,v σ=±
+Here,  ˜tiu,i′v,σ  denotes  the  eﬀective  transfer  integral  be-
+tween f  orbital u at site i and f  orbital v  at site i′  for
+spin σ (u and v represent the seven types of 4f  orbitals                                        C.    Kramers doublet
+in the cubic harmonic basis, ξ, η, ζ, A, α, β, and γ68),
+which includes contributions from both direct 4f-4f and                        We consider the 4f1  electronic state for the mulitor-
+indirect 4f-2p-4f  hopping processes; c†iuσ  and ciuσ  rep-                 bital Hubbard model in Eq. (2), namely, one f  electron
+resent creation and annihilation operators, respectively,                   per site on average.  This is expected from the formal va-
+for the f  orbital u and spin σ at site i.  Speciﬁcally, we                 lence of Pr4+ inA2PrO3, and indeed conﬁrmed by the ab
+take ˜tiu,i′v,σ in the form                                                 initio calculations in the later sections.  Let us ﬁrst dis-
+                                         tiu,op,σt∗i′v,op,σ                 cuss the atomic electronic state for the ﬁrst two terms in
+           ˜tiu,i′v,σ =tiu,i′v,σ +∑           ∆p-uv   ,       (12)          Eq. (2), HSOC and HOCF.  The SOC in Eq. (4) splits the
+                                     o,p                                    14-fold degenerate f-orbital manifold by the total angu-
+                                                                                                                                                    5
+
+                                                                             Here, we use the cubic harmonic basis as in Eq. (11) (we
+                                                                             omit the site labeli for simplicity);|0⟩ is the vacuum off
+                                                                             electrons. (The eigenvalues and eigenvectors for the other
+                                                                             multiplets are shown in Appendix A.) The lowest-energy
+                                                                             Γ7  doublet  in  Eq.  (13)  comprises  a  time-reversal  pair,
+                                                                             which can be regarded as a pseudospin|±⟩ with the eﬀec-
+                                                                             tive angular momentum jeﬀ  = 1/2.  For the pseudospin
+                                                                             state,  we  introduce  the  operator S  =  (Sx,Sy,Sz)T  de-
+                                                                             ﬁned by
+                                                                                                 (⟨+|jµ|+⟩ ⟨+|jµ|−⟩)
+                                                                                    Sµ =−35        ⟨−|jµ|+⟩ ⟨−|jµ|−⟩           = 12σµ,         (14)
+
+
+                                                                             where j and σ are the total angular momentum operator
+FIG. 1.  Energy level scheme for thef-orbital manifold under                 and the Pauli matrix, respectively.
+the spin-orbit coupling (SOC) and the octahedral crystal ﬁeld
+(OCF). The black dot represents the occupied state in thef1
+electron conﬁguration.  The schematic pictures of the corre-
+sponding wave functions are also shown, where red and blue                                    D.    Perturbation expansion
+represent spin-up and spin-down density proﬁles, respectively.
+
+                                                                                Next, for the Γ7  doublet described by the pseudospin
+lar momentum j into the  2F5/2 sextet with j = 5/2 and                       in Eq. (14), we discuss the eﬀect of the Coulomb inter-
+the  2F7/2  octet  with j  =  7/2,  as  shown  in  Fig.  1  (the             action  and  the  electron  hopping  described  by  the  lat-
+eigenvalues and eigenvectors are shown in Appendix A).                       ter two terms in Eq. (2).  We assume that the Coulomb
+These manifolds are further split by HOCF in Eq. (2). The                    interaction  in Hint  is  large  enough  to  realize  the  spin-
+j = 5/2 manifold is split into Γ7 doublet and Γ8 quartet,                    orbit  Mott  insulating  state  in  the  basis  of  the  Γ7  dou-
+while the j  = 7/2 manifold is split into Γ′7  doublet,  Γ′8                 blet,  where  the  4f  electrons  are  localized  at  each  site
+quartet, and Γ6 doublet, as shown in Fig. 1.  The Γ7 dou-                    with one electron per site.  For this situation, we derive
+blet from thej = 5/2 manifold has the lowest eigenvalue                      the  low-energy  eﬀective  Hamiltonian  by  employing  the
+of HOCF at−240B40, which is described by                                     perturbation expansion with respect to the electron hop-
+⏐⏐⏐⏐j = 5       ⟩                                                            ping in Hhop.  The lowest-order contribution is obtained
+                   =    1√                                                   from the second-order perturbation. The eﬀective Hamil-
+      2, Γ7;±            21(2ic†ξ∓∓ 2c†η∓± 2ic†ζ± + 3c†A±)|0⟩.               tonian for a pseudospin pair for nearest-neighbor sites i
+                                                                  (13)       and i′ on a µ bond is calculated by
+
+
+
+                                                       ∑    ⟨c,d|H (µ)hop,ii′|n⟩⟨n|H (µ)hop,ii′|a,b⟩
+                                   h(µ)ii′  =  ∑                          E0−En     |c,d⟩⟨a,b|.                                     (15)
+                                            a,b,c,d=±   n
+
+
+
+where|a,b⟩  and|c,d⟩  are  the  initial  and  ﬁnal  two-site                 the  pseudospins  in  Eq.  (14).   The  eﬀective  pseudospin
+states with 4f1-4f1 electron conﬁgurations described by                      Hamiltonian, e.g, for the z  bond, is given in the matrix
+the  eigenvalues  of  the  pseudospin  in  Eq.  (14)  at  each               form                                            
+site,  and|n⟩ is the intermediate states with 4f2-4f0  or
+4f0-4f2 electron conﬁgurations; E0 is the energy for the                                     H (z)         J    Γ      Γ′Γ   J       Γ′ Si′.              (16)
+initial and ﬁnal states, while En  is for the intermediate                                     ii′   = STi   Γ′  Γ′  J + K
+state|n⟩.   In  the  present  calculations,  we  classify  the
+intermediate states with thef2 electron conﬁguration on                      The total Hamiltonian is given by the sum over the neigh-
+the  basis  of  the  Russel-Saunders  scheme  by  using  the                 boring µ =x,y,z bonds as
+eigenstates of Hint + HSOC in the absence of HCEF.  This                                           Heﬀ =∑         ∑     H (µ)
+results in the 91 multiplets, whose explicit forms are given                                                              ii′ ,                     (17)
+with their energy eigenvalues in Appendix B.                                                                  µ  ⟨i,i′⟩µ
+
+  The eﬀective Hamiltonian in Eq. (15) can be summa-                         where H (x)ii′    and H (y)ii′   are  given  by  cyclic  permutations
+rized into the form of the spin Hamiltonian in terms of                      of{xyz}  in H (z)ii′  .   We  note  that  the  spin  Hamiltonian
+                                                                                                                                                         6
+
+
+TABLE I. Structural parameters of the optimized structures
+for A2PrO3  (A=K, Rb, and Cs) with C2/m symmetry.  See
+Fig. 2(b) for the deﬁnitions ofa,b,c,β, andn.  The ratioa/n
+becomes 3/√2≃ 2.12 in ideal octahedra with Oh symmetry.
+dPr-Pr  and θPr-O-Pr  denote  the  average  values  of  the  Pr-Pr
+bond  length  and  the  Pr-O-Pr  bond  angle,  respectively,  for
+the neighboring Pr pairs within the same honeycomb layer.
+                         K2PrO3           Rb2PrO3           Cs2PrO3
+     a (˚A)                  6.1069              6.2158               6.3349
+     b (˚A)                   10.535              10.705               10.921
+     c (˚A)                   6.3442              6.6890               7.0903
+    β (deg)                 109.04              108.29               107.42
+     n (˚A)                  2.4103              2.4516               2.3698
+      a/n                    2.5337              2.5354               2.6732
+  dPr-Pr (˚A)               3.5188              3.5778               3.6471
+θPr-O-Pr (deg)            103.68              105.49               107.57
+
+
+
+
+
+in Eq. (16) for the quasi-2D honeycomb cases does not                           FIG. 2.  (a) and (b) The optimized C2/m monoclinic struc-
+include antisymmetric exchange interactions, such as the                        ture  for A2PrO3  with A=Rb.   The  other  cases  with A=K
+Dzyaloshinskii-Moriya  interaction69,70,  since  the  lattice                   and Cs have similar structures.  The purple, yellow, and red
+structures possess the inversion center at the middle of                        spheres  denote A+,  Pr4+,  and  O2−  ions,  respectively.   The
+each Pr-Pr bond.  This is not the case for the 3D hyper-                        edge-sharing network of PrO6  octahedra is partially shown.
+honeycomb case, but it turns out that the antisymmetric                         In (b), the black lines represent a primitive unit cell with the
+exchange interactions are negligibly small as discussed in                      lattice parameters; n is the average distance of the O layers
+Sec. III B 4.                                                                   sandwiching the Pr layer.  (c) The ﬁrst Brillouin zone for the
+                                                                                monoclinic structure.  The red lines represent the symmetric
+                                                                                lines used in Fig. 3.
+
+
+                                                                                             A.    Honeycomb magnets A2PrO3
+
+                                                                                                         1.    Lattice structure
+                           III.    RESULT
+                                                                                   Table  I  summarizes  the  structural  parameters  for
+                                                                                A2PrO3  (A=K,  Rb,   and  Cs)  with C2/m  symmetry
+   In  this  section,  we  show  the  results  for  a  series  of               obtained  by  the  structural  optimization  described  in
+the quasi-2D honeycomb compoundsA2PrO3 (Sec. III A)                             Sec. II A. The optimized structures are composed of 2D
+and   the   3D   hyperhoneycomb   compound β-Na2PrO3                            honeycomb layers with edge-sharing PrO6 octahedra, as
+(Sec.  III B).  For  the  quasi-2D  cases,  after  presenting                   exempliﬁed in Fig. 2 forA=Rb. While theA-site ionic ra-
+the optimized lattice structures in Sec. III A 1, we show                       dius increases, not only the intralayer Pr-Pr bond length
+the  electronic  band  structures  for A=K,  Rb,  and  Cs                       dPr-Pr  but  also  the  interlayer  distance  is  elongated,  as
+in  Sec.  III A 2.   We  estimate  the  tight-binding  parame-                  shown  in  Table  I.  At  the  same  time,  the  value  of a/n,
+ters for the multiorbital Hubbard Hamiltonian from the                          which is a measure of the degree of trigonal distortions,
+MLWF  analysis  in  Sec.  III A 3  and  the  exchange  cou-                     and  the  Pr-O-Pr  bond  angle θPr-O-Pr  gradually  deviate
+pling constants in the eﬀective pseudospin Hamiltonian                          from the values for the ideal octahedra,  3/√2 and 90◦,
+in  Sec.  III A 4.   We  discuss  the  systematic  evolution  of                respectively71.  Although the lattice symmetry is C2/m,
+the parameters, including the previous results for A=Li                         the deviations from the perfect honeycomb structure with
+and Na49.  In particular,  we identify relevant perturba-                       C3  symmetry are very small in each Pr layer for all the
+tion processes to the coupling constants J, K, and Γ′ in                        compounds; the diﬀerences of dPr-Pr andθPr-O-Pr among
+Sec. III A 5.  In Sec. III A 6, we calculate the ground-state                   the  diﬀerent  bond  directions  are  within≃  0.05  ˚A  and
+phase  diagram  for  the J-K-Γ′  model  and  map  out  the                      ≃ 1◦, respectively.
+systematic  evolution  while  changing A-site  ions  on  the                       We note that the bond lengths and angles for the cases
+phase diagram.  For the 3D case, we present the results                         with A=K,  Rb,  and  Cs  are  comparatively  larger  than
+in a parallel manner from Sec. III B 1 to III B 4, by using                     those  for  the d5  Kitaev  honeycomb  magnets, A2IrO3
+the experimental structure for the ab initio calculations.                      (A=Li and Na)72,73 and α-RuCl374.  On the other hand,
+                                                                                                                                                    7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.  Electronic band structures for A2PrO3 obtained by the relativistic ab initio calculations:  (a)(d)(g) for A=K, (b)(e)(h)
+forA=Rb, and (c)(f)(i) forA=Cs.  The ﬁgures (a)-(c) are in the energy range from−25 eV to 10 eV, (d)-(f) are from−6 eV to
+2 eV, and (g)-(i) are from−0.1 eV to 1.2 eV. The band structures are drawn along the symmetric lines indicated in Fig. 2(c).
+The  red  dashed  lines  in  (g)-(i)  show  the  band  dispersions  obtained  by  the  tight-binding  calculations  with  nearest-neighbor
+transfers estimated by the MLWFs.  The right panels in each ﬁgure display the projected density of states to various orbitals of
+three atomsA, Pr, and O in (a)-(c), Pr 4f  and O 2p orbitals in (d)-(f), and the 2F5/2, 2F7/2, Γ7, Γ8, Γ′7, Γ′8, and Γ6 manifolds
+of the Pr 4f  states in (g)-(i).  The Fermi level is set to zero.
+
+
+Li2PrO3 and Na2PrO3, which were studied previously49,                        bands are located above 10 eV for all the compounds (not
+have similar structural parameters to the d5 candidates;                     shown).  Meanwhile, in the lower-energy region, the O 2p
+the bond lengths for the Li and Na cases are close to those                  bands are located in the range from−5.5 to−2.2 eV for
+for Na2IrO3 andα-RuCl3, respectively, and the bond an-                       A=K, from−5.2 to−2.0 eV forA=Rb, and from−4.5 to
+gles are close to those for α-RuCl374  and Na2IrO372,73,                     −1.8 eV forA=Cs, respectively, with weak hybridization
+respectively.                                                                with the Pr 4f  bands.  The bands in the deeper energy
+                                                                             range from−21 to−13 eV forA=K are mainly from the
+                                                                             hybridization  of  K  3p,  Pr  5p,  and  O  2s  orbitals.   The
+                      2.    Electronic structure                             bands  in  the  range  from−12.2  to−10.4  eV  for A=Rb
+                                                                             and in the range from−10.9 to−8.0 eV for A=Cs are
+                                                                             mainly from Rb 4p and Cs 5p orbitals, respectively.  The
+  The electronic band structures and the projected den-                      bands in the range from−21 to−14 eV for A=Rb and
+sity of states for nonmagnetic states of A2PrO3  (A=K,                       Cs are mainly from the hybridization of Pr 5p and O 2s
+Rb,  and  Cs)  are  shown  in  Fig.  3.   In  all  the  cases,  the          orbitals.
+Pr 4f  bands are well isolated from the other bands and
+located around the Fermi level set to zero.  In the higher-                     Reﬂecting  the  localized  nature  of  the f  orbitals,  the
+energy  region,  there  are  hybridized  bands  of s, p,  and                bandwidths of the well-isolated Pr 4f  bands are narrow.
+d  orbitals  of  the A  cations  above  2.5  eV,  2.0  eV,  and              The bandwidth decreases with the increase of the A-site
+1.8  eV  for A=K,  Rb,  and  Cs,  respectively.   The  Pr  4s                ionic  radii: ≃  1.3  eV  for A=K,≃  1.2  eV  for A=Rb,
+                                                                                                                                                     8
+
+
+TABLE II. Nearest-neighbor transfer integrals ˜tiu,i′v,+ on a z bond for A2PrO3 (A=K, Rb, and Cs); u is in the row and v is
+in the column.  ˜tiu,i′v,− are given by the complex conjugates.  The unit is in meV. The upper-right half of the table is omitted
+as the matrix is Hermite conjugate.
+ A=K        ξ            η            ζ           A           α           β        γ
+   ξ                     12.3
+   η    −7.16 + 0.15i                12.3
+   ζ    −1.04 + 0.12i  −1.04 + 0.12i    −84.1
+   A              5.30− 0.09i   −5.30− 0.09i         0.02 + 0.68i    −30.0
+   α    −55.9 + 0.17i          12.4 + 0.25i           20.5− 0.27i   −10.6 + 0.22i                123
+   β    −12.4 + 0.25i          55.9 + 0.17i   −20.5− 0.27i  −10.6− 0.22i  −49.1− 0.88i              123
+   γ              3.21 + 0.49i   −3.21 + 0.49i  −0.01− 0.17i    −7.32               7.53 + 0.53i         7.53− 0.53i        44.2
+A=Rb        ξ            η            ζ           A           α           β        γ
+   ξ                     9.15
+   η    −11.5 + 0.09i                9.15
+   ζ    −0.89− 0.21i  −0.89 + 0.21i    −79.4
+   A              8.48− 0.03i   −8.48− 0.03i    −0.63i     −22.5
+   α    −47.1 + 0.06i          12.1 + 0.24i           35.0− 0.34i   −14.3 + 0.14i                110
+   β    −12.1 + 0.24i          47.1 + 0.06i   −35.0− 0.34i  −14.3− 0.14i  −46.7− 0.68i              110
+   γ              5.98 + 0.49i   −5.98 + 0.49i               0.02i      −1.25               11.2 + 0.55i         11.2− 0.55i        40.3
+A=Cs        ξ            η            ζ           A           α           β        γ
+   ξ                     5.22
+   η   −16.04 + 0.04i               5.22
+   ζ    −0.09− 0.34i  −0.09 + 0.34i    −68.2
+   A              12.1 + 0.05i   −12.1 + 0.05i    −0.54i     −12.5
+   α    −37.3 + 0.05i          9.46 + 0.26i           50.6− 0.36i   −16.5 + 0.10i               91.6
+   β    −9.46 + 0.26i          37.3 + 0.05i   −50.6− 0.36i  −16.5− 0.10i  −35.4− 0.42i              91.6
+   γ              7.80 + 0.45i   −7.80 + 0.45i               0.23i                      5.20                 16.4 + 0.48i         16.4− 0.48i        33.1
+
+
+and≃  1.1  eV  for A=Cs.   This  is  in  accordance  with                     cating that the system is a compensated metal.  Nonethe-
+the  increased  lattice  constants  in  Table  I.  As  shown  in              less,  it  is  expected  for  all  the  cases  that  the  Coulomb
+the enlarged ﬁgures in Figs. 3(g), 3(h), and 3(i), the 4f                     interactions can make the system a spin-orbit Mott insu-
+bands are split into the bands predominantly originating                      lator.
+from the 2F5/2 sextet (below 0.3 eV) and those from the                          In Figs. 3(g),  3(h),  and 3(i),  we also show the tight-
+2F7/2 octet (above 0.3 eV), as expected from the atomic                       binding  band  structures  with  the  transfer  integrals  be-
+level scheme under the strong SOC in Fig. 1.  These two                       tween  nearest-neighbor  Pr  cations  estimated  from  the
+bunches of the bands are further split under the crystal                      MLWF analysis (see the next section).  The ab initio re-
+ﬁeld; the 2F5/2 bands are split into the bands dominated                      sults for the 4f  bands are well reproduced, especially for
+by  the  Γ7  doublet  and  the  Γ8  quartet,  while  the  2F7/2               the relevant low-energy bands near the Fermi level.  This
+bands are split into those dominated by Γ′7  doublet, Γ′8                     indicates that further-neighbor transfer integrals are less
+quartet, and Γ′6 doublet, as expected in Fig. 1.                              signiﬁcant, presumably due to the localized nature of the
+  In the 4f1 state, the lowest-energy shallow band (dou-                      4f  orbitals.   Based  on  this  observation,  in  Sec.  III A 4,
+bly  degenerate)  below  the  Fermi  level,  which  predom-                   we construct eﬀective models for the Γ7  pseudospins in
+inantly  originates  from  the  Γ7  doublet  split  from  the                 Eq. (13) by taking into account only the nearest-neighbor
+2F5/2  sextet,  is  occupied.    In  particular,  in  the A=K                 transfer integrals in the same honeycomb layer.
+and Rb cases, the band is fully occupied, indicating that
+the  system  is  a  band  insulator.   The  band  gap  is  esti-
+mated  as≃  18  meV  and  9  meV  for A=K  and  Rb,  re-                                       3.    Transfer integrals and SOC
+spectively, Meanwhile, for the A=Cs case, the (second)
+lowest-energy band is slightly hole (electron) doped, indi-
+
+
+
+
+  Performing   the   MLWF   analyses   on   the   ab   initio                 the  matrix  elements,  11  types  give  relevant  contribu-
+band  structures,  we  estimate  the  transfer  integrals  be-                tions  to  the  eﬀective  pseudospin  Hamiltonian  derived
+tween  the  Pr  cations.   The  results  for  nearest-neighbor                in  Sec.  III A 4:   ˜tiξ,i′α,σ  = −˜t∗iη,i′β,σ,  ˜tiζ,i′ζ,σ,  ˜tiA,i′A,σ,
+pairs  on  a z  bond  are  presented  in  Table  II.  Among                   ˜tiξ,i′ξ,σ  = ˜t∗iη,i′η,σ, ˜tiA,i′γ,σ, ˜tiξ,i′β,σ  =−˜t∗iη,i′α,σ, ˜tiξ,i′η,σ,
+                                                                                                                                                       9
+
+                                                                               rect hopping paths yield other ﬁve nonzero transfer inte-
+                                                                               grals:  ˜tiA,i′A,σ with anffπ bond [Fig. 4(c)], ˜tiξ,i′ξ,σ dom-
+                                                                               inantly withffσ andffφ bonds [Fig. 4(d)], ˜tiA,i′γ,σ with
+                                                                               ffπ andffφ bonds [Fig. 4(e)], ˜tiξ,i′β,σ dominantly with
+                                                                               ffπ and ffφ bonds [Fig. 4(f)], and ˜tiξ,i′η,σ  dominantly
+                                                                               withffσ andffφ bonds [Fig. 4(g)].  We note that, when
+                                                                               trigonal distortions are introduced, the indirect hopping
+                                                                               processes fξ-px-fβ  and fξ-px-fη  (equivalently, fξ-py-fη)
+                                                                               become dominant for the latter two ˜tiξ,i′β,σ and ˜tiξ,i′η,σ,
+                                                                               respectively  [Figs.  4(f)  and  4(g)].   The  remaining  four
+                                                                               types of the transfer integrals  ˜tiζ,i′α,σ,  ˜tiA,i′ξ,σ,  ˜tiξ,i′γ,σ,
+                                                                               and ˜tiA,i′α,σ become nonzero only in the presence of trig-
+                                                                               onal distortions; the indirect hopping processes fζ-pz-fα
+                                                                               and fξ-px-fA become dominant for ˜tiζ,i′α,σ  and ˜tiA,i′ξ,σ,
+                                                                               respectively [see Figs. 4(h) and 4(i)], and the direct hop-
+                                                                               ping  processes fξ-fγ  and fA-fα  become  dominant  for
+                                                                               ˜tiξ,i′γ,σ and ˜tiA,i′α,σ, respectively [see Figs. 4(j) and 4(k)].
+                                                                                  The amplitudes of ˜tiξ,i′α,σ and ˜tiζ,i′ζ,σ, which are dom-
+                                                                               inated  by  the  indirect  hopping  paths,  are  quite  large
+                                                                               among  the  11  types  of  transfer  integrals.   They,  how-
+                                                                               ever, decrease with the increase in the A-site ionic radii
+                                                                               which  enhance  the  trigonal  distortions.   On  the  other
+                                                                               hand,  among  the  ﬁve  transfer  integrals  predominantly
+                                                                               originating from the direct hopping paths, the amplitude
+                                                                               of ˜tiA,i′A,σ is distinctively large, which also decreases with
+                                                                               the increase of the A-site ionic radii due to the increase
+                                                                               in dPr-Pr.   While  the  amplitudes  of  the  remaining  four
+                                                                               ˜tiζ,i′α,σ, ˜tiA,i′ξ,σ, ˜tiξ,i′γ,σ, and ˜tiA,i′α,σ become larger with
+                                                                               the increase of trigonal distortions for larger A-site ionic
+                                                                               radii, that of ˜tiζ,i′α,σ  via the pfσ  bond between pz  and
+                                                                               fα  orbitals is particularly sensitive and becomes largest
+                                                                               for A=Cs.
+                                                                                  In addition to the transfer integrals,  we estimate the
+                                                                               SOC coeﬃcient λ in Eq. (4) from the comparison of the
+                                                                               band  structures  in  Fig.  3  with  those  obtained  by  non-
+FIG. 4.  Relevant hopping processes along a z  bond:  (a) in-                  relativistic  calculations.   The  values  of λ  are  estimated
+direct fξ-px-fα,  (b)  indirect fζ-pz-fζ,  (c)  direct fA-fA,  (d)             as λ≃ 0.12 eV for A=K (same for A=Li and Na49) and
+direct fξ-fξ,  (e)  direct fA-fγ,  (f)  direct fξ-fβ  and  indirect            λ≃ 0.11 eV for A=Rb and Cs.  We note that these are
+fξ-px-fβ, (g) direct fξ-fη  and indirect fξ-px-fη, (h) indirect                close to the empirical values75,76.
+fζ-pz-fα, (i) indirectfA-px-fξ, (j) directfξ-fγ, and (k) direct                                 4.    Eﬀective exchange couplings
+fA-fα.
+                                                                                  Following the procedure of the perturbation expansion
+˜tiζ,i′α,σ   = −˜t∗iζ,i′β,σ,  ˜tiA,i′ξ,σ   = −˜t∗iA,i′η,σ,  ˜tiξ,i′γ,σ   =     in  Sec.  II D,  we  estimate  the  coupling  constants  in  the
+−˜t∗iη,i′γ,σ, and ˜tiA,i′α,σ = ˜t∗iA,i′β,σ.  Note that the transfer            eﬀective pseudospin Hamiltonian in Eq. (16).  The results
+                                                                               forA2PrO3 (A=K, Rb, and Cs) are plotted in Fig. 5 for
+integrals between the T1u orbitals, fα, fβ, and fγ, some                       several U  as  functions  of  the  ratio  of  the  Hund’s-rule
+of which have large amplitudes, are irrelevant since they                      coupling JH  to  the  onsite  Coulomb  repulsion U.   The
+are not involved in the Γ7 state in Eq. (13).                                  value of the eﬀectiveU in the transition from 4f1-4f1 to
+  Let us explain how these transfer integrals arise.  Sup-                     4f2-4f0  was experimentally determined as 3.7 – 5.4 eV
+pose  that  trigonal  distortions  are  absent,  indirect  hop-                with  the  x-ray  photoelectron  spectroscopy77,  while  the
+ping paths via O p orbitals yield nonzero values of two                        eﬀective JH  for 4f2  has been measured as 0.6 – 0.9 eV
+types  of  transfer  integrals,  ˜tiξ,i′α,σ  with pfπ  and pfσ                 with spectroscopic methods for Pr3+  ions78–81.  On the
+bonds  as  exempliﬁed  for  the  indirect  hopping  process                    other hand, theoretical estimates were given asU = 5.0 –
+fξ-px-fα  in  Fig.  4(a)  and  ˜tiζ,i′ζ,σ  with pfπ  bonds  via                5.7 eV by the thermodynamic approximation method and
+pz  as shown in Fig. 4(b).  For these two, there are also                      the relativistic Hartree-Fock method82,83  and JH  = 0.6
+contributions from direct hopping paths between the f                          – 1.1 eV by the hydrogenic method and the relativistic
+orbitals, dominantly withffπ andffφ bonds for the for-                         Hartree-Fock method84,85.  We note that the previous ab
+mer and an ffδ bond for the latter.  Meanwhile, the di-                        initio studies on Ce- and Pr-based materials with 4f1 or
+                                                                                                                                                 10
+
+                                                                            these experimental and theoretical estimates, we take the
+                                                                            range ofU = 2 – 6 eV andJH/U = 0.0 – 0.2, in addition
+                                                                            to λ  =  0.12  eV  for A=K  and λ  =  0.11  eV  for A=Rb
+                                                                            and Cs which are obtained in the MLWF analyses in the
+                                                                            previous section.
+                                                                               In the case of K2PrO3  in Fig. 5(a), the AFM Kitaev
+                                                                            coupling K  is most dominant for large JH/U, while the
+                                                                            AFMK becomes smaller than the AFM Heisenberg cou-
+                                                                            plingJ for Rb2PrO3 in Fig. 5(b), and even negative (FM)
+                                                                            for  Cs2PrO3  in  Fig.  5(c).   Combining  with  the  previ-
+                                                                            ous results for Li2PrO3 and Na2PrO349, we ﬁnd that the
+                                                                            AFM Kitaev coupling K  is reduced systematically with
+                                                                            the increase of theA-site ionic radii.  On the other hand,
+                                                                            the AFM Heisenberg coupling J  shows smaller changes
+                                                                            and  remains  most  relevant  in  the  case  of A=Rb  and
+                                                                            Cs  in  the  entire  range  of U  and JH  studied  here.   The
+                                                                            symmetric oﬀ-diagonal coupling Γ′ is always positive for
+                                                                            A=K, Rb, and Cs and gives subdominant contributions
+                                                                            for larger A-site ionic radii, while Γ is smallest in all the
+                                                                            cases.
+                                                                               Thus, we conclude that the eﬀective pseudospin Hamil-
+                                                                            tonian forA2PrO3 (A=Li, Na, K, Rb, and Cs) can be well
+                                                                            described by the three dominant exchange couplings J,
+                                                                            K, and Γ′.  The Kitaev coupling K  is AFM, except for
+                                                                            the A=Cs case.  The situation is in stark contrast to the
+                                                                            d5 cases where the dominant couplings are J, K, and Γ,
+                                                                            and the Kitaev couplingK is FM. Thed5 case was often
+                                                                            studied by the model called the J-K-Γ model with FM
+                                                                            K96,97.  Our results suggest that the present 4f1 case is
+                                                                            well  described  by  the J-K-Γ′  model  with  AFM K.   In
+                                                                            particular, as Γ′ is very small for the Li and Na cases49,
+                                                                            these are approximately described by theJ-K model (the
+                                                                            Heisenberg-Kitaev model).  We will show the systematic
+                                                                            changes  of  the  coupling  constatnts  on  the  ground-state
+                                                                            phase diagram for the J-K-Γ′ model in Sec. III A 6.
+
+
+
+                                                                                5.    Decomposition into diﬀerent perturbation processes
+
+                                                                               In order to understand the origin of each coupling con-
+                                                                            stant, we decompose the contributions into diﬀerent per-
+                                                                            turbation processes.  Figure 6 shows the decomposition
+                                                                            into diﬀerent hopping processes in the perturbation on a
+                                                                            z bond.  Here, (˜µ˜ν;µν) denotes the contribution from the
+                                                                            hopping  process  via  ˜ti˜µ,i′˜ν,σ  and  ˜tiµ,i′ν,σ  [see  Eqs.  (12)
+FIG. 5.  Coupling constants in the eﬀective pseudospin Hamil-               and (15)].
+tonian  in  Eq.  (16)  for  (a)  K2PrO3,  (b)  Rb2PrO3,  and  (c)              As shown in Fig. 6(a), the major contributions to the
+Cs2PrO3  as  functions  of  the  Hund’s-rule  coupling JH.   The            AFM Kitaev coupling K  come from (ξα;µν) [and sym-
+green, red, orange, and purple lines represent the Heisenberg               metrically  equivalent  (ηβ;µν)].   For  this  type,  we  ﬁnd
+J,  Kitaev K,  and  oﬀ-diagonal  couplings  Γ  and  Γ′,  respec-            that  the  dominant  contributions  are  from  (ξα;ξα)  [see
+tively.  The bold, solid, dashed, and dotted lines represent the            Fig.  7(a)],  (ξα;ηβ)  [Fig.  7(b)],  and  (ξα;ζζ)  [Fig.  7(c)].
+results atU = 2, 3, 4, and 6 eV, respectively.  The SOC coeﬃ-               There  are  also  substantial  contributions  from  (ζζ;µν),
+cientλ is set to 0.12 eV for K2PrO3 and 0.11 eV for Rb2PrO3                 especially (ζζ;AA) [Fig. 7(d)] and (ζζ;ξξ) [Fig. 7(e)].  For
+and Cs2PrO3, respectively.                                                  larger A-site  ionic  radii, K  is  turned  into  FM  mainly
+                                                                            due to the contributions from (ζα;µν).  For this type, we
+                                                                            ﬁnd  that  the  dominant  contributions  are  from  (ζα;ζα)
+4f2 electron conﬁgurations have been implemented with                       [Fig. 7(f)] and (ζα;Aη) [Fig. 7(g)].
+U = 2.5 – 8 eV andJH/U = 0.08 – 0.2086–95. Considering                         Figure 6(b) displays the decomposition of the Heisen-
+                                                                                                                                                  11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6.  Coupling constants decomposed into the contributions from diﬀerent hopping processes in the perturbation; (˜µ˜ν;µν)
+represents the contribution via two hopping integrals ˜ti˜µ,i′˜ν,σ and ˜tiµ,i′ν,σ on az bond (˜µ, ˜ν,µ,ν =ξ,η,ζ,A,α,β,γ).  The results
+are shown forA2PrO3 (A=Li, Na, K, Rb, and Cs):  (a) KitaevK, (b) HeisenbergJ, and symmetric oﬀ-diagonal couplings (c) Γ
+and (d) Γ′.  See also Ref. 49 for the data for A=Li and Na.  The black points indicate the net values of the coupling constants.
+The onsite Coulomb energy U  and the Hund’s-rule coupling JH/U  are set to 4 eV and 0.15, respectively, for all compounds.
+The SOC coeﬃcient λ is set to 0.12 eV for A=Li, Na, and K, and 0.11 eV for A=Rb and Cs.
+
+
+berg  coupling J.    The  AFM J  predominantly  comes                        ﬁnd subdominant contributions from the type (Aξ;µν),
+from  (ζζ;µν),  where  (µ,ν)⁄=(ξ,ξ)  and  (η,η).    For  this                especially  (Aξ;ζζ)  [Fig.  7(o)],  (Aξ;ηβ)  [Fig.  7(p)],  and
+type, we ﬁnd that the dominant contributions are from                        (Aξ;ξα) [Fig. 7(q)].
+(ζζ;AA) [Fig. 7(h)] and (ζζ;ζζ) [Fig. 7(i)].  We also ﬁnd                       Summarizing the above analysis, we conclude that the
+that (ζα;ζα) [Fig. 7(f)], (ζα;Aη) [Fig. 7(g)], and (ζα;ξγ)                   contributions from (ξα;µν) and (ζζ;µν) play a major role
+[Fig. 7(j)] contribute to the AFM J  for the compounds                       in the dominant AFM Kitaev couplingK, while the latter
+with large A-site ionic radii.  We note that there are FM                    (ζζ;µν)  simultaneously  gives  a  relevant  contribution  to
+contributions  to J  dominantly  from  (ζζ;ξξ)  [Fig.  7(e)]                 the dominant AFM Heisenberg coupling J.  We also ﬁnd
+and symmetrically equivalent (ζζ;ηη).                                        that,  when  the  trigonal  distortions  become  larger  with
+  Figures 6(c) and 6(d) show the decompositions of the                       the  increase  of  the A-site  ionic  radii,  the  contribution
+symmetric oﬀ-diagonal Γ and Γ′, respectively.  Although                      from (ζα;µν) becomes more relevant to all the coupling
+Γ  is  always  small  as  mentioned  above,  the  major  con-                constants;  in  particular,  it  changes  the  sign  of K  from
+tributions come from the types of (ξβ;µν) and (ζα;µν),                       AFM to FM.
+where the dominant ones in the former are (ξβ;ηβ) and                           Finally, to further analyze the origin of the AFMK, we
+(ξβ;ζζ),  and  those  in  the  latter  are  (ζα;Aα),  (ζα;ζβ),               decomposeK into the contributions from diﬀerent inter-
+and (ζα;Aξ). On the other hand, the major contributions                      mediate 4f2-4f0 states in the perturbation [see Eq. (15)].
+to Γ′  are mainly by (ζα;µν) and symmetrically equiva-                       The result is shown in Fig. 8.  We ﬁnd that the dominant
+lent (ζβ;µν).  We ﬁnd that the dominant contributions                        contributions come from the intermediate states  3H and
+in  (ζα;µν)  are  (ζα;ξα)  [Fig.  7(k)],  (ζα;ζζ)  [Fig.  7(l)],             3F . These two have the lowest and second-lowest energies
+(ζα;ηβ)  [Fig.  7(m)],  and  (ζα;ξη)  [Fig.  7(n)].   We  also               among  many  intermediate  states  [see  Eqs.  (B5)-(B17)].
+                                                                                                                                                     12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.  Examples of (˜µ˜ν;µν) that give dominant contributions to the eﬀective coupling constants:  (a) (ξα;ξα), (b) (ξα;ηβ),
+(c) (ξα;ζζ), and (d) (ζζ;AA) contributing to the AMF K, (e) (ζζ;ξξ) to the AFM K and the FM J, (f) (ζα;ζα) to the FM K
+and the AFM J, (g) (ζα;Aη) to the FM K  and the AFM J, (h) (ζζ;AA), (i) (ζζ;ζζ), and (j) (ζα;ξγ) to the AFM J, and (k)
+(ζα;ξα), (l) (ζα;ζζ), (m) (ζα;ηβ), (n) (ζα;ξη), (o) (Aξ;ζζ), (p) (Aξ;ηβ), and (q) (Aξ;ξα) to the positive Γ′.
+                                                                                                                                                 13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  8.   Coupling  constants  decomposed  into  the  contribu-
+tions from diﬀerent intermediate 4f2-4f0 states to the Kitaev
+coupling K  for A2PrO3  (A=Li,  Na,  K,  Rb,  and  Cs).   The
+parameters are set in the same way as in Fig. 6.
+
+
+More speciﬁcally, the state ⏐⏐3H4;MJ =±4⟩ contributes
+to the AFMK, while⏐⏐3H4;MJ⁄=±4⟩ and 3F contribute
+to the FM K.  The contributions from ⏐⏐3H4;MJ =±4⟩
+and  3F  quickly  decrease  with  the  increase  of  the A-
+site ionic radii, but that from⏐⏐3H4;MJ⁄=±4⟩ does not
+change so much, which ﬁnally leads to the FM K in the
+Cs case.
+
+
+                  6.    Possible magnetic phases
+
+  Let us discuss the possible ground states for the quasi-                  FIG. 9.  Phase diagrams for the J-K-Γ′  model obtained by
+2D honeycomb compounds A2PrO3, by considering the                           the  Lanczos  exact  diagonalization  of  a  24-site  cluster.   (a)
+J-K-Γ′ model with the coupling constants deduced from                       and (b) show the results for Γ′≤ 0 and Γ′≥ 0, respectively.
+the analyses above forA=K, Rb, and Cs and in the pre-                       The Cartesian coordinates are given by (θ cosφ,θ sinφ) and
+vious study for A=Li and Na49.  Following the previous                      ((π/2−θ) cosφ, (π/2−θ) sinφ) for (a) and (b), respectively
+studies  of  the J-K-Γ  model  for  the d5-electron  candi-                 [see Eq. (18)], where the origins represent the Γ′-only limits
+dates96,97,  we  study  the  magnetic  ground  state  of  the               (J  = K  = 0).  The white regions denote  the regions where
+J-K-Γ′  model by using the exact diagonalizations for a                     the spin state cannot be identiﬁed within the 24-site cluster.
+24-site cluster with the Lanczos method.  The results are                   The red, orange, and blue dots connected by the solid lines
+plotted in Fig. 9 by two parameters θ  and φ which are                      show the evolution of the exchange coupling constants for the
+related with the coupling constants as                                      quasi-2D honeycomb compoundsA2PrO3 (A=Li, Na, K, Rb,
+                                                                            and Cs) at the onsite Coulomb energy U  = 2, 4, and 6 eV,
+          (J,K, Γ′) = (sinθ cosφ, sinθ sinφ, cosθ).      (18)               respectively; we set the Hund’s-rule coupling toJH/U = 0.15,
+                                                                            and the SOC coeﬃcient λ to 0.12 eV for A=Li, Na, and K,
+The phase boundaries are determined by peaks in the sec-                    and 0.11 eV for A=Rb and Cs.
+ond derivatives of the ground-state energy with respect
+toθ andφ, and the magnetic state in each phase is iden-
+tiﬁed by the spin structure factors, following the previous                 directions  for  the  FM  state  with  Γ′ <  0  and  the  AFM
+studies96,97.  We note that the results are consistent with                 state with Γ′ > 0 and that the spin moments arrange in
+the  previous  report  for  the J-K-Γ  model  with  nonzero                 the  (111)  plane  for  the  FM  state  with  Γ′ >  0  and  the
+Γ′97.                                                                       AFM state with Γ′ < 0.  Meanwhile, there are small ar-
+  As  shown  in  Fig.  9,  large  portions  of  the  parameter              eas for the AFM Kitaev QSL and the FM Kitaev QSL
+space  are  occupied  by  the  AFM  and  the  FM  states,                   states around theK-only limits (J = Γ′ = 0).  Similar to
+extending  from  the  trivial  points  in  the J-only  limits               the J-K-Γ model96,97, the two QSL regions remain sta-
+(K  =  Γ′  =  0).   A  classical  analysis  similar  to  Ref.  98           ble against weak J  and Γ′.  We note that the region of
+shows that the spin moments are ordered along the⟨111⟩                      the FM Kitaev QSL state for the J-K-Γ′ model is more
+                                                                                                                                                      14
+
+widely spread compared to that for the J-K-Γ model96.
+The  zigzag  state  takes  place  in  the  region  with J <  0
+and K > 0, while the stripy state appears for the oppo-
+site signs of J  and K.  We note that,  although Ref. 97
+revealed  two  distinct  zigzag  patterns  where  spins  align
+along the z  axis in the weak Γ regime and along the x
+andy bonds, the latter is not found in the presentJ-K-Γ′
+model.  We also identify a vortex state for Γ′ > 0 which
+is similar to that found for the J-K-Γ model97.
+   On  these  phase  diagrams  in  Fig.  9,  we  map  out  the
+systematic evolution of the eﬀective coupling constantsJ,
+K, and Γ′  while changing the A-site cation in A2PrO3.
+The  results  are  plotted  for U  =  2,  4,  and  6  eV  with
+JH/U  =  0.15.   Although  all  the  compounds  are  in  the
+AFM region, the system gets closer to the AFM Kitaev
+QSL region while decreasing theA-site ionic radii as well
+as  the  value  of U;  in  particular,  the A  =Li  case  with
+U  =2  eV  is  closest.   Thus,  our  results  show  that  the
+smallerA-site ionic radius and weakerU make the system
+A2PrO3 proximate to the AFM Kitaev QSL.
+
+
+       B.    Hyperhoneycomb magnet β-Na2PrO3
+
+                        1.    Lattice structure
+
+   Table III summarizes the experimental structural pa-
+rameters  for β-Na2PrO3  with C2/c  symmetry48.   The
+experimental structure is the 3D hyperhoneycomb struc-
+ture  with  edge-sharing  PrO6  octahedra,  as  shown  in
+Fig. 10.  We note that the local structures indicated by
+dPr-Pr and θPr-O-Pr are similar to those for the quasi-2D
+honeycomb case of Na2PrO349.
+   In  terms  of  the  space  group,  the  hyperhoneycomb
+structure composed of edge-sharing octahedra is seen not
+only in this monoclinic crystal with C2/c symmetry but                         FIG.  10.   (a),  (b),  and  (c)  The C2/c  monoclinic  structure
+also in an orthorhombic crystal with Fddd symmetry, as                         of the experimentally synthesized β-Na2PrO348.  The purple,
+in β-Li2IrO333.  The point group D2h  of the Fddd sym-                         yellow, and red spheres denote Na+, Pr4+, and O2− ions, re-
+metry gives a C2  axis that penetrates the center of the                       spectively.  In (a) and (b), the edge-sharing network of PrO6
+unit cell in the [110] direction, other two perpendicular                      octahedra is partially shown.  In (b), the blue, red, and green
+C2 axes parallel to the [001] and [110] directions, and the                    lines denote the x, y, and z  bonds, respectively.  In (c), the
+(110) mirror plane.  The mirror plane makes the x andy                         black lines represent a primitive unit cell.  (d) The ﬁrst Bril-
+bonds equivalent.  Meanwhile, theC2/c symmetry in the                          louin zone for the monoclinic structure.  The red lines repre-
+                                                                               sent the symmetric lines used in Fig. 11.
+
+
+TABLE III. Structural parameters of the experimental struc-                    present materialβ-Na2PrO3 lacks such mirror symmetry,
+tures for β-Na2PrO3  with C2/c symmetry48.  See Fig. 10(c)                     which makes thex andy bonds inequivalent, as shown in
+for the deﬁnitions ofa,b,c, andβ. dPr-Pr andθPr-O-Pr denote                    Table III. We note thatdPr-Pr is shortest for they bond.
+the Pr-Pr bond length and the Pr-O-Pr bond angle, respec-
+tively, for the neighboring Pr pair for the x, y, and z bonds.
+     a (˚A)                                             6.7878                                       2.    Electronic structure
+     b (˚A)                                             9.7747
+     c (˚A)                                             10.806                    Figures 11(a), 11(b), and 11(c) display the electronic
+    β (deg)                                           108.25                   band  structures  and  the  projected  density  of  states  for
+                           x bond      y bond      z bond                      the  nonmagnetic  state  of β-Na2PrO3  obtained  by  the
+  dPr-Pr (˚A)                 3.4363              3.4086              3.4400   non-relativistic ab-initio calculations for the experimen-
+θPr-O-Pr (deg)              100.06              99.655              99.667
+                                                                               tal lattice structure.  The overall feature is similar to the
+                                                                                                                                                    15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 11.  (a), (b), and (c) Electronic band structures forβ-Na2PrO3 obtained by the non-relativistic ab initio calculations.  The
+ﬁgure (a) is in the energy range from−25 eV to 10 eV, (b) is from−6 eV to 2 eV, and (c) is from−0.1 eV to 1.2 eV. The right
+panels display the projected density of states to various orbitals of three atoms Na, Pr, and O in (a) and Pr 4f and O 2p orbitals
+in (b).  In (c), the red dashed lines show the band dispersions obtained by the tight-binding calculation with nearest-neighbor
+transfers estimated by the MLWFs.  (d) Electronic band structures for β-Na2PrO3  obtained by the tight-binding calculation
+with manually implementing the SOC Hamiltonian HSOC given by Eq. (4) with the coeﬃcientλ=0.12 eV49.  The green solid and
+red dashed lines show the band dispersions by taking into account all the transfer integrals and the nearest-neighbor transfer
+integrals only, estimated by the MLWFs from the non-relativistic scheme, respectively.  The right panel displays the projected
+density of states to the  2F5/2, 2F7/2, Γ7, Γ8, Γ′7, Γ′8, and Γ6 manifolds in the Pr 4f  states.  The Fermi level is set to zero.
+
+
+honeycomb cases in Sec. III A 2. The Pr 4f bands are well                     blet, Γ′8 quartet, and Γ′6 doublet, respectively.
+isolated from the other bands, locating around the Fermi                         In the 4f1 state, the two lowest-energy shallow bands
+level set to zero, and the bandwidth is narrow≃ 0.9 eV                        below  the  Fermi  level  (double  degenerate  each),  which
+[see Fig. 11(c)].  Figure 11(d) shows the band structure                      predominantly originate from the Γ7  doublet split from
+obtained for the tight-binding Hamiltonian constructed                        the  2F5/2  sextet,  are  occupied  (note  that  the  unit  cell
+from  the  MLWF  analysis  for  the  non-relativistic  band                   includes  four  Pr  cations).   The  band  gap  is  estimated
+structures.  As shown in this ﬁgure, when the SOC term                        as≃ 9 meV, where the spin-orbit Mott insulator would
+HSOC given by Eq. (4) with the coeﬃcientλ=0.12 eV49 is                        be realized by the Coulomb interactions.  In Fig. 11(c),
+manually implemented in the tight-binding Hamiltonian,                        we show that the tight-binding band structure with the
+the bandwidth of the Pr 4f bands is widened to≃ 1.3eV.                        transfer integrals between nearest-neighbor Pr cations es-
+In addition, the SOC splits the 4f  bands into the bands                      timated from the MLWF analysis (see the next section)
+originating  from  the  2F5/2  sextet  (below  0.3  eV)  and                  well  reproduces  the  ab  initio  results,  especially  for  the
+those from the  2F7/2  octet (above 0.3 eV). The further                      low-energy  bands.   Moreover,  as  shown  in  Fig.  11(d),
+decomposition of the projected density of states into the                     the band structure obtained only by the nearest-neighbor
+multiplets  given  by  the  OCF  as  represented  by  Fig.  1                 transfer  integrals  from  the  MLWF  analysis  well  repro-
+ﬁnds that the 2F5/2 bands and the 2F7/2 bands are split                       duces that by all the further-neighbor transfer integrals
+into the Γ7 doublet and the Γ8 quartet and into Γ′7 dou-                      even when the SOC is implemented manually.  Based on
+                                                                                                                                                  16
+
+
+TABLE   IV.   Nearest-neighbor   transfer   integrals   ˜tiu,i′v,σ
+(σ=±) on aµ(=x,y, andz) bond forβ-Na2PrO3;u is in the
+row and v is in the column.  The unit is in meV. The upper-
+right  half  of  the  table  is  omitted  as  the  matrix  is  Hermite
+conjugate.
+µ =x   η     ζ     ξ    A    β     γ    α
+   η        17.5
+   ζ  −1.73     17.5
+   ξ         0.87      0.87 −79.6
+  A  −1.22     1.22      1.74 −36.1
+   β  −69.7 −8.64 −3.82 −4.52     132
+   γ        8.64      69.7      3.82 −4.52 −39.3     132
+   α  −0.96     0.96 −1.65 −16.1 −3.56 −3.56   43.7
+µ =y   ζ     ξ     η    A    γ     α    β
+   ζ         18.7
+   ξ         3.38      18.7
+   η        0.46      0.46 −80.8
+  A  −0.95     0.95 −2.29 −38.3
+   γ  −71.8     9.07      1.91      3.16       136
+   α  −9.07     71.8 −1.91     3.16 −38.6     136
+   β        1.16 −1.16 −0.99 −16.5 −2.83 −2.83   44.1
+µ =z   ξ     η     ζ    A    α    β    γ
+   ξ         18.1
+   η  −4.35     18.1
+   ζ         3.41      3.41 −77.0
+  A        1.61 −1.61     2.08 −36.7
+   α  −68.6 −6.15     6.86      1.65       130
+   β        6.15      68.6 −6.86     1.65 −38.9     130
+   γ        2.79 −2.79 −1.14 −17.1 −5.01 −5.01   41.9
+
+
+
+these observations, in Sec. III B 4, we construct eﬀective
+models for the Γ7 pseudospins in Eq. (13) by taking into
+account only the nearest-neighbor transfer integrals.
+
+
+                       3.    Transfer integrals
+
+  Performing the MLWF analyses on the non-relativistic
+ab initio band structures, we estimate the transfer inte-
+grals  between  the  Pr  cations.   The  results  for  nearest-
+neighbor pairs on the three bonds are presented in Ta-
+ble IV. We note that the values are similar to the case of
+the quasi-2D honeycomb compound Na2PrO349. The two
+transfer integrals ˜tiξ,i′α,σ and ˜tiζ,i′ζ,σ, which arise mainly
+from  the  indirect  hopping  processes,  are  comparatively
+large among the 11 types [Figs. 4(a) and 4(b)], similarly
+to  the  honeycomb  case  in  Sec.  III A 3.   These  two  give              FIG.  12.    Coupling  constants  in  the  eﬀective  pseudospin
+relevant contributions to the eﬀective pseudospin Hamil-                     Hamiltonian in Eq. (16) for β-Na2PrO3  on the (a) x, (b) y,
+tonian derived in the next section.                                          and (c) z  bond as functions of the Hund’s-rule coupling JH.
+                                                                             Notations are the same as in Fig. 5.  The SOC coeﬃcient λ is
+                                                                             set to 0.12 eV.
+
+                4.    Eﬀective exchange couplings
+                                                                             eter ranges of U  = 2 – 6 eV and JH/U  = 0.0 – 0.2,  in
+  Following the procedure of the perturbation expansion                      addition to λ = 0.12 eV, as in Sec. III B 4.
+in  Sec.  II D,  we  estimate  the  coupling  constants  in  the                As in the quasi-2D honeycomb case49, the AFM Kitaev
+eﬀective  pseudospin  Hamiltonian  for β-Na2PrO3.   The                      couplingK is most dominant for almost the entire param-
+results are plotted in Fig. 12.  We take the same param-                     eter region, while the AFM J  is subdominant and both
+                                                                                                                                              17
+
+Γ and Γ′ are negligibly small.  The values are similar to                  diagram for the J-K-Γ′  model, we showed that smaller
+those in the quasi-2D case49. Our results suggest that the                 A-site ionic radii make the system proximate to the AFM
+experimentally  synthesized  material β-Na2PrO3  is  well                  Kitaev quantum spin liquid, while all the compounds ap-
+described by the J-K model with dominant AFM K, as                         pear to exhibit an AFM order in the ground state. In par-
+in the quasi-2D case.  We note that the amplitudes of J                    ticular, the cases with A=Li and Na are well described
+and K for the y bond are comparatively larger than the                     by  the  Heisenberg-Kitaev  model  (J  and K  only)  with
+other bonds, owing to the shortest bond length dPr−Pr.                     the dominant AFM Kitaev coupling K, as found in the
+Although  the  antisymmetric  Dzyaloshinskii-Moriya  in-                   previous study49.  We note that theA=Na case has been
+teractions can be present in this structure, they are found                experimentally synthesized with a mixture of Na and Pr
+to be negligible for all the bonds, less than 10−6 meV. We                 cations45,  while the Li case was only obtained in a dif-
+also performed the decompositions of the contributions                     ferent  quasi-1D  structure  thus  far44,45  although  our  ab
+into  diﬀerent  perturbation  processes  as  in  Sec.  III A 4,            initio calculations suggest that the quasi-2D honeycomb
+and found basically the same results.                                      structure is at least locally stable.
+  Similar  exchange  coupling  constants  to  the  quasi-2D                   In the systematic study for the 2D compounds, we clar-
+case  suggest  that  the  ground  state  of β-Na2PrO3  is                  iﬁed the microscopic origin of the systematic evolution of
+the  AFM  state  located  in  the  vicinity  of  the  AFM  Ki-             the exchange coupling constants by carefully examining
+taev  QSL.  We  note  that  the  magnetic  phase  diagram                  the perturbation processes and identifying the dominant
+for the 3D J-K-Γ model was calculated at the classical                     hopping processes as well as the intermediate states.  For
+level99,100, which appears to support our conclusion.                      smaller A-site ionic radii where the trigonal distortion is
+                                                                           small, the indirect hoppings fξ-px-fα  (equivalent to fη-
+                                                                           py-fβ) and fζ-pz-fζ  give dominant contributions to the
+                       IV.    SUMMARY                                      AFM K, while the indirect fζ-pz-fζ  and the direct fA-
+                                                                           fA contribute dominantly to the AFMJ.  Meanwhile, for
+  In  summary,  we  have  systematically  investigated  the                larger A-site ionic radii, the increase in the trigonal dis-
+possible  realization  of  Kitaev-type  bond  dependent  in-               tortion as well as the lattice constant weakens the dom-
+teractions in A2PrO3 (A = alkali metal) with the quasi-                    inant hoppings, but instead, it enhances the indirect fζ-
+2D honeycomb and 3D hyperhoneycomb structures com-                         pz-fα (equivalent tofζ-pz-fβ) that contributes to the FM
+posed  of  edge-sharing  PrO6  octahedra.   In  these  com-                K, AFM J, and positive Γ′.  As the intermediate states
+pounds, under the strong spin-orbit coupling and the oc-                   for the perturbation processes, the 3H and 3F states have
+tahedral crystalline electric ﬁeld, the lowest-energy mul-                 the  main  contributions;  the  state ⏐⏐3H4;MJ =±4⟩  con-
+tiplet for the 4f1  electronic state of Pr4+  cations is ex-               tributes to the AFM K, while ⏐⏐3H4;MJ⁄=±4⟩ and  3F
+pected to be the Γ7 doublet, which is described by a pseu-                 contribute to the FM K.  The results are distinct from
+dospin with the eﬀective angular momentum jeﬀ  = 1/2.                      those for the low-spin d5  electron conﬁguration because
+By using the ab initio calculations of the electronic band                 of the diﬀerences in the spatial anisotropy of f  orbitals
+structure, we conﬁrmed that this picture holds for all the                 and  the  atomic  energy  levels  under  the  spin-orbit  cou-
+compounds and the Γ7 state comprises a half-ﬁlled band                     pling and the crystalline electric ﬁeld.
+to be a spin-orbit Mott insulator under strong electron                       For the 3D hyperhoneycomb case, we performed sim-
+correlations.  By constructing the multiorbital Hubbard                    ilar  analyses  for  the  experimentally-synthesized  com-
+Hamiltonian from the maximally-localized Wannier anal-                     pound,β-Na2PrO348. We found that the results are simi-
+ysis and performing the perturbation expansion with re-                    lar to the 2D counterpart withA=Na: The eﬀective pseu-
+spect to the electron hopping, we estimated the exchange                   dospin Hamiltonian is well described by the Heisenberg-
+coupling constants in the eﬀective pseudospin Hamilto-                     Kitaev model.  The result will stimulate material explo-
+nian.                                                                      ration of the Kitaev magnets in the series of 3D Pr-based
+  In the quasi-2D case, we have studied the compounds                      compounds.
+with A=K, Rb, and Cs in addition to A=Li and Na in                            We note that the energy scale of K  for the f-electron
+the previous study49, and discussed the systematic evolu-                  compounds is much smaller than that for 4d and 5d can-
+tion of the exchange coupling constants.  We found that                    didates: The former is estimated to be a few meV or less,
+the low-energy magnetic properties of these compounds                      but the latter is typically several tens of meV72,101–109.
+can be well described by the eﬀective pseudospin Hamil-                    This is because the f  electrons are more localized than
+tonian  with  the  isotropic  Heisenberg  interaction J,  the              the d  electrons.    Although  this  requires  much  lower
+anisotropic Kitaev interactionK, and the symmetric oﬀ-                     temperatures  to  detect  the  interesting  nature  of  the f-
+diagonal interaction Γ′.  These three coupling constants                   electron  candidates,  there  are  advantages  compared  to
+evolve systematically with the A-site substitution:  (i) J                 the d-electron  cases.   One  is  that  the  Kitaev  coupling
+is dominantly AFM and does not show a drastic change,                      can be AFM, in contrast to the FM one in the existing
+(ii)K is dominantly AFM but decreases for largerA-site                     d-electron  candidates.   This  allows  us  to  access  unex-
+ionic radii, and ﬁnally turns into FM forA=Cs, and (iii)                   plored parameter regions of the Kitaev physics.  Another
+Γ′ is very small forA=Li and Na but increases for larger                   advantage  is  that  parasitic  magnetic  orders,  if  any,  by
+A-site  ionic  radii.   Calculating  the  ground-state  phase              the non-Kitaev couplings might be destroyed by apply-
+                                                                                                                                               18
+
+ing smaller magnetic ﬁelds because of the overall smaller                  the Kitaev-type quantum spin liquid.  Systematic studies
+energy scales.  These may make possible to examine an-                     by extending our present work are left for future issues.
+other topological phase that was recently suggested for
+the AFM Kitaev model in the magnetic ﬁeld50–55.
+  While our analyses have been limited to the 4f1 case,                                      ACKNOWLEDGMENTS
+other f  electron  conﬁgurations  may  also  be  useful  for
+realizing  the  Kitaev-type  interactions.    We  note  that                  The authors thank T. Miyake for fruitful discussions.
+there are severalf electron conﬁgurations that allow the                   Y. M. thanks R. Coldea and K. Matsuhira for informative
+lowest-energy  multiplet  to  be  the  Kramers  doublet110.                discussions.   The  crystal  structures  in  Figs.  2(a),  2(b),
+For instance, the lowest-energy multiplet for the 4f5 elec-                10(a), 10(b), and 10(c) were visualized by VESTA116.  The
+tron conﬁguration, which is realized, e.g., for Sm3+, is ex-               second-order  perturbation  calculations  were  performed
+pected to be the Γ7 doublet under the strong spin-orbit                    by  using  SNEG  package117.    The  exact  diagonalization
+coupling and the octahedral crystalline electric ﬁeld.  In                 with  the  Lanczos  method  was  performed  by  usingHΦ
+the 4f11  case, e.g., for Er3+, while the Γ7  doublet may                  package118. Parts of the numerical calculations have been
+compete with the Γ8 quartet, ErX3 (X=Br and I) was re-                     done  using  the  facilities  of  the  Supercomputer  Center,
+ported to show interesting magnetic properties111, which                   the  Institute  for  Solid  State  Physics,  the  University  of
+may worth investigating the magnetic interactions from                     Tokyo.   This  work  was  supported  by  JSPS  KAKENHI
+ab initio calculations like in the present study.  The 4f13                Grant Nos. 16H02206 and 18K03447, JST CREST (JP-
+case, which is the electron-hole counterpart of 4f1, was                   MJCR18T2), and US NSF PHY-1748958.
+studied  both  theoretically  and  experimentally,  as  men-
+tioned  in  Sec.  I.  In  this  case,  the  expected  multiplet  is
+the Γ6 doublet, but the competition with the Γ′7 doublet                          Appendix A: Multiplets for the f1 electron
+or the Γ′8  quartet may cause unusual magnetic interac-                                               conﬁguration
+tions41,  which  is  potentially  relevant  to α-YbCl343.   It
+is  also  interesting  to  note  that  a  pyrochlore  compound
+Yb2Ti2O7  was  discussed  in  the  context  of  the  Kitaev-                  In this Appendix, we present the explicit forms of the
+type magnets112–114.  Beside the spin-orbit coupling and                   multiplets for thef1 electron conﬁguration.  As discussed
+the crystalline electric ﬁeld, the trigonal distortion, p-f                in Sec. II C, the 14-fold degenerate f-orbital manifold is
+mixings, andd-f electron repulsions may lead to a variety                  split by the SOC into the  2F5/2 sextet with j = 5/2 and
+of  multiplets115.   Thus,  the f-electron  compounds  pro-                the  2F7/2 octet with j = 7/2.  The j = 5/2 manifold has
+vide a fertile playground for exotic magnetism including                   the eigenvalue−2λ, which is described by the basis set
+
+
+
+                ⏐⏐⏐⏐j = 5           ⟩
+                      2,jz =±12        =    12√7(−√5ic†ξ∓∓√5c†η∓−√3ic†α∓∓√3c†β∓± 2√3ic†γ±)|0⟩,                             (A1)
+                ⏐⏐⏐⏐j = 5           ⟩
+                      2,jz =±32        =     12√14(√5ic†ξ∓∓√5c†η∓± 2√5ic†ζ± + 2√5c†A± +√3ic†α∓±√3c†β∓)|0⟩,             (A2)
+                ⏐⏐⏐⏐j = 5           ⟩
+                      2,jz =±52        =     12√14(−3ic†ξ∓± 3c†η∓∓ 2ic†ζ±− 2c†A± +√15ic†α∓±√15c†β∓)|0⟩,                      (A3)
+
+while the j = 7/2 manifold has the eigenvalue 3λ/2, which is described by
+              ⏐⏐⏐⏐j = 7            ⟩
+                     2,jz =±12       =    14√7(√15ic†ξ∓±√15c†η∓ + 3ic†α∓∓ 3c†β∓± 8ic†γ±)|0⟩,                                         (A4)
+              ⏐⏐⏐⏐j = 7            ⟩
+                     2,jz =±32       =    14√7(5ic†ξ∓∓ 5c†η∓∓ 4ic†ζ±− 4c†A± +√15ic†α∓±√15c†β∓)|0⟩,                             (A5)
+              ⏐⏐⏐⏐j = 7            ⟩
+                     2,jz =±52       =     14√14(√6ic†ξ∓∓√6c†η∓± 4√6ic†ζ±− 4√6c†A±−√10ic†α∓∓√10c†β∓)|0⟩,           (A6)
+              ⏐⏐⏐⏐j = 7            ⟩
+                     2,jz =±72       = 14(√3ic†ξ∓±√3c†η∓−√5ic†α∓±√5c†β∓)|0⟩.                                                        (A7)
+
+
+
+
+  These manifolds are further split by the OCF as dis-                     the Γ7 doublet in Eq. (13).  The Γ8 quartet has the eigen-
+cussed in Sec. II C. We present the multiplets other than                  value 120B40, which is described by
+                                                                                                                                             19
+
+
+
+                     ⏐⏐⏐⏐j = 5        ⟩
+                           2, Γ8a;±      =    16√7(−√15ic†ξ∓±√15c†η∓± 2√15ic†ζ± + 9ic†α∓± 9c†β∓)|0⟩,                           (A8)
+                     ⏐⏐⏐⏐j = 5        ⟩
+                           2, Γ8b;±      =  114(−√35ic†ξ∓∓√35c†η∓−√21ic†α∓±√21c†β∓± 2√21ic†γ±)|0⟩,                    (A9)
+
+
+the Γ′7 doublet from the j = 7/2 manifold has the eigenvalue−1080(B40 + 14B60), which is described by
+                                      ⏐⏐⏐⏐j = 7       ⟩
+                                             2, Γ′7;±    =   1√7(−ic†ξ∓±c†η∓∓ ic†ζ± + 2c†A±)|0⟩,                                        (A10)
+
+
+the Γ′8 quartet has the eigenvalue 120(B40 + 168B60), which is described by
+                       ⏐⏐⏐⏐j = 7        ⟩
+                              2, Γ′8a;±    =    12√7(√3ic†ξ∓∓√3c†η∓∓ 2√3ic†ζ± +√5ic†α∓±√5c†β∓)|0⟩,                        (A11)
+                        ⏐⏐⏐⏐j = 7       ⟩
+                              2, Γ′8b;±    =    16√7(−9ic†ξ∓∓ 9c†η∓ +√15ic†α∓∓√15c†β∓∓ 2√15ic†γ±)|0⟩,                     (A12)
+
+
+and the Γ6 doublet has the eigenvalue 840(B40− 30B60), which is described by
+                                           ⏐⏐⏐⏐j = 7       ⟩
+                                                 2, Γ6;±      =   1√3(−ic†α∓±c†β∓∓ ic†γ±)|0⟩.                                              (A13)
+
+
+
+
+
+                                                                                 Appendix B: Multiplets for the f2 electron
+                                                                                                    conﬁguration
+
+                                                                             In  this  Appendix,  we  present  the  multiplets  for  the
+                                                                          f2  electron  conﬁguration  discussed  in  Sec.  II D.  In  the
+                                                                          Russel-Saunders  scheme,  the  91  multiplets  are  given  in
+                                                                          the form
+
+
+
+
+                                                                     √              (Ltot Stot  Jtot     )
+           |Ltot,Stot,Jtot,MJ⟩ = (−1)Stot−Ltot−MJ ∑                     2Jtot + 1     ML MS −MJ             |Ltot,Stot,ML,MS⟩,      (B1)
+                                                             ML,MS
+                                                           √                 ( 3     3  Ltot    )
+    |Ltot,Stot,ML,MS =±1⟩ = (−1)−ML ∑                        2(2Ltot + 1)      m1 m2 −ML           ˜c†m1±˜c†m2±|0⟩,                            (B2)
+                                                   m1,m2                 ( 3     3  Ltot     )
+      |Ltot,Stot,ML,MS = 0⟩ = (−1)−ML ∑                    √2Ltot + 1                          (˜c†
+                                                                           m1 m2 −ML              m1+˜c†m2− + ˜c†m1−˜c†m2+)|0⟩,         (B3)
+                                                   m1,m2
+
+
+
+
+where Ltot, Stot, and Jtot denote the total orbital, spin,                quantum numbers taking−3,−2,··· , 3.  In these equa-
+and angular momentum quantum numbers, respectively;                       tions, the 2×3 matrices are the Wigner 3-j symbol given
+ML, MS, and MJ  denote the total magnetic, secondary                      by the Clebsch-Gordan coeﬃcients.
+total spin, and secondary total angular momentum quan-                       For                example,                    the                state
+tum numbers, respectively; m1 andm2 are the magnetic                      |Ltot = 5,Stot = 1,Jtot = 4,MJ =±4⟩,    which    is    de-
+                                                                          scribed as⏐⏐3H4;MJ =±4⟩, is given in the form
+                                                                                                                                                 20
+   ⏐⏐3H4;MJ =±4⟩ =       1                    5ic†               5c†                 3c†                 3ic†                 5ic†
+                           120√22(∓ 6√            A∓c†α∓− 6√        A∓c†β∓ + 10√        A∓c†η∓∓ 10√          A∓c†ξ∓∓ 90√         A±c†α±
+
+                                       + 90√5c†A±c†β± + 90√3c†A±c†η±± 90√3ic†A±c†ξ± + 45√3ic†α∓c†β±− 20√3c†α∓c†γ∓
+                                       − 6√5c†α∓c†ζ∓− 9√5ic†α∓c†η±∓ 36√5c†α∓c†ξ± + 45√3ic†α±c†β∓− 90√5c†α±c†ζ±
+                                       − 9√5ic†                   5c†                 3ic†               5ic†                5c†              (B4)
+                                                  α±c†η∓∓ 36√        α±c†ξ∓∓ 20√         β∓c†γ∓± 6√         β∓c†ζ∓± 36√         β∓c†η±
+                                       − 9√5ic†β∓c†ξ±∓ 90√5ic†β±c†ζ±± 36√5c†β±c†η∓− 9√5ic†β±c†ξ∓± 12√5ic†γ∓c†η∓
+                                       − 12√5c†γ∓c†ξ∓± 10√3ic†ζ∓c†η∓ + 10√3c†ζ∓c†ξ∓± 90√3ic†ζ±c†η±− 90√3c†ζ±c†ξ±
+                                       − 45√3ic†η∓c†ξ±− 45√3ic†η±c†ξ∓)|0⟩.
+
+
+
+  The energy eigenvalues of the intermediate states, En                              E3P1 =F0 + 45F2 + 33F4− 1287F6−λ/2,  (B14)
+are given as                                                                         E3P2 =F0 + 45F2 + 33F4− 1287F6 +λ/2,  (B15)
+        E3H4 =F0− 25F2− 51F4− 13F6− 3λ,         (B5)                                  E1I6 =F0 + 25F2 + 9F4 +F6,                     (B16)
+        E3H5 =F0− 25F2− 51F4− 13F6−λ/2,       (B6)                                   E1S0 =F0 + 60F2 + 198F4 + 1716F6,          (B17)
+        E3H6 =F0− 25F2− 51F4− 13F6 + 5λ/2,      (B7)
+        E3F2 =F0− 10F2− 33F4− 286F6− 2λ,       (B8)                         where Fk  are given by the Slater-Condon parameters in
+        E3F3 =F0− 10F2− 33F4− 286F6−λ/2,      (B9)                          Eq. (7) as F0  = F 0, F2  = F 2/225, F4  = F 4/1089, and
+        E3F4 =F0− 10F2− 33F4− 286F6 + 3λ/2,  (B10)                          F6 = 25F 6/184041; we took the ratio in values F 2 :F 4 :
+        E1G4 =F0− 30F2 + 97F4 + 78F6,                (B11)                  F 6  =  12.980  :  8.163  :  5.878  given  by  the  Hartree-Fock
+        E1D2 =F0 + 19F2− 99F4 + 715F6,              (B12)                   calculation for the 4f2  case119.  The Coulomb repulsion
+                                                                            U and the Hund’s-rule couplingJH are given in the linear
+        E3P0 =F0 + 45F2 + 33F4− 1287F6−λ,      (B13)                        combinations of Fk [see Eqs. (8) and (9)].
+
+
+
+
+
+
+
+  1  N. F. Mott, “Metal-insulator transition,” Rev. Mod. Phys.                   in strongly correlated quantum liquid,” Int. J. Mod. Phys.
+    40, 677 (1968).                                                              B 5, 1641 (1991).
+  2  M. Imada, A. Fujimori,  and Y. Tokura, “Metal-insulator                 14  M.  Levin  and  X.-G.  Wen,  “Detecting  topological  order
+    transitions,” Rev. Mod. Phys. 70, 1039 (1998).                               in  a  ground  state  wave  function,”  Phys.  Rev.  Lett. 96,
+  3  M. Z. Hasan and C. L. Kane, “Colloquium:  Topological                       110405 (2006).
+    insulators,” Rev. Mod. Phys. 82, 3045 (2010).                            15  S.  Sachdev,  “Kagom´e-  and  triangular-lattice  Heisenberg
+  4  X.-L.  Qi  and  S.-C.  Zhang,  “Topological  insulators  and                antiferromagnets:   Ordering  from  quantum  ﬂuctuations
+    superconductors,” Rev. Mod. Phys. 83, 1057 (2011).                           and  quantum-disordered  ground  states  with  unconﬁned
+  5  H.  Weng,  X.  Dai,   and  Z.  Fang,  “Topological  semimet-                bosonic spinons,” Phys. Rev. B 45, 12377 (1992).
+    als predicted from ﬁrst-principles calculations,” J. Phys.:              16  C.  Nayak,  S.  H.  Simon,  A.  Stern,  M.  Freedman,    and
+    Condens. Matter 28, 303001 (2016).                                           S. Das Sarma, “Non-abelian anyons and topological quan-
+  6  A. Bansil, H. Lin,  and T. Das, “Colloquium:  Topological                   tum computation,” Rev. Mod. Phys. 80, 1083 (2008).
+    band theory,” Rev. Mod. Phys. 88, 021004 (2016).                         17  A.  Y.  Kitaev,  “Fault-tolerant  quantum  computation  by
+  7  C.-K. Chiu, J. C. Y. Teo, A. P. Schnyder,   and S. Ryu,                     anyons,” Ann. Phys. (N. Y.) 303, 2 (2003).
+    “Classiﬁcation of topological quantum matter with sym-                   18  C.     Lacroix,      P.     Mendels,            and     F.     Mila,
+    metries,” Rev. Mod. Phys. 88, 035005 (2016).                                 Introduction to Frustrated Magnetism (Springer, 2011).
+  8  W. Witczak-Krempa, G. Chen, Y. B. Kim,   and L. Ba-                     19  H.  T.  Diep,   Frustrated Spin Systems  (World  Scientiﬁc,
+    lents, “Correlated quantum phenomena in the strong spin-                     2013).
+    orbit regime,” Annu. Rev. Condens. Matter Phys. 5, 57                    20  Z.  Nussinov  and  J.  van  den  Brink,  “Compass  models:
+    (2014).                                                                      Theory and physical motivations,” Rev. Mod. Phys. 87,
+  9  P. W. Anderson, “Resonating valence bonds:  A new kind                      1 (2015).
+    of insulator?” Mater. Res. Bull. 8, 153 (1973).                          21  A. Kitaev, “Anyons in an exactly solved model and be-
+ 10  L. Balents, “Spin liquids in frustrated magnets,” Nature                    yond,” Ann. Phys. (N. Y.) 321, 2 (2006).
+    464, 199 (2010).                                                         22  G.  Jackeli  and  G.  Khaliullin,  “Mott  insulators  in  the
+ 11  Y. Zhou, K. Kanoda,  and T.-K. Ng, “Quantum spin liq-                       strong  spin-orbit  coupling  limit:   From  Heisenberg  to  a
+    uid states,” Rev. Mod. Phys. 89, 025003 (2017).                              quantum compass and Kitaev models,” Phys. Rev. Lett.
+ 12  L. Savary and L. Balents, “Quantum spin liquids:  a re-                     102, 017205 (2009).
+    view,” Rep. Prog. Phys. 80, 016502 (2016).                               23  S.   Trebst,   “Kitaev   materials,”      (2017),   arXiv:cond-
+ 13  X.-G. Wen, “Topological orders and chern-simons theory                      mat.str-el/1701.07056.
+                                                                                                                                                        21
+
+
+24  S.  M.  Winter,  A.  A.  Tsirlin,  M.  Daghofer,  J.  van  den                  shared octahedra,” Phys. Rev. B 98, 054408 (2018).
+   Brink,  Y. Singh,  P. Gegenwart,   and R. Valent´ı, “Mod-                     42  Z.-X. Luo and G. Chen, “Rare earth Kitaev materials,”
+   els  and  materials  for  generalized  Kitaev  magnetism,”  J.                   (2019), arXiv:cond-mat.str-el/1903.02530.
+   Phys.:  Condens. Matter 29, 493002 (2017).                                    43  J.  Xing,  H.  Cao,  E.  Emmanouilidou,  C.  Hu,  J.  Liu,
+25  M. Hermanns, I. Kimchi,   and J. Knolle, “Physics of the                        D.  Graf,  A.  P.  Ramirez,  G.  Chen,     and  N.  Ni,  “A
+   Kitaev  model:   Fractionalization,  dynamic  correlations,                      rare-earth  Kitaev  material  candidate  YbCl3,”    (2019),
+   and material connections,” Annu. Rev. Condens. Matter                            arXiv:cond-mat.str-el/1903.03615.
+   Phys. 9, 17 (2018).                                                           44  von  R.  Wolf  and  R.  Hoppe,  “Ein  neues  Oxopraseody-
+26  J. Knolle and R. Moessner, “A ﬁeld guide to spin liquids,”                      mat(IV): Li2PrO3 1).” J. Solid State Chem. 70, 12 (1987).
+   Annu. Rev. Condens. Matter Phys. 10, 451 (2019).                              45  Y.  Hinatsu  and  Y.  Doi,  “Crystal  structures  and  mag-
+27  H. Takagi, T. Takayama, G. Jackeli, G. Khaliullin,   and                        netic properties of alkali-metal lanthanide oxidesA2LnO3
+   S. E. Nagler, “Concept and realization of Kitaev quantum                         (A=Li, Na; Ln=Ce, Pr, Tb),” J. Alloy. Comp. 418, 155
+   spin liquids,” Nat. Rev. Phys. 1, 264 (2019).                                    (2006).
+28  Y. Motome and J. Nasu, “Hunting Majorana Fermions in                         46  H.  Brunn  and  R.  Hoppe,  “ber  Ordnungsvarianten  des
+   Kitaev magnets,”  (2019), to appear in J. Phys. Soc. Jpn.,                       NaCl-Typs. Neue kubische Formen von NaMO2 (M=Sc,
+   arXiv:cond-mat.str-el/1909.02234.                                                Y, Dy,  Tm,  Yb,  Lu),  K2MO3  Rb2MO3,  (M  = Ce,  Pr,
+29  Y. Singh and P. Gegenwart, “Antiferromagnetic Mott in-                          Th)  und  Cs2ThO3,”  Z.  Anorg.  Allg.  Chem.  430,  144
+   sulating state in single crystals of the honeycomb lattice                       (1977).
+   material Na2IrO3,” Phys. Rev. B 82, 064412 (2010).                            47  E. Paletta and R. Hoppe, “Neue ternre Oxide vierwertiger
+30  Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale,                         Seltener Erden und des Thoriums,” Naturwissenschaften
+   W. Ku, S. Trebst,   and P. Gegenwart, “Relevance of the                          23, 611 (1966).
+   Heisenberg-Kitaev  model  for  the  honeycomb  lattice  iri-                  48  von R. Wolf and R. Hoppe, “ber Na2PrO3 und Na2TbO3,”
+   dates A2IrO3,” Phys. Rev. Lett. 108, 127203 (2012).                              Z. Anorg. Allg. Chem. 556, 97 (1988).
+31  K.  W.  Plumb,  J.  P.  Clancy,  L.  J.  Sandilands,  V.  V.                 49  S.-H. Jang, R. Sano, Y. Kato,  and Y. Motome, “Antifer-
+   Shankar,  Y.  F.  Hu,  K.  S.  Burch,  H.-Y.  Kee,   and  Y.-J.                  romagnetic Kitaev interaction in f-electron based honey-
+   Kim, “α−RuCl3:  A spin-orbit assisted Mott insulator on                          comb magnets,” Phys. Rev. B 99, 241106(R) (2019).
+   a honeycomb lattice,” Phys. Rev. B 90, 041112(R) (2014).                      50  Z. Zhu, I. Kimchi, D. N. Sheng,  and L. Fu, “Robust non-
+32  Y.  Kubota,   H.  Tanaka,   T.  Ono,   Y.  Narumi,     and                      abelian spin liquid and a possible intermediate phase in
+   K.  Kindo,  “Successive  magnetic  phase  transitions  in                        the antiferromagnetic Kitaev model with magnetic ﬁeld,”
+   α−RuCl3:  XY-like frustrated magnet on the honeycomb                             Phys. Rev. B 97, 241110(R) (2018).
+   lattice,” Phys. Rev. B 91, 094422 (2015).                                     51  M. Gohlke, R. Moessner,   and F. Pollmann, “Dynamical
+33  T. Takayama, A. Kato, R. Dinnebier, J. Nuss, H. Kono,                           and topological properties of the Kitaev model in a [111]
+   L.  S.  I.  Veiga,  G.  Fabbris,  D.  Haskel,    and  H.  Takagi,                magnetic ﬁeld,” Phys. Rev. B 98, 014418 (2018).
+   “Hyperhoneycomb  iridate β−Li2IrO3  as  a  platform  for                      52  J. Nasu, Y. Kato, Y. Kamiya,  and Y. Motome, “Succes-
+   Kitaev magnetism,” Phys. Rev. Lett. 114, 077202 (2015).                          sive  Majorana  topological  transitions  driven  by  a  mag-
+34  K.  A.  Modic,  T.  E.  Smidt,  I.  Kimchi,  N.  P.  Breznay,                   netic  ﬁeld  in  the  Kitaev  model,”  Phys.  Rev.  B  98,
+   A. Biﬃn, S. Choi, R. D. Johnson, R. Coldea, P. Watkins-                          060416(R) (2018).
+   Curry, G. T. McCandless, J. Y. Chan, F. Gandara, Z. Is-                       53  David C. Ronquillo,  Adu Vengal,   and Nandini Trivedi,
+   lam, A. Vishwanath, A. Shekhter, R. D. McDonald,  and                            “Signatures of magnetic-ﬁeld-driven quantum phase tran-
+   J. G. Analytis, “Realization of a three-dimensional spin-                        sitions  in  the  entanglement  entropy  and  spin  dynam-
+   anisotropic harmonic honeycomb iridate,” Nature Comm.                            ics  of  the  Kitaev  honeycomb  model,”  Phys.  Rev.  B 99,
+   5, 4203 (2014).                                                                  140413(R) (2019).
+35  Y. Kasahara, T. Ohnishi, Y. Mizukami, O. Tanaka, Sixiao                      54  C.  Hickey  and  S.  Trebst,  “Emergence  of  a  ﬁeld-driven
+   Ma, K. Sugii, N. Kurita, H. Tanaka, J. Nasu, Y. Motome,                          U(1) spin liquid in the Kitaev honeycomb model,” Nat.
+   T. Shibauchi,  and Y. Matsuda, Nature 559, 227 (2018).                           Commun. 10, 530 (2019).
+36  H. Liu and G. Khaliullin, “Pseudospin exchange interac-                      55  N.  D.  Patel  and  N.  Trivedi,  “Magnetic  ﬁeld-induced  in-
+   tions in d7 cobalt compounds:  Possible realization of the                       termediate quantum spin liquid with a spinon Fermi sur-
+   Kitaev model,” Phys. Rev. B 97, 014407 (2018).                                   face,” Proc. Natl. Acad. Sci. U.S.A. 116, 12199 (2019).
+37  R. Sano, Y. Kato,   and Y. Motome, “Kitaev-Heisenberg                        56  P. Giannozzi, O. Andreussi, T. Brumme, O. Bunau, M. B.
+   hamiltonian for high-spind7 Mott insulators,” Phys. Rev.                         Nardelli, M. Calandra, R. Car, C. Cavazzoni, D. Ceresoli,
+   B 97, 014408 (2018).                                                             M. Cococcioni,  N. Colonna,  I. Carnimeo,  A. Dal Corso,
+38  J.-Q.  Yan,  S.  Okamoto,  Y.  Wu,  Q.  Zheng,  H.  D.  Zhou,                   S.  de  Gironcoli,  P.  Delugas,  R.  A.  DiStasio  Jr.,  A.  Fer-
+   H. B. Cao,  and M. A. McGuire, “Magnetic order in sin-                           retti,  A.  Floris,  G.  Fratesi,  G.  Fugallo,  R.  Gebauer,
+   gle  crystals  of  ions  Na3Co2SbO6  with  a  honeycomb  ar-                     U. Gerstmann,  F. Giustino,  T. Gorni,  J. Jia,  M. Kawa-
+   rangement of 3d7 Co2+,” Phys. Rev. Materials 3, 074405                           mura,  H.-Y. Ko,  A. Kokalj,  E. K¨u¸u¨ukbenli,  M. Lazzeri,
+   (2019).                                                                          M.  Marsili,  N.  Marzari,  F.  Mauri,  N.  L.  Nguyen,  H.-
+39  W. Yao and Y. Li, “Ferrimagnetism and anisotropic phase                         V.  Nguyen,  A.  Otero  de-la  Roza,  L.  Paulatto,  S.  Ponc,
+   tunability  by  magnetic  ﬁelds  in  Na2Co2TeO6,”   (2019),                      D. Rocca, R. Sabatini, B. Santra, M. Schlipf, A. P. Seit-
+   arXiv:cond-mat.str-el/1908.09427.                                                sonen, A. Smogunov, I. Timrov, T. Thonhauser, P. Umari,
+40  R. Zhong, T. Gao, N. P. Ong,  and R. J. Cava, “Weak-ﬁeld                        N. Vast, X. Wu,   and S. Baroni, “Advanced capabilities
+   induced  nonmagnetic  state  in  a  co-based  honeycomb,”                        for  materials  modelling  with  quantum  ESPRESSO,”  J.
+   (2019), arXiv:cond-mat.str-el/1910.08577.                                        Phys.:  Condens. Matter 29, 465901 (2017).
+41  J.  G.  Rau  and  M.  J.  P.  Gingras,  “Frustration  and                    57  C. Hartwigsen, S. Goedecker,  and J. Hutter, “Relativistic
+   anisotropic  exchange  in  ytterbium  magnets  with  edge-                       separable dual-space gaussian pseudopotentials from h to
+                                                                                                                                                          22
+
+   rn,” Phys. Rev. B 58, 3641 (1998).                                                 ground state,” Phys. Rev. B 92, 235119 (2015).
+58  J. P. Perdew and Alex Zunger, “Self-interaction correction                    75  Y. Hinatsu and N. Edelstein, “Electron paramagnetic res-
+   to  density-functional  approximations  for  many-electron                         onance  spectrum  of  Pr4+  in  BaCeO3,”  J.  Solid  State
+   systems,” Phys. Rev. B 23, 5048 (1981).                                            Chem. 112, 53 (1994).
+59  P. E. Bl¨ochl, “Projector augmented-wave method,” Phys.                       76  M. N. Popova, S. A. Klimin, B. Z. Malkin, L. A. Kasatk-
+   Rev. B 50, 17953 (1994).                                                           ina, G. Cao,  and J. Crow, “Crystal ﬁeld and spectrum of
+60  Note  that  diﬀerent  types  of  the  pseudopotentials  were                      Pr4+ in BaPrO3,” Phys. Lett. A 223, 308 (1996).
+   adopted in the previous study forA=Li and Na in Ref. 49                        77  J. K. Lang,  Y. Baer,   and P. A. Cox, “Study of the 4f
+   because of the technical reasons.                                                  and valence band density of states in rare-earth metals.
+61  K. Persson, “Materials data on Rb2CeO3 (sg:12) by ma-                             II.  experiment  and  results,”  J.  Phys.  F:  Met.  Phys. 11,
+   terials project,”  (2014).                                                         121 (1981).
+62  U. von Barth and A. C. Pedroza, “The cohesive energy                          78  W. T. Carnall, P. R. Fields,  and K. Rajnak, “Electronic
+   and charge-density form factors of beryllium as a test on                          energy levels in the trivalent lanthanide aquo ions. I. Pr3+,
+   the  Langreth–Perdew–Mehl  approximation,”  Phys.  Scr.                            Nd3+, Pm3+, Sm3+, Dy3+, Ho3+, Er3+, and Tm3+,” J.
+   32, 353 (1985).                                                                    Chem. Phys. 49, 4424 (1968).
+63  H.  J.  Monkhorst  and  J.  D.  Pack,  “Special  points  for                  79  S. V. J. Lakshman and S. Buddhudu, “Optical absorption
+   Brillouin-zone   integrations,”   Phys.   Rev.   B  13,   5188                     spectrum of PrCl3 complexes in solution,” J. Phys. Chem.
+   (1976).                                                                            Solids 43, 849 (1982).
+64  A. A. Mostoﬁ, J. R. Yates, G. Pizzi, Y.-S. Lee, I. Souza,                     80  W. T. Carnall,  G. L. Goodman,  K. Rajnak,   and R. S.
+   D.  Vanderbilt,    and  N.  Marzari,  “An  updated  version                        Rana,  “A  systematic  analysis  of  the  spectra  of  the  lan-
+   of  wannier90:   A  tool  for  obtaining  maximally-localised                      thanides doped into single crystal LaF3,” J. Phys. Chem.
+   Wannier functions,” Comput. Phys. Commun. 185, 2309                                Solids 90, 3443 (1989).
+   (2014).                                                                        81  H. Ogasawara, A. Kotani, R. Potze, G. A. Sawatzky,  and
+65  S. Kern, C.-K. Loong,   and G. H. Lander, “Crystal-ﬁeld                           B. T. Thole, “Praseodymium 3d- and 4d-core photoemis-
+   transitions in f-electron oxides,” Phys. Rev. B 32, 3051                           sion spectra of Pr2O3,” Phys. Rev. B 44, 5465 (1991).
+   (1985).                                                                        82  B¨orje  Johansson,  “Energy  position  of  4f  levels  in  rare-
+66  V.  I.  Anisimov,  I.  V.  Solovyev,  M.  A.  Korotin,  M.  T.                    earth metals,” Phys. Rev. B 20, 1315 (1979).
+   Czy˙zyk,  and G. A. Sawatzky, “Density-functional theory                       83  J.        F.        Herbst        and        J.        W.        Wilkins,
+   and NiO photoemission spectra,” Phys. Rev. B 48, 16929                             Handbook on the Physics and Chemistry of Rare Earths
+   (1993).                                                                            (Elsevier Science, 1987).
+67  V. I. Anisimov, F. Aryasetiawan,  and A. I. Lichtenstein,                     84  B. R. Judd and I. Lindgren, “Theory of Zeeman eﬀect in
+   “First-principles  calculations  of  the  electronic  structure                    the  ground  multiplets  of  rare-earth  atoms,”  Phys.  Rev.
+   and spectra of strongly correlated systems:  the LDA+U                             122, 1802 (1961).
+   method,” J. Phys.:  Condens. Matter 9, 767 (1997).                             85  A.  J.  Freeman  and  R.  E.  Watson,  “Theoretical  investi-
+68  As  regards  the  linear  transformation  between  spheri-                        gation of some magnetic and spectroscopic properties of
+   cal  and  cubic  harmonic  bases,  refer  to  K.  Takegahara,                      rare-earth ions,” Phys. Rev. 127, 2058 (1962).
+   Y. Aoki,  and A. Yanase, “Slater-Koster tables forf elec-                      86  M.  Diviˇs  and  J.  Rusz,  “Calculation  of  crystal  ﬁeld  for
+   trons,” J. Phys. C: Solid St. Phys. 13, 583 (1980).                                PrO2,” J. Magn. Magn. Mater. 290-291, 1015 (2005).
+69  I.  Dzyaloshinsky,  “A  thermodynamic  theory  of  ”weak”                     87  P. Larson, W. R. L. Lambrecht, A. Chantis,  and M. van
+   ferromagnetism  of  antiferromagnetics,”  J.  Phys.  Chem.                         Schilfgaarde, “Electronic structure of rare-earth nitrides
+   Solids 4, 241 (1958).                                                              using the LSDA+U approach: Importance of allowing 4f
+70  T.  Moriya,  “Anisotropic  superexchange  interaction  and                        orbitals to break the cubic crystal symmetry,” Phys. Rev.
+   weak ferromagnetism,” Phys. Rev. 120, 91 (1960).                                   B 75, 045114 (2007).
+71  We note that the Li and Na cases slightly deviate from                        88  F.  Tran,   J.  Schweifer,   P.  Blaha,   K.  Schwarz,     and
+   the systematic change, presumably due to the use of a dif-                         P. Nov´ak, “PBE+U calculations of the Jahn-Teller eﬀect
+   ferent type of the pseudopotential for the alkali metals49.                        in PrO2,” Phys. Rev. B 77, 085123 (2008).
+   See also the footnote in Ref. 60.                                              89  Z. P. Yin and W. E. Pickett, “Rare-earth–boron bonding
+72  S. K. Choi, R. Coldea, A. N. Kolmogorov, T. Lancaster,                            and 4f  state trends inRB4  tetraborides,” Phys. Rev. B
+   I.  I.  Mazin,  S.  J.  Blundell,  P.  G.  Radaelli,  Y.  Singh,                   77, 035135 (2008).
+   P.  Gegenwart,  K.  R.  Choi,  S.-W.  Cheong,  P.  J.  Baker,                  90  H. Jiang, R. I. Gomez-Abal, P. Rinke,   and M. Scheﬄer,
+   C. Stock,   and J. Taylor, “Spin waves and revised crys-                           “Localized and itinerant states in lanthanide oxides united
+   tal structure of honeycomb iridate Na2IrO3,” Phys. Rev.                            by GW@LDA+U,” Phys. Rev. Lett. 102, 126403 (2009).
+   Lett. 108, 127204 (2012).                                                      91  F. Zhou and V. Ozoli¸nˇs, “Obtaining correct orbital ground
+73  H. Gretarsson, J. P. Clancy, X. Liu, J. P. Hill, E. Bozin,                        states  in f-electron  systems  using  a  nonspherical  self-
+   Y.  Singh,  S.  Manni,  P.  Gegenwart,  J.  Kim,  A. H.  Said,                     interaction-corrected  LDA + U  method,”  Phys.  Rev.  B
+   D. Casa, T. Gog, M. H. Upton, H.-S. Kim, J. Yu, V. M.                              80, 125127 (2009).
+   Katukuri,  L.  Hozoi,  J.  van  den  Brink,   and  Y.-J.  Kim,                 92  F.  Nilsson,  R.  Sakuma,   and  F.  Aryasetiawan,  “Ab  ini-
+   “Crystal-ﬁeld splitting and correlation eﬀect on the elec-                         tio  calculations  of  the  Hubbard U   for  the  early  lan-
+   tronic structure ofA2IrO3,” Phys. Rev. Lett. 110, 076402                           thanides using the constrained random-phase approxima-
+   (2013).                                                                            tion,” Phys. Rev. B 88, 125123 (2013).
+74  R. D. Johnson, S. C. Williams, A. A. Haghighirad, J. Sin-                     93  N.   Lanat`a,   Y.   Yao,   C.-Z.   Wang,   K.-M.   Ho,      and
+   gleton,  V.  Zapf,  P.  Manuel,  I.  I.  Mazin,  Y.  Li,  H.  O.                   G.  Kotliar,  “Phase  diagram  and  electronic  structure  of
+   Jeschke, R. Valent´ı,   and R. Coldea, “Monoclinic crystal                         praseodymium and plutonium,” Phys. Rev. X 5, 011008
+   structure  of α−RuCl3  and  the  zigzag  antiferromagnetic                         (2015).
+                                                                                                                                                          23
+
+
+ 94  B. Huang, “4f  ﬁne-structure levels as the dominant error                        ﬁeld-induced quantum spin-liquid states in honeycombα-
+    in the electronic structures of binary lanthanide oxides,”                        RuCl3,” Sci. Rep. 6, 37925 (2016).
+    J. Comput. Chem. 37, 825 (2016).                                             107  A. Glamazda, P. Lemmens, S.-H. Do, Y. S. Choi,  and K.-
+ 95  I.  L.  M.  Locht,  Y.  O.  Kvashnin,  D.  C.  M.  Rodrigues,                    Y. Choi, “Raman spectroscopic signature of fractionalized
+    M. Pereiro, A. Bergman, L. Bergqvist, A. I. Lichtenstein,                         excitations in the harmonic-honeycomb iridatesβ- andγ-
+    M. I. Katsnelson, A. Delin, A. B. Klautau, B. Johansson,                          Li2IrO3,” Nat. Commun. 7, 12286 (2016).
+    I.  Di  Marco,   and  O.  Eriksson,  “Standard  model  of  the               108  A.  Banerjee,  J.  Yan,  J.  Knolle,  C.  A.  Bridges,  M.  B.
+    rare earths analyzed from the HubbardI approximation,”                            Stone, M. D. Lumsden, D. G. Mandrus, D. A. Tennant,
+    Phys. Rev. B 94, 085137 (2016).                                                   R. Moessner,  and S. E. Nagler, “Neutron scattering in the
+ 96  J. G. Rau, E. K.-H. Lee,   and H.-Y. Kee, “Generic spin                          proximate  quantum  spin  liquid α-RuCl3,”  Science 356,
+    model  for  the  honeycomb  iridates  beyond  the  Kitaev                         1055 (2017).
+    limit,” Phys. Rev. Lett. 112, 077204 (2014).                                 109  S.-H. Do, S.-Y. Park, J. Yoshitake, J. Nasu, Y. Motome,
+ 97  J. Rusnaˇcko, D. Gotfryd,  and J. Chaloupka, “Kitaev-like                        Y.-S. Kwon, D. T. Adroja, D. J. Voneshen, K. Kim, T.-H.
+    honeycomb  magnets:  Global  phase  behavior  and  emer-                          Jang,  J.-H. Park,  K.-Y. Choi,   and S.-D. Ji, “Majorana
+    gent eﬀective models,” Phys. Rev. B 99, 064425 (2019).                            fermions  in  the  Kitaev  quantum  spin  system α-RuCl3,”
+ 98  J. Chaloupka and G. Khaliullin, “Magnetic anisotropy in                          Nat. Phys. 13, 1079 (2017).
+    the  Kitaev  model  systems  Na2IrO3  and  RuCl3,”  Phys.                    110  K. R. Lea, M. J. M. Leask,   and W. P. Wolf, “The rais-
+    Rev. B 94, 064435 (2016).                                                         ing of angular momentum degeneracy off-electron terms
+ 99  E. K.-H. Lee and Y. B. Kim, “Theory of magnetic phase                            by cubic crystal ﬁelds,” J. Phys. Chem. Solids 23, 1381
+    diagrams  in  hyperhoneycomb  and  harmonic-honeycomb                             (1962).
+    iridates,” Phys. Rev. B 91, 064407 (2015).                                   111  K.  W.  Kr¨amer,  H.  U.  G¨udel,  B.  Roessli,  P.  Fischer,
+100  W. G. F. Kr¨uger, M. Vojta,  and L. Janssen, “Heisenberg-                        A. D¨onni, N. Wada, F. Fauth, M. T. Fernandez-Diaz,  and
+    Kitaev models on hyperhoneycomb and stripyhoneycomb                               T. Hauss, “Noncollinear two- and three-dimensional mag-
+    lattices:  3D-2D equivalence of ordered states and phase                          netic ordering in the honeycomb lattices of ErX3  (X  =
+    diagrams,”  (2019), arXiv:cond-mat.str-el/1907.05423.                             Cl, Br, I),” Phys. Rev. B 60, R3724 (1999).
+101  V.    M.    Katukuri,    S.    Nishimoto,    V.    Yushankhai,              112  J.  D.   Thompson,   P.   A.   McClarty,   D.  Prabhakaran,
+    A.   Stoyanova,   H.   Kandpal,   S.-K.   Choi,   R.   Coldea,                    I.  Cabrera,  T.  Guidi,    and  R.  Coldea,  “Quasiparticle
+    I. Rousochatzakis, L. Hozoi,   and J. van den Brink, “Ki-                         breakdown and spin hamiltonian of the frustrated quan-
+    taev interactions betweenj = 1/2 moments in honeycomb                             tum pyrochlore Yb2Ti2O7 in a magnetic ﬁeld,” Phys. Rev.
+    Na2IrO3  are  large  and  ferromagnetic:   insights  from  ab                     Lett. 119, 057203 (2017).
+    initio quantum chemistry calculations,” New J. Phys. 16,                     113  V. Pe ¸canha Antonio,  E. Feng,  Y. Su,  V. Pomjakushin,
+    013056 (2014).                                                                    F. Demmel, L.-J. Chang, R. J. Aldus, Y. Xiao, M. R. Lees,
+102  Y.  Yamaji,   Y.  Nomura,   M.  Kurita,   R.  Arita,     and                     and T. Br¨uckel, “Magnetic excitations in the ground state
+    M.  Imada,  “First-principles  study  of  the  honeycomb-                         of Yb2Ti2O7,” Phys. Rev. B 96, 214415 (2017).
+    lattice  iridates  Na2IrO3  in  the  presence  of  strong  spin-             114  J. G. Rau, R. Moessner,   and P. A. McClarty, “Magnon
+    orbit  interaction  and  electron  correlations,”  Phys.  Rev.                    interactions   in   the   frustrated   pyrochlore   ferromagnet
+    Lett. 113, 107201 (2014).                                                         Yb2Ti2O7,” Phys. Rev. B 100, 104423 (2019).
+103  L. J. Sandilands, Y. Tian, K. W. Plumb, Y.-J. Kim,  and                     115  H.  Takahashi  and  T.  Kasuya,  “Anisotropic p-f  mixing
+    K.  S.  Burch,  “Scattering  continuum  and  possible  frac-                      mechanism explaining anomalous magnetic properties in
+    tionalized excitations inα-RuCl3,” Phys. Rev. Lett. 114,                          Ce monopnictides. II. Crystal-ﬁeld splitting in rare-earth
+    147201 (2015).                                                                    pnictides,” J. Phys. C: Solid State Phys. 18, 2709 (1985).
+104  A.  Banerjee,  C.  A.  Bridges,  J.-Q.  Yan,  A.  A.  Aczel,                116  K.   Momma   and   F.   Izumi,   “VESTA   3   for   three-
+    M.  B.  Stone  L.  Li,  G.  E.  Granroth,  M.  D.  Lumsden,                       dimensional visualization of crystal, volumetric and mor-
+    Y.  Yiu,  J.  Knolle,  S.  Bhattacharjee,  D.  L.  Kovrizhin,                     phology data,” J. Appl. Crystallogr. 44, 1272 (2011).
+    R. Moessner, D. A. Tennant, D. G. Mandrus,   and S. E.                       117  R. ˘Zitko, “SNEG – mathematica package for symbolic cal-
+    Nagler, “Proximate Kitaev quantum spin liquid behaviour                           culations with second-quantization-operator expressions,”
+    in a honeycomb magnet,” Nat. Mat. 15, 733 (2016).                                 Comp. Phys. Comm. 182, 2259 (2011).
+105  S. M. Winter, Y. Li, H. O. Jeschke,  and R. Valent´ı, “Chal-                118  M.  Kawamura,   K.  Yoshimi,   T.  Misawa,   Y.  Yamaji,
+    lenges  in  design  of  Kitaev  materials:  Magnetic  interac-                    S.  Todo,   and  N.  Kawashima,  “Quantum  lattice  model
+    tions  from  competing  energy  scales,”  Phys.  Rev.  B 93,                      solverHφ,” Comput. Phys. Commun. 217, 180 (2017).
+    214431 (2016).                                                               119  A.  J.  Freeman  and  R.  E.  Watson,  “Theoretical  investi-
+106  R. Yadav, N. A. Bogdanov, V. M. Katukuri, S. Nishimoto,                          gation of some magnetic and spectroscopic properties of
+    J. van den Brink,   and L. Hozoi, “Kitaev exchange and                            rare-earth ions,” Phys. Rev. 127, 2058 (1962).

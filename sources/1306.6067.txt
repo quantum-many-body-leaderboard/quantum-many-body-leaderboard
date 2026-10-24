@@ -1,0 +1,827 @@
+                        Phase diagram of spin- 12 J1-J2 Heisenberg model on honeycomb lattice
+
+                              Shou-Shu Gong1, D. N. Sheng1, Olexei I. Motrunich2, Matthew P. A. Fisher3
+                                  1Department of Physics and Astronomy, California State University Northridge,
+                                              2Department  of  Physics,  California  Institute  of  Technology,
+                                           3Department of Physics,  University of California,  Santa Barbara.
+
+                    We use density matrix renormalization group (DMRG) algorithm to study the phase diagram of the spin-1/2
+                 Heisenberg model on honeycomb lattice with ﬁrst (J1) and second (J2) neighbor antiferromagnetic interactions,
+                 where aZ2 spin liquid region has been proposed.  By implementing SU(2) symmetry in the DMRG code, we
+                 are able to obtain accurate results for long cylinders with width slightly over 15 lattice spacings and torus up
+                 to the sizeN  = 2× 6× 6.  With increasingJ2, we ﬁnd a N´eel phase with vanishing spin gap and a plaquette
+                 valence-bond  (PVB)  phase  with  non-zero  spin  gap.   By  extrapolating  the  square  of  the  staggered  magnetic
+                 momentm2s on ﬁnite-size cylinders to thermodynamic limit, we ﬁnd the N´eel order vanishing atJ2/J1≃ 0.22.
+                 For 0.25<J2/J1≤ 0.35, we ﬁnd a possible PVB order, which shows a fast growing PVB decay length with
+                 increasing system width. For 0.22<J2/J1 < 0.25, both spin and dimer orders vanish in thermodynamic limit,
+                 which is consistent with a possible spin liquid phase.  We present calculations of the topological entanglement
+                 entropy, compare the DMRG results with the variational Monte Carlo, and discuss possible scenarios in the
+                 thermodynamic limit for this region.
+
+                 PACS numbers: 73.43.Nq, 75.10.Jm, 75.10.Kt
+
+
+                         I.    INTRODUCTION
+
+   The quantum spin liquid (SL) is an enigmatic state of mat-
+ter where a spin system does not develop magnetic order or
+break  lattice  symmetries  even  at  zero  temperature  and  in-
+stead develops a topological order.1 Besides being important
+in the context of the frustrated magnetic systems,2 spin liquid
+physics may hold clues to theoretic understanding of the non-
+Fermi liquid behavior of the doped Mott materials3  and the
+high-Tc superconductivity of the strongly correlated systems.4
+The simplest SL’s are gappedZ2 states and have been explic-
+itly demonstrated to exist in many model systems including
+quantum dimer models5–7    and the kagome spin model in the
+easy axis limit.8,9    Such a SL is characterized by a Z2  topo-
+logical order,10,11     a ground state degeneracy on topologically
+non-trivial manifolds,11,12     as well as fractionalized spinon and                  FIG. 1:  Phase diagram of the spin- 1
+vison excitations.11,13,14        However, the explicit models for SL                 model forJ2≤ 0.35 obtained by our SU(2) DMRG studies.  With2 J1-J2 honeycomb Heisenberg
+phases tend to be fairly contrived and not realistic. It has been                     increasingJ2, the model has a N´eel phase forJ2 ≲ 0.22 and a PVB
+a long journey searching for the spin liquids in realistic frus-                      phase for 0.25 ≲ J2 ≲  0.35.  Between these two phases, there is
+trated spin models, particularly with spin rotational symmetry,                       a small region that exhibits no order in our calculations.  The main
+that are relevant to real magnetic materials.16–26      Experimen-                    panel shows N´eel order parameterms and spin gap ∆ET . The inset
+tally, some frustrated antiferromagnetic materials indeed can                         is the sketch of theJ1-J2  honeycomb lattice on aN  = 2×L1×
+resist forming the magnetic order or breaking real space sym-                         L2  torus (here with four unit cells, L1  = L2  =  4, along the two
+metry  at  very  low  temperature,22,23,25,26            while  the  nature  of       primitive vector directions).
+such states remains to be settled.16–20,24
+   Interestingly, large scale DMRG simulations have revealed                          tem exact diagonalization (ED) calculations aroundJ2/J1 =
+possible  SL  phases  on  kagome27–29      and J1-J2  square  lat-                    0.2.40 The Hamiltonian of the model is
+tice  Heisenberg  models.30,31      A  recent  determinantal  quan-                                             ∑                      ∑
+tum  Monte-Carlo  study  has  suggested  the  existence  of  a                                       H =J1           Si· Sj +J2              Si· Sj,              (1)
+spin  liquid  phase  in  the  half  ﬁlled  Hubbard  model  on  hon-                                             ⟨i,j⟩                 ⟨⟨i,j⟩⟩
+eycomb  lattice;32  however,  a  later  work  appears  to  contra-
+dict this conclusion.33–35      The related spin models on honey-                     where  the  sums⟨i,j⟩  and⟨⟨i,j⟩⟩  run  over  all  the  nearest-
+comb lattice have also attracted intensive attention.38–55     Slave-                 neighbor (NN) and the next nearest-neighbor (NNN) bonds,
+particle approaches43–45      and variational Monte Carlo (VMC)                       respectively.    It  has  been  established  that  there  is  a  N´eel
+simulations46 have proposed a gapped SL in the spin- 12 J1-J2                         state  on  the  small J2  side  (J2  ≲  0.2J1)39,40,45,50,51                and  a
+Heisenberg model and have found relatively low variational                            staggered  valence-bond  (SVB)  phase  on  the  large J2  side
+energy  close  to  the  exact  energy  obtained  from  small  sys-                    (J2 & 0.4J1).38,39,41,45,46,48                   In the intermediateJ2 region, the
+                                                                                                                                                            2
+
+plaquette  valence-bond  (PVB)  state  appears  strongly  in  the
+presence of an additional antiferromagnetic third NN coupling
+J3.38,40     However,  the fate of the quantum state for interme-
+diateJ2/J1≃ 0.2 withoutJ3 coupling remains challenging,
+where competing possibilities include a quantum SL, the PVB
+state, or a quantum critical point between the N´eel and PVB
+states.
+   Very recently, DMRG approach has been applied to study
+theJ1-J2 honeycomb model.54,55     By extrapolating the ﬁnite-
+size spin and dimer orders measured in the bulk of systems
+with fully open boundaries, Ref.54ﬁnds the N           ´eel order van-
+ishing atJ2/J1≃ 0.22, the PVB phase for 0.22 ≲ J2/J1 ≲
+0.35, and the SVB phase for J2/J1 &  0.35.  Both the tran-
+sitions are suggested to be continuous and thus indicate the
+deconﬁned quantum criticality.60 On the other hand, Ref.55
+systematically  measures  bulk  properties  using  cylinder  sys-
+tems with open ends, and the authors determine the N´eel or-
+der vanishing atJ2/J1≃ 0.26.  For 0.26 ≲ J2/J1 ≲ 0.36,
+the PVB correlation length grows faster or close to linear with
+cylinder width,  and it is suggested that the system is either
+quantum critical or has weak PVB order.  ForJ2/J1 & 0.36,
+Ref.55also ﬁnds the SVB phase. Both works54and55sug-
+gest the PVB phase for 0.26 ≲J2/J1 ≲ 0.35, but there is still
+a discrepancy for 0.22 < J2/J1 < 0.26, where a gapped SL
+had been proposed.43–46
+   In  this  article,  we  study  the J1-J2  Heisenberg  model  on               FIG. 2: Cylinders used in DMRG calculations.  (a) ZC4-12 cylinder
+the honeycomb lattice using the DMRG61 with spin rotational                      with zigzag open edges. It has 4 unit cells along the zigzag direction
+SU(2) symmetry62  and the VMC simulations.  We set J1  as                        (Wy  = 4√3) and 12 columns along the axis direction.  (b) AC4-12
+energy  scale,  and  lattice  spacing  between  nearest-neighbor                 cylinder with armchair open edges. It has 4 vertical bonds along the
+sites as length scale. By extrapolating the staggered magnetic                   armchair direction (Wy = 6) and 12 armchair columns along the axis
+momentm2s  on cylinder systems with width slightly over 15                       direction.  (c) Trimmed ZC cylinder tZC6-18 with trimmed zigzag
+lattice spacings (while the largest sizes are 10 and 12 lattice                  edges. It has 6 unit cells along the zigzag direction (Wy = 6√3) and
+spacings in Refs.54and55, respectively), we ﬁnd the N                      ´eel  18 columns along the axis direction.
+order vanishing atJ2≃ 0.22.  To determine the PVB order,
+we study the width dependence of the PVB correlation length
+on the cylinder systems, where open boundaries break trans-                      making it also possible that the system has a N´eel-PVB decon-
+lational symmetry. We ﬁnd the PVB correlation length grows                       ﬁned quantum critical point with larger length scale beyond
+strongly with increasing system width for 0.25<J2 ≲ 0.35.                        our system length.
+In the widest cylinders with width larger than 15 lattice spac-                      By employing SU(2) symmetry in DMRG, we can get ac-
+ings, we observe the long-range PVB order emerging with en-                      cess to larger system sizes with high accuracy, which is essen-
+ergy lower than the uniform state.  The N´eel and PVB phases                     tial for distinguishing a SL from competing weakly ordered
+are  consistent  with  the  gapless  and  gapped  spin  excitations              states. For cylinder systems with open edge, the U(1) DMRG
+extrapolated from the ﬁnite-size spin gaps on torus.                             is usually limited to the system width of 12 lattice spacings by
+   The spin and dimer orders vanish in 2D limit through ﬁnite-                   keeping 6000∼ 8000 states.54,55     In our calculations, we study
+size  scaling  for  0.22 < J2 ≤  0.25.   To  check  the  possi-                  the cylinder systems with width more than 15 lattice spacings
+ble  topological  nature  of  the  state,  we  obtain  the  topologi-            by keeping up to 24000 states to obtain the converged results.
+cal  entanglement  entropy  (TEE) γ  by  extrapolating  the  en-                 With the SU(2)-symmetric implementation, we can also study
+tanglement entropy (EE).56–58      It is found that γ ≃  0.51 for                the torus system up to the size 2× 6× 6 by keeping more than
+0.22 < J2≤ 0.25.  ForJ2  = 0.3, γ≃ 0.66 is close to the                          40000 states. The truncation error is controlled below 10−6 in
+TEE value of ln 2 ofZ2 SL, even though the system has PVB                        most cases, which gives well converged results.
+order; this indicates that the TEE is not a conclusive measure                       We study the model on both torus and cylinder.  The torus
+on our system sizes.                                                             geometry is denoted asN = 2×L1×L2, whereL1 andL2 are
+   We also compare the spin and dimer correlations atJ2  =                       the number of unit cells along the two primitive vector direc-
+0.25 on theN = 2× 6× 6 torus with VMC wave functions at                          tions (the inset of Fig.1shows the    N = 2× 4× 4 torus). For
+different parameters, and ﬁnd a striking match from aZ2 SL                       cylinder geometry, we study the systems with three different
+trial wave function. While our ﬁnite size results are consistent                 boundaries.  The ﬁrst cylinder [Fig.2(a)] has the zigzag open
+with a SL phase, we are challenged by the fact that spin liquid                  edges and is denoted as ZCm-n cylinder, wherem is the num-
+is not likely to have a continuous transition to N´eel phase,64                  ber of two-site unit cells along the column andn is the number
+                                                                                                                                                            3
+
+                                                                                 about 5× 10−6.   To  eliminate  boundary  effects,  we  calcu-
+                                                                                 late the bulk energy on cylinder by subtracting the energies
+                                                                                 of two samples with different lengths.59 By extrapolating the
+                                                                                 energies in Fig.3, we estimate  −0.4378 and−0.4255 as the
+                                                                                 thermodynamic limit ground-state energies forJ2 = 0.25 and
+                                                                                 0.3, respectively. The latter value is consistent with the result
+                                                                                 in Ref.55.
+                                                                                    The  remainder  of  the  paper  is  organized  as  follows.   In
+                                                                                 Sec. II, we calculate the square of the staggered magnetic mo-
+                                                                                 ment,m2s, on ZC cylinder for variousJ2 and extrapolate the
+                                                                                 ﬁnite-size data to thermodynamic limit to estimate the N´eel
+                                                                                 order.  In Sec. III, we study the PVB order on AC, ZC, and
+                                                                                 tZC  cylinders  from  the  N´eel  to  the  intermediate  region.   In
+                                                                                 Sec. IV, we obtain the spin gaps on ﬁnite-size torus and ex-
+                                                                                 trapolate to thermodynamic limit.  We study the EE and TEE
+                                                                                 in Sec. V to check the possible topological nature for the in-
+FIG. 3:  Circumference dependence of the ground-state energy per                 termediate region. In Sec. VI, we compare the DMRG results
+site forJ2 = 0.25 and 0.3 on torus, AC, tZC, and ZC cylinders. Each              with  the  variational  wave  functions  based  on  slave-fermion
+data  is  obtained  by  keeping  the  optimal  states  to  our  computation      approach, while in Sec. VII we discuss our results and sum-
+limit. The truncation errors are below 1×10−6 except for the largest             marize.   In  AppendixA,  we  also  present  variational  results
+size at J2  =  0.25 (tZC9 cylinder with Wy ≃  15.588), where the                 using Schwinger Boson construction.
+error is about 5× 10−6. The dashed lines indicate the extrapolations
+of the energies, which give−0.4378 and−0.4255 for J2  =  0.25
+and 0.3, respectively.
+                                                                                                       II.    MAGNETIC ORDER
+
+of columns along the axis direction.  The ZCm-n cylinder is                         The N´eel order on honeycomb lattice is described by the
+equivalent to the XC2m cylinder in Ref.55.  DMRG calcu-                          staggered  magnetic  moment m2s  = ⟨(∑i(−1)iSi)2⟩/N 2.40
+lations in our studied region give the uniform states without                    We obtain the staggered magnetic moment by calculating the
+translational  symmetry  breaking  in  ZC  cylinder.   To  induce                spin-spin correlation functions on both torus and cylinder.  In
+the PVB order,  we can  change the couplings  of some edge                       Fig.4(a), we plot DMRG data on torus together with smaller
+bonds to introduce pinning force. The second cylinder ACm-                       size ED data40 form2s at various system sizesN and a fewJ2
+n [Fig.2(b)] has the armchair open edges, where    m is num-                     closer to the possible transition point (around 0.2 identiﬁed by
+ber  of  unit  cells  in  the  column  direction  and  must  be  even            ED40) as a function of 1/√N. The leading 1/√N correction
+to form the periodic boundary condition in column direction;                     of  the  ﬁnite-size  scaling  is  well  satisﬁed  in  these  clusters66
+this system is equivalent to the YCm cylinder in Ref.55. AC                      through the good straight line ﬁtting to all data points with
+cylinder accommodates both the PVB and SVB orders,  and                          J2≤ 0.17.
+its edges can also select among degenerate states within each                       ForJ2 = 0.3 deep in the intermediate region, the spin cor-
+order.   The third cylinder is obtained by trimming the three                    relations decay exponentially in real space.  We can also see
+neighbor sites per six sites along the edges on the ZC cylin-                    this by examining the structure factor of the spin correlations
+der to make the lattice strongly select particular PVB state.                    between the sites in the same sublatticeSaa(⃗q) (for sublattice
+This system is denoted as tZCm-n cylinder,  where m must                         A)
+be multiple of 3 to form the periodic boundary condition in                                                        ∑
+column direction, and is shown in Fig.2(c).  In our DMRG                                   Saa(⃗q) =     1L1L2             ⟨Si· Sj⟩ei⃗q·(⃗ri−⃗rj).        (2)
+calculations,  we  use  ZC  cylinder  to  study m2s  to  determine                                              i∈A,j∈A
+the vanishing of N´eel order, and we use all three cylinders to
+study the PVB order.  To demonstrate the results of AC and                       In Figs.4(b) and4(c), we present       Saa(⃗q) forJ2  = 0.25 and
+tZC (ZC) cylinders together,  we also use the circumference                      0.3 obtained on torus. For each system, we see a peak at mo-
+Wy  to denote the geometrical width of cylinders in units of                     mentum⃗q = 0 corresponding to N´eel-like spin correlation in
+nearest-neighbor spacing.  On ACm and tZCm (ZCm) cylin-                          real space.  ForJ2 = 0.25 the peak is still growing but more
+ders,  the circumferences are Wy  =  1.5×m and√3×m,                              slowly than a linearly in N, while for J2  =  0.3 the peak is
+respectively.                                                                    saturating already at the sizeN  = 2× 5× 5, which are con-
+   To check the accuracy of our computations, we present the                     sistent with the vanishing ofms in the thermodynamic limit.
+circumference dependence of the ground-state energy per site                     The same behavior is also obtained for the structure factor of
+on torus, AC, tZC, and ZC cylinders for bothJ2 = 0.25 and                        the spin correlations between theA andB sublattices.  Such
+0.3 in Fig.3.  We obtained the data by keeping the optimal                       torus data on our sizes therefore further support that the N´eel
+states to our computation limit; the truncation errors are be-                   order is absent at least forJ2≥ 0.25.
+low 1× 10−6 except for the largest size (tZC9 cylinder with                         However,  the  torus  boundary  condition  limits  the  system
+Wy ≃  15.588) at J2  =  0.25,  where the truncation error is                     size in DMRG calculations due to larger truncation error for
+                                                                                                                                                            4
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                 FIG. 5: Structure factor of dimer-dimer correlation functions on the
+                                                                                 N = 2× 6× 6 torus for (a)J2 = 0.25 and (b)J2 = 0.3.
+
+
+                                                                                 olations of the small-size data. We therefore ﬁt the data using
+                                                                                 the formulam2s  = m2s,∞ +a/L +b/L2.  From the best ﬁts
+                                                                                 we estimate that the N´eel order vanishes atJ2≃ 0.22.  This
+                                                                                 observation is consistent with the DMRG result in Ref.54,
+                                                                                 where the ﬁnite-sizem2s are obtained on two different system
+                                                                                 samples with fully open boundaries up to the sizeL = 6. On
+                                                                                 the other hand, in Ref.55the authors estimate the 2D mag-
+                                                                                 netic order parameter by applying a staggered ﬁeld at the open
+                                                                                 ends of cylinder with optimal aspect ratio and measuring the
+                                                                                 local⟨Sz⟩ at the center of the sample. They determine that the
+                                                                                 transition occurs atJ2≃ 0.26. While both methods of extrap-
+                                                                                 olatingms,∞ are standard, they are limited by the reachable
+                                                                                 system size, and therefore the exact vanishing point of N´eel
+                                                                                 order might still be an open question.
+
+
+
+                                                                                           III.    PLAQUETTE VALENCE BOND ORDER
+
+                                                                                    To detect or exclude the possible VBS order in the interme-
+                                                                                 diate region, we can study the dimer-dimer correlation func-
+                                                                                 tion
+
+                                                                                    C(i,j),(k,l) = 4 [⟨(Si· Sj)(Sk· Sl)⟩−⟨Si· Sj⟩⟨Sk· Sl⟩]
+                                                                                                                                                          (3)
+                                                                                 in the system without lattice symmetry breaking, where (i,j)
+                                                                                 and (k,l) are NN bonds. We can also examine the correspond-
+FIG. 4: (a)m2s plotted vs 1/√N for the torus clustersN = 2×4×4,                  ing structure factors deﬁned as the Fourier transform of the
+2× 5× 4, 2× 5× 5, 2× 6× 5, and 2× 6× 6. The ED data is from                      dimer correlations, and here we consider the dimers oriented
+Ref.40.   (b),(c) Size dependence of same-sublattice spin structure              in the same direction:
+factor obtained on torus for J2  =  0.25 and 0.3, respectively.  The                                          ∑
+system sizes areN = 2×4×4, 2×5×5, and 2×6×6. (d)m2s plotted                          Daa(⃗q) =     1L1L2             C(i,j),(k,l)ei⃗q·(⃗r(i,j)−⃗r(k,l)).     (4)
+vs 1/L for the ZCL-2L cylinder withL = 4, 5, 6, 7, 8, 9.  Herem2s                                          (i,j),(k,l)
+is obtained fromN/2 spins in the middle part of the sample.
+                                                                                 On torus system, our DMRG calculations obtain the ground
+                                                                                 states without lattice symmetry breaking.  Therefore, we can
+the same number of states kept.61  Therefore,  we extend the                     study the dimer-dimer correlations. To accommodate the PVB
+system size by studying cylinder system. We choose the ZCL-                      order on torus,  both L1  and L2  must be multiples of 3.   In
+2L cylinder with system sizeN = 2× 2L×L. The magnetic                            Fig.5,  we present the dimer structure factor for    J2  =  0.25
+momentms is obtained from the spin-spin correlations of the                      and 0.3 on the 2× 6× 6 torus (this size accommodates both
+N/2 sites in the middle of sample, which effectively reduces                     the PVB and SVB orders).  For theseJ2 couplings, the dimer
+the  boundary  effect.30,65     We  calculate m2s  for  samples  with            structure factor has two weak peaks at q = (2π/3, 4π/3) and
+L = 4 to 9 and show the results in Fig.4(d).  The ﬁnite-size                     (4π/3, 2π/3) that are consistent with the possible PVB pat-
+m2s atL = 4, 5, 6 are close to the results on torus and their ex-                tern. However, it is not clear if the long-range PVB order will
+trapolations are consistent with those in Fig.4(a).  However,                    form in the large system limit. The absence of peak at q = 0
+on larger sizes the results deviate from the straight line extrap-               indicates the absence of SVB order.
+                                                                                                                                                           5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6:  The PVB bond textureBi,j  forJ2  =  0.25 on an AC6-12
+cylinder.  The red bonds with negative values have lower NN bond
+energies. Thus, the red hexagons with negative bonds could indicate
+the “resonating plaquettes.”
+
+
+   To study the PVB order on larger system sizes, we make
+the  DMRG  calculations  on  cylinder  systems.   An  effective
+method to detect dimer order on cylinder system is proposed
+in the quantum Monte Carlo study of the J-Q model on the
+square lattice63 (this model has a transition from the N´eel to
+the columnar dimer phase with changing Q coupling) and the
+DMRG study of the J1-J2  Heisenberg model on the square
+lattice.30 The idea of the method is to study the width depen-
+dence of the decay length of the dimer texture induced near a
+boundary. For the system without dimer order in the 2D limit,
+the dimer decay length might increase with growing width but
+should saturate in the thermodynamic limit, while for the sys-
+tem with dimer order, it will diverge. The DMRG calculations
+on cylinder could obtain the ground state with lattice symme-
+try breaking by making the lattice compatible with the possi-
+ble dimer order.  Thus, one could deﬁne the local dimer or-                      FIG. 7: (a) Log-linear plot ofϵi,jBi,j vs distance from boundary to
+der parameter and measure the decay of the dimer order from                      bulk forJ2 = 0.25 on AC4-12, AC6-18, and AC8-24 cylinders. The
+boundary to bulk, from which we can estimate a decay length.                     decay lengthξP  is obtained by ﬁtting the decay behavior ofϵi,jBi,j.
+To determine the PVB order on honeycomb lattice, we study                        (b) Circumference dependence of the decay length ξP  on AC4-12,
+the width dependence of the dimer decay length on the AC,                        AC6-18, and AC8-24 cylinders for variousJ2 couplings.
+tZC, and ZC cylinders.  On these systems, the local PVB or-
+der  parameter  decays  exponentially  from  boundary  to  bulk,
+from which we can estimate the dimer decay length ξP  and                        energies, and the red hexagons could indicate the “resonating
+investigate its dependence on the cylinder width.  The details                   plaquettes.” The bond textures decay from boundary to bulk.
+are discussed below.                                                                To describe the decay of bond texture, we multiply the pos-
+                                                                                 itive and negativeBi,j  byϵi,j  = 1 and−2 respectively (ap-
+                   A.    PVB order on AC cylinder                                propriate for the PVB order), and measure the decay of ver-
+                                                                                 tical bond ϵi,jBi,j  from open boundary to bulk.  Figure7(a)
+                                                                                 is  the  log-linear  plot  for  the  vertical ϵi,jBi,j  at J2  =  0.25
+   The AC cylinder with the armchair open boundaries accom-                      on  the  AC4-12,  AC6-18,  and  AC8-24  cylinders  and  shows
+modates the PVB order and can select a unique state where                        thatϵi,jBi,j decays exponentially from edge to bulk. The de-
+the hexagons on the open edges could form “resonating pla-                       cay lengthξP  increases with increasing cylinder width.  Fig-
+quettes” (the red hexagons with negative numbers in Fig.6).                      ure7(b) shows our study of the circumference dependence of
+The induced local orders can be identiﬁed by the distribution                    ξP  for variousJ2 couplings from the N´eel phase to the inter-
+of the subtracted NN bond energy, i.e. bond texture deﬁned as                    mediate region.  ForJ2 = 0.15 and 0.2 in the N´eel phase,ξP
+                                                                                 is saturated on the AC6 cylinder.  For 0.2 < J2≤ 0.25, ξP
+                       Bi,j =⟨Si· Sj⟩−eα,                          (5)           grows continuously from AC4-12 to AC8-24, but apparently
+                                                                                 more slowly than the linear increase, indicating that the dimer
+whereeα (α = 1, 2, 3) is the average of the NN bond energies                     decay lengths could be ﬁnite in the 2D limit.  ForJ2  = 0.27
+in the given bond directionα evaluated in the middle half of                     and 0.3,ξP  grows strongly with increasing width, which im-
+system.  Figure6shows the bond textures     Bi,j forJ2 = 0.25                    plies the diverging decay length in the 2D limit and PVB or-
+on an AC6-12 cylinder.  The red bonds have lower NN bond                         der.
+                                                                                                                                                            6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8: The PVB bond textureBi,j forJ2 = 0.25 on an AC10-30 cylinder. For clarity, only the left half of the lattice is shown. For this large
+size, the truncation error is about 5× 10−6 and the bond energies have some small uncertainty of±0.001.  At this accuracy, the PVB order
+vanishes in the middle of the sample.
+
+
+   For J2  =  0.25 and 0.3,  we also study the PVB order on
+the AC10-30 cylinder with circumferenceWy  = 15.  This is
+the size limit for AC cylinder in our DMRG calculations, and
+for such sizes we are no longer sure about the convergence of
+our measurements ofξP . We keep more than 20000 states for
+DMRG sweeps and obtain the results with the truncation error
+5× 10−6 forJ2 = 0.25 and 1× 10−5 forJ2 = 0.3. As shown
+in Fig.8for    J2  = 0.25, the PVB bond textures are weak in
+the bulk of system, and the ﬁtted decay length is ξP ≃  5.1.
+A linear extrapolation of theξP  for the AC10 cylinder from
+theξP  on the AC6 and AC8 cylinders in Fig.7(b) would give
+ξP  = 4.8. Although our present data is slightly larger than the
+linear extrapolation result, we expect thatξP will decrease sig-
+niﬁcantly for this system if we keep even more states, which
+is beyond our present capability. For example, when we study
+the  AC8-24  cylinder  at J2  =  0.25,  our  ﬁtted ξP  decreases
+from 4.7 to 3.8 when we increase the number of states kept                       FIG. 9:  The PVB bond texture Bi,j  for J2  =  0.27 on a tZC6-18
+from 4000 to 10000 U(1) equivalent states [the latter number                     lattice (left half of the lattice is shown). The summation of the bond
+is shown in Fig.7(b)].  From the present data, we tentatively                    textures on a hexagon with 6 negative bond textures (red bonds) is
+conclude thatJ2 = 0.25 does not have PVB order in the 2D                         denoted asE6, while that on a hexagon with 3 red bonds isE3.  We
+limit.   On  the  other  hand,  from  similar  visualization  of  the            deﬁne the PVB order parameter as the energy difference between two
+bond texture for J2  =  0.3 (not shown), we observe a long-                      neighboring such hexagons,P≡|E6−E3|.
+range PVB order that is consistent with the strong growth of
+ξP  in Fig.7(b).
+                                                                                 In the PVB state, the “resonating” hexagons have six negative
+           B.    PVB order on the trimmed ZC cylinder                            bond texturesBi,j, while the other hexagons have three neg-
+                                                                                 ative bonds.  We deﬁne the summations of the bond textures
+                                                                                 on these two kinds of hexagons as E6  and E3,  respectively
+   On the tZC cylinder, the trimmed edges can select one of                      (see Fig.9).   Therefore,  we can deﬁne the local PVB order
+the three degenerate PVB states on the ZC cylinder.  Figure9                     parameter as the difference between two adjacentE6 andE3,
+shows the bond texture for J2  =  0.27 on a tZC6-18 lattice.                     i.e. P≡|E6−E3|. To measure the decay of the PVB order,
+The  red  hexagons  with  negative  textures  at  the  boundaries                we study the order parameterP (d) along a row in the system
+strongly pin the PVB state and induce the local PVB order.                       (like the row withE6 andE3 symbols in Fig.9), where    d is
+                                                                                                                                                            7
+
+the distance of the hexagons from boundary.  We estimateξP
+by measuring the decay ofP (d) alongx direction from edge
+to bulk.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                 FIG. 11:  The PVB bond textureBi,j  forJ2  = 0.3 on the ZC6-24
+                                                                                 cylinder with pinning appropriate for the PVB order.  We show only
+                                                                                 the left half part of the lattice.   The blue dashed lines indicate the
+                                                                                 bonds with pinning couplingJpin = 0.5.
+
+
+                                                                                 ious J2  is  shown  in  Fig.10(a).     P (d)  decays  exponentially
+                                                                                 and we can estimate ξP .   In Fig.10(b),  we present the cir-
+                                                                                 cumference dependence ofξP  on the tZC3-12, tZC6-18, and
+                                                                                 tZC9-30 cylinders for variousJ2.  ForJ2 < 0.25, ξP  grows
+                                                                                 slower than the linear behavior with increasing width, while
+                                                                                 forJ2≥ 0.25,ξP  increases strongly. ForJ2 = 0.27 and 0.3,
+                                                                                 we ﬁnd the long-range PVB order emerging on the tZC9-30
+                                                                                 cylinder; Fig.10(c) illustrates the non-zero PVB order in the
+                                                                                 bulk forJ2 = 0.3. The system appears to have the PVB order
+                                                                                 forJ2 & 0.25 on the tZC cylinder, which is consistent with
+                                                                                 our observations on the AC cylinder.
+                                                                                    By comparing the PVB decay lengthξP  on the AC and tZC
+                                                                                 cylinders, we notice that the PVB order on the tZC cylinder
+                                                                                 grows faster than that on the AC cylinder on our studied ﬁ-
+                                                                                 nite sizes. The AC cylinder accommodates both the PVB and
+                                                                                 competing SVB orders, which might suppress the PVB order.
+                                                                                 On the other hand, the tZC cylinder frustrates the SVB order
+                                                                                 and at the same time provides strong seed for the PVB order at
+                                                                                 the edges, and this might enhance the PVB order throughout.
+                                                                                 Thus, the PVB order might also be overestimated on the tZC
+                                                                                 cylinder aroundJ2 = 0.25.
+
+
+
+                                                                                                     C.    PVB order on ZC cylinder
+
+                                                                                    Finally,  we  summarize  our  data  on  cylinder  with  zigzag
+                                                                                 edges. To lift the degeneracy of the PVB state on the ZC cylin-
+                                                                                 der, we can modify the bonds near the open boundaries to pin
+FIG. 10:  (a) Log-linear plot ofP (d) on the tZC9-30 lattice for var-            unique local PVB order.  A simple way is to reduce the NN
+ious J2  couplings.  (b) Circumference dependence of decay length                coupling toJpin <J1 for selected bonds–namely, each in ev-
+ξP  on the tZC3-12, tZC6-18, and tZC9-30 cylinders for variousJ2                 ery three bonds–along the zigzag boundaries at both left and
+couplings. ForJ2 = 0.27 and 0.3 on tZC9-30 cylinder, the systems                 right ends of ZC cylinder. Figure11shows the PVB bond tex-
+have long-range PVB order and thusξP  is divergent. (c) Real-space               ture forJ2  = 0.3 on the ZC6-24 cylinder where we reduced
+decay ofP (d) forJ2  = 0.3 on the tZC9-30 cylinder showing bulk                  the  NN  coupling  of  the  dashed  blue  bonds  to Jpin  =  0.5,
+PVB order.                                                                       which induces the local PVB order and selects unique PVB
+                                                                                 pattern in the system.
+   The log-linear plot ofP (d) on the tZC9-30 cylinder for var-                     The PVB order parameter on ZC cylinder can be deﬁned as
+                                                                                                                                                          8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 12: Log-linear plot of PVB order on the ZC cylinder with PVB-              FIG. 13:  Spin gap obtained from torus.  (a) AtJ2  = 0.1 and 0.15,
+pinningJpin = 0.5 as in shown Fig.11for    J2 = 0.25 and 0.3.                   the spin gaps are extrapolated to zero as ∆ET,N =α/N−β/N3/2
+                                                                                from the samplesN = 2× 3× 3, 2× 4× 3, 2× 4× 4, 2× 5× 4,
+                                                                                2× 5× 5, and 2× 6× 5. (b) AtJ2 = 0.25 and 0.3, the spin gaps are
+that on tZC cylinder. In Fig.12, we present the log-linear plot                 extrapolated to ﬁnite values as ∆ET,N = ∆ET,∞ +α/N +β/N2
+of the PVB order on the ZC6-24 and ZC9-30 cylinders with                        from the larger samplesN = 2×4×4, 2×5×4, 2×5×5, 2×6×5,
+Jpin = 0.5 forJ2 = 0.25 and 0.3. We study different ZCm-n                       and 2× 6× 6.
+cylinders with ration/m between 3 and 4 (the decay length is
+almost the same for ﬁxedm). ForJ2 = 0.25, we ﬁnd the de-
+cay lengths on the ZC6 (ξP≃ 3.1) and ZC9 (ξP≃ 5.9) cylin-
+ders consistent with those on the tZC cylinders in Fig.10(b).                   that these data can be extrapolated to zero quite well using
+For J2  =  0.3, ξP ≃  6.0 for the ZC6-24 cylinder,  close to                    the ﬁrst two terms in the 1/√N expansion ∆ET,N =α/N−
+5.2 on the tZC6 cylinder.  On the ZC9-30 cylinder,  we ﬁnd                      β/N 3/2+O(1/N 2),38,66    which is expected for the N´eel phase.
+that the obtained state is sensitive to the number of optimal                      For J2  =  0.25,  the  size  dependence  of  the  gap  changes
+states and sweep steps.   By keeping about 16000 states,  we                    substantially.  The gaps at smallerN  are near constant which
+obtain a uniform state in the bulk of the system with the de-                   could  be  consistent  with  a  lattice-symmetry-broken  state;
+cay length a bit smaller than that of ZC6-24, but after keeping                 however,  at  larger  sizes  (N  =  32  to N  =  72),  they  drop
+more than 20000 states and increasing the number of sweeps,                     withN but have a trend of saturating toward a ﬁnite value. In
+the ground-state energy is reduced and a strong PVB pattern
+emerges.                                                                        Fig.13(b), we ﬁt the ﬁnite-size gaps from larger system sizes
+   From  the  measurements  of  the  width  dependence  of  the                 by the formula ∆ET,N  = ∆ET,∞ +α/N +β/N 2, and ﬁnd
+PVB decay length ξP  on different cylinders with circumfer-                     non-zero spin gap in the thermodynamic limit forJ2 = 0.25
+ence as large asWy  = 15, we ﬁnd that the PVB order van-                        and 0.3. The ﬁnite spin gap atJ2 = 0.3 is consistent with the
+ishes in the region 0.22 < J2≤ 0.25, but grows strongly for                     PVB order.  For 0.22 < J2 < 0.25, it is hard to identify the
+J2 > 0.25. Our observations of the PVB order are close to the                   size of the spin gap from the extrapolations of our ﬁnite-size
+DMRG results in Ref.55.                                                         data, which suggests either a small or vanishing gap.
+
+                                                                                   The above DMRG results show that the magnetic and PVB
+                            IV.    SPIN GAP                                     orders are vanished for 0.22 < J2≤  0.25, which could be
+                                                                                consistent with the observation of a spin liquid. For a gapped
+                                                                                SL in this region, our DMRG measurements would suggest a
+   In the N´eel phase with broken SU(2) symmetry,  we have                      continuous transition from the N´eel to gapped SL.54 Although
+gapless  Goldstone  modes,  and  consequently  the  spin  gap                   there are some new theories suggesting such a transition,43,67
+should vanish, while in the PVB phase the spin gap appears                      the  conventional  viewpoint  is  that  the  collinear  N´eel  order
+due to the broken translational symmetry.  Spin gap has been                    is not  connected to SL  through continuous transition  in 2D
+studied by U(1) DMRG in fully open system54  and cylinder                       system.64  On the other hand, a very recent Quantum Monte
+system,55 both of which ﬁnd the non-zero spin gap in the in-                    Carlo  study68  of  a  honeycomb  J-Q  model  found  a  continu-
+termediate coupling regime.  Here we study the spin gap on                      ous transition from the N´eel to the PVB phase and proposed
+torus system,  which is free from the edge excitations in the                   a “deconﬁned quantum criticality” scenario (although in gen-
+open boundary.                                                                  eral such a transition could also be discontinuous). Therefore,
+   Figure13(a) shows the ﬁnite-size spin gaps for      J2  =  0.1               our proposal of spin liquid in this region can be challenged by
+and 0.15  for  different  torus  sizes  from N  =  2× 3× 3  to                  other possibilities like the deconﬁned quantum criticality with
+2× 6× 5 with 2D-like clusters. The ﬁnite size scaling shows                     long correlation length.
+                                                                                                                                                            9
+
+                                                                                 highly desired, particularly for such a non-Braivais lattice sys-
+                                                                                 tem where a trivial insulator may exist without breaking any
+                                                                                 symmetry.36,37     Recently,  a  number  of  topologically  ordered
+                                                                                 states have been identiﬁed from the TEE by extrapolating the
+                                                                                 EE  of  the  minimum  entropy  state  (MES)  on  long  cylinders
+                                                                                 through DMRG calculations.58 It is suggested that this method
+                                                                                 should be efﬁcient when all the correlation lengths are short
+                                                                                 compared with cylinder width,  and the DMRG would favor
+                                                                                 the MES on long cylinders in this situation.58
+                                                                                    We obtain the EE on cylinders by making a cut for subsys-
+                                                                                 tems in the middle of lattice along the vertical direction.  We
+                                                                                 scale the EE to largeL1 limit for each circumference on both
+                                                                                 AC and tZC cylinders to obtain the EE of the possible MES,
+                                                                                 and plot the circumference dependence of the resulting Von
+                                                                                 Neumann entropy to extrapolate the TEE.
+                                                                                    For 0.22<J2 ≲ 0.25, the system appears to have no dimer
+                                                                                 order, and the spin correlation lengths are short on the studied
+                                                                                 sizes.  By extrapolating the EE, we obtain γ  =  0.51 in this
+                                                                                 region. As presented in Fig.14(a) for    J2 = 0.25, the best lin-
+                                                                                 ear ﬁt of the EE using data on both the AC and tZC cylinders
+                                                                                 givesγ = 0.51. If the 2D system is magnetically disordered in
+                                                                                 this region, the non-zeroγ could indicate nontrivial topologi-
+                                                                                 cal feature.  Somewhat surprisingly, for largerJ2 in the PVB
+                                                                                 phase, we obtainγ close to ln 2, which is the TEE value ofZ2
+                                                                                 SL. As shown in Fig.14(b) for    J2  =  0.3, the best linear ﬁt
+                                                                                 of the EE using data on both the AC and tZC cylinders gives
+                                                                                 γ = 0.66. A possible explanation could be that on the system
+                                                                                 sizes in Fig.14(b), the long-range PVB order does not emerge.
+                                                                                 Thus, the wavefunction in the bulk of the lattice might appear
+                                                                                 like a gapped SL, which could lead to a TEE close toZ2 SL.
+                                                                                 However, as the long-range PVB order sets in for larger sizes,
+                                                                                 the scaling of the TEE may graduate change,  which cannot
+                                                                                 be directly checked due to our simulation limit:  In DMRG
+                                                                                 calculations, we need to keep more states to converge the EE
+FIG.  14:  Circumference  dependence  of  the  entanglement  entropy             compared to ground-state energy,69 and forWy > 12 our cal-
+in  large L1  limit  measured  on  both  AC  and  tZC  cylinders  for  (a)       culations of the EE are likely not fully converged.  While our
+J2 = 0.25, and (b)J2 = 0.3. The linear extrapolations of the entan-              entropy data is well converged forWy≤ 12, TEE is still ge-
+glement entropy using data on both cylinders lead to the topological             ometry dependent as we can see from comparing the AC and
+entanglement entropyγ = 0.51 and 0.66, respectively.                             tZC cylinders (e.g., if we used only the data on the tZC cylin-
+                                                                                 ders, the linear extrapolations in Fig.14would give    γ values
+                                                                                 close to zero).
+                V.    ENTANGLEMENT ENTROPY
+
+   For  a  gapped  quantum  state  with  topological  order,  the                     VI.    COMPARISONS WITH VARIATIONAL MONTE
+topological entanglement entropyγ is proposed to character-                                                       CARLO
+ize the non-local feature of entanglement.56,57     The Renyi en-
+tropies of a subsystemA with density matrixρA are deﬁned                            As a test of possible SL for 0.22<J2≤ 0.25, we compare
+asSn  = (1−n)−1 ln(TrρnA), and the Von Neuman entropy                            the DMRG results against VMC calculations using so-called
+is  deﬁned  as n →  1  limit  of  the  Renyi  entropy.   For  such               Sublattice Pairing State (SPS)44,46     constructed as follows. We
+a state with topological order,  the Renyi entropies have the                    use slave fermion representation of spins, Si =  1
+formSn  = αL−γ, whereL is the boundary of the subsys-                            with the constraint of precisely one spinon per site.  We con-2f†iασαβfiβ,
+tem and all other terms vanish in large L limit.  Here α is a                    sider spinon mean ﬁeld with hopping and pairing70
+non-universal constant, while a positiveγ term is a correction                                                                (                       )
+to the area law of entanglement and reaches a universal value                         Hmf   = −∑          tijf†                 ∆ijf†
+determined by the total quantum dimension D of the quasi-                                                      iαfjα +∑               i↑f†j↓ + H.c.
+particle excitations of the state.56,57                                                              ij,α                  ij
+   To  establish  the  nature  of  the  ground  state  as  a  possi-                          − ∑µif†iαfiα,                                                  (6)
+ble  topologically  nontrivial  SL  state,  positive  evidences  are                              i,α
+                                                                                                                                                         10
+
+                                                                                correlations in the DMRG ground state atJ2 = 0.25 and in the
+                                                                                VMC state with|∆| = 0.125 andθ = 0.6 on theN = 2×6×6
+                                                                                torus sample.  The spinon mean ﬁeld has antiperiodic bound-
+                                                                                ary conditions in both directions, which gives the lowest trial
+                                                                                energy in this sample. Strictly speaking, this trial state breaks
+                                                                                lattice rotation symmetry because of the boundary conditions;
+                                                                                however,  we  found  that  the  anisotropy  in  bond  energies  is
+                                                                                only few percent and essentially does not affect the compar-
+                                                                                isons  with  the  DMRG.  The  agreement  between  the  DMRG
+                                                                                and VMC is striking.  Even though the wave function repre-
+                                                                                sents a gappedZ2 spin liquid with no magnetic or dimer order
+                                                                                on long distances, the spin correlations in the VMC are a bit
+                                                                                stronger than in the DMRG, and the same is true about the
+                                                                                dimer correlations.
+                                                                                    The  above  results  suggest  that  despite  fairly  strong  such
+                                                                                correlations in our DMRG measurements, they are reasonable
+                                                                                for a gappedZ2 spin liquid on such ﬁnite samples.  We have
+                                                                                chosen to presentθ = 0.6 to emphasize this point, but results
+                                                                                for a range of θ  including θ  =  0 look very similar on this
+                                                                                size (we do not see signiﬁcant difference between correlation
+                                                                                functions forθ = 0 andθ = 0.6 even up to size 2× 15× 15
+                                                                                that we studied in VMC). However,  we expect a qualitative
+                                                                                difference  between θ ⁄=  0  and θ  =  0  SPS  states  on  long
+                                                                                distances.44  Speciﬁcally,  even  though  the  spinon  dispersion
+                                                                                has a gap for allθ, the gauge structure isZ2 only whenθ⁄= 0,
+                                                                                while the gauge structure is U(1) whenθ = 0 (i.e., this case
+                                                                                is equivalent to a pure hopping ansatz).   As we further dis-
+FIG. 15:  Comparisons of DMRG and VMC results on torus for (a)                  cuss in AppendixA, we expect the U(1) ansatz to be unstable
+spin and (b) dimer correlations atJ2  = 0.25 andN  = 2× 6× 6.                   beyond mean ﬁeld and can view its appearance as suggesting
+The VMC wave function is the SPS state of Ref.44with          ∆ = 0.125         proximitity to a Valence Bond Solid. In AppendixA, we also
+andθ = 0.6 and represents aZ2 spin liquid state (VMC results look               present VMC energetics using Schwinger Boson (SB) wave
+similar for a range ofθ includingθ  = 0).  Sitesj and bonds (k,l)               functions; while the SB study is limited to only small sizes,
+are ordered in a typewriter fashion going ﬁrst in the⃗a2 direction in           we ﬁnd general agreement with the slave fermion VMC and
+Fig.1.                                                                          similar hints of proximity to a U(1) regime and VBS order. It
+                                                                                would be interesting to extend the present VMC work to in-
+                                                                                clude true VBS order directly in the wave functions and to try
+with tji   = t∗ij   and  ∆ji   =   ∆ij.     The  SPS  state  has                to match with the DMRG results on open cylinders.
+real-valued  nearest-neighbor  hopping t  and  complex-valued
+second-neighbor  pairing  with  a  speciﬁc  pattern  of  phases:
+∆ij  =|∆|eiθ  fori,j  from one sublattice of the honeycomb                                     VII.    SUMMARY AND DISCUSSION
+lattice  and  ∆ij   = |∆|e−iθ  for i,j  from  the  other  sublat-
+tice.  There are two variational parameters,|∆|/t andθ.  We                         In summary, we have studied the phase diagram of the spin-
+set µi  =  0,  which in the SPS state automatically gives one                   1/2J1-J2 Heisenberg model on honeycomb lattice by means
+spinon  per  site  on  average.   We  ﬁnd  the  mean  ﬁeld  ground              of DMRG with SU(2) symmetry and VMC. By implementing
+state and then perform Gutzwiller projection into the physical                  SU(2) symmetry in DMRG, we can study cylinder geometry
+spin Hilbert space and use this as our trial wave function. We                  with circumference slightly overWy = 15 and torus with size
+calculate the energies and various correlation functions using                  up  to 2× 6× 6.   We  compute  the  square  of  the  staggered
+standard VMC techniques.71,72                                                   magnetic moment,m2s, on both torus and ZC cylinder (from
+   Our VMC energetics study ﬁnds that forJ2≤ 0.2 the op-                        ZC4-8 to ZC9-18).  By extrapolating the ﬁnite-sizem2s to the
+timal state is essentially a “Dirac spin liquid” with|∆|≈ 0.                    thermodynamic limit, we estimate that the N´eel order vanishes
+ForJ2≥ 0.2 the optimal|∆| rises continuously, and our on-                       atJ2≃ 0.22.
+set of non-zero ∆ is different from the result in Ref.46.  Our                      In order to investigate the PVB order in the intermediate
+optimalθ tends to remain near zero, although we ﬁnd that the                    region,  we  ﬁrst  study  the  dimer-dimer  correlation  functions
+energetics is not very sensitive toθ in a range of values.  For                 and the dimer structure factor on torus up to the size 2× 6×
+example, forJ2 = 0.25 we ﬁnd that the energy is minimized                       6.  We observe two weak peaks of the dimer structure factor
+at|∆| = 0.125,θ≈ 0, but with a nearly ﬂat dependence on                         at q  =  (2π/3, 4π/3) and (4π/3, 2π/3), indicating the PVB
+θ∈ (0, 0.7).                                                                    pattern of the dimer correlations. The absence of peak at q =
+   In Figs.15(a) and15(b),  we compare the spin and dimer                       0 indicates the vanishing SVB order.  We study cylinders to
+                                                                                                                                                         11
+
+                      J2 coupling                                         Earlier results                                   Our results
+                    0≤J2 < 0.22                     N´eel phase established by ED38–40    , DMRG54,55    , et.al.           N´eel phase
+                   0.22≤J2≤ 0.26          Controversy among N´eel (DMRG55), PVB (DMRG54) and SL (VMC46)                     possible SL
+                   0.26<J2≤ 0.35        Controversy between PVB (DMRG54,55    ) and SL (Mean-ﬁeld43–45    , VMC46)          PVB phase
+
+TABLE I: Earlier results in each interval ofJ2 coupling ofJ1-J2 honeycomb model, as well as the results established by our works. We have
+found a N´eel phase forJ2 < 0.22, a PVB phase for 0.26<J2≤ 0.35. For 0.22≤J2≤ 0.26, we ﬁnd a possible SL in the system.
+
+                                                   J2 coupling         Ref.54       Ref.55      Our results
+                                                 0≤J2 < 0.22         N´eel phase  N´eel phase   N´eel phase
+                                               0.22≤J2≤ 0.26         PVB phase    N´eel phase   possible SL
+                                               0.26<J2≤ 0.35         PVB phase    PVB phase     PVB phase
+
+TABLE II: The ground states ofJ1-J2 honeycomb model from recent DMRG works. All these works have found a N´eel phase for 0≤J2 <
+0.22 and a PVB phase for 0.26<J2≤ 0.35. For 0.22≤J2≤ 0.26, a PVB54 and a N´eel55 phase have been proposed. In our work, we ﬁnd
+that the system is a SL in this region, or has a deconﬁned quantum critical point from N´eel to PVB phase atJ2≃ 0.26.
+
+
+determine the PVB order on larger sizes.  For a system with                      a Valence Bond Solid, and the VMC is not conclusive about
+even weak dimer order in the 2D limit, the PVB order decay                       the ultimate state on long distances.  From our DMRG data,
+length from open edge to bulk in cylinder geometry is found to                   the possibility of spin liquid also competes with an alterna-
+grow faster than linear with increasing width, and will diverge                  tive scenario of a quantum critical point between the N´eel and
+on large size.63 Therefore, we study the width dependence of                     PVB phases, which we are unable to exclude with our ﬁnite-
+the PVB order decay length on the AC, tZC, and ZC cylinders                      size studies.
+for variousJ2 couplings. We estimate the decay length of the                        In TablesIandII, we show earlier and recent DMRG re-
+PVB orderξP  by ﬁtting the exponential decay of PVB order                        sults of J1-J2  honeycomb model,  which have controversies
+parameter from boundary to bulk. We ﬁnd that forJ2 ≲ 0.25,                       for 0.22≤ J2≤ 0.35.  In our DMRG calculations, we have
+ξP  grows slowly and appears to saturate in the 2D limit.  For                   found N´eel order forJ2 < 0.22 and solid evidences of a weak
+J2 > 0.25,ξP grows strongly with increasing width, implying                      PVB order for 0.26 < J2≤  0.35.  In the interesting region
+a possible PVB state in the 2D limit.                                            0.22 ≤ J2 ≤  0.26,  we  exclude  the  PVB  order  clearly  by
+   We also study the spin gap on torus in both the N´eel and                     large-scale results, which indicates a SL, or a N´eel phase.55
+the intermediate regions.  ForJ2  = 0.1 and 0.15 in the N´eel                       In our search for robust spin liquid regimes, we have also
+phase,  the  ﬁnite-size  spin  gaps  are  extrapolated  to  zero  as             performed studies of the honeycombJ1-J2-J3 model with fer-
+∆ET,N  = α/N−β/N 3/2, which is the expected behavior                             romagneticJ3, complementary to the work in Ref.40which
+for the N´eel state.  ForJ2 & 0.25, the spin gaps extrapolate                    studied antiferromagneticJ3. However, we ﬁnd that the Stag-
+to ﬁnite values, which are consistent with the observed PVB                      gered  Valence  Bond  solid  becomes  very  prominent  already
+order.                                                                           for small ferromagneticJ3, leaving only a very small possi-
+   We expect that a gapped Z2  SL has a non-zero TEE. We                         ble SL regime.  We quickly ﬁnd a direct N´eel to SVB transi-
+study  the  EE  on  both  AC  and  tZC  cylinders  and  extrapo-                 tion, which moves to smallerJ2 values upon increasing|J3|.
+late  the  EE  in  the  large L1  limit  to  obtain  the  TEE  of  the           It would be interesting to look for other modiﬁcations of the
+possible  MES.  We  ﬁnd  the  TEE  value  of γ   =   0.51  for                   model that could provide robust spin liquid on the honeycomb
+0.22 ≲ J2 ≲  0.25.   For J2  =  0.3,  the TEE extrapolation                      lattice.
+gives γ  =  0.66, which is close to the TEE value of Z2  SL,
+ln 2.  However,  since for this J2  we observe the PVB order
+on larger sizes, the obtained ln 2 value from our range of sys-                                            Acknowledgments
+tem sizes may not represent a signature of topological order in
+the thermodynamic limit; instead, it could still be due to the
+ﬁnite-size effect.                                                                  We would like to thank Z.-Y. Zhu, S. White, and D. Huse
+   As a test of a possible SL for 0.22 < J2≤ 0.25, we also                       for extensive discussions of their related work.  We also ac-
+study this region by VMC simulations and directly compare                        knowledge stimulating discussions with L. Balents, B. Clark,
+the  spin  and  dimer  correlation  functions  from  DMRG  and                   H.-C. Jiang, A. Vishwanath, C.-K. Xu, and Z.-C. Gu.  S.S.G
+VMC results on torus. ForJ2 = 0.25 on the 2× 6× 6 torus,                         thanks J.-Z. Zhao for help in developing DMRG code.  This
+we ﬁnd the striking match of the DMRG results with the VMC                       research  is  supported  by  the  National  Science  Foundation
+wave function of aZ2 SL. The match of correlation functions                      through  grants  DMR-0906816  (S.S.G.  and  D.N.S.),  DMR-
+further indicates that the ground states on such ﬁnite-size sam-                 1206096 (O.I.M.), DMR-1101912 (M.P.A.F.), and by the Cal-
+ple for 0.22 < J2≤ 0.25 are consistent with aZ2 SL. How-                         tech  Institute  of  Quantum  Information  and  Matter,  an  NSF
+ever, the optimal VMC states are close to a gapped U(1) SL                       Physics Frontiers Center with support of the Gordon and Betty
+point of the SPS ansatz, which may render it unstable towards                    Moore Foundation (O.I.M. and M.P.A.F.).
+                                                                                                                                                             12
+
+   Appendix A: Summary of VMC energetics with Schwinger
+                         boson wave functions
+
+   We have also considered projected Schwinger boson (SB)
+wave  functions  using  so-called  Zero  Flux  (ZF)  state  of
+Ref.43.   Here  we  use  slave  boson  representation  of  spins,
+Si =  12b†iασαβbiβ, with the constraint of one slave boson per
+site. The Schwinger boson mean ﬁeld Hamiltonian is
+                      (                      )
+   HSB,mf =∑           Aijb†i↑b†j↓ + H.c.       −µ∑b†iαbiα.    (A1)
+                  ij                                  i,α
+
+For  simplicity,  we  only  include  SB  “pairing”  terms Aij,
+which are expected to be appropriate for the antiferromagnetic
+spin  interactions.43,73,74         We  require Aji  = −Aij  to  satisfy
+SU(2) spin invariance.   The ZF ansatz has nearest-neighbor                        FIG. 16:   Variational energies on the 2× 5× 5 torus comparing ZF
+A<ij>  = A1  for  orientations i → j  from  one  sublattice                        Schwinger boson and SPS slave fermion ansatze, together with the
+of  the  honeycomb  lattice  to  the  other.   It  also  has  second-              exact DMRG ground state energy. The Dirac spin liquid is obtained
+neighbor A<<ij>>  = A2  for  orientations  going  clockwise                        by setting ∆ = 0 in the SPS state.  The U(1) RVB state is obtained
+(counter-clockwise)  around  up  (down)  triangles  formed  by                     by settingA2  = 0 in the ZF state.  The ZF state can also realize a
+the  second-neighbor  bonds  inside  each  hexagon,  see  Fig.  3                  long-ranged RVB state and can thus provide a good approximation
+in Ref.43.  We ﬁnd the mean ﬁeld ground state and then per-                        to the N´eel state forJ2 < 0.2.  In the putative spin liquid region for
+form Gutzwiller projection into the physical Hilbert space as                      larger J2,  the optimal ZF state is a short-ranged RVB state whose
+described in Ref.75. The result is a Resonating Valence Bond                       energetics  is  very  similar  to  the  optimal  SPS  case.   Note  that  the
+(RVB) wave function with speciﬁc singlet amplitudes deter-                         optimal parameters in both the ZF and SPS cases are close to U(1)
+                                                                                   regime in the respective ansatze as explained in the text. The DMRG
+mined from the SB ansatz.  Using direct permanent calcula-                         on larger clusters is indispensible in determining the ultimate nature
+tions in theSz basis,75 we can perform measurements for such                       of the ground state.
+wave functions on systems with up toN = 50 sites.
+   The  Zero  Flux  state  has  two  variational  parameters, A2
+and µ (setting A1  =  1).   When µ is very close to the bot-                       function  does  not  include  the  gauge  ﬂuctuations  and  is  not
+tom of the band—i.e.,  the Schwinger bosons are very close                         the full theory, it need not represent a qualitatively accurate
+to condensation—the RVB singlet amplitudes are power-law                           physical ground state and need not have such a VBS order.
+long-ranged and the wave function is a good approximation to                       Numerical studies of U(1) RVB wave functions on the square
+the N´eel state.75,76    On the other hand, whenµ is away from the                 lattice found exponenentially decaying spin correlations but
+bottom of the band, the wave function represents a short-range                     power-law decaying dimer correlations.78,79     Therefore, while
+RVB state.                                                                         they are not accurate representations of the VBS phase,  we
+   Figure16shows   optimized   trial   energies   for   the   ZF                   can still view the U(1) RVB wave functions as suggesting in-
+Schwinger  boson  wave  function  and  the  SPS  slave  fermion                    cipient VBS order.   Because of this,  it would be interesting
+wave function, on a 2× 5× 5 system, together with the exact                        to determine long-distance properties of the U(1) RVB wave
+DMRG results. The optimal parameters in the SPS are similar                        functions also on the honeycomb lattice (this was not possible
+to the ones discussed in Sec.VI. Here we focus on the ZF SB                        with our method using permanents but should be feasible with
+case.  For small J2 <  0.2, the optimized chemical potential                       valence bond Monte Carlo as in Refs.78,79).
+is close to the bottom of the spinon band, and the SB wave                            On  the  other  hand,  if  we  had  a  substantial  non-zero A2,
+function provides an accurate approximation to the N´eel or-                       the resulting state would be a stable Z2  spin liquid.  As the
+dered state.  For larger J2, the chemical potential moves far                      variational results stand, they are not conclusive about the ro-
+below the bottom of the band, and the wave function repre-                         bustness of the spin liquid state and can also be interpreted as
+sents a short-range RVB liquid.  We ﬁnd that the optimalA2                         suggesting proximity to a VBS order.  It is ultimately for un-
+is small in this regime, A2/A1 ≲  0.1.  We illustrate this in                      biased numerical studies like the DMRG to determine the true
+Fig.16by plotting also the trial energy with ﬁxed    A2 = 0 and                    nature of the ground state.
+varying only the chemical potential, which gives essentially                          We conclude by noting that Ref.44conjectured that the ZF
+the optimal ZF SB energy.                                                          Schwinger  boson  wave  function  and  the  SPS  slave  fermion
+   In  the  absence  of A2,  the  resulting  RVB  state  has  only                 wave function represent the sameZ2 spin liquid.  On a crude
+singlets connecting the different sublattices.  This is usually                    level, Fig.16shows that the optimized energetics is very sim-
+viewed as a U(1) spin liquid, hence the label “U(1) RVB” in                        ilar in the two states.   We have also compared the spin and
+the ﬁgure. The common belief is that the U(1) spin liquid with                     dimer structure factors in the optimized Schwinger boson and
+gapped spinons is unstable beyond mean ﬁeld in (2+1)d once                         slave  fermion  states  and  found  that  they  are  quantitatively
+gauge ﬂuctuations are included and that the ultimate state is                      close.   This supports the conjecture in Ref.44,  but we cau-
+Valence Bond Solid.10,70,77        Since the constructed formal wave               tion  that  both  wave  functions  are  close  to  the  U(1)  regime.
+                                                                                                                                                                         13
+
+We have also compared such properties of the ZF and SPS                                  smallN≤ 50 clusters, while it is important to compare topo-
+wave functions deep in the presumed Z2  regime and found                                 logical properties80 to ascertain that the two states are in the
+them to be similar.   Note,  however,  that we have compared                             same phase; we leave this as an interesting open problem.
+only correlations of local observables and only on relatively
+
+
+
+
+
+
+
+ 1  L. Balents, Nature 464, 199 (2010).                                                      sible to have a trivial insulator that does not break any symmetry
+ 2  H. T. Diep, Frustrated Spin Systems (World Scientiﬁc, Singapore)                         but has no topological order.36,37
+   (2005).                                                                               36  T. Li, Europhys. Lett. 93, 37007 (2011).
+ 3  P. A. Lee, N. Nagaosa, and X. G. Wen, Rev. Mod. Phys. 78, 17                         37  I. Kimchi, S. A. Parameswaran, A. M. Turner, F. Wang, A. Vish-
+   (2006).                                                                                   wanath, arXiv:1207.0498.
+ 4  P. W. Anderson, Mater. Res. Bull. 8, 153 (1973).                                     38  J. B. Fouet, P. Sindzingre, and C. Lhuillier, Eur. Phys. J. B 20, 241
+ 5  R. Moessner and S. L. Sondhi, Phys. Rev. Lett. 86, 1881 (2001).                          (2001).
+ 6  C. Nayak and K. Shtengel, Phys. Rev. B 64, 064422 (2001).                            39  H. Mosadeq, F. Shabazi, and S. A. Jafary, J. Phys.: Condens. Mat-
+ 7  T. Senthil and O. Motrunich, Phys. Rev. B 66, 205104 (2002).                             ter 23, 226006 (2011).
+ 8  L. Balents, M. P. A. Fisher, and S. M. Girvin, Phys. Rev. B 65,                      40  A.  F.  Albuquerque,  D.  Schwandt,  B.  Het´enyi,  S.  Capponi,  M.
+   224412 (2002).                                                                            Mambrini, and A. M. L¨auchli, Phys. Rev. B 84, 024406 (2011).
+ 9  D. N. Sheng and L. Balents, Phys. Rev. Lett. 94, 146805 (2005).                      41  A. Mulder,  R. Ganesh,  L. Capriotti,  and A. Paramekanti,  Phys.
+10  N. Read and S. Sachdev, Phys. Rev. Lett. 66, 1773 (1991).                                Rev. B 81, 214419 (2010).
+11  X. G. Wen, Phys. Rev. B 44, 2664 (1991).                                             42  D. C. Cabra, C. A. Lamas, and H. D. Rosales, Phys. Rev. B 83,
+12  X. G. Wen, Phys. Rev. B 40, 7387 (1989).                                                 094506 (2011).
+13  L. Balents, M. P. A. Fisher, and C. Nayak, Phys. Rev. B 60, 1654                     43  F. Wang, Phys. Rev. B 82, 024419 (2010).
+   (1999).                                                                               44  Y. M. Lu and Y. Ran, Phys. Rev. B 84, 024420 (2011).
+14  T. Senthil and M.P.A. Fisher, Phys. Rev. B 62, 7850 (2000); Phys.                    45  H. Zhang and C. A. Lamas, Phys. Rev. B 87, 024415 (2013).
+   Rev. Lett. 86, 292 (2001);                                                            46  B. K. Clark, D. A. Abanin, and S. L. Sondhi, Phys. Rev. Lett. 107,
+15  D. A. Ivanov, Phys. Rev. B 70, 094430 (2004).                                            087204 (2011).
+16  P. Chandra and B. Doucot, Phys. Rev. B 38, 9335 (1988).                              47  C. Xu and L. Balents, Phys. Rev. B 84, 014402 (2011).
+17  L. Siurakshina, D. Ihle, and R. Hayn, Phys. Rev. B 64, 104406                        48  J.  Reuther,  D.  A.  Abanin,  and  R.  Thomale,  Phys.  Rev.  B  84,
+   (2001).                                                                                   014417 (2011).
+18  Y. Shimizu, K. Miyagawa, K. Kanoda, M. Maesato, and G. Saito,                        49  J. Oitmaa and R. R. P. Singh, Phys. Re. B 84, 094424 (2011).
+   Phys. Rev. Lett. 91, 107001 (2003).                                                   50  F. Mezzacapo and M. Boninsegni,  Phys. Rev. B 85,  060402(R)
+19  S. S. Lee and P. A. Lee, Phys. Rev. Lett. 95, 036403 (2005).                             (2012).
+20  Olexei I. Motrunich, Phys. Rev. B 72, 045105 (2005).                                 51  R. F. Bishop, P. H. Y. Li, D. J. J. Farnell, and C. E. Campbell, J.
+21  M. Q. Weng, D. N. Sheng, Z. Y. Weng, and Robert J. Bursill, Phys.                        Phys.: Condens. Matter 24, 236002 (2012).
+   Rev. B 74, 012407 (2006).                                                             52  H-Y. Yang, A. F. Albuquerque, S. Capponi, A. M. L¨auchli, K. P.
+22  J. S. Helton, K. Matan, M. P. Shores, E. A. Nytko, B. M. Bartlett,                       Schmidt, New J. Phys. 14, 115027 (2012).
+   Y.  Yoshida,  Y.  Takano,  A.  Suslov,  Y.  Qiu,  J.-H.  Chung,  D.  G.               53  H.  D.  Rosales,  D.  C.  Cabra,  C.  A.  Lamas,  P.  Pujol,  and  M.  E.
+   Nocera, and Y. S. Lee, Phys. Rev. Lett. 98, 107204 (2007).                                Zhitomirsky, Phys. Rev. B 87, 104402 (2013).
+23  Y. Okamoto, M. Nohara, H. Aruga-Katori, and H. Takagi, Phys.                         54  R. Ganesh, Jeroen van den Brink, and S. Nishimoto, Phys. Rev.
+   Rev. Lett. 99, 137207 (2007).                                                             Lett. 110, 127203 (2013).
+24  M. Hermele, Y. Ran, P. A. Lee, and X. G. Wen, Phys. Rev. B 77,                       55  Zhenyue Zhu, D. A. Huse, and S. R. White, Phys. Rev. Lett. 110,
+   224413 (2008).                                                                            127205 (2013).
+25  R. Nath, A. A. Tsirlin, H. Rosner, and C. Geibel, Phys. Rev. B 78,                   56  A. Kitaev, J. Preskill, Phys. Rev. Lett. 96, 110404 (2006).
+   064422 (2008).                                                                        57  M. Levin, X.-G. Wen, Phys. Rev. Lett. 96, 110405 (2006).
+26  O. Smirnova,  M. Azuma,  N. Kumada,  Y. Kusano,  M. Matsuda,                         58  H. C. Jiang, Z. H. Wang, and L. Balents, Nature Physics 8, 902
+   Y. Shimakawa, T. Takei, Y. Yonesaki, and N. Kinomura, J. Am.                              (2012).
+   Chem. Soc. 131, 8313 (2009).                                                          59  E. M. Stoudenmire and S. R. White, Annual Review of Condensed
+27  H. C. Jiang, Z. Y. Weng, and D. N. Sheng, Phys. Rev. Lett. 101,                          Matter Physics, 3, 111 (2012).
+   117203 (2008).                                                                        60  T. Senthil, L. Balents, S. Sachdev, A. Vishwanath, and Matthew
+28  S. Yan, D. Huse, and S. R. White, Science 332, 1173 (2011).                              P. A. Fisher, Phys. Rev. B 70, 144407 (2004).
+29  S. Depenbrock, I. P. McCulloch, and U. Schollw¨ock, Phys. Rev.                       61  S. R. White, Phys. Rev. Lett. 69, 2863 (1992); Phys. Rev. B 48,
+   Lett. 109, 067201 (2012).                                                                 10345 (1993).
+30  H.  C.  Jiang,  H.  Yao,  and  L.  Balents,  Phys.  Rev.  B 86,  024424              62  I. P. McCulloch and M. Gul´acsi, Europhys. Lett. 57, 852 (2002);
+   (2012).                                                                                   I. P. McCulloch, J. Stat. Mech. 2007, P10014 (2007).
+31  L. Wang, Z. C. Gu, F. Verstraete, and X. G. Wen, arxiv:1112.3331.                    63  A. W. Sandvik, Phys. Rev. B 85, 134407 (2012).
+32  Z. Y. Meng, T. C. Lang, S. Wessel, F. F. Assaad, and A. Mura-                        64  S. Sachdev and N. Read, Int. J. Mod. Phys. B 5, 219 (1991).
+   matsu, Nature (London) 464, 847 (2010).                                               65  S. R. White and A. L. Chernyshev, Phys. Rev. Lett. 99, 127004
+33  S. Sorella,  Y. Otsuka,  and S. Yunoki,  Scientiﬁc Reports 2,  992                       (2007).
+   (2012).                                                                               66  H. Neuberger and T. Ziman, Phys. Rev. B 39, 2608 (1989) D.S.
+34  F. F. Assaad and I. F. Herbut, Phys. Rev. X 3, 031010 (2013).                            Fisher, Phys. Rev. B 39, 11783 (1989).
+35  Interestingly, for the non-Bravais honeycomb lattice, it is also pos-                67  E. G. Moon and Cenke Xu, Phys. Rev. B 86, 214414 (2012).
+                                                                                                                                                                            14
+
+
+68  K. Damle,  F. Alet,  and S. Pujari,  Phys. Rev. Lett. 111,  087203                        (2011).
+   (2013).                                                                                76  K. S. D. Beach, Phys. Rev. B 79, 224431 (2009).
+69  D. N. Sheng, Olexei I. Motrunich, and Matthew P. A. Fisher, Phys.                     77  N. Read and S. Sachdev, Phys. Rev. B 42, 4568 (1990).
+   Rev. B 79, 205112 (2009).                                                              78  A.  F.  Albuquerque  and  F.  Alet,  Phys.  Rev.  B  82,  180408(R)
+70  X. G. Wen, Phys. Rev. B 65, 165113 (2002).                                                (2010).
+71  D. Ceperley,  G. V. Chester,  and M. H. Kalos,  Phys. Rev. B 16,                      79  Y. Tang,  Anders W. Sandvik,  and Christopher L. Henley,  Phys.
+   3081 (1977).                                                                               Rev. B 84, 174427 (2011).
+72  C. Gros, Annals Phys. (NY) 189, 53 (1989).                                            80  T. Grover, Y. Zhang, and A. Vishwanath, New J. Phys. 15, 025002
+73  S. Sachdev, Phys. Rev. B 45, 12377 (1992).                                                (2013).
+74  F. Wang and A. Vishwanath, Phys. Rev. B 74, 174423 (2006).
+75  T.  Tay  and  Olexei  I.  Motrunich,  Phys.  Rev.  B  84,  020404(R)

@@ -1,0 +1,960 @@
+            Decorated Shastry-Sutherland  lattice in  the  spin- 12  magnet  CdCu2(BO3)2
+
+            O. Janson,1,     ∗  I. Rousochatzakis,2, 3  A.  A. Tsirlin,1  J.  Richter,4  Yu.  Skourski,5  and H.  Rosner1,                      †
+
+                        1Max-Planck-Institut  f¨ur  Chemische  Physik  fester  Stoﬀe,  D-01187  Dresden,  Germany
+                           2Max-Planck-Institut  f¨ur  Physik  komplexer  Systeme,  D-01187  Dresden,  Germany
+                      3Institute  for  Theoretical  Solid  State  Physics,  IFW  Dresden,  D-01171  Dresden,  Germany
+                      4Institut  f¨ur  Theoretische  Physik,  Universit¨at  Magdeburg,  D-39016  Magdeburg,  Germany
+              5Hochfeld-Magnetlabor  Dresden,  Helmholtz-Zentrum  Dresden-Rossendorf,  D-01314  Dresden,  Germany
+                                                                (Dated:  July 30, 2018)
+                   We report the microscopic magnetic model for the spin- 12  Heisenberg system CdCu2(BO3)2, one
+                 of  the  few  quantum  magnets  showing  the    12 -magnetization  plateau.    Recent  neutron  diﬀraction
+                 experiments  on  this  compound  [M.  Hase  et  al.,  Phys.  Rev.  B  80,  104405  (2009)]  evidenced  long-
+                 range magnetic order, inconsistent with the previously suggested phenomenological magnetic model
+                 of  isolated  dimers  and  spin  chains.   Based  on  extensive  density-functional  theory  band  structure
+                 calculations,  exact  diagonalizations,  quantum  Monte  Carlo  simulations,  third-order  perturbation
+                 theory,  as  well  as  high-ﬁeld  magnetization  measurements,  we  ﬁnd  that  the  magnetic  properties  of
+                 CdCu2(BO3)2 are accounted for by a frustrated quasi-2D magnetic model featuring four inequivalent
+                 exchange couplings:  the leading antiferromagnetic coupling Jd within the structural Cu2O6 dimers,
+                 two interdimer couplings Jt1 and Jt2, forming magnetic tetramers, and a ferromagnetic coupling Jit
+                 between  the  tetramers.   Based  on  comparison  to  the  experimental  data,  we  evaluate  the  ratios  of
+                 the leading couplings Jd : Jt1 : Jt2 : Jit = 1 : 0.20 : 0.45 : −0.30, with Jd  of about 178 K. The inequiva-
+                 lence of Jt1  and Jt2  largely lifts the frustration and triggers long-range antiferromagnetic ordering.
+                 The proposed model accounts correctly for the diﬀerent magnetic moments localized on structurally
+                 inequivalent Cu atoms in the ground-state magnetic conﬁguration.  We extensively analyze the mag-
+                 netic properties of this model, including a detailed description  of the magnetically  ordered  ground
+                 state and its evolution in magnetic ﬁeld with particular emphasis on the   12 -magnetization  plateau.
+                 Our  results  establish  remarkable  analogies  to  the  Shastry-Sutherland  model  of  SrCu2(BO3)2,  and
+                 characterize  the  closely  related  CdCu2(BO3)2  as  a  material  realization  for  the  spin- 12  decorated
+                 anisotropic Shastry-Sutherland lattice.
+
+                 PACS numbers:  71.20.Ps, 75.10.Jm, 75.40.Cx, 75.60.Ej
+
+
+                     I.     INTRODUCTION
+
+   Among  the  great  variety  of  magnetic  ground  states
+(GSs),  only  few  can  be  rigorously  characterized  using
+analytical  considerations.     To  these  exceptional  cases
+belong,  e.g.,  the  Heisenberg  zigzag  chain  model  at  the
+so-called  Majumdar–Ghosh  point,1                 a  class  of  Kitaev
+models,2     as  well  as  the  dimerized  phase  of  the  Heisen-
+berg model on the Shastry-Sutherland lattice.3                   The lat-
+ter describes the magnetism ofS = 1/2 spins on a square                          FIG.  1.     (Color  online)  Left  panel:    the  original  Shastry-
+lattice,  with  two  inequivalent  exchange  couplings:   (i)                    Sutherland model with the dimer-like coupling J  (thick lines)
+a  dimer-like  coupling J  connecting  the  spins  pairwise                      and the coupling J ′  (thin lines) along the edges of the square
+along  the  diagonals  of  the  square  lattice,  and  (ii)  the                 lattice.     Right  panel:    the  decorated  anisotropic   Shastry-
+coupling J ′  along the edges of the square lattice (Fig.                1,      Sutherland model in CdCu2(BO3)2.  The horizontal and ver-
+left).  For the ratio of antiferromagnetic (AFM) couplings                       tical  couplings  (J ′  in  the original  model)  are  not  equivalent,
+J ′/J< 0.7, the GS is an exact product of singlets residing                      leading to Jt1  (double line) and Jt2  (single line).  In addition,
+on the J  bonds.4                                                                the  coupling  Jt1  (dashed  line)  tiles  the  lattice  into  four-spin
+   The   Shastry-Sutherland   model   was   ﬁrst   studied                       units (tetramers).  Filled circles denote the decorating spins.
+theoretically,3    and only two decades later the spinS =  1
+                                                                          2
+magnet  SrCu2(BO3)2  was  claimed  to  be  an  experimen-
+tal realization of this model.5         In the following years, nu-              J ′/J = 0.64  (Refs.       8  and    9),  the  system  is  already  in
+merous experimental and theoretical studies  disclosed a                         the dimerized singlet phase, but very close to the quan-
+rather complex magnetic behavior of this compound, in-                           tum critical point.10        To access the critical point, further
+cluding  plateaux  at  1/8,  1/4,  and  1/3  of  the  satura-                    tuning  of  the  system  is  required.   For  example,  exter-
+tion  magnetization  (Ref.          6)  and  an  intricate  coupling             nal  pressure  leads  to  at  least  one  phase  transition  at
+between  magnetic  and  lattice  degrees  of  freedom.7                For       low  temperatures,11         as  evidenced  by  nuclear  magnetic
+the experimentally deﬁned ratio of the leading couplings                         resonance  (NMR)  studies,12             while  a  recent  theoretical
+                                                                                                                                                    2
+
+model13    with  two  inequivalent  dimer  couplings J  pre-                 This coupling is ferromagnetic, as inferred from the mag-
+dicts  an  unanticipated,  eﬀectively  one-dimensional  Hal-                 netic  structure,  and  contrasts  with  the  AFM  coupling
+dane phase.13,14                                                             assumed in the previous studies.24
+  An  alternative way to  tune  the  magnetic  couplings  is                    The   tentative   magnetic   model   from   Ref.           24   was
+the  directed  substitution  of  nonmagnetic  atoms  or  an-                 founded on the  assumption that the  strongest magnetic
+ionic groups.  The impact of this substitution on the mag-                   couplings are associated with the shortest Cu–Cu inter-
+netic coupling regime can be very diﬀerent.  The simplest                    atomic  distances.   However,  such  an  approach  fully  ne-
+eﬀect is a bare change of the energy scale, which does not                   glects the mutual orientation of magnetic orbitals, which
+aﬀect the physics, as for instance, in the spin- 12  uniform-                play  a  decisive  role  for  the  magnetic  coupling  regime.
+chain compounds Sr2Cu(PO4)2 and Ba2Cu(PO4)2.15                     An-       Moreover, the  experimental  results  suggest that  the  ac-
+other possibility is alteration of the leading couplings, as                 tual  spin model  of  CdCu2(BO3)2  is  more complex  than
+in  the  frustrated  square  lattice  systems AA′VO(PO4)2                    the simple “chain + dimer” scenario.
+(Ref.  16)  or  the  kagome  lattice  compounds  kapellasite                    In   this   paper,   we   investigate   the   magnetic   prop-
+Cu3Zn(OH)6Cl2 and haydeeite Cu3Mg(OH)6Cl2.17                     Such        erties  of  CdCu2(BO3)2   on  a  microscopic  level,   using
+systems  have  excellent  potential  for  exploring  magnetic                density-functional-theory (DFT) band structure calcula-
+phase diagrams.  Finally, in some cases, chemical substi-                    tions,  exact  diagonalization  (ED)  and  quantum  Monte
+tutions drastically alter the underlying magnetic model,                     Carlo  (QMC)  numerical  simulations,   as  well  as  ana-
+as shown recently for the family of Cu2A2O7 compounds                        lytical  low-energy  perturbative  expansions  and  linear
+(A = P, As, V).18                                                            spin-wave  theory.     We   show  that  the   magnetism  of
+  However, the  most common  eﬀect  of chemical  substi-                     CdCu2(BO3)2  can  be  consistently  described  by  a  two-
+tution  is  a  structural  transformation,  which  apparently                dimensional (2D) frustrated isotropic model (crystalline
+leads to a major qualitative change in the magnetic cou-                     and exchange anisotropy eﬀects are neglected) with four
+plings.   For  instance,  the  Se–Te  substitution,  accompa-                inequivalent exchange couplings, topologically equivalent
+nied by a major structural reorganization, transforms the                    to  the  decorated  anisotropic  Shastry-Sutherland  lattice
+Heisenberg-chain system CuSe2O5 (Ref.              19) into the spin         (see  Fig.   1,  right).    Therefore,  the  chemical  similarity
+dimer compound CuTe2O5  (Ref.              20).  Likewise, the La–           between SrCu2(BO3)2  and CdCu2(BO3)2  is retained on
+Bi substitution in the 2D square lattice system La2CuO4                      the  microscopic  level.   The  dominance  of  the  exchange
+(Ref.  21) leads to the three-dimensional magnet Bi2CuO4                     interaction Jd  within  the  structural  Cu(1)  dimers  al-
+(Ref.  22), etc.                                                             lows  to  describe  the  magnetic  properties  within  an  ef-
+  Coming  back  to  the S =  1                                               fective  low-energy  model  for  the  Cu(2)  sites  only.   This
+                                    2  Shastry-Sutherland  com-              eﬀective  model  explains  the  sizable  staggered  magneti-
+pound  SrCu2(BO3)2,  the  directed  substitution  of  non-                   zation of Cu(1) dimers  despite  the  large Jd, and unrav-
+magnetic structural elements is an appealing tool to ex-                     els  the nature of the  wide 1/2-magnetization plateau in
+plore the phase space of the Shastry-Sutherland model.23
+One possible way is the replacement of Sr2+  by another                      CdCu2(BO3)2.  The experimental data, both original and
+divalent  cation.    Indeed,  the  compound  CdCu2(BO3)2                     taken from the literature, are reconsidered in terms of the
+exists,  and  its  magnetic  properties  have  been  investi-                DFT-based  microscopic  model  and  the  eﬀective  model.
+gated  experimentally.24–26       In  contrast  to  SrCu2(BO3)2,             As a result, we ﬁnd an excellent agreement between the
+the magnetic GS of CdCu2(BO3)2 is long-range ordered,                        simulated and measured quantities.
+while the magnetization M(H) curve exhibits a plateau                           This  paper  is  organized  as  follows.     Sec.         II is  de-
+at one-half of the saturation magnetization.24                               voted  to  the  discussion  of  the  structural  peculiarities
+  The  substitution  of  Sr  by  Cd  in  SrCu2(BO3)2  is  ac-                of  CdCu2(BO3)2.   The  methods  used  in  this  study  are
+companied  by  a  structural  transformation.    Thus,  the                  presented  in  Sec.     III.  Then,  the  microscopic  magnetic
+initial tetragonal symmetry is reduced to monoclinic, en-                    model  is  evaluated  using  DFT  band  structure  calcula-
+gendering  two  independent  magnetic  sites:   Cu(1)  and                   tions,  and  its  parameters  are  reﬁned  using  ED  ﬁts  to
+Cu(2).  The presence of Cu(1) residing in the structural                     the  experiments  (Sec.       IV).  The  magnetic  properties  of
+dimers, similar to SrCu2(BO3)2, and the relatively short                     CdCu2(BO3)2  are in  the  focus  of Sec.          V.  We  show that
+Cu(2)–Cu(2) connections along c motivated the authors                        the  magnetism  of  CdCu2(BO3)2  is  captured  by  an  ef-
+of  Ref. 24  to  advance  a  tentative  magnetic  model  com-                fective low-energy description of the Cu(2) spins (on the
+prising  isolated  magnetic  dimers  of  Cu(1)  pairs  and  in-              Shastry-Sutherland lattice), which are further studied us-
+ﬁnite  chains  built  by  Cu(2)  spins.   This  model  was  in               ing linear spin-wave theory as well as QMC, and corrobo-
+agreement  with  the  experimental  magnetic  susceptibil-                   rated by ED for the microscopic magnetic model.  Finally,
+ity χ(T ),  magnetization M(H),  and  electron  spin  reso-                  in Sec.  VI   a summary and a short outlook are given.
+nance  (ESR)  data.   However,  later  neutron  diﬀraction
+(ND)  studies  challenged  this  model,  since  the  ordered                                II.     CRYSTAL STRUCTURE
+magnetic moments localized on Cu(1) amount to 0.45µB
+compared  to  0.83µB  on  Cu(2).26          Therefore,  the  Cu(1)
+dimers do not form a singlet state with zero ordered mo-                        The       low-temperature       crystal       structure       of
+ment, but rather experience a sizable coupling to Cu(2).                     CdCu2(BO3)2   is   reliably   established   based   on   syn-
+                                                                                                                                                     3
+
+                                                                              respective interlayer coupling (the chain-like couplingJ3
+                                                                              in the notation of Ref.      24) has been conjectured.24          How-
+                                                                              ever, the orientation of magnetic Cu(1)2O6 and Cu(2)O4
+                                                                              polyhedra  (almost  coplanar  to  the  magnetic  layers)  ex-
+                                                                              cludes an appreciable interlayer coupling.  This quasi-2D
+                                                                              scenario  is  readily  conﬁrmed  by  our  DFT  calculations
+                                                                              (Sec.  IV A).
+                                                                                 The  evaluation  of  the  intralayer  coupling  based  on
+                                                                              structural  considerations  is  more  involved.     In  many
+                                                                              cuprates,  the  leading  exchange  couplings  are  typically
+                                                                              associated with the Cu–Oplaq–Cu connections, i.e., when
+                                                                              the neighbouring plaquettes share a common corner (one
+                                                                              Oplaq  atom) or a common edge (two  Oplaq  atoms).28                  In
+                                                                              the crystal structure of CdCu2(BO3)2, both types of con-
+                                                                              nections are present.
+                                                                                 To  estimate  the  respective  magnetic  exchange  cou-
+                                                                              plings,  the  Goodenough–Kanamori rules29               are  typically
+                                                                              applied.  Using a closely related approach, Braden et al.30
+                                                                              evaluated the dependence of the magnetic exchangeJ on
+                                                                              the  Cu–O–Cu angle.  According  to  their  results,  for  the
+FIG. 2.  (Color online) The crystal structure of CdCu2(BO3)2                  Cu–O–Cu  angle  of  90◦,  the  resulting  total  coupling J,
+consists  of  structural  Cu(1)2O6  dimers,  Cu(2)O4  distorted               being a sum of AFMJ AFM (positive) and FMJ FM (neg-
+plaquettes,  BO3  triangles  connected  pairwise  as  well  as  iso-          ative) contributions, is FM. An increase in this angle (i)
+lated Cd atoms (spheres).  Oxygen atoms are shown as small                    decreases  the J FM  contribution  caused  by  Hund’s  cou-
+spheres located at the vertices of Cu(1)O4, Cu(2)O4 and BO3                   pling  on  the  O  sites,31    and  (ii)  enhances  the  Cu–O–Cu
+polyhedra.    The  numbers  “1”  and  “2”  denote  Cu(1)  and                 superexchange  which  in  turn  increases J AFM.   As  a  re-
+Cu(2),  respectively.   A  magnetic  tetramer  (see  Sec.      IV A)  is      sult, for the Cu–O–Cu angle close to 97◦,J FM andJ AFM
+shaped by a gray oval.  Right bottom:  position of the magnetic               are  balanced,  thereby  cancelling  the  total  magnetic  ex-
+layers (shaded) in the crystal structure of CdCu2(BO3)2.                      change (J = 0).  Further increase in the  Cu–O–Cu angle
+                                                                              breaks  this  subtle  balance  and  gives  rise  to  an  overall
+                                                                              AFM  exchange,  which  grows  monotonically  up  to  Cu–
+chrotron x-ray and neutron diﬀraction data.26               The basic         O–Cu = 180◦.
+structural elements of CdCu2(BO3)2 are magnetic layers                           Here, we try to apply this phenomenological approach
+(Fig.  2)  that  stretch  almost  parallel  to  (¯102)  planes                and estimate  the  respective exchange integrals.  The  in-
+(Fig.  2, right bottom).  These layers are formed by Cu–O                     tradimer Cu(1)–O–Cu(1) angle in CdCu2(BO3)2 is 98.2◦,
+polyhedra coupled by B2O5  units.                                             only slightly exceeding 97◦.  Therefore, a weak AFM ex-
+  Although   Cd2+   is   isovalent  to   Sr2+,   the   substan-               change  coupling  could  be  expected.   For  the  Cu(1)–O–
+tial  diﬀerence  in  their  ionic  radii  (1.26 ˚A  and  0.95 ˚A,             Cu(2) corner-sharing connections, the  angle amounts to
+respectively)27     gives   rise   to   diﬀerent   structural   mo-           117.5◦, which should give rise to a sizable AFM exchange.
+tives   in   the   two   systems.     Thus,   in   sharp   contrast           However,  our  DFT+U  calculations  deliver  a  magnetic
+with  SrCu2(BO3)2,  the  monoclinic  crystal  structure  of                   model,  which  is  in  sharp  contrast  with  these  expecta-
+CdCu2(BO3)2  comprises  two  inequivalent  positions  for                     tions:   the  AFM  coupling  within  the  structural  dimers
+Cu  atoms:  Cu(1)  and  Cu(2).  The  local  environment of                    is  sizable,  while  the  coupling  along  the  Cu(1)–O–Cu(2)
+these two sites is diﬀerent:  Cu(1) forms Cu(1)O4 plaque-                     connections is much smaller and FM. The substantial dis-
+ttes  that  in  turn  build  structural  Cu(1)2O6  dimers,  re-               crepancy between the simpliﬁed picture, based on struc-
+sembling SrCu2(BO3)2, while Cu(2) atoms form tetrahe-                         tural considerations only, and the microscopic model, evi-
+drally distorted Cu(2)O4 plaquettes that share a common                       dences the crucial importance of a microscopic insight for
+O atom with the Cu(1)2O6  dimers (Fig.               2).  As a result,        structurally intricate magnets like CdCu2(BO3)2.
+structural  Cu(1)2Cu(2)2O12  tetramers  are  formed.   In-
+terestingly, the structural tetramers do not coincide with
+the  magnetic  tetramers (shaded oval in Fig.             2) that are                                 III.     METHODS
+the basic units of the spin lattice (Sec.         IV A).
+  Large   cavities   between   the   neighboring   magnetic                      DFT  band  structure  calculations  were  performed  us-
+tetramers accommodate Cd atoms.  As a result, the space                       ing the full-potential code fplo-8.50-32.32            For the struc-
+between  the  magnetic  layers  is  rather  narrow,  leading                  tural  input,  we  used  the  atomic  positions  based  on  the
+to  short interatomic distances (∼3.4 ˚A) between the Cu                      neutron diﬀraction data at 1.5 K: space groupP 21/c (14),
+atoms belonging to neighboring magnetic layers.  On the                       a = 3.4047 ˚A, b = 15.1376 ˚A, c = 9.2958 ˚A, β = 92.807◦.26
+basis of such short Cu–Cu distance, the relevance of the                      For  the  scalar-relativistic  calculations,  the  local-density
+                                                                                                                                                    4
+
+approximation  (LDA)  parameterization  of  Perdew  and                      Field Laboratory.  Details of the experimental procedure
+Wang  has  been  chosen.33       We  also  cross-checked our  re-            can be found in Ref.       41.
+sults  by  using  the  parameterization  of  Perdew,  Burke
+and Ernzerhof based on the generalized gradient approx-
+imation  (GGA).34       For  the  nonmagnetic  calculations,  a                    IV.     EVALUATION OF  A  MICROSCOPIC
+kmesh  of  30×6×12 = 2160  points  (728  points  in  the  ir-                                     MAGNETIC  MODEL
+reducible  wedge)  has  been  adopted.   Wannier  functions
+(WF)  for  the  Cu  3dx2−y2  states  were  evaluated  using                                A.     Band  structure  calculations
+the  procedure  described  in  Ref.        35.    For  the  supercell
+magnetic  DFT+U  calculations,  two  types  of  supercells                      We begin our analysis with the evaluation of the mag-
+were  used:  a  supercell  metrically  equivalent  to  the  unit             netically relevant orbitals and couplings.  The LDA yields
+cell (sp. gr. P 1, 4×2×2 kmesh) and a supercell doubled                      a  valence  band  with  a  width  of  about  9 eV,  dominated
+along c  (sp.  gr. P 1,  4×1×1 kmesh).   Depending  on  the                  by  O  2p  states  (Fig.     3,  top  panel).    Interestingly,  the
+double-counting  correction  (DCC),36            the  around-mean-           lower  part  of  the  valence  band  exhibits  sizable  contri-
+ﬁeld  (AMF)  or  the  fully  localized  limit  (FLL),  we  var-              bution from the Cd 4d states, hinting at an appreciable
+ied  the  on-site  Coulomb  repulsion  parameter U3d  in  a                  covalency  of  Cd–O  bonds.   The  energy  range  between
+wide range: U3d = 5.5–7.5 eV for the AMF andU3d = 8.5–                       −3 and 0.5 eV is dominated by Cu 3d states.  The pres-
+10.5 eV  for  the  FLL  calculations,37        keeping J3d = 1 eV.           ence of bands crossing the Fermi level evidences a metal-
+The local spin-density approximation (LSDA)+U  results                       lic  GS,  which  contrasts  with  the  emerald-green color  of
+were cross-checked by GGA+U  calculations.  All results                      CdCu2(BO3)2.  This well-known shortcoming of the LDA
+were accurately checked for convergence with respect to                      and the GGA originates from underestimation of strong
+the kmesh.                                                                   correlations, intrinsic for the 3d9 electronic conﬁguration
+  Full   diagonalizations   of   the   resulting   Heisenberg                of  Cu2+.    To  remedy  this  drawback,  we  use  two  ap-
+Hamiltonian  were  performed  using  the  software  pack-                    proaches accounting for the missing part of correlations:
+age alps-1.3  (Ref.      38) on the N = 16 ﬁnite  lattice with               (i) on the model level, via mapping the LDA bands onto
+periodic boundary conditions.  Translational symmetries                      a  Hubbard  model  (model  approach);  and  (ii)  directly
+have  been  used  (the  code  does  not  allow  for  rotational              within  a  DFT  code,  by  adding  an  energy  penalty U3d
+symmetries).  Spin correlations in the GS  as well as the                    for  two  electrons  occupying  the  same  orbital  (DFT+U
+lowest-lying excitations were computed by Lanczos diag-                      approach).
+onalization of N = 32  sites  ﬁnite  lattices  using  the  code
+spinpack.39      Translational  symmetries  and  the  commu-                                                 energy (eV)
+tation relation [H,Sz] = 0  were used.  The  ﬁnite  lattices                             -8                 -6                 -4                 -2                  0
+are depicted in Fig.      12.  The QMC simulations of the ef-                   100                       total
+                                                                                                          Cu
+fective  model  were  performed  on  ﬁnite  lattices  with  up                                            Cd
+toN = 2304 spins with periodic boundary conditions us-                           50                       O
+                  40                                            38                                        B
+ing the looper        algorithm from the ALPS package.              For
+T = 0.05J ≃ 0.0031Jd(≃ 0.55 K), we used 40 000 loops for                           0
+thermalization and 400 000 loops after thermalization.
+  A powder sample of CdCu2(BO3)2 was prepared by an-                             0.2                                                              0.2
+nealing a stoichiometric mixture of CuO, CdO, and B2O3
+in air at 750 ◦C for 96 hours.  The sample contained trace                         0                                                              0
+amounts of unreacted CuO and Cd2B2O5 (below 1 wt.%                                                                LDA                    Cu(1)
+according  to  the  Rietveld  reﬁnement),  as  evidenced  by                    -0.2                              fit                    Cu(2)    -0.2
+powder x-ray diﬀraction (Huber G670 camera, CuKα1 ra-                                                                                    O
+diation,  ImagePlate  detector,  2θ = 3–100◦  angle  range).                    -0.4                                                              -0.4
+To improve the sample quality, we performed additional                              Γ          XM         YΓ  Z         RA          TZDOS (states / eV / cell)
+annealings that, however, resulted in a partial decompo-                                           k-vector
+sition of the target CdCu2(BO3)2  phase.  Both impurity                      FIG.   3.       (Color   online)   Top:     LDA   valence   band   of
+phases reveal a low and nearly temperature-independent                       CdCu2(BO3)2.  Atom-resolved DOS (number of states per eV
+magnetization within the temperature range under inves-                      and crystallographic unit cell) are shown.  Bottom left:  LDA
+tigation.  Therefore, they do not aﬀect any of the results                   band  structure  of  the  well-separated  eight-band  complex  at
+presented below.                                                             the Fermi level and the WF tight-binding ﬁt within an eﬀec-
+  The magnetic susceptibility (χ) was measured with an                       tive one-orbital model.  Bottom  right:  atom-resolved  DOS of
+MPMS SQUID magnetometer in the temperature range                             the eight-band complex.
+2 − 380 K in applied ﬁelds up to 5 T. The high-ﬁeld mag-
+netization curve was measured in pulsed magnetic ﬁelds                          The states relevant for magnetism are located in a close
+up to 60 T at a constant temperature of 1.5 K using the                      vicinity of the Fermi level.  Common for cuprates, these
+magnetometer  installed  at  the  Dresden  High  Magnetic                    states form a band complex, well-separated from the rest
+                                                                                                                                                                 5
+
+of  the  valence  band.    This  band  complex,  depicted  in
+Fig.  3  (bottom panels), comprises eight bands, in accord
+with  the  eight  Cu  atoms  in  a  unit  cell.   The  projection
+of  these  states  onto  a  local  coordinate  system42              readily
+yields their orbital character:  typical for cuprates, these
+states  correspond  to  the  antibonding σ-combination  of
+Cu  3dx2−y2  and  O  2p  orbitals.  To  visualize this  combi-
+nation in real space, the WFs for Cu 3dx2−y2  states can
+be used (Fig.      4).
+   To  evaluate  the  relevant  couplings,  we  calculate  hop-
+ping matrix elements of the WFs and introduce them as
+parameters (ti) into an eﬀective one-orbital tight-binding
+model.  This parameterization is justiﬁed by an excellent
+ﬁt (Fig.   3, bottom left) to the LDA band dispersions.  The
+relevant couplings (ti> 20 meV) are presented in Table                       I
+(third column).
+   The  transfer  integrals ti  can  be  subdivided  into  four
+groups, according to their strength.  The ﬁrst group con-
+tains  only  one  term td  (“d”  stands  for  “dimer”),  which                      FIG. 4.  (Color online) Wannier functions for the Cu 3dx2−y2
+clearly  dominates  over  all  other  couplings,  despite  the                      states.  Light  and dark areas  (colors)  denote diﬀerent phases
+respective  Cu(1)–O–Cu(1)  angle  being  rather  close  to                          of  the  functions.   Relevant  exchange  couplings  are  depicted
+90◦.    The  second  group  comprises  two  terms, tt1  and                         by lines:  thick (red-black)  lines (Jd),  thinner solid  (Jt2)  and
+tt2  (“t”  stands  for  “tetramer”)  that  couple  Cu(1)  and                       double  (Jt1)  lines,  as  well  as  dashed  lines  (Jit).    Note  the
+Cu(2) atoms via Cu(1)–O–O–Cu(2) paths (Fig.                       4) within         Cu–O–O–Cu superexchange paths via the BO3  triangles.
+the magnetic tetramers.  Although the Cu(1)–Cu(2) dis-
+tance fortt1 is shorter, the respective coupling is slightly                        TABLE  I.  Cu–Cu  distances  (d,  in  ˚A),  transfer  integrals  (ti,
+smaller thantt2.  This diﬀerence plays an important role                            in meV), antiferromagnetic J AFM
+for  the  magnetism  of  CdCu2(BO3)2,  as  will  be  shown                                                               i        (in K) contributions, as well
+later.                                                                              as the total exchange integrals Ji  (in K) for the leading cou-
+                                                                                    plings in CdCu2(BO3)2.  The values of Ji are evaluated within
+   The couplingstd,tt1, andtt2 form magnetic tetramers                              the DFT+U  method for two diﬀerent double-counting correc-
+(shaded oval in Fig.         2).  These tetramers are coupled to                    tion schemes with U3d = 6.5 eV for AMF and 9.5 eV for FLL.
+each other  by two  interactions forming  the third group:
+tit  and tCd.   The  coupling tit  (‘it”  stands  for  “interte-                    exchange         d          ti              J AFMi                    Ji  (LSDA+U)AMF               FLL
+tramer”)  corresponds  to  the  magnetic  exchange J2  be-                               Jd           2.957     203               425                146                 202
+tween  dimers  and  chains  in  the  notation  of  Ref.              24.   It           Jt1           5.268      73                 55                   30                   29
+is  short-ranged, and runs  via the  corner-sharing Cu(1)–                              Jt2           6.436      85                 75                   64                   55
+O–Cu(2) connection.  The second intertetramer termtCd                                    Jit           3.228      47                 23                −45              −135
+couples Cu(1) and Cu(2) via Cd atoms (not shown).  Fi-                                  JCd          6.450      41                 17                     5                     6
+nally,  the  fourth  group  of  transfer  integrals  includes  all                      Jt1 : Jd  (%)                                                       20                   14
+other terms that are smaller than 20 meV. Since these lat-                              Jit : Jd  (%)                                                    −31                −67
+ter  terms  play  a  minor  role  for  the  magnetic  properties                        Jt1 : Jt2  (%)                                                       47                   53
+of  CdCu2(BO3)2,  they  are  disregarded  in  the  following
+discussion.
+   To account for electronic correlations, neglected in the                            Resorting fromti to J AFMi        basically preserves the pic-
+tight-biding model, the  transfer integrals ti  are mapped                          ture  of  coupled  tetramers  with  a  strong  dimer-like  cou-
+onto  a  Hubbard  model.    This  way,  under  the  condi-                          pling.  However, the interatomic Cu-Cu distances for Jd
+tions  of  half-ﬁlling  and  strong  correlations  (Ueﬀ ≫ti),                       and Jit  are  rather  small,  thus  sizable  FM  contributions
+the  AFM  contribution J AFMi         to  the  exchange  integrals                  to  these  couplings  can  be  expected.  To  account for  the
+can be estimated in second-order perturbation theory:43                             FM  exchange,  we  perform DFT+U  calculations  for  dif-
+J AFMi       = 4t2i/Ueﬀ.44 Here, Ueﬀ  is  an  eﬀective  term  which                 ferent  magnetic  supercells,46          and  subsequently  map  the
+takes  into  account  the  correlations  in  the  magnetic  Cu                      resulting  total  energies  onto  a  Heisenberg  model.   This
+3dx2−y2  orbitals,  screened  by  the  O  2p  orbitals  (their                      way, the FM contribution can be evaluated by subtract-
+strong  hybridization  can  be  seen  in  Fig.             4).   Although           ingJ AFMi        estimates from the values of the total exchange
+the  experimental  evaluation  of Ueﬀ  is  challenging  (see,                       Ji,  obtained  from  DFT+U  calculations.   The  results  of
+e.g.,  Ref.   45),  there  is  an  empirical  evidence  that Ueﬀ                    DFT+U  calculations  typically  depend  on  (i)  the  func-
+values  in  the  4–5 eV  range  yield  reasonable  results  for                     tional  (LSDA  or  GGA),  (ii)  the  DCC  scheme  (AMF  or
+Cu2+  compounds.15,19,22           Here, we adopt Ueﬀ = 4.5 eV to                   FLL),  and  (iii)  the  value  of U3d  used.47            Representative
+estimate J AFMi        (Table  I, fourth column).                                   values for the total exchange integralsJi are summarized
+                                                                                                                                                      6
+
+in Table   I.
+  We ﬁrst discuss common trends that do not depend on
+a particular DFT+U  calculational scheme.  First, despite
+the substantial FM contribution, Jd  preserves its role of
+the leading coupling.  Second, the FM contributions fur-
+ther  enhance  the  diﬀerence  between Jt1  and Jt2.   This
+diﬀerence  is  crucial,  since  these  two  couplings  are  frus-
+trated, and the  degree of frustration largely depends  on
+their  ratio.  Third, the  interdimer coupling Jit  is  clearly
+FM,  while  a  sizable FM  contribution to JCd  practically
+switches this coupling oﬀ.
+  The  DFT+U  results  exhibit  a  rather  strong  depen-
+dence  on  the  calculational  scheme  and  the  parameters
+used.    A  comparative  analysis  of  the  exchange  values
+shows  that  the  couplings Jd, Jt1, Jt2,  and JCd  yielded
+by  GGA+U  are  reduced  by  20–30 %  compared  to  the
+LSDA+U  estimates  (for  the  same  DCC  and U3d).   The
+diﬀerence between the LSDA+U and GGA+U results for
+Jit  is  slightly  larger.  However,  the  ratios  of  the  leading
+couplings, which determine the nature of the GS, are very
+similar for both functionals.                                                 FIG.   5.     (Color   online)   Microscopic   magnetic   model   for
+  The  DCC  scheme  has  a  much  larger  impact  on  the                     CdCu2(BO3)2.  The  leading  magnetic  couplings  are  denoted
+values  of  exchange  integrals.   In  particular,  FLL  yields               by  lines.   The  experimental  magnetic  structure  (Ref.         26)  is
+substantially  larger Jit  values  than  AMF.  In  addition,                  depicted by arrows.  The crystal structure sketch is the same
+theJt1/Jd andJt2/Jd ratios are slightly reduced in FLL                        as in Fig.   2.
+compared to the AMF estimates (Table                I).
+  The  dependence of the  DFT+U  results on U3d  shows
+a clear and robust trend:  largerU3d lead to smaller abso-                    GS.  Additional  restrictions  arise  from  topological  fea-
+lute  values of the leading exchange couplings.  However,                     tures  of  the  particular  model,  e.g.,  only  certain  values
+the slope of theJi(U3d) dependence (not shown) slightly                       ofN  ﬁt to periodic boundary conditions.  Here, we apply
+diﬀers  for  diﬀerent  couplings.  As  a  result,  the  ratios  of            ED  to  study  the  magnetic  properties  of  CdCu2(BO3)2
+the couplings also depend moderately on the U3d  value.                       using exact diagonalization onN = 16 sites (for the mag-
+  In  conclusion,  DFT  provides  a  robust  qualitative  mi-                 netic  susceptibility)  and N = 32  sites  (for  GS  spin-spin
+croscopic magnetic model and unambiguously yields the                         correlations  and  the  GS  magnetization  process  in  mag-
+signs  of the  leading Ji’s,  as  revealed by  excellent agree-               netic ﬁeld).
+ment  with  the  experimentally  observed  magnetic  struc-                      Due  to  the  ambiguous  choice  of  the  DCC  and U3d,
+ture  (Fig.   5).   However,  the  accuracy  of  the  individual              our  DFT  calculations  do  not  provide  a  precise  position
+magnetic couplings is not enough to provide a quantita-                       of CdCu2(BO3)2 in the parameter space of the proposed
+tive  agreement with  the  experiments.  In  the  next  step,                 Jd–Jt1–Jt2–Jit model.  However, the ratios of the leading
+the evaluated model is reﬁned by a simulation of its mag-                     couplings (Table       I, three  bottom lines)  follow a  distinct
+netic properties and subsequent comparison to the exper-                      trend:  the  AMF  solutions  yield  larger Jt1 :Jd  and  sub-
+iments.                                                                       stantially  smaller  |Jit| :Jd  values,  than  FLL.  Compared
+                                                                              to  the  diﬀerence  between  the  AMF  and  FLL  solutions,
+                                                                              the  value  of U3d  and  the  functional  used  inﬂuence  the
+                         B.     Simulations                                   ratios only  slightly.  Therefore, we  adopt  the  two diﬀer-
+                                                                              ent DFT+U solutions:  the AMF solutionJd :Jt1 :Jt2 :Jit
+  Since   the   microscopic   magnetic   model   is   2D   and                ≃ 1 : 0.20 : 0.45 : −0.30 (AMF,U3d = 6.5 eV) and the FLL
+frustrated, numerically eﬃcient techniques that account                       solution Jd :Jt1 :Jt2 :Jit   ≃   1 : 0.15 : 0.25 : −0.70   (FLL,
+for  the  thermodynamic  limit,  such  as  quantum  Monte                     U3d = 9.5 eV)  as  starting  points  for  simulations  of  mag-
+Carlo  (QMC)  or  density-matrix  renormalization  group                      netic susceptibility.
+(DMRG),  can  not  be  applied.     Although  new  meth-                         We  have  simulated  the  magnetic  susceptibility  on  a
+ods  are  presently  under  active  development,48              a  stan-      N = 16 sites ﬁnite lattice (Fig.        12, bottom) with periodic
+dard  method  to  address  such  problems  is  exact  diag-                   boundary conditions, and by keeping theJd :Jt1 :Jt2 :Jit
+onalization  (ED)  of  the  respective  Hamiltonian  matrix                   ratios  ﬁxed.    Such  simulations  yield  the  reduced  mag-
+performed  on  ﬁnite  lattices  of N  spins.49          However,  the         netic  susceptibility χ∗(T ∗),  which  can  be  compared  to
+performance of present-day computational facilities lim-                      the  experimental χ(T )  by  ﬁtting  free  parameters:   the
+its the size of feasible ﬁnite lattices to N = 24 sites50            for      overall energy scaleJd, theg-factor and the temperature-
+ﬁnite-temperature  properties  or N = 42  sites51               for  the      independent   contribution χ0.52              In   accord   with   the
+                                                                                                                                                                7
+
+   10.0                                                                                  i     (a)                            (b)Cu(1)                 (c)
+                       Jd : Jt1 : Jt2 : Jit = 1 : 0.2 : 0.45 : -0.3                                          Cu(2)                              J3
+                                                                                        J1  !            "           !          "           j           Jd
+     8.0                        10.0                                                                                                              !           "
+                                 8.0                                                       J2    Jd               J1      Jd        J2              J1      J2
+     6.0                         6.0                                                     j                        i                          j            i
+
+     4.0                         4.0          effective model (QMC)
+
+                                   10                   20                   30                   40
+     2.0          ED (N = 16)
+                  exp. (0.1 T)
+     0.0                 100                     200                     300        FIG. 7.  (Color online) The three topologically  diﬀerent clus-
+                                        T (K)                                       ters that contribute up to third order in the eﬀective exchange
+       1                                     exp. (1.5 K)                           Jij  in the limit J1,2,3 ≪Jd, where J1, J2, and J3 belong to the
+     0.8                                     ED (N = 32, T = 0 K)                   set:  Jt1,  Jt2,  or  Jit.  Here J (2)ij    and  J (3)ij    denote,  respectively,
+             Hc1                             ED (N = 16, T = 1.5 K)                 the  contributions  from  second  and  third-order  perturbation
+     0.6                                                                            theory.  For any given cluster, we include only processes that
+     0.4                                                                            involve each of the weak couplings at least once.
+
+
+     0.2
+                                                                                    the experimental data using the expression
+       00          20         40         60         80        100       120       140                                                )h∗,                       (1)
+                                        H (T)                                                             H = (kBJdg−1µ−1B
+
+FIG.  6.   (Color  online)  Top  panel:   ED  (N = 16  sites)  ﬁt  to               and by  adopting the values of Jd  and g  from the  ﬁts  to
+the  experimental  (exp.)   magnetic  susceptibility.   Deviations                  χ(T ).  This way,Hc1 can be estimated directly, i.e., with-
+at  T < 30 K  are  an  extrinsic  ﬁnite-size  eﬀect.    Inset:   ﬁt  to             out using additional parameters beyond Jd  and g.  Such
+the low-temperature χ(T ) using QMC for the eﬀective model                          Hc1  estimates  are  given  in  the  last  column  of  Table               II.
+(Sec.  V A)  on  a  N =24×24  sites  ﬁnite  lattice.   Note  the  im-               Both  the  AMF  and  the  FLL  solutions  are  in  excellent
+proved agreement between 15 and 30 K, compared to the ED                            agreement  with  the  experimental Hc1.   Therefore,  only
+ﬁt.   Bottom  panel:   magnetization  curve  measured  at  1.5 K                    the AMF solutionJd :Jt1 :Jt2 :Jit ≃ 1 : 0.20 : 0.45 : −0.30
+and  simulated  by  ED  (ﬁnite-temperature  magnetization  for                      yields good agreement for both the g-factor and the Hc1
+N = 16 and the GS magnetization for N = 32 sites) scaled us-                        values.   Thus,  in  the  following,  we  restrict  ourselves  to
+ing the parameters (Jd  and g-factor) obtained from the ﬁt to
+χ(T ) (Table    II, top line).                                                      the analysis of this solution (Table             II, ﬁrst row).
+                                                                                       So far, the simulations evidence a good agreement be-
+                                                                                    tween  the  DFT-based  model  and  the  experimental  in-
+Mermin–Wagner theorem,53               our 2D magnetic model does                   formation  on  thermodynamical  properties.    In  the  fol-
+not  account  for  long-range  magnetic  ordering,   hence                          lowing, we perform an elaborate theoretical study of the
+the  simulated  magnetic  susceptibility  is  valid  only  for                      proposed model.  A deep insight into its physics enables
+T>TN = 9.8 K.26          Moreover,  at  low  temperatures  (even                    further experimental veriﬁcation of our microscopic sce-
+above TN)  ﬁnite-size  eﬀects  become  relevant.    To  ﬁnd                         nario and allows to get prospects for new experiments.
+an  appropriate  temperature  range,  we  used  an  auxil-
+iary eight-order high-temperature series expansion,54                    and
+thus evaluated 30 K as a reasonable lowest ﬁtting temper-                           V.     PROPERTIES  OF  THE  MAGNETIC  MODEL
+ature for the N= 16 sites ﬁnite lattice.
+   The  ﬁtted  values  of Jd, g,  and χ0  are  summarized in                                       A.     Eﬀective  low-energy  theory
+Table   II. Since the FLL solution (Table               II, bottom line)
+yields unrealistically largeg = 2.457, it can be safely ruled                          From  the  above  discussion,  it  has  become  clear  that
+out.  By contrast, the AMF solution (Table                   II, ﬁrst row)          the  intradimer  exchange Jd  is  considerably  larger  than
+yields a reasonable value ofg = 2.175.18               The resulting ﬁt
+to the experimentalχ(T ) curve is shown in Fig.                    6  (top).
+   Next,  we  challenge  the  solutions  from  Table               II  using        TABLE II. Fitted values of Jd (in K), the g-factor and χ0 (in
+the  high-ﬁeld  magnetization  data  (Fig.              6,  bottom).   In           10−4× emu [mol  Cu]−1),  as  well  as  the  critical  ﬁeld  Hc1  (in
+particular,  the  critical  ﬁeld Hc1,  corresponding  to  the                       T),  corresponding  to  the  onset  of  a  magnetization  plateau.
+onset of the magnetization plateau (Fig.                6, bottom), can             The  simulations  have  been  performed  on  N = 16  sites  ﬁnite
+be  estimated  independently  for  both  experimental  and                          lattices using ED.
+simulated curves.  Experimentally,Hc1 = 23.2 T was eval-                            Jd : Jt1 : Jt2 : Jit                              Jd            g              χ0       Hc1
+uated  by  a  pronounced  minimum  in ∂2m/∂H2.55                        The         1 : 0.20 : 0.45 : −0.30 (AMF)      178.0      2.175         0.9      24.1
+simulated  magnetization  curves m(h∗),  where h∗  is  the                          1 : 0.15 : 0.25 : −0.70 (FLL)        291.9      2.457      −2.9      23.7
+reduced magnetic ﬁeld in the units of Jd, were scaled to
+                                                                                                                                                       8
+
+
+                        Jd   Jt1
+
+                      Jt2       Jit
+          a                               e                                                                                                           4
+              b                                                  a+b
+                                  g  h                                                   e+f+g+h
+                                          f
+
+                  c                                                  c+d                                              1               3
+
+               d
+
+   Cu(1)
+   Cu(2)                                                                                                                            2
+
+
+FIG. 8.  (Color online) The eﬀective interactions between the Cu(2) sites (ﬁlled circles)  up to lowest second order.  Left panel:
+Eight  paths  a − h  that  provide  a  nonzero  exchange  interaction  up  to  second  order.   Middle  panel:  eﬀective  model  based  on
+a—h paths:  Jx = c + d, Jy = a + b, and J = e + f + g + h.  In third order, one should also include the processes from the third
+cluster of Fig.  7, apart from a renormalization of the amplitudes a—h (see text).  Right panel:  The resulting eﬀective model in
+the topologically  equivalent square lattice  version  of  the structure.  The indices 1-4  label the four sites  of  the unit  cell of  this
+lattice model.  The arrows denote the classical GS of the model.
+
+
+the remaining energy scales in the problem.  This separa-                         Using these quite general results, we may turn to our
+tion of energy scales leads naturally to the idea that the                     spin lattice and examine the possible eﬀective  processes
+physics  of  the  problem  can  be  understood  by  a  pertur-                 that  are  active  up  to  third  order.   We  ﬁrst  discuss  the
+bative expansion around the limit Jt1 =Jt2 =Jit = 0.  In                       contributions  of  the  type  shown  in  Fig.           7(a)  and  (b).
+this limit, the Cu(1) sites coupled by Jd  form quantum-                       Altogether,  we  ﬁnd  eight  diﬀerent  paths a–h  [these  are
+mechanical singlets, while the remaining, Cu(2) sites are                      shown in Fig.      8(a)] with the following amplitudes:
+free to point up or down, which deﬁnes a highly degener-                                             (                      )
+ate GS manifold.  By turning on the remaining couplings                             a = +Jt2Jit2Jd     1 + 3(Jt2 +Jit)4Jd      = − 240332000Jd,
+Jt1, Jt2,  and Jit,  the  Cu(2)  sites  begin  to  interact  with                                   (                   )
+each  other  through  the  virtual  excitations  of  the  Cu(1)                     b = −Jt1Jit        1 + Jt1 +Jit        = + 117
+dimers out of their  singlet GS manifold.  By  integrating                                   2Jd    (          4Jd      )       4000Jd,
+out  these  ﬂuctuations,  one  can  derive  an  eﬀective  low-
+energy  model  for  the  Cu(2)  sites  only.   As  we  show  be-                    c = −Jt2Jit2Jd     1 + Jt2 +Jit4Jd     = + 224132000Jd,
+low, a degenerate perturbation theory up to third order                                              (                      )
+gives a remarkably accurate description of the low-energy                           d = +Jt1Jit        1 + 3(Jt1 +Jit)         = −  111
+physics of the problem.                                                                       2Jd          (      4Jd         )      4000Jd,
+   Figure   7  shows  the  three  topologically  diﬀerent  clus-                    e =g = −Jt1Jt2           1 + Jt1 +Jt2        = −  837
+ters G  that involve a  given Cu(1) dimer  and contribute                                          2Jd                4Jd              16000Jd,
+up to third order in perturbation theory.  To avoid dou-                                          (             )
+ble counting  of the  processes that  live on subclusters of                        f  = +J 2t2     1 + 3Jt2       =   5427
+G,56  we keep only those processes that invoke each weak                                     2Jd  (       2Jd   )     32000Jd,
+coupling  of G  at  least  once.   Here  the  weak  couplings                       h = +J 2t1      1 + 3Jt1       =   13
+J1,2,3 ≪Jd  belong to the set: Jt1,Jt2, and Jit.                                             2Jd          2Jd         500Jd .
+   For  the  following  discussion,  it  is  essential  to  empha-             In the right-hand side equalities, we made use of the esti-
+size the diﬀerence between the ﬁrst two clusters in Fig.               7:      mated ratios of the original couplings from Table                II (the
+in  (a)  the  two  couplings  involve  the  same  site α  of  the              AMF  solution).   Including  now  the  contributions  of  the
+dimer, while in (b) they involve both sitesα andβ.  Since                      type shown in Fig.       7(c), we get altogether three diﬀerent
+the  singlet  wave  function  |s⟩αβ  =     1√2 (|↑α↓β⟩ − |↓α↑β⟩)
+on the strong dimer is antisymmetric with respect to in-                       eﬀective exchange interactions between the Cu(2) spins:
+terchanging α  and β,  the  two  processes  have  opposite                        Jx =c +d − Jt1Jt2Jit
+sign (and are equal in magnitude up to second order).  In                                              2J 2d      ≃ +0.05578Jd ,                      (2)
+particular, ifJ1J2> 0, the eﬀective coupling between the
+sitesi andj is ferromagnetic in (a) but antiferromagnetic                         Jy =a +b − Jt1Jt2Jit2J 2d      ≃ −0.03234Jd ,                      (3)
+in (b).  For the third cluster, we have a third-order pro-
+cess  where  each  of  the  three  weak  couplings J1, J2  and                    J =e +f +g +h − Jt1Jt2(Jt1 +Jt2)
+J3  has been involved once in the whole process.                                                                      2J 2d             ≃ 0.06172Jd .(4)
+                                                                                                                                                       9
+
+These  couplings  are  shown  in  the  right  panel  of  Fig.          8,             0.3
+where  we  use  the  square-lattice  representation  that  is
+topologically  equivalent  to  our  eﬀective  model.   Hence,
+the  resulting  eﬀective  model  is  the  anisotropic  Shastry-                       0.2
+Sutherland  lattice  model  with  an  AFM  exchange  cou-
+plingJ  for the diagonal bonds, an AFM exchangeJx for
+the  horizontal  bonds,  and  an  FM  exchange Jy  for  the
+vertical bonds.  This model readily explains the observed                             0.1
+magnetic ordering on the Cu(2) sites since, on the classi-
+cal level, one can minimize all interactions simultaneously
+in the collinear “stripe” conﬁguration shown in the right
+panel of Fig.    8.                                                                    (0,0)                                                                                    (0,0)0
+   To challenge the applicability of the eﬀective model, we                                              (π,0)               (π,π)
+refer  again  to  the  experimental χ(T )  dependence.   The                   FIG.  9.    (Color  online)  Magnon  dispersions  (along  certain
+nonfrustrated nature of the eﬀective model enables us to                       symmetry  directions  in  the  BZ)  obtained  from  linear  spin
+use numerically eﬃcient QMC techniques.38                 To this end,         wave theory  around  the stripe  phase of  the Cu(2)  spins  (see
+we have simulated χ∗(T ∗) of the eﬀective model on a ﬁ-                        right  panel  of  Fig.  8).  There  are  four  magnon  branches but
+niteN = 24×24 sites lattice with periodic boundary con-                        these pair up into two 2-fold degenerate branches, which is due
+ditions.   A  parameter-free ﬁt  to  the  experimental  curve                  to the symmetry of interchanging the sites (1,2) with (3,4) of
+is  obtained by  using  Eqs.  (2)-(4) above, and the  values                   the unit cell (see right panel of Fig.      8).
+of Jd  and g from the ED ﬁt (Table            II). By construction,
+the eﬀective model is valid at low temperatures (T ≪Jd),                       [see  Eq.  (A13)],  and  can  be  calculated  by  a  numerical
+but above the long-range magnetic ordering temperature                         integration over the BZ. Altogether, we ﬁnd
+TN.  In this temperature range, the eﬀective model yields
+excellent agreement with the experimental χ(T ) (see in-                                           Eclass/Nuc = −0.119Jd                         (5)
+set in top panel of Fig.      6), justifying it as an appropriate                                    δE1/Nuc = −0.238Jd                         (6)
+low-energy model for CdCu2(BO3)2.                                                                    δE2/Nuc ≃ +0.2092Jd.                      (7)
+
+                                                                               Thus, quadratic ﬂuctuations actually reduce the GS en-
+B.     The size of the Cu(2) moments:  linear spin wave                        ergy  by  about  24%.   We  now  turn  to  the  renormaliza-
+theory  in  the  eﬀective model  and  QMC  simulations                         tion  of  the  magnetic  moment, δS.  As  explained  in  Ap-
+                                                                               pendix    A, this can also be calculated by a numerical in-
+   The size of the Cu(2) moment in the GS of the system                        tegration over the BZ, see Eq.  (A16).  We ﬁnd
+is  not  equal to  the  classical value gµB/2,  but  it  will  be                          δS ≃ 0.159 ⇒S = 0.5 −δS ≃ 0.341.            (8)
+somewhat lower due to quantum ﬂuctuations.  A similar
+correction is  expected,  e.g.,  for  the  GS  energy.   We  can               With g ≃ 2.175 we get a local magnetic moment on the
+calculate these corrections by a standard 1/S semiclassi-                      Cu(2) sites ofm ≃ 0.742µB, in line with the experimen-
+cal  expansion  around  the  stripe  phase  keeping  only  the                 tal value ofm ≃ 0.83µB.26
+quadratic portion of the ﬂuctuations.  The details of this                        Since  the  model is  not frustrated, we  expect that  the
+calculation are provided in Appendix            A, and here we only            above prediction from linear spin wave theory is a good
+discuss the main results.                                                      approximation.   To  verify  this  conjecture,  we  simulate
+   Figure   9  shows  the  magnon  dispersions  of  the  eﬀec-                 the  static  structure  factor  S  corresponding to  the  prop-
+tive model along certain symmetry directions in the Bril-                      agation  vector  of  the  collinear  state  (π,0)  using  QMC,
+louin  zone  (BZ).  There  are  four  magnon  branches  but                    which readily  yields  the  order parameter S  [Eq.  (33) in
+these pair up into two 2-fold degenerate branches due to                       Ref.  58]:
+the symmetry of interchanging the sites (1,2) with (3,4)
+in  the  unit  cell  (see  right  panel  of  Fig.     8).   The  accu-                                  S2(N) =  3S(π,0)N  .                             (9)
+racy of the magnon dispersions was cross-checked by the
+McPhase code.57                                                                The  results  are  presented  in  Fig.        10.   We  evaluated  ﬁ-
+   Let  us  now  look  at  the  quadratic  correction  to  the                 nite  2D  lattices  with  up  to N = 48×48  sites,  and  used
+GS  energy  which,  as  shown  in  Appendix            A,  consists  of        Eq. (39b) from Ref.       58  for the ﬁnite-size scaling (Fig.       10):
+two  terms, δE1  and δE2.    The  ﬁrst  term  is  given  by                                  S2(N) =S2∞ + σ1√
+δE1  =  −2ξNucS,  where ξ  ≡ J  + 2Jx − 2Jy,  and Nuc                                                               N  + σ2N  + σ3√N 3,            (10)
+is the number of unit cells.  So adding δE1  to the classi-
+cal  GS  energy Eclass  = −2ξNucS2,  amounts  to  a  renor-                    where S∞  is  the magnetic  moment, extrapolated to  the
+malization of the spin fromS to √S(S + 1).  The second                         thermodynamic  limit.  The  resulting S∞ ≃ 0.3297 yields
+quadratic correctionδE2 stands for the zero-point energy                       m =gµBS∞ ≃ 0.717µB,   corroborating  the  linear  spin-
+of the ﬁnal, decoupled harmonic oscillators of the theory                      wave theory result.
+                                                                                                                                                       10
+
+      0.3
+                                                                                                                     Jd    Jt1
+    0.25        QMC J = 1; Jx = 0.90; Jy = -0.52
+   N  0.2                                                                                                          Jt2
+   S             fit with Eq. (10)                                                                                               Jit
+
+    0.15
+
+      0.1
+          0.0001               0.001                 0.011/N
+
+
+FIG. 10.  (Color online) Finite-size extrapolation of the quan-
+tity S2(N) deﬁned in Eq. (9).  Finite-N  values (crosses) were                            Cu(1)
+evaluated  using  QMC  simulations  for  the  eﬀective  model  of
+the Cu(2) spins for a series of ﬁnite lattices up to N = 48×48                            Cu(2)
+sites.    The  ﬁt  to  Eq.    (10)  yields  σ1 = 0.5509,  σ2 = 0.6436,
+σ3 = −0.5097,  and  S∞ ≃ 0.3297,  with  the  extrapolated  mag-                FIG.  11.    (Color  online)  The  classical  ground  state  of  the
+netic moment m = gµBS∞ ≃ 0.717 µB.                                             eﬀective model derived in Sec.         V A. The vectors h1,2  denote
+                                                                               the  local  exchange  ﬁelds  on  the  Cu(1)  sites  exerted  by  the
+                                                                               magnetically ordered Cu(2) sites (blue and red arrows).
+   C.     Staggered  polarization  on  the  Cu(1)  dimers
+
+   The  eﬀective  low-energy theory derived above in Sec.                      H|t±1⟩ =  J4 |t±1⟩, but it mixes |s⟩ with |t0⟩ as follows
+V A  is a theory for the projection of the full wave function
+of the system onto the manifold where all Cu(1) dimers                                              H|t0⟩ = Jd4  |t0⟩ −h|s⟩                          (13)
+form singlets.  However, there is also a ﬁnite GS compo-
+nent out of this manifold.  In particular, once the Cu(2)                                           H|s⟩ = − 3Jd4   |s⟩ −h|t0⟩ .                    (14)
+sites order magnetically in the collinear stripe phase (see                    A straightforward diagonalization of the Hamiltonian in
+right  panel  of  Fig.    8),  they  will  exert  a  ﬁnite  exchange
+ﬁeld on the Cu(1) dimers.  A simple inspection of Fig.                 11      the subspace of {|s⟩, |t0⟩} leads to the eigenvalues
+tells us that this ﬁeld is staggered, i.e., the local ﬁelds on                                                     √(Jd     )2
+the  two  Cu(1)  spins  of  any  given  dimer  are  opposite  to                                 E± = −Jd                        +h2 .                (15)
+each other.  Speciﬁcally, the ﬁelds h1,2, as shown in Fig.                                                   4  ±         2
+11, are given by
+                                                                               For h = 0,  these results reduce to the  energies Jd/4 and
+ h1,2 =± (Jt1 −Jt2 +Jit)⟨SCu2⟩ = ∓0.55Jd⟨SCu2⟩,  (11)                          −3Jd/4 as expected.  The GS is given by
+where  the  last  equation  follows  again  from  the  DFT-                                     [(            √               )               ]
+based  estimates  for  the  ratios  of  the  leading  couplings                   |ψ−⟩ =  1N        Jd/2 +       J 2d/4 +h2      |s⟩ +h|t0⟩      ,   (16)
+(Table   II, ﬁrst row).                                                        where N 2 = 2h2 +J 2d/2 +Jd√J 2d/4 +h2.  As expected,
+   Now,  the  important  point  is  that  the  staggered  ﬁeld                 |ψ−⟩↦→|s⟩ for h↦→0, while for h ≫Jd, |ψ−⟩↦→ |↑↓⟩.
+does not commute with the exchange interaction on the                             We  may  also look at the  GS  expectation value  of the
+dimer, and as a result it can polarize the system imme-                        local polarizations on the dimer.  We ﬁnd
+diately.  This is very diﬀerent from the case of a uniform
+ﬁeld, where one must exceed the singlet-triplet gapJd in                                                                      J 2d/4 +h2)
+order to (uniformly) polarize the sites of the dimer.                             ⟨ψ−|Sz1,2|ψ−⟩ = ±  h(Jd/2 + √
+   To  assess  the  amount  of  the  induced  polarization  on                                            2h2 +J 2d/2 +Jd√J 2d/4 +h2 .   (17)
+the Cu(1) dimers, we consider a single AFM dimer with                          Forh = 0 we recover ⟨ψ−|Sz1,2|ψ−⟩ = 0, while forh ≫Jd
+the  exchange Jd  in  the  presence  of  a  staggered  ﬁeld h,                 we  get  maximum  polarizations  ⟨ψ−|Sz1,2|ψ−⟩  ↦→  ±1/2,
+described by the Hamiltonian                                                   which  corresponds  to  the  state  | ↑↓⟩.   In  the  linear  re-
+                  H =Jd  S1 · S2 −h(Sz1 −Sz2)                 (12)             sponse  regime h ≪Jd,  we  get  ⟨ψ−|Sz1,2|ψ−⟩  ≃  ±h/Jd,
+                                                                               thus the staggered susceptibility is χs = 1/Jd.
+The  eigenstates  of  the  dimer  for h  =  0  are  the  singlet                  We  can  now  apply  these  results  to  our  case.   Using
+GS, |s⟩ =    1√2 (|↑↓⟩ − |↓↑⟩), and the triplet excited states                 Eqs.  (11)  and  (17),  the  polarization  on  the  Cu(1)  sites
+|t1⟩  =  | ↑↑⟩,  |t−1⟩  =  | ↓↓⟩,  and  |t0⟩  =     1√                         can be estimated as
+                                                      2 (|↑↓⟩ + |↓↑⟩).
+The  staggered ﬁeld  leaves  |t1⟩  and  |t−1⟩  intact,  namely                                 |⟨SCu1⟩| ≃ 0.176 ≃ 0.516|⟨SCu2⟩| ,             (18)
+                                                                                                                                                    11
+
+which  is  again in  very good agreement with  the  experi-                   carrying a strong singlet amplitude and a ﬁnite staggered
+mental |⟨SCu1⟩| = 0.54|⟨SCu2⟩| from Ref.            26.                       polarization.
+                                                                                 Here,  we  go  one  step  further  and  calculate Hc1,  the
+                                                                              onset  ﬁeld  of  the  1/2-plateau  by  considering  the  one-
+D.     The  1/2-plateau  phase  and  the  critical  ﬁeld  Hc1                 magnon spectrum of the eﬀective model in the fully po-
+                                                                              larized phase.  The  one-magnon space  consists  of  states
+  The  separation of  energy  scales in  CdCu2(BO3)2  is  a                   with all but one spins pointing up.  We label the possible
+natural reason for the formation of the 1/2 magnetization                     positions of the down spin by one index for the unit cell
+plateau.  Due to the strongJd, the Cu(1) spins involved in                    and  another  index α = 1 − 4  which speciﬁes  one  of  the
+theJd-dimers are much harder to polarize with a uniform                       4 inequivalent Cu sites within the unit cell (see sites 1-4
+ﬁeld  than  the  weakly  coupled  Cu(2)  spins.    Naturally                  in the right panel of Fig.        8).  A straightforward Fourier
+then,  the  1/2-plateau corresponds to  the  state with  the                  transform gives the  following  4 × 4  Hamiltonian  matrix
+Cu(2)  spins  fully  polarized  and  the  Cu(1)  dimers  still                in the one-magnon space
+
+
+                                              2λ             J       Jx(1 +e−ikx) Jy(e−ikx +e−i(kx+ky))                                   
+       δH1-magnon(k) =  1                   J                                 2λ       Jy(1 +e−iky ) Jx(e−iky +e−i(kx+ky))               ,
+                              2         Jx(1 +eikx)      Jy(1 +eiky )                  2λ            J
+                                    Jy(eikx +ei(kx+ky)) Jx(eiky +ei(kx+ky))     J                              2λ
+
+
+
+where we measure all energies relative to the energy of the                      A  rough  estimate  for  the  ordered  magnetic  moment
+fully  polarized state, and λ = gµBH − (Jx +Jy +J/2).                         can be  obtained from the  spin correlations of the  maxi-
+Using Eqs. (2)-(4), we ﬁnd that one of the four branches                      mally separated spins on a  ﬁnite  lattice.  The small size
+of the one-magnon spectrum becomes soft (reaches zero                         of the 32-site ﬁnite lattice impedes a direct evaluation of
+energy) at k = 0 when gµBH =J + 2Jx =  11096400Jd.  This                      the order parameters.  However, the same-sublattice cor-
+soft  mode  signals  the  instability  of  the  fully  polarized              relations for the Cu(1) and Cu(2) sublattices, evaluated
+state, hence                                                                  using the same N = 32 cluster, can be compared to each
+                                         Jd                                   other.   In  this  way,  ﬁnite  size  eﬀects,  which  are  crucial
+                        Hc1 =  1109                                           for  the  values  of mCu(1)  and mCu(2),  should  be  largely
+                                  6400  gµB .                          (19)   remedied for the mCu(1):mCu(2)  ratio.
+With g ≃ 2.175 and Jd = 178 K (AMF solution from Ta-                             The  maximal  separation  in  terms  of  exchange  bonds
+ble  II),  we  obtain Hc1 ≃ 21.11 T,  which  is  in  very  good               between   the   same-sublattice   spins   on   the   32-site   ﬁ-
+agreement  with  the  experimental  value  of Hc1 = 23.2 T.                   nite  lattice  is  ﬁve  and  corresponds  to  ⟨S0 · S8⟩  corre-
+This  conﬁrms  that  the  third-order  perturbation  theory                   lations  in  Fig.    12.    ED  yields  ⟨S0 · S8⟩[Cu(1)] = 0.060
+gives  an  adequate  quantitative  description  of  the  low-                 and   ⟨S0  ·  S8⟩[Cu(2)] = 0.174   for   Cu(1)   and   Cu(2),
+energy physics.  It also conﬁrms that our set of exchange                     respectively.        In   the   simplest   picture,    the   quan-
+parameters gives an accurate quantitative description of                      tity   √⟨S0·S8⟩[Cu(1)] : √⟨S0·S8⟩[Cu(2)] = 0.59   should
+the magnetism in this compound.                                               be  close  to  the  ratio  of  the  magnetic  moments.    Al-
+                                                                              though   the   results   may   be   still   aﬀected   by   ﬁnite-
+                                                                              size    eﬀects,    a    comparison    to    the    experimental26
+                 E.     Exact  Diagonalizations                               mCu(1) :mCu(2) = 0.45 : 0.83 = 0.54    reveals    surprisingly
+                                                                              good agreement between theory and experiment.
+  We are now going to check the above physical picture                           Next,  we  examine  the  evolution  of  the  GS  expecta-
+obtained from the eﬀective model by numerical exact di-                       tion values of the local spin-spin correlations in magnetic
+agonalizations  on  the  original  model.   We  ﬁrst  address                 ﬁeld, which are presented in Fig.          13.  Forh∗ = 0, the cor-
+the  nature  of  the  magnetic  GS  by  evaluating  the  spin-                relations within the structural dimers and along the Jt2
+spin correlations ⟨S0·SR⟩ as a function of the “distance”                     bonds  are  dominant,  amounting  to  −0.570 and  −0.366,
+R  (Fig.  12).   In  order  to  elucidate  the  diﬀerence  in  the            respectively.  The ﬁrst one is somewhat weaker than the
+coupling  regimes  of  Cu(1)  and  Cu(2)  spins,  we  choose                  pure singlet value of −0.75, because of the ﬁnite admix-
+two independent  paths  on the  2D  spin lattice,  with  dif-                 ture with the triplet |t0⟩ in GS, as explained in Sec.              V C.
+ferent  initial  spins  S0  (Fig.     12,  lower  panel).    As  ex-             Now,  according  to  Fig.       13,  a  magnetic  ﬁeld  enhances
+pected for strongJd, the structural dimers exhibit strong                     the intradimer correlation.  This  counter-intuitive result
+AFM correlation ⟨S0·S1⟩ = −0.57 (green line in Fig.                 12),      can be physically understood as follows.  In a ﬁnite ﬁeld,
+while  the Jit  bonds  bear  much  weaker  FM  correlation                    the Cu(2) spins  order in  the  plane  perpendicular to  the
+⟨S0 · S1⟩ = 0.15 (brown line in Fig.          12).                            ﬁeld (this happens in an inﬁnitesimal ﬁeld, since the crys-
+                                                                                                                                                         12
+
+  0.75                                                                                  0.5
+                                                                                                                           Cu(2)
+                                                                                       zi>
+                                                                                         S
+      0                                                                                                                    Cu(1)
+
+                                                                                           0
+                                                                                       0.25
+ -0.75          1        2        3        4        5        6        7        8
+                                       R                                                   0
+               0                                                                     j                                           Jt2
+                  Cu(2)                                                              i-0.25
+                     1       2                                                                                       Jd                  Jt1
+                                           8                                           -0.5
+                  3             45                                                                                             Jit
+                                   ,5  6,6       7                                    -0.750         0.2       0.4       0.6       0.8         1        1.2
+                                                                                                                           h*
+                    0       7,3                                                 FIG.  13.   (Color  online)  Magnetization  ⟨Szi ⟩  for  Cu(1)  and
+                                        8,4                                     Cu(2) spins, as well as spin correlations ⟨Si · Sj⟩ correspond-
+           Cu(1)                2                                               ing  to  the leading  couplings  Jd,  Jt1,  Jt2,  and  Jit  (line  styles
+                                                                                according  to  the  inset)  as  a  function  of  magnetic  ﬁeld  h∗  in
+                                                                                units of Jd.
+                           1
+
+                                                                                have diﬀerent signs.  The negative correlation forJt2 and
+FIG.  12.     (Color   online)   Upper  panel:    spin  correlations            the positive forJit are in accord with the nature of these
+⟨S0 · SR⟩ in the magnetic ground state of CdCu2(BO3)2, sim-                     two  couplings,  AFM  and  FM,  respectively.   For  weaker
+ulated on the 32-site ﬁnite lattice with periodic boundary con-                 AFMJt1, the correlation is positive due to the frustrated
+ditions  using  ED.  Lower  panel:   N = 32  sites  (full  plot)  and           nature of the spin model.
+N = 16 sites (shaded rectangle) ﬁnite lattices used in our ED.                     Since the local spin correlation on the Cu(1) dimers is
+S0–SR pathways are used for the ⟨S0·SR⟩(R) plot in the upper                    very  close  to  the  singlet  value,  the  contribution  to  the
+panel.  For the notation of exchange couplings, see Fig.            5.          total magnetization from the Cu(1) spins is expected to
+                                                                                be  negligible.  Therefore,  the  magnetization results  pre-
+                                                                                dominantly  from  the  Cu(2)  spins.   This  picture  is  sup-
+talline anisotropy eﬀects are neglected) and at the same                        ported  by  simulations  of  the  local  magnetizations  ⟨Szi ⟩,
+time develop a uniform component along the ﬁeld.  While                         shown in the upper panel of Fig.              13.  In the 1/2-plateau
+the former, as discussed in Sec.          V C, gives rise to a stag-            phase, the local magnetization of Cu(2) is ⟨SzCu2⟩ = 0.483,
+gered exchange ﬁeld on the  Cu(1) dimers,  the latter in-                       while the magnetization of Cu(1) is negligibly small with
+duces  a  uniform  exchange  ﬁeld.   By  increasing  the  ex-                   ⟨SzCu1⟩ = 0.017, which also agrees with the  main picture
+ternal  ﬁeld,  the  staggered  component  decreases,  while                     obtained from the eﬀective model.  Therefore, within the
+the  uniform  component  increases.   At  the  1/2-plateau,                     error from ﬁnite-size eﬀects, only about 3 % of the Cu(1)
+the  Cu(2)  spins  are  almost  fully  polarized,  hence  only                  moments are polarized in the 1/2-plateau phase.
+the  uniform  component  survives.   Now,  in  contrast  to                        Let us now discuss the width of the 1/2-plateau.  This
+the  staggered  component,  the  uniform  ﬁeld  commutes                        corresponds to the energy we need to pay to fully polar-
+with  the  exchange  interaction  on  the  Cu(1)  dimer  and                    ize a Cu(1) dimer, i.e. to convert a singlet into a triplet
+thus leaves the singlet GS wave function intact.  In other                      excitation.  The width of the plateau can be estimated by
+words, the magnetic ﬁeld suppresses the admixture of a                          neglecting the perturbative corrections that give rise to a
+triplet in the  singlet GS.  The  steep decrease in the  cor-                   hopping of these triplet excitations (and, thus, to a small
+relation along  the Jt2  bonds  in  a  ﬁeld  reﬂects  the  same                 dispersion).    Our  ED  results  (upper  panel  of  Fig.               13)
+physics.                                                                        agree  very  well  with  this  estimate:   the  critical  ﬁeld  at
+   At  the   critical  ﬁeld h∗ ≃ 0.2  (24 T),  CdCu2(BO3)2                      which the 1/2-plateau ends is h∗ = 1.17 (143 T).
+enters  the  1/2-plateau  phase.    Here,  in  contrast  with                      Now,  once  we  pay  the  energy Jd  to  excite  a  triplet,
+the  strong  AFM  correlations  within  the  Cu(1)  dimers                      we  can  also  polarize  the  remaining  Cu(1)  dimers  very
+(⟨S0 · S1⟩ = −0.718),  the  correlations  along  the Jt1, Jt2                   quickly  due  to  the  small  (perturbative)  kinetic  energy
+and Jit  bonds  are much smaller and similar in size,  but                      scale  of  the  triplet  excitations.   Indeed,  our  ED  results
+                                                                                                                                                 13
+
+for  the  magnetization  above Hc2  show  a  rapid  increase                dressed experimentally by nuclear magnetic resonance.60
+up to the saturation value.  In addition, we ﬁnd no indi-                   On  the  other  hand,  inelastic  neutron  scattering  experi-
+cation for  any  other  magnetization plateaux  above  1/2,                 ments could challenge the magnon dispersions calculated
+which  suggests  that  the  interaction  between  the  triplet              for the eﬀective low-energy model.  In addition, the mag-
+excitations is negligible.                                                  netic couplings, associated with edge-sharing and corner-
+                                                                            sharing connections of CuO4 plaquettes, are strongly de-
+                                                                            pendent  on  Cu–O–Cu  angles.   Therefore,  the  magnetic
+           VI.     SUMMARY  AND  OUTLOOK                                    properties of CdCu2(BO3)2  could be  tuned by  applying
+                                                                            external pressure.  Similar experiments on SrCu2(BO3)2
+  The  magnetism  of  CdCu2(BO3)2  was  investigated on                     (Ref.   11) reveal excellent potential of such studies.
+a microscopic level by using extensive DFT band struc-
+ture calculations, ED and QMC simulations, third-order                                         ACKNOWLEDGMENTS
+perturbation  theory,  as  well  as  high-ﬁeld  magnetization
+measurements.   In  contrast  to  the  previously  suggested                   We  thank  M.  Hase  for  providing  us  with  the  struc-
+“chains +  dimers” model,  we  evaluate  a  quasi-2D mag-                   tural data and sharing his preprint prior to publication.
+netic model with mostly antiferromagnetic couplings:  an                    We are also very grateful to M. Rotter, M. Horvati´c, M.
+intradimer  exchange Jd  and  two  intra-tetramer  interac-                 Baenitz,  R.  Sarkar, and  R.  Nath for  fruitful  discussions
+tions Jt1  and Jt2,  as  well  as  a  ferromagnetic  coupling               and  valuable  comments.    The  high-ﬁeld  magnetization
+Jit  between  the  tetramers.  The Jd :Jt1 :Jt2 :Jit  ratio  is             measurements  were  supported  by  EuroMagNET  II  un-
+close to 1 : 0.20 : 0.45 : −0.30 with a dominantJd of about                 der the EC contract 228043.  A. A. T. acknowledges the
+178 K.  Topologically,  this  microscopic  model  can  be  re-              funding from Alexander von Humboldt Foundation.
+garded as decorated anisotropic Shastry-Sutherland lat-
+tice (Fig.  1).
+  While  the  spin  pairs  forming  the  structural  dimers                    Appendix  A:  Linear  spin  wave theory  around  the
+show a  clear  tendency  to  form magnetic  singlets  on the                             stripe  phase  of  the  eﬀective model
+Jd  bonds,  the  low-temperature  magnetic  properties  of
+CdCu2(BO3)2  are governed by interdimer couplings.  In                         Here, we provide the details of the linear spin wave the-
+contrast to the strongly frustrated SrCu2(BO3)2  featur-                    ory around the stripe phase of the Cu(2) spins.  We begin
+ing a singlet ground state, the inequivalence ofJt1 andJt2                  with the eﬀective model Hamiltonian that was derived in
+largely lifts the  frustration and triggers long-range anti-                Sec.   V A   for the Cu(2) spins:
+ferromagnetic ordering.  This model correctly reproduces                                          (                              )
+the  substantial  diﬀerence  between  Cu(1)  and  Cu(2)  or-                         H = ∑      J   S1,u · S2,u + S3,u · S4,u
+dered moments, as observed experimentally.  Our simula-                                     u         (                   )
+tions and the subsequent ﬁtting of the magnetic suscepti-                               +Jx  S3,u ·     S1,u + S1,u+tx
+bility and magnetization further support the microscopic                                              (                   )
+model and the proposed parameterization.                                                +Jy  S3,u ·     S2,u + S2,u+ty
+  It   is   interesting   to   compare   the   key   results   for
+CdCu2(BO3)2   with  the  archetype  Shastry-Sutherland                                  +Jx  S4,u · S2,u+ty +Jx  S2,u · S4,u−tx−ty
+S =  12  system  SrCu2(BO3)2.   Although  the  substitution                             +Jy  S1,u · S4,u−tx−ty +Jy  S4,u · S1,u+tx    (A1)
+of Sr by Cd signiﬁcantly alters the crystal structure and
+stabilizes  a  diﬀerent  magnetic  ground  state,  the  micro-              where tx,y = 2a ex,y are the primitive translation vectors
+scopic  magnetic  models  of  both  systems  bear  apparent                 in the model (a is the lattice constant of the square lat-
+similarities (Fig.   1).  Moreover, the dominance of the Jd                 tice), and the indexu labels the unit cell.  The remaining
+coupling  in  CdCu2(BO3)2  leads  to  an eﬀective  nonfrus-                 spin operator index (1-4) labels the 4 sites of the unit cell
+trated model for the  Cu(2) spins, which is topologically                   (see right panel of Fig.      8).  We then take as our reference
+equivalent  to  an  anisotropic  Shastry-Sutherland  lattice                classical state the  one  where  the  spins  1  and 3  (resp.  2
+model.  It is noteworthy that the phase diagram of such                     and 4) of the unit cell point along the positive (resp.  neg-
+a model was recently discussed.59                                           ative)z-axis, and perform a standard Holstein-Primakoﬀ
+  One of the main objectives of this study is to stimulate                  expansion in  terms  of  four  bosonic  operators  labeled  as
+further  experimental  activity  on  CdCu2(BO3)2.    Such                   au,bu,cu,du, which correspond to the four spins per unit
+studies are necessary to reﬁne the parameters of the sug-                   cellS1,u,S2,u,S3,u,S4,u respectively.  The transformation
+gested microscopic model and address yet unresolved is-                     reads
+sues.  Our extensive analysis of the magnetic properties of                             Sz1,u ≃ −S +a+uau,  S+1,u ≃ √2S a+u
+this  complex  system delivers several results  that  should
+be  challenged experimentally.  For example, we  have re-                               Sz2,u ≃S −b+ubu,  S+2,u ≃ √2S bu
+solved that the Cu(1) dimers develop a sizable staggered                                Sz3,u ≃S −c+ucu,  S+3,u ≃ √2S cu
+polarization which is suppressed by an applied ﬁeld and
+vanishes at the 1/2 plateau.  This behavior could be ad-                                Sz4,u ≃ −S +d+udu,  S+4,u ≃ √2S d+u .        (A2)
+                                                                                                                                                                14
+
+Replacing these expressions in the Hamiltonian and per-                             pact matrix form
+forming a Fourier transform, we get                                                                                        ∑
+                                                                                                    H2b =δE1 + S2               A+k  · Mk · Ak            (A4)
+                                                                                                                            k
+                                                                                    where δE1 = −2ξNucS,
+                      H =E0b + H2b + O(S0)                    (A3)
+                                                                                         A+k =(a+k, b+k, c+k, d+k, a−k, b−k, c−k, d−k ),
+                                                                                                                                                            (A5)
+                                                                                                                      ( Ck   Dk      )
+where Eob  =  −2ξNucS2  stands  for  the  classical  energy,                                                 Mk =         Dk   Ck        ,                       (A6)
+and ξ  ≡ J  + 2Jx − 2Jy.   The  term  H2b  stands  for  the
+quadratic Hamiltonian which can be written in the com-                              and
+
+                                                   ξ                          0                       0              Jye−ikx(1 + e−iky )
+                                                                                                                      
+                                                    0                          ξ             Jy(1 + e−iky )                   0
+                               Ck =                                                                                                ,                                   (A7)
+                                                    0                Jy(1 + eiky )              ξ                              0
+
+                                          Jyeikx(1 + eiky )            0                       0                              ξ
+                                             0                           −J                −Jx(1 + e−ikx)                    0     
+                                                                                                                           
+                                            −J                           0                              0               −Jxe−iky (1 + e−ikx)
+                          Dk =                                                                                                          .                            (A8)
+                                     −Jx(1 + eikx)                  0                              0                               −J
+
+                                              0              −Jxeiky(1 + eikx)             −J                               0
+
+
+To  diagonalize  H2b  we  search  for  a  new  set  of  bosonic                     where the second correction
+operators  ˜Ak given by the generalized Bogoliubov trans-                                                          ∑
+formation Ak = Sk· ˜Ak, such that the matrix S+k MkSk ≡                                               δE2 = S2          (ω1k +...+ω4k) ,            (A13)
+Ωk becomes diagonal.  The transformation must also pre-                                                             k
+serve  the  bosonic  commutation  relations,  which  can  be                        stands for the total contribution from the zero-point en-
+expressed compactly as  g =  ˜g  = Sk · g · S+k ,  where g  is                      ergy  of  all  independent  harmonic  operators  involved  in
+the “commutator” matrix                            ( 14     0     )                 the theory.
+                        ((A+)T  · ATk      )T  =
+  g = Ak · A+k  −             k                        0   −14          (A9)
+and 14  stands for the  4 × 4 identity  matrix.  The  above                              1.     Renormalization  of  the  magnetic  moments
+two conditions give                                                                    Let us now look at the eﬀect of the quadratic ﬂuctua-
+           (gMk) · Sk = Sk · (gΩk) ≡ Sk · Ω′k              (A10)                    tions on the magnetic moments.  We consider the spin S1
+which  is  an  eigenvalue  equation  in  matrix  form  (the                         operator inside the unit cell n = 0.  The classical vector
+columns of Sk  contain the eigenvectors of gMk).                                    points along the z-axis.  We have
+   One  can  show61        that  if  Mk  is  semi-deﬁnite  positive,                                                                  ∑
+then the eigenvalues of gMk  come in opposite pairs:                                      Sz1 =S −a+n=0an=0 =S −    1Nuc                    a+kaq .        (A14)
+               ( ωk      0     )               ( ωk    0     )                                                                         k,q
+      Ω′k =        0    −ωk       ⇒ Ωk =            0    ωk           (A11)         Using the transformation Ak = Sk ·  ˜Ak, we get
+
+where ωk  is a diagonal matrix with non-negative entries                                Sz1 =S −    1      ∑∑Sk(1,i)∗Sq(1,j)  ˜A+
+ω1k,...,ω4k.  This in turn leads to                                                                  Nuc                                       k (i) ˜Ak(j) .
+                                   (                                      )                                 k,q   ij
+H2b =δE1 +δE2 +S ∑                   ω1k  ˜a+k ˜ak +...+ω4k  ˜d+k  ˜dk       ,                                                                             (A15)
+                                k                                                   In  the  vacuum  GS,  the  only  non-vanishing  expectation
+                                                                      (A12)         values are of the type ⟨˜ak˜a+k ⟩ = 1.  Thus from the above
+                                                                                                                                                              15
+
+sum  we  should  keep  only  terms  with i =j = 5 − 8  and   k =q, namely
+                                                                                                                     ∑      8∑
+                                                                                              ⟨Sz1⟩ =S −    1Nuc               |Sk(1,i)|2 .              (A16)
+                                                                                                                       k  i=5
+                                                                                   The second term can be calculated by a numerical inte-
+                                                                                   gration over the BZ.
+
+
+
+
+
+
+
+ ∗ janson@cpfs.mpg.de                                                                  Haﬁez,  O.  Janson,  A.  A.  Tsirlin,  H.  Rosner,  S.-L.  Drech-
+ † rosner@cpfs.mpg.de                                                                  sler,   M.   Weil,   G.   N´enert,   R.   Klingeler,   O.   Volkova,
+ 1  C.  K.  Majumdar  and  D.  K.  Ghosh,           J.  Math.  Phys.  10,              A.  Vasiliev,  V.  Kataev,    and  B.  B¨uchner,         Phys.  Rev.  B
+   1388 (1969);     J. Math. Phys. 10, 1399 (1969).                                    84, 134430 (2011),       arXiv:1110.0447.
+ 2  A. Kitaev,    Ann. Phys. 321, 2 (2006),         cond-mat/0506438.              19  O. Janson, W. Schnelle, M. Schmidt, Y. Prots, S.-L. Drech-
+ 3  B. S. Shastry and B. Sutherland,           Physica B+C 108, 1069                   sler, S. K. Filatov,  and H. Rosner,        New J. Phys. 11, 113034
+   (1981).                                                                             (2009),   arXiv:0907.4874.
+ 4  S.  Miyahara  and  K.  Ueda,          Phys.  Rev.  Lett.  82,  3701            20  J. Deisenhofer, R. M. Eremina, A. Pimenov, T. Gavrilova,
+   (1999),   cond-mat/9807075.                                                         H.  Berger,  M.  Johnsson,  P.  Lemmens,  H.-A.  Krug  von
+ 5  H. Kageyama, K. Yoshimura, R. Stern, N. V. Mushnikov,                              Nidda,  A.  Loidl,  K.-S.  Lee,    and  M.-H.  Whangbo,            Phys.
+   K. Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto,                            Rev.  B  74,  174421  (2006),        cond-mat/0610458;    H.  Das,
+   and Y. Ueda,      Phys. Rev. Lett. 82, 3168 (1999).                                 T. Saha-Dasgupta, C. Gros,   and R. Valent´ı,            Phys. Rev. B
+ 6  K. Onizuka, H. Kageyama, Y. Narumi, K. Kindo, Y. Ueda,                             77, 224437 (2008),       cond-mat/0703675.
+   and T. Goto,      J. Phys. Soc. Jpn. 69, 1016 (2000).                           21  W. E. Pickett,     Rev. Mod. Phys. 61, 433 (1989).
+ 7  C.  Vecchini,  O.  Adamopoulos,   L.  Chapon,   A.  Lappas,                    22  O. Janson, R. O. Kuzian, S.-L. Drechsler,   and H. Rosner,
+   H.  Kageyama,  Y.  Ueda,    and  A.  Zorko,             J.  Solid  State            Phys. Rev. B 76, 115119 (2007).
+   Chem. 182, 3275 (2009).                                                         23  K.-Y.    Choi,    Y.    G.    Pashkevich,    K.    V.    Lamonova,
+ 8  S.  Miyahara  and  K.  Ueda,  J.  Phys.  Soc.  Jpn.  (Suppl.  B)                   H.  Kageyama,  Y.  Ueda,   and  P.  Lemmens,             Phys.  Rev.  B
+   69, 72 (2000),     cond-mat/0004260.                                                68,  104418  (2003);    G.  T.  Liu,  J.  L.  Luo,  N.  L.  Wang,
+ 9  S. Miyahara and K. Ueda,          J. Phys.:  Condens. Matter 15,                   X.  N. Jing,  D.  Jin,  T.  Xiang,   and  Z.  H.  Wu,       Phys.  Rev.
+   R327 (2003).                                                                        B 71, 014441  (2005),       cond-mat/0406306;  G. T. Liu, J. L.
+10  See,  e.g.,  Ref. 9,  A.  Koga  and  N.  Kawakami,         Phys.  Rev.             Luo, Y. Q. Guo,  S. K. Su, P. Zheng, N. L. Wang, D. Jin,
+   Lett.  84,  4461  (2000),       cond-mat/0003435;    R.  Darradi,                   and  T.  Xiang,      Phys.  Rev.  B  73,  014414  (2006),          cond–
+   J. Richter,   and D. J. J. Farnell,        Phys. Rev. B 72, 104425                  mat/0512521;  S. Haravifard,  S. R. Dunsiger,  S. El Shaw-
+   (2005),   cond-mat/0504283.                                                         ish,  B.  D.  Gaulin,  H.  A.  Dabkowska,  M.  T.  F.  Telling,
+11  T.  Waki,  K.  Arai,  M.  Takigawa,  Y.  Saiga,  Y.  Uwatoko,                      T. G. Perring,   and J. Bonˇca,       Phys. Rev. Lett. 97, 247206
+   H. Kageyama,  and Y. Ueda,           J. Phys. Soc. Jpn. 76, 073710                  (2006),   cond-mat/0608442.
+   (2007),   arXiv:0706.0112.                                                      24  M.  Hase,  M.  Kohno,  H.  Kitazawa,  O.  Suzuki,  K.  Ozawa,
+12  For  a  recent  review,  see  M.  Takigawa,  T.  Waki,  M.  Hor-                   G.  Kido,  M.  Imai,   and  X.  Hu,       Phys.  Rev.  B  72,  172412
+   vati´c,    and  C.  Berthier,     J.  Phys.  Soc.  Jpn.  79,  011005                (2005),   cond-mat/0509094.
+   (2010).                                                                         25  S.   Mitsudo,    M.   Yamagishi,    T.   Fujita,    Y.   Fujimoto,
+13  M. Moliner, I. Rousochatzakis,  and F. Mila,             Phys. Rev. B              M. Toda, T. Idehara,  and M. Hase,           J. Magn. Magn. Mater.
+   83, 140414 (2011),       arXiv:1012.5177.                                           310, e418 (2007).
+14  N. B. Ivanov and J. Richter,       Phys. Lett. A 232, 308 (1997),              26  M.   Hase,   A.   D¨onni,   V.   Y.   Pomjakushin,   L.   Keller,
+   cond-mat/9705162.                                                                   F.  Gozzo,  A.  Cervellino,    and  M.  Kohno,           Phys.  Rev.  B
+15  A.  A.  Belik,  M.  Azuma,    and  M.  Takano,          J.  Solid  State           80, 104405 (2009).
+   Chem. 177, 883 (2004);  M. D. Johannes, J. Richter, S.-L.                       27  R. D. Shannon,       Acta Crystallogr. A32, 751 (1976).
+   Drechsler,  and H. Rosner,        Phys. Rev. B 74, 174435 (2006),               28  It  is  especially  important  that  the  respective  O  atom  be-
+   cond-mat/0609430.                                                                   longs  to  a  magnetic  plaquette.  Otherwise,  the  magnetic
+16  A.  A.  Tsirlin  and  H.  Rosner,       Phys.  Rev.  B  79,  214417                exchange would be very small. For instance, an octahedral
+   (2009),   arXiv:0901.4498.                                                          CuO6  coordination is typically distorted with a formation
+17  R. H. Colman,  C.  Ritter,   and A. S. Wills,           Chem. Mater.               of four short Cu–Oplaq bonds (a plaquette) and two longer
+   20,  6897  (2008),     arXiv:0811.4048;   O.  Janson,  J.  Richter,                 Cu–Oapic  (apical)  bonds. The latter bonds are perpendic-
+   and  H.  Rosner,       Phys.  Rev.  Lett.  101,  106403   (2008),                   ular  to  the  magnetically  active  Cu  3dx−y2  orbital,  thus
+   arXiv:0806.1592;   R.  H.  Colman,  A.  Sinclair,    and  A.  S.                    the  superexchange  along  Cu–Oapic–Cu  paths  can  be  very
+   Wills,   Chem. Mater. 22, 5774 (2010).                                              small.
+18  O.   Janson,    A.   A.   Tsirlin,    J.   Sichelschmidt,   Y.   Sk-           29  J.    B.    Goodenough,        Phys.    Rev.    100,    564    (1955);
+   ourski,  F.  Weickert,    and  H.  Rosner,         Phys.  Rev.  B  83,              J. Kanamori,      J. Phys. Chem. Solids 10, 87 (1959).
+   094435  (2011),      arXiv:1011.5393;    A.  A.  Tsirlin,  O.  Jan-             30  M.  Braden,  G.  Wilkendorf,  J.  Lorenzana,  M.  A¨ın,  G.  J.
+   son,    and  H.  Rosner,      Phys.  Rev.  B  82,  144416  (2010),                  McIntyre,   M.   Behruzi,   G.   Heger,   G.   Dhalenne,     and
+   arXiv:1007.1646;   Y.  C.  Arango,  E.  Vavilova,  M.  Abdel-                       A. Revcolevschi,      Phys. Rev. B 54, 1105 (1996).
+                                                                                                                                                              16
+
+
+31  V.  V.  Mazurenko,  S.  L.  Skornyakov,  A.  V.  Kozhevnikov,                      and   22).  The  parameter  U3d  describes  the  correlations  in
+   F.  Mila,    and  V.  I.  Anisimov,      Phys.  Rev.  B  75,  224408                the 3d shell, only, thus its value is larger than the value of
+   (2007),   cond-mat/0702276.                                                         Ueﬀ.
+32  K.  Koepernik  and  H.  Eschrig,          Phys.  Rev.  B  59,  1743            48  See,  e.g.,  G.  Vidal,   Phys.  Rev.  Lett.  101,  110501  (2008),
+   (1999).                                                                             quant-ph/0610099;  J.  Jordan,  R. Or´us,  G.  Vidal,  F. Ver-
+33  J. P. Perdew and Y. Wang,         Phys. Rev. B 45, 13244 (1992).                   straete,    and  J.  I.  Cirac,    Phys.  Rev.  Lett.  101,  250602
+34  J.  P.  Perdew,  K.  Burke,    and  M.  Ernzerhof,         Phys.  Rev.             (2008),   cond-mat/0703788.
+   Lett. 77, 3865 (1996).                                                          49  J.  Richter,  J.  Schulenburg,     and  A.  Honecker,  in  Lec-
+35  H.  Eschrig  and  K.  Koepernik,        Phys.  Rev.  B  80,  104503                ture  Notes  in  Physics,  Vol.  645,  edited  by  U.  Schollw¨ock,
+   (2009),   arXiv:0905.4844.                                                          J.    Richter,    D.   Farnell,        and    R.   Bishop    (Springer
+36  M. T. Czy˙zyk and G. A. Sawatzky,           Phys. Rev. B 49, 14211                 Berlin/Heidelberg, 2004) pp. 85–153.
+   (1994);  E. R. Ylvisaker, W. E. Pickett,  and K. Koepernik,                     50  G.  Misguich  and  P.  Sindzingre,        Eur.  Phys.  J.  B  59,  305
+   Phys. Rev. B 79, 035103 (2009),            arXiv:0808.1706.                         (2007),   arXiv:0704.1017;  O.  Janson,  J.  Richter,  P. Sindz-
+37  Note that diﬀerent U3d ranges should be used for AMF and                           ingre,    and  H.  Rosner,     Phys.  Rev.  B  82,  104434  (2010),
+   FLL, as explained in Refs.         18  and   62.                                    arXiv:1004.2185.
+38  A. Albuquerque, F. Alet, P. Corboz, P. Dayal, A. Feiguin,                      51  J. Richter, J.  Schulenburg, A. Honecker,   and D. Schmal-
+   S.  Fuchs,  L.  Gamper,  E.  Gull,  S.  G¨urtler,  A.  Honecker,                    fuß,  Phys.  Rev.  B  70,  174454  (2004),        cond-mat/0406103;
+   R. Igarashi, M. K¨orner, A. Kozhevnikov, A. L¨auchli, S. R.                         A. M. L¨auchli, J. Sudan,   and E. S. Sørensen,             Phys. Rev.
+   Manmana,  M.  Matsumoto,  I.  P.  McCulloch,  F.  Michel,                           B 83, 212401 (2011),        arXiv:1103.1159.
+   R.   M.   Noack,   G.   Pawlowski,   L.   Pollet,   T.   Pruschke,              52  For  the ﬁtting,  we  used  Eq.  2 from  Ref.        62.  Cimp  was  set
+   U.  Schollw¨ock,  S. Todo,  S.  Trebst,  M.  Troyer,  P. Werner,                    to zero.
+   and  S.  Wessel,  J.  Magn.  Magn.  Mater.  310,  1187  (2007),                 53  N. D. Mermin  and  H. Wagner,            Phys. Rev. Lett. 17,  1133
+   arXiv:0801.1765.                                                                    (1966).
+39  J. Schulenburg,    http://www-e.uni-magdeburg.de/jschulen/spin54  H.-J. Schmidt, A. Lohmann,  and J. Richter,.                               Phys. Rev. B
+40  S. Todo and K. Kato,        Phys. Rev. Lett. 87, 047203 (2001),                    84, 104443 (2011).
+   cond-mat/9911047.                                                               55  The simulated magnetization curve exhibits a step-wise be-
+41  A. A. Tsirlin, B. Schmidt, Y. Skourski, R. Nath, C. Geibel,                        havior  which  originates  from  the  ﬁnite  size  of  the  lattice
+   and H. Rosner, Phys. Rev. B 80, 132407 (2009).                                      and the low temperature T /Jd = 8.4×10−3 used for the ED
+42  In this coordinate system, the x-axis runs from Cu to one                          simulation.
+   of  the  O  atoms,  while  the  z-axis  is  perpendicular  to  the              56  J.  Oitmaa,  C.  Hamer,    and  W.  Zheng,  Series  expansion
+   plaquette plane.                                                                    methods for strongly Interacting lattice models (Cambridge
+43  P. W. Anderson,       Phys. Rev. 115, 2 (1959).                                    University Press, 2006).
+44  Restriction  to  the  antiferromagnetic  contribution  arises                  57  M. Rotter,    J. Magn. Magn. Mater. 272–276, E481 (2004).
+   from  the  one-orbital  nature  of  the  tight-binding  model,                  58  A.  W.  Sandvik,      Phys.  Rev.  B  56,  11678  (1997),          cond–
+   which can not account for the ferromagnetic exchange due                            mat/9707123.
+   to the Pauli exclusion principle.                                               59  S. Furukawa, T. Dodds,  and Y. B. Kim,              Phys. Rev. B 84,
+45  R. Neudert, S.-L. Drechsler, J. M´alek, H. Rosner, M. Kiel-                        054432 (2011),      arXiv:1104.5017.
+   wein, Z. Hu, M. Knupfer, M. S. Golden, J. Fink, N. N¨ucker,                     60  See, e.g. K. Kodama, K. Arai, M. Takigawa, H. Kageyama,
+   M. Merz, S. Schuppler, N. Motoyama, H. Eisaki, S. Uchida,                           and Y. Ueda,     J. Magn. Magn. Mater. 272–276, 491 (2004);
+   M. Domke,  and G. Kaindl,          Phys. Rev. B 62, 10752 (2000).                   K.  Kodama,   S.  Miyahara,   M.  Takigawa,   M.  Horvati´c,
+46  Strong correlations inherent to the Cu 3d9  electronic con-                        C. Berthier, F. Mila, H. Kageyama,  and Y. Ueda,               J. Phys.:
+   ﬁguration ensure the applicability of the DFT+U methods,                            Condens. Matter 17, L61 (2005),            cond-mat/0404482.
+   see, e.g.V. I. Anisimov, F. Aryasetiawan,   and A. I. Licht-                    61  J.-P. Blaizot and G. Ripka, Quantum Theory of Finite Sys-
+   enstein,   J. Phys.:  Condens. Matter 9, 767 (1997).                                tems  (MIT Press, Cambridge, MA, 1985) Chapter 3.
+47  The relevant ranges of U3d  were chosen based on previous                      62  O.  Janson,  A.  A.  Tsirlin,  M.  Schmitt,    and  H.  Rosner,
+   DFT+U  studies for related cuprate systems (e.g., Refs.                 19          Phys. Rev. B 82, 014424 (2010),            arXiv:1004.3765.

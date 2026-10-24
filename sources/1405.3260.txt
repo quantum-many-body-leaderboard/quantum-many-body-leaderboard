@@ -1,0 +1,881 @@
+             Exotic magnetisation plateaus in a quasi-2D Shastry-Sutherland model
+
+                                        G.R.  Foltin,1  S.R.  Manmana,2  and  K.P.  Schmidt1,∗
+                         1Lehrstuhl  f¨ur  Theoretische  Physik  1,  TU  Dortmund,  44221  Dortmund,  Germany
+               2Institut  f¨ur  Theoretische  Physik,  Georg-August-Universit¨at  G¨ottingen,  37077  G¨ottingen,  Germany
+                                                             (Dated:  June 24, 2021)
+                  We ﬁnd unconventional Mott insulators in a quasi-2D version of the Shastry-Sutherland model
+                in a magnetic ﬁeld.  In our realization on a 4-leg tube geometry, these are stabilized by correlated
+                hopping of localized magnetic excitations.  Using perturbative continuous unitary transformations
+                (pCUTs, plus classical approximation or exact diagonalization) and the density matrix renormal-
+                isation group method (DMRG), we  identify prominent magnetization plateaus at magnetizations
+                M = 1/8, M = 3/16, M = 1/4, and M = 1/2.  While the plateau at M = 1/4 can be understood in
+                a semi-classical fashion in terms of diagonal stripes, the plateau at M = 1/8 displays highly entan-
+                gled wheels in the transverse direction of the tube.  Finally, the M = 3/16 plateau is most likely to
+                be viewed as a classical 1/8 structure on which additional triplets are fully delocalized around the
+                tube.  The classical approximation of the eﬀective model fails to describe all these plateau structures
+                which beneﬁt from correlated hopping.  We relate our ﬁndings to the full 2D system, which is the
+                underlying model for the frustrated quantum magnet SrCu(BO3)2.
+
+                PACS numbers:  75.10.Jm, 75.40.Mg, 75.30.Kz
+
+
+                    I.    INTRODUCTION                                       the full 2D system even more diﬃcult.  In consequence,
+                                                                             we  choose  to  study  a  quasi-2D  version  of  the  Shastry-
+  A  particularly  interesting  realization  of  highly  frus-               Sutherland model on a tube geometry which has a ﬁnite
+trated   quantum   magnetism1   is   found   in   the   corre-               width of four dimers and is periodically coupled in the
+lated  material  SrCu(BO3)2.2–11     The  underlying  model                  transverse direction, and which we refer to as a four-leg
+is  widely  believed  to  be  the S  =  1/2  Heisenberg  anti-               tube.  Note that in the present paper we go one step fur-
+ferromagnet (HAFM) on the 2D Shastry-Sutherland lat-                         ther than in previous work11  and do not only focus on
+tice and experiments in ultrastrong magnetic ﬁelds un-                       the  magnetization  curve  itself,  but  also  treat  the  mag-
+veil  a  multitude  of  intriguing  behavior  archetypical  for              netization structures on the plateaus in high detail and
+frustrated quantum magnetism.  Despite a huge body of                        accuracy.   We  believe  that  this  can  lead  to  insights  for
+literature,2–23     still  various  aspects  refrain  from  a  clear         the full 2D case.  In particular, we identify a mechanism
+theoretical  understanding,  in  particular  the  structures                 which  leads  to  delocalized  structures  on  magnetisation
+and  sequence  of  Mott  insulators  realized  as  magnetiza-                plateaus, and which stabilises highly entangled states in
+tion plateaus in the low part of the magnetization curve,                    these Mott insulators similar to the recently discovered
+so that the system stays in the focus of present day re-                     crystals of bound states30 in the 2D Shastry-Sutherland
+search.                                                                      model23.  The scope of this paper is to discuss this mech-
+  The Shastry-Sutherland model24  can be seen as a set                       anism in detail and propose possible scenarios for the full
+of mutually orthogonal dimers which are coupled by an                        2D system.
+interdimer coupling J′.  Its beauty arises from the exact
+solution  in  terms  of  a  product  state  of  singlets  at  zero                                       II.    MODEL
+magnetic ﬁeld and small enough values ofJ′, and the fact
+that the magnetization process can be viewed as a subse-                        In  Fig.1we  show  the  geometry  of  the  lattice  under
+quent population of the dimers by triplets.  Even though                     consideration,  which  we  refer  to  as  a  four-leg  Shastry-
+these aspects give important insights into the magneti-                      Sutherland tube.  On this geometry, we study the spin-
+zation  process,  the  interdimer  coupling  in  the  material               1/2  Shastry-Sutherland  model  in  an  external  magnetic
+is  so  strong  that  a  treatment  by  analytical  methods  as              ﬁeld h,
+well  as  by  numerical  approaches  has  remained  a  chal-
+lenge.   Here,  we  combine  pCUTs25,26      and  DMRG27  to                    H =J ∑           ⃗Si·⃗Sj +J′ ∑         ⃗Si·⃗Sj−h∑        Szi  ,   (1)
+treat  the  system  in  an  approximation  of  the  2D  struc-                           ≪i,j≫                 <i,j>                  i
+ture.  While the DMRG works best in 1D, the uncover-
+ing of a spin liquid phase in the HAFM on a 2D kagome                        with the bonds≪i,j≫ building an array of orthogonal
+lattice28  shows  that  this  method  can  lead  to  insightful              dimers and the bonds < i,j > representing inter-dimer
+results  also  in  higher  dimensions,  see  also  Ref.29.   In              couplings.   The  four-leg  Shastry-Sutherland  tube  has  a
+contrast to this study, here we do not restrict ourselves                    four-dimer unit cell which is shown in Fig.1.
+to the ground state at zero magnetic ﬁeld but address the                       Here we are not interested in the full phase diagram of
+aforementioned behaviour at ﬁnite magnetizations.  This                      Eq. (1).  We restrict ourselves to parameter ratios  J′/J
+further  degree  of  freedom  makes  a  systematic  study  of                for which the four-leg Shasty-Sutherland tube is in the
+                                                                                                                                                   2
+
+                                                                            model is then given by
+
+                                                                             Heﬀ =∑toδb†i+δbi +∑Voδ1,δ2,δ3b†i+δ3b†i+δ2bi+δ1bi ... ,
+                                                                                       i,δ               i,δn
+                                                                                                                                                (2)
+                                                                            where the sums run over the sitesi of the eﬀective square
+                                                                            lattice build by dimers of the Shastry-Sutherland model
+                                                                            ando∈{v, h} gives the orientation vertical or horizontal
+                                                                            of  dimer i.   The  dots  ”...”  represent  terms  containing
+                                                                            more than four operators which we do not consider here.
+                                                                            The hardcore boson operator b†i  (bi) corresponds to the
+                                                                            creation (annihilation) of a triplet|t1⟩ on dimer i.  The
+                                                                            amplitudestoδ andVoδ1,δ2,δ3 are obtained as high-order se-
+FIG. 1.  Illustration of the four-leg Shastry-Sutherland tube.              ries expansions in J′/J  in the thermodynamic limit.  We
+Solid  red  bonds  denote  inter-dimer  couplings J  and  dashed            have calculated order 15 for one-body termstδ and order
+blue lines refers to the intra-dimer coupling J′.  The tube is              14 for two-body terms Vδ2,δ3δ1     .  In this work we use bare
+periodically coupled in the vertical direction as indicated by              series which are fully converged for J′/J = 0.3.
+the blue dashed lines at the upper end.  The unit cell is shown                In the following we focus on certain aspects of the ef-
+as thin black box covering four dimers.                                     fective model which are speciﬁc to the four-leg Shastry-
+                                                                            Sutherland tube and which are diﬀerent when compared
+exact product state of singlets for h = 0, since this is ex-                to the two-dimensional case.  For more general properties
+pected to be the relevant coupling regime for SrCu(BO3)2                    we refer to the literature19,30
+in two dimensions.11 Indeed, the singlet product state of                      Let us start by discussing the amplitudestδ of the one-
+dimers is, as for the two-dimensional case, an exact eigen-                 particle operators which are also given in the Appendix
+state of the system being the ground state up to J′/J≈                      VIII. As for the two-dimensional case  19,  one ﬁnds only
+0.7  which  can  be  estimated  by  extrapolating  the  one-                two  types  of  terms:  a  chemical  potential∝ b†ibi  and  a
+triplon gap with pCUTs (not shown).  The latter value                       one-particle  hopping  over  the  diagonal  of  the  eﬀective
+is very close to the one of the two-dimensional Shastry-                    dimer square lattice.  The chemical potential for the four-
+Sutherland model22,35     suggesting that the four-leg tube                 leg Shastry-Sutherland tube is slightly diﬀerent on hori-
+shares many similarities with its two-dimensional coun-                     zontal and vertical dimers.  In fact, the value is lower on
+terpart.                                                                    vertical dimers.  As a consequence, typical magnetization
+                                                                            structures found by pCUT have particles dominantly on
+                                                                            vertical dimers.  But the energy diﬀerence in the chem-
+                                                                            ical potentials between horizontal and vertical dimers is
+                        III.    METHODS                                     very small, e.g. 10−9J forJ′/J = 0.3, since it arises per-
+                                                                            turbatively only due to a diﬀerent amplitude in order 10.
+  In  this  section,  we  discuss  the  pCUTs  aiming  at  the              This energy scale is therefore diﬃcult to resolve by the
+derivation  of  an  eﬀective  low-energy  model  which  is                  DMRG.
+treated either by the classical approximation (CA) or by                       Two-particle  operators  with  amplitudes Voδ1,δ2,δ3  are
+exact diagonalization (ED), and brieﬂy mention details                      dominated by repulsive density-density interactions and
+of our DMRG approach.                                                       correlated hopping terms, i.e. processes where a particle
+                                                                            is only allowed to hop if another particle is present (see
+                                                                            also AppendixVIII). Correlated hopping terms arise in
+                                                                            order 2 perturbation theory and represent the dominant
+                    A.    pCUT(+CA/ED)                                      kinetic processes in the eﬀective Hamiltonian. In contrast
+                                                                            to the two-dimensional case, the amplitudes Voδ1,δ2,δ3 dif-
+  The pCUT method25,26     has been used successfully for                   fer for operators which are related to each other by a 90◦
+the two-dimensional Shastry-Sutherland model19 as well                      rotation due to the ﬁnite extension of the four-leg tube
+as for the two-leg Shastry-Sutherland tube30. Essentially,                  in the transverse direction,  as was already seen for the
+the pCUT transforms Eq.1into an eﬀective model con-                         one-particle  operators.   But  we  stress  that  these  diﬀer-
+serving the number of triplons.  Triplons with total spin                   ences are typically tiny, since they originate from virtual
+one are the elementary excitations of coupled-dimer sys-                    ﬂuctuations  which  wind  around  the  tube  and  therefore
+tems  and  can  be  viewed  as  triplets  dressed  with  a  po-             only  show  up in  high  orders of  the  perturbation.  As  a
+larization  cloud31.   In  a  ﬁnite  magnetic  ﬁeld,  the  rele-            consequence, we use in ﬁgures and when appropriate the
+vant processes have maximum values of total Sz.  Other                      notation µ≡tv(0,0)≈th(0,0) for the chemical potential on
+channels are only important if bound states of triplons                     all  dimers  and,  in  the  same  spirit, Vn  for  the  repulsive
+with diﬀerent quantum numbers become relevant at low                        density-density interactions which have been introduced
+energies30.  The general form of the eﬀective low-energy                    in Ref.19for the 2D Shastry-Sutherland model (see also
+                                                                                                                                                    3
+
+AppendixVIII).                                                               up  to  order  10  in J′/J  and  up  to L  =  8  (L  =  6)  for
+  Altogether, the eﬀective model of the four-leg Shastry-                    M  = 1/8 (M  = 1/4).  As for pCUT(+ED), we use bare
+Sutherland tube is very similar to the one for the two-                      series which are fully converged for J′/J = 0.3.
+dimensional  case19.   However,  this  does  not  imply  that                   There    can    be    important    diﬀerences    between
+the  solution  of  the  eﬀective  model  is  the  same  in  both             pCUTﬁnite(+ED) and pCUT(+ED) which we would like
+cases.    Especially  at  low  magnetizations,  unit  cells  of              to discuss shortly for the chemical potential∝ b†
+magnetization  plateaus  become  large  and  the  ﬁnite  ex-                 contrast to pCUT(+ED) discussed above,  the chemicalibi.  In
+tension of the tube can matter.                                              potential  varies  for  diﬀerent  dimers  on  the  cluster.   In
+  The derivation of the eﬀective model by pCUTs is only                      order two, the chemical potential J− (J′/J)2 is still the
+the ﬁrst step, since the solution of Eq. (2) is by far not                   same  on  all  horizontal  and  vertical  dimers  except  for
+simple.   Here  we  apply  two  strategies  to  tackle  the  ef-             the  vertical  dimers  located  at  the  edge  of  the  cluster.
+fective  model:   i)  a  CA  along  the  lines  of  Ref.19and                Here one ﬁnds J− 1/2(J′/J)2.  The diﬀerent order-two
+ii)  ED.  In  the  following  we  call  these  two  approaches               amplitude originates from the fact that a triplet located
+pCUT(+CA) and pCUT(+ED).                                                     on a vertical dimer on the left (right) edge of the cluster
+  i)  For  the  CA  one  applies  a  Matsubara-Matsuda                       cannot  perform  a  virtual  ﬂuctuation  to  the  left  (right)
+transformation32  to rewrite Eq. (2) in terms of eﬀective                    in contrast to dimers in the inside as well as horizontal
+pseudo-spins 1/2.  Then, spin 1/2 operators are replaced                     dimers  on  the  edge  which  still  can  ﬂuctuate  up  and
+by  classical  vectors  yielding  a  classical  energy  which  is            down.  This diﬀerence in the chemical potential is large
+minimized for a set of unit cells.  We considered unit cells                 compared  to  the  one  between  vertical  and  horizontal
+up to 8×4 dimers. Physically, this approach works ﬁne as                     dimers  in  the  eﬀective  model  in  the  thermodynamic
+long as quantum ﬂuctuations are not too strong, i.e. it is                   limit arising from the tube geometry.  As a consequence,
+exact in the limit where diagonal density-density interac-                   the  magnetization  proﬁles  as  well  as  the  ground-state
+tions dominate over kinetic processes.  This is indeed the                   energy obtained by pCUT(+ED) and the ones obtained
+case if one only considers one-particle hopping processes.                   by pCUTﬁnite(+ED) and DMRG might diﬀer.
+In  contrast,  large  correlated  hopping  processes  are  not
+treated  well  by  the  CA  which  leads  to  a  breakdown  of
+this approach as shown below.
+  ii) We have used ED to diagonalize the eﬀective model
+(2)  on  ﬁnite  clusters.   This  is  done  with  the  Lanczos                                           C.    DMRG
+algorithm33  allowing us to treat systems with up to 32
+dimers  and  with  up  to M  =  1/3  using  either  open  or
+periodic boundary conditions.  Let us stress that the ED                        In most cases we treat systems with up to 64 dimers
+of the eﬀective model has less ﬁnite-size eﬀects compared                    using  open  boundary  conditions  in  the  longitudinal  di-
+to an ED (or DMRG) of the original model on the same                         rection, and in particular cases we go up to 144 dimers.
+cluster, since the eﬀective model has been derived in the                    Typically,  we  use  35  sweeps  keeping  up  to m  =  1500
+thermodynamic limit.                                                         density matrix eigenstates, leading to a discarded weight
+                                                                             of the order of 10−8  or better;  in some cases which ap-
+                     B.    pCUTﬁnite(+ED)                                    pear more diﬃcult to converge, we apply up to 50 sweeps
+                                                                             and m = 2500.  The results on diﬀerent system sizes are
+                                                                             consistent with each other, so that we refrain from per-
+  Alternatively,   one  can  also  i)  derive  the  eﬀective                 forming a more detailed study varying the sweeping pro-
+low-energy  model  by  pCUTs  directly  on  ﬁnite  clusters                  cedure etc.  as discussed in Refs.28,29, and34.  We also
+and then ii) solve this cluster-dependent eﬀective model                     do not perform a ﬁnite-size scaling procedure in terms of
+by  ED.  In  the  following  we  denote  this  approach  by                  the cylinder circumference as performed, e.g., in Ref.28
+pCUTﬁnite(+ED). This allows a straightforward compar-                        for kagome systems.  Strictly speaking, we therefore can-
+ison with DMRG results obtained on the same cluster.                         not  make  predictions  for  the  behaviour  in  the  true  2D
+  In contrast to Eq. (2), the amplitudes of the eﬀective                     case.  Instead,  our strategy here is to focus on systems
+model do depend directly on the absolute location of par-                    with four legs and by carefully comparing energies as well
+ticles on the cluster under study                                            as local observables to pCUTs identify the mechanisms
+                                                                             leading to the interesting plateaus discussed in this pa-
+HLeﬀ =∑      toi,δb†i+δbi+∑Voi,δ1,δ2,δ3b†i+δ3b†i+δ2bi+δ1bi ... ,             per.   Note  that  in  our  previous  study  Ref.11,  DMRG
+         i,δ                i,δn                                             results for 2D behaviour when applying PBC where dis-
+                                                                    (3)      cussed.   There,  we  focused  on  ground-state  energies  at
+whereHLeﬀ refers to the eﬀective model on a cluster of size                  ﬁnite  magnetic  ﬁelds,  which  are  much  easier  to  obtain
+L× 4.  The dependence of the amplitudes toi,δ, Voi,δ1,δ2,δ3,                 and so could lead to insights into the 2D behavior.  Here,
+etc. on the variablei corresponds to the present ﬁnite-size                  we  go  beyond  and  obtain  accurate  results  for  local  ob-
+eﬀects.  In this work we have calculated all amplitudes of                   servables, however, restricting us to the aforementioned
+the eﬀective model including all multi-particle processes                    conﬁgurations.
+                                                                                                                                               4
+
+                                                                                      IV.    MAGNETIZATION CURVES
+
+                                                                             In Fig.2we present our results for the magnetisation
+                                                                           curves  obtained  with  DMRG  (pCUT(+ED))  for  ﬁnite
+                                                                           systems with up to 64 (32) dimers for various values of
+                                                                           J′/J.  One observes plateaus at M = 1/8,M = 1/4, and
+                                                                           M  =  1/2  with  both  methods  and  for  diﬀerent  system
+                                                                           sizes.  Most remarkably, the plateau at M  = 1/8 is very
+                                                                           stable and grows with increasing J′/J.
+                                                                             In  contrast  to  the  2D  case,  there  is  no  prominent
+                                                                           plateau with M = 1/3.  This is well understood in terms
+                                                                           of the eﬀective pCUT model, since the corresponding 2D
+                                                                           structure consisting of diagonal stripes on alternatively
+                                                                           vertical and horizontal dimers is energetically not favored
+                                                                           on the four-leg tube, since one has to pay large repulsive
+                                                                           interactions.
+                                                                             Additionally, there are many other plateau structures
+                                                                           which  we  mostly  attribute  to  ﬁnite-size  artifacts,  since
+                                                                           the  associated  magnetization  proﬁle  is  not  correspond-
+                                                                           ing to any regular structure and therefore speciﬁc for a
+                                                                           given cluster.  One exception might be the existence of a
+                                                                           plateau around M∼ 0.3.  Here DMRG displays a broad
+                                                                           magnetization plateau.  Additionally, we observe a very
+                                                                           stable  plateau  at M  =  7/24  within  pCUT(+CA)  con-
+                                                                           taining similar features in the magnetization proﬁles (see
+                                                                           Fig.2).  Such a plateau has likely a conventional struc-
+                                                                           ture corresponding to a classical solution of the eﬀective
+                                                                           model and we therefore do not focus on this plateau in
+                                                                           the following.
+                                                                             We will now focus on the sequenceM = 1/8,M = 1/4,
+                                                                           and M = 1/2 where all our techniques display very reg-
+                                                                           ular structures.  The magnetization proﬁle of the plateau
+                                                                           at M = 1/2 is just the known and very well understood
+                                                                           one appearing also in the 2D Shastry-Sutherland model.
+                                                                           Here the magnetization is dominantly on one sublattice,
+                                                                           which is a consequence of the very large repulsive interac-
+                                                                           tion V1 between nearest-neighbor dimers.  Consequently,
+                                                                           we do not focus on this plateau but we concentrate on the
+                                                                           speciﬁc magnetizationsM = 1/8 andM = 1/4 for which
+                                                                           pCUT and DMRG allow a consistent and interesting in-
+                                                                           terpretation.   Afterwards,  we  discuss  the  intermediate
+                                                                           regime between M = 1/8 and M = 1/4.
+
+
+                                                                                                   A.    1/8 plateau
+
+                                                                             A very robust structure found in DMRG is the one at
+                                                                           M  =  1/8.   In  the  following  we  analyze  ﬁrst  this  mag-
+                                                                           netization for a rather small value J′/J = 0.3 where the
+                                                                           eﬀective model derived by pCUT is fully converged.  Here
+                                                                           we compare our ﬁndings by DMRG, pCUT(+CA/+ED),
+FIG. 2.  Magnetization M/Ms  as a function of the magnetic                 and pCUTﬁnite(+ED) and we give the physical origin of
+ﬁeld h obtained with pCUT(+ED) and DMRG. First panel:                      the observed structure.  Afterwards, we discuss the prop-
+Results from pCUT(+CA). Inset shows magnetization proﬁle                   erties of the 1/8 plateau as a function of J′/J.
+at M = 7/24.  Second panel:  Results from pCUT(+ED) on a                     For the open tube with 64 dimers as shown in Fig.3
+8 × 4 with periodic (PBC) and open (OBC) boundary condi-                   for J′/J  =  0.3,  DMRG  ﬁnds  a  regular  pattern  of  four
+tions for J′/J = 0.3 as well as J′/J = 0.5 in the inset.  Third            structures which we name  wheels.  In a wheel the mag-
+panel: DMRG results for systems with 8×4 and 16×4 dimers                   netization is uniformly distributed among the four verti-
+for J′/J = 0.3.  Fourth panel: DMRG results for systems with
+8 × 4 dimers for various values of J′/J.
+                                                                                                                                                     5
+
+
+
+
+
+
+
+
+
+
+
+                                                                              FIG. 4.  Illustration of the plateau with M = 1/8 obtained by
+                                                                              pCUT(+CA). Thin red (thick dark) lines correspond to empty
+                                                                              (ﬁlled) dimers. The most relevant two-particle interactions V′3
+                                                                              and V6  are shown as grey/cyan dashed lines with arrows on
+FIG. 3.  Local magnetization of the 1/8 plateau using DMRG.                   both sides pointing to the two involved ﬁlled dimers.
+
+Upper (lower left) panel corresponds to an open tube with 64
+dimers (32 dimers) and J′/J = 0.3 (J′/J = 0.6).  The diam-                    ∆Ej  is the energy diﬀerence between the energy of the
+eters of circles relate to the local magnetization which is also              intermediate state after acting with the kinetic processτj
+given explicitly as numbers.  Positive (negative) values denote               on the classical ground state and the energy E0,cl of the
+a local magnetization parallel (antiparallel) to the ﬁeld direc-              classical state itself.  This approach is fully controlled if
+tion.  Lower right panel gives an illustration of the dominant
+order-two correlated hopping processes t′ and t′′.                            τ 2j ≪ ∆Ej for allj. For the rather small valueJ′/J = 0.3
+                                                                              considered here, this is exactly the case, since the leading
+                                                                              perturbative order in J′/J  involved in all ∆Ej  is lower
+cal dimers around the tube so that each dimer contains                        than the coresponding one in τ 2j .
+roughly half of the magnetization of a single triplet.  The                      If one adds quantum ﬂuctuations on top of the classical
+total value ofSz in a wheel is therefore 2. Between wheels                    structure, one ﬁnds that kinetic processes are never able
+there are two rows of dimers where almost no magneti-                         to explain the observed energy diﬀerence between DMRG
+zation is present leading to a unit cell of 16 dimers.  The                   and  the  CA  of  the  eﬀective  model,  since  the  distance
+same kind of structure is also found for open tubes with                      between particles in the classical structures is already so
+16,  32,  and  48  dimers  having  1,2,  and  3  wheels.   It  is             large  that  kinetic  processes  are  not  able  to  reduce  the
+therefore  very  certain  that  this  magnetization  plateau                  energy suﬃciently.  Additionally, also the structure made
+at M   =  1/8  is  present  in  the  thermodynamic  limit.                    of single dressed triplons is clearly incompatible with the
+The  energy  per  site  is  fully  converged  when  comparing                 magnetization proﬁle deduced by DMRG. In conclusion,
+diﬀerent clusters and one obtains ϵ1/8                                        the pCUT(+CA) is not able to reproduce the ﬁndings of
+                                             0    =−0.31924J  for             DMRG even for values ofJ′/J where the eﬀective model
+J′/J = 0.3.                                                                   is fully converged.
+  One should stress that the detected structure of the lo-                       Therefore, it cannot be the (fully converged) eﬀective
+cal magnetization is very surprising. Naively, one expects                    model  derived  by  pCUTs  which  is  problematic,  but  it
+magnetization plateaus at low magnetizations which cor-                       has  to  be  the  CA  which  fails.   The  CA  is  not  able  to
+respond to crystals of single-triplon excitations being sta-                  treat  the  correlated  hopping  processes  well  as  we  show
+bilized  by  repulsive  density-density  interactions.    One                 below.   This  becomes  clear  when  solving  the  eﬀective
+such  example  can  be  seen  with  pCUT(+CA)  displayed                      model by ED on ﬁnite clusters so that quantum ﬂuctua-
+in Fig.4for    J′/J = 0.3.                                                    tions are taken into account exactly.  The corresponding
+  The  classical  structure  with  a  unit  cell  of  24  dimers              results for J′/J = 0.3 on clusters with 16 and 32 dimers
+has the energy per site ϵ1/80,cl =−0.31901J  atJ′/J = 0.3,                    are  shown  in  Fig5.    Most  notably,  the  pCUT(+ED)
+i.e.  the  energy  is∼  2· 10−4J  higher  compared  to  the                   and  pCUTﬁnite(+ED)  are  in  agreement  with  DMRG:
+one found by DMRG. The classical structure results from                       one  ﬁnds  a  regular  pattern  of  wheels  and  the  ground-
+minimizing  density-density  interactions,  since  it  avoids                 state energy per site−0.31924J on an open cluster with
+paying all repulsive interactions below order 6 as for the                    16  dimers  is  identical.   In  fact,  the  local  magnetization
+classical structures for the 2D case19.  In fact, it is inter-                proﬁle of pCUTﬁnite(+ED) and DMRG, which are per-
+esting to realize that the classical 1/8 structure found for                  formed on the same cluster, are quantitatively the same.
+the four-leg tube is similar in spirit to the realized 1/9                    For  pCUT(+ED),  where  the  ED  is  done  on  the  eﬀec-
+plateau in 2D19.                                                              tive  model  evaluated  in  the  thermodynamic  limit,  one
+  Next we add quantum ﬂuctuations on top of the clas-                         observes  the  same  pattern  but  more  magnetization  is
+sical solution to show that the energy diﬀerence to the                       found  at  the  edge  of  the  cluster.   This  is  mainly  due
+DMRG  result  cannot  be  explained  this  way.   Quantum                     to the isotropic chemical potential which is the same on
+ﬂuctuations are induced in the eﬀective model by kinetic                      all dimers in contrast to the ﬁnite-size approaches as ex-
+processesτj like hopping, correlated hopping, etc.  .  The                    plained in the method section.
+leading correction to the classical energy per site is calcu-                    What is the physical origin of these wheels?  Since the
+lated by summing over all contributions−τ 2j/∆Ej where                        wheels are (i) already stable for small values ofJ′/J and
+                                                                                                                                                      6
+
+                                                                              energy Eh1/8 = 2µ +V1 due to the correlated hopping t′.
+                                                                              In total, this leads to the ﬁnite matrix
+                                                                                El1/8     0        0        0      +t′    +t′      0        0 
+                                                                                0  El1/8     0        0        0        0      +t′    +t′
+                                                                                     0        0  El1/8     0        0  −t′ −t′      0
+                                                                                     0        0        0  El1/8 −t′      0        0  −t′            (4)
+                                                                                    +t′      0        0  −t′ Eh1/8     0        0        0
+                                                                                    +t′      0  −t′      0        0  Eh1/8     0        0
+                                                                                     0      +t′ −t′      0        0        0  Eh1/8     0
+                                                                                     0      +t′      0  −t′      0        0        0  Eh1/8
+
+                                                                              and the resulting ground-state energy of a single wheel is
+                                                                              obtained analytically as
+                                                                                                                    √(                  )2 + 16t′2
+                                                                                 Ewheel = El1/8 +Eh1/82   − 12          Eh1/8−El1/8
+                                                                                                                     √
+                                                                                          = 2µ + V1 +V22  − 12          (V1−V2)2 + 16t′2  . (5)
+
+                                                                              The corresponding eigenvector is a highly entangled two-
+                                                                              particle bound state.  Both particles are with the same
+FIG. 5.  Local magnetization of the 1/8 plateau on an open                    probability in one of the four low-energy states and the
+tube  with  16  (left)  32  (right)  dimers  for  J′/J   =  0.3  us-          density is approximately 1/2 on all four vertical dimers
+ing DMRG (upper panel), pCUT(+ED) (middle panel), and                         inside the wheel for J′/J  = 0.3 just as observed in the
+pCUTﬁnite(+ED) (lower panel).  The diameters of circles re-                   magnetization proﬁle deduced by DMRG.
+late to the local magnetization which is also given explicitly                   If one assumes the interactions between wheels to be
+as  numbers.   Positive  (negative)  values  denote  a  local  mag-           zero (which is almost the case as shown below), then the
+netization  parallel  (antiparallel)  to  the  ﬁeld  direction.   One         ground-state energy per spin of the crystals of wheels is
+observes the realization of one (left) and two (right) quantum                perturbatively
+wheels.
+                                                                                      ϵ1/80,wheel
+(ii)  not  realized  in  the  CA,  this  structure  has  to  come                        J      =Ewheel/32− 3(J′8      )2          (J′   )3
+from the perturbatively leading kinetic processes in the                                        ≈− 5                       −   5                .    (6)
+eﬀective pCUT model.  The latter are correlated hopping                                               16−  116      J         128     J
+terms arising in order two perturbation theory, i.e. wheels                   Interestingly,     one     ﬁnds     the     energy     per     spin
+are two-particle objects.                                                     ϵ1/8
+  Let us consider one pair of particles.  In order to proﬁt                   ment  with  DMRG.  Note  that  we  have  checked  that  all0,wheel≈−0.31918J   for J′/J   =   0.3  in  good  agree-
+from the leading correlated hopping processes t′  and t′′                     other quantum ﬂuctuations do not alter this result sig-
+(see also AppendixVIIIand Fig.3), particles should be                         niﬁcantly.  Most importantly, the order-three expansion
+either next-nearest neighbors in a diagonal conﬁguration                      of ϵ1/8
+(t′) or nearest neighbors (t′  and t′′).  The ﬁrst conﬁgu-                    for the full crystal of wheels.0,wheel  remains  correct  in  the  thermodynamic  limit
+ration is by far more attractive, since one does not need                        The  astonishing  agreement  between  the  extrapolated
+to pay the large nearest-neighbor repulsion V1 arising in                     energy from DMRG and the single-wheel calculation pre-
+leading order perturbation theory.  In contrast, the repul-                   sented above is only possible if the interaction between
+sive density-density interaction over the diagonal V2 is a                    wheels of the 1/8 plateau is negligible.  This is indeed the
+third-order process and therefore small as long as J′/J                       case:  First, the ground-state energy per spin in DMRG
+is small.  Nevertheless, this interaction is larger than the                  ofν wheels is almost identical toν times the single-wheel
+ones  appearing  in  the  classical  structures  and  a  classi-              energy of a 16-dimer cluster which demands the interac-
+cal plateau of particles being in a diagonal conﬁguration                     tions between wheels to be close to zero.  Second, assum-
+does not represent the classical energy minimum.                              ing the density of particles on verticle dimers in a wheel to
+  One therefore has to maximize quantum ﬂuctuations                           be roughly 1/2, the interactions between two neighboring
+due  to  correlated  hopping.   This  is  done  by  taking  the               wheels to be paid only involve repulsive density-density
+four  low-energy  states  with  energy El1/8   =   2µ + V2                    interactions in the eﬀective model starting at least in or-
+where two particles are next-nearest neighbors on adja-                       der 6 perturbation theory giving a neglible energy cost.
+cent rows.  Each of the four states can ﬂuctuate to two                          Altogether, we found quantitative agreement between
+states  where  both  particles  are  nearest  neighbors  with                 all approaches used.  The 1/8 plateau consists of almost
+                                                                                                                                                    7
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                             FIG. 7.  Illustration of the plateau with M = 1/4 obtained by
+                                                                             pCUT(+CA). Thin red (thick dark) lines correspond to empty
+                                                                             (ﬁlled)  dimers.   The  most  relevant  two-particle  interactions
+                                                                             V2, V4, V′3, and V7 are shown as grey/cyan dashed lines with
+                                                                             arrows on both sides pointing to the two involved ﬁlled dimers.
+
+
+                                                                             spin  is ϵ1/40,cl =−0.26222J  at J′/J = 0.3  and  therefore
+                                                                             ∼ 6· 10−4J  higher  in  energy  compared  to  DMRG.  In
+                                                                             contrast  to  the  classical  1/8  structure,  the  one  at  1/4
+                                                                             involves two density-density interactions of type V2  per
+FIG. 6.  Local magnetization of the 1/4 plateau on an open                   unit cell and quantum ﬂuctuations induced by the dom-
+tube with 64 dimers using DMRG. One observes the super-                      inant order-two correlated hopping t′ can overcome half
+position of four diagonal stripes.  Upper (lower) panel corre-               of this energy diﬀerence.  Nevertheless, there remain dis-
+sponds to J′/J = 0.3 (J′/J = 0.6).  The diameters of circles                 crepancies with respect to energy and with respect to the
+relate to the local magnetization which is also given explicitly             magnetization proﬁle which cannot be resolved.  Conse-
+as numbers.  Positive (negative) values denote a local magne-                quently, there must a diﬀerent structure behind the ob-
+tization parallel (antiparallel) to the ﬁeld direction.                      served 1/4 plateau.
+                                                                                In the following we show that the 1/4 plateau corre-
+                                                                             sponds to a diagonal stripe which winds around the tube
+decoupled wheels in a 16-dimer unit cell.  Each wheel is                     as illustrated in Fig.8, i.e. the translational symmetry is
+a two-particle bound state which is stabilized by corre-                     broken in the thermodynamic limit and a single stripe is
+lated hopping.  It is therefore reasonable that the crystal                  realized which is dressed by quantum ﬂuctuations.  We
+of wheels becomes more stable with increasingJ′/J, since                     call such a structure semi-classical, since its energy rep-
+the delocalization of the two particles due to correlated                    resents a local minimum within pCUT(+CA) which be-
+hopping is even enhanced along the wheels.  This is con-                     comes the true ground state when adding leading quan-
+ﬁrmed  by  DMRG  (see  also  Fig.3).   One  observes  well                   tum ﬂuctuations inside the eﬀective pCUT model.  The
+deﬁned wheels in a broad range of parameters J′/J  and                       particles are placed on vertical dimers in the thermody-
+the width of the 1/8 magnetization plateau increases for                     namic limit, since the chemical potential is slightly lower
+large values of J′/J.                                                        compared  to  horizontal  dimers.   Such  a  diagonal  stripe
+                                                                             costs dominantly one interactionV2 for each particle and
+                                                                             its  classical  energy  per  spin−0.26175J  is  higher  than
+                         B.    1/4 plateau                                   ϵ1/40,cl.
+                                                                                Interestingly, quantum ﬂuctuations induced by corre-
+  Next we discuss the second prominent plateau of the                        lated hopping lower the classical energy of the diagonal
+four-leg  Shastry-Sutherland  model  which  is  the  one  at                 stripe signiﬁcantly such that this structure is indeed re-
+M  =  1/4.   The  DMRG  ﬁnds  consistently  a  magnetiza-                    alized  in  the  four-leg  Shastry-Sutherland  model.   Each
+tion proﬁle shown in Fig.6for an open cluster with 64                        particle on a vertical dimer of a stripe can use the dom-
+dimers  for J′/J  =  0.3,  where  the  magnetization  is  al-                inant order-two correlated hopping process t′  to ﬂuctu-
+most distributed uniformly among all horizontal dimers.                      ate to the horizontal dimers below and above the stripe.
+The corresponding energy per site is ϵ1/40    =−0.26281J                     Again, in the intermediate state one has to pay the inter-
+for J′/J  =  0.3.   If  one  increases  the  ratio J′/J  to  0.6,            actionV1 for particles being nearest neighbors.  Summing
+the overall structure is similar except that the magneti-                    over  these  ﬂuctuation  channels  in  order t′2/∆E,  as  for
+zation  is  transferred  more  prominently  from  horizontal                 the 1/8 plateau,  one gets an energy reduction per spin
+to vertical dimers.                                                          of approximately−8t′2/32V1 =−(J′/J)3/32, since there
+  As  for  the  1/8  plateau,  the  DMRG  result  is  not  ex-               are 8 ﬂuctuation channels in the 32-spin unit cell.  This
+plained  within  pCUT(+CA)  which  is  shown  in  Fig.7.                     results in a semi-classical energy per spin
+One  ﬁnds  a  classical  structure  with  a  24-dimer  unit                           ϵ1/4                    (J′  )2           (J′  )3
+cell   where   single   particles   are   far   apart   in   order                     0,stripe                        −  15                ,     (7)
+to   minimize   repulsive   interactions.      Its   energy   per                        J  ≈−14− 18            J          256     J
+                                                                                                                                                      8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  8.   Illustration  of  one  semi-classical  stripe  on  vertical
+dimers  relevant  for  M  =  1/4.   Thin  red  (thick  dark)  lines
+correspond to empty (ﬁlled) dimers.  The most relevant two-
+particle interactions V2 and V5 are shown as grey/cyan dashed
+lines with arrows on both sides pointing to the two involved
+ﬁlled  dimers.   Each  particle  of  the  stripe  can  ﬂuctuate  by
+the dominant order-two correlated hopping process t′  to the
+closest horizontal dimers above and below the stripe which is
+sketched for the particle in the second row.
+
+
+which  gives −0.26283J  for J′/J   =  0.3  in  very  good
+agreement with DMRG.
+  Up  to  now  we  have  considered  the  symmetry-broken                     FIG. 9.  Local magnetization of the 1/4 plateau on an open
+state in the thermodynamic limit.  On a ﬁnite open clus-                      tube  with  16  (left)  32  (right)  dimers  for  J′/J   =  0.3  us-
+ter,  there  are  four  equivalent  diagonal  stripes  and  the               ing DMRG (upper panel), pCUT(+ED) (middle panel), and
+ground  state  is  a  symmetric  superposition  of  the  four                 pCUTﬁnite(+ED) (lower panel).  The diameters of circles re-
+states.  As a consequence, the densities on all dimers of                     late to the local magnetization which is also given explicitly
+the stripes have to be the same.  This is exactly what we                     as numbers.  Positive (negative) values denote a local magne-
+ﬁnd using the pCUT(+ED) approach on clusters with 16                          tization parallel (antiparallel) to the ﬁeld direction.
+and 32 dimers as displayed in the middle panel of Fig.9
+for J′/J = 0.3.
+  As mentioned above, DMRG ﬁnds a similar magneti-                                               C.    Intermediate regime
+zation proﬁle up to the fact that the role of vertical and
+horizontal dimers is interchanged (see also upper panel                          The magnetization plateaus atM = 1/8 andM = 1/4
+of  Fig.9).    Exactly  the  same  kind  of  pattern  is  also                are  robust  features  for  the  four-leg  Shastry-Sutherland
+deduced  with  pCUTﬁnite(+ED)  as  shown  in  the  lower                      tube and we were able to ﬁnd a consistent description be-
+panel of Fig.9.  The reason of this discrepancy between                       tween DMRG, pCUTﬁnite(+ED), and pCUT(+ED). One
+the ﬁnite-size calculations of the full Shastry-Sutherland-                   may  expect  additional  structures  in  between  these  two
+Model (DMRG/pCUTﬁnite(+ED)) and the ﬁnite-size ED                             plateaus as well as between 1/4 and 1/2.
+of the eﬀective model derived by pCUT in the thermo-                             In  the  latter  region,   we  ﬁnd  some  signatures  for
+dynamic limit lies in the diﬀerent chemical potentials as                     plateaus,  but  these  are  either  diﬃcult  to  pin  down  or
+discussed already in the method section.                                      resemble  classical  structures.   Here,  we  prefer  therefore
+  In the pCUT(+ED), the chemical potential of a par-                          to focus onto the region M < 1/4 and leave this region
+ticle  on  a  vertical  dimer  is  slightly  lower  than  the  one            of the magnetization curve for future studies.
+for a particle on a horizontal dimer.  Therefore, particles                      For the regime 1/8<M < 1/4 it is also very diﬃcult
+are placed on vertical dimers.  In contrast, although the                     for the techniques applied by us to fully resolve the mag-
+same eﬀect is present for pCUTﬁnite(+ED) in the bulk of                       netization  curve.   Nevertheless,  we  would  like  to  argue
+the ﬁnite cluster, the chemical potential for particles on                    i) against the stability of three-particle wheels but ii) in
+horizontal dimers is lower on the edge of the cluster com-                    favor of a plateau atM = 3/16 which again beneﬁts from
+pared to the corresponding one on vertical dimers.  Since                     correlated hopping.
+this energy diﬀerence is very large, it is natural to place                      Since  wheels  of  the  1/8  plateau  contain  2  particles
+particles on horizontal dimers when treating the four-leg                     and  the  diagonal  stripe  of  the  1/4  plateau  has  4  par-
+Shastry-Sutherland tube on ﬁnite clusters.                                    ticles in a unit cell, one might wonder whether one can
+  Altogether, we ﬁnd very strong evidence for aM = 1/4                        construct a magnetization proﬁle with three particles in
+magnetization  plateau  which  corresponds  to  a  semi-                      a  unit  cell.   The  ﬁrst  idea  is  to  create  the  analogue  of
+classical diagonal stripe winding around the tube.  As for                    a  wheel,  i.e.  a  highly  entangled  superposition  of  states
+the plateau at M = 1/8, correlated hopping is essential                       where  three  particles  build  stripes  in  three  subsequent
+to stabilize this structure.                                                  rows as sketched in the upper panel of Fig.10.  Indeed,
+                                                                                                                                                        9
+
+                                                                               ﬁts again from correlated hopping, but at the same time
+                                                                               it displays features of a classical plateau (see lower panel
+                                                                               of  Fig.10).   One  builds  a  classical     M  =  1/8  structure
+                                                                               having  a  unit  cell  of  16  dimers  so  that  one  pays  only
+                                                                               V5  interactions.  This classical structure is the analogue
+                                                                               of  the M  =  1/8  plateau  with  a  diamond  unit  cell  dis-
+                                                                               cussed for the 2D Shastry-Sutherland model19.  Now the
+                                                                               third particle is doped inside each unit cell so that it can
+                                                                               fully  delocalize  on  two  vertical  dimers  of  the  same  row
+                                                                               resulting in a structure with M  = 3/16.  For small val-
+                                                                               ues ofJ′/J, there are i) very small energy costs between
+                                                                               classical particles having no doped particles in between,
+                                                                               ii) the doped particle completely delocalizes around the
+                                                                               tube due to correlated hopping building a single-particle
+                                                                               wheel, and iii) each classical particle has one ﬂuctuation
+                                                                               channel beneﬁtting from the dominant order-two corre-
+                                                                               lated hopping process as illustrated in the lower panel of
+                                                                               Fig.10.
+                                                                                  One can estimate the energy per spin of such a 3/16
+                                                                               plateau for small values of J′/J.  We therefore take the
+                                                                               two low-energy states with an energy El3/16 = 3µ + 2V2
+FIG. 10. The upper panel illustrates a crystal of three-particle               where three particles are located in diagonal stripes ori-
+wheels  having  M  =  1/8.   Wheels  are  highlighted  by  black               ented from left down to right up in the lower part of the
+boxes.   The  lower  panel  shows  a  plateau  with  M  =  3/16                tube or from left up to right down in the upper part of the
+consisting  of  a  classical M  =  1/8  diamond  structure  which              tube. Furthermore, there are six high-energy states. Two
+is doped by a third particle in each unit cell which delocal-                  states (four states) with an energy Eh13/16 = 3µ +V1 +V5
+ize around the tube by correlated hopping.  Thin red (thick                    (Eh23/16 = 3µ +V1 +V2 +V4) where the inner (outer) par-
+dark) lines correspond to empty (ﬁlled) dimers.  Delocalized                   ticle(s) hops due to the correlated hopping process t′.  In
+particles are sketched as thick dark lines of half length.                     total, one ﬁnds the ﬁnite matrix
+                                                                               El3/16      0    t′    t′       +t′      +t′        0         0          
+there are several low-energy conﬁgurations of three par-                       0  El3/16  t′    t′         0         0       +t′      +t′   
+ticles  on  vertical  dimers  so  that  i)  only  interactions V2                    t′    t′  Eh13/16      0         0         0         0         0
+have  to  be  paid  and  ii)  the  dominant  order-two  corre-                       t′    t′         0  Eh13/16      0         0         0         0
+lated hopping can act.  If a crystal of such three-particle                        +t′        0         0         0  Eh23/16      0         0         0
+wheels  should  be  realized  in  the  thermodynamic  limit,
+then  the  interactions  between  neighboring  wheels  must                        +t′        0         0         0         0  Eh23/16      0         0
+be  very  small.   This  implies  three  empty  rows  in  order                      0       +t′        0         0         0         0  Eh23/16      0
+to avoid paying the dominant repulsions V1  and V3.  As                              0       +t′        0         0         0         0         0  Eh23/16
+a consequence,  the interaction between wheels is essen-                                                                                              (8)
+tially zero.  One can then use pCUT(+ED) on a single
+12-dimer cluster to get the energy per spin−0.31912J for                       and one obtains the ground-state energy per spin pertur-
+J′/J = 0.3 in the thermodynamic limit for this structure                       batively as
+with M  = 1/8.  This crystal of three-particle wheels is                                                         (J′   )2           (J′  )3
+therefore not realized in the four-leg Shastry-Sutherland                               ϵ3/160                             −   7                .     (9)
+tube,  since  its  energy  is  larger  than  the  corresponding                           J ≈− 932−  332            J         128      J
+one  of  two-particle  wheels  discussed  above.   Physically,
+the relatively large energy of three-particle wheels com-                      As for the other plateaus withM = 1/8 andM = 1/4 we
+pared  to  two-particle  wheels  comes  mainly  from  larger                   observe strong binding eﬀects due to correlated hopping.
+energy costs due to strong repulsive density-density in-                       Setting J′/J = 0.3, one obtains ϵ3/160      =−0.29116J.
+teractions between the three particles inside the entan-                          Let us investigate whether this plateau withM = 3/16
+gled wheel.  Indeed,  there is a large particle density on                     is realized in the magnetization curve by comparing it to
+nearest-neighbor vertical dimers such that one has to pay                      the  plateaus  at M  =  1/8  and M  =  1/4.   In  the  limit
+the large interaction V3.                                                      of  small J′/J,  this  can  be  done  via  the  order-three  se-
+   Next   we   discuss   a   crystal   with   magnetization                    ries of the ground-state energy per spin which we have
+M = 3/16 which is a promising candidate for the inter-                         given for all three plateaus.  If one deﬁnes the magneti-
+mediate regime between 1/8 and 1/4, at least for not too                       zations Mn(h) =ϵn0−nh with n∈{1/8, 3/16, 1/4} as a
+large values of J′/J.  The corresponding structure bene-                       function of the magnetic ﬁeld h, then crossings between
+                                                                                                                                                   10
+
+two structures signal ﬁrst-order phase transitions.  In the
+present case one ﬁnds that the transition between 1/8 and
+3/16  takes  place  at  1/2− (1/2)(J′/J)2− (1/4)(J′/J)3
+while   the   one   between   3/16   and   1/4   happens   at
+1/2− (1/2)(J′/J)2− (1/16)(J′/J)3.   Here  we  have  set
+J  =  1.   Consequently,  the  plateau  at M  =  3/16  is  al-
+ways  realized  in  the  limit  of  small J′/J  with  a  width
+(3/64)(J′/J)3  assuming  no  other  phase  not  considered
+here is favored.
+  Since this M = 3/16 structure has the same 16-dimer
+unit  cell  as  the  two-particle  wheel  with M  =  1/8  and
+the diagonal stripe with M = 1/4, one can also compare
+these  plateaus  on  the  same  cluster  to  see  which  mag-
+netization  is  present  in  the  magnetization  curve.   The
+DMRG  on  open  clusters  of  32  and  64  dimers  does  not
+observe this plateau.  The reason is again the very large
+chemical potential on vertical dimers at the edge of the
+clusters  which  makes  this  structure  energetically  disfa-
+vored.  This is diﬀerent for pCUT(+ED) which realizes
+this M = 3/16 structure for J′/J = 0.3 on the 32-dimer                       FIG. 11.  Local magnetization of the 3/16 plateau on a tube
+cluster with open and periodic boundary conditions (see                      with  32  dimers  for J′/J  =  0.3  using  DMRG  (upper  panel)
+Fig.2and Fig.11).  One ﬁnds exactly the same ground-                         with  periodic  boundary  conditions  and  pCUT(+ED)  (lower
+state energy per spin−0.29116J for pCUT(+ED) on the                          panel).   The  diameters  of  circles  relate  to  the  local  magne-
+periodic 32-dimer cluster strongly conﬁrming the above                       tization  which  is  also  given  explicitly  as  numbers.   Positive
+considerations.                                                              (negative)  values  denote  a  local  magnetization  parallel  (an-
+                                                                             tiparallel) to the ﬁeld direction.
+  We also performed DMRG on the same 32-dimer clus-
+ter using periodic boundary conditions.  The correspond-
+ing local magnetization is shown in Fig.11.                                  elements  of  a  classical  plateau  and  a  highly  entangled
+  By applying 50 sweeps in the DMRG and keeping up to                        one-particle  wheel,  does  not  beneﬁt  as  much  from  cor-
+m=2500 states, we ﬁnd a homogeneous solution with an                         related hopping with increasing J′/J  as the two-particle
+energy−0.29115J only slightly higher than the one given                      wheel with M = 1/8 (see Fig.2).
+above.   Nevertheless,  the  periodic  boundary  conditions
+applied here make it more diﬃcult to converge.  Indeed,
+we ﬁnd that the values of the local magnetizations can                                      V.    IMPLICATIONS FOR 2D
+vary by up to 3· 10−3 on equivalent sites,
+  which  is  a  considerably  larger  diﬀerence  than  in  the                  In  this  section  we  discuss  how  our  ﬁndings  for  the
+presence  of  open  boundary  conditions  and  can  be  used                 quasi-2D  Shastry-Sutherland  tube  relate  to  the  physics
+as an error estimate for the convergence of the calcula-                     of the two-dimensional Shastry-Sutherland model which
+tion  with  periodic  boundary  conditions.   Interestingly,                 is believed to be a good microscopic model for the frus-
+the  structure  looks  very  similar  to  the  one  found  by                trated quantum magnet SrCu(BO3)2.  To this end we fo-
+pCUT(+ED)  except  that  the  role  of  vertical  and  hori-                 cus on the dominant plateaus atM = 1/8 andM = 1/4,
+zontal dimers is interchanged.  The DMRG result on this                      since the plateau at M  = 3/16 is only present for small
+cluster looks like a state where eﬀectively four particles                   J′/J  in  the  tube  while  the  origin  of  the M  =  1/2  is
+build a classical 1/8 plateau with diamond unit cell on                      anyway not debated.
+horizontal dimers while the remaining two particles delo-
+calize via correlated hopping horizontally.  From the con-
+siderations above, it is reasonable that such a state has                                                A.    M = 1/8
+also a very low energy for this cluster which is slightly
+above  the  true  ground  state.   We  expect  that  the  en-                   Let us start with the interesting plateau atM = 1/8 of
+ergy  diﬀerence  between  these  two  states  increases  with                the four-leg Shastry-Sutherland tube consisting of highly
+increasing system size,  since particles delocalizing hori-                  entangled  wheels  oriented  transverse  to  the  tube  direc-
+zontally in the same row have to pay repulsive interac-                      tion.  Each 16-dimer unit cell contains one wheel where
+tions. As a consequence, it might be easier for the DMRG                     two  particles  are  essentially  delocalized  over  the  inner
+to resolve this structure, in which the vertical dimers are                  four vertical dimers.
+polarized, on larger systems.                                                   This  plateau  is  certainly  speciﬁc  to  the  tube  geome-
+  Interestingly, the plateau at M  = 3/16 is not present                     try.  Indeed, due to the ﬁnite transverse extension a ﬁnite
+within pCUT(+ED) for a larger ratio J′/J = 0.5.  Phys-                       number of triplons in one wheel is suﬃcient to construct
+ically,  we  suspect  that  this  structure,  which  combines                a structure at ﬁnite density.  It becomes then preferable
+                                                                                                                                                  11
+
+                                                                             as  well  as  for  the  experimental  ﬁndings  for  the  com-
+                                                                             pound SrCu(BO3)210,11,18,23           , but no microscopic mecha-
+                                                                             nism was yet deduced for this structure, e.g. no plateau
+                                                                             at M = 1/4 has been found in Ref.19, where the classi-
+                                                                             cal limit of the eﬀective two-dimensional model has been
+                                                                             investigated  in  detail.   Our  microscopic  results  for  the
+FIG. 12.  Local magnetization of the 1/8 plateau on a four-leg               four-leg Shastry-Sutherland tube indicate that this dis-
+system with 64 dimers for J′/J  = 0.3 using open boundary                    crepancy  is  due  to  neglecting  quantum  ﬂuctuations  in-
+conditions in both directions obtained by DMRG. The diam-                    duced  by  correlated  hopping.   Furthermore,  we  expect
+eters of circles relate to the local magnetization which is also             that the energy per site of the M  = 1/4 plateau on the
+given  explicitly  as  numbers.   Positive  (negative)  values  de-          tube should be very close to the one of the correspond-
+note a local magnetization parallel (antiparallel) to the ﬁeld               ing  two-dimensional  structure.   The  reason  is  that  the
+direction.                                                                   two-dimensional  structure  ﬁts  perfectly  on  the  four-leg
+                                                                             tube geometry and virtual ﬂuctuations feeling the ﬁnite
+for the four-leg tube to fully delocalize the two triplons                   transverse extension of the tube are clearly of subleading
+in such a wheel in order to beneﬁt maximally from cor-                       order.
+
+related hopping.
+  Now imagine we increase the number of legs Nlegs  of                                           VI.    CONCLUSIONS
+the  tube  up  to  inﬁnity  which  corresponds  to  the  two-
+dimensional case.  If one creates the same kind of state as                     In  this  work  we  have  studied  the  magnetization  pro-
+above, i.e. we take a rectangular unit cell of size 4×Nlegs                  cess  of  a  four-leg  Shastry-Sutherland  tube  by  DMRG,
+which  contains  two  delocalized  triplons,  one  obtains  a                pCUT(+CA/+ED), and pCUTﬁnite(+ED). Most impor-
+magnetization 2/(4Nlegs) which decreases gradually with                      tantly, we have identiﬁed unconventional magnetization
+Nlegs. ForNlegs = 6, one then expects a similar plateau at                   plateaus at M = 1/8 and M = 1/4 which do not corre-
+M = 1/12, forNlegs = 8 one has a plateau atM = 1/16,                         spond  to  classical  structures  of  frozen  triplons.   In  all
+and so on.  But in the limit Nlegs→∞ this kind of state                      cases  quantum  ﬂuctuations  induced  by  correlated  hop-
+corresponds to a zero-density state and is thus irrelevant                   ping  processes  of  triplons  are  essential.   We  stress  that
+for the two-dimensional system.                                              both plateaus are stable in a broad range of parameters.
+  Nevertheless, we would like to stress that although the                       The nature of the two plateaus is strikingly diﬀerent.
+wheels are speciﬁc to the tube geometry, the mechanism,                      The plateau atM = 1/4 is understood semi-classically by
+which stabilizes the wheels, is very likely relevant for the                 a diagonal stripe of triplons wrapping around the tube.
+2D Shastry-Sutherland model.  Indeed, the recently dis-                      It is this structure which beneﬁts most from correlated
+covered  crystals  of  bound  states  for  the  2D  problem23                hopping.  In contrast, the low-magnetization plateau at
+have exactly the same quantum numbers as our crystal                         M  = 1/8 consists of highly entangled transverse wheels
+of wheels, i.e. in both systems two-particle bound states                    where  each  wheel  contains  a  two-triplon  bound  state
+withSztot = 2 are found.  It is therefore tempting to inter-                 which fully delocalizes around the tube.
+pret the pinwheel structures in 2D as two particles gain-                       The  intermediate  regimes  between M   =   1/8  and
+ing  kinetic  energy  due  to  correlated  hopping  processes.               M = 1/4  as  well  as  the  one  between M   =  1/4  and
+Furthermore, we observe similar pinwheel structures also                     M = 1/2  are  very  demanding  to  pinpoint.    Here  one
+in the four-leg system when applying open boundary con-                      is  facing  the  problem  that  diﬀerent  structures  with  al-
+ditions to the both direction (see Fig.12). While we leave                   ready  large  unit  cells  may  build  super-structures  with
+a detailed study of this case to future studies, this ﬁnding                 even larger unit cells which are very hard to treat by any
+again indicates that our physical picture obtained for the                   theoretical method.  We think it might be an interesting
+four-leg  Shastry-Surtherland  tube  is  likely  of  relevance               option to use DMRG or other variational tools directly
+for the full 2D case.                                                        on the eﬀective model derived by pCUT in order to tackle
+                                                                             this question at least in the limit of smallJ′/J where the
+                           B.    M = 1/4                                     eﬀective model is fully converged.  At the same time this
+                                                                             may shed light on the appearance of pair superﬂuids at
+                                                                             very low magnetizations or supersolid phases in the in-
+  For M  =  1/4,  we  ﬁnd  that  correlated  hopping  sta-                   termediate regimes.  Indeed, correlated hopping is known
+bilizes a semiclassical structure consisting of a diagonal                   to be able to stabilize such phases14,36–38        .
+stripe which wraps around the tube.  This structure does                        Our work shows that correlated hopping processes, or
+not correspond to the classical solution.  Quantum ﬂuc-                      more generally quantum ﬂuctuations, are important also
+tuations induced by correlated hopping are essential to                      for the two-dimensional case.  This aspect is very likely
+lower the energy of this structure.                                          the reason between the discrepancies of the pCUT(+CA)
+  Interestingly, such diagonal stripes have been proposed                    approach used in Ref.19ﬁnding magnetization plateaus
+for the M  = 1/4 plateau of the two-dimensional model                        of single triplons and the recently discovered sequence of
+                                                                                                                                      12
+
+magnetization  plateaus  of  two-particle  bound  states23.            quantum ﬂuctuations, as e.g.  correlated hopping.  It will
+It is therefore not the eﬀective model derived by pCUT                 be intriguing to search for such eﬀects in further systems.
+which fails for the crystal of bound states, but it is clearly
+the CA which is not able to treat correlated hopping pro-
+cesses well as we have seen impressively for the Shastry-                          VII.    ACKNOWLEDGEMENTS
+Sutherland four-leg tube.
+                                                                         We acknowledge very useful discussions with F. Mila
+  Altogether,    our   study   of   the   four-leg   Shastry-          and S. Wessel.  We also thank S. Wessel for providing us
+Sutherland  tube  reveals  that  the  character  of  magneti-          QMC data for related sign-free systems which helped op-
+zation plateaus can indeed be given by delocalized struc-              timizing the DMRG procedure.  KPS acknowledges ESF
+tures of multiple triplons which are stabilized by exotic              and EuroHorcs for funding through his EURYI.
+
+
+
+
+
+
+
+
+                                                        VIII.    APPENDIX
+
+
+  In this appendix we give the series expansions of the most relevant amplitudes of the eﬀective pCUT model.  One-
+body operators (two-body operators) are calculated up to order 15 (14) in the parameter x≡ J′/J.  Note that we
+have set J = 1 in all expressions.
+
+
+
+
+
+
+
+
+                                                     A.    One-body operators
+
+
+  In the following we show the series expansions for the chemical potential on vertical and horizontal dimers as well
+as the hopping over the diagonal:
+
+
+
+  tv(0,0) = 1−x2− 12x3− 18x4 +  532x5 +   3128x6− 16994608x7− 3510755296x8− 259061663552x9 +  9746876635520x10 + 11518705274777574400x11
+
+           − 2332336762938220595200x12− 4039266940027122932357120000x13− 10228987643346116357789539942400000 x14−  820433982002044611148543213551616000000x15
+
+  th(0,0) = 1−x2− 12x3− 18x4 +  532x5 +   3128x6− 16994608x7− 3510755296x8− 259061663552x9 +  1947551327104x10 + 11532664634777574400x11
+
+           + 116030601329191102976000x12 + 4014064736051922932357120000x13 + 2017241062817424711557907988480000x14 + 1227745985509498283359708642710323200000x15
+
+  tv(1,1) =− 196x6−  11576x7−   834608x8−   2447663552x9− 1048755779626240x10−  3031501739555148800x11−  675446521776441190400x12
+
+           −  14930736446759137594142720000x13−  2124365465020694280706662400000x14 +  176721930867027663197086427103232000000x15
+
+  th(1,1) =− 196x6−  11576x7−   834608x8−   2447663552x9− 1048755779626240x10−  3031501739555148800x11−  675917113776441190400x12
+
+           − 149631502102793137594142720000x13−  113355756996122649241600000x14 +  175023958786072695197086427103232000000x15
+
+
+
+with tv(1,1) =tv(−1,1) and th(1,1) =th(−1,1).  In the main body of the paper we often use µ for the chemical potenzial on
+all dimers which reﬂects the fact that tv(0,0) and th(0,0) only diﬀer in order 10.
+                                                                                                                                 13
+
+                                        B.    Two-body density-density interactions
+
+  The type of density-density interactions called V1 in the main body of the text is given by:
+
+           V v(1,0),(0,0),(1,0) = 12x + 12x2− 18x3−  916x4−  364x5 + 809768x6 + 21733072x7− 7054324576x8− 378164115308416 x9
+
+                              − 2055058321637009920 x10 + 1221224637776441190400x11 + 3298454784980119172942848000 x12
+
+                              + 523425276627762371100753141760000 x13 + 19409208366246467731924632639078400000 x14
+
+           V v(0,1),(0,0),(0,1) = 12x + 12x2− 18x3−  916x4−  364x5 + 809768x6 + 21733072x7− 21130973728 x8− 376408995308416 x9
+
+                              − 396983309127401984x10 + 34182578175125480396800 x11 + 627937913706013057647616000 x12
+
+                              + 5449884415720907291100753141760000 x13 + 30729593506190988097924632639078400000 x14  .
+
+The type of density-density interactions called V3 in the main body of the text read:
+
+                V v(2,0),(0,0),(2,0) = 12x2 + 34x3− 18x4− 4964x5− 289768x6 + 40199216x7 +  77609110592x8 +  2439911327104x9
+
+                                   − 7385527979626240x10− 15844894211061683200x11−   1756843119439360x12
+
+                                   + 10026185975635145864714240000 x13 + 183832105244723489115579079884800000x14
+
+                V h(0,2),(0,0),(0,2) = 12x2 + 34x3−  516x4− 1164x5 +  73768x6− 17293072x7 + 4756736864x8−  3862011327104x9
+
+                                   − 15781781920 x10 + 252943525879555148800 x11− 55846945337891146617856000x12
+
+                                   + 4604094384156727518828544000x13 + 15588229511402320119263179980800000 x14  .
+
+The type of density-density interactions called V2 in the main body of the text read:
+
+                    V v(1,1),(0,0),(1,1) = 14x3 + 38x4 + 2364x5−  41128x6− 337192x7− 283327221184x8 + 236846875308416 x9
+
+                                       + 1362906325127401984 x10− 1221224637776441190400x11− 3298454784980119172942848000 x12
+
+                                       − 523425276627762371100753141760000 x13 + 19409208366246467731924632639078400000 x14
+
+                    V h(1,1),(0,0),(1,1) = 14x3 + 38x4 + 2364x5−  39128x6− 971576x7− 262199221184x8 + 238061875308416 x9
+
+                                       + 6742797373637009920 x10− 1516738049376441190400x11− 3261017165059439172942848000 x12
+
+                                       − 516366710819281931100753141760000 x13 + 9661058826847003663924632639078400000 x14  .
+
+The type of density-density interactions called V4 in the main body of the text read:
+
+              V v(2,1),(0,0),(2,1) = 18x4 + 1764x5 +  77768x6− 35719216x7−  59017110592x8 + 13397392654208x9 + 323608631159252480x10
+
+                                 + 5127498551938220595200x11− 34588636796811146617856000x12− 3387691098242909550376570880000 x13
+
+                                 + 180169037145982051231158159769600000x14
+
+              V v(1,2),(0,0),(1,2) = 18x4 + 1764x5−  17384x6− 63499216x7− 1763336864x8 + 44764332654208x9 + 567596647159252480x10
+
+                                 − 1117810646938220595200x11− 181774640691887436800 x12− 4776276471478103550376570880000 x13
+
+                                 + 8711588250104481127462316319539200000 x14  .
+                                                                                                                                              14
+
+All other density-density interactions appear in at least order 6 or higher.
+
+
+                                                        C.    Correlated hopping
+
+  The type of correlated hopping called t′ in the main body of the text is given by:
+
+           V h(1,0),(1,0),(0,1) =−14x2−  516x3 +  964x4 +  89128x5 + 37316144x6− 4236749152x7− 96163153538944x8
+
+                                − 2441143128311552x9 + 7745306763710192158720x10 + 110908020949781537269760 x11
+
+                                − 832683372515471146767085568000x12− 1026091095635912891956894474240000 x13− 2334347547785143346965467381760000x14
+
+           V v(0,1),(0,1),(1,0) =−14x2−  516x3 +  964x4 +  89128x5 + 37316144x6− 4236749152x7− 96470353538944x8
+
+                                − 85369739437184x9 + 7643726341310192158720x10 + 61107510387745298483200 x11
+
+                                − 830592692720663146767085568000x12 + 830260111004218939117612050268160000 x13− 668866209122606693986274815016960000x14  .
+
+The type of correlated hopping called t′′ in the main body of the text is given by:
+
+                  V h(1,0),(1,0),(2,0) = 14x2 + 38x3 + 18x4− 1332x5− 6164x6−  5911024x7 + 10786773728 x8 + 60131991769472x9
+
+                                       −  690159114155776x10− 245155912791698693120 x11− 16279526208581611529523200 x12
+
+                                       − 9606368877184324461180928000x13 + 394284691801428095361642175938560000 x14
+
+                  V v(0,1),(0,1),(0,2) = 14x2 + 38x3 + 18x4− 1332x5− 6164x6−  5911024x7 + 10722773728 x8 + 59317551769472x9
+
+                                       − 1492372923592960x10− 37454815179725480396800 x11− 16400221354633611529523200 x12
+
+                                       − 1291801992179591366917713920000 x13− 6066194272818874343154105439846400000 x14  .
+
+
+
+
+
+
+
+
+
+∗  kai.schmidt@tu-dortmund.de                                               8  S. E. Sebastian, N. Harrison, P. Sengupta, C. D. Batista,
+ 1  C. Lacroix, P. Mendels, and F. Mila (Eds), Introduction to                S.  Francoual,  E.  Palm,  T.  Murphy,  N.  Marcano,  H.  A.
+   Frustrated  Magnetism  Springer  Series  in  Solid-State  Sci-             Dabkowska, and B. D. Gaulin, Proceedings of the National
+   ences 164, (2011).                                                         Academy of Sciences 105, 20157 (2008).
+ 2  H. Kageyama, K. Yoshimura, R. Stern, N. V. Mushnikov,                   9  M. Jaime, R. Daou, S. A. Crooker, F.Weickert, A. Uchida,
+   K. Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto,                   A. E. Feiguin, C. D. Batista, H. A. Dabkowska, and B. D.
+   and Y. Ueda, Phys. Rev. Lett. 82, 3168 (1999).                             Gaulin, Proceedings of the National Academy of Sciences
+ 3  K. Onizuka, H. Kageyama, Y. Narumi, K. Kindo, Y. Ueda,                    (2012), 10.1073/pnas.1200743109.
+   and T. Goto, J. Phys. Soc. Jpn. 69, 1016 (2000).                        10  M.  Takigawa,   M.  Horvatic,   T.  Waki,   S.  Kr¨amer,   C.
+ 4  H. Kageyama, M. Nishi, N. Aso, K. Onizuka, T. Yosihama,                   Berthier, F. Levy-Bertrand, I. Sheikin, H. Kageyama, Y.
+   K.  Nukui,  K.  Kodama,  K.  Kakurai,  and  Y.  Ueda,  Phys.               Ueda, and F. Mila, Phys. Rev. Lett. 110, 067210 (2013).
+   Rev. Lett. 84, 5876 (2000).                                             11  Y. H. Matsuda,  N. Abe,  S. Takeyama,  H. Kageyama,  P.
+ 5  K.  Kodama,  M.  Takigawa,  M.  Horvatic,  C.  Berthier,  H.              Corboz,  A.  Honecker,  S.  R.  Manmana,  G.  R.  Foltin,  K.
+   Kageyama, Y. Ueda, S. Miyahara, F. Becca, and F. Mila,                     P.  Schmidt,  and  F.  Mila,  Phys.  Rev.  Lett.  111,  137204
+   Science 298, 395 (2002).                                                   (2013).
+ 6  M.  Takigawa,  K.  Kodama,  M.  Horvatic,  C.  Berthier,  H.           12  S.  Miyahara  and  K.  Ueda,  Phys.  Rev.  Lett.  82,  3701
+   Kageyama, Y. Ueda, S. Miyahara, F. Becca, and F. Mila,                     (1999).
+   Physica B: Condensed Matter 346, 27 (2004).                             13  T. Momoi and K. Totsuka, Phys. Rev. B 61, 3231 (2000).
+ 7  F. Levy, I. Sheikin, C. Berthier, M. Horvatic, M. Takigawa,            14  T. Momoi and K. Totsuka, Phys. Rev. B 62, 15067 (2000).
+   H. Kageyama, T. Waki, and Y. Ueda, EPL (Europhysics                     15  Y. Fukumoto and A. Oguchi, J. Phys. Soc. Jpn. 69, 1286
+   Letters) 81, 67004 (2008).                                                 (2000).
+                                                                                                                                                             15
+
+
+16  Y. Fukumoto, J. Phys. Soc. Jpn. 70, 1397 (2001).                               28  S.  Yang,  D.A.  Huse,  and  S.R.  White,  Science 332,  1173
+17  S. Miyahara and K. Ueda, J. Phys.: Condensed Matter 15,                           (2011).
+   R327 (2003).                                                                    29  E.M. Stoudenmire and S.R. White, Annu. Rev. Condens.
+18  S.  Miyahara,  F.  Becca,  and  F.  Mila,  Phys.  Rev.  B  68,                    Matter Phys. 2012. 3:11128 .
+   024401 (2003).                                                                  30  S.R. Manmana,  J.-D. Picon,  K.P. Schmidt,  and F. Mila,
+19  J. Dorier, K.P. Schmidt and F. Mila, Phys. Rev. Lett. 101,                        Eur. Phys. Lett. 94, 67004 (2011).
+   250402 (2008).                                                                  31  K.P. Schmidt and G.S. Uhrig, Phys. Rev. Lett. 90, 227204
+20  A.  Abendschein  and  S.  Capponi,  Phys.  Rev.  Lett.  101,                      (2003).
+   227201 (2008).                                                                  32  T. Matsubara and H. Matsuda, Prog. Theor. Phys. 16, 569
+21  M. Nemec, G. R. Foltin, and K. P. Schmidt, Phys. Rev. B                           (1956).
+   86, 174425 (2012).                                                              33  K.  Lanczos,  J.  Res.  Natl.  Bur.  Stand 45,  225  (1950);  J.
+22  J.   Lou,   T.   Suzuki,   K.   Harada,   and   N.   Kawashima,                   K.  Cullum  and  R.  A.  Willoughby,  Lanczos  Algorithms
+   arXiv:1212.1999 (2012).                                                            for  Large  Symmetric  Eigenvalue  Computations  (SIAM,
+23  P.  Corboz  and  F.  Mila,  Phys.  Rev.  Lett.  112,  147203                      Philadelphia, (2002).
+   (2014).                                                                         34  S.R.  White  and  A.L.  Chernyshev,  Phys.  Rev.  Lett.  99,
+24  B.S. Shastry and B. Sutherland, Physica (Amsterdam) 108                           127004 (2007).
+   B+C, 1069 (1981).                                                               35  P. Corboz and F. Mila, Phys. Rev. B 87, 115144 (2013).
+25  C. Knetter and G. S. Uhrig, Eur. Phys. J. B 13, 209 (2000).                    36  R.  Bendjama,  B.  Kumar,  and  F.  Mila,  Phys.  Rev.  Lett.
+26  C.  Knetter,  K.P.  Schmidt,  and  G.S.  Uhrig,  J.  Phys.  A:                    95, 110406 (2005).
+   Math. and Gen. 36, 7889 (2003).                                                 37  K.P.  Schmidt,  J.  Dorier,  A.  L¨auchli,  and  F.  Mila,  Phys.
+27  S.R.   White,   Phys.   Rev.   Lett.  69,   2863   (1992);   U.                   Rev. B 74, 174508 (2006).
+   Schollw¨ock, Rev. Mod. Phys. 77, 259 (2005).                                    38  K.P.  Schmidt,  J.  Dorier,  A.  L¨auchli  and  F.  Mila,  Phys.
+                                                                                      Rev. Lett. 100, 090401 (2008).

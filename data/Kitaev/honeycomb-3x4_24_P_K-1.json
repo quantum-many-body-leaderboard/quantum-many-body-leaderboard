@@ -1,0 +1,235 @@
+{
+  "model": "Kitaev",
+  "lattice": "honeycomb-3x4",
+  "n_sites": 24,
+  "boundary": "P",
+  "params": {
+    "K": -1,
+    "J": 0,
+    "Gamma": 0
+  },
+  "cluster": "3 x 4 two-site unit cells, periodic in both directions (arXiv:1411.5198, Fig. 1(b))",
+  "instance_id": "Kitaev/honeycomb-3x4_24_P_K-1",
+  "rows": [
+    {
+      "energy": -18.04,
+      "sigma": 0.04,
+      "energy_variance": null,
+      "dof": 24,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "PP",
+      "method_detail": "pair wave function",
+      "method_as_published": "|ψpair⟩ (Table I)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Kurita, Yamaji, Morita & Imada, Variational Monte Carlo method in the presence of spin-orbit interaction and its application to Kitaev and Kitaev-Heisenberg models, Phys. Rev. B 92, 035122 (2015), doi:10.1103/PhysRevB.92.035122, arXiv:1411.5198",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:1411.5198 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "−9.02 ± 0.02",
+        "note": "Table I, row |ψpair⟩, column 3×4 unit cells; version read: arXiv text (sources/1411.5198.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (28) H_KH = 2 alpha H_K + (1 - alpha) J_H sum S.S at alpha = 1 (the text before Table I: 'the Kitaev model, where alpha = 1'), with H_K = -J sum S^g S^g (Eq. 27), S^g = c^dag sigma^g c / 2, J = 1: H = -2 sum S^g S^g, K = -2 in the S = sigma/2 form, twice the instance's K = -1 (scale 2). Total energies of the cluster: the per-site values -0.3970, -0.3977, -0.3926 the text compares with the thermodynamic -0.39365 are these totals over N. QMBL's flux-free free-Majorana energies of the 3 x 4 and 4 x 4 tori reproduce -9.54589 and -12.56409 (SWEEP.md, 2026-10-20).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-23",
+          "scope": "value",
+          "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+          "location": "Table I, row |ψpair⟩, column 3x4 unit cells",
+          "reported_as": "−9.02 ± 0.02 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+          "conversion": "-9.02 * 2 = -18.04; sigma 0.02 * 2 = 0.04",
+          "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.187917. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type variational agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate.",
+          "source_entry": "famP4-arxiv-1411-5198#0 (qmbl-verify 2026-10-23)"
+        }
+      },
+      "normalised": {
+        "factor": 2,
+        "source_couplings": "H = 2 H_K = -2 sum S^g S^g (Eq. 28 at alpha = 1, J = 1): K = -2 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 2 times the instance's; its printed energy (reported_as) is divided by 2"
+      }
+    },
+    {
+      "energy": -19.086,
+      "sigma": 0.008,
+      "energy_variance": null,
+      "dof": 24,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "PP",
+      "method_detail": "pair wave function; projected: K = 0",
+      "method_as_published": "|ψMP⟩ (Table I)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Kurita, Yamaji, Morita & Imada, Variational Monte Carlo method in the presence of spin-orbit interaction and its application to Kitaev and Kitaev-Heisenberg models, Phys. Rev. B 92, 035122 (2015), doi:10.1103/PhysRevB.92.035122, arXiv:1411.5198",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:1411.5198 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "−9.543 ± 0.004",
+        "note": "Table I, row |ψMP⟩, column 3×4 unit cells; version read: arXiv text (sources/1411.5198.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (28) H_KH = 2 alpha H_K + (1 - alpha) J_H sum S.S at alpha = 1 (the text before Table I: 'the Kitaev model, where alpha = 1'), with H_K = -J sum S^g S^g (Eq. 27), S^g = c^dag sigma^g c / 2, J = 1: H = -2 sum S^g S^g, K = -2 in the S = sigma/2 form, twice the instance's K = -1 (scale 2). Total energies of the cluster: the per-site values -0.3970, -0.3977, -0.3926 the text compares with the thermodynamic -0.39365 are these totals over N. QMBL's flux-free free-Majorana energies of the 3 x 4 and 4 x 4 tori reproduce -9.54589 and -12.56409 (SWEEP.md, 2026-10-20).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+          "location": "Table I, row |ψMP⟩, column 3x4 unit cells",
+          "reported_as": "−9.543 ± 0.004",
+          "conversion": "-9.543 * 2 = -19.086; sigma 0.004 * 2 = 0.008",
+          "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 2 * E_src. Energy, sigma, cluster, boundary, couplings and bound_type agree with the source; own computation, variational.",
+          "source_entry": "famP4-arxiv-1411-5198#1 (qmbl-verify 2026-10-23; skeptic upheld)"
+        }
+      },
+      "normalised": {
+        "factor": 2,
+        "source_couplings": "H = 2 H_K = -2 sum S^g S^g (Eq. 28 at alpha = 1, J = 1): K = -2 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 2 times the instance's; its printed energy (reported_as) is divided by 2"
+      }
+    },
+    {
+      "energy": -19.088,
+      "sigma": 0.008,
+      "energy_variance": null,
+      "dof": 24,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "PP",
+      "method_detail": "pair wave function, hexagon fluxes fixed (Kitaev-liquid constraint)",
+      "method_as_published": "|ψKL⟩ (Table I)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Kurita, Yamaji, Morita & Imada, Variational Monte Carlo method in the presence of spin-orbit interaction and its application to Kitaev and Kitaev-Heisenberg models, Phys. Rev. B 92, 035122 (2015), doi:10.1103/PhysRevB.92.035122, arXiv:1411.5198",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:1411.5198 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "−9.544 ± 0.004",
+        "note": "Table I, row |ψKL⟩, column 3×4 unit cells; version read: arXiv text (sources/1411.5198.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (28) H_KH = 2 alpha H_K + (1 - alpha) J_H sum S.S at alpha = 1 (the text before Table I: 'the Kitaev model, where alpha = 1'), with H_K = -J sum S^g S^g (Eq. 27), S^g = c^dag sigma^g c / 2, J = 1: H = -2 sum S^g S^g, K = -2 in the S = sigma/2 form, twice the instance's K = -1 (scale 2). Total energies of the cluster: the per-site values -0.3970, -0.3977, -0.3926 the text compares with the thermodynamic -0.39365 are these totals over N. QMBL's flux-free free-Majorana energies of the 3 x 4 and 4 x 4 tori reproduce -9.54589 and -12.56409 (SWEEP.md, 2026-10-20).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read",
+          "location": "Table I, row |ψKL⟩, column 3x4 unit cells",
+          "reported_as": "−9.544 ± 0.004",
+          "conversion": "-9.544 * 2 = -19.088; sigma 0.004 * 2 = 0.008",
+          "note": "factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 2 * E_src. Energy, sigma, cluster, boundary, couplings and bound_type agree with the source; own computation, variational. The same paper's lower VMC energy on this instance, Table II (Wx,Wy) = (+,-) -9.546(1), is its own row.",
+          "source_entry": "famP4-arxiv-1411-5198#2 (qmbl-verify 2026-10-23; skeptic upheld)"
+        }
+      },
+      "normalised": {
+        "factor": 2,
+        "source_couplings": "H = 2 H_K = -2 sum S^g S^g (Eq. 28 at alpha = 1, J = 1): K = -2 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 2 times the instance's; its printed energy (reported_as) is divided by 2"
+      }
+    },
+    {
+      "energy": -19.09178,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 24,
+      "einf": 0,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact (Table I)",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "Kurita, Yamaji, Morita & Imada, Variational Monte Carlo method in the presence of spin-orbit interaction and its application to Kitaev and Kitaev-Heisenberg models, Phys. Rev. B 92, 035122 (2015), doi:10.1103/PhysRevB.92.035122, arXiv:1411.5198",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:1411.5198 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "−9.54589",
+        "note": "Table I, row Exact, column 3×4 unit cells; version read: arXiv text (sources/1411.5198.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (28) H_KH = 2 alpha H_K + (1 - alpha) J_H sum S.S at alpha = 1 (the text before Table I: 'the Kitaev model, where alpha = 1'), with H_K = -J sum S^g S^g (Eq. 27), S^g = c^dag sigma^g c / 2, J = 1: H = -2 sum S^g S^g, K = -2 in the S = sigma/2 form, twice the instance's K = -1 (scale 2). Total energies of the cluster: the per-site values -0.3970, -0.3977, -0.3926 the text compares with the thermodynamic -0.39365 are these totals over N. QMBL's flux-free free-Majorana energies of the 3 x 4 and 4 x 4 tori reproduce -9.54589 and -12.56409 (SWEEP.md, 2026-10-20).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+          "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+          "reported_as": "−9.54589",
+          "conversion": "recomputed total (Pauli form, |K| = 1) -19.091785322372; stored -19.09178; difference -5.322e-06; printed-digit resolution of the stored total 1.0e-05",
+          "note": "3 x 4 torus, full enumeration of 2^13 gauge classes with projection; spin ED of the same torus (2^24 states, own Lanczos ed.c) gives -19.091785322372 and scipy eigsh agrees; recomputed / 2 = -9.545892661, printed -9.54589. Also read by famP4-arxiv-1411-5198#4 (arXiv:1411.5198v2 PDF (identical to the project's sources/1411.5198.pdf, md5 fc3ccbb1...), pypdf layout mode; v1 PDF also extracted, same numbers; journal PDF (PRB 92, 035122) HTTP 401, not read; Table I, row Exact, column 3x4 unit cells; −9.54589 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)): factor 2 (Eq. 28 at alpha = 1: H = 2 H_K = -2 sum S^g S^g; instance -sum S^g S^g); stored Pauli total = 4 * (E_src / 2) = 2 * E_src; per site of the instance's S form: -0.198873. Cluster, PBC, alpha = 1 (pure Kitaev, J = 1), global ground state, bound_type exact agree; own computation of the cited paper; peer reviewed (PRB 92, 035122). No other batch has a row on this instance (data file holds only this paper's rows), so no duplicate. Exact = exact diagonalization ('We show comparisons of the VMC calculation with the exact diagonalization results'); second reader 2026-10-24: flux-free free-Majorana sum E_src = -(1/2) sum_q |1+e^{iq1}+e^{iq2}| on the 3 x 4 torus (node, 12 closed-form terms, no diagonalisation) gives -9.545893 in the (antiperiodic, periodic) sector and -9.493500 for the next one, matching Exact -9.54589 and the text first excited -9.4934; this confirms cluster, PBC and the factor 2 independently of the loader comment.",
+          "source_entry": "famE-exact-recompute#1, famP4-arxiv-1411-5198#4 (qmbl-verify 2026-10-23)"
+        }
+      },
+      "normalised": {
+        "factor": 2,
+        "source_couplings": "H = 2 H_K = -2 sum S^g S^g (Eq. 28 at alpha = 1, J = 1): K = -2 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 2 times the instance's; its printed energy (reported_as) is divided by 2"
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "−9.54589",
+          "location": "arXiv:1411.5198 Table I, row Exact",
+          "version_read": "arXiv text (sources/)",
+          "conversion": "none",
+          "checked_on": "2026-10-20",
+          "reason": "Deterministic, not a Monte Carlo estimate: exact diagonalization of the cluster (the text compares the VMC wave functions \"with the exact diagonalization results\"). The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+          "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)",
+          "from": true
+        }
+      ],
+      "sampled": false
+    },
+    {
+      "energy": -19.092,
+      "sigma": 0.002,
+      "energy_variance": null,
+      "dof": 24,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "PP",
+      "method_detail": "pair wave function, hexagon fluxes fixed, Wilson-loop sector (Wx,Wy) = (+,−)",
+      "method_as_published": "VMC, |ψKL⟩ with Wilson-loop projection, (Wx,Wy) = (+,−) (Table II)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Kurita, Yamaji, Morita & Imada, Variational Monte Carlo method in the presence of spin-orbit interaction and its application to Kitaev and Kitaev-Heisenberg models, Phys. Rev. B 92, 035122 (2015), doi:10.1103/PhysRevB.92.035122, arXiv:1411.5198",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:1411.5198 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "−9.546±0.001",
+        "note": "Table II, 3×4 unit cells, (Wx,Wy) = (+,−), column VMC; version read: arXiv text (sources/1411.5198.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (28) H_KH = 2 alpha H_K + (1 - alpha) J_H sum S.S at alpha = 1 (the text before Table I: 'the Kitaev model, where alpha = 1'), with H_K = -J sum S^g S^g (Eq. 27), S^g = c^dag sigma^g c / 2, J = 1: H = -2 sum S^g S^g, K = -2 in the S = sigma/2 form, twice the instance's K = -1 (scale 2). Total energies of the cluster: the per-site values -0.3970, -0.3977, -0.3926 the text compares with the thermodynamic -0.39365 are these totals over N. QMBL's flux-free free-Majorana energies of the 3 x 4 and 4 x 4 tori reproduce -9.54589 and -12.56409 (SWEEP.md, 2026-10-20).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "arXiv:1411.5198v2 PDF, pypdf layout mode (v1 identical); journal PDF (PRB 92, 035122) HTTP 401, not read",
+          "location": "Table II, 3 x 4 unit cells, (Wx,Wy) = (+,-), column VMC; text: 'In the case of the 3 × 4 unit-cells lattice, it is different and we found the energy of (Wx,Wy) = (1, −1) state is −9.546 ± 0.001.'",
+          "reported_as": "−9.546±0.001 (total energy, units of J, source Hamiltonian H = -2 sum S^g S^g)",
+          "conversion": "-9.546 * 2 = -19.092; sigma 0.001 * 2 = 0.002",
+          "note": "Own VMC of |psi_KL> with the Wilson-loop projection (Eq. 43), variational; factor 2 (Eq. 28 at alpha = 1). It sits 0.00022 (0.11 sigma) below the Exact row -19.09178, within its bar. The loader had dropped it as a repeat of the same paper's Exact row (within the printed digits, a different method); restored 2026-10-24.",
+          "source_entry": "famP4-arxiv-1411-5198#3 and #2 (qmbl-verify 2026-10-23; skeptic upheld); ruled 2026-10-24"
+        }
+      },
+      "normalised": {
+        "factor": 2,
+        "source_couplings": "H = 2 H_K = -2 sum S^g S^g (Eq. 28 at alpha = 1, J = 1): K = -2 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 2 times the instance's; its printed energy (reported_as) is divided by 2"
+      }
+    }
+  ]
+}

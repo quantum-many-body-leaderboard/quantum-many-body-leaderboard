@@ -1,0 +1,536 @@
+                                       Disentangling  Kitaev  Quantum  Spin Liquid
+
+                                       Xiang  Li,1, ∗  Xiangjian  Qian,2, 1, ∗  and  Mingpu  Qin1, 3, †
+                      1Key  Laboratory  of  Artiﬁcial  Structures  and  Quantum  Control  (Ministry  of  Education),
+                    School  of  Physics  and  Astronomy,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                         2Tsung-Dao  Lee  Institute,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                                               3Hefei  National  Laboratory,  Hefei  230088,  China
+                                                             (Dated:  November 26, 2025)
+                   In this work, we investigate the Kitaev honeycomb model employing the recently developed Clif-
+                 ford Circuits Augmented Matrix Product States (CAMPS) method.  While the model in the gapped
+                 phase  is  known  to  reduce  to  the  toric  code  model—whose  ground  state  is  entirely  constructible
+                 from  Cliﬀord  circuits—we  demonstrate  that  the  very  diﬀerent  gapless  quantum  spin  liquid  (QSL)
+                 phase can also be signiﬁcantly disentangled with Cliﬀord circuits.  Speciﬁcally, CAMPS simulations
+                 reveal that approximately two-thirds of the entanglement entropy in the isotropic point arises from
+                 Cliﬀord-circuit contributions,  enabling dramatically more eﬃcient computations compared to con-
+                 ventional matrix product state (MPS) methods.  Crucially, this ﬁnding implies that the Kitaev QSL
+                 state retains signiﬁcant “Cliﬀord-simulatable” structure, even in the gapless phase with non-abelian
+                 anyon excitations when time reversal symmetry is broken.  This property not only enhances classical
+                 simulation eﬃciency signiﬁcantly but also suggests substantial resource reduction for preparing such
+                 states on quantum devices.  As an application, we leverage CAMPS to study the Kitaev-Heisenberg
+                 model and determine the most accurate phase boundary between the anti-ferromagnetic phase and
+                 the Kitaev QSL phase in the model.  Our results highlight how Cliﬀord circuits can eﬀectively disen-
+                 tangle the intricate entanglement of Kitaev QSLs, opening avenues for eﬃciently simulating related
+                 and similar strongly correlated models.
+
+
+   Introduction  -    Strongly  correlated  quantum  many-                                  6      12              18     24              30      36
+body  systems  exhibit  a  broad  range  of  emergent  phe-
+nomena driven by the interplay among geometry, interac-                                 5                           1117                          2329                          35
+tions, and quantum entanglement.  Despite their concep-
+tual richness, obtaining accurate theoretical descriptions                                  4      10              16     22              28      34
+of such systems poses a great challenge due to the expo-                                3                            915                          2127                          33
+nential  growth  of  the  Hilbert  space  and  the  presence  of
+intricate long-range quantum correlations.  Consequently,                                   2      8               14     20              26      32
+advanced numerical techniques have emerged as essential
+tools for probing the ground-state properties, low-energy                               1                            713                          1925                          31
+excitations,  and  phase transitions of strongly correlated
+quantum materials   [1].
+   Quantum  spin  liquids  (QSLs)  exemplify  systems  in
+which  such  advanced  numerical  tools  are  particularly                       FIG.  1:   Schematic  of  the  honeycomb  lattice  geometry  and
+valuable.    QSLs  represent  a  class  of  quantum  phases                      boundary  conditions  used  in  this  work.   Periodic  boundary
+that  defy  classical  symmetry-breaking  paradigms,  man-                       conditions are applied along the vertical direction,  while the
+ifesting long-range entanglement, emergent gauge ﬁelds,                          horizontal direction is open.  The three types of Kitaev bonds
+and  fractionalized  quasi-particles  [2].   Their  unconven-                    (x (green), y  (red), and z  (blue)) are indicated by diﬀerently
+tional properties make them leading candidates for fault-                        colored lines.  The mapping of the two-dimensional lattice (6×
+tolerant quantum information processing based on topo-                           6 in the plot) to a one-dimensional chain for MPS simulations
+logical degrees of freedom[3–5].  Among theoretical mod-                         is illustrated by the numbering.
+els of QSLs, the Kitaev honeycomb model holds a privi-
+leged position thanks to its exact solvability and explicit                      netic order at low temperatures, extensive experimental
+realization of a Z2  QSL [6].
+   Bond-directional interactions of the Kitaev type arise                        and theoretical works indicate that they reside near the
+naturally in several materials with strong spin–orbit cou-                       boundary of Kitaev spin-liquid phases[9–24].  To capture
+pling,  leading to the proposal of numerous “Kitaev ma-                          the leading perturbations relevant for these materials, the
+terial”  candidates,  such  as  Na2IrO3,  α-Li2IrO3[7],  and                     Kitaev–Heisenberg  model  (KHM)  augments  the  bond-
+α-RuCl3[17].    While  these  systems  often  exhibit  mag-                      directional Kitaev interactions with isotropic Heisenberg
+                                                                                 exchange.  This model displays a rich phase diagram con-
+                                                                                 taining gapless Kitaev QSL, and a variety of magnetically
+                                                                                 ordered  states  induced  by  the  competition  between  Ki-
+∗These authors contributed equally to this work.                                 taev and Heisenberg terms[25–34].  Resolving the ground-
+†qinmingpu@sjtu.edu.cn                                                           state  properties  and  phase  transitions  within  the  KHM
+                                                                                                                                                     2
+
+requires numerical techniques capable of handling strong                      termine the most accurate phase boundary between the
+anisotropy, frustration, and enhanced entanglement.                           anti-ferromagnetic  and  the  Kitaev  spin  liquid  phases  in
+  Tensor-network  related  methods  [35,  36],  such  as  the                 the model through reliable ﬁnite-size scaling.
+density  matrix  renormalization  group  (DMRG)[37]  and                        Results for Kitaev model - The Hamiltonian of the Ki-
+its   underlying   wave-function   ansatz,   Matrix   Product                 taev honeycomb model is deﬁned as
+States  (MPS)[38–42],  have  become  indispensable  tools                                  ∑                   ∑                   ∑
+for  accurately  simulating  low-dimensional  quantum  sys-                      H = Jx          Sxi Sxj  + Jy      Syi Syj  + Jz       Szi Szj ,    (1)
+tems.  Their eﬀectiveness stems from the controlled trun-                                  ⟨ij⟩x               ⟨ij⟩y              ⟨ij⟩z
+cation of entanglement and the eﬃcient variational rep-
+resentation  of  low-energy  states.    However,  the  entan-                 where Sγi (γ = x, y, z) are spin-1/2 operators on site i and
+glement  entropy  that  an  MPS  can  represent  scales  log-                 Jγ  is  the  corresponding  coupling  constant.   The  model
+arithmically  with  its  bond  dimension,  which  fundamen-                   is  deﬁned  on  a  honeycomb  lattice  (see  Fig.  1).    Each
+tally limits its ability to describe states with high entan-                  nearest-neighbor pair ⟨ij⟩γ  interacts only through the γ-
+glement.  People also developed two-dimensional tensor-                       component of the spin, giving rise to a highly frustrated
+network  ansatze  [43–45]  capable  of  encoding  the  entan-                 system.
+glement  area  law  for  systems  with  local  interactions.                    The  kitaev  honeycomb  model  is  exactly  solvable  by
+However,  the  prohibitively  expensive  scaling  of  compu-                  representing the spin degree of freedom as Majorana de-
+tational  cost  with  bond  dimension  D  prevents  reaching                  gree of freedom [6, 55].  The Hamiltonian is then reduced
+very large D, which controls the amount of entanglement                       to  non-interacting  fermions  coupled  to  Z2  gauge  ﬁelds.
+that can be handled.                                                          The phase diagram of the Kitaev honeycomb model con-
+  These  challenges  have  motivated  the  development  of                    sists  of  two  diﬀerent  phases.   One  is  the  gapped  phase,
+augmented  tensor-network  architectures  aimed  at  ex-                      which carries Abelian anyon excitations, i.e., the so-called
+tending  the  expressive  power  of  Tensor  network  [46].                   A phase.  In this phase, the low-energy physics of the Ki-
+One   particularly   promising   approach   is   the   Cliﬀord                taev model can be described by the Toric code model [6].
+Circuits  Augmented  Matrix  Product  States  (CAMPS)                         The  other  one  is  the  gapless  phase,  which  carries  non-
+method[47], which enhances MPS by incorporating layers                        Abelian anyon excitations if the time reversal symmetry
+of Cliﬀord circuits as disentanglers acting on the physical                   is  broken  with  a  small  magnetic  ﬁeld,  i.e.,  the  so-called
+degrees of freedom of MPS. Leveraging the Gottesman–                          B phase.  In this work, we focused on the isotropic point
+Knill theorem [48–50], which ensures the eﬃcient classi-                      (i.e.,  Jx  = Jy  = Jz  = 1),  which lies in the center of the
+cal  simulation  of  Cliﬀord  circuits,  this  method  expands                gapless B phase.
+the  variational  manifold  of  MPS  with  mild  computa-                       In this work, we consider cylindrical clusters with pe-
+tional  overhead[47].   Recent  studies  have  demonstrated                   riodic  boundary  conditions  along  the  vertical  direction
+that   CAMPS   achieves   substantial   accuracy   improve-                   and open boundary conditions along the horizontal direc-
+ments over conventional MPS, making it a powerful tool                        tion,  as  illustrated  in Fig.  1.  The  three  types  of Kitaev
+for tackling strongly entangled quantum systems[51, 52].                      bonds—x  (green),  y  (red),  and  z  (blue)—are  depicted
+  The Kitaev honeycomb model in the gapped phase is                           with  distinct  colors  in  Fig.  1.   To  facilitate  MPS-based
+known  to  reduce  to  the  toric  code  model  whose  ground                 simulations, which require a one-dimensional ordering of
+state is then entirely constructible from Cliﬀord circuits                    lattice  sites,  the  two-dimensional  honeycomb  lattice  is
+and  is  trivial  to  handle  with  CAMPS  (with  bond  di-                   mapped onto a one-dimensional chain using a snake-like
+mension  1  [53]).   Previous  work  has  demonstrated  that                  path, as indicated by the numbering in Fig. 1 for a 6 × 6
+the  entanglement  entropy  in  the  gapless  phase  results                  lattice.
+from the sum of contributions originating from both the                         Fig.  2(a)  shows  the  convergence  of  the  ground-state
+gauge ﬁeld and the fermionic degree of freedom [54].  This                    energy  as  a  function  of  the  bond  dimension  D  for  both
+property of the entanglement structure makes us wonder                        MPS (DMRG) and CAMPS for system with size 16×16.
+whether  the  gapless  phase  can  also  be  signiﬁcantly  dis-               Results  for  other  system  sizes  can  be  found  in  the  sup-
+entangled with Cliﬀord circuits.                                              plementary materials.  To avoid the trapping of the cal-
+  To answer this question, we calculate the ground state                      culation in a meta-stable state [31, 56], we apply a small
+of  the  Kitaev  honeycomb  model  at  the  isotropic  point                  magnetic  ﬁeld  (with  strength  h  =  0.01)  in  the  [111]  di-
+with  CAMPS  in  this  work.   We  ﬁnd  that  for  the  sys-                  rection  to  break  the  conservation  of  the  plaquette  op-
+tem sizes (from 8 × 8 to 16×16) we studied, about two-                        erator  [6].   As  we  can  see  in  Fig.  2(a),  MPS  converges
+thirds of the whole entanglement entropy in the ground                        slowly,  requiring  bond  dimensions  exceeding  D  =  2000
+state can be handled by the Cliﬀord circuits, which makes                     to  achieve  accurate  results.  In  contrast,  CAMPS  shows
+CAMPS  extremely  eﬃcient  to  study  the  Kitaev  honey-                     rapid  convergence  with  D,  providing  signiﬁcantly  im-
+comb model.  For example, for the 16 × 16 system in the                       proved  ground  state  energy  at  much  smaller  bond  di-
+isotropic  point,  CAMPS  with  bond  dimension  D  =  20                     mensions  (D  <  100).   Notably,  the  CAMPS  energy  at
+can give more accurate energy than ordinary MPS with                          D  = 20  already  surpasses  the  accuracy  of  the  MPS  en-
+bond dimension 1200.  As an application, we also leverage                     ergy  at  D  =  1200.   Given  the  D3  scaling  of  the  cost  in
+CAMPS  to  study  the  Kitaev-Heisenberg  model  and  de-                     both methods,  this result demonstrates that CAMPS is
+                                                                                                                                                         3
+
+
+      0.182                                                   6                                                6.0
+                 (a)                     MPS                        (b)                                                (c)
+      0.184                              CAMPS                4                                                5.5
+
+      0.186                                                                                                    5.0
+                                                              2
+      0.188                                                                                                    4.5
+
+      0.190                                                   0                                                4.0
+                                                                       MPS
+      0.192                                                   2        CAMPS                                   3.5
+                                                                       Fit MPS: EE=0.17L+2.19
+      0.194                                                            Fit CAMPS: EE=0.09L+0.17                3.0
+              0     500     1000    1500    2000              4  6      8     10     12     14     16               6      8     10     12     14     16
+                               D                                                  L                                                  L
+
+FIG.  2:  (a)  Convergence  of  the  ground-state  energy  of  the  Kitaev  honeycomb  model  as  a  function  of  the  bond  dimension  D
+for both MPS (blue) and CAMPS (orange).  The system size is 16 × 16.  While the MPS energy decreases slowly and requires
+D  ≳  2000  to  approach  convergence,  the  CAMPS  reaches  a  signiﬁcantly  lower  energy  already  at  very  small  bond  dimensions
+D ≲ 100.  Notably, the CAMPS result at a very small bond dimension D = 20 already achieves a lower variational energy than
+the  MPS  calculation  with  D  =  1200.   (b)  entanglement  entropy  (EE)  as  a  function  of  system  size  L  for  MPS  and  CAMPS.
+Simple  linear  ﬁts  (dashed  lines)  show  that  the  slope  of  CAMPS  (0.09)  is  substantially  smaller  than  that  of  MPS  (0.17).(c)
+Ratio of entanglement entropies, EEMPS/EECAMPS, as a function of L.  Across all sizes, the ratio basically remains above 2.9,
+conﬁrming that MPS consistently requires more entanglement to describe the same physical state.
+
+
+extremely  more  eﬃcient  than  traditional  MPS  in  han-                            0.380        MPS D=1200
+dling the Kitaev honeycomb model.                                                                  MPS D=1600
+                                                                                                   MPS D=2000
+   To  quantify  the  entanglement  reduction  achieved  by                                        CAMPS D=1200
+CAMPS,  Fig.  2(b)  shows  the  half-system  entanglement                             0.385        CAMPS D=1600
+                                                                                                   CAMPS D=2000
+entropy  (EE)  for  system  sizes  ranging  from  L  =  6  to                                      phase transition point
+L  =  16.   Notice  that  the  EE  for  CAMPS  here  is  actu-                        0.390
+ally the Non-stabilizerness Entanglement Entropy intro-
+duced in [53], i.e., the entanglement entropy which can’t
+be reduced by Cliﬀord circuits.  For MPS, the EE grows                                0.395
+approximately linearly with system size.  A simple linear
+ﬁt gives a slope of 0.17.  In contrast, CAMPS exhibits a                              0.400
+signiﬁcantly  reduced  EE  and  a  simple  linear  ﬁt  gives  a
+slope of only 0.09, demonstrating that the Cliﬀord circuit                                   0.483      0.486       0.489      0.492      0.495      0.498
+eﬀectively disentangles the system, thereby reducing the                                                                    ϕ
+entanglement burden on the MPS representation.
+   The  ratio  EEMPS/EECAMPS,  shown  in  Fig.  2(c),  re-                      FIG. 3:  Ground-state energy of the Kitaev–Heisenberg model
+mains above 2.9 across all studied system sizes, conﬁrm-                        on the 16 × 16 lattice as a function of the parameter φ (in the
+ing that CAMPS consistently requires substantially less                         unit of π).  The MPS data are indicated by triangles, whereas
+entanglement capacity for the MPS part to describe the                          the  CAMPS  data  are  indicated  by  circles.     The  CAMPS
+same  physical  state.   This  reduction  directly  correlates                  data display signiﬁcantly improvement over MPS. The dashed
+with  the  faster  variational  convergence  of  CAMPS  re-                     magenta  lines  represent  a  linear  extrapolation  based  on  the
+sults  observed  in  Fig.  2(a),  indicating  that  the  Cliﬀord                CAMPS  energies.    The  intersection  between  the  two  lines
+circuit  augmentation  fundamentally  reshapes  the  eﬀec-                      identiﬁes  the  phase-transition  point,  marked  by  the  red  dot.
+tive entanglement landscape of the Kitaev ground state.                         The transition point of the 16 × 16 lattice is φc = 0.48500(7)
+   These  results  provide  an  answer  to  the  question  in
+the introduction and demonstrate that the gapless QSL                           to  be  related  to  several  Kitaev  materials  [57].     The
+phase for the Kitaev honeycomb model can also be signif-                        Kitaev-Heisenberg Hamiltonian is given by
+icantly disentangled using Cliﬀord circuits, although the
+gapless  and  gapped  phases  are  quite  diﬀerent  in  nature                                H =  ∑        KγSγi Sγj  + J ∑      Si · Sj,               (2)
+and they are connected by a quantum phase transition.                                                ⟨i,j⟩γ                   ⟨ij⟩
+   Results  for  Kitaev-Heisenberg  model  -  After  demon-
+strating  that  the  Kitaev  honeycomb  model  can  be  eﬃ-                     where  the  ﬁrst  term  represents  the  bond-dependent  Ki-
+ciently  handled  by  the  CAMPS  method,  we  also  study                      taev interaction, coupling only the γ = x, y, z  spin com-
+the  Kitaev–Heisenberg  model  on  the  honeycomb  lattice                      ponents  on  corresponding  γ-type  bonds,  while  the  sec-
+with  CAMPS.  The  kitaev-Heisenberg  model  is  believed                       ond  term  is  the  SU(2)-symmetric  Heisenberg  exchange.
+                                                                                                                                                        4
+
+
+                                                                                       ED[58]  fRG[59]  CCM[60]  iDMRG[31]  iPEPS[61]   CAMPS
+     0.490                                                                      φc/π   0.489     0.495       0.472           0.487            0.489      0.4861(5)
+
+
+     0.488                                                                     TABLE I: Comparison of the anti-ferromagnetic–KSL phase-
+                                                                               transition  point  φc  obtained  from  diﬀerent  numerical  meth-
+                                                                               ods  in  the  literature.  Exact  diagnalization  (ED)  is  for  a  24-
+     0.486                                                                     site  cluster  under  periodic  boundary  conditions[58].    Func-
+                                                                               tional  renormalization  group  (fRG)  result  corresponds  to  a
+                                                                               ﬁnite-size  cluster  containing  166  lattice  sites[59].    Coupled
+     0.484                                                                     cluster method (CCM) result is for system in the thermody-
+                                                                               namic limit[60].  Inﬁnite density matrix renormalization group
+                                                                               (iDMRG) result is for inﬁnitely long cylinder with circumfer-
+     0.482     8            10            12             14            16      ence  6[31].   Inﬁnite  projected  entangled-pair  states  (iPEPS)
+                                                                               is result obtained with bond dimension D = 6[61].
+                                           L
+
+FIG. 4:  Finite-size estimates of the phase-transition point φc                ﬁts to the CAMPS ground-state energies on the two sides
+(in the unite of π) obtained from CAMPS calculations for sys-                  of  the  transition  point  and  take  the  intersection  of  the
+tem sizes L = 8, 10, 12, 14, and 16 (L = 16 results are shown                  ﬁtted branches as the estimate of φc (red point in Fig. 3).
+in Fig. 3 and other results can be found in the supplementary                     To  determine  the  phase  transition  point  in  the  ther-
+materials)  The  extracted  transition  points  exhibit  weak  size            modynamic  limit,  we  performed  simulations  for  system
+dependence and converge rapidly as L increases.  The shaded                    with  lengths  L  =  8, 10, 12, 14,  and  16  (the  detailed  re-
+band  represents  the  ﬁnal  uncertainty  range  of  the  transition           sults can be found in the supplementary materials).  The
+point, considering both the spread of the ﬁnite-size data and                  corresponding  estimates  of  the  critical  parameter  φ  are
+the extrapolation uncertainty.                                                 shown in Fig. 4.  While a noticeable shift is observed be-
+                                                                               tween L = 8 and L = 10,  the transition point stabilizes
+Following  the  standard  parametrization  J  =  cos φ  and                    for larger system sizes, showing only minimal dependence
+Kγ  =  K  =  2 sin φ,  the  pure  Kitaev  point  is  located  at               on  L.   This  indicates  that  the  ﬁnite-size  eﬀects  become
+φ  =  π/2.   Numerical  studies  of  the  Kitaev-Heisenberg                    small  as  L  increases.   The  shaded  region  in  Fig.  4  rep-
+phase diagram show that the gapless B-phase KSL per-                           resents  the  ﬁnal  uncertainty  range,  which  accounts  for
+sists  for  small  J,  while  larger  Heisenberg  couplings  in-               both  the  ﬁnite-size  eﬀects  and  the  residual  errors  from
+duce  several  magnetically  ordered  phases  [31].     The                    the  linear  energy  extrapolations.    By  combining  these
+competition between anisotropic Kitaev interactions and                        contributions, we estimate the phase-transition point to
+isotropic Heisenberg exchange generates extra frustration                      be φc = 0.4861(5).  For comparison, Table I summarizes
+in this model.                                                                 our  result  alongside  those  obtained  from  other  numer-
+                                                                               ical  methods  in  the  literature.    All  the  results  for  the
+   In  our  study,  we  use  the  same  cylindrical  lattice  ge-              transition point are consistent in some sense, but our re-
+ometry  for  the  Kitaev-Heisenberg  model  as  shown  in                      sults  is  the  one  without  systematic  bias.   Therefore  the
+Fig. 1.  We focus on the phase transition between the anti-                    CAMPS result provides the best estimation for the tran-
+ferromagnetic phase and the Kitaev spin liquid phase in                        sition point for the anti-ferromagnetic to Kitaev spin liq-
+the phase diagram.  Fig. 3 shows the ground-state energy                       uid phase transition in the Kitaeve-Heisenberg model.
+as  a function  of  φ  for  both  MPS  and  CAMPS  with  dif-                     Conclusion  and  Perspective  –  In  summary,  we  show
+ferent bond dimensions for the 16×16 system.  The MPS                          that  the  gapless  quantum  spin  liquid  phase  with  non-
+results (triangle) display a pronounced and irregular drift                    abelian   anyon   excitations   in   the   Kitaev   honeycomb
+with increasing bond dimension D, indicating that stan-                        model can be signiﬁcantly disentangled with Cliﬀord cir-
+dard  MPS  (DMRG)  method  faces  substantial  diﬃculty                        cuits.  For the system size (from 8×8 to 16×16) we stud-
+converging  the  region  near  the  phase  boundary  where                     ied,  about  two-thirds  of  the  total  entanglement  entropy
+entanglement is enhanced.  Even at D = 2000, the MPS                           in  the  ground  state  of  the  isotropic  Kitaev  honeycomb
+optimization frequently becomes trapped in metastable,                         model  can  be  handled  by  Cliﬀord  circuits.   This  prop-
+higher-energy states, producing inconsistent energy esti-                      erty  not  only  signiﬁcantly  enhances  classical  simulation
+mates and preventing reliable extrapolation.  In contrast,                     eﬃciency with CAMPS but also suggests substantial re-
+the  CAMPS  results  (circle)  remain  remarkably  stable                      source reductions for preparing such states on quantum
+across diﬀerent bond dimensions:  the D = 1200 CAMPS                           devices.  As an application, we employ CAMPS to study
+data already achieve lower and more consistent energies                        the Kitaev-Heisenberg model and determine the most ac-
+than the D = 2000 MPS results.                                                 curate  phase  boundary  between  the  anti-ferromagnetic
+   It is known that the phase transition between the anti-                     phase  and  the  Kitaev  quantum  spin  liquid  phase  in  the
+ferromagnetic phase and the Kitaev QSL phase is a ﬁrst                         model,  through  reliable  ﬁnite  size  scaling.   Our  results
+order  type  [31],  so  we  locate  the  critical  point  from  an             highlight how Cliﬀord circuits can eﬀectively disentangle
+energy-crossing analysis.  We perform independent linear                       the  intricate  entanglement  of Kitaev  QSLs,  opening av-
+                                                                                                                                                            5
+
+enues for eﬃciently simulating similar strongly correlated                       Kitaev  model  with  CAMPS  during  a  visit  to  the  Insti-
+systems that admit a description of (free) fermions cou-                         tute for Advanced Study at Tsinghua University, hosted
+pled to a gauge ﬁeld.  The distinctive entanglement prop-                        by Yingfei Gu.  The calculation in this work is performed
+erties of the gapless spin phase in the Kitaev honeycomb                         using  TensorKit  [63].   The  numerical  calculations  were
+model  also  indicate  that  generalized  CAMPS  methods                         run on the Siyuan-1 high-performance computing cluster
+[52, 62] could likewise be highly eﬀective for the simula-                       provided  by  the  Center  for  High  Performance  Comput-
+tions  of  the  thermodynamic  and  dynamic  properties  of                      ing at Shanghai Jiao Tong University.  MQ acknowledges
+Kitaev-related  models,  which  is  crucial  for  establishing                   the support from the National Key Research and Devel-
+the  model  Hamiltonian  for  Kitaev  materials.   We  leave                     opment Program of MOST of China (2022YFA1405400),
+these investigations for future work.                                            the National Natural Science Foundation of China (Grant
+                                                                                 No.     12274290   and   No.     12522406),   and   the   Inno-
+                                                                                 vation  Program  for  Quantum  Science  and  Technology
+                         Acknowledgments                                         (2021ZD0301902).
+
+   Acknowledgments:  We thank Hong Yao for bringing
+Ref. [54] to our attention, which inspired us to study the
+
+
+
+
+ [1]  J.  P.  F.  LeBlanc,  A.  E.  Antipov,  F.  Becca,  I.  W.  Bulik,               D.  Stricker,   J.  N.  Hancock,   et  al.,   Phys.  Rev.  Lett.
+     G. K.-L. Chan, C.-M. Chung, Y. Deng, M. Ferrero, T. M.                            109,  266406  (2012),  URL https://link.aps.org/doi/
+     Henderson, C. A. Jim´enez-Hoyos, et al. (Simons Collab-                           10.1103/PhysRevLett.109.266406.
+     oration  on  the  Many-Electron  Problem),  Phys.  Rev.  X                  [14]  S.   Hwan   Chun,    J.-W.   Kim,    J.   Kim,    H.   Zheng,
+     5, 041041 (2015), URL https://link.aps.org/doi/10.                                C.  Stoumpos,  C.  Malliakas,  J.  Mitchell,  K.  Mehlawat,
+     1103/PhysRevX.5.041041.                                                           Y.   Singh,   Y.   Choi,   et   al.,   Nature   Physics   11,   462
+ [2]  Y.  Zhou,  K.  Kanoda,  and  T.-K.  Ng,  Rev.  Mod.  Phys.                       (2015),   ISSN   1745-2481,   URL https://doi.org/10.
+     89,  025003  (2017),  URL https://link.aps.org/doi/                               1038/nphys3322.
+     10.1103/RevModPhys.89.025003.                                               [15]  Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale,
+ [3]  M.   H.   Freedman,    A.   Kitaev,    M.   J.   Larsen,    and                  W.  Ku,  S.  Trebst,  and  P.  Gegenwart,  Phys.  Rev.  Lett.
+     Z.   Wang,    arXiv   e-prints   quant-ph/0101025   (2001),                       108,  127203  (2012),  URL https://link.aps.org/doi/
+     quant-ph/0101025.                                                                 10.1103/PhysRevLett.108.127203.
+ [4]  L. Savary and L. Balents, Reports on Progress in Physics                   [16]  S.  C.  Williams,   R.  D.  Johnson,   F.  Freund,   S.  Choi,
+     80,   016502  (2016),   publisher:    IOP  Publishing,   URL                      A.    Jesche,    I.    Kimchi,    S.    Manni,    A.    Bombardi,
+     https://doi.org/10.1088/0034-4885/80/1/016502.                                    P.   Manuel,   P.   Gegenwart,   et   al.,   Phys.   Rev.   B   93,
+ [5]  L.  Balents,  Nature  464,  199  (2010),  ISSN  1476-4687,                       195158   (2016),   URL https://link.aps.org/doi/10.
+     URL https://doi.org/10.1038/nature08917.                                          1103/PhysRevB.93.195158.
+ [6]  A. Kitaev, Annals of Physics 321, 2 (2006).                                [17]  K.  W.  Plumb,  J.  P.  Clancy,  L.  J.  Sandilands,  V.  V.
+ [7]  J. Chaloupka, G. Jackeli, and G. Khaliullin, Physical re-                        Shankar,  Y.  F.  Hu,  K.  S.  Burch,  H.-Y.  Kee,  and  Y.-
+     view letters 110, 097204 (2013).                                                  J.  Kim,  Phys.  Rev.  B  90,  041112  (2014),  URL https:
+ [8]  K.  Plumb,   J.  Clancy,   L.  Sandilands,   V.  V.  Shankar,                    //link.aps.org/doi/10.1103/PhysRevB.90.041112.
+     Y.  Hu,  K.  Burch,  H.-Y.  Kee,  and  Y.-J.  Kim,  Physical                [18]  L.    J.    Sandilands,    Y.    Tian,    K.    W.    Plumb,    Y.-
+     Review B 90, 041112 (2014).                                                       J.   Kim,   and   K.   S.   Burch,   Phys.   Rev.   Lett.   114,
+ [9]  Y.    Singh    and    P.    Gegenwart,    Phys.    Rev.    B    82,              147201   (2015),   URL https://link.aps.org/doi/10.
+     064412   (2010),   URL https://link.aps.org/doi/10.                               1103/PhysRevLett.114.147201.
+     1103/PhysRevB.82.064412.                                                    [19]  J.  A.  Sears,  M.  Songvilay,  K.  W.  Plumb,  J.  P.  Clancy,
+[10]  X. Liu, T. Berlijn, W.-G. Yin, W. Ku, A. Tsvelik, Y.-J.                          Y. Qiu, Y. Zhao, D. Parshall, and Y.-J. Kim, Phys. Rev.
+     Kim,  H.  Gretarsson,  Y.  Singh,  P.  Gegenwart,  and  J.  P.                    B 91, 144420 (2015), URL https://link.aps.org/doi/
+     Hill,  Phys.  Rev.  B  83,  220403  (2011),  URL https://                         10.1103/PhysRevB.91.144420.
+     link.aps.org/doi/10.1103/PhysRevB.83.220403.                                [20]  M.  Majumder,   M.  Schmidt,   H.  Rosner,   A.  A.  Tsir-
+[11]  S. K. Choi, R. Coldea, A. N. Kolmogorov, T. Lancaster,                           lin,   H.  Yasuoka,   and  M.  Baenitz,   Phys.  Rev.  B  91,
+     I.  I.  Mazin,  S.  J.  Blundell,  P.  G.  Radaelli,  Y.  Singh,                  180401   (2015),   URL https://link.aps.org/doi/10.
+     P.   Gegenwart,   K.   R.   Choi,   et   al.,   Phys.   Rev.   Lett.              1103/PhysRevB.91.180401.
+     108,  127204  (2012),  URL https://link.aps.org/doi/                        [21]  R.   D.   Johnson,   S.   C.   Williams,   A.   A.   Haghighirad,
+     10.1103/PhysRevLett.108.127204.                                                   J.  Singleton,  V.  Zapf,  P.  Manuel,  I.  I.  Mazin,  Y.  Li,
+[12]  F.    Ye,     S.    Chi,     H.    Cao,     B.    C.    Chakoumakos,             H.  O.  Jeschke,   R.  Valent´ı,   et  al.,   Phys.  Rev.  B  92,
+     J.    A.    Fernandez-Baca,    R.    Custelcean,    T.    F.    Qi,               235119   (2015),   URL https://link.aps.org/doi/10.
+     O.   B.   Korneta,    and   G.   Cao,    Phys.   Rev.   B   85,                   1103/PhysRevB.92.235119.
+     180403   (2012),   URL https://link.aps.org/doi/10.                         [22]  L.  J.  Sandilands,  Y.  Tian,  A.  A.  Reijnders,  H.-S.  Kim,
+     1103/PhysRevB.85.180403.                                                          K.  W.  Plumb,  Y.-J.  Kim,  H.-Y.  Kee,  and  K.  S.  Burch,
+[13]  R.  Comin,   G.  Levy,   B.  Ludbrook,   Z.-H.  Zhu,   C.  N.                    Phys.  Rev.  B  93,  075144  (2016),  URL https://link.
+     Veenstra,    J.   A.   Rosen,    Y.   Singh,    P.   Gegenwart,                   aps.org/doi/10.1103/PhysRevB.93.075144.
+                                                                                                                                                          6
+
+[23]  A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,                      nications in Mathematical Physics 144, 443 (1992).
+     M.  B.  Stone,  G.  E.  Granroth,  M.  D.  Lumsden,  Y.  Yiu,              [41]  D.  Perez-Garcia,  F.  Verstraete,  M.  M.  Wolf,  and  J.  I.
+     J. Knolle, et al., Nature Materials 15, 733 (2016), ISSN                         Cirac, Quantum Info. Comput. 7, 401–430 (2007), ISSN
+     1476-4660, URL https://doi.org/10.1038/nmat4604.                                 1533-7146.
+[24]  S.-H. Do, S.-Y. Park, J. Yoshitake, J. Nasu, Y. Motome,                   [42]  U.   Schollw¨ock,   Annals   of   Physics   326,   96   (2011),
+     Y.  Kwon,  D.  T.  Adroja,  D.  J.  Voneshen,  K.  Kim,  T.-                     ISSN   0003-4916,    january   2011   Special   Issue,    URL
+     H.  Jang,  et  al.,  Nature  Physics  13,  1079  (2017),  ISSN                   https://www.sciencedirect.com/science/article/
+     1745-2481, URL https://doi.org/10.1038/nphys4264.                                pii/S0003491610001752.
+[25]  T.    Sato    and    F.    F.    Assaad,    Physical    Review    B       [43]  F.   Verstraete   and   J.   I.   Cirac,   arXiv   e-prints   cond-
+     104,    L081106   (2021),    ISSN   2469-9950,    2469-9969,                     mat/0407066 (2004), cond-mat/0407066.
+     URL  https://link.aps.org/doi/10.1103/PhysRevB.                            [44]  Z. Y. Xie, J. Chen, J. F. Yu, X. Kong, B. Normand, and
+     104.L081106.                                                                     T.  Xiang,  Phys.  Rev.  X  4,  011025  (2014),  URL https:
+[26]  S.-S.  Zhang,  G.  B.  Hal´asz,  W.  Zhu,  and  C.  D.  Batista,                //link.aps.org/doi/10.1103/PhysRevX.4.011025.
+     Physical Review B 104, 014411 (2021), ISSN 2469-9950,                      [45]  G.   Evenbly   and   G.   Vidal,    Phys.   Rev.   Lett.   102,
+     2469-9969,  URL https://link.aps.org/doi/10.1103/                                180406   (2009),   URL https://link.aps.org/doi/10.
+     PhysRevB.104.014411.                                                             1103/PhysRevLett.102.180406.
+[27]  P. M. Cˆonsoli, L. Janssen, M. Vojta, and E. C. Andrade,                  [46]  X. Qian and M. Qin, Chinese Physics Letters 40, 057102
+     Physical Review B 102, 155134 (2020), ISSN 2469-9950,                            (2023), URLhttps://dx.doi.org/10.1088/0256-307X/
+     2469-9969,  URL https://link.aps.org/doi/10.1103/                                40/5/057102.
+     PhysRevB.102.155134.                                                       [47]  X.   Qian,   J.   Huang,   and   M.   Qin,   Phys.   Rev.   Lett.
+[28]  L. Janssen and M. Vojta, Journal of Physics:  Condensed                         133,  190402  (2024),  URL https://link.aps.org/doi/
+     Matter  31,  423002  (2019),  ISSN  0953-8984,  1361-648X,                       10.1103/PhysRevLett.133.190402.
+     URL https://iopscience.iop.org/article/10.1088/                            [48]  D.  Gottesman,  Stabilizer  codes  and  quantum  error  cor-
+     1361-648X/ab283e.                                                                rection  (1997), quant-ph/9705052.
+[29]  D.   G.   Joshi,   Physical   Review   B   98,   060405   (2018),         [49]  S.   Aaronson   and   D.   Gottesman,   Phys.   Rev.   A   70,
+     ISSN   2469-9950,   2469-9969,   arXiv:1803.01515   [cond-                       052328   (2004),   URL https://link.aps.org/doi/10.
+     mat], URL http://arxiv.org/abs/1803.01515.                                       1103/PhysRevA.70.052328.
+[30]  M.   Georgiou,    I.   Rousochatzakis,    D.   J.   J.   Farnell,         [50]  S.   Anders   and   H.   J.   Briegel,    Phys.   Rev.   A   73,
+     J. Richter, and R. F. Bishop, Physical Review Research                           022334   (2006),   URL https://link.aps.org/doi/10.
+     6, 033168 (2024), ISSN 2643-1564, URL https://link.                              1103/PhysRevA.73.022334.
+     aps.org/doi/10.1103/PhysRevResearch.6.033168.                              [51]  J.  Huang,  X.  Qian,  and  M.  Qin,  Physical  Review  B
+[31]  M. Gohlke, R. Verresen, R. Moessner, and F. Pollmann,                           112, 205106 (2025), URL https://app.dimensions.ai/
+     Phys.  Rev.  Lett.  119,  157203  (2017),  URL https://                          details/publication/pub.1194662195.
+     link.aps.org/doi/10.1103/PhysRevLett.119.157203.                           [52]  X.  Qian,  J.  Huang,  and  M.  Qin,  Physical  Review  B
+[32]  J.  Chaloupka,  G.  Jackeli,  and  G.  Khaliullin,  Physical                    112, 115150 (2025), URL https://app.dimensions.ai/
+     Review  Letters  110,   097204  (2013),   ISSN  0031-9007,                       details/publication/pub.1193327206.
+     1079-7114,  URL https://link.aps.org/doi/10.1103/                          [53]  J.  Huang,  X.  Qian,  and  M.  Qin,  Phys.  Rev.  A  112,
+     PhysRevLett.110.097204.                                                          012425   (2025),   URL https://link.aps.org/doi/10.
+[33]  D.   Gotfryd,   J.   Rusnaˇcko,   K.   Wohlfeld,   G.   Jackeli,                1103/gxdn-zwrw.
+     J.  Chaloupka,  and  A.  M.  Ole´s,  Physical  Review  B  95,              [54]  H.    Yao    and    X.-L.    Qi,     Phys.    Rev.    Lett.    105,
+     024426 (2017), ISSN 2469-9950, 2469-9969, URL https:                             080501   (2010),   URL https://link.aps.org/doi/10.
+     //link.aps.org/doi/10.1103/PhysRevB.95.024426.                                   1103/PhysRevLett.105.080501.
+[34]  M.  Kadosawa,  M.  Nakamura,  Y.  Ohta,  and  S.  Nishi-                  [55]  X.-Y.  Feng,  G.-M.  Zhang,  and  T.  Xiang,  Phys.  Rev.
+     moto,   Journal   of   the   Physical   Society   of   Japan   92,               Lett.  98,  087204  (2007),  URL https://link.aps.org/
+     055001 (2023), ISSN 0031-9015, 1347-4073, URL https:                             doi/10.1103/PhysRevLett.98.087204.
+     //journals.jps.jp/doi/10.7566/JPSJ.92.055001.                              [56]  H.-K.  Jin,  H.-H.  Tu,  and  Y.  Zhou,  Phys.  Rev.  B  104,
+[35]  J.  I.  Cirac,  D.  P´erez-Garc´ıa,  N.  Schuch,  and  F.  Ver-                 L020409  (2021),  URL https://link.aps.org/doi/10.
+     straete, Rev. Mod. Phys. 93, 045003 (2021), URLhttps:                            1103/PhysRevB.104.L020409.
+     //link.aps.org/doi/10.1103/RevModPhys.93.045003.                           [57]  Y. Matsuda, T. Shibauchi, and H.-Y. Kee, arXiv e-prints
+[36]  T.  Xiang,  Density  Matrix  and  Tensor  Network  Renor-                       arXiv:2501.05608 (2025), 2501.05608.
+     malization   (Cambridge  University  Press,   2023),   URL                 [58]  J.  c.  v.  Chaloupka,  G.  Jackeli,  and  G.  Khaliullin,  Phys.
+     https://books.google.com/books?hl=en&lr=&id=                                     Rev. Lett. 110, 097204 (2013), URL https://link.aps.
+     E5fxEAAAQBAJ&oi=fnd&pg=PP1&ots=Hqdq-ApAx0&sig=                                   org/doi/10.1103/PhysRevLett.110.097204.
+     xi-IvwDkPLk7CTWPcB_d5zRtFZk.                                               [59]  K.  Fukui,  Y.  Kato,  J.  Nasu,  and  Y.  Motome,  Phys.
+[37]  S.  R.  White,  Phys.  Rev.  Lett.  69,  2863  (1992),  URL                     Rev.  B  106,  174416  (2022),  URL https://link.aps.
+     https://link.aps.org/doi/10.1103/PhysRevLett.69.                                 org/doi/10.1103/PhysRevB.106.174416.
+     2863.                                                                      [60]  M.   Georgiou,    I.   Rousochatzakis,    D.   J.   J.   Farnell,
+[38]  S.    ¨Ostlund   and   S.   Rommer,   Phys.   Rev.   Lett.   75,                J.   Richter,   and   R.   F.   Bishop,   Phys.   Rev.   Res.   6,
+     3537    (1995),     URL  https://link.aps.org/doi/10.                            033168   (2024),   URL https://link.aps.org/doi/10.
+     1103/PhysRevLett.75.3537.                                                        1103/PhysRevResearch.6.033168.
+[39]  U.  Schollw¨ock,  Rev.  Mod.  Phys.  77,  259  (2005),  URL               [61]  J.  Osorio  Iregui,  P.  Corboz,  and  M.  Troyer,  Phys.  Rev.
+     https://link.aps.org/doi/10.1103/RevModPhys.77.                                  B 90, 195102 (2014), URL https://link.aps.org/doi/
+     259.                                                                             10.1103/PhysRevB.90.195102.
+[40]  M. Fannes, B. Nachtergaele, and R. F. Werner, Commu-                      [62]  X.   Qian,   J.   Huang,   and   M.   Qin,   Phys.   Rev.   Lett.
+                                                                                                                                                         7
+
+     134,  150404  (2025),  URL https://link.aps.org/doi/                            egory  theory  (2025),  2508.10076,  URL https://arxiv.
+     10.1103/PhysRevLett.134.150404.                                                 org/abs/2508.10076.
+[63]  L. Devos and J. Haegeman, Tensorkit.jl:  A julia package
+     for  large-scale  tensor  computations,  with  a  hint  of  cat-
+      Supplementary  Materials  for  “Disentangling  the  Kitaev  Quantum  Spin Liquid”
+
+                                      Xiang  Li,1, ∗  Xiangjian  Qian,2, 1, ∗  and  Mingpu  Qin1, 3, †
+                     1Key  Laboratory  of  Artiﬁcial  Structures  and  Quantum  Control  (Ministry  of  Education),
+                   School  of  Physics  and  Astronomy,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                        2Tsung-Dao  Lee  Institute,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                                            3Hefei  National  Laboratory,  Hefei  230088,  China
+                                                          (Dated:  November 26, 2025)
+
+
+
+                           CONTENTS                                           does at D = 1200, underscoring its robustness.
+                                                                                 For the 14×14 lattice, MPS convergence is slow, requir-
+ I.  Results for diﬀerent system sizes of the Kitaev                          ing  D  ≳  1000  to  approach  the  ground  state.   CAMPS,
+    honeycomb model                                                           1however,  achieves  signiﬁcantly  lower  energies  with  D  ≲
+                                                                              60, and even at D = 20, it outperforms MPS at D = 600.
+II.  Results for diﬀerent system sizes of the Kitaev                             Overall, these comparisons conﬁrm that CAMPS sys-
+    Heisenberg Model                                                           1tematically  achieves  lower  variational  energies  at  sub-
+                                                                              stantially reduced bond dimensions and exhibits greater
+                                                                              optimization stability, particularly as the system size in-
+ I.     RESULTS  FOR  DIFFERENT  SYSTEM  SIZES                                creases.
+     OF  THE  KITAEV  HONEYCOMB  MODEL                                        II.     RESULTS  FOR  DIFFERENT  SYSTEM  SIZES
+                                                                                    OF  THE  KITAEV  HEISENBERG  MODEL
+
+  In the main text, we presented results for the 16 × 16                         In the main text, we presented the ground-state energy
+system in the Kitaev honeycomb model.  Here, we provide                       and the anti-ferromagnetic to Kitaev quantum spin liquid
+additional  data  for  other  system  sizes  (8 × 8,  10 × 10,                phase-transition  point  analysis  for  the  16 × 16  Kitaev–
+12×12, and 14×14) to further illustrate the performance                       Heisenberg model.  Here, we provide supplementary data
+of CAMPS compared to conventional MPS.                                        for additional system sizes (8 × 8, 10 × 10, 12 × 12, and
+  Fig. 1 illustrates the ground-state energy of the Kitaev                    14 × 14)  to  illustrate  the  phase  transition  point  results
+model  as  a  function  of  the  bond  dimension  D  for  both                for diﬀerent system sizes.
+MPS (blue) and CAMPS (orange) across various system                              The  results  are  shown  in  Fig.  2.   Because  the  transi-
+sizes.                                                                        tion  is  ﬁrst  order,  we  locate  the  critical  point  from  an
+  For the 8 × 8 lattice, where entanglement is relatively                     energy-crossing analysis.  We perform independent linear
+low,  both MPS and CAMPS result converge with small                           ﬁts  to  the  ground-state  energies  on  the  two  sides  of  the
+D.   However,  CAMPS  demonstrates  signiﬁcantly  faster                      transition and take the intersection of the ﬁtted branches
+convergence, achieving lower energies with smaller bond                       as the estimate of φc  (red point in Fig. 2).  We conduct
+dimensions.                                                                   simulations approaching the critical region from both di-
+  For  the  10 × 10  lattice,  CAMPS  continues  to  outper-                  rections to capture the ﬁrst-order transition.  Speciﬁcally,
+form MPS, with its results at D = 100 surpassing those                        we  ﬁrst  perform  simulations  sweeping  from  left  to  right
+of MPS at D = 300, highlighting its eﬃciency.                                 (increasing φ), initializing each step using the wavefunc-
+  For the 12 × 12 lattice, MPS struggles with initializa-                     tion from the previous simulation; this branch is labeled
+tion  issues,  often  becoming  trapped  in  high-energy  lo-                 “L to R” in Fig. 2.  Subsequently, we perform simulations
+cal minima.  In contrast, CAMPS avoids these problems,                        sweeping from right to left (decreasing φ), similarly ini-
+converging  rapidly  to  lower  energy  states.   Remarkably,                 tializing with the wavefunction from the preceding step;
+CAMPS  achieves  a  lower  energy  at  D  =  20  than  MPS                    this branch is labeled “R to L” in Fig. 2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+∗  These authors contributed equally to this work.                                                     †  qinmingpu@sjtu.edu.cn
+                                                                                                                                                      2
+
+
+
+             0.1880       8× 8                                  MPS               0.187       10× 10                                MPS
+                                                                CAMPS                                                               CAMPS
+             0.1885                                                               0.188
+
+                                                                                  0.189
+             0.1890
+                                                                                  0.190
+
+             0.1895                                                               0.191
+
+
+             0.1900                                                               0.192
+
+                     0        200      400       600       800       1000               0        200       400        600       800      1000
+                                              D                                                                   D
+
+                         12× 12                                 MPS               0.182       14× 14                                 MPS
+             0.186                                              CAMPS                                                                CAMPS
+                                                                                  0.184
+
+             0.188                                                                0.186
+
+                                                                                  0.188
+             0.190
+                                                                                  0.190
+
+             0.192                                                                0.192
+
+                     0      200     400      600     800    1000     1200         0.194   0       500      1000      1500     2000      2500
+                                              D                                                                    D
+
+FIG. 1.  The ground-state energy of the Kitaev model as a function of the bond dimension D for both MPS (blue) and CAMPS
+(orange) across diﬀerent system sizes (8 × 8, 10 × 10, 12 × 12, and 14 × 14).  For the 14 × 14 lattice, the MPS energy decreases
+slowly and requires D ≳ 1000 to approach convergence, while CAMPS reaches a signiﬁcantly lower energy already at very small
+bond  dimensions  (D  ≲  60).  Notably,  the  CAMPS  result  at  a  very  small  bond  dimension  (D  =  20)  already  achieves  a  lower
+variational energy than the MPS calculation with D = 600.  Similar trends are observed for smaller lattice sizes, with CAMPS
+consistently outperforming MPS in terms of energy and convergence speed.
+                                                                                                                                                                             3
+
+                             8× 8                                                              0.380        10× 10
+               0.380
+
+               0.385                                                                           0.385
+
+                                                                                               0.390
+               0.390
+                                                                                               0.395
+               0.395
+                                                                  CAMPS D=1200 L to R          0.400                                              CAMPS D=1200 L to R
+                                                                  CAMPS D=1200 R to L                                                             CAMPS D=1200 R to L
+               0.400                                              phase transition point       0.405                                              phase transition point
+                          0.483     0.486     0.489     0.492     0.495     0.498                              0.483   0.486    0.489    0.492    0.495    0.498
+                                                     ϕ                                                                              ϕ
+
+
+               0.380         12× 12                                                            0.380        14× 14
+
+               0.385                                                                           0.385
+
+               0.390                                                                           0.390
+
+               0.395                                                                           0.395
+
+                                                                                               0.400                                             CAMPS D=1200 L to R
+               0.400                                                                                                                             CAMPS D=1200 R to L
+                                                                  CAMPS D=1200 L to R                                                            CAMPS D=1400 R to L
+                                                                  CAMPS D=1200 R to L                                                            CAMPS D=1600 R to L
+               0.405                                              phase transition point       0.405                                             phase transition point
+                               0.483    0.486    0.489    0.492    0.495    0.498                              0.483    0.486     0.489    0.492    0.495     0.498
+                                                     ϕ                                                                              ϕ
+
+FIG.  2.  Ground-state  energy  of  the  Kitaev–Heisenberg  model  for  diﬀerent  system  sizes  as  a  function  of  the  parameter  φ  (in
+the  unite  of  π).  Since  the  transition  is  ﬁrst  order,  we  locate  the  critical  point  using  an  energy-crossing  analysis.  Speciﬁcally,
+we perform independent linear ﬁts to the ground state energies on either side of the transition.  The intersection of the ﬁtted
+branches provides an estimate of the critical parameter φc, as indicated by the red dot.  Speciﬁcally, we ﬁrst perform simulations
+sweeping from left to right (increasing φ), initializing each step using the wavefunction from the previous simulation; this branch
+is labeled “L to R”. Subsequently, we perform simulations sweeping from right to left (decreasing φ), similarly initializing with
+the wavefunction from the preceding step; this branch is labeled “R to L”.

@@ -1,0 +1,1759 @@
+XY magnetism, Kitaev exchange, and long-range frustration in the Jeﬀ = 1/2
+honeycomb cobaltates
+Shreya Das,1,∗ Sreekar Voleti,2,∗ Tanusri Saha-Dasgupta,1,† and Arun Paramekanti 2,‡
+1Department of Condensed Matter Physics and Materials Science,
+S.N. Bose National Centre for Basic Sciences, Kolkata 700098, India.
+2Department of Physics, University of Toronto, Toronto, Ontario, M5S 1A7, Canada
+The quest for Kitaev quantum spin liquids has led to great interest in honeycomb quantum mag-
+nets with strong spin-orbit coupling. It has been recently proposed that even Mott insulators with
+3d transition metal ions, having nominally weak spin-orbit coupling, can realize such exotic physics.
+Motivated by this, we study the rhombohedral honeycomb cobaltates CoTiO 3, BaCo2(PO4)2, and
+BaCo2(AsO4)2, using ab initio density functional theory, which takes into account realistic crystal
+ﬁeld distortions and chemical information, in conjunction with exact diagonalization numerics. We
+show that these Co 2+ magnets host Jeﬀ =1/2 local moments with highly anisotropic g-factors, and
+we extract their full spin Hamiltonians including longer-range and anisotropic exchange couplings.
+For CoTiO 3, we ﬁnd a nearest-neighbor easy-plane ferromagnetic XXZ model with additional
+bond-dependent anisotropies and interlayer exchange, which supports three-dimensional (3D) Dirac
+nodal line magnons. In contrast, for BaCo2(PO4)2 and BaCo2(AsO4)2, we ﬁnd a strongly suppressed
+interlayer coupling, and signiﬁcant frustration from additional third-neighbor antiferromagnetic ex-
+change mediated by P/As. Such bond-anisotropic J1-J3 spin models can support collinear zig-zag or
+coplanar spiral ground states. We discuss their dynamical spin correlations which reveal a gapped
+Goldstone mode, and argue that the eﬀective parameters of the pseudospin-1/2 models in these two
+materials may be strongly renormalized by coupling to a low energy spin-exciton. Our results call
+for re-examining proposals for realizing Kitaev spin liquids in the honeycomb cobaltates.
+I. INTRODUCTION
+A signiﬁcant eﬀort has been invested in exploring ma-
+terial realizations of Kitaev’s honeycomb quantum spin
+liquid (QSL) model and its anyon excitations [1–5]. The
+initial work in this direction focussed mainly on the iri-
+date honeycomb magnets which have strong spin-orbit
+coupling (SOC) [6–12]. At this point, the most promis-
+ing candidate appears to be α-RuCl3 [13–23], where in-
+termediate in-plane Zeeman ﬁelds appear to lead to a
+plateau in the thermal Hall conductivity κxy [24], and
+quantum oscillations in the diagonal thermal conductiv-
+ity κxx [25], which have been proposed as potential sig-
+natures of emergent Majorana fermion excitations in an
+insulating quantum magnet. At the same time, there is
+debate on the precise magnetic Hamiltonian for α-RuCl3
+[26, 27] as well as the existence of a ﬁeld induced QSL
+[28, 29] in its phase diagram. A search for such exotic
+physics in a wider range of quantum materials is thus
+highly desirable.
+This quest has led to great interest in honeycomb
+cobaltates, where the Co 2+ ion in an octahedral crystal
+ﬁeld environment has total spin S = 3/2 moment and an
+eﬀective total orbital angular momentum L = 1, which
+are locked by spin-orbit coupling, leading to a Jeﬀ = 1/2
+pseudospin doublet ground state [30–32]. These materi-
+als were proposed to host to dominant Kitaev exchange
+∗ These authors contributed equally
+† tanusri@bose.res.in
+‡ arunp@physics.utoronto.ca
+between neighboring pseudospins, rendering them can-
+didates for quantum spin liquids [30–33]. While this is
+an exciting proposal, SOC is much weaker for 3 d transi-
+tion metal ions as compared with the 5 d-iridates or 4d-
+ruthenates. As a result, trigonal distortions of the local
+crystal ﬁeld environment, inevitable in any layered hon-
+eycomb material, may be expected to have a considerable
+impact on the nature of exchange interactions and the
+low energy fate of magnetism in these materials.
+To critically examine this issue, we explore several
+rhombohedral d7 cobaltates — CoTiO 3, BaCo 2(PO4)2,
+and BaCo 2(AsO4)2 — which are formed from stacked
+honeycomb Co2+ layers as shown in Fig. 1. In particu-
+lar, we ask: does a realistic theory of the d7 cobaltates,
+using a combination of ab initio density functional the-
+ory (DFT) and exact diagonalization numerics, favor the
+realization of Kitaev spin liquids in these materials?
+To address this issue, we use non-spin-polarized DFT
+calculation to extract the non-interacting part of the
+Hamiltonian, namely the hopping interactions and crys-
+tal ﬁeld splitting, and then solve the many-body problem
+of the Co multiplet structure by including Coulomb in-
+teractions and spin-orbit coupling in an exact diagonal-
+ization for a single Co ion. Finally we consider the lowest
+two d7 states as the pseudospin-1/2 basis, to derive su-
+perexchange interactions by utilizing the multiplet struc-
+ture and incorporating hoppings within second-order per-
+turbation theory. Our approach thus combines the mate-
+rial speciﬁc theory DFT with the many-body calculation
+to handle the multiplet structure, which we use to shed
+light on magnetism in the d7 cobaltates.
+A quick summary of our key results are as follows.
+Our ab initio computations reveal that although all three
+arXiv:2106.11982v3  [cond-mat.str-el]  23 Nov 2021
+2
+compounds host the stacked honeycomb Co2+ layers, the
+diﬀerence in the geometry and chemical composition of
+the spacer layers between the Co 2+ layers greatly inﬂu-
+ences the resulting electronic structure of the three com-
+pounds. In CoTiO 3, strong Co-Ti covalency leads to a
+more 3D electronic structure, while the delicate Co-As/P
+covalency and large separation between the Co 2+ layers
+leads to weakly coupled 2D layers but with longer-range
+hoppings in the electronic structure of BaCo 2(AsO4)2
+and BaCo 2(PO4)2. We use these DFT inputs to carry
+out an exact diagonalization study incorporating cor-
+relation eﬀects, which has been shown to work well
+in other Mott insulators with SOC [22, 34]. Our ex-
+act diagonalization numerics reveal that the Co 2+ ion
+has strongly anisotropic g-factors, consistent with ex-
+perimental data [35–37]. For CoTiO 3, our computa-
+tions reveal a dominant nearest-neighbor XXZ easy-
+plane ferromagnetic coupling, with additional anisotropic
+compass-type exchange interactions and interlayer cou-
+plings. Such a spin Hamiltonian supports 3D Dirac
+nodal line magnon excitations and is in good quanti-
+tative agreement with recent neutron scattering exper-
+iments [36, 37]. For BaCo 2(PO4)2 and BaCo 2(AsO4)2,
+we ﬁnd that the spacer layers lead to nearly decoupled
+honeycomb layers. The magnetic Hamiltonian is found
+to be a quasi-2D easy-plane XXZ model with signif-
+icant frustration from third-neighbor antiferromagnetic
+exchange. Such J1-J3 honeycomb lattice spin models can
+support collinear zig-zag or coplanar spiral ground states
+[12, 38, 39]. We present results on their dynamical spin
+structure factor which reveals a gapped Goldstone mode
+from bond-dependent compass anisotropy terms, in qual-
+itative agreement with neutron scattering data [40, 41].
+II. CR YST AL STRUCTURE
+All three compounds CoTiO 3, BaCo 2(AsO4)2, and
+BaCo2(PO4)2 crystallize in the rhombohedral R¯3 space
+group. While the basic structural motif of all three
+compounds consist of stacked honeycomb cobaltate lay-
+ers formed by edge shared CoO 6 octahedra, the out of
+plane stacking involving spacer layers between honey-
+comb planes are distinctly diﬀerent between CoTiO 3,
+and BaCo2(AsO4)2 or BaCo2(PO4)2. The left and mid-
+dle panels of Fig. 1 show the crystal structures of
+CoTiO3 and BaCo 2(AsO4)2, respectively; the crystal
+structure of BaCo 2(PO4)2 being very similar to that of
+BaCo2(AsO4)2, is not shown. In case of CoTiO 3, the
+cobalt layers are separated by Ti layers, where octahe-
+drally coordinated Ti 4+ ions face share with CoO6 6 oc-
+tahedra along the hexagonal c-axis, with the Ti ion on
+top of Co ion, vertically displaced by 2 .67˚A. In case of
+BaCo2(AsO4)2, on the other hand, the Co layers are sep-
+arated by bilayers of AsO 4 tetrahedra, one pointing up
+and another pointing down, and separated by large Ba2+
+ions. This diﬀerence in spacer layer thickness between
+CoTiO3 and the Ba compounds, makes the c-axis lattice
+FIG. 1. Crystal structure of CoTiO3 (left) and BaCo2(AsO4)2
+(right) viewed with hexagonal c-axis pointing upwards. The
+Co, Ti, As, Ba and O atoms are labeled and colored dif-
+ferently. Marked is the six formula unit hexagonal unit cell.
+Bottom left panel shows the top view of CoTiO3 looking down
+the c-axis.
+constant of BaCo 2(AsO4)2 and BaCo 2(AsO4)2 signiﬁ-
+cantly diﬀerent from CoTiO3, being 13.92˚A for CoTiO3,
+23.49˚A for BaCo2(AsO4)2, and 23.22˚A for BaCo2(PO4)2.
+However, their inplane lattice constants are rather sim-
+ilar: 5 .06˚A for CoTiO 3, 5.00˚A for BaCo 2(AsO4)2, and
+4.86˚A for BaCo 2(PO4)2. This gives rise to a more 2D
+character of the Co network in Ba compounds, while
+CoTiO3 has more 3D character. Furthermore, as op-
+posed to face-shared geometry of Co-Ti network, the
+AsO4 tetrahedra corner share with CoO 6 octahedra, the
+As ion being displaced from Co ion by 1 .67˚A along the
+in-plane directions and 1.41˚A along the vertical direction.
+This creates O-As-O bridges both from top and bottom
+between long ranged in-plane Co neighbors, this feature
+being absent for CoTiO3 compound. These structural de-
+tails have important implications for the electronic struc-
+ture and low-energy Hamiltonian of the three compounds
+which we discuss next.
+III. ELECTRONIC STRUCTURE
+To characterize the valences, spin states, and orbital
+contributions of various ions, we ﬁrst carry out the spin-
+polarized DFT calculations within the framework of gen-
+eralized gradient approximation (GGA) [42]. See Sup-
+plementary Materials (SM) [43] for calculation details
+[44–46]. The magnetic moment of Co site is found to
+be around 2.60µB conﬁrming the high spin d7 conﬁgu-
+ration of Co ions. Interestingly for CoTiO 3, large frac-
+tion of the missing moment is found to be at Ti and
+O sites of 0 .12µB and 0.10µB, respectively, despite the
+nominally nonmagnetic conﬁguration of Ti 4+ and O 2−,
+indicating strong Co-O, and Ti-O covalency. For the
+Ba compounds, a similar magnitude of missing moment
+3
+(∼ 0.10µB) is found at O sites. Furthermore, a non-
+negligible moment of∼0.05µB is also found at the nomi-
+nally valenced As5+/P5+ sites, indicating the subtle role
+of As/P in describing the electronic structure of the
+Ba compounds. Repeating the calculations within the
+GGA+SOC approach uncovers a substantial orbital mo-
+ment of 0.16-0.17µB at the Co site highlighting impor-
+tance of SOC in these compounds.
+In order to check the eﬀect of missing correlation ef-
+fect beyond GGA, GGA with supplemented Hubbard U
+correction [47] within the framework of GGA+ U and
+GGA+SOC+U was carried out with choice of U = 3
+eV and JH = 0.7 eV [48, 49]. We ﬁnd that the result-
+ing magnetic moments remain qualitatively unchanged;
+however, inclusion of a supplemented HubbardU correc-
+tion strongly impacts the electronic structure. Crucially,
+an insulating solution is only obtained upon addition
+of U correction, while GGA and GGA+SOC solutions
+are metallic. The magnetic moments calculated within
+GGA, GGA+SOC and GGA+SOC+U as well as density
+of states calculated within three scheme of calculations
+are given in the SM [43].
+Since our goal is to use the DFT calculations to de-
+rive a low-energy Hamiltonian to be used as an input
+for a model Hamiltonian study, we henceforth focus on
+the non-spin-polarized electronic structure of these com-
+pounds. Fig. 2 shows the density of states of CoTiO3 and
+BaCo2(AsO4)2 compounds projected to diﬀerent orbital
+characters; the electronic structure of BaCo 2(PO4)2 is
+very similar to BaCo 2(PO4)2 and is thus not shown. In
+an ideal octahedral environment the Co d states are split
+into three-fold degenerate t2g and two-fold degenerate
+eg states. However, the CoO 6 octahedra in the studied
+compounds are not perfect, rather they are trigonally dis-
+torted with the Co atom moved along [111] direction from
+the centre of the octahedra, leading to three short and
+three long Co-O bonds. As shown in the insets of Fig. 2,
+this further splits the d levels into two-fold degenerate
+eπg , non-degenerate a1g, and two-fold degenerate eσg lev-
+els. The octahedral splitting is found to be about∼1 eV,
+while trigonal splitting is found to be ∼ 0.1 eV and thus
+larger than the nominal SOC on Co. Within the non-
+spin-polarized scheme of calculations, the Cot2g are fully
+occupied while the Co eg states are partially ﬁlled. As
+seen from the density of states near the Fermi level, there
+is signiﬁcantly contribution of O p states along with the
+Co d states, indicating strong Co-O covalency; this was
+also manifest in the presence of substantial magnetic mo-
+ment at the otherwise non-magnetic O sites. In CoTiO 3,
+we also notice a signiﬁcant presence of Ti- d character
+near the Fermi level, which we deem responsible for the
+3D nature of the density of states. While the density of
+states of BaCo 2(AsO4)2 bears an overall resemblance to
+that of CoTiO3, the details are markedly diﬀerent. Near
+the Fermi level, we ﬁnd the appearance of pseudogap like
+features seen in the inset of the bottom panel of Fig. 2,
+which arises due to intricate interplay of long-ranged in
+plane Co-Co interactions mediated by As; this feature is
+FIG. 2. Non spin-polarized DFT density of states of CoTiO 3
+(top) and BaCo 2(AsO4)2 (bottom) projected to Co- d, Ti-d,
+As and O-p states. The zero of the energy is marked at the
+corresponding Fermi level (E F ). Crystal ﬁeld splitting of the
+Co-d states are shown as insets. The second inset in bottom
+is the zoomed-in plot of the density of states close to E F .
+absent in CoTiO 3. While the contribution of As states
+near the Fermi level is small compared to Ti, it is still
+non-negligible as highlighted in the zoomed-in plot of the
+density of states in the second inset of the bottom panel
+of Fig. 2. As discussed below, we believe this overlap with
+As states drives the overlap of further neighbor Wannier
+orbitals in the Ba compounds and leads to strong third-
+neighbor exchange.
+4
+FIG. 3. In-plane view of NMTO downfolded Co dx2−y2 Wan-
+nier function of CoTiO 3 (left) and BaCo 2(AsO4)2 (right).
+Plotted are the constant value isosurfaces with lobes of op-
+posite signs colored as magenta and yellow. The hexagonal
+network of Co atoms in blue is shown, with O and Ti/As
+atoms shown as small-red and medium-cyan/green balls.
+IV. LOW-ENERGY DFT HAMIL TONIAN
+In an attempt to derive Co d-only low energy Hamil-
+tonian out of DFT calculations, we resort to the en-
+ergy selective N-th order muﬃn-tin orbital (NMTO)
+based downfolding technique [50]. Starting from a self-
+consistent DFT calculation in linear muﬃn-tin orbital
+basis,[51], NMTO-downfolding calculation arrives at a
+low-energy Cod-only Hamiltonian by integrating out de-
+grees that are not of interest like O- p, Ti-d, As and Ba
+states. This procedure constructs the ab-initio derived
+eﬀective Co Wannier functions, the head parts of which
+are shaped according to Co d symmetries, while the the
+tail parts are shaped according to the integrated out de-
+grees of freedom which are mixed in with Co d charac-
+ters. The construction of these eﬀective Wannier func-
+tions depends on the choice of basis. We chose the oc-
+tahedral local coordinate system with z-axis of the lo-
+cal coordinate system pointed along one of short Co-O
+bond, and the local y-axis pointed closet to neighbor-
+ing Co-O bond. With this choice, the local z-axis on
+nearest neighbor edge-shared Co pairs point in opposite
+directions, with the center of inversion at the middle of
+the vector connecting the Co-Co pair. Fig. 3 shows a
+representative example of the eﬀective Co dx2−y2 Wan-
+nier function as given by NMTO-downfolded calculations
+for CoTiO3 and BaCo2(AsO4)2, which exhibitspdσ anti-
+bonds formed between Co and O, which appear as pro-
+nounced tails shaped according to O p symmetry. In the
+case of CoTiO 3, a signiﬁcant weight of the tail also sits
+at the out-of-plane Ti site, as we ﬁnd from other Wan-
+nier orbitals (not shown). What is remarkable in case
+of Ba compound is that one of the lobes of the O-tail
+bends towards As sites due to overlap of Co-O and As-O
+covalency at the corner-shared O site of CoO 6 octahedra
+and AsO4 tetrahedra. This As-covalency driven bending
+of the tails promotes the long-ranged third neighbor in-
+plane Co-Co interaction, which plays an important role
+in the spin model for BaCo 2(AsO4)2; we ﬁnd similar fea-
+tures in BaCo 2(PO4)2.
+The low-energy tight-binding Hamiltonian, in the basis
+of NMTO-downfolded eﬀective Co d Wannier functions,
+encodes the eﬀect of local distortion of CoO 6 octahedra,
+as well as the eﬀect of spacer chemistry and geometry.
+The full local crystal ﬁeld matrix and the hopping matri-
+ces for various neighbors are given in the SM [43]. This
+information is next used to build model Hamiltonians for
+these cobaltates.
+V. EXACT DIAGONALIZA TION RESUL TS:
+SINGLE ION PROPER TIES
+From our DFT calculations, we extract a local crystal
+ﬁeld Hamiltonian HCF describing the d-orbital manifold
+of the Co 2+ ion in a distorted octahedral crystal ﬁeld
+environment which only has a residualC3 symmetry. We
+supplement this Hamiltonian with SOC and interactions,
+so that the on-site Hamiltonian takes the form
+Hloc =ξHCF +HSOC +Hint. (1)
+Here, HSOC is the single-particle SOC term, explicitly
+given by
+HSOC =λ
+∑
+𝓁𝓁′m
+∑
+αβ
+c†𝓁sLm𝓁𝓁′c𝓁′s′σmss′ , (2)
+where ( 𝓁,𝓁′) are orbital labels corresponding to
+{(yz,xz,xy ), (x2−y2, 3z2−r2)},m labels the vector com-
+ponent of the orbital L or spin σ angular momentum,
+withs,s′ being spin component labels. Hint is the spher-
+ically symmetric Kanamori Hamiltonian encoding inter-
+actions between the electrons:
+Hint =U
+∑
+𝓁
+n𝓁↑n𝓁↓ +U′ ∑
+𝓁>𝓁′
+n𝓁n𝓁′
+−JH
+∑
+𝓁⁄=𝓁′
+S𝓁· S𝓁′ +JH
+∑
+𝓁⁄=𝓁′
+c†𝓁↑c†𝓁↓c𝓁′↓c𝓁′↑ . (3)
+Here, U, U′, and JH represent intra-orbital Hubbard,
+inter-orbital Hubbard, and Hund’s couplings, respec-
+tively, and the spin operator in orbital 𝓁 is
+Sm𝓁 = 12c†𝓁sσmss′c𝓁s′. (4)
+We assume U′ = U− 2JH as appropriate for a spher-
+ically symmetric Coulomb interaction [52]. Finally, in
+this single-ion Hamiltonian Eq. 1, we have incorporated
+a scaling factor ξ multiplying the HCF obtained from
+our DFT calculations, as a crude way to account for the
+“double-counting” of interactions. We refer here to the
+fact that ab initio calculations partially account for inter-
+orbital repulsion and changes in the corresponding orbital
+occupancies and energies at mean ﬁeld level, while such
+a renormalization of crystal ﬁeld levels will also occur
+from the full set of Kanamori interactions in Eq. 3. An
+intrinsic issue of any realistic many-body approach is the
+so-called double-counting of interaction terms. How to
+5
+choose the double-counting potential in a manner that is
+both physically sound and consistent is unknown. Vari-
+ous diﬀerent schemes of double-counting have been pro-
+posed in literature, as it is an ill-posed question to make
+connection between DFT based on electronic densities,
+and a Hubbard-like many-body model based on local-
+ized atomic orbitals. The double counting schemes like
+around mean-ﬁeld [53] or fully localized limit, [54] or self-
+interaction correction [55] used in DFT+U approach may
+provide diﬀerent results. An alternative approach is to
+use double-counting correction as an adjustable parame-
+ter, ξ, which we have used, to give the best comparison
+with experiment (see discussions later).
+Below, we set λ = 80 meV for Co 2+ [56], and choose
+the scaling factor ξ = 0.65. Based on an exploration of
+how the diﬀerent exchange couplings vary with interac-
+tions (discussed below), we ﬁx the interaction strengths
+to U = 3.25 eV and JH = 0.7 eV [57]. We ﬁnd that
+this set of parameters leads to reasonable results for the
+single ion g-factors, as well as the low energy single ion
+excitations and spin-wave modes observed in CoTiO3 us-
+ing inelastic neutron scattering experiments [36, 37]. We
+have found that the exchange Hamiltonians we derive in
+later sections are not substantially impacted by the pre-
+cise value of ξ.
+A. Kramers doublet ground state
+As discussed in Ref [30, 31], the 3 d7 Co2+ ion in an
+octahedral crystal ﬁeld environment is predominantly in
+the high-spin S = 3/2 (t52ge2g) conﬁguration. Combining
+this with the total eﬀective orbital angular momentum
+L = 1, of a single hole in the t2g orbitals, the SOC term
+with λ > 0 stabilizes a Jeﬀ = 1/2 pseudospin degree of
+freedom. Indeed, our exact diagonalization of the Hamil-
+tonian leads to a Kramers doublet ground state for a
+wide range of parameter values, indicating that such a
+pseudospin-1/2 picture remains valid for all three cobal-
+tates even in the presence of realistic distortions.
+B. Single-ion excitations
+Inelastic neutron scattering experiments on CoTiO 3
+reveal magnetic excitations above the Jeﬀ = 1/2 dou-
+blet at energies {29(2), 58(7),..., 132(3)} meV, where
+“... ” indicates a broad continuum of signiﬁcant scat-
+tering intensity in the 60-120 meV range where individ-
+ual sharp peaks cannot be resolved [36, 37]. Choosing
+the scaling factor ξ = 0.65 in Hloc, we ﬁnd that these
+low-lying many-body crystal ﬁeld excitations above the
+Jeﬀ = 1/2 doublet ground state in CoTiO 3 are at ener-
+gies{22, 63, 104, 111, 132} meV, with the underlined ex-
+citations energy levels being in reasonably good agree-
+ment with the experimentally observed peaks. We con-
+trast these results with the corresponding values when
+Material g⊥ g‖
+CoTiO3 5.0 3.2
+BaCo2(AsO4)2 5.0 2.7
+BaCo2(PO4)2 5.0 3.0
+TABLE I. Computed g-factors corresponding to directions
+perpendicular (in-plane) or parallel (out-of-plane) to the C3
+axis (c-axis) for honeycomb cobaltates studied in this paper.
+the scale factor is set to ξ = 1, which leads to excitation
+energies{15, 84, 118, 130, 152} meV quite unlike the data.
+Using this scaling factor ξ = 0.65 for BaCo 2(AsO4)2
+and BaCo 2(PO4)2, we ﬁnd the excited states
+at excitation energies which are respectively at
+{14, 85, 120, 134, 158} and{16, 77, 112, 126, 151}. These
+could be explored in future experiments. We note that
+similar spin exciton states have also been measured in
+certain pyrochlore cobaltates [58].
+C. g-factors
+Table I lists the g-factors associated with this pseu-
+dospin degree of freedom which we obtain from the
+ground state expectation value 2⟨(⃗L + 2⃗S)⟩ in the pres-
+ence of a weak Zeeman ﬁeld ⃗B. By choosing ⃗B to
+point perpendicular or parallel to the C3 axis (i.e., c-
+axis), we extract g⊥ and g‖ respectively. In contrast to
+the isotropic g-factors obtained for the iridate d5 Mott
+insulators, all the cobaltates studied here show highly
+anisotropic g-factors, in agreement with recent experi-
+ments [35, 41]. Such anisotropic g-factors have also been
+measured in certain pyrochlore cobaltates [58]. To the
+best of our knowledge, g-factors for BaCo 2(PO4)2 have
+not been measured; our estimates may be compared with
+future experiments.
+VI. PER TURBA TION THEOR Y FOR
+INTER-SITE EXCHANGE
+In order to obtain the exchange interactions between
+pseudospins on a pair of sites, we use the single-ion en-
+ergy levels and eigenfunctions and incorporate inter-site
+hopping to second order in perturbation theory. We out-
+line this below, together with a brief discussion about the
+dependence on the various exchange couplings on inter-
+action parameters such asU andJH, with further details
+given in the SM [43].
+A. Two-site perturbation theory
+The interactions between the pseudospins can be ob-
+tained via second order perturbation theory, using hop-
+ping integrals extracted from the above DFT calcula-
+tions. The calculation schematically proceeds as follows.
+6
+(i) We solve the single site problem for occupanciesd6,d7
+and d8, to obtain the full set of energy levels and many-
+body wavefunctions including SOC. In doing this, we ap-
+ply a weak ﬁeld along the global Z-axis (C3 axis perpen-
+dicular to the honeycomb planes) in order to deﬁne our
+pseudospin|↑⟩,|↓⟩ basis states (see Fig. 4, reproduced
+from [6]). (ii) We extract spin-independent hopping ma-
+trices T (ij) from DFT, whose elements T (ij)𝓁𝓁′ describe an
+electron in orbital 𝓁 at site i hopping to an orbital 𝓁′ at
+site j, so that the (ij) kinetic energy is
+ˆTij = ∑
+𝓁𝓁′α
+(T (ij)𝓁𝓁′ c†j𝓁′αci𝓁α +T (ji)𝓁′𝓁 c†i𝓁αcj𝓁′α) (5)
+(iii) We focus on initial and ﬁnal states where each of
+the two sites live in a ground doublet which we denote as
+|b⟩,|b′⟩. These kets span a 4-dimensional Hilbert space,
+formed by the direct product of doublet levels at each
+site. The operator ˆTij connects these states to intermedi-
+ate many-body levels (d6,d 8) or (d8,d 6) which we denote
+as|e⟩. (iv) From second order perturbation theory, we
+obtain the eﬀective Hamiltonian as
+[
+H(2)eﬀ
+]
+b′,b =
+∑
+e
+⟨b′| ˆTij|e⟩⟨e| ˆTij|b⟩
+Eb−Ee
+(6)
+where Ee and Eb = Eb′ refer to the energies of the in-
+termediate and initial/ﬁnal ground states, respectively.
+H(2)eﬀ is a 4x4 matrix, describing the interactions between
+the doublet manifolds on the two sites. (v) Finally, from
+this 4x4 Hamiltonian, the exchange matrixJ is extracted
+by writingH(2)eﬀ above as a pseudospin exchange term
+Hij = ∑
+αβ
+SiαJijαβSjβ (7)
+where α and β are the components of the spin vectors,
+and theSα are pseudospin-1/2 operators.
+For instance, along a C-type nearest-neighbor bond
+(see left panel in Fig.4), the exchange matrix J [C] is
+deﬁned as
+J [C] =
+
+
+JXY +D E G
+E J XY−D F
+G F J Z
+
+ (8)
+with antisymmetric terms, e.g. Dzyaloshinskii-Moriya
+(DM) exchange couplings, being forbidden by inversion
+symmetry about the bond center. We can extract the
+corresponding exchange matrices J [A] andJ [B] on the
+A-type and B-type bonds simply by a ±2π/3 rotations
+of the above exchange matrix about the C3 axis. More
+generally, the exchange matrices on generic bonds would
+allow DM terms, but we ﬁnd that these are negligible,
+even for bonds where there is no center of inversion (eg.
+second-neighbor bonds 2 and 2′).
+In Appendix A, we present results for the exchange ma-
+trices in terms of the ideal local octahedral basis in which
+the famous Kitaev-Γ type Hamiltonians are usually for-
+mulated (also shown in the left panel in Fig.4). However,
+FIG. 4. (Left) The honeycomb plane is shown, as viewed down
+the c axis, along with the global XYZ and local ˜x˜y˜z basis.
+The deﬁnition of the bases, along with that of the A, B, and
+C bonds is consistent with Ref. [6]. The dotted bonds denote
+the third-nearest neighbor bonds, which can be also be deﬁned
+asA,B,C-type. (Right) Bonds with non-negligible exchange
+couplings for the diﬀerent materials; unprimed numbers refer
+to in-plane neighbors, while primed numbers refer to the out-
+of-plane neighbors.
+FIG. 5. Dependence of the nearest-neighbor exchange inter-
+action J XY1 on the Hubbard U, for ﬁxed JH = 0.7 eV. For
+U = 3.25 eV (shown by the dotted line), the exchange cou-
+plings for CoTiO3 are in good agreement with neutron exper-
+iments [36, 37]. Inset shows the ratio −J XY3 /J XY1 over the
+same range ofU for the Barium compounds, suggesting signif-
+icant frustration from third neighbor exchange. The full set of
+signiﬁcant exchange couplings for U = 3.25 and JH = 0.7 eV
+are quoted in Tables II, III, and IV.
+we note that in all the cobaltates we have examined, the
+pseudospin Hamiltonian is simplest in the above global
+basis, i.e. with the fewest number of nonzero entries in
+the exchange matrices.
+B. Dependence of Exchanges on Interaction
+Parameters
+The exchange interactions are sensitive to the inter-
+action parameters U,JH in Equation (3). To illustrate
+7
+this, Fig. 5 shows the dependence of the ﬁrst-neighbor
+XY exchange JXY1 on the Hubbard repulsion U for all
+three cobaltates, while the inset displays the variation of
+the non-negligible third-neighbor exchange −JXY3 /JXY1
+in BaCo 2(AsO4)2 and BaCo 2(PO4)2. The SM [43] in-
+cludes additional plots for the JH dependence of these
+couplings, as well as the ( U,JH) dependence of bond-
+dependent anisotropies and further neighbor interactions.
+Based on Fig. 5, and similar plots, we ﬁnd that a rea-
+sonable choice of U = 3.25 eV and JH = 0.7 eV [48, 49]
+leads to exchange couplings for CoTiO 3 which are in ex-
+cellent agreement with inelastic neutron scattering exper-
+iments. For BaCo 2(AsO4)2 and BaCo2(PO4)2, however,
+the spin ground state is extremely sensitive to the third-
+neighbor exchange over a range of JXY3 /JXY1 (shown in
+the inset of Fig. 5). This suggests that some degree of
+ﬁne-tuning might be needed to explain their precise mag-
+netic ordering. Indeed, experiments on BaCo 2(PO4)2
+have even argued for the coexistence of orderings with
+diﬀerent wavevectors in the same sample [40]. In ad-
+dition to this issue, we ﬁnd a much larger overall scale
+of the exchange couplings in these two materials when
+compared with experimental reports - we later discuss a
+possible reason for this signiﬁcant discrepancy.
+VII. SPIN HAMIL TONIANS, ORDERED
+ST A TES, SPIN DYNAMICS
+A. CoTiO 3
+We ﬁnd that the spin model in CoTiO 3 is best de-
+scribed as a nearest-neighbor ferromagnetic easy-plane
+XXZ model with signiﬁcant compass-type anisotropies
+in the honeycomb plane, along with a weaker antiferro-
+magnetic coupling between honeycomb layers. The full
+set of signiﬁcant exchange coupling values are listed in
+Table II. This complete set of spin interactions favors an
+ordered ground state where the moments have XY fer-
+romagnetic order within each honeycomb layer, but are
+antiferromagnetically stacked from one layer to the next.
+The interlayer exchanges are mediated by the signiﬁcant
+overlap of the Co Wannier orbitals with the spacer Ti
+ions. The ﬁrst-neighbor exchange coupling and its strong
+anisotropy, as well as the weaker interlayer couplings, are
+in very good agreement with those inferred from neutron
+scattering studies of the material [36, 37]. The scale of
+the compass anisotropy terms are consistent with those
+conjectured in previous work [37].
+Fig. 6 shows the linear spin wave dispersion, obtained
+with our computed exchange interactions, along speciﬁc
+cuts in momentum space. The left panel reveals a Gold-
+stone mode at the zone center - this is an artefact of
+linear spin wave theory, since the signiﬁcant anisotropic
+“compass”-type exchange couplings D and E break the
+U(1) symmetry of the pureXXZ model. Order by disor-
+der physics, beyond linear spin-wave theory, is expected
+to pin the ordered moment and gap out the Goldstone
+CoTiO3 Bond-1 Bond-1’ Bond-2’
+J XY −4.5 meV 0.4 meV 0.8 meV
+J Z −0.3 meV 0.3 meV 0.4 meV
+D 1.8 meV ∼ 0 ∼ 0
+E −2.2 meV ∼ 0 ∼ 0
+TABLE II. Table of dominant exchange parameters for
+CoTiO3, corresponding to U = 3.25 eV and JH = 0.7 eV.
+For the deﬁnitions of the bonds, see Fig. 4 (right panel).
+FIG. 6. Spin wave dispersions for CoTiO 3, obtained using
+SpinW [59], plotted along two cuts in momentum space in
+theL = 1/2 plane [36, 37]. Dotted line in right panel denotes
+the Brillouin zone corner.
+mode [37]. The right panel shows the computed Dirac
+node which has been observed in inelastic neutron scat-
+tering experiments; we ﬁnd that this node is shifted away
+from the Brillouin zone corner which is at (2/3, 2/3, 1/2)
+(dotted line in the right panel of Figure 6). This is in ac-
+cordance with predictions that there are 3D Dirac nodal
+lines which should wind, like a triple helix, around the
+(2/3, 2/3,L ) axis in momentum space. This displacement
+of the Dirac nodal lines is enabled by the anisotropic D
+and E exchange couplings, and might lead to a suppres-
+sion of the magnon density of states, as seen in recent
+experiments [37].
+B. BaCo 2(AsO4)2 and BaCo 2(PO4)2
+The Barium compounds are much more two-
+dimensional compared to CoTiO 3, with extremely small
+inter-layer couplings<∼ 0.1 meV. The source of this layer
+decoupling is the large inter-plane distances discussed in
+Section II. In addition, the less buckled nature of the
+honeycomb planes and the Wannier orbital overlap with
+As/P appears to promote larger in-plane hopping am-
+plitudes. As a result, we ﬁnd that the computed ex-
+change interactions betweenj =1/2 pseudospins in these
+compounds are signiﬁcantly enhanced compared with
+CoTiO3.
+Tables III and IV show values for the exchange param-
+eters for the BaCo 2(AsO4)2 and BaCo 2(PO4)2 respec-
+tively. The ﬁrst-neighbor interaction leads to an easy-
+plane XXZ model, but with subdominant anisotropies,
+8
+BaCo2(AsO4)2 Bond-1 Bond-3
+J XY −14.5 meV 7.1 meV
+J Z −3.8 meV 2.3 meV
+D 1.5 meV ∼ 0
+E −1.7 meV ∼ 0
+TABLE III. Table of dominant exchange parameters for
+BaCo2(AsO4)2, corresponding to U = 3.25 eV and JH = 0.7
+eV. For the deﬁnitions of the bonds, see Fig. 4 (right panel).
+which is qualitatively similar to CoTiO 3. However,
+in contrast to CoTiO 3 we ﬁnd strong frustration com-
+ing from signiﬁcant third-neighbor antiferromagnetic ex-
+change; this leads to antiferromagneticXY ground states
+in the Barium compounds.
+The classical phase diagram of theJ1-J3 model [38, 39]
+features a tiny sliver (0.25<∼−J3/J1<∼ 0.4) of an incom-
+mensurate coplanar spiral phase sandwiched between the
+more robust ferromagnetic and zig-zag ordered phases;
+see Appendix B for a phase diagram reproduced from
+Ref. [39]. Based on our exploration of how the exchange
+couplings vary with the interaction parameters in Eq. 3
+(see Figure 5), we ﬁnd that the ratio J3/J1 lies close
+to this window. We thus deduce that the ground states
+of these materials could be extremely sensitive to small
+variations in material parameters.
+Based on our computed exchange couplings shown in
+Tables III and IV, we extract the Curie-Weiss constants
+for BaCo2(AsO4)2 and BaCo2(PO4)2 both parallel to the
+c-axis, and perpendicular to the c-axis (i.e., in the hon-
+eycomb plane). For BaCo 2(AsO4)2, we ﬁnd Θ ‖≃ 65 K
+and Θ⊥≃ 4 K, about twice as large as the correspond-
+ing experimental values [35]. For BaCo 2(PO4)2, we ﬁnd
+Θ‖≃ 90 K and Θ⊥≃ 23 K, which remains to be experi-
+mentally studied on single crystal samples.
+Using SpinW [59], we have computed the magnetic or-
+der and dynamical spin correlations corresponding to the
+exchange values in Table III. We ﬁnd that this parameter
+set supports collinear zig-zag magnetic order as shown in
+Fig. 7 (left panel), with moment directions as shown for
+the ordering wavevector along ˆX. The wavevector (H,K )
+for this order corresponds to Q0 = (1/2, 0); reinstating
+the lattice units, this translates to Q0≃ (0.628, 0)˚A−1.
+The dynamical spin correlations corresponding to this
+order show signiﬁcant intensity at a band of excitations
+around an energy transfer ¯hω∼JXY1 . In addition, the
+Goldstone mode expected at Q0 for a simpleXXZ model
+BaCo2(PO4)2 Bond-1 Bond-3
+J XY −17.3 meV 6.9 meV
+J Z −5.0 meV 2.4 meV
+D −2.7 meV ∼ 0
+E 0.2 meV ∼ 0
+TABLE IV. Table of dominant exchange parameters for
+BaCo2(PO4)2, corresponding to U = 3.25 eV and JH = 0.7
+eV. For the deﬁnitions of the bonds, see Fig. 4 (right panel).
+FIG. 7. Left panel: Zig-zag ordered phase with Q0 =
+(1/2, 0) ≈ (0.628, 0)˚A−1. Right panel: Powder averaged dy-
+namical structure factor of the zig-zag ordered phase for the
+parameter set from Table III.
+is gapped out by the anisotropy terms in the Hamilto-
+nian, with a gap ∼ 0.3JXY1 . Below the scale of this
+Goldstone gap, we expect that the magnetic speciﬁc heat
+should be exponentially suppressed. Similar results fol-
+low for the exchange parameter set from Table IV.
+On the other hand, experiments on BaCo 2(AsO4)2
+and BaCo2(PO4)2 do not ﬁnd a zig-zag ordered ground
+state. While early experiments on BaCo 2(AsO4) [60]
+reported results consistent with a coplanar spiral (he-
+lical) ground state with a wavevector Q0 ≃ (0.27, 0),
+or equivalently (0 .34, 0)˚A−1, recent work [41] has in-
+stead suggested a collinear order with this wavevector.
+For BaCo 2(PO4), recent experiments [40] have argued
+for short-range ordering involving both zig-zag and spi-
+ral states. Overall, these experiments suggest a slightly
+smaller third-neighbor coupling, which would favor a
+smaller wavevector compared with the zig-zag ordered
+ground state, reﬂecting the extreme sensitivity of the
+magnetic ground state to small changes in the frustration.
+This, in turn, might arise from small diﬀerences in the
+microscopic Kanamori interactions. To illustrate this,
+we have computed the magnetic ground state and dy-
+namical spin correlations by rescaling all third-neighbor
+hoppings by a factor≈0.8, which leads to a renormalized
+JXY3 /JXY1 =−0.3. In this case, we ﬁnd that the magnetic
+ground state has the experimentally reported ordering
+FIG. 8. Left panel: Spiral ordered phase with Q0 =
+(0.34, 0)˚A. Right panel: Powder averaged dynamical struc-
+ture factor of the zig-zag ordered phase for the parameter set
+from Table III but with all third-neighbor couplings rescaled
+such that J XY3 /J XY1 = −0.3.
+9
+wavevector, with the spin order as shown in Fig. 8 (left
+panel). The corresponding dynamical spin correlations
+are shown in Fig. 8 (right panel). As expected, the Gold-
+stone mode continues to be gapped due to the anisotropic
+exchange terms. Indeed, inelastic neutron scattering ex-
+periments on BaCo 2(AsO4)2 and BaCo2(PO4)2 ﬁnd ev-
+idence for spin gapped excitations, qualitatively consis-
+tent with our results [40, 41].
+It is possible that the collinear order reported in [41]
+could reﬂect the impact of strong quantum ﬂuctuations
+on the competition between spiral and collinear ground
+states. Such competition has been extensively investi-
+gated in spatially anisotropic triangular antiferromagnets
+[61]; we defer a full quantum analysis of our model to a
+future publication.
+Speciﬁc heat measurements on BaCo2(AsO4)2 have re-
+ported a ∼T 2 speciﬁc heat at the lowest temperature
+T <∼ 2 K [41, 62], which was attributed to 2D magnetic
+ﬂuctuations. However, our calculations suggest that the
+speciﬁc heat should be suppressed below a spin gap scale
+∼0.3JXY1 ; we thus conclude that the experimentally ob-
+served speciﬁc heat may be of non-magnetic origin. Al-
+ternatively, it might reﬂect the impact of disorder which
+has not been taken into account in our work.
+One key discrepancy between our calculations
+and the experimental results on BaCo 2(AsO4)2 and
+BaCo2(PO4)2 is in the overall scale of the magnetic ex-
+change. The exchange couplings we ﬁnd are about 3 − 4
+times larger than those reported in the experimental lit-
+erature. We have explored varying U,JH and the crystal
+ﬁeld matrix in order to resolve this discrepancy while
+maintaining a reasonable ratio of JXY3 /JXY1 , but with-
+out any success. We therefore propose the following ten-
+tative explanation to reconcile this problem. We have
+seen that the Co 2+ ion supports a lowest energy single-
+ion excitation, i.e. a spin exciton, at an energy ≃ 20-
+30 meV. In CoTiO 3, the exchange interactions between
+theJeﬀ =1/2 pseudospins is much smaller than this spin-
+exciton gap, justifying the restriction to a pseudospin-1/2
+model. By contrast, the magnetic exchange interactions
+in BaCo 2(AsO4)2 and BaCo 2(PO4)2 are comparable to
+the spin-exciton gap. This suggests that the spin dynam-
+ics and Curie-Weiss temperatures might both be strongly
+impacted by coupling between the low energy magnon
+and the spin exciton. Level repulsion between these
+states could then lead to an eﬀectively smaller magnon
+bandwidth for the Jeﬀ = 1/2 spins. The theory of this
+magnon-exciton coupling will be discussed elsewhere.
+Our viewpoint taken in this paper is that we can focus
+on a Co-only model with site-local interactions, although
+Fig. 3 shows that the Wannier orbitals do have oxygen
+character. To what extent is this a reasonable assump-
+tion? Partial justiﬁcation for retaining only an eﬀective
+Co interacting model stems from the recognition that
+compounds in the transition metal oxide series go from
+being Mott-Hubbard insulators to charge-transfer insula-
+tors as we go from Ti to Cu, with the cuprates being well-
+known charge transfer insulators. Recent work suggests
+that nickelates, such as NdNiO2, lie at the borderline
+[63]. Based on this, the cobaltates, are perhaps better
+viewed as Mott-Hubbard insulators where focussing on
+excitations on the Co d-levels is a good starting point,
+and indeed we do seem to ﬁnd excellent agreement with
+experiments on CoTiO 3 following this approach. Never-
+theless, in light of the above discrepancies, a more quan-
+titative treatment of the two-site exchange interaction in-
+corporating oxygen orbitals, in addition to the Co ions,
+might might be important to consider in future studies
+of BaCo2(AsO4)2 and BaCo2(PO4)2.
+VIII. DISCUSSION
+We have explored the magnetism of the honeycomb
+cobaltates CoTiO 3, BaCo 2(AsO4)2, and BaCo 2(PO4)2
+which crystallize in the rhombohedral structure with R¯3
+space group. The Co 2+ ions in the d7 conﬁguration have
+been proposed as possible candidate materials for realiz-
+ing strong Kitaev interactions and Kitaev quantum spin
+liquids. Based on our combined DFT and exact diagonal-
+ization study, we ﬁnd that the magnetism in these cobal-
+tates is strongly perturbed by the trigonal distortion, and
+that they are better described asXXZ quantum magnets
+with subdominant but nevertheless important anisotropy
+terms. Our results for CoTiO 3 are in excellent agree-
+ment with neutron scattering experiments [36, 37]. The
+bond-anisotropic exchanges we have uncovered can gap
+the Goldstone modes in these magnets, and lead to a heli-
+cal winding of the Dirac magnon nodal line in CoTiO3. In
+BaCo2(AsO4)2 and BaCo2(PO4)2, we have found micro-
+scopic evidence for strong third-neighbor antiferromag-
+netic exchange, which can drive possibly quite distinct
+quantum spin liquid phases proximate to zig-zag or spiral
+ordered phases. Indeed, the reported collinear order [41]
+and small magnetic ﬁeld to drive saturation [35] point to
+the importance of strong quantum ﬂuctuations in these
+two materials. In addition, we have presented arguments
+that the low-energy spin excitations in the Ba compounds
+may involve strongly coupled magnons and spin exci-
+tons. While such magnon-exciton coupling has been ex-
+plored within phenomenological models for CoTiO 3 [37]
+and FeI2 [64], it would be worth revisiting those ideas in
+light of our work in order to provide a quantitative under-
+standing of BaCo 2(AsO4)2 and BaCo2(PO4)2, and their
+magnetic ﬁeld driven phase diagram [35, 65, 66]. Care-
+fully integrating out the high energy exciton may lead to
+an enhancement of the Kitaev exchange interaction for
+the Jeﬀ = 1/2 pseudospins; we are presently exploring
+this possibility.
+While we have explored a limited set of all the hon-
+eycomb cobaltates, i.e. the rhombohedral cases, most
+other candidate cobaltates have even lower symmetry.
+For instance, Na 3Co2SbO6 [67–72], Ag 3Co2SbO6 [73],
+Li3Co2SbO6 [74, 75], and CoPS 3 [76] crystallize in the
+monoclinic C2/m space group, while Co 4Nb2O9 and
+Co4Ta2O9 [77–80] crystallize in the P ¯3c1 space group.
+10
+We thus suspect that they may support even more com-
+plex magnetic exchange interactions. In addition, the
+zig-zag magnetic order observed in many of these com-
+pounds may again stem from a signiﬁcant third-neighbor
+coupling as was initially proposed also for the iridates
+[12] and also recognized to be important for the cobal-
+tates [30].
+As a test case, we have carried out a preliminary
+study of the exchange couplings in Na 3Co2SbO6. We
+ﬁnd that its spin Hamiltonian is consistent with nearly
+decoupled 2D honeycomb layers. However, the 3 × 3
+matrix of in-plane exchange couplings does not appear
+to be simple (i.e., sparse) in either the local octahedral
+basis or a global spin basis; indeed all couplings per-
+mitted by symmetry appear to be relevant. Our pre-
+liminary calculations yield, in the local octahedral ba-
+sis, a nearest-neighbor ferromagnetic Heisenberg cou-
+pling J1∼− 3 meV, a comparable antiferromagnetic Ki-
+taev exchange K∼ 2.5 meV, an oﬀ-diagonal symmetric
+exchange Γ∼− 2.5 meV, and a frustrating antiferromag-
+netic third-neighbor Heisenberg exchange J3∼ 2.5 meV,
+together with additional bond-anisotropic terms Γ ′1, Γ′2.
+The signiﬁcant J3 appears to be mediated by the Sb ion
+in the honeycomb plane. This spin Hamiltonian favors
+a zig-zag ground state with a gapped Goldstone mode,
+in qualitative agreement with neutron diﬀraction and in-
+elastic scattering experiments [81, 82]. Our estimated
+exchange couplings are roughly in the same ballpark as
+those extracted from careful spin-wave ﬁts to the inelas-
+tic neutron scattering data [81, 82], but diﬀer in detail
+(e.g., the sign of Γ). Clearly, given the absence ofC3 sym-
+metry in this monoclinic crystal, a more careful study is
+needed to reliably extract the exchange interactions and
+model the spin-wave spectrum. Nevertheless, our prelim-
+inary calculations appear to conﬁrm that the spin model
+is far more complex in this lower symmetry magnet, sug-
+gesting that this material also does not realize a simple
+Kitaev-exchange dominated spin model. The presence of
+multiple competing interactions could still lead to nearby
+quantum spin liquid phases whose existence and nature
+remain open issues.
+In other cobaltates, such as the recently studied
+Na2Co2TeO6 [83] which crystallizes in the P 6322 space
+group and exhibits zig-zag magnetic order, randomness
+in the Na+ arrangement might promote disorder-enabled
+spin liquid signatures. However, this randomness stymies
+a full ab initio based study of the exchange interactions.
+Progress may be made by exploring a suitable periodic
+arrangement of Na + ions in a supercell; we defer this to
+a future investigation.
+In summary, we argue that the honeycomb cobaltates
+can realize a rich set of magnetic Hamiltonians with
+frustration and anisotropic bond-dependent interactions.
+and may potentially host interesting quantum spin liq-
+uids driven by further-neighbor interactions and disorder.
+Realizing the Kitaev quantum spin liquid in this class of
+materials may require further ﬁne-tuning of the chem-
+istry and crystal ﬁelds in order to promote the Kitaev
+coupling over other competing exchange interactions.
+ACKNOWLEDGMENTS
+We thank Giniyat Khaliullin, Kate Ross, Peter Ar-
+mitage, and Sasha Chernyshev for useful discussions. SV
+and AP acknowledge funding from NSERC of Canada.
+TS-D acknowledges a J.C. Bose National Fellowship
+(grant no. JCB/2020/000004) for funding. SD was sup-
+ported by a DST-INSPIRE fellowship. Exact diagonal-
+ization computations were performed on the Niagara su-
+percomputer at the SciNet HPC Consortium. SciNet is
+funded by: the Canada Foundation for Innovation; the
+Government of Ontario; Ontario Research Fund - Re-
+search Excellence; and the University of Toronto.
+[1] Alexei Kitaev, “Anyons in an exactly solved model
+and beyond,” Annals of Physics 321, 2–111 (2006),
+arXiv:0506438 [cond-mat].
+[2] M. Hermanns, I. Kimchi, and J. Knolle, “Physics
+of the kitaev model: Fractionalization, dynamic
+correlations, and material connections,” Annual Re-
+view of Condensed Matter Physics 9, 17–33 (2018),
+https://doi.org/10.1146/annurev-conmatphys-033117-
+053934.
+[3] Hidenori Takagi, Tomohiro Takayama, George Jackeli,
+Giniyat Khaliullin, and Stephen E. Nagler, “Concept
+and realization of Kitaev quantum spin liquids,” (2019).
+[4] Yukitoshi Motome, Ryoya Sano, Seonghoon Jang,
+Yusuke Sugita, and Yasuyuki Kato, “Materials design of
+Kitaev spin liquids beyond the Jackeli-Khaliullin mecha-
+nism,” Journal of Physics Condensed Matter 32, 404001
+(2020), arXiv:2001.03731.
+[5] Tomohiro Takayama, Jiri Chaloupka, Andrew Smerald,
+Giniyat Khaliullin, and Hidenori Takagi, “Spin orbit-
+entangled electronic phases in 4d and 5d transition-metal
+compounds,” Journal of the Physical Society of Japan90,
+062001 (2021), https://doi.org/10.7566/JPSJ.90.062001.
+[6] Jiri Chaloupka, George Jackeli, and Giniyat Khaliullin,
+“Kitaev-heisenberg model on a honeycomb lattice: Pos-
+sible exotic phases in iridium oxides A2IrO3,” Physical
+Review Letters 105, 027204 (2010), arXiv:1004.2964.
+[7] Yoshihiko Okamoto, Minoru Nohara, Hiroko Aruga-
+Katori, and Hidenori Takagi, “Spin-liquid state in the
+S=1/2 hyperkagome antiferromagnet Na 4Ir3O8,” Phys-
+ical Review Letters 99, 137207 (2007), arXiv:0705.2821.
+[8] Vamshi M. Katukuri, S. Nishimoto, V. Yushankhai,
+A. Stoyanova, H. Kandpal, Sungkyun Choi, R. Coldea,
+I. Rousochatzakis, L. Hozoi, and Jeroen Van Den Brink,
+“Kitaev interactions between j = 1/2 moments in hon-
+eycomb Na 2IrO3 are large and ferromagnetic: Insights
+11
+from ab initio quantum chemistry calculations,” New
+Journal of Physics 16, 013056 (2014), arXiv:1312.7437.
+[9] Jeﬀrey G. Rau, Eric Kin Ho Lee, and Hae Young Kee,
+“Generic spin model for the honeycomb iridates beyond
+the Kitaev limit,” Physical Review Letters 112, 077204
+(2014), arXiv:1310.7940.
+[10] Yogesh Singh and P. Gegenwart, “Antiferromagnetic
+Mott insulating state in single crystals of the honeycomb
+lattice material Na2IrO3,” Physical Review B - Con-
+densed Matter and Materials Physics 82, 064412 (2010),
+arXiv:1006.0437.
+[11] S. K. Choi, R. Coldea, A. N. Kolmogorov, T. Lancaster,
+I. I. Mazin, S. J. Blundell, P. G. Radaelli, Yogesh Singh,
+P. Gegenwart, K. R. Choi, S. W. Cheong, P. J. Baker,
+C. Stock, and J. Taylor, “Spin waves and revised crys-
+tal structure of honeycomb iridate Na 2IrO 3,” Physical
+Review Letters 108, 127204 (2012), arXiv:1202.1268.
+[12] Itamar Kimchi and Yi-Zhuang You, “Kitaev-heisenberg-
+J2-J3 model for the iridates A2iro3,” Phys. Rev. B 84,
+180407 (2011).
+[13] K. W. Plumb, J. P. Clancy, L. J. Sandilands, V. Vijay
+Shankar, Y. F. Hu, K. S. Burch, Hae Young Kee, and
+Young June Kim, “α- RuCl3: A spin-orbit assisted Mott
+insulator on a honeycomb lattice,” Physical Review B
+- Condensed Matter and Materials Physics 90, 041112
+(2014), arXiv:1403.0883.
+[14] J. A. Sears, M. Songvilay, K. W. Plumb, J. P. Clancy,
+Y. Qiu, Y. Zhao, D. Parshall, and Young June Kim,
+“Magnetic order in α - RuCl3: A honeycomb-lattice
+quantum magnet with strong spin-orbit coupling,” Phys-
+ical Review B - Condensed Matter and Materials Physics
+91, 144420 (2015), arXiv:1411.4610.
+[15] A. Banerjee, C. A. Bridges, J. Q. Yan, A. A. Aczel, L. Li,
+M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu,
+J. Knolle, S. Bhattacharjee, D. L. Kovrizhin, R. Moess-
+ner, D. A. Tennant, D. G. Mandrus, and S. E. Na-
+gler, “Proximate Kitaev quantum spin liquid behaviour
+in a honeycomb magnet,” Nature Materials 15, 733–740
+(2016).
+[16] Daniel Weber, Leslie M. Schoop, Viola Duppel, Judith M.
+Lippmann, J¨ urgen Nuss, and Bettina V. Lotsch, “Mag-
+netic Properties of Restacked 2D Spin 1/2 honeycomb
+RuCl3 Nanosheets,” Nano Letters 16, 3578–3584 (2016),
+arXiv:1603.04463.
+[17] Martin Gr¨ onke, Peer Schmidt, Martin Valldor, Steﬀen
+Oswald, Daniel Wolf, Axel Lubk, Bernd B¨ uchner, and
+Silke Hampel, “Chemical vapor growth and delamination
+of α-RuCl3 nanosheets down to the monolayer limit,”
+Nanoscale 10, 19014–19022 (2018).
+[18] Soudabeh Mashhadi, Daniel Weber, Leslie M. Schoop,
+Armin Schulz, Bettina V. Lotsch, Marko Burghard,
+and Klaus Kern, “Electrical Transport Signature of
+the Magnetic Fluctuation-Structure Relation inα-RuCl3
+Nanoﬂakes,” Nano Letters 18, 3203–3208 (2018).
+[19] Yingzhen Tian, Weiwei Gao, Erik A. Henriksen,
+James R. Chelikowsky, and Li Yang, “Optically Driven
+Magnetic Phase Transition of Monolayer RuCl3,” Nano
+Letters 19, 7673–7680 (2019).
+[20] Boyi Zhou, J. Balgley, P. Lampen-Kelley, J. Q. Yan,
+D. G. Mandrus, and E. A. Henriksen, “Evidence for
+charge transfer and proximate magnetism in graphene-α-
+RuCl3 heterostructures,” Physical Review B 100, 165426
+(2019), arXiv:1811.04838.
+[21] Soudabeh Mashhadi, Youngwook Kim, Jeongwoo Kim,
+Daniel Weber, Takashi Taniguchi, Kenji Watanabe, Noe-
+jung Park, Bettina Lotsch, Jurgen H. Smet, Marko
+Burghard, and Klaus Kern, “Spin-Split Band Hy-
+bridization in Graphene Proximitized with α-RuCl3
+Nanosheets,” Nano Letters 19, 4659–4665 (2019).
+[22] Sananda Biswas, Ying Li, Stephen M. Winter, Johannes
+Knolle, and Roser Valenti, “Electronic Properties of α-
+RuCl3 in Proximity to Graphene,” Physical Review Let-
+ters 123, 237201 (2019), arXiv:1908.04793.
+[23] Eli Gerber, Yuan Yao, Tomas A. Arias, and Eun Ah
+Kim, “Ab Initio Mismatched Interface Theory of
+Graphene on α-RuCl3: Doping and Magnetism,” Physi-
+cal Review Letters 124, 106804 (2020).
+[24] Y. Kasahara, K. Sugii, T. Ohnishi, M. Shimozawa,
+M. Yamashita, N. Kurita, H. Tanaka, J. Nasu, Y. Mo-
+tome, T. Shibauchi, and Y. Matsuda, “Unusual Ther-
+mal Hall Eﬀect in a Kitaev Spin Liquid Candidate α-
+RuCl3,” Physical Review Letters 120, 217205 (2018),
+arXiv:1709.10286.
+[25] Peter Czajka, Tong Gao, Max Hirschberger, Paula
+Lampen-Kelley, Arnab Banerjee, Jiaqiang Yan, David G.
+Mandrus, Stephen E. Nagler, and N. P. Ong, “Oscilla-
+tions of the thermal conductivity in the spin-liquid state
+of α-RuCl3,” Nature Physics , 1–5 (2021).
+[26] P. A. Maksimov and A. L. Chernyshev, “Rethinking
+α−rucl3,” Phys. Rev. Research 2, 033011 (2020).
+[27] H. Suzuki, H. Liu, J. Bertinshaw, K. Ueda, H. Kim,
+S. Laha, D. Weber, Z. Yang, L. Wang, H. Takahashi,
+K. Fursich, M. Minola, B. V. Lotsch, B. J. Kim,
+H. Yavas, M. Daghofer, J. Chaloupka, G. Khaliullin,
+H. Gretarsson, and B. Keimer, “Proximate ferromag-
+netic state in the Kitaev model materialα-RuCl3,” arXiv
+e-prints , arXiv:2008.02037 (2020), arXiv:2008.02037
+[cond-mat.str-el].
+[28] S. Bachus, D. A. S. Kaib, Y. Tokiwa, A. Jesche,
+V. Tsurkan, A. Loidl, S. M. Winter, A. A. Tsirlin,
+R. Valenti, and P. Gegenwart, “Thermodynamic per-
+spective on ﬁeld-induced behavior of α−rucl3,” Phys.
+Rev. Lett. 125, 097203 (2020).
+[29] S. Bachus, D. A. S. Kaib, A. Jesche, V. Tsurkan, A. Loidl,
+S. M. Winter, A. A. Tsirlin, R. Valenti, and P. Gegen-
+wart, “Angle-dependent thermodynamics of α−Rucl3,”
+Phys. Rev. B 103, 054440 (2021).
+[30] Huimei Liu and Giniyat Khaliullin, “Pseudospin ex-
+change interactions in d7 cobalt compounds: Possible
+realization of the Kitaev model,” Physical Review B 97,
+014407 (2018), arXiv:1710.10193.
+[31] Ryoya Sano, Yasuyuki Kato, and Yukitoshi Motome,
+“Kitaev-heisenberg hamiltonian for high-spind7 mott in-
+sulators,” Phys. Rev. B 97, 014408 (2018).
+[32] Huimei Liu, Jiri Chaloupka, and Giniyat Khaliullin,
+“Kitaev Spin Liquid in 3d Transition Metal Com-
+pounds,” Physical Review Letters 125, 47201 (2020),
+arXiv:2002.05441.
+[33] Huimei Liu, “Towards Kitaev Spin Liquid in 3d
+Transition Metal Compounds,” arXiv e-prints ,
+arXiv:2105.00168 (2021), arXiv:2105.00168 [cond-
+mat.str-el].
+[34] Stephen M. Winter, Ying Li, Harald O. Jeschke, and
+Roser Valenti, “Challenges in design of kitaev materials:
+Magnetic interactions from competing energy scales,”
+Phys. Rev. B 93, 214431 (2016).
+12
+[35] Ruidan Zhong, Tong Gao, Nai Phuan Ong, and
+Robert J. Cava, “Weak-ﬁeld induced nonmagnetic
+state in a Co-based honeycomb,” Science Advances 6,
+eaay6953 (2020), arXiv:1910.08577.
+[36] Bo Yuan, Ilia Khait, Guo Jiun Shu, F. C. Chou, M. B.
+Stone, J. P. Clancy, Arun Paramekanti, and Young June
+Kim, “Dirac Magnons in a Honeycomb Lattice Quantum
+XY Magnet CoTiO3,” Physical Review X 10, 011062
+(2020), arXiv:1907.02061.
+[37] M. Elliot, P. A. McClarty, D. Prabhakaran, R. D. John-
+son, H. C. Walker, P. Manuel, and Radu Coldea, “Visu-
+alization of isospin momentum texture of dirac magnons
+and excitons in a honeycomb quantum magnet,” arXiv ,
+1–28 (2020), arXiv:2007.04199.
+[38] E. Rastelli, A. Tassi, and L. Reatto, “Non-simple mag-
+netic order for simple hamiltonians,” Physica B+C 97,
+1–24 (1979).
+[39] J. B. Fouet, P. Sindzingre, C. Lhuillier, “An investiga-
+tion of the quantum J1-J2-J3 model on the honeycomb
+lattice,” the European Physical Journal B 162, 147–162
+(2004).
+[40] Harikrishnan S. Nair, J. M. Brown, E. Coldren, G. Hes-
+ter, M. P. Gelfand, A. Podlesnyak, Q. Huang, and K. A.
+Ross, “Short-range order in the quantum XXZ honey-
+comb lattice material BaCo2(PO4)2,” Physical Review
+B 97, 134409 (2018), arXiv:1712.06208.
+[41] L. P. Regnault, C. Boullier, and J. E. Lorenzo,
+“Polarized-neutron investigation of magnetic order-
+ing and spin dynamics in BaCo2(AsO4)2 frustrated
+honeycomb-lattice magnet,” Heliyon 4, 1–37 (2018),
+arXiv:1801.06588.
+[42] John P. Perdew, J. A. Chevary, S. H. Vosko, Koblar A.
+Jackson, Mark R. Pederson, D. J. Singh, and Carlos
+Fiolhais, “Atoms, molecules, solids, and surfaces: Ap-
+plications of the generalized gradient approximation for
+exchange and correlation,” Phys. Rev. B 46, 6671–6687
+(1992).
+[43] See Supplemental Material online.
+[44] G. Kresse and J. Furthm¨ uller, “Eﬃcient iterative schemes
+for ab initio total-energy calculations using a plane-wave
+basis set,” Phys. Rev. B 54, 11169–11186 (1996).
+[45] P. E. Bl¨ ochl, “Projector augmented-wave method,” Phys.
+Rev. B 50, 17953–17979 (1994).
+[46] John P. Perdew, Kieron Burke, and Matthias Ernzer-
+hof, “Generalized gradient approximation made simple,”
+Phys. Rev. Lett. 77, 3865–3868 (1996).
+[47] A. I. Liechtenstein, V. I. Anisimov, and J. Zaanen,
+“Density-functional theory and strong interactions: Or-
+bital ordering in mott-hubbard insulators,” Phys. Rev. B
+52, R5467–R5470 (1995).
+[48] Lei Wang, Thomas Maxisch, and Gerbrand Ceder, “Ox-
+idation energies of transition metal oxides within the
+GGA + U framework,” Phys. Rev. B 73, 195107 (2006).
+[49] Marcal Capdevila-Cortada, Zbigniew Lodziana, and
+Nuria Lopez, “Performance of dft+u approaches in the
+study of catalytic materials,” ACS Catalysis 6, 8370–
+8379 (2016), https://doi.org/10.1021/acscatal.6b01907.
+[50] O. K. Andersen and T. Saha-Dasgupta, “Muﬃn-tin or-
+bitals of arbitrary order,” Phys. Rev. B 62, R16219–
+R16222 (2000).
+[51] O. K. Andersen and O. Jepsen, “Explicit, ﬁrst-principles
+tight-binding theory,” Phys. Rev. Lett. 53, 2571–2574
+(1984).
+[52] Antoine Georges, Luca De Medici, and Jernej Mravlje,
+“Strong correlations from hund’s coupling,” Annual Re-
+view of Condensed Matter Physics 4, 137–178 (2013).
+[53] M. T. Czyzyk and G. A. Sawatzky, “Local-density func-
+tional and on-site correlations: The electronic structure
+of la 2cuo4 and lacuo 3,” Phys. Rev. B 49, 14211–14228
+(1994).
+[54] Vladimir I Anisimov, F Aryasetiawan, and A I Licht-
+enstein, “First-principles calculations of the electronic
+structure and spectra of strongly correlated systems: the
+lda+u method,” Journal of Physics: Condensed Matter
+9, 767–808 (1997).
+[55] Dong-Kyun Seo, “Self-interaction correction in the lda+u
+method,” Phys. Rev. B 76, 033102 (2007).
+[56] Sadamichi Maekawa, Takami Tohyama, Stewart E.
+Barnes, Sumio Ishihara, Wataru Koshibae, and Giniyat
+Khaliullin, Physics of Transition Metal Oxides , Springer
+Series in Solid-State Sciences, Vol. 144 (Springer Berlin
+Heidelberg, Berlin, Heidelberg, 2004).
+[57] LJ de Jongh, “Magnetic Properties of Layered TMOs,”
+Journal of Chemical Information and Modeling 53, 1689–
+1699 (2013), arXiv:arXiv:1011.1669v3.
+[58] K. A. Ross, J. M. Brown, R. J. Cava, J. W. Krizan,
+S. E. Nagler, J. A. Rodriguez-Rivera, and M. B. Stone,
+“Single-ion properties of the Seﬀ = 12 xy antiferromag-
+netic pyrochlores Na A
+′
+co2f7 (A
+′
+= ca 2+, sr2+),” Phys.
+Rev. B 95, 144414 (2017).
+[59] S. Toth and B. Lake, “Linear spin wave theory for
+single-Q incommensurate magnetic structures,” Journal
+of Physics Condensed Matter 27 (2014), 10.1088/0953-
+8984/27/16/166002, arXiv:1402.6069.
+[60] L. P. Regnault, P. Burlet, and J. Rossat-Mignod, “Mag-
+netic ordering in a planar X - Y model: BaCo2(AsO4)2,”
+Physica B+C 86-88, 660–662 (1977).
+[61] Oleg A. Starykh and Leon Balents, “Ordering in spa-
+tially anisotropic triangular antiferromagnets,” Phys.
+Rev. Lett. 98, 077205 (2007).
+[62] Regnault, L. P., Rossat-Mignod, J., Villain, J., and de
+Combarieu, A., “Speciﬁc heat of the quasi 2d-xy helimag-
+nets baco2(aso4)2 and baco2 (po4)2,” J. Phys. Colloques
+39, C6–759–C6–761 (1978).
+[63] Berit H. Goodge, Danfeng Li, Kyuho Lee, Motoki
+Osada, Bai Yang Wang, George A. Sawatzky, Harold Y.
+Hwang, and Lena F. Kourkoutis, “Doping evolu-
+tion of the mott–hubbard landscape in inﬁnite-layer
+nickelates,” Proceedings of the National Academy
+of Sciences 118 (2021), 10.1073/pnas.2007683118,
+https://www.pnas.org/content/118/2/e2007683118.full.pdf.
+[64] Xiaojian Bai, Shang Shun Zhang, Zhiling Dun, Hao
+Zhang, Qing Huang, Haidong Zhou, Matthew B. Stone,
+Alexander I. Kolesnikov, Feng Ye, Cristian D. Batista,
+and Martin Mourigal, “Hybridized quadrupolar excita-
+tions in the spin-anisotropic frustrated magnet FeI2,” Na-
+ture Physics 17, 467–472 (2021), arXiv:2004.05623.
+[65] Xinshu Zhang, Yuanyuan Xu, Ruidan Zhong, R. J.
+Cava, N. Drichko, and N. P. Armitage, “In- and out-
+of-plane ﬁeld induced quantum spin-liquid states in a
+more ideal kitaev material: Baco 2(aso4)2,” (2021),
+arXiv:2106.13418 [cond-mat.str-el].
+[66] L. Y. Shi, X. M. Wang, R. D. Zhong, Z. X. Wang, T. C.
+Hu, S. J. Zhang, Q. M. Liu, T. Dong, F. Wang, and
+N. L. Wang, “Magnetic excitations of the ﬁeld induced
+states in baco2(aso4)2 probed by time-domain terahertz
+13
+spectroscopy,” (2021), arXiv:2106.13100 [cond-mat.str-
+el].
+[67] L Viciu, Q Huang, E Morosan, HW Zandbergen,
+Ni Greenbaum, T McQueen, and RJ Cava, “Structure
+and basic magnetic properties of the honeycomb lat-
+tice compounds,” Journal of Solid State Chemistry 180,
+1060–1067 (2007).
+[68] M. Songvilay, J. Robert, S. Petit, J. A. Rodriguez-Rivera,
+W. D. Ratcliﬀ, F. Damay, V. Bal´ edent, M. Jim´ enez-Ruiz,
+P. Lejay, E. Pachoud, A. Hadj-Azzem, V. Simonet, and
+C. Stock, “Kitaev interactions in the Co honeycomb anti-
+ferromagnets Na3Co2SbO6 and Na2Co2TeO6,” Physical
+Review B 102, 224429 (2020), arXiv:2012.00006.
+[69] E. Lefran¸ cois, M. Songvilay, J. Robert, G. Nataf, E. Jor-
+dan, L. Chaix, C. V. Colin, P. Lejay, A. Hadj-Azzem,
+R. Ballou, and V. Simonet, “Magnetic properties of the
+honeycomb oxide Na2 Co2 TeO6,” Physical Review B94,
+214416 (2016), arXiv:1608.07593.
+[70] Guiling Xiao, Zhengcai Xia, Wanwan Zhang, Xiaoyu Yue,
+Sha Huang, Xiaoxing Zhang, Feng Yang, Yujie Song,
+Meng Wei, Han Deng, and Dequan Jiang, “Crystal
+Growth and the Magnetic Properties of Na2Co2TeO6
+with Quasi-Two-Dimensional Honeycomb Lattice,” Crys-
+tal Growth and Design 19, 2568–2662 (2019).
+[71] A. K. Bera, S. M. Yusuf, Amit Kumar, and C. Ritter,
+“Zigzag antiferromagnetic ground state with anisotropic
+correlation lengths in the quasi-two-dimensional honey-
+comb lattice compound N a2 C o2Te O6,” Physical Re-
+view B 95, 094424 (2017).
+[72] Cheryl Wong, Maxim Avdeev, and Chris D.
+Ling, “Zig-zag magnetic ordering in honeycomb-layered
+Na3Co2SbO6,” Journal of Solid State Chemistry 243,
+18–22 (2016).
+[73] E. A. Zvereva, M. I. Stratan, A. V. Ushakov, V. B.
+Nalbandyan, I. L. Shukaev, A. V. Silhanek, M. Abdel-
+Haﬁez, S. V. Streltsov, and A. N. Vasiliev, “Or-
+bitally induced hierarchy of exchange interactions in the
+zigzag antiferromagnetic state of honeycomb silver de-
+lafossite Ag3Co2SbO6,” Dalton Transactions 45, 7373–
+7384 (2016).
+[74] Alex J. Brown, Qingbo Xia, Maxim Avdeev, Brendan J.
+Kennedy, and Chris D. Ling, “Synthesis-Controlled
+Polymorphism and Magnetic and Electrochemical Prop-
+erties of Li3Co2SbO6,” Inorganic Chemistry 58, 13881–
+13891 (2019).
+[75] Mikhail I. Stratan, Igor L. Shukaev, Tatyana M.
+Vasilchikova, Alexander N. Vasiliev, Artem N. Ko-
+rshunov, Alexander I. Kurbakov, Vladimir B. Nal-
+bandyan, and Elena A. Zvereva, “Synthesis, struc-
+ture and magnetic properties of honeycomb-layered
+Li3Co2SbO6 with new data on its sodium precursor,
+Na3Co2SbO6,” New Journal of Chemistry 43, 13545–
+13553 (2019).
+[76] A. R. Wildes, V. Simonet, E. Ressouche, R. Ballou, and
+G. J. McIntyre, “The magnetic properties and structure
+of the quasi-two-dimensional antiferromagnet CoPS3,”
+Journal of Physics Condensed Matter 29, 455801 (2017),
+arXiv:1706.07989.
+[77] E. F. Bertaut, L. Corliss, F. Forrat, R. Aleonard,
+and R. Pauthenet, “Etude de niobates et tantalates de
+metaux de transition bivalents,” Journal of Physics and
+Chemistry of Solids 21, 234–251 (1961).
+[78] N. D. Khanh, N. Abe, H. Sagayama, A. Nakao,
+T. Hanashima, R. Kiyanagi, Y. Tokunaga, and
+T. Arima, “Magnetoelectric coupling in the honeycomb
+antiferromagnet Co4Nb2 O9,” Physical Review B 93,
+075117 (2016).
+[79] Yuki Yanagi, Satoru Hayami, and Hiroaki Kusunose,
+“Manipulating the magnetoelectric eﬀect: Essence
+learned from co4nb2o9,” Physical Review B 97, 020404
+(2018).
+[80] Yuki Yanagi, Satoru Hayami, and Hiroaki Kusunose,
+“Theory of magnetoelectric response in Co4Nb2O9,”
+Physica B: Condensed Matter 536, 107–110 (2018).
+[81] M. Songvilay, J. Robert, S. Petit, J. A. Rodriguez-Rivera,
+W. D. Ratcliﬀ, F. Damay, V. Bal´ edent, M. Jim´ enez-Ruiz,
+P. Lejay, E. Pachoud, A. Hadj-Azzem, V. Simonet, and
+C. Stock, “Kitaev interactions in the co honeycomb anti-
+ferromagnets na3co2sbo6 and na2co2teo6,” Phys. Rev. B
+102, 224429 (2020).
+[82] Chaebin Kim, Jaehong Jeong, Gaoting Lin, Pyeongjae
+Park, Takatsugu Masuda, Shinichiro Asai, Shinichi Itoh,
+Heung-Sik Kim, Haidong Zhou, Jie Ma, and Je-Geun
+Park, “Antiferromagnetic kitaev interaction injeﬀ = 1/2
+cobalt honeycomb materials na3co2sbo6 and na2co2teo6,”
+(2020), arXiv:2012.06167 [cond-mat.str-el].
+[83] Anjana M. Samarakoon, Qiang Chen, Haidong Zhou,
+and V. Ovidiu Garlea, “Static and dynamic mag-
+netic properties of honeycomb lattice antiferromagnets
+na2m2teo6, m = co and ni,” (2021), arXiv:2105.06549
+[cond-mat.str-el].
+Appendix A: Exchange couplings in local Kitaev
+basis
+In this Appendix, we discuss the basis rotation and
+the rewriting of the exchange couplings in the Kitaev
+basis. The spins written in the global XYZ basis (Sα
+can be transformed into the local ˜ x˜y˜z basis ( ˜Sα) via a
+transformation ˜Sα = UαβSβ, where U is given by the
+matrix
+U =
+
+
+1/
+√
+6 1 /
+√
+2 1 /
+√
+3
+−
+√
+2/3 0 1 /
+√
+3
+1/
+√
+6 −1/
+√
+2 1 /
+√
+3
+
+ (A1)
+Thus, the local exchange matrix Jloc is obtained via
+Jloc =UJUT (A2)
+whereJ is the exchange matrix in the global basis. Along
+the same C bond (referred to in the local basis as the z
+bond), the Heisenberg (J) , Kitaev (K), Diagonal (η) and
+oﬀ-diagonal (Γ, Γ′1, Γ′2) anisotropy couplings are deﬁned
+as
+J (z)loc =
+
+
+J +η Γ Γ ′1
+Γ J−η Γ′2
+Γ′1 Γ′2 J +K
+
+ (A3)
+Below we present the couplings in this local basis for
+the materials considered. It should be noted that many
+couplings have comparable values, which does not allow
+for as simple a description as the XXZ model in the
+global basis which is presented in the main text.
+14
+CoTiO3 Bond-1 Bond-1’ Bond-2’
+J -3.80 0.33 1.07
+K 1.37 0 0.12
+Γ 2.08 0 -0.17
+η -1.84 0 0
+Γ′1 -0.57 0 -0.18
+Γ′2 2.73 0 -0.35
+TABLE V. Local exchange couplings for CoTiO 3.
+BaCo2(AsO4)2 Bond-1 Bond-3
+J -12.40 5.51
+K 2.06 -0.30
+Γ 4.05 -1.44
+η -0.84 0.00
+Γ′1 1.82 -1.42
+Γ′2 4.89 -1.45
+TABLE VI. Local exchange couplings for BaCo 2(AsO4)2.
+BaCo2(PO4)2 Bond-1 Bond-3
+J -13.04 5.21
+K -3.11 -0.05
+Γ 2.00 -1.05
+η -1.35 0.00
+Γ′1 6.41 -1.45
+Γ′2 3.38 -1.24
+TABLE VII. Local exchange couplings for BaCo 2(PO4)2.
+Appendix B: J1-J2-J3 Phase Diagram
+The ﬁgure below shows the classical J1-J2-J3 phase
+diagram explored in [39]. In this work, we ﬁnd that the
+relevant part of the phase diagram is the y-axis, speciﬁ-
+cally whereJ3/J1< 0. Experiments on the Barium com-
+pounds appear to stabilize the shaded ”Spiral 2” phase
+(characterized by a nonzero angle between spins on dif-
+ferent sublattices. While the aforementioned study does
+not consider oﬀ-diagonal anisotropy terms (D andE), we
+ﬁnd that including them retains the general structure of
+the phase diagram. The narrowness of this spiral phase
+emphasizes the sensitivity of the magnetic order to the
+microscopics of the systems considered.
+FIG. 9. Classical phase diagram for the J1-J2-J3 model, re-
+produced from [39]
+SUPPLEMENTARY MATERIAL
+XY magnetism, Kitaev exchange, and long-range frustration in the Jeﬀ = 1/2
+honeycomb cobaltates
+Shreya Das, 1,∗ Sreekar Voleti,2,∗ Tanusri Saha-Dasgupta,1,† and Arun Paramekanti 2,‡
+1Department of Condensed Matter Physics and Materials Science,
+S.N. Bose National Centre for Basic Sciences, Kolkata 700098, India.
+2Department of Physics, University of Toronto, Toronto, Ontario, M5S 1A7, Canada
+∗ These authors contributed equally
+† tanusri@bose.res.in
+‡ arunp@physics.utoronto.ca
+arXiv:2106.11982v3  [cond-mat.str-el]  23 Nov 2021
+2
+I. DFT CALCULA TION DET AILS
+We carried out theoretical calculations within the framework of ﬁrst-principles density functional theory (DFT)
+taking into account the structural as well as chemical information completely.
+Our DFT based calculations were executed with the choices of diﬀerent basis sets as, (i) the plane-wave based
+basis as implemented in the Vienna ab - initio Simulation Package (VASP) [1] with projector-augmented wave (PAW)
+potential [2] and (ii) the muﬃn-tin orbital (MTO) based linear muﬃn-tin orbital (LMTO) method [3], and the Nth
+order MTO method namely, NMTO method [4], as implemented in the STUTTGART code.
+The consistency of results between two diﬀerent basis sets have been conﬁrmed in terms density of states, band
+structure and magnetic moments. The exchange correlation functional was chosen as the generalized gradient approx-
+imation (GGA) implemented following the Perdew-Burke-Ernzerhof (PBE) prescription [5].
+For the plane wave calculation, energy cutoﬀ of 600 eV and MonkhorstPack k-points mesh of 6 ×6×2 for the unit
+cell of CoTiO 3 and BaCo2(AsO4)2 were found to provide good convergence of the total energy in self-consistent ﬁeld
+calculations. The eﬀect of spin-orbit coupling (SOC) was included within GGA+SOC implementation of VASP and
+the eﬀect of missing correlation eﬀect beyond GGA at the Co site was considered within the GGA+SOC+U frame
+work [6] with the choice of U = 3 eV and Hund’s coupling JH = 0.7 eV [7, 8].
+For construction of low energy Hamiltonian, we used the Nth order muﬃn-tin orbital method, which relies on a
+self-consistent potential generated by the linear MTO (LMTO) method. The low-energy tight-binding Hamiltonian,
+deﬁned in the eﬀective Co Wannier basis, provides information about the crystal-ﬁeld splitting at the Co site along
+with the eﬀective hopping interactions between the Co sites. The muﬃn-tin radii of diﬀerent atomic sites used in
+LMTO calculations were chosen as 1.52 ˚A for Co, 1.27 ˚A for Ti, 0.98 ˚A for O atoms in CoTiO 3; 2.44 ˚A for Ba, 1.52
+˚A for Co, 1.09 ˚A for As and 0.82/0.89 ˚A for the O atoms in BaCo 2(AsO4)2. For BaCo 2(PO4)2, the atomic radii are
+chosen to be 2.43 ˚A for Ba, 1.58 ˚A for Co, 0.97 ˚A for P and 0.74/0.83 ˚A for the O atoms.
+II. GGA, GGA+SOC, GGA+SOC+ U MAGNETIC MOMENTS AND ELECTRONIC STRUCTURE
+CoTiO3 BaCo2(AsO4)2
+Co Ti O Ba Co As O
+GGA 2.55 0.11 0.10 0.00 2.58 0.02 0.09
+GGA+SOC 2.55 0.11 0.10 0.00 2.58 0.02 0.10
+(0.17) (0.00) (0.00) (0.00) (0.15) (0.00) (0.00)
+GGA+SOC+U 2.69 0.10 0.08 0.00 2.70 0.02 0.06
+(0.19) (0.00) (0.00) (0.00) (0.17) (0.00) (0.00)
+TABLE I. The magnetic moments (in µB) at diﬀerent atomic sites of CoTiO 3 and BaCo2(AsO4)2, as calculated within GGA,
+GGA+SOC and GGA+SOC+U. The numbers in the bracket refer to orbital moments.
+3
+FIG. 1. Density of states of CoTiO3 (left panels) and BaCo2(AsO4)2 (right panels), as calculated within GGA (top), GGA+SOC
+(middle) and GGA+SOC+U (bottom). The GGA+SOC+U shows the clear appearance of an insulating gap.
+III. ONSITE MA TRICES
+The on-site term ( HCF) is written in second quantized language as
+HCF =
+∑
+𝓁𝓁′
+A𝓁m
+∑
+s
+c†𝓁scms
+where 𝓁 and m are orbital indices, and s refers to the electron spin. Below, we present the A matrices for each of
+the materials considered in the main text. All the matrices below are written in the orbital basis {(yz, xz, xy), (x2−
+y2, 3z2−1)}
+A. CoTiO 3
+ACTO =
+
+
+−1.1642 0 .0312 −0.0008 −0.0063 −0.0039
+0.0312 −0.1429 −0.0040 0 .0033 −0.0044
+−0.0008 −0.004 −1.0968 0 .0926 0 .0103
+−0.0063 0 .0033 0 .0926 −0.4133 0 .4380
+−0.0039 −0.0044 0 .0103 0 .4380 −0.8765
+
+ (1)
+B. BaCo 2(AsO4)2
+ABCAO =
+
+
+−2.9578 0 .0140 −0.0005 0 .0202 0 .0123
+0.0140 −1.6838 0 .0124 0 .0020 −0.0043
+−0.0005 0 .0124 −2.8610 0 .049 −0.0495
+0.0202 0 .0020 0 .0490 −1.9904 0 .5312
+0.0123 −0.0043 −0.04950 0 .5312 −2.6055
+
+ (2)
+4
+C. BaCo 2(PO4)2
+ABCPO =
+
+
+−3.5049 −0.0717 0 .0008 0 .0034 0 .0008
+−0.0717 −2.2912 0 .0017 −0.0136 0 .0249
+0.0008 0 .0017 −3.4155 −0.0900 0 .0157
+0.0034 −0.0136 −0.0900 −2.5757 0 .5051
+0.0008 0 .0249 0 .0157 0 .5051 −3.186
+
+ (3)
+IV. HOPPING MA TRICES
+Below, we list the hopping matrices for the relevant bonds, listing both the connecting vector ⃗V , as well as the
+associated hopping matrix T . These should be read in terms of the hopping Hamiltonian (in the same basis as above)
+ˆTi,i+⃗V = ∑
+𝓁𝓁′α
+(T𝓁𝓁′c†i+⃗V,𝓁 ′αci𝓁α + Tt𝓁′𝓁c†i𝓁αci+⃗V,𝓁 ′α) (4)
+A. CoTiO 3
+1. In-plane 1st Nearest Neighbour
+⃗V = (−0.5,−0.866, 0.205) , T =
+
+
+−0.0803 −0.0411 0 .1233 −0.0163 −0.0415
+−0.0411 −0.0588 0 .0236 −0.0143 −0.0433
+0.1233 0 .0236 −0.0684 0 .0575 −0.0073
+−0.0163 −0.0143 0 .0575 −0.0333 −0.0641
+−0.0415 −0.0433 −0.0073 −0.0641 −0.0093
+
+ (5)
+⃗V = (1.0, 0.0, 0.205) , T =
+
+
+0.0012 −0.0100 −0.0026 −0.0243 −0.0134
+−0.0100 −0.0427 0 .0194 0 .0268 −0.0026
+−0.0026 0 .0194 0 .0793 −0.0515 −0.0051
+−0.0243 0 .0268 −0.0515 −0.1734 0 .0811
+−0.0134 −0.0026 −0.0051 0 .0811 −0.1146
+
+ (6)
+⃗V = (−0.5, 0.866, 0.205) , T =
+
+
+−0.0779 −0.0214 −0.1259 −0.0006 0 .0287
+−0.0214 −0.0991 −0.0691 0 .0119 0 .0123
+−0.1259 −0.0691 −0.0744 0 .0405 −0.0154
+−0.0006 0 .0119 0 .0405 −0.0364 −0.0271
+0.0287 0 .0123 −0.0154 −0.0271 0 .0376
+
+ (7)
+2. Out-of-plane 1st Nearest Neighbour
+⃗V = (0.0, 0.0, 1.381) , T =
+
+
+−0.0015 0 .0210 0 .0010 0 .0082 0 .0052
+0.0210 0 .027 0 .0052 −0.0049 0 .0067
+0.0010 0 .0052 −0.019 −0.0097 0 .0033
+0.0082 −0.0049 −0.0097 0 .0353 0 .0086
+0.0052 0 .0067 0 .0033 0 .0086 −0.0142
+
+ (8)
+5
+3. Out-of-plane 2nd Nearest Neighbour
+⃗V = (−0.5,−0.866, 1.587) , T =
+
+
+−0.0089 −0.0308 −0.0046 −0.0155 0 .0042
+0.0358 0 .0038 0 .0106 0 .0063 −0.0129
+0.0131 0 .0124 0 .0070 0 .0079 −0.0065
+0.0208 0 .0234 −0.0049 0 .0144 −0.0140
+0.0005 0 .0276 −0.0167 0 .0264 −0.0216
+
+ (9)
+⃗V = (0.5, 0.866,−1.587) , T =
+
+
+−0.0089 0 .0358 0 .0131 0 .0208 0 .0005
+−0.0308 0 .0038 0 .0124 0 .0234 0 .0276
+−0.0046 0 .0106 0 .0070 −0.0049 −0.0167
+−0.0155 0 .0063 0 .0079 0 .0144 0 .0264
+0.0042 −0.0129 −0.0065 −0.0140 −0.0216
+
+ (10)
+⃗V = (1.0, 0.0, 1.587) , T =
+
+
+0.0109 −0.0542 0 .0071 −0.0099 −0.0169
+0.0275 0 .0071 0 .0056 −0.0019 −0.0022
+−0.0295 0 .0188 −0.0137 0 .0062 0 .0201
+−0.0036 −0.0051 −0.0085 0 .0013 0 .0184
+0.0104 −0.0117 0 .0016 0 .0017 −0.0109
+
+ (11)
+⃗V = (−1.0, 0.0,−1.587) , T =
+
+
+0.0109 0 .0275 −0.0295 −0.0036 0 .0104
+−0.0542 0 .0071 0 .0188 −0.0051 −0.0117
+0.0071 0 .0056 −0.0137 −0.0085 0 .0016
+−0.0099 −0.0019 0 .0062 0 .0013 0 .0017
+−0.0169 −0.0022 0 .0201 0 .0184 −0.0109
+
+ (12)
+⃗V = (−0.5, 0.866, 1.587) , T =
+
+
+0.0174 −0.0180 0 .0049 −0.0224 0 .0102
+0.0232 −0.0098 0 .0085 −0.0022 0 .0031
+−0.0146 −0.0278 0 .0052 0 .0079 −0.0013
+0.0534 0 .0160 0 .0090 −0.0153 0 .0179
+0.0093 −0.0087 0 .0063 0 .0024 −0.0027
+
+ (13)
+⃗V = (0.5,−0.866,−1.587) , T =
+
+
+0.0174 0 .0232 −0.0146 0 .0534 0 .0093
+−0.0180 −0.0098 −0.0278 0 .0160 −0.0087
+0.0049 0 .0085 0 .0052 0 .0090 0 .0063
+−0.0224 −0.0022 0 .0079 −0.0153 0 .0024
+0.0102 0 .0031 −0.0013 0 .0179 −0.0027
+
+ (14)
+B. BaCo 2(AsO4)2
+1. In-plane 1st Nearest Neighbour
+⃗V = (−0.5,−0.866, 0.056) , T =
+
+
+−0.1539 −0.0133 0 .1892 −0.0808 0 .0095
+−0.0133 −0.0250 0 .0676 −0.0087 0 .0115
+0.1892 0 .0676 −0.0883 0 .0240 −0.0012
+−0.0808 −0.0087 0 .0240 0 .0292 −0.056
+0.0095 0 .0115 −0.0012 −0.056 0 .0176
+
+ (15)
+6
+⃗V = (1.0, 0.0, 0.056) , T =
+
+
+0.0961 0 .0558 0 .0009 0 .0123 −0.0033
+0.0558 −0.0240 −0.0076 0 .0129 −0.0221
+0.0009 −0.0076 0 .0442 0 .0052 −0.0476
+0.0123 0 .0129 0 .0052 −0.1668 0 .1650
+−0.0033 −0.0221 −0.0476 0 .1650 −0.1699
+
+ (16)
+⃗V = (−0.5, 0.866, 0.056) , T =
+
+
+−0.1581 −0.0391 −0.1913 0 .0531 −0.0147
+−0.0391 −0.0226 −0.0711 0 .0043 −0.0034
+−0.1913 −0.0711 −0.0849 0 .0005 −0.0034
+0.0531 0 .0043 0 .0005 0 .0416 −0.0649
+−0.0147 −0.0034 −0.0034 −0.0649 0 .0038
+
+ (17)
+2. In-plane 3rd Nearest Neighbour
+⃗V = (1.0, 1.732, 0.056) , T =
+
+
+−0.0177 −0.0075 0 .0255 −0.0102 −0.0026
+−0.0075 0 .0013 0 .0298 −0.0658 −0.0377
+0.0255 0 .0298 −0.0283 −0.0060 −0.0005
+−0.0102 −0.0658 −0.0060 0 .0653 0 .0394
+−0.0026 −0.0377 −0.0005 0 .0394 0 .0251
+
+ (18)
+⃗V = (−2.0, 0.0, 0.056) , T =
+
+
+0.0061 0 .0137 −0.0007 0 .0077 0 .0000
+0.0137 0 .1327 −0.0134 −0.0042 0 .0078
+−0.0007 −0.0134 −0.0027 −0.0086 0 .0015
+0.0077 −0.0042 −0.0086 −0.0646 0 .0149
+0.0000 0 .0078 0 .0015 0 .0149 −0.0258
+
+ (19)
+⃗V = (1.0,−1.732, 0.056) , T =
+
+
+−0.0226 −0.0107 −0.0243 0 .0141 0 .0094
+−0.0107 0 .0019 −0.0084 0 .0661 0 .0363
+−0.0243 −0.0084 −0.0242 0 .0129 0 .0151
+0.0141 0 .0661 0 .0129 0 .0856 0 .0260
+0.0094 0 .0363 0 .0151 0 .0260 0 .0051
+
+ (20)
+C. BaCo 2(PO4)2
+1. In-plane 1st Nearest Neighbour
+⃗V = (−0.5,−0.866, 0.059) , T =
+
+
+0.1162 −0.0458 0 .0024 −0.0152 0 .0031
+−0.0458 −0.0748 0 .0106 0 .0078 −0.0217
+0.0024 0 .0106 0 .0363 0 .0057 0 .0519
+−0.0152 0 .0078 0 .0057 −0.1642 0 .1553
+0.0031 −0.0216 0 .0519 0 .1553 −0.2813
+
+ (21)
+⃗V = (1.0, 0.0, 0.059) , T =
+
+
+−0.2091 0 .0040 −0.2255 −0.0496 0 .0435
+0.0040 −0.0612 0 .0309 0 .0033 −0.0031
+−0.2255 0 .0309 −0.0987 0 .0137 0 .0194
+−0.0496 0 .0033 0 .0137 0 .0115 −0.0874
+0.0435 −0.0031 0 .0194 −0.0874 −0.0103
+
+ (22)
+7
+⃗V = (−0.5, 0.866, 0.059) , T =
+
+
+−0.1827 −0.0309 0 .2215 0 .0908 −0.0315
+−0.0309 −0.0711 −0.0265 0 .0043 0 .0059
+0.2215 −0.0265 −0.1217 −0.0213 0 .0096
+0.0908 0 .0043 −0.0213 −0.0084 −0.0761
+−0.0315 0 .0059 0 .0096 −0.0761 0 .0161
+
+ (23)
+2. In-plane 3rd Nearest Neighbour
+⃗V = (1.0, 1.732, 0.056) , T =
+
+
+0.0243 −0.0360 −0.0014 −0.0084 −0.0044
+−0.0360 0 .1278 0 .0189 −0.0055 0 .0141
+−0.0014 0 .0189 −0.0197 0 .0236 −0.0042
+−0.0084 −0.0055 0 .0236 −0.0463 0 .0087
+−0.0044 0 .0141 −0.0042 0 .0087 −0.0275
+
+ (24)
+⃗V = (−2.0, 0.0, 0.056) , T =
+
+
+−0.0118 −0.0024 −0.0208 −0.0211 −0.0054
+−0.0024 0 .0038 0 .0056 0 .0639 0 .0348
+−0.0208 0 .0056 −0.0276 −0.0066 −0.0233
+−0.0211 0 .0639 −0.0066 0 .1013 0 .0172
+−0.0054 0 .0348 −0.0233 0 .0172 −0.0072
+
+ (25)
+⃗V = (1.0,−1.732, 0.056) , T =
+
+
+−0.0062 −0.0117 0 .0222 0 .0200 0 .0014
+−0.0117 0 .0059 −0.0292 −0.0659 −0.0358
+0.0222 −0.0292 −0.0342 0 .0151 −0.0116
+0.0200 −0.0659 0 .0151 0 .0809 0 .0298
+0.0014 −0.0358 −0.0116 0 .0298 0 .0121
+
+ (26)
+V. DEPENDENCE OF EXCHANGES ON INTERACTION P ARAMETERS
+In this section, we give more examples of the dependence of the exchanges considered in the main text on the
+interaction parameters. This is done to emphasize the fact that for reasonable values of these parameters, there is a
+fairly large variance in the exchanges.
+A. CoTiO 3
+FIG. 2. Variance of 1NN Exchanges with Hund’s Coupling JH
+8
+B. BaCo 2(AsO4)2 and BaCo 2(PO4)2
+The Barium compounds show similar behaviour, so the results will only be presented for BaCo 2(AsO4)2.
+FIG. 3. Variance of 1NN Exchanges with Hubbard U
+FIG. 4. Variance of 3NN Exchanges with Hubbard U
+9
+FIG. 5. Variance of 1NN Exchanges with Hund’s coupling JH
+FIG. 6. Variance of 3NN Exchanges with Hund’s coupling JH
+FIG. 7. Variance of the ratio −J XY3 /J XY1 with Hund’s coupling JH
+10
+[1] G. Kresse and J. Furthm¨ uller, “Eﬃcient iterative schemes for ab initio total-energy calculations using a plane-wave basis
+set,” Phys. Rev. B 54, 11169–11186 (1996).
+[2] P. E. Bl¨ ochl, “Projector augmented-wave method,” Phys. Rev. B50, 17953–17979 (1994).
+[3] O. K. Andersen and O. Jepsen, “Explicit, ﬁrst-principles tight-binding theory,” Phys. Rev. Lett. 53, 2571–2574 (1984).
+[4] O. K. Andersen and T. Saha-Dasgupta, “Muﬃn-tin orbitals of arbitrary order,” Phys. Rev. B 62, R16219–R16222 (2000).
+[5] John P. Perdew, Kieron Burke, and Matthias Ernzerhof, “Generalized gradient approximation made simple,” Phys. Rev.
+Lett. 77, 3865–3868 (1996).
+[6] A. I. Liechtenstein, V. I. Anisimov, and J. Zaanen, “Density-functional theory and strong interactions: Orbital ordering in
+mott-hubbard insulators,” Phys. Rev. B 52, R5467–R5470 (1995).
+[7] Lei Wang, Thomas Maxisch, and Gerbrand Ceder, “Oxidation energies of transition metal oxides within the GGA + U
+framework,” Phys. Rev. B 73, 195107 (2006).
+[8] Marcal Capdevila-Cortada, Zbigniew Lodziana, and Nuria Lopez, “Performance of dft+u approaches in the study of
+catalytic materials,” ACS Catalysis 6, 8370–8379 (2016), https://doi.org/10.1021/acscatal.6b01907.

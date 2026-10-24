@@ -69,12 +69,14 @@ for (const [id, rows] of Object.entries(byInst)) {
     // at t' = 0.25), so the same-paper test does not apply to it. A row flagged independent_exact
     // is a source's own calculation of an exact energy the instance already carries (RULES.md 6:
     // every published calculation of the exact energy is a row), so neither the same-method nor the
-    // exact-against-exact test applies to it; a copy of another source's value stays out.
+    // exact-against-exact test applies to it, nor does a mention of its source in another row's
+    // verification note (arXiv:2311.16889 is named in the note of cond-mat/0605464's 6 x 6 row);
+    // a copy of another source's value stays out.
     const indep = r.independent_exact && r.origin === "own" && r.bound_type === "exact";
     const dup = inst.rows.find(x => Math.abs(x.energy / div - r.eps) <=
       (r.origin === "quoted" && r.bound_type === "exact" ? Math.max(r.tol, r.sigma_per_site ?? 0) : r.tol) &&
       ((r.origin === "quoted" && x.bound_type === r.bound_type) || (!indep && x.method === r.method) ||
-       (!r.same_value_distinct_method && ((x.reference || "").includes(srcKey) || (x.verified?.note || "").includes(srcKey))) || (!indep && x.bound_type === "exact" && r.bound_type === "exact")));
+       (!r.same_value_distinct_method && ((x.reference || "").includes(srcKey) || (!indep && (x.verified?.note || "").includes(srcKey)))) || (!indep && x.bound_type === "exact" && r.bound_type === "exact")));
     if (dup) { skipped.push(`${id} ${r.reported_as} [${srcKey}] = "${dup.method.slice(0, 40)}"`); continue; }
     const energy = +(r.eps * div).toPrecision(12);
     // sigma^2/N_site as printed; totals scale with the site count. A relative

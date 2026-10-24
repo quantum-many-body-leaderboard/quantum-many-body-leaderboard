@@ -22759,4 +22759,313 @@ export const CORRECTIONS = [
     "reason": "Rule for exact rows that state a more precise published exact energy (2026-10-24): the printed value is the more precise diagonalization's value rounded to the printed digits, so the row keeps its citation and carries those digits, and as the earliest diagonalization of the instance it is the exact energy shown (RULES.md 6, 11); the printed value stays here. The more precise value is Richter & Schulenburg, Eur. Phys. J. B 73, 117 (2010), Table 1, row J2 = 0, -27.09485025, on the mirror image of the same cluster.",
     "source_entry": "rule 2026-10-24: earlier diagonalizations carry the more precise digits"
   },
+  // ---------------------------------------------------------------------------------------
+  // Families pass 2026-10-20 (honeycomb and Shastry-Sutherland, sweep-rows-2026-10-20-families.json):
+  // sampled: false on the exact and exactly contracted rows whose printed label carries no
+  // deterministic marker.
+  {
+    "match": { "instance": "Kitaev/honeycomb-11x11_242_O_K-1", "method": "Exact", "energy": -182.23409732 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.75303346",
+    "location": "arXiv:2112.08394 Table III, column Exact",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: the exact finite-system solution of the Kitaev model (free Majorana fermions; QMBL reproduces all three values to the printed digits). The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-11x11_242_O_K-1", "method": "isoTNS D=4, η=8", "energy": -180.16531918 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.74448479",
+    "location": "arXiv:2112.08394 Table III, column isoTNS D=4",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: a tensor-network energy contracted exactly (isometric TNS optimised by DMRG2); no Monte Carlo sampling. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-11x11_242_O_K-1", "method": "isoTNS D=6, η=12", "energy": -180.73124102 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.74682331",
+    "location": "arXiv:2112.08394 Table III, column isoTNS D=6",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: a tensor-network energy contracted exactly (isometric TNS optimised by DMRG2); no Monte Carlo sampling. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-3x4_24_P_K-1", "method": "Exact (Table I)", "energy": -19.09178 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "−9.54589",
+    "location": "arXiv:1411.5198 Table I, row Exact",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: exact diagonalization of the cluster (the text compares the VMC wave functions \"with the exact diagonalization results\"). The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-4x4_32_P_K-1", "method": "Exact (Table I)", "energy": -25.12818 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "−12.56409",
+    "location": "arXiv:1411.5198 Table I, row Exact",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: exact diagonalization of the cluster (the text compares the VMC wave functions \"with the exact diagonalization results\"). The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-5x5_50_O_K-1", "method": "Exact", "energy": -35.7012005 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.71402401",
+    "location": "arXiv:2112.08394 Table III, column Exact",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: the exact finite-system solution of the Kitaev model (free Majorana fermions; QMBL reproduces all three values to the printed digits). The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-5x5_50_O_K-1", "method": "isoTNS D=4, η=8", "energy": -35.3449695 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.70689939",
+    "location": "arXiv:2112.08394 Table III, column isoTNS D=4",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: a tensor-network energy contracted exactly (isometric TNS optimised by DMRG2); no Monte Carlo sampling. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-6x6_72_PO_K1", "method": "exact ground-state energy Eg(Φy = 1)", "energy": -54.4698474903 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-54.469847490329",
+    "location": "arXiv:2009.04129 Supplemental Material, numerical data for Fig. 3",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: the free-Majorana solution of the cylinder, printed to 12 decimals. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-7x7_98_O_K-1", "method": "Exact", "energy": -71.94840226 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.73416737",
+    "location": "arXiv:2112.08394 Table III, column Exact",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: the exact finite-system solution of the Kitaev model (free Majorana fermions; QMBL reproduces all three values to the printed digits). The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-7x7_98_O_K-1", "method": "isoTNS D=4, η=8", "energy": -71.24270426 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.72696637",
+    "location": "arXiv:2112.08394 Table III, column isoTNS D=4",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: a tensor-network energy contracted exactly (isometric TNS optimised by DMRG2); no Monte Carlo sampling. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-7x7_98_O_K-1", "method": "isoTNS D=6, η=12", "energy": -71.52760986 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.72987357",
+    "location": "arXiv:2112.08394 Table III, column isoTNS D=6",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: a tensor-network energy contracted exactly (isometric TNS optimised by DMRG2); no Monte Carlo sampling. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "Kitaev/honeycomb-hex24_24_P_K-1", "method": "Exact (Table I)", "energy": -19.0572 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "−9.52860",
+    "location": "arXiv:1411.5198 Table I, row Exact",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: exact diagonalization of the cluster (the text compares the VMC wave functions \"with the exact diagonalization results\"). The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  {
+    "match": { "instance": "ShastrySutherland/square_16_P_J0.7_Jd1", "method": "exact values", "energy": -25.4008 },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.63502 ×10^1",
+    "location": "arXiv:cond-mat/0309368 Sec. 3",
+    "version_read": "arXiv text (sources/)",
+    "conversion": "none",
+    "checked_on": "2026-10-20",
+    "reason": "Deterministic, not a Monte Carlo estimate: the exact ground-state energy of the 4 x 4 cluster the stochastic estimates are compared with. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+    "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)"
+  },
+  // ---------------------------------------------------------------------------------------
+  // qmbl-verify 2026-10-23 (families), apply step: exact rows QMBL recomputed whose printed value is
+  // the source's Lanczos residual or not fully converged, or QMBL's value truncated: the exact value or
+  // QMBL's digits, the printed value kept (rule of 2026-09-30, ruled for these rows 2026-10-24;
+  // checks/exact-recompute-2026-10-families/) (9)
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.677244_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -47.9999999996
+    },
+    "field": "energy",
+    "to": -48,
+    "reported_as": "-0.374999999997006 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "location": "Table I (square N = 32, left half), row J2/J1 = 0.677244 (arXiv:cond-mat/0605464)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
+    "conversion": "recomputed -48.0000000000; stored -47.9999999996; difference -4.00e-10",
+    "checked_on": "2026-10-24",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the dimer-singlet product state is an exact eigenstate at E = -48, and QMBL's Lanczos of the lowest state orthogonal to it (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated) gives -47.9997683784 after 217 steps, 2.316e-04 above it, so E0 = -48 exactly. The printed value carries the source's Lanczos residual (printed x 128 = -47.99999999962). The row carries the exact value; the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#7, famP2-10-1142-s0129183106009709#0 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.677246_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -47.9999999996
+    },
+    "field": "energy",
+    "to": -48,
+    "reported_as": "-0.374999999997179 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "location": "Table I (square N = 32, left half), row J2/J1 = 0.677246 (arXiv:cond-mat/0605464)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
+    "conversion": "recomputed -48.0000000000; stored -47.9999999996; difference -4.00e-10",
+    "checked_on": "2026-10-24",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the dimer-singlet product state is an exact eigenstate at E = -48, and QMBL's Lanczos of the lowest state orthogonal to it (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated) gives -47.9998852404 after 217 steps, 1.148e-04 above it, so E0 = -48 exactly. The printed value carries the source's Lanczos residual (printed x 128 = -47.99999999964). The row carries the exact value; the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#8, famP2-10-1142-s0129183106009709#1 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.677248_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.0000020238
+    },
+    "field": "energy",
+    "to": -48.0000021044,
+    "reported_as": "-0.375000015810957 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "location": "Table I (square N = 32, left half), row J2/J1 = 0.677248 (arXiv:cond-mat/0605464)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
+    "conversion": "recomputed -48.0000021044; stored -48.0000020238; difference -8.06e-08",
+    "checked_on": "2026-10-24",
+    "reason": "Ruled 2026-10-24 (rule for exact rows QMBL recomputed, 2026-09-30): QMBL's Lanczos (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated; 217 steps, the last 10 moved it by about 1e-10) gives -48.0000021044, below the dimer state at -48 and 8.06e-08 below the printed value (x 128), beyond its convergence. Lanczos Ritz values are upper bounds, so the source's run was not fully converged; the row carries QMBL's digits and the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#9, famP2-10-1142-s0129183106009709#2 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.67724_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -47.9999999996
+    },
+    "field": "energy",
+    "to": -48,
+    "reported_as": "-0.374999999997117 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "location": "Table I (square N = 32, left half), row J2/J1 = 0.67724 (arXiv:cond-mat/0605464)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
+    "conversion": "recomputed -48.0000000000; stored -47.9999999996; difference -4.00e-10",
+    "checked_on": "2026-10-24",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the dimer-singlet product state is an exact eigenstate at E = -48, and QMBL's Lanczos of the lowest state orthogonal to it (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated) gives -47.9995346605 after 217 steps, 4.653e-04 above it, so E0 = -48 exactly. The printed value carries the source's Lanczos residual (printed x 128 = -47.99999999963). The row carries the exact value; the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#10, famP2-10-1142-s0129183106009709#3 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.6778_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.0323336684
+    },
+    "field": "energy",
+    "to": -48.0323336688,
+    "reported_as": "-0.375252606784488 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "location": "Table I (square N = 32, left half), row J2/J1 = 0.6778 (arXiv:cond-mat/0605464)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
+    "conversion": "recomputed -48.0323336688; stored -48.0323336684; difference -3.78e-10",
+    "checked_on": "2026-10-24",
+    "reason": "Ruled 2026-10-24 (rule for exact rows QMBL recomputed, 2026-09-30): QMBL's Lanczos (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated; 209 steps, the last 10 moved it by about 1e-10) gives -48.0323336688, below the dimer state at -48 and 3.64e-10 below the printed value (x 128), beyond its convergence. Lanczos Ritz values are upper bounds, so the source's run was not fully converged; the row carries QMBL's digits and the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#14, famP2-10-1142-s0129183106009709#7 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.677_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -47.9999999999
+    },
+    "field": "energy",
+    "to": -48,
+    "reported_as": "-0.374999999998987 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "location": "Table I (square N = 32, left half), row J2/J1 = 0.677 (arXiv:cond-mat/0605464)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
+    "conversion": "recomputed -48.0000000000; stored -47.9999999999; difference -1.00e-10",
+    "checked_on": "2026-10-24",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the dimer-singlet product state is an exact eigenstate at E = -48, and QMBL's Lanczos of the lowest state orthogonal to it (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated) gives -47.9855261950 after 222 steps, 1.447e-02 above it, so E0 = -48 exactly. The printed value carries the source's Lanczos residual (printed x 128 = -47.99999999987). The row carries the exact value; the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#15, famP2-10-1142-s0129183106009709#8 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.68_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.1627761552
+    },
+    "field": "energy",
+    "to": -48.1627761592,
+    "reported_as": "-0.376271688712272 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "location": "Table I (square N = 32, left half), row J2/J1 = 0.68 (arXiv:cond-mat/0605464)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
+    "conversion": "recomputed -48.1627761592; stored -48.1627761552; difference -4.01e-09",
+    "checked_on": "2026-10-24",
+    "reason": "Ruled 2026-10-24 (rule for exact rows QMBL recomputed, 2026-09-30): QMBL's Lanczos (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated; 191 steps, the last 10 moved it by about 1e-10) gives -48.1627761592, below the dimer state at -48 and 4.04e-09 below the printed value (x 128), beyond its convergence. Lanczos Ritz values are upper bounds, so the source's run was not fully converged; the row carries QMBL's digits and the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#16, famP2-10-1142-s0129183106009709#9 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_16_P_J0.7_Jd1",
+      "method": "exact values",
+      "energy": -25.4008
+    },
+    "field": "energy",
+    "to": -25.401007836214,
+    "reported_as": "-0.63502 ×10^1 (total energy, units of J = Jd, S.S form)",
+    "location": "Sec. 3 and Table I, row L = 1 (arXiv:cond-mat/0309368)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0309368v2 and v1 (pypdf layout); J. Phys. Soc. Jpn. 73, 340 not reached",
+    "conversion": "-0.63502e1 x 4 = -25.4008 (S units total x 4); recomputed -25.401007836214 = 4 x (-6.350251959)",
+    "checked_on": "2026-10-24",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the printed -0.63502 x 10^1 is QMBL's ground state truncated to the printed digits (-6.3502520 would round to -6.3503), so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by Lanczos on the 4 x 4 orthogonal-dimer torus in the S^z = 0 basis (12,870 states, ed.c), the same code in the full 2^16 basis, and scipy eigsh, all -25.401007836214. The source does not print the boundary; the torus reproduces the printed digits, so the instance's periodic boundary stands. Codes and outputs in checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#18, famP7-kitaev-shastrysutherland#1 (ambiguous: boundary, closed) (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.5_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -53.9999999999
+    },
+    "field": "energy",
+    "to": -54,
+    "reported_as": "-0.374999999999425 (E0/N, per site, units of J1 = Jd, S.S form)",
+    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.5 (arXiv:cond-mat/0605464)",
+    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
+    "conversion": "18 dimers x (-3/4) = -13.5 in S units; x 4 = -54 (Pauli total)",
+    "checked_on": "2026-10-24",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): at J/Jd = 1/2 the dimer-singlet product state is a proven ground state (H splits into triangles h_t = (Jd/2) S1.S2 + J (S1.S3 + S2.S3), each bounded below by -3J/4 and saturated by the dimer state, also on the 6 x 6 torus), so E0 = -54 exactly (18 dimers x -3/4 x 4); the printed -0.374999999999425 per site carries the source's Lanczos residual (5.75e-13 per site). The row carries the exact value; the printed value stays here. See checks/exact-recompute-2026-10-families/.",
+    "source_entry": "famE-exact-recompute#19, famP2-10-1142-s0129183106009709#11 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
+  },
 ];

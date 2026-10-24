@@ -1,0 +1,876 @@
+                            Emergence of quantum spin liquid and spin-flop phase
+                              in Kitaev antiferromagnets in a [111] magnetic field
+
+                        Shuai Liu,1, 2  Hao Wu,1, 2  Jinbin Li,1, 2  Xiaoqun Wang,3  and Qiang Luo1, 2,∗
+                1College  of  Physics,  Nanjing  University  of  Aeronautics  and  Astronautics,  Nanjing,  211106,  China
+          2Key Laboratory of Aerospace Information Materials and Physics (NUAA), MIIT, Nanjing, 211106, China
+        3School of Physics and Institute for Advanced Study in Physics, Zhejiang University, Hangzhou 310058, China
+                                                           (Dated:  December 24, 2025)
+                   Kitaev magnets have emerged as pivotal systems for investigating frustrated magnetism, providing
+                a unique platform to explore quantum phases governed by the interplay between bond-dependent
+                anisotropy and external magnetic fields.  However, the quantum phase diagrams, particularly near
+                the dominant antiferromagnetic Kitaev regime, remain puzzling despite extensive studies.  In this
+                work, we perform unbiased exact diagonalization calculations of the Kitaev-Γ model in a [111] mag-
+                netic field on aC   6-symmetric 24-site cluster.  By calculating theZ       2 flux density and the topological
+                entanglement entropy, we reveal multiple phase transitions and identify signatures of both scalar
+                and  vector  chiral  orders  in  the  intermediate-field  regime  between  the  Kitaev  spin  liquid  and  the
+                polarized phase.  As the negative Γ interaction increases, we discover a proximate quantum spin liq-
+                uid featured by a three-peak specific heat and a spin-flop phase at a moderate magnetic field.  Our
+                findings provide insight into the field-induced intermediate phases in the antiferromagnetic Kitaev
+                model and pave the way for the hunt for emergent phases in real materials.
+
+
+                     I.   INTRODUCTION                                         the  AFM  Kitaev  model  in  the  [111]  magnetic  field,  no
+                                                                               broad  consensus  has  yet  been  reached  regarding  either
+  Exchange-anisotropic frustrated magnets stand at the                         the number or the nature of these intermediate phases
+forefront  of  modern  condensed  matter  physics,  serv-                      [30–40].   While  most  studies  report  a  single  intermedi-
+ing  as  a  versatile  playground  for  the  discovery  of  ex-                ate phase, its proposed nature varies significantly across
+otic  quantum  phases  and  a  plethora  of  emergent  phe-                    different  methodologies:  a  gaplessU(1)  QSL  identified
+nomena [1–4].  In two-dimensional materials,  a floating                       through exact diagonalization (ED) [30–32] and density-
+Kosterlitz-Thouless  phase  is  realized  in  the  rare  earth                 matrix renormalization group (DMRG) [30,33,34] meth-
+magnet TmMgGaO4 with strong Ising anisotropy [5,6],                            ods,  a  gapped  chiral  QSL  with  Chern  numberC=  4
+a  skyrmion  crystal  is  stabilized  in  MnSi  with  a  sizable               from  variational  approaches  [35],  and  a  gapless  Majo-
+Dzyaloshinskii-Moriya interaction [7,8], and a plausible                       rana metal suggested by tensor network studies [36,37].
+quantum spin liquid (QSL) is identified in Kitaev magnet                       In contrast, combined mean-field and many-body analy-
+α-RuCl   3 under in-plane or out-of-plane magnetic field [9–                   ses reveal more complex scenarios. Jianget al.identified
+13].  Among these, the Kitaev interaction, consisting of                       two  distinct  disordered  phases  characterized  byC=  4
+bond-directional Ising couplings on the honeycomb lat-                         andC= 1, respectively [38], while Holdhusenet al.re-
+tice,  stands  out  because  it  renders  the  exact  solubility               ported two symmetry-breaking stripy and chiral phases
+of  the  Kitaev  honeycomb  model  that  can  generate  the                    with either ill-defined or trivial Chern numbers [40]. The
+sought-after QSL with fractionalized excitations [14]. Af-                     striking diversity and complexity exhibited by the inter-
+ter a surge of theoretical proposals and/or experimental                       mediate  phases  in  the  Kitaev  model  necessitate  metic-
+validation,  many Kitaev materials have been proposed,                         ulous inspection through unbiased numerical techniques
+including  5d  5  iridates  [15–18],  4d              5  ruthenates  [19–21],  and sensitive probes of QPTs.
+d7  cobaltates [22–26] during the last decade.  Neverthe-                         In terms of experiments, the Kitaev QSL (KQSL) has
+less, the Kitaev interaction is prevailingly ferromagnetic                     not yet been realized as a genuine ground state of any
+(FM), and recent efforts have been made to hunt for Ki-                        existing Kitaev material [41].  Ineluctable exchange cou-
+taev  antiferromagnets,  prominent  examples  encompass                        plings,  such  as  the  Γ  interaction  originating  from  the
+α-RuH   3/2   X3/2    (X= Cl and Br) [27], SmI           3 [28], etc.          spin-orbit coupling, compete with the Kitaev interaction
+  Theoretically, while the antiferromagnetic (AFM) and                         and typically generate magnetically ordered states [18].
+FM  Kitaev  models  are  unitarily  equivalent  under  local                   The  Kitaev-Γ  model  has  established  itself  as  a  corner-
+spin  rotations  at  zero  field,  the  AFM  model  under  a                   stone model in quantum magnetism, serving as both an
+magnetic field exhibits significantly richer quantum phase                     important theoretical framework for understanding real
+transitions (QPTs) than the FM counterpart, which tran-                        materials and a fertile ground for discovering exotic states
+sitions directly into a polarized phase [29].  However, de-                    of matter and unconventional critical behaviors [42–53].
+spite the general recognition of an intervening regime in                      When the Kitaev and Γ interactions have different signs,
+                                                                               the model is highly frustrated and the ground-state phase
+                                                                               diagram is rather involved.  Despite substantial numeri-
+                                                                               cal efforts devoted to elucidating QPTs in the FM Kitaev
+∗qiangluo@nuaa.edu.cn                                                          regime,  a  definitive  phase  diagram  remains  unresolved,
+                                                                                                                                                       2
+
+while  intriguing  phases  including  nematic  paramagnet                      adopted  aC  6-symmetric  24-site  cluster  with  full  peri-
+[43], proximate QSL (PQSL) [44], and Γ-type QSL [54]                           odic boundary conditions (PBCs), see Fig.11(a) in Ap-
+have been identified across various parameter ranges (for                      pendixA. Due to the bond-dependent anisotropy of the
+a recent review, see Ref. [3]). In stark contrast, investiga-                  Kitaev interactions,  a pure latticeC            6  rotation is not a
+tions of QPTs in the AFM Kitaev regime have been re-                           symmetry  operation  of  the  Kitaev  honeycomb  model.
+markably scarce, leaving even the fundamental question                         Even in the isotropic Kitaev limit, the Hamiltonian re-
+of which phase succeeds the KQSL unsettled [48].  This                         mains invariant only under a combined operation denoted
+significant  knowledge  gap,  combined  with  the  growing                     C6 ×C    S3 , where aπ/3 spatial rotation (C      6) is accompa-
+experimental relevance of AFM Kitaev materials, moti-                          nied by a 2π/3 spin rotation about the [111] axis (C      S3 ).
+vates our systematic investigation of the quantum phase                        Therefore,  the  24-site  cluster  we  employ  is  compatible
+diagram in the Kitaev-dominant AFM regime, where we                            with  this  combined  symmetry  structure  and  thus  pro-
+carefully  examine  the  interplay  between  off-diagonal  Γ                   vides  an  appropriate  finite-size  geometry  for  studying
+exchange interactions and external magnetic fields.                            competing phases [40].
+  The  paper  is  structured  as  follows:   In  Sec.II,  we                      Instead  of  using  energy  derivatives  and  quantum  in-
+present  the  Hamiltonian  of  the  Kitaev-Γ  model  in  the                   formation probes, we will adopt two KQSL-related phys-
+out-of-plane  magnetic  field  and  introduce  two  KQSL-                      ical quantities [the flux density and the topological en-
+related physical quantities, followed by a brief description                   tanglement  entropy  (TEE)]  to  characterize  QPTs.   On
+of the quantum phase diagram.  SectionIIIdiscusses the                         the one hand, the hexagonal plaquette operator, which is
+features of the QPTs and provides a detailed dynamical                         schematically illustrated in Fig.1(a), is defined as
+and thermal analysis of representative phases.   Finally,                                           ˆWp = 26Sx1 Sy
+Sec.IVoffers a summary of our main results alongside a                                                              2Sz3Sx4 Sy5Sz6.                  (2)
+critical evaluation of the key findings.
+                                                                               We compute the expectation value of the plaquette op-
+                                                                               erator for each individual plaquette and define the flux
+        II.   MODEL AND PHASE DIAGRAM                                          density   Wp  as its spatial average throughout the entire
+                                                                               lattice:
+  We study a spin-1/2 AFM Kitaev honeycomb model                                                                    X   
+  ˆWp,                      (3)
+with a perturbed Γ term on a honeycomb lattice in a [111]                                             Wp =   1Np
+magnetic  field.   This  model  is  not  only  experimentally                                                        p
+relevant but also theoretically pivotal in exploring exotic                    whereN           p denotes the total number of plaquettes in the
+phases and emergent excitations. Its Hamiltonian can be                        system.   The  flux  density        Wp  and  its  derivatives  have
+described by                                                                   been frequently used to determine first-order and contin-
+  H=    X       KSγ                                 − X     h·S    i,       uous QPTs [31,36,40,45,54,55].  On the other hand,
+                      i Sγj  + Γ Sαi Sβj  +S    βi Sαj
+        ⟨i,j⟩∥γ                                             i                  we  compute  the  TEE  via  the  Kitaev-Preskill  construc-
+                                                                     (1)       tion  [56].   In  this  recipe,  the  TEE  is  computed  via  a
+where⟨i, j⟩∥γdenotes nearest-neighbor sites connected                          precisely crafted linear combination of von Neumann en-
+by aγ-type bond (γ∈x, y, z), with the interaction type                         tropy, given by:
+explicitly depending on the bond orientation. Krepre-                           γE =S   A +S   B +S   C −S   AB −S   BC −S   AC +S   ABC. (4)
+sents the Kitaev interaction, Γ denotes the off-diagonal
+coupling, and the last term corresponds to the magnetic                        Here,S          A represents the von Neumann entropy acquired
+field.  The magnetic field is applied along the [111] crys-                    by  tracing  out  degrees  of  freedom  outside  of  regionA,
+tallographic  direction,  and  the  field  strengthhis  de-                    SAB  corresponds to the entropy of the union of regions
+fined  via  the  vectorh=h(1,1,1)/                    √3.   In  the  follow-   AandB, and so on. To implement this, we partition the
+ing analysis,  bothKand Γ are parameterized through                            cluster  into  four  distinct  regions  with  the  same  lattice
+an  exchange-coupling  angleϕ,  withK=E                            0 cosϕand   sites, labeledA,B,C, andD. The specific choice of these
+Γ  =−E   0 sinϕ(E          0  is  the  energy  unit).   The  opposing          regions is depicted in Fig.1(b), where the red, green, and
+signs ofKand Γ promote quantum fluctuations, thereby                           blue areas correspond to the regionsA,B, andC, respec-
+facilitating the emergence of novel quantum states.                            tively,  while  the  remaining  area  defines  the  regionD.
+  Although  Hamiltonian  Eq.  (1)  has  been  extensively                      Physically, the TEEγ         E remains constant within a given
+studied  by  different  many-body  computational  tech-                        phase but exhibits variations across distinct phases. Con-
+niques,  the  full  quantum  phase  diagram  has  not  yet                     sequently, the discontinuity in TEE serves as a sensitive
+been  settled,  especially  in  the  dominant  Kitaev  region                  indicator of QPTs [32,40,55].
+[3].   Among  these  methods,  ED  is  an  ideal many-body                        Figure1(c)  and1(d)  present  the  quantum  phase  di-
+computational method that provides high accuracy and                           agrams  characterized  by  the  flux  density            W p  and  the
+reliability. It allows a comprehensive study of all relevant                   TEEγ         E,  respectively.  The concurrence of singularities
+physical  properties,  including  thermodynamic  and  dy-                      in  both  quantities  unambiguously  identifies  consistent
+namic characteristics.  During the calculation, we chiefly                     phase boundaries.  The quantum phase diagrams in the
+                                                                                                                                                        3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1:  (a) Illustration of the hexagonal plaquette operator   ˆWp.  The nearest-neighbor links are distinguished asX(red),Y
+(green), andZ(blue) bonds, respectively.  (b) The three-region partition scheme employed in calculating topological entangle-
+ment entropy using the Kitaev-Preskill method, with the red, green, and blue representing regionsA,B, andC, respectively.
+(c) and (d) present the quantum phase diagrams obtained from the flux density                        W p  and TEEγ         E,  respectively.  The open
+circles represent the transition points while the crosses denote a partition within the KQSL. The symbolκ   v  denotes regions
+with large vector spin chirality.  The orange and red arrows indicate the regions of the vector chiral phases with ground-state
+degeneracies of two and three, respectively.  Two special cutting lines,h= 5ϕ/π(in yellow) andh= 0.5                p1−ϕ/π(in purple),
+are plotted for later use.
+
+
+(ϕ/π, h)  parameter  space  predominantly  consist  of  five                   factor (DSSF) [57,58].  They also account for a double-
+distinct  phases,  which  include  the  KQSL,  a  proximate                    peak structure in specific heat and a nearly half-plateau
+QSL featured by a three-peak specific heat, a scalar chiral                    thermal entropy in between [59].
+order and a spin-flop phase at moderate magnetic field,
+and a polarized phase at high magnetic field.  There are
+also three narrow regions of vector chiral order nearϕ/π
+= 0.00 and 0.10. For comparison, the density plots of the
+scalar and vector order parameters are presented in the
+AppendixA. In what follows, we will systematically in-
+vestigate the characteristic properties of each individual
+phase,  with  particular  focus  on  their  spin  and  thermal
+dynamics.
+
+
+
+           III.   RESULTS AND DISCUSSION
+
+      A.   Competing degenerate states in KQSL
+
+   The Kitaev honeycomb model provides a rare, exactly                         FIG. 2:  The energy-level splittingδE               g  (left axis, red circles)
+solvable platform where the spins fractionalize into Ma-                       and the ground-state fidelityF(ϕ, h) (right axis, blue squares)
+jorana fermions. At zero field, this leads to a gapless QSL                    as a function ofϕalong the parameter pathh= 5ϕ/π.  The
+with an emergentZ  2 gauge structure [14].  These Majo-                        inset magnifiesδE                 g in the region where 0.01≤ϕ/π≤0.03.
+rana quasiparticles are classified into two kinds,  itiner-
+ant Majorana fermions and flux excitations (so-called vi-                         However,  the  exact  solvability  of  the  Kitaev  honey-
+sons), both of which play key roles at different energy and                    comb model can be ruined immediately by perturbations
+temperature scales.  In theZ      2 QSL, the ground state lies                 such as magnetic field or off-diagonal exchanges. Numer-
+in the vortex-free sector in which⟨   ˆWp⟩= 1 for arbitrary                    ical calculations are therefore necessary to quantify the
+hexagonal plaquette, yielding flux density              W p = 1.  The          extent of the KQSL region.  As shown in Figs.1(c) and
+TEEγ         E =−ln 2, as theZ             2 topological order has a quan-     1(d), the phase boundary of the KQSL in the (ϕ/π,h)
+tum dimensionD= 2.  Beyond the ground state,  hall-                            parameter plane is consistently delineated by using flux
+mark signatures of the two kinds of Majorana fermions                          density    W p  and TEEγ         E.  Specifically,  the KQSL ends
+manifest  in  spin  dynamics  and  thermal  measurements.                      ath    t,l ≈0.385 andϕ              t/π≈0.087, respectively, in the ab-
+The itinerant Majorana fermions and visons contribute,                         sence of the Γ term and in the zero-field Kitaev-Γ model.
+respectively, to the broad high-energy continuum and the                       These  transition  point  estimates  show  excellent  consis-
+low-energy coherent peak in the dynamical spin structure                       tency with the previous ED study [31,48].
+                                                                                                                                                             4
+
+                                                                                  as implemented in the open-source software packageHϕ
+                                                                                  [62,63].  In the TPQ method, thek-th TPQ state is gen-
+                                                                                  erated  as|ϕ     TPQ(β  k)⟩=  [U(∆τ)]               k |ϕ rand⟩where  the  in-
+                                                                                  verse temperatureβ             k =k∆τand the initial state|ϕ                      rand⟩
+                                                                                  is  a  random  vector.   In  addition,U(∆τ)  =e                        − ∆τ2 H  ≈
+                                                                                  Pnmax         − ∆τ              n          max  denotes  the  maximal
+                                                                                     n=0      1n!   2 Hn.   Here,
+                                                                                  order of the Taylor expansion and is set to 20, and ∆τ
+                                                                                  represents the increment of the imaginary-time evolution
+                                                                                  and is set to 0.1. To ensure statistical reliability, stochas-
+                                                                                  tic sampling was carried out over three independent runs,
+                                                                                  and the final results were obtained by averaging the out-
+                                                                                  comes of these executions.
+                                                                                     To commence with, the essential step is to determine
+                                                                                  the free energyFof the system, which serves as the ba-
+                                                                                  sis for all subsequent thermodynamic computations.  It
+                                                                                  is known thatF=−β              −1   lnZ, whereZdenotes the par-
+                                                                                  tition function of the system andβ= 1/k            BT(with the
+                                                                                  Boltzmann  constantk  B  set  to  1  in  this  paper).   Based
+                                                                                  on  this,  the  specific  heat  and  the  thermal  entropy  are
+FIG. 3: (a) and (b) show the specific heatC        v and the thermal              calculated as
+entropySat  two  characteristic  parameter  points,  (ϕ/π=                                                               ∂U
+0.01,h= 0.05) and (ϕ/π= 0.03,h= 0.15), along the path                                                        Cv =  1N      ∂T    v,                       (5a)
+lineh= 5ϕ/π.  The shaded regions mark the estimated errors
+in the low-temperature regime.                                                                               S=    β
+                                                                                                                   N (U−F),                       (5b)
+   Although KQSL is characterized by a four-fold degen-                           with the internal energyU=−∂lnZ/∂β[51].  We have
+eracy of the ground state on a torus [60], the degenerate                         chosen a representative point in each region withϕ/π=
+manifold can be lifted in a finite 24-site cluster.  In ac-                       0.01 and 0.03 along the lineh= 5ϕ/π.  As can be seen in
+cordance with Rousochatzakis [48], we also observe that                           Fig.3, the specific heat displays two pronounced peaks
+the ground-state degeneracy is three in the pure Kitaev                           at two well-separated temperatures due to two kinds of
+limit and is reduced to two as the Γ term is added.  In-                          fractionalized excitations, and the thermal entropy is re-
+terestingly,  there is still competition in the presence of                       leased in two steps with a quasi-half-plateau in the mid-
+the magnetic field, resulting in a tiny energy-level split-                       dle.  These observed features are consistent with the ex-
+ting  between  the  remaining  two  degenerate  states.   To                      pected signatures of a KQSL.
+illustrate the evolution of the ground state with the low-                           Before closing, we briefly note that a spurious lattice
+est energy,  we have calculated the ground-state fidelity                         nematicity was identified in low-field KQSL. This behav-
+F(ϕ, h) =|⟨ψ            g(ϕ ′, h′)|ψ   g(ϕ, h)⟩|in which (ϕ        ′, h′) close toior stems from ground-state degeneracy and is highly sen-
+(ϕ, h), and the energy-level splittingδE                    g =E   1 −E   0 with  sitive to numerical precision.  More details are provided
+E0,1   being the energy of the two lowest energy levels. Fig-                     in AppendixB.
+ure2shows the splittingδE                        g  (left axis, in red) and the
+fidelityF(right axis, in blue) along the parameter line                             B.   Field-induced scalar and vector chiral phases
+h= 5ϕ/πwith 0≤ϕ/π≤0.05.  It is clear thatδE                                       g has
+two appreciable drops down to zero whenϕ          s,1  /π≈0.022
+andϕ       s,2  /π≈0.042, signifying an accidental balance due                       Having established the phase boundary of the KQSL,
+to the interplay of competing interactions and magnetic                           we  now  consider  the  emergent  phases  in  the  quantum
+field.  Interestingly,Fapproaches zero atϕ        s,1    andϕ       s,2  ,        phase  diagram.   Aligning  with  the  enormous  efforts  to
+indicating that there is a swap of the degenerate ground                          identify the field-induced intermediate region in the Ki-
+state thereof.                                                                    taev model in the out-of-plane magnetic field, we made
+   Although  we  are  not  aware  of  any  physical  implica-                     an attempt to provide insight into the number and nature
+tion  of  competition  of  the  degenerate  ground  state  at                     of the intermediate phases. As can be seen in Fig.4, flux
+present, this effect breaks the KQSL into two separated                           density   W p and TEEγ         E undergo several abrupt changes
+regions,  as  marked  by  white  crosses  (×)  in  Figs.1(c)                      as the magnetic fieldhincreases to 1, at which the under-
+and1(d).   Here,  we  resort  to  thermodynamic  quanti-                          lying ground state becomes polarized.  Takingϕ/π= 0
+ties,  such  as  specific  heat  and  thermal  entropy,  to  tes-                 as an example,       W p decreases from unity and has its first
+tify  to  the  similarity  of  the  two  regions.    The  ther-                   jump  ath    lt  ≈0.385.   Subsequently,  it  experiences  two
+modynamic properties were computed using the canon-                               jumps  ath    m1t    ≈0.540  andh              m2t    ≈0.595,  before  enter-
+ical  thermal  pure  quantum  (TPQ)  state  method  [61],                         ing the polarized phase ath    ht  ≈0.640.  Similarly, these
+                                                                                                                                                          5
+
+                                                                                where  the  sites  (i, j, k)  of  the  same  sublattice  form
+                                                                                an  equilateral  triangle  in  the  anticlockwise  direction.
+                                                                                ηαβγ =±1, depending on the permutation order.  As the
+                                                                                magnetic field is applied, the chirality is usually nonzero
+                                                                                because of the time-reversal symmetry breaking. To deal
+                                                                                with distraction,  we substitute the third-order moment
+                                                                                in Eq. (7) with a cumulant:
+                                                                                       κ3 Sαi Sβ        =
+Sαi Sβ        − 
+Sαi Sβ
+Sγ
+                                                                                                  j Sγk            j Sγk             j     k
+                                                                                                            − 
+Sαi Sγ
+Sβ − 
+Sβ             
+Sαi
+                                                                                                                       k     j         j Sγk
+                                                                                                            + 2
+Sαi   
+Sβ
+Sγ.                    (8)
+                                                                                                                           j      k
+                                                                                In  doing  so,  we  systematically  eliminate  contributions
+                                                                                from lower-order statistics (single and pairwise correla-
+                                                                                tions), thereby rigorously extracting the nontrivial corre-
+                                                                                lation effects solely arising from three-body interactions.
+                                                                                This approach not only guarantees that the scalar spin
+                                                                                chirality signal originates exclusively from intrinsic three-
+                                                                                body quantum correlations but also renders it a sensitive
+FIG.  4:  (a)  The  flux  density     W p  as  a  function  ofhalong            probe for characterizing time-reversal symmetry break-
+parameter  linesϕ/π=  0.00  (red  circles)  and  0.01  (blue                    ing.  Ultimately, the scalar chiral order parameter is de-
+squares).  The insets show a magnified view in the range of                     fined as
+0.5≤h≤0.7.  (b) The same as (a) but for the TEEγ                          E.
+                                                                                                          χs =  2     X χi,j,k,                        (9)
+abrupt changes are also observed in the curve ofγ    E, ver-                                                      N
+ifying the existence of multiple QPTs.  Beyond the pure                         where the summation is taken over all eligible triangles
+Kitaev limit, key features are observed to be still reserved                    within the hexagonal plaquettes.
+at a slightly different angleϕ/π= 0.005 (not shown), rul-
+ing out the possibility of numerical instability. Hence, the
+intermediate regions contain three parts, in which one is
+quite wide while others are relatively narrow.   We also
+find that the intermediate regions have a large number
+of low-energy states.  However, asϕ/πincreases to 0.01,
+one of the narrow regions disappears, see the inset.
+   We  proceed  to  reveal  the  nature  of  these  interme-
+diate  phases.    Magnetically  ordered  states  are  known
+to be distinguished by their patterns in the static spin
+structure  factor  (SSSF),  which  is  given  byS  N(q)  =
+P
+   αβ δαβSαβN (q), where
+              Sαβ              X⟨S  αi Sβ
+               N (q) =      1N            j ⟩e  ıq·(R      i−R   j).           (6)
+                                ij
+
+We find that the SSSFs in these intermediate phases are
+rather  diffusive  without  pronounced  peaks,  eliminating
+the likelihood of long-range orders.  In order to look for
+possible symmetry-breaking signatures, we measured two
+kinds of chiralities:  scalar spin chirality and vector spin                    FIG. 5: (a) The scalar chiral order parameterχ                  s as a function
+chirality.                                                                      ofhalong parameter linesϕ/π= 0.00 (red circles) and 0.01
+   The  scalar  spin  chirality,  which  breaks  time-reversal                  (blue squares).  (b) The same as (a) but for the vector chiral
+symmetry,  is  characterized  by  a  scalar  chiral  order  pa-                 order parameterκ                v.
+rameter denoted as                                                                  The vector spin chirality that corresponds to the break-
+
+  χi,j,k = 23 ⟨S  i ·(S   j ×S   k)⟩= 2   3  X      ηαβγ⟨S  αi Sβj Sγk⟩,        ing of discrete symmetry is given by
+                                            {αβγ}                                                              D                   E
+                                                                       (7)                            κγi,j =   Sαi Sβj −S    βi Sαj  ,                 (10)
+                                                                                                                                                          6
+
+where  the  sites  (i, j)  are  of  next-nearest  neighbor  and                 those  of  the  vector  chiral  phases  shrink.   Notably,  the
+their bond typeγis the same as the corresponding or-                            twofold-degenerate  vector  chiral  phase  completely  van-
+thogonal bonds.  As the discrete symmetry breaks spon-                          ishes atϕ/π= 0.01.  Our findings highlight the need for
+taneously, the ground state|ψ⟩should have a degeneracy                          careful verification of vector chiral phases in future large-
+gand the chirality is then averaged with respect to the                         scale many-body calculations that surpass the ED limi-
+degenerate manifold.  Hence, the vector chiral order pa-                        tations.  It would be worthwhile for such future studies
+rameter is defined as                                                           to investigate whether such a phase constitutes a chiral
+                                  X     X κγ                                   QSL or a symmetry-breaking chiral spin solid.
+                  κv =    13gN                  i,j  ψ .              (11)
+                                 ⟨⟨i,j⟩⟩  ψ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                FIG. 7: (a) The flux density       W p (left axis, red circles) and the
+                                                                                TEEγ         E (right axis, blue squares) as a function ofϕalong the
+                                                                                parabolic parameter pathh= 0.5       p1−ϕ/π. (b) The same as
+FIG.  6:  (a)  The  flux  density     W p  as  a  function  ofϕalong            (a) but for the first-order (∂e  g/∂ϕ, left axis) and second-order
+parameter linesh= 0.0 (red circles), 0.1 (blue squares), and                    (∂  2eg/∂ϕ2, right axis) energy derivatives.
+0.2 (green triangles).  (b) The same as (a) but for the TEE
+γE.                                                                                Finally, we comment on why vector chiral phases may
+   The scalar (χ  s) and vector (κ  v) chiral order parame-                     have been overlooked in previous ED studies of 24-site
+ters  are  shown  in  Figs.5(a)  and5(b),  respectively.   In                   clusters.  In Ref. [31], although the sameC               6-symmetric
+the  case  ofϕ/π=  0.00,χ                   s  remains  negligible  in  the     24-site cluster is employed, one of the main cases stud-
+KQSL. It exhibits a sharp increase within the field range                       ied involves a magnetic field tilted away from thecaxis
+h∈(0.385,0.540), attaining a peak value of∼0.04. Sub-                           ([111] direction) by an angleϑ= 7.5             ◦.  As shown in Ap-
+sequently,χ s undergoes an abrupt drop accompanied by                           pendixC, the vector chiral phases indeed vanish at this
+a sign reversal, eventually decaying to zero in the polar-                      tilt angle. In Ref. [30], a different 24-site torus (2×4×3)
+ized phase.  The phase adjacent to the KQSL, character-                         is used.  Nevertheless, as can be seen from AppendixD,
+ized by a maximal scalar chiral order parameter, is desig-                      a  finite—though  reduced—chiral  region  can  still  be  re-
+nated as the scalar chiral phase.  In contrast,κ          v displays            solved  when  the  magnetic  field  resolution  is  increased.
+a dome-like behavior ashvaries, with the most striking                          These  findings  highlight  that  subtle  aspects  of  the  nu-
+feature being two quasi-plateaus of   0.055 and   0.095 in                      merical setup, including field direction, lattice topology,
+the field rangesh∈(0.540,0.595) andh∈(0.595,0.640),                             and computational resolution, are critical for reliably re-
+respectively.  The ground state degeneraciesgof the two                         solving exotic magnetic phases.
+intervals  are  two  and  three  at  low  and  high  fields,  re-
+spectively.   Despite  these  differences,  the  enhanced  or-
+der parameter observed in intermediate-field regimes in-                            C.   Proximate QSL: high TEE and three-peak
+dicates the emergence of vector chiral correlations within                                                   specific heat
+a narrow field range below saturation.  Consequently, we
+identify the regions that exhibit the maximal chiral or-                           We  now  move  on  to  further  consider  the  role  of  the
+der parameter as vector chiral phases.  Asϕ/πincreases,                         negative  Γ  interaction.   As|Γ| increases,  the  KQSL  is
+the domain of the scalar chiral phase expands, whereas                          destroyed and taken over by a new phase.  Similarly, we
+                                                                                                                                                          7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8:  (a) DSSF calculated along high-symmetry momentum lines at (ϕ/π, h) = (0.11,0.2).  Inset:  The corresponding SSSF
+with labels of symmetry points used in the main panel.   (b) and (c) show the specific heatC        v  and the thermal entropyS
+at  two  characteristic  parameter  points,  (ϕ/π=  0.09,h=  0.2)  and  (ϕ/π=  0.11,h=  0.2).   The  shaded  regions  mark  the
+estimated errors in the low-temperature regime.  The observed negative entropy values at ultralow temperatures are attributed
+to systematic errors resulting from exceeding the precision limit of the measurement.
+
+
+leverage the flux density       W p and the TEEγ         E to pinpoint          component of the spin operator in the Heisenberg repre-
+the phase boundary.  As can be seen in Fig.6, the KQSL                          sentation at timeton sitei.  It is formulated as
+gives way to a new phase through a first-order QPT ath                                                X
+= 0.0 (red circles), 0.1 (blue squares), and 0.2 (green tri-                        Sγγq  (ω) =      1     eiq(r     i−r   j) Z  ∞       i,j (t).    (12)
+angles).  Compared to the transition between the KQSL                                             N    i,j               −∞ dte−iωt  Sγγ
+and the scalar chiral phase revealed in Fig.4, the jumps
+in W p andγ       E here are much sharper, especially in the low                Considering  the  zero-temperature  case,  the  average  is
+field case.  Despite behavioral differences, the new phase                      taken  in  the  ground  state  and  the  Lehmann  represen-
+exhibits certain similarities to the scalar chiral phase, as                    tation of the DSSF is
+evidenced by the flux density            W p  decreasing below 0.1                                      ⟨υ|S     γq|0⟩  2 δ ω−(E        υ −E   0),      (13)
+and the rescaled TEE|γ          E|/ln 2 decreasing from an ini-                       Sγγq  (ω) =   X
+tial value of approximately three.  This raises the curious                                          υ
+question of whether a QPT exists between the scalar chi-                        whereE           υ is the energy corresponding to an eigenstate|υ⟩
+ral phase and the new phase. To address this issue, we de-                      [58].  We compute the DSSF using its continued fraction
+signed a parabolic parameter pathh= 0.5         p1−ϕ/πand                       representation.  This is achieved by preparing an initial
+performed comprehensive calculations of the flux density                        state, which is then processed through the Lanczos algo-
+W p and the TEEγ         E along this trajectory; see Fig.7(a).                 rithm.  The resulting tridiagonal matrix implicitly con-
+As the exchange-coupling angleϕis varied, discontinuous                         tains the coefficients of the continued fraction expansion
+jumps in both quantities are observed, signaling the oc-                        [66].   In  our  implementation,  we  set  the  energy  resolu-
+currence of a first-order QPT. To further corroborate the                       tionδω= 0.01, employ a Gaussian broadening parameter
+nature of the transition, we computed the first and sec-                        η= 0.05, and perform 1000 Lanczos iterations to ensure
+ond derivatives of the ground-state energy (∂e  g/∂ϕand                         numerical convergence of the DSSF. Furthermore, from
+∂2eg/∂ϕ2), which exhibit a discontinuity and a divergent                        now on, we will focus on the sumS(q, ω) =        P
+peak, respectively, consistent with a first-order QPT [see                         To  be  specific,  we  will  examine  certain  parameterγ Sγγq  (ω).
+Fig.7(b)].  Thus,  all the calculations demonstrate that                        points along the line ofh= 0.2.  In this new phase, the
+the new phase is fundamentally distinct from the scalar                         ground state is unique and the energy spectrum is very
+chiral phase.                                                                   dense  with  a  tiny  excitation  gap.   Takingϕ/π=  0.11
+
+   To reveal the nature of this newly identified phase, we                      which  lies  well  within  the  bulk  of  the  phase  as  an  ex-
+employ  complementary  diagnostics  to  the  SSSF,  which                       ample,  we  find  an  excitation  gap  of  ∆≈0.008.   The
+exhibits a diffusive pattern in reciprocal space, indicat-                      SSSF  and  the  DSSF  at  the  same  parameter  point  are
+ing  the  absence  of  conventional  long-range  order.   The                   shown in Fig.8(a). For the SSSF shown in the inset, it is
+DSSF is particularly noteworthy, as it is not only capable                      observed that the high intensity is diffusely distributed
+of probing fractionalized excitations but also provides di-                     over  a  wide  momentum  range,  with  the  nominal  peak
+rect signatures measurable in spectroscopic experiments                         located  halfway  between  the  vertices  of  the  first  and
+[65].   The  DSSF  is  calculated  from  the  Fourier  trans-                   second  Brillouin  zones.   Meanwhile,  the  DSSF  exhibits
+form in time and space of the dynamical spin correlation                        broad and continuous spectral weight characteristics in
+functionS               γγi,j (t) =   
+Sγi  (t)S     γj (0) whereS           γi (t) is theγ-ththe low-frequency range.   The slight spectral weight at
+                                                                                                                                                           8
+
+high-frequency regime aroundω≈1.5 may be attributed
+to either fractionalized excitations or finite-resolution ef-
+fects.  Together, these phenomena indicate the presence
+of a likely QSL in the ground state.
+   To detect possible unusual excitations, we compute the
+specific heatC        v  and thermal entropySat the parame-
+ter pointsϕ/π= 0.09 andϕ/π= 0.11, which are close
+to the phase boundary and deep into the new phase, re-
+spectively.  As shown in Fig.8(b), the specific heat curve
+atϕ/π= 0.09 (in red) shows not only low-temperature
+and  high-temperature  peaks  but  also  a  smeared  inter-
+mediate  peak.    Asϕincreases,  say  toϕ/π=  0.11,
+the high-temperature peak remains stable while the low-
+temperature peak shifts to a lower temperature and be-
+comes more pronounced. Notably, the intermediate peak
+is also enhanced and evolves into a distinctly observable
+feature.   In  parallel,  the  thermal  entropy,  depicted  in
+Fig.8(c),  undergoes  a  three-step  release  in  accordance
+with the specific heat having a three-peak structure.  We
+note  that  such  a  three-peak  specific  heat  is  scarce  and
+the multiple peaks may be a reminiscence of fractional-                          FIG.  9:   (a),  (b),  and  (c)  respectively  display  the  SSSFs
+ized excitations.  Compared with neighboring KQSL, we                            for  spin  components  along  three  crystallographic  directions
+conclude that the new phase is a proximate QSL charac-                           a[11  ¯2],b[      ¯110], andc[111] at (ϕ/π= 0.06, h= 0.6).  Panel (a)
+terized by high TEE and three-peak specific heat.                                specifically  marks  the  selected  momentum  points  for  mag-
+                                                                                 netic  order  parameter  calculations.   (d)  Evolution  of  mag-
+                                                                                 netic  order  parametersM                    ccN (Γ)  (black  star),M               ccN (Γ ′)  (blue
+                                                                                 circle),M             ccN (K) (yellow triangle),M                      ccN (M) (orange square),
+      D.   The spin-flop phase:  double peaks and                                andM       ccN (M ′) (green diamond) along thec-axis atϕ/π= 0.06.
+   logarithmic temperature scaling in specific heat                              The inset shows the corresponding results for thea-axis di-
+                                                                                 rection.
+   The discovery and characterization of magnetic phase
+transitions in low-dimensional magnetic systems are piv-
+otal to advancing our fundamental understanding of mag-                          magnetic order parameterM                    γγN  (q) =   pSγγN (q)/Nat dif-
+netism.  Among these, the spin-flop transition represents                        ferent high-symmetry points, whereS           γγN (q) denotes the
+a cornerstone in the physics of antiferromagnetism, offer-                       SSSF defined in Eq. (6).  As shown in Fig.9(d),M                     γγN  (q)
+ing profound insights into the interplay between exchange                        withq=K(yellow triangle),M(orange square),  and
+interactions,  anisotropy,  and  external  fields.   The  spin-                  M′ (green diamond) are smaller than 0.1 and are consid-
+flop  transition  is  a  magnetic  phase  transition  in  which                  erably reduced ashincreases, excluding the presence of
+the spins of an easy-axis antiferromagnet undergo a sud-                         120◦  order, zigzag order, and stripy order.  In contrast,
+den reorientation  under an applied magnetic field,  giv-                        MγγN  (Γ) (black star) andM            γγN  (Γ ′) (blue circle) increase
+ing rise to a transverse magnetization.  Such a transition                       simultaneously with the increase ofh.  In particular, the
+has been probed in honeycomb-lattice materials includ-                           uniform magnetizationM                           γγN  (Γ) increases in steps in the
+ing Ni2Mo3O8  [67],  CaCo      2TeO6  [68],  Na      3Ni2BiO6  [69],             interval ofh∈(0.445,0.775), a manifestation of the re-
+and FeP3SiO11 [70].                                                              orientation of the underlying spins against the magnetic
+   However, different from the conventional wisdom that                          field.  In comparison, the in-plane antiferromagnetic or-
+the  spin-flop  phase  is  induced  from  a  collinear  AFM                      der parametersM         aaN (Γ ′) andM       bbN (Γ ′) in this interval are
+phase, we find that it can alternatively be stabilized at                        sizable  (see  the  inset),  albeit  having  a  gradual  reduc-
+a moderate magnetic field even in the absence of a low-                          tion  towards  the  saturated  magnetic  field.   The  onset
+field magnetically ordered state.  To demonstrate it, we                         of in-plane staggered magnetization associated with the
+present QPTs along the line ofϕ/π= 0.06 in which the                             Γ′  point,  together  with  the  rising  out-of-plane  uniform
+zero-field ground state is KQSL. Figs.9(a)-9(c) display                          magnetization associated with theΓpoint, convincingly
+the SSSFs ath= 0.6 for spin components alonga[11                  ¯2],           verifies the formation of the spin-flop phase.
+b[  ¯110], andc[111], respectively.  The out-of-plane SSSFs                         The  coexistence  of  transverse  and  longitudinal  mag-
+exhibits a dominant peak at the Γ point, whereas the in-                         netizations in the spin-flop phase may contribute to the
+plane SSSFs have the same intensity and peak at the Γ′                           creation  of  different  magnetic  excitations.   To  measure
+point.  These magnetization behaviors demonstrate that                           the possible multiple excitations,  we here calculate the
+the spins of the two sublattices are antiparallel when pro-                      specific heatC        v  and the thermal entropySat the rep-
+jected onto the honeycomb plane, while exhibiting equal                          resentative  point  (ϕ/π, h)  =  (0.06,0.6)  in  the  spin-flop
+canting angles toward thec-axis.  Next, we calculate the                         phase. As can be seen in Fig.10, the specific heat exhibits
+                                                                                                                                                      9
+
+                                                                              sitive probes of QPTs. For the AFM Kitaev model in the
+                                                                              external magnetic field, we discover a scalar chiral phase
+                                                                              and two vector chiral phases with different ground-state
+                                                                              degeneracy at the intermediate region.  In particular, the
+                                                                              regime of the vector chiral phases shrinks considerably as
+                                                                              the Γ term increases, implying that careful attention is
+                                                                              required to confirm its existence reliably.  For the mod-
+                                                                              erate Γ interaction,  we identify a proximate QSL char-
+                                                                              acterized by high TEE and three-peak specific heat at a
+                                                                              low magnetic field. However, its nature is still elusive and
+                                                                              deserves further study.  We also disclose a field-revealed
+                                                                              spin-flop  phase in  a  wide  parameter  range.   It is  inter-
+                                                                              esting  to  note  that  the  spin-flop  phase  exhibits  double
+                                                                              peaks in its specific heat and has a logarithmic temper-
+FIG. 10:  The specific heatC        v  (left axis, solid line) and the        ature scaling between the two characteristic peaks.  Our
+thermal  entropyS(right  axis,  dotted  line)  at  the  parame-               work provides a roadmap towards exploring the dynam-
+ter points (ϕ/π=  0.06,h=  0.6).   In the specific heat,  the                 ical and thermal magnetic properties of novel phases in
+low-temperature asymptotic behavior (e −0.012937/T             /T 1/2   , red Kitaev antiferromagnets and candidate materials.
+belt) and a logarithmic scaling behavior (0.017 lnT+ 0.129,
+orange belt) in the middle temperature region are plotted.
+
+
+two well-separated peaks at different temperature scales,
+in which the low temperature is two orders smaller than
+the  high  one.   Although  the  low  temperature  is  small,
+posing experimental challenges, the peak is nevertheless
+robust with a high intensity.  For the 24-site cluster, we
+find that the low-temperature specific heat behaves ap-
+proximately asC    v ≃e   −∆   s/T /T αs  with ∆s ≈0.012937
+being the excitation gap andα       s = 1/2.  In addition, the
+specific heat exhibits a logarithmic temperature depen-
+dence within the intermediate regime bounded by the two
+characteristic peaks. This logarithmic scaling behavior is
+a hallmark signature of the well-known superfluid phase.
+Indeed, the correspondence between the spin-flop phase
+and  the  superfluid  phase  has  been  demonstrated  in  an
+analogous spin-orbit coupled model [71].  The distinction
+between the two spin-flop phases manifests in the rela-
+tive alignment of their in-plane spin components: parallel
+(ferromagnetic spin-flop phase) versus antiparallel (anti-                    FIG. 11: (a) A 24-site cluster withC          6 symmetry under PBCs.
+ferromagnetic spin-flop phase) configurations [72].                           (b) A 2×4×3 torus with PBCs.  TheX,Y, andZbonds
+  Our results incidentally clarify that the appearance of                     are  represented  by  red,  green,  and  blue  line  segments,  re-
+double peaks in the specific heat cannot serve as defini-                     spectively.  Open circles denote even sites, while filled circles
+tive evidence for QSLs, contrary to some previous claims                      denote odd sites.
+in  the  literature  [73].   This  perspective  is  further  sup-
+ported by recent work on the frustrated quantum mag-
+net  Cs2RuO4,  where  similar  double-peak  features  were
+unambiguously identified in the spin-flop phase [74].                                                 Acknowledgments
+
+
+                     IV.   CONCLUSION                                            We are grateful to Z. Zhou, S. Feng, K. Wang, and H.-
+                                                                              Q. Wu for insightful discussions. Q.L. is supported by the
+                                                                              National Natural Science Foundation of China (Grants
+  In  conclusion,   we  have  presented  a  rich  quantum                     No.  12304176 and No.  12247183), the Beijing National
+phase  diagram  containing  several  intriguing  QSLs  and                    Laboratory  for  Condensed  Matter  Physics  (Grant  No.
+symmetry-breaking   phases   of   the   spin-1/2   Kitaev-Γ                   2025BNLCMPKF022),  and  the  Natural  Science  Foun-
+model in a [111] magnetic field on a honeycomb lattice.                       dation  of  Jiangsu  Province  (Grant  No.   BK20220876).
+By  using  ED  calculation  on  a  24-site  cluster,  we  have                X.W.  is  supported  by  the  National  Program  on  Key
+demonstrated that theZ      2 flux density and TEE are sen-                   Research  Project  (Grant  No.   MOST2022YFA1402701)
+                                                                                                                                                    10
+
+and the National Natural Science Foundation of China                          ral phase clearly displays large vector chirality order pa-
+(Grants No. 12574163). S.L. and H.W. are supported by                         rameters, allowing for a clear identification of the phase
+the  Postgraduate  Research  &  Practice  Innovation  Pro-                    boundaries between the KQSL and the scalar chiral and
+gram  of  Jiangsu  Province  (Grants  No.   xcxjh20242110                     PQSL phases. The spin-flop and vector chiral phases can
+and  No.   xcxjh20242107).   The  computations  are  par-                     also be readily distinguished from other phases.  Never-
+tially supported by High Performance Computing Plat-                          theless, the vector chirality order parameter remains in-
+form of Nanjing University of Aeronautics and Astronau-                       sufficient for distinguishing between the scalar chiral and
+tics. Some physical quantities are obtained by employing                      PQSL phases.  This suggests that the PQSL phase may
+the  open-source  exact  diagonalization  software  package                   also host finite scalar and/or vector chiralities, rendering
+HΦ[62,63].                                                                    it difficult to accurately map out the full phase diagram
+                                                                              using scalar or vector chirality order parameters alone.
+
+                    DATA AVAILABILITY
+
+  The data that support the findings of this article are
+openly available [75].
+
+
+  Appendix A: Implementation of PBCs for Lattice
+    and Additional Information on Phase Diagram
+
+  To begin with, in Fig.11we present the two lattice
+geometries employed in our calculations, together with a
+detailed description of the implementation of PBCs.
+
+
+                                                                              FIG. 13: Illustration of the convergence behavior of the order
+                                                                              parametersO                    xC3 (red circles),O              yC3 (green triangles), andO       zC3
+                                                                              (blue squares) with respect to the energy convergence toler-
+                                                                              anceϵof (a) the first and (b) the third energy level at the
+                                                                              representative point (ϕ/π= 0.01, h= 0.01).
+
+
+
+
+                                                                                    Appendix B: Spurious Lattice Nematicity in
+                                                                                                       Low-Field KQSL
+
+                                                                                 The  lattice  nematicity  results  from  the  breaking  of
+FIG. 12:  (a) Phase diagram constructed from the scalar spin                  lattice-rotational symmetry and can be detected through
+chirality defined in Eq. (9).  (b) Phase diagram constructed                  differences  in  the  bond  energyE            γ  = 
+H⟨i,j⟩      γ,  where
+from the vector spin chirality defined in Eq. (11).                           γ∈x, y, zdenotes the bond type.  WhenC                   3  symmetry
+                                                                              is broken, the bond energiesE               γ  become distinct across
+  We then show the density plots of the scalar and vec-                       different bond types.  To quantify this, we define aC  3-
+tor spin chiralities,  as illustrated in Fig.12.  It should                   symmetry-breaking order parameter for each bond type
+be  noted  that,  due  to  limitations  in  computational  re-                γasO      γC3, which measures the deviation ofE    γ  from the
+sources,  the  spatial  resolution  of  these  density  maps  is              average bond energy of the system [43].  Explicitly,  for
+finite.   As  shown  in  Fig.12(a),  the  phase  boundaries                   eachγ, the order parameter is given by
+between the KQSL and the scalar chiral phase, between                                         Oγ                  Ex +E   y +E   z.           (B1)
+the scalar chiral and vector chiral phases, as well as those                                     C3 =E   γ − 13
+separating the spin-flop and polarized phases, can be rel-
+atively easily identified. However, the boundary between                         In the low-field KQSL, the ground state exhibits quasi-
+the scalar chiral phase and the spin-flop phase is difficult                  threefold degeneracy. Due to the significantly slower con-
+to distinguish solely using the scalar chirality order pa-                    vergence of eigenstates compared to eigenvalues, the val-
+rameter.  Moreover, in both the scalar chiral and PQSL                        ues of the nematic order parametersO                     γC3  vary consider-
+phases, the scalar chirality order parameter exhibits both                    ably depending on the convergence criterion set by the
+positive  and  negative  values,  indicating  a  pronounced                   numerical order of the energy levels.  Taking the repre-
+spatial  inhomogeneity.   In  Fig.12(b),  the  vector  chi-                   sentative point (ϕ/π, h) = (0.01,0.01) as an example, we
+                                                                                                                                                        11
+
+examine the convergence behavior of the three nematic
+order  parametersO                     γC3  with  respect  to  the  convergence
+tolerance  of  the  first  [Fig.13(a)]  and  the  third  energy
+level [Fig.13(b)].  As the numerical precision approaches
+the machine epsilon (approximately 2.22×10         −16   in C++
+using double-precision arithmetic), the values ofO    γC3 re-
+main finite in Fig.13(a), whereas they gradually decrease
+and become vanishingly small in Fig.13(b). These results
+indicate that the observed lattice nematicity in the low-
+field KQSL is not physical, but rather a spurious effect
+arising from ground-state degeneracy and finite numeri-
+cal precision.
+
+
+
+        Appendix C: Evolution and Instability of
+           Intermediate Phases with Field Tilt
+
+   As revealed by our high-precision and high-resolution
+ED calculation of the AFM Kitaev model in a [111] mag-
+netic field on theC      6-symmetric 24-site cluster [see Fig.                  FIG. 14:  (a) Flux density       Wp versus magnetic field strength
+11(a)], the intermediate region, which is sandwiched be-                        hfor various deviation anglesϑ.  The angleϑis defined as
+tween the KQSL and the polarized phase, contains three                          the tilt of the magnetic field away from thec-axis within the
+different phases.  Among these, apart from a wide scalar                        bcplane.   (b)  Phase  diagram  in  the  parameter  space  ofh
+chiral  phase,  we  also  identify  two  vector  chiral  phases                 andϑ.  The regions labeledκ                2v  andκ      3v  correspond to vector
+with distinct ground-state degeneracy.  In contrast, in a                       chiral phases with ground-state degeneracies of two and three,
+similar ED study by Hickey and Trebst [31], they discov-                        respectively.
+ered the emergence of aU(1) QSL in the nearly same re-
+gion of the scalar chiral phase. Nonetheless, they did not                      vital importance of precise control and theoretical exam-
+report the existence of vector chiral phases.  In addition,                     ination of magnetic field orientation when exploring the
+they found that the intermediate phase survives against                         precise phase diagram of Kitaev materials.
+the  tilted  magnetic  fields  at  least  for  small  tilt  angles.
+In fact, although the phase diagram in Ref. [31] encom-
+passes the [111] direction, the main results presented in                           Appendix D: Unveiling an Overlooked Narrow
+that work—such as flux density           Wp, ground-state fidelity,                              Phase on the2×4×3Torus
+and the second derivative of the energy—were computed
+for representative directions tilted away fromc[111] axis                          In addition to theC      6-symmetric 24-site cluster, there
+towardsb[         ¯110] axis with different deviation angles such               are also several ED studies of the AFM Kitaev model in
+asϑ= 7.5        ◦.                                                              a [111] magnetic field on the 2×4×3 torus, as depicted
+   To systematically investigate this field-directional de-                     in Fig.11(b). These studies coincidentally identify a sole
+pendence,  we  performed  a  high-resolution  scan  of  the                     intermediate phase. However, in contrast to the low-field
+magnetic field orientation within theb[       ¯110]–c[111] plane,               QPT ath    lt ≈0.365, the high-field QPT nearh               ht ≈0.620,
+varying the deviation angle from thec-axis continuously                         as identified via magnetic susceptibility [30] or topologi-
+from 0◦ to 7.5   ◦.  Multiple diagnostic quantities including                   cal entanglement entropy [32], appears somewhat broad-
+the  flux  density    Wp  were  computed  concurrently.   The                   ened,  suggesting the potential for a narrow intervening
+results reveal that the intermediate-field region exhibits                      phase.  For the torus geometry considered here, Wilson
+a strong dependence on the deviation angle: it splits into                      loop operators provide a convenient and efficient means
+three distinct phases for angles below approximately 4.0   ◦,                   of detecting QPTs. Thus, the purpose of this Appendix is
+merges into two phases within the 4.0   ◦–5.0    ◦  range, and                  to investigate the possible existence of such an additional
+finally  collapses  into  a  single  phase  once  the  deviation                phase.
+exceeds about 5.0   ◦.  The evolution of          Wp with magnetic                 As shown in the inset of Fig.15(a), the Wilson loop
+field  strength  across  different  deviation  angles  is  illus-               operatorsW             y andW       z are defined as
+trated in Fig.14(a), while the corresponding phase di-
+agram  in  the  (h, ϑ)  plane  is  presented  in  Fig.14(b).                                           D 2L  yY   E              D 2L  zY  E
+Hence,  our work reveals that in the immediate vicinity                                      Wy =−             σyi  ,  Wz =−            σzi  .       (D1)
+of the [111] direction, the ground state exhibits extreme                                                 i=1                      i=1
+sensitivity to tiny deviations and hosts a more complex
+multiphase structure.   This outcome clarifies seemingly                        whereσ           y andσ       z are Pauli matrices satisfying ˆS=     ℏ2ˆσ=
+inconsistent findings in the literature and underscores the                     ℏ
+                                                                                2(σ  x, σy, σz).   In  the  zero-field  Kitaev  limit,  it  can  be
+                                                                                                                                                              12
+
+                                                                                   readily  verified  that  these  Wilson  loop  operators  com-
+                                                                                   mute with  the Hamiltonian,  and  their eigenvalues  take
+                                                                                   values  of±1  [30].   As  indicated  by  the  red  circles  in
+                                                                                   Fig.15(a),W                  y starts from an initial value of−1, exhibits
+                                                                                   the first abrupt change ath    lt ≈0.365, followed by a sec-
+                                                                                   ond abrupt change ath    mt  ≈0.595, and finally enters the
+                                                                                   polarized phase ath    ht  ≈0.620.  Similar abrupt changes
+                                                                                   are observed in theW      z curve [blue squares in Fig.15(a)],
+                                                                                   confirming  the  existence  of  two  intermediate  phases  in
+                                                                                   the  range  ofh∈(0.365,0.595)  and  (0.595,0.620).   We
+                                                                                   note that the Wilson loop calculation by Zhuet al.[30],
+                                                                                   which  is  limited  to  fields  up  toh≃0.5,  places  the
+                                                                                   low-field  QPT  ath    lt ≈0.2    √3≈0.346,  a  value  consis-
+                                                                                   tent with our result.  To clarify the nature of these two
+                                                                                   phases,  we computed the scalar chiral order parameter
+                                                                                   (χ  s)  and  the  vector  chiral  order  parameter  (κ  v).   It  is
+                                                                                   observed from Fig.15(b) thatχ                   s andκ       v are pronounced
+                                                                                   in the first and second intermediate phases, respectively.
+                                                                                   Our results thus highlight the existence of a narrow vec-
+                                                                                   tor chiral phase which was overlooked previously.  This
+FIG. 15:  (a)W     y  (left axis,  red circles) andW       z  (right axis,         omission may be attributed to the notably narrow extent
+blue squares) as a function of the magnetic fieldh.  The inset                     of the phase and the restricted resolution of previously
+depicts the construction ofW   y andW       z.  (b) The scalar chiral              employed  diagnostics,  highlighting  the  challenge  in  de-
+order parameterχ                  s (left axis) and the vector chiral order pa-    tecting delicate yet potentially crucial states in quantum
+rameterκ              v (right axis) as a function ofh.                            phase diagrams.
+
+
+
+
+
+
+
+ [1]O.  A.  Starykh,  Unusual  ordered  phases  of  highly  frus-                        Wolter, S. Nishimoto, J. van den Brink, and B. B¨uchner,
+     trated magnets:  a review,Rep. Prog. Phys.78, 052502                                Evidence  for  a  Field-Induced  Quantum  Spin  Liquid  in
+     (2015).                                                                             α-Rucl   3,Phys. Rev. Lett.119, 037201 (2017).
+ [2]Q. Cui, L. Wang, Y. Zhu, J. Liang, and H. Yang, Mag-                           [10]I. A. Leahy, C. A. Pocs, P. E. Siegfried, D. Graf, S.-H.
+     netic anisotropy, exchange coupling and Dzyaloshinskii-                             Do,  K.-Y. Choi,  B. Normand,  and M. Lee,  Anomalous
+     Moriya  interaction  of  two-dimensional  magnets,Front.                            Thermal Conductivity and Magnetic Torque Response in
+     Phys.18, 13602 (2023).                                                              the Honeycomb Magnetα-Rucl                    3,Phys. Rev. Lett.118,
+ [3]I. Rousochatzakis, N. B. Perkins, Q. Luo, and H.-Y. Kee,                             187203 (2017).
+     Beyond Kitaev physics in strong spin-orbit coupled mag-                       [11]J. Zheng, K. Ran, T. Li, J. Wang, P.-S. Wang, B. Liu,
+     nets,Rep. Prog. Phys.87, 026502 (2024).                                             Z.-X. Liu, B. Normand, J. Wen, and W. Yu, Anomalous
+ [4]Q. Luo, J. Zhao, and X. Wang, Interplay of Kitaev Inter-                             Thermal Conductivity and Magnetic Torque Response in
+     action and Off-Diagonal Exchanges:  Exotic Phases and                               the Honeycomb Magnetα-RuCl                    3,Phys. Rev. Lett.119,
+     Quantum Phase Diagrams,Chin. Phys. Lett.42, 027501                                  227208 (2017).
+     (2025).                                                                       [12]A.  Banerjee,  P.  Lampen-Kelley,  J.  Knolle,  C.  Balz,  A.
+ [5]Z. Hu, Z. Ma, Y.-D. Liao, H. Li, C. Ma, Y. Cui, Y. Shang-                            A. Aczel, B. Winn, Y. Liu, D. Pajerowski, J. Yan, C. A.
+     guan, Z. Huang, Y. Qi, W. Li, Z. Y. Meng, J. Wen, and                               Bridges, A. T. Savici, B. C. Chakoumakos, M. D. Lums-
+     W. Yu,  Evidence of the Berezinskii-Kosterlitz-Thouless                             den, D. A. Tennant, R. Moessner, D. G. Mandrus, and
+     Phase in a Frustrated Magnet,Nat. Commun.11, 5631                                   S.  E.  Nagler,  Excitations  in  the  field-induced  quantum
+     (2020).                                                                             spin liquid state ofα-RuCl       3,npj Quantum Mater.3, 8
+ [6]H. Li, Y. D. Liao, B.-B. Chen, X.-T. Zeng, X.-L. Sheng,                              (2018).
+     Y. Qi, Z. Y. Meng , and W. Li, Kosterlitz-Thouless melt-                      [13]X.-G. Zhou, H. Li, Y. H. Matsuda, A. Matsuo, W. Li, N.
+     ing  of  magnetic  order  in  the  triangular  quantum  Ising                       Kurita, G. Su, K. Kindo, and H. Tanaka, Possible Inter-
+     material TmMgGaO4,Nat. Commun.11, 1111 (2020).                                      mediate Quantum Spin Liquid Phase inα-RuCl        3  under
+ [7]S.  M¨uhlbauer,  B.  Binz,  F.  Jonietz,  C.  Pfleiderer,  A.                        High Magnetic Fields up to 100 T,Nat. Commun.14,
+     Rosch, A. Neubauer, R. Georgii, and P. B¨oni, Skyrmion                              5613 (2023).
+     Lattice in a Chiral Magnet,Science323, 915-919(2009).                         [14]A. Kitaev,  Anyons in an exactly solved model and be-
+ [8]S.  D.  Yi,   S.  Onoda,   N.  Nagaosa,   and  J.  H.  Han,                          yond,Ann. Phys. (NY)321, 2 (2006).
+     Skyrmions and anomalous Hall effect in a Dzyaloshinskii-                      [15]G.  Jackeli,  and  G.  Khaliullin,  Mott  Insulators  in  the
+     Moriya spiral magnet,Phys. Rev. B80, 054416 (2009).                                 Strong Spin-Orbit Coupling Limit: From Heisenberg to a
+ [9]S.-H. Baek, S.-H. Do, K.-Y. Choi, Y. S. Kwon, A. U. B.                               Quantum Compass and Kitaev Models,Phys. Rev. Lett.
+                                                                                                                                                            13
+
+     102, 017205 (2009).                                                                245104 (2011).
+[16]F.  Ye,  S.  X.  Chi,  H.  B.  Cao,  B.  C.  Chakoumakos,  J.                 [30]Z. Zhu, I. Kimchi, D. N. Sheng, and L. Fu, Robust non-
+     A. Fernandez-Baca, R. Custelcean, T. F. Qi, O. B. Kor-                             Abelian spin liquid and a possible intermediate phase in
+     neta, and G. Cao, Direct evidence of a zigzag spin-chain                           the antiferromagnetic Kitaev model with magnetic field,
+     structure in the honeycomb lattice: A neutron and x-ray                            Phys. Rev. B97, 241110(R) (2018).
+     diffraction investigation of single-crystal Na2IrO3,Phys.                    [31]C.  Hickey,  and  S.  Trebst,  Emergence  of  a  field-driven
+     Rev. B.85, 180403 (2012).                                                          U(1)  spin  liquid  in  the  Kitaev  honeycomb  model,Nat.
+[17]S. K. Choi, R. Coldea, A. N. Kolmogorov, T. Lancaster,                              Commun.10, 530 (2019).
+     I.  I.  Mazin,  S.  J.  Blundell,  P.  G.  Radaelli,  Y.  Singh,             [32]D. C. Ronquillo, A. Vengal, and N. Trivedi, Signatures
+     P. Gegenwart,  K. R. Choi,  S.-W. Cheong,  P. J. Baker,                            of magnetic-field-driven quantum phase transitions in the
+     C. Stock, and J. Taylor, Spin Waves and Revised Crys-                              entanglement entropy and spin dynamics of the Kitaev
+     tal Structure of Honeycomb Iridate Na2IrO3,Phys. Rev.                              honeycomb model,Phys. Rev. B99, 140413(R) (2019).
+     Lett.108, 127204 (2012).                                                     [33]M. Gohlke,  R. Moessner,  and F. Pollmann,  Dynamical
+[18]J. G. Rau,  E. K.-H. Lee,  and H.-Y. Kee,  Generic Spin                             and topological properties of the Kitaev model in a [111]
+     Model  for  the  Honeycomb  Iridates  beyond  the  Kitaev                          magnetic field,Phys. Rev. B98, 014418 (2018).
+     Limit,Phys. Rev. Lett., 077204 (2014).112                                    [34]N. D. Patel, and N. Trivedi, Magnetic field-induced inter-
+[19]J. A. Sears,  M. Songvilay,  K. W. Plumb,  J. P. Clancy,                            mediate quantum spinliquid with a spinon Fermi surface,
+     Y. Qiu, Y. Zhao, D. Parshall, and Y.-J. Kim, Magnetic                              Proc. Natl. Acad. Sci. USA116, 12199 (2019).
+     order inα-Rucl       3:  A honeycomb-lattice quantum magnet                  [35]S.-S. Zhang, G. B. Hal´asz, and C. D. Batista, Theory of
+     with strong spin-orbit coupling,Phys. Rev. B91, 144420                             the Kitaev model in a [111] magnetic field,Nat. Commun.
+     (2015).                                                                            13, 399 (2022).
+[20]H.-S. Kim, V. S. V., A. Catuneanu, and H.-Y. Kee, Ki-                         [36]K. Wang, S. Feng, P. Zhu, R. Chi, H.-J. Liao, N. Trivedi,
+     taev magnetism in honeycomb RuCl3 with intermediate                                and T. Xiang, Fractionalization signatures in the dynam-
+     spin-orbit coupling,Phys. Rev. B91, 241110(R) (2015).                              ics of quantum spin liquids,Phys. Rev. B111, L100402
+[21]R.  D.  Johnson,  S.  C.  Williams,  A.  A.  Haghighirad,  J.                       (2025).
+     Singleton,  V.  Zapf,  P.  Manuel,  I.  I.  Mazin,  Y.  Li,  H.              [37]P.  Zhu,  S.  Feng,  K.  Wang,  T.  Xiang,  and  N.  Trivedi,
+     O.  Jeschke,  R.  Valent´l,  and  R.  Coldea,  Magnetic  or-                       Emergent  quantum  Majorana  metal  from  a  chiral  spin
+     der inα-RuCl       3:  A honeycomb-lattice quantum magnet                          liquid,Nat. Commun.16, 2420 (2025).
+     with strong spin-orbit coupling,Phys. Rev. B92, 235119                       [38]M.-H.  Jiang,  S.  Liang,  W.  Chen,  Y.  Qi,  J.-X.  Li,  and
+     (2015).                                                                            Q.-H.  Wang,  Tuning  Topological  Orders  by  a  Conical
+[22]H. Liu, and G. Khaliullin, Pseudospin exchange interac-                             Magnetic Field in the Kitaev Model,Phys. Rev. B125,
+     tions ind    7 cobalt compounds:  Possible realization of the                      177203 (2020).
+     Kitaev model,Phys. Rev. B97, 014407 (2018).                                  [39]C. Chen and I. S. Villadiego, Anyon polarons as a window
+[23]W. Yao and Y. Li, Ferrimagnetism and anisotropic phase                              into competing phases of the Kitaev honeycomb model
+     tunability by magnetic fields in Na2Co2TeO6,Phys. Rev.                             under a Zeeman field,Phys. Rev. B111, 245140 (2025).
+     B101, 085120 (2020).                                                         [40]W. Holdhusen, D. Huerga, and G. Ortiz, Emergent mag-
+[24]G. Lin, J. Jeong, C. Kim, Y. Wang, Q. Huang, T. Ma-                                 netic order  in the  antiferromagnetic Kitaev  model  in a
+     suda, S. Asai, S. Itoh, G. G¨unther, M. Russina, Z. Lu, J.                         [111] field,Phys. Rev. B109, 174411 (2024).
+     Sheng, L. Wang, J. Wang, G. Wang, Q. Ren, C. Xi, W.                          [41]Y. Matsuda, T. Shibauchi, H.-Y. Kee, Kitaev Quantum
+     Tong, L. Ling, Z. Liu, L. Wu, J. Mei, Z. Qu, H. Zhou,                              Spin Liquids,arXiv:2501.05608.
+     X. Wang, J.-G. Park, Y. Wan, and J. Ma, Field-induced                        [42]W. Wang, Z.-Y. Dong, S.-L. Yu, and J.-X. Li, Theoretical
+     quantum  spin  disordered  state  in  spin-1/2  honeycomb                          investigation  of  magnetic  dynamics  inα-RuCl        3, Phys.
+     magnet Na2Co2TeO6,Nat. Commun.12, 5559 (2021).                                     Rev. B96, 115103 (2017).
+[25]X. Li,  Y. Gu,  Y. Chen,  V. O. Garlea,  K. Iida,  K. Ka-                     [43]M.  Gohlke,  L.  E.  Chern,  H.-Y.  Kee,  and  Y.  B.  Kim,
+     mazawa, Y. Li, G. Deng, Q. Xiao, X. Zheng, Z. Ye, Y.                               Emergence  of  nematic  paramagnet  via  quantum  order-
+     Peng, I. A. Zaliznyak, J. M. Tranquada, and Y. Li, Giant                           by-disorder and pseudo-Goldstone modes in Kitaev mag-
+     Magnetic In-Plane Anisotropy and Competing Instabili-                              nets,Phys. Rev. Research2, 043023 (2020).
+     ties in Na3Co2SbO6,Phys. Rev. X12, 041024 (2022).                            [44]J. Wang, B. Normand, and Z.-X. Liu, One Proximate Ki-
+[26]J. Jiao, X. Li, G. Lin, M. Shu, W. Xu, O. Zaharko, T.                               taev Spin Liquid in theK-J-Γ Model on the Honeycomb
+     Shiroka, T. Hong, A. I. Kolesnikov, G. Deng, S. Dunsiger,                          Lattice,Phys. Rev. Lett.123, 197201 (2019).
+     M. C. Aronson, H. Zhou, X. Wang, T. Shang, and J. Ma,                        [45]H.-Y. Lee, R. Kaneko, L. E. Chern, T. Okubo, Y. Yamaji,
+     Static magnetic order with strong quantum fluctuations                             N. Kawashima, and Y. B. Kim, Magnetic field induced
+     in spin-1/2 honeycomb magnet Na2Co2TeO6, Commun                                    quantum phases in a tensor network study of Kitaev mag-
+     Mater5, 159 (2024).                                                                nets,Nat. Commun.11, 1639 (2020).
+[27]Y. Sugita, Y. Kato, and Y. Motome, Antiferromagnetic                          [46]Q. Luo, J. Zhao, J. Li, and X. Wang, Chiral spin state
+     Kitaev  interactions  in  polar  spin-orbit  Mott  insulators,                     and  nematic  ferromagnet  in  the  spin-1  Kitaev-model,
+     Phys. Rev. B101, 100410(R) (2020).                                                 Phys. Rev. B110, 035121 (2024).
+[28]L.-H. Xia, Y.-P. Gao, Z.-Y. Dong, and J.-X. Li, Ligand-                       [47]Z. Zou and Q. Luo, High Chern numbers and topological
+     SOC enhanced 4f   5 Kitaev antiferromagnet:  Application                           flat bands in high-field polarized Kitaev magnets on the
+     to SmI3,arXiv:2505.18616.                                                          star lattice,Phys. Rev. B112, 054409 (2025).
+[29]H.-C.  Jiang,  Z.-C.  Gu,  X.-L.  Qi,  and  S.  Trebst,  Possi-               [48]I. Rousochatzakis, Interplay between classical and quan-
+     ble proximity of the Mott insulating iridate Na2IrO3  to                           tum spin  liquids  in the spin-1/2  Kitaev-Gamma  model
+     a  topological  phase:  Phase  diagram of  the  Heisenberg-                        on the honeycomb lattice,KITP Program:  A New Spin
+     Kitaev  model  in  a  magnetic  field,Phys.  Rev.  B83,                            on Quantum Magnets (Jul. 17 - Sep. 8, 2023).
+                                                                                                                                                            14
+
+[49]W.  Yang,  A.  Nocera,  T.  Tummuru,  H.-Y.  Kee,  and  I.                          pled honeycomb magnets,Phys. Rev. Research4, 013062
+     Affleck, Phase Diagram of the Spin-1/2 Kitaev-Gamma                                (2022).
+     Chain and Emergent SU(2) Symmetry,Phys. Rev. Lett.                           [65]P. Laurell, and S. Okamoto, Dynamical and thermal mag-
+     124, 147205 (2020).                                                                netic  properties  of  the  Kitaev  spin  liquid  candidateα-
+[50]Q. Luo, J. Zhao, X. Wang, and H.-Y. Kee, Unveiling the                              RuCl3,npj Quantum Mater.5, 2 (2020).
+     phase diagram of a bond-alternating spin- 12  K-Γ chain,                     [66]E. R. Gagliano, and C. A. Balseiro, Dynamical Properties
+     Phys. Rev. B103, 144423 (2021).                                                    of Quantum Many-Body Systems at Zero Temperature,
+[51]Q. Luo, S. Hu, and H.-Y. Kee, Unusual excitations and                               Phys. Rev. Lett.59, 2999 (1987).
+     double-peak  specific  heat  in  a  bond-alternating  spin-1                 [67]Z.  Yu,  H.  Ding,  K.  Zhai,  C.  Mu,  A.  Nie,  J.  Cong,  J.
+     chain,Phys. Rev. Research3, 033048 (2021).                                         Huang, H. Zhou, Q. Wang, F. Wen, J. Xiang, B. Wang,
+[52]E. S. Sørensen, A. Catuneanu, J. S. Gordon, and H.-Y.                               T. Xue, Z. Zeng, and Z. Liu, Crystal structure, spin flop
+     Kee,  Heart of Entanglement:  Chiral,  Nematic,  and In-                           transition, and magnetoelectric effect in the honeycomb-
+     commensurate Phases in the Kitaev-Γ Ladder in a Field,                             lattice frustrated Fe-doped Ni2Mo3O8 antiferromagnets,
+     Phys. Rev. X11, 011013 (2021).                                                     Phys. Rev. B109, 024442 (2024).
+[53]E. S. Sørensen, and H.-Y. Kee, Twice hidden string order                      [68]X. Huang, P. Ma, M. Huo, C. Huang, H. Sun, X. Chen, S.
+     and  competing  phases  in  the  spin-1/2  Kitaev–Gamma                            Deng, L. He, Tao Xie, Z. He, and M. Wang, Ground state
+     ladder,npj Quantum Mater.9, 10 (2024).                                             and magnetic transitions of the orthorhombic antiferro-
+[54]Q. Luo, J. Zhao, H.-Y. Kee, and X. Wang, Gapless quan-                              magnet CaCo2TeO6,Phys. Rev. B111, 094434 (2025).
+     tum spin liquid in a honeycomb Γ magnet,npj Quantum                          [69]Y. Shangguan, S. Bao, Z.-Y. Dong, N. Xi, Y.-P. Gao, Z.
+     Mater.6, 57 (2021).                                                                Ma,  W. Wang,  Z. Qi,  S. Zhang,  Z. Huang,  J. Liao,  X.
+[55]S. Feng, A. Agarwala, S. Bhattacharjee, and N. Trivedi,                             Zhao,  B. Zhang,  S. Cheng,  H. Xu,  D. Yu,  R. A. Mole,
+     Anyon dynamics in field-driven phases of the anisotropic                           N. Murai, S. O.-Kawamura, L. He, J. Hao, Q.-B. Yan, F.
+     Kitaev model,Phys. Rev. B108, 035149 (2023).                                       Song, W. Li, S.-L. Yu, J.-X. Li , and J. Wen, A one-third
+[56]A. Kitaev, and J. Preskill, Topological Entanglement En-                            magnetization plateau phase as evidence for the Kitaev
+     tropy,Phys. Rev. Lett.96, 110404 (2006).                                           interaction in a honeycomb-lattice antiferromagnet,Nat.
+[57]J. Knolle, D. L. Kovrizhin, J. T. Chalker, and R. Moess-                            Phys.19, 1883–1889 (2023).
+     ner, Dynamics of a Two-Dimensional Quantum Spin Liq-                         [70]J.  Khatua,  M.  Gomilˇsek,  K.-Y.  Choi,  and  P.  Khuntia,
+     uid:   Signatures  of  Emergent  Majorana  Fermions  and                           Magnetism and field-induced effects in theS=             52  hon-
+     Fluxes,Phys. Rev. Lett.112, 207203 (2014).                                         eycomb lattice antiferromagnet FeP3SiO11,Phys. Rev. B
+[58]J. Knolle, D. L. Kovrizhin, J. T. Chalker, and R. Moess-                            110, 184402 (2024).
+     ner, Dynamics of fractionalization in quantum spin liq-                      [71]Q. Luo, and H.-Y. Kee, Interplay of magnetic field and
+     uids,Phys. Rev. B92, 115127 (2015).                                                trigonal  distortion  in  the  honeycomb  Γ  model:  Occur-
+[59]J.  Nasu,  M.  Udagawa,  and  Y.  Motome,  Thermal  frac-                           rence  of  a  spin-flop  phase,Phys.  Rev.  B105,  174435
+     tionalization   of   quantum   spins   in   a   Kitaev   model:                    (2022).
+     Temperature-linear specific heat and coherent transport                      [72]X. Li, J. Zhao, J. Li, and Q. Luo, Successive topological
+     of Majorana fermions,Phys. Rev. B92, 115122 (2015).                                phase transitions in two distinct spin-flop phases on the
+[60]M. Kurita, Y. Yamaji, S. Morita, and M. Imada, Varia-                               honeycomb lattice,Phys. Rev. B111, 064416 (2025).
+     tional Monte Carlo method in the presence of spin-orbit                      [73]C. Xu, J. Feng, M. Kawamura, Y. Yamaji, Y. Nahas, S.
+     interaction  and  its  application  to  Kitaev  and  Kitaev-                       Prokhorenko, Y. Qi, H. Xiang, and L. Bellaiche, Possible
+     Heisenberg models,Phys. Rev. B92, 035122 (2015).                                   Kitaev Quantum Spin Liquid State in 2D Materials with
+[61]S.  Sugiura,  and  A.  Shimizu,  Canonical  Thermal  Pure                           S= 3/2,Phys. Rev. Lett.124, 087205 (2020).
+     Quantum State,Phys. Rev. Lett.111, 010401 (2013).                            [74]S.  D.  Nabi,  M.  Zhu,  K.  Yu.  Povarov,  D.  G.  Mazzone,
+[62]M.  Kawamura,  K.  Yoshimi,  T.  Misawa,  Y.  Yamaji,  S.                           J.  Lass,  Y.  Wu,  Z.  Yan,  S.  Gvasaliya,  and  A.  Zhe-
+     Todo, and N. Kawashima, Quantum lattice model solver                               ludev, Spin-flop-like transition as quantum critical point
+     Hϕ,Comput. Phys. Commun.217, 180 (2017).                                           in Cs2RuO4,arXiv:2507.19853.
+[63]K.  Ido,  M.  Kawamura,  Y.  Motoyama,  K.  Yoshimi,  Y.                      [75]S.   Liu,   H.   Wu,   J.   Li,   X.   Wang,   and   Q.   Luo,
+     Yamaji, S. Todo, N. Kawashima, and T. Misawa, Update                               Data   repository   for   “Emergence   of   quantum   spin
+     ofHϕ:  Newly added functions and methods in versions                               liquid   and   spin-flop   phase   in   Kitaev   antiferromag-
+     2 and 3r ,Comput. Phys. Commun.298, 109093 (2024).                                 nets   in   a   [111]   magnetic   field”,    Zenodo   (2025).
+[64]Q.  Luo,  P.  P.  Stavropoulos,  J.  S.  Gordon,  and  H.-Y.                        https://doi.org/10.5281/zenodo.17769428.
+     Kee, Spontaneous chiral-spin ordering in spin-orbit cou-

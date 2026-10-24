@@ -1,0 +1,833 @@
+          Density matrix renormalization group boosted by Gutzwiller projected wave functions
+
+                                                Hui-Ke  Jin,1  Hong-Hao  Tu,2,∗  and  Yi  Zhou1, 3, 4,†
+  1Beijing National Laboratory for Condensed Matter Physics & Institute of Physics, Chinese Academy of Sciences, Beijing 100190, China
+                           2Institut f¨ur Theoretische Physik, Technische Universit¨at Dresden, 01062 Dresden, Germany
+                                  3Songshan Lake Materials Laboratory,  Dongguan,  Guangdong 523808,  China
+                 4Kavli Institute for Theoretical Sciences & CAS Center for Excellence in Topological Quantum Computation,
+                                         University of Chinese Academy of Sciences,  Beijing 100190,  China
+                                                                    (Dated: May 5, 2021)
+
+                    We propose to boost the performance of the density matrix renormalization group (DMRG) in two dimensions
+                 by using Gutzwiller projected states as the initialization ansatz. When the Gutzwiller projected state is properly
+                 chosen, the notorious “local minimum” issue in DMRG can be circumvented and the precision of DMRG can be
+                 improved by orders of magnitude without extra computational cost.  Moreover, this method allows to quantify
+                 the closeness of the initial Gutzwiller projected state and the ﬁnal converged state after DMRG sweeps, thereby
+                 sheds light on whether the Gutzwiller ansatz captures the essential entanglement features of the actual ground
+                 state for a given Hamiltonian. The Kitaev honeycomb model has been exploited to demonstrate and benchmark
+                 this new method.
+
+
+   Introduction.— Since its invention by White in 1992 [1,2],                      matrix  product  state  (MPO-MPS)  method.   This  completes
+the density matrix renormalization group (DMRG) has been                           the building block of initializing DMRG with Gutzwiller pro-
+recognized  as  the  most  powerful  computational  method  for                    jected states.  The accuracy of the MPO-MPS method has al-
+studying strongly correlated quantum systems in one dimen-                         ready  been  carefully  examined  for  various  one-dimensional
+sion [3–5].  Soon after that, it was realized that DMRG can                        systems [18,19].  Along this line, the present work focuses
+be  formulated  as  a  variational  method  operating  within  the                 on (i) sorting out the subtleties of the MPO-MPS method for
+family of matrix product states (MPSs) [6,7].  This discov-                        2D systems with cylindrical boundary conditions and (ii) ana-
+ery leads to a deeper and coherent understanding of the inner                      lyzing the performance of DMRG initialized with Gutzwiller
+structure of the DMRG method, as well as its potential and                         projected states.
+limitations [8,9]. For instance, it becomes clear that DMRG is                         The  Kitaev  honeycomb  model  [20],  being  a  rare  exactly
+only moderately successful when applied to two-dimensional                         solvable example in two dimensions,  is used for illustrating
+(2D) quantum systems [10]:  while relatively small systems                         our method. Our extensive analysis shows that the MPO-MPS
+can be computed with high accuracy,  the computational re-                         method,  with several subtleties taken into account,  converts
+sources  required  grow  exponentially  with  the  system  size,                   Gutzwiller projected states into MPSs with satisfactory preci-
+making  large  systems  intractable.   The  sharply  distinct  per-                sion and the performance of DMRG is dramatically improved
+formance  of  DMRG  in  one  and  two  dimensions  originates                      when  initialized  with  these  MPSs.   We  also  address  a  con-
+from the diﬀerent entanglement scaling in many-body ground                         troversial issue on the Kitaev honeycomb model with antifer-
+states with respect to spatial dimensionality,  dictated by the                    romagnetic Kitaev interactions and a magnetic ﬁeld in [111]
+so-called area law [11–13].                                                        direction. With a nonzero ﬁeld, this model is no longer exactly
+   For 2D quantum systems, the common practice of DMRG                             solvable and was claimed to support a disordered state at inter-
+is  to  consider  lattices  with  cylindrical  boundary  conditions                mediate ﬁeld strength [21–23]. We use our method to analyze
+and gradually increase the circumference of the cylinder [10].                     early proposed candidate wave functions [24,25] and found
+However,  the  convergence  of  DMRG  to  the  ground  state  is                   that although some of them describe actual ground states well
+not guaranteed due to the presence of local minima in the en-                      in both small and large ﬁeld limits, all of them seem to fail
+ergy landscape.   As a result,  the  eﬃciency and accuracy of                      in the region with intermediate ﬁeld strength, thus calling for
+DMRG  highly  depend  on  how  initial  states  are  chosen.   It                  further investigations on the nature of the ﬁeld-induced disor-
+is expected that the performance of DMRG can be improved                           dered state.
+by using some initial states that capture the essential physics.                       Method.— Throughout this work, we consider spin-1/2 lat-
+Actually, Gutzwiller projected wave functions have long been                       tice systems and Gutzwiller projected states with singly oc-
+used as variational ansatz for strongly correlated electrons and                   cupied fermionic partons at each site [see Fig.1(a)], whereas
+quantum spin systems, which have proven success in a num-                          generalizations  to  other  systems  and/or  diﬀerent  parton  de-
+ber of important instances [14–17]. This raises a very natural                     scriptions are straightforward.  Our method consists of three
+question: can one utilize Gutzwiller projected wave functions                      main steps:
+to improve the performance of DMRG?                                                    (1)  Construct  the  Gutzwiller  projected  state  as |ΨG⟩   =
+   Very  recently,  it  was  proposed  by  us  [18]  and  cowork-                   PG|Ψ0⟩,  where |Ψ0⟩  is  the  ground  (or  excited)  state  of  a
+ers  [19]  that  a  Gutzwiller  projected  state  can  be  e     ﬃciently          quadratic  Hamiltonian  for  fermionic  partons  and  PG  is  the
+represented as a tensor network and subsequently compressed                        Gutzwiller  projector  imposing  the  single-occupancy  con-
+as  an  MPS  by  using  the  so-called  matrix  product  operator-                 straint.
+                                                                                                                                                                 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1. (a) Sketch of parton construction for a quantum spin-1/2 sys-
+tem,  where Gutzwiller projection keeps two single-occupied states
+and removes other components locally. (b) Convert a Gutzwiller pro-
+jected wave function into an MPS by the MPO-MPS method. (c) The
+MPS prepared in (b) serves as an initial state for two-site DMRG.
+
+
+   (2)  Convert|ΨG⟩  into  an  MPS  by  using  the  MPO-MPS
+method [18,19] as illustrated in Fig.1(b), and keep the bond
+dimension of the resulting MPS up to  ˜D.
+   (3) Use the two-site DMRG algorithm [5] to optimize the                          FIG. 2.  (a) Kitaev honeycomb model on a cylinder geometry with
+MPS obtained in step (2) with respect to the target Hamilto-                        two basis vectors ˆx and ˆy, in which the x-boundary is open while the
+nian [see Fig.1(c)], in which the bond dimension of the MPS                         y-boundary is periodic. Black dots and white circles stand for A and
+is gradually increased from  ˜D to D.                                               B sublattice.  x, y and z denote three types of bonds.  The three-spin
+   While  the  main  steps  are  clear,  a  few  subtleties  turn  out              interactions in Eq. (1) are deﬁned on two types of triangles with ver-
+                                                                                    texes  j, k, and l.  The purple zigzag line indicates a closed loopC
+to be important for a successful implementation.  Below we                          along which the Wilson loop operator Wy is deﬁned, see Eq. (4). (b)
+demonstrate these issues and benchmark the performance in                           Graphic representation of Kitaev’s four-Majorana decomposition of
+the Kitaev honeycomb model.                                                         spins. Solid bonds stand for the Z2 gauge ﬁeld u jk. Dash bonds ema-
+   Model.—   We   ﬁrst   consider   the   Kitaev   honeycomb                        nating from the x-boundary indicate how to ﬁx the unpaired bound-
+model [20] in the presence of three-spin interactions,                              ary modes.
+
+                    ∑    ∑                       ∑
+            H3 =               Jaσajσak + J3           σxjσykσzl,           (1)     of gauge Majorana fermions denoted by|{u}⟩, the eigenstates
+                     a   ⟨ jk⟩∈a                ⟨ jkl⟩∈∆
+                                                                                    of Heﬀ are given by
+where σaj  (a  =  x, y, z) are Pauli matrices,⟨ jk⟩ ∈  a denotes
+a nearest neighbor (NN) bond of type a [see Fig.2(a)], and                                                   |Ψ0⟩ =|{u}⟩⊗|φ({u})⟩.                           (3)
+⟨ jkl⟩∈∆ refers to three sites around two types of triangles as
+indicated in Fig.2(a), as well as their translations to the whole                   These states are turned into (physical) eigenstates of the spin
+lattice.                                                                            HamiltonianH3  only  after  applying  the  Gutzwiller  projec-
+   Following Kitaev’s approach, we use the Majorana repre-                          tion,  i.e.,|ΨG⟩  =  PG|Ψ0⟩  with  PG ≡ ∏j(1 + D j)/2.   Here
+sentation,σaj = icajc0j, where ca (c0) are so-called gauge (itin-                   the projection onto the singly occupied subspace can be re-
+erant) Majorana fermions. This parton representation enlarges                       vealed  by  combining  Majoranas  into  complex  fermions  via
+the Hilbert space and a local constraint D j≡ cxjcyjczjc0j = 1 has                   f j,↑ = (cxj− icy
+to be imposed to restore the physical Hilbert space of spin-                                          j)/2 and  f j,↓ = (czj− ic0j)/2, so that the local con-
+1/2’s.   Under  this  representation,H3  becomes  an  eﬀective                      straint becomes ∑σ=↑,↓ f†j,σ f j,σ = 1.  Accordingly, the ground
+Hamiltonian for Majorana partons,                                                   state is achieved by determining the gauge ﬁeld conﬁguration
+                 ∑     ∑                          ∑                                 {u} in Eq. (2) under which the resulting quadratic Hamiltonian
+     Heﬀ =−i                 Jau jkc0jc0                u jkuklc0jc0                of itinerant Majorana fermions has the lowest energy.
+                                       k− iJ3                      l,       (2)        MPO-MPS process.— In correspondence with the common
+                   a  ⟨ jk⟩∈a                   ⟨ jkl⟩∈∆
+                                                                                    practice in DMRG, we adopt cylindrical boundary conditions,
+where u jk≡ icajcak lives on an a-type bond. Since [Heﬀ, u jk] =                    where the honeycomb lattice is embedded on a ﬁnite cylinder
+[u jk, ulm]  =  0 for all diﬀerent bonds, u jk  are static Z2  gauge                with Lx (Ly) unit cells along the open (periodic) direction and
+ﬁelds taking their eigenvalues±1. When the gauge ﬁeld con-                          a total number of N = 2LxLy sites. The HamiltonianH3 now
+ﬁguration (denoted by{u}) is ﬁxed, Heﬀ becomes a quadratic                          commutes with Wilson loop operators wrapping around the
+Hamiltonian  of  the  itinerant  Majorana  fermion  c0,  whose                      cylinder,  e.g.,  Wy  = −∏j∈Cσyj  withC being a closed loop
+eigenstates can be written as|φ({u})⟩.  Together with the state                     shown in Fig.2(a).  The eigenvalue of         Wy is just the product
+                                                                                                                                                              3
+
+of the static Z2 gauge ﬁelds along the loop,                                                                      Jx = 1                          Jx = 4
+                          Wy|ΨG⟩ = Φy|ΨG⟩,                              (4)                     ˜D      J3 = 0       J3 = 0.1      J3 = 0.2       J3 = 0
+                                                                                              100    1.7× 10−1     9.2× 10−2     5.7× 10−2     1.1× 10−4
+where Φy = ∏⟨ jk⟩∈C u jk =±1.                                                                 200    2.4× 10−2     1.0× 10−2     5.0× 10−3     1.0× 10−6
+   The ground-state gauge conﬁguration{u} in Φy = 1 sector                                    400    2.5× 10−3     5.6× 10−4     2.4× 10−4     3.4× 10−7
+can be chosen as u jk  =  1 for all bonds, while for Φy  =−1                           ϵtrunc 600    4.2× 10−4     8.0× 10−5     3.0× 10−5     3.4× 10−7
+sector it is achieved by setting u jk =−1 for a row of z-bonds                                800    1.1× 10−4     1.9× 10−5     7.4× 10−6     3.4× 10−7
+and  u jk  =  1  elsewhere  [20].   Here  we  have  taken  the  con-                         1000    3.4× 10−5     6.8× 10−6     2.9× 10−6     3.4× 10−7
+vention that  j (k) belongs to A (B) sublattice [see Fig.2(a)].
+However, it is worth emphasizing that, for each sector, there                                 100    1.3× 10−2     7.2× 10−3     3.9× 10−3     8.6× 10−5
+are still unpaired cy gauge Majorana fermions at the leftmost                                 200    1.1× 10−3     4.9× 10−4     1.8× 10−4     6.8× 10−8
+and  rightmost  boundaries  [see  Fig.2(a)],  which  do  not  en-                      δEg    400    8.8× 10−5     2.4× 10−5     9.2× 10−6     4.9× 10−8
+ter into the Hamiltonian Heﬀ and thus lead to extra degenera-                                 600    1.6× 10−5     4.0× 10−6     1.3× 10−6     4.9× 10−8
+cies. For the purpose of compressing the ground state into an                                 800    4.4× 10−6     9.3× 10−7     3.3× 10−7     4.9× 10−8
+MPS, we seek to minimize the entanglement, so we pair up                                     1000    1.6× 10−6     3.3× 10−7     1.3× 10−7     4.9× 10−8
+these boundary gauge Majorana fermions [see Fig.2(b)] into
+complex fermions  f⟨⟨ jl⟩⟩≡ (cyj− icyl )/2 and require that these                 TABLE I. The truncation errorϵtrunc and the energy deviationδEg in
+boundary modes are unoccupied in the unprojected state|Ψ0⟩,                       the MPO-MPS process, which are deﬁned in Eqs. (5) and (6), respec-
+i.e.,  f⟨⟨ jl⟩⟩|Ψ0⟩ = 0 for all such boundary modes.  Apparently,                 tively.  The MPO-MPS procedure is carried out for the Hamiltonian
+this  manipulation  is  equivalent  to  adding  suitable  boundary                H3 with Jy = Jz = 1, deﬁned on a cylinder with Lx× Ly = 10× 4 and
+terms in the spin HamiltonianH3 [26], which is of great help                      in the Φy =−1 sector.
+in suppressing entanglement.
+   With  these  prescriptions,   we  are  ready  to  convert  the                 the exact ground-state energy Eg(Φy) via the relative energy
+Gutzwiller  projected  state|ΨG⟩  =  PG|Ψ0⟩  into  an  MPS  by
+noticing that|Ψ0⟩ = ∏2Nm=1 d†m|0⟩, where|0⟩ is the vacuum of                      deviation,
+fermionic partons ( f j,σ|0⟩ = 0∀ j,σ) and d†m are Bogoliubov-
+de Gennes (BdG) quasiparticle operators taking the form d†m =                        δEg(Φy,  ˜D) =⟨ΨMPS(Φy,  ˜D)|H3|ΨMPS(Φy,  ˜D)⟩− Eg(Φy)
+∑N                                                                                                                          |Eg(Φy)|           .
+  j=1 ∑σ=↑,↓(Um, jσ f†j,σ + Vm, jσ f j,σ)  and  satisfying  d†m|Ψ0⟩  =                                                                                      (6)
+0 [27].  This form of  |Ψ0⟩ is particularly suitable for utilizing                   To  examine  the  accuracy  of  the  MPO-MPS  method,  we
+the MPO-MPS method [18], whose basic idea is summarized                           compute the truncation error ϵtrunc  and the energy deviation
+as follows [see Fig.1(b)]:  (i) view each         d†m  as an MPO and              δEg for the HamiltonianH3 on a cylinder with Lx×Ly = 10×4
+|Ψ0⟩  as  a  tensor  network  with  2N  MPOs  acting  on  a  prod-                and in the sector Φy =−1.  We take Jy =  Jz = 1 and vary Jx
+uct state (parton vacuum); (ii) apply these MPOs successively                     and J3 to study both gapped and gapless  phases.  The results
+(with a proper order) and compress the outcome in each inter-                     are summarized in TableI. For all these states, as increasing
+mediate step as an MPS with bond dimension up to  ˜D, which                        ˜D, the truncation errorsϵtrunc are signiﬁcantly reduced.  Nev-
+yields an MPS approximating|Ψ0⟩; (iii) apply the Gutzwiller                       ertheless, the truncation error for the gapless case (Jx = 1 and
+projector PG  to obtain|ΨMPS( ˜D)⟩, which is an MPS approx-                       J3 = 0) is clearly larger than those in gapped phase. It is worth
+imation  of|ΨG⟩.   Further  technical  details  are  discussed  in                mentioning that, for the case with Abelian topological order
+Ref. [26].                                                                        (Jx = 4 and J3 = 0), the MPO-MPS procedure yields a highly
+   At each intermediate step of the above MPO-MPS proce-                          accurate MPS approximation for the ground state.  These re-
+dure,  approximating  the  MPO-evolved  MPS  (with  bond  di-                     sults give a hint that good MPS approximations of Gutzwiller
+mension 2 ˜D) into an MPS (with bond dimension  ˜D) incurs a                      projected states could be obtained as long as the entanglement
+truncation error. In order to estimate the accuracy of the ﬁnal                   has been treated properly.
+MPS, the accumulated truncation error is deﬁned by                                   We are now in the position to perform DMRG optimization
+
+                    2N∏                                   2N∑                     with initial MPSs prepared from Gutzwiller projected states.
+ ϵtrunc( ˜D) = 1−        F(m)( ˜D),     F(m)( ˜D) = 1−        ϵ(m)j   ( ˜D),  (5) For this we consider the HamiltonianH3 on a Lx× Ly = 6× 6
+                    m=1                                   j=1                     cylinder and for the most challenging gapless case (Jx = Jy =
+                                                                                  Jz = 1 and J3 = 0) [28].  For this particular model, we obtain
+whereϵ(m)j   ( ˜D) is the sum of the discarded squared singular val-              the MPS approximations of the ground states|ΨMPS(Φy, D)⟩ in
+ues at the j-th bond of the m-th MPO-evolved MPS [5]. Notice                      both Φy =±1 sectors. For comparison, we also randomly gen-
+that F(m)( ˜D) is a rough estimate of the overlap between MPO-                    erate an MPS (with bond dimension  ˜D) and optimize it with
+evolved MPS and truncated MPS in the m-th MPO-MPS step.                           the two-site DMRG until a converged MPS at bond dimension
+   Since the HamiltonianH3 in Eq. (1) is exactly solvable, we                     D is obtained.
+also quantify the errors,  in both Φy  = ±1 sectors,  by com-                        The DMRG continues sweeping untilδEg converges. As il-
+paring the variational energy of the MPS|ΨMPS(Φy,  ˜D)⟩ with                      lustrated in Fig.3, the relative energy deviation    δEg is reduced
+                                                                                                                                                                  4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  3.      The  relative  energy  deviations δEg  [deﬁned  in  Eq.  (6)]          FIG.  4.   The  ﬁdelities  F  as  a  function  of  the  magnetic  ﬁeld h  for
+versus number of sweeps in DMRG. The calculations are performed                      (1) the Kitaev’s non-Abelian state (green), (2) fully polarized state
+for the HamiltonianH3 in Eq. (1) on an    Lx× Ly = 6× 6 cylinder and                 (red),  (3) partially polarized state (light blue),  and (4) a U(1) spin
+with parameters Jx = Jy = Jz = 1 and J3 = 0.  The truncation errors                  liquid  state  (dark  blue).   Further  details  on  the  parametrization  of
+are always kept to be smaller than 10−9 during DMRG optimization.                    these states are given in Ref. [26]. The calculations are performed on
+Red, green and blue lines stand for those with initial states of random              an Lx× Ly = 10× 4 cylinder and the accumulated truncation errors in
+MPS, PG|Ψ0(Φy =−1)⟩ and PG|Ψ0(Φy = 1)⟩, respectively. Note that                      the MPO-MPS procedure are (1)ϵtrunc = 0.005, (2)ϵtrunc = 0.12, (3)
+δEg  initialized with a random MPS is measured from the ground-                      ϵtrunc  =  0.09, and (4)ϵtrunc  =  0.01 for these four states respectively.
+state energy in the Φy =−1 sector.  The ﬁnal bond dimensions after                   The DMRG calculations for the Hamiltonian in Eq. (7) generate MPS
+DMRG sweeps are D  =  8000 for random MPS and D  =  6500 for                         with bond dimension D =  2400 and truncation errorϵDMRG∼  10−8
+Gutzwiller ansatzes.  Inset: δEg  versus the inverse bond dimension                  (ϵDMRG∼ 10−5 for 0.4≤ h < 0.7).  Inset: The wave-function ﬁdelity
+1/D.                                                                                 ˜F =|⟨ΨDMRG|PG|ΨParton⟩|.
+
+
+by two orders of magnitude with Gutzwiller projected states                             Diagnosis  of  parton  wave  functions.—  The  Gutzwiller-
+PG|Ψ0(Φy =±1)⟩ being the initial ansatz.                                             boosted DMRG is certainly applicable to generic models that
+   In addition to the substantial improvement of the DMRG                            do not have exact solutions.  As a concrete example, we con-
+results,  several remarks are in order:  (1) A relatively small                      sider  the  Kitaev  honeycomb  model  in  an  external  magnetic
+bond dimension  ˜D = 200 for the MPS prepared from PG|Ψ0⟩                            ﬁeld along the [111] direction, deﬁned by the Hamiltonian
+is suﬃciently good to initialize the DMRG process,  despite                                               ∑                    ∑
+of a larger truncation error (ϵtrunc ∼  0.25) in the MPO-MPS                                      H =           Jaσajσak− h        (σxj +σyj +σzj)            (7)
+                                                                                                         ⟨ jk⟩∈a                 j
+step.   Meanwhile,  the computational cost of preparing such                         with  Jx  =  Jy  =  Jz  =  1.  In this situation we shall focus on
+MPS with  ˜D  =  200 is quite cheap.   (2) During the DMRG                           another function of our method, namely, diagnosing whether a
+sweeps initialized with Gutzwiller projected states, the eigen-                      Gutzwiller projected state captures the essential entanglement
+value  of  the  Wilson  loop  operator  (Φy  = ±1)  is  preserved,                   features of the actual ground state for a given Hamiltonian.
+i.e., the MPS stays in the respective sector.  This is very use-                        In order to diagnose the quality of a Gutzwiller projected
+ful  for  studying  topologically  ordered  states  with  topologi-                  parton  wave  function  PG|ΨParton⟩,  we  utilize  the  ﬁdelity  de-
+cal degeneracy on the cylinder.  (3)   For the 6× 6 cylinder,                        ﬁned by [30]
+the DMRG initialized with a random MPS always converges                                                                [√                ]
+to  an  MPS  in Φy  = −1  sector.   However,  exact  results  in-
+dicate  that  for  a  ﬁnite  cylinder,  the  ground-state  energy  in                                        F = Tr        ρ1/2D ρGρ1/2D  ,                          (8)
+Φy  =−1 sector is higher than that in the Φy  =  1 sector.  For
+instance, the energy diﬀerence on the 6× 6 cylinder is given                         where ρG  and ρD,  being two reduced density matrices for a
+by Eg(Φy  =−1)− Eg(Φy  =  1)≈  0.084.  This implies that                             column of 2Ly sites in the middle of the cylinder, correspond
+the DMRG with a random initial ansatz gets stuck in a local                          to the Gutzwiller ansatz PG|ΨParton⟩ and  the variational ground
+minimum [29].  (4) For the DMRG process initialized with a                           state|ΨDMRG⟩ obtained by DMRG, respectively.  This ﬁdelity
+random MPS,δEg measured from Eg(Φy =−1) is still about                               measures how close the bulk parts of two wave functions are,
+two orders of magnitude larger than those initialized from the                       while the boundary eﬀects due to the cylindrical geometry are
+Gutzwiller projected state PG|Ψ0(Φy  =−1)⟩.  These clearly                           precluded as much as possible. For comparison, we also eval-
+show that a properly chosen Gutzwiller projected state pro-                          uate the wave-function ﬁdelity  ˜F =|⟨ΨDMRG|PG|ΨParton⟩|.
+vides an ideal initialization ansatz for DMRG in two dimen-                             While several parton constructions have been suggested for
+sions.                                                                               the Hamiltonian in Eq. (7) (see, e.g., Refs. [20,24,25]), we
+                                                                                                                                                                        5
+
+shall restrict ourselves to four classes of Gutzwiller ansatzes:
+(1)  Kitaev’s  non-Abelian  state  with  Chern  number C  =  1;
+(2) fully polarized state with Chern number C  =  0; (3) par-                               ∗  hong-hao.tu@tu-dresden.de
+tially polarized state with Chern number C = 1; and (4) U(1)                                †  yizhou@iphy.ac.cn
+spin  liquid  state  with  a  spinon  Fermi  surface  [24].   Further                    [1]S. R. White,Phys. Rev. Lett.               69, 2863 (1992).
+details of these states can be found in the Supplemental Ma-                             [2]S. R. White,Phys. Rev. B               48, 10345 (1993).
+terial [26].  The ﬁdelities       F  and  ˜F  between these Gutzwiller                   [3]U. Schollw     ¨ock,Rev. Mod. Phys.       77, 259 (2005).
+ansatzes and the ground state of the Hamiltonian in Eq. (7)                              [4]K. A. Hallberg,Adv. Phys.        55, 477 (2006).
+are shown in Fig.4, where the reference ground state is ob-                              [5]U. Schollw     ¨ock,Ann. Phys.       326, 96  (2011).
+tained by DMRG initialized with random MPSs.   It is seen                                [6]S.      ¨Ostlund and S. Rommer,Phys. Rev. Lett.  75, 3537 (1995).
+that  state  (1)  agrees  well  with  the  DMRG-obtained  ground                         [7]J. Dukelsky, M. A. Mart     ´ın-Delgado, T. Nishino,  and G. Sierra,
+state  at  small  h  (0 <  h <  0.35),  while  both  states  (2)  and                         Europhys. Lett. 43, 457 (1998).
+                                                                                         [8]F. Verstraete and J. I. Cirac,Phys. Rev. B              73, 094423 (2006).
+(3) coincide with the ground state at large h (h >  1.25).  For                          [9]M. B. Hastings,J. Stat. Mech.                   2007, P08024 (2007).
+the whole region of h, the U(1) spin liquid state (4) has neg-                          [10]E. Stoudenmire and S. R. White,Annu. Rev. Condens. Matter
+ligible wave-function ﬁdelity  ˜F, although the corresponding                                 Phys. 3, 111 (2012).
+reduced-density-matrix ﬁdelity F is ﬁnite.  It is worth noting                          [11]G. Vidal, J. I. Latorre, E. Rico,  and A. Kitaev,Phys. Rev. Lett.
+that the two Gutzwiller projected states (2) and (3) have a large                             90, 227902 (2003).
+overlap with each other, although their corresponding (unpro-                           [12]J. I. Latorre, E. Rico,  and G. Vidal,Quant. Inf. Comput.              4, 48
+jected) parton states carry diﬀerent Chern numbers C = 0 and                                  (2004).
+                                                                                        [13]J. Eisert, M. Cramer,   and M. B. Plenio,Rev. Mod. Phys.                  82,
+C  =  1,  respectively.   For  an  intermediate  magnetic  ﬁeld  h                            277 (2010).
+(0.35 < h < 1), we have observed that the DMRG cannot be                                [14]C. Gros,Ann. Phys. (N.Y.)               189, 53  (1989).
+boosted by any of the four Gutzwiller ansatzes.  This implies                           [15]P. W. Anderson, P. A. Lee, M. Randeria, T. M. Rice, N. Trivedi,
+that none of these ansatzes describes actual ground states well.                              and F. C. Zhang,J. Phys.: Condens. Matter           16, R755 (2004).
+                                                                                        [16]P. A. Lee, N. Nagaosa,  and X.-G. Wen,Rev. Mod. Phys.           78, 17
+   Summary.— To summarize, we have devised a method to                                        (2006).
+boost the performance of DMRG in two dimensions by using                                [17]Y. Zhou, K. Kanoda,  and T.-K. Ng,Rev. Mod. Phys.            89, 025003
+Gutzwiller projected states as the initialization ansatz.  With                               (2017).
+the extensive benchmarks on the Kitaev honeycomb model,                                 [18]H.-K. Jin, H.-H. Tu,   and Y. Zhou,Phys. Rev. B                101, 165135
+                                                                                              (2020).
+our  method  has  shown  clear  advantages  that   with  suitably                       [19]Y.-H. Wu, L. Wang,  and H.-H. Tu,Phys. Rev. Lett.          124, 246401
+chosen Gutzwiller ansatz, local minima are circumvented and                                   (2020).
+much more accurate results are obtained with no extra com-                              [20]A. Kitaev,Ann. Phys.        321, 2 (2006).
+putational costs.  For topological states, the DMRG calcula-                            [21]Z. Zhu, I. Kimchi, D. N. Sheng,   and L. Fu,Phys. Rev. B            97,
+tions initialized with Gutzwiller ansatz can preserve topolog-                                241110 (2018).
+ical sectors, which is a very nice property for further charac-                         [22]M. Gohlke, R. Moessner,   and F. Pollmann,Phys. Rev. B                       98,
+terizing the topological order [31–34].  Our method also pro-                                 014418 (2018).
+                                                                                        [23]C. Hickey and S. Trebst,Nat. Commun.               10, 1 (2019).
+vides a diagnosis tool for analyzing the quality of Gutzwiller                          [24]H.-C. Jiang,  C.-Y. Wang,  B. Huang,   and Y.-M. Lu,   (2018),
+ansatz for a given Hamiltonian. Actually, a number of impor-                                  arXiv:1809.08247.
+tant  strongly  correlated  systems  have  elusive  ground  states,                     [25]M.-H.  Jiang,  S.  Liang,  W.  Chen,  Y.  Qi,  J.-X.  Li,   and  Q.-H.
+albeit many parton wave function proposals are already avail-                                 Wang,Phys. Rev. Lett.       125, 177203 (2020).
+able (e.g., spin-1/2 kagome Heisenberg antiferromagnet [35–                             [26]See the Supplemental Material for more details.
+41]).  It would be interesting to revisit these problems armed                          [27]For gauge Majorana fermions,  these BdG modes are trivially
+with our new method.                                                                          derived from the gauge choice{u} and the ﬁxing of the boundary
+                                                                                              modes. For itinerant Majorana fermions, the BdG modes are ob-
+   Note  added:   After  the  submission  of  this  work,  we  are                            tained by diagonalizing the quadratic Hamiltonian for c0 under
+                                                                                              the ﬁxed gauge choice, followed by Wannier localization [18].
+aware of related works [42,43] reporting results on converting                                More details can be found in the Supplemental Material.
+Gutzwiller projected wave functions into MPSs and/or using                              [28]In  this  case,  the  so-called  “loop-gas”  tensor  network  state  in
+them to initialize DMRG calculations.                                                         Ref.  [50]  is  an  excellent  trial  wave  function  and  would  have
+                                                                                              been a nice initialization ansatz for DMRG. However, its MPS
+   Acknowledgement.—  We  thank  Qiang-Hua  Wang,  Yang                                       representation has a bond dimension D = 7Ly, which, for Ly =
+Qi, Hong Yao, Ying-Hai Wu, Urban Seifert, Yuan Wan and                                        6, is beyond the computational capacity of DMRG.
+Zheng Zhu for helpful discussions. This work is supported in                            [29]We have swept an unbiased set of random MPS up to 36 times,
+part by National Natural Science Foundation of China (No.                                     which is a suﬃciently large number for DMRG optimization
+11774306),  National  Key  Research  and  Development  Pro-                                   empirically.  Starting  from  the  24th  sweep,  the  (variational)
+gram of China (No.  2016YFA0300202), the Strategic Prior-                                     ground-state energy does not decrease anymore and   becomes
+                                                                                              ﬂuctuating,  and the relative energy deviation δEg  in the 36th
+ity Research Program of Chinese Academy of Sciences (No.                                      sweep  is  almost  identical  to  the  one  in  the  24th  sweep  (the
+XDB28000000)  and  the  DFG  through  project  A06  of  SFB                                   diﬀerence is about 3× 10−8), which clearly indicates that the
+1143 (project-id 247310070).                                                                  randomly-initialized DMRG gets stuck in a local minimum.
+                                                                                                                                                                        6
+
+[30]I. McCulloch,  (2008),arXiv:0804.2509.                                                    98, 117205 (2007).
+[31]Y. Zhang,  T. Grover,  A. Turner,  M. Oshikawa,   and A. Vish-                      [40]Y. Iqbal, F. Becca, S. Sorella,  and D. Poilblanc,Phys. Rev. B
+      wanath,Phys. Rev. B          85, 235151 (2012).                                         87, 060405 (2013).
+[32]L. Cincio and G. Vidal,Phys. Rev. Lett.              110, 067208 (2013).            [41]T. Li,  (2018),arXiv:1807.09463.
+[33]H.-H. Tu, Y. Zhang,   and X.-L. Qi,Phys. Rev. B            88, 195412               [42]G. Petrica, B.-X. Zheng, G. K.-L. Chan,  and B. K. Clark,Phys.
+      (2013).                                                                                 Rev. B 103, 125161 (2021).
+[34]M. P. Zaletel, R. S. K. Mong,  and F. Pollmann,Phys. Rev. Lett.                     [43]A. M. Aghaei,  B. Bauer,  K. Shtengel,   and R. V. Mishmash,
+      110, 236801 (2013).                                                                     (2020),arXiv:2009.12435.
+[35]S. Yan, D. A. Huse,  and S. R. White,Science                 332, 1173 (2011).      [44]A. A. Abrikosov,Physics Physique Fizika        2, 61 (1965).
+[36]S.  Depenbrock,  I.  P.  McCulloch,   and  U.  Schollw       ¨ock,Phys.             [45]F. J. Burnell and C. Nayak,Phys. Rev. B                  84, 125125 (2011).
+      Rev. Lett. 109, 067201 (2012).                                                    [46]Y.-Z.  You,  I.  Kimchi,   and  A.  Vishwanath,Phys.  Rev.  B                 86,
+[37]H. J. Liao, Z. Y. Xie, J. Chen, Z. Y. Liu, H. D. Xie, R. Z. Huang,                        085145 (2012).
+      B.  Normand,    and  T.  Xiang,Phys.  Rev.  Lett.            118,  137202         [47]X.-G. Wen,Phys. Lett. A            300, 175  (2002).
+      (2017).                                                                           [48]X.-G. Wen,Phys. Rev. B            65, 165113 (2002).
+[38]Y.-C. He, M. P. Zaletel, M. Oshikawa,  and F. Pollmann,Phys.                        [49]Y. Zhou and X.-G. Wen,(2002),arXiv:cond-mat                     /0210662.
+      Rev. X 7, 031020 (2017).                                                          [50]H.-Y. Lee,  R. Kaneko,  T. Okubo,   and N. Kawashima,Phys.
+[39]Y. Ran, M. Hermele, P. A. Lee,  and X.-G. Wen,Phys. Rev. Lett.                            Rev. Lett. 123, 087203 (2019).
+
+
+
+  Supplemental material for “Density matrix renormalization group boosted by Gutzwiller projected wave functions”
+
+   This Supplemental Material provides technique details: (1) the implementation of the MPO-MPS method, (2) numerical data
+for Fig. 3 in the main text, (3) the four classes of Gutzwiller projected wave functions used in the main text, (4) discussion about
+{Wy, Wp}-ﬁxed ansatz, and (5) entanglement spectra for Kitaev’s non-Abelian states.
+
+
+
+                                              THE IMPLEMENTATION OF THE MPO-MPS METHOD
+
+   In this section, we provide details on how to convert a Gutzwiller projected state|ΨG⟩  =  PG|Ψ0⟩ to an MPS by using the
+MPO-MPS method, where|Ψ0⟩ =|{u}⟩⊗|φ({u})⟩ is the unprojected ground state of the Kitaev honeycomb model that is deﬁned
+in Eq. (3) in the main text.
+
+
+
+                                                                      One-dimensional path
+
+   In order to carry out the MPO-MPS procedure and perform the DMRG optimization, one should ﬁrst deﬁne the ordering of
+lattice sites. This can be done by assigning an integer ˜j = 1,··· , N to each lattice site. There are two frequently used site-labeling
+schemes for an Lx× Ly honeycomb lattice on a cylinder as illustrated in Fig.S1. More explicitly, the lattice site belonging to unit
+cell r = rx ˆx + ry ˆy (rx = 1,··· , Lx and ry = 1,··· , Ly) and sublattice A or B can be labeled by two diﬀerent schemes as follows:
+(1) [see Fig.S1(a)]
+
+                                                               ˜j = 2[(rx− 1)Ly + ry− 1] + CAB,                                                                   (S1a)
+
+or
+(2) [see Fig.S1(b)]
+
+                                                       ˜j = 2[(rx− 1)Ly + ry− 1] + CAB,  for odd rx,
+                                                       ˜j = 2(rxLy− ry) + C′AB,                  for even rx,                                                         (S1b)
+
+where CAB = 1 (2) and C′ab = 2 (1) for A (B) sublattice.
+   In the MPO-MPS procedure, we found that scheme (1) [deﬁned in Eq. (S1a) and shown in Fig.S1(a)] always gives rise to
+a smaller accumulated truncation error ϵtrunc  [see Eq. (5) in the main text for its deﬁnition] than that obtained by scheme (2)
+[deﬁned in Eq. (S1b) and shown in Fig.S1(b)].  For instance, consider the Hamiltonian     H3  with  Jx  =  Jy  =  Jz  =  1 on an
+Lx× Ly = 10× 4 cylinder and in the Φy =−1 sector, the truncation errors are given byϵtrunc( ˜D = 100)≈ 0.09 for scheme (1) and
+ϵtrunc( ˜D = 100)≈ 0.24 for scheme (2), respectively. Thereby, throughout this work, we utilize scheme (1) to deﬁne the ordering
+of lattice sites and thus convert a cylinder into a 1D chain to apply the MPO-MPS method and perform DMRG calculations.
+                                                                                                                                                                  7
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S1.  Schematics of two labeling schemes for a honeycomb lattice on an Lx× Ly = 6× 3 cylinder with basis vectors ˆx and ˆy.  (a) and (b)
+correspond to the labeling scheme given in Eq. (S1a) and Eq. (S1b), respectively. With these two labeling schemes, one is able to carry out the
+MPO-MPS procedure and perform the DMRG calculation.
+
+
+                                                              Complex fermion representation
+
+   To apply the MPO-MPS method in Refs. [18and19], it is convenient to rewrite the Majorana ground state    |Ψ0⟩ in terms of
+complex fermions [44].  In the standard gauge theory approach to a quantum spin      S  = 1/2 system [17], a complex Abrikosov
+fermion doublet (⃗f j)†≡ ( f†j,↑  f†j,↓) is introduced at each site  j to represent spin operators,
+
+
+                                                              S aj =  12(⃗f j)†σa⃗f j,     a = x, y, z.
+
+With a certain S U(2) gauge choice[17,45,46], complex Abrikosov fermions                           f j,↑(↓) are related to the four Majorana fermions as
+follows:
+                                                       f j,↑ =  1(cxj− icy),         f j,↓ =  1 (cz        ),                                                             (S2)
+                                                              2            j                  2    j− ic0j
+
+Here it is easy to see that the local constraint D j = cxjcyjczjc0j = 1 for Majorana fermions becomes the single-occupancy condition
+f†j,↑ f j,↑ + f†j,↓ f j,↓ = 1 for complex fermions.
+
+
+
+                                                        Bogoliubov-de-Gennes (BdG) formulation
+
+   Now we shall explain how to implement the MPO-MPS method with the help of a BdG Hamiltonian, as developed in Ref. [18].
+For simplicity, we shall focus on the Φy =−1 sector.  In accordance with Eq. (3) in the main text, the unprojected ground state
+|Ψ0(Φy =−1)⟩ is written as
+
+                                                   |Ψ0(Φy =−1)⟩ =|{u}(Φy =−1)⟩⊗|φ(Φy =−1)⟩,
+
+where|{u}(Φy =−1)⟩ denotes the ground state of gauge Majorana fermions with Φy =−1 and|φ(Φy =−1)⟩ the corresponding
+itinerant Majorana ground state.  As mentioned in the main text, such a{u}(Φy =−1) conﬁguration can be achieved by setting
+u jk =−1 in a speciﬁed row of z-bonds and u jk = 1 elsewhere. Without loss of generality, we set u jk =−1 for z-bonds in the Lthy
+row. Note that we have used the convention that  j (k) belongs to A (B) sublattice.
+
+
+
+                                                                      Itinerant fermions
+
+   As long as the conﬁguration{u}(Φy =−1) has been ﬁxed, the eﬀective Hamiltonian for itinerant Majorana fermions (c0) can
+be rewritten in a standard BdG form,
+                                   (Φy =−1) =       ∑       (2(η0r)†η0r− 1) +      ∑         ((η0r)†η0
+                              Heﬀ                        Jx                               Jy          r+ˆx + (η0r)†(η0r+ˆx)† + h.c.)
+                                                     r                            rx<Lx,ry                                                                    (S3)
+                                                       ∑    (Jz(η0r)†η0                                                            ),
+                                                    +                  r+ˆy + (Jz + 2iJ3) (η0r)†(η0r+ˆy)† + h.c.)(1− 2δry,Ly
+                                                        r
+                                                                                                                                                                        8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S2.   The three-spin interactions in Eq. (S8) are deﬁned on two types of boundary triangles (on the ﬁrst and last columns, respectively)
+with vertices  j, k, and l.
+
+
+where
+                                                                                                    )− ( fk=(r,B),↓− f†           )
+                                     η0r =  c0j=(r,A) + ic0k=(r,B)                         j=(r,A),↓                     k=(r,B),↓
+                                                       2             =  i( f j=(r,A),↓− f†           2                                                                          (S4)
+is the complex fermion within the unit cell r = rx ˆx+ry ˆy. The above quadratic Hamiltonian can be diagonalized by using standard
+BdG transformation,
+                                                                (Φy =−1) =−          LxLy∑    (             )
+                                                           Heﬀ                            ϵm   h†mhm− 12      ,
+                                                                                     m=1
+
+whereϵm≥ 0, h†m (hm) is a Bogoliubov quasihole creation (annihilation) operator, and its ground state is given by
+
+                                                                                        LxLy∏
+                                                                   |φ(Φy =−1)⟩ =             h†m|0⟩η0                                                                          (S5)
+                                                                                        m=1
+with|0⟩η0 being the vacuum of complex fermionsη0r.
+
+
+                                                                          Gauge fermions
+
+   In addition to itinerant complex fermionsη0r, one can construct three complex gauge fermions per unit cell, which are deﬁned
+on every nearest neighboring (NN) bond⟨ jk⟩∈ a (a = x, y, z) as
+
+                                                                           ηa               k
+                                                                             jk =  caj− ica2  ,                                                                                   (S6)
+
+where  j (k) belongs to A (B) sublattice. It is easy to verify that u jk≡ icajcak = 1− 2(ηajk)†ηajk, which indicates that a conﬁguration
+{u} can be obtained in accordance to the occupation number of gauge complex fermionsηajk on every NN bond.  Explicitly, an
+occupied bond (ηajk)†ηajk = 1 gives rise to u jk =−1 , while an empty bond (ηajk)†ηajk = 0 gives rise to u jk = 1.  For instance, the
+gauge conﬁguration for{u}(Φy = 1) is obtained by ﬁlling all the z-bonds in the Ly-th row and leaving other bonds empty.
+   As discussed in the main text, the cylindrical boundary condition yields boundary gauge Majorana fermions [see Fig. 2(b)
+in main text], which should be paired into complex fermions  f⟨⟨ jk⟩⟩.  Taking into account all these gauge complex fermions, we
+obtain the ground state|u(Φy =−1)⟩ as follows,
+                                                                                      ∏
+                                                             |u(Φy =−1)⟩ =                     (ηzjk)†|0⟩η,                                                                   (S7)
+                                                                                   ⟨ jk⟩∈z,ky=Ly
+
+where|0⟩η is the vacuum of complex fermionsηajk and  f⟨⟨ jk⟩⟩, and ky is the y-component of the unit cell vector on which lattice
+site k locates.  Note that we leave all the boundary gauge fermions  f⟨⟨ jk⟩⟩ unoccupied in Eq. (S7) as mentioned in the main text,
+                                                                                                                                                                     9
+
+and such a state is stabilized by the following boundary Hamiltonian:∑                          ∑
+                                                  Hboundary =δK              σzjσylσxk =δK            u jlulkicyjcyk.                                                       (S8)
+                                                                      ⟨⟨ jlk⟩⟩                  ⟨⟨ jlk⟩⟩
+Note that 0<δK≪ 1, [Hboundary,H3] = 0 , and⟨⟨ jlk⟩⟩ refers to three sites around the boundary triangles as indicated in Fig.S2.
+Indeed there exists other choices, e.g., ﬁlling all the the boundary gauge fermions  f⟨⟨ jk⟩⟩ gives rise to the following state:
+                                                                           ∏                ∏
+                                                     |u(Φy =−1)⟩′ =              f†⟨⟨ jk⟩⟩          (ηzjk)†|0⟩η,
+                                                                           ⟨⟨ jk⟩⟩      ⟨ jk⟩∈z,ky=Ly
+which is degenerate with|u(Φy =−1)⟩ ifδK = 0.
+
+
+                                                                          Vacuum states
+
+   Note that we have chosen the vacuum of itinerant fermionsη0 in Eq. (S5) and the vacuum of gauge fermions   η jk and  f⟨⟨ jk⟩⟩ in
+Eq. (S7), respectively.  However, all the gauge fermions are deﬁned on each bond.  To implement the Gutzwiller projection on
+each site, we had better work on the basis of Abrikosov fermions  f j,↑(↓). As shown in Ref. [18], the vacuum state  |0⟩η0 could be
+replaced by the vacuum state of Abrikosov fermions,|0⟩, as long as they have the same fermion parity. Furthermore, the vacuum
+state|0⟩η can be obtained by applying annihilation operatorsη jk and  f⟨⟨ jk⟩⟩ onto the Abrikosov fermion vacuum|0⟩.  Thus, we
+can use the following unprojected ground state in the MPO-MPS calculation:
+
+                                                 LxLy∏     ∏               ∏              ∏             ∏
+                          |Ψ0(Φy =−1)⟩ =              h†m       f⟨⟨ jk⟩⟩            ηyjk       ηxjk             (ηzjk)†    ∏        ηzjk|0⟩,                         (S9)
+                                                 m=1      ⟨⟨ jk⟩⟩      ⟨ jk⟩∈y,kx<Lx     ⟨ jk⟩∈x    ⟨ jk⟩∈z,ky=Ly       ⟨ jk⟩∈z,ky<Ly
+
+where the operators h†m,  f⟨⟨ jk⟩⟩,ηx,y,zjk    and (ηzjk)† should be further expressed as linear combinations of Abrikosov fermions  f j,↑(↓).
+
+
+                                                              The sequence of acting operators
+
+   With the help of Eqs. (S2) and (S9), one can rewrite the Majorana ground state   |Ψ0⟩ as a paired state of Abrikosov fermions,
+which can be converted to an MPS by using the MPO-MPS method [18]. We apply the single-particle operators successively in
+the sequence that is illustrated in Fig.S3.  It turns out that this speciﬁed sequence reduces the entanglement in the MPO-MPS
+process and gives rise to the smallest accumulated truncation errorϵtrunc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S3. The single-particle operators are acted in the following sequence: gauge complex fermionsηz [and/or (ηz)†],ηx [and/or (ηx)†], andηy
+[and/or (ηy)†], boundary complex fermion  f†, and ﬁnally the Bogoliubov quasiholes h† (whose sequence is subject to the Wannier localization
+and “left-meet-right” schemes [18,19]) associated with the e         ﬀective Hamiltonian Heﬀ.
+
+   It  is  also  worth  noting  that,  instead  of h†m  themselves,  we  use  linear  combinations  of  of h†m  to  form  maximally  localized
+Wannier orbitals [18,19] and act them on the MPS during the whole MPO-MPS procedure. Additionally, the “left-meet-right”
+scheme [18,19] has been used. Here the leftmost site is labeled by            ˜j = 1 and rightmost site by  ˜j = N = 2LxLy [see Eq. (S1) for
+the deﬁnition of ˜j].
+                                                                                                                                                          10
+
+                                                                    Exact zero mode
+
+   Consider the sector Φy  =  1.  For the non-Abelian phase along the symmetric line Jx  =  Jz, there exists an exact zero mode
+associated with c0 Majorana fermions on the cylinder geometry. This zero mode gives rise to an additional two-fold degeneracy
+in the spectrum and has to be properly handled.
+   The analytical form of the zero mode can be explicitly obtained.  For that, we perform Fourier transformation for the Hamil-
+tonian Heﬀ(Φy = 1) along the y-direction,
+                                        ∑∑          (2(η0qy,rx)†η0qy,rx− 1) + Jy  ((η0qy,rx)†η0
+                     Heﬀ(Φy = 1) =               Jx                                           qy,rx+1 + (η0qy,rx)†(η0−qy,rx+1)† + h.c.)
+                                         qy   rx
+                                              {[                   (         )                                  }                                     (S10)
+                                        + Jz     (η0qy,rx)†η0qy,rx +1 + i J3Jz (η0qy,rx)†(η0−qy,rx)†]eiqy + h.c.  ,
+
+
+where qy = 2nyπ/Ly for ny = 1,..., Ly andη0qy,rx is obtained by taking the Fourier transformation ofη0r [see Eq. (S4)] along the
+y-direction. Here we have chosen a gauge such that u jk = 1 everywhere to stay in the Φy = 1 sector. Because Jx = Jz, the qy =π
+sector of Hamiltonian Heﬀ in Eq. (S10) is equivalent to the Kitaev’s Majorana chain, which reads
+                                        (Φy = 1, qy =π) =      Lx−1∑    ((η0π,rx)†η0
+                                   heﬀ                               Jy            π,rx+1 + (η0π,rx)†(η0π,rx+1)† + h.c.).                                     (S11)
+                                                                rx=1
+There  exist  two  unpaired  Majorana  fermions γ1  =    1           ((η0             )  and γLx   =    i ((η0π,Lx)†−η0π,Lx)  commuting  with  heﬀ  in
+                                                                   2     π,1)† +η0π,1                   2
+Eq. (S11). Then, pairing up   γ1 andγLx gives one complex fermion zero mode  f†1,Lx = (γ1± iγLx).
+   To perform the MPO-MPS procedure for the Hamiltonian Heﬀ(Φy  =  1) with this exact zero mode, we need to pin the zero
+mode  f†1,Lx into its vacuum (i.e., annihilated by  f1,Lx). Otherwise, the MPO-evolved state has an odd fermion parity (measured in
+terms of the original Abrikosov fermions) and cannot survive the Gutzwiller projection requiring even fermion parity.
+
+
+                                            NUMERICAL DATA FOR FIG. 3 IN THE MAIN TEXT
+
+   The relative energy deviation δEg  [deﬁned in Eq. (6) in the main text] is plotted in Fig. 3 in the main text.  Here we list
+corresponding data in TableSI. The calculations are performed for the Hamiltonian   H3 on an Lx× Ly  =  6× 6 cylinder with
+parameters Jx = Jy = Jz = 1 and J3 = 0. The bond dimension is chosen as  ˜D = 200 for initial MPSs.
+   The exact ground-state energies are Eg(Φy = 1) =−54.469847490329 and Eg(Φy =−1) =−54.385529432483. Note thatδEg
+initialized with a random MPS is measured from Eg(Φy =−1).
+
+
+                                            PG|Ψ0(Φy = 1)⟩           PG|Ψ0(Φy =−1)⟩                   Random MPS
+                                   NS         δEg           D           δEg           D     NS         δEg           D
+                                    7    6.3835×10−8      3875     1.1948×10−7      4216    17    2.2756×10−4      4230
+                                    8    2.0020×10−8      4632     2.9244×10−8      5169    18    2.0524×10−5      4621
+                                    9    1.0119×10−8      5120     1.1545×10−8      5929    19    4.3845×10−6      5439
+                                    10   7.1220×10−9      5345     8.4900×10−9      6328    20    1.0873×10−6      5488
+                                    11   5.8850×10−9      5537     6.4520×10−9      6500    21    3.9420×10−7      7190
+                                    12   5.2980×10−9      5638     6.2710×10−9      6500    22    2.3145×10−7      8000
+                                    13   5.2980×10−9      5699     6.2520×10−9      6500    23    1.8347×10−7      8000
+                                    14   5.2770×10−9      5727     6.2470×10−9      6500    24    1.6716×10−7      8000
+                                    15   5.2670×10−9      5784     6.2460×10−9      6500    25    1.5727×10−7      8000
+                                    16   5.2370×10−9      5846     6.2420×10−9      6500    26    1.5291×10−7      8000
+
+TABLE SI.  The relative energy deviationsδEg as plotted in Fig.  3 in the main text.  NS is the number of DMRG sweeps, and D is the bond
+dimension for DMRG calculations.
+                                                                                                                                                               11
+
+   This section is devoted to the four classes of Gutzwiller projected wave functions used in the main text. Essentially, all these
+states are Gutzwiller projected states of Abrikosov fermions. Corresponding unprojected states are either ground states of BdG
+type Hamiltonians or a Fermi sea of Abrikosov fermions. Below we shall deﬁne these unprojected states|Ψ0⟩ one by one.
+   (1) Kitaev non-Abelian state with Chern number C  =  1.  This class of states has been discussed in the main text as well as
+Sec. . The unprojected state is given by a direct product|Ψ0⟩ =|{u}⟩⊗|φ({u})⟩, namely, Eq. (3) in the main text. As discussed in
+Sec. ,|{u}⟩ is determined by ﬁlling gauge complex fermions in accordance with the eigenvalue of u jk on each bond, and|φ({u})⟩
+is determined by the eﬀective Hamiltonian Heﬀ in Eq. (2) in the main text after ﬁxing the eigenvalues±1 for u jk. With the help
+of Eq. (S2),  |Ψ0⟩ can be written as a paired state of Abrikosov fermions and realized by ﬁlling all the Bogoliubov quasiholes as
+given in Eq. (S9).
+   In practice, we choose parameters Jx = 1.05, Jy = Jz = 1 and J3 = 0.05 in the Hamiltonian Heﬀ and set u jk = 1 for all bonds
+to ensure Φy  =  1.  Note that this choice of Jx,y,z avoids the zero mode issue mentioned in Sec. , which occurs only along the
+symmetric line Jx  =  Jz.  The bond dimension is chosen to be  ˜D =  800 for an Lx× Ly  =  4× 10 cylinder, which gives rise to
+truncation errorϵtrunc∼ 10−3 in the MPO-MPS process.
+   (2) Partially polarized state with C = 1 and (3) Fully polarized state with C = 0.  As proposed in Ref. [25], the unprojected
+state|Ψ0⟩ for these two classes can be uniﬁed as the ground state of the following BdG-type mean-ﬁeld Hamiltonian:
+                  ∑       [hσ(σx +σy +σz) + hτσ0]αr +β†r               [hσ(σx +σy +σz) + hτσ0]βr + [α†r(ihτσy + hτσy)β†r + h.c.]
+        HBdG =         α†r
+                    r∑      ∑     [−α†
+                  +                    r+δr[tz(δr)σz + t0σ0]βr +α†r+δr[tx(δr)σz− ty(δr)σ0]β†r + h.c.],                                               (S12)
+                       r  δr=ˆ0,ˆx,ˆy
+
+whereαr = ( fr,A,↑  fr,A,↓) andβr = ( fr,B,↑  fr,B,↓) are two doublets of Abrikosov fermions on A and B sublattices, respectively, r
+labels a unit cell, and the parameters are simpliﬁed as follows:
+
+                                  tx(ˆ0) = ty(ˆx) = tz(ˆy) = t‖,  tx(ˆx) = tx(ˆy) = tx(ˆ0) = tx(ˆy) = tx(ˆ0) = tx(ˆx) = t⊥.
+
+Then,  the Gutzwiller projected state PG|Ψ0(hσ, hτ, t0, t‖, t⊥)⟩ serves as a variational wave function for the Kitaev honeycomb
+model under a [111] magnetic ﬁeld. By varying the ﬁve real numbers{hσ, hτ, t0, t‖, t⊥}, the energy is optimized to obtain the best
+approximation to the ground state by using variational Monte Carlo (VMC) method. The VMC-optimized parameters have been
+obtained in Ref. [25].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S4.  Four quasiparticle bands and four quasihole bands from the Hamiltonian HBdG  deﬁned in Eq. (S12) with (a) parameters given in
+Eq. (S13a) and (b) parameters given in Eq. (S13b). The Chern numbers from the lowest band to the highest band are (a)     {1, 0, 0, 0, 0, 0, 0,−1}
+and (b){1, 0, 0,−1, 1, 0, 0,−1}, respectively. Thus, the total Chern number, given by the summation over the Chern numbers of all the quasihole
+bands, reads (a) C = 1 and (b) C = 0.
+
+   It is worth noting that, when hσ = hτ = 0 and t⊥ =−t0, the Gutzwiller projected state PG|Ψ0(hσ, hτ, t0, t‖, t⊥)⟩ gives rise to the
+exact ground state (in Φy = 1 sector) of the Kitaev honeycomb modelH3 deﬁned in Eq. (1) in the main text.
+   A typical partially polarized state with Chern number C = 1 [state (2)] is given by the following set of parameters:
+
+                                       hσ =−0.341,  hτ = 0.288,  t0 =−0.588,  t‖ = 0.622,  t⊥ = 0.518,                                       (S13a)
+
+while a typical fully polarized state with Chern number C = 0 [state (3)] is given by another set of parameters:
+
+                                       hσ =−0.355,  hτ = 0.276,  t0 =−0.595,  t‖ = 0.609,  t⊥ = 0.524,                                       (S13b)
+
+The corresponding quasiparticle and quasihole band structures for Eqs. (S13a) and (S13b) are illustrated in Figs.S4(a) and (b),
+respectively.
+                                                                                                                                                               12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S5.  (a) Four spinon bands with a spinon Fermi surface from Hamiltonian HU1 deﬁned in Eq. (S14) with parameters given in Eq. (S15).
+(b) The corresponding spinon Fermi surfaces. There are one electron pocket around (0, 0) and two hole pockets around (π,π).
+
+
+
+   For carrying out the MPO-MPS procedure, the bond dimension  ˜D = 1400 is chosen for an Lx× Ly = 10× 4 cylinder, which
+gives rise to truncation errorsϵtrunc∼ 0.12 for state (2) andϵtrunc∼ 0.09 for state (3).
+   (4)  U(1)  spin  liquid  state  with  a  spinon  Fermi  surface.   This  class  of  states  is  introduced  in  Ref.  [24]  and  is  labeled  as
+U1Ak=0 quantum spin liquid state[24] in accordance with the projective symmetry group analysis[47–49].  The corresponding
+unprojected ground state|Ψ0⟩ is given by a quadratic Hamiltonian as follows:
+
+         ∑{         [                                                [                                          }
+ HU1 =          α†r  −   h8√3 (σx +σy +σz)−µσ0]             αr +β†r    −   h8√3 (σx +σy +σz)−µσ0]            βr
+    ∑[α†r(s3σ0 + tx0σx + tyr
+ −                                0σy + ty0σz)βr +α†r+ˆx(s3σ0 + ty0σx + tx0σy + ty0σz)βr +α†r+ˆy(s3σ0 + ty0σx + ty0σy + tx0σz)βr + h.c.]
+      r  {(α†                                                                                                                                   )        }
+    ∑                    )[(˜s3σ0− i˜s0σz)⊗σ0 + (˜tx0σ0− i˜tx3σz)⊗σx + (˜tx0σ0− i˜tx3σz)⊗σy + (˜tz
+ −            r+ˆx, β†r+ˆx                                                                                        0σ0− i˜tz3σz)⊗σz](αrβr          + h.c.
+      r  {(α��                                                                                                                                   )        }
+    ∑                    )[(˜s3σ0− i˜s0σz)⊗σ0 + (˜tx0σ0− i˜tx3σz)⊗σx + (˜tz
+ −            r+ˆy, β†r+ˆy                                                            0σ0− i˜tz3σz)⊗σy + (˜tx0σ0− i˜tx3σz)⊗σz](αrβr               + h.c.
+      r  {(α†                                                                                                                                        )        }
+    ∑                         )[(˜s3σ0− i˜s0σz)⊗σ0 + (˜tz
+ −            r+ˆx−ˆy, β†r+ˆx−ˆy                               0σ0− i˜tz3σz)⊗σx + (˜tx0σ0− i˜tx3σz)⊗σy + (˜tx0σ0− i˜tx3σz)⊗σz](αrβr                    + h.c.    ,
+      r
+                                                                                                                                                           (S14)
+
+
+where real numbers{s3, tx0, ty0} and{˜s0, ˜s3, ˜tx0, ˜tx3,, ˜tz0, ˜tz3} are mean-ﬁeld couplings on nearest neighbor (NN) and next NN bonds,
+respectively.  Notice that the geometry of the honeycomb lattice and, thereby, the Hamiltonian HU1  in Eq. (S14) are di       ﬀerent
+from those used in Ref. [24] by a global   π/3 rotation.
+   A typical U(1) spin liquid state with a spinon Fermi surface [state (4)] is obtained by the following set of parameters:
+
+                           h =−0.188,  µ =−0.1832,     s3 =−0.02373,     tx0 =−0.02373,     ty0 =−0.00415,
+                           ˜s0 =−0.00018,    ˜s3 = 0.0018,    ˜tx0 = 0,    ˜tx3 =−0.000102,    ˜tz0 = 0,    ˜tz3 =−0.000102.                         (S15)
+
+Note that the parameter h in Ref. [24] reads 0.188, but the actual value of      h which is utilized for practical calculations should
+be−0.188.  The corresponding band structures for Eq. (S15) are illustrated in Fig.S5.  In the MPO-MPS procedure, the bond
+dimension is chosen to be  ˜D = 800 for an Lx× Ly = 10× 4 cylinder, which gives rise to a truncation errorϵtrunc∼ 0.01.
+                                                                                                                                                                13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S6.  The relative energy deviationsδEg [deﬁned in Eq. (6)] versus number of sweeps in DMRG. The calculations are performed for the
+HamiltonianH3 in Eq. (1) on an     Lx× Ly  =  6× 6 cylinder and with parameters Jx  =  Jy  =  Jz  =  1 and J3  =  0.  Red, green, blue, and black
+lines stand for those with initial states of random MPS, PG|Ψ0(Φy =−1)⟩, PG|Ψ0(Φy = 1)⟩, and{Wy, Wp}-ﬁxed MPS, respectively.  The bond
+dimension is chosen as  ˜D = 200 for initial MPSs, and the ﬁrst 5 DMRG sweeps are used to gradually increase the bond dimension from  ˜D to
+D. Note thatδEg initialized with a random MPS and a{Wy, Wp}-ﬁxed MPS are measured from the ground-state energy in the Φy =−1 sector.
+The ﬁnal bond dimension after DMRG sweeps is 1000.
+
+
+
+                                                                 {Wy, Wp}-FIXED ANSATZ
+
+   This section is devoted to discussing eﬃciency of initializing DMRG using a{Wy, Wp}-ﬁxed ansatz.   In Ref. [50],  it was
+shown that the so-called “loop gas” tensor network ansatz is an excellent trial wave function for the Kitaev honeycomb model
+with Jx = Jy = Jz. However, it is computationally expensive to encode such a loop gas ansatz tensor network state on a Lx× Ly
+cylinder into an MPS since the bond dimension of MPS is  ˜D = 7Ly. Instead, we can initiate an MPS, namely{Wy, Wp}-ﬁxed MPS,
+which is the eigenstate of Wilson loop operators Wy and hexagonal plaquettes Wp with all 1−|Φy|< 10−15 and 1−|wp|< 10−15.
+Here [Wp,H3] = 0, W2p  = 1, and Wp≡ σxp1σyp2σzp3σzp4σyp5σzp6, where the site indices p1–p6 are as 2, 3, 4, 10, 11, 12 in Fig.S1
+(b). We denote wp as the eigenvalue of Wp and, for the ground states ofH3, all of wp are 1.
+   As illustrated in Fig.S6, the relative energy deviation     δEg of the{Wy, Wp}-ﬁxed MPS with D = 1000 is almost the same as
+that of the random MPS, which indicates that this initial state is not as eﬃcient as Gutzwiller projected ansatz. Moreover, for this
+{Wy, Wp}-ﬁxed MPS, it is possible that ﬂipping ﬂuxes wp does not cost energy due to that itinerant Majorana degrees of freedom
+are not ﬁxed (and hence the vison gap is zero). Consequently, the Wilson loop Φy would not be preserved during DMRG sweeps.
+Actually, we have encountered such situations in our numerical simulations.
+   However, the loop-gas ansatz in Ref. [50] is not supposed to su     ﬀer from this issue, since it is expected to capture the essential
+entanglement structure of the actual ground state. It would be interesting if one could ﬁnd a reliable MPS approximation of this
+ansatz and test its performance in initializing DMRG calculations.
+
+
+
+                                   ENTANGLEMENT SPECTRA FOR KITAEV’S NON-ABELIAN STATES
+
+   In this section, we discuss the topological properties of non-Abelian states where c0 Majoranas have a nontrivial topological
+band structure with Chern number C = 1. In the Kitaev’s B phase [20], where ﬁnite      J3 opens a bulk gap, PG|Ψ0(Φy =−1)⟩ and
+PG|Ψ0(Φy = 1)⟩ are denoted by the topological quasiparticles          1   andσ [33], respectively. The rescaled entanglement spectra for
+1   andσ have been calculated for both initial Gutzwiller projected state (MPO-MPS) at  ˜D = 2000 and DMRG-optimized state
+(MPO-MPS-DMRG) at D = 2000, as shown in Fig.S7.  For both                                                                                                            1   andσ sectors, the characteristic counting of entanglement
+spectra agrees with the prediction of Ising conformal ﬁeld theory (up to trivial multiplicity, which arises due to the entanglement
+cut of            Z    2  gauge ﬁelds).  This means that the topological order is well captured by the MPO-MPS method.  The similarity of
+entanglement spectra resulting from the MPO-MPS and MPO-MPS-DMRG calculations indicates that the topological sector is
+preserved during the DMRG optimization procedure.
+                                                                                                                                                                       14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S7. The rescaled entanglement spectra for Gutzwiller wave functions PG|Ψ0(Φy =−1)⟩ (1   sector) and PG|Ψ0(Φy = 1)⟩ (σ sector), as well
+as their corresponding DMRG-optimized states. The calculations are performed on an Lx× Ly = 6× 6 cylinder.

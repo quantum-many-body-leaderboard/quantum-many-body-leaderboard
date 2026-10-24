@@ -704,10 +704,16 @@ loader, never by hand.
 | | stored as | papers usually quote |
 |---|---|---|
 | Heisenberg, J1-J2 | total energy, **Pauli** (σ·σ) convention | `E/N` in `S·S`: divide by `4 * n_sites` |
+| Kitaev (K-J-Γ), Shastry-Sutherland | total energy, **Pauli** form of the S = σ/2 Hamiltonian with normalised couplings, \|K\| = 1 or Jd = 1 ([RULES.md §2.1](RULES.md#21-instance-names)) | `E/N` with S = σ/2: divide by `4 * n_sites` |
 | TFIsing | total energy, **Pauli** | `E/N`: divide by `n_sites`; no `S·S` term to rescale |
 | Hubbard, t-V | total energy | per site: divide by `n_sites` |
 | Impurity | total energy | no meaningful per-site energy |
 | HEG2D, HEG3D (track 2) | total energy, Hartree, Ewald sum with the Madelung term (RULES.md 12.2) | per electron: divide by N (`n_sites` holds N) |
+
+An instance on a cluster that its source defines (the honeycomb and Shastry-Sutherland families)
+carries a `cluster` field: the shape in words and where the source defines it.
+A row read from a source whose Hamiltonian is the instance's times a factor carries `normalised`:
+`{ factor, source_couplings, note }`. The loader has divided the printed energy by `factor`.
 
 `dof` is the spin count for spin models, `N_up + N_dn` for Hubbard, and the particle
 count for **spinless** t-V. `einf` is `0` for traceless spin Hamiltonians and

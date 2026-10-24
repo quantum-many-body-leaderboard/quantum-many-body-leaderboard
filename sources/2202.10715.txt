@@ -1,0 +1,1081 @@
+Extraction of interaction parameters for α-RuCl3 from neutron data using machine learning
+Anjana M. Samarakoon,1, 2, 3,∗ Pontus Laurell,4, 5, 6 Christian Balz,2, 7 Arnab Banerjee,2, 8 Paula Lampen-Kelley,9, 10
+David Mandrus,9, 10 Stephen E. Nagler, 2, 11 Satoshi Okamoto,10, 11 and D. Alan Tennant 1, 6, 10, 11
+1Shull-Wollan Center , Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+2Neutron Scattering Division, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+3Materials Science Division, Argonne National Laboratory, Lemont, Illinois 60439, USA
+4Center for Nanophase Materials Sciences, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+5Computational Sciences and Engineering Division, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+6Department of Physics and Astronomy, University of Tennessee, Knoxville, Tennessee 37996, USA.
+7ISIS Neutron and Muon Source, Rutherford Appleton Laboratory, Didcot, OX11 0QX, United Kingdom
+8Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47906, USA
+9Department of Materials Science and Engineering, University of Tennessee, Knoxville, Tennessee 37996, USA
+10Materials Science and Technology Division, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+11Quantum Science Center , Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+(Dated: February 24, 2022)
+Single crystal inelastic neutron scattering data contain rich information about the structure and dynamics of a
+material. Yet the challenge of matching sophisticated theoretical models with large data volumes is compounded
+by computational complexity and the ill-posed nature of the inverse scattering problem. Here we utilize a novel
+machine-learning-assisted framework featuring multiple neural network architectures to address this via high-
+dimensional modeling and numerical methods. A comprehensive data set of di ﬀraction and inelastic neutron
+scattering measured on the Kitaev material α−RuCl3 is processed to extract its Hamiltonian. Semiclassical
+Landau-Lifshitz dynamics and Monte-Carlo simulations were employed to explore the parameter space of an
+extended Kitaev-Heisenberg Hamiltonian. A machine-learning-assisted iterative algorithm was developed to
+map the uncertainty manifold to match experimental data; a non-linear autoencoder used to undertake informa-
+tion compression; and Radial Basis networks utilized as fast surrogates for diﬀraction and dynamics simulations
+to predict potential spin Hamiltonians with uncertainty. Exact diagonalization calculations were employed to
+assess the impact of quantum ﬂuctuations on the selected parameters around the best prediction.
+Introduction.—Highly frustrated quantum systems are im-
+portant routes to realizing exotic ground states and excita-
+tions. They are proposed to host states ranging from long-
+range entangled quantum spin liquids (QSLs) with nonlocal
+excitations to quantum spin ices with emergent photons [1–
+3]. Recently, the two-dimensional honeycomb spin-1/2 mate-
+rialα-RuCl3 [Fig. 1(a)] has garnered particular attention fol-
+lowing being reported [4–11] as a leading candidate [12–14]
+for realization of the Kitaev model—an exactly solvable QSL
+Hamiltonian [15, 16]. The Kitaev model is a spin network
+with competing bond-dependent interactions and hosts a topo-
+logical QSL ground state that supports two types of fractional-
+ized excitations: visons, which are excitations of the emergent
+ﬂux, and deconﬁned Majorana fermions. These quasiparticles
+are predicted to show non-Abelian statistics, suggesting po-
+tential applications in e.g. topological quantum computing
+[17]. Recently, theoretical propositions have been made for
+interferometers utilizing their braiding statistics as a precur-
+sor to undertaking quantum operations [18, 19]. Meanwhile,
+however, the experimental situation regarding the quasiparti-
+cles in α-RuCl3 remains inconclusive, primarily due to di ﬃ-
+culties in determining the precise nature of the spin couplings
+in the material and to what extent these destabilize the QSL
+state in zero and applied magnetic ﬁelds.
+Experiments have revealed evidence that α-RuCl3 is close
+to the Kitaev QSL [12, 13, 23, 24]. At low temperatures and
+magnetic ﬁelds it orders magnetically in a zigzag structure
+[6, 25–27], implying the presence of symmetry-allowed inter-
+FIG. 1. (a) α-RuCl3 crystal structure, consisting of Ru sites at cen-
+ters of edge-sharing Cl octahedra. (b) The magnetism is due to Ru3+
+ions, which form a honeycomb lattice. Nearest, second-nearest, and
+third-nearest neighbor bonds are indicated by solid, dashed, and dot-
+ted lines respectively. Anisotropic nearest-neighbor interactions are
+considered as given in Eq. (1). (c) Machine-learned phase diagram
+for the J1− K− Γ model at T = 1 K, with theoretical phase bound-
+aries from Ref. [20] overlaid in black dashed lines. The diﬀerent col-
+ors, which represent di ﬀerent structure factors S (Q), are predicted
+by a trained neural network as explained in the main text. Numbered
+points correspond to S (Q) shown in Fig. 2(b). The identiﬁed phases
+include ferromagnetic [FM], N ´eel [AFM], 120 °, and zigzag [Z.Z.]
+orders.
+actions additional to the Kitaev Hamiltonian, as is generically
+predicted by theory [20, 28–30]. Inelastic neutron scattering
+(INS) shows scattering dominated by continua at the zone cen-
+arXiv:2202.10715v2  [cond-mat.str-el]  23 Feb 2022
+2
+FIG. 2. (a) Machine-learned phase map varying Γ/|K| and J3/|K| through the optimal solution for α-RuCl3 at ﬁxed J1/|K| = −0.1 and
+J2/|K| = 0, with K < 0. Labeled phases include ferromagnetic [FM], zigzag [Z.Z.] and planar zigzag [Z.Z. (2D)] orders. The ellipsoidal
+approximation to the optimal solution is marked in panel (a) in dark-red. Due to uneven sampling of the IMA process from which the data
+was taken, the prediction accuracy varies in parameter space resulting in a blotchy appearance. The diﬀerent colors, which represent diﬀerent
+structure factors S (Q), are predicted by a trained neural network as explained in the main text. Panel (b) shows the surrogate predicted neutron
+structure factor, S Sur(Q), at numbered locations indicated in (a) and Fig. 1(c). Corresponding spin structures for the long-range ordered phases
+labeled 1, 3-7 are given in the SM [21]. Note that Z.Z. and Z.Z. (2D) have similar long-range order, but along di ﬀerent spin-orientation
+directions. This occurs because, as discussed in Ref. [22], when K < 0 the spin orientation in zigzag ground states depends on the sign of Γ.
+Due to the neutron spin polarization factor, the twoS (Q) are diﬀerent in the shown plane, despite yielding the same trace over spin correlations,∑
+α Sαα (Q). Some of the diﬀuse S (Q), taken at either phase boundaries or critical points, are also shown. The S (Q) labeled 11 and 12 are for
+the pure AFM and FM Kitaev models.
+ter [7–11], interpreted as originating from underlying frac-
+tional Majorana excitations, or from incoherent excitations
+due to magnon decay [31–33]; both related to strongly ﬂuc-
+tuating quantum states. Similarly, Raman scattering shows a
+broad scattering continuum at the zone center [5, 34–37], and
+a fermionic temperature dependence, interpreted as indicat-
+ing fractional excitations. The zigzag order melts in a narrow
+range of applied in-plane magnetic ﬁelds, possibly inducing a
+QSL state [10, 11, 38–40]. Oscillations of the thermal con-
+ductivity were also observed in this ﬁeld range, suggesting
+the presence of a Fermi surface [41–43]. Perhaps the most
+striking reports are those of a half-integer-quantized thermal
+Hall eﬀect in the same ﬁeld range [44–46]. Additional exper-
+imental evidence for Kitaev interactions in α-RuCl3 has been
+reported using e.g. inelastic X-ray scattering [47], thermody-
+namical [8, 48–51], NMR [39, 52], electron spin resonance
+[53], microwave absorption [54], thermal transport [55, 56],
+and THz spectroscopy [57–61] techniques.
+The complexity of magnetic interactions in RuCl 3 has hin-
+dered determination of an underlying model. Various groups
+have ﬁt or derived proposed Hamiltonian parameters for the
+material [6, 9, 23, 24, 29–31, 59, 60, 62–71], but these stud-
+ies disagree signiﬁcantly about which interactions are present,
+and on values of speciﬁc interaction parameters [33, 72, 73].
+Part of the reason for this lack of agreement is that many ex-
+perimental ﬁts have relied on linear spin wave theory (LSWT),
+which cannot account for the quantum ﬂuctuations inherent
+to α-RuCl3. However, the more central issue is that a com-
+paratively large set of weak perturbations are possible, that
+can signiﬁcantly modify the magnetic ordering, dynamics and
+thermal properties of Kitaev materials. With such a high-
+dimensional parameter space, comparing modeling with ex-
+perimental data leaves a great deal of uncertainty, unless com-
+prehensive enough to explore the range of possible interac-
+tions; an approach which is absent to date.
+Scattering data contain considerable information on the
+magnetic states and interactions in materials. A di ﬃcult step
+in the quantiﬁcation of models has been inversion from mea-
+sured data to a model—the so-called inverse scattering prob-
+lem, which is usually ill-posed due to loss of phase informa-
+tion. In this regard, machine learning (ML) [74, 75] has shown
+promising results [76–80]. Here we combine ML approaches
+with large-scale semi-classical simulations (SCSs) [80]. ML-
+SCS techniques have been used to successfully extract cou-
+plings from di ﬀuse neutron scattering data and yielded sig-
+niﬁcant insight by mapping the physical behavior in high-
+dimensional interaction spaces of materials [80, 81]. We ex-
+tend these methods to include dynamics data forα-RuCl3, al-
+lowing a comprehensive ﬁt.
+Experiments.—Elastic neutron studies were performed
+at the Spallation Neutron Source (SNS) [82] using the
+CORELLI beamline [83]. A 125 mg α-RuCl3 crystal was
+mounted on an aluminium plate and aligned with the [ h, 0, l]
+plane horizontal. The crystal was rotated through 170 degrees
+in 2° steps about the vertical axis. The temperature of the mea-
+surement was 2 K and the perpendicular wave vector transfer
+was integrated in the range l = [0.92, 1.08] r.l.u.. The elas-
+tic scattering data was previously published as Supplementary
+Figure S2(a) in Ref. [10].
+INS was performed on a 0 .7 g single crystal, which was
+sealed in a thin-walled aluminium can with 1 atmosphere of
+Helium gas for thermal contact. Measurements at 4 K were
+carried out using the SEQUOIA spectrometer [84, 85] at the
+SNS. The incident energy was set to Ei = 22.5 meV . The
+crystal was mounted with [h, 0, 0] and [0, 0, l] axes in the hor-
+izontal plane, and the orthogonal [0 .5k,−k, 0] axis pointing
+3
+vertically upwards. Data were collected by rotating the crys-
+tal about the vertical axis over 290 ° in 1° steps. The data are
+integrated over the range [0, 0, l]= [-3.5, 3.5].
+Modeling.—We consider a generalized spin-1 /2 Kitaev-
+Heisenberg spin (local moment) Hamiltonian,
+H =
+∑
+γ=X,Y,Z
+∑
+⟨i, j⟩γ
+Si· Jγ1· S j
++ J2
+∑
+⟨⟨i, j⟩⟩
+Si· S j + J3
+∑
+⟨⟨⟨i, j⟩⟩⟩
+Si· S j, (1)
+on the honeycomb lattice [Fig. 1(b)], which is ex-
+pected to capture relevant interactions in the 2D plane.
+⟨... ⟩, ⟨⟨... ⟩⟩, and ⟨⟨⟨... ⟩⟩⟩ represent nearest, next-
+nearest and third-nearest neighbors, respectively, and
+JX1 =
+J1 + K 0 00 J1 Γ0 Γ J1, JY1 = J1 0 Γ0 J1 + K 0Γ 0 J1, JZ1 = J1 Γ 0Γ J1 00 0 J1 + K
+Exchange matrices are deﬁned in the {X, Y, Z} coordi-
+nate system with principal axes along mutually orthogonal
+normal vectors of three nearest neighbor Ru-Cl-Ru-Cl pla-
+quettes. Our model includes nearest-neighbor Heisenberg
+(J1), Kitaev ( K) and symmetric o ﬀ-diagonal Gamma ( Γ)
+interactions, as well as second- ( J2) and third-nearest ( J3)
+Heisenberg exchanges. For J2 = 0 it reduces to a proposed
+minimal model for α-RuCl3 [29]. Eq. (1) is, however,
+restricted compared to some proposed models, notably
+neglecting e.g. interlayer exchange [11, 23, 86], and the
+Γ′ term associated with trigonal distortion [20]. There are
+conﬂicting reports as to the magnitude ofΓ′ [33, 70, 73], such
+that neglecting it may not be fully justiﬁed. Nevertheless, this
+choice of Hamiltonian allows us to reduce the computational
+complexity, and to clearly present our proposed method
+and its capabilities. We note that ML-SCS techniques have
+been used to theoretically explore phase diagrams of related
+Hamiltonians [87, 88].
+To simulate spin structure and dynamics, Metropolis
+(Monte Carlo) sampling [89] and Landau-Lifshitz (LL) dy-
+namics is used [80]. This incorporates e ﬀects beyond LSWT,
+while achieving suﬃciently good performance to allow gener-
+ating a suﬃcient amount of training data. Spin-1/2 operators
+in Eq. (1) are approximated by classical spin vectors subject
+to semiclassical normalization,|Si| = √S (S + 1). Metropolis
+sampling is carried out at ﬁxed temperature, yielding well-
+thermalized spin conﬁgurations. Spin dynamics is governed
+by the usual LL equations of motion, see Supplemental Mate-
+rial (SM) [21]. The LL equation is solved numerically using
+a fourth-order Runge-Kutta algorithm with adaptive step size
+[90]. We use a cluster of 20x20 unit cells (2400 spins) with
+periodic boundary conditions [21]. Neutron magnetic form
+factor for Ru3+, polarization factors, and instrumental resolu-
+tion are accounted for, to match with experimental data. Fig-
+ure 2(b) shows sampling of diﬀuse scattering at diﬀerent loca-
+tions in parameter space. The simulated scattering , S sim(Q),
+shows complex behavior, reﬂecting the rich physics of Eq. (1).
+Machine learning method. —Our method builds on
+Ref. [81], which recently demonstrated that an ML-integrated
+FIG. 3. Schematic illustrations of ML methods. (a) Autoen-
+coder architecture used to compress 3D /4D S (Q)/S (Q,ω ) volumes
+into a much lower dimensionality. The autoencoder is trained with
+simulated data to reproduce the input. The architecture consists of
+two networks: Encoder and Decoder. The output of Encoder con-
+tains a compressed (latent space) representation, S (L) of the input
+S (Q,ω ). Decoder decompresses S (L) into a ﬁltered structure factor,
+S AE(Q,ω ), with the original dimensionality. (b) Schematic design
+of constructing the surrogate for predicting S (Q)/S (Q,ω ) given a set
+of model parameters. The surrogate comprises a radial basis net-
+work (RBN) as the Generator mapping parameter space, H({p}), to
+latent space S GN(L) and a Decoder to reconstruct S (Q)/S (Q,ω ) from
+latent space representations. The generator network (GN) is trained
+with simulated data for evaluated parameter sets{p} as input and cor-
+responding S (L) as target. (c) The ML workﬂow implemented here
+to integrate scattering experiments with theory, and extract model
+parameters and phase-diagram information.
+method can be used with the experimental static structure
+factor, S exp(Q), to extract Hamiltonian parameters from
+diﬀuse scattering data on a spin ice. Unlike spin ice,α-RuCl3
+shows a magnetic diﬀraction pattern with sharp Bragg peaks
+associated with long-range order, which does not su ﬃciently
+constrain the model parameters. Thus we extend the method
+to account also for the dynamical structure factor, S exp(Q,ω )
+from spectroscopy. Although ﬁnding a single model to
+explain the entire 4D scattering is a formidable task, doing so
+should help avoid ﬁts biased by incomplete information.
+A machine-learning-integrated workﬂow with autoencoder
+training and global optimization was used to simultane-
+ously ﬁt both S (Q) and S (Q,ω ). A four-dimensional
+hyper-parameter space, {p}, was explored to learn the un-
+certainty manifold in the ﬁve-dimensional parameter space
+{J1, K, Γ, J2, J3} [21] using a variant of the E ﬃcient Global
+Optimization algorithm [81, 91] which we call the Itera-
+tive Mapping algorithm (IMA). Autoencoders are unsuper-
+vised artiﬁcial neural networks with architecture as shown in
+Fig. 3(a). We train two autoencoders [21] with either S (Q)
+or S (Q,ω ). The Encoder takes a linearized version of the
+structure factor S (ν) [ν = Q orν = Q,ω ] and outputs a com-
+pressed representation, S (L), reducing the input dimensional-
+4
+ity Nν = 106−108 pixels down toNL = 100−102. The Decoder
+is a contrary network, which projects S (L) back to the origi-
+nal dimensionality and predicts S AE(ν). Our Encoders and
+Decoders are designed to be symmetrical, and the numbers of
+layers are tuned as described in [21].
+Two separate Radial Basis Networks (RBN) [92], shown
+in Fig. 3(b), provide Generator Networks (GN) to approxi-
+mately map the Hamiltonian space, H({p}) directly to latent
+space,Lν. See [21] for training details. The GN provides
+surrogate calculations to bypass the computationally expen-
+sive direct solver, allowing exhaustive searches for parameter
+space mapping as illustrated in Fig. 3(c). GN predictions de-
+pend on the degree of training of the network, the topography
+of the parameter space, and the sampling sparsity. They do
+not fully replace simulations, and should not be used to draw
+conclusions when detailed information is needed. Complete
+surrogates predicting structure factors,S sur(ν), are constructed
+by linking the GN with corresponding Decoder. These surro-
+gates can also be used as low-cost estimators in the IMA as an
+alternative to the Gaussian Process Regression in Ref. [81].
+As Fig. 3(c) schematically shows, the workﬂow can be split
+into ﬁve sections: I) scattering experiment and hypothesis;
+II) parameter space exploration and information compression;
+III) structure or property predictions; IV) parameter space pre-
+dictions; and V) validation of SCS results using a quantum
+many-body solver. The workﬂow is similar to one proposed
+in Ref. [93], but here we add step V and use a composite la-
+tent spaceLQ∪L Q,ω. The latent space forms the backbone of
+the operation, into which experimental data, simulations, and
+predictions from GN feed, and from which structure, property,
+and model parameters are predicted.
+ML predictions.—The S (Q) (and consequently S (L)) pro-
+vides natural classiﬁcation of phases, as the correlations of the
+system are encoded [93]. A high-dimensional graphical phase
+diagram can be constructed easily by projecting Q-space into
+a latent space of NL = 3 as suggested in Ref. [93]. An ar-
+chitecture of three intermediate layers with 300-3-300 logistic
+neurons (activation function as f (x) = 1/(1 + e−x)) was em-
+pirically found have the highest performance for the S sim(Q).
+Two phase diagrams are plotted in Figures 1(c) and 2(a).
+Phases are indicated by color derived by treating latent vec-
+tors as RGB color components [80]. Fig. 1(c) corresponds to
+the J2 = J3 = 0 hyperplane, and uses the parametrization [20]
+J1 = sinθ cosφ, K = sinθ sinφ, Γ = cosθ, where the en-
+ergy scale is ﬁxed according to 1 =
+√
+J21 + K2 + Γ2. Overlaid
+dashed black lines indicate the theoretically predicted phase
+diagram. We note that typically our method does not ﬁnd
+sharp transitions, so our results are not phase diagrams in a
+strict sense. Nevertheless, the excellent agreement between
+Fig. 1(c) and the phase diagram derived in Ref. [20] shows
+the merit of the approach. Fig. 2(a) shows the phase diagram
+in a slice around the optimal solution we ﬁnd forα-RuCl3 (see
+Fig. 4 and later discussion). Fig. 2(b) indicates the scattering
+at various points in the two phase diagrams.
+To ﬁt experimental scattering data and map uncertainty in
+FIG. 4. Optimal solution for α-RuCl3. (a) shows a slice of ˆ χ2S (Q)
+as function of J3/|K| and Γ/|K|. The problem is strongly underdeter-
+mined when only S (Q) is taken into account, with a ﬂat ﬁtness land-
+scape indicating many possible solutions. (b) Same slice for ˆχ2S (Q,ω).
+The ﬁtness landscape remains relatively ﬂat when only S (Q,ω ) is
+accounted for. (c) Slice for the combined ˆχ2Com function, which ac-
+counts for both statics and dynamics. An ellipsoidal approximation
+to the optimal regions is shown in pink on panels (a), (b) and (c).
+(d) shows line-cuts of ˆχ2Com for individual parameters by ﬁxing other
+parameters to their optimal values.
+the ﬁve-dimensional parameter space we employed IMA with
+cost function ˆχ2Com = ˆχ2S (Q)× ˆχ2S (Q,ω), where the ˆχ2S (ν) are low-
+cost estimators deﬁned in SM [21]. IMA samples the param-
+eter space iteratively subject to ˆχ2Com≤ CCom. The threshold
+value CCom is iteratively reduced to a ﬁnal value. The Au-
+toencoders and GN, are retrained at the end of each iteration.
+Thus, the predictability of the networks becomes reliable to-
+wards the minimum of ˆχ2Com.
+Results and Discussion.—Figure 4 shows slices and cuts of
+the ﬁnal ˆχ2Comin parameter space. Due to uncertainties in the
+data, minimizing ˆχ2Com leads to a region of potential ﬁts, indi-
+cated by the ellipsoid in panels (a)-(c). Additional Hamilto-
+nian terms may need to be included in the modeling to cap-
+ture all relevant interactions and achieve higher ﬁtting cer-
+tainty. This restriction aside, we have identiﬁed several pa-
+rameter sets with particularly low ˆχ2Com, and these were inves-
+tigated more closely. Fig. 5 showsS (Q) and S (Q,ω ) from ex-
+periment, LL simulation, and Lanczos exact diagonalization
+(ED) for the optimized parameter set: J1 =−0.4± 0.4 meV ,
+K =−5.3± 0.3 meV ,Γ = 0.15± 0.05 meV ,J2 =−0.19± 0.15
+meV and J3 = 1.35± 0.15 meV . The LL-simulated spectrum
+shows intensity at both the M and Γ points, although the in-
+tensity at Γ is lower than in the experiment. In addition, the
+simulation captures the curvature of the spin wave dispersion
+along the Γ→ M path, as well as the feature at ω = 6 meV .
+5
+ED is subject to ﬁnite-size restrictions and low momentum
+resolution, but captures the magnetic order and energy scale
+of the low-energy scattering (ω< 5 meV).
+How does our optimized solution compare to other pro-
+posed models for α-RuCl3? Using the surrogates we can
+easily calculate ˆχ2 values for proposed models described by
+Eq. (1). By this metric our ﬁt outperforms other models in the
+literature at describing the neutron data, see SM [21]. Our ﬁt
+has a Kitaev interaction strength comparable to a previous INS
+ﬁt [31], but lower Γ/K and higher J3/K. However, the energy
+scale is generally smaller than for models predicted by band
+structure calculations, and for models that seek to explain the
+experimental magnetic speciﬁc heatC(T) [73]. Consequently,
+thermal pure quantum state [94, 95] C(T) results for the op-
+timized solution fail to capture the experimentally observed
+high-temperature peak [21, 49]. One of our identiﬁed near-
+optimized parameter sets performs better in this regard, but
+worse at reproducing subtle spectral features [21]. This rein-
+forces the point that Eq. (1) may miss some important term.
+One limitation of our approach is the use of SCS. This was
+necessary to generate large amounts of training data, and al-
+lowed us to generate phase diagrams. However, quantum ef-
+fects can be signiﬁcant close to phase boundaries, thus lo-
+cally diminishing the reliability of our networks and requir-
+ing many-body veriﬁcation. This is particularly important
+in α-RuCl3, which is close to a phase transition under mag-
+netic ﬁelds, and where many Hamiltonian parameters matter.
+Our optimized parameters are close to a transition between
+the Z.Z. and Z.Z. (2D) orders, but using ED we fortunately
+ﬁnd the SCS results are physical, and correctly identiﬁes the
+ground state. In contrast, the recently proposed Hamiltonian
+of Ref. [70] is close to a transition between FM and Z.Z. or-
+ders, and our SCS predict FM, while ED ﬁnds Z.Z. This sug-
+gests it may be useful to retrain the networks using many-body
+simulations in regions close to phase boundaries to increase
+physical predictability.
+Our analysis shows that subtle changes in parameters aﬀect
+the spectra and ordering. This means that other Hamiltonian
+terms could also account for the results. This implies that zero
+ﬁeld neutron scattering is probably insuﬃcient to constrain the
+model beyond the treatment here. For a more deﬁnitive under-
+standing of α-RuCl3 additional data is needed. Simulations
+of ﬁeld dependence suggest that high ﬁeld spectroscopy mea-
+surements should be helpful here in disentangling the contri-
+butions of competing terms. Neutron scattering with its ability
+to capture wavevector and energy eﬀects would be particularly
+valuable. Co-analysis of high ﬁeld data along with zero ﬁeld
+measurements used here, as well as other observable proper-
+ties, can then be undertaken using the machine-learning-based
+approach.
+Conclusion.—We have demonstrated unsupervised ML-
+SCS methods can be used to solve the inverse scattering prob-
+lem inherent to INS experiments, thereby extending previous
+methods to also account for dynamics. Our approach can be
+applied to a wide range of magnetic systems, to obtain phase
+diagrams and ﬁt the full 4D experimental scattering, as long
+FIG. 5. Top row: (a) Experimental and (b,c) theoretical static spin
+structure factors calculated using (b) MC simulation and (c) Lanc-
+zos ED for the optimized Hamiltonian parameters. All methods ﬁnd
+peaks at the M points, reﬂecting the zigzag ordering. Bottom row:
+Inelastic scattering from (d) experiment, (e) LLD, and (f) Lanczos
+for the same parameter set.
+as suﬃcient amounts of training data can be generated. For
+α-RuCl3 we ﬁnd a relatively ﬂat ﬁtness landscape, produc-
+ing an uncertain ﬁt. It does not fully explain the experimen-
+tal scattering, likely due to interactions not considered here.
+Nevertheless, the optimal parameters reproduce many smaller
+scattering features, not captured by other proposed models.
+Improved algorithms are needed to extend the method further
+to even higher-dimensional parameter spaces and to fully con-
+strain Hamiltonians. This can be done iteratively, building on
+previously simulated data. With future advances in comput-
+ing power, we hope such methods may be used to rapidly and
+reliably identify the crucial physics of new materials.
+ACKNOWLEDGEMENTS
+We thank J. Q. Yan for valuable discussions and for provid-
+ing detailed crystal growth instructions. D.A.T, A.B., S.E.N.,
+and S.O. have been supported by the U.S. Department of En-
+ergy, Oﬃce of Science, National Quantum Information Sci-
+ence Research Centers, Quantum Science Center. A.M.S. was
+supported by the U.S. Department of Energy, O ﬃce of Sci-
+ence, Materials Sciences and Engineering Division and Sci-
+entiﬁc User Facilities Division. The research by P.L. and the
+early stage of S.O.’s e ﬀort were supported by the scientiﬁc
+Discovery through Advanced Computing (SciDAC) program
+funded by U.S. Department of Energy, Oﬃce of Science, Ad-
+vanced Scientiﬁc Computing Research and Basic Energy Sci-
+ences, Division of Materials Sciences and Engineering. A por-
+tion of this research used resources at the Spallation Neutron
+Source, a DOE O ﬃce of Science User Facility operated by
+the Oak Ridge National Laboratory. The computer modeling
+used resources of the Oak Ridge Leadership Computing Facil-
+ity, which is a DOE Oﬃce of Science User Facility supported
+6
+under Contract DE-AC05-00OR22725, and of the Compute
+and Data Environment for Science (CADES) at the Oak Ridge
+National Laboratory, which is supported by the Oﬃce of Sci-
+ence of the U.S. Department of Energy under Contract No.
+DE-AC05-00OR22725.
+∗ asamarakoon@anl.gov
+[1] L. Balents, Nature (London) 464, 199 (2010).
+[2] C. Lacroix, P. Mendels, and F. Mila, eds., Introduction to Frus-
+trated Magnetism: Materials, Experiments, Theory , Springer
+Series in Solid-State Sciences (Springer, Berlin, 2011).
+[3] L. Savary and L. Balents, Rep. Prog. Phys. 80, 016502 (2017).
+[4] K. W. Plumb, J. P. Clancy, L. J. Sandilands, V . V . Shankar, Y . F.
+Hu, K. S. Burch, H.-Y . Kee, and Y .-J. Kim, Phys. Rev. B 90,
+041112 (2014).
+[5] L. J. Sandilands, Y . Tian, K. W. Plumb, Y .-J. Kim, and K. S.
+Burch, Phys. Rev. Lett. 114, 147201 (2015).
+[6] A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,
+M. B. Stone, G. E. Granroth, M. D. Lumsden, Y . Yiu, J. Knolle,
+S. Bhattacharjee, D. L. Kovrizhin, R. Moessner, D. A. Tennant,
+D. G. Mandrus, and S. E. Nagler, Nat. Mat. 15, 733 (2016).
+[7] A. Banerjee, J. Yan, J. Knolle, C. A. Bridges, M. B. Stone,
+M. D. Lumsden, D. G. Mandrus, D. A. Tennant, R. Moessner,
+and S. E. Nagler, Science 356, 1055 (2017).
+[8] S.-H. Do, S.-Y . Park, J. Yoshitake, J. Nasu, Y . Motome, Y . S.
+Kwon, D. T. Adroja, D. J. V oneshen, K. Kim, T.-H. Jang, J.-H.
+Park, K.-Y . Choi, and S. Ji, Nat. Phys.13, 1079 (2017).
+[9] K. Ran, J. Wang, W. Wang, Z.-Y . Dong, X. Ren, S. Bao, S. Li,
+Z. Ma, Y . Gan, Y . Zhang, J. T. Park, G. Deng, S. Danilkin, S.-L.
+Yu, J.-X. Li, and J. Wen, Phys. Rev. Lett.118, 107203 (2017).
+[10] A. Banerjee, P. Lampen-Kelley, J. Knolle, C. Balz, A. A. Aczel,
+B. Winn, Y . Liu, D. Pajerowski, J. Yang, C. A. Bridges, A. T.
+Savici, B. C. Chakoumakos, M. D. Lumsden, D. A. Tennant,
+R. Moessner, D. G. Mandrus, and S. E. Nagler, npj Quantum
+Mater. 3, 8 (2018).
+[11] C. Balz, P. Lampen-Kelley, A. Banerjee, J. Yan, Z. Lu, X. Hu,
+S. M. Yadav, Y . Takano, Y . Liu, D. A. Tennant, M. D. Lumsden,
+D. Mandrus, and S. E. Nagler, Phys. Rev. B100, 060405 (2019).
+[12] S. M. Winter, A. A. Tsirlin, M. Daghofer, J. van den Brink,
+Y . Singh, P. Gegenwart, and R. Valent´ı, J. Phys. Condens. Mat-
+ter 29, 493002 (2017).
+[13] H. Takagi, T. Takayama, G. Jackeli, G. Khaliullin, and S. E.
+Nagler, Nat. Rev. Phys. 1, 264 (2019).
+[14] Y . Motome and J. Nasu, J. Phys. Soc. Jpn.89, 012002 (2020).
+[15] A. Kitaev, Ann. Phys. (N.Y .)321, 2 (2006).
+[16] M. Hermanns, I. Kimchi, and J. Knolle, Annu. Rev. Condens.
+Matter Phys. 9, 17 (2018).
+[17] C. Nayak, S. H. Simon, A. Stern, M. Freedman, and
+S. Das Sarma, Rev. Mod. Phys. 80, 1083 (2008).
+[18] D. Aasen, R. S. K. Mong, B. M. Hunt, D. Mandrus, and J. Al-
+icea, Phys. Rev. X 10, 031014 (2020).
+[19] K. Klocke, D. Aasen, R. S. K. Mong, E. A. Demler, and J. Al-
+icea, Phys. Rev. Lett. 126, 177204 (2021).
+[20] J. G. Rau, E. K.-H. Lee, and H.-Y . Kee, Phys. Rev. Lett. 112,
+077204 (2014).
+[21] See Supplemental Material, which includes Refs. [ ? ? ? ? ? ?
+], at [URL will be inserted by publisher] for more details of the
+experiments and calculations.
+[22] J. Chaloupka and G. Khaliullin, Phys. Rev. B 94, 064435
+(2016).
+[23] C. Balz, L. Janssen, P. Lampen-Kelley, A. Banerjee, Y . H. Liu,
+J.-Q. Yan, D. G. Mandrus, M. V ojta, and S. E. Nagler, Phys.
+Rev. B 103, 174417 (2021).
+[24] H. Suzuki, H. Liu, J. Bertinshaw, K. Ueda, H. Kim, S. Laha,
+D. Weber, Z. Yang, L. Wang, K. F. H. Takahash and, M. Minola,
+B. V . Lotsch, B. J. Kim, H. Yavas ¸, M. Daghofer, J. Chaloupka,
+G. Khaliullin, H. Gretarsson, and B. Keimer, Nat. Commun.12,
+4512 (2021).
+[25] J. A. Sears, M. Songvilay, K. W. Plumb, J. P. Clancy, Y . Qiu,
+Y . Zhao, D. Parshall, and Y .-J. Kim, Phys. Rev. B91, 144420
+(2015).
+[26] R. D. Johnson, S. C. Williams, A. A. Haghighirad, J. Singleton,
+V . Zapf, P. Manuel, I. I. Mazin, Y . Li, H. O. Jeschke, R. Valent´ı,
+and R. Coldea, Phys. Rev. B 92, 235119 (2015).
+[27] H. B. Cao, A. Banerjee, J.-Q. Yan, C. A. Bridges, M. D. Lums-
+den, D. G. Mandrus, D. A. Tennant, B. C. Chakoumakos, and
+S. E. Nagler, Phys. Rev. B 93, 134423 (2016).
+[28] G. Jackeli and G. Khaliullin, Phys. Rev. Lett. 102, 017205
+(2009).
+[29] S. M. Winter, Y . Li, H. O. Jeschke, and R. Valent´ı, Phys. Rev. B
+93, 214431 (2016).
+[30] C. Eichstaedt, Y . Zhang, P. Laurell, S. Okamoto, A. G. Eguiluz,
+and T. Berlijn, Phys. Rev. B100, 075110 (2019).
+[31] S. M. Winter, K. Riedl, P. A. Maksimov, A. L. Chernyshev,
+A. Honecker, and R. Valent´ı, Nat. Commun. 8, 1152 (2017).
+[32] S. M. Winter, K. Riedl, D. Kaib, R. Coldea, and R. Valent ´ı,
+Phys. Rev. Lett. 120, 077203 (2018).
+[33] P. A. Maksimov and A. L. Chernyshev, Phys. Rev. Research 2,
+033011 (2020).
+[34] J. Nasu, J. Knolle, D. L. Kovrizhin, Y . Motome, and R. Moess-
+ner, Nat. Phys. 12, 912 (2016).
+[35] L. Du, Y . Huang, Y . Wang, Q. Wang, R. Yang, J. Tang, M. Liao,
+D. Shi, Y . Shi, and X. Zhou, 2D Mater.6, 015014 (2018).
+[36] T. T. Mai, A. McCreary, P. Lampen-Kelley, N. Butch, J. R.
+Simpson, J.-Q. Yan, S. E. Nagler, D. Mandrus, A. R. H. Walker,
+and R. V . Aguilar, Phys. Rev. B100, 134419 (2019).
+[37] Y . Wang, G. B. Osterhoudt, Y . Tian, P. Lampen-Kelley,
+A. Banerjee, T. Goldstein, J. Yan, J. Knolle, H. Ji, R. J. Cava,
+J. Nasu, Y . Motome, S. E. Nagler, D. Mandrus, and K. S. Burch,
+npj Quantum Mater. 5, 14 (2020).
+[38] J. Zheng, K. Ran, T. Li, J. Wang, P. Wang, B. Liu, Z.-X. Liu,
+B. Normand, J. Wen, and W. Yu, Phys. Rev. Lett. 119, 227208
+(2017).
+[39] S.-H. Baek, S.-H. Do, K.-Y . Choi, Y . S. Kwon, A. U. B. Wolter,
+S. Nishimoto, J. van den Brink, and B. B¨uchner, Phys. Rev. Lett.
+119, 037201 (2017).
+[40] J. A. Sears, Y . Zhao, Z. Xu, J. W. Lynn, and Y .-J. Kim, Phys.
+Rev. B 95, 180411 (2017).
+[41] P. Czajka, T. Gao, M. Hirschberger, P. Lampen-Kelley,
+A. Banerjee, J. Yan, D. G. Mandrus, S. E. Nagler, and N. P.
+Ong, Nat. Phys. 17, 915 (2021).
+[42] I. S. Villadiego, Phys. Rev. B 104, 195149 (2021).
+[43] W. G. F. Kr ¨uger and L. Janssen, Phys. Rev. B 104, 165133
+(2021).
+[44] Y . Kasahara, T. Ohnishi, Y . Mizukami, O. Tanaka, S. Ma,
+K. Sugii, N. Kurita, H. Tanaka, J. Nasu, Y . Motome,
+T. Shibauchi, and Y . Matsuda, Nature (London) 559, 227
+(2018).
+[45] M. Yamashita, J. Gouchi, Y . Uwatoko, N. Kurita, and
+H. Tanaka, Phys. Rev. B102, 220404 (2020).
+[46] T. Yokoi, S. Ma, Y . Kasahara, S. Kasahara, T. Shibauchi, N. Ku-
+rita, H. Tanaka, J. Nasu, Y . Motome, C. Hickey, S. Trebst, and
+Y . Matsuda, Science373, 568 (2021).
+7
+[47] H. Li, T. T. Zhang, A. Said, G. Fabbris, D. G. Mazzone, J. Q.
+Yan, D. Mandrus, G. B. Hal ´asz, S. Okamoto, S. Murakami,
+M. P. M. Dean, H. N. Lee, and H. Miao, Nat. Commun. 12,
+3513 (2021).
+[48] A. U. B. Wolter, L. T. Corredor, L. Janssen, K. Nenkov,
+S. Sch ¨onecker, S.-H. Do, K.-Y . Choi, R. Albrecht, J. Hunger,
+T. Doert, M. V ojta, and B. B¨uchner, Phys. Rev. B 96, 041405
+(2017).
+[49] S. Widmann, V . Tsurkan, D. A. Prishchenko, V . G. Mazurenko,
+A. A. Tsirlin, and A. Loidl, Phys. Rev. B 99, 094415 (2019).
+[50] S. Bachus, D. A. S. Kaib, Y . Tokiwa, A. Jesche, V . Tsurkan,
+A. Loidl, S. M. Winter, A. A. Tsirlin, R. Valent´ı, and P. Gegen-
+wart, Phys. Rev. Lett. 125, 097203 (2020).
+[51] O. Tanaka, Y . Mizukami, R. Harasawa, K. Hashimoto,
+K. Hwang, N. Kurita, H. Tanaka, S. Fujimoto, Y . Mat-
+suda, E.-G. Moon, and T. Shibauchi, Nat. Phys.
+https://doi.org/10.1038/s41567-021-01488-6 (2022).
+[52] N. Jan ˇsa, A. Zorko, M. Gomil ˇsek, M. Pregelj, K. W. Kr ¨amer,
+D. Biner, A. Biﬃn, C. R ¨uegg, and M. Klanjˇsek, Nat. Phys. 14,
+786 (2018).
+[53] A. N. Ponomaryov, L. Zviagina, J. Wosnitza, P. Lampen-Kelley,
+A. Banerjee, J.-Q. Yan, C. A. Bridges, D. G. Mandrus, S. E.
+Nagler, and S. A. Zvyagin, Phys. Rev. Lett.125, 037202 (2020).
+[54] C. Wellm, J. Zeisner, A. Alfonsov, A. U. B. Wolter, M. Roslova,
+A. Isaeva, T. Doert, M. V ojta, B. B¨uchner, and V . Kataev, Phys.
+Rev. B 98, 184408 (2018).
+[55] D. Hirobe, M. Sato, Y . Shiomi, H. Tanaka, and E. Saitoh, Phys.
+Rev. B 95, 241112 (2017).
+[56] Y . Kasahara, K. Sugii, T. Ohnishi, M. Shimozawa, M. Ya-
+mashita, N. Kurita, H. Tanaka, J. Nasu, Y . Motome,
+T. Shibauchi, and Y . Matsuda, Phys. Rev. Lett. 120, 217205
+(2018).
+[57] A. Little, L. Wu, P. Lampen-Kelley, A. Banerjee, S. Patankar,
+D. Rees, C. A. Bridges, J.-Q. Yan, D. Mandrus, S. E. Nagler,
+and J. Orenstein, Phys. Rev. Lett. 119, 227201 (2017).
+[58] Z. Wang, S. Reschke, D. H ¨uvonen, S.-H. Do, K.-Y . Choi,
+M. Gensch, U. Nagel, T. R ˜o˜om, and A. Loidl, Phys. Rev. Lett.
+119, 227202 (2017).
+[59] L. Wu, A. Little, E. E. Aldape, D. Rees, E. Thewalt, P. Lampen-
+Kelley, A. Banerjee, C. A. Bridges, J.-Q. Yan, D. Boone,
+S. Patankar, D. Goldhaber-Gordon, D. Mandrus, S. E. Nagler,
+E. Altman, and J. Orenstein, Phys. Rev. B 98, 094425 (2018).
+[60] I. O. Ozel, C. A. Belvin, E. Baldini, I. Kimchi, S. Do, K.-Y .
+Choi, and N. Gedik, Phys. Rev. B 100, 085108 (2019).
+[61] S. Reschke, V . Tsurkan, S.-H. Do, K.-Y . Choi, P. Lunkenheimer,
+Z. Wang, and A. Loidl, Phys. Rev. B100, 100403 (2019).
+[62] J. Cookmeyer and J. E. Moore, Phys. Rev. B98, 060412 (2018).
+[63] H.-S. Kim, V . S. V ., A. Catuneanu, and H.-Y . Kee, Phys. Rev. B
+91, 241110 (2015).
+[64] H.-S. Kim and H.-Y . Kee, Phys. Rev. B93, 155143 (2016).
+[65] R. Yadav, N. A. Bogdanov, V . M. Katukuri, S. Nishimoto,
+J. van den Brink, and L. Hozoi, Sci. Rep. 6, 37925 (2016).
+[66] T. Suzuki and S.-i. Suga, Phys. Rev. B 97, 134424 (2018).
+[67] T. Suzuki and S.-i. Suga, Phys. Rev. B 99, 249902 (2019).
+[68] Y . S. Hou, H. J. Xiang, and X. G. Gong, Phys. Rev. B 96,
+054410 (2017).
+[69] W. Wang, Z.-Y . Dong, S.-L. Yu, and J.-X. Li, Phys. Rev. B96,
+115103 (2017).
+[70] H. Li, H.-K. Zhang, J. Wang, H.-Q. Wu, Y . Gao, D.-W. Qu, Z.-
+X. Liu, S.-S. Gong, and W. Li, Nat. Commun.12, 4007 (2021).
+[71] K. Ran, J. Wang, S. Bao, Z. Cai, Y . Shangguan, Z. Ma,
+W. Wang, Z.-Y . Dong, P.ˇCerm´ak, A. Schneidewind, S. Meng,
+Z. Lu, S.-L. Yu, J.-X. Li, and J. Wen, Chin. Phys. Lett. 39,
+027501 (2022).
+[72] L. Janssen, E. C. Andrade, and M. V ojta, Phys. Rev. B 96,
+064430 (2017).
+[73] P. Laurell and S. Okamoto, npj Quantum Mater. 5, 2 (2020).
+[74] P. Mehta, M. Bukov, C.-H. Wang, A. G. Day, C. Richardson,
+C. K. Fisher, and D. J. Schwab, Phys. Rep. 810, 1 (2019).
+[75] J. Carrasquilla, Adv. Phys. X 5, 1797528 (2020).
+[76] M. Doucet, A. M. Samarakoon, C. Do, W. T. Heller,
+R. Archibald, D. A. Tennant, T. Pro ﬀen, and G. E. Granroth,
+Mach. Learn. Sci. Technol. 2, 023001 (2021).
+[77] K. T. Butler, M. D. Le, J. Thiyagalingam, and T. G. Perring, J.
+Phys. Condens. Matter 33, 194006 (2021).
+[78] Z. Chen, N. Andrejevic, N. C. Drucker, T. Nguyen, R. P. Xian,
+T. Smidt, Y . Wang, R. Ernstorfer, D. A. Tennant, M. Chan, and
+M. Li, Chem. Phys. Rev. 2, 031301 (2021).
+[79] S. Yu, Y . Gao, B.-B. Chen, and W. Li, Chin. Phys. Lett. 38,
+097502 (2021).
+[80] A. Tennant and A. Samarakoon, J. Phys. Condens. Matter 34,
+044002 (2021).
+[81] A. M. Samarakoon, K. Barros, Y . W. Li, M. Eisenbach,
+Q. Zhang, F. Ye, V . Sharma, Z. L. Dun, H. Zhou, S. A. Grig-
+era, C. D. Batista, and D. A. Tennant, Nat. Commun. 11, 892
+(2020).
+[82] T. E. Mason, D. Abernathy, I. Anderson, J. Ankner, T. Egami,
+G. Ehlers, A. Ekkebus, G. Granroth, M. Hagen, K. Herwig,
+J. Hodges, C. Ho ﬀmann, C. Horak, L. Horton, F. Klose,
+J. Larese, A. Mesecar, D. Myles, J. Neuefeind, M. Ohl, C. Tulk,
+X.-L. Wang, and J. Zhao, Physica B: Condensed Matter 385-
+386, 955 (2006).
+[83] S. Rosenkranz and R. Osborn, Pramana-J. Phys. 71, 705 (2008).
+[84] G. E. Granroth, D. H. Vandergriﬀ, and S. E. Nagler, Physica B:
+Condensed Matter 385-86, 1104 (2006).
+[85] G. E. Granroth, A. I. Kolesnikov, T. E. Sherline, J. P. Clancy,
+K. A. Ross, J. P. C. Ru ﬀ, B. D. Gaulin, and S. E. Nagler, J.
+Phys.: Conf. Ser. 251, 012058 (2010).
+[86] L. Janssen, S. Koch, and M. V ojta, Phys. Rev. B 101, 174444
+(2020).
+[87] K. Liu, N. Sadoune, N. Rao, J. Greitemann, and L. Pollet, Phys.
+Rev. Research 3, 023016 (2021).
+[88] N. Rao, K. Liu, M. Machaczek, and L. Pollet, Phys. Rev. Re-
+search 3, 033223 (2021).
+[89] N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H.
+Teller, and E. Teller, J. Chem. Phys.21, 1087 (1953).
+[90] T. Huberman, D. A. Tennant, R. A. Cowley, R. Coldea, and
+C. D. Frost, J. Stat. Mech.: Theory Exp. 2008 (05), P05017.
+[91] D. R. Jones, M. Schonlau, and W. J. Welch, J. Glob. Optim. 13,
+455 (1998).
+[92] D. S. Broomhead and D. Lowe, Radial Basis Functions, Multi-
+V ariable Functional Interpolation and Adaptive Networks ,
+Tech. Rep. (Royal Signals and Radar Establishment Malvern
+(United Kingdom), 1988).
+[93] A. M. Samarakoon, D. A. Tennant, F. Ye, Q. Zhang,
+and S. A. Grigera, https: //arxiv.org/abs/2110.15817 (2021),
+arXiv:2110.15817.
+[94] S. Sugiura and A. Shimizu, Phys. Rev. Lett. 108, 240401
+(2012).
+[95] M. Kawamura, K. Yoshimi, T. Misawa, Y . Yamaji, S. Todo, and
+N. Kawashima, Comp. Phys. Comms. 217, 180 (2017).
+Supplemental material for: Extraction of the interaction parameters for α-RuCl3 from neutron data
+using machine learning
+Anjana M. Samarakoon,1, 2, 3 Pontus Laurell,4, 5, 6 Christian Balz,2, 7 Arnab Banerjee,2, 8 Paula Lampen-Kelley,9, 10
+David Mandrus,9, 10 Stephen E. Nagler, 2, 11 Satoshi Okamoto,10, 11 and D. Alan Tennant 10, 11, 1, 6
+1Shull-Wollan Center , Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+2Neutron Scattering Division, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+3Materials Science Division, Argonne National Laboratory, Lemont, Illinois 60439, USA
+4Center for Nanophase Materials Sciences, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+5Computational Sciences and Engineering Division, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+6Department of Physics and Astronomy, University of Tennessee, Knoxville, Tennessee 37996, USA.
+7ISIS Neutron and Muon Source, Rutherford Appleton Laboratory, Didcot, OX11 0QX, United Kingdom
+8Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47906, USA
+9Department of Materials Science and Engineering, University of Tennessee, Knoxville, Tennessee 37996, USA
+10Materials Science and Technology Division, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+11Quantum Science Center , Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+(Dated: February 24, 2022)
+This PDF ﬁle includes:
+• Details on numerical methods and training of networks
+• More information on Neutron data analysis and treatments
+• Real-space spin conﬁgurations
+• Phase map generation and SSF predictions using machine-learning
+• Additional predictions of dynamical structure factor
+• Details of ED calculations and comparisons with MC results
+• Formulation of the optimal region
+• Comparison of machine-learned parameter set with some of the previously reported values
+• Magnetic speciﬁc heat
+Supplementary Figures 1-13
+Supplementary Tables I-III
+arXiv:2202.10715v2  [cond-mat.str-el]  23 Feb 2022
+2
+I. DETAILS ON NUMERICAL METHODS AND TRAINING OF NETWORKS
+A. Monte Carlo and Landau-Lifshitz Solver for scattering
+Neutron scattering from the magnetic system directly probes the magnetic two-point correlations of the material and the
+scattering cross section can be formulated as:
+d2σ
+dℏωΩ = k fki r2m ∑α,β gαgβ4 (δαβ− qαqβq2 )|F(Q)|2Sαβ (Q,ω ) (S1)
+where Q andω are the wavevector and energy transfer in the scattering process,ki and k f are the initial and ﬁnal wavevectors of
+the neutrons, rm is a scattering factor, α,β = x, y, z are Cartesian coordinates indicating initial and ﬁnal spin polarization of the
+neutron, F(Q) is the magnetic form factor and Sαβ (Q,ω ) is the spin correlation function. The pre-factors are set by measure-
+ment conditions or atomic properties of the material and so are straightforwardly evaluated allowing quantitative experimental
+determination ofS (Q,ω ).
+The dynamical correlation functionSαβ(Q,ω ) is equal to the Fourier transform of the spin-spin correlation functions in space
+and time:
+Sαβ(Q,ω ) = 12πN ∑i, j eiQ.(R j−Ri) ∫ ∞−∞ e−iωt⟨Sαi (t0)Sβj(t0 + t)⟩dt. (S2)
+FIG. S1. The nuclear structure of RuCl 3 as reported in Refs. [1, 2]. The space group is R¯3 (148). Note that there are 6 Ru-ions per unit-cell
+corresponding to three stacked honeycomb layers. We used this structure in our MC /LLD simulations even though the Hamiltonian of this
+study does not contain out-of-plane exchanges. Thus, our simulation setup can be readily generalized to 3D models with inter-layer exchange
+interactions.
+The Monte Carlo solver used in Ref. [3] is deployed for a network of Heisenberg spins on a honeycomb lattice. Although we
+neglect out-of-plane exchanges in this study, the unit cell with three honeycomb layers shown in Fig. S1 was used throughout
+the simulations. The spins are treated as vectors Si = [S xi, S yi, S zi ] of ﬁxed length of √S (S + 1)(= √3/2) at positions Ri. The
+energy due to interactions, {p} is given by the spin Hamiltonian, H =H({p}, S, R) given in Eq. (1) of the main text. Spin
+conﬁgurations which are representative of the system in thermal equilibrium at chosen temperature T are found using simulated
+annealing based on the Metropolis algorithm, a Markov Chain Monte Carlo method [4]. From these conﬁgurations a full range
+of physical properties can be calculated includingS sim(Q). The time development of a thermally equilibrated spin conﬁguration,
+S(t) can be evaluated using the Landau-Lifshitz (LL) equations of motion which are readily derived through Poisson brackets
+involving Si andH.
+dSi
+dt =γ
+[
+S i× ∂H∂Si
+]
+(S3)
+3
+The LL equation is solved numerically using a fourth-order Runge-Kutta algorithm with adaptive step size [5]. The S(t) is
+calculated for an appropriately spaced set of discrete times from t0 to tN with spacing ∆t and used to calculateSαβ(Q,ω ). The
+tN is determined by the target energy resolution of 0.5 meV . For a given{p}, the S (Q,ω ) was calculated from 256 independent
+simulations and averaged to yield good statistics. The actual measured cross sectionSexp (ν) depends on experimental conditions
+including resolution and the MC /LLD solver then undertakes the transformation {H(p)}→S sim(Q,{p}) to replicate expected
+scattering.
+B. Parameterization of the Hamiltonian and optimization
+The original Hamiltonian space is re-parameterized as follows to cover the entire parameter-space (both positive and negative
+sides of each parameter):
+J1 =
+( U
+3
+)
+sin(φ)sin(θ)sin(β)sin(γ),
+K = (U) cos(φ)sin(θ)sin(β)sin(γ),
+Γ =
+( U
+2
+)
+cos(θ)sin(β)sin(γ),
+J2 =
+( U
+6
+)
+cos(β)sin(γ),
+J3 =
+( U
+3
+)
+cos(γ),
+(S4)
+where U is the overall energy scale. The hyper-parameter space of{p} ={φ,θ,β,γ } was explored with ﬁxed U = 10 meV , using
+the iterative mapping algorithm (IMA), which is a variant of the E ﬃcient Global Optimization algorithm as described in Ref.
+[3]. The IMA is employed to minimize the multi-experiment error measure, ˆχ2com = ˆχ2S (Q)× ˆχ2S (Q,ω). The ˆχ2S (Q) and ˆχ2S (Q,ω) are
+the low-cost estimators of the mean squared error, χ2S (ν) = ∑ν[S exp(ν)− S sim(ν)]2 with respect to static and dynamical structure
+factors. In contrast to the Gaussian process regression in Ref. [3], we here calculate a low cost estimators using the surrogate
+networks to determine the squared distance between prediction and experimental data, (Eq. S5).
+ˆχ2S (Q) = ∑
+Q
+[S exp(Q)− S sur(Q)]2
+ˆχ2S (Q,ω) = ∑
+{Q,ω}
+[S exp(Q,ω )− S sur(Q,ϵω )]2 (S5)
+Here, ϵ renormalizes the energy scale U and is found by minimizing ˆχ2S (Q,ω) within the interval of ϵ ∈ [1/3, 3] for a given
+Hamiltonian parameter set{p}. The ϵ is necessary to account for the overall energy scale.
+The IMA iteratively samples parameter space subject to the condition that ˆχ2com is below the error tolerance threshold, Ccom,
+and the surrogates are retrained. As more data is collected, the prediction accuracy of the surrogates towards minimum of the
+ˆχ2com becomes reliable.
+C. Training of Autoencoders
+In this work, we have trained two Autoencoders; for static and dynamic structure factors. The training includes S Sim(Q) and
+S Sim(Q,ω ) generated from the MC /LLD solver for random sets of Hamiltonian parameter produced by the IMA. By the last
+iteration of IMA, we have employed 10000 models for Hamiltonian Eq. (1). For each model, both S Sim(Q) and S Sim(Q,ω ) are
+calculated. The training data includes simulated data of 90% of randomly selected existing samples and the remaining data was
+used as ML training validation. The autoencoder tries to minimize the deviation between its input S sim(Q) and ﬁltered output,
+summed over all random models in the dataset.
+The Autoencoder corresponding to S (Q), is constructed with three hidden layers of logistic neurons and latent space of 3-
+dimensions. The number of neurons for the three layers are empirically found to be 300-3-300. A single hidden layer autoencoder
+architecture of 200 linear neurons is found to be performing reasonably well with S (Q,ω ) data.
+Training the autoencoder corresponds to determining the weight matrix ( W) and bias ( b) for each layer including the output
+layer. A loss function,L
+L =
+∑
+{p}
+ 1Nν ∑ν (S sim(ν)− S simAE (ν))2 +LR (S6)
+4
+is minimized using the Adam optimization algorithm as readily accessible in Keras [6], a deep learning API written in Python.
+The termLR is relatively weak, and includes two types of regularization: An L2 regularization on the weight matrices, and an
+activity regularizer for uncorrelated feature constraint. This regularization seems to improve the physical interpretability of the
+latent space representation. Despite having millions of trainable parameters in the neural network, the autoencoder does not
+seem prone to overﬁtting; the low-dimensionality of the latent space itself acts as a strong regularizer.
+D. Training of the generative model
+The RBN is constructed with two layers: A layer of radial basis (RB) neurons followed by an output layer of logistic neurons.
+The latent space predictions for a given parameter set{p} are deﬁned as:
+Li = f2(w(2)i j .h j({p}) + b2) (S7)
+h j({p}) = exp
+[
+−
+∑
+k(pk− c jk)2
+σ2
+]
+(S8)
+where f2 is the logistic activation function f (x) = 1/(1 + e−x) similar to the output layer of the NLAE Encoder. The weight
+matrix w(2)i j , and bias vector b2 of the output layer and the clustering centers c jk of the RB layer are to be determined from the
+training process. The spread of RB function, σ is preset to 0.05. The network is trained with the S sim(L) as the target and the
+corresponding{p} as the input. Thus the input and the output dimensionality is set by the dimensionality of the {H(p)} and the
+LQ. The number of neutrons in the RB layer is determined during the training process. The training starts with no neurons in
+the hidden layer and iteratively adding neurons to minimize the error between output and the target.
+II. MORE INFORMA TION ON NEUTRON DA TA ANALYSIS AND TREA TMENTS
+Fig. S2(a) shows a 2D slice of 4D raw data from the inelastic neutron experiment executed at the Fine-Resolution Fermi
+Chopper Spectrometer (SEQUOIA), SNS, ORNL, under temperature of ∼ 4 K and zero ﬁeld conditions. The level of experi-
+mental noise is comparable to the magnetic signal even though we have integrated over a wide range ofl = 0±3.5 . We therefore
+perform a 3D Gaussian ﬁltering on the l-integrated 3D data volume as a pre-processing step to the ML integrated workﬂow.
+As shown in Fig. S2(b), the Gaussian ﬁlter helps to get rid of statistical noise up to some extent and makes the spectrum more
+clearer. A Gaussian kernel with standard deviation (σ) of 1 was used here. A lower value of σ will not do better on statistical
+noise while a higher value would make the features broader than instrument resolution.
+FIG. S2. Pre-processing treatment on SEQUOIA data. (a) the raw data sliced in [ −h, h, 0] and ℏω plane with the integration of[k, k, 0] : k =
+0± 0.02, [0, 0, l] : l = 0± 3.5 and (b) the corresponding slice of smoothed data are shown here. The data was collected at 4 K with a single
+crystal of mass 0.7 g. The data was smoothed by ﬁltering l-integrated 3D image with a 3D Gaussian smoothing kernel with standard deviation
+of 1.0. The Gaussian ﬁlter helps to get rid of statistical noise and sharpen up the features in the raw data.
+5
+III. REAL-SPACE SPIN CONFIGURA TIONS
+Fig. S3 compares the real-space spin conﬁgurations of the 3D and planar zigzag phases. Fig. S4 shows spin conﬁgurations for
+some other phases identiﬁed in Fig. 2.
+FIG. S3. Magnetic structures of the two zig-zag (Z.Z.) phases mentioned in the main text. Panel (a), (b) and (c) show the three of the six
+magnetic domains for the 3D Z.Z. phase. Panel (d), (e) and (f) are the three of the six magnetic domains for the 2D Z.Z. phase. The yellow
+spheres and red arrows represents the Ru-ions and its magnetic moments respectively. The green plane cuts through the vertical center of the
+lattice for better perspective on the out of plane spin components. Both phases can be found in parameter space plane shown in Fig. 2(a).
+Γ > 0 favors 3D Z.Z., while Γ < 0 favors the 2D Z.Z. phase. The magnetic conﬁguration of both phases consist of zig-zag chains, but the
+spin orientations diﬀerent. The directions of zig-zag chains in 3D Z.Z. phase aligns with the principal axis of the anisotropic models while
+it is in-plane and perpendicular to the propagation vector of the chains. The corresponding labels to map the S (Q) shown in Fig. 2 are also
+displayed. Due to the diﬀerence in spin orientations, neutron structure factor is also distinguishable.
+FIG. S4. Magnetic structure of some of the phases shown in Fig. 2. The spin conﬁguration for the S (Q) labeled as (a) 6 , (b) 3, (c) 7 and (d)
+4 in Fig. 2 are shown here. The yellow spheres and red arrows represents the Ru-ions and its magnetic moments respectively. The green plane
+cuts through the vertical center of the lattice for better perspective on the out of plane spin components. The corresponding phases for label 6,
+3 and 7 can be easily identify as anti-ferromagnetic, ferromagnetic and 120° orders respectively. The spin-structure corresponding to the label
+4 [panel (d)] is planar with “6-in” type plaquettes forming a triangular network.
+6
+IV . PHASE MAP GENERA TION AND SSF PREDICTIONS USING MACHINE-LEARNING
+As explained in the main text, an Autoencoder with latent space ofNL = 3 is trained to compressS (Q) data and used to predict
+phase maps of magnetic ordering (see Fig. S5(a)). The S (Q) (and consequently S (L)) encodes correlations of the systems and
+provides natural classiﬁcation with an adequate size of reciprocal space. Parameter sets corresponding to the same structure
+would cluster together in either Q or L space. (see Fig. S5(b)). Thus, it is technically possible to perform a clustering analysis
+to identify and label di ﬀerent clusters. However, such clustering analysis would fail when the system undergoes continuous
+transitions or crossovers rather than abrupt ﬁrst-order like changes. In this case it is still possible to easily construct a graphical
+phase diagram. If the Q space can be reduced to an L space with NL = 3, then the latent vectors can be treated as the RGB color
+components of a phase map.
+FIG. S5. Latent space representations and generative model predictability. (a) A predicted map of magnetic orderings in the J1− K− Γ
+space on the hyper-surface of J21 + K2 + Γ2 = 1 at a ﬁxed temperature of T/|K| = 0.02. The phase map is generated for Γ > 0 and depicted
+according to Γ = cos(θ). (b) 3D histogram (density map) of the{p} manifold in latent space. The surfaces are the 3D contours of the histogram
+and their color represents the bin-height (density) used to generate the contour. In this latent space representation, a broad phase in parameter
+space appears as a dense point and a higher order phase transition / crossover appears as lines of points connecting dense clusters. First-order
+phase transitions appear as isolated clusters and discontinuities in the latent space projection [7]. (c) S (L) for (ﬁlled triangles) the simulated
+structure factors calculated along the white dashed line shown in panel (a) at θ =π/4 along with (solid lines) the prediction from the GN. (d)
+The high-symmetry-plane slices of simulated and surrogate-predicted S (Q) data at multiple places in parameter space as indexed on panel (c).
+In order to construct high-dimensional phase maps, we used a Generator network (see Fig. 3(b)) to predict S GN(L) for
+the parameters set located in between existing {p}samples. Figure S5(a) is generated in such fashion in the hyper plane of√
+J21 + K2 + Γ2 = 1 and J2 = J3 = 0 and Figure S5(c) shows the S GN(L) in comparison to S (L) not included in GN training,
+along the dashed circle in panel (a).
+As shown in Fig. 3 (b) and (c), a faster surrogate for the MC /LLD solver can be constructed by connecting the GN with the
+Decoder network of the Autoencoder. Figure S5 (d) shows the surrogate-predicted structure factors,S sur(Q) in comparison to the
+simulated for the parameter sets, not used as a part of training data. The surrogate-predictions are worse in some regions where
+the the S sim(Q) change rapidly and the {p} samples are taken sparsely. The predictability of both Decoder and the Generator
+contribute the total prediction error of the surrogate. As more{p} are evaluated on demand in the regions of interest, the surrogate
+predictions will be more reliable. Even though the surrogate predictions are not accurate in some regions, it can be used to do
+guide parameter space searches and even draw quick conclusions for experiment planning. However, any prediction leading to
+critical decisions or conclusion, should always be validated with direct calculations.
+7
+V . ADDITIONAL PREDICTIONS OF DYNAMICAL STRUCTURE FACTOR
+Fig. S6 shows predicted dynamical structure factors for the parameter sets speciﬁed in Table I.
+FIG. S6. The dynamical structure factors for multiple parameter sets. All the panels shows [−h, h, 0]−ℏω slices of S Sur(Q,ω ) at [k, k, 0] : k = 0,
+[0, 0, l] : l = 0 for the parameter sets listed in the Table I. The ratios between parameter for the S Sur(Q,ω ) shown in panel (a)-(e) also match
+for the sets labeled as 1-5 in the Fig. 2(a).
+Set #
+J1
+(meV)
+K
+(meV)
+Γ
+(meV)
+J2
+(meV)
+J3
+(meV)
+1 -0.28 -1.39 0.87 0 1.75
+2 -0.47 -2.33 1.89 -0.07 0.04
+3 -0.21 -2.50 0.99 0.08 -1.58
+4 0.12 -3.40 -2.23 0.01 0.43
+5 -0.28 -1.74 -0.83 -0.04 1.71
+6 -0.04 -1.66 0.99 0.04 0.11
+7 -0.34 -7.72 2.34 -0.1 0.74
+8 -0.52 -5.02 1.46 -0.12 0.74
+9 -0.84 -4.45 0.92 -0.08 1.05
+10 -0.18 -5.89 0.15 -0.23 1.45
+TABLE I. The corresponding parameter sets for the dynamical structure factors shown in Fig. S6.
+8
+VI. DETAILS OF ED CALCULA TIONS AND COMPARISONS WITH MC RESULTS
+Lanczos exact diagonalization calculations were performed at zero temperature using the HΦ library [8] on the 24-site C3-
+symmetric ﬁnite size cluster shown in Fig. S7. It has the same rotational symmetry as the full honeycomb lattice. Static structure
+factors were evaluated directly as ground state expectation values, whereas dynamical structure factors were calculated using the
+continued fraction expansion method (CFE) [9]. As in Ref. [10] we used 500 Lanczos steps in the CFE. We used a Lorentzian
+broadeningη of 0.05 meV (half width at half maximum) for the optimized parameters, or 0.05/sqrt(3) meV for parameter sets
+1-4 deﬁned in Table II and represented visually in Fig. S8. The broadening was intentionally made small to allow experimental
+resolution eﬀects to be implemented as in the LLD calculations. The frequency step size was ∆ω =η/5.
+Comparisons of S (Q) and S (Q,ω ) are shown in Fig. S9. A comparison of the individual matrix elements, ⟨SαSβ⟩ is also
+shown in Fig. S10, S11 and S12 for parameter sets 1,2,4 listed in Table II.
+FIG. S7. Finite size cluster with periodic boundary conditions used for Lanczos ED calculations. Sides with matching symbols are identiﬁed.
+This ﬁgure is reproduced without changes from Ref. [10]; licensed under a Creative Commons Attribution (CC BY) license a.
+a http://creativecommons.org/licenses/by/4.0/
+Set #
+J1
+(meV)
+K
+(meV)
+Γ
+(meV)
+J2
+(meV)
+J3
+(meV)
+1 -2.1 -13.6 -1.0 -0.2 1.7
+2 -2.5 -13.3 0.6 -0.2 1.6
+3 -2.0 -13.8 -1.1 -0.2 1.6
+4 -2.5 -13.9 -0.7 -0.1 0.6
+a -1.98 -11.29 0.49 -0.19 1.55
+b -1.45 -9.29 0.38 -0.195 1.49
+c -0.93 -7.28 0.26 -0.193 1.435
+Opt. -0.4 -5.27 0.15 -0.19 1.38
+TABLE II. Parameter sets used to compare ED calculation with LLD.
+9
+FIG. S8. The parameters sets listed in Table II are shown in the machine-learned phase map varying Γ/|K| and J3/|K| through the optimal
+solution forα-RuCl3 at ﬁxed J1/|K| =−0.1 and J2/|K| = 0, with K < 0. Parameter sets 1-4 were chosen to be located close to phase transitions,
+and parameter sets a-c were chosen to lie on a line connecting the optimized parameter set with parameter set 2.
+FIG. S9. The validation of MC /LLD with Lanczos ED for four di ﬀerent parameter sets listed in Table II. The comparisons of (a - d) static
+and (e - h) dynamic structure factors from (left side) Monte-Carlo simulations /LLD and (right side) ED are shown. The ED calculations use
+a 24-site cluster as shown in Fig. S7 and structure factors are calculated up to the 2 nd Brillouin Zone of the honeycomb lattice. The MC /LLD
+structure factors are calculated on a super cell of 20× 20 RuCl3 nuclear unit cells (equivalent to 2400 sites). Even though the the Q-resolutions
+of two calculations are not comparable, the magnetic peak structure in S (Q) agrees well for sets (b)2 and (d)4 but not for set (a)1 or (c)3.
+According to the MC /LLD calculations, the corresponding magnetic structure for set 1 and 3 is 2D Z.Z.. For this phase, M-point peaks in
+the 1st B.Z. are not allowed by the polarization factor, but M-point peaks appear in higher Brillouin zones, which are not covered in the ED
+calculation. Thus, the diﬀuse patterns in the S ED(Q) for set 1 and 3 are due to the ﬁnite-size eﬀect.
+10
+FIG. S10. The comparison of the individual SSF matrix elements, ⟨SαSβ⟩ for the parameter set 1 listed in Table II.
+11
+FIG. S11. The comparison of the individual SSF matrix elements, ⟨SαSβ⟩ for the parameter set 2 listed in Table II.
+12
+FIG. S12. The comparison of the individual SSF matrix elements, ⟨SαSβ⟩ for the parameter set 4 listed in Table II.
+13
+VII. FORMULA TION OF THE OPTIMAL REGION
+The ﬁve-dimensional optimal region for which ˆχ2Com < C2Com as illustrated in Fig. 4 (blue contours) can be formulated by
+ﬁtting the region to a minimum volume ellipsoid [11] as,
+V× M× V†≤ 1, (S9)
+where,
+M =
+ 0.0108 0 .0011 −0.0202 0 .0062 0 .00690.0011 0 .0004 0 .0003 −0.0011 0 .0007−0.0202 0 .0003 0 .1101 −0.0269 −0.01310.0062 −0.0011 −0.0269 0 .0508 0 .02390.0069 0 .0007 −0.0131 0 .0239 0 .0213 ,
+V =
+[
+J1 + 0.4481 K + 5.5136 Γ− 0.1627 J2 + 0.2228 J3− 1.4543
+]
+,
+VIII. COMPARISON OF MACHINE-LEARNED PARAMETER SET WITH SOME OF THE PREVIOUSLY REPORTED
+V ALUES
+In Table III we showχ2Com evaluated for some models in the literature. By this metric the optimized parameter set obtained by
+our machine learning method performs best with a value ofχ2Com≈ 5 — but it is expected to do so by design. However, no other
+model produces χ2Com < 10, while three models are found to produce χ2Com values in the [10, 20] range. It is remarkable that
+our optimized parameter set and the model of Ref. [12] have signiﬁcantly diﬀerentχ2Com values despite appearing close in terms
+of interaction parameters—perhaps J2 plays an important role? We stress that our treatment here neglects other small terms —
+both in some of the models in Table III and in determination of the ﬁtness landscape. This may be too drastic an approximation,
+as suggested particularly by models with larger Γ′ values such as in Ref. [13]. For this reason we suggest the χ2Com values be
+interpreted with care. In addition, our SCS predicts a ferromagnetic ground state for the model of Ref. [14] rather than zigzag,
+which likely contributes substantially to the highχ2Com value.
+Reference J1 K Γ J2 J3 ˆχ2Com
+Optimal ML parameters (this work) -0.3961 -5.2731 0.15 -0.1935 1.3761 4.95
+Hou et al. [15] -1.87 -10.7 3.8 0 1.27 13.78
+Suzuki et al. [16] -3 -5 2.5 0 0.75 18.6
+Winter et al. PRB [17] -5.5 7.6 8.4 0 2.3 19.58
+Winter et al. NC [12] -0.5 -5 2.5 0 0.5 26.96
+Wu et al. [18] -0.35 -2.8 2.4 0 0.34 28.70
+Ozel et al. [19] -0.95 1.15 3.8 0 0 35.75
+Kim and Kee [20] -3.5 4.6 6.42 0 0 36.27
+Kim et al. [21, 22] -12 17 12 0 0 38.23
+Li et al. [14] -2.5 -25 7.5 0 0 38.424
+Banerjee et al. [23] -4.6 7 0 0 0 38.54
+Laurell and Okamoto [10] -1.3 -15.1 10 0 0.9 38.65
+Cookmeyer and Moore [24] -0.5 -5 2.5 0 0.1125 38.70
+Ran et al. (2017) [25] 0 -6.8 9.5 0 0 39.04
+Suzuki and Suga [26, 27] -1.53 -24.4 5.25 0 0 40.03
+Ozel et al. [19] 0.46 -3.5 2.35 0 0 40.12
+Ran et al. (2022) [28] 0 -7.2 5.6 0 0 40.339
+Wang et al. [29] -0.3 -10.9 6.1 0 0.03 40.65
+TABLE III.χ2Com for diﬀerent models approximately described by Eq. (1) in the main text. For some of the models we have neglected additional
+small terms not captured by our model, such as Γ′. Those models are those of Refs. [10, 15, 17, 20, 26, 27]. It is possible that inclusion of
+those terms and/or usage of parameters that have not been bond-averaged would improve those models’χ2Com performance.
+14
+IX. MAGNETIC SPECIFIC HEA T
+Magnetic speciﬁc heat for some models was calculated using the microcanonical thermal pure quantum state (mTPQ) method
+[30] implemented in the HΦ library [8]. Similarly to the ED calculations, the 24-site cluster in Fig. S7 was used. To reduce
+statistical error, results were averaged over 15 initial random vectors. The results are shown in Fig. S13. These ﬁndings are not
+compared with SCS results since the speciﬁc heat of classical and quantum models are fundamentally di ﬀerent. In future work
+one may co-optimize parameters to ﬁt both neutron data and other observables, e.g. C(T).
+FIG. S13. (a) Magnetic speciﬁc heat for some of the parameter sets listed in Table II and (b) the corresponding S (Q,ω ) are shown. In panel
+(a), the black line shows experimentally determined Cmag(T) from Ref. [31], which features a peak near 6.5 K due to onset of magnetic order
+and a high-temperature peak around 70 K. The sharp peak at ≈ 170 K is not a feature of the speciﬁc heat, but an artifact of the background
+subtraction due to a structural transition not present in the nonmagnetic analog. Shown are also mTPQ calculations for ﬁve parameters sets near
+the machine-learning-predicted optimal region. The other lines indicates the statistical average over initial vectors. We see that our optimized
+parameters (Opt. Set) do not capture the high-temperature peak well, whereas Set 2 [see Table II] performs better in this regard. This matches
+the general trend noticed in Ref. [10] that the C(T) behavior is largely controlled by the overall energy scale of the spin Hamiltonian, whereas
+S (Q,ω ) depends crucially on the balance of di ﬀerent interactions. Note that Sets a,b and c are linearly connected points between Set 2 and
+Opt. Set in parameter space as shown in Fig. S8. Even though, Set 02 is doing well on C(T), the corresponding S (Q,ω ) does not capture the
+dispersion at M−points as shown in panel (b). Evidently, it is unlikely to ﬁnd a single region to capture both experimental observations in the
+current parameter space. However the two regions are not far away in parameter space as shown in Fig. S8 and it might be possible to ﬁnd a
+single solution in a further extended parameter space with appropriate extra exchanges.
+15
+[1] A. Glamazda, P. Lemmens, S.-H. Do, Y . S. Kwon, and K.-Y . Choi, Phys. Rev. B95, 174429 (2017).
+[2] S. Mu, K. D. Dixit, X. Wang, D. L. Abernathy, H. Cao, S. E. Nagler, J. Yan, P. Lampen-Kelley, D. Mandrus, C. A. Polanco, L. Liang,
+G. B. Hal´asz, Y . Cheng, A. Banerjee, and T. Berlijn, Phys. Rev. Research4, 013067 (2022).
+[3] A. M. Samarakoon, K. Barros, Y . W. Li, M. Eisenbach, Q. Zhang, F. Ye, V . Sharma, Z. L. Dun, H. Zhou, S. A. Grigera, C. D. Batista,
+and D. A. Tennant, Nat. Commun. 11, 892 (2020).
+[4] N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H. Teller, and E. Teller, J. Chem. Phys. 21, 1087 (1953).
+[5] T. Huberman, D. A. Tennant, R. A. Cowley, R. Coldea, and C. D. Frost, J. Stat. Mech.: Theory Exp. 2008 (05), P05017.
+[6] F. Chollet et al., Keras (2015), github.com/keras-team/keras.
+[7] A. Tennant and A. Samarakoon, J. Phys. Condens. Matter 34, 044002 (2021).
+[8] M. Kawamura, K. Yoshimi, T. Misawa, Y . Yamaji, S. Todo, and N. Kawashima, Comp. Phys. Comms.217, 180 (2017).
+[9] E. Dagotto, Rev. Mod. Phys. 66, 763 (1994).
+[10] P. Laurell and S. Okamoto, npj Quantum Mater. 5, 2 (2020).
+[11] N. Moshtagh et al., Convex optimization 111, 1 (2005).
+[12] S. M. Winter, K. Riedl, P. A. Maksimov, A. L. Chernyshev, A. Honecker, and R. Valent´ı, Nat. Commun. 8, 1152 (2017).
+[13] P. A. Maksimov and A. L. Chernyshev, Phys. Rev. Research 2, 033011 (2020).
+[14] H. Li, H.-K. Zhang, J. Wang, H.-Q. Wu, Y . Gao, D.-W. Qu, Z.-X. Liu, S.-S. Gong, and W. Li, Nat. Commun.12, 4007 (2021).
+[15] Y . S. Hou, H. J. Xiang, and X. G. Gong, Phys. Rev. B96, 054410 (2017).
+[16] H. Suzuki, H. Liu, J. Bertinshaw, K. Ueda, H. Kim, S. Laha, D. Weber, Z. Yang, L. Wang, K. F. H. Takahash and, M. Minola, B. V .
+Lotsch, B. J. Kim, H. Yavas ¸, M. Daghofer, J. Chaloupka, G. Khaliullin, H. Gretarsson, and B. Keimer, Nat. Commun.12, 4512 (2021).
+[17] S. M. Winter, Y . Li, H. O. Jeschke, and R. Valent´ı, Phys. Rev. B 93, 214431 (2016).
+[18] L. Wu, A. Little, E. E. Aldape, D. Rees, E. Thewalt, P. Lampen-Kelley, A. Banerjee, C. A. Bridges, J.-Q. Yan, D. Boone, S. Patankar,
+D. Goldhaber-Gordon, D. Mandrus, S. E. Nagler, E. Altman, and J. Orenstein, Phys. Rev. B98, 094425 (2018).
+[19] I. O. Ozel, C. A. Belvin, E. Baldini, I. Kimchi, S. Do, K.-Y . Choi, and N. Gedik, Phys. Rev. B100, 085108 (2019).
+[20] H.-S. Kim and H.-Y . Kee, Phys. Rev. B93, 155143 (2016).
+[21] H.-S. Kim, V . S. V ., A. Catuneanu, and H.-Y . Kee, Phys. Rev. B91, 241110 (2015).
+[22] L. Janssen, E. C. Andrade, and M. V ojta, Phys. Rev. B96, 064430 (2017).
+[23] A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li, M. B. Stone, G. E. Granroth, M. D. Lumsden, Y . Yiu, J. Knolle, S. Bhattacharjee,
+D. L. Kovrizhin, R. Moessner, D. A. Tennant, D. G. Mandrus, and S. E. Nagler, Nat. Mat.15, 733 (2016).
+[24] J. Cookmeyer and J. E. Moore, Phys. Rev. B 98, 060412 (2018).
+[25] K. Ran, J. Wang, W. Wang, Z.-Y . Dong, X. Ren, S. Bao, S. Li, Z. Ma, Y . Gan, Y . Zhang, J. T. Park, G. Deng, S. Danilkin, S.-L. Yu, J.-X.
+Li, and J. Wen, Phys. Rev. Lett.118, 107203 (2017).
+[26] T. Suzuki and S.-i. Suga, Phys. Rev. B 97, 134424 (2018).
+[27] T. Suzuki and S.-i. Suga, Phys. Rev. B 99, 249902 (2019).
+[28] K. Ran, J. Wang, S. Bao, Z. Cai, Y . Shangguan, Z. Ma, W. Wang, Z.-Y . Dong, P. ˇCerm´ak, A. Schneidewind, S. Meng, Z. Lu, S.-L. Yu,
+J.-X. Li, and J. Wen, Chin. Phys. Lett. 39, 027501 (2022).
+[29] W. Wang, Z.-Y . Dong, S.-L. Yu, and J.-X. Li, Phys. Rev. B96, 115103 (2017).
+[30] S. Sugiura and A. Shimizu, Phys. Rev. Lett. 108, 240401 (2012).
+[31] S. Widmann, V . Tsurkan, D. A. Prishchenko, V . G. Mazurenko, A. A. Tsirlin, and A. Loidl, Phys. Rev. B99, 094415 (2019).

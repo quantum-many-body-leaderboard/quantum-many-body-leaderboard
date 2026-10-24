@@ -1,0 +1,873 @@
+                    Nematic chiral spin liquid in a Kitaev magnet under external magnetic ﬁeld
+
+                                       Shun-Yao Yu,1  Han Li,2  Qi-Rong Zhao,3  Yuan Gao,1, 4  Xiao-Yu
+                                      Dong,5  Zheng-Xin Liu,3,∗  Wei Li,4, 6, 7,†  and Shou-Shu Gong1, 8,‡
+                                         1Department of Physics,  Beihang University,  Beijing 100191,  China
+                  2Kavli Institute for Theoretical Sciences, University of Chinese Academy of Sciences, Beijing 100190, China
+                                    3Department of Physics,  Renmin University of China,  Beijing 100872,  China
+     4CAS Key Laboratory of Theoretical Physics, Institute of Theoretical Physics, Chinese Academy of Sciences, Beijing 100190, China
+                                                    5Hefei  National  Laboratory,  Hefei  230088,  China
+                                          6CAS Center of Excellence in Topological Quantum Computation,
+                                         University of Chinese Academy of Sciences,  Beijing 100190,  China
+                 7Peng Huanwu Collaborative Center for Research and Education, Beihang University, Beijing 100191, China
+                                   8School of Physical Sciences,  Great Bay University, Dongguan 523000,  China
+                                                                     (Dated: April 4, 2023)
+                    The possible existence of a quantum spin liquid (QSL) phase, an exotic state of matter with long-range quan-
+                 tum entanglement and fractionalized excitations, inα-RuCl3 has sparked widespread interests in exploring QSLs
+                 in various Kitaev models under magnetic ﬁelds.  Recently, a K-J-Γ-Γ′ model has been proposed to accurately
+                 describe the compound by ﬁtting the measured thermodynamic data [Nat.  Commun.  12, 4007 (2021)], where
+                 J is Heisenberg interaction, and Γ, Γ′  are oﬀ-diagonal exchanges on top of the dominant Kitaev coupling K.
+                 Based on this eﬀective model, an intermediate QSL phase in presence of an out-of-plane ﬁelds along the [111]
+                 direction, between the low-ﬁeld zigzag order and high-ﬁeld polarized phase, has been predicted. By combining
+                 density matrix renormalization group (DMRG), exponential tensor renormalization group (XTRG), and varia-
+                 tional Monte Carlo (VMC) calculations, we address the nature of this QSL phase in the honeycomb K-J-Γ-Γ′
+                 model under the [111]-direction ﬁeld. Our DMRG calculations ﬁnd the algebraic-like decay of spin correlation
+                 function, the ﬁnite spin scalar chiral order, and lattice nematic order. Together with the XTRG results of power-
+                 law speciﬁc heat at low temperature, our ﬁndings naturally suggest a gapless nematic chiral spin liquid. On the
+                 other hand, our VMC study ﬁnds a gapped nematic chiral spin liquid with the variational energy very close to
+                 that obtained in DMRG. As VMC ﬁnds a very small gap that is beyond the current resolution of both ground-
+                 state DMRG and ﬁnite-temperature XTRG calculations on ﬁnite-width cylinders, we resort the full clariﬁcation
+                 for the nature of the intermediate QSL to future studies. Lastly, we discuss the implications of our results to the
+                 recent experiment onα-RuCl3 and the QSL-like phase in a similar K-Γ-Γ′ model.
+
+
+                         I.    INTRODUCTION                                          A3Co2SbO6  [17, 18],  and  BaCo               2(AsO4)2  [19, 20]  are  also
+                                                                                     thought to be candidates of Kitaev materials.
+   Quantum spin liquid (QSL) is an exotic quantum state of                              Among these compounds,α-RuCl3 has been widely recog-
+matter  where  the  spins  of  electrons  remain  disordered  even                   nized as a prominent Kitaev material.  Due to the non-Kitaev
+at  absolute  zero  temperature  [1, 2].    Unlike  conventional                     interactions in the material, the compound exhibits a zigzag
+phases of matter, QSL states do not ﬁt the Landau-Ginzburg-                          magnetic order at low temperature [11,12].  By suppressing
+Wilson framework, and exhibit long-range quantum entangle-                           the zigzag order with external magnetic ﬁelds [21–23], in the
+ment and fractionalized excitations [3–5].  The exactly solu-                        intermediate  ﬁelds  experimental  evidences  for  a  QSL  have
+ble Kitaev honeycomb model plays the milestone role for un-                          been reported, e.g., the excitation continuum in the inelastic
+derstanding the physics in QSL. In particular, a non-Abelian                         neutron scattering spectrum [13,14,24],  the half-quantized
+chiral  spin  liquid  (CSL)  can  be  induced  by  breaking  time-                   thermal Hall conductivity [25–27] suggesting the presence of
+reversal symmetry in the Kitaev model, which possesses the                           gapless Majorana edge modes [28,29], and the quantum oscil-
+non-Abelian anyon that has potential application in topolog-                         lations in the low-temperature longitudinal heat conductivity
+ical quantum computing [6,7].  Experimentalists have been                            possibly due to a spinon Fermi surface [30].   Despite these
+searching for the Kitaev QSL candidate materials in various                          intriguing progresses,  nature of this state are still under de-
+compounds with 4d and 5d transition metal-based honeycomb                            bate [31–46].
+lattice. These compounds have strong spin-orbit coupling that                           Motivated by the exciting experimental progress, there have
+may induce the bond-dependent Kitaev interaction [8]. Some                           been a plenty of theoretical studies in an eﬀort to ﬁnd QSL in
+examples of these compounds are A2IrO3 with A = Li, Na [9],                          related spin models.  Amongst others, the K-Γ-Γ′ model with
+H3LiIr2O6, which is a hydrogen intercalated modiﬁcation of                           the Kitaev interaction K and oﬀ-diagonal couplings Γ, Γ′ has
+A2IrO3  [10],  and   α-RuCl3  [11–14].    Recently,  the  cobalt-                    been considered as a minimal model to describe a broad class
+based 3d7 honeycomb magnets such as A2Co2TeO6 [15,16],                               of Kitaev materials including α-RuCl3  [47–53].  Besides the
+                                                                                     well  known  Kitaev  spin  liquids,  other  promising  QSL  can-
+                                                                                     didates have also been proposed in extended Kitaev models,
+∗ liuzxphys@ruc.edu.cn                                                               including  the  QSL  in  the  antiferromagnetic  (AFM)  Kitaev
+† w.li@itp.ac.cn                                                                     model under an intermediate magnetic ﬁeld [54–60],  di          ﬀer-
+‡ shoushu.gong@buaa.edu.cn
+                                                                                     ent QSL phases in the K-Γ model with or without a magnetic
+                                                                                                                                                                2
+
+ﬁeld [61–63],  the multinode QSL [64] and nematic QSL in
+the K-Γ-Γ′ model [65–67].  However, it is hard to accurately
+estimate the microscopic parameters that can match the exper-
+imental data and thus it is unclear how to connect the found
+QSLs in model studies to the compounds in experiment.
+   Recently,  a  K-J-Γ-Γ′  model  has  been  proposed  for α-
+RuCl3.  Multiple accurate many-body simulations have been
+combined to examine this model, which reproduces the ma-
+jor experimental features in equilibrium and dynamical mea-
+surements,  giving  the  dominant  ferromagnetic  Kitaev  inter-
+action, additional Heisenberg coupling J, and other parame-
+ters [68].  Interestingly, this model under the [111]-direction
+magnetic  ﬁeld  shows  an  emergent  QSL  phase  between  the
+low-ﬁeld  zigzag  order  and  high-ﬁeld  polarized  phase  [68].
+While the variational Monte Calro (VMC) study proposes a
+gapped CSL, the exact diagonalization results seem to suggest
+a gapless state [68].  Remarkably, the theoretically predicted                      FIG. 1.  Lattice geometries and the 1D phase diagram obtained by
+two-transition scenario in Ref. [68] has been witnessed by re-                      DMRG. (a) and (b) show the XC and YC cylinders used in our calcu-
+cent high magnetic ﬁeld experiment on α-RuCl3  at∼  35 T                            lations. The cylinders have the open boundary condition along the X
+and∼ 83 T, respectively, with the ﬁeld along the out-of-plane                       direction and periodic boundary condition along the Y direction. The
+c∗  axis  [69].    A  ﬁeld-induced  intermediate  phase  is  found                  three diﬀerent colors in the solid bonds denote the diﬀerent dominant
+experimentally  in  the  ﬁeld-angle  phase  diagram  [69].   The                    Kitaev couplings.  The dashed bonds mark the periodic connection.
+experimental  ﬁndings  and  the  good  agreements  with  model                      These two cylinders have the size Lx  =  3, Ly  =  2 and are denoted
+study open a new route to search for QSL inα-RuCl3 and call                         as XC2-3 and YC2-3. The external magnetic ﬁeld is applied perpen-
+for further understanding on the QSL phase in the K-J-Γ-Γ′                          dicular to the honeycomb plane.  (c) Quantum phase diagram of the
+model.                                                                              model Eq. (1).   As the magnetic ﬁeld increases,  the system shows
+   In this work, we study the nature of the intermediate QSL                        a zigzag (ZZ) magnetic order phase for h ≲  0.1,  a polarized (PL)
+phase in the K-J-Γ-Γ′ model using three methods: density ma-                        phase for h &  0.4, and an intermediate quantum spin liquid (QSL)
+trix renormalization group (DMRG), VMC, and exponential                             phase with spin scalar chiral order and lattice nematic order.   (d)-
+tensor renormalization group (XTRG) for ﬁnite-temperature                           (f) show the characteristic intra-sublattice spin structure factor  ˜S (k)
+                                                                                    deﬁned in Eq. (2) for the three phases,  which are obtained on the
+calculations.   The  DMRG  calculations  on  diﬀerent  cylinder                     YC4-18 cylinder for h =  0.02, 0.24, 0.46, respectively.  The dashed
+geometries  up  to  the  circumference  of  6  unit  cells  identify                white hexagon denotes the Brillouin zone of the sublattice, and the Γ
+the existence of an intermediate phase, with a robust nonzero                       and M points are marked in (f).
+scalar spin chiral order⟨Si· (S j× Sk)⟩ and a lattice nematic
+order characterizing a C3 symmetry breaking. In addition, the
+algebraic-like spin correlation decay observed in the ground                           This  paper  is  organized  as  follows.   In  Sec.II,  we  intro-
+state and the power-law behavior of the speciﬁc heat Cm∼ T 2                        duce the  K-J-Γ-Γ′  model and numerical methods employed
+obtained at low temperature strongly suggest a gapless QSL                          in  this  study.   The  DMRG  simulations  are  demonstrated  in
+state.                                                                              Sec.III, and the XTRG thermodynamics results are presented
+   We  further  investigate  the  intermediate  phase  using  the                   in Sec.IV. In  Sec.V,  we show  the nematic  order obtained
+VMC  with  extended  variational  parameters,  which  unveils                       in  the  VMC  calculations  and  compare  the  results  with  the
+that  allowing  the  C3  symmetry  breaking  can  further  lower                    DMRG and XTRG results. We present our summary and dis-
+the  variational  energy  of  the  previously  identiﬁed  gapped                    cussion in Sec.VI.
+CSL [68] and enlarge the spinon gap, giving a variational en-
+ergy very close to that obtained in DMRG. Using quantitative                                           II.    MODEL AND METHODS
+analysis,  we  examine  how  the  mean  ﬁeld  dispersion  varies
+and  ﬁnd  that  the  spinon  gap  is  very  small  compared  to  the
+total band width (∼  0.02), which may explain why the spin                             We study the honeycomb-lattice K-J-Γ-Γ′ model in an out-
+correlation  decay  looks  like  algebraic  on  our  studied  cylin-                of-plane magnetic ﬁeld along the [111] direction, which has
+ders.   The  spinon  density  of  states  which  is  approximately                  the Hamiltonian deﬁned as
+proportional to energy above the spinon gap can agree with                                        ∑
+the Cm∼ T 2 behavior at low temperature. The Van Hove sin-                                  H =        [KSγi Sγj + JSi· S j + Γ(Sαi Sβj + Sβi Sαj )
+gularity at the higher energy  E/|K| ∼  0.4 also supports the                                     ⟨i, j⟩γ                                        ∑            (1)
+double peak structure found in the speciﬁc heat.  The gapless                               + Γ′(Sγ                                                  Sαi,
+or gapped nature of the QSL may require further simulations                                          i Sαj + Sγi Sβj + Sαi Sγj + Sβi Sγj )] + h
+                                                                                                                                                 i,α
+on larger sizes, but the predicted low-temperature properties
+above T ≈  2K, which are less aﬀected by ﬁnite-size eﬀects,                         where⟨i, j⟩γ denotes the nearest-neighbor (NN)γ bond with
+could be tested in high-ﬁeld experiments onα-RuCl3.                                 {α,β,γ}  being {x, y, z}  under  a  cyclic  permutation,   Si   =
+                                                                                                                                                               3
+
+{S xi, S yi, S zi} are the pseudo spin-1/2 operators at the site i.  K             factor deﬁned as
+denotes the FM Kitaev interaction,  J  is the FM Heisenberg                                    ˜S (k) =  1  ∑
+interaction, Γ and Γ′ are the oﬀ-diagonal spin couplings. Fol-                                           N       e−ik·ri j[⟨Si· S j⟩−⟨Si⟩·⟨S j⟩],          (2)
+lowing  the  microscopic  model  determined  in  Ref.  [68],  we                                             i, j
+choose  the  Kitaev  coupling  as  the  energy  unit  K  = −1.0,                   where the summation is for the sites in the same sublattice.
+J =−0.1, Γ = 0.3 and Γ′ =−0.02. Without external magnetic                          The obtained results of  ˜S (k) are the same for the two sublat-
+ﬁeld, this system has the ﬁnite magnetic point group D3d×ZT2 ,                     tices of the honeycomb lattice. In the zigzag phase [Fig.1(d)],
+where ZT2  ={E, T} is the time-reversal symmetry group, and                        the prominent peaks at the M points characterize the zigzag
+each  element  in  D3d  stands  for  a  combination  of  spin  rota-               order. In the QSL phase [Fig.1(e)], a dominant peak appears
+tion and lattice rotation owing to the spin-orbit coupling.  In                    at the Γ point with a broad peak at a M point. In the polarized
+this paper, we focus on the system under an external magnetic                      phase [Fig.1(f)],  the featureless structure factor reﬂects the
+ﬁeld along the [111] direction, which gives the Zeeman cou-                        very short-range spin correlation.  In the following, we focus
+pling h∑i,α Sαi  in Eq. (1).                                                       on the characterization of the QSL phase.
+   In DMRG calculation  of the ground  state [70],  we study
+the system on a cylinder geometry with the periodic bound-
+ary condition along the circumference direction (Y direction)                         A.    Algebraic-like spin correlation function and static spin
+and the open boundary condition along the axis direction (X                                                     structure factor
+direction).  To avoid possible bias from the lattice geometry,
+we consider two geometries, namely the XC and YC cylinders                            We ﬁrst study the spin-spin correlation function C(r) de-
+shown in Figs.1(a) and1(b).  For the XC cylinder, there is a                       ﬁned as
+π/3 angle between the Y  and X direction.  For the YC cylin-
+der, the Y direction is perpendicular to the X direction. We de-                                       C(r) =|⟨Si· S j⟩−⟨Si⟩·⟨S j⟩|,                     (3)
+note the system size as XCLy-Lx and YCLy-Lx, where Ly and                          where r is the distance between the two sites i, j in the same
+Lx denote the numbers of unit cells along the two directions,                      row along the  X  direction.   In Fig.2,  we show the double-
+respectively.  When we show the results on both cylinders to-                      logarithmic plots of the spin correlations on diﬀerent geome-
+gether,  we use the length along the circumference direction                       tries and system sizes.  In all the cases, the spin correlations
+to demonstrate diﬀerent system sizes, which is denoted as Wy                       drop markedly with about an order of magnitude in the dis-
+with the lattice constant as the unit.  In our DMRG simula-                        tance  of  r ≃  1,  which  is  similar  to  the  observation  in  the
+tion, we keep up to D = 2000 bond states, which allow us to                        spin systems with the  dominant bond-directional Kitaev in-
+obtain accurate results on the Ly  =  6 cylinder with the trun-                    teraction [7].  Remarkably, the spin correlations decay slowly
+cation error at about 10−6. To reduce the ﬁnite-size eﬀect, we                     at long distance, which can be ﬁtted quite well using the al-
+also implement the inﬁnite-DMRG (iDMRG) [71] by using                              gebraic behavior C(r) ∼  1/rKs  with small power exponents
+the TeNPy library [72] to check our results,  where the sys-                       Ks ≲  1.5.  Although the spin correlations decay slowly, one
+tem size along the X  direction can be taken as long enough                        can ﬁnd in Fig.2that with growing         Ly, the spin correlations
+to eliminate the size eﬀect in this direction.  In the iDMRG                       only change slightly, which agrees with the vanished magnetic
+simulations, we denote the lattice as XCLy and YCLy.                               order in two-dimensional limit (also see Fig.3below).  With
+   To   compute   the   thermodynamic   properties,    we   em-                    increasing the ﬁeld, the power exponent Ks remains small in
+ploy  the  exponential  tensor  renormalization  group  (XTRG)                     the QSL phase until the transition to the polarized phase with
+method  [73, 74]  to  simulate  the  model  on  the  YC  cylinder                  spin correlations decaying exponentially.
+with Ly = 4 and Lx up to 12. The retained bond dimension D                            As a comparison, we also demonstrate the semi-logarithmic
+is up to 1000, which ensures the truncation error smaller than                     plots of the same data in the insets of Fig.2.  We ﬁt the most
+10−4 down to the lowest temperature T/|K| = 0.008.                                 data as shown by the dashed lines, showing the deviation of
+                                                                                   the longer-distance data from the exponential decay.   These
+                                                                                   analyses strongly suggest the algebraic-like decay of spin cor-
+      III.    DMRG RESULTS FOR THE GROUND STATE                                    relation, which supports a gapless QSL.
+                                                                                      We further discuss the static spin structure factor.  For the
+                                                                                   sake of convenience, we stick to the intra-sublattice structure
+   In this section, we demonstrate our DMRG simulation re-                         factor deﬁned in Eq. (2).   As shown in Fig.3(for XC) and
+sults, focusing on the QSL phase. Since the phase boundaries                       Fig.1(e)  (for  YC),           ˜S (k)  exhibits  a  dominant  peak  at  the Γ
+have been investigated in a recent study [68],  we leave our                       point, which appears to be singular [Fig.3(b)] and is consis-
+results on the determination of phase transition points in Ap-                     tent with the small power exponent (Ks < 2) of spin correla-
+pendixA, which identify the transitions at              h≃ 0.1 and h≃ 0.4          tion.  In Figs.3(b) and3(c), we plot                   ˜S (k) versus kx following
+as  shown  in  Fig.1(c),  in  consistent  with  the  previous  ﬁnd-                the  two  cuts  in  Fig.3(a),  crossing  the       Γ  and  M  points,  re-
+ing [68]. With increased magnetic ﬁeld, an intermediate QSL                        spectively. For a direct comparison, we plot the  ˜S (k) obtained
+emerges between a zigzag magnetic order at low ﬁeld and a                          from the middle Ly× 3Ly sites.  With increased Ly, the peak
+polarized phase at high ﬁeld.                                                      at  ˜S (Γ) becomes more diﬀusive, which agrees with the absent
+   The three phases have diﬀerent features of spin structure                       magnetic order.  The round peak at the M point may charac-
+factor.  In Figs.1(d-f), we show the intra-sublattice structure                    terize the residual ﬂuctuation of the neighboring zigzag order.
+                                                                                                                                                                           4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2. Absolute spin correlation function C(r) along the X direction in the QSL phase. r is the distance of the sites to the reference site in the
+same row.  (a) and (b) are the double-logarithmic plots of the spin correlations for h = 0.24 on the XC and YC cylinders with Lx = 24.  Ks is
+the ﬁtted power exponent of algebraic decay. The insets are the semi-logarithmic plots for the same data. (c) and (d) are the similar ﬁgures for
+h = 0.34. The reference site is chosen on the ﬁfth column of the cylinder.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3. Static intra-sublattice spin structure factor at h = 0.24 in the QSL phase. (a) shows the typical results of  ˜S (k) obtained on the XC4-24
+cylinder, with the white dashed hexagon indicating the Brillouin zone. The red dashed lines denote the two momentum cuts crossing the Γ and
+M points, which represent the momentum used in (b) and (c).  (b) and (c) show the  ˜S (k) along the momentum cuts in (a), in which  ˜S (k) are
+obtained from the Fourier transform of the middle Ly× 3Ly sites.
+
+
+                       B.    Spin scalar chiral order                                    where  the  sites  i, j, k  from  the  same  sublattice  form  a  tri-
+                                                                                         angle  in  the  clockwise  direction  as  shown  in  the  inset  of
+   While the magnetic order is absent in the QSL phase, the                              Fig.4(a).   For  a  time-reversal  symmetric  system,  the  spon-
+CSL found in the previous VMC study [68] motivates us to                                 taneously  emergent  chiral  order  could  either  be  left-chiral
+examine the spin chiral order.   We calculate the spin scalar                            or right-chiral, which is chosen randomly in DMRG simula-
+chiral orderχi jk deﬁned as                                                              tions [75].  For our studied system with an external magnetic
+                                                                                         ﬁeld, we always obtain a certain chirality.  We have checked
+                           χi jk =⟨Si· (S j× Sk)⟩,                           (4)         the chiral orders of diﬀerent types of triangles allowed on the
+                                                                                                                                                                 5
+
+honeycomb lattice,  and we ﬁnd that the chiral orders of the
+equilateral triangles shown in the inset of Fig.4(a) have the
+maximal magnitudes (see the results for other types of trian-
+gles in AppendixB). Thus, we focus on the equilateral trian-
+gles inside the hexagon. In each hexagon, there are two types
+of equilateral triangles, and both of them have the same chi-
+rality denoted asχn.
+   We ﬁrst check the spatial dependence of the chiral orderχn.
+Two examples at h =  0.24, 0.34 on the XC6-18 cylinder are
+demonstrated in Fig.4(a).  Indeed, the two types of triangles
+have the same chirality and both of them are quite uniform in
+the bulk of system, revealing a small ﬁnite-size eﬀect along
+the X direction. We have also checked the chiral orders using
+iDMRG  simulations,  which  obtain  the  results  in  agreement
+with the calculations on the ﬁnite-length cylinders.
+   Furthermore,  we  examine  the  Ly  dependence  of  the  chi-
+ral  orders  on  both  the  XC  and  YC  cylinders  [Fig.4(b)].
+Clearly, the chiral orders only change slightly with growing
+Ly,  strongly  indicating  the  robust  scalar  chiral  order  in  the
+thermodynamic limit.  We remark that this ﬁnite chiral order
+is not from a trivial product of local magnetic moments.  We
+have checked the result of⟨Si⟩· (⟨S j⟩×⟨Sk⟩), which turns out
+to be vanishingly small in the QSL phase.
+   The  nonzero  scalar  chiral  order  has  also  been  found  in                  FIG. 4.  Scalar spin chiral order in the QSL phase.  (a) The spatial
+some other Kitaev systems.  One model is a similar K-J-Γ-Γ′                         dependence of the chiral orders computed for the equilateral trian-
+model either without or with a small magnetic ﬁeld [76,77].                         gles deﬁned following the clockwise direction. i denotes the column
+Near  the  dominant  Γ  interaction  region,  a  QSL-like  phase                    number and the data for h  =  0.24, 0.34 are obtained on the XC6-
+with chiral order has been found.  Diﬀerent from the studied                        18 cylinder.   (b) System width dependence of the chiral order ob-
+model, in this Γ-dominant phase the two equilateral triangles                       tained on various cylinders.  Wy  is the width of the cylinder along
+inside the hexagon have the opposite chiralities [76,77]. The                       the circumference direction, with the lattice constant as the unit. The
+other system is the K-Γ model in the [111]-direction magnetic                       dashed lines are linear extrapolations of the data for the guide to the
+ﬁeld, which has both the uniform chiral and staggered chiral                        eye.
+phases on two-leg ladder, with tuning coupling ratio and ﬁeld
+strength [78].  The spin chiral order can emerge in magneti-
+cally disordered phases of various Kitaev models due to the
+rich interplay among diﬀerent interactions and magnetic ﬁeld.
+
+
+
+                       C.    Lattice nematic order
+
+   To rule out the valence bond order in the QSL phase, we
+have measured the bond energy to detect the translation sym-
+metry breaking. In the bulk of the cylinder, we ﬁnd a uniform
+bond energy distribution that agrees with the absent valence
+bond order. Furthermore, we ﬁnd the bond energies along the
+axis (X) direction and the circumference (Y) direction show a
+clear diﬀerence, indicating a possible lattice nematic order as-
+sociated with C3 lattice rotational symmetry breaking. To de-
+tect such a nematic order, we can measure the diﬀerence of the                      FIG.  5.   Size  dependence  of  the  lattice  nematic  order  in  the  QSL
+bond energies as the nematic order parameter ON.  As shown                          phase. (a) and (b) show the deﬁnitions of the lattice nematic order pa-
+in Figs.5(a) and5(b), we deﬁne the bond energies along the                          rameters ON on the XC and YC cylinders, respectively. The nematic
+three bond directions as Eγ  (including all the energy contri-                      order is the bond-energy diﬀerence between the bond along the axis
+butions to the NN γ bond), where γ∈{x, y, z}.  On the XC                            (X) and the circumference (Y) direction.  (c) Size dependence of the
+cylinder,  Ex  =  Ez  is guaranteed due to the symmetry along                       nematic order on the XC and YC cylinders with diﬀerent widths Wy
+the Y  direction,  and  the  nematic  order  can  be  described  by                 at the ﬁeld h = 0.24 and 0.34. For a comparison, the nematic orders
+ON ≡ |Ex− Ey|.   Similarly,  on the YC cylinder ON  can be                          in the zigzag phase (h = 0.02) and the polarized phase (h = 0.46) are
+deﬁned as ON≡|Ex− Ez|.                                                              also shown.
+   We emphasize that for our studied systems, a nonzero ON
+                                                                                                                                                                 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6.  Entanglement entropy versus the conformal distance ˜lx in the QSL phase.  The conformal distance is deﬁned as ˜lx  =   Lxπ  sin(πlxLx ).  (a)
+and (b) are the entropy for h = 0.24 obtained on the Lx = 24 XC and YC cylinders, respectively. The dashed lines denote the ﬁtting of entropy
+using the formula S (˜lx) =   c6 ln(˜lx) + g, giving the ﬁtted central charge c.  The insets show the entropy versus the subsystem length lx.  (c) and
+(d) are the similar plots for h = 0.34.
+
+
+always exists in the bulk of the system due to the quasi-one-                       the three bonds have the same energy.
+dimensional cylindrical geometry that has already broken the                           In the recent studies on a similar K-Γ-Γ′ model in the [111]-
+lattice C3 rotational symmetry, but the Ly dependence of ON                         direction magnetic ﬁeld,  a possible nematic QSL phase has
+can determine whether the ground state has an intrinsic ne-                         also been found [65–67].  The iDMRG simulation can obtain
+matic order in two-dimensional limit.  Such a scheme for de-                        the ground state with Ex , Ey , Ez in some ﬁeld regime of the
+termining nematic order has been adopted in previous DMRG                           nematic phase [67], which may be owing to the inﬁnite system
+studies  on  various  spin  systems  [79–81]:   for  the  quantum                   length that allows a complete C3 symmetry breaking. We have
+states with lattice rotational symmetry breaking, ON  will re-                      also tested the nematic order of our model using iDMRG (see
+main ﬁnite after the extrapolation to Ly→∞; otherwise ON                            the  details  in  AppendixC),  which  can  obtain  the  complete
+decreases rapidly with Ly and appears to approach zero in the                       C3  symmetry  breaking  in  some  range  of  the  QSL  phase  as
+thermodynamic limit.                                                                well,  indicating that such a nematic order with  Ex  ,  Ey  ,
+   Following this strategy, we ﬁrst check the nematic order ON                      Ez is highly possible in the thermodynamic limit.  While our
+in the bulk of the long cylinders for diﬀerent Lx to ensure the                     results can identify the nematic order, the explicit nature of the
+converged ON with system length (not shown here). Then, we                          nematicity still needs further studies on larger system sizes,
+examine the Ly dependence of ON as shown in Fig.5(c). For a                         e.g., by tensor network simulations [66].
+comparison, one can see that in the polarized phase (h = 0.46)
+ON  is vanishing small and decreases rapidly to zero,  which                                               D.    Entanglement entropy
+agrees with the preserved lattice rotational symmetry in this
+state.  On the other hand, in the zigzag phase (h = 0.02), ON                          In this subsection, we calculate and analyze the entangle-
+increases with Ly and approaches a ﬁnite value, which is con-                       ment entropy versus subsystem length lx by cutting the cylin-
+sistent with the spacial anisotropy associated with the zigzag                      der  into  two  parts.   For  gapless  quasi-one-dimensional  sys-
+spin order.  Interestingly, in the QSL phase, ON  shows rela-                       tems, the entropy will have a logarithmic correction to the area
+tively large values and the results slightly increase with grow-                    law and follow the formula [82]
+ing Ly, strongly indicating a ﬁnite nematic order in the ther-
+modynamic limit.  We remark that although this method can                                              S (lx) =  c
+identify an intrinsic nematic order, the ﬁnite-size cylinder cal-                                                6 ln [( Lxπ ) sin(πlxLx )] + g,                   (5)
+culation will not allow the symmetries along the Y  direction
+to break. Thus, our results in Fig.5cannot determine whether                        where S (lx)  is  the  bipartite  entanglement  entropy,  Lx  is  the
+the C3 symmetry breaking state has Ex ,  Ey ,  Ez or two of                         length of system, g is a non-universal constant, and c is the
+                                                                                                                                                                 7
+
+central charge characterizing the number of gapless modes. In
+principle, the ﬁtting of the central charge from Eq. (5) should
+be applied for a large Lx. In our study, we study the entangle-
+ment entropy behavior with the system length up to Lx = 24,
+and we ﬁnd the obtained central charge results are consistent
+at diﬀerent system lengths (see AppendixD).
+   In  Fig.6,  we  show  the  entanglement  entropy  for          h   =
+0.24, 0.34 on both the XC and YC cylinders with Lx  =  24,
+including the entanglement entropy versus the conformal dis-
+tance  ˜lx  =  (Lx/π) sin(πlx/Lx)  and  the  lx  dependence  of  the
+entanglement entropy in the insets.  On both geometries, the
+entanglement  entropy  can  be  ﬁtted  well  using  Eq.  (5),  giv-
+ing  nonzero  central  charge.   Although  the  obtained  central
+charge  dependents  on  lattice  geometry  and  magnetic  ﬁeld,
+the  nonzero  values  support  the  gapless  nature  of  the  phase
+within present resolution.   One inspiring observation is that
+with  growing  Ly  for  each  case,  the  obtained  central  charge                 FIG. 7.  The low-temperature speciﬁc heat Cm curves under the out-
+seems to approach either c∼ 0.5 or c∼ 1.0, which may sug-                           of-plane ﬁeld h = 0.34 on the YC4-L cylinders with L up to 12. The
+gest emergent gapless Majorana excitations.                                         corresponding thermal entropy S  are shown in the inset.  Below the
+                                                                                    lower-temperature scale T′′L ≃ 0.07 as marked by the black arrow in
+                                                                                    both the main plot and the inset, the dashed line indicates a power-
+         IV.    GAPLESS NATURE IDENTIFIED FROM                                      law decay (∼ T 2) and serves as a guide to the eye.
+                        THERMODYNAMICS
+
+   To  further  explore  the  nature  of  the  intermediate  QSL
+phase, we turn to study the speciﬁc heat Cm and thermal en-
+tropy S .  In a previous work by some of the authors [68], a
+prominent double-peak/hump feature has been revealed in the
+curve of the speciﬁc heat Cm  versus temperature, for the in-
+termediate ﬁeld regime, which characterizes two temperature
+scales TH  (the higher-temperature scale) and T′′L  (the lower-
+temperature  scale).   Below  T′′L ,  the  calculated  speciﬁc  heat
+data seem to fall into a power-law decay [68].
+   To  clarify  this  possible  power-law  behavior,  here  we  im-
+prove the XTRG calculation to larger system sizes,  namely
+YC4-Lx cylinders (Lx = 6, 8, 10, 12) and down to lower tem-
+perature.  As shown in Fig.7, we ﬁnd that both the position
+and height of the Cm hump at T′′L ≃ 0.07 (under the magnetic
+ﬁeld h = 0.34) are quite robust with growing system size. Be-
+low T′′L , the Cm  curves exhibit a power-law decay Cm∼  Tα
+with the power exponent approaching α ≃  2,  reﬂecting the                          FIG. 8.  Mean-ﬁeld band dispersion of the CSL state either without
+gapless  excitations  (or  with  a  very  small  excitation  gap)  in               or with the nematic order.  k1  and k2  are the two reciprocal lattice
+this low-energy scale.                                                              basis vectors.  The bands are shown as 3D surface plots and viewed
+   Besides, we also show the thermal entropy S  in the inset                        from the 45◦ angle.  (a) The band dispersion of the CSL with the C3
+of Fig.7, where the low-temperature data has well converged                         symmetry.  (b) Zoom in of the lowest-energy band in (a).  (c) The
+versus bond dimension D and also follows a power-law de-                            band dispersion of the CSL breaking the C3 symmetry.  (d) Zoom in
+                                                                                    of the lowest-energy band in (c). These band dispersions are obtained
+cay  close  to  S ∼  T 2.   It  is  noteworthy  that  there  are  con-              at h = 0.3.
+siderable amount of entropies below T′′L ,  indicating that the
+low-temperature states are strongly ﬂuctuating and have large
+density of states in low-energy excitations.                                           We introduce the fermionic slave-particle representation for
+                                                                                    spin  operator  as  Sαi   =    12C†iσαCi  with C†i   =  (c†i↑, c†i↓), α ≡
+                                                                                    x, y, z, and σα  the Pauli matrices.  To ensure that the Hilbert
+        V.    VARIATIONAL MONTE CARLO RESULTS                                       space of the fermions faithfully represents that of the physical
+                                                                                    spin, a constraint for particle number  ˆNi≡ c†i↑ci↑ +c†i↓ci↓ = 1 is
+   Finally,  we investigate the intermediate phase of the sys-                      imposed for every site.  This complex fermion representation
+tem using VMC, and try to provide a physical picture to help                        is equivalent to the Majorana representation using bx, by, bz, c
+understand part of the above numerical results.                                     fermions [7].  For the model described by Eq. (1), the most
+                                                                                                                                                              8
+general expression of the mean-ﬁeld Hamiltonian reads [83]                        ∑    ∑
+                                                                                     α | f (α)|2γ| f (γ)|2 (∑β⟨β|H|α⟩ f (β)∗f (α)∗) is computed using Monte Carlo
+                ∑       ( Tr[U(0)                                                 sampling. Then the optimal parameters{x} are determined by
+    HSLmf =                     ji Ψ†i Ψ j] + Tr[U(1)ji Ψ†i (iRγαβ)Ψ j]           minimizing the energy E({x}). Our VMC calculations are per-
+             ⟨i, j⟩∈αβ(γ)                                                         formed on the torus geometry up to the size 9× 9× 2 with 162
+          + Tr[U(2)ji Ψ†iσγΨ j] + Tr[U(3)ji Ψ†iσγRγαβΨ j] + H.c.)                 sites.
+             ∑    [ Tr(λλλi· ΨiτττΨ†       ∑                                         In the absence of the variational parameters{ηx7,ηz7,θ}, an
+          +                        i ) + h4     Tr(Ψ†iσαΨi)],          (6)        intermediate  CSL  phase  between  the  zigzag  phase  and  the
+               i                             α                                    polarized trivial phase is identiﬁed with Chern number ν  =
+where  Ψi    =    (Ci,  ¯Ci),    ¯Ci    =    (c†                                  2  [68].   This  CSL  is  an  Abelian  QSL  with  the  quasiparti-
+                                              i↓,−c†i↑)T ,   and  Rγαβ    =       cle excitations a,  ¯a, ϵ,  1,  where 1 denotes the vacuum, ϵ  is
+−i(σα +σβ)/√2 is a rotation matrix.  Considering the SU(2)                        the fermion, a and  ¯a are two types of vortices with topolog-
+gauge symmetry in this fermionic representation, the particle-                    ical spin eiπ/4  [7].  These excitations follow the fusion rules
+number  constraint   ˆNi  =  1  is  extended  to  the  SU(2)  gauge-              ϵ×ϵ = 1, a× ¯a = 1, a×ϵ =  ¯a, ¯a×ϵ = a, and ¯a× ¯a = ϵ [7].
+invariant three-component form Tr(ΨiτΨ†i ) = 0, which is im-                      The gapless edge of this CSL contains 2 branches of chiral
+plemented by the Lagrangian multipliers λx,y,z  with τx,y,z  be-                  Majorana excitations with total chiral central charge c− = 1.
+ing the generators of the SU(2) gauge group.  The mean-ﬁeld                          By  considering  the  additional  parameters{ηx7,ηz7,θ},  our
+matrices  U0,1,2,3ji        can  be  expanded  with  the  identity  matrix        VMC  calculations  still  support  a  CSL  state,  but  with  a  ne-
+and τx,y,z.   For the studied model,  the SU(2) gauge symme-                      matic order which further lowers the variational energy.  For
+try breaks down to its Z2 subgroup named the invariant gauge                      example, on the 8× 8× 2 size at the magnetic ﬁeld h = 0.3,
+group (IGG) [84].                                                                 the variational energy of the CSL state with the C3 symmetry
+   While a QSL state preserves the space group symmetry, the                      is−0.3691.  By allowing the C3 symmetry breaking, the en-
+symmetry group of its mean-ﬁeld Hamiltonian is an enlarged                        ergy is lowered to−0.3746 with an emergent nematic order.
+one called the projective symmetry group (PSG), whose group                       This optimized variational energy is very close to the energies
+elements are the space group operations followed by certain                       found in the DMRG simulation, e.g.,−0.3790 in the bulk of
+SU(2) gauge transformation.  We adopt the Kitaev PSG [85,                         the XC6 cylinder.  The details of the VMC identiﬁcation of
+86], namely the PSG of the mean-ﬁeld description of the pure                      the nematic order can be found in AppendixE. Besides the
+Kitaev model, then the general form of the coeﬃcients U(m)ji                      spontaneous nematic order in the new ground state,  the ob-
+can be expressed as                                                               tained low-lying energies also have a drastic change. In Fig.8,
+                                                                                  we show the dispersion of the fermion bands in the optimized
+       U(0)zji    = iθ(η0 +ρa +ρc)τ0,                                             mean-ﬁeld Hamiltonian Eq. (6) with    h = 0.3, which indicates
+       U(0)x,y                                                                    that with the C3 symmetry breaking a small excitation gap is
+          ji     = i(η0 +ρa +ρc)τ0,                                               opened.
+       U(1)zji    = iθη3τc + iθ(ρa−ρc +ρd + 2ρ f )(τx +τy),                          The  mean  ﬁeld  dispersion  is  plotted  for  a  system  with
+       U(1)x,y                                                                    120× 120× 2 sites.  There are totally eight bands due to the
+          ji     = iη3τc + i(ρa−ρc +ρd + 2ρ f )(τy,x +τz),                        two sublattices, two spin components and the particle-hole re-
+       U(2)zji    = iθη5τc + iθ(ρa +ρc)τz + iθρ f (τx +τy),                       dundancy.  A remarkable feature of the spinon dispersion is
+                                                                                  that six of the eight bands are quit ﬂat and are close to zero
+         U(2)x,y                                                                  energy, and the rest two bands are very dispersive.  The exis-
+            ji     = iη5τc + i(ρa +ρc)τx,y + iρ f (τy,x +τz),                     tence of the nearly ﬂat bands is very similar to the mean ﬁeld
+         U(3)z                                                                    spectrum of the pure Kitaev model, where the dispersive band
+            ji    = i(ηz7 +θρc−θρa−θρd)(τx−τy),                                   mainly  come  from  the  c  fermions  and  the  ﬂat  bands  result
+         U(3)x,yji     =±iηx7τc± i(ρc−ρa−ρd)(τy,x−τz).                            from the bx,y,z fermions.  Our variational calculation indicates
+                                                                                  that four parameters are dominating in the intermediate QSL
+withτc =    1√3(τx +τy +τz).  Hence we have the complete set                      phase, namely ρa,ρc,η0  and η3, where ρa,ρc  come from the
+of variational parameters{ρa,ρc,ρd,ρ f,η0,η3,η5,ηx7,ηz7,θ,λ},                     Kitaev interactions,η0 comes from the Heisenberg interaction
+in which the subset{ρa,ρc,ρd,ρ f,η0,η3,η5} preserves all the                      andη3 comes from the Γ interaction.
+symmetries of the original Hamiltonian Eq. (1).  To make the                         It will be illustrative to compare the VMC results with those
+VMC  compatible  with  the  spacial  nematic  order,  we  intro-                  from DMRG and XTRG. The size of the spinon gap with re-
+duce three additional parameters{ηx7,ηz7,θ} in the mean-ﬁeld                      spect to the total band width is 0.02|K| (we have set the band
+Hamiltonian to break the C3  symmetry but preserve a resid-                       width of the spinons to be 2|K|) which is very small.  Practi-
+ual  mirror  symmetry.   The  mirror  plane  is  parallel  to  the  z             cally, it is not easy to detect such a small gap using correla-
+bond and perpendicular to the lattice plane.  Then Gutzwiller                     tion functions.  This qualitatively interprets the algebraic-like
+projection is performed to the mean-ﬁeld ground state to en-                      spin correlation decay observed in DMRG results.   Further-
+force the particle number constraint.  Thus we obtain the trial                   more,  above the energy 0.02|K|,  the fermionic spinons start
+wave function|Ψ({x})⟩ =  PG|Ψmf({x})⟩ = ∑α f (α)|α⟩, where                        to show density of states which is proximately proportional
+{x}  denote  the  variational  parameters  and α  stands  for  the                to  energy  in  a  small  energy  window.   This  agrees  with  the
+Ising bases in the many-body Hilbert space.   The energy of                       Cm ∝  T 2  law of the speciﬁc heat at the temperature region
+the trial state  E({x})  = ⟨Ψ({x})|H|Ψ({x})⟩/⟨Ψ({x})|Ψ({x})⟩  =                   0.02|K|∼ 0.04|K|. With further increasing energy, a Van Hove
+                                                                                                                                                            9
+
+singularity appears in the dispersive band at E∼ 0.5|K| which
+yields a large density of states.  Hence a peak (or shoulder)
+is expected to appear in the speciﬁc heat Cm at around 0.5|K|.
+We notice that the existence of two-temperature scale struc-
+ture in the speciﬁc heat is indeed observed in the XTRG re-
+sults shown in Fig.7.
+
+
+               VI.    SUMMARY AND DISCUSSION                                     FIG. 9. Field dependence of entanglement entropy and its derivative.
+                                                                                 (a) shows the entropy S E versus the ﬁeld h on the XC4-18, XC5-18,
+   By combining the DMRG, XTRG, and VMC calculations,                            and XC6-18 cylinders.   (b) shows the derivative of S E  to the ﬁeld
+we investigate the nature of the intermediate QSL phase of a                     dS E/dh.
+honeycomb K-J-Γ-Γ′ model in an out-of-plane magnetic ﬁeld
+along the [111] direction, which is sandwiched between a low-
+ﬁeld zigzag order phase and a high-ﬁeld polarized phase.                         may also be a nematic CSL.
+   By using DMRG simulations on diﬀerent cylinder geome-
+tries,  we  conﬁrm  the  absent  magnetic  order  and  unveil  the
+algebraic-like spin correlation function decay C(r) ∼  1/rKs
+with small power exponent Ks  ≲  1.5.  Besides,  we identify                                            ACKNOWLEDGMENTS
+a robust spin scalar chiral order⟨Si· (S j× Sk)⟩ and a lattice
+nematic order characterizing the C3 symmetry breaking.  We                          We  acknowledge  stimulating  discussions  with  Lei  Wang,
+also  extend  the  XTRG  simulation  to  longer  4-leg  cylinders                Xing-Yu Zhang,  and Qiang Luo.   This work was supported
+and down to lower temperature. Below the lower-temperature                       by the National Natural Science Foundation of China Grants
+scale T′′L ≃ 0.07, we observe a robust power-law behavior of                     No.     11874078,   No.     11834014,   No.     12222412,   No.
+the speciﬁc heat Cm ∼  T 2,  as well as considerable amount                      11974036, N0.  11974421, No.  12047503 and No.12134020;
+of thermal entropy. By allowing C3 symmetry breaking in the                      the  Innovation  Program  for  Quantum  Science  and  Technol-
+VMC calculation, we obtain the same gapped CSL reported in                       ogy  (2021ZD0301900);  CAS  Project  for  Young  Scientists
+Ref. [68] but with an additional nematic order that can further                  in  Basic  Research  (Grant  No.   YSBR-057);  and  China  Na-
+lower the variational energy.                                                    tional Postdoctoral Program for Innovative Talents (Grant No.
+   While our DMRG results also ﬁnd the chiral order and ne-                      BX20220291).
+matic  order  that  can  agree  with  the  nematic  CSL  found  by
+VMC, the ground-state and thermal measurements suggest a
+nearly gapless QSL. Yet, the VMC results provide another pic-
+ture to understand the ﬁnite-size simulation results. The small                                Appendix A: Quantum phase transitions
+ratio of the gap with respect to the spinon band width (∼ 0.02)
+indicates  a  large  correlation  length  that  may  go  beyond  the                In  Ref.  [68],  the  two  phase  transitions  have  been  identi-
+resolution of present DMRG calculation. The ﬁnite density of                     ﬁed from the results of magnetization and susceptibility. Here
+states for spinons, which are nearly proportional to energy in                   we calculate entanglement entropy to characterize the phase
+a small energy window above the gap, also agrees with the be-                    transitions.  As shown in Fig.9on the XC cylinders, the en-
+havior of the speciﬁc heat Cm∼ T 2. Identifying the nature of                    tropy exhibits quick drops near the transition points. Although
+gapped or gapless may need further studies on larger system                      the entropy on the XC4 cylinder behaves diﬀerently from the
+size.                                                                            wider sizes near the lower transition point, which may be ow-
+   It is noteworthy that the QSL predicted here for α-RuCl3                      ing to the ﬁnite-size eﬀect, the estimated transition points are
+with  relatively  large  low-energy  excitation  could  be  further              very close on diﬀerent system sizes.  Our determined transi-
+studied  experimentally  in  high-ﬁeld  NMR  [87],  ESR  spec-                   tion points also agree with those found in Ref. [68].
+troscopy [88], and speciﬁc heat measurements.  Besides, this
+intermediate QSL may also relate to other recently proposed
+ﬁeld-induced states in the Kitaev candidates, e.g., the broad
+magnetic continuum observed by time-domain terahertz spec-                          Appendix B: Spin scalar chiral orders in diﬀerent triangles
+troscopy measurements on BaCo2(AsO4)2 [20].
+   We also notice that this QSL phase might be related to the
+nematic QSL-like phase in the K-Γ-Γ′ model with dominant                            In the main text, we have shown the spin scalar chiral or-
+FM  Kitaev  interaction  and  oﬀ-diagonal  exchanges  Γ >  0,                    der of the equilateral triangles inside the hexagon.  Here we
+Γ′ < 0 [65–67]. While this phase was found not connected to                      demonstrate the chiral orders for other types of triangles. Four
+the Kitaev spin liquid, many-body simulations found the C3                       typical triangles are shown in Fig.10, where the chiral order
+symmetry breaking [66,67] and gapless-like excitations [67].                     of the triangle ∆4  has the maximum magnitude and has the
+It would be interesting to explore the potential connection of                   opposite chirality to the chiral order shown in the main text
+the two phases and whether the phase in the  K-Γ-Γ′  model                       (inside the hexagon).
+                                                                                                                                                                     10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 10.  The scalar spin chiral orders in diﬀerent types of triangles.
+The data are obtained for h = 0.24 on a XC6-18 cylinder.  The inset
+shows  the deﬁnitions  of  the four  kinds of  triangles.   i  denotes  the
+column number.
+
+
+
+
+
+                                                                                       FIG.  12.   Entanglement  entropy  versus  the  subsystem  length lx  in
+                                                                                       the intermediate phase on the XC cylinders.  The central charge c is
+                                                                                       ﬁtted using the formula Eq. (5),    S (lx) =   c6 ln [( Lxπ ) sin(πlxLx )] + g.  (a),
+                                                                                       (c), (e) are the entropy for h = 0.24 obtained on the Ly = 4, 5, 6 XC
+                                                                                       cylinders, respectively. (b), (d), (f) are the similar plots for h = 0.34.
+
+
+
+
+
+
+
+
+
+
+
+FIG. 11. Lattice nematic orders versus the magnetic ﬁeld. (a) and (b)
+are the results obtained from DMRG on the XC4 and XC6 cylinders.
+(c) and (d) are the results obtained from iDMRG on the XC4 and
+XC6 cylinders. Oγ = Eγ− (Ex + Ey + Ez)/3, whereγ = x, y, z denote
+the three bond directions.
+
+
+
+                                                                                       FIG. 13. Entanglement entropy versus the subsystem length lx in the
+      Appendix C: Nematic order from iDMRG simulation                                  intermediate phase on the YC cylinders. The central charge c is ﬁtted
+                                                                                       using the formula Eq. (5),    S (lx) =   c6 ln [( Lxπ ) sin(πlxLx )] + g. (a) and (c)
+                                                                                       are the entropy for h = 0.24 obtained on the Ly = 4, 6 YC cylinders,
+   In the matin text, we have shown the nematic order obtained                         respectively. (b) and (d) are the similar plots for h = 0.34.
+by ﬁnite DMRG calculation. Here, we show more results from
+iDMRG calculation. We deﬁne Oγ = Eγ− (Ex + Ey + Ez)/3,                                               Appendix D: Fitting of the central charge
+whereγ = x, y, z denote the three bond directions. In Fig.11,
+we show Oγ obtained by DMRG and iDMRG. In DMRG re-
+sults,  two  bond  energies  are  always  the  same,  which  is  re-                      In the main text, we have shown the entanglement entropy
+quired by the symmetries along the circumference direction.                            versus  the  conformal  distance  ˜lx  on  the  Lx  =  24  cylinders.
+In  iDMRG  simulation,  probably  due  to  the  inﬁnite  system                        Here, we show more results of the entropy on diﬀerent system
+length allows the complete C3  symmetry breaking,  one can                             sizes.  In Figs.12and13, we present the entropy obtained on
+obtain the ground state with Ex , Ey , Ez in a regime of the                           the XC and YC cylinders with diﬀerent Lx.  All the entropy
+intermediate phase, indicating that the complete C3 symmetry                           data can be well ﬁtted using Eq. (5), giving the close central
+breaking is possible in two-dimensional limit.                                         charge on diﬀerent system lengths.
+                                                                                                                                                             11
+
+
+TABLE I. Diﬀerent variational states and the corresponding energies. The system sizes are chosen from 3× 3× 2 to 9× 9× 2, and the magnetic
+ﬁeld is h = 0.3. Here we useη = (1−θ). Bdr1 = Bdr2 = 1 denotes the periodic boundary conditions along both the a1 and a2 directions. E is
+the variational energy per site. While the best variational state on 3× 3× 2 preserves the C3 symmetry with the vanished parameters{ηx7,ηz7,η},
+the best variational states on larger sizes break the C3 symmetry.
+              size    Bdr1   Bdr2       E        ρa       ρc       ρd        ρ f       η0        η3       η5        ηx7       ηz7       η       λ0
+           3× 3× 2      1      1    -0.3725   0.9397   0.1847   -0.1887   -0.0079   -0.1778   0.3167   -0.0847       0        0         0    0.0257
+           3× 3× 2      1      1    -0.3721   0.6129   0.1742   -0.1291   -0.0095   -0.2113   0.3062   -0.0586   -0.0974   0.0418       0    0.0311
+           3× 3× 2      1      1    -0.3720   0.5928   0.1928   -0.1276   -0.0085   -0.2180   0.3063   -0.0653   -0.1005   0.0406   0.0356   0.0258
+           4× 4× 2      1      1    -0.3720   1.1047   0.1519   -0.1041   -0.0094   -0.1865   0.2858   -0.1019       0        0         0    0.0280
+           4× 4× 2      1      1    -0.3743   1.2157   0.1769   -0.1264   -0.0115   -0.1918   0.3187   -0.0938   -0.0494   0.0327       0    0.0365
+           4× 4× 2      1      1    -0.3742   1.1839   0.1698   -0.1280   -0.0118   -0.1870   0.3179   -0.0887   -0.0554   0.0348   0.0181   0.0394
+           6× 6× 2      1      1    -0.3715   0.5972   0.1329   -0.1953   -0.0153   -0.1585   0.3386   -0.0715       0        0         0    0.0407
+           6× 6× 2      1      1    -0.3731   1.3208   0.1746   -0.1183   -0.0078   -0.1770   0.3039   -0.0945   -0.0721   0.0604       0    0.0235
+           6× 6× 2      1      1    -0.3731   1.3363   0.2109   -0.1219   -0.0167   -0.1882   0.3225   -0.0966   -0.0959   0.0573   0.0008   0.0234
+           8× 8× 2      1      1    -0.3691   0.8860   0.1738   -0.1822   -0.0072   -0.1793   0.3173   -0.1013       0        0         0    0.0267
+           8× 8× 2      1      1    -0.3746   0.6559   0.1854   -0.1317   -0.0092   -0.1877   0.3065   -0.0740   -0.0689   0.0232       0    0.0310
+           8× 8× 2      1      1    -0.3743   0.7866   0.1881   -0.1335   -0.0094   -0.1771   0.3152   -0.0821   -0.0804   0.0322   0.0351   0.0238
+           9× 9× 2      1      1    -0.3684   1.0719   0.1778   -0.1533   -0.0083   -0.1836   0.3028   -0.0991       0        0         0    0.0276
+           9× 9× 2      1      1    -0.3740   0.8519   0.1835   -0.1335   -0.0080   -0.1812   0.3172   -0.0834   -0.0754   0.0439       0    0.0291
+           9× 9× 2      1      1    -0.3739   0.9048   0.1904   -0.1323   -0.0084   -0.1829   0.3183   -0.0816   -0.0784   0.0439   0.0294   0.0264
+
+
+Appendix E: Nematic order in Variational Monte Carlo results                       TABLE II. Symmetrization of the variational wavefunctions under
+                                                                                   the  three  anti-periodic  boundary  conditions.   The  system  sizes  in-
+   Using VMC calculation, we examine the mean-ﬁeld Hamil-                          clude 3× 3× 2, 6× 6× 2, and 8× 8× 2. E is the ground-state energy
+tonian Eq. (6) in the intermediate phase. Here we show the re-                     of the symmetrized state.  E+,−, E−,+, and E−,−  are the ground state
+sults at the magnetic ﬁeld h = 0.3 as an example. On diﬀerent                      energies  under  the  three  anti-periodic  boundary  conditions,  before
+system sizes with La1× La2× 2 (La1  and La2  denote the num-                       the symmetrization.            √
+bers of unit cell along the two lattice spacing directions a1 and                              size        E        |O0|2    E+,−      E−,+      E−,−
+a2) under the periodic boundary conditions (PBC), which pre-                                3× 3× 2    -0.3781   0.9846    -0.3709   -0.3706   -0.3708
+serve the C3 symmetry, we calculate the variational energies                                6× 6× 2    -0.3701       /     -0.3690   -0.3690   -0.3689
+up to the system size 9× 9× 2, as shown in TableI. On the                                   8× 8× 2    -0.3701       /     -0.3696   -0.3695   -0.3696
+smaller 3× 3× 2 system sizes, the variational ground states
+preserve the C3  symmetry and have a large overlap with an
+low-lying exact state obtained by exact diagonalization.  Re-                      projected ‘non-nematic’ states there does not exist a C3 sym-
+markably,  on  the  larger  sizes  (≥  4× 4× 2),  the  optimized                   metrized state whose energy is lower than the ones with ne-
+ground state always breaks the C3 symmetry (see TableI).                           matic order. This result supports the C3 symmetry breaking in
+   Next,  to  interpret  the  diﬀerence  results  for  systems  with               the thermodynamic limit.
+diﬀerent  size,  we  perform  the  ‘symmetrization’  procedure                        For the C3 symmetry breaking nematic states, we can also
+among  the  projected  states  under  diﬀerent  boundary  condi-                   perform similar symmetrization procedure in the space spaned
+tions  to  obtain  a C3  symmetric  wave  functions.   We  diago-                  by the three nematic states related by the C3 operation.  The
+nalize the original Hamiltonian Eq. (1) in the Hilbert space                       results are shown in TableIII. We ﬁnd that the symmetriza-
+with anti-periodic boundary conditions (APBC), and the ob-                         tion cannot eﬃciently lower the energy.  Furthermore eigen-
+tained  results  are  shown  in  TableII,  where  the  parameters                  values  of  the  ﬁdelity  matrix  are  all  close  to  1.   The  reason
+{ηx7,ηz7,η} = 0 (withη = (1−θ)) for the three projected states                     is  that  the  overlaps  between  the  diﬀerent  nematic  states  as
+in the APBC. For the 3× 3× 2 system size, the energy of the                        well as the hopping elements of the Hamiltonian among the
+symmetrized ground state is signiﬁcantly lowered.  Actually                        three states are all vanishing small,  i.e. ⟨ψnematici  |ψnematicj  ⟩≈
+we have conﬁrmed that the overlap of the symmetrized state                         ⟨ψnematici  | ˆH|ψnematicj  ⟩≈  0, which indicates a three-fold degen-
+has and the exact ground state is close to 1, and its energy also                  eracy that agrees with a C3 symmetry breaking.
+very close to that of the exact state. However, for systems with
+6×6×2 and 8×8×2 sizes, the symmetrized states are not sig-
+niﬁcantly proved (as shown in TableIIthe energy correction is
+very small) and their energy are still higher than those of the
+corresponding nematic states in TableI. This result indicate
+that with increasing system size, within the Hilbert space of
+                                                                                                                                                                             12
+
+
+TABLE III. Symmetrization of the three nematic states. The system
+sizes include 6×6×2 and 8×8×2. E is the ground-state energy of the
+renormalized state.  Enematic are the ground state energies of the ne-
+matic states before the symmetrization.ρ1,ρ2,ρ3 are the eigenvalues
+of the density matrix.
+              size         E       Enematic     ρ1        ρ2        ρ3
+          6× 6× 2      -0.3732    -0.3729    0.9558    1.0028    1.0414
+          8× 8× 2      -0.3757    -0.3757    0.9870    1.0000    1.0130
+
+
+
+
+
+
+
+
+ [1]L. Savary and L. Balents, Quantum spin liquids:  a review,Re-                                 L. Wang, J. Wang, G. Wang, Q. Ren, C. Xi, W. Tong, L. Ling,
+      ports on Progress in Physics 80, 016502 (2016).                                             Z. Liu, L. Wu, J. Mei, Z. Qu, H. Zhou, X. Wang, J.-G. Park,
+ [2]Y. Zhou, K. Kanoda, and T.-K. Ng, Quantum spin liquid states,                                 Y. Wan, and J. Ma, Field-induced quantum spin disordered state
+      Rev. Mod. Phys. 89, 025003 (2017).                                                          in spin-1/2 honeycomb magnet Na2Co2TeO6,Nature Commu-
+ [3]X.  G.  Wen,  Mean-ﬁeld  theory  of  spin-liquid  states  with  ﬁ-                            nications 12, 5559 (2021).
+      nite energy gap and topological orders,Phys. Rev. B            44, 2664              [16]W.  Yao,  K.  Iida,  K.  Kamazawa,  and  Y.  Li,  Excitations  in
+      (1991).                                                                                     the  ordered  and  paramagnetic  states  of  honeycomb  magnet
+ [4]T. Senthil and M. P. A. Fisher,     Z2 gauge theory of electron frac-                         Na2Co2TeO6,Phys. Rev. Lett.  129, 147202 (2022).
+      tionalization in strongly correlated systems,Phys. Rev. B               62,          [17]R. Sano, Y. Kato, and Y. Motome, Kitaev-Heisenberg Hamilto-
+      7850 (2000).                                                                                nian for high-spin d7 Mott insulators,Phys. Rev. B                  97, 014408
+ [5]T. Senthil and M. P. A. Fisher, Fractionalization in the cuprates:                            (2018).
+      Detecting the topological order,Phys. Rev. Lett.  86, 292 (2001).                    [18]M.  Songvilay,  J.  Robert,  S.  Petit,  J.  A.  Rodriguez-Rivera,
+ [6]A. Kitaev, Fault-tolerant quantum computation by anyons,An-                                   W. D. Ratcliﬀ, F. Damay, V. Bal´edent, M. Jim´enez-Ruiz, P. Le-
+      nals of Physics 303, 2 (2003).                                                              jay,  E.  Pachoud,  A.  Hadj-Azzem,  V.  Simonet,  and  C.  Stock,
+ [7]A. Kitaev, Anyons in an exactly solved model and beyond,An-                                   Kitaev  interactions  in  the  Co  honeycomb  antiferromagnets
+      nals of Physics 321, 2 (2006).                                                              Na3Co2SbO6  and  Na2Co2TeO6, Phys.  Rev.  B   102,  224429
+ [8]G. Jackeli and G. Khaliullin, Mott insulators in the strong spin-                             (2020).
+      orbit coupling limit:  From Heisenberg to a quantum compass                          [19]R. Zhong,  T. Gao,  N. P. Ong, and R. J. Cava, Weak-ﬁeld in-
+      and Kitaev models,Phys. Rev. Lett.              102, 017205 (2009).                         duced  nonmagnetic  state  in  a  Co-based  honeycomb,Science
+ [9]Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale, W. Ku,                                Advances 6, eaay6953 (2020).
+      S.  Trebst,  and  P.  Gegenwart,  Relevance  of  the  Heisenberg-                    [20]X.  Zhang,  Y.  Xu,  T.  Halloran,  R.  Zhong,  C.  Broholm,  R.  J.
+      Kitaev model for the honeycomb lattice iridates A2IrO3,Phys.                                Cava, N. Drichko, and N. P. Armitage, A magnetic continuum
+      Rev. Lett. 108, 127203 (2012).                                                              in the cobalt-based honeycomb magnet BaCo2(AsO4)2,Nature
+[10]K. Kitagawa, T. Takayama, Y. Matsumoto, A. Kato, R. Takano,                                   Materials 22, 58 (2023).
+      Y. Kishimoto, S. Bette, R. Dinnebier, G. Jackeli, and H. Tak-                        [21]J. A. Sears, Y. Zhao, Z. Xu, J. W. Lynn, and Y.-J. Kim, Phase
+      agi, A spin-orbital-entangled quantum liquid on a honeycomb                                 diagram ofα-RuCl3 in an in-plane magnetic ﬁeld,Phys. Rev. B
+      lattice,Nature            554, 341 (2018).                                                  95, 180411 (2017).
+[11]J. A. Sears, M. Songvilay, K. W. Plumb, J. P. Clancy, Y. Qiu,                          [22]J. Zheng, K. Ran, T. Li, J. Wang, P. Wang, B. Liu, Z.-X. Liu,
+      Y. Zhao, D. Parshall, and Y.-J. Kim, Magnetic order inα-RuCl3:                              B. Normand, J. Wen, and W. Yu, Gapless spin excitations in the
+      A  honeycomb-lattice  quantum  magnet  with  strong  spin-orbit                             ﬁeld-induced quantum spin liquid phase ofα-RuCl3,Phys. Rev.
+      coupling,Phys. Rev. B                91, 144420 (2015).                                     Lett. 119, 227208 (2017).
+[12]R. D. Johnson, S. C. Williams, A. A. Haghighirad, J. Singleton,                        [23]A. Banerjee, P. Lampen-Kelley, J. Knolle, C. Balz, A. A. Aczel,
+      V. Zapf, P. Manuel, I. I. Mazin, Y. Li, H. O. Jeschke, R. Valent´ı,                         B. Winn, Y. Liu, D. Pajerowski, J. Yan, C. A. Bridges, A. T.
+      and R. Coldea, Monoclinic crystal structure ofα-RuCl3 and the                               Savici, B. C. Chakoumakos, M. D. Lumsden, D. A. Tennant,
+      zigzag antiferromagnetic ground state,Phys. Rev. B         92, 235119                       R.  Moessner,  D.  G.  Mandrus,  and  S.  E.  Nagler,  Excitations
+      (2015).                                                                                     in the ﬁeld-induced quantum spin liquid state of α-RuCl3,npj
+[13]A.  Banerjee,  J.  Yan,  J.  Knolle,  C.  A.  Bridges,  M.  B.  Stone,                        Quantum Materials 3, 8 (2018).
+      M. D. Lumsden, D. G. Mandrus, D. A. Tennant, R. Moessner,                            [24]A.  Banerjee,  C.  A.  Bridges,  J.-Q.  Yan,  A.  A.  Aczel,  L.  Li,
+      and S. E. Nagler, Neutron scattering in the proximate quantum                               M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu, J. Knolle,
+      spin liquidα-RuCl3,Science  356, 1055 (2017).                                               S. Bhattacharjee, D. L. Kovrizhin, R. Moessner, D. A. Tennant,
+[14]S.-H.  Do,   S.-Y.  Park,   J.  Yoshitake,   J.  Nasu,   Y.  Motome,                          D. G. Mandrus, and S. E. Nagler, Proximate Kitaev quantum
+      Y. Kwon,  D. T. Adroja,  D. J. Voneshen,  K. Kim,  T.-H. Jang,                              spin liquid behaviour in a honeycomb magnet,Nature Materi-
+      J.-H. Park, K.-Y. Choi, and S. Ji, Majorana fermions in the Ki-                             als 15, 733 (2016).
+      taev quantum spin system α-RuCl3,Nature Physics  13, 1079                            [25]Y.  Kasahara,  T.  Ohnishi,  Y.  Mizukami,  O.  Tanaka,  S.  Ma,
+      (2017).                                                                                     K.   Sugii,   N.   Kurita,   H.   Tanaka,   J.   Nasu,   Y.   Motome,
+[15]G.  Lin,  J.  Jeong,  C.  Kim,  Y.  Wang,  Q.  Huang,  T.  Masuda,                            T. Shibauchi, and Y. Matsuda, Majorana quantization and half-
+      S.  Asai,  S.  Itoh,  G.  G¨unther,  M.  Russina,  Z.  Lu,  J.  Sheng,                      integer thermal quantum Hall eﬀect in a Kitaev spin liquid,Na-
+                                                                                                                                                                              13
+
+      ture 559, 227 (2018).                                                                       α-RuCl3,Phys. Rev. Lett.  125, 097203 (2020).
+[26]T. Yokoi, S. Ma, Y. Kasahara, S. Kasahara, T. Shibauchi, N. Ku-                         [41]S.  Bachus,  D.  A.  S.  Kaib,  A.  Jesche,  V.  Tsurkan,  A.  Loidl,
+      rita, H. Tanaka, J. Nasu, Y. Motome, C. Hickey, S. Trebst, and                              S.  M.  Winter,  A.  A.  Tsirlin,  R.  Valent´ı,  and  P.  Gegenwart,
+      Y. Matsuda, Half-integer quantized anomalous thermal Hall ef-                               Angle-dependent  thermodynamics  of α-RuCl3, Phys.  Rev.  B
+      fect in the Kitaev material candidateα-RuCl3,Science  373, 568                              103, 054440 (2021).
+      (2021).                                                                               [42]I. A. Leahy, C. A. Pocs, P. E. Siegfried, D. Graf, S.-H. Do, K.-
+[27]J.  A.  N.  Bruin,   R.  R.  Claus,   Y.  Matsumoto,   N.  Kurita,                            Y. Choi, B. Normand, and M. Lee, Anomalous thermal conduc-
+      H. Tanaka, and H. Takagi, Robustness of the thermal Hall ef-                                tivity and magnetic torque response in the honeycomb magnet
+      fect close to half-quantization in α-RuCl3,Nature Physics  18,                              α-RuCl3,Phys. Rev. Lett.  118, 187203 (2017).
+      401 (2022).                                                                           [43]N. Jan       ˇsa, A. Zorko, M. Gomilˇsek, M. Pregelj, K. W. Kr¨amer,
+[28]Y. Vinkler-Aviv and A. Rosch, Approximately quantized ther-                                   D. Biner,  A. Biﬃn,  C. R¨uegg, and M. Klanjˇsek, Observation
+      mal Hall eﬀect of chiral liquids coupled to phonons,Phys. Rev.                              of two types of fractional excitation in the Kitaev honeycomb
+      X 8, 031032 (2018).                                                                         magnet,Nature Physics              14, 786 (2018).
+[29]M. Ye, G. B. Hal       ´asz, L. Savary, and L. Balents, Quantization of                 [44]S.  M.  Winter,  K.  Riedl,  D.  Kaib,  R.  Coldea,  and  R.  Valent       ´ı,
+      the thermal Hall conductivity at small Hall angles,Phys. Rev.                               Probing α-RuCl3  beyond magnetic order:  Eﬀects of tempera-
+      Lett. 121, 147201 (2018).                                                                   ture and magnetic ﬁeld,Phys. Rev. Lett.         120, 077203 (2018).
+[30]P.   Czajka,   T.   Gao,   M.   Hirschberger,   P.   Lampen-Kelley,                     [45]D. A. S. Kaib, S. M. Winter, and R. Valent       ´ı, Kitaev honeycomb
+      A. Banerjee,  J. Yan,  D. G. Mandrus,  S. E. Nagler, and N. P.                              models in magnetic ﬁelds: Dynamical response and dual mod-
+      Ong, Oscillations of the thermal conductivity in the spin-liquid                            els,Phys. Rev. B      100, 144445 (2019).
+      state ofα-RuCl3,Nature Physics  17, 915 (2021).                                       [46]L.  E.  Chern,  E.  Z.  Zhang,  and  Y.  B.  Kim,  Sign  structure  of
+[31]L. Janssen and M. Vojta, Heisenberg–Kitaev physics in mag-                                    thermal Hall conductivity and topological magnons for in-plane
+      netic ﬁelds,Journal of Physics:  Condensed Matter           31, 423002                      ﬁeld polarized Kitaev magnets,Phys. Rev. Lett.                126, 147201
+      (2019).                                                                                     (2021).
+[32]S.-H. Baek, S.-H. Do, K.-Y. Choi, Y. S. Kwon, A. U. B. Wolter,                          [47]S.  M.  Winter,  K.  Riedl,  P.  A.  Maksimov,  A.  L.  Chernyshev,
+      S. Nishimoto, J. van den Brink, and B. B¨uchner, Evidence for a                             A.  Honecker,  and  R.  Valent´ı,  Breakdown  of  magnons  in  a
+      ﬁeld-induced quantum spin liquid inα-RuCl3,Phys. Rev. Lett.                                 strongly spin-orbital coupled magnet,Nature Communications
+      119, 037201 (2017).                                                                         8, 1152 (2017).
+[33]A.  U.  B.  Wolter,  L.  T.  Corredor,  L.  Janssen,  K.  Nenkov,                       [48]T. Cookmeyer and J. E. Moore, Spin-wave analysis of the low-
+      S. Sch¨onecker, S.-H. Do, K.-Y. Choi, R. Albrecht, J. Hunger,                               temperature thermal Hall eﬀect in the candidate Kitaev spin liq-
+      T. Doert, M. Vojta, and B. B¨uchner, Field-induced quantum crit-                            uidα-RuCl3,Phys. Rev. B  98, 060412 (2018).
+      icality in the Kitaev systemα-RuCl3,Phys. Rev. B  96, 041405                          [49]H.-S. Kim and H.-Y. Kee, Crystal structure and magnetism in
+      (2017).                                                                                     α-RuCl3: An ab initio study,Phys. Rev. B  93, 155143 (2016).
+[34]S. Gass, P. M. C       ˆonsoli, V. Kocsis, L. T. Corredor, P. Lampen-                   [50]T. Suzuki and S.-i. Suga, E      ﬀective model with strong Kitaev
+      Kelley,  D.  G.  Mandrus,  S.  E.  Nagler,  L.  Janssen,  M.  Vojta,                        interactions forα-RuCl3,Phys. Rev. B  97, 134424 (2018).
+      B. B¨uchner, and A. U. B. Wolter, Field-induced transitions in                        [51]K. Ran, J. Wang, W. Wang, Z.-Y. Dong, X. Ren, S. Bao, S. Li,
+      the Kitaev materialα-RuCl3 probed by thermal expansion and                                  Z. Ma, Y. Gan, Y. Zhang, J. T. Park, G. Deng, S. Danilkin, S.-
+      magnetostriction,Phys. Rev. B                             101, 245158 (2020).               L. Yu, J.-X. Li, and J. Wen, Spin-wave excitations evidencing
+[35]R. Hentrich, A. U. B. Wolter, X. Zotos, W. Brenig, D. Nowak,                                  the Kitaev interaction in single crystallineα-RuCl3,Phys. Rev.
+      A. Isaeva, T. Doert, A. Banerjee, P. Lampen-Kelley, D. G. Man-                              Lett. 118, 107203 (2017).
+      drus, S. E. Nagler, J. Sears, Y.-J. Kim, B. B¨uchner, and C. Hess,                    [52]I.  O.  Ozel,  C.  A.  Belvin,  E.  Baldini,  I.  Kimchi,  S.  Do,  K.-
+      Unusual phonon heat transport inα-RuCl3: Strong spin-phonon                                 Y. Choi, and N. Gedik, Magnetic ﬁeld-dependent low-energy
+      scattering  and  ﬁeld-induced  spin  gap,Phys.  Rev.  Lett.       120,                      magnon  dynamics  in α-RuCl3, Phys.  Rev.  B   100,  085108
+      117204 (2018).                                                                              (2019).
+[36]R.  Hentrich,  M.  Roslova,  A.  Isaeva,  T.  Doert,  W.  Brenig,                       [53]H.-S. Kim, V. S. V., A. Catuneanu, and H.-Y. Kee, Kitaev mag-
+      B.  B¨uchner,  and  C.  Hess,  Large  thermal  Hall  eﬀect  in α-                           netism in honeycomb RuCl3 with intermediate spin-orbit cou-
+      RuCl3: Evidence for heat transport by Kitaev-Heisenberg para-                               pling,Phys. Rev. B          91, 241110 (2015).
+      magnons,Phys. Rev. B                99, 085136 (2019).                                [54]Z. Zhu, I. Kimchi, D. N. Sheng, and L. Fu, Robust non-abelian
+[37]R.  Hentrich,   X.  Hong,   M.  Gillig,   F.  Caglieris,   M.          ˇCulo,                 spin liquid and a possible intermediate phase in the antiferro-
+      M.  Shahrokhvand,  U.  Zeitler,  M.  Roslova,  A.  Isaeva,  T.  Do-                         magnetic Kitaev model with magnetic ﬁeld,Phys. Rev. B         97,
+      ert, L. Janssen, M. Vojta, B. B¨uchner, and C. Hess, High-ﬁeld                              241110 (2018).
+      thermal transport properties of the Kitaev quantum magnet α-                          [55]M.  Gohlke,  R.  Moessner,  and  F.  Pollmann,  Dynamical  and
+      RuCl3: Evidence for low-energy excitations beyond the critical                              topological properties of the Kitaev model in a [111] magnetic
+      ﬁeld,Phys. Rev. B         102, 235155 (2020).                                               ﬁeld,Phys. Rev. B         98, 014418 (2018).
+[38]C. Balz, P. Lampen-Kelley, A. Banerjee, J. Yan, Z. Lu, X. Hu,                           [56]H.-C.  Jiang,  C.-Y.  Wang,  B.  Huang,  and  Y.-M.  Lu,  Field  in-
+      S. M. Yadav, Y. Takano, Y. Liu, D. A. Tennant, M. D. Lumsden,                               duced quantum spin liquid with spinon Fermi surfaces in the
+      D. Mandrus, and S. E. Nagler, Finite ﬁeld regime for a quantum                              Kitaev model,arXiv:1809.08247  (2018).
+      spin liquid inα-RuCl3,Phys. Rev. B  100, 060405 (2019).                               [57]N. D. Patel and N. Trivedi, Magnetic ﬁeld-induced intermediate
+[39]C. Balz, L. Janssen, P. Lampen-Kelley, A. Banerjee, Y. H. Liu,                                quantum spin liquid with a spinon Fermi surface,Proceedings
+      J.-Q. Yan, D. G. Mandrus, M. Vojta, and S. E. Nagler, Field-                                of the National Academy of Sciences 116, 12199 (2019).
+      induced intermediate ordered phase and anisotropic interlayer                         [58]C. Hickey and S. Trebst, Emergence of a ﬁeld-driven U(1) spin
+      interactions inα-RuCl3,Phys. Rev. B  103, 174417 (2021).                                    liquid  in  the  Kitaev  honeycomb  model,Nature  Communica-
+[40]S. Bachus,  D. A. S. Kaib,  Y. Tokiwa,  A. Jesche,  V. Tsurkan,                               tions 10, 530 (2019).
+      A. Loidl, S. M. Winter, A. A. Tsirlin, R. Valent´ı, and P. Gegen-                     [59]D.  C.  Ronquillo,  A.  Vengal,  and  N.  Trivedi,  Signatures  of
+      wart, Thermodynamic perspective on ﬁeld-induced behavior of                                 magnetic-ﬁeld-driven quantum phase transitions in the entan-
+                                                                                                                                                                             14
+
+      glement entropy and spin dynamics of the Kitaev honeycomb                                   liquid: Fractional quantum Hall eﬀect in a kagome Heisenberg
+      model,Phys. Rev. B            99, 140413 (2019).                                            model,Scientiﬁc Reports            4, 6317 (2014).
+[60]L. Zou and Y.-C. He, Field-induced QCD          3-Chern-Simons quan-                   [76]Q. Luo, P. P. Stavropoulos, J. S. Gordon, and H.-Y. Kee, Spon-
+      tum criticalities in Kitaev materials,Phys. Rev. Res.                 2, 013072             taneous chiral-spin ordering in spin-orbit coupled honeycomb
+      (2020).                                                                                     magnets,Phys. Rev. Research               4, 013062 (2022).
+[61]M. Gohlke, G. Wachtel, Y. Yamaji, F. Pollmann, and Y. B. Kim,                          [77]Q. Luo and H.-Y. Kee, Interplay of magnetic ﬁeld and trigonal
+      Quantum spin liquid signatures in Kitaev-like frustrated mag-                               distortion in the honeycomb Γ model: Occurrence of a spin-ﬂop
+      nets,Phys. Rev. B        97, 075126 (2018).                                                 phase,Phys. Rev. B           105, 174435 (2022).
+[62]Z.-X. Liu and B. Normand, Dirac and chiral quantum spin liq-                           [78]E.  S.  Sørensen,  A.  Catuneanu,  J.  S.  Gordon,  and  H.-Y.  Kee,
+      uids on the honeycomb lattice in a magnetic ﬁeld,Phys. Rev.                                 Heart of entanglement:  Chiral, nematic, and incommensurate
+      Lett. 120, 187201 (2018).                                                                   phases in the Kitaev-Γ ladder in a ﬁeld, Phys. Rev. X 11,Phys.
+[63]M. G. Yamada and S. Fujimoto, Quantum liquid crystals in the                                  Rev. X 11.011013(2021).
+      ﬁnite-ﬁeld K-Γ model forα-RuCl3,arXiv:2107.03045  (2021).                            [79]W.-J. Hu, S.-S. Gong, H.-H. Lai, H. Hu, Q. Si, and A. H. Nev-
+[64]J. Wang, Q. Zhao, X. Wang, and Z.-X. Liu, Multinode quan-                                     idomskyy, Nematic spin liquid phase in a frustrated spin-1 sys-
+      tum spin liquids on the honeycomb lattice,Phys. Rev. B            102,                      tem on the square lattice,Phys. Rev. B            100, 165142 (2019).
+      144427 (2020).                                                                       [80]W.-J. Hu, S.-S. Gong, H.-H. Lai, Q. Si, and E. Dagotto, Density
+[65]J.  S.  Gordon,  A.  Catuneanu,  E.  S.  Sørensen,  and  H.-Y.  Kee,                          matrix renormalization group study of nematicity in two dimen-
+      Theory of the ﬁeld-revealed Kitaev spin liquid,Nature Com-                                  sions: Application to a spin-1 bilinear-biquadratic model on the
+      munications 10, 2470 (2019).                                                                square lattice,Phys. Rev. B            101, 014421 (2020).
+[66]H.-Y.  Lee,  R.  Kaneko,  L.  E.  Chern,  T.  Okubo,  Y.  Yamaji,                      [81]W.-J. Hu, H.-H. Lai, S.-S. Gong, R. Yu, E. Dagotto, and Q. Si,
+      N. Kawashima, and Y. B. Kim, Magnetic ﬁeld induced quan-                                    Quantum  transitions  of  nematic  phases  in  a  spin-1  bilinear-
+      tum phases in a tensor network study of Kitaev magnets,Nature                               biquadratic model and their implications for FeSe,Phys. Rev.
+      Communications 11, 1639 (2020).                                                             Research 2, 023359 (2020).
+[67]M.  Gohlke,  L.  E.  Chern,  H.-Y.  Kee,  and  Y.  B.  Kim,  Emer-                     [82]P. Calabrese and J. Cardy, Entanglement entropy and quantum
+      gence  of  nematic  paramagnet  via  quantum  order-by-disorder                             ﬁeld theory: A non-technical introduction,Journal of Statistical
+      and  pseudo-Goldstone  modes  in  Kitaev  magnets,Phys.  Rev.                               Mechanics: Theory and Experiment 2004, P06002 (2004).
+      Research 2, 043023 (2020).                                                           [83]J.  Wang,  B.  Normand,  and  Z.-X.  Liu,  One  proximate  Kitaev
+[68]H. Li, H.-K. Zhang, J. Wang, H.-Q. Wu, Y. Gao, D.-W. Qu, Z.-                                  spin liquid in the K-J-Γ model on the honeycomb lattice,Phys.
+      X. Liu, S.-S. Gong, and W. Li, Identiﬁcation of magnetic inter-                             Rev. Lett. 123, 197201 (2019).
+      actions and high-ﬁeld quantum spin liquid inα-RuCl3,Nature                           [84]X.-G. Wen, Quantum orders and symmetric spin liquids,Phys.
+      Communications 12, 4007 (2021).                                                             Rev. B 65, 165113 (2002).
+[69]X.-G. Zhou, H. Li, Y. H. Matsuda, A. Matsuo, W. Li, N. Ku-                             [85]X.-Y. Song, Y.-Z. You, and L. Balents, Low-energy spin dynam-
+      rita, K. Kindo, and H. Tanaka, Intermediate Quantum Spin Liq-                               ics of the honeycomb spin liquid beyond the Kitaev limit, Phys-
+      uid Phase in the Kitaev Materialα-RuCl3 under High Magnetic                                 ical Review Letters 117,Phys. Rev. Lett. 117.037209(2016).
+      Fields up to 100 T,arXiv:2201.04597 (2022).                                          [86]Y.-Z. You, I. Kimchi, and A. Vishwanath, Doping a spin-orbit
+[70]S. R. White, Density matrix formulation for quantum renormal-                                 Mott insulator: Topological superconductivity from the Kitaev-
+      ization groups,Phys. Rev. Lett.             69, 2863 (1992).                                Heisenberg  model  and  possible  application  to  (Na2/Li2)IrO3,
+[71]I.  P.  McCulloch,Inﬁnite  size  density  matrix  renormalization                             Phys. Rev. B 86, 085145 (2012).
+      group, revisited(2008).                                                              [87]B. Meier, S. Greiser, J. Haase, T. Herrmannsd       ¨orfer, F. Wolﬀ-
+[72]J. Hauschild and F. Pollmann, E      ﬃcient numerical simulations                             Fabris, and J. Wosnitza, NMR signal averaging in 62 T pulsed
+      with tensor networks:  Tensor network python (tenpy),SciPost                                ﬁelds,Journal of Magnetic Resonance           210, 1 (2011).
+      Phys. Lect. Notes , 5 (2018).                                                        [88]M.  Akaki,  K.  Kanaida,  and  M.  Hagiwara,  Magnetoelectric
+[73]B.-B. Chen, L. Chen, Z. Chen, W. Li, and A. Weichselbaum,                                     properties  of  Ca2CoSi2O7  studied  by  high-ﬁeld  electron  spin
+      Exponential thermal tensor network approach for quantum lat-                                resonance,Journal of Physics: Conference Series                  969, 012102
+      tice models,Phys. Rev. X              8, 031082 (2018).                                     (2018).
+[74]Q. Li, Y. Gao, Y.-Y. He, Y. Qi, B.-B. Chen, and W. Li, Tangent                         [89]W. Yao and Y. Li, Ferrimagnetism and anisotropic phase tun-
+      space approach for thermal tensor network simulations of 2D                                 ability  by  magnetic  ﬁelds  in  na2co2teo6, Phys.  Rev.  B   101,
+      Hubbard model,arXiv: 2212.11973 (2022).                                                     085120 (2020).
+[75]S.-S.  Gong,  W.  Zhu,  and  D.  N.  Sheng,  Emergent  chiral  spin

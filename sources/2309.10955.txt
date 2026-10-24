@@ -1,0 +1,736 @@
+       Quantum Criticality with Emergent Symmetry in the Extended Shastry-Sutherland Model
+
+          Wen-Yuan Liu,1 Xiao-Tian Zhang,2 Zhe Wang,3 Shou-Shu Gong,4 Wei-Qiang Chen,5, 6 and Zheng-Cheng Gu7
+           1Division of Chemistry and Chemical Engineering, California Institute of Technology, Pasadena, California 91125, USA
+                                            2School  of  Physics,  Beihang  University,  Beijing  100191,  China
+                                     3Department of Physics,  Beijing Normal University,  Beijing 100875,  China
+                                4School of Physical Sciences, Great Bay University, Dongguan 523000, China, and
+                                          Great Bay Institute for Advanced Study,  Dongguan 523000,  China
+                                    5Institute for Quantum Science and Engineering and Department of Physics,
+                                      Southern University of Science and Technology,  Shenzhen 518055,  China
+                               6Shenzhen Key Laboratory of Advanced Quantum Functional Materials and Devices,
+                                      Southern University of Science and Technology,  Shenzhen 518055,  China
+                  7Department of Physics, The Chinese University of Hong Kong, Shatin, New Territories, Hong Kong, China
+                                                                    (Dated: May 31, 2024)
+                    Motivated by the novel phenomena observed in the layered material SrCu2(BO3)2, the Shastry-Sutherland
+                 model (SSM) has been extensively studied as the minimal model for SrCu2(BO3)2.  However, the nature of its
+                 quantum phase transition from the plaquette valence-bond solid (PVBS) to antiferromagnetic (AFM) phase is
+                 under fierce debate, posing a challenge to understand the underlying quantum criticality. Via the state-of-the-art
+                 tensor network simulations, we study the ground state of the SSM on large-scale size up to 20× 20 sites.  We
+                 identify the continuous transition nature accompanied by an emergent O(4) symmetry between the PVBS and
+                 AFM phase, which strongly suggests a deconfined quantum critical point (DQCP). Furthermore, we map out the
+                 phase diagram of an extended SSM that can be continuously tuned to the SSM, which demonstrates the same
+                 DQCP phenomena along a whole critical line. Our results indicate a compelling scenario for understanding the
+                 origin of the proposed proximate DQCP in recent experiments of SrCu2(BO3)2.
+
+
+   Introduction.    The  frustrated  Shastry-Sutherland  magnet                      role  for  understanding  the  proximate  DQCP  phenomena  of
+SrCu2(BO3)2 is a fascinating material to explore exotic phe-                         SrCu2(BO3)2  [19, 20, 49, 52, 54, 56–60, 62, 63],  remains
+nomena  including  magnetization  plateaus,  supersolid,  and                        unresolved.
+topological physics [1–16].  Recently, SrCu             2(BO3)2  has also               Specifically,  whether  the  potential  PVBS-AFM  transition
+attracted  drastically  increasing  interest  as  a  promising  plat-                belongs  to  first  order,  a  DQCP,  or  is  extended  to  a  gap-
+form to experimentally study the physics of deconfined quan-                         less  quantum  spin  liquid  (QSL)  phase  in  between  is  a  big
+tum critical point (DQCP) [17–20],  which represents a new                           enigma.   Series  expansion  study  finds  a  continuous  PVBS-
+framework for understanding the unconventional continuous                            AFM transition at J1/J2  =  0.86(1) [63,64], but infinite-size
+transitions  beyond  Landau-Ginzburg-Wilson  paradigm  and                           tensor network studies suggest a weakly first-order transition
+has been studied primarily through theoretical and numerical                         at J1/J2≃ 0.78 [52,56] and a multicritical point as a DQCP
+ways [21–48].  Remarkably, the recently observed magnetic                            by introducing additional interactions [56].  In recent density
+field-driven PVBS-AFM transition in SrCu2(BO3)2  displays                            matrix renormalization group (DMRG) studies, different con-
+extraordinary characteristics, including quantum critical scal-                      clusions have also been found. While an earlier study suggests
+ing and emergence of O(3) symmetry, that strongly suggests a                         a  direct  PVBS-AFM  transition,  which  is  further  argued  to
+nearby DQCP [49] and calls for theoretical understanding.                            represent  a  DQCP  with  emergent  O(4)  symmetry  based  on
+   While  the  exact  interactions  for  SrCu2(BO3)2  are  still                     quantum  field  theory  analyses  [54],  a  recent  DMRG  study
+unclear,  most  experimental  observations  can  be  understood                      based  on  gap  crossings  finds  an  intermediate  gapless  QSL
+based on the minimal Shastry-Sutherland model (SSM) [50,                             phase between the PVBS and AFM phase for 0.79≲ J1/J2≲
+51], with the following Hamiltonian:                                                 0.82 [57]. This PVBS-QSL-AFM picture is also supported by
+                           X                   X                                     a functional renormalization group study [58].  These contro-
+                  H = J1        Si· Sj + J2          Si· Sj,                  (1)    versial results lead to a big obstacle for further understanding
+                            ⟨i, j⟩             ⟨⟨i, j⟩⟩                              of the proximate DQCP phenomena in SrCu2(BO3)2 observed
+where  J1  and  J2  terms  sum  over  all  the  nearest-neighbor                     in a magnetic field and high pressure [49].
+(NN)  [gray  lines  in  Fig.1(b)]  and  part  of  the  next-nearest-                    In this paper, we employ the state-of-the-art tensor network
+neighbor  (NNN)  AFM  Heisenberg  interactions  [red  dashed                         simulations  by  means  of  the  finite  projected  entangled  pair
+lines denoted as  J2a  in Fig.1(b)] on the square lattice.  The                      state  (PEPS)  approach  to  study  an  extended  SSM  with  the
+                                                                                     following Hamiltonian:
+model  is  in  a  dimer  valence-bond  solid  (DVBS)  phase  for                                   X                    X                     X
+small J1/J2 and an AFM phase for large J1/J2. The existence                               H = J1        Si· Sj + J2a          Si· Sj + J2b         Si· Sj,      (2)
+of  a  plaquette  VBS  phase  (PVBS)  between  the  DVBS  and                                      ⟨i, j⟩               ⟨⟨i, j⟩⟩             ⟨⟨i, j⟩⟩
+AFM phase has also been well established with a first-order
+DVBS-PVBS transition [19,20,49,52–62]. Nevertheless, the                             where J2a and J2b represent two sets of the NNN interactions
+transition nature between the PVBS and AFM phase, which                              as  shown  in  Fig.1(b).   For  either          J2b  =  0  or  J2a  =  0,  the
+is  a  promising  candidate  of  DQCP  and  may  play  a  crucial                    model recovers the standard SSM, while for  J2a  =  J2b  it is
+                                                                                                                                                                  2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 1. (a) Ground state phase diagram of the SSM, including three
+phase:  DVBS, PVBS and AFM. Dashed diagonal lines indicate the
+NNN interaction terms.  (b) The extended SSM, which contains two                    Figure 2.    Finite size scaling of ground state order parameters for
+sets of NNN interaction  J2a  (red) and  J2b  (blue).  (c) Ground state             the  SSM  on  L× L  lattices  (a)-(d).   Quadratic  fits  are  shown  for
+phase diagram of the extended Shastry-Sutherland model and it is                    VBS order parameters (a-c) and cubic fits are shown for AFM order
+symmetric about J2a and J2b. J2b = 0 (or J2a = 0) corresponds to the                parameter (d) using L = 6− 20. The ratios of PVBS and AFM order
+SSM, and J2a = J2b corresponds to the checkerboard model (CBM).                     parameters⟨Q2⟩/⟨M2⟩ are presented in (e) and their crossing points
+The grey region denotes other phases not of interest here.                          from (L, L+ 2) or (L, L+ 4) are presented in (f). (h) shows the fourth-
+                                                                                    order momentum ratio.   (g) shows the data collapse of PVBS and
+                                                                                    AFM  order  parameters,  and  the  dashed  lines  are  quadratic  curves
+the checkerboard model (CBM) with a potential PVBS-AFM                              using  the  corresponding  critical  exponents.   The  values  of  scaled
+transition  [65–67].    The  two  models  can  be  connected  by                    AMF  quantities in  (g)  have  been shifted  upwards  by  0.7  for clear
+tuning J2a and J2b. Our extensive tensor network simulations                        display.
+yield strong evidence that the SSM undergoes a direct PVBS-
+AFM transition accompanied by an emergent O(4) symmetry,                            induced  plaquette  order  parameter  is  measured  by  P   =
+supporting a DQCP in the SSM. The conclusions are further                            1  P
+strengthened  by  the  investigations  of  the  extended  SSM,                       Np    i(−1)ixΠi,  where  Np  =  (L− 1)2  is the total number of
+which exhibits the same type of DQCP physics as shown in                            counted plaquettes [72]. The scaling of  ⟨P⟩2 with L = 6− 20
+the phase diagram Fig.1(c). Our findings suggest an origin of                       is shown in Fig.2(a) for di       fferent couplings J1 using second
+the experimentally observed proximate DQCP phenomena in                             order  polynomial  fits.    With  J1  increasing, ⟨P⟩2  gradually
+SrCu2(BO3)2.                                                                        decreases.     The  extrapolated ⟨P⟩2  in  the  thermodynamic
+   Results  of  the  SSM.  The  finite  PEPS  algorithm  here  we                   limit at  J1  =  0.78,  0.80,  0.82 are 0.0075(3),  0.0041(3) and
+adopt has been demonstrated as a powerful approach for simu-                        0.0014(5), respectively, but would be zero at J1 = 0.84.  This
+lating quantum spin systems [46–48,68–70]. To further verify                        suggests the PVBS phase vanishes around  J1  =  0.83.   The
+the  finite  PEPS  results,  we  carefully  compare  with  DMRG                     third order fits give the same conclusion. The plaquette pattern
+and infinite-size tensor network methods on the SSM [52,56].                        in the PVBS phase is shown in the middle part of Fig.1(a),
+These results explicitly demonstrate the high accuracy of the                       where the singlets form on the empty plaquettes.
+finite  PEPS  method.   (  In  addition,  we  also  benchmark  our                      On the other hand, we consider the dimer order parameters
+results of J− Q model with Quantum Monte Carlo simulation                           for double check, defined as
+at all different sizes. See Supplemental Material [71].) We use                                                       X
+D = 8 to perform all calculations, where both the ground state                                            Dα =   1Nb       (−1)iαSi· Si+eα,                      (3)
+energy and order parameters are well converged for the largest                                                          i
+available size 20× 20 by very careful analysis for D = 4− 10                        whereα = x or y, and Nb = L(L−1) is the corresponding total
+results [71].                                                                       number of counted bonds along theα direction. For the PVBS
+   Since our method works well for open boundary systems,                           phase,  the  boundary  induced  dimerization⟨D⟩2  = ⟨Dx⟩2 +
+we  first  look  into  the  boundary  induced  dimerized  pattern                   ⟨Dy⟩2 should also be finite in the thermodynamic limit.  The
+on  L× L systems for the SSM. We set  J2  =  1 to keep the                          scaling of⟨D⟩2 for J1 = 0.78, 0.80, 0.82, 0.84 using L = 6−20
+same energy scale with previous studies.  The local plaquette                       is shown in Fig.2(b), and indeed is consistent with a PVBS
+operator  at  site  i   =   (ix, iy)  is  defined  as  Πi   =     12(P□,i  +        phase for J1≲ 0.83.
+P−1□,i),  where  P□,i  denotes  the  cyclic  exchange  operator  of                     Now  we  turn  to  the  PVBS  and  AFM  order  parameters
+the four spins on a given plaquette at site i.   The boundary                       defined  based  on  correlation  functions.    The  PVBS  order
+                                                                                                                                                                  3
+
+parameter  is  defined  as⟨Q2⟩  = ⟨(Dx− Dy)2⟩  where  Q  =
+Dx− Dy  [54].   In  Fig.2(c),  the  quantity    ⟨Q2⟩  is  presented.
+The finite-size scaling shows J1  =  0.8 has a nonzero PVBS
+order 0.0024(6) in the thermodynamic limit, and the vanishing
+point  J1  of  PVBS  order  parameter  is  very  close  to  that
+obtained from the scaling of boundary induced quantities⟨P⟩2
+and⟨D⟩2.    On  the  other  hand,  the  AFM  order  parameter
+⟨M2⟩  where  M   =      1L2 Pi(−1)ix+iySi  is  show  in  Fig.2(d).
+One  can  see  with  J1  increasing,  the  AFM  order  increases,
+and  potentially  establishes  for  J1 ≥   0.84.    These  results
+from  different  physical  quantities  suggest  a  direct  PVBS-
+AFM  phase  transition.     By  using  the  crossing  points  of
+order parameter ratio,  which we will mention later,  it gives
+a PVBS-AFM transition point at  J1 ≃  0.83, consistent with
+the finite size scaling analysis.  The physical quantities vary
+smoothly  about  J1  in  our  results,  indicating  a  continuous
+PVBS-AFM transition, though the possibility of weakly first
+order transition in the thermodynamic limit can not be fully
+excluded.
+   The  PVBS-AFM  transition  point  in  the  SSM  has  been                        Figure 3.    Finite size scaling of ground state order parameters for
+argued  as  a  DQCP  with  emergent  O(4)  symmetry  through                        checkerboard  model  (J2a  =  J2b)  on  L× L  lattices  (a)-(d),  setting
+the  rotation  of  three  components  of  AFM  order  parameter                     J1 = 1. Quadratic fits for L = 6− 20 are shown. The meanings of the
+M = (Mx, My, Mz) and one-component PVBS order parameter                             figures are the same with those of Fig.2. The values of scaled AMF
+Q into each other to form a superspin n  =  (Mx, My, Mz, Q),                        quantities in (g) have been shifted upwards by 0.7 for clear display.
+where  Q  =  Dx− Dy  [54].   To  check  the  O(4)  symmetry,
+as  we  note  the  SO(3)  symmetry  for  AFM  components  is
+well  satisfied  by  observing⟨M2α⟩  =    13⟨M2⟩  (see  SM  [71]),                  ⟨Q2⟩ for different size L at different  J1. ν is the correlation
+we  only  need  to  check  the  additional  symmetry  formed  by                    length exponent, and z +η∗s,p represents the spin or plaquette
+Mz  and  Q.   A  simple  but  nontrivial  quantity  to  verify  the                 exponents  where  z  is  the  dynamical  exponent  and η∗s,p  are
+emergent  O(4)  symmetry  is  that  the  ratio ⟨Q2⟩/⟨M2⟩  (or                       corresponding  anomalous  scaling  dimensions.     F[x]  is  a
+⟨Q2⟩/⟨M2z⟩ as⟨M2z⟩ =   13⟨M2⟩) should be size-independent at                        polynomial  function.   The  analysis  of  data  collapse  can  be
+the transition point [30,40,73].  In Fig.2(e), the quantities                       followed in Ref. [47]. In Fig.2(g), we show the data collapse
+⟨Q2⟩/⟨M2⟩  for  different  system  size  have  a  crossing  point                   of  the  order  parameters  (using  Jc1  =  0.828)  by  collectively
+at  J1 ≃   0.83,  which  is  intrinsically  close  to  the  PVBS-                   fitting A(J1, L) with different J1 and L (exclude L  =  6), and
+AFM transition point evaluated by finite size scaling of order                      the physical quantities can be well scaled with z+η∗s = 1.39(2),
+parameters.   The  crossing  points  show  much  smaller  finite                    z+η∗p = 1.39(1) andν = 0.84(3). On the other hand, note at the
+size effects [Fig.2(f)], which has also been observed in other                      critical point J1 = Jc1 it has A(Jc1, L)∝ L−(z+η∗), indicating that
+DQCP studies by Quantum Monte Carlo simulations [30,40,                             the exponents (z +η∗) can be directly evaluated by using the
+73].   These  results  on  one  hand  provide  direct  evidence  to                 data at Jc1. Indeed at J1 = 0.83 it gives the almost same value
+support  the  PVBS-AFM  transition  point  as  a  DQCP  with                        1.39 for both z +η∗s  and z +η∗p, in good agreement with the
+emergent  O(4)  symmetry,  on  the  other  hand  give  a  more                      collective fittings.   Note that the obtained critical exponents
+accurate  evaluation  of  the  transition  point  Jc1   =   0.828(5),               clearly indicate z +η∗s  = z +η∗p, which is consistent with the
+significantly  reducing  the  uncertainties  from  the  finite  size                emergent O(4) symmetry [38,48,73].
+extrapolations of order parameters.  We also consider higher                            At  last,  we  compare  our  results  with  those  from  DMRG
+order  momentum  ratios  of  order  parameters  to  check  the                      on smaller system size.  Although converged DMRG results
+emergent symmetry [38,40,73],  which is very challenging                            are unbiased, the limited system size and different analyzed
+to  compute.    Within  our  capability,  we  can  only  get  the                   quantities may lead to different conclusions for 2D limit.  By
+fourth-order momentum ratio⟨M2z Q2⟩/⟨M2z M2⟩. Remarkably,                           computing the ground-state energy and correlation lengths on
+⟨M2z Q2⟩/⟨M2z M2⟩ also has a crossing point around J1≃ 0.83,                        infinite-long cylinders, an earlier DMRG calculation finds a
+shown in Fig.2(h), further supporting the emergent symmetry.                        PVBS-AFM transition that can be consistent with an emergent
+   The extensive data with different system size enable us to                       O(4) symmetry. Nonetheless, a latter DMRG study using gap
+precisely  extract  the  corresponding  critical  exponents.   We                   crossings suggests an intermediate QSL for gc1≲ J1/J2≲ gc2
+use the standard finite size scaling formula without subleading                     separating  the  PVBS  and  AFM  phase  in  the  SSM,  where
+corrections [74]:                                                                   gc1≃ 0.79 and gc2≃ 0.82 are estimated from the 1/L2 finite-
+              A(J1, L) = L−(z+η∗)F[L1/ν(J1− Jc1)/Jc1],              (4)             size scaling of gap crossings [57].  Notably, the extrapolated
+                                                                                    results  based  on  the  relatively  small  cylinder  width  near
+where J1 denotes the coupling constant, and A(J1, L) denote                         transition point may strongly depend on the assumed scaling
+the  AFM  order  parameters⟨M2⟩  or  VBS  order  parameters                         formula  [75].    Indeed,  the  extrapolated       gc1  from  linear  fit
+                                                                                                                                                                    4
+
+                                                                                      J2b/J1 = 0.3 (sweeping J2a).  In all of these cases, the PVBS
+                                                                                      has the same plaquette pattern with the SSM that the plaquette
+                                                                                      singlets are located on four sites without diagonal interaction
+                                                                                      terms  [see  Fig.1(b)].    The  extracted  critical  exponents  for
+                                                                                      these  different  cases  are  given  in  Table.I,  and  it  clearly
+                                                                                      shows that the PVBS-AFM transitions have the similar critical
+                                                                                      exponents, z +η∗s  = z +η∗p∼  1.35 andν∼  0.80, suggesting
+                                                                                      all of them belong to the same universality class.  The same
+                                                                                      value of z +η∗s and z +η∗p is a reflection of the emergent O(4)
+                                                                                      symmetry.  Since the SSM can be smoothly connected to the
+                                                                                      CBM via the above intermediate cases, the results of extended
+                                                                                      SSM consolidate the existence of a DQCP.
+
+
+                                                                                      Table I.  Critical exponents of the extended SSM at the PVBS–AFM
+                                                                                      transition points. Critical points are from crossing points of the ratio
+                                                                                      of order parameters. Errors in critical exponents are from fittings.
+                                                                                      model                                 z +η∗s     z +η∗p    ν                  Jc
+                                                                                      SSM [J2a = 1, J2b = 0]      1.39(2)   1.39(1)   0.84(3)    J1 = 0.828(5)
+                                                                                      CBM [J1 = 1, J2a = J2b]   1.33(1)   1.33(1)   0.82(4)   J2a = 0.730(4)
+Figure  4.       The  scaling  of  AFM  and  VBS  order  parameters  for              (J1, J2b) = (1, 0.1)             1.39(1)   1.39(1)   0.80(4)   J2a = 1.165(3)
+three  cases:  (J1, J2b)  =  (1, 0.3)  with  tuning  parameter  J2a  (a)-(d),         (J1, J2b) = (1, 0.3)             1.35(1)   1.35(1)   0.85(3)   J2a = 1.075(4)
+and extrapolations with cubic fits for L  =  6− 20 are shown (a-b);                   (J1, J2a) = (1, 0.9)             1.33(1)   1.33(1)   0.81(5)   J2b = 0.550(3)
+(J1, J2b) = (1, 0.1) with tuning parameter J2a (e)-(f); and (J1, J2a) =
+(1, 0.9) with tuning parameter J2b (g)-(h). The values of scaled AMF
+quantities in (c),  (e) and (g) have been shifted upwards by 0.7 for                     Summary and discussion.   The nature of the PVBS-AFM
+clear display.                                                                        transition in the SSM is a critical issue to be addressed.  By
+                                                                                      applying the state-of-the-art finite-size tensor network simu-
+                                                                                      lations, we reveal a direct continuous PVBS-AFM transition
+of  1/L,  can  become  very  close  to  the  extrapolated  gc2  (see                  in  the  SSM,  accompanied  by  an  emergent  O(4)  symmetry.
+SM [71]). Hence it is possible that      gc1 and gc2 would eventu-                    Further investigations on the extended SSM find the similar
+ally converge to the same value at larger size.  Our extensive                        behaviors.     These  results  are  consistent  with  the  DQCP
+results,  utilizing  larger  system  sizes,  reveal  the  emergence                   nature of PVBS-AFM transition in the SSM, and exclude the
+of  O(4)  symmetry  at  the  point  Jc1  =  0.828(5)  in  the  SSM                    existence of an intermediate QSL phase.
+and similar features in the extended SSM, providing strong                               In the SSM, our PVBS-AFM transition point Jc1 = 0.828(5)
+evidence for a direct PVBS-AFM transition and significantly                           is  a  bit  different  from  the  one  Jc1 ≃  0.78  obtained  by  the
+diminishing the possibility of an intermediate QSL phase.                             infinite-size  tensor  network  simulations  using  a  finite  bond
+   Results  of  the  extended  SSM.  To  gain  more  insight  into                    dimension  D  [52, 56].    This  di         fference  in  principle  could
+the ground state phase diagram of SSM, we further consider                            be further reduced by properly extrapolating the infinite-size
+the  extended  SSM  Eq.  (2),  which  is  described  by  a  two                       results with a new finite correlation length scaling scenario or
+dimensional space of parameters (J2a/J1, J2b/J1). For J2b = 0                         using a sufficiently large D   [47,76–79].  While the PVBS-
+it recovers the SSM (relabel  J2a  as  J2), and for  J2b  =  J2a  it                  AFM  transition  in  our  large-scale  simulation  is  extremely
+corresponds to the CBM. The two cases can be continuously                             close to a continuous transition,  the possibility of a weakly
+connected by tuning the strength of J2b terms.  For the CBM,                          first-order transition in the thermodynamic limit still cannot
+previous  studies  suggest  it  could  have  a  direct  PVBS-AFM                      be fully excluded.
+transition  [65–67].    Here  we  focus  on  the  region  close  to                      In the PVBS phase of SrCu2(BO3)2, the plaquette singlets
+the suggested PVBS-AFM transition.   In Fig.3,  we present                            form at the sites with diagonal interactions, which is different
+different  quantities  including  boundary  induced  orders⟨P⟩2                       from the SSM and is possibly owing to the weak intralayer
+and⟨D⟩2,  and  AFM  and  PVBS  order  parameters⟨M2⟩  and                             and  interlayer  interactions  [19, 20, 49, 53, 56, 62, 80, 81].
+⟨Q2⟩, as well as the order parameter ratios, with the systems                         Interestingly, in the phase diagram of SrCu2(BO3)2, including
+up to 20×20 sites. Similar to the analyses of the SSM, we find                        these  extra  interactions,  the  PVBS-AFM  transition  line  in
+a continuous PVBS-AFM transition at J2a/J1 = J2b/J1≃ 0.73                             SrCu2(BO3)2 still may connect the nearby DQCP in the SSM
+for the CBM, associated with the emergent O(4) symmetry.                              via  a  triple  critical  point  [56],  exhibiting  large  correlation
+   In fact,  by computing the intermediate cases with proper                          lengths with emergent symmetry [54]. On the other hand, the
+J2a/J1 and J2b/J1 in between the SSM and the CBM, we find                             PVBS in SrCu2(BO3)2  also has two-fold degeneracy,  which
+these different cases also support a continuous PVBS-AFM                              in  presence  of  magnetic  fields  also  naturally  supports  the
+transition with emergent O(4) symmetry. In Fig.4, we present                          observed O(3) symmetry. Thus, our findings strongly suggest
+the scaling for the cases with fixed J2a/J1  =  0.9 ( sweeping                        that  it  is  a  highly  compelling  scenario  that  the  proximate
+J2b),  fixed  J2b/J1   =   0.1  (sweeping  J2a),  as  well  as  fixed                 DQCP phenomena observed in SrCu2(BO3)2 under magnetic
+                                                                                                                                                             5
+
+fields,  including the emergent O(3) symmetry and quantum
+critical   scaling   at   the   PVBS-AFM   transition   [49],   can
+originate  from  the  DQCP  universality  class  inherent  in  the
+SSM [54].   Consequently,  the anomalous dimension scaling
+η ∼   0.2  under  magnetic  fields  in  SrCu2(BO3)2  [49]  is
+understandably near to our resultη∼ 0.35 without magnetic
+fields  (setting  the  dynamic  exponent z  =  1).   Note  that  the
+SSM subjected to magnetic fields and additional interactions
+in SrCu2(BO3)2,  e.g.,  frustrated bilayer interaction∼  0.1J2,
+Dzyaloshinskii–Moriya  interaction ∼   0.03J2,  and  higher-
+order  further-neighbour  interaction  [62, 80, 81],  can  posses
+very rich physics [6,14,15,49,60–62,82–88], and we leave
+these interesting topics to future studies.
+
+   Acknowledgments.     We  thank  Philippe  Corboz,  Wenan
+Guo,  Wei  Li,  Frédéric  Mila,  Junsen  Wang,  Ning  Xi,  Zhi-
+Yuan  Xie  and  Rong  Yu  for  very  helpful  discussions.    We
+also  thank  Philippe  Corboz  and  Ning  Xi  for  providing  the
+iPEPS  and  iPESS  data,  respectively.    This  work  was  sup-
+ported  by  the  CRF  C7012-21GF  from  the  Hong  Kong’s
+Research  Grants  Council,  and  the  National  Key  R&D  Pro-
+gram  of  China  (Grants  No.    2022YFA1403700).    W.Q.C.
+was  supported  by  the  National  Natural  Science  Foundation
+of  China  (Grants  No.    12141402),  the  Science,  Technol-
+ogy  and  Innovation  Commission  of  Shenzhen  Municipality
+(No.  ZDSYS20190902092905285), and the Guangdong Ba-
+sic and Applied Basic Research Foundation under Grant No.
+2020B1515120100.   This  work  was  also  granted  access  to
+the HPC resources of Center for Computational Science and
+Engineering at Southern University of Science and Technol-
+ogy. W.Y.L. was supported by the U.S. Department of Energy,
+Office  of  Science,  National  Quantum  Information  Science
+Research  Centers,  Quantum  Systems  Accelerator.    X.T.Z.
+and S.S.G. were supported by the National Natural Science
+Foundation of China (No. 11874078 and No. 11834014), the
+Special Project in Key Areas for Universities in Guangdong
+Province  (No.    2023ZDZX3054),  and  the  Dongguan  Key
+Laboratory  of  Artificial  Intelligence  Design  for  Advanced
+Materials.     Z.W.  was  supported  by  the  National  Natural
+Science Foundation of China under Grant No. 12175015.
+                                                                                                                                                                6
+
+                       Supplemental Material                                        and spin inversion symmetry [70], which are listed in TableII.
+                                                                                    For L  =  20, the energies using symmetrization at  J/Q  =  0
+                                                                                    and  0.1  are−0.77812  and−0.83694,  respectively,  slightly
+               Appendix S-1: Tensor Network Method                                  lower  than  -0.77806  and  -0.83688  without  symmetrization,
+                                                                                    with  a  difference  around  0.00006.   For  L ≤  16,  with  and
+   The tensor network state, particularly the projected entan-                      without  symmetrization,  the  energy  differences  are  also  as
+gled pair state (PEPS), serves as a highly potent description                       small as 0.00002. In all these cases, we find magnetization and
+for  quantum  many-body  systems  [89].    It  has  been  exten-                    dimerization have no visible changes with and without sym-
+sively  employed  to  characterize  complex  entangled  many-                       metrization, which is similar to the study of the Heisenberg
+body states, including those with topological order [90].  The                      model [70].  The comparison about symmetrization indicates
+expressive  capacity  of  PEPS  is  systematically  governed  by                    our obtained PEPS is well optimized as a good ground state
+the  dimension  D  of  tensors.    In  this  study,  we  adopt  the                 that can well respect the lattice and spin symmetry.
+tensor network formalism using finite PEPS in the framework                            In TableII, we summarize the physical quantities obtained
+of variational Monte Carlo [68,70], which works very well                           from QMC and PEPS. It is clear that the obtained physical
+to  deal  with  open  boundary  systems.    This  approach  has                     quantities  including  energies,  magnetization,  and  dimeriza-
+proven very successful in elucidating the nature of particularly                    tion from PEPS are in excellent agreement with those from
+challenging frustrated spin systems [46–48]. The PEPS ansatz                        QMC across different system sizes, and the energy differences
+here we used is always defined on a square lattice with open                        can be as small as 0.00009 on 20× 20 sites.   These results
+boundaries.    The  tensors  on  the  corners,  edges  and  in  the                 show that D = 8 PEPS can produce well converged results up
+middle region, have 2, 3 and 4 virtual indices, respectively, to                    to 20× 20 sites, and demonstrate the extraordinary capability
+connect their nearest neighbour sites.  Throughout this paper,                      of PEPS in handling near critical systems.
+unless otherwise specified, we use PEPS with D  =  8 for all
+calculations  which  can  provide  well-converged  results  (see
+Sec.S-1 2). Here we show more results to further demonstrate                                   2.    comparison with DMRG and convergence
+the accuracy of our method.
+
+
+            1.    comparison with QMC on J− Q model
+
+   Here we present a comprehensive benchmark study on the
+spin-1/2 J− Q model, also known as the Heisenberg model
+with  additional  four-spin  exchange  interactions  [26].   This
+model  can  be  unbiasedly  simulated  using  quantum  Monte
+Carlo (QMC) without encountering sign problems and served
+as a representative example for studying the DQCP [26]. The
+J−  Q  model  has  a  VBS-AFM  phase  transition  at  J/Q  =
+0.0447(2) [91]. Due to the existence of four-spin interactions
+and critical properties for the J− Q model, it thus also offers
+a highly nontrivial example to demonstrate the capability of
+PEPS to deal with critical systems.
+   Here  we  focus  on  two  commonly  studied  near  critical
+points:   J/Q  =  0  and  J/Q  =  0.1,  which  have  very  large
+correlation  lengths  around ξ ∼   30  [91].    The  QMC  re-
+sults  are  obtained  in  the  stochastic  series  expansion  (SSE)                 Figure  S1.      Ground-state  energy,   spin,   and  dimer  correlation
+method [74] on open boundary conditions, which operates in                          functions  from  the  DMRG  and  PEPS  simulations  on  the  12× 28
+the S z  basis.  In this context it is convenient to calculate the                  SSM at  J1/J2  =  0.8.   M  is the number of SU(2) multiplets in the
+z-component  quantities,  including  staggered  magnetization                       DMRG simulations with SU(2) symmetry. The correlation functions
+⟨M2z⟩  =     1                                                                      are measured along the central row y = 6. The reference site for spin
+            N2⟨(Pi(−1)ix+iyS zi )2⟩ where N  =  L2,  as well as the                 correlation is chosen at the third column near the left edge. The dimer
+boundary-induced  dimerization⟨ ¯D⟩2   =     1P        2(⟨ ¯Dx⟩2  +⟨ ¯Dy⟩2),        correlations are measured for the nearest-neighbor bonds along the
+where  ¯Dα =    1Nb   i(−1)iαS zi S zi+eα with Nb = L(L− 1).                        x  direction  with  the  reference  bond  located  between  the  third  and
+   For  the  PEPS  simulation,  we  use  D  =   8  PEPS  as  the                    fourth columns.
+variational  ansatz,  and  stochastic  gradient  descent  [68, 70]
+and  stochastic  reconfiguration  [92]  to  optimize  the  PEPS                        Now we directly compare the PEPS and DMRG results of
+wave  function.    After  optimization,  we  can  compute  the                      the  SSM  on  a  long  Ly× Lx  strip  with  Ly  =  12,  Lx  =  28.
+physical quantities directly via Monte Carlo sampling of the                        Here we focus on  J1/J2  =  0.8 (set  J2  =  1), which is close
+optimized PEPS. Such energies can also be compared with the                         to the critical point and the nature of which is controversial
+ones computed from the wave function by symmetrizing the                            according to previous studies.  The strip geometry has open
+optimized PEPS with horizontal and vertical lattice reflection                      boundary conditions along both the x- and y-directions.  The
+                                                                                                                                                                     7
+
+
+Table II.  Comparison between PEPS and QMC results on J− Q model on open boundary systems, including ground state energies (set Q = 1),
+magnetizations⟨M2z⟩ and dimerizations⟨ ¯D⟩2.  In PEPS calculations, Monte Carlo sampling errors are order of 10−6 for energies EPEPS  and
+order of 10−5 for⟨M2z⟩ and⟨ ¯D⟩2. For QMC resultsβ = 120 is used, and sampling errors for these quantities are order of 10−6.
+     J/Q = 0                                                                          J/Q = 0.1
+L     EPEPS        EQMC  ⟨M2z⟩PEPS  ⟨M2z⟩QMC ⟨ ¯D⟩2PEPS  ⟨ ¯D⟩2QMC                    EPEPS          EQMC  ⟨M2z⟩PEPS  ⟨M2z⟩QMC ⟨ ¯D⟩2PEPS  ⟨ ¯D⟩2QMC
+6     -0.66172   -0.66174   0.02531(8)   0.02539     0.00572(2)   0.00565             -0.71708     -0.71711   0.02665(6)   0.02672     0.00533(2)   0.00526
+8     -0.70379   -0.70383   0.01565(9)   0.01573     0.00433(2)   0.00430             -0.76015     -0.76019   0.01670(3)   0.01684     0.00396(1)   0.00392
+10   -0.72897   -0.72903   0.01074(6)   0.01092     0.00355(1)   0.00349              -0.78603     -0.78608   0.01175(3)   0.01187     0.00316(0)   0.00312
+12   -0.74558   -0.74564   0.00804(4)   0.00812     0.00298(3)   0.00295              -0.80318     -0.80322   0.00890(4)   0.00898     0.00262(1)   0.00258
+14   -0.75735   -0.75739   0.00633(2)   0.00634     0.00260(1)   0.00256              -0.81534     -0.81539   0.00704(4)   0.00712     0.00224(2)   0.00219
+16   -0.76606   -0.76613   0.00507(3)   0.00513     0.00231(2)   0.00227              -0.82440     -0.82446   0.00577(3)   0.00585     0.00194(1)   0.00191
+20   -0.77812   -0.77820   0.00353(2)   0.00360     0.00192(1)   0.00186              -0.83694     -0.83703   0.00412(3)   0.00424     0.00157(1)   0.00151
+
+
+DMRG simulations with spin SU(2) symmetry use a maxi-                                 J−  Q  model.    In  the  meanwhile,  in  Table.III,  we  can
+mum bond dimension of M = 10000 SU(2) multiplets, which                               see  for  large  D  it  has⟨M2⟩  =  3⟨M2z⟩  and⟨Mz⟩  is  almost
+is equivalent to about 40000 U(1) states and ensures a good                           zero  within  the  Monte  Carlo  sampling  error  where  Mz   =
+convergence with the truncation error at about 1× 10−6.  The                           1    ix,iy(−1)ix+iyS z
+                                                                                       L2 P                  ix,iy,  indicating  the  SU(2)  symmetry  of  the
+ground-state energy per site for each M is listed in the legend                       ground state recovers very well.
+of Fig.S1(a). The DMRG correlation functions are measured
+along the central row (y = 6) and are extrapolated versus 1/M
+(M  =  4000− 10000) following a second order polynomial                                               3.    comparison with iPEPS and iPESS
+fit.   The  extrapolated  results  are  shown  by  the  green  filled
+circles  in  Figs.S1(a)  andS1(c).    For  the  spin  correlation                        We conduct a comparison of energy per site between the
+function⟨S0· Sr⟩, the reference site S0 is chosen at the third                        finite  PEPS  and  iPEPS  methods,  shown  in  Fig.S2.    For
+column near the left edge.  For the dimer correlation function                        this  purpose,  we  utilize  the  best  iPEPS  energies  reported
+⟨B0Br⟩−⟨B0⟩⟨Br⟩, the bond operators are chosen along the x                            in  Ref.  [52]  at       J1/J2   =   0.75,  0.76,  0.77,  and  0.78,  all
+direction,  namely  Br  =  Sr· Sr+ ˆx  ( ˆx is the unit vector along                  obtained with a bond dimension of  D  =  10.   To obtain the
+the  x direction).   The reference bond for dimer correlations                        thermodynamic limit energy for our finite size calculations,
+is chosen between the third and fourth columns near the left                          we perform an extrapolation of the finite PEPS energy using
+boundary.                                                                             systems  with  sizes  ranging  from  L  =   6  to  L  =   20.    To
+   The  PEPS  results  from  D  =  4− 10  are  also  presented                        facilitate finite-size scaling, one can choose different central
+to  compare  with  the  DMRG  results.   Firstly,  we  note  that                     cluster  ˜L×  ˜L for finite-size scaling [46,47,70], as depicted
+the  PEPS  energies  at  D  =  8  and  10  agree  very  well  with                    in  Fig.S2.     Regardless  of  the  chosen  central  cluster,  the
+the  M  =  10000 DMRG energy.  Meanwhile,  the converged                              extrapolated energies for each J1/J2 remain almost identical,
+PEPS  correlations  also  agree very  well  with  those  obtained                     similar to previous studies [46,47,70].   These extrapolated
+from  DMRG,  as  shown  in  Figs.S1(b)  andS1(d).    These                            PEPS  energies  and  iPEPS  energies  show  a  nice  agreement
+comparisons  further  demonstrate  the  accuracy  of  our  PEPS                       with up to 5 significant digits.
+results.  It also shows that the PEPS simulations with D =  8                            We  also  compare  the  SSM  energies  at  J1/J2  =  0.8  with
+are good enough to converge the results for the 12× 28 SSM.                           other  available  results,  here  from  the  infinite-size  projected
+   Here  we  explicitly  show  the  convergence  of  energy  and                      entangled simplex states (iPESS) results,  shown in Fig.S3.
+order parameters on the largest available 20× 20 SSM system                           The best iPESS result (D  =  7) is taken from Ref. [52].  We
+at J1/J2 = 0.8, shown in Table.III. In the calculations, for the                      can see the extrapolated finite PEPS energies also agree well
+order parameters⟨M2⟩ and⟨Q2⟩ defined based on correlation                             with the iPESS results up to 4 significant digits.
+functions,  all pairs  of spin and  dimer correlations  are com-                         Similar to the iPEPS analysis in Ref. [52], we can determine
+puted  for  summation,  respectively.   Other  order  parameters                      the  first-order  transition  point  between  the  DVBS  (dimer
+mainly  involve  local  terms,  which  have  less  computational                      valence-bond solid) and PVBS (plaquette valence-bond solid)
+cost and can be obtained with smaller sampling uncertainty,                           phases  by  examining  the  ground  state  energy.   The  DVBS
+allowing to check the convergence in higher accuracy. Similar                         phase  corresponds  to  a  dimer  state  with  an  exact  energy
+to  12×  28,  for  20×  20  we  can  see  visible  improvement                        EDVBS  =−0.375.   Using finite size scaling,  we can get the
+by  increasing  D  =   4  to  D  =   8,  and  the  D  =   6  results                  thermodynamic limit energies at J1/J2  =  0.68 and 0.72, and
+are  rather  close  to  D  =  8  results.   Further  increasing  D  to                estimate the energies at other  J1/J2  points with a presumed
+10,  the  results  almost  have  no  further  visible  improvement,                   linear extrapolation with respect to J1/J2 (a linear assumption
+indicating  D  =   8  indeed  converges  well  for  the  physical                     is  reasonable  as  the  energy  seems  to  change  linearly  in  a
+quantities.  Actually, it has also been shown that the D  =  8                        large  range  of  J1/J2  according  to  our  results  or  previous
+PEPS  simulations  can  converge  quite  well  for  other  highly                     studies  [52, 54, 56]  ).    The  energy  variation  about                 J1/J2,
+frustrated spin models [46–48], including the            J1-J2-J3 model               obviously  suggests  a  first-order  DVBS-PVBS  transition  at
+up to 20× 28 sites [47], as well as the above highly nontrivial                       J1/J2 ≃   0.676,  shown  in  Fig.S4,  which  is  also  in  good
+                                                                                                                                                                               8
+
+
+Table III.   The convergence of energy and order parameters with respect to the PEPS bond dimension  D on the 20× 20 SSM system at
+J1/J2 = 0.8 (set J2 = 1).⟨P⟩2,⟨D⟩2 and⟨Q2⟩ are all valid VBS order parameters, used for cross check;⟨M2⟩ are AFM order parameters, and
+3⟨M2z⟩ and⟨Mz⟩ are used to check the SU(2) symmetry.
+D                        E        ⟨P⟩2       ⟨D⟩2      ⟨Q2⟩      ⟨M2⟩                      3⟨M2z⟩      ⟨Mz⟩
+4                -0.442104(8)               0.01624(8)               0.01738(9)               0.0380(2)               0.0139(1)               0.01450(9)               0.0014(4)
+6                -0.442861(9)               0.01349(5)               0.01454(5)               0.0324(1)               0.0158(1)               0.01571(9)               0.0011(5)
+8                -0.442920(2)               0.01341(8)               0.01442(9)               0.0321(2)               0.0155(1)               0.01548(6)               0.0001(5)
+10               -0.442928(3)               0.01344(9)               0.01441(5)               0.0320(1)               0.0155(2)               0.01549(5)               0.0003(4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S2.     Finite size scaling of ground state energies with L  =
+6− 20 for SSM at different J1. The iPEPS results are from Ref. [52].
+For  ˜L = L second-order polynomial fits are used and for other cases,                     Figure S3.     Finite size scaling of ground state energies with L  =
+linear fits are used.  Extrapolated thermodynamic limit energies are                       6− 20 for SSM at J1  =  0.8.  The iPESS results are from Ref. [56].
+listed in the legend.                                                                      For  ˜L = L second-order polynomial fits are used and for other cases,
+                                                                                           linear fits are used.  Extrapolated thermodynamic limit energies are
+                                                                                           listed in the legend.
+agreement with the iPEPS and iPESS results, as well as the
+DMRG study [54].
+
+
+                     4.    PVBS-AFM transition point
+
+   We  now  examine  the  PVBS-AFM  phase  transition  point
+in  the  SSM  determined  by  various  methods,  which  is  very
+challenging for accurate determination.  The outcomes of the
+DMRG investigation conducted on an infinitely long cylinder
+(Lx  is  infinite  while  Ly  =  L  is  finite)  show  apparent  finite-
+size  effects  [54].   The  observed  values  of       Jc1(L)  are  0.693,
+0.728,  0.762,  and  0.77  for  L  equaling  6,  8,  10,  and  12,
+respectively [54]. Extrapolating to the 2D limit, the transition
+point  is  estimated  as  Jc1   =   0.85(1)  (linear  fit  1/L  with  L
+ranging  from  6  to  12)  or  Jc1  =  0.81  (linear  fit  1/L  with  L                    Figure S4.  Energy variation with respect to J1/J2 for the SSM. Red
+ranging from 10 to 12), as illustrated in Fig.S5. On the other                             points  denote  thermodynamic  limit  energies  at  J1/J2  =  0.68  and
+hand,  based  on  the  singlet  minimum  points  from  the  later                          0.72, and red dashed line denotes a presumed linear change of the
+DMRG study [57] (     Lx  =  2L is finite), the estimation of gc1                          energies close to the first-order transition point.
+with similar linear fits can also be 0.834(4) for L  =  6− 12
+and  0.818  for  L  =  10− 12  [see  Fig.S5],  rather  close  to
+gc2 ≈  0.82 ∼  0.83  [57, 59].   This  indicates  the  possibility                         J1 ∼  0.82 in the 2D limit,  closely resembling our obtained
+that gc1 and gc2 coincide, and the proposed narrow spin liquid                             PVBS-AFM transition point, Jc1 = 0.828(5).
+might  be  a  consequence  of  finite-size  effects.    Noticeably,                            Additionally, the PVBS-AFM phase transition points from
+these estimations based on different cylindrical systems and                               infinite tensor network methods are a bit different from our
+different physical quantities, seemingly reach an point around                             Jc1  =  0.828(5), which are  Jc1  =  0.765(15) [52] or 0.79 [56].
+                                                                                                                                                                         9
+
+                                                                                                  Appendix S-2: Setup for open boundary systems
+
+                                                                                           In open boundary systems, the presence of boundaries will
+                                                                                        induce  dimerized  patterns,  which  requires  careful  consider-
+                                                                                        ation  about  such  effects  on  the  real  plaquette  pattern  in  the
+                                                                                        PVBS  phase.    To  illustrate  this,  we  examine  the  Shastry-
+                                                                                        Sutherland  model  (SSM)  and  calculate  the  values  of  local
+                                                                                        plaquette operators at each site.
+                                                                                           We start by considering setup A, where diagonal interaction
+                                                                                        terms  exist  at  the  corners.    We  consider  an  L×  L  lattice
+                                                                                        with  L  =  20.   We  observe  a  distinct  plaquette  pattern  near
+                                                                                        the boundaries of the systems,  but it becomes blurry in the
+                                                                                        middle  region,  shown  in  Fig.S6(a).    This  blurriness  is  a
+                                                                                        consequence of the boundaries. Specifically, the x-directional
+                                                                                        boundaries  induce  a  certain  pattern,  while  the  y-directional
+                                                                                        boundaries give rise to another kind of plaquette pattern. The
+Figure  S5.   Finite-size  extrapolations  of  the  relevant  points  of  the           ’superposition’ of these equal-footing boundary effects results
+DMRG  results  from  Ref.  [54]  (black)  and  Ref.  [57]  (red).   They                in the formation of domain walls along the diagonal directions
+use  different  systems  and  physical  quantities  to  locate  the  turning            [see  Fig.S6(a)].   However,  if  the            x-  and  y-boundaries  are
+points, so their values for a given cylinder width L could be different.                not  treated  on  equal  footing,  a  clear  plaquette  pattern  may
+Linear  fits  with  L  =  6− 12  and  L  =  10− 12  are  shown,  which                  eventually  emerge  in  the  middle  region,  as  illustrated  in
+give  extrapolated  values  0.85(1)  and  0.81  using  the  results  from               Fig.S6(b) for a 16   × 28 system.
+Ref.  [54]  and,  0.834(4)  and  0.818  using  singlet  minimum  results                   In  setup  A,  the  presence  of  domain  walls  poses  a  chal-
+from Ref. [57], respectively.                                                           lenge for finite-size scaling since the VBS order parameters
+                                                                                        defined  on  the  entire  lattice  are  not  well-defined  due  to  the
+                                                                                        incompatibility of the plaquette pattern in different domains.
+                                                                                        For  example,  considering  the  boundary-induced  plaquetteP
+                                                                                        order  parameter  P  =     1Np        i(−1)ixΠi,  the  contributions  from
+                                                                                        different  domains  could  be  partly  canceled  (so  is  the  VBS
+                                                                                        order parameters based on bond-bond correlations).  Even if
+Generally  speaking,  finite  PEPS  methods  suffer  finite  size                       one  attempts  to  define  the  VBS  order  parameters  within  a
+effects (the finite-D effects can be removed by a mild D for                            specific domain,  the ambiguity caused by the domain walls
+a  moderate  system  size,  e.g.    here  D  =   8  for  20×  20),                      cannot be entirely removed.
+and  infinite  tensor  network  methods  suffer  finite  D  effects.                       The  plaquette  pattern  in  the  middle  region  of  16×  28
+In  our  finite-size  calculations,   the  uncertainty  caused  by                      system using setup A [Fig.S6(b)],  suggests one should use
+finite-size  effects  for  the  PVBS-AFM  transition  point  has                        the setup B, where corner sites have no diagonal interaction
+been significantly reduced by crosschecking different physical                          terms.   In  this  context,  the  plaquette  pattern  is  compatible
+quantities including the order parameter ratio that is related                          with  the  boundaries  [see  Fig.S6(c)].    As  a  result,  there
+to  emergent  symmetry.     For  infinite-size  tensor  network                         are  no  domain  walls,  and  the  VBS  order  parameters  can
+simulations,  we  believe  a  proper  consideration  about  finite                      be  defined  unambiguously  over  the  lattice,  which  ensures
+D  effects  may  also  give  the  similar  result.    We  point  out                    a  more  reliable  and  consistent  analysis  of  the  VBS  order
+that  for  larger  finite-size  systems  larger  D  is  necessary  for                  parameters.  Consequently, throughout this work, setup B is
+convergence, and the systematical investigation of finite-L and                         used to compute all physical quantities in the SSM and the
+finite-D effects can be found in Refs. [93,94].                                         extended SSM.
+
+
+
+
+
+ [1]H.  Kageyama,  K.  Yoshimura,  R.  Stern,  N.  V.  Mushnikov,                             “Magnetic  superstructure  in  the  two-dimensional  quantum
+      K.  Onizuka,  M.  Kato,  K.  Kosuge,  C.  P.  Slichter,  T.  Goto,                      antiferromagnet SrCu2(BO3)2,”Science   298, 395–399 (2002).
+      and   Y.   Ueda,   “Exact   dimer   ground   state   and   quantized                [4]Kenzo  Onizuka,  Hiroshi  Kageyama,  Yasuo  Narumi,  Koichi
+      magnetization  plateaus  in  the  two-dimensional  spin  system                         Kindo, Yutaka Ueda,   and Tsuneaki Goto, “1/3 magnetization
+      SrCu2(BO3)2,”Phys. Rev. Lett.   82, 3168–3171 (1999).                                   plateau in SrCu2(BO3)2-stripe order of excited triplets,”Journal
+ [2]Tsutomu Momoi and Keisuke Totsuka, “Magnetization plateaus                                of the Physical Society of Japan 69, 1016–1018 (2000).
+      of the shastry-sutherland model for SrCu2(BO3)2: Spin-density                       [5]M Takigawa, K Kodama, M Horvati     ´c, C Berthier, H Kageyama,
+      wave, supersolid, and bound states,”Phys. Rev. B   62, 15067–                           Y Ueda, S Miyahara, Federico Becca,   and F Mila, “The 1/8-
+      15078 (2000).                                                                           magnetization plateau state in the 2d quantum antiferromagnet
+ [3]K.   Kodama,    M.   Takigawa,    M.   Horvati     ´c,    C.   Berthier,                  SrCu2(BO3)2:  spin  superstructure,  phase  transition,  and  spin
+      H. Kageyama, Y. Ueda, S. Miyahara, F. Becca,   and F. Mila,                             dynamics  studied  by  high-field  nmr,”Physica  B:  Condensed
+                                                                                                                                                                             10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S6.   Two setups for the SSM. Green diagonal line denote diagonal interaction terms.  Corner sites have diagonal interaction terms in
+setup A and but not in setup B. (a-b) show the plaquette operator values Πi setup A on 20× 20 and 16× 28 systems.  (c) shows the plaquette
+values on 20× 20 using setup B. All three cases use J1/J2 = 0.74.
+
+
+      Matter 346, 27–33 (2004).                                                            [16]Dirk  Wulferding,  Youngsu  Choi,  Seungyeol  Lee,  Mikhail  A
+ [6]K.  P.  Schmidt,   J.  Dorier,   A.  M.  Läuchli,     and  F.  Mila,                          Prosnikov,  Yann Gallais,  Peter Lemmens,  Chengchao Zhong,
+      “Supersolid phase induced by correlated hopping in spin-1/2                                 Hiroshi Kageyama,   and Kwang-Yong Choi, “Thermally pop-
+      frustrated  quantum  magnets,”Phys.  Rev.  Lett.   100,  090401                             ulated versus field-induced triplon bound states in the shastry-
+      (2008).                                                                                     sutherland lattice srcu2 (bo3) 2,”npj Quantum Materials  6, 102
+ [7]F  Levy,  I  Sheikin,  C  Berthier,  M  Horvati     ´c,  M  Takigawa,                         (2021).
+      H  Kageyama,  T  Waki,    and  Y  Ueda,  “Field  dependence  of                      [17]T. Senthil, Ashvin Vishwanath, Leon Balents, Subir Sachdev,
+      the  quantum  ground  state  in  the  shastry-sutherland  system                            and   Matthew   P.   A.   Fisher,   “Deconfined   quantum   critical
+      SrCu2(BO3)2,”Europhysics Letters   81, 67004 (2008).                                        points,”Science   303, 1490–1494 (2004).
+ [8]Suchitra   E.   Sebastian,   N.   Harrison,   P.   Sengupta,   C.   D.                 [18]T. Senthil, Leon Balents, Subir Sachdev, Ashvin Vishwanath,
+      Batista,   S.  Francoual,   E.  Palm,   T.  Murphy,   N.  Marcano,                          and  Matthew  P.  A.  Fisher,  “Quantum  criticality  beyond  the
+      H.  A.  Dabkowska,   and  B.  D.  Gaulin,  “Fractalization  drives                          landau-ginzburg-wilson  paradigm,”Phys.  Rev.  B   70,  144407
+      crystalline states in a frustrated spin system,”Proceedings of                              (2004).
+      the National Academy of Sciences 105, 20157–20160 (2008).                            [19]M.  E.  Zayed,  Ch.  Rüegg,  A.  M.  Läuchli,  C.  Panagopoulos,
+ [9]Marcelo  Jaime,  Ramzy  Daou,  Scott  A.  Crooker,  Franziska                                 S.  S.  Saxena,  M.  Ellerby,  D.  F.  McMorrow,  Th.  Strässle,
+      Weickert,   Atsuko  Uchida,   Adrian  E.  Feiguin,   Cristian  D.                           S. Klotz, G. Hamel, et al., “4-spin plaquette singlet state in the
+      Batista,   Hanna   A.   Dabkowska,      and   Bruce   D.   Gaulin,                          Shastry–Sutherland  compound  SrCu2(BO3)2,”Nat.  Phys.   13,
+      “Magnetostriction  and  magnetic  texture  to  100.75  tesla  in                            962–966 (2017).
+      frustrated SrCu2(BO3)2,”Proceedings of the National Academy                          [20]Jing Guo,  Guangyu Sun,  Bowen Zhao,  Ling Wang,  Wenshan
+      of Sciences 109, 12404–12407 (2012).                                                        Hong,  Vladimir  A.  Sidorov,  Nvsen  Ma,  Qi  Wu,  Shiliang  Li,
+[10]M.  Takigawa,  M.  Horvati       ´c,  T.  Waki,  S.  Krämer,  C.  Berthier,                   Zi Yang Meng, Anders W. Sandvik,  and Liling Sun, “Quantum
+      F.  Lévy-Bertrand,  I.  Sheikin,  H.  Kageyama,  Y.  Ueda,    and                           phases of SrCu2(BO3)2  from high-pressure thermodynamics,”
+      F.  Mila,  “Incomplete  devil’s  staircase  in  the  magnetization                          Phys. Rev. Lett. 124, 206602 (2020).
+      curve of SrCu2(BO3)2,”Phys. Rev. Lett.   110, 067210 (2013).                         [21]Olexei   I.   Motrunich   and   Ashvin   Vishwanath,   “Emergent
+[11]Y. H. Matsuda, N. Abe, S. Takeyama, H. Kageyama, P. Corboz,                                   photons and transitions in the O(3) sigma model with hedgehog
+      A. Honecker, S. R. Manmana, G. R. Foltin, K. P. Schmidt,  and                               suppression,”Phys. Rev. B   70, 075104 (2004).
+      F. Mila, “Magnetization of SrCu2(BO3)2 in ultrahigh magnetic                         [22]Yizhi You and Yi-Zhuang You, “Stripe melting and a transition
+      fields up to 118 t,”Phys. Rev. Lett.   111, 137204 (2013).                                  between  weak  and  strong  symmetry  protected  topological
+[12]S. Haravifard, D. Graf, A.E. Feiguin, C.D. Batista, J.C. Lang,                                phases,”Phys. Rev. B   93, 195141 (2016).
+      D.M. Silevitch, G. Srajer, B.D. Gaulin, H.A. Dabkowska,  and                         [23]Chong Wang, Adam Nahum, Max A. Metlitski, Cenke Xu,  and
+      T.F.  Rosenbaum,  “Crystallization  of  spin  superlattices  with                           T.  Senthil,  “Deconfined  quantum  critical  points:  Symmetries
+      pressure and field in the layered magnet SrCu2(BO3)2,”Nature                                and dualities,”Phys. Rev. X   7, 031051 (2017).
+      communications 7, 11956 (2016).                                                      [24]Max A. Metlitski and Ryan Thorngren, “Intrinsic and emergent
+[13]Siddharth  A  Parameswaran,  Ari  M  Turner,  Daniel  P  Arovas,                              anomalies  at  deconfined  critical  points,”Phys.  Rev.  B    98,
+      and  Ashvin  Vishwanath,  “Topological  order  and  absence  of                             085140 (2018).
+      band insulators at integer filling in non-symmorphic crystals,”                      [25]Chao-Ming  Jian,  Alex  Thomson,  Alex  Rasmussen,  Zhen  Bi,
+      Nature Physics 9, 299–303 (2013).                                                           and  Cenke  Xu,  “Deconfined  quantum  critical  point  on  the
+[14]Judit  Romhányi,  Karlo  Penc,    and  Ramachandran  Ganesh,                                  triangular lattice,”Phys. Rev. B   97, 195115 (2018).
+      “Hall effect of triplons in a dimerized quantum magnet,”Nature                       [26]Anders   W.   Sandvik,   “Evidence   for   deconfined   quantum
+      Communications 6, 6805 (2015).                                                              criticality  in  a  two-dimensional  Heisenberg  model  with  four-
+[15]Paul  A.  McClarty,   F.  Krüger,   Tatiana  Guidi,   S.F.  Parker,                           spin interactions,”Phys. Rev. Lett.   98, 227202 (2007).
+      Keith Refson, A.W. Parker, Dharmalingam Prabhakaran,   and                           [27]Roger G. Melko and Ribhu K. Kaul, “Scaling in the fan of an
+      Radu  Coldea,  “Topological  triplon  modes  and  bound  states                             unconventional quantum critical point,”Phys. Rev. Lett.   100,
+      in a shastry–sutherland magnet,”Nature Physics   13, 736–741                                017203 (2008).
+      (2017).                                                                              [28]F-J  Jiang,  M  Nyfeler,  S  Chandrasekharan,    and  U-J  Wiese,
+                                                                                                                                                                            11
+
+      “From an antiferromagnet to a valence bond solid: evidence for                       [47]Wen-Yuan Liu, Juraj Hasik, Shou-Shu Gong, Didier Poilblanc,
+      a first-order phase transition,”Journal of Statistical Mechanics:                          Wei-Qiang  Chen,     and  Zheng-Cheng  Gu,  “Emergence  of
+      Theory and Experiment 2008, P02009 (2008).                                                 gapless quantum spin liquid from deconfined quantum critical
+[29]Jie   Lou,   Anders   W.   Sandvik,      and   Naoki   Kawashima,                            point,”Phys. Rev. X   12, 031039 (2022).
+      “Antiferromagnetic  to  valence-bond-solid  transitions  in  two-                    [48]Wen-Yuan Liu, Shou-Shu Gong, Wei-Qiang Chen,  and Zheng-
+      dimensional SU(N) Heisenberg models with multispin interac-                                Cheng Gu, “Emergent symmetry in quantum phase transition:
+      tions,”Phys. Rev. B   80, 180414 (2009).                                                   From  deconfined  quantum  critical  point  to  gapless  quantum
+[30]Adam Nahum, P. Serna, J. T. Chalker, M. Ortuño,   and A. M.                                  spin liquid,”Science Bulletin   69, 190–196 (2024).
+      Somoza,  “Emergent  SO(5)  symmetry  at  the  néel  to  valence-                     [49]Yi Cui,  Lu Liu,  Huihang Lin,  Kai-Hsin Wu,  Wenshan Hong,
+      bond-solid transition,”Phys. Rev. Lett.   115, 267203 (2015).                              Xuefei Liu, Cong Li, Ze Hu, Ning Xi, Shiliang Li, Rong Yu,
+[31]D. Charrier and F. Alet, “Phase diagram of an extended classical                             Anders W. Sandvik,  and Weiqiang Yu, “Proximate deconfined
+      dimer model,”Phys. Rev. B   82, 014429 (2010).                                             quantum  critical  point  in  SrCu2(BO3)2,”Science   380,  1179–
+[32]Anders  W.  Sandvik,  “Continuous  quantum  phase  transition                                1184 (2023).
+      between  an  antiferromagnet  and  a  valence-bond  solid  in  two                   [50]B.  Sriram  Shastry  and  Bill  Sutherland,  “Exact  ground  state
+      dimensions:  Evidence for logarithmic corrections to scaling,”                             of a quantum mechanical antiferromagnet,”Physica B  +C 108,
+      Phys. Rev. Lett. 104, 177201 (2010).                                                       1069–1070 (1981).
+[33]Ribhu  K.  Kaul,  “Quantum  criticality  in  SU(3)  and  SU(4)                         [51]Shin  Miyahara  and  Kazuo  Ueda,  “Exact  dimer  ground  state
+      antiferromagnets,”Phys. Rev. B   84, 054407 (2011).                                        of the two dimensional heisenberg spin system SrCu2(BO3)2,”
+[34]Matthew S. Block, Roger G. Melko,  and Ribhu K. Kaul, “Fate                                  Phys. Rev. Lett. 82, 3701–3704 (1999).
+      of CPN−1 fixed points with q monopoles,”Phys. Rev. Lett.   111,                      [52]Philippe Corboz and Frédéric Mila, “Tensor network study of
+      137202 (2013).                                                                             the  Shastry-Sutherland  model  in  zero  magnetic  field,”Phys.
+[35]Kenji  Harada,  Takafumi  Suzuki,  Tsuyoshi  Okubo,  Haruhiko                                Rev. B 87, 115144 (2013).
+      Matsuo, Jie Lou, Hiroshi Watanabe, Synge Todo,   and Naoki                           [53]C.  Boos,  S.  P.  G.  Crone,  I.  A.  Niesen,  P.  Corboz,  K.  P.
+      Kawashima,  “Possibility  of  deconfined  criticality  in  su(n)                           Schmidt,    and  F.  Mila,  “Competition  between  intermediate
+      heisenberg models at small n,”Phys. Rev. B  88, 220408 (2013).                             plaquette  phases  in  SrCu2(BO3)2  under  pressure,”Phys.  Rev.
+[36]Kun  Chen,  Yuan  Huang,  Youjin  Deng,  A.  B.  Kuklov,  N.  V.                             B 100, 140413 (2019).
+      Prokof’ev,  and B. V. Svistunov, “Deconfined criticality flow in                     [54]Jong Yeon Lee,  Yi-Zhuang You,  Subir Sachdev,   and Ashvin
+      the heisenberg model with ring-exchange interactions,”Phys.                                Vishwanath,  “Signatures  of  a  deconfined  phase  transition  on
+      Rev. Lett. 110, 185701 (2013).                                                             the Shastry-Sutherland lattice: Applications to quantum critical
+[37]Sumiran Pujari, Fabien Alet,  and Kedar Damle, “Transitions to                               SrCu2(BO3)2,”Phys. Rev. X   9, 041037 (2019).
+      valence-bond solid order in a honeycomb lattice antiferromag-                        [55]Tokuro  Shimokawa,  “Signatures  of  finite-temperature  mirror
+      net,”Phys. Rev. B   91, 104411 (2015).                                                     symmetry  breaking  in  the  S = 12   Shastry-Sutherland  model,”
+[38]Adam Nahum, J. T. Chalker, P. Serna, M. Ortuño,   and A. M.                                  Phys. Rev. B 103, 134419 (2021).
+      Somoza,  “Deconfined  quantum  criticality,  scaling  violations,                    [56]Ning  Xi,   Hongyu  Chen,   ZY  Xie,     and  Rong  Yu,  “First-
+      and classical loop models,”Phys. Rev. X   5, 041048 (2015).                                order transition between the plaquette valence bond solid and
+[39]Hui  Shao,  Wenan  Guo,   and  Anders  W.  Sandvik,  “Quantum                                antiferromagnetic  phases  of  the  Shastry-Sutherland  model,”
+      criticality  with  two  length  scales,” Science    352,  213–216                          arXiv:2111.07368  (2021).
+      (2016).                                                                              [57]Jianwei Yang, Anders W. Sandvik,  and Ling Wang, “Quantum
+[40]G. J. Sreejith, Stephen Powell,  and Adam Nahum, “Emergent                                   criticality  and  spin  liquid  phase  in  the  Shastry-Sutherland
+      SO(5)  symmetry  at  the  columnar  ordering  transition  in  the                          model,”Phys. Rev. B   105, L060409 (2022).
+      classical  cubic  dimer  model,”Phys.  Rev.  Lett.   122,  080601                    [58]Ahmet Kele¸s and Erhai Zhao, “Rise and fall of plaquette order
+      (2019).                                                                                    in  the  Shastry-Sutherland  magnet  revealed  by  pseudofermion
+[41]F.  F.  Assaad  and  Tarun  Grover,  “Simple  fermionic  model  of                           functional renormalization group,”Phys. Rev. B   105, L041115
+      deconfined  phases  and  phase  transitions,”Phys.  Rev.  X    6,                          (2022).
+      041049 (2016).                                                                       [59]Ling Wang, Yalei Zhang,   and Anders W Sandvik, “Quantum
+[42]Toshihiro  Sato,  Martin  Hohenadler,    and  Fakher  F.  Assaad,                            spin  liquid  phase  in  the  Shastry-Sutherland  model  detected
+      “Dirac fermions with competing orders: Non-Landau transition                               by an improved level spectroscopic method,”Chinese Physics
+      with emergent symmetry,”Phys. Rev. Lett.  119, 197203 (2017).                              Letters 39, 077502 (2022).
+[43]Yi-Zhuang You, Yin-Chen He, Cenke Xu,   and Ashvin Vish-                               [60]Junsen  Wang,  Han  Li,  Ning  Xi,  Yuan  Gao,  Qing-Bo  Yan,
+      wanath,  “Symmetric  fermion  mass  generation  as  deconfined                             Wei Li,   and Gang Su, “Plaquette singlet transition, magnetic
+      quantum criticality,”Phys. Rev. X   8, 011026 (2018).                                      barocaloric   effect,   and   spin   supersolidity   in   the   shastry-
+[44]Xue-Feng  Zhang,  Yin-Chen  He,  Sebastian  Eggert,  Roderich                                sutherland model,”Phys. Rev. Lett.   131, 116702 (2023).
+      Moessner,     and   Frank   Pollmann,   “Continuous   easy-plane                     [61]Zhenzhong   Shi,    Sachith   Dissanayake,    Philippe   Corboz,
+      deconfined phase transition on the kagome lattice,”Phys. Rev.                              William  Steinhardt,   David  Graf,   DM  Silevitch,   Hanna  A
+      Lett. 120, 115702 (2018).                                                                  Dabkowska, TF Rosenbaum, Frédéric Mila,  and Sara Haravi-
+[45]Y. Liu, Z. Wang, T. Sato, M. Hohenadler, C. Wang, W. Guo,                                    fard, “Discovery of quantum phases in the Shastry-Sutherland
+      and  F.F.  Assaad,  “Superconductivity  from  the  condensation                            compound SrCu2(BO3)2 under extreme conditions of field and
+      of  topological  defects  in  a  quantum  spin-Hall  insulator,”Nat                        pressure,”Nature Communications   13, 2301 (2022).
+      Commun 10, 2658 (2019).                                                              [62]J  Larrea  Jiménez,  SPG  Crone,  Ellen  Fogh,  Mohamed  Ezzat
+[46]Wen-Yuan Liu, Shou-Shu Gong, Yu-Bin Li, Didier Poilblanc,                                    Zayed,   Rolf   Lortz,   Ekaterina   Pomjakushina,   Kaziemerzh
+      Wei-Qiang  Chen,    and  Zheng-Cheng  Gu,  “Gapless  quantum                               Conder,  Andreas  M  Läuchli,  Lukas  Weber,  Stefan  Wessel,
+      spin liquid and global phase diagram of the spin-1/2  J1− J2                               et al., “A quantum magnetic analogue to the critical point of
+      square antiferromagnetic Heisenberg model,”Science Bulletin                                water,”Nature   592, 370–375 (2021).
+      67, 1034–1041 (2022).                                                                [63]Akihisa  Koga  and  Norio  Kawakami,  “Quantum  phase  transi-
+                                                                                                                                                                             12
+
+      tions in the Shastry-Sutherland model for SrCu2(BO3)2,”Phys.                                2906–2909 (1999).
+      Rev. Lett. 84, 4461–4464 (2000).                                                     [81]T.  Rõ  om,  D.  Hüvonen,  U.  Nagel,  J.  Hwang,  T.  Timusk,
+[64]Yoshihiro  Takushima,  Akihisa  Koga,   and  Norio  Kawakami,                                 and    H.    Kageyama,    “Far-infrared    spectroscopy    of    spin
+      “Competing  spin-gap  phases  in  a  frustrated  quantum  spin                              excitations   and   dzyaloshinskii-moriya   interactions   in   the
+      system in two dimensions,”Journal of the Physical Society of                                Shastry-Sutherland compound SrCu2(BO3)2,”Phys. Rev. B   70,
+      Japan 70, 1369–1374 (2001).                                                                 144417 (2004).
+[65]Oleg   A.   Starykh,   Akira   Furusaki,      and   Leon   Balents,                    [82]O. Cépas, K. Kakurai, L. P. Regnault, T. Ziman, J. P. Boucher,
+      “Anisotropic  pyrochlores  and  the  global  phase  diagram  of                             N. Aso, M. Nishi, H. Kageyama,  and Y. Ueda, “Dzyaloshinski-
+      the  checkerboard  antiferromagnet,”Phys.  Rev.  B   72,  094416                            moriya  interaction  in  the  2d  spin  gap  system  SrCu2(BO3)2,”
+      (2005).                                                                                     Phys. Rev. Lett. 87, 167205 (2001).
+[66]R.  F.  Bishop,  P.  H.  Y.  Li,  D.  J.  J.  Farnell,  J.  Richter,    and            [83]Shin  Miyahara  and  Kazuo  Ueda,  “Theory  of  the  orthogonal
+      C. E. Campbell, “Frustrated heisenberg antiferromagnet on the                               dimer  heisenberg  spin  model  for  SrCu2(BO3)2,”Journal  of
+      checkerboard lattice:  J1-J2  model,”Phys. Rev. B   85, 205122                              Physics: Condensed Matter 15, R327 (2003).
+      (2012).                                                                              [84]K   Kodama,    S   Miyahara,    M   Takigawa,    M   HorvatiÄ‡,
+[67]Haiyuan  Zou,  Fan  Yang,    and  Wei  Ku,  “Nearly  degenerate                               C Berthier, F Mila, H Kageyama,  and Y Ueda, “Field-induced
+      ground  states  of  a  checkerboard  antiferromagnet  and  their                            effects  of  anisotropic  magnetic  interactions  in  SrCu2(BO3)2,”
+      bosonic interpretation,”arXiv:2011.06520  (2020).                                           Journal of Physics: Condensed Matter 17, L61 (2005).
+[68]Wen-Yuan  Liu,  Shao-Jun  Dong,  Yong-Jian  Han,  Guang-Can                            [85]Judit Romhányi, Keisuke Totsuka,  and Karlo Penc, “E      ffect of
+      Guo,  and Lixin He, “Gradient optimization of finite projected                              dzyaloshinskii-moriya  interactions  on  the  phase  diagram  and
+      entangled pair states,”Phys. Rev. B   95, 195154 (2017).                                    magnetic excitations of SrCu2(BO3)2,”Phys. Rev. B  83, 024413
+[69]Wen-Yuan  Liu,  Shaojun  Dong,  Chao  Wang,  Yongjian  Han,                                   (2011).
+      Hong An, Guang-Can Guo,  and Lixin He, “Gapless spin liquid                          [86]S.  Haravifard,  A.  Banerjee,  J.  van  Wezel,  D.  M.  Silevitch,
+      ground state of the spin-1/2 J1-J2 Heisenberg model on square                               A. M. dos Santos, J. C. Lang, E. Kermarrec, G. Srajer, B. D.
+      lattices,”Phys. Rev. B   98, 241109 (2018).                                                 Gaulin, J. J. Molaison, H. A. Dabkowska,  and T. F. Rosenbaum,
+[70]Wen-Yuan Liu, Yi-Zhen Huang, Shou-Shu Gong,  and Zheng-                                       “Emergence of long-range order in sheets of magnetic dimers,”
+      Cheng Gu, “Accurate simulation for finite projected entangled                               Proceedings of the National Academy of Sciences 111, 14372–
+      pair  states  in  two  dimensions,”Phys.  Rev.  B   103,  235155                            14377 (2014).
+      (2021).                                                                              [87]Zhenzhong  Shi,   William  Steinhardt,   David  Graf,   Philippe
+[71]See Supplemental Material including Refs. [89–94], for addi-                                  Corboz,  Franziska  Weickert,  Neil  Harrison,  Marcelo  Jaime,
+      tional  information  about  the  comparison  with  other  methods                           Casey Marjerrison, Hanna A Dabkowska, Frédéric Mila, et al.,
+      and the convergence behaviour about bond dimension D.                                       “Emergent bound states and impurity pairs in chemically doped
+[72]Bowen  Zhao,  Phillip  Weinberg,     and  Anders  W  Sandvik,                                 Shastry-Sutherland system,”Nature Communications   10, 2439
+      “Symmetry-enhanced discontinuous phase transition in a two-                                 (2019).
+      dimensional  quantum  magnet,”Nature  Physics   15,  678–682                         [88]T Nomura, P Corboz, A Miyata, S Zherlitsyn, Y Ishii, Y Ko-
+      (2019).                                                                                     hama,  YH Matsuda,  A Ikeda,  C Zhong,  H Kageyama,  et al.,
+[73]Pablo Serna and Adam Nahum, “Emergence and spontaneous                                        “Unveiling  new  quantum  phases  in  the  Shastry-Sutherland
+      breaking of approximate O(4) symmetry at a weakly first-order                               compound  SrCu2(BO3)2  up  to  the  saturation  magnetic  field,”
+      deconfined phase transition,”Phys. Rev. B   99, 195110 (2019).                              Nature Communications 14, 3769 (2023).
+[74]Anders W. Sandvik, “Computational studies of quantum spin                              [89]F. Verstraete, V. Murg,   and J.I. Cirac, “Matrix product states,
+      systems,”AIP Conference Proceedings   1297, 135–338 (2010).                                 projected entangled pair states, and variational renormalization
+[75]Xiangjian Qian and Mingpu Qin, “Absence of spin liquid phase                                  group methods for quantum spin systems,”Advances in Physics
+      in the J1−J2 heisenberg model on the square lattice,”Phys. Rev.                             57, 143–224 (2008).
+      B 109, L161103 (2024).                                                               [90]J.   Ignacio   Cirac,    David   Pérez-García,    Norbert   Schuch,
+[76]Philippe  Corboz,  Piotr  Czarnik,  Geert  Kapteijns,    and  Luca                            and  Frank  Verstraete,  “Matrix  product  states  and  projected
+      Tagliacozzo,  “Finite  correlation  length  scaling  with  infinite                         entangled pair states:  Concepts,  symmetries,  theorems,”Rev.
+      projected entangled-pair states,”Phys. Rev. X  8, 031031 (2018).                            Mod. Phys. 93, 045003 (2021).
+[77]Michael  Rader  and  Andreas  M.  Läuchli,  “Finite  correlation                       [91]Anders W. Sandvik, “Finite-size scaling and boundary e      ffects
+      length   scaling   in   Lorentz-invariant   gapless   iPEPS   wave                          in  two-dimensional  valence-bond  solids,”Phys.  Rev.  B   85,
+      functions,”Phys. Rev. X   8, 031030 (2018).                                                 134407 (2012).
+[78]Bram  Vanhecke,  Juraj Hasik,  Frank Verstraete,   and Laurens                         [92]Tom Vieijra, Jutho Haegeman, Frank Verstraete,   and Laurens
+      Vanderstraeten,  “Scaling  hypothesis  for  projected  entangled-                           Vanderstraeten,  “Direct  sampling  of  projected  entangled-pair
+      pair states,”Phys. Rev. Lett.   129, 200601 (2022).                                         states,”Phys. Rev. B   104, 235141 (2021).
+[79]H. J. Liao, Z. Y. Xie, J. Chen, Z. Y. Liu, H. D. Xie, R. Z. Huang,                     [93]Ching-Yu   Huang,   Sing-Hong   Chan,   Ying-Jer   Kao,      and
+      B. Normand,  and T. Xiang, “Gapless spin-liquid ground state                                Pochung  Chen,  “Tensor  network  based  finite-size  scaling  for
+      in the S  = 1/2 kagome antiferromagnet,”Phys. Rev. Lett.   118,                             two-dimensional  ising  model,” Phys.  Rev.  B    107,  205123
+      137202 (2017).                                                                              (2023).
+[80]Hiroyuki  Nojiri,  Hiroshi  Kageyama,  Kenzo  Onizuka,  Yutaka                         [94]Atsushi  Ueda  and  Masaki  Oshikawa,  “Finite-size  and  finite
+      Ueda,   and  Mitsuhiro  Motokawa,  “Direct  observation  of  the                            bond  dimension  effects  of  tensor  network  renormalization,”
+      multiple spin gap excitations in two-dimensional dimer system                               Phys. Rev. B 108, 024413 (2023).
+      SrCu2(BO3)2,”Journal  of  the  Physical  Society  of  Japan   68,

@@ -1,0 +1,709 @@
+   Variational  Monte  Carlo Method  in  the  Presence of  Spin-Orbit  Interaction and  Its
+                              Application  to Kitaev and  Kitaev-Heisenberg  Model
+
+                          Moyuru  Kurita1,  Youhei  Yamaji2,  Satoshi  Morita3,  and  Masatoshi  Imada1
+             1Department  of  Applied  Physics,  The  University  of  Tokyo,  Hongo,  Bunkyo-ku,  Tokyo,  113-8656,  Japan
+     2Quantum-Phase  Electronics  Center  (QPEC),  The  University  of  Tokyo,  Hongo,  Bunkyo-ku,  Tokyo,  113-8656,  Japan
+                   3Institute  for  Solid  State  Physics,  The  University  of  Tokyo,  Kashiwa,  Chiba  277-8581,  Japan
+                                                             (Dated:  August 30, 2018)
+                   We propose an accurate variational Monte Carlo method applicable in the presence of the strong
+                spin-orbit  interactions.    The  algorithm  is  applicable  even  in  a  wider  class  of  Hamiltonians  that
+                do  not  have  the  spin-rotational  symmetry.   Our  variational  wave  functions  consist  of  generalized
+                Pfaﬃan-Slater  wave  functions  that  involve  mixtures  of  singlet  and  triplet  Cooper  pairs,  Jastrow-
+                Gutzwiller-type  projections,  and  quantum  number  projections.    The  generalized  wave  functions
+                allow  describing  states  including  a  wide  class  of  symmetry  broken  states,  ranging  from  magnetic
+                and/or  charge  ordered  states  to  superconducting  states  and  their  ﬂuctuations,  on  equal  footing
+                without any ad hoc ansatz for variational wave functions.  We detail our optimization scheme for the
+                generalized Pfaﬃan-Slater wave functions with complex-number variational parameters.  Generalized
+                quantum  number projections  are  also  introduced,  which  imposes  the  conservation  of  not  only  the
+                momentum  quantum  number  but  also  Wilson  loops.   As  a  demonstration  of  the  capability  of  the
+                present  variational  Monte  Carlo  method,  the  accuracy  and  eﬃciency  is  tested  for  the  Kitaev  and
+                Kitaev-Heisenberg models, which lack the SU(2) spin-rotational symmetry except at the Heisenberg
+                limit.  The Kitaev  model  serves as  a  critical  benchmark of  the present  method:  The exact  ground
+                state of the model is a typical gapless quantum spin liquid far beyond the reach of simple mean-ﬁeld
+                wave functions.  The newly introduced quantum number projections precisely reproduce the ground
+                state degeneracy of the Kitaev spin liquids, in addition to their ground state energy.  An application
+                to a closely related itinerant model described by a multi-orbital Hubbard model with the spin-orbit
+                interaction also shows promising benchmark results.  The strong-coupling limit of the multi-orbital
+                Hubbard model is indeed described  by the Kitaev model.  Our framework  oﬀers accurate solutions
+                for the systems where strong electron correlation and spin-orbit interaction coexist.
+
+                PACS numbers:  05.30.Rt,71.10.Fd,73.43.Lp,71.27.+a
+
+
+                     I.     INTRODUCTION                                       (VMC) method13  oﬀers a wide applicability after recent
+                                                                               revisions as we remark later.14–18
+   In  condensed  matter  physics,  many  fundamental  and                        Growing   interest   in   topological   states   of   matters
+challenging issues are found in connection to strong cor-                      urges  the  numerical  methods  to  be  capable  of  handling
+relation eﬀects of electrons1.  These are characterized by                     strong  relativistic  spin-orbit  interactions.     The  topo-
+the interplay of itinerancy due to the kinetic energy and                      logical  states  such  as  theoretically  proposed  topologi-
+localization  promoted  by  the  Coulomb  repulsions.   The                    cal insulators19–22  followed by  reports  of several experi-
+interplay  of  the  itinerancy  and  localization  leads  corre-               mental realizations23,24 have recently attracted much at-
+lated  electron  systems  to  rich  symmetry-broken  phases                    tention,  where  strong  relativistic  spin-orbit  interaction
+such   as   magnetism2   and   high-Tc   superconductivity.3                   plays crucial roles.  In addition, a certain class of orders
+Even   when   electrons   are   localized   due   to   dominant                with circular charge currents generates topologically non-
+Coulomb repulsions, as realized in Mott insulators, zero-                      trivial phases called Chern insulators25,26.  Such circular-
+point motions or quantum ﬂuctuations of electronic spin                        current  orders  realize  non-collinear  and  non-coplanar
+and orbital degrees of freedom induce competition among                        alignments of local magnetic ﬂux and aﬀect electron dy-
+such  symmetry-broken  phases  and  quantum  melting  of                       namics.
+them.                                                                             Handling   relativistic   spin-orbit  couplings   and   non-
+   Satisfactory understanding of the interplay and quan-                       coplanar  magnetism requires  additional numerical  costs
+tum ﬂuctuations requires sophisticated theoretical frame-                      and more complicated algorithm in comparison with the
+work beyond the standard band theory based on the one-                         conventional non-relativistic system with collinear mag-
+body  approximation.    However,  correlated  many-body                        netic  orders.  Both  of  them  break  local symmetries  and
+systems  are  not  rigorously  solvable  except  few  cases4,5,                conservation laws  such as SU(2)-symmetry  of spins  and
+while many numerical methods have been developed, and                          total z-components of spins.  Furthermore, such compli-
+become  powerful  partly  thanks  to  progress  in  the  com-                  cations  generally  make  so-called negative  sign  problems
+putational  power.   Examples  are  exact  diagonalization,                    more serious in quantum Monte Carlo methods.  For the
+auxiliary-ﬁeld quantum Monte Carlo method6–9, density                          understanding of correlated topological states of matters,
+matrix  renormalization  group10,  and  dynamical  mean-                       it  is  important  to  construct  a  numerical  framework  to
+ﬁeld theory11,12.  Among all, the variational Monte Carlo                      treat  the  spin-orbit  interaction  of  electrons  simultane-
+                                                                                                                                                     2
+
+ously with the strong Coulomb interaction.                                    formulation for the optimization becomes diﬀerent from
+  In this paper, we formulate a generalized VMC method                        that with real numbers.
+for  the  purpose  of  developing  an  eﬃcient  algorithm  for                   We consider the system which has Nf  degrees of free-
+systems  without  spin-rotational  symmetry.   To  test  the                  dom  (including  the  number  of  site/momentum  and  ﬂa-
+eﬃciency  of  the  method,  we  apply  the  method  to  the                   vors  such  as  spins  and  orbitals)  and  the  wave  function
+Kitaev  and  Kitaev-Heisenberg  models  as  well  as  to  the                 withN  fermions.  Then any many-body wave function is
+multi-orbital Hubbard model with the spin-orbit interac-                      expanded in the complete set:
+tion.                                                                                      |ψfull⟩ = ∑          Fi1···iNc†              ,          (1)
+  The Kitaev model27  is a typical quantum many-body                                                                      i1 · · ·c†iN |0⟩
+system  that  exhibits  a  topological  state,  which  breaks                                         {i1···iN }
+both of SU(2)-symmetry of spins and conservation of to-                       wherec†
+tal z-components  of  spins.   There,  a  spin  liquid  phase                 i-th degrees of freedom (i = 1, 2, · · ·,Nf).  However, thisi  (ci) is a creation (an annihilation) operator with
+becomes the  exact ground state.  Though it is yet to be                      function that expands the full Hilbert space and allows to
+realized in experiments, it is theoretically proposed that                    describe the exact ground state is not tractable when the
+the  Kitaev  model  is  realized  at  strong  coupling  limit  of             system size becomes large.  The pair-product function in
+the  iridium  compounds  such  as  A2IrO3  (A=  Na,  Li)28,                   the form
+where the spin-orbit interaction plays a crucial role.                                                                 
+  Due to their well-understood ground states and inher-                                                    Nf∑            N/2
+ent strong spin-orbit couplings, the Kitaev model and its                                        |ψ⟩ =        Fijc†          |0⟩,                    (2)
+variant, the Kitaev-Heisenberg model, are unique among                                                               ic†j
+                                                                                                           i⁄=j
+various many-body systems.  They oﬀer critical and suit-
+able  benchmark  tests  of  numerical  algorithms  for  the                   instead was shown to provide us with an accurate starting
+topological states of correlated many-body systems under                      point.  In  this  work, we  take Fij  as  complex  variational
+the strong spin-orbit interaction.                                            parameters.   Here,  the  indices i  and j  specify  the  site,
+  Though  the  VMC  method  inherently  contains  biases                      orbital,  and  spins.   Since  anti-commutation  relations  of
+arising from the given form of wave functions, the gener-                     fermions  require Fji  =  −Fij,  there  are Nf (Nf  − 1)/2
+alized Pfaﬃan-Slater wave functions together with quan-                       independent  complex  variational  parameters  and  there-
+tum number projections reduce the bias and considerably                       foreNf (Nf −1) real variational parameters at maximum.
+reproduce  numerically  exact  results,  which  has  partly                   However, when the system has some symmetry and when
+been shown in the previous studies18,29.  In this paper, we                   we impose a related constraint toFij, this number can be
+further show that our fermion wave functions give accu-                       reduced.  For example, when the translational symmetry
+rate description of the Kitaev liquid phase with the help                     is imposed onFij, the number of the variational param-
+of  newly  introduced  quantum  number  projections.  The                     eters decreases to Nu(Nf − 1), where Nu  is the number
+benchmark  test on a  multi-orbital Hubbard model  with                       of degrees of freedom contained in one unit cell.
+the spin-orbit interaction is also shown within the system                       Hereafter, independent real variational parameters are
+sizes where the  exact diagonalization result is  available.                  written  as  {αk|k   =   1, · · ·,p}.     Here,   index  of  pair-
+The multi-orbital Hubbard model is chosen as its strong-                      function  variational  parameter k  is  ellipsis  notation  of
+coupling limit is described by the Kitaev model28.                            i,j  as Fij  = −Fji =α2l−1 +iα2l.
+  The paper is organized as follows:  We detail our VMC                          We  note  that  the  pair  function  itself  is  a  natural  ex-
+method  including  an  energy  minimization  scheme  and                      tension of the one-body approximation.  This is because
+quantum  number  projections  in  Sec.    II.  In  Sec.    III,               when  we  have  eigenstates  of  the  one-body  Hamiltonian
+we  apply  our  VMC  method  to  the  Kitaev  and  Kitaev-                    as
+Heisenberg  model.   In  Sec.   IV,  our  method  is  applied                                                           Nf∑
+to  the  multi-orbital Hubbard  model  with  the  spin-orbit                                    H =∑       tijc†            ǫnc†ncn                   (3)
+interaction.  Section V is devoted to discussion.                                                              icj =
+                                                                                                       ij              n=1
+                                                                              and the N-particle eigenstate is described as
+                     II.     VMC  METHOD                                                                         N∏
+                                                                                                        |ψ⟩ =        c†n|0⟩,                              (4)
+  In  this  section,  we  present  our  VMC  method.    We                                                      n=1
+use  pair  wave  functions  with  complex  variables,  where                  the equivalent pair function is easily produced as
+each  pair  of  electrons  is  either  singlet  or  triplet14,16,18.                                                    
+These variational wave functions are applicable to Hub-                                                  N/2∑              N/2
+bard  and  quantum  spin  models  in  the  presence  of  the                                   |ψ⟩ =         c†2n−1c†2n       |0⟩,                   (5)
+spin-orbit  interaction  and  non-colinear  magnetic  ﬁelds                                              n=1
+whose Hamiltonian inevitably includes complex numbers,
+such  as  spin-orbit  couplings  due  to  electric  ﬁelds  E(r),              where c†n  is a creation operator of the n-th eigenstate of
+[p × E(r)] · σ,  or  the  Pauli matrix σy.  As  a  result,  the               the  one-body  Hamiltonian.  In  this  calculation,  we  only
+                                                                                                                                                      3
+
+used the fact that the Hamiltonian is one-body and it can                     The SR method requires the value of matrix Skl  deﬁned
+contain any kind  of spin-orbit interaction and magnetic                      by
+ﬁeld.  Therefore, the pair function of this form with com-                                     ∆2norm ≡ ‖| ¯ψα+γ⟩ − | ¯ψα⟩‖2
+plex  variables  can  principally  describe  the  state  under                                               p∑
+spin-orbit interactions and non-colinear magnetic ﬁelds.                                                =        γkγlSkl +O(γ3),               (12)
+
+                                                                                                           k,l=1
+                  A.     Energy  minimization                                 where γ is a small deviation from α.  Since the expansion
+                                                                              of | ¯ψα+γ⟩ up to the ﬁrst order is
+  To minimize the energy of the pair function with com-                                                           p∑
+plex coeﬃcientFij 30, we need to calculate                                                | ¯ψα+γ⟩ = | ¯ψα⟩ +         γk| ¯ψkα⟩ +O(γ2),         (13)
+
+                                                                                                                 k=1
+                  E =  ⟨ψα|H|ψα⟩⟨ψα|ψα⟩ ,  and ∂E∂αk,                    (6)  we get
+
+with H  the  Hamiltonian  of  the  system.    Here,  we  ex-                                             p∑
+plicitly wrote |ψα⟩ to indicate that the wave function de-                                 ∆2norm =          γkγl⟨ ¯ψkα| ¯ψlα⟩ +O(γ3)          (14)
+pends on variational parameters.  Since rigorous estimate                                              k,l=1
+of  the  energy is  not  possible  if  the  system size  becomes              and therefore
+large, we  apply  the  Monte-Carlo method.  For  this  pur-                               Skl = Re(⟨ ¯ψkα| ¯ψlα⟩)
+pose,  it  is  convenient  to  introduce  the  normalized  wave
+function | ¯ψα⟩ and operatorsOk  as                                                            = Re(⟨O†kOl⟩) − Re(⟨Ok⟩)Re(⟨Ol⟩).        (15)
+
+                     | ¯ψα⟩ ≡          1√                                     The SR method gives the updated variational parameter
+                                  ⟨ψα|ψα⟩ |ψα⟩,                       (7)     by
+and                                                                                                   αnewk     =αoldk    + ∆αk,                         (16)
+                            (     1       ∂            )                      where the change from the initial value is given by
+            Ok ≡∑|x⟩           ⟨x|ψα⟩   ∂αk ⟨x|ψα⟩       ⟨x|                                                          p∑
+                     x
+                =∑|x⟩Ok(x)⟨x|.                                       (8)                            ∆αk = −∆t            S−1kl gl.                      (17)
+                                                                                                                     l=1
+                     x
+Here,  |x⟩  is  real  space  conﬁgurations.   Then  we  get  a                Here, ∆t is a small constant, which is determined empiri-
+expression for the derivatives of | ¯ψα⟩ as                                   cally.  Equations (11) and (15) are diﬀerent from the case
+                                                                              with only the real parameters for Fij 18.  However, tech-
+                                                                              niques for the Monte-Carlo calculation of these quantities
+         | ¯ψkα⟩ ≡ ∂∂αk | ¯ψα⟩                                                are the same.  We produce real space conﬁgurations
+
+                 =          1√                                                                         |x⟩ =c†i1 · · ·c†iN |0⟩                          (18)
+                       ⟨ψα|ψα⟩ [Ok − Re(⟨Ok⟩)] |ψα⟩,                          and use the fact
+                 = [Ok − Re(⟨Ok⟩)] | ¯ψα⟩,                            (9)                             ⟨x|ψ⟩ = (N/2)!PfX,                         (19)
+
+where a bracket ⟨A⟩ for an operatorA means ⟨ ¯ψα|A| ¯ψα⟩.                     where X  is N ×N  skew-symmetric matrix with the ele-
+Here, we have used the relations                                              ment
+
+                     Ok|ψα⟩ = ∂|ψα⟩∂αk ,                                                               Xkl =Fikil −Filik.                         (20)
+                ∂                                                             Then the expectation value of an operatorA is calculated
+              ∂αk ⟨ψα|ψα⟩ = 2Re (⟨ψα|Ok|ψα⟩).            (10)                 by Monte-Carlo simulation as
+The energy gradient is now expressed as                                                                     ∑             ∑
+                                                                                       A ≡  ⟨ψ|A|ψ⟩⟨ψ|ψ⟩    =         1       ρ(x)⟨x|A|ψ⟩⟨x|ψ⟩ ,    (21)
+                                                                                                               x′ρ(x′)     x
+             gk ≡ ∂∂αk ⟨ ¯ψα|H| ¯ψα⟩                                          where  the  weight  for  the  Metropolis  algorithm ρ(x)  is
+                 = 2Re(⟨ ¯ψα|H| ¯ψkα⟩)                                        deﬁned as
+                 = 2Re(⟨HOk⟩) − 2⟨H⟩Re(⟨Ok⟩).           (11)                                             ρ(x) ≡ |⟨x|ψ⟩|2.
+To  perform  the  steepest  descent  method,  we  only  need                  This method requires four times more computational op-
+the values of gk.  However, this method is unstable com-                      erations than the VMC method with only real variational
+pared  to  the  stochastic  reconﬁguration  (SR)  method15.                   parameters, because of complex number calculations.
+                                                                                                                                                    4
+
+             B.     Quantum-number  projection                               and σx,σy,σz  are  the  Pauli  matrices,  the  Kitaev27  and
+                                                                             Kitaev-Heisenberg31 Hamiltonian are described by
+  In  general,  Hamiltonian  often  has  several symmetries                                          ∑                          ∑
+such  as  the  translational  symmetry,  point  group  sym-                        HK = −JKx                SIxSJx −JKy                SIySJy
+metry, and SU(2) spin-rotational symmetry.  However, a                                             x−bond∑                    y−bond
+single pair function does not always satisfy them, which                                   −JKz            SIzSJz,                                     (27)
+results in higher energy compared to the correct ground                                            z−bond
+state.  In such a case, variational wave function combined                   and
+with  the  quantum-number  projection  is  helpful.   Let  us                                                              ∑
+consider the quantum-number projection constructed by                                   HKH = 2αHK + (1 −α)JH                   SI · SJ,        (28)
+transformation operatorsT (n) with weights wn  as                                                                          ⟨IJ⟩
+
+                         P ≡∑       ωnT (n).                            (22) respectively.  Hereafter, we consider the case J  ≡JKx =
+                                 n                                           JKy   = JKz   = JH  and  take  the  energy  unit J   =  1.
+                                                                             The  characteristics  of  these  Hamiltonians  are  that  the
+The form of our wave function is now                                         anisotropy  of  the  interaction  depends  on  the  bond  di-
+                                                  N/2                      rection.   There  are  three  types  of  bonds  (x,y,z-bond)
+                                      Nf∑                                    as  schematically  shown  in  Fig.   1  corresponding  to  the
+          P|ψ⟩ =∑        wnT (n)         Fijc†ic†j      |0⟩                bonds in Eq.(27).
+                      n              i⁄=j                                       One  interesting  and  important  feature  of  the  Kitaev
+                                              N/2                          Hamiltonian  is  the  existence  of  local  operators  which
+                                Nf∑
+                 =∑      wn         ˜F (n)          |0⟩,            (23)   commute  with  each  other  and  with  the  Hamiltonian27.
+                                      ij c†ic†j                              This conserved quantity is deﬁned by the product of spin
+                      n         i⁄=j                                         operators, for example,
+
+where  ˜F (n)ij    is calculated fromT (n) andFij  in the follow-                               K0 ≡ Γ0zΓ1xΓ2yΓ3zΓ4xΓ5y,                  (29)
+ing manner.  For the unitary operatorT  deﬁned by                            where the site indices 0 − 5 are what we deﬁned in Fig.1,
+                       Tc†               αikc†                               and  ΓIγ  =  2SIγ.   These  sites  labeled  by  0 − 5  form  a
+                          iT −1 =∑             k,                        (24)hexagon,  and  obviously  there  are  local  conserved quan-
+                                      k                                      tities as many as the number of the hexagons in the sys-
+the operated wave function is written as                                     tem  and  they  all  mutually  commute  each  other.   Actu-
+                                               N/2                         ally, when we consider a honeycomb lattice withNs sites,
+                                                                             there are Nq  hexagons (Nq  =Ns/2) with corresponding
+              T |ψ⟩ =   ∑    Fijαikαjlc†kc†l        |0⟩                    operatorsKq, and relations
+
+                          ijkl                                                                   [Kq,Kq′] = [Kq,HK] = 0                    (30)
+                                       N/2
+                    =   ∑     ˜Fklc†        |0⟩                       (25) are satisﬁed.
+                                    kc†l
+                          k⁄=l
+with                                                                                             B.     Method  and  Result
+
+                        ˜Fkl ≡∑     Fijαikαjl.                         (26)     The  VMC  method  precisely  reproduces  ground  state
+                               i⁄=j                                          wave  functions  of  quantum  spin  models  with  high  ac-
+This  type  of  projection  is  especially  eﬃcient  when  we                curacy by employing the  fermionic wave function of the
+                                                                             form
+consider a model with  SU(2) symmetry18  or the Kitaev                                                                     N/2
+model  and  the  application  to  the  Kitaev  model  will  be                                                 Nf∑
+discussed in the following section.                                                         |ψpair⟩ = PG          Fijc†ic†j      |0⟩,             (31)
+
+                                                                                                              i⁄=j
+
+ III.     APPLICATION  TO  THE  KITAEV  MODEL                                where PG  denotes the Gutzwiller projector deﬁned as
+
+                                                                                                           Ns∏
+                   A.     Model  Hamiltonian                                                       PG ≡        (1 −nI↑nI↓).                      (32)
+                                                                                                           I=1
+  In  this  section,  we  consider  the  Kitaev  model  and                  Here, indices i,j  include both site I,J  and spin indices.
+Kitaev-Heisenberg  model.   By  deﬁning SIγ  =   12c†IσγcI,                  The  number  of  species  of  fermion  is Nf  =  2Ns,  where
+where c†I  = (c†I↑,c†I↓) is a creation operator at the site I                the factor 2 is from the spin degrees of freedom and the
+                                                                                                                                                         5
+
+(a)                                                                             TABLE I.   Summary of the calculated total energy of Kitaev
+
+                                                                                model.
+                                                                                          hexagonal 24 sites      3×4 unit cells      4×4 unit cells
+                                                                                 |ψpair⟩     −9.47 ± 0.01         −9.02 ± 0.02        −11.95 ± 0.03
+
+                                            [                                    |ψMP⟩      −9.527 ± 0.003       −9.543 ± 0.004       −12.43 ± 0.02
+                              Z            Y                                     |ψKL⟩    −9.5285 ± 0.0003       −9.544 ± 0.004      −12.555 ± 0.005
+                                                                                 Exact         −9.52860              −9.54589           −12.56409
+                              Y           Z
+                                    [
+
+                                                                                with two-sublattice unit cell as shown in Fig.1 (b).  One
+                                                                                can  compare  results  of  these  conﬁgurations  with  exact
+                                                                                solutions  and  they  are  all  close  to  the  thermodynamic
+                                                                                results.   We  show  comparisons  of  the  VMC  calculation
+                                                                                with the exact diagonalization results.
+(b)                                                                                We ﬁrst show the results for the Kitaev model, where
+                                                                                α = 1.  The variational parameters Fij  are optimized by
+                                   [    Y                                       the SR method.  In this  ﬁrst benchmark, we do not im-
+                                                                                pose any constraints onFij  except the anti-commutation
+                                Z          Z                                    relation, Fji  =  −Fij.   Thus  the  number  of  independent
+                                  Y     [                                       complex variational parameters in |ψpair⟩ isNf (Nf −1)/2
+                                                                                as  mentioned  before.  The  results  are  shown in  the  ﬁrst
+                                                                                row of Table I. As can be seen from the table, the errors
+                                                                                in energy are as large as 5% in the 3×4- and 4×4-unit-cell
+                                                                                boundary  conditions.  This  fact  indicates  that  the  wave
+(c)                                                                             function deﬁned by Eq.(31) is insuﬃcient to express the
+                                                                                Kitaev liquid.
+                                                                                   We  next  study  how the  accuracy improves by  impos-
+                                                                                ing  the  quantum  number  projection.   We  consider  two
+                                                                                kinds  of  projections.   The  ﬁrst  is  the  total  momentum
+                                                                                projection (MP)
+                                                                                                                         ∑
+                                                                                                        PK=0 =   1Ns          TR,                         (33)
+                                                                                                                          R
+
+FIG.  1.     (Color  online)  (a)  Honeycomb-lattice  structure  on             where the translational operator is deﬁned as
+
+24-site  hexagonal  supercell.   Three  types  of  bonds  are  illus-                                  TRc†IσT −1R   =c†I+R,σ.                        (34)
+trated as x (green), y(red), and z  (blue) bonds, respectively.
+(b)  Honeycomb  lattice  with  3 × 4  and  4 × 4  unit  cells  con-             The resultant wave function has the form
+tained in a supercell, where two conﬁguration is indicated by                                                                      
+two diﬀerent (black) dashed boundary line.  In both pictures,                                                         Nf∑             N/2
+dashed  lines  are  periodic  boundaries.   (c)  Wilson-loop  oper-                        |ψMP⟩ = PGPK=0                Fijc†           |0⟩.        (35)
+ators Wx, Wy,  and Wz  deﬁned  along  paths  shown  by  green,                                                                  ic†j
+red, and blue lines, respectively.                                                                                    i⁄=j
+
+                                                                                We note that the constraint onFij  in |ψMP⟩ is the same
+number  of  particles  in  the  wave  function  is N   = Ns.                    as |ψpair⟩.
+The Gutzwiller projector excludes the double occupancy                             The  second  projection  is  introduced  by  utilizing  the
+and  strictly  keeps  condition  that  there  is  one  electron                 fact  that  the  eigenvalue  of Kq  is  either  1  or  −1  in  the
+per  site.   In  more  technical  term,  we  only  choose  real                 eigenstates  of  the  Hamiltonian.   We  deﬁne  a  projection
+space conﬁguration |x⟩ without double occupancy in the                          operator  1 ±Kq  to  ﬁx  the  eigenvalue  of Kq  to  ±1,  re-
+Monte-Carlo calculation.                                                        spectively.   Since  all  the  eigenvalues  of Kq  are  unity  in
+   We  calculated  three  conﬁgurations  of  ﬁnite  size  hon-                  the ground state, we consider the state with Kq  = 1 for
+eycomb  lattice  as  examples.   One  is  hexagonal  24  sites                  all  hexagons.   The  corresponding  projection  operator  is
+with periodic boundary condition as shown in Fig.1 (a).                         deﬁned as
+This conﬁguration is exactly the same as that studied by                                                             Nq−1∏
+Chaloupka31.  The others are supercells containing 3 × 4                                          PKL ≡      12Nq−1        (1 +Kq).                 (36)
+and 4 × 4 unit cells under periodic boundary conditions                                                               q=1
+                                                                                                                                                     6
+
+The number of transfomation operators in this projection                      (a)
+is Nq − 1, because there are Nq  hexagons in the system                           <S S >i    j
+and an identity∏Nq                                                                   0.8
+                       q=1Kq = 1 holds.  Since this projcetion
+operator  commutes  with  the  Gutzwiller  projector,  the                           0.7
+projected wave function is written as                                                0.6
+                                                N/2                                0.5
+                                    Nf∑
+            |ψKL⟩ = PGPKL              Fijc†ic†j      |0⟩.         (37)            0.4
+
+                                   i⁄=j                                              0.3
+In fact, this wave function is able to represent the Kitaev                          0.2
+liquid (KL)32, in which long-range spin-spin correlations                            0.1
+exactly vanish.  For example, we have                                                 0
+
+       ⟨ψKL|S0xSix|ψKL⟩ = ⟨ψKL|K0S0xSixK0|ψKL⟩                                      -0.1                                                            rij
+                               = −⟨ψKL|S0xSix|ψKL⟩                                       0      0.5    1      1.5    2      2.5     3     3.5     4
+                               = 0,                                         (38)(b)
+                                                                                  <S S >i    j
+where K0 is what deﬁned in Eq.(29) and the site i is far                             0.8
+enough from the  site  0  that Six  commute with K0  (See                            0.7
+also  Fig.1).    We  can  also  show  ⟨ψKL|S0zSiz|ψKL⟩  =  0
+(⟨ψKL|S0ySiy|ψKL⟩ = 0) by using another hexagon oper-                                0.6
+atorKj  which contains Γ0x  or Γ0y  (Γ0z  or Γ0x).                                   0.5
+  The  projection  operator  in  |ψKL⟩  is  treated  by  using                       0.4
+the  quantum-number  projection  method  in  Eq.(23)  by
+expanding the operator as                                                            0.3
+
+                Nq−1∏                      Nq−1∏                                     0.2
+                      (1 +Kq) = ∑                 Knqq ,               (39)          0.1
+
+                 q=1                  {nq}  q=1                                       0
+where nq  takes  +1  or  0.  The  summation  is  over  2Nq−1                        -0.1 0     0.5     1      1.5    2      2.5    3      3.5     4 rij
+terms and it requires substantial computational cost.  In
+the  calculation  of  supercells  containing  3×4  and  4×4                   FIG. 2.    (Color online) Spin-spin correlations as functions of
+unit  cells  each,  we  impose  the  translational  symmetry                  distances betweeni-th andj-th sites,rij  of (a) |ψMP⟩ and (b)
+of the Bravais lattice toFij  to reduce the computational                     |ψKL⟩ on 3×4 unit cells.  Dashed (blue) lines show ⟨SiSj⟩ = 0.
+cost.   The  translational  symmetry  is  not  a  serious  con-
+straint when the  translational symmetry is preserved in
+the ground state as in spin liquid states.                                    Kitaev-Heisenberg model calculated by the exact diago-
+  As shown in Table I, these projections largely improve                      nalization  and  Figs.   4  and  5  show  the  energy  errors  of
+the energy accuracy.  While the error of |ψMP⟩ compared                       the VMC results using the function in Eqs.(31), (35) and
+to the exact value is about 1%, the error of |ψKL⟩ is 0.1%.                   (37) in comparison to the exact diagonalization.  A com-
+Therefore the projection ofKq is very useful in improving                     mon property  of these  conﬁgurations is  that the  energy
+the accuracy.                                                                 of the simple pair wave function |ψpair⟩ becomes substan-
+  We  also  checked the  accuracy of |ψMP⟩  and  |ψKL⟩  by                    tially higher than that with projection around and above
+comparing the spin-spin correlations as a function of the                     α  =  0.85.  Thus  a  simple  pair  function  is  inappropriate
+distance  with  the  exact  result  of  the  Kitaev  model  as                to describe the ground state of this region.  On the other
+shown in Fig.  2.  These data are consistent with the exact                   hand,  the  error in  the  energy of  the  Kitaev  liquid  wave
+result that only the nearest neighbor sites have nonzero                      function  |ψKL⟩ becomes  very small when α exceeds  0.9,
+spin-spin correlations.                                                       although hexagonal operators Kr  do not commute  with
+  To  further  examine  the  applicability  of  our  method,                  the HamiltonianHKH  atα< 1.0.  This indicates that as
+we  next  study  the  Kitaev-Heisenberg  model  given  by                     long as the ground state is adiabatically connected to the
+Eq.(28).   The  Heisenberg  term  is  indeed  naturally  de-                  Kitaev limit,  the function Eq.(37) works quite  well as a
+rived from the strong coupling expansion of the realistic                     variational wave function.
+fermionic  Hamiltonian,  which  may  coexist  with  the  Ki-
+taev  term  arising  from  the  spin  orbit  interaction  when                   The quantum number projection method is also useful
+the electron correlation and the spin orbit interaction are                   to  ﬁx  the  eigenvalue  of  the  topological  Wilson  loop  op-
+both strong as in the case of 4d and 5d transition metal                      erator which crosses the boundary.27 Under the periodic
+compounds.31  Figure  3  shows  the  ground  energy  of  the                  boundary  condition,  two  global  loops  are  independent.
+                                                                                                                                                             7
+
+(a)  E/N                                                                           (a)                                                                ψ
+                                                                                   ΔΕ/Ν 0.016                                                         ψpair
+       -0.2                                                                                                                                           ψMP
+                                                                                                                                                        KL
+                                                                                             0.012
+       -0.3                                                                                  0.008
+
+       -0.4                                                                                  0.004
+
+       -0.5                                                                                        0
+                                                24site hexagonal                                   0          0.2        0.4        0.6        0.8         1α
+       -0.6 0          0.2        0.4        0.6        0.8         1              (b)       0.025
+                                           α                                       ΔΕ/Ν                                                            ψpair
+(b)  E/N                                                                                      0.02                                                 ψMP
+       -0.2                                                                                                                                        ψKL
+                                                                                             0.015
+
+       -0.3                                                                                   0.01
+
+                                                                                             0.005
+       -0.4                                                                                        0
+
+       -0.5                                                                                         0          0.2        0.4        0.6        0.8         1
+                                                       4x4 periodic                                                              α
+       -0.6                                                                         (c)       0.03                                                ψ
+            0          0.2        0.4        0.6        0.8         1               ΔΕ/Ν                                                          ψpair
+                                           α                                                                                                      ψMP
+(c)  E/N                                                                                      0.02                                                  KL
+
+       -0.2
+                                                                                              0.01
+       -0.3
+
+       -0.4                                                                                       0
+
+                                                                                                    0          0.2        0.4        0.6        0.8         1α
+       -0.5
+                                                       3x4 periodic               FIG. 4.  (Color online) Errors in energy per site for the VMC
+       -0.6                                                                       wave function in comparison to the exact result calculated for
+            0          0.2        0.4        0.6        0.8         1             hexagonal 24 sites lattice, 3×4-unit-cell lattice and 4×4-unit-
+                                           α                                      cell lattice respectively.  Blue, green and red lines indicate the
+                                                                                  energy error of the VMC wave function without projection as
+FIG. 3.  (Color online) Ground energies per site of the Kitaev-                   in Eq.(31), with only momentum projection as in Eq.(35) and
+Heisenberg model calculated by exact diagonalization  for (a)                     with only Kitaev liquid projection as in Eq.(37), respectively.
+24site hexagonal, (b) 3×4 periodic, and (c) 4×4 periodic, con-                    The error bars are estimated from the statistical errors of the
+ﬁguration.  The results show that the ﬁnite-size/lattice shape                    Monte  Carlo  sampling  and  do  not  include  the possible  error
+eﬀects is very small.                                                             in the SR optimization procedure.
+                                                                                                                                                   8
+
+(a)            0.1                                                           TABLE II.  Comparisons of total energies of low-energy states
+ ΔE/N        0.01                                                            obtained by the VMC with  the exact diagonalization  for the
+                                                                             three choices of ﬁnite lattice with corresponding values of the
+                                                                             Wilson loop operators.  + and − are 1 and −1 respectively.
+           0.001                                                                    Conﬁguration        (Wx,Wy)       Exact          VMC
+          0.0001                                                                 hexagonal 24 sites       (+, +)     −9.5286    -9.528±0.002
+                             ψ                                                                            (+, −)     −9.5286    -9.528±0.002
+                               pair                                                                       (−, +)     −9.5286    -9.528±0.002
+           1e-05             ψMP
+                             ψKL                                                   3 × 4 unit cells       (+, −)     −9.5459    -9.546±0.001
+           1e-06 0         0.2       0.4       0.6       0.8       1               4 × 4 unit cells       (+, +)    −12.5641     -12.55±0.01
+                                           α                                                              (+, −)    −12.5641     -12.55±0.01
+(b)            0.1                                                                                        (−, +)    −12.5641     -12.55±0.01
+ ΔE/N
+             0.01                                                            tion of the global loop
+
+           0.001                                                               Wz = Γ2zΓ3zΓ4zΓ18zΓ19zΓ8zΓ7zΓ6zΓ23zΓ22zΓ11zΓ12z,
+                                                                                                                                                (41)
+          0.0001                                                             is not independent of Wx  and Wy, because WxWyWz  =
+                             ψpair                                           −1 is  satisﬁed in the Kitaev liquid wave function owing
+           1e-05             ψMP                                             to the identity
+                             ψKL
+           1e-06 0         0.2       0.4       0.6       0.8       1                                           Nq∏
+(c)                                         α                                                     WxWyWz           Kq = −1.                      (42)
+               0.1                                                                                             q=1
+ ΔE/N                                                                        These facts are equally true in 3 × 4 and 4 × 4 unit-cells
+             0.01                                                            supercell. Wx  andWy  of these lattices are also shown in
+                                                                             Fig.1(c).
+                                                                                The quantum numbers Wx  and Wy  have primary im-
+           0.001                                                             portance  in  understanding  the  topological  order  of  the
+                                                                             ground  state  of  the  model,  because  the  four  combina-
+          0.0001             ψpair                                           tions of the Wilson loop numbersWx = ±1 andWy = ±1
+                             ψ                                               characterize the four-fold degeneracy of the ground state
+                               MP                                            in  the  thermodynamic  limit.   Namely,  the  Wilson-loop
+           1e-05             ψKL                                             number speciﬁes the topological order.27
+                  0         0.2       0.4       0.6       0.8       1           Table  II  shows  several  exact  results  on  low  energy
+                                            α                                states  for  our  choices  of  the  lattice  with  eigenvalues  of
+                                                                             the Wilson loop operators for  the  ﬁnite-size  systems  we
+FIG.  5.  (Color  online)  Semi-log  plot  of  errors  in  energy  per       studied.
+site of  the VMC wave functions shown  in  Fig.4.  Blue,  green                 In fact, our VMC result by |ψKL⟩ supplemented by the
+and red lines follow the same notations with Fig.4.                          Wilson loop projection shows that the ground state of 24
+                                                                             site hexagonal conﬁguration is triply degenerate classiﬁed
+                                                                             by  these  Wilson  loop  operators.   When  we  deﬁne  three
+For example, in hexagonal 24-site lattice, two operators                     wave functions
+
+Wx = Γ0xΓ1xΓ2xΓ12xΓ13xΓ20xΓ19xΓ18xΓ17xΓ16xΓ23xΓ6x,                                           |ψx⟩ = (1 −Wx)(1 +Wy)|ψKL⟩
+Wy = Γ0yΓ5yΓ4yΓ18yΓ17yΓ10yΓ11yΓ12yΓ13yΓ14yΓ7yΓ6y,                                            |ψy⟩ = (1 +Wx)(1 −Wy)|ψKL⟩
+                                                                   (40)                      |ψz⟩ = (1 +Wx)(1 +Wy)|ψKL⟩,               (43)
+
+have   eigenvalues   ±1   and   commute   with   the   Kitaev                their energies go to the ground state energy as −9.528 ±
+Hamiltonian  and Kq,  where  the  paths  of  global  loops                   0.002 in excellent agreement with the exact results.
+are shown in Fig.1(c).  Therefore, the  eigenstates of the                      Since  the  point  group symmetry  of  the  Kitaev  model
+Kitaev model are characterized by these quantum num-                         and  the  size  of  its  largest  irreducible  representation  is
+bers.   Other  Wilson  loop  operators  can  be  decomposed                  two (see  also Appendix  A),  the triple  degeneracy of the
+into  product  of Wx, Wy  and Kq.   We  note  that  corre-                   ground  states  is  not  of  the  point  group  symmetry  and
+spondingz-spin Wilson loop operator in the other direc-                      inevitably  must  have  a  topological  origin  characterized
+                                                                                                                                                      9
+
+by the Wilson-loop quantum number.  As we mentioned                            E/N
+above, in the thermodynamic limit (on the inﬁnite size),                       -0.37
+the  topological  order  of  the  Kitaev  model  predicts  the                                                             3x4 periodic
+four  fold  degeneracy.   However,  the  convergence  of  the                                                              4x4 periodic
+state with Wx =Wy  = −1 to the ground state resulting                                                                      6x6 periodic
+in  the  four-fold  degeneracy  seems  to  be  slow  with  the                 -0.38
+increase in the system size.
+  We  also  note  that  when  we  ﬁx  eigenvalues  of  Wilson
+loop  operators,  in  the  4 × 4  unit-cells  lattice,  the  en-
+ergies  calculated  with  the  three  conditions  (Wx,Wy)  =                   -0.39
+(1, −1), (−1, 1), (−1, −1) become as low as −12.55±0.01.
+In  the  case  of  the  3 × 4  unit-cells  lattice,  it  is  diﬀerent
+and we found the  energy of (Wx,Wy) = (1, −1) state is
+−9.546 ± 0.001.   Indeed  the  exact  ground  state  of  the                   -0.4 0           0.2         0.4        0.6        0.8         1
+4 × 4  unit-cells lattice is  triply  degenerate while  that of
+the 3 × 4 is not degenerate.  The ground state energy of                                                                              Nh/(N -1)q
+the latter is −9.5459 with (Wx,Wy) = (1, −1) and its ﬁrst
+excited energy is −9.4934 with (Wx,Wy) = (1, 1).  All are                     FIG. 6.  (Color online) Energy per site of VMC wave function
+consistent with  our  results.  Since  the  energy per  site  is              at 3 × 4, 4 × 4, and 6 × 6 unit cells conﬁguration for diﬀerent
+well converged as −0.3970 (hexagonal 24 sites), −0.3977                       values of Nh  for the Kitaev model.
+(3×4  lattice)  and  −0.3926  (4×4  lattice)  in  comparison
+to the thermodynamic value27, −0.39365, we expect that
+the present method keeps the accuracy and eﬃciency for                             IV.     APPLICATION  TO  MULTI-ORBITAL
+increased system size.                                                                              HUBBARD  MODEL
+  When  the  system  size  becomes  larger,  it  is  expected
+that one excited level becomes lower and we get four fold                        We also note that our method is applicable to Hamil-
+degeneracy  in  the  inﬁnite  size  limit  (see  also  Appendix               tonians  with  explicit  spin-orbit  interactions.    Here  we
+B).                                                                           apply  the  present  method  to  a  multi-orbital  Hubbard
+  We  also  note  that  our  projection  method  eﬃciently                    model  with  spin-orbit  interactions,  which  is  closely  re-
+improves the wavefunction by lowering energy even if it                       lated  to  the  Kitaev  model.    It  is  known  that  the  Ki-
+is  a  partial projection.  This  enables  us  to  calculate  the             taev model is eﬀectively realized as strong-coupling lim-
+wave  function  for  large  systems.   By  replacing  Eq.(39)                 its of at2g multi-orbital Hubbard model on a honeycomb
+with                                                                          lattice28,31,33–36.   There,  the  hopping  amplitude t,  spin-
+                                                                              orbit interaction λ,  on-site  Coulomb interaction U,  and
+                                                                              Hund’s  coupling JH  are  basic  parameters  to  deﬁne  the
+                            ∑     Nh∏                                         Hamiltonian.  The Hamiltonian is given by
+                                      Knqq ,                               (44)                   Ht2g =H0 +HSOC +HU,                   (45)
+                            {nq}  q=1
+                                                                              where each term is deﬁned by the following:  The hopping
+                                                                              term is given by
+with  a  number  of  hexagonal  operators Kq, Nh,  instead                                              ∑                 [                   ]
+ofNq − 1 whereNh <Nq − 1, the computation time can                                   H0 = ∑                       ti,j;a,b c†iaσcjbσ + h.c.    .  (46)
+be  reduced  to  a  tractable  range.   In  this  projection,  we                            ⟨i,j⟩σa,b=xy,yz,zx
+arbitrarily choose some hexagons in the lattice to ﬁx the
+value  of Ki  to  1.   The  energy  gets  lower  for  larger Nh               Here we deﬁne the hopping matricesti,j;a,b on the honey-
+with monotonic reductions as shown in Fig.  6, where the                      comb lattice (see Fig.7) as follows:  If ⟨i,j⟩ belongs to ax-
+energies  of  3 × 4,  4 × 4,  and  6 × 6  unit  cells  are  calcu-            bond,  (a,b) = (zx,xy), ⟨i,j⟩ ∈ y-bond (a,b) = (xy,yz),
+lated by the VMC. The energies at 3 × 4, 4 × 4 converge                       and  ⟨i,j⟩  ∈ z-bond  (a,b)  =  (yz,zx)  and  0  for  others.
+accurately in the limitNh →Nq − 1 as already shown in                         The spin-orbit interaction term is deﬁned by
+Table II. For the size 6 × 6, although the full projection                                                                             
+is not possible within our feasible computation time, the                                                         0      +iˆσz   −iˆσy
+improvement of the  energy with  increasing Nh  suggests                                HSOC =λ∑⃗c†           −iˆσz      0      +iˆσx ⃗ci,      (47)
+that  it  approaches the  exact value E/N  = −3.901.  Be-                                                  i
+                                                                                                       i        +iˆσy   −iˆσx      0
+yond  the  full  summation,  Monte  Carlo  sampling  of  the
+summation  of  projection  discussed  in  Sec.    V  may  re-                 where        a        vector        representation   ⃗c†
+lax the limitation on Nh  and give convergence of energy                                                                                   i             =
+within feasible computational time.                                           (c†ℓyz↑,c†iyz↓,c†ℓzx↑,c†izx↓,c†ℓxy↑,c†ixy↓)       is       introduced.
+                                                                                                                                                  10
+
+
+TABLE  III.    Total  energy  of  three-orbital  Hubbard  model
+with spin-orbit interaction λ at t =λ = 1.0, and U  = 2.5 .
+                     JH       VMC          Exact
+                     0.0  135.85 ± 0.02    135.78                                                              [
+                    0.25  105.64 ± 0.03    105.52
+                                                                                                 Z                            Y
+
+Finally the two-body interaction term is deﬁned by
+HU  =U∑             ∑        nia↑nia↓
+
+             i  a=yz,zx,xy                                                                       Y                           Z
++∑∑∑[(U − 2JH)niaσnib
+                                        σ + (U − 3JH)niaσnibσ]
+     i  a<b   σ                                                                                                [
+       ∑   ∑    [                                         ]
++JH              c†ia↑c†ib↓cia↓cib↑ +c†ia↑c†ia↓cib↓cib↑     .        (48)
+        i  a⁄=b
+
+  We deﬁned the VMC wave function of hole picture to                         FIG. 7.  (Color online) Single hexagon with periodic boundary
+reduce the size of the matrixX in Eq.(19) and introduced                     condition.  Here the size isNs = 6 with six degrees of freedom
+a Jastrow-Gutzwiller-type correlation factor of the form                     at each site (three orbitals times two spin degrees of freedom).
+                                                  
+                CJG ≡ exp     −∑       gijNiNj,                (49)                V.     DISCUSSION  AND  CONCLUSIVE
+                                     i,j                                                                 REMARKS
+
+whereNi is the number of hole at sitei andgij  are vari-                        In  this  paper,  we  have  extended  the  VMC  method
+ational parameters.  Our VMC wave function is given by                       to  treat  the  Hamiltonian,  and  applied  it  to  the  Kitaev-
+CJG|ψpair⟩.  CalculatingOk(x) in Eq.(8) for these param-                     Heisenberg model.  The advantage of the VMC method is
+eters are not diﬃcult.  For any type of correlation factor                   that it is able to treat large system sizes even when elec-
+of the form                                                                  tron correlations and  geometrical frustrations  are  large.
+                                (               )                            Our study further shows that the method is eﬃciently ap-
+                   Cα = exp       −∑     αkΘk      ,                    (50) plicable to systems including non-colinear magnetic ﬁelds
+                                      k                                      and spin-orbit interactions.  Furthermore, we have shown
+                                                                             that  the  energy  error  in  the  Kitaev  limit  is  very  small
+where αk    are   variational   parameters   and   Θk    are                 (less than 0.1% in the present case) without an apprecia-
+diagonal    operators    for    real    space    conﬁgurations               ble system size dependence.  The degeneracy of topolog-
+[Θk|x⟩ = Θk(x)|x⟩], correspondingOk(x) is obtained as                        ical ground state in the  Kitaev limit  is  also successfully
+                                                                             reproduced  by  employing  the  quantum  number  projec-
+                        Ok(x) = −Θk(x).                           (51)       tions,  which  is  a  powerful tool for  studying  Kitaev  spin
+                                                                             liquid.
+  For  the  benchmark  calculation,  we  set  the  value  to                    Reducing computational costs for calculations of large-
+t  = λ  =  1.0, U   =  2.5  and JH   =  0,   0.25  with  the                 size  systems  is  one  of  the  future  issue.   In  the  present
+5/6-ﬁlled  electron  density  (5Ns  electrons  and Ns  holes                 method, the fully projected wave function in the Kitaev
+for the Ns-site system).  In the  case of a single hexagon                   spin model is tractable in limited sizes in practice because
+with the periodic boundary condition, shown in Fig.  ??,                     of the exponentially increasing number of summation for
+we found that the  error of the  energy calculated by our                    the  projection  by Kq  and  sizes  far  beyond  the  present
+VMC  method  compared  to  that  obtained  by  the  exact                    results are not practically feasible.  However, a sampling
+diagonalization is about 0.1% for this parameter values.                     of the projection will solve this diﬃculty in the future as
+Though  we  can  not  obtain the  exact  energies  for  larger               we details below.
+sizes  in  this  Hamiltonian,  the  result  suggests  that  the                 One  of  the  future  issue  is  to  use  the  Monte-Carlo
+present method is also eﬃciently applicable to the itiner-                   method  in  performing  quantum  number  projections.   A
+ant models such as the multi-orbital Hubbard model with                      certain  class  of  quantum  number  projections  including
+the  spin-orbit interaction.  Applications  to  the  itinerant               ∏Nq−1
+                                                                               q=1   (1 +Kq) requires demanding computational costs
+systems with the interplay of the electron correlation and                   exponentially  scaled  by  the  system  size,  as  already  dis-
+the spin-orbit interaction beyond the benchmark is an in-                    cussed below Eq.(31).  Therefore, for larger system sizes,
+triguing future issue.                                                       eﬃcient  algorithm  to  calculate  such  quantum  number
+                                                                                                                                                     11
+
+projections is useful.  That is, for                                           (a)
+                       |ψ⟩ =∑       wnT (n)|φ⟩,                        (52)        E/N
+                                                                                                                                    (-,-)
+                                n                                                 -0.37                                             (+,-)
+physical quantity is expressed as                                                                                                   (+,+)
+                                   ∑                                                                                                (-,+)
+   ⟨A⟩ =               1∑                             ⟨x|T (n)|φ⟩ ,(53)           -0.38
+               xnn′ρ(x,n,n′)      xnn′ρ(x,n,n′)⟨x|AT (n)|φ⟩
+where
+          ρ(x,n,n′) =wnwn′⟨φ|T (n′)|x⟩⟨x|T (n)|φ⟩.       (54)                     -0.39
+Using the Monte-Carlo method for the summation∑xnn′
+may  reduce  the  computational  cost.   Since ρ(x,n,n′)  is                               5   10     15   20    25    30    35    40    45    50    L
+a  complex  number,  we  need  to  generate  (x,n,n′)  with
+probability  proportional  to  |ρ(x,n,n′)|  and  reweight  it                   (b)
+with  the  factor ρ(x,n,n′)/|ρ(x,n,n′)|.   That  is,  we  cal-                  ΔE/N
+culate two quantities
+           ∑                                                                       0.1
+   α =    ∑   xnn′ρ(x,n,n′)                                                                                                      E(-,-)-E0
+
+             xnn′ |ρ(x,n,n′)|,                                                    0.01
+          ∑                       ∑
+    β =                1                             ⟨x|T (n)|φ⟩ ,(55)
+             xnn′ |ρ(x,n,n′)|     xnn′ρ(x,n,n′)⟨x|AT (n)|φ⟩                       0.001
+and the ratio β/α gives the value of Eq.(53).
+  Our  improvement  of  the  VMC  method  opens  a  way                          0.0001
+for  studying  systems  with  various  kinds  of  competing
+phases under the competition of electron correlations and                         1e-05
+spin-orbit interaction.  The Kitaev model, studied in this
+paper,  is  a  good  example.   The  present  method  has  a                      1e-06
+plenty of ﬂexibilities  and is  straightforwardly applicable                               5     10   15    20    25    30    35   40    45    50    L
+to  more realistic but  complicated  systems including  the
+itinerancy  of  electrons  coexisting  with  electron  correla-               FIG.  8.   (Color  online)  (a)  Exact  lowest  energies  per  site  of
+tions  and  strong  spin-orbit interactions.  Studies  on  the                vortex  free  states  for  the  Kitaev  model  with L ×L  periodic
+Kitaev spin liquid in more realistic cases28,31,33–36  is in-                 boundary condition.  Within the vortex free sector, the lowest
+triguing in terms of the application of our method.                           energies  of  states  distinguished  by  the  quantum  number  for
+                                                                              the global Wilson loop operators, Wx andWy  are all plotted.
+                  ACKNOWLEDGEMENT                                             The  pairs  of  signs  in  the  brackets  in  the  legend  correspond
+                                                                              to  the  sign  of  (Wx,Wy).  When L  is  even,  only  (−, −)  state
+                                                                              is  excited  and  the  other  three  states  are  degenerate  and  the
+  The  authors thank  ﬁnancial support  by  Grant-in-Aid                      ground  states.  (b)  Excitation  energy  per site  of  the ﬁrst  ex-
+for  Scientiﬁc  Research  (No.    22340090),  from  MEXT,                     cited states characterized by (−, −) measured from the ground
+Japan.   The  authors  thank  T.  Misawa  and  D.  Tahara                     state energy.
+for fruitful discussions.  A part of this research was sup-
+ported  by  the  Strategic  Programs  for  Innovative  Re-
+search  (SPIRE),  MEXT  (grant  numbers  hp130007  and
+hp140215), and the Computational Materials Science Ini-                       byD3d elements using Wilson loop projections and Pfaf-
+tiative (CMSI), Japan.                                                        ﬁan calculations.  Here, transformation of the function is
+                                                                              done by using the deﬁnition of the point group elements
+
+          Appendix  A:  Point  Group  Symmetry
+
+  By using our VMC method, we can calculate the wave                               TcIσT −1 =a(I,σ,T, ↑)c†T (I)↑ +a(I,σ,T, ↓)c†T (I)↓(A1)
+function  transformed  by  operators  of  point  group  sym-
+metry.   For  example,  in  the  case  of  hexagonal  24  sites
+conﬁguration, we ﬁnd that the representation with basis
+set deﬁned by Eq.  (43) reduces toA1g ⊕Eg.  This is clar-                     and Eq.(26), whereT (I) is the site obtained after trans-
+iﬁed  by  observing  transformation  property  of  the  basis                 formationT  to site I.
+                                                                                                                                                            12
+
+Appendix  B: Exact  Energy  and Degeneracy at  Large                              tion onto the physical solution of the Kitaev’s mapping to
+                                   Sizes                                          Majorana fermions37.  Figure 8 shows the  lowest energy
+                                                                                  per  site  of  vortex  free  states  (Kq  =  1  for  all  hexagons)
+   Here, we show that exact ground states of the Kitaev                           characterized  by  diﬀerent  eigenvalues  of  global  Wilson
+model have four-fold degeneracy characterized by diﬀer-                           loop operators atL ×L unit cells model.  The sizeL = 4
+ent eigenvalues of global Wilson loop operators at large                          corresponds to the 4 × 4 unit-cell conﬁguration.
+size limit.  We obtained exact solutions using the projec-
+
+
+
+
+
+
+
+ 1  M.  Imada,  A.  Fujimori,  and  Y.  Tokura,  Rev.  Mod.  Phys                 20  J.  E.  Moore,  and  L.  Balents,  Phys.  Rev.  B  75,  121306
+   70, 1039 (1998).                                                                   (2007).
+ 2  U.  Schollw¨ock,  J.  Richter,  D.  J.  J.  Farnell,  and  R.  F.             21  R. Roy, Phys. Rev. B 79, 195322 (2009).
+   Bishop  (Eds.),  Quantum  Magnetism,  Lect.  Notes  Phys.                      22  M.  Z.  Hasan,  and  C.  L.  Kane,  Rev. Mod.  Phys. 82,  3045
+   645 (Springer, Berlin Heidelberg 2004).                                            (2010).
+ 3  J. G. Bednorz and K. A. M¨uller, Z. Phys. B 64 189 (1986).                    23  M. K¨onig, S. Wiedmann, C. Br¨une, A. Roth, H. Buhmann,
+ 4  R. J. Baxter, Exactly Solved Models in Statistical Mechan-                        L.W. Molenkamp, X.L. Qi and S. C. Zhang, Science 318,
+   ics, (Academic Press, London 1982).                                                766 (2007).
+ 5  E.  H.  Lieb,  B.  Nachtergaele,  J.  P.  Solovej,  J.  Yngvason,             24  H.  Zhang,  C.  X.  Liu,  X.  L.  Qi,  X.  Dai,  Z.  Fang  and  S.C.
+   Condensed  Mattar  Physics  and  Exactly  Soluble  Models,                         Zhang, Nature Physics 5, 438 (2009).
+   (Springer, Berlin Heidelberg 2004).                                            25  F. D. M. Haldane, Phys. Rev. Lett. 61, 2015 (1988).
+ 6  R. Blankenbecler, D. J. Scalapino, and R. L. Sugar, Phys.                     26  N. Regnault, and B. A. Bernevig, Phys. Rev. X 1, 021014
+   Rev. D 24 2278 (1981).                                                             (2011).
+ 7  S. Sorella, S. Baroni, R. Car, and M. Parrinello, Europhys.                   27  A Kitaev, Ann. Phys. 321 2 (2006).
+   Lett 8 663 (1989).                                                             28  G. Jackeli and G. Khaliullin Phys. Rev. Lett. 102 017205
+ 8  M.  Imada  and  Y.  Hatsugai,  J.  Phys.  Soc.  Jpn.  58  3752                    (2009).
+   (1989).                                                                        29  T. Misawa and M. Imada, Phys. Rev. B 90, 115137 (2014).
+ 9  N.  Furukawa  and  M.  Imada,  J.  Phys.  Soc.  Jpn.  61  3331                30  See  §2.3  of  C.  Weber,  Ph.  D  thesis,  ´Ecole  Polytechnique
+   (1992).                                                                            F´ed´erale De Lausanne, (2007)
+10  S. R. White, Phys. Rev. B 48 10345 (1993).                                    31  J. Chaloupka, G Jackeli, and G Khaliullin, Phys. Rev. Lett
+11  W.  Metzner  and  D.  Vollhardt,  Phys.  Rev.  Lett.  62  324                     105, 027204 (2010).
+   (1989).                                                                        32  G. Baskaran, S. Mandal, and R. Shankar, Phys. Rev. Lett
+12  A. Georges, G. Kotliar, W. Krauth, and M. J. Rozenberg,                           98, 247201 (2007).
+   Rev. Mod. Phys. 68 13 (1996).                                                  33  I. Kimchi and Y.-Z. You, Phys. Rev. B 84, 180407 (2011).
+13  D. Ceperley, G. V. Chester,  and M. H. Kalos,  Phys. Rev.                     34  V.   K.   Katukuri,    S.   Nishimoto,    V.   Yushankhai,    A.
+   B 16 3081 (1977).                                                                  Stoyanova,   H.   Kandpal,   C.   Sungkyun,   R.   Coldea,   I.
+14  J.  P.  Bouchaud,  A.  Georges,  and  C.  Lhuillier,  J.  Phys.                   Rousochatzakis,  L.  Hozoi,  and  J.  van  den  Brink,  New  J.
+   (Paris) 49 553 (1988).                                                             Phys. 16, 013056 (2014).
+15  S. Sorella, Phys. Rev. B 64 024512 (2001).                                    35  J. G. Rau, E. K.-H. Lee, and H.-Y. Kee, Phys. Rev. Lett.
+16  S.  Sorella,  L.  Capriotti,  F.  Becca,  and  A.  Parola,  Phys.
+                                                                                      112, 077204 (2014).
+   Rev. Lett. 91, 257005 (2003)                                                   36  Y.  Yamaji,  Y.  Nomura,  M.  Kurita,  R.  Arita,  M.  Imada,
+17  M.  Bajdich,  L.  Mitas,  L.  K.  Wagner,  and  K.  E.  Schmidt,
+                                                                                      Phys. Rev. Lett 113, 107201 (2014).
+   Phys. Rev. B 77, 115112 (2008).                                                37  F.  L. Pedrocchi,  S. Chesi,  and  D. Loss,  Phys. Rev. B 84,
+18  D.  Tahara,  and  M.  Imada,  J.  Phys.  Soc.  Jpn  77,  114701                   165414 (2011).
+   (2008).
+19  L.  Fu,  C.  L.  Kane,  and  E.  J.  Mele,  Phys.  Rev.  Lett.  98,
+   106803 (2007).

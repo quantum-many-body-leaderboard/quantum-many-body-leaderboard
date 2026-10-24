@@ -1,0 +1,1530 @@
+One Proximate Kitaev Spin Liquid in the K-J-Γ Model on the Honeycomb Lattice
+Jiucai Wang, 1 B. Normand, 2 and Zheng-Xin Liu 1,∗
+1Department of Physics, Renmin University of China, Beijing 100872, China
+2Neutrons and Muons Research Division, Paul Scherrer Institute, CH-5232 Villigen-PSI, Switzerland
+(Dated: November 14, 2019)
+In addition to the Kitaev (K) interaction, candidate Kitaev materials also possess Heisenberg (J)
+and oﬀ-diagonal symmetric (Γ) couplings. We investigate the quantum ( S = 1/2) K-J-Γ model on
+the honeycomb lattice by a variational Monte Carlo (VMC) method. In addition to the “generic”
+Kitaev spin liquid (KSL), we ﬁnd that there is just one proximate KSL (PKSL) phase, while the
+rest of the phase diagram contains diﬀerent magnetically ordered states. The PKSL is a gapless
+Z2 state with 14 Majorana cones, which in contrast to the KSL has a gapless spin response. In
+a magnetic ﬁeld applied normal to the honeycomb plane, it realizes two of Kitaev’s gapped chiral
+spin-liquid phases, of which one is non-Abelian with Chern number ν = 5 and the other is Abelian
+with ν = 4. These two phases could be distinguished by their thermal Hall conductance.
+The Kitaev model [1] of bond-dependent Ising-type
+spin interactions on the honeycomb lattice oﬀers exactly
+soluble examples of both gapped and gapless quantum
+spin liquids (QSLs). The magnetically disordered ground
+states of diﬀerent QSLs are the consequence of strong
+intrinsic quantum ﬂuctuations and provide particularly
+clean realizations of diﬀerent fundamental phenomena.
+The gapped Kitaev QSL has Z 2 Abelian topological or-
+der, while the quintessential “Kitaev spin liquid” (KSL)
+is the gapless state whose low-energy excitations form
+two Majorana cones, whereas its Z 2 ﬂux excitations are
+gapped. In an applied magnetic ﬁeld, the Majorana cones
+become gapped and the resulting state is a chiral spin
+liquid (CSL) with Ising-type non-Abelian anyonic exci-
+tations, which have potential application in fault-tolerant
+topological quantum computation.
+Thus the experimental realization of the Kitaev model
+has moved to the forefront of research in strongly corre-
+lated materials. While transition-metal compounds with
+strong spin-orbit coupling do realize Kitaev-type inter-
+actions [2, 3], these “candidate Kitaev” materials typi-
+cally possess in addition signiﬁcant non-Kitaev interac-
+tions, which lead to Na2IrO3 [4, 5] andα-RuCl3 [6–9] ex-
+hibiting magnetic order at low temperatures. Although
+H3LiIr2O6 [10] is not ordered, it appears to show strong
+impurity and extrinsic disordering eﬀects. At the same
+order in a strong-coupling treatment [11], the Kitaev (K)
+interaction is accompanied by Heisenberg ( J) and oﬀ-
+diagonal symmetric (Γ) interactions, and thus the focus
+of the ﬁeld has become the understanding of “proximate
+Kitaev” physics in this class of model, also under applied
+magnetic ﬁelds [12–15] and pressures [16].
+In this Letter, we investigate the K-J-Γ extended Ki-
+taev model by variational Monte Carlo (VMC) studies of
+a spinon representation. Guided by the projective sym-
+metry group (PSG), we obtain the globalK-J-Γ phase di-
+agram and show that it contains two distinct QSL phases
+among several classically ordered phases. One QSL, at
+small J and Γ, is the generic KSL. At larger Γ we ﬁnd
+one proximate KSL (PKSL), a non-Kitaev QSL sharing
+the same PSG as the KSL but with 14 Majorana cones
+in the ﬁrst Brillouin zone and gapless spin excitations.
+In an applied ˆc-axis ﬁeld, all 14 cones are gapped and
+the PKSL hosts two exotic CSL phases, one with non-
+Abelian anyons and one with Abelian anyons. These re-
+sults shed crucial new light on the parameter-space con-
+straints and (induced) spin-liquid phases of candidate Ki-
+taev materials.
+In the candidate materials known to date, K < 0 is
+believed to be ferromagnetic [17–20], while J has been
+argued to have both signs and extended nature, but all
+studies of the Γ (and Γ ′) term(s) take Γ > 0 [21, 22].
+The role of Γ in a fully quantum model remains little
+studied [23], but from classical models Γ is thought to
+explain the strongly anisotropic ﬁeld response ofα-RuCl3
+[8, 21]. In general, it is not yet accepted that a J =
+0 (i.e. K-Γ) model can support a magnetically ordered
+ground state [21], and it has been claimed on the basis
+of exact diagonalization of small systems [11, 24] and
+iDMRG studies of narrow cylinders [25] that multiple
+QSL phases may exist in the K-J-Γ model at small J.
+The model we consider is
+H =
+∑
+⟨i,j⟩∈γ
+KSγiSγj +J⃗Si·⃗Sj + Γ(Sαi Sβj +SβiSαj ), (1)
+where⟨i,j⟩ denotes nearest-neighbor sites andγ both the
+bond type on the honeycomb lattice and the spin index.
+Due to the spin-orbit coupling, the symmetry group of
+the model, G = D3d×ZT2 where ZT2 ={E,T} is time
+reversal, is ﬁnite, i.e. its elements are discrete operations
+combining the space-time and spin degrees of freedom.
+We ﬁnd the ground state of the S = 1/2K-J-Γ model
+by VMC, which is a powerful method for the study
+of spin-liquid phases. We ﬁrst introduce the fermionic
+slave-particle representation Smi = 12C†iσmCi, where
+C†i = (c†i↑,c†i↓), m≡ x,y,z , and σm are Pauli matrices.
+The particle-number constraint, ˆNi =c†i↑ci↑ +c†i↓ci↓ = 1,
+should be imposed at every site to ensure that the size
+of the fermion Hilbert space is the same as that of the
+arXiv:1903.10026v3  [cond-mat.str-el]  13 Nov 2019
+2
+0 0.2 0.4 0.6 0.8 1 1.2 1.4
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+Stripe
+IS
+AFM
+GKSL
+ZigzagFM
+-1
+-0.6
+-0.2
+0.2
+0.6
+1
+AFM
+IS
+Zigzag
+FM
+(b)(a)
+PKSL
+FIG. 1. (a) Phase diagram of the quantum K-J-Γ model
+for K < 0 in the limit of large system size. There are two
+QSL phases of diﬀerent types but with the same PSG, the
+GKSL and the PKSL. The magnetically ordered phases are
+antiferromagnetic (AFM), stripe, incommensurate spiral (IS),
+zigzag, and ferromagnetic (FM) order. (b) Detail of the limit
+|K|/Γ→ 0, where all phases are magnetically ordered; the
+transitions occur at J/Γ = 0.15, 0.05, and−0.75.
+physical spin. This complex fermion representation is
+equivalent to the Majorana representation introduced by
+Kitaev [1]. It has a local SU(2) symmetry that is inde-
+pendent of the SU(2) spin-rotation operations and can
+be considered as a gauge structure [26], as discussed in
+Sec. S1A of the Supplemental Material (SM) [27]. The
+spin interactions in Eq. (1) are rewritten in terms of in-
+teracting fermionic operators and decoupled into a non-
+interacting mean-ﬁeld Hamiltonian (Sec. S1B of the SM
+[27]), which for the most general spin-orbit-coupled spin
+liquid has the form
+Hmf =∑⟨i,j⟩∈γ Tr [U (0)ji ψ†iψj] + Tr [U (1)ji ψ†i (iRγαβ)ψj]
++ Tr [U (2)ji ψ†iσγψj] + Tr [U (3)ji ψ†iσγRγαβψj], (2)
+whereψi = (Ci ¯Ci), ¯Ci = (c†i↓,−c†i↑)T ,Rγαβ =− i√2(σα +
+σβ) is a rotation matrix, and the quantities U (m)ji , with
+γ speciﬁed by⟨i,j⟩, are mean-ﬁeld parameters.
+In the states described by Eq. (2), the SU(2) gauge
+symmetry is usually reduced to U(1) or Z 2, which is
+known as the invariant gauge group (IGG) [35]. The
+Majorana mean-ﬁeld solution of the Kitaev model has
+IGG Z 2. Because the KSL is a special (exactly solu-
+ble) point in the model of Eq. (1), one expects a ﬁnite
+regime of QSL states connected adiabatically to it; fol-
+lowing Ref. [36] we call this the generic KSL (GKSL).
+A QSL ground state preserves the full symmetry group,
+G, and so does the mean-ﬁeld Hamiltonian. However,
+a general symmetry operation of this Hamiltonian is a
+space-time and spin operation in G combined with an
+SU(2) gauge transformation. These new symmetry oper-
+ations form a larger group, known as the PSG, which is
+equivalent to a central extension ofG by the IGG (Sec. S2
+of the SM [27]). The PSG of the KSL is known exactly
+[37] and the corresponding mean-ﬁeld Hamiltonian must
+respect it. The PSG reduces the number of independent
+parameters and, as detailed in Sec. S3 of the SM [27], the
+coeﬃcients U (m)ji in Eq. (2) are constrained to the forms
+U (0)ji =iη0 +i(ρa +ρc),U (1)ji =i(ρa−ρc +ρd)(τα +τβ) +
+iη3(τx +τy +τz),U (2)ji =i(ρa +ρc)τγ +iη5(τx +τy +τz),
+and U (3)ji =i(ρc−ρa−ρd)(τα−τβ).
+In addition we allow competing magnetically ordered
+phases by including the term H′mf = 12 ∑iMMMi·C†iσσσCi
+in the mean-ﬁeld Hamiltonian [23]. The ordering pat-
+tern of MMMi is set from the classical solution within the
+single-QQQ approximation, leaving only the amplitude, M,
+and the canting angle, φ, to be determined variationally
+(Sec. S3 of the SM [27]). The power of the VMC approach
+is that it allows the particle-number constraint to be en-
+forced locally, by performing Gutzwiller projection of the
+mean-ﬁeld ground states to obtain the trial wave func-
+tions|Ψ(x)⟩ = PG|Ψmf(x)⟩, where x denotes the varia-
+tional parameters (ρa,ρc,ρd,η 0,η 3,η 5,M,φ ). These are
+determined by minimizing the trial ground-state energy,
+E(x) =⟨Ψ(x)|H|Ψ(x)⟩/⟨Ψ(x)|Ψ(x)⟩, in calculations per-
+formed on tori of up to 14 ×14 unit cells, i.e. 392 lattice
+sites. Because the ﬁnal variational states depend cru-
+cially on the mean-ﬁeld Hamiltonian, a meaningful VMC
+procedure requires a careful choice and comparison of de-
+coupling channels, and we have tested many spin-liquid
+and magnetic ansatzes (Sec. S3).
+Figure 1 shows the VMC phase diagram of the K-J-Γ
+model at zero applied ﬁeld. As a benchmark, we note
+that our phase boundaries at Γ = 0, J >0 agree quanti-
+tatively with those of Ref. [38]. Although the mean-ﬁeld
+phase diagram contains a number of candidate QSLs,
+VMC calculations reveal that only two are robust. One
+is the GKSL, whose regime of stability is bounded ap-
+proximately by|J/K| = 0.2 at Γ = 0 and Γ/|K| = 0.15;
+this result provides a quantitative statement of the re-
+gion of relevance for the considerations of Ref. [36]. The
+second we name the PKSL, one of our central results be-
+ing that there is only one QSL proximate to the GKSL.
+The GKSL and PKSL have the same PSG despite be-
+ing physically quite diﬀerent states. In contrast to the
+spinon excitation spectrum of the GKSL, which has two
+Majorana cones in the ﬁrst Brillouin zone [Fig. 2(a)],
+the PKSL has 14 [Figs. 2(b) and 2(d)]. These cones are
+protected from local perturbations by the combination of
+spatial-inversion and time-reversal symmetry, as detailed
+in Sec. S3 of the SM [27]. We discuss the nature of the
+cones and the magnetic response of the PKSL below.
+The majority of the phase diagram (Fig. 1) consists of
+the magnetically ordered states familiar from the classical
+K-J-Γ model [11], namely AFM, stripe, incommensurate
+spiral (IS), zigzag, and FM ordered phases. Unsurpris-
+ingly, the boundaries around the QSL phases are rather
+diﬀerent in the quantum model, with FM being stronger
+3
+0.11 0.15 0.19
+-0.21
+-0.205
+-0.2
+-0.195
+(c)
+(d)
+0
+0.5
+1
+0
+0.5
+1
+0
+1
+2
+3
+4
+5
+6(e)
+0
+0.5
+1
+0
+0.5
+1
+10
+20
+30
+40
+50
+60
+(f)
+FIG. 2. (a) Spinon dispersion in the GKSL, drawn with Γ /|K| = 0.1 and J = 0, showing 2 Majorana cones. (b) Spinon
+dispersion in the PKSL, drawn with Γ /|K| = 0.3 and J = 0, showing 14 Majorana cones. (c) Ground-state energy per site
+of the K-J-Γ model at ﬁxed J/|K| = 0.05, showing a clear ﬁrst-order phase transition. (d) Locations of the 14 cones of
+the PKSL in the ﬁrst Brillouin zone. (e) Dynamical structure factor of the PKSL at low energy (integrated over energies
+0≤ω/|K|≤ 0.08). (f) Dynamical structure factor of the PKSL at ω/|K| = 0.15 (integrated over 0.13≤ω/|K|≤ 0.17).
+at low Γ and IS extending to J <0. We comment that,
+not only can an incommensurate ordered phase still ex-
+ist for S = 1/2, but it can also exist throughout the
+phase diagram from (near) a pure K-Γ to a pure J-Γ
+model; as expected of our ordered phases, the spiral an-
+gles we obtain agree with Ref. [11]. We draw attention
+to the fact that all of the J = 0 line in Fig. 1 is or-
+dered for Γ/|K|> 0.55, with IS order until Γ /|K| = 0.7
+and zigzag order all the way to and in the pure Γ model
+[39]. This result contradicts an iDMRG study [25] that
+reported only QSL phases in the K-Γ model; as we show
+in Sec. S4 of the SM [27], that conclusion is relevant only
+for very narrow cylinders. While the existence of order
+has been called into question at J = 0 [21], it is robust
+in the S = 1/2 model in VMC.
+We state without demonstration that all of the phase
+transitions between the magnetically ordered phases are
+ﬁrst-order, which is the simplest possibility when two
+phases of diﬀering order parameters meet. A more com-
+plex situation is possible for the transitions between or-
+dered and QSL phases, which could be second-order or
+even show an intermediate phase with coexisting mag-
+netic and Z 2 topological order (Sec. S3 of the SM [27]).
+However, we ﬁnd at all points we have investigated that
+these transitions are also ﬁrst-order. Finally, the transi-
+tion between the GKSL and PKSL is also sharply ﬁrst-
+order, as may be observed both in the ground-state en-
+ergy [Fig. 2(c)] and through discontinuities in the optimal
+variational parameters (not shown). Neither the GKSL
+nor the PKSL dispersion [Figs. 2(a) and 2(b)] evolves
+signiﬁcantly around the level-crossing.
+Returning to the spin response of the QSLs, it is help-
+ful to consider Kitaev’s representation [1] of the spin in
+terms of Majorana fermions, Sm = ibmc (m = x,y,z ),
+which we review in Sec. S1 of the SM [27]. In the GKSL,
+the c fermions are gapless and the bm fermions gapped,
+but the gapped spin response of the KSL becomes gapless
+when both J and Γ are non-zero [36]. This is veriﬁed in
+our VMC calculations in the form of c-bm hybridization
+in the low-energy limit, but as shown in Sec. S5 of the SM
+[27] this hybridization remains very weak throughout the
+GKSL regime, such that low-energy spin excitations, if
+present, have very little weight. By contrast, in the PKSL
+we ﬁnd that the quasiparticles are strongly hybridized
+combinations of c and bm fermions at all wave vectors
+and energies, which is a consequence of the ﬁnite η3 pa-
+rameter induced by the Γ term. Thus low-energy spin
+excitations arise from both intra- and intercone spinon
+processes and the spin response of the PKSL is gapless,
+as we illustrate in Fig. 2(e) by computing the dynami-
+cal structure factor, S(qqq,ω ), at the mean-ﬁeld level for
+energy ω = 0 (Sec. S5). The positions of the maxima
+are readily understood from the cone structure shown in
+Fig. 2(d). For energies beyond the cone region, S(qqq,ω )
+4
+0 0.4 0.8 1.2 1.6
+0 0.01 0.02 0.03 0.04 0.05
+FIG. 3. Phase diagrams of the PKSL (Γ /|K| = 0.3, J = 0)
+in a magnetic ﬁeld applied in the ˆx− ˆy direction and in the
+ˆc = 1√3(ˆx + ˆy + ˆz) direction. “6-cone” denotes a phase whose
+low-energy spinon dispersion has six remaining cones.
+takes on a complex and continuous form [Fig. 2(f)].
+One of the most exciting properties of the KSL is that
+it becomes a gapped, non-Abelian CSL in an applied
+magnetic ﬁeld of any orientation not orthogonal to an
+Ising (spin) axis. Speciﬁcally, Kitaev classiﬁed 16 diﬀer-
+ent types of CSL based on the statistics of their vortices,
+which are defects arising from inserted ﬂux quanta [1]. He
+showed that these Z 2 vortices are Abelian anyons when
+the Chern number, ν, is even and non-Abelian anyons
+whenν is odd, leading to a clear illustration of topologi-
+cal properties, edge modes, fusion rules, and applications
+in quantum computation. The KSL in a ﬁeld provides
+an example of the class ν = 1, where the non-Abelian
+statistics arise due to unpaired Majorana modes ( σ in
+Table I) associated with the vortices. By VMC calcula-
+tions in a ﬁeld BBB‖ ˆc (Sec. S6 of the SM [27]), we verify
+at the mean-ﬁeld level that these modes are also present
+in the GKSL; this non-Abelian regime is terminated at a
+Z2 deconﬁnement-to-conﬁnement transition [38].
+In the PKSL, each of the 7 pairs of cones becomes
+gapped in a ﬁeld BBB‖ ˆc and contributes a Chern num-
+ber ν =±1. We demonstrate by VMC calculations at
+Γ/|K| = 0.3 and J = 0 that a CSL phase with ν = 5
+is obtained at small |BBB|. As shown in Fig. 3, there are
+two successive, weakly ﬁrst-order phase transitions with
+increasing|BBB|, to aν = 4 CSL and then to a trivial phase
+connected to the fully polarized state. (We comment that
+this trivial, Z 2-conﬁned phase is obtained from both the
+ν = 1 and ν = 0 mean-ﬁeld states, as shown in Sec. S6
+of the SM [27].) Thus the PKSL provides a speciﬁc real-
+ization of two little-known cases from Kitaev’s “16-fold
+way,” and we use it in Sec. S6 to illustrate their vortex
+modes at the mean-ﬁeld level. The ν = 5 phase is a non-
+Abelian CSL while the ν = 4 phase is Abelian. Quite
+generally, in a CSL with Chern number ν, there are ν
+branches of chiral Majorana edge states, each of which
+contributes to a total chiral central charge c− = ν/2.
+The thermal Hall conductance, which is a physical ob-
+servable, is therefore quantized to κxy/T Λ = c−, where
+Λ = πk2B/6h is a constant. From the number of associ-
+ated mid-gap modes it can be shown that the vortex car-
+ries topological spin eiν π8 , and from its fusion with itself
+or with a fermion we obtain the anyonic character of the
+Parent state CSL topological sectors GSD c−
+PKSL ν = 5 σ,ε, 1 3 5/2
+PKSL ν = 4 e,m,ε, 1 4 2
+KSL ν = 1 σ,ε, 1 3 1/2
+U(1) Dirac KL e, 1 2 1
+TABLE I. Field-induced CSL states realized to date inK-J-Γ
+models. ν is the Chern number. KL is the Kalmayer-Laughlin
+state [23, 40]. 1 denotes the vacuum and ε the fermion. σ
+denotes the vortices in the non-Abelian phases ( ν = 1 and
+5), which have topological spin ei π8 and ei 5π8 . e and m are
+the two diﬀerent types of vortex in the Abelian CSL ( ν = 4),
+which are both semions. GSD abbreviates the ground-state
+degeneracy on a torus. c− is the chiral central charge.
+CSLs as listed in Table I. These results are further veriﬁed
+within our VMC analysis by calculating the ground-state
+degeneracy (GSD) on a torus, which matches the number
+of topologically distinct quasiparticle types.
+In contrast to the emergence in an arbitrary applied
+ﬁeld of fully gapped quantum states, which can be dis-
+tinguished by their ν or edge c− numbers, is the pos-
+sibility that, for speciﬁc ﬁeld directions, the system re-
+mains a gapless Z 2 QSL over a ﬁnite range of ﬁeld mag-
+nitudes [23]. In the PKSL we ﬁnd this to be the case for
+BBB‖ (xxx−yyy), where the six black and blue cones shown
+in Fig. 2(d) remain gapless at low ﬁelds, whereas the
+other cones become gapped. For BBB‖ (yyy−zzz), the black
+and red cones remain gapless and for BBB ‖ (zzz−xxx) the
+black and green cones. With increasing ﬁeld, pairs of
+cones move towards each other, but a ﬁrst-order tran-
+sition occurs to a fully gapped state at a critical ﬁeld
+Bc≃ 0.017|K|/gµB (Fig. 3). This reﬂects the fact that
+many competing states appear at these low energy scales.
+We leave the response of the PKSL to ﬁelds of arbitrary
+orientation and strength to a future study.
+The K-J-Γ model is expected to provide the basis
+for interpreting the physics of 4 d and 5d transition-
+metal compounds. While robust magnetic order suggests
+strong J terms in Li 2IrO3 and Na 2IrO3 [4, 5], α-RuCl3
+is thought to have only weak J [20] and many diﬀerent
+K and Γ combinations have been suggested [21, 22]. Our
+phase diagram provides a quantitative guide to the low-J,
+low-Γ parameter regime required to observe QSL behav-
+ior, including by application of pressure to the known
+candidate materials. It also oﬀers a detailed framework
+within which to interpret both the physics of the magneti-
+cally disordered material H3LiIr2O6 [10] and the reported
+observation of a half-integer-quantized thermal Hall con-
+ductance in α-RuCl3 [41].
+In summary, we have obtained the phase diagram of
+the quantum K-J-Γ model on the honeycomb lattice.
+We ﬁnd two quantum spin-liquid phases, the generic KSL
+and one proximate KSL, that have the same projective
+symmetry group but quite diﬀerent low-energy physics.
+The PKSL is a gapless Z 2 QSL with 14 Majorana cones
+5
+and a gapless spin response. In an applied ﬁeld it realizes
+a gapped, non-Abelian chiral QSL with ν = 5 and an
+Abelian one with ν = 4. We also map the wide variety of
+magnetically ordered phases appearing in the quantum
+limit. Our phase diagram provides an essential guide to
+the physics of candidate Kitaev materials.
+Acknowledgments. We thank M. Cheng, H.-J. Liao, Q.
+Luo, M. Vojta, C. Wang, T. Xiang, Q. Wang, and espe-
+cially Y.-M. Lu and L. Zou for helpful discussions. This
+work was supported by the Ministry of Science and Tech-
+nology of China (Grant No. 2016YFA0300504), the NSF
+of China (Grant No. 11574392 and No. 11974421), and
+the Fundamental Research Funds for the Central Uni-
+versities and the Research Funds of Renmin University
+of China (No. 19XNLG11).
+∗ liuzxphys@ruc.edu.cn
+[1] A. Kitaev, Ann. Phys. 321, 2 (2006).
+[2] G. Jackeli and G. Khaliullin, Phys. Rev. Lett. 102,
+017205 (2009).
+[3] J. Chaloupka, G. Jackeli, and G. Khaliullin, Phys. Rev.
+Lett. 105, 027204 (2010).
+[4] F. Ye, S. X. Chi, H. B. Cao, B. C. Chakoumakos, J. A.
+Fernandez-Baca, R. Custelcean, T. F. Qi, O. B. Korneta,
+and G. Cao, Phys. Rev. B 85, 180403(R) (2012).
+[5] S. K. Choi, R. Coldea, A. N. Kolmogorov, T. Lancaster,
+I. I. Mazin, S. J. Blundell, P. G. Radaelli, Y. Singh,
+P. Gegenwart, K. R. Choi, S.-W. Cheong, P. J. Baker,
+C. Stock, and J. Taylor, Phys. Rev. Lett. 108, 127204
+(2012).
+[6] J. M. Fletcher, W. E. Gardner, A. C. Fox, and G. Top-
+ping, J. Chem. Soc. A 1038 (1967).
+[7] J. A. Sears, M. Songvilay, K. W. Plumb, J. P. Clancy, Y.
+Qiu, Y. Zhao, D. Parshall, and Y.-J. Kim, Phys. Rev. B
+91, 144420 (2015).
+[8] R. D. Johnson, S. C. Williams, A. A. Haghighirad, J.
+Singleton, V. Zapf, P. Manuel, I. I. Mazin, Y. Li, H. O.
+Jeschke, R. Valent´ ı, and R. Coldea, Phys. Rev. B 92,
+235119 (2015).
+[9] H. B. Cao, A. Banerjee, J.-Q. Yan, C. A. Bridges, M. D.
+Lumsden, D. G. Mandrus, D. A. Tennant, B. C. Chak-
+oumakos, and S. E. Nagler, Phys. Rev. B 93, 134423
+(2016).
+[10] K. Kitagawa, T. Takayama, Y. Matsumoto, A. Kato, R.
+Takano, Y. Kishimoto, S. Bette, R. Dinnebier, G. Jackeli,
+and H. Takagi, Nature 554, 341 (2018).
+[11] J. G. Rau, E.-H. Lee, and H.-Y. Kee, Phys. Rev. Lett.
+112, 077204 (2014).
+[12] I. A. Leahy, C. A. Pocs, P. E. Siegfried, D. Graf, S.-H.
+Do, K.-Y. Choi, B. Normand, and M. Lee, Phys. Rev.
+Lett. 118, 187203 (2017).
+[13] S.-H. Baek, S.-H. Do, K.-Y. Choi, Y. S. Kwon, A. U. B.
+Wolter, S. Nishimoto, J. van den Brink, and B. B¨ uchner,
+Phys. Rev. Lett. 119, 037201 (2017).
+[14] J. Zheng, K. Ran, T. Li, J. Wang, P.-S. Wang, B. Liu,
+Z.-X. Liu, B. Normand, J. Wen, and W. Yu Phys. Rev.
+Lett. 119, 227208 (2017).
+[15] A. Banerjee, P. Lampen-Kelley, J. Knolle, C. Balz, A.
+A. Aczel, B. Winn, Y. Liu, D. Pajerowski, J.-Q. Yan,
+C. A. Bridges, A. T. Savici, B. C. Chakoumakos, M. D.
+Lumsden, D. A. Tennant, R. Moessner, D. G. Mandrus,
+and S. E. Nagler, npj Quantum Materials 3, 8 (2018).
+[16] Y. Cui, J. Zheng, K. Ran, J. Wen, Z.-X. Liu, B. Liu, W.
+Guo, and W. Yu, Phys. Rev. B 96, 205147 (2017).
+[17] S. M. Winter, Y. Li, H. O. Jeschke, and R. Valent´ ı, Phys.
+Rev. B 93, 214431 (2016).
+[18] A. Banerjee, J. Q. Yan, J. Knolle, C. A. Bridges, M. B.
+Stone, M. D. Lumsden, D. G. Mandrus, D. A. Tennant,
+R. Moessner, and S. E. Nagler, Science 356, 1055 (2017).
+[19] K. Ran, J. Wang, W. Wang, Z.-Y. Dong, X. Ren, S. Bao,
+S. Li, Z. Ma, Y. Gan, Y. Zhang, J. T. Park, G. Deng,
+S. Danilkin, S.-L. Yu, J.-X. Li, and J. Wen, Phys. Rev.
+Lett. 118, 107203 (2017).
+[20] W. Wang, Z.-Y. Dong, S.-L. Yu, and J.-X. Li, Phys. Rev.
+B 96, 115103 (2017).
+[21] L. Janssen, E. C. Andrade, and M. Vojta, Phys. Rev. B
+96, 064430 (2017).
+[22] J. Cookmeyer and J. E. Moore Phys. Rev. B 98,
+060412(R) (2018).
+[23] Z.-X. Liu and B. Normand, Phys. Rev. Lett. 120, 187201
+(2018).
+[24] A. Catuneanu, Y. Yamaji, G. Wachtel, Y.-B. Kim, and
+H.-Y. Kee, npj Quantum Materials 3, 23 (2018).
+[25] M. Gohlke, G. Wachtel, Y. Yamaji, F. Pollmann, and Y.
+B. Kim, Phys. Rev. B 97, 075126 (2018).
+[26] I. Aﬄeck, Z. Zou, T. Hsu, and P. W. Anderson, Phys.
+Rev. B 38, 745 (1988).
+[27] See the Supplemental Material at [url], for details con-
+cerning the fermionic spinon representation, IGG and
+PSG, ﬁnite-size eﬀects, calculation of the dynamical
+struc- ture factor, and ﬁeld-induced topological states in
+the PKSL, which includes Ref. [28–34].
+[28] A. Kitaev, AIP Conference Proceedings 1134, 22 (2009).
+[29] Xiao-Gang Wen, Phys. Rev. B 85, 085103 (2012).
+[30] H.-H. Tu, Phys. Rev. B 87, 041103(R) (2013).
+[31] S. Yang, T. B. Wahl, H.-H. Tu, N. Schuch, and J. I. Cirac,
+Phys. Rev. Lett. 114, 106803 (2015).
+[32] M. Greiter and R. Thomale, Phys. Rev. Lett. 102,
+207203 (2009).
+[33] Z.-X. Liu, H.-H. Tu, Y.-H. Wu, R.-Q. He, X.-J. Liu, Y.
+Zhou, and T.-K. Ng, Phys. Rev. B 97, 195158 (2018).
+[34] C. Nayak, S. H. Simon, A. Stern, M. Freedman, and S.
+Das Sarma, Rev. Mod. Phys. 80, 1083 (2008).
+[35] X.-G. Wen, Phys. Rev. B 65, 165113 (2002).
+[36] X.-Y. Song, Y.-Z. You, and L. Balents, Phys. Rev. Lett
+117, 037209 (2016).
+[37] Y.-Z. You, I. Kimchi, and A. Vishwanath, Phys. Rev. B
+86, 085145 (2012).
+[38] H.-C. Jiang, Z.-C. Gu, X.-L. Qi, and S. Trebst, Phys.
+Rev. B 83, 245104 (2011).
+[39] H. J. Liao, R. Z. Huang, Y. B. Guo, Z. Y. Xie, B. Nor-
+mand, and T. Xiang, unpublished.
+[40] V. Kalmeyer and R. B. Laughlin, Phys. Rev. Lett. 59,
+2095 (1987).
+[41] Y. Kasahara, T. Ohnishi, Y. Mizukami, O. Tanaka, S.
+Ma, K. Sugii, N. Kurita, H. Tanaka, J. Nasu, Y. Motome,
+T. Shibauchi, and Y. Matsuda, Nature 559, 227 (2018).
+1
+Supplemental Material for “One Proximate Kitaev Spin Liquid
+in the K-J-Γ Model on the Honeycomb Lattice”
+Jiucai Wang, B. Normand, and Zheng-Xin Liu
+S1. FERMIONIC SPINON REPRESENTATION
+A. SU(2) gauge structure
+A detailed introduction to the fermionic spin represen-
+tation, by which the spinons C = (c↑,c↓)T are used to
+express the spin operators as Sm = 12C†σmC, may be
+found in Sec. S1 of Ref. [1]. The two spinon species may
+further be expressed in terms of four Majorana fermions,
+c↑ = 12(bz +ic), c ↓ = 12(bx +iby), (S1)
+which satisfy the anti-commutation relations {bα,bβ} =
+2δαβ (α,β = 0,x,y,z ; b0≡ c). In this basis, the spin
+operator takes the form
+Sm =ibmc, (S2)
+and the particle-number constraint, C†C = 1, is
+bxbybzc = 1.
+The anti-commutation relation of the Majorana
+fermions is invariant under the group SO(4). The re-
+lation SO(4)≃ SU(2)×SU(2)/Z2 expresses the fact that
+the Majorana fermions are invariant under two types of
+SU(2) operation, one being the expected spin-rotation
+group and the other a “particle-hole-type” charge rota-
+tion, which behaves as an internal gauge symmetry for
+the fermionic representation of spin S = 1/2.
+It is convenient to introduce the time-reversal and
+particle-hole partner of C, namely ¯C = (c†↓,−c†↑)T , in
+terms of which the spin operator may also be expressed
+as Sm = 12 ¯C†σm ¯C. C and ¯C can be combined into a
+matrix operator,
+ψ =
+(C ¯C) =
+(
+c↑ c†↓
+c↓ −c†↑
+)
+= 12(ic +bxτx +byτy +bzτz),
+to obtain a symmetric representation of the spin oper-
+ators as Sm = 14Tr(ψ†σmψ), while the particle-number
+constraint is Tr(ψτzψ†) = 0, where we use the Pauli ma-
+trix τz to distinguish from the spin operation σz.
+In this framework, a left SU(2) transformation, ψ→
+g†ψ (or equivalently ψ† → ψ†g), mixes c↑ and c↓ and
+thus corresponds to a spin rotation,
+1
+4Tr(ψ†gσmg†ψ) =∑
+n
+Rnm(g)Sn,
+where R(g) is an SO(3) matrix representation of g. By
+contrast, a right SU(2) transformation, ψ→ψW , mixes
+C and ¯C and corresponds to the SU(2) gauge symmetry,
+1
+4Tr(W†ψτmψ†W ) =∑
+n
+R(W )nmΛn,
+where Λm = 14Tr(ψτmψ†) are the generators of the SU(2)
+gauge transformation in the same way that the spin oper-
+atorsSm = 14Tr(ψ†σmψ) are the generators of the SU(2)
+spin rotation. It is easy to see that Λ ΛΛ is spin-rotation-
+invariant and SSS is SU(2) gauge-invariant. In this nota-
+tion, the particle-number constraint (Tr(ψτzψ†) = 0) can
+be written in the SU(2) gauge-covariant form ΛΛΛ = 0, i.e.
+Tr(ψτττψ†) = 0, (S3)
+which speciﬁes that the physical Hilbert space is SU(2)
+gauge-invariant.
+B. Mean-ﬁeld Hamiltonian
+The Heisenberg exchange interaction can be written as
+SSSi·SSSj =− 18Tr (ψ†jψiψ†iψj) (S4)
+= 18Tr (ψ†jσσσψi·ψ†iσσσψj)
+up to constant terms. To make more transparent the
+connection to the spinon representation, we note that the
+singlet matrix operator, ψ†iψj, and the triplet operator,
+ψ†iσσσψj, can be expanded as
+ψ†iψj =
+(
+C†iCj C†i ¯Cj
+¯C†iCj ¯C†i ¯Cj
+)
+, ψ†iσσσψj =
+(
+C†iσσσCj C†iσσσ ¯Cj
+¯C†iσσσCj ¯C†iσσσ ¯Cj
+)
+.
+The sign diﬀerence between the two decoupling formulas
+in Eq. (S4) means that the version in the ﬁrst line is
+suitable for AFM Heisenberg interactions and that in the
+second line for FM ones.
+In the mean-ﬁeld approximation, one decouples these
+interactions to obtain a non-interacting fermionic Hamil-
+tonian. In the AFM case ( J >0)
+Hmf =−J
+∑
+⟨i,j⟩
+Tr
+(
+U†ijψ†iψj + h.c.) +∑
+i
+λλλ·ΛΛΛi, (S5)
+while in the FM one (J <0)
+Hmf =J
+∑
+⟨i,j⟩
+Tr
+(
+UUU†ij·ψ†iσσσψj + h.c.) +∑
+i
+λλλ·ΛΛΛi, (S6)
+where λλλ are the Lagrange multipliers corresponding to
+Eq. (S3), U†ij = Uji∝⟨ ψ†jψi⟩ is a matrix of singlet pa-
+rameters andUUU†ij =UUUji∝⟨ψ†jσσσψi⟩ is a triplet parameter
+matrix. Under the gauge transformation ψi→ψiWi,
+Tr
+(
+U†ijψ†iψj)→ Tr(U†ijW†iψ†iψjWj)
+= Tr
+(
+WjU†ijW†iψ†iψj), (S7)
+arXiv:1903.10026v3  [cond-mat.str-el]  13 Nov 2019
+2
+meaning that Uji→U′ji =WjUjiW†i varies as an SU(2)
+gauge ﬁeld and similarly for UUUji → UUU′ji = WjUUUjiW†i .
+Thus the spin system is described in the mean-ﬁeld the-
+ory by free fermions coupling to static SU(2) gauge ﬁelds
+on the bonds of the honeycomb lattice.
+In insulating systems with spin-orbit coupling, the spin
+interactions are anisotropic, as expressed in the K-J-Γ
+Hamiltonian [Eq. (1) of the main text]. In this case the
+mean-ﬁeld Hamiltonian will contain both singlet ( ψ†iψj)
+and triplet terms (ψ†iσσσψj). As an example, an AFM Ising
+interaction can be decoupled [1] as
+Smi Smj =− 116
+[
+Tr(ψ†iψjψ†jψi) + Tr(ψ†iσmψjψ†jσmψi)],
+up to a constant term, where m = x,y,z , and
+thus any XXZ-type interaction may be expressed by
+adding triplet hopping and pairing terms of the form∑
+⟨i,j⟩ Tr
+(
+Uzijψ†iσzψj) to the mean-ﬁeld Hamiltonian of
+Eq. (S5). The most general mean-ﬁeld Hamiltonian for
+a spin-liquid state in a spin-orbit-coupled magnetic insu-
+lator, containing both (S5) and (S6), takes the form
+HSLmf =∑
+⟨i,j⟩
+Tr
+(
+Ujiψ†iψj +UUUji·ψ†iσσσψj + h.c.) +∑
+i
+λλλ·ΛΛΛi,
+(S8)
+whereUji andUUUji are treated as variational parameters.
+S2. INVARIANT GAUGE GROUP AND
+PROJECTIVE SYMMETRY GROUP
+Because of the static bond gauge ﬁelds contained in
+Uji and UUUji, the mean-ﬁeld Hamiltonian of Eq. (S8) is
+not in general invariant under an arbitrary SU(2) gauge
+transformation. The subgroup of the SU(2) gauge group
+under which Eq. (S8) remains invariant is called the in-
+variant gauge group (IGG) of the spin-liquid state. The
+IGG determines the nature of the low-energy gauge ﬂuc-
+tuations in a QSL phase.
+If the IGG is U(1), there exists an SU(2) gauge trans-
+formation that eliminates all fermion-pairing terms in
+the mean-ﬁeld Hamiltonian, meaning that the number
+of fermionic slave particles is conserved. In this case, the
+gapless gauge photons contribute to the low-energy exci-
+tations. In two spatial dimensions (2D), it is known that
+a U(1) gauge ﬁeld is conﬁned unless it is coupled to a
+matter ﬁeld (in this case the fermions) that is either (i)
+gapless or (ii) has a nonzero Chern number.
+If the IGG is Z 2, as in the KSL, fermion-pairing terms
+cannot be removed by any SU(2) gauge transformation.
+The Z 2 gauge-ﬂux excitations in this case are usually
+gapped, and can remain deconﬁned even if the matter
+ﬁeld is gapped with zero Chern number. The low-energy
+gauge ﬂuctuations dictated by the conﬁnement or decon-
+ﬁnement of the Z2 gauge ﬁeld are reﬂected in the ground-
+state degeneracy (GSD) of the QSL when placed on a
+torus: in the thermodynamic limit, inserting a global Z 2
+π ﬂux in either hole of the torus costs no energy. Because
+this process is equivalent to exchanging the boundary
+conditions of the mean-ﬁeld Hamiltonian from periodic
+to anti-periodic, in 2D one may construct the four mean-
+ﬁeld ground states |ψ±±⟩, where the subscripts denote
+the boundary conditions for the x- and y-directions. Af-
+ter a Gutzwiller projection of these four states to the
+physical Hilbert space, the number of linearly indepen-
+dent states is equal to the GSD on a torus.
+We calculate the density matrix of the projected
+(VMC) states from the wave-function overlap ραβ =
+⟨PGψα|PGψβ⟩ = ρ∗βα, with α,β ∈{ ++, +−,−+,−−}.
+If ραβ has only one signiﬁcant eigenvalue, with the oth-
+ers vanishing, then the GSD is 1, indicating that the Z 2
+gauge ﬁeld is conﬁned. If ραβ has more than one near-
+degenerate nonzero eigenvalue, the GSD is nontrivial and
+hence the Z 2 gauge ﬂuctuations are deconﬁned. In this
+deconﬁned phase, if the Chern number is even then from
+above the GSD is 4; however, if the Chern number is odd,
+as we will ﬁnd in Sec. S6, then the GSD is 3 because the
+mean-ﬁeld ground state |ψ++⟩ has odd fermionic parity
+and vanishes after Gutzwiller projection.
+Quite generally, a QSL should respect all the symme-
+tries of the spin Hamiltonian, but at the mean-ﬁeld level
+this constraint can be relaxed in the following sense. Un-
+der a symmetry operation g, Hmf may be transformed
+to a diﬀerent expression, gHmf = H′mf⁄= Hmf, but if it
+can be transformed back to its original form by an SU(2)
+gauge transformation then this mean-ﬁeld Hamiltonian
+still describes a spin-liquid state. Speciﬁcally,
+ψi→g†ψg(i)Wi(g), (S9)
+Tr [UUUji·ψ†iσσσψj]→ Tr [WjUUUjiW†i·ψ†g(i)gσσσg†ψg(j)]
+= Tr [UUUg(j)g(i)·ψ†g(i)σσσψg(j)], (S10)
+Tr [Ujiψ†iψj]→ Tr [WjUjiW†iψ†g(i)gg†ψg(j)]
+= Tr [Ug(j)g(i)ψ†g(i)ψg(j)], (S11)
+which requires Ung(j)g(i) = ∑mRnm(g)Wj(g)UmjiW†i (g)
+and Ug(j)g(i) =Wj(g)UjiW†i (g). The new symmetry op-
+erations, each of which involves a symmetry operation g
+followed by a gauge transformation Wi(g), form a larger
+group that is known as the projective symmetry group
+(PSG). Together with the IGG, the PSG of the mean-
+ﬁeld Hamiltonian is used to classify and distinguish the
+diﬀerent spin-liquid phases.
+The gapless KSL is believed [2] to be a ﬁnite, stable
+phase in the presence of non-Kitaev interactions, includ-
+ing the J and Γ terms. The mean-ﬁeld Hamiltonian de-
+scribing the generic state around the KSL, which we de-
+note the gKSL, will then respect the same PSG as the
+KSL itself. Besides translation symmetry, the symme-
+try group of the pure KSL, G =D3d×ZT2 , has the three
+generators
+S6 = (C3)2P, M =Cx−y2 P, T =iσyK,
+whereC3 is a threefold rotation around the direction ˆc =
+3
+1√
+3(ˆx+ˆy+ˆz),Cx−y2 is a twofold rotation around 1√2(ˆx−ˆy),
+and P is spatial inversion. The PSG of the KSL is read
+most simply from the Majorana representation, in which
+the mean-ﬁeld Hamiltonian is
+HKmf = ∑
+⟨i,j⟩∈γ
+ρa(icicj) +ρc(ibγibγj )
+=
+∑
+⟨i,j⟩∈γ
+iρaTr(ψ†iψj +τxψ†iσxψj +τyψ†iσyψj
++τzψ†iσzψj) +iρcTr(ψ†iψj +τγψ†iσγψj
+−ταψ†iσαψj−τβψ†iσβψj) + h.c. (S12)
+Because the c fermion never mixes with any of the bm
+fermions, any PSG operation leaves thec fermions invari-
+ant. The gauge operation, Wi(g), following the symme-
+try operation g should then be Wi(g) =±g. A detailed
+analysis [3] shows that the gauge transformations of the
+generators S6, M, and T are
+WA(S6) =−WB(S6) = exp
+[
+−i 43π 12√3(τx +τy +τz)],
+WA(M) =−WB(M) = exp
+[
+−iπ 12√2(τx−τy)],
+WA(T ) =−WB(T ) =iτy, (S13)
+where A and B denote the two sublattices of the honey-
+comb lattice.
+S3. K-J-Γ MODEL: SYMMETRY-PROTECTION
+AND MAGNETIC ORDER
+When the Kitaev model is extended to the K-J-Γ
+model, still with only nearest-neighbor coupling on the
+honeycomb lattice for all three types of term, there are
+several diﬀerent ansatzes for states beyond the Kitaev
+mean-ﬁeld Hamiltonian [Eq. (S12)] that are invariant un-
+der the same PSG. The Γ interaction gives rise to the
+mean-ﬁeld terms
+HΓmf = ∑
+⟨i,j⟩∈γ
+iρd(bαibβj +bβibαj ) (S14)
+=
+∑
+⟨i,j⟩∈γ
+iρdTr
+(
+ταψ†iσβψj +τβψ†iσαψj
+)
++ h.c.
+It is readily demonstrated from the Majorana decoupling
+that Heisenberg interactions do not give rise to any new
+types of term. Thus when expressed in terms of Uij and
+UUUij, the full expression of the mean-ﬁeld Hamiltonian
+that preserves the PSG is
+HSLmf =∑
+⟨i,j⟩∈γ
+Tr [U(0)ji ψ†iψj]+Tr [U(1)ji ψ†i (iRγαβ)ψj] (S15)
++Tr [U(2)ji ψ†iσγψj]+Tr [U(3)ji ψ†iσγRγαβψj]+h.c.,
+whereRγαβ =− i√2(σα +σβ), which is Eq. (2) of the main
+text. The decouplings expressed in Eqs. (S12) and (S14)
+contribute the terms
+˜U(0)ji =i(ρa +ρc),
+˜U(1)ji =i(ρa−ρc +ρd)(τα +τβ),
+˜U(2)ji =i(ρa +ρc)τγ,
+˜U(3)ji =i(ρc−ρa−ρd)(τα−τβ),
+(S16)
+to the coeﬃcientsU(m)ji , in whichj andi specifyγ. How-
+ever, the most general coeﬃcients preserving theC3 rota-
+tion symmetry (in the PSG sense) also contain multiples
+of the uniform (I) and τx +τy +τz gauge components,
+˜˜U(0)ji =iη0 +η1(τx +τy +τz),
+˜˜U(1)ji =η2 +iη3(τx +τy +τz),
+˜˜U(2)ji =η4 +iη5(τx +τy +τz),
+˜˜U(3)ji =η6 +iη7(τx +τy +τz).
+(S17)
+If the full symmetry group, G =D3d×ZT2 , is preserved,
+then only the three parameters η0, η3, and η5 are al-
+lowed; by contrast, if one allows the breaking of spa-
+tial inversion symmetry, while still preserving mirror re-
+ﬂection symmetry, then η1, η2, and η4 are also allowed.
+Thus a spin-liquid ansatz that preserves the full PSG
+symmetry generated by Eq. (S13) contains the variables
+U(m)ji = ˜U(m)ji + ˜˜U(m)ji of the main text with six real scalar
+parameters, ρa, ρc, ρd, η0, η3, and η5. Of these, only
+η3 and η5 lead to a hybridization of the c with the bm
+fermions, which as we show in Sec. S5 has important con-
+sequences for the spin response of the ground state.
+A. Majorana Cones and Symmetry Protection
+TheG =D3d×ZT2 symmetry imposes a constraint on
+the number of cones in the mean-ﬁeld dispersion. First,
+the momentum points K and K′ are invariant under the
+subgroupC3v, together with the combined symmetry op-
+erationPT , and are transformed into each other either by
+time reversal (T ) or by spatial inversion (P ). The cones
+at K and K′ must therefore appear as a pair. Second, if
+an extra cone appears at a general point kkk, which in the
+present case must be invariant under one of the mirror-
+reﬂection operations in D3d, then the C3 and C23 opera-
+tions transform kkk intokkk′ andkkk′′, respectively, while the
+time-reversal symmetry further transforms these three
+points into −kkk,−kkk′,−kkk′′. Because the spin liquid pre-
+serves theG =D3d×ZT2 symmetry, cones should appear
+at all six of these points, and the total number of cones
+should be N = 2 + 6m, where m≥ 0 is an integer.
+Next we discuss the symmetry protecting these cones
+and hence guaranteeing their existence. It is known that
+the Berry phase along a small contour surrounding a cone
+is quantized toπ and hence is nontrivial. However, with-
+out symmetry-protection, the cone can become gapped
+4
+and the corresponding Berry phase can be changed con-
+tinuously. The key symmetry in the present case is the
+fact that the position of the cone is invariant under the
+combination PT : for any system with PT symmetry,
+the 1D subsystem deﬁned by the contour also has this
+symmetry. From classiﬁcation theory [4, 5], a gapped
+1D fermionic system preserving this combined symmetry,
+with (PT )2 = 1, is classiﬁed by Z 2, indicating that there
+is one nontrivial phase. Thus the π-quantization of the
+Berry phase along such a contour is PT -protected, and
+hence the stability of the cone is also protected. The Z 2
+classiﬁcation also indicates that one mechanism for gap-
+ping of the cones in a system preserving PT symmetry
+is when two cones merge.
+Besides being used to construct the mean-ﬁeld ansatz,
+the PSG can also be used to classify QSL phases that
+have the same pattern of many-body entanglement but
+diﬀerent types of symmetry fractionalization. However,
+the gKSL and PKSL phases of the present work have the
+same PSG but diﬀerent patterns of many-body entangle-
+ment, and hence quite diﬀerent physical properties. This
+diﬀerence becomes clear when a magnetic ﬁeld is applied
+in the ˆc-direction, and the resulting gapped chiral spin-
+liquid (CSL) phases have diﬀerent types of topological
+order, as we discuss in Sec. S6.
+B. Magnetic Order
+In addition to spin-liquid phases, to describe the mag-
+netic order of the spin-symmetry-breaking phases of the
+K-J-Γ model we introduce a single-QQQ ﬁeld [6]
+MMMi =M{sinφ[ˆeee′x cos(QQQ·rrri) + ˆeee′y sin(QQQ·rrri)] + cosφ ˆeee′z},
+where the local spin axes, ˆeee′α, are speciﬁed at rrri = 0 by
+three Euler angles, (ψ,θ,ϕ ), andφ is a canting angle. We
+determine (ψ,θ,ϕ ) from the classical ground state. Al-
+thoughφ is treated as a variational parameter, we ﬁnd in
+all our ordered ground states except for the IS phase that
+the canting angle φ→ 0. Thus the quantum corrections
+we compute are in essence contained in the amplitude of
+the ordered moment, M. In this way, the static order is
+treated as an external ﬁeld, obtained by summing over all
+neighbors of a given site, i, and hence the full mean-ﬁeld
+Hamiltonian for the K-J-Γ model is
+Htotalmf =HSLmf− 12∑
+i
+(MMMi·C†iσσσCi + h.c.). (S18)
+The ground state ofHtotalmf preserves all of the symmetries
+of the PSG or the ordered magnetic state. The trial
+wave functions obtained by Gutzwiller projection then
+also preserve the full symmetry of the system.
+In order to provide a complete and systematic study
+of the K-J-Γ phase diagram, we have investigated many
+diﬀerent ansatzes for both the spin-liquid and the ordered
+magnetic phases. In the spin-liquid regime of Fig. 1 of
+the main text, one of the most important questions [1] is
+0.2 0.3 0.4 0.5
+-0.3
+-0.26
+-0.22
+0.2 0.3 0.4 0.5
+0
+4
+810-3
+FIG. S1. Ground-state energy per site, E, of the K-Γ model
+(J = 0), comparing the lowest-lying trial wave functions for
+U(1) and Z 2 QSLs. The inset shows the energy diﬀerence
+from the 14-cone Z 2 state.
+whether states with IGG U(1) can compete with states
+whose IGG is Z 2 (but whose PSG may be diﬀerent from
+that of the KSL). As Fig. S1 illustrates for the J = 0
+line, in the absence of an applied ﬁeld even the leading
+(8-cone) U(1) state is not favored energetically in the
+parameter range of the PKSL.
+Turning to Z 2 QSLs, we have found a 20-cone state
+that lies very low in energy and has the same PSG as
+the 14-cone state. As a technical comment, we count the
+number of cones in any state by using the parameters
+determined from VMC to draw the spinon dispersion of
+Eq. (S15) in a momentum space of 120 ×120 kkk-points.
+Physically, although we will show in Sec. S4 that the
+20-cone state is not favored energetically for any large
+system sizes, it is instructive to present a brief discussion
+of its properties. In the 20-cone state, the bx, by, and
+bz fermions are mutually hybridized, but in contrast to
+the 14-cone state they have almost no hybridization with
+the c fermions. This is a consequence of the variational
+parameters η3 and η5 being ﬁnite in the 14-cone state
+but very small in the 20-cone state. Further, a weak
+out-of-plane ﬁeld applied to the 20-cone state induces an
+Abelian CSL with Chern number ν = 4, rather than the
+non-Abelian CSL with ν = 5 induced from the 14-cone
+phase (main text). Another candidate QSL is the π-
+ﬂux state, which contains a π-ﬂux in every hexagon and
+thus has a diﬀerent PSG. In summary, although the 14-
+cone state is the ground state over the full PKSL regime,
+it is clear from Fig. S1 that indeed there exist several
+competing states which are very close in energy, despite
+their quite diﬀerent physical nature.
+We also tested many diﬀerent ansatzes for the ordered
+magnetic states. Here we found without exception that
+ordered states with IGG Z 2 inHSLmf are favored. Because
+the gauge-ﬂux excitations (visons) are gapped in a Z 2
+QSL, they may remain deconﬁned even in the presence
+of magnetic order. Alternatively stated, a phase with
+coexisting magnetic order and Z 2 topological order is al-
+lowed in principle, and would be separated both from the
+nearest pure spin-liquid phase and from the pure magnet-
+5
+0 0.2 0.4 0.6 0.8 1
+KSL
+KSL
+KSL
+PKSL
+PKSL
+PKSL
+IS
+IS
+IS
+KSLFMPKSL IS Zigzag
+FIG. S2. Phase diagram of the K-Γ model ( K < 0) in a
+cylindrical geometry, shown on a scale where|K|+Γ = 1. (a)-
+(c) Cylinders of radius 6 sites: QSL phases dominate, their
+regime of stability increasing with cylinder length. (d) System
+size 12×6×2: three magnetically ordered phases appear. The
+variational parameters of the QSL phases we denote by PKSL
+in panels (a)-(c) correspond in a 2D system to the 14-cone
+state, but in panel (d) to the 20-cone state.
+ically ordered phase by continuous transitions. However,
+our VMC results indicate that such coexisting states do
+not appear in the phase diagram: all of the magneti-
+cally ordered ground states we ﬁnd have singly degen-
+erate ground states on a torus, indicating the absence
+of Z 2 topological order. Thus it is no surprise that all
+the transitions from spin-liquid to magnetically ordered
+phases in Fig. 1 of the main text are ﬁrst-order.
+Similar conditions are found in the presence of an ap-
+plied magnetic ﬁeld (Sec. S6). Because the IGG is Z 2,
+when all the cones are gapped by the magnetic ﬁeld and
+the total Chern number vanishes, it remains possible that
+the system can possess Z 2 topological order. However,
+such states never appear in the VMC phase diagram,
+i.e. gapped states in the K-J-Γ model with zero Chern
+number are always Z2-conﬁned and trivial.
+S4. FINITE-SIZE EFFECTS IN THE K-Γ MODEL
+As stated in the main text, the phase boundaries we
+ﬁnd by VMC for the K-J model, meaning the model
+with Γ = 0 and J > 0, agree quantitatively with the
+results obtained by DMRG [13]. Speciﬁcally, we ﬁnd that
+Jc1 = 0.16|K| for the transition from the KSL into the
+spiral phase and Jc2 = 0.77|K| for the AFM transition,
+while in Ref. [13] Jc1 = 0.13|K| and Jc2 = 0.75|K|. This
+indicates that ﬁnite-size eﬀects in the K-J model, which
+in DMRG arise from the circumference of the cylinder
+used, are relatively weak.
+However, the situation is diﬀerent for the K-Γ model.
+In Ref. [7] it was stated that the ground state of the K-Γ
+model with K <0 and Γ > 0 is magnetically disordered
+for all values of Γ /|K|, a result quite diﬀerent from our
+conclusion (Fig. 1 of the main text). We note that the
+iDMRG calculations of these authors were performed on
+cylinders with a circumference of six lattice sites. To
+reproduce this geometry, we perform VMC calculations
+for the model with J = 0 on lattices of sizes Lx×Ly×2,
+6 7 8 9 10 11 12
+-8
+-6
+-4
+-2
+0
+210-4(a)
+0
+0.5
+110-3(b)
+FIG. S3. (a) Energy diﬀerence per site between the 20-cone
+and 14-cone states in VMC calculations for systems with short
+dimensionLy = 6, where the 20-state lies lower in energy. (b)
+Energy diﬀerence for system sizes Lx×Ly×2 with Lx≥Ly >
+6, where the 14-cone state is lower in energy.
+where the cylinder circumference is ﬁxed to Ly = 3 unit
+cells while its length is Lx = 18, 24, and 30. As shown
+in Figs. S2(a), S2(b), and S2(c), indeed we ﬁnd a very
+broad regime of QSL phases whose width increases with
+Lx, limiting the ordered (IS) phase to values only beyond
+Γ/|K| = 3 on long cylinders.
+When the circumference is increased toLy = 6 (system
+size 12×6×2 sites), we ﬁnd a zigzag-ordered phase for all
+parameter ratios Γ/|K|> 0.9, which is absent whenLy =
+3 [Fig. S2(d)]. Further, a ferromagnetic phase appears at
+small Γ, separating the KSL from the analog of the PKSL
+for this geometry (because of the ﬁnite number ofkkk values
+in the transverse direction, this magnetically disordered
+state will not have the full complement of gapless cones).
+This result alone demonstrates that the K-Γ model on
+the honeycomb lattice is subject to very strong ﬁnite-
+size eﬀects, and that conclusions in favor of QSL states
+at large Γ are artifacts of the system sizes considered.
+Further investigation reveals, however, that theLy = 6
+geometry is still anomalous, especially in the PKSL
+regime. In our VMC calculations for the 12 ×6×2 sys-
+tem we ﬁnd that the ground state in the intermediate
+regime 0.23 < Γ/|K| < 0.55 is a gapless Z 2 QSL corre-
+sponding in the 2D system to the 20-cone state. This
+competes with the 14-cone state, whose energy is higher
+by values ranging from 0 to 7 ×10−4|K|, as shown in
+Fig. S3(a). However, for all larger accessible system sizes
+with Lx ≥ Ly > 6, these conditions are reversed and
+the 14-cone state becomes lower in energy, as detailed in
+Fig. S3(b). Although our system sizes preclude a reliable
+extrapolation to the thermodynamic limit, by calcula-
+tions on systems up to 14×14×2 we infer that the ground
+state in this limit is indeed the 14-cone PKSL phase, and
+6
+4 4 8 4 8 8 12 6 10 8
+lattice size (by unit cell)
+-0.09
+-0.08
+-0.07
+-0.06
+-0.05
+-0.04
+-0.03
+0.13
+0.135
+0.14
+0.145
+0.15
+FIG. S4. Dependence on system size of the phase bound-
+ary between the gKSL and PKSL phases, computed at ﬁxed
+J/|K| = 0.05, and of the boundary between the PKSL phase
+and the FM ordered phase, computed at ﬁxed Γ /|K| = 0.4.
+that the 20-cone ground state is an artifact of the Ly = 6
+geometry. Here we comment that the energies we calcu-
+late for the 12×12×2 and 14×14×2 geometries are not
+obtained variationally, but are computed using the vari-
+ational parameters of the same states on the 12 ×8×2
+cluster. From these smaller systems we ﬁnd that changes
+to the variational parameters are negligible when com-
+pared to changes due to the cluster geometry, and hence
+we infer that the large-system energies are reliable.
+In view of all of these complexities, we performed a
+large number of studies to ensure that the phase dia-
+gram presented in Fig. 1 of the main text is completely
+reliable. To eliminate ﬁnite-size eﬀects to the best of our
+ability, we determined every point in the phase diagram
+by examining its evolution with system size. We illus-
+trate the results of these investigations in Fig. S4, where
+we show the size-dependence of the phase boundary in
+two cases. For the transition from a QSL (the PKSL)
+to an ordered state (the FM phase), we ﬁnd rather little
+variation even from small sizes; for the transition of most
+interest to the present study, that from the gKSL to the
+PKSL phase, we ﬁnd that a stable limiting value does
+require system sizes large in both dimensions.
+S5. DYNAMICAL STRUCTURE FACTOR
+To understand the nature of the PKSL, we deduce its
+physical properties and contrast them with those of the
+gKSL, which is also a gapless QSL. To this end we inves-
+tigate the magnetic response in the form of the dynamical
+structure factor (DSF), Smn(qqq,ω ) (m,n =x,y,z ), which
+we compute at the level of linear response. From the
+ﬂuctuation-dissipation theorem, the DSF is deﬁned by
+Smn(qqq,ω ) =− 1π [1 +nB(ω)]χ′′mn(qqq,ω ), (S19)
+where nB(ω) is the Bose-Einstein distribution and
+χ′′mn(qqq,ω ) = lim δ→0 Im χmn(qqq,ω + iδ) is the imag-
+0
+0.5
+1
+0
+0.5
+1
+0
+2
+4
+6
+8
+10
+10-3
+(a)
+0
+0.5
+1
+0
+0.5
+1
+0
+0.5
+1
+1.5
+(b)
+FIG. S5. Dynamical structure factor illustrated for the gKSL
+(Γ/|K| = 0.1, J/|K| = 0.05). ω0 = 0.082|K| is the minimum
+energy of the gapped, bm-dominated spinon bands. (a) Sum
+over all frequencies ω≤ ω0. (b) Sum over frequencies ω0≤
+ω≤ω0 + 0.018|K|. Note the logarithmic intensity scale.
+inary part of the analytic continuation of the ﬁnite-
+temperature susceptibility, χmn(qqq,iω ). To interpret the
+low-energy spin response of the PKSL, it is most conve-
+nient to express the DSF in the Majorana representation
+of Eq. (S1). As an example, we illustrate the processes
+contributing to χzz(qqq,iω ) in the form
+χzz(qqq,iω ) =
+∫ β
+0
+⟨TτSzqqq (τ)Sz−qqq(0)⟩eiωτdτ
+=−
+∫ β
+0
+∑
+kkkppp
+⟨Tτc−kkk(τ)bzkkk+qqq(τ)c−ppp(0)bzppp−qqq(0)⟩eiωτdτ
+=
+∫ β
+0
+∑
+kkk
+[
+⟨Tτc−kkk(τ)ckkk(0)⟩⟨bzkkk+qqq(τ)bz−kkk−qqq(0)⟩
+−⟨Tτc−kkk(τ)bzkkk(0)⟩⟨bzkkk+qqq(τ)c−kkk−qqq(0)⟩]eiωτdτ,
+where Tτ denotes time-ordering and ⟨... ⟩ the thermal
+average (which at zero temperature is equivalent to aver-
+aging over the mean-ﬁeld ground state). It is clear that
+processes contributing to the DSF involve the excitation
+of two Majorana fermions created by a c and a bz opera-
+tor, with total momentum qqq and total energy ω. At low
+energies, the DSF will be nonzero if one or both of the fol-
+lowing two situations is/are satisﬁed: (a) both the c and
+thebz fermions are gapless; (b) the c andbz fermions are
+hybridized at the nodal points of the PKSL dispersion.
+In the KSL ( J = 0 = Γ), the c fermions are gap-
+less and independence of the four species is a deﬁning
+property, hence neither (a) nor (b) is applicable and the
+spin response is gapped. In the gKSL, the bm-dominated
+bands retain a robust gap, which we label ω0 and which
+precludes case (a). In Ref. [2] it was argued qualita-
+tively, on the basis of symmetry and gauge constraints,
+that the system remains gapped when J = 0 or Γ = 0,
+7
+Γ
+|K|
+J
+|K| Cone |⟨ckkk|γkkk⟩|2 |⟨bxkkk|γkkk⟩|2 |⟨bykkk|γkkk⟩|2 |⟨bzkkk|γkkk⟩|2
+0 0.1 K 1 0 0 0
+0.1 0.0 K 1 0 0 0
+0.05 K 0.9997 1.04×10−4 1.04×10−4 1.04×10−4
+K 0.3616 0.2128 0.2128 0.2128
+0.3 0.0 K1 0.1850 0.4009 0.4009 0.0133
+K2 0.2528 0.0717 0.0717 0.6038
+TABLE S1. Projected weights of Majorana fermions at the
+gapless momentum points in selected gKSL and PKSL phases
+when expressed in terms of the c, bx, by, and bz fermions
+[Eq. (S1)]. K 1 and K2 denote the ﬁrst two blue points from
+left to right in Fig. 2(d) of the main text.
+but that the generic spin response is gapless. It is for
+this reason that we distinguish between the KSL and the
+gKSL. In our spinon representation, the nature of this
+case (b) gapless response is quantiﬁed through the c-bm
+hybridization, which we compute atω→ 0 by projecting
+the eigenstates we obtain onto the {c,bx,by,bz} basis.
+The results are shown in Table S1: for the parameter
+sets (Γ/|K| = 0.1, J = 0) and (Γ = 0, J/|K| = 0.1),
+the ground states we ﬁnd are those with η3 = 0 and
+η5 = 0, ensuring that hybridization is completely ab-
+sent; by contrast, for (Γ /|K| = 0.1, J/|K| = 0.05) the
+optimized values of η3 and η5 are nonzero but remain
+small [O(10−2)], as a result of which the hybridization is
+very weak [O(10−4)]. The corresponding DSF, shown in
+Figs. S5(a) and S5(b), remains strongly suppressed until
+ﬁnite energies ω≈ ω0. Thus although the gKSL has a
+gapless spin response when both J and Γ are ﬁnite, in
+practice the degree of hybridization remains small out to
+the ﬁrst-order transitions terminating its phase space,
+and hence the DSF may be very small at frequencies
+ω <ω0. This situation could result in the erroneous iden-
+tiﬁcation of a gapped QSL in inelastic neutron scatter-
+ing experiments, which cannot access the lowest energy
+scales, and may require nuclear magnetic or electron spin
+resonance (NMR or ESR) measurements to identify the
+gapless nature. We comment that the mean-ﬁeld band
+gap of thebm fermions we compute is larger than the true
+ﬂux-excitation gap, as pointed out by Kitaev [8], and thus
+the mean-ﬁeld DSF provides only a qualitative reﬂection
+of the spin response, but not a quantitative statement of
+the value ω0 that governs it.
+In the PKSL, the projected weights shown in Table
+S1 demonstrate clearly that all of the eigenstates are
+strongly hybridized superpositions of all four basis states,
+at all of the cones and even asω→ 0. Thus both (a) and
+(b) are relevant. The low-energy DSF shown in Fig. 2(e)
+of the main text is a consequence of two-cone processes
+involving any of the 14 cones, with diﬀerent weights for
+each diﬀerent type of intra- or intercone pair. When the
+energy increases towards the width of the lowest band,
+the DSF is no longer controlled by the nodal points and
+becomes continuous across the Brillouin zone, as shown
+in Fig. 2(f) of the main text. At all energies the DSF is
+strongest atqqq = 0, and indeed we note that the peaks in
+FIG. S6. Two vortices inserted at the hexagons marked by
+red crosses deﬁne a branch cut (dot-dashed line).
+Fig. 2(e) of the main text have been cut from an intensity
+of 16 to 6 in order to show the structure of the low-energy
+DSF more clearly throughout the Brillouin zone.
+S6. FIELD-INDUCED TOPOLOGICAL STATES
+As we have shown in the main text, the PKSL in an
+applied magnetic ﬁeld BBB ‖ ˆc provides examples of the
+ν = 5 andν = 4 chiral spin-liquid (CSL) states of Ref. [8].
+While high-ν CSL phases have been studied in SO( n)-
+symmetric [9, 10] and spin S > 1/2 systems [11, 12],
+here we have realized them in a S = 1/2 lattice model
+with only short-range interactions. In an in-plane ﬁeld
+BBB‖ (xxx−yyy), the gapless 14-cone state is preserved for
+small but ﬁnite ﬁeld strengths. The phase diagrams as a
+function of|BBB| are shown in Fig. 3 of the main text and
+here we provide the results supporting our conclusions.
+To perform VMC calculations in a magnetic ﬁeld, we
+add the Zeeman-coupling term,
+HZeeman =gµBBBB· 12C†iσσσCi,
+to the mean-ﬁeld Hamiltonian and reoptimize the param-
+eters under Gutzwiller projection. For convenience we
+introduce the normalized ﬁeld strength ˜B =gµBB/|K|.
+As in Ref. [1], we assume an uniform and isotropic g-
+factor for all ﬁeld directions. To investigate the physics
+of anyons in the CSL phases, we introduce a pair of vor-
+tices in the system, as represented in Fig. S6, by reversing
+the signs of the mean-ﬁeld terms on the bonds intersected
+by the dot-dashed line.
+A. BBB‖ccc
+In the gKSL for K <0, there is a single phase transi-
+tion with increasing the ﬁeld strength [13]. For ˜B < ˜Bc
+(= 0.19 for Γ /|K| = 0.1, J = 0), the mean-ﬁeld dis-
+persion is fully gapped, this gap growing linearly with
+| ˜B| when| ˜B| is small, except when J = 0 or Γ = 0, in
+which case it is proportional to | ˜B|3. The ground state
+has Chern number ν = 1, so one Majorana zero mode is
+bound to each vortex, σ, and the vortices obey the well-
+known fusion rule σ×σ = 1 +ε, where 1 is the vacuum
+andε is a fermion. 1, ε, andσ are the three topologically
+distinct sectors in the system, as shown in Table I of the
+main text, and correspond to the GSD of 3.
+8
+-0.05
+-0.025
+0
+0.025
+0.05(a)
+-0.004
+0
+0.004
+(b)
+-0.1
+-0.05
+0
+0.05
+0.1
+(c)
+-0.1
+-0.05
+0
+0.05
+0.1
+(d)
+FIG. S7. Energy spectrum of the mean-ﬁeld Hamiltonian in the vicinity of the gap, computed for a large system in four diﬀerent
+external magnetic ﬁelds BBB‖ccc and in the presence of two vortices (Fig. S6). The interaction parameters are those of the PKSL
+(Γ = 0.3|K|,J = 0) and the mean-ﬁeld parameters are determined by VMC calculations with system size 8×8×2. (a) ˜Bx = 0.1,
+where each vortex binds two complex fermion modes plus a Majorana zero mode ( ν = 5); (b) ˜Bx = 0.4, where each vortex
+binds two mid-gap complex fermion modes ( ν = 4); (c) ˜Bx = 0.5, where each vortex binds a Majorana zero mode ( ν = 1; this
+state becomes trivial after Gutzwiller projection); (d) ˜Bx = 0.85, where no mid-gap modes are trapped by the vortex.
+To show this we apply the following considerations. A
+fermion experiences a ﬂux π on moving around a vortex,
+whence the vortices appear in pairs. A pair of π-ﬂuxes
+gives rise to two Majorana zero modes, equivalent to a
+single fermion mode, whose energies fall in the bulk gap
+[similar to Fig. S7(c)]. Because of the nonzero Chern
+number, each vortex (σ) is associated with a gauge charge
+1/4, a situation analogous to the Hall eﬀect [14]. When
+two vortices are exchanged, the Aharonov-Bohm phase
+between the π-ﬂux and the associated charge is counted
+only once. Thus the topological spin (the Abelian phase
+obtained by rotating a vortex by 2 π, which by the spin-
+statistics theorem is the same as the phase obtained by
+exchanging two vortices) is equal to ei π4× 12 =ei π8 .
+If a fermion, which has gauge charge−1 [8], is attached
+to a vortex, the composite vortex σ×ε also has topolog-
+ical spin ei π8 : exchanging two composite vortices creates
+a phase ei( π8− π2− π2 +π), where the factors of e−i π2 arise
+from the fermion and π-ﬂux moving half a circle around
+each other and the phase eiπ from the exchange of two
+fermions. In fact a composite vortex has the same prop-
+erties as a vortex (except for the gauge charge, which is
+not measurable), resulting in the fusion rule σ×ε = σ
+[8], conﬁrming that the set of three topologically distinct
+sectors is closed.
+After Gutzwiller projection, if it remains Z2-deconﬁned
+then the ν = 1 mean-ﬁeld state becomes a non-Abelian
+CSL, in which the vortices are Ising anyons. Our VMC
+calculations for the gKSL in a ﬁeld verify that the GSD
+of this CSL on a torus is 3, as stated in Sec. S2 for any
+system with an odd Chern number. When ˜B > ˜Bc, the
+projected state is Z 2-conﬁned and the GSD is 1, i.e. the
+system enters a topologically trivial gapped phase, which
+is connected adiabatically to the fully polarized state.
+Turning to the PKSL, one may apply all of the same
+considerations. We ﬁnd that there are two phase tran-
+sitions, which for Γ /|K| = 0.3, occur at ˜B1 = 0.28 and
+˜B2 = 0.71. When ˜B < ˜B1, the Chern number is ν = 5:
+the vortex carries gauge chargeν/4 = 5/4, which give rise
+to a topological spinei 58π. One vortex traps two complex
+fermion modes plus one unpaired Majorana zero mode,
+as shown in Fig. S7(a) by computing the low-energy spec-
+trum at the mean-ﬁeld level for a large system. The odd
+Chern number means that the vortex is a non-Abelian
+anyon and correspondingly the ν = 5 phase is a non-
+Abelian CSL. This nontrivial topological order is veriﬁed
+in VMC by the three-fold degeneracy of the ground state
+on a torus, as shown by the eigenvalues of the density ma-
+trix listed in Table S2. Despite their commonalities, the
+ν = 1 and ν = 5 phases diﬀer in the topological spin of
+their vortices, their total chiral central charge, and their
+thermal Hall conductance (Table I of the main text).
+When ˜B1 < ˜B < ˜B2, the Chern number is ν = 4. As
+shown in Fig. S7(b), a pair of vortices gives rise to four
+mid-gap fermion modes, whose energies are nonzero. In
+principle each vortex (denote by m [8]) traps four Majo-
+rana zero modes, but these lower their energies by cou-
+pling to form two complex fermion modes. Thus the vor-
+tex,m, carries gauge charge ν/4 = 1 and has topological
+spin ei π2×1 = ei π2 , meaning that it is a semion. The
+composite object of two m vortices has statistical angle
+π/2× 4 = 2π, which means it is a boson ( m×m = 1).
+The attachment of a fermion,ε, to the vortex creates a
+new composite vortex,m×ε =e. Similar to the previous
+discussion, this does not change the topological spin, i.e.e
+is also a semion, with e×e = 1. Thus it is easy to
+obtain the remaining fusion rules, e×m =ε, e×ε =m,
+and m×ε = e. The nontrivial topological order of the
+projected ν = 4 state is reﬂected by the GSD on a torus,
+which is 4 (Table S2).
+For ˜B > ˜B2, the outcome of VMC is a trivial, gapped,
+Z2-conﬁned phase. However, working at the mean-ﬁeld
+level (with the parameters determined from VMC), there
+is an additional critical point at ˜B3 ∼ 1.22 where the
+mean-ﬁeld Chern number changes from ν = 1 to ν = 0.
+˜Bx ν ρ1 ρ2 ρ3 (ρ4) GSD
+0.1 5 0.4016 0.8456 1.7527 3
+0.4 4 0.7506 0.8168 0.8303 1.6024 4
+0.5 1 8.0×10−6 7.6×10−4 2.9992 1
+0.85 0 7.5×10−9 3.0×10−7 5.6×10−6 4.0000 1
+TABLE S2. Eigenvalues of the density matrices of the CSL
+ground states induced by a magnetic ﬁeldBBB‖ ˆc, computed in
+the PKSL (Γ/|K| = 0.3, J = 0) for a system of size 8 ×8×2.
+ν is the mean-ﬁeld Chern number; as discussed in the text,
+the projected ν = 1 and ν = 0 states are the same phase.
+9
+0.2 0.24 0.28 0.32
+-0.29
+-0.28
+-0.27
+0.2 0.24 0.28 0.32
+-1
+0
+110-3
+(a)
+0.7 0.74 0.78 0.82
+-0.48
+-0.45
+-0.42
+0.7 0.74 0.78 0.82
+-2
+0
+2
+4
+610-4
+(b)
+0.01 0.02 0.03 0.04 0.05
+-0.27
+-0.26
+-0.25
+6-cone
+gapped
+(c)
+FIG. S8. Field-induced phase transitions in the PKSL (Γ/|K| = 0.3,J = 0). (a) Level-crossing at the transition from the ν = 5
+to the ν = 4 CSL in a ﬁeld BBB‖ccc and (b) level-crossing at the transition from the ν = 4 CSL, which is Z 2-deconﬁned, to the
+trivial (Z2-conﬁned) phase obtained by projection of the ν = 1 mean-ﬁeld state. Both insets show the energy diﬀerence per site
+with respect to the ν = 4 state. (c) Level-crossing from the gapless 6-cone state to a trivial gapped phase in a ﬁeld BBB‖ (xxx−yyy).
+The number of mid-gap states in the mean-ﬁeld spec-
+trum changes correspondingly from 2 [Fig. S7(c)] to 0
+[Fig. S7(d)]. However, as Table S2 shows clearly, both
+the projected ν = 1 state and the projected ν = 0 state
+have a GSD of 1, showing that they are Z2-conﬁned. Usu-
+ally, a mean-ﬁeld state with nontrivial Chern number is
+nontrivial after Gutzwiller projection, but in the present
+case our numerical results indicate that the strong mag-
+netic ﬁeld causes the highly polarized projected state to
+become Z2-conﬁned. This conﬁnement can be interpreted
+as a closing of the Z 2 vison gap despite the fact that the
+mean-ﬁeld spinon gap is still ﬁnite. We comment in clos-
+ing this subsection that the transitions at both ˜B1 and˜B2 are ﬁrst-order, as shown in Figs. S8(a) and S8(b),
+and hence the closure of the spinon gap required at a
+continuous topological transition is absent.
+B. BBB‖ (xxx−yyy)
+Here we discuss only the PKSL. An in-plane mag-
+netic ﬁeld breaks the three-fold rotation symmetry and
+in general a gap will be opened at all the cones. How-
+ever, as noted in the main text, for the special directions
+BBB ‖ (xxx−yyy), (yyy−zzz), and ( zzz−xxx), 6 of the cones re-
+main gapless at small but ﬁnite ﬁelds. As the ﬁeld is
+increased, pairs of cones move together and may merge,
+then become gapped at a second-order phase transition
+[1]. In the PKSL, a ﬁrst-order transition preempts this
+process, as shown in Fig. S8(c), and instead the system
+enters a phase whose GSD on a torus is 1, meaning that
+it is Z 2-conﬁned and trivial. We ﬁnd that this state,
+which is connected directly to the fully polarized limit,
+is characterized by strong spatial anisotropy and a sign-
+reversal of the variational parameter ρa. All of the ﬁrst-
+order transitions in Fig. S8 reinforce the observation that
+many states compete strongly at low energies, which in
+turn raises the computational complexity of the task of
+deducing the full phase diagram in K, J, Γ,|BBB|, and ˆB.
+C. General BBB
+Before concluding this section, we provide one brief
+illustration of the possibilities that arise when applying
+the magnetic ﬁeld in an intermediate direction, and when
+applying it to an ordered phase. For a ﬁeld orientation
+ﬁxed along the direction [1, 1, 0.2] and interaction param-
+eters ﬁxed at (Γ /|K| = 1.4, J = 0) [1], we observe a
+phase transition at ˜B = 0.36 from the zigzag phase to a
+ν = 1 CSL. This CSL phase is stable in the ﬁeld range
+0.36 < ˜B < 0.50. It supports a half-quantized thermal
+Hall conductance, a result which may be of key impor-
+tance in interpreting the results of experiments such as
+that reported in Ref. [15].
+[1] Z.-X. Liu and B. Normand, Phys. Rev. Lett. 120, 187201
+(2018).
+[2] X.-Y. Song, Y.-Z. You, and L. Balents, Phys. Rev. Lett
+117, 037209 (2016).
+[3] Y.-Z. You, I. Kimchi, and A. Vishwanath, Phys. Rev. B
+86, 085145 (2012).
+[4] A. Kitaev, AIP Conf. Proc. 1134, 22 (2009).
+[5] X.-G. Wen, Phys. Rev. B 85, 085103 (2012).
+[6] J. G. Rau, E. K.-H. Lee, and H.-Y. Kee, Phys. Rev. Lett.
+112, 077204 (2014).
+[7] M. Gohlke, G. Wachtel, Y. Yamaji, F. Pollmann, and Y.
+B. Kim, Phys. Rev. B 97, 075126 (2018).
+[8] A. Kitaev, Ann. Phys. 321, 2 (2006).
+[9] H.-H. Tu, Phys. Rev. B 87, 041103 (2013).
+[10] S. Yang, T. B. Wahl, H.-H. Tu, N. Schuch, and J. I. Cirac,
+Phys. Rev. Lett. 114, 106803 (2015).
+[11] M. Greiter and R. Thomale, Phys. Rev. Lett. 102,
+207203 (2009).
+[12] Z.-X. Liu, H.-H. Tu, Y.-H. Wu, R.-Q. He, X.-J. Liu, Y.
+Zhou, and T.-K. Ng, Phys. Rev. B 97, 195158 (2018).
+[13] H.-C. Jiang, Z.-C. Gu, X.-L. Qi, and S. Trebst, Phys.
+Rev. B 83, 245104 (2011).
+[14] C. Nayak, S. H. Simon, A. Stern, M. Freedman, and S.
+Das Sarma, Rev. Mod. Phys. 80, 1083 (2008).
+[15] Y. Kasahara, T. Ohnishi, Y. Mizukami, O. Tanaka, S.
+Ma, K. Sugii, N. Kurita, H. Tanaka, J. Nasu, Y. Motome,
+10
+T. Shibauchi, and Y. Matsuda, Nature 559, 227 (2018).
