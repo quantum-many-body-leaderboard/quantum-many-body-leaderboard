@@ -786,7 +786,9 @@ To cite the data itself, use the Zenodo concept DOI, which resolves to the lates
 To add an energy, use the [new result form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-result.yml).
 To add an instance QMBL does not have yet, a lattice model or an electron-gas cell, use the
 [new instance form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=new-instance.yml).
-To correct a row, open an issue on that row. Be specific and technical
+To correct a row or comment on it, click the pencil at the end of the row on
+[qmbl.org/instances](https://qmbl.org/instances/); it opens the
+[about-a-row form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=row-feedback.yml) with the row filled in. Be specific and technical
 ([RULES.md §10](RULES.md#10-review-and-objections)). A sampled energy without an
 error bar is marked &dagger;. Send the error bar so the row can be compared with its
 neighbours.

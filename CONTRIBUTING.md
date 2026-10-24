@@ -37,8 +37,9 @@ energies are compared only within one instance.
 
 ## Correct a row or object to it
 
-Open a blank issue that names the instance and the row. Say what is wrong and what it
-should be. An objection must be specific and technical.
+Open the row on the [Table](https://qmbl.org/instances/) page and click the pencil at the
+end of it. This opens the [about-a-row form](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/issues/new?template=row-feedback.yml) with the row, its instance and its
+values filled in. Say what is wrong and what it should be. An objection must be specific and technical.
 [RULES.md §10](RULES.md#10-review-and-objections) lists the admissible grounds, for
 example a wrong sector, a misdeclared `bound_type` or an error bar with no autocorrelation
 correction. Rows are corrected in place and keep the finding
@@ -47,7 +48,8 @@ correction. Rows are corrected in place and keep the finding
 ## Send an error bar or a cost
 
 Many sampled energies are listed without an error bar (marked &dagger;), because the
-source gives none. If you know it, open an issue with the value and how it was estimated.
+source gives none. If you know it, send it with the row's pencil (above), with the value and
+how it was estimated.
 With an error bar, results that agree within it share a rank
 ([RULES.md §6](RULES.md#6-records-and-ties)).
 
@@ -90,6 +92,7 @@ corrections and objections. The same rules and the same checks apply.
 - An issue opened through the API cannot use a form. Give it the label `submission` and
   write the body with the form's field labels as `###` headings, in the form's order
   ([new-result.yml](.github/ISSUE_TEMPLATE/new-result.yml),
+  [row-feedback.yml](.github/ISSUE_TEMPLATE/row-feedback.yml),
   [new-unpublished-result.yml](.github/ISSUE_TEMPLATE/new-unpublished-result.yml),
   [new-instance.yml](.github/ISSUE_TEMPLATE/new-instance.yml)).
 - Name the system that made the submission (model and version), and say whether a person
